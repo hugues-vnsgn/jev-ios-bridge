@@ -1,6 +1,8 @@
 # jev-ios-bridge: architecture blueprint
 
-Bridge between a coding agent (Claude Code, Codex) and an iOS simulator, with Jev (typesafe.ai) supplying per-step decisions. See `CONTEXT.md` for vocabulary and `docs/adr/0001` for why Jev decides but never acts.
+Bridge between a coding agent (Claude Code, Codex) and an iOS simulator, with Jev (typesafe.ai) supplying per-step decisions and XcodeBuildMCP supplying all simulator and UI automation. See `CONTEXT.md` for vocabulary, `docs/adr/0001` for why Jev decides but never acts, and `docs/adr/0002` for why the bridge owns no device code.
+
+Open question (ticket 08): whether the loop below lives in the bridge or in the host agent with the bridge exposing only Jev judgment tools. The diagrams show the bridge-owned shape.
 
 ## Daily-driver flow
 
@@ -10,10 +12,10 @@ flowchart LR
     CC -->|"/test-ios 'login with valid creds'"| Cmd[Slash command]
     Cmd -->|optional xcodebuild| Build[(.app)]
     Cmd -->|MCP tool call| MCP[jev-ios-bridge MCP server]
-    MCP --> DM[Device manager]
-    DM -->|simctl boot / install / launch| Sim[(iOS Simulator)]
+    MCP --> DM[Device driver]
+    DM -->|XcodeBuildMCP: boot / install / launch-app| Sim[(iOS Simulator)]
     MCP --> Loop[Run loop]
-    Loop -->|observe: idb ui describe-all| Sim
+    Loop -->|observe: XcodeBuildMCP snapshot-ui| Sim
     Loop -->|state + questions| Jev[(Jev API)]
     Jev -->|typed judgments| Loop
     Loop -->|tap / swipe / type| Sim
@@ -29,23 +31,23 @@ flowchart LR
 sequenceDiagram
     participant CC as Claude Code
     participant B as Bridge (MCP)
-    participant D as Device driver
+    participant D as Device driver (XcodeBuildMCP adapter)
     participant S as Simulator
     participant J as Jev API
 
     CC->>B: jev_run_mobile_test(scenario, bundleId, device?)
     B->>D: resolve device, boot if needed
-    D->>S: xcrun simctl boot / install / launch
+    D->>S: xcodebuildmcp simulator boot / install / launch-app
     loop each step (bounded by max steps and timeout)
         B->>D: observe
-        D->>S: idb ui describe-all + screenshot
-        S-->>D: accessibility JSON + PNG
+        D->>S: xcodebuildmcp ui-automation snapshot-ui + screenshot
+        S-->>D: rs/1 snapshot with element references + PNG
         D-->>B: Observation (pruned tree, candidates)
         B->>J: POST /v1/systemone {state: observation, questions: next_action, assertions..., done?}
         J-->>B: answers with probabilities and confidence
         alt confident choice
             B->>D: perform action on chosen candidate
-            D->>S: idb ui tap / swipe / text
+            D->>S: xcodebuildmcp ui-automation tap / swipe / type-text by element reference
         else low confidence
             B-->>CC: fallback: screenshot + candidates for host-agent vision
         end
@@ -61,7 +63,8 @@ sequenceDiagram
 | Host agent | deciding to verify, reading the report, fixing code, vision fallback | touching the simulator |
 | Bridge | run lifecycle, perception, candidates, actions, timeouts, cleanup, report | choosing an action on its own |
 | Jev | per-step judgments: next action, assertion checks, progress | seeing pixels, holding state, acting |
-| Device driver | simctl and idb commands, screenshots, accessibility dumps | anything Jev-related |
+| Device driver | adapting XcodeBuildMCP calls, screenshots, snapshots | simulator logic of its own, anything Jev-related |
+| XcodeBuildMCP | simulators, build, install, launch, UI snapshot, tap, swipe, type | deciding anything |
 
 ## Project structure (target)
 
@@ -86,9 +89,8 @@ jev-ios-bridge/
 │   │       └── get-report.ts         # jev_get_test_report
 │   ├── device-manager/
 │   │   ├── driver.ts             # DeviceDriver interface
-│   │   ├── simctl.ts             # list / boot / install / launch / terminate
-│   │   ├── idb.ts                # describe-all / tap / swipe / text / screenshot
-│   │   └── observation.ts        # accessibility JSON -> Observation + candidates
+│   │   ├── xcodebuildmcp.ts      # adapter: CLI shell-out or MCP client (ticket 08)
+│   │   └── observation.ts        # rs/1 snapshot -> Observation + candidates
 │   ├── jev-client/
 │   │   ├── client.ts             # @typesafe-ai/sdk wrapper, retries
 │   │   └── questions.ts          # next_action (Choice), assertion (Noul), progress (Score)
@@ -109,6 +111,7 @@ jev-ios-bridge/
 ## Configuration and safety
 
 - `TYPESAFE_API_KEY` from env or `.env`; `TYPESAFE_JEV_API_KEY` accepted as an alias.
+- XcodeBuildMCP pinned to an exact version; simulator and bundle defaults in `.xcodebuildmcp/config.yaml`.
 - Every run has a wall-clock timeout and a max step count.
 - SIGINT and SIGTERM terminate the app under test, flush artifacts, and emit an inconclusive report.
 - Screenshots and Jev payloads are written per run for post-mortem, and linked from the report rather than inlined.

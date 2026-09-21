@@ -19,7 +19,9 @@ Shared vocabulary for the bridge between a coding agent, the Jev judgment model,
 - **Verdict**: the outcome of a run: passed, failed, or inconclusive, with the failing step and evidence attached.
 - **Report**: the token-efficient Markdown summary of a run that the host agent reads to decide whether the code change is good.
 - **Device**: an iOS simulator identified by its UDID. Physical devices are out of scope for this effort.
-- **Device driver**: the bridge's seam over simulator tooling (`xcrun simctl`, `idb`). Boots, installs, launches, observes, acts.
+- **Device driver**: the bridge's seam over XcodeBuildMCP. Boots, installs, launches, observes, acts. Never contains simulator logic of its own.
+- **Snapshot**: XcodeBuildMCP's semantic runtime UI capture (format rs/1). The raw material an observation is derived from.
+- **Element reference**: the id XcodeBuildMCP assigns to an element in a snapshot. A candidate's identity; actions are addressed by it.
 - **Fallback**: the path taken when Jev cannot decide confidently from text alone, where a vision-capable model in the host agent is handed the screenshot instead.
 
 ## Avoid

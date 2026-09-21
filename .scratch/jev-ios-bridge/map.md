@@ -12,7 +12,7 @@ A spec for the bridge plus one working vertical slice: a single MCP tool that ru
 - Domain: agent tooling; Claude Code MCP servers, hooks, slash commands; iOS simulator automation; TypeSafe Jev.
 - Read `CONTEXT.md` and `docs/adr/0001` before any ticket. Jev is text-only and stateless: the bridge perceives and acts, Jev decides.
 - Skills every session should consult: `typesafe:typesafe-ai` (read the live docs), `grilling`, `domain-modeling`. Use `codebase-design` when a ticket shapes a module seam.
-- Stack fixed during charting: TypeScript on Node 20+, `@typesafe-ai/sdk`, official MCP TypeScript SDK, `xcrun simctl` plus `idb` behind a `DeviceDriver` seam.
+- Stack fixed during charting: TypeScript on Node 20+, `@typesafe-ai/sdk`, official MCP TypeScript SDK, and getsentry/XcodeBuildMCP as the device layer (see `docs/adr/0002`) behind a `DeviceDriver` seam. Whether the bridge or the host agent owns the loop is ticket 08.
 - Blueprint and target tree: `docs/architecture.md`.
 - Tracker: local markdown, see `docs/agents/issue-tracker.md`.
 
@@ -32,6 +32,6 @@ A spec for the bridge plus one working vertical slice: a single MCP tool that ru
 ## Out of scope
 
 - Physical iPhones: signing, `devicectl`, and an XCUITest runner bundle. Simulators cover the daily loop; revisit as a fresh effort.
-- Depending on a third-party `xcode-mcp` server from inside the bridge. The `DeviceDriver` seam leaves room for it later.
+- Writing our own simulator or UI automation code over `xcrun simctl` or `idb`. XcodeBuildMCP already does this; see ADR-0002.
 - A Codex-native slash command. Codex gets the same tools over MCP.
 - Sending screenshots to Jev. Not supported by the model.
