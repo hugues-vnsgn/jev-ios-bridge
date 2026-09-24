@@ -20,4 +20,6 @@ The independent checkpoint review found two report gaps. Selecting the current c
 
 The benchmark review also identified differences between the upstream baseline and bridge host permissions, suggested actions, and Weather build timing. [Benchmark preparation](../../spikes/benchmarks/README.md) now discloses them. No comparison result has been claimed.
 
+The earlier-screen evidence gap is now fixed. The report correlates each checkpoint proof with its preceding recorded step and includes the screen excerpt, screenshot artifact name, snapshot sequence, and device provenance. Missing evidence and output truncation are explicit. Regressions cover Settings-to-Home-to-detail evidence, an interrupted boundary, and oversized output. The coding agent ran `npm run check`: all 93 tests, type checking, and build passed; no frozen experiment source changed.
+
 Runtime calibration, live checkpoint feasibility, the installed Claude Code run, and comparison measurements remain expected gate work. No high-severity contradiction was found in ordered advancement, cancellation, the strict scenario union, or bridge-owned verdicts. The standards review found no documented-standard breach; its remaining event-typing concern is a design suggestion, not a live feasibility result.

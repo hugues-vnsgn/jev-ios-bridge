@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, readFile, rm, appendFile } from 'node:fs/promises';
+import { mkdtemp, readFile, rm, appendFile, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createRunLog, readRunEvents } from '../src/log/index.js';
@@ -83,16 +83,79 @@ test('report names the pending checkpoint when the budget ends between checkpoin
       { id: 'settings', goal: 'Settings visible', assertions: [] },
       { id: 'home', goal: 'Home visible', assertions: [] },
     ] });
-    await log.append('step', { step: 1, checkpointId: 'settings', observationSummary: 'Settings visible' });
+    const shot = join(root, 'settings.jpg');
+    await writeFile(shot, Buffer.from([0xff, 0xd8, 0xff, 0xd9]));
+    await log.append('step', { step: 1, checkpointId: 'settings', observationSummary: 'Settings screen proves °C selected', screenshotPath: shot });
     await log.append('checkpoint', { checkpointId: 'settings', status: 'passed', step: 1,
-      goalReachedProbability: 0.99,
-      assertions: [{ id: 'settings:unit', claim: 'Fahrenheit is selected', probability: 0.98 }],
+      snapshotSequence: 41, deviceId: 'sim-test', goalReachedProbability: 0.99,
+      assertions: [{ id: 'settings:unit', claim: 'Celsius is selected', probability: 0.98 }],
     });
     await log.append('verdict', { verdict: 'inconclusive', reason: 'Step limit 1 reached' });
     const text = renderReport(buildReport(await log.read()));
     assert.match(text, /Current checkpoint: home: Home visible/);
     assert.doesNotMatch(text, /Current checkpoint: settings/);
-    assert.match(text, /Fahrenheit is selected/);
+    assert.match(text, /Celsius is selected/);
     assert.match(text, /"probability":0.98/);
+    assert.match(text, /Settings screen proves °C selected/);
+    assert.match(text, /screen-2\.jpg/);
+    assert.match(text, /snapshot sequence 41/);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('report links each earlier checkpoint to its own screen, not the final detail screen', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-report-checkpoints-'));
+  try {
+    const log = await createRunLog(root, 'weather');
+    await log.append('started', { checkpoints: [
+      { id: 'settings', goal: 'Settings verified', assertions: [] },
+      { id: 'home', goal: 'Home verified', assertions: [] },
+      { id: 'detail', goal: 'Detail verified', assertions: [] },
+    ] });
+    for (const [index, id, summary] of [
+      [1, 'settings', `Settings shows Celsius and km. ${'x'.repeat(1_000)}`],
+      [2, 'home', 'London Home shows 11 degrees.'],
+      [3, 'detail', 'Precipitation detail shows 78 percent.'],
+    ] as const) {
+      const source = join(root, `${id}.jpg`);
+      await writeFile(source, Buffer.from([0xff, 0xd8, 0xff, 0xd9]));
+      await log.append('step', { step: index, checkpointId: id, observationSummary: summary, screenshotPath: source });
+      await log.append('checkpoint', { checkpointId: id, status: 'passed', step: index,
+        snapshotSequence: 40 + index, deviceId: 'sim-test', goalReachedProbability: 0.99, assertions: [] });
+    }
+    await log.append('verdict', { verdict: 'passed', reason: 'All checkpoints passed' });
+    const text = renderReport(buildReport(await log.read()));
+    const settings = text.slice(text.indexOf('Checkpoint settings:'), text.indexOf('Checkpoint home:'));
+    const home = text.slice(text.indexOf('Checkpoint home:'), text.indexOf('Checkpoint detail:'));
+    const detail = text.slice(text.indexOf('Checkpoint detail:'));
+    assert.match(settings, /Settings shows Celsius and km\./);
+    assert.match(settings, /screen-2\.jpg/);
+    assert.match(settings, /\[truncated; \d+ more characters in the run log\]/);
+    assert.match(home, /London Home shows 11 degrees\./);
+    assert.match(home, /screen-4\.jpg/);
+    assert.match(detail, /Precipitation detail shows 78 percent\./);
+    assert.match(detail, /screen-6\.jpg/);
+    assert.match(text, /snapshot sequence 41; device sim-test/);
+    assert.doesNotMatch(settings, /Precipitation detail/);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('a long checkpoint report marks its overall output limit', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-report-bounded-'));
+  try {
+    const log = await createRunLog(root, 'bounded');
+    await log.append('started', { checkpoints: Array.from({ length: 10 }, (_, index) => ({
+      id: `stage${index + 1}`, goal: `Stage ${index + 1}`, assertions: [],
+    })) });
+    for (let step = 1; step <= 10; step++) {
+      await log.append('step', { step, checkpointId: `stage${step}`, observationSummary: 'S'.repeat(1_000),
+        ...(step === 10 ? { logTails: { app: 'L'.repeat(5_000) } } : {}) });
+      await log.append('checkpoint', { checkpointId: `stage${step}`, step, status: 'passed',
+        assertions: [{ id: `stage${step}:claim`, claim: 'C'.repeat(1_000), probability: 0.99 }] });
+    }
+    for (let index = 0; index < 8; index++) await log.append('error', { message: 'E'.repeat(3_000) });
+    await log.append('verdict', { verdict: 'passed', reason: 'All stages passed' });
+    const text = renderReport(buildReport(await log.read()));
+    assert.ok(text.length < 31_000);
+    assert.match(text, /\[truncated; \d+ more characters in the run log\]$/);
   } finally { await rm(root, { recursive: true, force: true }); }
 });

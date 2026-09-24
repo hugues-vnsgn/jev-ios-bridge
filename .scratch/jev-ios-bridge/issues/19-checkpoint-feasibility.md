@@ -12,3 +12,11 @@ Can Jev meet the unchanged action/coverage bar when the scenario supplies ordere
 Two broad-goal experiments failed. The next design keeps one scenario submission, one bridge-owned run and verdict, and Jev choosing actions, but the bridge advances explicit checkpoints only after their evidence passes. This is also needed to verify the complete Weather benchmark across Settings, Home, and detail screens. See [the checkpoint proposal](../checkpoint-proposal.md).
 
 Implement the schema and deterministic checkpoint lifecycle under tests. Preregister development and fresh held-out cases with checkpoint-sized desired states, then obtain owner label review and freeze the experiment. Keep the same model, threshold grid, Noul bounds, and 18/20 correct + 16/20 accepted with zero accepted errors and zero false-pass assertions bar. Preserve all previous results as failed development evidence. No publication until the revised scope is supported by evidence.
+
+## Current evidence
+
+The checkpoint prototype is committed at `5021c02`; Node 24 CI passed 91 tests, type checking, and build. The [fresh corpus](../../../spikes/feasibility/corpus-v3/review/case-review.md) is frozen at `cb87239` after the [independent audit](../corpus-v3-review.md). It has 10 development cases and 20 fresh held-out cases, with all 90 asset hashes and 124 offline request builds verified.
+
+Corpus SHA-256: `136dd6ed8e7880e6e1118b1691a31693b72a19f0498cd7ef8b4be475d58363cf`. Manifest SHA-256: `ced6bfb11cc14e1138f2f28d5fca66ec16dade716a0aa126ddd4ca94a204a172`.
+
+Owner label approval has been requested. The approval template remains false; no v3 Jev request has been made. After approval, run tuning once, evaluate its frozen selection on all 20 held-out cases, and record the unchanged gate result. Runtime calibration and publication remain pending.

@@ -25,6 +25,27 @@ export function renderReport(report: RunReport): string {
   const checkpoints = Array.isArray(start?.checkpoints) ? start.checkpoints : [];
   const checkpointProofs = report.events.filter(event => event.type === 'checkpoint' && event.data.status === 'passed');
   const activeCheckpoint = checkpoints[checkpointProofs.length];
+  const excerpt = (value: string, maxChars: number): string => value.length <= maxChars
+    ? value : `${value.slice(0, maxChars)}\n[truncated; ${value.length - maxChars} more characters in the run log]`;
+  const checkpointEvidence = (proof: RunEvent): string => {
+    const screen = report.events.findLast(event => event.sequence < proof.sequence && event.type === 'step' &&
+      event.data.step === proof.data.step && event.data.checkpointId === proof.data.checkpointId);
+    if (!screen) return 'Recorded screen evidence: unavailable for this checkpoint.';
+    const sequence = proof.data.snapshotSequence;
+    const device = proof.data.deviceId;
+    const provenance = [
+      `step ${screen.data.step} (event ${screen.sequence})`,
+      ...(typeof sequence === 'number' ? [`snapshot sequence ${sequence}`] : []),
+      ...(typeof device === 'string' ? [`device ${device}`] : []),
+    ].join('; ');
+    const image = typeof screen.data.screenshotPath === 'string'
+      ? `Screenshot artifact: ${screen.data.screenshotPath} (beside run.jsonl).`
+      : 'Screenshot artifact: none recorded.';
+    const summary = typeof screen.data.observationSummary === 'string'
+      ? `Recorded screen excerpt:\n${excerpt(screen.data.observationSummary, 600)}`
+      : 'Recorded screen excerpt: unavailable.';
+    return `Evidence: ${provenance}.\n${image}\n${summary}`;
+  };
   const compactEvidence = (event: RunEvent) => {
     const judgment = event.data.judgment;
     if (event.type === 'judgment' && judgment && typeof judgment === 'object') {
@@ -34,23 +55,27 @@ export function renderReport(report: RunReport): string {
     }
     return JSON.stringify(event.data);
   };
-  return [
+  const text = [
     `Run ${report.runId}: ${report.verdict}`,
     report.reason,
     `Steps: ${report.steps}; Jev input tokens: ${report.inputTokens}; duration: ${report.durationMs} ms.`,
-    ...(typeof start?.goal === 'string' ? [`Goal: ${start.goal.slice(0, 2000)}`] : []),
-    ...(Array.isArray(start?.assertions) ? [`Assertions: ${JSON.stringify(start.assertions).slice(0, 4000)}`] : []),
+    ...(typeof start?.goal === 'string' ? [`Goal: ${excerpt(start.goal, 2000)}`] : []),
+    ...(Array.isArray(start?.assertions) ? [`Assertions: ${excerpt(JSON.stringify(start.assertions), 4000)}`] : []),
     ...(checkpoints.length ? [
       `Recorded checkpoint passes: ${checkpointProofs.length}/${checkpoints.length}.`,
       ...checkpointProofs.map(event => [
         `Checkpoint ${event.data.checkpointId}: ${event.data.status} at step ${event.data.step}.`,
-        `Completion probability: ${event.data.goalReachedProbability}; assertion proof: ${JSON.stringify(event.data.assertions ?? []).slice(0, 4000)}`,
+        `Completion probability: ${event.data.goalReachedProbability}; assertion proof: ${excerpt(JSON.stringify(event.data.assertions ?? []), 700)}`,
+        checkpointEvidence(event),
       ].join('\n')),
-      ...(activeCheckpoint ? [`Current checkpoint: ${activeCheckpoint.id}: ${activeCheckpoint.goal}`, `Checkpoint assertions: ${JSON.stringify(activeCheckpoint.assertions).slice(0, 4000)}`] : []),
+      ...(activeCheckpoint ? [`Current checkpoint: ${activeCheckpoint.id}: ${activeCheckpoint.goal}`, `Checkpoint assertions: ${excerpt(JSON.stringify(activeCheckpoint.assertions), 4000)}`] : []),
     ] : []),
     '', 'Recent evidence:',
-    ...evidence.map(event => `${event.sequence}. ${event.type}: ${compactEvidence(event).slice(0, 1800)}`),
-    ...(typeof lastScreen?.observationSummary === 'string' ? ['', 'Final recorded observation:', lastScreen.observationSummary.slice(0, 4000)] : []),
-    ...(lastScreen?.logTails ? ['', `App log excerpts: ${JSON.stringify(lastScreen.logTails).slice(0, 4000)}`] : []),
+    ...evidence.map(event => `${event.sequence}. ${event.type}: ${excerpt(compactEvidence(event), 1800)}`),
+    ...(typeof lastScreen?.observationSummary === 'string' &&
+        !checkpointProofs.some(proof => proof.data.step === lastScreen.step)
+      ? ['', 'Final recorded observation:', excerpt(lastScreen.observationSummary, 4000)] : []),
+    ...(lastScreen?.logTails ? ['', `App log excerpts: ${excerpt(JSON.stringify(lastScreen.logTails), 4000)}`] : []),
   ].join('\n');
+  return excerpt(text, 30_000);
 }
