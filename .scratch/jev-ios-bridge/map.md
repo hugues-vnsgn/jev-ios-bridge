@@ -5,7 +5,7 @@ Created: 2026-09-21 · Re-charted: 2026-09-24
 
 ## Destination
 
-A reviewed v1 spec for the bridge. It covers the tools, run loop, observation, policy, report, and watch view. It is backed by measured evidence that Jev can choose actions on real screens, and it is complete enough that engineers can build v1 without re-deciding anything. Building v1 is a separate effort.
+A verified implementation and GitHub prerelease v0.1.0 of the bridge, including its installable package, tools, run loop, observation, policy, report, and watch view. The owner expanded the planning effort through release on 2026-09-24. Measured feasibility evidence, the reviewed corpus, and the go/no-go decision remain gates; implementation must not turn missing evidence into a resolved ticket.
 
 ## Notes
 
@@ -25,15 +25,19 @@ A reviewed v1 spec for the bridge. It covers the tools, run loop, observation, p
   - `mermaid-diagrams` for diagrams;
   - `unslop` before anything reviewers read.
 - **Tracker:** local markdown; see [`docs/agents/issue-tracker.md`](../../docs/agents/issue-tracker.md). Refer to tickets by name. After opening, claiming, closing, or rewiring a ticket, run `python3 scripts/render-route.py`.
-- **Reaching the destination:** once every ticket is resolved, write the spec from the resolved tickets and ADRs with the `to-spec` skill. Then send it to the engineers for the same review as these docs.
+- **Reaching the destination:** consolidate decisions into the spec, implement and verify the bridge, review the changes, then publish the GitHub prerelease. The main agent owns integration and ticket updates; delegated agents own explicitly assigned files. External messages to engineers are not part of the release authorization.
 
 ## Decisions so far
+
+- [Local environment](issues/06-local-environment.md): dedicated iOS 26.4 simulator is ready, pinned MobileBuildMCP captures work, and the supplied key authenticates. Settings, Contacts, Reminders, and Files are available; Weather is not installed.
 
 - [Jev today: model, API, SDK, limits](issues/01-jev-today.md): `jev-1.13.0` is text-only and stateless. A request is capped at 64k tokens, with 32k for the state plus the longest question. Noul answers carry no confidence. TypeSafe publishes no cookbook for choosing UI actions.
 - [MobileBuildMCP: simulator and real-iPhone capability](issues/02-mobilebuildmcp-capability.md): the project was renamed on 2026-09-23. Element references expire after 60 s. Full snapshot data comes only from the CLI. There is no UI automation on a real iPhone.
 - [Claude and Jev: dividing the work](issues/03-claude-and-jev.md): a tool call cannot ask Claude anything mid-run, and `structuredContent` hides the text report. The evidence leaves two shapes viable: a loop run by the bridge, or a loop run by a Claude subagent. The owner chose the bridge.
 - [Watching a run: options for a live view](issues/04-watching-a-run.md): the Claude Code CLI shows one progress line, and MCP logging is deprecated. The practical watch view is a localhost page served from the run log.
 - [Driving a real iPhone: what a second device layer takes](issues/05-driving-a-real-iphone.md): WebDriverAgent through Appium is the plausible path, sized M. Most of that cost is per-developer signing and keeping it working across Xcode releases. Jev's view of the screen can stay the same.
+- [Domain boundaries](../../docs/domain-boundaries.md): one iOS Scenario Verification context owns the run and verdict policy. Preparation and evidence presentation are supporting modules; the integration patterns remain explicitly inferred.
+- [Feasibility plan: the go/no-go bar and the step questions](issues/07-feasibility-plan.md): 30 owner-labelled cases, split into 10 tuning and 20 held-out cases. One Choice selects a complete action; independent Nouls check completion and assertions. Compare compact/full observations with/without history, then freeze one configuration. The exploratory bar is 18/20 correct choices, at least 16/20 accepted with no accepted errors, and no false-pass assertions. The environment and reviewed corpus still precede live evaluation.
 
 ## Route
 
@@ -86,9 +90,9 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05 resolved
-    class T06,T07 frontier
-    class T08,T09,T10,T11,T12,T13,T14,T15,T16,T17 blocked
+    class T01,T02,T03,T04,T05,T06,T07 resolved
+    class T08 claimed
+    class T09,T10,T11,T12,T13,T14,T15,T16,T17 blocked
 ```
 <!-- route:end -->
 

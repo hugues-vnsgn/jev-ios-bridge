@@ -1,7 +1,8 @@
 # Feasibility run: measure Jev on real screens
 
 Type: prototype
-Status: open
+Status: claimed
+Claimed by: Codex main, with gpt-6-sol high sub-agents
 Blocked by: 06, 07
 
 ## Question
@@ -23,3 +24,7 @@ Go through the results with the human. Resolve with:
 Link the harness branch and the results note as assets.
 
 A go accepts ADR-0001. A no-go reopens it.
+
+## Comments
+
+2026-09-24: the owner delegated implementation through GitHub prerelease v0.1.0. The harness and real-screen corpus are in preparation on `feat/v0.1-release`. Ticket 07's owner label review and frozen held-out evaluation still apply. No evaluation result is asserted by the offline tests. See [release plan](../release-plan.md).

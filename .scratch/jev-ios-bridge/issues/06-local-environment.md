@@ -1,7 +1,7 @@
 # Local environment: Jev key, pinned MobileBuildMCP, a dedicated simulator, test apps
 
 Type: task
-Status: open
+Status: resolved
 Blocked by: none
 
 ## Question
@@ -26,3 +26,15 @@ To resolve, record what was done:
 - the simulator's UDID;
 - the exact MobileBuildMCP command;
 - the app list, with bundle ids.
+
+## Answer
+
+Verified 2026-09-24 in the release worktree. [Environment evidence](../environment-evidence.md) records commands and capture results.
+
+- The owner confirmed the real key in the original checkout's `.env`. A presence-only check passed; the main agent's authenticated `GET /v1/models` returned HTTP 200. The key was neither printed nor copied to the worktree.
+- Dedicated simulator: `jev-ios-bridge`, iPhone 17 Pro Max, iOS 26.4, UDID `0E42FDE2-5E09-42D3-9876-9EF0037FCBE7`. It is booted and pinned in `.mobilebuildmcp/config.yaml` with Sentry reporting disabled.
+- Command: `npx -y mobilebuildmcp@2.7.1 ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --output json`; add `--verbose` for full elements.
+- Verified launch and capture: Settings (`com.apple.Preferences`), Contacts (`com.apple.MobileAddressBook`), Reminders (`com.apple.reminders`), Files (`com.apple.DocumentsApp`). These include all three apps selected by the accepted feasibility plan.
+- Weather (`com.apple.weather`) is not installed. This does not block the selected feasibility corpus, but the Weather benchmark in ticket 17 remains unverified until its app is available. Do not substitute another app and report the benchmark as complete.
+
+No OPS simulator or physical device was used.
