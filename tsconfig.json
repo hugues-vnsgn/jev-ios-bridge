@@ -16,7 +16,8 @@
   "include": [
     "src/**/*.ts",
     "tests/**/*.ts",
-    "spikes/feasibility/**/*.ts"
+    "spikes/feasibility/**/*.ts",
+    "spikes/scripted/**/*.ts"
   ],
   "exclude": [
     "node_modules",

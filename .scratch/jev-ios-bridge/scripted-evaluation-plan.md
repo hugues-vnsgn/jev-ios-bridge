@@ -10,6 +10,10 @@ Each step has a unique ID. An action is a tap, full-field text replacement, dire
 
 Every step obtains a fresh observation; an acknowledged input is followed by another observation before continuing. A stale reference causes fresh guard and selector resolution, never guessing or host escalation. Missing or ambiguous targets, unexpected screens, truncation, unsupported text, unknown action outcomes, timeout, or cancellation stop safely. Reuse the device adapter's acknowledgement and lock rules. A wait is explicit and bounded, not a Jev decision. Global step and time budgets never reset at checkpoints.
 
+Physical aliases follow the prior v2 identity rule: only rows with the same nonempty identifier, role, label, and value and pairwise-contained frames may collapse to the largest frame. Distant same-ID controls and same-label controls without identifiers remain ambiguous. This rule applies to targets and guards; there is no first-match fallback.
+
+Action eligibility requires known visibility, enabled state, and positive frame dimensions; missing metadata is not permission to act. The following step's guard must distinguish the expected post-action state, not merely repeat a broad app title. A vendor success acknowledgement alone does not prove that the intended UI change happened. Review these guards during script authoring and compare captures during integration tests.
+
 At least one assertion checkpoint is required, and the script ends at one. Jev receives current-screen evidence and current claims only: no action choices, completion question, future steps, expected truth labels, or scenario values as separate hints. True/false assertions concern observable evidence, not hidden persistence or source-code facts. Probability at least 0.9 means true; at most 0.1 means false; otherwise uncertain. A completed checkpoint passes only if every claim is true. Any uncertain claim leaves the run inconclusive; otherwise a false claim fails. A run passes only after all scripted steps and checkpoints pass. Cleanup failure always prevents a pass.
 
 ## Prototype boundaries and ownership
@@ -31,7 +35,26 @@ Pin `jev-1.13.0` and SDK 0.6.0. Use one preregistered full-screen textual projec
 
 Capture **24 fresh screen states across at least eight workflow groups and three apps**. Each screen carries one true and one false claim, for 48 judgments. Claims on one screen and screens within one workflow are correlated: report 24 screen cases and per-workflow results, not 48 independent trials. Include saved/unsaved edits, selected/unselected controls, fields and visible text, settled empty results, and the diagnostic total. Exclude every previous held-out screen and every screen used for prompt development. Preserve capture hashes, screenshots, full device JSON, normalized snapshots, label rationale, setup steps, and exact source/configuration.
 
+Use neutral claim IDs, never `true` or `false` in request keys. Expected truth and label rationale stay outside the request. Counterbalance claim order before freezing: 12 screens put the true claim first, 12 put the false claim first. Tests must verify that the request contains no labels or oracle metadata.
+
 Old screens may be used for offline development, never as new held-out evidence. No live development call is needed before this first frozen experiment. If an implementation or input defect is found before freezing, fix it and regenerate artifacts. After querying starts, preserve failures; do not relabel, alter the projection, or rerun the same held-out corpus as fresh evidence.
+
+The capture plan uses eight three-screen groups, all held out. These are proposed states before capture, not asserted observations:
+
+| Group | Three states and claim contrast |
+| --- | --- |
+| Weather Berlin search | Partial query `Ber`, exact Berlin result, Berlin main screen; distinguish search text/results from the main location button. |
+| Weather Lisbon distance | Lisbon main, Settings with mi selected, Settings with km selected; distinguish city and selected unit. Use a new visible unit combination if the sheet omits the city. |
+| Contacts Tessa duplicate/hidden | Two Tessa Vale rows, Edit form with seed email below the viewport, seed email after an upward swipe; test duplicate counts and actual visibility. |
+| Contacts Nolan edit/save | Seed email in Edit, final email entered but unsaved, saved final card; distinguish field content from a saved card. |
+| Contacts search contrast | Partial Nina query, settled Nina Calder No Results, two Tessa Vale results; distinguish query text, explicit empty state, and matches. |
+| Reminders Signal Kit list | Blank name, typed unsaved name, saved list; distinguish an input form from a saved list. |
+| Reminders Charge lantern note | Empty Notes, `Use green cable` entered but unsaved, saved row containing the note. |
+| Diagnostic Bread-first | Bread selected, Bread then Apple selected, confirmation with actual $2 and false $5 total. |
+
+Every captured screen receives one true and one false current-screen claim. Reject reused hashes and unsupported claims before freezing; retain failed preflights and record any whole-group replacement. Screenshots and accessibility data must support the same labels. No source-only facts become screen labels.
+
+Pre-freeze Reminders audit corrections: s18 shows the list overview, where both Signal Kit and Market Errands are visible. Its false claim is scoped to Signal Kit having two reminders; the row shows zero. In s20, the screenshot displays the new note under Charge lantern even though that row's accessibility label omits the note. Do not infer an unsaved backend state or an absent row note. Pair the visible editor text and Done control with the false claim that its Notes field is empty. Keep the save-transition distinction only where foreground form versus completed presentation is directly supported by both captures.
 
 The gate requires all of:
 
