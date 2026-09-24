@@ -27,7 +27,7 @@ const fixtures: Record<string, string[]> = {
   'c03-nolan-edit-final': ['s12-contacts-nolan-new-email-saved', 's11-contacts-nolan-new-email-unsaved'],
   'r01-signal-kit-note': ['reminders-lists', 's21-reminders-charge-lantern-note-saved'],
   'r02-signal-kit-empty-claim': ['reminders-lists', 's21-reminders-charge-lantern-note-saved'],
-  'r03-lantern-empty-note-claim': ['s21-reminders-charge-lantern-note-saved', 'lantern-edit'],
+  'r03-reminders-search-claim': ['reminders-lists', 'reminders-search'],
   'd01-bread-selected': ['v3-d01-shop-empty', 's22-diagnostic-bread-selected', 's22-diagnostic-bread-selected'],
   'd02-bread-first-total-claim': ['v3-d01-shop-empty', 's22-diagnostic-bread-selected',
     's23-diagnostic-bread-apple-selected', 's24-diagnostic-bread-first-total2'],

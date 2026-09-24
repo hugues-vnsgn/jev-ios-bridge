@@ -72,6 +72,10 @@ const remindersLists = present(
   { role: 'text', label: 'My Lists' },
   { role: 'button', label: 'Signal Kit, 1 reminder' },
 );
+const remindersSearchReady = present(
+  { role: 'text', label: 'My Lists' },
+  { role: 'text-field' },
+);
 const signalKit = present(
   { role: 'other', label: 'Signal Kit' },
   { role: 'other', label: 'Charge lantern, Incomplete, Use green cable' },
@@ -150,10 +154,10 @@ const cases = [
       action('openSignalKit', remindersLists, { kind: 'tap', selector: { role: 'button', label: 'Signal Kit, 1 reminder' } }),
       checkpoint(signalKitReady, 'The Signal Kit list has no reminders.'),
     ])],
-  ['r03-lantern-empty-note-claim', 'reminders', 'failed',
-    script(app.reminders, ['The Signal Kit list is in front with its Charge lantern row visible.'], {}, [
-      action('openLantern', signalKit, { kind: 'tap', selector: { role: 'other', label: 'Charge lantern, Incomplete, Use green cable' } }),
-      checkpoint(lanternEdit, 'The Charge lantern Notes field is empty.'),
+  ['r03-reminders-search-claim', 'reminders', 'failed',
+    script(app.reminders, ['My Lists is in front with a Signal Kit row showing one reminder.'], {}, [
+      action('openSearch', remindersLists, { kind: 'tap', selector: { role: 'button', label: 'Search' } }),
+      checkpoint(remindersSearchReady, 'The Reminders Search field contains Charge lantern.'),
     ])],
 
   ['d01-bread-selected', 'diagnostic', 'passed',

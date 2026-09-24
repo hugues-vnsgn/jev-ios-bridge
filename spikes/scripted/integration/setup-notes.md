@@ -13,10 +13,12 @@ Run the twelve scripts in this order. Each starting screen was checked against a
 | `c01`, `c02` | Launch `com.apple.MobileAddressBook`. Close an edit form or return from a card if needed; dismiss an active Search overlay with its `close` control. Repeat before each script. | Contacts list with a single text field whose value is `Search`. |
 | `c03` | From Contacts list, search `Nolan Ames`, open its unique result, and leave the saved card in front. | Nolan Ames card header, Edit button, and visible `nolan.final@example.test` email row. |
 | `r01`, `r02` | Launch `com.apple.reminders`. If inside Signal Kit, tap Back. Open My Lists and verify its Signal Kit row reads `1 reminder`. Repeat before each script. | My Lists title and unique `Signal Kit, 1 reminder` row. |
-| `r03` | Launch Reminders and open Signal Kit. Leave its Charge lantern row visible. | Signal Kit title and unique `Charge lantern, Incomplete, Use green cable` row. |
+| `r03` | Launch Reminders and return to My Lists. Dismiss an open Search field before setup capture. | My Lists title and unique `Signal Kit, 1 reminder` row; Search button available. |
 | `d01`, `d02`, `d03` | Stop and relaunch `dev.jevbridge.diagnostic` before each script. | `selection.summary` reads `Selected: None`, with Apple and Bread choices enabled. |
 
 The Weather `km` selector is an exact button label, distinct from `km/h`. Contacts Search is selected by its text-field role and exact value. The Reminders Signal Kit target is the list row with `1 reminder`, not the separate title text. Diagnostic targets use the app's accessibility identifiers. The terminal guards identify the foreground screen and relevant controls; an explicit wait or next-step guard checks transitions where needed. The planted checkout total appears only in the assertion, not the terminal guard.
+
+The first `r03` draft opened Charge lantern and inspected its Notes field. During a MobileBuild-only setup check, tapping the editor's Done control completed that reminder: Signal Kit fell to zero and Completed showed Charge lantern. The operator tapped its filled completion circle to restore the synthetic fixture; My Lists again showed Signal Kit with one reminder. The excluded zero-count setup capture is in `setup-evidence/`, and `preflight/reminders-search.full.json` records the replacement Search screen. The revised `r03` taps Search from My Lists and asks a false claim about its empty field; it does not edit a reminder. No Jev call was made during this correction.
 
 Run command, after the setup capture and root review:
 
