@@ -1,14 +1,20 @@
 import { randomUUID } from 'node:crypto';
 import { resolve } from 'node:path';
-import type { DeviceDriver, JevJudge, RunReport, Scenario } from './contracts/index.js';
+import { z } from 'zod/v4';
+import type { DeviceDriver, JevJudge, RunReport, RunScenario } from './contracts/index.js';
 import { parseScenario } from './scenario/index.js';
 import { createRunLog, readRunEvents, validateRunId } from './log/index.js';
 import { buildReport } from './report/index.js';
-import { runScenario } from './run/index.js';
-import { buildObservation } from './observation/index.js';
+import { runScenario, type RunLimits } from './run/index.js';
+import { buildObservation, type ObservationBuildOptions } from './observation/index.js';
 import { startWatchServer } from './watch/index.js';
 
 interface Job { abort: AbortController; done: Promise<void>; state: 'running' | 'finished' }
+
+export const startLimitsSchema = z.strictObject({
+  maxSteps: z.number().int().min(1).max(1000).optional(),
+  wallTimeMs: z.number().int().min(1).max(3_600_000).optional(),
+});
 
 export class BridgeService {
   private readonly jobs = new Map<string, Job>();
@@ -18,18 +24,28 @@ export class BridgeService {
   readonly baseDir: string;
   constructor(private readonly options: {
     baseDir: string;
-    createDriver: (scenario: Scenario) => DeviceDriver;
-    createJudge: () => JevJudge;
+    createDriver: (scenario: RunScenario) => DeviceDriver;
+    createJudge: (scenario: RunScenario) => JevJudge;
+    policy?: RunLimits;
+    observation?: ObservationBuildOptions;
   }) { this.baseDir = resolve(options.baseDir); }
 
-  async start(input: unknown): Promise<{ runId: string; watchUrl: string }> {
+  async start(input: unknown, requestedLimits: unknown = {}): Promise<{ runId: string; watchUrl: string }> {
     if (this.stopping) throw new Error('Bridge is shutting down');
     const scenario = parseScenario(input);
+    const parsedLimits = startLimitsSchema.parse(requestedLimits);
+    const limits: RunLimits = { ...this.options.policy,
+      ...(parsedLimits.maxSteps === undefined ? {} : { maxSteps: parsedLimits.maxSteps }),
+      ...(parsedLimits.wallTimeMs === undefined ? {} : { wallTimeMs: parsedLimits.wallTimeMs }),
+    };
     const driver = this.options.createDriver(scenario);
-    const judge = this.options.createJudge();
+    const judge = this.options.createJudge(scenario);
     if (this.stopping) throw new Error('Bridge is shutting down');
     const runId = randomUUID();
-    const log = await createRunLog(this.baseDir, runId, { values: Object.values(scenario.values) });
+    const values = scenario.checkpoints
+      ? scenario.checkpoints.flatMap(checkpoint => Object.values(checkpoint.values ?? {}))
+      : Object.values(scenario.values);
+    const log = await createRunLog(this.baseDir, runId, { values });
     if (this.stopping) throw new Error('Bridge is shutting down');
     this.startingWatch ??= startWatchServer(this.baseDir);
     this.watch = await this.startingWatch;
@@ -37,7 +53,8 @@ export class BridgeService {
     const job: Job = { abort: new AbortController(), done: Promise.resolve(), state: 'running' };
     this.jobs.set(runId, job);
     job.done = runScenario({ runId, scenario, driver, judge, log, signal: job.abort.signal,
-      observationBuilder: buildObservation,
+      observationBuilder: buildObservation, limits,
+      ...(this.options.observation ? { observationOptions: this.options.observation } : {}),
     }).then(() => { job.state = 'finished'; }, async () => {
       // Never serialize upstream exceptions, which can carry screen text or credentials.
       try {
@@ -51,8 +68,21 @@ export class BridgeService {
     return { runId, watchUrl: `${this.watch.url}&run=${runId}` };
   }
 
-  async status(runId: string): Promise<{ state: 'running' | 'finished' | 'interrupted'; report: RunReport }> {
+  async status(runId: string, waitMs = 0, signal?: AbortSignal): Promise<{ state: 'running' | 'finished' | 'interrupted'; report: RunReport }> {
     validateRunId(runId);
+    if (!Number.isInteger(waitMs) || waitMs < 0 || waitMs > 45_000) throw new Error('Invalid report wait');
+    const job = this.jobs.get(runId);
+    if (job?.state === 'running' && waitMs > 0) {
+      await new Promise<void>((done, reject) => {
+        const cleanup = () => { clearTimeout(timer); signal?.removeEventListener('abort', abort); };
+        const finish = () => { cleanup(); done(); };
+        const abort = () => { cleanup(); reject(new Error('Report wait cancelled')); };
+        const timer = setTimeout(finish, waitMs);
+        signal?.addEventListener('abort', abort, { once: true });
+        if (signal?.aborted) abort();
+        void job.done.then(finish, finish);
+      });
+    }
     const events = await readRunEvents(this.baseDir, runId);
     const state = this.jobs.get(runId)?.state ?? (events.some(event => event.type === 'verdict') ? 'finished' : 'interrupted');
     return { state, report: buildReport(events) };

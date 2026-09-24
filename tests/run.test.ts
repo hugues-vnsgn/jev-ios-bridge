@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import type { DeviceDriver, JevJudge, Judgment, RunEvent, RunLog, Scenario, Snapshot } from '../src/contracts/index.js';
+import type { DeviceDriver, JevJudge, Judgment, RunEvent, RunLog, RunScenario, Scenario, Snapshot } from '../src/contracts/index.js';
 import { StaleSnapshotError } from '../src/device/index.js';
 import { runScenario } from '../src/run/index.js';
 
@@ -111,7 +111,9 @@ test('cleanup timeout records an error and never invents a pass', async () => {
   const report = await runScenario({ runId: 'run-1', scenario, driver, judge: judge('stop-goal', 0.98, 0.98), log: memoryLog(), limits: { cleanupTimeMs: 10 } });
   assert.equal(report.verdict, 'inconclusive');
   assert.match(report.reason, /cleanup failed/);
-  assert.ok(report.events.some(event => event.type === 'error'));
+  const error = report.events.find(event => event.type === 'error');
+  assert.equal(error?.data.phase, 'cleanup');
+  assert.ok(typeof error.data.phaseMs === 'number' && Number.isFinite(error.data.phaseMs) && error.data.phaseMs >= 0);
 });
 
 test('step bound is inclusive and records an inconclusive verdict', async () => {
@@ -135,4 +137,209 @@ test('step event records app-log tails while Jev observation text omits them', a
   assert.equal(report.verdict, 'passed');
   assert.ok(!sentToJev.includes(marker));
   assert.deepEqual(report.events.find(event => event.type === 'step')?.data.logTails, { runtime: marker });
+});
+
+test('run events carry monotonic phase times and cumulative driver refresh counts', async () => {
+  let refreshes = 0;
+  const driver = device({
+    async act() { refreshes++; },
+    metrics() { return { referenceRefreshes: refreshes, referenceExpiries: 0, nearTtlRefreshes: refreshes }; },
+  });
+  let decisions = 0;
+  const sequential: JevJudge = { async judge(_scenario, observation, signal) {
+    decisions++;
+    return judge(decisions === 1 ? 'tap:e1' : 'stop-goal', decisions === 1 ? 0.02 : 0.98, 0.98)
+      .judge(scenario, observation, signal);
+  } };
+  const report = await runScenario({ runId: 'run-1', scenario, driver, judge: sequential, log: memoryLog() });
+  assert.equal(report.verdict, 'passed');
+  const prepared = report.events.find(event => event.type === 'prepared');
+  const firstStep = report.events.find(event => event.type === 'step');
+  const firstJudgment = report.events.find(event => event.type === 'judgment');
+  const firstAction = report.events.find(event => event.type === 'action');
+  const last = report.events.at(-1);
+  for (const [event, key] of [[prepared, 'prepareMs'], [firstStep, 'observeMs'], [firstJudgment, 'decideMs'], [firstAction, 'actMs']] as const) {
+    const elapsed = event?.data[key];
+    assert.ok(typeof elapsed === 'number' && Number.isFinite(elapsed) && elapsed >= 0, `${key} must be a monotonic duration`);
+  }
+  assert.deepEqual(firstAction?.data.deviceMetrics, { referenceRefreshes: 1, referenceExpiries: 0, nearTtlRefreshes: 1 });
+  assert.deepEqual(last?.data.deviceMetrics, { referenceRefreshes: 1, referenceExpiries: 0, nearTtlRefreshes: 1 });
+});
+
+test('failed prepare and failed action retain their phase duration in error events', async () => {
+  const failedPrepare = await runScenario({ runId: 'run-1', scenario,
+    driver: device({ async prepare() { throw new Error('launch failed'); } }), judge: judge('stop-goal', 0.98, 0.98), log: memoryLog() });
+  const failedAction = await runScenario({ runId: 'run-1', scenario,
+    driver: device({ async act() { throw new Error('tap failed'); } }), judge: judge('tap:e1', 0.02, 0.02), log: memoryLog() });
+  for (const [report, phase] of [[failedPrepare, 'prepare'], [failedAction, 'act']] as const) {
+    assert.equal(report.verdict, 'inconclusive');
+    const event = report.events.find(candidate => candidate.type === 'error');
+    assert.equal(event?.data.phase, phase);
+    assert.ok(typeof event?.data.phaseMs === 'number' && Number.isFinite(event.data.phaseMs) && event.data.phaseMs >= 0);
+  }
+});
+
+test('ordered checkpoints prove each goal before the bridge passes the run', async () => {
+  const ordered: RunScenario = {
+    app: { bundleId: 'com.example.weather' }, checkpoints: [
+      { id: 'settings', goal: 'Verify Fahrenheit settings', assertions: [{ id: 'visible', claim: 'Fahrenheit is selected' }] },
+      { id: 'home', goal: 'Return to Weather Home', assertions: [{ id: 'visible', claim: 'Home forecast is visible' }] },
+    ],
+  };
+  let prepares = 0;
+  let closes = 0;
+  const driver = device({ async prepare() { prepares++; }, async close() { closes++; } });
+  const activeGoals: string[] = [];
+  const jev: JevJudge = { async judge(active, observation) {
+    activeGoals.push(active.goal);
+    assert.equal(active.assertions.length, 1);
+    assert.ok(observation.text.includes(active.goal));
+    if (activeGoals.length === 1) assert.ok(!observation.text.includes('Return to Weather Home'));
+    return { ...successJudgment(), assertions: { visible: 0.98 } };
+  } };
+  const report = await runScenario({ runId: 'run-1', scenario: ordered, driver, judge: jev, log: memoryLog() });
+  assert.equal(report.verdict, 'passed');
+  assert.deepEqual(activeGoals, ['Verify Fahrenheit settings', 'Return to Weather Home']);
+  assert.equal(prepares, 1);
+  assert.equal(closes, 1);
+  const proofs = report.events.filter(event => event.type === 'checkpoint');
+  assert.deepEqual(proofs.map(event => [event.data.checkpointId, event.data.checkpointIndex, event.data.step]),
+    [['settings', 1, 1], ['home', 2, 2]]);
+  assert.ok(proofs.every(event => event.data.status === 'passed' && Array.isArray(event.data.assertions)));
+  assert.deepEqual(proofs[0]?.data.assertions, [{ id: 'settings:visible', claim: 'Fahrenheit is selected', probability: 0.98 }]);
+  assert.equal(proofs[0]?.data.snapshotSequence, 1);
+  assert.ok(report.events.at(-1)!.sequence > proofs[1]!.sequence);
+});
+
+function successJudgment(): Judgment {
+  return { choice: 'stop-goal', confidence: 0.99, probabilities: { 'stop-goal': 0.99 }, goalReached: 0.98,
+    assertions: { visible: 0.98 }, inputTokens: 10, latencyMs: 1, model: 'fixture' };
+}
+
+test('global step limit does not reset after a checkpoint passes', async () => {
+  const ordered: RunScenario = { app: scenario.app, checkpoints: [
+    { id: 'settings', goal: 'Verify settings', assertions: [{ id: 'visible', claim: 'Settings visible' }] },
+    { id: 'home', goal: 'Verify Home', assertions: [{ id: 'visible', claim: 'Home visible' }] },
+  ] };
+  let judgments = 0;
+  let closes = 0;
+  const jev: JevJudge = { async judge() { judgments++; return successJudgment(); } };
+  const report = await runScenario({ runId: 'run-1', scenario: ordered,
+    driver: device({ async close() { closes++; } }), judge: jev, log: memoryLog(), limits: { maxSteps: 1 } });
+  assert.equal(report.verdict, 'inconclusive');
+  assert.match(report.reason, /Step limit 1/);
+  assert.equal(report.steps, 1);
+  assert.equal(judgments, 1);
+  assert.equal(closes, 1);
+  assert.deepEqual(report.events.filter(event => event.type === 'checkpoint').map(event => event.data.checkpointId), ['settings']);
+});
+
+test('cancellation between checkpoints retains proof and closes the device once', async () => {
+  const ordered: RunScenario = { app: scenario.app, checkpoints: [
+    { id: 'settings', goal: 'Verify settings', assertions: [{ id: 'visible', claim: 'Settings visible' }] },
+    { id: 'home', goal: 'Verify Home', assertions: [{ id: 'visible', claim: 'Home visible' }] },
+  ] };
+  const abort = new AbortController();
+  const log = memoryLog();
+  const append = log.append.bind(log);
+  log.append = async (type, data) => {
+    await append(type, data);
+    if (type === 'checkpoint') abort.abort();
+  };
+  let closes = 0;
+  let judgments = 0;
+  const report = await runScenario({ runId: 'run-1', scenario: ordered,
+    driver: device({ async close() { closes++; } }),
+    judge: { async judge() { judgments++; return successJudgment(); } },
+    log, signal: abort.signal });
+  assert.equal(report.verdict, 'inconclusive');
+  assert.equal(judgments, 1);
+  assert.equal(closes, 1);
+  assert.deepEqual(report.events.filter(event => event.type === 'checkpoint').map(event => event.data.checkpointId), ['settings']);
+  assert.equal(report.events.at(-1)?.type, 'verdict');
+});
+
+test('false or uncertain first checkpoint never advances to the next goal', async () => {
+  const ordered: RunScenario = { app: scenario.app, checkpoints: [
+    { id: 'settings', goal: 'Verify settings', assertions: [{ id: 'visible', claim: 'Settings visible' }] },
+    { id: 'home', goal: 'Verify Home', assertions: [{ id: 'visible', claim: 'Home visible' }] },
+  ] };
+  for (const [answer, expected] of [[0.05, 'failed'], [0.5, 'inconclusive']] as const) {
+    let judgments = 0;
+    const report = await runScenario({ runId: 'run-1', scenario: ordered, driver: device(), log: memoryLog(),
+      judge: { async judge() { judgments++; return { ...successJudgment(), assertions: { visible: answer } }; } } });
+    assert.equal(report.verdict, expected);
+    assert.equal(judgments, 1);
+    assert.equal(report.events.filter(event => event.type === 'checkpoint').length, 0);
+    assert.equal(report.events.at(-1)?.data.checkpointsPassed, 0);
+  }
+});
+
+test('wall deadline spans the checkpoint boundary and preserves the first proof', async () => {
+  const ordered: RunScenario = { app: scenario.app, checkpoints: [
+    { id: 'settings', goal: 'Verify settings', assertions: [{ id: 'visible', claim: 'Settings visible' }] },
+    { id: 'home', goal: 'Verify Home', assertions: [{ id: 'visible', claim: 'Home visible' }] },
+  ] };
+  let judgments = 0;
+  let closes = 0;
+  const report = await runScenario({ runId: 'run-1', scenario: ordered, log: memoryLog(),
+    driver: device({ async close() { closes++; } }), limits: { wallTimeMs: 15 },
+    judge: { async judge() { judgments++; return judgments === 1 ? successJudgment() : new Promise<Judgment>(() => {}); } },
+  });
+  assert.equal(report.verdict, 'inconclusive');
+  assert.match(report.reason, /wall-time limit/);
+  assert.equal(judgments, 2);
+  assert.equal(closes, 1);
+  assert.deepEqual(report.events.filter(event => event.type === 'checkpoint').map(event => event.data.checkpointId), ['settings']);
+});
+
+test('future checkpoint values do not suppress a navigation field tap', async () => {
+  const ordered: RunScenario = { app: scenario.app, checkpoints: [
+    { id: 'navigate', goal: 'Find the search field', assertions: [{ id: 'visible', claim: 'Search is visible' }] },
+    { id: 'query', goal: 'Search for a city', assertions: [{ id: 'visible', claim: 'Results are visible' }],
+      values: { query: 'FutureCity' } },
+  ] };
+  const field: Snapshot = { ...snapshot, elements: [{ ref: 'e1', role: 'text-field', label: 'Search', actions: ['tap', 'typeText'] }] };
+  const seen: string[][] = [];
+  const report = await runScenario({ runId: 'run-1', scenario: ordered, log: memoryLog(),
+    driver: device({ async observe() { return field; } }), observationOptions: { variant: 'full', optionRule: 'v2' },
+    judge: { async judge(_active, observation) {
+      seen.push(observation.options.map(option => option.id));
+      if (seen.length === 1) {
+        assert.ok(!observation.text.includes('FutureCity'));
+        return successJudgment();
+      }
+      assert.ok(observation.text.includes('FutureCity'));
+      return { ...successJudgment(), choice: 'none' };
+    } },
+  });
+  assert.equal(report.verdict, 'inconclusive');
+  assert.ok(seen[0]?.includes('tap:e1'));
+  assert.ok(!seen[0]?.includes('type:e1:query'));
+  assert.ok(!seen[1]?.includes('tap:e1'));
+  assert.ok(seen[1]?.includes('type:e1:query'));
+});
+
+test('legacy single-goal run still offers and performs its root typed value', async () => {
+  const legacy: Scenario = { ...scenario, values: { query: 'London' } };
+  const field: Snapshot = { ...snapshot, elements: [{ ref: 'e1', role: 'text-field', label: 'Search', actions: ['tap', 'typeText'] }] };
+  let judgments = 0;
+  const acted: string[] = [];
+  const report = await runScenario({ runId: 'run-1', scenario: legacy, log: memoryLog(),
+    driver: device({ async observe() { return field; }, async act(action, _snapshot, selected) {
+      assert.equal(action.kind, 'type');
+      if (action.kind === 'type') acted.push(selected.values[action.valueKey]!);
+    } }),
+    judge: { async judge(_scenario, observation) {
+      judgments++;
+      if (judgments === 1) {
+        assert.ok(observation.options.some(option => option.id === 'type:e1:query'));
+        return { ...successJudgment(), choice: 'type:e1:query', goalReached: 0.01 };
+      }
+      return successJudgment();
+    } },
+  });
+  assert.equal(report.verdict, 'passed');
+  assert.deepEqual(acted, ['London']);
+  assert.equal(report.events.filter(event => event.type === 'checkpoint').length, 0);
 });

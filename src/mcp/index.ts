@@ -1,7 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/server';
 import { z } from 'zod/v4';
 import { scenarioSchema } from '../scenario/index.js';
-import { BridgeService } from '../service.js';
+import { BridgeService, startLimitsSchema } from '../service.js';
 import { renderReport } from '../report/index.js';
 
 const idInput = z.object({ runId: z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$/) });
@@ -12,18 +12,19 @@ export function createMcpServer(service: BridgeService): McpServer {
   const server = new McpServer({ name: 'jev-ios-bridge', version: '0.1.0' });
   server.registerTool('start_scenario', {
     description: 'Start an iOS verification scenario. Returns a run id and local watch URL. Poll get_report for completion; use cancel_run to stop. Screen text and supplied values are sent to TypeSafe.',
-    inputSchema: z.object({ scenario: scenarioSchema }),
-  }, async ({ scenario }) => {
-    try { return result(JSON.stringify(await service.start(scenario))); } catch { return failed(); }
+    inputSchema: z.object({ scenario: scenarioSchema, limits: startLimitsSchema.optional() }),
+  }, async ({ scenario, limits }) => {
+    try { return result(JSON.stringify(await service.start(scenario, limits))); } catch { return failed(); }
   });
   server.registerTool('get_report', {
-    description: 'Read the current status and recorded evidence for a run. No device interaction.',
-    inputSchema: idInput,
+    description: 'Wait up to waitMs (maximum 45000) for a run. Running results contain progress only; completion returns the evidence report. Cancelling this wait does not cancel the run; use cancel_run to stop it.',
+    inputSchema: idInput.extend({ waitMs: z.number().int().min(0).max(45000).optional() }),
     annotations: { readOnlyHint: true },
-  }, async ({ runId }) => {
+  }, async ({ runId, waitMs }, ctx) => {
     try {
-      const { state, report } = await service.status(runId);
-      return result(`Status: ${state}\n${renderReport(report)}`);
+      const { state, report } = await service.status(runId, waitMs, ctx.mcpReq.signal);
+      if (state === 'running') return result(`Status: running\nRun: ${runId}\nRecorded steps: ${report.steps}. Call get_report with waitMs: 45000 to wait for completion.`);
+      return result(`Status: ${state}\n${renderReport(report)}\nFull local evidence: ${service.baseDir}/${runId}/run.jsonl`);
     } catch { return failed(); }
   });
   server.registerTool('cancel_run', {

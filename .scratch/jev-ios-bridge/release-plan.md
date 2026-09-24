@@ -4,7 +4,7 @@ Status: preparatory phase reviewed by the main agent and in progress on `feat/v0
 
 ## Execution order and gates
 
-Current checkpoint: environment, preparatory implementation, offline checks, and the first owner-reviewed corpus are complete. The first live evaluation failed the fixed bar (15/20 correct actions; 7/20 accepted). [Ticket 18](issues/18-feasibility-revision.md) investigates a revision on fresh held-out cases. Release and production design remain gated. The owner explicitly deferred real wait-state coverage for the first corpus.
+Current checkpoint: both broad-goal evaluations failed the fixed bar. The first scored 15/20 correct actions and 7/20 accepted; the second scored 16/20 correct and 14/20 accepted, including two wrong accepted actions. [Ticket 19](issues/19-checkpoint-feasibility.md) tests ordered observable checkpoints on 20 fresh held-out cases, with the same thresholds and acceptance bar. Checkpoint execution, evidence, cancellation, and MCP integration have scripted tests; those tests do not establish live feasibility. The third corpus is being audited before owner label review and evaluation. Release and production design remain gated. Real wait-state coverage remains explicitly deferred.
 
 | Phase | Work | Exit gate |
 | --- | --- | --- |

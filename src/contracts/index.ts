@@ -4,7 +4,6 @@ export type Direction = 'up' | 'down' | 'left' | 'right';
 
 export interface ScenarioContext {
   app: { bundleId: string };
-  values: Record<string, string>;
   preconditions?: string[];
   device?: { udid?: string };
 }
@@ -15,15 +14,17 @@ export interface Assertion { id: string; claim: string }
 export interface Scenario extends ScenarioContext {
   goal: string;
   assertions: Assertion[];
+  values: Record<string, string>;
   checkpoints?: never;
 }
 
-export interface Checkpoint { id: string; goal: string; assertions: Assertion[] }
+export interface Checkpoint { id: string; goal: string; assertions: Assertion[]; values?: Record<string, string> }
 
 export interface CheckpointScenario extends ScenarioContext {
   checkpoints: Checkpoint[];
   goal?: never;
   assertions?: never;
+  values?: never;
 }
 
 export type RunScenario = Scenario | CheckpointScenario;

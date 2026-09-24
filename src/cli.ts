@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { readFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
+import { parseArgs } from 'node:util';
 import { serveStdio } from '@modelcontextprotocol/server/stdio';
 import { BridgeService } from './service.js';
 import { createMcpServer } from './mcp/index.js';
@@ -9,12 +10,22 @@ import { createJevJudge } from './jev/index.js';
 import { renderReport } from './report/index.js';
 
 async function main(): Promise<void> {
-  const [command, argument] = process.argv.slice(2);
-  if (command === '--help' || !command) {
-    console.log('jev-ios-bridge mcp | run <scenario.json> | report <run-id>\nSet TYPESAFE_API_KEY and JEV_DEVICE_UDID. Optional JEV_RUNS_DIR selects the local evidence directory.');
+  const parsed = parseArgs({ allowPositionals: true, options: {
+    help: { type: 'boolean' }, version: { type: 'boolean' },
+    'max-steps': { type: 'string' }, 'timeout-ms': { type: 'string' },
+  } });
+  const [command, argument] = parsed.positionals;
+  if (parsed.values.help || (!command && !parsed.values.version)) {
+    console.log('jev-ios-bridge mcp | run <scenario.json> [--max-steps N] [--timeout-ms N] | report <run-id>\nSet TYPESAFE_API_KEY and JEV_DEVICE_UDID. Optional JEV_RUNS_DIR selects the local evidence directory.');
     return;
   }
-  if (command === '--version') { console.log('0.1.0'); return; }
+  if (parsed.values.version) { console.log('0.1.0'); return; }
+  if (parsed.positionals.length > (command === 'mcp' ? 1 : 2)) throw new Error('Unexpected arguments');
+  const limits = {
+    ...(parsed.values['max-steps'] === undefined ? {} : { maxSteps: Number(parsed.values['max-steps']) }),
+    ...(parsed.values['timeout-ms'] === undefined ? {} : { wallTimeMs: Number(parsed.values['timeout-ms']) }),
+  };
+  if (command !== 'run' && Object.keys(limits).length) throw new Error('Run limits apply only to run');
   const service = new BridgeService({
     baseDir: process.env.JEV_RUNS_DIR ?? join(process.cwd(), '.jev-runs'),
     createDriver: () => createMobileBuildMcpDriver({ cwd: process.cwd(),
@@ -40,7 +51,7 @@ async function main(): Promise<void> {
       const status = await service.status(argument);
       console.log(`Status: ${status.state}\n${renderReport(status.report)}`);
     } else if (command === 'run' && argument) {
-      const { runId, watchUrl } = await service.start(JSON.parse(await readFile(resolve(argument), 'utf8')));
+      const { runId, watchUrl } = await service.start(JSON.parse(await readFile(resolve(argument), 'utf8')), limits);
       console.error(`Watch: ${watchUrl}`);
       while (!closing) {
         await new Promise(done => setTimeout(done, 500));

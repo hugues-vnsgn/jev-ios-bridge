@@ -22,6 +22,12 @@ export const V2_WORDING: QuestionWording = {
   goalReached: 'Does this observation visibly establish the entire scenario goal now, including any named item or requested verification evidence? A general completion banner is insufficient when the goal asks to see a particular item. Do not require another tap merely to read evidence already visible.',
   assertion: DEFAULT_WORDING.assertion,
 };
+/** Checkpoint-sized desired-state phrasing for the separately reviewed v3 experiment. */
+export const V3_WORDING: QuestionWording = {
+  nextAction: 'Which complete listed action most directly establishes the current checkpoint desired screen state from this observation? Choose stop-goal if that desired screen state visibly holds now. Choose stop-blocked only when explicit blocking, error, or finished empty-result evidence on this screen prevents progress. Choose none if no supported action fits.',
+  goalReached: 'Does this observation visibly satisfy the current checkpoint desired screen state now? Base the answer on evidence present on this screen.',
+  assertion: DEFAULT_WORDING.assertion,
+};
 
 export class JevContractError extends Error {
   constructor(readonly code: 'INVALID_INPUT' | 'REQUEST_BUDGET' | 'MALFORMED_RESPONSE') {
@@ -142,6 +148,14 @@ export interface JevJudgeOptions {
 }
 
 export function createJevJudge(options: JevJudgeOptions = {}): JevJudge {
+  let client: Pick<TypeSafeClient, 'systemOne'>;
+  if (options.client) client = options.client;
+  else {
+    // Fail before BridgeService allocates a run or prepares a simulator.
+    if (!process.env.TYPESAFE_API_KEY?.trim()) throw new JevRequestError('AUTH');
+    try { client = new TypeSafeClient({ defaultModel: JEV_MODEL, logLevel: 'warn' }); }
+    catch (error) { throw safeRequestError(error); }
+  }
   return {
     async judge(scenario, observation, signal) {
       const request = buildJevRequest(scenario, observation, options.wording);
@@ -149,7 +163,6 @@ export function createJevJudge(options: JevJudgeOptions = {}): JevJudge {
       const start = performance.now();
       let raw: unknown;
       try {
-        const client = options.client ?? new TypeSafeClient({ defaultModel: JEV_MODEL, logLevel: 'warn' });
         raw = await client.systemOne(request, { signal });
       } catch (error) {
         throw safeRequestError(error);

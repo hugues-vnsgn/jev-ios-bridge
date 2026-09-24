@@ -30,6 +30,9 @@ The bridge's adapter over a device layer. The only part of the bridge that knows
 What to exercise on the app, in plain language, with the assertions that decide pass or fail and the values to type. The unit of work a host agent submits.
 _Avoid_: test, test case
 
+**Checkpoint**:
+One ordered goal and its assertions within a scenario. The run proceeds to the next checkpoint only after the current one is established.
+
 **Assertion**:
 A claim about the app that must hold for a scenario to pass, judged by Jev against an observation.
 

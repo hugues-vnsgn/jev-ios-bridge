@@ -27,7 +27,7 @@ function corpus(): FeasibilityCorpus {
 }
 function frozen(c: FeasibilityCorpus): { manifest: ExperimentManifest; approval: OwnerApproval } {
   const manifest = { ...makeDraftManifest(c), status: 'frozen' as const };
-  const approval: OwnerApproval = { version: 1, approved: true, reviewedBy: 'Synthetic test owner',
+  const approval: OwnerApproval = { version: c.version, approved: true, reviewedBy: 'Synthetic test owner',
     reviewedAt: '2026-09-24', corpusSha256: digest(c), manifestSha256: digest(manifest) };
   return { manifest, approval };
 }
@@ -151,4 +151,78 @@ test('held-out run rejects a changed tuning selection before querying Jev', asyn
   await assert.rejects(runHeldout(c, manifest, approval,
     { ...tuned.selection, threshold: 0.9 }, tuned, fakeJudge(calls), new AbortController().signal), /TUNING_LOCK_MISMATCH|SELECTION_MISMATCH/);
   assert.equal(calls.length, 0);
+});
+
+test('v2 corpus preserves compact aliases and requires the full canonical accepted ID', () => {
+  const c = corpus();
+  c.version = 2;
+  const elements: Snapshot['elements'] = [
+    { ref: 'e1', role: 'button', label: 'Continue', identifier: 'continue', frame: { x: 0, y: 0, width: 200, height: 50 }, actions: ['tap'] },
+    { ref: 'e2', role: 'button', label: 'Continue', identifier: 'continue', frame: { x: 10, y: 10, width: 80, height: 20 }, actions: ['tap'] },
+  ];
+  c.cases[0]!.fullSnapshot = { ...c.cases[0]!.fullSnapshot, elements };
+  c.cases[0]!.compactSnapshot = { ...c.cases[0]!.compactSnapshot, elements };
+  c.cases[0]!.labels.acceptableActionIds = ['tap:e1', 'tap:e2'];
+  c.cases[0]!.positionalVariant!.acceptableActionIds = ['tap:e1', 'tap:e2'];
+  validateCorpus(c);
+  const draft = makeDraftManifest(c);
+  assert.equal(draft.version, 2);
+  assert.equal(draft.optionRule, 'complete-actions-v2');
+  assert.match(draft.wording.nextAction, /blocking setup or permission prompt/i);
+  c.cases[0]!.labels.acceptableActionIds = ['tap:e2'];
+  assert.throws(() => validateCorpus(c), /CANONICAL_LABEL_REQUIRED/);
+});
+
+test('v2 tuning scores canonical full option and raw compact alias under one approved set', async () => {
+  const c = corpus();
+  c.version = 2;
+  const elements: Snapshot['elements'] = [
+    { ref: 'e1', role: 'button', label: 'Continue', identifier: 'continue', frame: { x: 0, y: 0, width: 200, height: 50 }, actions: ['tap'] },
+    { ref: 'e2', role: 'button', label: 'Continue', identifier: 'continue', frame: { x: 10, y: 10, width: 80, height: 20 }, actions: ['tap'] },
+  ];
+  c.cases[0]!.fullSnapshot = { ...c.cases[0]!.fullSnapshot, elements };
+  c.cases[0]!.compactSnapshot = { ...c.cases[0]!.compactSnapshot, elements };
+  c.cases[0]!.labels.acceptableActionIds = ['tap:e1', 'tap:e2'];
+  c.cases[0]!.positionalVariant!.acceptableActionIds = ['tap:e1', 'tap:e2'];
+  const { manifest, approval } = frozen(c);
+  const run = await runTuning(c, manifest, approval, fakeJudge([]), new AbortController().signal);
+  assert.equal(run.selection?.version, 2);
+  const compact = run.results.find(result => result.caseId === 'case-0' && result.configuration === 'A')!;
+  const full = run.results.find(result => result.caseId === 'case-0' && result.configuration === 'C')!;
+  assert.ok(Object.hasOwn(compact.probabilities ?? {}, 'tap:e2'));
+  assert.ok(!Object.hasOwn(full.probabilities ?? {}, 'tap:e2'));
+  assert.deepEqual(full.collapsedTapRefs, { e1: ['e2'] });
+  assert.equal(compact.top1Correct, true);
+  assert.equal(full.top1Correct, true);
+});
+
+test('v3 freezes checkpoint wording while retaining v2 options and the original gate', async () => {
+  const c = corpus();
+  c.version = 3;
+  const elements: Snapshot['elements'] = [
+    { ref: 'e1', role: 'button', label: 'Continue', identifier: 'continue', frame: { x: 0, y: 0, width: 200, height: 50 }, actions: ['tap'] },
+    { ref: 'e2', role: 'button', label: 'Continue', identifier: 'continue', frame: { x: 10, y: 10, width: 80, height: 20 }, actions: ['tap'] },
+  ];
+  c.cases[0]!.fullSnapshot = { ...c.cases[0]!.fullSnapshot, elements };
+  c.cases[0]!.compactSnapshot = { ...c.cases[0]!.compactSnapshot, elements };
+  c.cases[0]!.labels.acceptableActionIds = ['tap:e1', 'tap:e2'];
+  c.cases[0]!.positionalVariant!.acceptableActionIds = ['tap:e1', 'tap:e2'];
+  const { manifest, approval } = frozen(c);
+  assert.equal(manifest.version, 3);
+  assert.equal(manifest.candidateRule, 'visible-enabled-v2');
+  assert.equal(manifest.optionRule, 'complete-actions-v2');
+  assert.deepEqual(manifest.thresholds, [0.6, 0.7, 0.8, 0.9]);
+  assert.equal(manifest.noulYes, 0.9);
+  assert.equal(manifest.noulNo, 0.1);
+  assert.equal(manifest.gateRule, 'ticket-07-v1');
+  assert.match(manifest.wording.nextAction, /current checkpoint.*desired screen state/i);
+  validateFrozenExperiment(c, manifest, approval);
+  const run = await runTuning(c, manifest, approval, fakeJudge([]), new AbortController().signal);
+  assert.equal(run.selection?.version, 3);
+  assert.equal(run.comparison.length, 16);
+  assert.equal(run.results.length, 40);
+  const compact = run.results.find(result => result.caseId === 'case-0' && result.configuration === 'A')!;
+  const full = run.results.find(result => result.caseId === 'case-0' && result.configuration === 'C')!;
+  assert.ok(Object.hasOwn(compact.probabilities ?? {}, 'tap:e2'));
+  assert.ok(!Object.hasOwn(full.probabilities ?? {}, 'tap:e2'));
 });

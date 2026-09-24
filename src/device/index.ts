@@ -4,7 +4,7 @@ import { constants } from 'node:fs';
 import { mkdir, open, readFile, unlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { isAbsolute, join, resolve } from 'node:path';
-import type { Action, DeviceDriver, Element, Scenario, Snapshot } from '../contracts/index.js';
+import type { Action, DeviceDriver, DeviceMetrics, Element, RunScenario, Scenario, Snapshot } from '../contracts/index.js';
 
 type JsonObject = Record<string, unknown>;
 export type CliResult = { stdout: string; stderr: string; exitCode: number };
@@ -20,10 +20,11 @@ export interface MobileBuildMcpDriverOptions {
   stopAppOnClose?: boolean;
   runner?: CliRunner;
   lockRoot?: string;
+  uiCommandTimeoutMs?: number;
 }
 
 export class DeviceCliError extends Error {
-  constructor(readonly code: string, message: string) {
+  constructor(readonly code: string, message: string, readonly terminalAcknowledged = false) {
     super(message);
     this.name = 'DeviceCliError';
   }
@@ -48,7 +49,16 @@ function number(value: unknown): number | undefined {
   return typeof value === 'number' && Number.isFinite(value) ? value : undefined;
 }
 
-function parseEnvelope(result: CliResult): JsonObject {
+function terminalPayloadMatches(envelope: JsonObject, expectedSchema: string, success: boolean): boolean {
+  if (envelope.schema !== expectedSchema || envelope.schemaVersion !== '2') return false;
+  const data = record(envelope.data);
+  if (Object.keys(record(data.artifacts)).length === 0) return false;
+  if (expectedSchema === 'mobilebuildmcp.output.ui-action-result' && Object.keys(record(data.action)).length === 0) return false;
+  if (expectedSchema === 'mobilebuildmcp.output.capture-result' && success && Object.keys(record(data.capture)).length === 0) return false;
+  return true;
+}
+
+function parseEnvelope(result: CliResult, expectedSchema?: string): JsonObject {
   let envelope: JsonObject;
   try {
     envelope = record(JSON.parse(result.stdout));
@@ -58,13 +68,18 @@ function parseEnvelope(result: CliResult): JsonObject {
   if (envelope.didError === true || result.exitCode !== 0) {
     const uiError = record(record(envelope.data).uiError);
     const legacyError = record(envelope.error);
+    const terminalAcknowledged = expectedSchema !== undefined && terminalPayloadMatches(envelope, expectedSchema, false);
     throw new DeviceCliError(
       string(uiError.code) ?? string(legacyError.code) ?? 'CLI_ERROR',
       string(uiError.message) ?? string(envelope.error) ?? string(legacyError.message) ?? `MobileBuildMCP failed (exit ${result.exitCode})`,
+      terminalAcknowledged,
     );
   }
   if (envelope.schemaVersion !== '2' || !envelope.data || typeof envelope.data !== 'object' || Array.isArray(envelope.data)) {
     throw new DeviceCliError('INVALID_ENVELOPE', 'MobileBuildMCP returned an unsupported envelope');
+  }
+  if (expectedSchema && !terminalPayloadMatches(envelope, expectedSchema, true)) {
+    throw new DeviceCliError('TERMINAL_ACK_MISSING', 'MobileBuildMCP did not return the expected terminal result');
   }
   return record(envelope.data);
 }
@@ -209,6 +224,30 @@ function sameScreen(before: Snapshot, after: Snapshot): boolean {
   return JSON.stringify(identity(before)) === JSON.stringify(identity(after));
 }
 
+async function awaitSettlement(pending: Promise<unknown>, signal: AbortSignal): Promise<void> {
+  if (signal.aborted) throw signal.reason;
+  await new Promise<void>((resolveDone, reject) => {
+    const onAbort = () => { signal.removeEventListener('abort', onAbort); reject(signal.reason); };
+    signal.addEventListener('abort', onAbort, { once: true });
+    pending.then(
+      () => { signal.removeEventListener('abort', onAbort); resolveDone(); },
+      () => { signal.removeEventListener('abort', onAbort); resolveDone(); },
+    );
+  });
+}
+
+function awaitResultOrAbort<T>(pending: Promise<T>, signal: AbortSignal): Promise<T> {
+  if (signal.aborted) return Promise.reject(signal.reason);
+  return new Promise<T>((resolveResult, reject) => {
+    const onAbort = () => { signal.removeEventListener('abort', onAbort); reject(signal.reason); };
+    signal.addEventListener('abort', onAbort, { once: true });
+    pending.then(
+      result => { signal.removeEventListener('abort', onAbort); resolveResult(result); },
+      error => { signal.removeEventListener('abort', onAbort); reject(error); },
+    );
+  });
+}
+
 function rematch(target: Element, fresh: Snapshot): Element {
   const matches = target.identifier
     ? fresh.elements.filter((element) => element.identifier === target.identifier)
@@ -243,25 +282,84 @@ export class MobileBuildMcpDriver implements DeviceDriver {
   private launched = false;
   private logPaths: Record<string, string> = {};
   private logNotes: Record<string, string> = {};
+  private referenceRefreshes = 0;
+  private referenceExpiries = 0;
+  private nearTtlRefreshes = 0;
+  private readonly unconfirmedCommands = new Set<symbol>();
+  private readonly pendingOperations = new Set<Promise<unknown>>();
+  private closing: Promise<void> | undefined;
+  private readonly uiCommandTimeoutMs: number;
 
   constructor(private readonly options: MobileBuildMcpDriverOptions) {
     this.runner = options.runner ?? defaultRunner(options);
+    const timeout = options.uiCommandTimeoutMs ?? 35_000;
+    if (!Number.isSafeInteger(timeout) || timeout < 1 || timeout > 300_000) throw new RangeError('uiCommandTimeoutMs must be between 1 and 300000');
+    this.uiCommandTimeoutMs = timeout;
   }
 
-  private async call(args: string[], signal: AbortSignal): Promise<JsonObject> {
+  metrics(): DeviceMetrics {
+    return {
+      referenceRefreshes: this.referenceRefreshes,
+      referenceExpiries: this.referenceExpiries,
+      nearTtlRefreshes: this.nearTtlRefreshes,
+    };
+  }
+
+  private async call(args: string[], signal: AbortSignal, expectedSchema?: string): Promise<JsonObject> {
     if (signal.aborted) throw signal.reason ?? new Error('Aborted');
-    return parseEnvelope(await this.runner([...args, '--output', 'json'], signal));
+    return parseEnvelope(await this.runner([...args, '--output', 'json'], signal), expectedSchema);
   }
 
-  async prepare(scenario: Scenario, signal: AbortSignal): Promise<void> {
+  private trackOperation<T>(operation: () => Promise<T>): Promise<T> {
+    const pending = Promise.resolve().then(operation);
+    this.pendingOperations.add(pending);
+    void pending.then(
+      () => { this.pendingOperations.delete(pending); },
+      () => { this.pendingOperations.delete(pending); },
+    );
+    return pending;
+  }
+
+  private async issueCommand(args: string[], runSignal: AbortSignal, expectedSchema: string): Promise<JsonObject> {
+    if (runSignal.aborted) throw runSignal.reason;
+    const command = new AbortController();
+    const deadline = setTimeout(() => command.abort(new Error('UI command deadline reached')), this.uiCommandTimeoutMs);
+    const token = Symbol(expectedSchema);
+    this.unconfirmedCommands.add(token);
+    try {
+      const result = await awaitResultOrAbort(this.call(args, command.signal, expectedSchema), command.signal);
+      this.unconfirmedCommands.delete(token);
+      return result;
+    } catch (error) {
+      if (error instanceof DeviceCliError && error.terminalAcknowledged) this.unconfirmedCommands.delete(token);
+      throw error;
+    } finally {
+      clearTimeout(deadline);
+    }
+  }
+
+  prepare(scenario: RunScenario, signal: AbortSignal): Promise<void> {
+    return this.trackOperation(() => this.prepareIssued(scenario, signal));
+  }
+
+  private async prepareIssued(scenario: RunScenario, signal: AbortSignal): Promise<void> {
     if (this.releaseLock) throw new Error('Driver is already prepared');
+    if (signal.aborted) throw signal.reason;
     const deviceId = scenario.device?.udid ?? this.options.defaultUdid ?? await configuredUdid(this.options.cwd);
     if (!deviceId) throw new DeviceCliError('NO_DEVICE', 'Set a dedicated simulator UDID in the scenario or MobileBuildMCP config');
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(deviceId)) {
+      throw new DeviceCliError('INVALID_DEVICE', 'Set a dedicated simulator UUID; device aliases are not supported');
+    }
     this.releaseLock = await acquireLock(this.options.lockRoot ?? join(tmpdir(), 'jev-ios-bridge-device-locks'), deviceId);
+    this.referenceRefreshes = 0;
+    this.referenceExpiries = 0;
+    this.nearTtlRefreshes = 0;
+    this.unconfirmedCommands.clear();
     this.deviceId = deviceId;
     this.bundleId = scenario.app.bundleId;
     try {
-      const launched = await this.call(['simulator', 'launch-app', '--simulator-id', deviceId, '--bundle-id', scenario.app.bundleId], signal);
+      const launched = await this.issueCommand(['simulator', 'launch-app', '--simulator-id', deviceId, '--bundle-id', scenario.app.bundleId], signal,
+        'mobilebuildmcp.output.launch-result');
       const artifacts = record(launched.artifacts);
       this.logPaths = {};
       this.logNotes = {};
@@ -273,21 +371,28 @@ export class MobileBuildMcpDriver implements DeviceDriver {
       }
       this.launched = true;
     } catch (error) {
-      await this.releaseLock();
-      this.releaseLock = undefined;
+      if (this.unconfirmedCommands.size === 0) {
+        await this.releaseLock();
+        this.releaseLock = undefined;
+      }
       throw error;
     }
   }
 
-  async observe(signal: AbortSignal): Promise<Snapshot> {
+  observe(signal: AbortSignal): Promise<Snapshot> {
+    return this.trackOperation(() => this.observeIssued(signal));
+  }
+
+  private async observeIssued(signal: AbortSignal): Promise<Snapshot> {
     const deviceId = this.deviceId;
     if (!deviceId || !this.releaseLock) throw new Error('Driver is not prepared');
     const args = ['ui-automation', 'snapshot-ui', '--simulator-id', deviceId];
     if (this.options.capture === 'full') args.push('--verbose');
-    const data = await this.call(args, signal);
+    const data = await this.issueCommand(args, signal, 'mobilebuildmcp.output.capture-result');
     let screenshotPath: string | undefined;
     if (this.options.screenshots) {
-      const shot = await this.call(['ui-automation', 'screenshot', '--simulator-id', deviceId, '--return-format', 'path'], signal);
+      const shot = await this.issueCommand(['ui-automation', 'screenshot', '--simulator-id', deviceId, '--return-format', 'path'], signal,
+        'mobilebuildmcp.output.capture-result');
       screenshotPath = string(record(shot.artifacts).screenshotPath) ?? string(record(shot.capture).path) ?? string(shot.path);
     }
     const logTails = { ...this.logNotes };
@@ -296,7 +401,11 @@ export class MobileBuildMcpDriver implements DeviceDriver {
       ...(Object.keys(logTails).length ? { logTails } : {}) };
   }
 
-  async act(action: Action, snapshot: Snapshot, scenario: Scenario, signal: AbortSignal): Promise<void> {
+  act(action: Action, snapshot: Snapshot, scenario: Scenario, signal: AbortSignal): Promise<void> {
+    return this.trackOperation(() => this.actIssued(action, snapshot, scenario, signal));
+  }
+
+  private async actIssued(action: Action, snapshot: Snapshot, scenario: Scenario, signal: AbortSignal): Promise<void> {
     if (action.kind === 'wait') return;
     if (!('targetRef' in action)) throw new Error(`Cannot send ${action.kind} to device`);
     if (!this.deviceId || snapshot.deviceId !== this.deviceId) throw new Error('Snapshot belongs to a different device');
@@ -305,48 +414,68 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     const requiredAction = action.kind === 'type' ? 'typeText' : action.kind === 'swipe' ? 'swipeWithin' : 'tap';
     if (!old.actions.includes(requiredAction)) throw new DeviceCliError('UNSUPPORTED_ACTION', `Target does not support ${action.kind}`);
     if (action.kind === 'type' && !Object.hasOwn(scenario.values, action.valueKey)) throw new DeviceCliError('MISSING_VALUE', `Scenario value ${action.valueKey} is absent`);
+    if (action.kind === 'type' && scenario.values[action.valueKey]!.startsWith('-')) {
+      throw new DeviceCliError('UNSUPPORTED_LEADING_DASH_TEXT', 'MobileBuildMCP 2.7.1 cannot type a value beginning with a hyphen');
+    }
 
     let selected = old;
     if (Date.now() >= snapshot.expiresAt - 5_000) {
       const fresh = await this.observe(signal);
+      this.referenceRefreshes++;
+      this.nearTtlRefreshes++;
       if (!sameScreen(snapshot, fresh)) throw new StaleSnapshotError();
       selected = rematch(old, fresh);
     }
     const perform = (ref: string) => {
       const base = ['ui-automation'];
       if (action.kind === 'tap') return [...base, 'tap', '--simulator-id', this.deviceId!, '--element-ref', ref];
-      if (action.kind === 'type') return [...base, 'type-text', '--simulator-id', this.deviceId!, '--element-ref', ref, '--text', scenario.values[action.valueKey]!, '--replace-existing'];
+      if (action.kind === 'type') return [...base, 'type-text', '--json', JSON.stringify({
+        simulatorId: this.deviceId!, elementRef: ref, text: scenario.values[action.valueKey]!, replaceExisting: true,
+      })];
       return [...base, 'swipe', '--simulator-id', this.deviceId!, '--within-element-ref', ref, '--direction', action.direction];
     };
+    if (signal.aborted) throw signal.reason;
     try {
-      await this.call(perform(selected.ref), signal);
+      await this.issueCommand(perform(selected.ref), signal, 'mobilebuildmcp.output.ui-action-result');
     } catch (error) {
-      if (!(error instanceof DeviceCliError) || !['SNAPSHOT_EXPIRED', 'ELEMENT_REF_NOT_FOUND'].includes(error.code)) throw error;
+      if (signal.aborted || !(error instanceof DeviceCliError) || !['SNAPSHOT_EXPIRED', 'ELEMENT_REF_NOT_FOUND'].includes(error.code)) throw error;
+      if (error.code === 'SNAPSHOT_EXPIRED') this.referenceExpiries++;
       const fresh = await this.observe(signal);
+      this.referenceRefreshes++;
       if (!sameScreen(snapshot, fresh)) throw new StaleSnapshotError();
       selected = rematch(old, fresh);
-      await this.call(perform(selected.ref), signal);
+      if (signal.aborted) throw signal.reason;
+      await this.issueCommand(perform(selected.ref), signal, 'mobilebuildmcp.output.ui-action-result');
     }
   }
 
-  async close(signal: AbortSignal): Promise<void> {
-    const release = this.releaseLock;
-    this.releaseLock = undefined;
-    if (!release) return;
-    let stopError: unknown;
-    try {
-      if (this.launched && this.options.stopAppOnClose !== false && this.deviceId && this.bundleId) {
-        await this.call(['simulator', 'stop', '--simulator-id', this.deviceId, '--bundle-id', this.bundleId], signal);
-      }
-    } catch (error) {
-      stopError = error;
-    } finally {
-      this.launched = false;
-      this.logPaths = {};
-      this.logNotes = {};
-      await release();
+  close(signal: AbortSignal): Promise<void> {
+    if (this.closing) return this.closing;
+    this.closing = this.finishClose(signal).finally(() => { this.closing = undefined; });
+    return this.closing;
+  }
+
+  private async finishClose(signal: AbortSignal): Promise<void> {
+    while (this.pendingOperations.size > 0) {
+      try { await awaitSettlement(Promise.allSettled([...this.pendingOperations]), signal); }
+      catch { throw new DeviceCliError('UI_ACTION_UNCONFIRMED', 'Cleanup ended before the issued device operation acknowledged; device lock retained'); }
     }
-    if (stopError) throw stopError;
+    const release = this.releaseLock;
+    if (!release) return;
+    // A lost CLI response has no proven acknowledgement. A new daemon snapshot
+    // alone cannot establish that an earlier request will never arrive late.
+    if (this.unconfirmedCommands.size > 0) throw new DeviceCliError('UI_ACTION_UNCONFIRMED', 'Device operation outcome is unknown; device lock retained');
+    if (this.launched && this.options.stopAppOnClose !== false && this.deviceId && this.bundleId) {
+      // Stop is not in MobileBuildMCP's UI queue. Keep our lock if its CLI
+      // response is lost, so another run cannot overlap uncertain cleanup.
+      await this.call(['simulator', 'stop', '--simulator-id', this.deviceId, '--bundle-id', this.bundleId], signal,
+        'mobilebuildmcp.output.stop-result');
+    }
+    await release();
+    this.releaseLock = undefined;
+    this.launched = false;
+    this.logPaths = {};
+    this.logNotes = {};
   }
 }
 

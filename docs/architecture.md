@@ -1,6 +1,6 @@
 # jev-ios-bridge: architecture
 
-Status: proposed, 2026-09-24. Nothing here is built. Where a detail is still open, this page names the ticket that decides it.
+Status: proposed baseline, 2026-09-24. A preparatory implementation now exists under `src/`, but the first feasibility experiment failed and production decisions remain gated on [the revision](../.scratch/jev-ios-bridge/issues/18-feasibility-revision.md). Where a detail is still open, this page names the ticket that decides it.
 
 - For the vocabulary, see [`CONTEXT.md`](../CONTEXT.md).
 - [ADR-0001](adr/0001-bridge-perceives-and-acts-jev-decides.md) explains why the bridge owns the loop.

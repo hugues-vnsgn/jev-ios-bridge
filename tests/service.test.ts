@@ -33,3 +33,37 @@ test('start returns a recoverable run id and report reflects policy verdict', as
     await reader.close();
   } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
 });
+
+test('checkpoint service redacts every phase value and honors one global budget', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-checkpoint-service-'));
+  let prepares = 0, closes = 0;
+  const service = new BridgeService({ baseDir: root,
+    createDriver: () => ({
+      async prepare() { prepares++; },
+      async observe() { return { deviceId: 'fixture', capturedAt: Date.now(), expiresAt: Date.now()+60000, sequence: 1, elements: [], truncated: false }; },
+      async act() { assert.fail('Completed checkpoint must not act'); },
+      async close() { closes++; },
+    }),
+    createJudge: () => ({ async judge(scenario) {
+      return { choice: 'stop-goal', confidence: 1, probabilities: {'stop-goal':1}, goalReached: 1,
+        assertions: Object.fromEntries(scenario.assertions.map(assertion => [assertion.id, 1])),
+        inputTokens: 10, latencyMs: 1, model: 'fixture' };
+    } }),
+  });
+  const scenario = { app: { bundleId: 'com.example.app' }, checkpoints: [
+    { id: 'first', goal: 'First private-one visible', assertions: [{id:'visible',claim:'private-one visible'}], values: {first:'private-one'} },
+    { id: 'second', goal: 'Second private-two visible', assertions: [{id:'visible',claim:'private-two visible'}], values: {second:'private-two'} },
+  ] };
+  try {
+    const {runId} = await service.start(scenario, {maxSteps:1});
+    let status = await service.status(runId);
+    for(let i=0;status.state==='running'&&i<100;i++){await new Promise(done=>setTimeout(done,5));status=await service.status(runId);}
+    assert.equal(status.state,'finished');
+    assert.equal(status.report.verdict,'inconclusive');
+    assert.equal(status.report.events.filter(event=>event.type==='checkpoint').length,1);
+    assert.equal(prepares,1);assert.equal(closes,1);
+    assert.doesNotMatch(JSON.stringify(status.report),/private-one|private-two/);
+    await assert.rejects(service.start(scenario,{maxSteps:1001}));
+    assert.equal(prepares,1);
+  } finally {await service.close();await rm(root,{recursive:true,force:true});}
+});

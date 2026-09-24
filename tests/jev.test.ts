@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { TypeSafeClient } from '@typesafe-ai/sdk';
 import type { Observation, Scenario, Snapshot } from '../src/contracts/index.js';
-import { buildJevRequest, createJevJudge, JevContractError, JevRequestError, parseJevResult } from '../src/jev/index.js';
+import { buildJevRequest, createJevJudge, JevContractError, JevRequestError, parseJevResult, V2_WORDING, V3_WORDING } from '../src/jev/index.js';
 import { buildObservation } from '../src/observation/index.js';
 
 const scenario: Scenario = {
@@ -32,6 +32,29 @@ test('request sends text only, complete options, and independent assertion quest
   assert.equal(request.questions['assertion:visible']?.type, 'noul');
   assert.doesNotMatch(JSON.stringify(request), /screen\.jpg/);
   assert.deepEqual(Object.keys((request.questions.next_action as { criteria: Record<string, unknown> }).criteria), observation.options.map(option => option.id));
+});
+
+test('v2 wording prioritizes blocking prompts and visible end-state evidence', () => {
+  const request = buildJevRequest(scenario, observation, V2_WORDING);
+  const action = request.questions.next_action as { instructions: string };
+  const goal = request.questions.goal_reached as { instructions: string };
+  assert.match(action.instructions, /blocking setup or permission prompt/i);
+  assert.match(action.instructions, /do not tap.*read/i);
+  assert.match(action.instructions, /entire requested end state/i);
+  assert.match(goal.instructions, /named.*visible/i);
+});
+
+test('v3 wording asks for current checkpoint state without a generic dialog priority', () => {
+  const request = buildJevRequest(scenario, observation, V3_WORDING);
+  const action = request.questions.next_action as { instructions: string };
+  const goal = request.questions.goal_reached as { instructions: string };
+  assert.match(action.instructions, /current checkpoint.*desired screen state/i);
+  assert.match(action.instructions, /stop-goal.*visibly holds now/i);
+  assert.match(action.instructions, /stop-blocked.*explicit.*empty-result/i);
+  assert.match(action.instructions, /none.*no supported action fits/i);
+  assert.doesNotMatch(action.instructions, /blocking setup or permission prompt before/i);
+  assert.match(goal.instructions, /current checkpoint.*desired screen state/i);
+  assert.doesNotMatch(goal.instructions, /overall scenario|historical action/i);
 });
 
 test('response parser validates option distribution, model and Noul shape', () => {
@@ -66,4 +89,37 @@ test('judge passes abort signal through SDK and does not expose raw transport er
   controller.abort();
   await assert.rejects(createJevJudge({ client }).judge(scenario, observation, controller.signal),
     (error: unknown) => error instanceof JevRequestError && error.code === 'ABORTED');
+});
+
+test('judge factory rejects a missing API key before any judgment or device work', () => {
+  const previous = process.env.TYPESAFE_API_KEY;
+  try {
+    delete process.env.TYPESAFE_API_KEY;
+    assert.throws(() => createJevJudge(),
+      (error: unknown) => error instanceof JevRequestError && error.code === 'AUTH' && error.message === 'AUTH');
+    const injected = new TypeSafeClient({ apiKey: 'synthetic-test-key', fetch: async () => new Response(JSON.stringify(response())) });
+    assert.ok(createJevJudge({ client: injected }));
+  } finally {
+    if (previous === undefined) delete process.env.TYPESAFE_API_KEY;
+    else process.env.TYPESAFE_API_KEY = previous;
+  }
+});
+
+test('judge factory reuses one SDK client across judgments', async (t) => {
+  const previous = process.env.TYPESAFE_API_KEY;
+  const clients = new Set<TypeSafeClient>();
+  try {
+    process.env.TYPESAFE_API_KEY = 'synthetic-test-key';
+    t.mock.method(TypeSafeClient.prototype, 'systemOne', function (this: TypeSafeClient) {
+      clients.add(this);
+      return Promise.resolve(response());
+    } as unknown as TypeSafeClient['systemOne']);
+    const judge = createJevJudge();
+    await judge.judge(scenario, observation, new AbortController().signal);
+    await judge.judge(scenario, observation, new AbortController().signal);
+    assert.equal(clients.size, 1);
+  } finally {
+    if (previous === undefined) delete process.env.TYPESAFE_API_KEY;
+    else process.env.TYPESAFE_API_KEY = previous;
+  }
 });

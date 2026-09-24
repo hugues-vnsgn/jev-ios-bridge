@@ -4,7 +4,7 @@ import { readFile, realpath } from 'node:fs/promises';
 import { dirname, isAbsolute, relative, resolve } from 'node:path';
 import type { HistoryEntry, JevJudge, Scenario, Snapshot } from '../../src/contracts/index.js';
 import { actionOptions, buildObservation, projectActionOptions, type ObservationVariant, type OptionRule } from '../../src/observation/index.js';
-import { DEFAULT_WORDING, V2_WORDING, JEV_MODEL, JevContractError, JevRequestError, type QuestionWording } from '../../src/jev/index.js';
+import { DEFAULT_WORDING, V2_WORDING, V3_WORDING, JEV_MODEL, JevContractError, JevRequestError, type QuestionWording } from '../../src/jev/index.js';
 import { ObservationError } from '../../src/observation/index.js';
 
 export interface FeasibilityCase {
@@ -21,11 +21,11 @@ export interface FeasibilityCase {
   /** Proposed by the capturing agent, then bound to owner approval by corpus hash. */
   labels: { acceptableActionIds: string[]; goalReached: boolean; assertions: Record<string, boolean> };
 }
-export interface FeasibilityCorpus { version: 1 | 2; cases: FeasibilityCase[] }
+export interface FeasibilityCorpus { version: 1 | 2 | 3; cases: FeasibilityCase[] }
 export type ConfigurationId = 'A' | 'B' | 'C' | 'D';
 export interface ExperimentConfiguration { id: ConfigurationId; variant: ObservationVariant; history: boolean }
 export interface ExperimentManifest {
-  version: 1 | 2;
+  version: 1 | 2 | 3;
   status: 'draft' | 'frozen';
   corpusSha256: string;
   implementationSha256: string;
@@ -45,7 +45,7 @@ export interface ExperimentManifest {
   selectionRule: 'coverage-correctness-tokens-order-threshold-v1';
 }
 export interface OwnerApproval {
-  version: 1 | 2;
+  version: 1 | 2 | 3;
   approved: true;
   reviewedBy: string;
   reviewedAt: string;
@@ -89,7 +89,7 @@ export interface ThresholdSummary {
   qualifying: boolean;
 }
 export interface FrozenSelection {
-  version: 1 | 2;
+  version: 1 | 2 | 3;
   corpusSha256: string;
   manifestSha256: string;
   configuration: ConfigurationId;
@@ -178,12 +178,12 @@ export const CONFIGURATIONS: ExperimentConfiguration[] = [
   { id: 'D', variant: 'full', history: true },
 ];
 const THRESHOLDS = [0.6, 0.7, 0.8, 0.9];
-const optionRuleFor = (version: 1 | 2): OptionRule => version === 2 ? 'v2' : 'v1';
+const optionRuleFor = (version: 1 | 2 | 3): OptionRule => version >= 2 ? 'v2' : 'v1';
 
-function validateActionLabels(ids: string[], offered: Set<string>, collapsed: Record<string, string[]>, version: 1 | 2): void {
+function validateActionLabels(ids: string[], offered: Set<string>, collapsed: Record<string, string[]>, version: 1 | 2 | 3): void {
   for (const id of ids) if (!offered.has(id)) fail('LABEL_ACTION_UNKNOWN');
   if (new Set(ids).size !== ids.length) fail('LABEL_DUPLICATE');
-  if (version !== 2) return;
+  if (version === 1) return;
   const accepted = new Set(ids);
   for (const [canonical, aliases] of Object.entries(collapsed)) {
     const canonicalId = `tap:${encodeURIComponent(canonical)}`;
@@ -198,7 +198,7 @@ function validateActionLabels(ids: string[], offered: Set<string>, collapsed: Re
 }
 
 export function validateCorpus(corpus: FeasibilityCorpus): void {
-  if (![1, 2].includes(corpus.version) || !Array.isArray(corpus.cases) || corpus.cases.length !== 30) fail('CORPUS_COUNT');
+  if (![1, 2, 3].includes(corpus.version) || !Array.isArray(corpus.cases) || corpus.cases.length !== 30) fail('CORPUS_COUNT');
   const ids = new Set<string>();
   const groupPartitions = new Map<string, string>();
   let tuning = 0;
@@ -227,7 +227,7 @@ export function validateCorpus(corpus: FeasibilityCorpus): void {
     const rule = optionRuleFor(corpus.version);
     const full = projectActionOptions(item.fullSnapshot, item.scenario, 255, { variant: 'full', optionRule: rule });
     const compact = actionOptions(item.compactSnapshot, item.scenario, 255, { variant: 'compact', optionRule: rule });
-    const offered = new Set((corpus.version === 2 ? [...full.options, ...compact] : full.options).map(option => option.id));
+    const offered = new Set((corpus.version >= 2 ? [...full.options, ...compact] : full.options).map(option => option.id));
     validateActionLabels(item.labels.acceptableActionIds, offered, full.collapsedTapRefs, corpus.version);
     if (item.positionalVariant) {
       if (item.partition !== 'tuning' || !item.positionalVariant.goal?.trim() || item.positionalVariant.goal === item.scenario.goal ||
@@ -246,9 +246,9 @@ export function makeDraftManifest(corpus: FeasibilityCorpus): ExperimentManifest
     version: corpus.version, status: 'draft', corpusSha256: digest(corpus), implementationSha256: implementationDigest(), model: JEV_MODEL,
     configurations: CONFIGURATIONS.map(config => ({ ...config })), thresholds: [...THRESHOLDS],
     noulYes: 0.9, noulNo: 0.1, maxHistory: 3, maxCandidates: 64, maxStateBytes: 24_000,
-    wording: { ...(corpus.version === 2 ? V2_WORDING : DEFAULT_WORDING) },
-    candidateRule: corpus.version === 2 ? 'visible-enabled-v2' : 'visible-enabled-v1',
-    optionRule: corpus.version === 2 ? 'complete-actions-v2' : 'complete-actions-v1', historyRule: 'recent-steps-v1',
+    wording: { ...(corpus.version === 3 ? V3_WORDING : corpus.version === 2 ? V2_WORDING : DEFAULT_WORDING) },
+    candidateRule: corpus.version >= 2 ? 'visible-enabled-v2' : 'visible-enabled-v1',
+    optionRule: corpus.version >= 2 ? 'complete-actions-v2' : 'complete-actions-v1', historyRule: 'recent-steps-v1',
     gateRule: 'ticket-07-v1', selectionRule: 'coverage-correctness-tokens-order-threshold-v1',
   };
 }
@@ -259,8 +259,8 @@ export function validateFrozenExperiment(corpus: FeasibilityCorpus, manifest: Ex
   if (manifest.implementationSha256 !== implementationDigest()) fail('IMPLEMENTATION_CHANGED');
   if (JSON.stringify(manifest.configurations) !== JSON.stringify(CONFIGURATIONS) || JSON.stringify(manifest.thresholds) !== JSON.stringify(THRESHOLDS) ||
       manifest.noulYes !== 0.9 || manifest.noulNo !== 0.1 ||
-      manifest.candidateRule !== `visible-enabled-v${manifest.version}` ||
-      manifest.optionRule !== `complete-actions-v${manifest.version}` || manifest.historyRule !== 'recent-steps-v1' ||
+      manifest.candidateRule !== `visible-enabled-${optionRuleFor(manifest.version)}` ||
+      manifest.optionRule !== `complete-actions-${optionRuleFor(manifest.version)}` || manifest.historyRule !== 'recent-steps-v1' ||
       manifest.gateRule !== 'ticket-07-v1' || manifest.selectionRule !== 'coverage-correctness-tokens-order-threshold-v1') fail('MANIFEST_PROTOCOL');
   if (!Number.isSafeInteger(manifest.maxHistory) || manifest.maxHistory < 1 || manifest.maxHistory > 20 ||
       !Number.isSafeInteger(manifest.maxCandidates) || manifest.maxCandidates < 1 || manifest.maxCandidates > 255 ||

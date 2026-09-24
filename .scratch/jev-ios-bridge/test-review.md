@@ -42,3 +42,11 @@ Node's coverage run over the evidence, service, integration, and MCP tests passe
 | Row | Why | What closes it |
 | --- | --- | --- |
 | 12 | The simulator belongs to ticket 08's corpus preparation, and its reviewed labels precede live Jev evaluation. | Run the packaged CLI/MCP scenario after the owner reviews and freezes the corpus, then inspect the report, JSONL, screenshot, and watch page for the same run. |
+
+## Checkpoint implementation follow-up
+
+`npm run check` now passes type checking, all 90 tests, and the build. Added coverage includes ordered checkpoint proofs, values restricted to the active checkpoint, global step and wall limits, cancellation between checkpoints, missing-key rejection before device work, bounded MCP report waiting, and withholding screen evidence from running MCP replies. Device lifecycle tests require terminal acknowledgement before unlocking after cancellation or a transport failure.
+
+The default-device regression first failed with `Missing expected rejection`: `defaultUdid: 'booted'` could bypass scenario UUID validation. The adapter now validates the resolved device ID before locking or issuing any CLI command. The unchanged regression passes; all 21 device tests pass.
+
+These are scripted checks. The two live feasibility evaluations remain no-go results. Ticket 19's checkpoint corpus is awaiting final audit and owner review; the complete installed Claude Code scenario and comparison measurements remain unverified.

@@ -8,19 +8,30 @@ export function validateRunId(runId: string): string {
 }
 
 export function redact(value: unknown, secrets: string[]): unknown {
-  if (typeof value === 'string') {
-    let result = value;
-    for (const secret of [...secrets].filter(Boolean).sort((a, b) => b.length - a.length)) {
-      result = result.split(secret).join('[REDACTED]');
+  const ordered = [...new Set(secrets.filter(Boolean))].sort((a, b) => b.length - a.length);
+  const text = (input: string) => ordered.reduce((result, secret) => result.split(secret).join('[REDACTED]'), input);
+  const enums: Record<string, readonly string[]> = {
+    verdict: ['passed', 'failed', 'inconclusive'], status: ['passed', 'failed', 'inconclusive'],
+    'action.kind': ['tap', 'type', 'swipe', 'wait', 'stop-goal', 'stop-blocked', 'none'],
+    'action.direction': ['up', 'down', 'left', 'right'], phase: ['prepare', 'observe', 'decide', 'act', 'cleanup'],
+  };
+  const walk = (input: unknown, path: string[] = [], dynamicKeys = false): unknown => {
+    if (typeof input === 'string') {
+      // These are generated protocol values, not copies of scenario text. A typed
+      // value such as "passed" must not erase the run's recorded verdict.
+      if (enums[path.join('.')]?.includes(input)) return input;
+      if (path.join('.') === 'screenshotPath' && /^screen-\d+\.(jpg|png)$/.test(input)) return input;
+      return text(input);
     }
-    return result;
-  }
-  if (Array.isArray(value)) return value.map(item => redact(item, secrets));
-  if (value && typeof value === 'object') {
-    return Object.fromEntries(Object.entries(value).map(([key, item]) => [key,
-      /^(authorization|apiKey|api_key|password|token)$/i.test(key) ? '[REDACTED]' : redact(item, secrets)]));
-  }
-  return value;
+    if (Array.isArray(input)) return input.map(item => walk(item, path));
+    if (input && typeof input === 'object') {
+      return Object.fromEntries(Object.entries(input).map(([key, item]) => [dynamicKeys ? text(key) : key,
+        typeof item === 'string' && /^(authorization|apiKey|api_key|password|token)$/i.test(key) ? '[REDACTED]' : walk(item, [...path, key],
+          key === 'probabilities' || key === 'values' || (key === 'assertions' && !Array.isArray(item)))]));
+    }
+    return input;
+  };
+  return walk(value);
 }
 
 export async function readRunEvents(baseDir: string, runId: string): Promise<RunEvent[]> {

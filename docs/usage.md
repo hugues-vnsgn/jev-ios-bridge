@@ -35,9 +35,33 @@ A scenario supplies the goal, bundle ID, assertions, and every value the bridge 
 }
 ```
 
-Typed values must use printable US-keyboard characters. Preconditions describe setup the author must arrange; the bridge does not seed accounts or reset app data. Assertions describe the current screen. Ordered assertions are not supported.
+Typed values must use printable US-keyboard characters and replace the entire field value. MobileBuildMCP 2.7.1's AXe input path rejects a leading hyphen, so the bridge rejects values beginning with `-` before device work. Preconditions describe setup the author must arrange; the bridge does not seed accounts or reset app data. Assertions describe the current screen.
 
 Run the scenario with `node dist/cli.js run scenario.json`. The command prints a local watch URL to stderr and a final report to stdout. Exit codes are 0 for passed, 1 for failed, and 2 for inconclusive or startup failure.
+
+For a flow across screens, the experimental checkpoint form gives each stage an observable desired state:
+
+```json
+{
+  "app": { "bundleId": "com.sentry.weather.Weather" },
+  "checkpoints": [
+    {
+      "id": "settings",
+      "goal": "The Weather Settings sheet is open with Temperature choices visible.",
+      "assertions": [{ "id": "choices", "claim": "The Temperature controls show °C and °F choices." }]
+    },
+    {
+      "id": "fahrenheit",
+      "goal": "The °F Temperature control is selected in Settings.",
+      "assertions": [{ "id": "selected", "claim": "The °F Temperature control is selected." }]
+    }
+  ]
+}
+```
+
+Use 2 to 10 checkpoints with unique IDs. Put typed `values` only inside the checkpoint that needs them; omitted values mean none. The checkpoint form rejects root-level `goal`, `assertions`, or `values`. The bridge prepares the app once, records each passing checkpoint, and passes the run only after every checkpoint passes in order. A failed or uncertain checkpoint ends the run. This input form is still awaiting its live feasibility result.
+
+Step and time limits cover the whole run. Override them with `--max-steps 60 --timeout-ms 600000`, or the MCP `limits` object. These options do not change the judgment thresholds.
 
 ## MCP hosts
 
@@ -47,11 +71,11 @@ The server exposes:
 
 | Tool | Input | Result |
 | --- | --- | --- |
-| `start_scenario` | `scenario` object | A run ID and local watch URL |
-| `get_report` | `runId` | Running, finished, or interrupted status, plus the recorded outcome and recent evidence |
+| `start_scenario` | `scenario` object, optional `limits: {maxSteps, wallTimeMs}` | A run ID and local watch URL |
+| `get_report` | `runId`, optional `waitMs` up to 45000 | Progress while running; the recorded outcome and evidence once finished or interrupted |
 | `cancel_run` | `runId` | Cancellation after cleanup |
 
-The host submits once and polls for the report. It must leave the simulator to the bridge during a run. The bridge uses text content for its responses so hosts receive the complete report. Closing the server cancels active runs and ends the watch page.
+The host submits once and waits for the report with `get_report` and `waitMs: 45000`. Running replies contain progress only; per-step screen evidence stays out of the host's context until the final report. It must leave the simulator to the bridge during a run. The bridge uses text content for its responses so hosts receive the complete report. Closing the server cancels active runs and ends the watch page.
 
 Copy [the test-ios skill](../skills/test-ios/SKILL.md) into the consuming repository's `.claude/skills/test-ios/SKILL.md` for Claude Code, or `.agents/skills/test-ios/SKILL.md` for Codex. Register the MCP server separately. Codex support remains best effort.
 
@@ -61,6 +85,6 @@ Run logs and copied screenshots live in `.jev-runs/<run-id>/` in the current dir
 
 Screen text and supplied values go to TypeSafe. The scenario and report enter the host model's context. Every supplied value and the API key are redacted from textual run events. Screenshots are images: text redaction does not remove visible private data from them. Use synthetic test data and agree on data handling before testing apps containing real user information. Screenshots never go to Jev.
 
-The watch server binds to `127.0.0.1` on an available port. Its URL contains a private access token. Anyone with that URL on the machine can read the run evidence while the server lives. The page shows per-step captures and recorded judgments, not a video stream.
+The watch server binds to `127.0.0.1` on an available port. Its URL contains a private access token. Anyone with that URL on the machine can read the run evidence while the server lives. The page shows per-step captures, recorded judgments, and bounded runtime/OS log excerpts supplied by the device layer. Each log excerpt is at most 4 KiB; unavailable logs are identified. These excerpts remain local and are excluded from Jev's observation. The page does not stream video.
 
 After a process interruption, use `node dist/cli.js report <run-id>` from the same evidence directory. A log without a final verdict is reported as inconclusive. This version does not resume interrupted runs or escalate to the host agent.

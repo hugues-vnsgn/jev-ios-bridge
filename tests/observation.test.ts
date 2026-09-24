@@ -74,3 +74,34 @@ test('filtered full state drops empty containers but keeps semantic and actionab
   assert.match(observation.text, /ref=go\b/);
   assert.ok(observation.options.some(option => option.id === 'tap:go'));
 });
+
+test('v2 full options collapse only overlapping same-identity taps and keep distant rows', () => {
+  const shot = snapshot([
+    { ref: 'e1', role: 'button', label: 'About', identifier: 'about', frame: { x: 0, y: 0, width: 200, height: 50 }, actions: ['tap'] },
+    { ref: 'e2', role: 'button', label: 'About', identifier: 'about', frame: { x: 10, y: 10, width: 80, height: 20 }, actions: ['tap'] },
+    { ref: 'e3', role: 'button', label: 'About', identifier: 'about', frame: { x: 0, y: 100, width: 200, height: 50 }, actions: ['tap'] },
+    { ref: 'e4', role: 'button', label: 'About', identifier: 'about', frame: { x: 0, y: 0, width: 200, height: 50 }, actions: ['tap'] },
+    { ref: 'e5', role: 'button', label: 'About', identifier: 'about', frame: { x: 110, y: 10, width: 80, height: 20 }, actions: ['tap'] },
+  ]);
+  const full = buildObservation(scenario, shot, [], { variant: 'full', optionRule: 'v2' });
+  assert.deepEqual(full.options.filter(option => option.action.kind === 'tap').map(option => option.id), ['tap:e1', 'tap:e3', 'tap:e5']);
+  assert.doesNotMatch(full.text, /ref=e2\b|ref=e4\b/);
+  const compact = buildObservation(scenario, shot, [], { variant: 'compact', optionRule: 'v2' });
+  assert.deepEqual(compact.options.filter(option => option.action.kind === 'tap').map(option => option.id), ['tap:e1', 'tap:e2', 'tap:e3', 'tap:e4', 'tap:e5']);
+});
+
+test('v2 type action removes focus-only tap and swipe spells out finger and content direction', () => {
+  const shot = snapshot([
+    { ref: 'field', role: 'text-field', label: 'Email', actions: ['tap', 'typeText'] },
+    { ref: 'scroll', role: 'scroll-view', label: 'Results', actions: ['swipeWithin'] },
+    { ref: 'bar', role: 'slider', label: 'Vertical scroll bar, 1 page', actions: ['tap'] },
+    { ref: 'size', role: 'slider', label: 'Text Size', actions: ['tap'] },
+  ]);
+  const observation = buildObservation(scenario, shot, [], { variant: 'full', optionRule: 'v2' });
+  assert.ok(observation.options.some(option => option.id === 'type:field:email'));
+  assert.ok(!observation.options.some(option => option.id === 'tap:field'));
+  assert.ok(!observation.options.some(option => option.id === 'tap:bar'));
+  assert.ok(observation.options.some(option => option.id === 'tap:size'));
+  assert.doesNotMatch(observation.text, /ref=bar\b/);
+  assert.match(observation.options.find(option => option.id === 'swipe:scroll:up')?.description ?? '', /finger.*bottom to top.*later/i);
+});

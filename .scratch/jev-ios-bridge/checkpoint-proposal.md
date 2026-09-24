@@ -1,6 +1,6 @@
 # Ordered checkpoints for a full Weather run
 
-Status: proposal for [Scenario language](issues/10-scenario-language.md) and [Step-loop policy](issues/11-step-loop-policy.md), after ticket 18's revised feasibility gate. No checkpoint behavior is implemented by this document.
+Status: experimental R&D contract after ticket 18's second no-go. The implementation is for testing the ordered path; [Scenario language](issues/10-scenario-language.md) and [Step-loop policy](issues/11-step-loop-policy.md) remain open before production use.
 
 The current scenario has one `goal` and one set of assertions judged against the final screen. That cannot prove a Weather run visited and verified Settings, returned to Home, and then opened a detail screen: a final detail screenshot says nothing reliable about what held on Settings earlier. Keep the existing single-goal form. Add one ordered form whose checkpoint results are recorded as the run proceeds.
 
@@ -9,25 +9,28 @@ The current scenario has one `goal` and one set of assertions judged against the
 ```ts
 type BaseScenario = {
   app: { bundleId: string };
-  values: Record<string, string>;
   preconditions?: string[];
   device?: { udid?: string };
 };
 
-type Scenario = BaseScenario & (
-  | { goal: string; assertions: Assertion[]; checkpoints?: never }
-  | { checkpoints: Array<{ id: string; goal: string; assertions: Assertion[] }>;
-      goal?: never; assertions?: never }
-);
+type LegacyScenario = BaseScenario & {
+  goal: string; assertions: Assertion[]; values: Record<string, string>; checkpoints?: never
+};
+type CheckpointScenario = BaseScenario & {
+  checkpoints: Array<{ id: string; goal: string; assertions: Assertion[];
+    values?: Record<string, string> }>;
+  goal?: never; assertions?: never; values?: never
+};
+type RunScenario = LegacyScenario | CheckpointScenario;
 ```
 
-Require 2 to 10 checkpoints, unique checkpoint IDs, and at least one assertion per checkpoint. Keep the current goal, assertion, and typed-value length limits. **Reject** a payload that mixes root `goal` or `assertions` with `checkpoints`; no field may be silently ignored. A legacy scenario remains byte-for-byte valid and behaves as one implicit checkpoint internally. Assertion IDs may be scoped to a checkpoint in the request but log keys must include the checkpoint ID to avoid collisions.
+Require 2 to 10 checkpoints, unique checkpoint IDs, and at least one assertion per checkpoint. Keep the current goal, assertion, and typed-value length limits, including at most 32 typed values **per checkpoint**. Missing checkpoint values mean `{}`. **Reject** a payload that mixes root `goal`, `assertions`, or `values` with `checkpoints`; no field may be silently ignored. A legacy scenario remains valid and behaves as one implicit checkpoint internally, without adding a checkpoint event to its existing log shape. Assertion IDs may be scoped to a checkpoint in the request but log keys include the checkpoint ID to avoid collisions.
 
-For the Weather benchmark, the checkpoint goals are: verify the selected units on Settings; return to and verify Home; open and verify the detail screen. Each checkpoint's actual assertions must come from the benchmark oracle and captured app behavior before use. For example, Settings can prove Fahrenheit, km/h, and hPa selections. A later Home or detail assertion must state what that screen itself shows; the bridge must not infer an earlier Settings proof from it.
+For the Weather benchmark, checkpoint goals should describe observable states: "Weather Settings visibly shows °F, km/h, and inHg selected"; "Weather Home visibly shows the expected forecast"; "the forecast detail screen visibly shows its expected conditions". The exact Home and detail claims must come from the benchmark oracle and captured app behavior before use. A later Home or detail assertion must state what that screen itself shows; the bridge must not infer an earlier Settings proof from it.
 
 ## Run semantics
 
-One run prepares one device and app once, keeps one run log and watch URL, and closes the driver once. The existing wall-clock and step limits apply to the **whole run**, not separately to each checkpoint. The controller asks Jev only about the active checkpoint's goal and assertions, using the existing one Choice plus independent Nouls. Bounded history can mention completed checkpoint proofs; future assertions are not sent as if they were current claims.
+One run prepares one device and app once, keeps one run log and watch URL, and closes the driver once. The existing wall-clock and step limits apply to the **whole run**, not separately to each checkpoint. The controller projects the active checkpoint into the existing single-goal Jev/observation interface. Only that checkpoint's goal, assertions, and typed values enter the current request. This avoids suppressing focus taps on a navigation screen merely because a future checkpoint will type something. Bounded history can mention completed checkpoint proofs; future assertions and values are not sent as if they were current claims.
 
 When `stop-goal` passes the active completion and assertion gates, the bridge appends a `checkpoint` event with its ID and index, the decisive step and snapshot reference, the judgment probabilities, and the evidence path already recorded by that step. It then advances the index and takes a **new** observation before the next judgment. No device action uses a reference from the completed checkpoint. A false assertion at a completed goal fails the run under the bridge's policy; an uncertain judgment, blocker, cancellation, or global limit leaves it inconclusive according to ticket 11's settled rules. Earlier checkpoint proofs remain in the log in either case.
 
@@ -39,6 +42,7 @@ Only the bridge assigns the final verdict. `passed` requires a recorded pass for
 | --- | --- |
 | Legacy one-goal scenario | Existing JSON parses and reaches the same verdict with one prepare and close. |
 | Mixed or malformed input | Root assertions plus checkpoints, duplicate IDs, empty checkpoint assertions, or one checkpoint are rejected before device work. |
+| Future values | A future checkpoint's typed value is absent from the current observation and Choice options; the value appears only after that checkpoint becomes active. |
 | Two successful checkpoints | `checkpoint` events appear in order, each names its own observation and judgment; final pass appears only after the second. |
 | Premature completion | `stop-goal` at checkpoint one advances only to checkpoint two; it never passes the run. |
 | Failed or uncertain first checkpoint | Final failed or inconclusive policy is recorded; checkpoint two is never judged. |
