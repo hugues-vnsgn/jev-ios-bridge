@@ -13,3 +13,9 @@ Independent audit by the `gpt-6-sol` high reviewer, 2026-09-24. No remaining fac
 The visual audit supports the Contacts hidden-field swipe, settled Ada Birch no-results blocker, saved reminder note, and diagnostic total of $3. Failed Reminders capability routes remain excluded preflight evidence. Real wait-state coverage remains explicitly deferred.
 
 This audit is not owner approval or a feasibility result. Freeze the exact manifest, obtain review of the linked [case sheet](../../spikes/feasibility/corpus-v3/review/case-review.md), then run tuning and the unchanged held-out gate without relabelling from model answers.
+
+## Post-evaluation independent audit
+
+After explicit owner approval, the independent reviewer verified the approval's corpus and manifest hashes, source digest, frozen selection, combined primary/positional tuning hash, and all 20 expected held-out cases. The partial journal exactly matches the final results. Every gate and aggregate recomputes identically.
+
+The result is no-go: 17/20 correct choices, 10/20 accepted, zero wrong accepted actions, zero false passes across 20 known-false assertions, and no request/observation/response failures. Five rejections first failed Choice confidence, three failed completion-no, and two failed completion-yes. Those last two prevented premature stops on unsaved forms. Correct choices were also rejected by uncertain completion or low action confidence. This audit made no Jev or device calls and did not change the experiment.

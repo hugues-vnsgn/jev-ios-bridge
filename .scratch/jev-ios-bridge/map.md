@@ -43,6 +43,8 @@ A verified implementation and GitHub prerelease v0.1.0 of the bridge, including 
 - [Domain boundaries](../../docs/domain-boundaries.md): one iOS Scenario Verification context owns the run and verdict policy. Preparation and evidence presentation are supporting modules; the integration patterns remain explicitly inferred.
 - [Feasibility plan: the go/no-go bar and the step questions](issues/07-feasibility-plan.md): 30 owner-labelled cases, split into 10 tuning and 20 held-out cases. One Choice selects a complete action; independent Nouls check completion and assertions. Compare compact/full observations with/without history, then freeze one configuration. The exploratory bar is 18/20 correct choices, at least 16/20 accepted with no accepted errors, and no false-pass assertions. The environment and reviewed corpus still precede live evaluation.
 
+- [Checkpoint feasibility](issues/19-checkpoint-feasibility.md): third no-go, 17/20 correct actions and 10/20 accepted, with no accepted errors or false-pass assertions. All original criteria remain unchanged. [Product direction](issues/20-post-feasibility-direction.md) now blocks production design and release; explicit-script execution is proposed, not accepted.
+
 ## Route
 
 Green nodes are the frontier (open and unblocked), blue are claimed, grey are resolved, and white are blocked. `scripts/render-route.py` generates this block, so don't edit it by hand.
@@ -69,11 +71,12 @@ flowchart LR
     T17["17 Slice measurements<br/><small>task</small>"]
     T18["18 Feasibility revision<br/><small>prototype</small>"]
     T19["19 Checkpoint feasibility<br/><small>prototype</small>"]
+    T20["20 Product direction after three feasibility no-go results<br/><small>grilling</small>"]
     T06 --> T08
     T07 --> T08
-    T19 --> T09
-    T19 --> T10
-    T19 --> T11
+    T20 --> T09
+    T20 --> T10
+    T20 --> T11
     T09 --> T11
     T10 --> T11
     T05 --> T12
@@ -94,12 +97,13 @@ flowchart LR
     T16 --> T17
     T08 --> T18
     T18 --> T19
+    T19 --> T20
     classDef resolved fill:#e4e4e7,stroke:#a1a1aa,color:#52525b
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T06,T07,T08,T18 resolved
-    class T19 claimed
+    class T01,T02,T03,T04,T05,T06,T07,T08,T18,T19 resolved
+    class T20 frontier
     class T09,T10,T11,T12,T13,T14,T15,T16,T17 blocked
 ```
 <!-- route:end -->

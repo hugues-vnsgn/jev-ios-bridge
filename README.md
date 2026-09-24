@@ -2,7 +2,7 @@
 
 jev-ios-bridge lets a coding agent verify an iOS app by submitting a scenario and reading back a verdict. The bridge runs the scenario on a simulator. At each step, TypeSafe's Jev model chooses what to do from a text view of the screen, and MobileBuildMCP does the device work.
 
-The implementation is in progress on the v0.1.0 release branch. The repo contains the bridge, offline tests, a feasibility harness, and the design and research behind them. Both broad-goal experiments failed the agreed bar: [first results](spikes/feasibility/results/heldout/heldout.md), [second results](spikes/feasibility/results-v2/heldout/heldout.md). Release remains blocked while [ticket 19](.scratch/jev-ios-bridge/issues/19-checkpoint-feasibility.md) tests ordered observable checkpoints on fresh held-out cases.
+The implementation is in progress on the v0.1.0 release branch. The repo contains the bridge, offline tests, a feasibility harness, and the design and research behind them. All three experiments failed the agreed bar: [first results](spikes/feasibility/results/heldout/heldout.md), [second results](spikes/feasibility/results-v2/heldout/heldout.md), and [checkpoint results](spikes/feasibility/results-v3/heldout/heldout.md). Release remains blocked on the [product-direction decision](.scratch/jev-ios-bridge/issues/20-post-feasibility-direction.md).
 
 ## Why build it
 

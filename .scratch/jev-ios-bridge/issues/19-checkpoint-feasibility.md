@@ -1,8 +1,7 @@
 # Checkpoint feasibility: bound each judgment to an observable subgoal
 
 Type: prototype
-Status: claimed
-Claimed by: Codex main, with gpt-6-sol high sub-agents
+Status: resolved
 Blocked by: 18
 
 ## Question
@@ -19,4 +18,14 @@ The checkpoint prototype is committed at `5021c02`; Node 24 CI passed 91 tests, 
 
 Corpus SHA-256: `136dd6ed8e7880e6e1118b1691a31693b72a19f0498cd7ef8b4be475d58363cf`. Manifest SHA-256: `ced6bfb11cc14e1138f2f28d5fca66ec16dade716a0aa126ddd4ca94a204a172`.
 
-Owner label approval has been requested. The approval template remains false; no v3 Jev request has been made. After approval, run tuning once, evaluate its frozen selection on all 20 held-out cases, and record the unchanged gate result. Runtime calibration and publication remain pending.
+The owner explicitly approved the frozen labels and evaluation in the conversation. Hash-bound `approval.json` records that decision; the template remains unapproved by design. The testing agent ran tuning once, followed by its frozen selection on all 20 held-out cases. The outcome is recorded below.
+
+## Answer
+
+**No-go.** After owner approval, each phase ran once with unchanged source, labels, model, thresholds, and gate. Tuning selected D (full observations and history) at Choice confidence 0.6: 10/10 correct top choices, 5/10 accepted, zero wrong accepted actions.
+
+The fresh held-out result is **17/20 correct top choices** (18 required), **10/20 accepted** (16 required), **zero wrong accepted actions**, and **zero false-pass assertions across 20 known-false claims**. There were no request, observation, or response failures. Completion labels matched at the frozen bounds in 12/20 cases; assertion labels matched in 19/25. The requests consumed 95,295 input tokens and 6,726 ms accumulated Jev latency.
+
+The three wrong top choices were the reverse swipe on the hidden Contacts field and premature `stop-goal` choices on unsaved Contacts and Reminders forms. The policy rejected all three. Of the ten rejected cases, five first failed Choice confidence, three failed the completion-no check, and two failed the completion-yes check. The rejection rules prevented accepted errors but left coverage at 50%.
+
+[Tuning](../../../spikes/feasibility/results-v3/tuning/tuning.md), [held-out results](../../../spikes/feasibility/results-v3/heldout/heldout.md), partial journals, approval, and phase claims are preserved. This corpus is now disclosed development evidence and must not be reused as a fresh held-out evaluation. The runtime has not been calibrated or released as a passing design. [Ticket 20](20-post-feasibility-direction.md) asks the owner to choose the product direction after three no-go results.
