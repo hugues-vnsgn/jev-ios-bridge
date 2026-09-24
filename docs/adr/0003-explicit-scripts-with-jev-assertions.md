@@ -14,3 +14,7 @@ This preserves bridge-owned execution but removes Jev's next-action role. Script
 Evaluation approval is not production acceptance. [Ticket 21](../../.scratch/jev-ios-bridge/issues/21-scripted-feasibility.md) requires deterministic execution tests and a separately frozen, owner-reviewed 24-screen assertion experiment. The [protocol](../../.scratch/jev-ios-bridge/scripted-evaluation-plan.md) fixes its denominators and thresholds before querying. Installed-host runs, a blind diagnosis task, and measured authoring/execution costs follow only if feasibility passes.
 
 ADR-0001 remains proposed with its three no-go results. This ADR will supersede its runtime decision only after the scripted contract is supported by evidence and accepted for production. ADR-0002's MobileBuildMCP boundary remains unchanged. No release or performance claim follows merely from this proposal.
+
+## Assertion evidence
+
+The owner-approved frozen assertion evaluation met its gate on one run: 22/24 true claims and 23/24 false claims confidently correct, with zero confidently wrong answers and no request failures. Three judgments were uncertain. [The results](../../spikes/scripted/results/evaluation/results.md) support proceeding to real scripted integration under the owner's delegation. This is a small exploratory assertion result, not evidence of autonomous navigation or a universal error rate. Real execution, installed-host, diagnosis, and comparison gates remain before production acceptance.

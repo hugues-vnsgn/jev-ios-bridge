@@ -15,3 +15,9 @@ Independent `gpt-6-sol` high audit completed before owner review and live evalua
 The [owner case sheet](../../spikes/scripted/corpus/review/case-review.md) links all 24 screenshots and full captures. Its links resolve, the exact frozen manifest passed the CLI review step, and the approval template remains false. Owner approval has been requested.
 
 The [protocol](scripted-evaluation-plan.md) requires at least 20/24 confident correct true claims and 20/24 confident correct false claims, with zero confidently wrong judgments. Correlated pairs count as 24 screen cases, not 48 independent trials. This audit establishes readiness for owner label review; it is not a feasibility result or release approval.
+
+## Post-evaluation audit
+
+After explicit owner approval, the evaluation ran once. An independent reviewer verified the approval/corpus/manifest/source chain, all 48 asset hashes, all 24 unique cases, and exact equality between the fsynced journal and final result rows. Every metric recomputed from the frozen labels and recorded probabilities agrees: 22/24 true claims and 23/24 false claims confidently correct, 21/24 paired decisive screens, zero false passes or wrong decisive failures, and no errors. Input tokens total 111,957; summed Jev latency is 11,366.319 ms.
+
+The three uncertain answers concern s11's foreground saved-card claim (false, 0.22), s16's empty List Name claim (true, 0.80), and s19's empty Notes claim (true, 0.78). Their labels remain supported by the captures. No reinterpretation or rerun was needed. The assertion gate is met; real scripted execution and release validation remain separate obligations.
