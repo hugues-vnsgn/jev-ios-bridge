@@ -82,7 +82,7 @@ async function main(): Promise<void> {
     if (manifest.status !== 'frozen' || manifest.corpusSha256 !== digest(corpus) || manifest.implementationSha256 !== implementationDigest()) throw new ExperimentError('MANIFEST_NOT_FROZEN');
     await save(out, 'label-review.md', renderLabelReview(corpus, manifest));
     await save(out, 'approval.template.json', {
-      version: 1, approved: false, reviewedBy: '', reviewedAt: '',
+      version: manifest.version, approved: false, reviewedBy: '', reviewedAt: '',
       corpusSha256: digest(corpus), manifestSha256: digest(manifest),
     });
     process.stdout.write('Review sheet and unapproved template written. No Jev request made.\n');

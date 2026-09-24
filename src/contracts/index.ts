@@ -1,15 +1,32 @@
-/** Provisional seams; empirical configuration remains gated by ticket 08. */
+/** Provisional seams; the checkpoint path is experimental after ticket 18. */
 export type Verdict = 'passed' | 'failed' | 'inconclusive';
 export type Direction = 'up' | 'down' | 'left' | 'right';
 
-export interface Scenario {
-  goal: string;
+export interface ScenarioContext {
   app: { bundleId: string };
-  assertions: Array<{ id: string; claim: string }>;
   values: Record<string, string>;
   preconditions?: string[];
   device?: { udid?: string };
 }
+
+export interface Assertion { id: string; claim: string }
+
+/** Existing single-goal scenario; Jev and the feasibility harness consume this shape. */
+export interface Scenario extends ScenarioContext {
+  goal: string;
+  assertions: Assertion[];
+  checkpoints?: never;
+}
+
+export interface Checkpoint { id: string; goal: string; assertions: Assertion[] }
+
+export interface CheckpointScenario extends ScenarioContext {
+  checkpoints: Checkpoint[];
+  goal?: never;
+  assertions?: never;
+}
+
+export type RunScenario = Scenario | CheckpointScenario;
 
 export interface Element {
   ref: string;
@@ -59,10 +76,20 @@ export interface Judgment {
 }
 
 export interface DeviceDriver {
-  prepare(scenario: Scenario, signal: AbortSignal): Promise<void>;
+  prepare(scenario: RunScenario, signal: AbortSignal): Promise<void>;
   observe(signal: AbortSignal): Promise<Snapshot>;
   act(action: Action, snapshot: Snapshot, scenario: Scenario, signal: AbortSignal): Promise<void>;
   close(signal: AbortSignal): Promise<void>;
+  metrics?(): DeviceMetrics;
+}
+
+export interface DeviceMetrics {
+  /** Completed captures to refresh an action's reference, proactive or reactive. */
+  referenceRefreshes: number;
+  /** Vendor SNAPSHOT_EXPIRED responses observed while acting. */
+  referenceExpiries: number;
+  /** Proactive refreshes started near a reference's expiry time. */
+  nearTtlRefreshes: number;
 }
 
 export interface JevJudge {
@@ -74,7 +101,7 @@ export interface RunEvent {
   runId: string;
   sequence: number;
   at: string;
-  type: 'started' | 'prepared' | 'step' | 'judgment' | 'action' | 'error' | 'verdict';
+  type: 'started' | 'prepared' | 'step' | 'judgment' | 'action' | 'checkpoint' | 'error' | 'verdict';
   data: Record<string, unknown>;
 }
 

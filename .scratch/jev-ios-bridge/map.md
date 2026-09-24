@@ -29,6 +29,8 @@ A verified implementation and GitHub prerelease v0.1.0 of the bridge, including 
 
 ## Decisions so far
 
+- [Second feasibility run](issues/18-feasibility-revision.md): also no-go, with 16/20 correct, 14/20 accepted, and two accepted errors. [Checkpoint feasibility](issues/19-checkpoint-feasibility.md) now tests explicit observable subgoals while keeping the same success bar and autonomous bridge-owned execution.
+
 - [First feasibility run](issues/08-feasibility-run.md): no-go. Filtered full observations with history and threshold 0.9 produced 15/20 correct actions and 7/20 accepted cases, with no accepted errors or false-pass assertions. [A revision](issues/18-feasibility-revision.md) must meet the same bar on fresh held-out cases before production design proceeds.
 
 - [Local environment](issues/06-local-environment.md): dedicated iOS 26.4 simulator is ready, pinned MobileBuildMCP captures work, and the supplied key authenticates. Settings, Contacts, Reminders, and Files are available; Weather is not installed.
@@ -66,11 +68,12 @@ flowchart LR
     T16["16 Vertical slice<br/><small>prototype</small>"]
     T17["17 Slice measurements<br/><small>task</small>"]
     T18["18 Feasibility revision<br/><small>prototype</small>"]
+    T19["19 Checkpoint feasibility<br/><small>prototype</small>"]
     T06 --> T08
     T07 --> T08
-    T18 --> T09
-    T18 --> T10
-    T18 --> T11
+    T19 --> T09
+    T19 --> T10
+    T19 --> T11
     T09 --> T11
     T10 --> T11
     T05 --> T12
@@ -90,12 +93,13 @@ flowchart LR
     T15 --> T16
     T16 --> T17
     T08 --> T18
+    T18 --> T19
     classDef resolved fill:#e4e4e7,stroke:#a1a1aa,color:#52525b
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T06,T07,T08 resolved
-    class T18 claimed
+    class T01,T02,T03,T04,T05,T06,T07,T08,T18 resolved
+    class T19 claimed
     class T09,T10,T11,T12,T13,T14,T15,T16,T17 blocked
 ```
 <!-- route:end -->

@@ -40,3 +40,5 @@ The research left two shapes viable. The owner chose between them on 2026-09-24.
 ## Feasibility evidence, 2026-09-24
 
 The first frozen experiment did not meet the agreed bar: 15/20 correct next actions against a required 18, and 7/20 accepted steps against a required 16. There were no wrong accepted actions, false-pass assertions, or request failures. The decision is reopened and remains proposed; it is not approved for release. [Ticket 08](../../.scratch/jev-ios-bridge/issues/08-feasibility-run.md) records the results. [Ticket 18](../../.scratch/jev-ios-bridge/issues/18-feasibility-revision.md) investigates a revision using fresh held-out evidence.
+
+The second experiment also failed: 16/20 correct actions, 14/20 accepted, two incorrect accepted actions, and no false-pass assertions or request failures. [Ticket 19](../../.scratch/jev-ios-bridge/issues/19-checkpoint-feasibility.md) now tests explicit ordered checkpoints. It retains bridge-owned execution while narrowing what each Jev judgment must decide. General broad-goal navigation is not approved for release.

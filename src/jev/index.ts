@@ -16,6 +16,12 @@ export const DEFAULT_WORDING: QuestionWording = {
   goalReached: 'Does the current observation establish that the scenario goal has been reached?',
   assertion: 'Does the current observation establish this specific scenario claim?',
 };
+/** Revised phrasing for the separately approved v2 feasibility experiment. */
+export const V2_WORDING: QuestionWording = {
+  nextAction: 'Which complete listed action best advances the scenario goal now? Resolve a blocking setup or permission prompt before using controls behind it. Choose stop-goal only when the entire requested end state and its evidence are visibly established now; do not tap text merely to read evidence already visible. If progress is visibly blocked, choose stop-blocked; if no listed action fits and no blocker is established, choose none.',
+  goalReached: 'Does this observation visibly establish the entire scenario goal now, including any named item or requested verification evidence? A general completion banner is insufficient when the goal asks to see a particular item. Do not require another tap merely to read evidence already visible.',
+  assertion: DEFAULT_WORDING.assertion,
+};
 
 export class JevContractError extends Error {
   constructor(readonly code: 'INVALID_INPUT' | 'REQUEST_BUDGET' | 'MALFORMED_RESPONSE') {

@@ -1,0 +1,95 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "0coersn",
+      "seq": 45,
+      "count": 262,
+      "targets": [
+        "e27|tap|button|Contact photo for John Appleseed||",
+        "e35|tap|button|Contact photo for Kate Bell||",
+        "e43|tap|button|Contact photo for Anna Haro||",
+        "e48|tap|button|Contact photo for Daniel Higgins Jr.||",
+        "e56|tap|button|Contact photo for David Taylor||",
+        "e64|tap|button|Contact photo for Hank M. Zakroff||",
+        "e82|typeText|text-field||Search|",
+        "e116|typeText|text-field|First name|Mira|First name",
+        "e119|typeText|text-field|Last name|Vale|Last name",
+        "e123|typeText|text-field||Company|Company",
+        "e11|tap|button|Back||BackButton",
+        "e83|tap|button|Dictate||Dictate",
+        "e85|tap|button|Dictate||Dictate",
+        "e90|tap|button|Add||",
+        "e103|tap|button|Done||",
+        "e112|tap|button|Add photo||",
+        "e120|tap|button|Clear text||",
+        "e125|tap|button|add phone||",
+        "e126|tap|button|Insert add phone||",
+        "e130|tap|button|add email||",
+        "e131|tap|button|Insert add email||",
+        "e135|tap|button|add pronouns||",
+        "e136|tap|button|Insert add pronouns||",
+        "e150|tap|button|add url||",
+        "e151|tap|button|Insert add url||",
+        "e175|tap|button|add url||",
+        "e176|tap|button|Insert add url||",
+        "e180|tap|button|add pronouns||",
+        "e181|tap|button|Insert add pronouns||",
+        "e185|tap|button|add email||",
+        "e186|tap|button|Insert add email||",
+        "e190|tap|button|add phone||",
+        "e191|tap|button|Insert add phone||",
+        "e195|tap|button|Add photo||",
+        "e101|tap|button|close||"
+      ],
+      "scroll": [
+        "e18|swipe|other|||ContactsListView",
+        "e114|swipe|scroll-view|||"
+      ],
+      "text": [
+        "e24|text|text|A||",
+        "e29|text|text|John Appleseed||",
+        "e33|text|text|B||",
+        "e37|text|text|Kate Bell||",
+        "e41|text|text|H||",
+        "e196|text|text|Add Photo||",
+        "e45|text|text|Anna Haro||",
+        "e50|text|text|Daniel Higgins Jr.||",
+        "e54|text|text|T||",
+        "e58|text|text|David Taylor||",
+        "e62|text|text|Z||",
+        "e129|text|text|add phone||",
+        "e194|text|text|add phone||",
+        "e66|text|text|Hank M. Zakroff||",
+        "e134|text|text|add email||",
+        "e189|text|text|add email||",
+        "e139|text|text|add pronouns||",
+        "e184|text|text|add pronouns||",
+        "e143|text|text|Default||",
+        "e141|text|text|Ringtone||",
+        "e148|text|text|Default||",
+        "e146|text|text|Text Tone||",
+        "e154|text|text|add url||",
+        "e179|text|text|add url||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Drag visible sheet content: mobilebuildmcp ui-automation drag --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e114 --direction up --distance 0.7 --duration 0.8 --steps 80 --post-delay 0.5",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e112"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "02lncki",
+      "seq": 174,
+      "count": 159,
+      "targets": [
+        "e71|typeText|text-field|List Name|Market Errands|",
+        "e11|tap|button|Back||BackButton",
+        "e12|tap|button|More||",
+        "e45|tap|button|New Reminder||",
+        "e55|tap|button|Cancel||",
+        "e57|tap|button|Done||",
+        "e72|tap|button|Clear text||"
+      ],
+      "scroll": [
+        "e64|swipe|scroll-view|||"
+      ],
+      "text": [
+        "e78|text|text||Red|Red",
+        "e79|text|text||Orange|Orange",
+        "e80|text|text||Yellow|Yellow",
+        "e81|text|text||Green|Green",
+        "e82|text|text||Blue|Blue",
+        "e83|text|text||Purple|Purple",
+        "e84|text|text||Brown|Brown",
+        "e34|text|text|No Reminders||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e45\"},{\"action\":\"tap\",\"elementRef\":\"e72\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e45",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e64 --direction up --distance 0.5"
+  ]
+}

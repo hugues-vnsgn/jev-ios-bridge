@@ -1,0 +1,45 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "1f16z7j",
+      "seq": 166,
+      "count": 139,
+      "targets": [
+        "e62|tap|button|Sort By, Manual||",
+        "e11|tap|button|Back||BackButton",
+        "e12|tap|button|More||",
+        "e45|tap|button|New Reminder||",
+        "e56|tap|button|Show List Info||",
+        "e59|tap|button|Select Reminders||",
+        "e66|tap|button|Show Completed||",
+        "e69|tap|button|Print||",
+        "e72|tap|button|Delete List||"
+      ],
+      "scroll": [
+        "e1|swipe|application|Reminders||"
+      ],
+      "text": [
+        "e34|text|text|No Reminders||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e12\"},{\"action\":\"tap\",\"elementRef\":\"e45\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e62"
+  ]
+}

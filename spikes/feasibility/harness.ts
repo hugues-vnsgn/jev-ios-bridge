@@ -2,9 +2,9 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { readFile, realpath } from 'node:fs/promises';
 import { dirname, isAbsolute, relative, resolve } from 'node:path';
-import type { HistoryEntry, JevJudge, Judgment, Scenario, Snapshot } from '../../src/contracts/index.js';
-import { actionOptions, buildObservation, type ObservationVariant } from '../../src/observation/index.js';
-import { DEFAULT_WORDING, JEV_MODEL, JevContractError, JevRequestError, type QuestionWording } from '../../src/jev/index.js';
+import type { HistoryEntry, JevJudge, Scenario, Snapshot } from '../../src/contracts/index.js';
+import { actionOptions, buildObservation, projectActionOptions, type ObservationVariant, type OptionRule } from '../../src/observation/index.js';
+import { DEFAULT_WORDING, V2_WORDING, JEV_MODEL, JevContractError, JevRequestError, type QuestionWording } from '../../src/jev/index.js';
 import { ObservationError } from '../../src/observation/index.js';
 
 export interface FeasibilityCase {
@@ -21,11 +21,11 @@ export interface FeasibilityCase {
   /** Proposed by the capturing agent, then bound to owner approval by corpus hash. */
   labels: { acceptableActionIds: string[]; goalReached: boolean; assertions: Record<string, boolean> };
 }
-export interface FeasibilityCorpus { version: 1; cases: FeasibilityCase[] }
+export interface FeasibilityCorpus { version: 1 | 2; cases: FeasibilityCase[] }
 export type ConfigurationId = 'A' | 'B' | 'C' | 'D';
 export interface ExperimentConfiguration { id: ConfigurationId; variant: ObservationVariant; history: boolean }
 export interface ExperimentManifest {
-  version: 1;
+  version: 1 | 2;
   status: 'draft' | 'frozen';
   corpusSha256: string;
   implementationSha256: string;
@@ -38,14 +38,14 @@ export interface ExperimentManifest {
   maxCandidates: number;
   maxStateBytes: number;
   wording: QuestionWording;
-  candidateRule: 'visible-enabled-v1';
-  optionRule: 'complete-actions-v1';
+  candidateRule: 'visible-enabled-v1' | 'visible-enabled-v2';
+  optionRule: 'complete-actions-v1' | 'complete-actions-v2';
   historyRule: 'recent-steps-v1';
   gateRule: 'ticket-07-v1';
   selectionRule: 'coverage-correctness-tokens-order-threshold-v1';
 }
 export interface OwnerApproval {
-  version: 1;
+  version: 1 | 2;
   approved: true;
   reviewedBy: string;
   reviewedAt: string;
@@ -64,6 +64,7 @@ export interface CaseResult {
   inputTokens?: number;
   latencyMs?: number;
   model?: string;
+  collapsedTapRefs?: Record<string, string[]>;
   top1Correct: boolean;
   completionLabelCorrect?: boolean;
   assertionLabelMatches?: number;
@@ -88,7 +89,7 @@ export interface ThresholdSummary {
   qualifying: boolean;
 }
 export interface FrozenSelection {
-  version: 1;
+  version: 1 | 2;
   corpusSha256: string;
   manifestSha256: string;
   configuration: ConfigurationId;
@@ -177,9 +178,27 @@ export const CONFIGURATIONS: ExperimentConfiguration[] = [
   { id: 'D', variant: 'full', history: true },
 ];
 const THRESHOLDS = [0.6, 0.7, 0.8, 0.9];
+const optionRuleFor = (version: 1 | 2): OptionRule => version === 2 ? 'v2' : 'v1';
+
+function validateActionLabels(ids: string[], offered: Set<string>, collapsed: Record<string, string[]>, version: 1 | 2): void {
+  for (const id of ids) if (!offered.has(id)) fail('LABEL_ACTION_UNKNOWN');
+  if (new Set(ids).size !== ids.length) fail('LABEL_DUPLICATE');
+  if (version !== 2) return;
+  const accepted = new Set(ids);
+  for (const [canonical, aliases] of Object.entries(collapsed)) {
+    const canonicalId = `tap:${encodeURIComponent(canonical)}`;
+    if (aliases.some(ref => accepted.has(`tap:${encodeURIComponent(ref)}`)) && !accepted.has(canonicalId)) {
+      fail('CANONICAL_LABEL_REQUIRED');
+    }
+    if (accepted.has(canonicalId) && aliases.some(ref => {
+      const aliasId = `tap:${encodeURIComponent(ref)}`;
+      return offered.has(aliasId) && !accepted.has(aliasId);
+    })) fail('EQUIVALENT_LABEL_REQUIRED');
+  }
+}
 
 export function validateCorpus(corpus: FeasibilityCorpus): void {
-  if (corpus.version !== 1 || !Array.isArray(corpus.cases) || corpus.cases.length !== 30) fail('CORPUS_COUNT');
+  if (![1, 2].includes(corpus.version) || !Array.isArray(corpus.cases) || corpus.cases.length !== 30) fail('CORPUS_COUNT');
   const ids = new Set<string>();
   const groupPartitions = new Map<string, string>();
   let tuning = 0;
@@ -205,15 +224,16 @@ export function validateCorpus(corpus: FeasibilityCorpus): void {
       if (typeof item.labels.assertions[id] !== 'boolean') fail('ASSERTION_LABELS');
       if (item.partition === 'heldout' && item.labels.assertions[id] === false) knownFailingHeldout++;
     }
-    const fullOptions = actionOptions(item.fullSnapshot, item.scenario, 255);
-    const fullIds = new Set(fullOptions.map(option => option.id));
-    for (const id of item.labels.acceptableActionIds) if (!fullIds.has(id)) fail('LABEL_ACTION_UNKNOWN');
-    if (new Set(item.labels.acceptableActionIds).size !== item.labels.acceptableActionIds.length) fail('LABEL_DUPLICATE');
+    const rule = optionRuleFor(corpus.version);
+    const full = projectActionOptions(item.fullSnapshot, item.scenario, 255, { variant: 'full', optionRule: rule });
+    const compact = actionOptions(item.compactSnapshot, item.scenario, 255, { variant: 'compact', optionRule: rule });
+    const offered = new Set((corpus.version === 2 ? [...full.options, ...compact] : full.options).map(option => option.id));
+    validateActionLabels(item.labels.acceptableActionIds, offered, full.collapsedTapRefs, corpus.version);
     if (item.positionalVariant) {
       if (item.partition !== 'tuning' || !item.positionalVariant.goal?.trim() || item.positionalVariant.goal === item.scenario.goal ||
           !/(?:first|second|third|fourth|row|\b\d+(?:st|nd|rd|th)\b)/i.test(item.positionalVariant.goal) ||
           !Array.isArray(item.positionalVariant.acceptableActionIds) || !item.positionalVariant.acceptableActionIds.length) fail('POSITIONAL_PAIR_INVALID');
-      for (const id of item.positionalVariant.acceptableActionIds) if (!fullIds.has(id)) fail('POSITIONAL_PAIR_INVALID');
+      validateActionLabels(item.positionalVariant.acceptableActionIds, offered, full.collapsedTapRefs, corpus.version);
       positionalPairs++;
     }
   }
@@ -223,35 +243,37 @@ export function validateCorpus(corpus: FeasibilityCorpus): void {
 export function makeDraftManifest(corpus: FeasibilityCorpus): ExperimentManifest {
   validateCorpus(corpus);
   return {
-    version: 1, status: 'draft', corpusSha256: digest(corpus), implementationSha256: implementationDigest(), model: JEV_MODEL,
+    version: corpus.version, status: 'draft', corpusSha256: digest(corpus), implementationSha256: implementationDigest(), model: JEV_MODEL,
     configurations: CONFIGURATIONS.map(config => ({ ...config })), thresholds: [...THRESHOLDS],
     noulYes: 0.9, noulNo: 0.1, maxHistory: 3, maxCandidates: 64, maxStateBytes: 24_000,
-    wording: { ...DEFAULT_WORDING }, candidateRule: 'visible-enabled-v1',
-    optionRule: 'complete-actions-v1', historyRule: 'recent-steps-v1',
+    wording: { ...(corpus.version === 2 ? V2_WORDING : DEFAULT_WORDING) },
+    candidateRule: corpus.version === 2 ? 'visible-enabled-v2' : 'visible-enabled-v1',
+    optionRule: corpus.version === 2 ? 'complete-actions-v2' : 'complete-actions-v1', historyRule: 'recent-steps-v1',
     gateRule: 'ticket-07-v1', selectionRule: 'coverage-correctness-tokens-order-threshold-v1',
   };
 }
 
 export function validateFrozenExperiment(corpus: FeasibilityCorpus, manifest: ExperimentManifest, approval: OwnerApproval): void {
   validateCorpus(corpus);
-  if (manifest.version !== 1 || manifest.status !== 'frozen' || manifest.model !== JEV_MODEL || manifest.corpusSha256 !== digest(corpus)) fail('MANIFEST_NOT_FROZEN');
+  if (manifest.version !== corpus.version || manifest.status !== 'frozen' || manifest.model !== JEV_MODEL || manifest.corpusSha256 !== digest(corpus)) fail('MANIFEST_NOT_FROZEN');
   if (manifest.implementationSha256 !== implementationDigest()) fail('IMPLEMENTATION_CHANGED');
   if (JSON.stringify(manifest.configurations) !== JSON.stringify(CONFIGURATIONS) || JSON.stringify(manifest.thresholds) !== JSON.stringify(THRESHOLDS) ||
-      manifest.noulYes !== 0.9 || manifest.noulNo !== 0.1 || manifest.candidateRule !== 'visible-enabled-v1' ||
-      manifest.optionRule !== 'complete-actions-v1' || manifest.historyRule !== 'recent-steps-v1' ||
+      manifest.noulYes !== 0.9 || manifest.noulNo !== 0.1 ||
+      manifest.candidateRule !== `visible-enabled-v${manifest.version}` ||
+      manifest.optionRule !== `complete-actions-v${manifest.version}` || manifest.historyRule !== 'recent-steps-v1' ||
       manifest.gateRule !== 'ticket-07-v1' || manifest.selectionRule !== 'coverage-correctness-tokens-order-threshold-v1') fail('MANIFEST_PROTOCOL');
   if (!Number.isSafeInteger(manifest.maxHistory) || manifest.maxHistory < 1 || manifest.maxHistory > 20 ||
       !Number.isSafeInteger(manifest.maxCandidates) || manifest.maxCandidates < 1 || manifest.maxCandidates > 255 ||
       !Number.isSafeInteger(manifest.maxStateBytes) || manifest.maxStateBytes < 1 || manifest.maxStateBytes > 28_000 ||
       !manifest.wording.nextAction || !manifest.wording.goalReached || !manifest.wording.assertion) fail('MANIFEST_SETTINGS');
-  if (approval.version !== 1 || approval.approved !== true || !approval.reviewedBy?.trim() || !approval.reviewedAt?.trim() ||
+  if (approval.version !== manifest.version || approval.approved !== true || !approval.reviewedBy?.trim() || !approval.reviewedAt?.trim() ||
       approval.corpusSha256 !== digest(corpus) || approval.manifestSha256 !== digest(manifest)) fail('OWNER_APPROVAL_REQUIRED');
 }
 
 function observationFor(item: FeasibilityCase, config: ExperimentConfiguration, manifest: ExperimentManifest) {
   return buildObservation(item.scenario, config.variant === 'compact' ? item.compactSnapshot : item.fullSnapshot,
     config.history ? item.history : [], {
-      variant: config.variant, maxHistory: manifest.maxHistory,
+      variant: config.variant, optionRule: optionRuleFor(manifest.version), maxHistory: manifest.maxHistory,
       maxCandidates: manifest.maxCandidates, maxStateBytes: manifest.maxStateBytes,
     });
 }
@@ -261,6 +283,8 @@ export async function evaluateCase(item: FeasibilityCase, config: ExperimentConf
   const base: CaseResult = { caseId: item.id, configuration: config.id, variant, top1Correct: false, knownFailingAssertions, falsePassAssertions: 0 };
   try {
     const observation = observationFor(item, config, manifest);
+    const collapsedTapRefs = projectActionOptions(observation.snapshot, item.scenario, manifest.maxCandidates,
+      { variant: config.variant, optionRule: optionRuleFor(manifest.version) }).collapsedTapRefs;
     const judgment = await judge.judge(item.scenario, observation, signal);
     const falsePassAssertions = Object.entries(item.labels.assertions).filter(([id, expected]) => !expected && (judgment.assertions[id] ?? -1) >= manifest.noulYes).length;
     const completionLabelCorrect = item.labels.goalReached ? judgment.goalReached >= manifest.noulYes : judgment.goalReached <= manifest.noulNo;
@@ -270,6 +294,7 @@ export async function evaluateCase(item: FeasibilityCase, config: ExperimentConf
       ...base, choice: judgment.choice, confidence: judgment.confidence, probabilities: judgment.probabilities,
       goalReached: judgment.goalReached, assertions: judgment.assertions, inputTokens: judgment.inputTokens,
       latencyMs: judgment.latencyMs, model: judgment.model,
+      ...(Object.keys(collapsedTapRefs).length ? { collapsedTapRefs } : {}),
       top1Correct: item.labels.acceptableActionIds.includes(judgment.choice), completionLabelCorrect,
       assertionLabelMatches, falsePassAssertions,
     };
@@ -288,7 +313,9 @@ export function gateCase(item: FeasibilityCase, result: CaseResult, threshold: n
   if (!result.choice || result.choice === 'none') return { accepted: false, reason: 'none', correct };
   if (result.confidence === undefined || !Number.isFinite(result.confidence) || result.confidence < threshold) return { accepted: false, reason: 'choice-confidence', correct };
   const snapshot = result.configuration === 'A' || result.configuration === 'B' ? item.compactSnapshot : item.fullSnapshot;
-  const action = actionOptions(snapshot, item.scenario, manifest.maxCandidates).find(option => option.id === result.choice)?.action;
+  const action = actionOptions(snapshot, item.scenario, manifest.maxCandidates,
+    { variant: result.configuration === 'A' || result.configuration === 'B' ? 'compact' : 'full',
+      optionRule: optionRuleFor(manifest.version) }).find(option => option.id === result.choice)?.action;
   if (!action || result.goalReached === undefined || !Number.isFinite(result.goalReached)) return { accepted: false, reason: 'malformed-action', correct };
   if (action.kind === 'stop-goal') {
     if (result.goalReached < manifest.noulYes) return { accepted: false, reason: 'completion-not-yes', correct };
@@ -353,14 +380,14 @@ export async function runTuning(corpus: FeasibilityCorpus, manifest: ExperimentM
     [threshold.toFixed(1), gateCase(byId.get(result.caseId)!, result, threshold, manifest)])) }));
   return {
     results: perCase, positionalResults, comparison,
-    selection: winner ? { version: 1, corpusSha256: digest(corpus), manifestSha256: digest(manifest), configuration: winner.configuration,
+    selection: winner ? { version: manifest.version, corpusSha256: digest(corpus), manifestSha256: digest(manifest), configuration: winner.configuration,
       threshold: winner.threshold, tuningSummary: comparison, tuningResultsSha256: digest({ primary: perCase, positional: positionalResults }) } : null,
   };
 }
 
 export function validateFrozenSelection(corpus: FeasibilityCorpus, manifest: ExperimentManifest, approval: OwnerApproval, selection: FrozenSelection, tuningRun: TuningRun): ExperimentConfiguration {
   validateFrozenExperiment(corpus, manifest, approval);
-  if (selection.version !== 1 || selection.corpusSha256 !== digest(corpus) || selection.manifestSha256 !== digest(manifest)) fail('SELECTION_MISMATCH');
+  if (selection.version !== manifest.version || selection.corpusSha256 !== digest(corpus) || selection.manifestSha256 !== digest(manifest)) fail('SELECTION_MISMATCH');
   if (!tuningRun.selection || digest({ primary: tuningRun.results, positional: tuningRun.positionalResults }) !== selection.tuningResultsSha256 || digest(tuningRun.comparison) !== digest(selection.tuningSummary) ||
       digest(tuningRun.selection) !== digest(selection)) fail('TUNING_LOCK_MISMATCH');
   const expectedComparison = manifest.configurations.flatMap(candidate => manifest.thresholds.map(threshold =>
@@ -417,8 +444,12 @@ export function renderLabelReview(corpus: FeasibilityCorpus, manifest: Experimen
     'Review every acceptable action, completion label, assertion label, case group and partition. The approval file must bind both hashes after the manifest is frozen.', '',
   ];
   for (const item of corpus.cases) {
-    const full = actionOptions(item.fullSnapshot, item.scenario, 255);
-    const compactIds = new Set(actionOptions(item.compactSnapshot, item.scenario, 255).map(option => option.id));
+    const rule = optionRuleFor(manifest.version);
+    const full = projectActionOptions(item.fullSnapshot, item.scenario, 255, { variant: 'full', optionRule: rule });
+    const compact = actionOptions(item.compactSnapshot, item.scenario, 255, { variant: 'compact', optionRule: rule });
+    const fullIds = new Set(full.options.map(option => option.id));
+    const compactIds = new Set(compact.map(option => option.id));
+    const offered = [...full.options, ...compact.filter(option => !fullIds.has(option.id))];
     lines.push(`## ${escapeTableCell(item.id)} (${item.partition}; group ${escapeTableCell(item.scenarioGroup)})`, '',
       `Goal: ${escapeTableCell(item.scenario.goal)}`, '',
       ...(item.positionalVariant ? [`Positional alternate goal (same capture, tuning only): ${escapeTableCell(item.positionalVariant.goal)}`,
@@ -427,8 +458,12 @@ export function renderLabelReview(corpus: FeasibilityCorpus, manifest: Experimen
       `Goal reached: **${item.labels.goalReached}**`, '',
       `Assertions: ${Object.entries(item.labels.assertions).map(([id, value]) => `\`${id}\`=${value}`).join(', ') || '(none)'}`, '',
       `Evidence: ${item.assets ? `${escapeTableCell(item.assets.compactPath)}, ${escapeTableCell(item.assets.fullPath)}, ${escapeTableCell(item.assets.screenshotPath)}` : '(paths not recorded)'}`, '',
-      '| Action ID | Full-snapshot description | In compact capture |', '| --- | --- | --- |',
-      ...full.map(option => `| \`${option.id}\` | ${escapeTableCell(option.description)} | ${compactIds.has(option.id) ? 'yes' : 'no'} |`), '');
+      ...(Object.keys(full.collapsedTapRefs).length ? [
+        `Full-only collapsed tap refs: ${Object.entries(full.collapsedTapRefs).map(([canonical, aliases]) =>
+          `\`${canonical}\` ← ${aliases.map(alias => `\`${alias}\``).join(', ')}`).join('; ')}`, '',
+      ] : []),
+      '| Action ID | Description | In full | In compact |', '| --- | --- | --- | --- |',
+      ...offered.map(option => `| \`${option.id}\` | ${escapeTableCell(option.description)} | ${fullIds.has(option.id) ? 'yes' : 'no'} | ${compactIds.has(option.id) ? 'yes' : 'no'} |`), '');
   }
   return lines.join('\n');
 }

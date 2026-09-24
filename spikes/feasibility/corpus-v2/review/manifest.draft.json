@@ -1,0 +1,50 @@
+{
+  "version": 2,
+  "status": "draft",
+  "corpusSha256": "683121f8cb2da5b85184a92176a32ef36f61fb33cb0ca4c308c8c9cfc5b16bc2",
+  "implementationSha256": "44bcc9b76de15bee2449e30d992758d895ffb8e7c6b07b2d42e92722eada924a",
+  "model": "jev-1.13.0",
+  "configurations": [
+    {
+      "id": "A",
+      "variant": "compact",
+      "history": false
+    },
+    {
+      "id": "B",
+      "variant": "compact",
+      "history": true
+    },
+    {
+      "id": "C",
+      "variant": "full",
+      "history": false
+    },
+    {
+      "id": "D",
+      "variant": "full",
+      "history": true
+    }
+  ],
+  "thresholds": [
+    0.6,
+    0.7,
+    0.8,
+    0.9
+  ],
+  "noulYes": 0.9,
+  "noulNo": 0.1,
+  "maxHistory": 3,
+  "maxCandidates": 96,
+  "maxStateBytes": 24000,
+  "wording": {
+    "nextAction": "Which complete listed action best advances the scenario goal now? Resolve a blocking setup or permission prompt before using controls behind it. Choose stop-goal only when the entire requested end state and its evidence are visibly established now; do not tap text merely to read evidence already visible. If progress is visibly blocked, choose stop-blocked; if no listed action fits and no blocker is established, choose none.",
+    "goalReached": "Does this observation visibly establish the entire scenario goal now, including any named item or requested verification evidence? A general completion banner is insufficient when the goal asks to see a particular item. Do not require another tap merely to read evidence already visible.",
+    "assertion": "Does the current observation establish this specific scenario claim?"
+  },
+  "candidateRule": "visible-enabled-v2",
+  "optionRule": "complete-actions-v2",
+  "historyRule": "recent-steps-v1",
+  "gateRule": "ticket-07-v1",
+  "selectionRule": "coverage-correctness-tokens-order-threshold-v1"
+}
