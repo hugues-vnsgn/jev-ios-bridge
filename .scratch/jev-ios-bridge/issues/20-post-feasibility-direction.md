@@ -1,7 +1,7 @@
 # Product direction after three feasibility no-go results
 
 Type: grilling
-Status: open
+Status: resolved
 Blocked by: 19
 
 ## Question
@@ -33,4 +33,8 @@ Keep Jev choosing every action and defer v0.1 publication. Further research need
 
 ## Decision
 
-Pending owner discussion. No new live experiment, scripted implementation, or publication is authorized by this ticket itself.
+The owner selected **Evaluate scripted bridge execution** in the conversation. This authorizes a prototype and a new evaluation protocol; it does not approve the architecture for publication or turn any prior no-go into a pass. The main agent owns the protocol, tracker, docs, and owner label review. Coding, builds, and tests remain delegated to `gpt-6-sol` high agents.
+
+## Answer
+
+Proceed with [scripted feasibility](21-scripted-feasibility.md). Keep one host submission and bridge-owned execution, replace autonomous action selection with explicit actions and deterministic guards/selectors, and evaluate Jev assertion checks separately on fresh evidence. Publication still depends on passing that contract's preregistered tests and the installed-host and comparison measurements.

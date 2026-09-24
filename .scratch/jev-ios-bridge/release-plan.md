@@ -4,7 +4,7 @@ Status: preparatory phase reviewed by the main agent and in progress on `feat/v0
 
 ## Execution order and gates
 
-Current checkpoint: all three feasibility evaluations failed the unchanged bar. The checkpoint design scored 17/20 correct actions and 10/20 accepted, with zero wrong accepted actions or false-pass assertions. [Ticket 19](issues/19-checkpoint-feasibility.md) is resolved with that no-go; [ticket 20](issues/20-post-feasibility-direction.md) asks the owner to choose the next product contract. Production design, live benchmark execution, merge, and prerelease remain blocked. The implementation passes 93 scripted tests, type checking, and build; these do not override the live result. Real wait-state coverage remains explicitly deferred.
+Current checkpoint: all three feasibility evaluations failed the unchanged bar. The checkpoint design scored 17/20 correct actions and 10/20 accepted, with zero wrong accepted actions or false-pass assertions. [Ticket 19](issues/19-checkpoint-feasibility.md) is resolved with that no-go; [ticket 20](issues/20-post-feasibility-direction.md) records owner approval to evaluate explicit scripted execution. [Ticket 21](issues/21-scripted-feasibility.md) now tests deterministic actions and Noul-only assertions under a separate preregistered protocol. Production design, live benchmark execution, merge, and prerelease remain blocked. The implementation passes 93 scripted tests, type checking, and build; these do not override the live result. Real wait-state coverage remains explicitly deferred.
 
 | Phase | Work | Exit gate |
 | --- | --- | --- |
