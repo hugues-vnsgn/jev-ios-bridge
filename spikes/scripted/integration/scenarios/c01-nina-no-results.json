@@ -6,7 +6,7 @@
     "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
   },
   "preconditions": [
-    "Contacts list is in front with an empty Search field."
+    "Contacts Search is in front with one active Search text field."
   ],
   "values": {
     "query": "Nina Calder"
@@ -22,16 +22,18 @@
             "label": "Contacts"
           },
           {
-            "role": "text-field",
-            "value": "Search"
+            "role": "other",
+            "label": "Search results"
+          },
+          {
+            "role": "text-field"
           }
         ]
       },
       "action": {
         "kind": "replaceText",
         "selector": {
-          "role": "text-field",
-          "value": "Search"
+          "role": "text-field"
         },
         "valueKey": "query"
       }

@@ -6,10 +6,43 @@
     "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
   },
   "preconditions": [
-    "Weather Settings sheet is open with Distance mi selected and km not selected."
+    "Weather main is in front; Distance will be mi selected when Settings opens."
   ],
   "values": {},
   "steps": [
+    {
+      "id": "openSettings",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "button",
+            "identifier": "weather.locationButton"
+          },
+          {
+            "role": "button",
+            "identifier": "weather.settingsButton"
+          }
+        ],
+        "absent": [
+          {
+            "role": "text",
+            "label": "Locations"
+          },
+          {
+            "role": "text",
+            "label": "Settings"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "identifier": "weather.settingsButton"
+        }
+      }
+    },
     {
       "id": "selectKm",
       "kind": "action",

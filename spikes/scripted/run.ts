@@ -6,7 +6,8 @@ import { SCRIPTED_JEV_MODEL } from './jev.js';
 import { renderAssertionState, ScriptedObservationError } from './observe.js';
 import { buildScriptedReport, type ScriptedReport } from './report.js';
 import { parseScriptedScenario } from './schema.js';
-import { assertScreenGuard, resolveActionTarget, ScriptSelectionError } from './select.js';
+import { assertScreenGuard, resolveActionTarget, ScriptSelectionError,
+  type SelectionOptions } from './select.js';
 
 export interface ScriptedRunLimits {
   maxSteps?: number;
@@ -23,6 +24,8 @@ export interface ScriptedRunOptions {
   log: RunLog;
   signal?: AbortSignal;
   limits?: ScriptedRunLimits;
+  /** Set only by a driver integration whose pinned tap semantics were verified. */
+  tapAliasRule?: SelectionOptions['tapAliasRule'];
 }
 
 class ScriptRunError extends Error {
@@ -106,16 +109,17 @@ function safeCode(error: unknown, signal: AbortSignal): string {
 async function waitUntil(step: Extract<ScriptedStep, { kind: 'wait' }>, initial: Snapshot,
   pollIntervalMs: number, pause: (milliseconds: number) => Promise<void>,
   capture: () => Promise<{ snapshot: Snapshot; observeDurationMs: number }>,
-  onObserved: (snapshot: Snapshot, poll: number, observeDurationMs: number) => Promise<void>): Promise<void> {
+  onObserved: (snapshot: Snapshot, poll: number, observeDurationMs: number) => Promise<void>,
+  selectionOptions: SelectionOptions): Promise<void> {
   const started = performance.now();
   let current = initial;
   let poll = 0;
   while (true) {
-    try { assertScreenGuard(current, step.until); return; }
+    try { assertScreenGuard(current, step.until, selectionOptions); return; }
     catch (error) {
       if (!(error instanceof ScriptSelectionError) || !['GUARD_MISSING', 'GUARD_FORBIDDEN'].includes(error.code)) throw error;
     }
-    assertScreenGuard(current, step.guard);
+    assertScreenGuard(current, step.guard, selectionOptions);
     const left = step.timeoutMs - (performance.now() - started);
     if (left <= 0) throw new ScriptRunError('WAIT_TIMEOUT');
     await pause(Math.min(pollIntervalMs, left));
@@ -135,6 +139,8 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
   const pollIntervalMs = bounded(limits.pollIntervalMs, 250, 1, 5_000);
   const cleanupTimeMs = bounded(limits.cleanupTimeMs, 10_000, 1, 60_000);
   const context = driverScenario(script);
+  const selectionOptions: SelectionOptions = options.tapAliasRule
+    ? { tapAliasRule: options.tapAliasRule } : {};
   const started = performance.now();
   const controller = new AbortController();
   const signal = controller.signal;
@@ -192,11 +198,11 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
         snapshotSequence: snapshot.sequence, observationSummary: summary(snapshot), observeDurationMs,
         ...(snapshot.screenshotPath ? { screenshotPath: snapshot.screenshotPath } : {}),
         ...(snapshot.logTails ? { logTails: snapshot.logTails } : {}) });
-      assertScreenGuard(snapshot, step.guard);
+      assertScreenGuard(snapshot, step.guard, selectionOptions);
 
       if (step.kind === 'action') {
         phase = 'act';
-        const target = resolveActionTarget(snapshot, step.action.selector, requiredAction(step));
+        const target = resolveActionTarget(snapshot, step.action.selector, requiredAction(step), selectionOptions);
         let selected = snapshot;
         let ref = target;
         let actDurationMs = 0;
@@ -215,8 +221,8 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
             ...(fresh.screenshotPath ? { screenshotPath: fresh.screenshotPath } : {}),
             ...(fresh.logTails ? { logTails: fresh.logTails } : {}) });
           if (snapshotChanged(snapshot, fresh)) throw new ScriptRunError('SCREEN_CHANGED');
-          assertScreenGuard(fresh, step.guard);
-          ref = resolveActionTarget(fresh, step.action.selector, requiredAction(step));
+          assertScreenGuard(fresh, step.guard, selectionOptions);
+          ref = resolveActionTarget(fresh, step.action.selector, requiredAction(step), selectionOptions);
           selected = fresh;
           phase = 'act';
           await act();
@@ -239,7 +245,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
             observeDurationMs: observedDurationMs,
             ...(observed.screenshotPath ? { screenshotPath: observed.screenshotPath } : {}),
             ...(observed.logTails ? { logTails: observed.logTails } : {}) });
-        });
+        }, selectionOptions);
         await options.log.append('action', { step: steps, stepId: step.id, action: 'wait', timeoutMs: step.timeoutMs,
           waitDurationMs: phaseTimingsMs.waitMs - waitBefore,
           stepDurationMs: Math.max(0, performance.now() - activeStepStarted) });

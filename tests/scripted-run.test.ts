@@ -32,6 +32,58 @@ test('same identity at distant frames remains ambiguous', () => {
     (error: unknown) => error instanceof ScriptSelectionError && error.code === 'GUARD_AMBIGUOUS');
 });
 
+test('Nolan same-frame button aliases resolve one tap target without a vendor identifier', () => {
+  // The pinned MobileBuild capture 1gps7nb exposes these two refs for one Nolan photo button.
+  const label = 'Contact photo for Nolan Ames';
+  const nolan: Element = { ref: 'e30', role: 'button', label,
+    frame: { x: 22, y: 112, width: 40, height: 40 },
+    state: { enabled: true, visible: true }, actions: ['tap', 'longPress', 'touch'] };
+  const alias: Element = { ...nolan, ref: 'e117' };
+  const captured = snapshot([alias, nolan]);
+  assert.throws(() => resolveActionTarget(captured, { role: 'button', label }, 'tap'),
+    (error: unknown) => error instanceof ScriptSelectionError && error.code === 'TARGET_AMBIGUOUS');
+  assert.throws(() => assertScreenGuard(captured, { present: [{ role: 'button', label }] }),
+    (error: unknown) => error instanceof ScriptSelectionError && error.code === 'GUARD_AMBIGUOUS');
+  const pinned = { tapAliasRule: 'mobilebuildmcp-2.7.1' } as const;
+  assert.equal(resolveActionTarget(captured, { role: 'button', label }, 'tap', pinned).ref, 'e30');
+  assert.doesNotThrow(() => assertScreenGuard(captured,
+    { present: [{ role: 'button', label }] }, pinned));
+});
+
+test('unidentified tap buttons with different frames or actions remain ambiguous', () => {
+  const label = 'Contact photo for Nolan Ames';
+  const nolan: Element = { ref: 'e30', role: 'button', label,
+    frame: { x: 22, y: 112, width: 40, height: 40 },
+    state: { enabled: true, visible: true }, actions: ['tap', 'longPress', 'touch'] };
+  const differentFrame: Element = { ...nolan, ref: 'e117', frame: { x: 22, y: 172, width: 40, height: 40 } };
+  const differentActions: Element = { ...nolan, ref: 'e117', actions: ['tap', 'touch'] };
+  const differentValue: Element = { ...nolan, ref: 'e117', value: 'different' };
+  const pinned = { tapAliasRule: 'mobilebuildmcp-2.7.1' } as const;
+  for (const other of [differentFrame, differentActions, differentValue]) {
+    const captured = snapshot([nolan, other]);
+    assert.throws(() => resolveActionTarget(captured, { role: 'button', label }, 'tap', pinned),
+      (error: unknown) => error instanceof ScriptSelectionError && error.code === 'TARGET_AMBIGUOUS');
+    assert.throws(() => assertScreenGuard(captured,
+      { present: [{ role: 'button', label }] }, pinned),
+    (error: unknown) => error instanceof ScriptSelectionError && error.code === 'GUARD_AMBIGUOUS');
+  }
+});
+
+test('same-frame no-identifier aliases are not generalized to typing or swiping', () => {
+  const frame = { x: 22, y: 112, width: 40, height: 40 };
+  const state = { enabled: true, visible: true };
+  const field: Element = { ref: 'e30', role: 'text-field', label: 'Email', frame, state,
+    actions: ['tap', 'typeText'] };
+  const scroll: Element = { ref: 'e30', role: 'scroll-view', label: 'List', frame, state,
+    actions: ['swipeWithin'] };
+  assert.throws(() => resolveActionTarget(snapshot([field, { ...field, ref: 'e117' }]),
+    { role: 'text-field', label: 'Email' }, 'typeText', { tapAliasRule: 'mobilebuildmcp-2.7.1' }),
+  (error: unknown) => error instanceof ScriptSelectionError && error.code === 'TARGET_AMBIGUOUS');
+  assert.throws(() => resolveActionTarget(snapshot([scroll, { ...scroll, ref: 'e117' }]),
+    { role: 'scroll-view', label: 'List' }, 'swipeWithin', { tapAliasRule: 'mobilebuildmcp-2.7.1' }),
+  (error: unknown) => error instanceof ScriptSelectionError && error.code === 'TARGET_AMBIGUOUS');
+});
+
 test('missing, disabled, offscreen, and truncated targets fail before action', () => {
   const { frame: _frame, state: _state, ...missingMetadata } = apple;
   assert.throws(() => resolveActionTarget(snapshot([apple]), { identifier: 'missing' }, 'tap'),

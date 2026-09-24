@@ -10,6 +10,7 @@ const read = (path: string) => JSON.parse(readFileSync(join(root, path), 'utf8')
 const scripted = read('spikes/scripted/corpus/corpus.json') as { cases: { id: string; snapshot: Snapshot }[] };
 const v3 = read('spikes/feasibility/corpus-v3/corpus.json') as { cases: { id: string; fullSnapshot: Snapshot }[] };
 const udid = '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7';
+const pinnedTapAlias = { tapAliasRule: 'mobilebuildmcp-2.7.1' } as const;
 const byId = (id: string): Snapshot => {
   const current = scripted.cases.find(item => item.id === id);
   if (current) return current.snapshot;
@@ -20,11 +21,14 @@ const byId = (id: string): Snapshot => {
 };
 const fixtures: Record<string, string[]> = {
   'w01-locations-open': ['s04-weather-lisbon-main', 'v3-w01-location-picker'],
-  'w02-distance-km': ['s05-weather-lisbon-distance-mi', 's06-weather-lisbon-distance-km', 's06-weather-lisbon-distance-km'],
-  'w03-distance-mi-claim': ['s05-weather-lisbon-distance-mi', 's06-weather-lisbon-distance-km', 's06-weather-lisbon-distance-km'],
-  'c01-nina-no-results': ['s07-contacts-tessa-duplicate-list', 's14-contacts-nina-calder-no-results', 's14-contacts-nina-calder-no-results'],
-  'c02-nina-card-claim': ['s07-contacts-tessa-duplicate-list', 's14-contacts-nina-calder-no-results', 's14-contacts-nina-calder-no-results'],
-  'c03-nolan-edit-final': ['s12-contacts-nolan-new-email-saved', 's11-contacts-nolan-new-email-unsaved'],
+  'w02-distance-km': ['s04-weather-lisbon-main', 's05-weather-lisbon-distance-mi',
+    's06-weather-lisbon-distance-km', 's06-weather-lisbon-distance-km'],
+  'w03-distance-mi-claim': ['s04-weather-lisbon-main', 's05-weather-lisbon-distance-mi',
+    's06-weather-lisbon-distance-km', 's06-weather-lisbon-distance-km'],
+  'c01-nina-no-results': ['launch-contacts-after-card', 's14-contacts-nina-calder-no-results', 's14-contacts-nina-calder-no-results'],
+  'c02-nina-card-claim': ['launch-contacts-after-card', 's14-contacts-nina-calder-no-results', 's14-contacts-nina-calder-no-results'],
+  'c03-nolan-edit-final': ['launch-contacts-after-card', 'nolan-duplicate-result',
+    'nolan-duplicate-result', 's12-contacts-nolan-new-email-saved', 's11-contacts-nolan-new-email-unsaved'],
   'r01-signal-kit-note': ['reminders-lists', 's21-reminders-charge-lantern-note-saved'],
   'r02-signal-kit-empty-claim': ['reminders-lists', 's21-reminders-charge-lantern-note-saved'],
   'r03-reminders-search-claim': ['reminders-lists', 'reminders-search'],
@@ -40,13 +44,13 @@ for (const [id, states] of Object.entries(fixtures)) {
   for (const [index, step] of script.steps.entries()) {
     const snapshot = byId(states[index]!);
     try {
-      assertScreenGuard(snapshot, step.guard);
+      assertScreenGuard(snapshot, step.guard, pinnedTapAlias);
       if (step.kind === 'action') {
         const capability = step.action.kind === 'replaceText' ? 'typeText'
           : step.action.kind === 'swipe' ? 'swipeWithin' : 'tap';
-        resolveActionTarget(snapshot, step.action.selector, capability);
+        resolveActionTarget(snapshot, step.action.selector, capability, pinnedTapAlias);
       }
-      if (step.kind === 'wait') assertScreenGuard(snapshot, step.until);
+      if (step.kind === 'wait') assertScreenGuard(snapshot, step.until, pinnedTapAlias);
       checked++;
     } catch (error) {
       throw new Error(`${id}/${step.id} fixture ${states[index]}: ${error instanceof Error ? error.message : String(error)}`);
@@ -62,8 +66,8 @@ for (const [id, fixture, expected] of faultFixtures) {
   const step = scenario.steps[0]!;
   if (step.kind !== 'action') throw new Error(`${id}: expected action`);
   const snapshot = byId(fixture);
-  assertScreenGuard(snapshot, step.guard);
-  try { resolveActionTarget(snapshot, step.action.selector, 'tap'); }
+  assertScreenGuard(snapshot, step.guard, pinnedTapAlias);
+  try { resolveActionTarget(snapshot, step.action.selector, 'tap', pinnedTapAlias); }
   catch (error) {
     if (error instanceof ScriptSelectionError && error.code === expected) continue;
     throw error;
@@ -73,9 +77,9 @@ for (const [id, fixture, expected] of faultFixtures) {
 const cancel = parseScriptedScenario(read('spikes/scripted/integration/faults/f03-cancel-wait.json'));
 const waitStep = cancel.steps[0]!;
 if (waitStep.kind !== 'wait') throw new Error('f03: expected wait');
-assertScreenGuard(byId('v3-d01-shop-empty'), waitStep.guard);
+assertScreenGuard(byId('v3-d01-shop-empty'), waitStep.guard, pinnedTapAlias);
 let markerMissing = false;
-try { assertScreenGuard(byId('v3-d01-shop-empty'), waitStep.until); }
+try { assertScreenGuard(byId('v3-d01-shop-empty'), waitStep.until, pinnedTapAlias); }
 catch (error) {
   if (!(error instanceof ScriptSelectionError) || error.code !== 'GUARD_MISSING') throw error;
   markerMissing = true;

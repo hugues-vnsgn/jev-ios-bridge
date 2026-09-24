@@ -49,6 +49,11 @@ const contactsList = present(
   { role: 'application', label: 'Contacts' },
   { role: 'text-field', value: 'Search' },
 );
+const contactsSearchReady = present(
+  { role: 'application', label: 'Contacts' },
+  { role: 'other', label: 'Search results' },
+  { role: 'text-field' },
+);
 const ninaQuery = present({ role: 'text-field', value: 'Nina Calder' });
 const ninaNoResults = present(
   { role: 'text-field', value: 'Nina Calder' },
@@ -62,6 +67,15 @@ const nolanCard = present(
   { role: 'text', identifier: 'ContactCardHeaderView', label: 'Nolan Ames' },
   { role: 'button', label: 'Edit' },
   { role: 'button', label: 'home, nolan.final@example.test' },
+);
+const nolanQuery = present(
+  { role: 'other', label: 'Search results' },
+  { role: 'text-field', value: 'Nolan Ames' },
+);
+const nolanSearchResult = present(
+  { role: 'other', label: 'Search results' },
+  { role: 'text-field', value: 'Nolan Ames' },
+  { role: 'button', label: 'Contact photo for Nolan Ames' },
 );
 const nolanEdit = present(
   { role: 'text-field', identifier: 'First name', value: 'Nolan' },
@@ -112,34 +126,42 @@ const cases = [
       checkpoint(locationsOpen, 'The Locations sheet is open with its search field visible.'),
     ])],
   ['w02-distance-km', 'weather', 'passed',
-    script(app.weather, ['Weather Settings sheet is open with Distance mi selected and km not selected.'], {}, [
+    script(app.weather, ['Weather main is in front; Distance will be mi selected when Settings opens.'], {}, [
+      action('openSettings', weatherMain, { kind: 'tap', selector: { role: 'button', identifier: 'weather.settingsButton' } }),
       action('selectKm', weatherDistanceMi, { kind: 'tap', selector: { role: 'button', label: 'km', value: 'not selected' } }),
       wait('settleKm', weatherDistanceReady, weatherDistanceKm),
       checkpoint(weatherDistanceReady, 'The Distance setting has km selected.'),
     ])],
   ['w03-distance-mi-claim', 'weather', 'failed',
-    script(app.weather, ['Weather Settings sheet is open with Distance mi selected and km not selected.'], {}, [
+    script(app.weather, ['Weather main is in front; Distance will be mi selected when Settings opens.'], {}, [
+      action('openSettings', weatherMain, { kind: 'tap', selector: { role: 'button', identifier: 'weather.settingsButton' } }),
       action('selectKm', weatherDistanceMi, { kind: 'tap', selector: { role: 'button', label: 'km', value: 'not selected' } }),
       wait('settleKm', weatherDistanceReady, weatherDistanceKm),
       checkpoint(weatherDistanceReady, 'The Distance setting has mi selected.'),
     ])],
 
   ['c01-nina-no-results', 'contacts', 'passed',
-    script(app.contacts, ['Contacts list is in front with an empty Search field.'],
+    script(app.contacts, ['Contacts Search is in front with one active Search text field.'],
       { query: 'Nina Calder' }, [
-        action('searchNina', contactsList, { kind: 'replaceText', selector: { role: 'text-field', value: 'Search' }, valueKey: 'query' }),
+        action('searchNina', contactsSearchReady, { kind: 'replaceText', selector: { role: 'text-field' }, valueKey: 'query' }),
         wait('settleResults', ninaQuery, present({ role: 'text', label: 'No Results for “Nina Calder”' })),
         checkpoint(ninaReady, 'Contacts shows No Results for Nina Calder.'),
       ])],
   ['c02-nina-card-claim', 'contacts', 'failed',
-    script(app.contacts, ['Contacts list is in front with an empty Search field.'],
+    script(app.contacts, ['Contacts Search is in front with one active Search text field.'],
       { query: 'Nina Calder' }, [
-        action('searchNina', contactsList, { kind: 'replaceText', selector: { role: 'text-field', value: 'Search' }, valueKey: 'query' }),
+        action('searchNina', contactsSearchReady, { kind: 'replaceText', selector: { role: 'text-field' }, valueKey: 'query' }),
         wait('settleResults', ninaQuery, present({ role: 'text', label: 'No Results for “Nina Calder”' })),
         checkpoint(ninaReady, 'A Nina Calder contact card is open.'),
       ])],
   ['c03-nolan-edit-final', 'contacts', 'passed',
-    script(app.contacts, ['The saved Nolan Ames card is in front.'], {}, [
+    script(app.contacts, ['Contacts Search is in front and synthetic Nolan Ames is saved with a final email.'],
+      { query: 'Nolan Ames' }, [
+      action('searchNolan', contactsSearchReady,
+        { kind: 'replaceText', selector: { role: 'text-field' }, valueKey: 'query' }),
+      wait('settleNolan', nolanQuery, nolanSearchResult),
+      action('openNolan', nolanSearchResult,
+        { kind: 'tap', selector: { role: 'button', label: 'Contact photo for Nolan Ames' } }),
       action('openEdit', nolanCard, { kind: 'tap', selector: { role: 'button', label: 'Edit' } }),
       checkpoint(nolanEdit, 'The Nolan Ames Edit form email field contains nolan.final@example.test.'),
     ])],

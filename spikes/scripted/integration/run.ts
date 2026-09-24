@@ -112,6 +112,7 @@ export async function runIntegration(args: IntegrationArgs, ports: IntegrationPo
   const scenario: ScriptedScenario = { ...parsed, device: { udid: args.deviceUdid } };
   // Constructing the default judge checks for a key before allocating a run or touching a device.
   const judge = ports.createJudge?.() ?? createAssertionJudge();
+  const tapAliasRule = ports.createDriver ? undefined : 'mobilebuildmcp-2.7.1' as const;
   const driver = ports.createDriver?.(args.deviceUdid) ?? createMobileBuildMcpDriver({
     cwd: process.cwd(), defaultUdid: args.deviceUdid,
     capture: 'full', screenshots: true, stopAppOnClose: true,
@@ -128,6 +129,7 @@ export async function runIntegration(args: IntegrationArgs, ports: IntegrationPo
     scenarioPath: args.scenarioPath, scenarioSha256: sha256(scenarioBytes),
     bundleId: scenario.app.bundleId, deviceUdid: args.deviceUdid,
     model: SCRIPTED_JEV_MODEL, mobileBuildMcpVersion: '2.7.1',
+    tapAliasRule: tapAliasRule ?? 'strict',
     assertionImplementationSha256: implementationDigest(), scriptedRuntimeSha256: await runtimeDigest(),
     ...(head ? { gitHead: head } : {}),
     nodeVersion: process.version, maxSteps: args.maxSteps, timeoutMs: args.timeoutMs,
@@ -136,6 +138,7 @@ export async function runIntegration(args: IntegrationArgs, ports: IntegrationPo
   await writeFile(provenancePath, `${JSON.stringify(provenance, null, 2)}\n`, { flag: 'wx', mode: 0o600 });
   const report = await runScriptedScenario({ runId, scenario, driver, judge, log,
     ...(ports.signal ? { signal: ports.signal } : {}),
+    ...(tapAliasRule ? { tapAliasRule } : {}),
     limits: { maxSteps: args.maxSteps, wallTimeMs: args.timeoutMs } });
   const recorded = buildScriptedReport(await log.read());
   const verdictEvent = recorded.events.findLast(event => event.type === 'verdict');

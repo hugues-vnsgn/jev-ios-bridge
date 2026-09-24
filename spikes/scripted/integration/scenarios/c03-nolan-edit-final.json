@@ -6,10 +6,98 @@
     "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
   },
   "preconditions": [
-    "The saved Nolan Ames card is in front."
+    "Contacts Search is in front and synthetic Nolan Ames is saved with a final email."
   ],
-  "values": {},
+  "values": {
+    "query": "Nolan Ames"
+  },
   "steps": [
+    {
+      "id": "searchNolan",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "Contacts"
+          },
+          {
+            "role": "other",
+            "label": "Search results"
+          },
+          {
+            "role": "text-field"
+          }
+        ]
+      },
+      "action": {
+        "kind": "replaceText",
+        "selector": {
+          "role": "text-field"
+        },
+        "valueKey": "query"
+      }
+    },
+    {
+      "id": "settleNolan",
+      "kind": "wait",
+      "guard": {
+        "present": [
+          {
+            "role": "other",
+            "label": "Search results"
+          },
+          {
+            "role": "text-field",
+            "value": "Nolan Ames"
+          }
+        ]
+      },
+      "until": {
+        "present": [
+          {
+            "role": "other",
+            "label": "Search results"
+          },
+          {
+            "role": "text-field",
+            "value": "Nolan Ames"
+          },
+          {
+            "role": "button",
+            "label": "Contact photo for Nolan Ames"
+          }
+        ]
+      },
+      "timeoutMs": 10000
+    },
+    {
+      "id": "openNolan",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "other",
+            "label": "Search results"
+          },
+          {
+            "role": "text-field",
+            "value": "Nolan Ames"
+          },
+          {
+            "role": "button",
+            "label": "Contact photo for Nolan Ames"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "Contact photo for Nolan Ames"
+        }
+      }
+    },
     {
       "id": "openEdit",
       "kind": "action",

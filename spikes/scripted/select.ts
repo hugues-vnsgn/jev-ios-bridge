@@ -13,6 +13,11 @@ export class ScriptSelectionError extends Error {
   }
 }
 
+/** Internal driver capability; authored scenarios cannot request alias collapsing. */
+export interface SelectionOptions {
+  tapAliasRule?: 'mobilebuildmcp-2.7.1';
+}
+
 function usableFrame(element: Element): boolean {
   return element.frame !== undefined && element.frame.width > 0 && element.frame.height > 0;
 }
@@ -62,30 +67,61 @@ function onePhysicalTargetPerAliasCluster(elements: Element[]): Element[] {
   return distinct;
 }
 
-function visibleMatches(snapshot: Snapshot, selector: Selector): Element[] {
-  if (snapshot.truncated) throw new ScriptSelectionError('SNAPSHOT_TRUNCATED');
-  return onePhysicalTargetPerAliasCluster(snapshot.elements.filter(element => matches(element, selector) && visible(element)));
+/** Pinned AXe taps the same public frame for these duplicate no-ID button refs. */
+function equivalentUnidentifiedTapButtons(left: Element, right: Element): boolean {
+  if (left.identifier || right.identifier || left.role !== 'button' || right.role !== 'button' ||
+      !left.label?.trim() || left.label !== right.label || left.value !== right.value ||
+      left.state?.visible !== true || right.state?.visible !== true ||
+      left.state.enabled !== true || right.state.enabled !== true ||
+      !left.frame || !right.frame || !usableFrame(left) || !usableFrame(right) ||
+      ![left.frame.x, left.frame.y, right.frame.x, right.frame.y].every(Number.isFinite) ||
+      left.frame.x !== right.frame.x || left.frame.y !== right.frame.y ||
+      left.frame.width !== right.frame.width || left.frame.height !== right.frame.height ||
+      !left.actions.includes('tap') || !right.actions.includes('tap')) return false;
+  const actions = new Set(left.actions);
+  const otherActions = new Set(right.actions);
+  return actions.size === otherActions.size && [...actions].every(action => otherActions.has(action));
 }
 
-export function assertScreenGuard(snapshot: Snapshot, guard: ScreenGuard): void {
+function collapseUnidentifiedTapButtonAliases(elements: Element[]): Element[] {
+  const distinct: Element[] = [];
+  for (const element of [...elements].sort((left, right) =>
+    left.ref.localeCompare(right.ref, undefined, { numeric: true }))) {
+    if (!distinct.some(existing => equivalentUnidentifiedTapButtons(existing, element))) distinct.push(element);
+  }
+  return distinct;
+}
+
+function visibleMatches(snapshot: Snapshot, selector: Selector, options: SelectionOptions): Element[] {
+  if (snapshot.truncated) throw new ScriptSelectionError('SNAPSHOT_TRUNCATED');
+  const matched = onePhysicalTargetPerAliasCluster(
+    snapshot.elements.filter(element => matches(element, selector) && visible(element)));
+  return options.tapAliasRule === 'mobilebuildmcp-2.7.1'
+    ? collapseUnidentifiedTapButtonAliases(matched) : matched;
+}
+
+export function assertScreenGuard(snapshot: Snapshot, guard: ScreenGuard,
+  options: SelectionOptions = {}): void {
   if (snapshot.truncated) throw new ScriptSelectionError('SNAPSHOT_TRUNCATED');
   for (const selector of guard.present) {
-    const matches = visibleMatches(snapshot, selector);
+    const matches = visibleMatches(snapshot, selector, options);
     if (matches.length === 0) throw new ScriptSelectionError('GUARD_MISSING');
     if (matches.length !== 1) throw new ScriptSelectionError('GUARD_AMBIGUOUS');
   }
   for (const selector of guard.absent ?? []) {
-    if (visibleMatches(snapshot, selector).length) throw new ScriptSelectionError('GUARD_FORBIDDEN');
+    if (visibleMatches(snapshot, selector, options).length) throw new ScriptSelectionError('GUARD_FORBIDDEN');
   }
 }
 
 export function resolveActionTarget(snapshot: Snapshot, selector: Selector,
-  action: 'tap' | 'typeText' | 'swipeWithin'): Element {
+  action: 'tap' | 'typeText' | 'swipeWithin', options: SelectionOptions = {}): Element {
   if (snapshot.truncated) throw new ScriptSelectionError('SNAPSHOT_TRUNCATED');
   const allMatches = snapshot.elements.filter(element => matches(element, selector));
   if (!allMatches.length) throw new ScriptSelectionError('TARGET_MISSING');
-  const candidates = onePhysicalTargetPerAliasCluster(allMatches.filter(element =>
+  const available = onePhysicalTargetPerAliasCluster(allMatches.filter(element =>
     visible(element) && element.state?.enabled === true && element.actions.includes(action)));
+  const candidates = action === 'tap' && options.tapAliasRule === 'mobilebuildmcp-2.7.1'
+    ? collapseUnidentifiedTapButtonAliases(available) : available;
   if (!candidates.length) throw new ScriptSelectionError('TARGET_UNAVAILABLE');
   if (candidates.length !== 1) throw new ScriptSelectionError('TARGET_AMBIGUOUS');
   return candidates[0]!;

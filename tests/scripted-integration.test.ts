@@ -71,6 +71,7 @@ test('a scripted run writes private replay, numeric metrics, and exact scenario/
     const provenance = JSON.parse(await readFile(result.provenancePath, 'utf8')) as Record<string, unknown>;
     assert.equal(provenance.deviceUdid, udid);
     assert.equal(provenance.mobileBuildMcpVersion, '2.7.1');
+    assert.equal(provenance.tapAliasRule, 'strict');
     assert.equal(typeof provenance.assertionImplementationSha256, 'string');
     assert.equal(provenance.assertionExperimentSha256, undefined);
     assert.equal(typeof provenance.scriptedRuntimeSha256, 'string');

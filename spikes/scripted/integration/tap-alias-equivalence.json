@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "scope": "Tap-only command equivalence for exact no-identifier button aliases in one full runtime snapshot",
+  "upstream": {
+    "repository": "getsentry/MobileBuildMCP",
+    "package": "mobilebuildmcp@2.7.1",
+    "commit": "d13ff0c707b0681769cf31da0eb42c4f94ceafff",
+    "sourceReferences": [
+      "src/mcp/tools/ui-automation/shared/runtime-snapshot.ts:267-305",
+      "src/mcp/tools/ui-automation/shared/runtime-snapshot.ts:456-494",
+      "src/mcp/tools/ui-automation/shared/runtime-snapshot.ts:497-549",
+      "src/mcp/tools/ui-automation/shared/runtime-snapshot.ts:646-674",
+      "src/mcp/tools/ui-automation/shared/runtime-snapshot.ts:719-768",
+      "src/mcp/tools/ui-automation/shared/semantic-tap.ts:50-129",
+      "src/mcp/tools/ui-automation/tap.ts:80-120",
+      "src/mcp/tools/ui-automation/tap.ts:132-136",
+      "src/mcp/tools/ui-automation/shared/axe-command.ts:31"
+    ]
+  },
+  "capture": {
+    "path": "spikes/scripted/integration/preflight/nolan-duplicate-result.full.json",
+    "sha256": "31c803bbddc5f009bd845da1a0865eda12e6612fa1c670067ca4546e674da31e",
+    "screenHash": "1gps7nb",
+    "sequence": 85,
+    "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "viewportFrame": { "x": 0, "y": 0, "width": 440, "height": 956 }
+  },
+  "candidates": [
+    {
+      "ref": "e30",
+      "role": "button",
+      "label": "Contact photo for Nolan Ames",
+      "identifier": null,
+      "value": null,
+      "frame": { "x": 22, "y": 112, "width": 40, "height": 40 },
+      "state": { "enabled": true, "visible": true },
+      "actions": ["tap", "longPress", "touch"],
+      "selectorArgs": null,
+      "axeArgs": ["tap", "-x", "42", "-y", "132", "--udid", "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"]
+    },
+    {
+      "ref": "e117",
+      "role": "button",
+      "label": "Contact photo for Nolan Ames",
+      "identifier": null,
+      "value": null,
+      "frame": { "x": 22, "y": 112, "width": 40, "height": 40 },
+      "state": { "enabled": true, "visible": true },
+      "actions": ["tap", "longPress", "touch"],
+      "selectorArgs": null,
+      "axeArgs": ["tap", "-x", "42", "-y", "132", "--udid", "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"]
+    }
+  ],
+  "proof": [
+    "normalizeNode publishes its normalized frame unchanged and initializes metadata without an activationPoint. The full capture contains these public frames.",
+    "Viewport handling uses one application/window viewport for all elements. It does not change public frames. Its only activationPoint override is a deterministic function of public frame, role, action set and that viewport; there is no parent-specific point override. The Nolan center y=132 is below the bottom-clipped-zone threshold of 889.08, so neither alias has an override.",
+    "Both aliases have the same AXe element type Button and duplicate the same label, with no identifier or value. The pinned semantic-tap selector chooser therefore returns null for both and uses coordinate mode.",
+    "For a button, the default activation point is the rounded center of the public frame: (42,132). The pinned pure createSemanticTapCommand returned identical coordinate args for e30 and e117 from this capture. The AXe command adds the same simulator UDID. No elementRef is sent to AXe."
+  ],
+  "safePredicate": [
+    "same untruncated full snapshot and simulator",
+    "both visible, enabled, nonzero-frame button elements with tap action",
+    "no identifier on either element",
+    "exactly equal public role, label, value, frame and action set",
+    "tap only; choose a deterministic representative only after equivalence is established"
+  ],
+  "enablement": "Internal opt-in only for the integration runner's pinned mobilebuildmcp@2.7.1 driver. Generic selector and runner calls remain strict by default; scenario JSON cannot request this rule.",
+  "limits": [
+    "This establishes identical pinned AXe tap commands for these aliases, not that the coordinate is unobscured or still represents the intended logical contact after the UI changes.",
+    "References remain snapshot-scoped; retain fresh guard, stale-reference handling, terminal acknowledgement and device lock.",
+    "Do not infer equivalence for unequal or distant frames, different roles/labels/values/actions, or type, swipe, long-press and touch operations."
+  ]
+}
