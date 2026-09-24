@@ -56,6 +56,8 @@ Every captured screen receives one true and one false current-screen claim. Reje
 
 Pre-freeze Reminders audit corrections: s18 shows the list overview, where both Signal Kit and Market Errands are visible. Its false claim is scoped to Signal Kit having two reminders; the row shows zero. In s20, the screenshot displays the new note under Charge lantern even though that row's accessibility label omits the note. Do not infer an unsaved backend state or an absent row note. Pair the visible editor text and Done control with the false claim that its Notes field is empty. Keep the save-transition distinction only where foreground form versus completed presentation is directly supported by both captures.
 
+Pre-freeze Contacts budget finding: the first Tessa field-reveal swipe produced 23,738 raw state bytes but 28,170 bytes after JSON escaping, exceeding the state-plus-question cap. That capture remains excluded preflight evidence. A shorter real swipe exposed the same email with a 24,654-byte two-claim request. No field was truncated and no budget changed. Capture preparation used a vendor swipe extent of 0.25; the current bridge adapter exposes direction only. This assertion case does not prove that the prototype can replay that exact transition. Any dependent execution test must separately resolve and test the extent limitation.
+
 The gate requires all of:
 
 - At least **20/24 true claims** receive probability at least 0.9.

@@ -1,0 +1,3643 @@
+{
+  "deviceId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+  "capturedAt": 1790241495041,
+  "expiresAt": 1790241555041,
+  "sequence": 10,
+  "elements": [
+    {
+      "ref": "e1",
+      "role": "application",
+      "label": "Weather",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": []
+    },
+    {
+      "ref": "e2",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e3",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e4",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e5",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e6",
+      "role": "other",
+      "label": "dismiss popup",
+      "identifier": "PopoverDismissRegion",
+      "frame": {
+        "x": -440,
+        "y": -956,
+        "width": 1320,
+        "height": 2868
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e7",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e8",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e9",
+      "role": "scroll-view",
+      "identifier": "weather.mainScrollView",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch",
+        "swipeWithin"
+      ]
+    },
+    {
+      "ref": "e10",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 62,
+        "width": 440,
+        "height": 1786.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e11",
+      "role": "text",
+      "label": "San Francisco",
+      "identifier": "weather.heroLocation",
+      "frame": {
+        "x": 153.17,
+        "y": 158,
+        "width": 133.67,
+        "height": 26.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e12",
+      "role": "text",
+      "label": "Current Location",
+      "frame": {
+        "x": 167.67,
+        "y": 186.33,
+        "width": 104.67,
+        "height": 15.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e13",
+      "role": "text",
+      "label": "64",
+      "frame": {
+        "x": 144.83,
+        "y": 200,
+        "width": 143.33,
+        "height": 157.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e14",
+      "role": "text",
+      "label": "°",
+      "frame": {
+        "x": 282.17,
+        "y": 218,
+        "width": 13,
+        "height": 43
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e15",
+      "role": "text",
+      "label": "Mostly Sunny",
+      "frame": {
+        "x": 163,
+        "y": 357.67,
+        "width": 114,
+        "height": 23
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e16",
+      "role": "text",
+      "label": "H:68° L:54°",
+      "frame": {
+        "x": 176.83,
+        "y": 382.67,
+        "width": 86.33,
+        "height": 18
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e17",
+      "role": "text",
+      "label": "\"Crisp and clear\"",
+      "frame": {
+        "x": 165.5,
+        "y": 410.67,
+        "width": 109,
+        "height": 17
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e18",
+      "role": "text",
+      "label": "HOURLY FORECAST",
+      "frame": {
+        "x": 28,
+        "y": 459.67,
+        "width": 130,
+        "height": 13.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e19",
+      "role": "scroll-view",
+      "frame": {
+        "x": 12,
+        "y": 479,
+        "width": 416,
+        "height": 116
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch",
+        "swipeWithin"
+      ]
+    },
+    {
+      "ref": "e20",
+      "role": "other",
+      "frame": {
+        "x": 12,
+        "y": 479,
+        "width": 672,
+        "height": 116
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e21",
+      "role": "text",
+      "label": "Now",
+      "frame": {
+        "x": 26.67,
+        "y": 478,
+        "width": 26.67,
+        "height": 15.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e22",
+      "role": "text",
+      "label": "2pm",
+      "frame": {
+        "x": 82.5,
+        "y": 478,
+        "width": 27,
+        "height": 15.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e23",
+      "role": "text",
+      "label": "3pm",
+      "frame": {
+        "x": 138.5,
+        "y": 478,
+        "width": 27,
+        "height": 15.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e24",
+      "role": "text",
+      "label": "4pm",
+      "frame": {
+        "x": 194.5,
+        "y": 478,
+        "width": 27,
+        "height": 15.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e25",
+      "role": "text",
+      "label": "5pm",
+      "frame": {
+        "x": 250.5,
+        "y": 478,
+        "width": 27,
+        "height": 15.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e26",
+      "role": "text",
+      "label": "6pm",
+      "frame": {
+        "x": 306.5,
+        "y": 478,
+        "width": 27,
+        "height": 15.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e27",
+      "role": "text",
+      "label": "7pm",
+      "frame": {
+        "x": 362.5,
+        "y": 478,
+        "width": 27,
+        "height": 15.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e28",
+      "role": "text",
+      "label": "8pm",
+      "frame": {
+        "x": 418.5,
+        "y": 478,
+        "width": 27,
+        "height": 15.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e29",
+      "role": "text",
+      "label": "9pm",
+      "frame": {
+        "x": 474.5,
+        "y": 478,
+        "width": 27,
+        "height": 15.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e30",
+      "role": "text",
+      "label": "10pm",
+      "frame": {
+        "x": 526.5,
+        "y": 478,
+        "width": 35,
+        "height": 15.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e31",
+      "role": "text",
+      "label": "11pm",
+      "frame": {
+        "x": 582.5,
+        "y": 478,
+        "width": 35,
+        "height": 15.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e32",
+      "role": "text",
+      "label": "12am",
+      "frame": {
+        "x": 638.83,
+        "y": 478,
+        "width": 34.33,
+        "height": 15.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e33",
+      "role": "text",
+      "label": "64°",
+      "frame": {
+        "x": 25.5,
+        "y": 573.67,
+        "width": 29,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e34",
+      "role": "text",
+      "label": "66°",
+      "frame": {
+        "x": 81.5,
+        "y": 573.67,
+        "width": 29,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e35",
+      "role": "text",
+      "label": "66°",
+      "frame": {
+        "x": 137.5,
+        "y": 573.67,
+        "width": 29,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e36",
+      "role": "text",
+      "label": "68°",
+      "frame": {
+        "x": 193.5,
+        "y": 573.67,
+        "width": 29,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e37",
+      "role": "text",
+      "label": "66°",
+      "frame": {
+        "x": 249.5,
+        "y": 573.67,
+        "width": 29,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e38",
+      "role": "text",
+      "label": "64°",
+      "frame": {
+        "x": 305.5,
+        "y": 573.67,
+        "width": 29,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e39",
+      "role": "text",
+      "label": "63°",
+      "frame": {
+        "x": 361.5,
+        "y": 573.67,
+        "width": 29,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e40",
+      "role": "text",
+      "label": "61°",
+      "frame": {
+        "x": 417.5,
+        "y": 573.67,
+        "width": 29,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e41",
+      "role": "text",
+      "label": "57°",
+      "frame": {
+        "x": 473.5,
+        "y": 573.67,
+        "width": 29,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e42",
+      "role": "text",
+      "label": "55°",
+      "frame": {
+        "x": 529.5,
+        "y": 573.67,
+        "width": 29,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e43",
+      "role": "text",
+      "label": "55°",
+      "frame": {
+        "x": 585.5,
+        "y": 573.67,
+        "width": 29,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e44",
+      "role": "text",
+      "label": "54°",
+      "frame": {
+        "x": 641.5,
+        "y": 573.67,
+        "width": 29,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e45",
+      "role": "text",
+      "label": "7-DAY FORECAST",
+      "frame": {
+        "x": 28,
+        "y": 623,
+        "width": 117,
+        "height": 13.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e46",
+      "role": "text",
+      "label": "Today",
+      "frame": {
+        "x": 28,
+        "y": 661.5,
+        "width": 48,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e47",
+      "role": "text",
+      "label": "54°",
+      "frame": {
+        "x": 145,
+        "y": 662,
+        "width": 27,
+        "height": 19.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e48",
+      "role": "text",
+      "label": "68°",
+      "frame": {
+        "x": 385,
+        "y": 662,
+        "width": 27,
+        "height": 19.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e49",
+      "role": "text",
+      "label": "Wed",
+      "frame": {
+        "x": 28,
+        "y": 711.83,
+        "width": 34.67,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e50",
+      "role": "text",
+      "label": "55°",
+      "frame": {
+        "x": 145,
+        "y": 712.33,
+        "width": 27,
+        "height": 19.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e51",
+      "role": "text",
+      "label": "70°",
+      "frame": {
+        "x": 385,
+        "y": 712.33,
+        "width": 27,
+        "height": 19.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e52",
+      "role": "text",
+      "label": "Thu",
+      "frame": {
+        "x": 28,
+        "y": 762.17,
+        "width": 29.67,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e53",
+      "role": "text",
+      "label": "55°",
+      "frame": {
+        "x": 145,
+        "y": 762.67,
+        "width": 27,
+        "height": 19.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e54",
+      "role": "text",
+      "label": "70°",
+      "frame": {
+        "x": 385,
+        "y": 762.67,
+        "width": 27,
+        "height": 19.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e55",
+      "role": "text",
+      "label": "Fri",
+      "frame": {
+        "x": 28,
+        "y": 812.5,
+        "width": 19.33,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e56",
+      "role": "text",
+      "label": "52°",
+      "frame": {
+        "x": 145,
+        "y": 813,
+        "width": 27,
+        "height": 19.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e57",
+      "role": "text",
+      "label": "66°",
+      "frame": {
+        "x": 385,
+        "y": 813,
+        "width": 27,
+        "height": 19.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e58",
+      "role": "text",
+      "label": "Sat",
+      "frame": {
+        "x": 28,
+        "y": 862.83,
+        "width": 25.33,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e59",
+      "role": "text",
+      "label": "48°",
+      "frame": {
+        "x": 145,
+        "y": 863.33,
+        "width": 27,
+        "height": 19.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e60",
+      "role": "text",
+      "label": "61°",
+      "frame": {
+        "x": 385,
+        "y": 863.33,
+        "width": 27,
+        "height": 19.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e61",
+      "role": "text",
+      "label": "Sun",
+      "frame": {
+        "x": 28,
+        "y": 913.17,
+        "width": 29.67,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e62",
+      "role": "text",
+      "label": "48°",
+      "frame": {
+        "x": 145,
+        "y": 913.67,
+        "width": 27,
+        "height": 19.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e63",
+      "role": "text",
+      "label": "57°",
+      "frame": {
+        "x": 385,
+        "y": 913.67,
+        "width": 27,
+        "height": 19.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e64",
+      "role": "text",
+      "label": "Mon",
+      "frame": {
+        "x": 28,
+        "y": 963.5,
+        "width": 33.67,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e65",
+      "role": "text",
+      "label": "52°",
+      "frame": {
+        "x": 145,
+        "y": 964,
+        "width": 27,
+        "height": 19.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e66",
+      "role": "text",
+      "label": "66°",
+      "frame": {
+        "x": 385,
+        "y": 964,
+        "width": 27,
+        "height": 19.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e67",
+      "role": "text",
+      "label": "WIND",
+      "frame": {
+        "x": 30,
+        "y": 1026.67,
+        "width": 35,
+        "height": 12.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e68",
+      "role": "text",
+      "label": "N",
+      "frame": {
+        "x": 109.17,
+        "y": 1036.67,
+        "width": 9.67,
+        "height": 13.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e69",
+      "role": "text",
+      "label": "LULL",
+      "frame": {
+        "x": 216,
+        "y": 1059.33,
+        "width": 30.67,
+        "height": 12
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e70",
+      "role": "text",
+      "label": "4",
+      "frame": {
+        "x": 368.33,
+        "y": 1052.67,
+        "width": 10.67,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e71",
+      "role": "text",
+      "label": "mph",
+      "frame": {
+        "x": 387,
+        "y": 1058.67,
+        "width": 23,
+        "height": 13.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e72",
+      "role": "text",
+      "label": "WNW",
+      "frame": {
+        "x": 96.67,
+        "y": 1096.33,
+        "width": 34.67,
+        "height": 13.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e73",
+      "role": "text",
+      "label": "NOW",
+      "frame": {
+        "x": 216,
+        "y": 1101.67,
+        "width": 29.33,
+        "height": 12
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e74",
+      "role": "text",
+      "label": "8",
+      "frame": {
+        "x": 368.33,
+        "y": 1095,
+        "width": 10.67,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e75",
+      "role": "text",
+      "label": "mph",
+      "frame": {
+        "x": 387,
+        "y": 1101,
+        "width": 23,
+        "height": 13.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e76",
+      "role": "text",
+      "label": "W",
+      "frame": {
+        "x": 18,
+        "y": 1126.67,
+        "width": 12,
+        "height": 13.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e77",
+      "role": "text",
+      "label": "8",
+      "frame": {
+        "x": 105.33,
+        "y": 1111.67,
+        "width": 17.33,
+        "height": 36
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e78",
+      "role": "text",
+      "label": "E",
+      "frame": {
+        "x": 200,
+        "y": 1126.67,
+        "width": 8,
+        "height": 13.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e79",
+      "role": "text",
+      "label": "mph",
+      "frame": {
+        "x": 103,
+        "y": 1149.67,
+        "width": 22,
+        "height": 12.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e80",
+      "role": "text",
+      "label": "GUST",
+      "frame": {
+        "x": 216,
+        "y": 1144,
+        "width": 34,
+        "height": 12
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e81",
+      "role": "text",
+      "label": "13",
+      "frame": {
+        "x": 357.67,
+        "y": 1137.33,
+        "width": 21.33,
+        "height": 20.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e82",
+      "role": "text",
+      "label": "mph",
+      "frame": {
+        "x": 387,
+        "y": 1143.33,
+        "width": 23,
+        "height": 13.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e83",
+      "role": "text",
+      "label": "From the west-northwest · Gentle breeze",
+      "frame": {
+        "x": 216,
+        "y": 1179.67,
+        "width": 146.67,
+        "height": 26.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e84",
+      "role": "text",
+      "label": "S",
+      "frame": {
+        "x": 109.67,
+        "y": 1216.67,
+        "width": 8.67,
+        "height": 13.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e85",
+      "role": "text",
+      "label": "Updated just now",
+      "frame": {
+        "x": 171.5,
+        "y": 1741.33,
+        "width": 97,
+        "height": 13.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e86",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e87",
+      "role": "button",
+      "label": "San Francisco",
+      "identifier": "weather.locationButton",
+      "frame": {
+        "x": 12,
+        "y": 81.33,
+        "width": 178,
+        "height": 33.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "tap",
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e88",
+      "role": "image",
+      "label": "Map Pin",
+      "identifier": "mappin",
+      "frame": {
+        "x": 44.67,
+        "y": 91,
+        "width": 5.33,
+        "height": 14
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e89",
+      "role": "text",
+      "label": "San Francisco",
+      "frame": {
+        "x": 61.67,
+        "y": 89.33,
+        "width": 94.67,
+        "height": 17.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e90",
+      "role": "image",
+      "label": "Go Down",
+      "identifier": "chevron.down",
+      "frame": {
+        "x": 165.67,
+        "y": 95.33,
+        "width": 9,
+        "height": 5.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e91",
+      "role": "button",
+      "label": "Settings",
+      "identifier": "weather.settingsButton",
+      "frame": {
+        "x": 390,
+        "y": 79,
+        "width": 38,
+        "height": 38
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "tap",
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e92",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e93",
+      "role": "other",
+      "label": "dismiss popup",
+      "identifier": "PopoverDismissRegion",
+      "frame": {
+        "x": -440,
+        "y": -956,
+        "width": 1320,
+        "height": 2868
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e94",
+      "role": "other",
+      "frame": {
+        "x": 8,
+        "y": 451.08,
+        "width": 424,
+        "height": 496.92
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e95",
+      "role": "button",
+      "label": "Sheet Grabber",
+      "value": "Half screen",
+      "frame": {
+        "x": 183.38,
+        "y": 446.27,
+        "width": 73.24,
+        "height": 24.09
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "tap",
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e96",
+      "role": "other",
+      "frame": {
+        "x": 8,
+        "y": 451.08,
+        "width": 424,
+        "height": 496.92
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e97",
+      "role": "other",
+      "frame": {
+        "x": 8,
+        "y": 451.08,
+        "width": 424,
+        "height": 496.92
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e98",
+      "role": "other",
+      "frame": {
+        "x": 8,
+        "y": 451.08,
+        "width": 424,
+        "height": 496.92
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e99",
+      "role": "other",
+      "frame": {
+        "x": 8,
+        "y": 451.08,
+        "width": 424,
+        "height": 496.92
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e100",
+      "role": "text",
+      "label": "Locations",
+      "identifier": "weather.locationsSheet",
+      "frame": {
+        "x": 27.27,
+        "y": 470.2,
+        "width": 94.12,
+        "height": 25.38
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e101",
+      "role": "button",
+      "label": "Close",
+      "identifier": "weather.locationsSheet",
+      "frame": {
+        "x": 383.82,
+        "y": 468.43,
+        "width": 28.91,
+        "height": 28.91
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "tap",
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e102",
+      "role": "image",
+      "label": "Search",
+      "identifier": "weather.locationsSheet",
+      "frame": {
+        "x": 40.76,
+        "y": 520.15,
+        "width": 15.74,
+        "height": 16.06
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e103",
+      "role": "text-field",
+      "value": "Ber",
+      "identifier": "weather.locationsSheet",
+      "frame": {
+        "x": 66.14,
+        "y": 518.54,
+        "width": 309.97,
+        "height": 18.95
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "tap",
+        "typeText",
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e104",
+      "role": "button",
+      "label": "Clear search",
+      "identifier": "weather.locationsSheet",
+      "frame": {
+        "x": 383.82,
+        "y": 519.5,
+        "width": 17.35,
+        "height": 17.35
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "tap",
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e105",
+      "role": "text",
+      "label": "1 RESULT",
+      "identifier": "weather.locationsSheet",
+      "frame": {
+        "x": 31.13,
+        "y": 556.76,
+        "width": 60.39,
+        "height": 12.85
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e106",
+      "role": "scroll-view",
+      "identifier": "weather.locationsSheet",
+      "frame": {
+        "x": 27.27,
+        "y": 577.32,
+        "width": 385.45,
+        "height": 309.01
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch",
+        "swipeWithin"
+      ]
+    },
+    {
+      "ref": "e107",
+      "role": "other",
+      "frame": {
+        "x": 27.27,
+        "y": 577.32,
+        "width": 385.45,
+        "height": 80.95
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e108",
+      "role": "other",
+      "frame": {
+        "x": 40.76,
+        "y": 588.88,
+        "width": 358.47,
+        "height": 50.11
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e109",
+      "role": "button",
+      "label": "Berlin, Germany, 10:24 PM · Cloudy",
+      "value": "not saved",
+      "frame": {
+        "x": 40.76,
+        "y": 588.88,
+        "width": 101.5,
+        "height": 50.11
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "tap",
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e110",
+      "role": "text",
+      "label": "Berlin",
+      "frame": {
+        "x": 40.76,
+        "y": 588.88,
+        "width": 41.12,
+        "height": 18.63
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e111",
+      "role": "text",
+      "label": "Germany",
+      "frame": {
+        "x": 40.76,
+        "y": 609.44,
+        "width": 49.15,
+        "height": 13.81
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e112",
+      "role": "text",
+      "label": "10:24 PM · Cloudy",
+      "frame": {
+        "x": 40.76,
+        "y": 625.18,
+        "width": 101.5,
+        "height": 13.81
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e113",
+      "role": "text",
+      "label": "52°",
+      "frame": {
+        "x": 320.22,
+        "y": 594.02,
+        "width": 32.76,
+        "height": 25.38
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e114",
+      "role": "text",
+      "label": "H:57° L:45°",
+      "frame": {
+        "x": 294.2,
+        "y": 622.29,
+        "width": 58.78,
+        "height": 11.56
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e115",
+      "role": "button",
+      "label": "Add",
+      "identifier": "plus",
+      "frame": {
+        "x": 364.55,
+        "y": 596.59,
+        "width": 34.69,
+        "height": 34.69
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "tap",
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e116",
+      "role": "slider",
+      "label": "Vertical scroll bar, 1 page",
+      "value": "0%",
+      "frame": {
+        "x": 380.93,
+        "y": 577.32,
+        "width": 28.91,
+        "height": 309.01
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e117",
+      "role": "other",
+      "frame": {
+        "x": 406.95,
+        "y": 814.7,
+        "width": 2.89,
+        "height": 6.75
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e118",
+      "role": "slider",
+      "label": "Vertical scroll bar, 1 page",
+      "value": "0%",
+      "frame": {
+        "x": 380.93,
+        "y": 577.32,
+        "width": 28.91,
+        "height": 309.01
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e119",
+      "role": "other",
+      "frame": {
+        "x": 406.95,
+        "y": 814.7,
+        "width": 2.89,
+        "height": 6.75
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e120",
+      "role": "other",
+      "frame": {
+        "x": 8,
+        "y": 451.08,
+        "width": 424,
+        "height": 496.92
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e121",
+      "role": "other",
+      "frame": {
+        "x": 8,
+        "y": 451.08,
+        "width": 424,
+        "height": 496.92
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e122",
+      "role": "other",
+      "frame": {
+        "x": 8,
+        "y": 451.08,
+        "width": 424,
+        "height": 496.92
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e123",
+      "role": "other",
+      "frame": {
+        "x": 8,
+        "y": 451.08,
+        "width": 424,
+        "height": 496.92
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e124",
+      "role": "other",
+      "frame": {
+        "x": 8,
+        "y": 451.08,
+        "width": 424,
+        "height": 496.92
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e125",
+      "role": "other",
+      "frame": {
+        "x": 8,
+        "y": 451.08,
+        "width": 424,
+        "height": 496.92
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e126",
+      "role": "other",
+      "frame": {
+        "x": 8,
+        "y": 451.08,
+        "width": 424,
+        "height": 496.92
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e127",
+      "role": "other",
+      "frame": {
+        "x": 8,
+        "y": 451.08,
+        "width": 424,
+        "height": 496.92
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e128",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e129",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e130",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e131",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e132",
+      "role": "other",
+      "label": "Suggested",
+      "frame": {
+        "x": 58,
+        "y": 518.67,
+        "width": 61.33,
+        "height": 46
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e133",
+      "role": "other",
+      "frame": {
+        "x": 64,
+        "y": 516.67,
+        "width": 26.67,
+        "height": 20.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e134",
+      "role": "other",
+      "frame": {
+        "x": 58,
+        "y": 537.33,
+        "width": 61.33,
+        "height": 27.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e135",
+      "role": "scroll-view",
+      "frame": {
+        "x": 58,
+        "y": 537.33,
+        "width": 34.33,
+        "height": 27.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch",
+        "swipeWithin"
+      ]
+    },
+    {
+      "ref": "e136",
+      "role": "other",
+      "frame": {
+        "x": 58,
+        "y": 537.33,
+        "width": 34.33,
+        "height": 27.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e137",
+      "role": "other",
+      "label": "Her",
+      "frame": {
+        "x": 58,
+        "y": 537.33,
+        "width": 34.33,
+        "height": 27.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e138",
+      "role": "slider",
+      "label": "Vertical scroll bar, 1 page",
+      "value": "0%",
+      "frame": {
+        "x": 72.17,
+        "y": 537.33,
+        "width": 17.17,
+        "height": 27.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e139",
+      "role": "other",
+      "frame": {
+        "x": 86.33,
+        "y": 525.67,
+        "width": 3,
+        "height": 36
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e140",
+      "role": "slider",
+      "label": "Horizontal scroll bar, 1 page",
+      "value": "0%",
+      "frame": {
+        "x": 58,
+        "y": 548,
+        "width": 34.33,
+        "height": 13.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e141",
+      "role": "other",
+      "frame": {
+        "x": 53.33,
+        "y": 558.67,
+        "width": 36,
+        "height": 3
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e142",
+      "role": "slider",
+      "label": "Vertical scroll bar, 1 page",
+      "value": "0%",
+      "frame": {
+        "x": 72.17,
+        "y": 537.33,
+        "width": 17.17,
+        "height": 27.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e143",
+      "role": "other",
+      "frame": {
+        "x": 86.33,
+        "y": 525.67,
+        "width": 3,
+        "height": 36
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e144",
+      "role": "slider",
+      "label": "Horizontal scroll bar, 1 page",
+      "value": "0%",
+      "frame": {
+        "x": 58,
+        "y": 548,
+        "width": 34.33,
+        "height": 13.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e145",
+      "role": "other",
+      "frame": {
+        "x": 53.33,
+        "y": 558.67,
+        "width": 36,
+        "height": 3
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e146",
+      "role": "other",
+      "label": "Dismiss",
+      "frame": {
+        "x": 92.33,
+        "y": 537.33,
+        "width": 23,
+        "height": 27.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e147",
+      "role": "image",
+      "label": "Close",
+      "identifier": "xmark",
+      "frame": {
+        "x": 98.33,
+        "y": 546,
+        "width": 11,
+        "height": 10.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e148",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e149",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e150",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 956,
+        "width": 440,
+        "height": 321
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e151",
+      "role": "other",
+      "identifier": "SystemInputAssistantView",
+      "frame": {
+        "x": 0,
+        "y": 956,
+        "width": 440,
+        "height": 78
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e152",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 956,
+        "width": 440,
+        "height": 78
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e153",
+      "role": "other",
+      "identifier": "CenterPageView",
+      "frame": {
+        "x": 0,
+        "y": 956,
+        "width": 440,
+        "height": 44
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e154",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 356,
+        "width": 440,
+        "height": 1244
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": []
+    },
+    {
+      "ref": "e155",
+      "role": "scroll-view",
+      "frame": {
+        "x": 0,
+        "y": 956,
+        "width": 440,
+        "height": 44
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e156",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 956,
+        "width": 440,
+        "height": 44
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e157",
+      "role": "other",
+      "label": "Typing Predictions",
+      "frame": {
+        "x": 0,
+        "y": 956,
+        "width": 440,
+        "height": 44
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e158",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 956,
+        "width": 440,
+        "height": 44
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e159",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 956,
+        "width": 440,
+        "height": 44
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e160",
+      "role": "other",
+      "label": "“Ber”",
+      "frame": {
+        "x": 0,
+        "y": 956,
+        "width": 146.67,
+        "height": 44
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e161",
+      "role": "other",
+      "label": "Her",
+      "frame": {
+        "x": 146.67,
+        "y": 956,
+        "width": 146.67,
+        "height": 44
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e162",
+      "role": "other",
+      "label": "Berry",
+      "frame": {
+        "x": 293.33,
+        "y": 956,
+        "width": 146.67,
+        "height": 44
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e163",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 956,
+        "width": 440,
+        "height": 321
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e164",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 956,
+        "width": 440,
+        "height": 321
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e165",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 956,
+        "width": 440,
+        "height": 321
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e166",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 1034,
+        "width": 440,
+        "height": 243
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e167",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 1034,
+        "width": 440,
+        "height": 243
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e168",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 1034,
+        "width": 440,
+        "height": 243
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e169",
+      "role": "other",
+      "identifier": "UIKeyboardLayoutStar Preview",
+      "frame": {
+        "x": 0,
+        "y": 1034,
+        "width": 440,
+        "height": 243
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e170",
+      "role": "button",
+      "label": "Padding-Left",
+      "frame": {
+        "x": 0,
+        "y": 1034,
+        "width": 0,
+        "height": 0
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e171",
+      "role": "button",
+      "label": "Padding-Right",
+      "frame": {
+        "x": 0,
+        "y": 1034,
+        "width": 0,
+        "height": 0
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e172",
+      "role": "button",
+      "label": "Padding-Left",
+      "frame": {
+        "x": 0,
+        "y": 1034,
+        "width": 0,
+        "height": 0
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e173",
+      "role": "button",
+      "label": "Padding-Right",
+      "frame": {
+        "x": 0,
+        "y": 1034,
+        "width": 0,
+        "height": 0
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e174",
+      "role": "button",
+      "label": "Padding-Left",
+      "frame": {
+        "x": 0,
+        "y": 1034,
+        "width": 0,
+        "height": 0
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e175",
+      "role": "button",
+      "label": "Padding-Right",
+      "frame": {
+        "x": 0,
+        "y": 1034,
+        "width": 0,
+        "height": 0
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e176",
+      "role": "button",
+      "label": "q",
+      "frame": {
+        "x": 4.67,
+        "y": 1041,
+        "width": 43,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e177",
+      "role": "button",
+      "label": "w",
+      "frame": {
+        "x": 47.67,
+        "y": 1041,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e178",
+      "role": "button",
+      "label": "e",
+      "frame": {
+        "x": 91,
+        "y": 1041,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e179",
+      "role": "button",
+      "label": "r",
+      "frame": {
+        "x": 134.33,
+        "y": 1041,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e180",
+      "role": "button",
+      "label": "t",
+      "frame": {
+        "x": 177.67,
+        "y": 1041,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e181",
+      "role": "button",
+      "label": "y",
+      "frame": {
+        "x": 221,
+        "y": 1041,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e182",
+      "role": "button",
+      "label": "u",
+      "frame": {
+        "x": 264.33,
+        "y": 1041,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e183",
+      "role": "button",
+      "label": "i",
+      "frame": {
+        "x": 307.67,
+        "y": 1041,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e184",
+      "role": "button",
+      "label": "o",
+      "frame": {
+        "x": 351,
+        "y": 1041,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e185",
+      "role": "button",
+      "label": "p",
+      "frame": {
+        "x": 394.33,
+        "y": 1041,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e186",
+      "role": "button",
+      "label": "a",
+      "frame": {
+        "x": 26,
+        "y": 1097,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e187",
+      "role": "button",
+      "label": "s",
+      "frame": {
+        "x": 69.33,
+        "y": 1097,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e188",
+      "role": "button",
+      "label": "d",
+      "frame": {
+        "x": 112.67,
+        "y": 1097,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e189",
+      "role": "button",
+      "label": "f",
+      "frame": {
+        "x": 156,
+        "y": 1097,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e190",
+      "role": "button",
+      "label": "g",
+      "frame": {
+        "x": 199.33,
+        "y": 1097,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e191",
+      "role": "button",
+      "label": "h",
+      "frame": {
+        "x": 242.67,
+        "y": 1097,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e192",
+      "role": "button",
+      "label": "j",
+      "frame": {
+        "x": 286,
+        "y": 1097,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e193",
+      "role": "button",
+      "label": "k",
+      "frame": {
+        "x": 329.33,
+        "y": 1097,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e194",
+      "role": "button",
+      "label": "l",
+      "frame": {
+        "x": 372.67,
+        "y": 1097,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e195",
+      "role": "button",
+      "label": "shift",
+      "identifier": "shift",
+      "frame": {
+        "x": 4.67,
+        "y": 1153,
+        "width": 56,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e196",
+      "role": "button",
+      "label": "z",
+      "frame": {
+        "x": 69.33,
+        "y": 1153,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e197",
+      "role": "button",
+      "label": "x",
+      "frame": {
+        "x": 112.67,
+        "y": 1153,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e198",
+      "role": "button",
+      "label": "c",
+      "frame": {
+        "x": 156,
+        "y": 1153,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e199",
+      "role": "button",
+      "label": "v",
+      "frame": {
+        "x": 199.33,
+        "y": 1153,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e200",
+      "role": "button",
+      "label": "b",
+      "frame": {
+        "x": 242.67,
+        "y": 1153,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e201",
+      "role": "button",
+      "label": "n",
+      "frame": {
+        "x": 286,
+        "y": 1153,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e202",
+      "role": "button",
+      "label": "m",
+      "frame": {
+        "x": 329.33,
+        "y": 1153,
+        "width": 43.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e203",
+      "role": "button",
+      "label": "delete",
+      "identifier": "delete",
+      "frame": {
+        "x": 381.33,
+        "y": 1153,
+        "width": 56.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e204",
+      "role": "button",
+      "label": "numbers",
+      "identifier": "more",
+      "frame": {
+        "x": 4.67,
+        "y": 1209,
+        "width": 108,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e205",
+      "role": "button",
+      "identifier": "space",
+      "frame": {
+        "x": 112.67,
+        "y": 1209,
+        "width": 216.67,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    },
+    {
+      "ref": "e206",
+      "role": "button",
+      "label": "return",
+      "identifier": "Return",
+      "frame": {
+        "x": 329.33,
+        "y": 1209,
+        "width": 108.33,
+        "height": 56
+      },
+      "state": {
+        "enabled": true,
+        "visible": false
+      },
+      "actions": []
+    }
+  ],
+  "truncated": false,
+  "screenHash": "0yqwg3t",
+  "screenshotPath": "raw/s01-weather-ber-query.jpg"
+}

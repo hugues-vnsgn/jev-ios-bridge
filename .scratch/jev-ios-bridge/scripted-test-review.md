@@ -4,6 +4,8 @@
 
 The coding agents ran `npm run check`: type checking, all **127 tests with zero skips**, and build passed. The assertion/schema/harness group has 13 focused tests; the selector/runner/report group has 21. The existing 93 tests remain green.
 
+[Node 24 CI](https://github.com/hugues-vnsgn/jev-ios-bridge/actions/runs/35982857259) also passed on archived prototype commit `2222fc2`.
+
 | Behavior | Evidence | Result |
 | --- | --- | --- |
 | Strict script and paired-corpus schema | Schema tests reject invalid shapes, value references, claim IDs and unbalanced labels | PASS |
