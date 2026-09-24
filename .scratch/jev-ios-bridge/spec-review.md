@@ -1,0 +1,13 @@
+# Spec review: `39b4653` → `e4c5ebe`
+
+Reviewed the fixed checkpoint on the **Spec** axis against ticket 07, the release plan, domain boundaries, and usage guide. Findings below concern the preparatory implementation; they do not treat pending owner review or live measurements as code defects.
+
+1. **P1 — Expired-reference recovery cannot recognize vendor errors.** [src/device/index.ts:57](../../src/device/index.ts#L57) treats `envelope.error` as an object with `code`, but MobileBuildMCP 2.7.1 defines that field as `string|null`; recoverable codes such as `SNAPSHOT_EXPIRED` live in `data.uiError.code`. Every such failure becomes `CLI_ERROR`, so the [retry branch at :286](../../src/device/index.ts#L286) never refreshes and rematches. The [release plan:121](release-plan.md#L121) requires: “when it expires, takes a fresh snapshot and matches by identifier or role and label.” An expired ref instead ends the run inconclusively.
+
+2. **P1 — A permitted frozen budget can abort the feasibility run after a paid answer.** [spikes/feasibility/harness.ts:247](../../spikes/feasibility/harness.ts#L247) rebuilds an observation with the default 24,000-byte limit, while evaluation at :207 uses `manifest.maxStateBytes` and validation at :199 permits up to 28,000. A 25,000-byte full observation can reach Jev, then throw `STATE_BUDGET` while scoring, losing the comparison. Ticket 07 requires frozen rendering rules and per-case results ([lines 92, 127](issues/07-feasibility-plan.md#L92)).
+
+3. **P2 — Invalid held-out inputs consume the only run claim.** [spikes/feasibility/cli.ts:95](../../spikes/feasibility/cli.ts#L95) creates the corpus-wide held-out claim before selection validation at :118. A mismatched or incomplete tuning file fails without a Jev call, yet a corrected invocation is then rejected as already claimed. Ticket 07 requires evaluation of the chosen frozen configuration on **all 20** held-out cases ([line 113](issues/07-feasibility-plan.md#L113)).
+
+4. **P2 — Reviewed screen evidence is not bound to approval.** [spikes/feasibility/harness.ts:145](../../spikes/feasibility/harness.ts#L145) accepts absent asset paths, and approval hashes only the normalized corpus and manifest; raw captures and screenshots can change without invalidating the approval. Ticket 07 says each case records “the captured screen” and the owner settles labels against that capture ([lines 45, 54](issues/07-feasibility-plan.md#L45)). Require existing, digest-bound evidence assets before live evaluation.
+
+The 30-case corpus, owner labels, live Jev results, go/no-go decision, Claude Code smoke run, and release artifact are pending gates in the release plan, not findings against this checkpoint. I found no material scope creep in the preparatory code.

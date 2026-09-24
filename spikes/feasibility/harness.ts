@@ -1,5 +1,7 @@
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
+import { readFile, realpath } from 'node:fs/promises';
+import { dirname, isAbsolute, relative, resolve } from 'node:path';
 import type { HistoryEntry, JevJudge, Judgment, Scenario, Snapshot } from '../../src/contracts/index.js';
 import { actionOptions, buildObservation, type ObservationVariant } from '../../src/observation/index.js';
 import { DEFAULT_WORDING, JEV_MODEL, JevContractError, JevRequestError, type QuestionWording } from '../../src/jev/index.js';
@@ -13,7 +15,9 @@ export interface FeasibilityCase {
   compactSnapshot: Snapshot;
   fullSnapshot: Snapshot;
   history: HistoryEntry[];
-  assets?: { compactPath: string; fullPath: string; screenshotPath: string };
+  assets?: { compactPath: string; fullPath: string; screenshotPath: string;
+    sha256?: { compact: string; full: string; screenshot: string } };
+  positionalVariant?: { goal: string; acceptableActionIds: string[] };
   /** Proposed by the capturing agent, then bound to owner approval by corpus hash. */
   labels: { acceptableActionIds: string[]; goalReached: boolean; assertions: Record<string, boolean> };
 }
@@ -51,6 +55,7 @@ export interface OwnerApproval {
 export interface CaseResult {
   caseId: string;
   configuration: ConfigurationId;
+  variant?: 'primary' | 'positional';
   choice?: string;
   confidence?: number;
   probabilities?: Record<string, number>;
@@ -91,7 +96,12 @@ export interface FrozenSelection {
   tuningSummary: ThresholdSummary[];
   tuningResultsSha256: string;
 }
-export interface TuningRun { selection: FrozenSelection | null; results: Array<CaseResult & { gates: Record<string, GateResult> }>; comparison: ThresholdSummary[] }
+export interface TuningRun {
+  selection: FrozenSelection | null;
+  results: Array<CaseResult & { gates: Record<string, GateResult> }>;
+  positionalResults: CaseResult[];
+  comparison: ThresholdSummary[];
+}
 export interface HeldoutRun {
   selection: FrozenSelection;
   results: Array<CaseResult & { gate: GateResult }>;
@@ -118,6 +128,32 @@ export function digest(value: unknown): string {
     return input;
   };
   return createHash('sha256').update(JSON.stringify(canonical(value))).digest('hex');
+}
+
+/** Check the owner-reviewed raw evidence against hashes stored in the approved corpus. */
+export async function verifyCorpusAssets(corpus: FeasibilityCorpus, corpusPath: string): Promise<void> {
+  const root = await realpath(dirname(resolve(corpusPath)));
+  for (const item of corpus.cases) {
+    const assets = item.assets;
+    if (!assets?.sha256) throw new ExperimentError('CAPTURE_ASSETS_REQUIRED');
+    const entries = [
+      ['compact', assets.compactPath], ['full', assets.fullPath], ['screenshot', assets.screenshotPath],
+    ] as const;
+    for (const [kind, path] of entries) {
+      if (!path || isAbsolute(path)) fail('CAPTURE_PATH_INVALID');
+      const expected = assets.sha256[kind];
+      if (!/^[a-f0-9]{64}$/.test(expected)) fail('CAPTURE_HASH_REQUIRED');
+      let actualPath: string;
+      try { actualPath = await realpath(resolve(root, path)); }
+      catch { fail('CAPTURE_ASSET_MISSING'); }
+      const within = relative(root, actualPath!);
+      if (within === '..' || within.startsWith('../') || isAbsolute(within)) fail('CAPTURE_PATH_INVALID');
+      let bytes: Buffer;
+      try { bytes = await readFile(actualPath!); }
+      catch { fail('CAPTURE_ASSET_MISSING'); }
+      if (createHash('sha256').update(bytes!).digest('hex') !== expected) fail('CAPTURE_HASH_MISMATCH');
+    }
+  }
 }
 
 /** Freeze the exact offline decision code and shared input type used for this experiment. */
@@ -149,6 +185,7 @@ export function validateCorpus(corpus: FeasibilityCorpus): void {
   let tuning = 0;
   let heldout = 0;
   let knownFailingHeldout = 0;
+  let positionalPairs = 0;
   for (const item of corpus.cases) {
     if (!item.id || !item.scenarioGroup || ids.has(item.id)) fail('CORPUS_ID');
     ids.add(item.id);
@@ -172,8 +209,15 @@ export function validateCorpus(corpus: FeasibilityCorpus): void {
     const fullIds = new Set(fullOptions.map(option => option.id));
     for (const id of item.labels.acceptableActionIds) if (!fullIds.has(id)) fail('LABEL_ACTION_UNKNOWN');
     if (new Set(item.labels.acceptableActionIds).size !== item.labels.acceptableActionIds.length) fail('LABEL_DUPLICATE');
+    if (item.positionalVariant) {
+      if (item.partition !== 'tuning' || !item.positionalVariant.goal?.trim() || item.positionalVariant.goal === item.scenario.goal ||
+          !/(?:first|second|third|fourth|row|\b\d+(?:st|nd|rd|th)\b)/i.test(item.positionalVariant.goal) ||
+          !Array.isArray(item.positionalVariant.acceptableActionIds) || !item.positionalVariant.acceptableActionIds.length) fail('POSITIONAL_PAIR_INVALID');
+      for (const id of item.positionalVariant.acceptableActionIds) if (!fullIds.has(id)) fail('POSITIONAL_PAIR_INVALID');
+      positionalPairs++;
+    }
   }
-  if (tuning !== 10 || heldout !== 20 || knownFailingHeldout === 0) fail('CORPUS_SPLIT');
+  if (tuning !== 10 || heldout !== 20 || knownFailingHeldout === 0 || positionalPairs === 0) fail('CORPUS_SPLIT');
 }
 
 export function makeDraftManifest(corpus: FeasibilityCorpus): ExperimentManifest {
@@ -212,9 +256,9 @@ function observationFor(item: FeasibilityCase, config: ExperimentConfiguration, 
     });
 }
 
-export async function evaluateCase(item: FeasibilityCase, config: ExperimentConfiguration, manifest: ExperimentManifest, judge: JevJudge, signal: AbortSignal): Promise<CaseResult> {
+export async function evaluateCase(item: FeasibilityCase, config: ExperimentConfiguration, manifest: ExperimentManifest, judge: JevJudge, signal: AbortSignal, variant: 'primary' | 'positional' = 'primary'): Promise<CaseResult> {
   const knownFailingAssertions = Object.values(item.labels.assertions).filter(value => !value).length;
-  const base: CaseResult = { caseId: item.id, configuration: config.id, top1Correct: false, knownFailingAssertions, falsePassAssertions: 0 };
+  const base: CaseResult = { caseId: item.id, configuration: config.id, variant, top1Correct: false, knownFailingAssertions, falsePassAssertions: 0 };
   try {
     const observation = observationFor(item, config, manifest);
     const judgment = await judge.judge(item.scenario, observation, signal);
@@ -244,7 +288,7 @@ export function gateCase(item: FeasibilityCase, result: CaseResult, threshold: n
   if (!result.choice || result.choice === 'none') return { accepted: false, reason: 'none', correct };
   if (result.confidence === undefined || !Number.isFinite(result.confidence) || result.confidence < threshold) return { accepted: false, reason: 'choice-confidence', correct };
   const snapshot = result.configuration === 'A' || result.configuration === 'B' ? item.compactSnapshot : item.fullSnapshot;
-  const action = buildObservation(item.scenario, snapshot, [], { variant: result.configuration === 'A' || result.configuration === 'B' ? 'compact' : 'full', maxCandidates: manifest.maxCandidates }).options.find(option => option.id === result.choice)?.action;
+  const action = actionOptions(snapshot, item.scenario, manifest.maxCandidates).find(option => option.id === result.choice)?.action;
   if (!action || result.goalReached === undefined || !Number.isFinite(result.goalReached)) return { accepted: false, reason: 'malformed-action', correct };
   if (action.kind === 'stop-goal') {
     if (result.goalReached < manifest.noulYes) return { accepted: false, reason: 'completion-not-yes', correct };
@@ -272,10 +316,18 @@ function summarize(corpus: FeasibilityCorpus, results: CaseResult[], config: Con
   };
 }
 
+function chooseWinner(comparison: ThresholdSummary[], manifest: ExperimentManifest): ThresholdSummary | undefined {
+  const bestPerConfig = manifest.configurations.map(config => comparison.filter(row => row.configuration === config.id && row.qualifying)
+    .sort((a, b) => b.accepted - a.accepted || a.threshold - b.threshold)[0]).filter((row): row is ThresholdSummary => row !== undefined);
+  return bestPerConfig.sort((a, b) => b.accepted - a.accepted || b.top1Correct - a.top1Correct || a.inputTokens - b.inputTokens ||
+    a.configuration.localeCompare(b.configuration) || a.threshold - b.threshold)[0];
+}
+
 export async function runTuning(corpus: FeasibilityCorpus, manifest: ExperimentManifest, approval: OwnerApproval, judge: JevJudge, signal: AbortSignal, onCase?: (result: CaseResult) => Promise<void>): Promise<TuningRun> {
   validateFrozenExperiment(corpus, manifest, approval);
   const tuning = corpus.cases.filter(item => item.partition === 'tuning');
   const results: CaseResult[] = [];
+  const positionalResults: CaseResult[] = [];
   for (const config of manifest.configurations) {
     for (const item of tuning) {
       if (signal.aborted) fail('ABORTED');
@@ -283,39 +335,48 @@ export async function runTuning(corpus: FeasibilityCorpus, manifest: ExperimentM
       results.push(result);
       await onCase?.(result);
     }
+    for (const item of tuning) {
+      if (!item.positionalVariant) continue;
+      if (signal.aborted) fail('ABORTED');
+      const variantItem: FeasibilityCase = { ...item,
+        scenario: { ...item.scenario, goal: item.positionalVariant.goal },
+        labels: { ...item.labels, acceptableActionIds: item.positionalVariant.acceptableActionIds } };
+      const result = await evaluateCase(variantItem, config, manifest, judge, signal, 'positional');
+      positionalResults.push(result);
+      await onCase?.(result);
+    }
   }
   const comparison = manifest.configurations.flatMap(config => manifest.thresholds.map(threshold => summarize(corpus, results, config.id, threshold, manifest)));
-  const bestPerConfig = manifest.configurations.map(config => comparison.filter(row => row.configuration === config.id && row.qualifying)
-    .sort((a, b) => b.accepted - a.accepted || a.threshold - b.threshold)[0]).filter((row): row is ThresholdSummary => row !== undefined);
-  const winner = bestPerConfig.sort((a, b) => b.accepted - a.accepted || b.top1Correct - a.top1Correct || a.inputTokens - b.inputTokens ||
-    a.configuration.localeCompare(b.configuration) || a.threshold - b.threshold)[0];
+  const winner = chooseWinner(comparison, manifest);
   const byId = new Map(corpus.cases.map(item => [item.id, item]));
   const perCase = results.map(result => ({ ...result, gates: Object.fromEntries(manifest.thresholds.map(threshold =>
     [threshold.toFixed(1), gateCase(byId.get(result.caseId)!, result, threshold, manifest)])) }));
   return {
-    results: perCase, comparison,
+    results: perCase, positionalResults, comparison,
     selection: winner ? { version: 1, corpusSha256: digest(corpus), manifestSha256: digest(manifest), configuration: winner.configuration,
-      threshold: winner.threshold, tuningSummary: comparison, tuningResultsSha256: digest(perCase) } : null,
+      threshold: winner.threshold, tuningSummary: comparison, tuningResultsSha256: digest({ primary: perCase, positional: positionalResults }) } : null,
   };
 }
 
-export async function runHeldout(corpus: FeasibilityCorpus, manifest: ExperimentManifest, approval: OwnerApproval, selection: FrozenSelection, tuningRun: TuningRun, judge: JevJudge, signal: AbortSignal, onCase?: (result: CaseResult & { gate: GateResult }) => Promise<void>): Promise<HeldoutRun> {
+export function validateFrozenSelection(corpus: FeasibilityCorpus, manifest: ExperimentManifest, approval: OwnerApproval, selection: FrozenSelection, tuningRun: TuningRun): ExperimentConfiguration {
   validateFrozenExperiment(corpus, manifest, approval);
   if (selection.version !== 1 || selection.corpusSha256 !== digest(corpus) || selection.manifestSha256 !== digest(manifest)) fail('SELECTION_MISMATCH');
-  if (!tuningRun.selection || digest(tuningRun.results) !== selection.tuningResultsSha256 || digest(tuningRun.comparison) !== digest(selection.tuningSummary) ||
+  if (!tuningRun.selection || digest({ primary: tuningRun.results, positional: tuningRun.positionalResults }) !== selection.tuningResultsSha256 || digest(tuningRun.comparison) !== digest(selection.tuningSummary) ||
       digest(tuningRun.selection) !== digest(selection)) fail('TUNING_LOCK_MISMATCH');
   const expectedComparison = manifest.configurations.flatMap(candidate => manifest.thresholds.map(threshold =>
     summarize(corpus, tuningRun.results, candidate.id, threshold, manifest)));
   if (digest(expectedComparison) !== digest(selection.tuningSummary)) fail('TUNING_LOCK_MISMATCH');
-  const qualifying = manifest.configurations.map(candidate => expectedComparison.filter(row => row.configuration === candidate.id && row.qualifying)
-    .sort((a, b) => b.accepted - a.accepted || a.threshold - b.threshold)[0]).filter((row): row is ThresholdSummary => row !== undefined);
-  const winner = qualifying.sort((a, b) => b.accepted - a.accepted || b.top1Correct - a.top1Correct || a.inputTokens - b.inputTokens ||
-    a.configuration.localeCompare(b.configuration) || a.threshold - b.threshold)[0];
+  const winner = chooseWinner(expectedComparison, manifest);
   if (!winner || winner.configuration !== selection.configuration || winner.threshold !== selection.threshold) fail('SELECTION_MISMATCH');
   const config = manifest.configurations.find(candidate => candidate.id === selection.configuration);
   if (!config || !manifest.thresholds.includes(selection.threshold) || !Array.isArray(selection.tuningSummary) || selection.tuningSummary.length !== 16) {
     throw new ExperimentError('SELECTION_INVALID');
   }
+  return config;
+}
+
+export async function runHeldout(corpus: FeasibilityCorpus, manifest: ExperimentManifest, approval: OwnerApproval, selection: FrozenSelection, tuningRun: TuningRun, judge: JevJudge, signal: AbortSignal, onCase?: (result: CaseResult & { gate: GateResult }) => Promise<void>): Promise<HeldoutRun> {
+  const config = validateFrozenSelection(corpus, manifest, approval, selection, tuningRun);
   const heldout = corpus.cases.filter(item => item.partition === 'heldout');
   const results: HeldoutRun['results'] = [];
   for (const item of heldout) {
@@ -347,7 +408,7 @@ export async function runHeldout(corpus: FeasibilityCorpus, manifest: Experiment
   } };
 }
 
-const md = (text: string): string => text.replaceAll('|', '\\|').replaceAll('\n', ' ');
+const escapeTableCell = (value: string): string => value.replaceAll('|', '\\|').replaceAll('\n', ' ');
 export function renderLabelReview(corpus: FeasibilityCorpus, manifest: ExperimentManifest): string {
   validateCorpus(corpus);
   const lines = [
@@ -358,14 +419,16 @@ export function renderLabelReview(corpus: FeasibilityCorpus, manifest: Experimen
   for (const item of corpus.cases) {
     const full = actionOptions(item.fullSnapshot, item.scenario, 255);
     const compactIds = new Set(actionOptions(item.compactSnapshot, item.scenario, 255).map(option => option.id));
-    lines.push(`## ${md(item.id)} (${item.partition}; group ${md(item.scenarioGroup)})`, '',
-      `Goal: ${md(item.scenario.goal)}`, '',
+    lines.push(`## ${escapeTableCell(item.id)} (${item.partition}; group ${escapeTableCell(item.scenarioGroup)})`, '',
+      `Goal: ${escapeTableCell(item.scenario.goal)}`, '',
+      ...(item.positionalVariant ? [`Positional alternate goal (same capture, tuning only): ${escapeTableCell(item.positionalVariant.goal)}`,
+        `Alternate acceptable action IDs: ${item.positionalVariant.acceptableActionIds.map(id => `\`${id}\``).join(', ')}`, ''] : []),
       `Acceptable action IDs: ${item.labels.acceptableActionIds.map(id => `\`${id}\``).join(', ')}`, '',
       `Goal reached: **${item.labels.goalReached}**`, '',
       `Assertions: ${Object.entries(item.labels.assertions).map(([id, value]) => `\`${id}\`=${value}`).join(', ') || '(none)'}`, '',
-      `Evidence: ${item.assets ? `${md(item.assets.compactPath)}, ${md(item.assets.fullPath)}, ${md(item.assets.screenshotPath)}` : '(paths not recorded)'}`, '',
+      `Evidence: ${item.assets ? `${escapeTableCell(item.assets.compactPath)}, ${escapeTableCell(item.assets.fullPath)}, ${escapeTableCell(item.assets.screenshotPath)}` : '(paths not recorded)'}`, '',
       '| Action ID | Full-snapshot description | In compact capture |', '| --- | --- | --- |',
-      ...full.map(option => `| \`${option.id}\` | ${md(option.description)} | ${compactIds.has(option.id) ? 'yes' : 'no'} |`), '');
+      ...full.map(option => `| \`${option.id}\` | ${escapeTableCell(option.description)} | ${compactIds.has(option.id) ? 'yes' : 'no'} |`), '');
   }
   return lines.join('\n');
 }

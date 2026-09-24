@@ -31,6 +31,7 @@ export interface Snapshot {
   truncated: boolean;
   screenHash?: string;
   screenshotPath?: string;
+  logTails?: Record<string, string>;
 }
 
 export type Action =

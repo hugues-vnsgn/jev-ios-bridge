@@ -1,0 +1,61 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "1l4h5yt",
+      "seq": 113,
+      "count": 102,
+      "targets": [
+        "e26|tap|button|Contact photo for John Appleseed||",
+        "e34|tap|button|Contact photo for Kate Bell||",
+        "e42|tap|button|Contact photo for Anna Haro||",
+        "e47|tap|button|Contact photo for Daniel Higgins Jr.||",
+        "e55|tap|button|Contact photo for Mira Stone||",
+        "e63|tap|button|Contact photo for David Taylor||",
+        "e71|tap|button|Contact photo for Hank M. Zakroff||",
+        "e89|typeText|text-field||Search|",
+        "e10|tap|button|Back||BackButton",
+        "e90|tap|button|Dictate||Dictate",
+        "e92|tap|button|Dictate||Dictate",
+        "e97|tap|button|Add||"
+      ],
+      "scroll": [
+        "e17|swipe|other|||ContactsListView"
+      ],
+      "text": [
+        "e23|text|text|A||",
+        "e28|text|text|John Appleseed||",
+        "e32|text|text|B||",
+        "e36|text|text|Kate Bell||",
+        "e40|text|text|H||",
+        "e44|text|text|Anna Haro||",
+        "e49|text|text|Daniel Higgins Jr.||",
+        "e53|text|text|S||",
+        "e57|text|text|Mira Stone||",
+        "e61|text|text|T||",
+        "e65|text|text|David Taylor||",
+        "e69|text|text|Z||",
+        "e73|text|text|Hank M. Zakroff||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e90\"},{\"action\":\"tap\",\"elementRef\":\"e92\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e26",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e17 --direction up --distance 0.5"
+  ]
+}

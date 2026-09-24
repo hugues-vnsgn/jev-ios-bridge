@@ -189,12 +189,14 @@ test('watch serves copied images only with its token and a safe basename', async
     const endpoint = `${url.origin}/image?run=image&name=${stored}`;
     assert.equal((await fetch(endpoint)).status, 401);
     const headers = { Authorization: `Bearer ${url.searchParams.get('token')}` };
+    assert.equal((await fetch(endpoint, { method: 'POST', headers })).status, 405);
     const image = await fetch(endpoint, { headers });
     assert.equal(image.status, 200);
     assert.equal(image.headers.get('content-type'), 'image/jpeg');
     assert.deepEqual(Buffer.from(await image.arrayBuffer()), Buffer.from([0xff, 0xd8, 0xff, 0xd9]));
     assert.equal((await fetch(`${url.origin}/image?run=image&name=..%2Fsource.jpg`, { headers })).status, 400);
     assert.equal((await fetch(`${url.origin}/image?run=image&name=screen-99.jpg`, { headers })).status, 404);
+    assert.equal((await fetch(`${url.origin}/events?run=missing`, { headers })).status, 404);
   } finally { await watch?.close(); await rm(root, { recursive: true, force: true }); }
 });
 

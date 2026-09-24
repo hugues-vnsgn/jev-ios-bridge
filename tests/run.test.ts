@@ -122,3 +122,17 @@ test('step bound is inclusive and records an inconclusive verdict', async () => 
   assert.equal(report.verdict, 'inconclusive');
   assert.match(report.reason, /Step limit 2/);
 });
+
+test('step event records app-log tails while Jev observation text omits them', async () => {
+  const marker = 'APP-LOG-ONLY-MARKER';
+  const driver = device({ async observe() { return { ...snapshot, logTails: { runtime: marker } }; } });
+  let sentToJev = '';
+  const inspectingJudge: JevJudge = { async judge(_scenario, observation) {
+    sentToJev = observation.text;
+    return judge('stop-goal', 0.98, 0.98).judge(scenario, observation, new AbortController().signal);
+  } };
+  const report = await runScenario({ runId: 'run-1', scenario, driver, judge: inspectingJudge, log: memoryLog() });
+  assert.equal(report.verdict, 'passed');
+  assert.ok(!sentToJev.includes(marker));
+  assert.deepEqual(report.events.find(event => event.type === 'step')?.data.logTails, { runtime: marker });
+});

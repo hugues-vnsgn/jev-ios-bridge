@@ -1,0 +1,5913 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "protocol": "rs/1",
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+      "screenHash": "0qjcybi",
+      "seq": 167,
+      "capturedAtMs": 1790228319663,
+      "expiresAtMs": 1790228379663,
+      "elements": [
+        {
+          "ref": "e1",
+          "role": "application",
+          "label": "Settings",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e2",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e3",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e4",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e5",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e6",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e7",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e8",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e9",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e10",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e11",
+          "role": "other",
+          "identifier": "Language & Region",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 440,
+            "height": 54
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e12",
+          "role": "button",
+          "label": "General",
+          "identifier": "BackButton",
+          "frame": {
+            "x": 20,
+            "y": 62,
+            "width": 44,
+            "height": 44
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e13",
+          "role": "other",
+          "label": "Language & Region",
+          "frame": {
+            "x": 143,
+            "y": 72.67,
+            "width": 153.67,
+            "height": 22.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e14",
+          "role": "button",
+          "label": "Edit",
+          "frame": {
+            "x": 361.67,
+            "y": 66,
+            "width": 54.33,
+            "height": 36
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e15",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e16",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e17",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e18",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e19",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 116,
+            "width": 440,
+            "height": 806
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e20",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e21",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e22",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e23",
+          "role": "scroll-view",
+          "frame": {
+            "x": 20,
+            "y": 116,
+            "width": 400,
+            "height": 992.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch",
+            "swipeWithin"
+          ]
+        },
+        {
+          "ref": "e24",
+          "role": "other",
+          "label": "English",
+          "value": "iPhone Language",
+          "identifier": "en-US",
+          "frame": {
+            "x": 20,
+            "y": 171.33,
+            "width": 400,
+            "height": 68
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e25",
+          "role": "text",
+          "label": "English",
+          "identifier": "en-US",
+          "frame": {
+            "x": 40,
+            "y": 181.33,
+            "width": 325,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e26",
+          "role": "text",
+          "label": "iPhone Language",
+          "frame": {
+            "x": 40,
+            "y": 206.67,
+            "width": 118.67,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e27",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 238.33,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e28",
+          "role": "button",
+          "label": "Reorder English",
+          "frame": {
+            "x": 373,
+            "y": 171.33,
+            "width": 27,
+            "height": 68
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e29",
+          "role": "image",
+          "label": "drag",
+          "identifier": "line.horizontal.3",
+          "frame": {
+            "x": 373,
+            "y": 198.33,
+            "width": 27,
+            "height": 15
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e30",
+          "role": "other",
+          "label": "Tiếng Việt",
+          "value": "Vietnamese",
+          "identifier": "vi-US",
+          "frame": {
+            "x": 20,
+            "y": 239.33,
+            "width": 400,
+            "height": 68
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e31",
+          "role": "text",
+          "label": "Tiếng Việt",
+          "identifier": "vi-US",
+          "frame": {
+            "x": 40,
+            "y": 249.33,
+            "width": 325,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e32",
+          "role": "text",
+          "label": "Vietnamese",
+          "frame": {
+            "x": 40,
+            "y": 274.67,
+            "width": 80.67,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e33",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 306.33,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e34",
+          "role": "button",
+          "label": "Reorder Tiếng Việt",
+          "frame": {
+            "x": 373,
+            "y": 239.33,
+            "width": 27,
+            "height": 68
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e35",
+          "role": "image",
+          "label": "drag",
+          "identifier": "line.horizontal.3",
+          "frame": {
+            "x": 373,
+            "y": 266.33,
+            "width": 27,
+            "height": 15
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e36",
+          "role": "button",
+          "label": "Add Language…",
+          "identifier": "ADD_PREFERRED_LANGUAGE",
+          "frame": {
+            "x": 20,
+            "y": 307.33,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e37",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 307.33,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e38",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 307.33,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e39",
+          "role": "button",
+          "label": "Add Language…",
+          "identifier": "ADD_PREFERRED_LANGUAGE",
+          "frame": {
+            "x": 40,
+            "y": 323.67,
+            "width": 123.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e40",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 307.33,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e41",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 307.33,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e42",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 361.33,
+            "width": 400,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e43",
+          "role": "button",
+          "label": "Region, United States",
+          "identifier": "LOCALE",
+          "frame": {
+            "x": 20,
+            "y": 430,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e44",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 430,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e45",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 430,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e46",
+          "role": "button",
+          "label": "Region, United States",
+          "identifier": "LOCALE",
+          "frame": {
+            "x": 40,
+            "y": 446.33,
+            "width": 341.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e47",
+          "role": "text",
+          "label": "Region",
+          "frame": {
+            "x": 40,
+            "y": 446.33,
+            "width": 52.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e48",
+          "role": "text",
+          "label": "United States",
+          "frame": {
+            "x": 278.33,
+            "y": 446.33,
+            "width": 103.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e49",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 430,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e50",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 430,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e51",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 484,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e52",
+          "role": "button",
+          "label": "chevron",
+          "frame": {
+            "x": 389.67,
+            "y": 450,
+            "width": 10.33,
+            "height": 14
+          },
+          "state": {
+            "enabled": false,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e53",
+          "role": "button",
+          "label": "Calendar, Gregorian",
+          "identifier": "CALENDAR",
+          "frame": {
+            "x": 20,
+            "y": 485,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e54",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 485,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e55",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 485,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e56",
+          "role": "button",
+          "label": "Calendar, Gregorian",
+          "identifier": "CALENDAR",
+          "frame": {
+            "x": 40,
+            "y": 501.33,
+            "width": 341.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e57",
+          "role": "text",
+          "label": "Calendar",
+          "frame": {
+            "x": 40,
+            "y": 501.33,
+            "width": 68.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e58",
+          "role": "text",
+          "label": "Gregorian",
+          "frame": {
+            "x": 306.33,
+            "y": 501.33,
+            "width": 75.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e59",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 485,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e60",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 485,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e61",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 539,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e62",
+          "role": "button",
+          "label": "chevron",
+          "frame": {
+            "x": 389.67,
+            "y": 505,
+            "width": 10.33,
+            "height": 14
+          },
+          "state": {
+            "enabled": false,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e63",
+          "role": "button",
+          "label": "Temperature, °F",
+          "identifier": "TEMPERATURE_UNIT",
+          "frame": {
+            "x": 20,
+            "y": 540,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e64",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 540,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e65",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 540,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e66",
+          "role": "button",
+          "label": "Temperature, °F",
+          "identifier": "TEMPERATURE_UNIT",
+          "frame": {
+            "x": 40,
+            "y": 556.33,
+            "width": 341.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e67",
+          "role": "text",
+          "label": "Temperature",
+          "frame": {
+            "x": 40,
+            "y": 556.33,
+            "width": 97,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e68",
+          "role": "text",
+          "label": "°F",
+          "frame": {
+            "x": 364.67,
+            "y": 556.33,
+            "width": 17,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e69",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 540,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e70",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 540,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e71",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 594,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e72",
+          "role": "button",
+          "label": "chevron",
+          "frame": {
+            "x": 389.67,
+            "y": 560,
+            "width": 10.33,
+            "height": 14
+          },
+          "state": {
+            "enabled": false,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e73",
+          "role": "button",
+          "label": "Measurement System, US",
+          "identifier": "MEASUREMENT_SYSTEM",
+          "frame": {
+            "x": 20,
+            "y": 595,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e74",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 595,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e75",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 595,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e76",
+          "role": "button",
+          "label": "Measurement System, US",
+          "identifier": "MEASUREMENT_SYSTEM",
+          "frame": {
+            "x": 40,
+            "y": 611.33,
+            "width": 341.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e77",
+          "role": "text",
+          "label": "Measurement System",
+          "frame": {
+            "x": 40,
+            "y": 611.33,
+            "width": 165.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e78",
+          "role": "text",
+          "label": "US",
+          "frame": {
+            "x": 359,
+            "y": 611.33,
+            "width": 22.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e79",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 595,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e80",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 595,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e81",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 649,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e82",
+          "role": "button",
+          "label": "chevron",
+          "frame": {
+            "x": 389.67,
+            "y": 615,
+            "width": 10.33,
+            "height": 14
+          },
+          "state": {
+            "enabled": false,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e83",
+          "role": "button",
+          "label": "First Day of Week, Sunday",
+          "identifier": "FIRST_WEEKDAY",
+          "frame": {
+            "x": 20,
+            "y": 650,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e84",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 650,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e85",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 650,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e86",
+          "role": "button",
+          "label": "First Day of Week, Sunday",
+          "identifier": "FIRST_WEEKDAY",
+          "frame": {
+            "x": 40,
+            "y": 666.33,
+            "width": 341.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e87",
+          "role": "text",
+          "label": "First Day of Week",
+          "frame": {
+            "x": 40,
+            "y": 666.33,
+            "width": 133.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e88",
+          "role": "text",
+          "label": "Sunday",
+          "frame": {
+            "x": 324.67,
+            "y": 666.33,
+            "width": 57,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e89",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 650,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e90",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 650,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e91",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 704,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e92",
+          "role": "button",
+          "label": "chevron",
+          "frame": {
+            "x": 389.67,
+            "y": 670,
+            "width": 10.33,
+            "height": 14
+          },
+          "state": {
+            "enabled": false,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e93",
+          "role": "button",
+          "label": "Date Format, 8/19/26",
+          "identifier": "DATE_FORMAT",
+          "frame": {
+            "x": 20,
+            "y": 705,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e94",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 705,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e95",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 705,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e96",
+          "role": "button",
+          "label": "Date Format, 8/19/26",
+          "identifier": "DATE_FORMAT",
+          "frame": {
+            "x": 40,
+            "y": 721.33,
+            "width": 341.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e97",
+          "role": "text",
+          "label": "Date Format",
+          "frame": {
+            "x": 40,
+            "y": 721.33,
+            "width": 94.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e98",
+          "role": "text",
+          "label": "8/19/26",
+          "frame": {
+            "x": 323.67,
+            "y": 721.33,
+            "width": 58,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e99",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 705,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e100",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 705,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e101",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 759,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e102",
+          "role": "button",
+          "label": "chevron",
+          "frame": {
+            "x": 389.67,
+            "y": 725,
+            "width": 10.33,
+            "height": 14
+          },
+          "state": {
+            "enabled": false,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e103",
+          "role": "button",
+          "label": "Number Format, 1, 234, 567.89",
+          "identifier": "NUMBER_FORMAT",
+          "frame": {
+            "x": 20,
+            "y": 760,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e104",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 760,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e105",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 760,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e106",
+          "role": "button",
+          "label": "Number Format, 1,234,567.89",
+          "identifier": "NUMBER_FORMAT",
+          "frame": {
+            "x": 40,
+            "y": 776.33,
+            "width": 341.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e107",
+          "role": "text",
+          "label": "Number Format",
+          "frame": {
+            "x": 40,
+            "y": 776.33,
+            "width": 120,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e108",
+          "role": "text",
+          "label": "1,234,567.89",
+          "frame": {
+            "x": 283.33,
+            "y": 776.33,
+            "width": 98.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e109",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 760,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e110",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 760,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e111",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 814,
+            "width": 400,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e112",
+          "role": "button",
+          "label": "chevron",
+          "frame": {
+            "x": 389.67,
+            "y": 780,
+            "width": 10.33,
+            "height": 14
+          },
+          "state": {
+            "enabled": false,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e113",
+          "role": "other",
+          "identifier": "LIVE_TEXT_CELL",
+          "frame": {
+            "x": 20,
+            "y": 850,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e114",
+          "role": "other",
+          "label": "Preferred Languages",
+          "frame": {
+            "x": 20,
+            "y": 116,
+            "width": 400,
+            "height": 55.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e115",
+          "role": "other",
+          "label": "Apps and websites will use the first language in this list that they support.",
+          "frame": {
+            "x": 20,
+            "y": 362.33,
+            "width": 400,
+            "height": 50
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e116",
+          "role": "other",
+          "label": "Select text in images to copy or take action.",
+          "frame": {
+            "x": 20,
+            "y": 905,
+            "width": 400,
+            "height": 30
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e117",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 952.67,
+            "width": 400,
+            "height": 101
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e118",
+          "role": "text",
+          "label": "Region Format Example",
+          "frame": {
+            "x": 130,
+            "y": 952.67,
+            "width": 180,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e119",
+          "role": "text",
+          "label": "9:41 AM",
+          "frame": {
+            "x": 190,
+            "y": 982.67,
+            "width": 60.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e120",
+          "role": "text",
+          "label": "Wednesday, August 19, 2026",
+          "frame": {
+            "x": 109,
+            "y": 1007,
+            "width": 221.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e121",
+          "role": "text",
+          "label": "$12,345.67 4,567.89",
+          "frame": {
+            "x": 136,
+            "y": 1031.33,
+            "width": 168.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e122",
+          "role": "slider",
+          "label": "Vertical scroll bar, 2 pages",
+          "value": "0%",
+          "frame": {
+            "x": 407,
+            "y": 116,
+            "width": 30,
+            "height": 778
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e123",
+          "role": "other",
+          "frame": {
+            "x": 434,
+            "y": 119,
+            "width": 3,
+            "height": 646
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e124",
+          "role": "slider",
+          "label": "Horizontal scroll bar, 1 page",
+          "value": "0%",
+          "frame": {
+            "x": 62,
+            "y": 923,
+            "width": 316,
+            "height": 30
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e125",
+          "role": "other",
+          "frame": {
+            "x": 65,
+            "y": 950,
+            "width": 310,
+            "height": 3
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e126",
+          "role": "slider",
+          "label": "Vertical scroll bar, 2 pages",
+          "value": "0%",
+          "frame": {
+            "x": 407,
+            "y": 116,
+            "width": 30,
+            "height": 778
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e127",
+          "role": "other",
+          "frame": {
+            "x": 434,
+            "y": 119,
+            "width": 3,
+            "height": 646
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e128",
+          "role": "slider",
+          "label": "Horizontal scroll bar, 1 page",
+          "value": "0%",
+          "frame": {
+            "x": 62,
+            "y": 923,
+            "width": 316,
+            "height": 30
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e129",
+          "role": "other",
+          "frame": {
+            "x": 65,
+            "y": 950,
+            "width": 310,
+            "height": 3
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e130",
+          "role": "button",
+          "label": "Number Format, 1, 234, 567.89",
+          "identifier": "NUMBER_FORMAT",
+          "frame": {
+            "x": 20,
+            "y": 760,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e131",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 760,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e132",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 760,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e133",
+          "role": "button",
+          "label": "Number Format, 1,234,567.89",
+          "identifier": "NUMBER_FORMAT",
+          "frame": {
+            "x": 40,
+            "y": 776.33,
+            "width": 341.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e134",
+          "role": "text",
+          "label": "Number Format",
+          "frame": {
+            "x": 40,
+            "y": 776.33,
+            "width": 120,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e135",
+          "role": "text",
+          "label": "1,234,567.89",
+          "frame": {
+            "x": 283.33,
+            "y": 776.33,
+            "width": 98.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e136",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 760,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e137",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 760,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e138",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 814,
+            "width": 400,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e139",
+          "role": "button",
+          "label": "chevron",
+          "frame": {
+            "x": 389.67,
+            "y": 780,
+            "width": 10.33,
+            "height": 14
+          },
+          "state": {
+            "enabled": false,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e140",
+          "role": "button",
+          "label": "Date Format, 8/19/26",
+          "identifier": "DATE_FORMAT",
+          "frame": {
+            "x": 20,
+            "y": 705,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e141",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 705,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e142",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 705,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e143",
+          "role": "button",
+          "label": "Date Format, 8/19/26",
+          "identifier": "DATE_FORMAT",
+          "frame": {
+            "x": 40,
+            "y": 721.33,
+            "width": 341.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e144",
+          "role": "text",
+          "label": "Date Format",
+          "frame": {
+            "x": 40,
+            "y": 721.33,
+            "width": 94.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e145",
+          "role": "text",
+          "label": "8/19/26",
+          "frame": {
+            "x": 323.67,
+            "y": 721.33,
+            "width": 58,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e146",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 705,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e147",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 705,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e148",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 759,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e149",
+          "role": "button",
+          "label": "chevron",
+          "frame": {
+            "x": 389.67,
+            "y": 725,
+            "width": 10.33,
+            "height": 14
+          },
+          "state": {
+            "enabled": false,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e150",
+          "role": "button",
+          "label": "First Day of Week, Sunday",
+          "identifier": "FIRST_WEEKDAY",
+          "frame": {
+            "x": 20,
+            "y": 650,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e151",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 650,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e152",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 650,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e153",
+          "role": "button",
+          "label": "First Day of Week, Sunday",
+          "identifier": "FIRST_WEEKDAY",
+          "frame": {
+            "x": 40,
+            "y": 666.33,
+            "width": 341.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e154",
+          "role": "text",
+          "label": "First Day of Week",
+          "frame": {
+            "x": 40,
+            "y": 666.33,
+            "width": 133.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e155",
+          "role": "text",
+          "label": "Sunday",
+          "frame": {
+            "x": 324.67,
+            "y": 666.33,
+            "width": 57,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e156",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 650,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e157",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 650,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e158",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 704,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e159",
+          "role": "button",
+          "label": "chevron",
+          "frame": {
+            "x": 389.67,
+            "y": 670,
+            "width": 10.33,
+            "height": 14
+          },
+          "state": {
+            "enabled": false,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e160",
+          "role": "button",
+          "label": "Measurement System, US",
+          "identifier": "MEASUREMENT_SYSTEM",
+          "frame": {
+            "x": 20,
+            "y": 595,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e161",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 595,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e162",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 595,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e163",
+          "role": "button",
+          "label": "Measurement System, US",
+          "identifier": "MEASUREMENT_SYSTEM",
+          "frame": {
+            "x": 40,
+            "y": 611.33,
+            "width": 341.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e164",
+          "role": "text",
+          "label": "Measurement System",
+          "frame": {
+            "x": 40,
+            "y": 611.33,
+            "width": 165.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e165",
+          "role": "text",
+          "label": "US",
+          "frame": {
+            "x": 359,
+            "y": 611.33,
+            "width": 22.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e166",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 595,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e167",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 595,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e168",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 649,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e169",
+          "role": "button",
+          "label": "chevron",
+          "frame": {
+            "x": 389.67,
+            "y": 615,
+            "width": 10.33,
+            "height": 14
+          },
+          "state": {
+            "enabled": false,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e170",
+          "role": "button",
+          "label": "Temperature, °F",
+          "identifier": "TEMPERATURE_UNIT",
+          "frame": {
+            "x": 20,
+            "y": 540,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e171",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 540,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e172",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 540,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e173",
+          "role": "button",
+          "label": "Temperature, °F",
+          "identifier": "TEMPERATURE_UNIT",
+          "frame": {
+            "x": 40,
+            "y": 556.33,
+            "width": 341.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e174",
+          "role": "text",
+          "label": "Temperature",
+          "frame": {
+            "x": 40,
+            "y": 556.33,
+            "width": 97,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e175",
+          "role": "text",
+          "label": "°F",
+          "frame": {
+            "x": 364.67,
+            "y": 556.33,
+            "width": 17,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e176",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 540,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e177",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 540,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e178",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 594,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e179",
+          "role": "button",
+          "label": "chevron",
+          "frame": {
+            "x": 389.67,
+            "y": 560,
+            "width": 10.33,
+            "height": 14
+          },
+          "state": {
+            "enabled": false,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e180",
+          "role": "button",
+          "label": "Calendar, Gregorian",
+          "identifier": "CALENDAR",
+          "frame": {
+            "x": 20,
+            "y": 485,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e181",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 485,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e182",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 485,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e183",
+          "role": "button",
+          "label": "Calendar, Gregorian",
+          "identifier": "CALENDAR",
+          "frame": {
+            "x": 40,
+            "y": 501.33,
+            "width": 341.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e184",
+          "role": "text",
+          "label": "Calendar",
+          "frame": {
+            "x": 40,
+            "y": 501.33,
+            "width": 68.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e185",
+          "role": "text",
+          "label": "Gregorian",
+          "frame": {
+            "x": 306.33,
+            "y": 501.33,
+            "width": 75.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e186",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 485,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e187",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 485,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e188",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 539,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e189",
+          "role": "button",
+          "label": "chevron",
+          "frame": {
+            "x": 389.67,
+            "y": 505,
+            "width": 10.33,
+            "height": 14
+          },
+          "state": {
+            "enabled": false,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e190",
+          "role": "button",
+          "label": "Region, United States",
+          "identifier": "LOCALE",
+          "frame": {
+            "x": 20,
+            "y": 430,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e191",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 430,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e192",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 430,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e193",
+          "role": "button",
+          "label": "Region, United States",
+          "identifier": "LOCALE",
+          "frame": {
+            "x": 40,
+            "y": 446.33,
+            "width": 341.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e194",
+          "role": "text",
+          "label": "Region",
+          "frame": {
+            "x": 40,
+            "y": 446.33,
+            "width": 52.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e195",
+          "role": "text",
+          "label": "United States",
+          "frame": {
+            "x": 278.33,
+            "y": 446.33,
+            "width": 103.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e196",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 430,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e197",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 430,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e198",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 484,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e199",
+          "role": "button",
+          "label": "chevron",
+          "frame": {
+            "x": 389.67,
+            "y": 450,
+            "width": 10.33,
+            "height": 14
+          },
+          "state": {
+            "enabled": false,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e200",
+          "role": "button",
+          "label": "Add Language…",
+          "identifier": "ADD_PREFERRED_LANGUAGE",
+          "frame": {
+            "x": 20,
+            "y": 307.33,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e201",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 307.33,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e202",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 307.33,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e203",
+          "role": "button",
+          "label": "Add Language…",
+          "identifier": "ADD_PREFERRED_LANGUAGE",
+          "frame": {
+            "x": 40,
+            "y": 323.67,
+            "width": 123.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e204",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 307.33,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e205",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 307.33,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e206",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 361.33,
+            "width": 400,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e207",
+          "role": "text",
+          "label": "Region Format Example",
+          "frame": {
+            "x": 130,
+            "y": 952.67,
+            "width": 180,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e208",
+          "role": "text",
+          "label": "9:41 AM",
+          "frame": {
+            "x": 190,
+            "y": 982.67,
+            "width": 60.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e209",
+          "role": "text",
+          "label": "Wednesday, August 19, 2026",
+          "frame": {
+            "x": 109,
+            "y": 1007,
+            "width": 221.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e210",
+          "role": "text",
+          "label": "$12,345.67 4,567.89",
+          "frame": {
+            "x": 136,
+            "y": 1031.33,
+            "width": 168.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e211",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e212",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e213",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e214",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "action": "longPress",
+          "elementRef": "e2"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e2"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e3"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e3"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e4"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e4"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e5"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e5"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e6"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e7"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e7"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e8"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e8"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e9"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e9"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e10"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e10"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e11"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e11"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e12",
+          "label": "General"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e12",
+          "label": "General"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e12",
+          "label": "General"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e13",
+          "label": "Language & Region"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e13",
+          "label": "Language & Region"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e14",
+          "label": "Edit"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e14",
+          "label": "Edit"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e14",
+          "label": "Edit"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e15"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e15"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e16"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e16"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e17"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e17"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e18"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e18"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e19"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e19"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e20"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e20"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e21"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e21"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e22"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e22"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e23"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e23"
+        },
+        {
+          "action": "swipeWithin",
+          "elementRef": "e23"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e24",
+          "label": "English"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e24",
+          "label": "English"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e24",
+          "label": "English"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e25",
+          "label": "English"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e25",
+          "label": "English"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e25",
+          "label": "English"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e26",
+          "label": "iPhone Language"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e26",
+          "label": "iPhone Language"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e26",
+          "label": "iPhone Language"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e27"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e27"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e28",
+          "label": "Reorder English"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e28",
+          "label": "Reorder English"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e28",
+          "label": "Reorder English"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e29",
+          "label": "drag"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e29",
+          "label": "drag"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e29",
+          "label": "drag"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e30",
+          "label": "Tiếng Việt"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e30",
+          "label": "Tiếng Việt"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e30",
+          "label": "Tiếng Việt"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e31",
+          "label": "Tiếng Việt"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e31",
+          "label": "Tiếng Việt"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e31",
+          "label": "Tiếng Việt"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e32",
+          "label": "Vietnamese"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e32",
+          "label": "Vietnamese"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e32",
+          "label": "Vietnamese"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e33"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e33"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e34",
+          "label": "Reorder Tiếng Việt"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e34",
+          "label": "Reorder Tiếng Việt"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e34",
+          "label": "Reorder Tiếng Việt"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e35",
+          "label": "drag"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e35",
+          "label": "drag"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e35",
+          "label": "drag"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e36",
+          "label": "Add Language…"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e36",
+          "label": "Add Language…"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e36",
+          "label": "Add Language…"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e37"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e37"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e38"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e38"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e39",
+          "label": "Add Language…"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e39",
+          "label": "Add Language…"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e39",
+          "label": "Add Language…"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e40"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e40"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e41"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e41"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e42"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e42"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e43",
+          "label": "Region, United States"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e43",
+          "label": "Region, United States"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e43",
+          "label": "Region, United States"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e44"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e44"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e45"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e45"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e46",
+          "label": "Region, United States"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e46",
+          "label": "Region, United States"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e46",
+          "label": "Region, United States"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e47",
+          "label": "Region"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e47",
+          "label": "Region"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e48",
+          "label": "United States"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e48",
+          "label": "United States"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e49"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e49"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e50"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e50"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e51"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e51"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e53",
+          "label": "Calendar, Gregorian"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e53",
+          "label": "Calendar, Gregorian"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e53",
+          "label": "Calendar, Gregorian"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e54"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e54"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e55"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e55"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e56",
+          "label": "Calendar, Gregorian"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e56",
+          "label": "Calendar, Gregorian"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e56",
+          "label": "Calendar, Gregorian"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e57",
+          "label": "Calendar"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e57",
+          "label": "Calendar"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e58",
+          "label": "Gregorian"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e58",
+          "label": "Gregorian"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e59"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e59"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e60"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e60"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e61"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e61"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e63",
+          "label": "Temperature, °F"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e63",
+          "label": "Temperature, °F"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e63",
+          "label": "Temperature, °F"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e64"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e64"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e65"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e65"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e66",
+          "label": "Temperature, °F"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e66",
+          "label": "Temperature, °F"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e66",
+          "label": "Temperature, °F"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e67",
+          "label": "Temperature"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e67",
+          "label": "Temperature"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e68",
+          "label": "°F"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e68",
+          "label": "°F"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e69"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e69"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e70"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e70"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e71"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e71"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e73",
+          "label": "Measurement System, US"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e73",
+          "label": "Measurement System, US"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e73",
+          "label": "Measurement System, US"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e74"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e74"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e75"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e75"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e76",
+          "label": "Measurement System, US"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e76",
+          "label": "Measurement System, US"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e76",
+          "label": "Measurement System, US"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e77",
+          "label": "Measurement System"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e77",
+          "label": "Measurement System"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e78",
+          "label": "US"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e78",
+          "label": "US"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e79"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e79"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e80"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e80"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e81"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e81"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e83",
+          "label": "First Day of Week, Sunday"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e83",
+          "label": "First Day of Week, Sunday"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e83",
+          "label": "First Day of Week, Sunday"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e84"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e84"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e85"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e85"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e86",
+          "label": "First Day of Week, Sunday"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e86",
+          "label": "First Day of Week, Sunday"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e86",
+          "label": "First Day of Week, Sunday"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e87",
+          "label": "First Day of Week"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e87",
+          "label": "First Day of Week"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e88",
+          "label": "Sunday"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e88",
+          "label": "Sunday"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e89"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e89"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e90"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e90"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e91"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e91"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e93",
+          "label": "Date Format, 8/19/26"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e93",
+          "label": "Date Format, 8/19/26"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e93",
+          "label": "Date Format, 8/19/26"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e94"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e94"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e95"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e95"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e96",
+          "label": "Date Format, 8/19/26"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e96",
+          "label": "Date Format, 8/19/26"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e96",
+          "label": "Date Format, 8/19/26"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e97",
+          "label": "Date Format"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e97",
+          "label": "Date Format"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e98",
+          "label": "8/19/26"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e98",
+          "label": "8/19/26"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e99"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e99"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e100"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e100"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e101"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e101"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e103",
+          "label": "Number Format, 1, 234, 567.89"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e103",
+          "label": "Number Format, 1, 234, 567.89"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e103",
+          "label": "Number Format, 1, 234, 567.89"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e104"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e104"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e105"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e105"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e106",
+          "label": "Number Format, 1,234,567.89"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e106",
+          "label": "Number Format, 1,234,567.89"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e106",
+          "label": "Number Format, 1,234,567.89"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e107",
+          "label": "Number Format"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e107",
+          "label": "Number Format"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e108",
+          "label": "1,234,567.89"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e108",
+          "label": "1,234,567.89"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e109"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e109"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e110"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e110"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e111"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e111"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e113"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e113"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e114",
+          "label": "Preferred Languages"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e114",
+          "label": "Preferred Languages"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e115",
+          "label": "Apps and websites will use the first language in this list that they support."
+        },
+        {
+          "action": "touch",
+          "elementRef": "e115",
+          "label": "Apps and websites will use the first language in this list that they support."
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e116",
+          "label": "Select text in images to copy or take action."
+        },
+        {
+          "action": "touch",
+          "elementRef": "e116",
+          "label": "Select text in images to copy or take action."
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e122",
+          "label": "Vertical scroll bar, 2 pages"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e122",
+          "label": "Vertical scroll bar, 2 pages"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e123"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e123"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e124",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e124",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e125"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e125"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e126",
+          "label": "Vertical scroll bar, 2 pages"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e126",
+          "label": "Vertical scroll bar, 2 pages"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e127"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e127"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e128",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e128",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e129"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e129"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e130",
+          "label": "Number Format, 1, 234, 567.89"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e130",
+          "label": "Number Format, 1, 234, 567.89"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e130",
+          "label": "Number Format, 1, 234, 567.89"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e131"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e131"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e132"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e132"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e133",
+          "label": "Number Format, 1,234,567.89"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e133",
+          "label": "Number Format, 1,234,567.89"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e133",
+          "label": "Number Format, 1,234,567.89"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e134",
+          "label": "Number Format"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e134",
+          "label": "Number Format"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e135",
+          "label": "1,234,567.89"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e135",
+          "label": "1,234,567.89"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e136"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e136"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e137"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e137"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e138"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e138"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e140",
+          "label": "Date Format, 8/19/26"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e140",
+          "label": "Date Format, 8/19/26"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e140",
+          "label": "Date Format, 8/19/26"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e141"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e141"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e142"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e142"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e143",
+          "label": "Date Format, 8/19/26"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e143",
+          "label": "Date Format, 8/19/26"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e143",
+          "label": "Date Format, 8/19/26"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e144",
+          "label": "Date Format"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e144",
+          "label": "Date Format"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e145",
+          "label": "8/19/26"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e145",
+          "label": "8/19/26"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e146"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e146"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e147"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e147"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e148"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e148"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e150",
+          "label": "First Day of Week, Sunday"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e150",
+          "label": "First Day of Week, Sunday"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e150",
+          "label": "First Day of Week, Sunday"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e151"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e151"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e152"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e152"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e153",
+          "label": "First Day of Week, Sunday"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e153",
+          "label": "First Day of Week, Sunday"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e153",
+          "label": "First Day of Week, Sunday"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e154",
+          "label": "First Day of Week"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e154",
+          "label": "First Day of Week"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e155",
+          "label": "Sunday"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e155",
+          "label": "Sunday"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e156"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e156"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e157"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e157"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e158"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e158"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e160",
+          "label": "Measurement System, US"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e160",
+          "label": "Measurement System, US"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e160",
+          "label": "Measurement System, US"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e161"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e161"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e162"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e162"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e163",
+          "label": "Measurement System, US"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e163",
+          "label": "Measurement System, US"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e163",
+          "label": "Measurement System, US"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e164",
+          "label": "Measurement System"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e164",
+          "label": "Measurement System"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e165",
+          "label": "US"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e165",
+          "label": "US"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e166"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e166"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e167"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e167"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e168"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e168"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e170",
+          "label": "Temperature, °F"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e170",
+          "label": "Temperature, °F"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e170",
+          "label": "Temperature, °F"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e171"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e171"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e172"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e172"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e173",
+          "label": "Temperature, °F"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e173",
+          "label": "Temperature, °F"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e173",
+          "label": "Temperature, °F"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e174",
+          "label": "Temperature"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e174",
+          "label": "Temperature"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e175",
+          "label": "°F"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e175",
+          "label": "°F"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e176"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e176"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e177"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e177"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e178"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e178"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e180",
+          "label": "Calendar, Gregorian"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e180",
+          "label": "Calendar, Gregorian"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e180",
+          "label": "Calendar, Gregorian"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e181"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e181"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e182"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e182"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e183",
+          "label": "Calendar, Gregorian"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e183",
+          "label": "Calendar, Gregorian"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e183",
+          "label": "Calendar, Gregorian"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e184",
+          "label": "Calendar"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e184",
+          "label": "Calendar"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e185",
+          "label": "Gregorian"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e185",
+          "label": "Gregorian"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e186"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e186"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e187"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e187"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e188"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e188"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e190",
+          "label": "Region, United States"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e190",
+          "label": "Region, United States"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e190",
+          "label": "Region, United States"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e191"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e191"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e192"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e192"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e193",
+          "label": "Region, United States"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e193",
+          "label": "Region, United States"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e193",
+          "label": "Region, United States"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e194",
+          "label": "Region"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e194",
+          "label": "Region"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e195",
+          "label": "United States"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e195",
+          "label": "United States"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e196"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e196"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e197"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e197"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e198"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e198"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e200",
+          "label": "Add Language…"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e200",
+          "label": "Add Language…"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e200",
+          "label": "Add Language…"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e201"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e201"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e202"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e202"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e203",
+          "label": "Add Language…"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e203",
+          "label": "Add Language…"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e203",
+          "label": "Add Language…"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e204"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e204"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e205"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e205"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e206"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e206"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e211"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e211"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e212"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e212"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e213"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e213"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e214"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e214"
+        }
+      ]
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e12\"},{\"action\":\"tap\",\"elementRef\":\"e14\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e43",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e23 --direction up --distance 0.5"
+  ]
+}

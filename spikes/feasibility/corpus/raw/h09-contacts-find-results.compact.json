@@ -1,0 +1,64 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "0pck25k",
+      "seq": 117,
+      "count": 182,
+      "targets": [
+        "e23|tap|button|Contact photo for John Appleseed||",
+        "e31|tap|button|Contact photo for Kate Bell||",
+        "e39|tap|button|Contact photo for Anna Haro||",
+        "e44|tap|button|Contact photo for Daniel Higgins Jr.||",
+        "e52|tap|button|Contact photo for Mira Stone||",
+        "e60|tap|button|Contact photo for David Taylor||",
+        "e68|tap|button|Contact photo for Hank M. Zakroff||",
+        "e88|tap|button|Contact photo for Mira Stone||",
+        "e111|typeText|text-field||Mira|",
+        "e113|tap|button|Clear text||",
+        "e118|tap|button|close||"
+      ],
+      "scroll": [
+        "e14|swipe|other|||ContactsListView",
+        "e79|swipe|other|Activate to dismiss||",
+        "e80|swipe|other|||ContactsListView",
+        "e81|swipe|other|Search results||"
+      ],
+      "text": [
+        "e20|text|text|A||",
+        "e86|text|text|Top Name Matches||",
+        "e90|text|text|Mira Stone||",
+        "e25|text|text|John Appleseed||",
+        "e29|text|text|B||",
+        "e33|text|text|Kate Bell||",
+        "e37|text|text|H||",
+        "e41|text|text|Anna Haro||",
+        "e46|text|text|Daniel Higgins Jr.||",
+        "e50|text|text|S||",
+        "e54|text|text|Mira Stone||",
+        "e58|text|text|T||",
+        "e62|text|text|David Taylor||",
+        "e66|text|text|Z||",
+        "e70|text|text|Hank M. Zakroff||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e23",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e81 --direction up --distance 0.5"
+  ]
+}

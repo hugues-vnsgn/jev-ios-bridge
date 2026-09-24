@@ -1,0 +1,6488 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "protocol": "rs/1",
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+      "screenHash": "0tbfh5y",
+      "seq": 131,
+      "capturedAtMs": 1790227992236,
+      "expiresAtMs": 1790228052236,
+      "elements": [
+        {
+          "ref": "e1",
+          "role": "application",
+          "label": "Settings",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e2",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e3",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e4",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e5",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e6",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e7",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e8",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e9",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e10",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e11",
+          "role": "other",
+          "identifier": "About",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 440,
+            "height": 54
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e12",
+          "role": "button",
+          "label": "General",
+          "identifier": "BackButton",
+          "frame": {
+            "x": 20,
+            "y": 62,
+            "width": 44,
+            "height": 44
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e13",
+          "role": "other",
+          "label": "About",
+          "frame": {
+            "x": 195.67,
+            "y": 72.67,
+            "width": 48.33,
+            "height": 22.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e14",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e15",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e16",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e17",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e18",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 116,
+            "width": 440,
+            "height": 806
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e19",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e20",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e21",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e22",
+          "role": "scroll-view",
+          "frame": {
+            "x": 20,
+            "y": 116,
+            "width": 400,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch",
+            "swipeWithin"
+          ]
+        },
+        {
+          "ref": "e23",
+          "role": "other",
+          "label": "Name, iPhone",
+          "identifier": "NAME_CELL_ID",
+          "frame": {
+            "x": 20,
+            "y": 133.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e24",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 133.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e25",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 133.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e26",
+          "role": "button",
+          "label": "Name, iPhone",
+          "identifier": "NAME_CELL_ID",
+          "frame": {
+            "x": 40,
+            "y": 150,
+            "width": 360,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e27",
+          "role": "text",
+          "label": "Name",
+          "frame": {
+            "x": 40,
+            "y": 150,
+            "width": 45,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e28",
+          "role": "text",
+          "label": "iPhone",
+          "frame": {
+            "x": 347.67,
+            "y": 150,
+            "width": 52.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e29",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 133.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e30",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 133.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e31",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 187.67,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e32",
+          "role": "button",
+          "label": "iOS Version, 26.4.1",
+          "identifier": "SW_VERSION_SPECIFIER",
+          "frame": {
+            "x": 20,
+            "y": 188.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e33",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 188.67,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e34",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 188.67,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e35",
+          "role": "button",
+          "label": "iOS Version, 26.4.1",
+          "identifier": "SW_VERSION_SPECIFIER",
+          "frame": {
+            "x": 40,
+            "y": 205,
+            "width": 341.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e36",
+          "role": "text",
+          "label": "iOS Version",
+          "frame": {
+            "x": 40,
+            "y": 205,
+            "width": 88,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e37",
+          "role": "text",
+          "label": "26.4.1",
+          "frame": {
+            "x": 336.33,
+            "y": 205,
+            "width": 45.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e38",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 188.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e39",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 188.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e40",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 242.67,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e41",
+          "role": "button",
+          "label": "chevron",
+          "frame": {
+            "x": 389.67,
+            "y": 208.67,
+            "width": 10.33,
+            "height": 14
+          },
+          "state": {
+            "enabled": false,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e42",
+          "role": "other",
+          "label": "Model Name, iPhone 17 Pro Max",
+          "identifier": "ProductModelName",
+          "frame": {
+            "x": 20,
+            "y": 243.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e43",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 243.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e44",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 243.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e45",
+          "role": "button",
+          "label": "Model Name, iPhone 17 Pro Max",
+          "identifier": "ProductModelName",
+          "frame": {
+            "x": 40,
+            "y": 260,
+            "width": 360,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e46",
+          "role": "text",
+          "label": "Model Name",
+          "frame": {
+            "x": 40,
+            "y": 260,
+            "width": 96.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e47",
+          "role": "text",
+          "label": "iPhone 17 Pro Max",
+          "frame": {
+            "x": 260.33,
+            "y": 260,
+            "width": 139.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e48",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 243.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e49",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 243.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e50",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 297.67,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e51",
+          "role": "other",
+          "label": "Model Number, A3257SA/A",
+          "identifier": "ProductModel",
+          "frame": {
+            "x": 20,
+            "y": 298.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e52",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 298.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e53",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 298.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e54",
+          "role": "button",
+          "label": "Model Number, A3257SA/A",
+          "identifier": "ProductModel",
+          "frame": {
+            "x": 40,
+            "y": 315,
+            "width": 360,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e55",
+          "role": "text",
+          "label": "Model Number",
+          "frame": {
+            "x": 40,
+            "y": 315,
+            "width": 113,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e56",
+          "role": "text",
+          "label": "A3257SA/A",
+          "frame": {
+            "x": 312.67,
+            "y": 315,
+            "width": 87.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e57",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 298.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e58",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 298.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e59",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 352.67,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e60",
+          "role": "other",
+          "label": "Serial Number, K2MNVKK265",
+          "identifier": "SerialNumber",
+          "frame": {
+            "x": 20,
+            "y": 353.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e61",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 353.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e62",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 353.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e63",
+          "role": "button",
+          "label": "Serial Number, K2MNVKK265",
+          "identifier": "SerialNumber",
+          "frame": {
+            "x": 40,
+            "y": 370,
+            "width": 360,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e64",
+          "role": "text",
+          "label": "Serial Number",
+          "frame": {
+            "x": 40,
+            "y": 370,
+            "width": 108.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e65",
+          "role": "text",
+          "label": "K2MNVKK265",
+          "frame": {
+            "x": 289.67,
+            "y": 370,
+            "width": 110.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e66",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 353.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e67",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 353.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e68",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 407.67,
+            "width": 400,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e69",
+          "role": "other",
+          "label": "Songs, 0",
+          "identifier": "SONGS",
+          "frame": {
+            "x": 20,
+            "y": 443.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e70",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 443.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e71",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 443.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e72",
+          "role": "button",
+          "label": "Songs, 0",
+          "identifier": "SONGS",
+          "frame": {
+            "x": 40,
+            "y": 460,
+            "width": 360,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e73",
+          "role": "text",
+          "label": "Songs",
+          "frame": {
+            "x": 40,
+            "y": 460,
+            "width": 48,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e74",
+          "role": "text",
+          "label": "0",
+          "frame": {
+            "x": 389.67,
+            "y": 460,
+            "width": 10.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e75",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 443.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e76",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 443.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e77",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 497.67,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e78",
+          "role": "other",
+          "label": "Videos, 0",
+          "identifier": "VIDEOS",
+          "frame": {
+            "x": 20,
+            "y": 498.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e79",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 498.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e80",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 498.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e81",
+          "role": "button",
+          "label": "Videos, 0",
+          "identifier": "VIDEOS",
+          "frame": {
+            "x": 40,
+            "y": 515,
+            "width": 360,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e82",
+          "role": "text",
+          "label": "Videos",
+          "frame": {
+            "x": 40,
+            "y": 515,
+            "width": 52.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e83",
+          "role": "text",
+          "label": "0",
+          "frame": {
+            "x": 389.67,
+            "y": 515,
+            "width": 10.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e84",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 498.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e85",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 498.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e86",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 552.67,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e87",
+          "role": "other",
+          "label": "Photos, 6",
+          "identifier": "PHOTOS",
+          "frame": {
+            "x": 20,
+            "y": 553.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e88",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 553.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e89",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 553.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e90",
+          "role": "button",
+          "label": "Photos, 6",
+          "identifier": "PHOTOS",
+          "frame": {
+            "x": 40,
+            "y": 570,
+            "width": 360,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e91",
+          "role": "text",
+          "label": "Photos",
+          "frame": {
+            "x": 40,
+            "y": 570,
+            "width": 53.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e92",
+          "role": "text",
+          "label": "6",
+          "frame": {
+            "x": 389.33,
+            "y": 570,
+            "width": 10.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e93",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 553.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e94",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 553.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e95",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 607.67,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e96",
+          "role": "other",
+          "label": "Capacity, 494.38 GB",
+          "identifier": "User Data Capacity",
+          "frame": {
+            "x": 20,
+            "y": 608.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e97",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 608.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e98",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 608.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e99",
+          "role": "button",
+          "label": "Capacity, 494.38 GB",
+          "identifier": "User Data Capacity",
+          "frame": {
+            "x": 40,
+            "y": 625,
+            "width": 360,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e100",
+          "role": "text",
+          "label": "Capacity",
+          "frame": {
+            "x": 40,
+            "y": 625,
+            "width": 67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e101",
+          "role": "text",
+          "label": "494.38 GB",
+          "frame": {
+            "x": 317,
+            "y": 625,
+            "width": 83,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e102",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 608.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e103",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 608.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e104",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 662.67,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e105",
+          "role": "other",
+          "label": "Available, 52.53 GB",
+          "identifier": "User Data Available",
+          "frame": {
+            "x": 20,
+            "y": 663.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e106",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 663.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e107",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 663.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e108",
+          "role": "button",
+          "label": "Available, 52.53 GB",
+          "identifier": "User Data Available",
+          "frame": {
+            "x": 40,
+            "y": 680,
+            "width": 360,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e109",
+          "role": "text",
+          "label": "Available",
+          "frame": {
+            "x": 40,
+            "y": 680,
+            "width": 67.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e110",
+          "role": "text",
+          "label": "52.53 GB",
+          "frame": {
+            "x": 328.33,
+            "y": 680,
+            "width": 71.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e111",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 663.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e112",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 663.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e113",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 717.67,
+            "width": 400,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e114",
+          "role": "button",
+          "label": "Certificate Trust Settings",
+          "identifier": "CERT_TRUST_SETTINGS",
+          "frame": {
+            "x": 20,
+            "y": 788.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e115",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 788.67,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e116",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 788.67,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e117",
+          "role": "text",
+          "label": "Certificate Trust Settings",
+          "frame": {
+            "x": 40,
+            "y": 805,
+            "width": 189.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e118",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 788.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e119",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 788.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e120",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 842.67,
+            "width": 400,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e121",
+          "role": "button",
+          "label": "chevron",
+          "frame": {
+            "x": 389.67,
+            "y": 808.67,
+            "width": 10.33,
+            "height": 14
+          },
+          "state": {
+            "enabled": false,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e122",
+          "role": "slider",
+          "label": "Vertical scroll bar, 1 page",
+          "value": "0%",
+          "frame": {
+            "x": 407,
+            "y": 116,
+            "width": 30,
+            "height": 778
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e123",
+          "role": "other",
+          "frame": {
+            "x": 434,
+            "y": 160,
+            "width": 3,
+            "height": 731
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e124",
+          "role": "slider",
+          "label": "Horizontal scroll bar, 1 page",
+          "value": "0%",
+          "frame": {
+            "x": 62,
+            "y": 923,
+            "width": 316,
+            "height": 30
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e125",
+          "role": "other",
+          "frame": {
+            "x": 65,
+            "y": 950,
+            "width": 310,
+            "height": 3
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e126",
+          "role": "slider",
+          "label": "Vertical scroll bar, 1 page",
+          "value": "0%",
+          "frame": {
+            "x": 407,
+            "y": 116,
+            "width": 30,
+            "height": 778
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e127",
+          "role": "other",
+          "frame": {
+            "x": 434,
+            "y": 160,
+            "width": 3,
+            "height": 731
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e128",
+          "role": "slider",
+          "label": "Horizontal scroll bar, 1 page",
+          "value": "0%",
+          "frame": {
+            "x": 62,
+            "y": 923,
+            "width": 316,
+            "height": 30
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e129",
+          "role": "other",
+          "frame": {
+            "x": 65,
+            "y": 950,
+            "width": 310,
+            "height": 3
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e130",
+          "role": "button",
+          "label": "Certificate Trust Settings",
+          "identifier": "CERT_TRUST_SETTINGS",
+          "frame": {
+            "x": 20,
+            "y": 788.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e131",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 788.67,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e132",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 788.67,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e133",
+          "role": "text",
+          "label": "Certificate Trust Settings",
+          "frame": {
+            "x": 40,
+            "y": 805,
+            "width": 189.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e134",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 788.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e135",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 788.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e136",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 842.67,
+            "width": 400,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e137",
+          "role": "button",
+          "label": "chevron",
+          "frame": {
+            "x": 389.67,
+            "y": 808.67,
+            "width": 10.33,
+            "height": 14
+          },
+          "state": {
+            "enabled": false,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e138",
+          "role": "other",
+          "label": "Available, 52.53 GB",
+          "identifier": "User Data Available",
+          "frame": {
+            "x": 20,
+            "y": 663.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e139",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 663.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e140",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 663.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e141",
+          "role": "button",
+          "label": "Available, 52.53 GB",
+          "identifier": "User Data Available",
+          "frame": {
+            "x": 40,
+            "y": 680,
+            "width": 360,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e142",
+          "role": "text",
+          "label": "Available",
+          "frame": {
+            "x": 40,
+            "y": 680,
+            "width": 67.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e143",
+          "role": "text",
+          "label": "52.53 GB",
+          "frame": {
+            "x": 328.33,
+            "y": 680,
+            "width": 71.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e144",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 663.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e145",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 663.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e146",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 717.67,
+            "width": 400,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e147",
+          "role": "other",
+          "label": "Capacity, 494.38 GB",
+          "identifier": "User Data Capacity",
+          "frame": {
+            "x": 20,
+            "y": 608.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e148",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 608.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e149",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 608.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e150",
+          "role": "button",
+          "label": "Capacity, 494.38 GB",
+          "identifier": "User Data Capacity",
+          "frame": {
+            "x": 40,
+            "y": 625,
+            "width": 360,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e151",
+          "role": "text",
+          "label": "Capacity",
+          "frame": {
+            "x": 40,
+            "y": 625,
+            "width": 67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e152",
+          "role": "text",
+          "label": "494.38 GB",
+          "frame": {
+            "x": 317,
+            "y": 625,
+            "width": 83,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e153",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 608.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e154",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 608.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e155",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 662.67,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e156",
+          "role": "other",
+          "label": "Photos, 6",
+          "identifier": "PHOTOS",
+          "frame": {
+            "x": 20,
+            "y": 553.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e157",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 553.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e158",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 553.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e159",
+          "role": "button",
+          "label": "Photos, 6",
+          "identifier": "PHOTOS",
+          "frame": {
+            "x": 40,
+            "y": 570,
+            "width": 360,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e160",
+          "role": "text",
+          "label": "Photos",
+          "frame": {
+            "x": 40,
+            "y": 570,
+            "width": 53.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e161",
+          "role": "text",
+          "label": "6",
+          "frame": {
+            "x": 389.33,
+            "y": 570,
+            "width": 10.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e162",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 553.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e163",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 553.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e164",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 607.67,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e165",
+          "role": "other",
+          "label": "Videos, 0",
+          "identifier": "VIDEOS",
+          "frame": {
+            "x": 20,
+            "y": 498.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e166",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 498.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e167",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 498.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e168",
+          "role": "button",
+          "label": "Videos, 0",
+          "identifier": "VIDEOS",
+          "frame": {
+            "x": 40,
+            "y": 515,
+            "width": 360,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e169",
+          "role": "text",
+          "label": "Videos",
+          "frame": {
+            "x": 40,
+            "y": 515,
+            "width": 52.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e170",
+          "role": "text",
+          "label": "0",
+          "frame": {
+            "x": 389.67,
+            "y": 515,
+            "width": 10.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e171",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 498.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e172",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 498.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e173",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 552.67,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e174",
+          "role": "other",
+          "label": "Songs, 0",
+          "identifier": "SONGS",
+          "frame": {
+            "x": 20,
+            "y": 443.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e175",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 443.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e176",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 443.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e177",
+          "role": "button",
+          "label": "Songs, 0",
+          "identifier": "SONGS",
+          "frame": {
+            "x": 40,
+            "y": 460,
+            "width": 360,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e178",
+          "role": "text",
+          "label": "Songs",
+          "frame": {
+            "x": 40,
+            "y": 460,
+            "width": 48,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e179",
+          "role": "text",
+          "label": "0",
+          "frame": {
+            "x": 389.67,
+            "y": 460,
+            "width": 10.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e180",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 443.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e181",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 443.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e182",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 497.67,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e183",
+          "role": "other",
+          "label": "Serial Number, K2MNVKK265",
+          "identifier": "SerialNumber",
+          "frame": {
+            "x": 20,
+            "y": 353.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e184",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 353.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e185",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 353.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e186",
+          "role": "button",
+          "label": "Serial Number, K2MNVKK265",
+          "identifier": "SerialNumber",
+          "frame": {
+            "x": 40,
+            "y": 370,
+            "width": 360,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e187",
+          "role": "text",
+          "label": "Serial Number",
+          "frame": {
+            "x": 40,
+            "y": 370,
+            "width": 108.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e188",
+          "role": "text",
+          "label": "K2MNVKK265",
+          "frame": {
+            "x": 289.67,
+            "y": 370,
+            "width": 110.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e189",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 353.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e190",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 353.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e191",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 407.67,
+            "width": 400,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e192",
+          "role": "other",
+          "label": "Model Number, A3257SA/A",
+          "identifier": "ProductModel",
+          "frame": {
+            "x": 20,
+            "y": 298.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e193",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 298.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e194",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 298.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e195",
+          "role": "button",
+          "label": "Model Number, A3257SA/A",
+          "identifier": "ProductModel",
+          "frame": {
+            "x": 40,
+            "y": 315,
+            "width": 360,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e196",
+          "role": "text",
+          "label": "Model Number",
+          "frame": {
+            "x": 40,
+            "y": 315,
+            "width": 113,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e197",
+          "role": "text",
+          "label": "A3257SA/A",
+          "frame": {
+            "x": 312.67,
+            "y": 315,
+            "width": 87.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e198",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 298.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e199",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 298.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e200",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 352.67,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e201",
+          "role": "other",
+          "label": "Model Name, iPhone 17 Pro Max",
+          "identifier": "ProductModelName",
+          "frame": {
+            "x": 20,
+            "y": 243.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e202",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 243.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e203",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 243.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e204",
+          "role": "button",
+          "label": "Model Name, iPhone 17 Pro Max",
+          "identifier": "ProductModelName",
+          "frame": {
+            "x": 40,
+            "y": 260,
+            "width": 360,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e205",
+          "role": "text",
+          "label": "Model Name",
+          "frame": {
+            "x": 40,
+            "y": 260,
+            "width": 96.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e206",
+          "role": "text",
+          "label": "iPhone 17 Pro Max",
+          "frame": {
+            "x": 260.33,
+            "y": 260,
+            "width": 139.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e207",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 243.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e208",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 243.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e209",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 297.67,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e210",
+          "role": "button",
+          "label": "iOS Version, 26.4.1",
+          "identifier": "SW_VERSION_SPECIFIER",
+          "frame": {
+            "x": 20,
+            "y": 188.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e211",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 188.67,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e212",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 188.67,
+            "width": 369.67,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e213",
+          "role": "button",
+          "label": "iOS Version, 26.4.1",
+          "identifier": "SW_VERSION_SPECIFIER",
+          "frame": {
+            "x": 40,
+            "y": 205,
+            "width": 341.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e214",
+          "role": "text",
+          "label": "iOS Version",
+          "frame": {
+            "x": 40,
+            "y": 205,
+            "width": 88,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e215",
+          "role": "text",
+          "label": "26.4.1",
+          "frame": {
+            "x": 336.33,
+            "y": 205,
+            "width": 45.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e216",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 188.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e217",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 188.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e218",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 242.67,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e219",
+          "role": "button",
+          "label": "chevron",
+          "frame": {
+            "x": 389.67,
+            "y": 208.67,
+            "width": 10.33,
+            "height": 14
+          },
+          "state": {
+            "enabled": false,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e220",
+          "role": "other",
+          "label": "Name, iPhone",
+          "identifier": "NAME_CELL_ID",
+          "frame": {
+            "x": 20,
+            "y": 133.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e221",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 133.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e222",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 133.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e223",
+          "role": "button",
+          "label": "Name, iPhone",
+          "identifier": "NAME_CELL_ID",
+          "frame": {
+            "x": 40,
+            "y": 150,
+            "width": 360,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e224",
+          "role": "text",
+          "label": "Name",
+          "frame": {
+            "x": 40,
+            "y": 150,
+            "width": 45,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e225",
+          "role": "text",
+          "label": "iPhone",
+          "frame": {
+            "x": 347.67,
+            "y": 150,
+            "width": 52.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e226",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 133.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e227",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 133.67,
+            "width": 400,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e228",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 187.67,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e229",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e230",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e231",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e232",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "action": "longPress",
+          "elementRef": "e2"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e2"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e3"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e3"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e4"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e4"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e5"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e5"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e6"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e7"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e7"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e8"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e8"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e9"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e9"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e10"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e10"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e11"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e11"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e12",
+          "label": "General"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e12",
+          "label": "General"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e12",
+          "label": "General"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e13",
+          "label": "About"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e13",
+          "label": "About"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e14"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e14"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e15"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e15"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e16"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e16"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e17"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e17"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e18"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e18"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e19"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e19"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e20"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e20"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e21"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e21"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e22"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e22"
+        },
+        {
+          "action": "swipeWithin",
+          "elementRef": "e22"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e23",
+          "label": "Name, iPhone"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e23",
+          "label": "Name, iPhone"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e24"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e24"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e25"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e25"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e26",
+          "label": "Name, iPhone"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e26",
+          "label": "Name, iPhone"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e26",
+          "label": "Name, iPhone"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e27",
+          "label": "Name"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e27",
+          "label": "Name"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e28",
+          "label": "iPhone"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e28",
+          "label": "iPhone"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e29"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e29"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e30"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e30"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e31"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e31"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e32",
+          "label": "iOS Version, 26.4.1"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e32",
+          "label": "iOS Version, 26.4.1"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e32",
+          "label": "iOS Version, 26.4.1"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e33"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e33"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e34"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e34"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e35",
+          "label": "iOS Version, 26.4.1"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e35",
+          "label": "iOS Version, 26.4.1"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e35",
+          "label": "iOS Version, 26.4.1"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e36",
+          "label": "iOS Version"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e36",
+          "label": "iOS Version"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e37",
+          "label": "26.4.1"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e37",
+          "label": "26.4.1"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e38"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e38"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e39"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e39"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e40"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e40"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e42",
+          "label": "Model Name, iPhone 17 Pro Max"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e42",
+          "label": "Model Name, iPhone 17 Pro Max"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e43"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e43"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e44"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e44"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e45",
+          "label": "Model Name, iPhone 17 Pro Max"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e45",
+          "label": "Model Name, iPhone 17 Pro Max"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e45",
+          "label": "Model Name, iPhone 17 Pro Max"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e46",
+          "label": "Model Name"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e46",
+          "label": "Model Name"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e47",
+          "label": "iPhone 17 Pro Max"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e47",
+          "label": "iPhone 17 Pro Max"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e48"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e48"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e49"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e49"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e50"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e50"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e51",
+          "label": "Model Number, A3257SA/A"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e51",
+          "label": "Model Number, A3257SA/A"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e52"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e52"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e53"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e53"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e54",
+          "label": "Model Number, A3257SA/A"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e54",
+          "label": "Model Number, A3257SA/A"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e54",
+          "label": "Model Number, A3257SA/A"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e55",
+          "label": "Model Number"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e55",
+          "label": "Model Number"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e56",
+          "label": "A3257SA/A"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e56",
+          "label": "A3257SA/A"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e57"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e57"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e58"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e58"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e59"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e59"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e60",
+          "label": "Serial Number, K2MNVKK265"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e60",
+          "label": "Serial Number, K2MNVKK265"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e61"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e61"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e62"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e62"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e63",
+          "label": "Serial Number, K2MNVKK265"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e63",
+          "label": "Serial Number, K2MNVKK265"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e63",
+          "label": "Serial Number, K2MNVKK265"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e64",
+          "label": "Serial Number"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e64",
+          "label": "Serial Number"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e65",
+          "label": "K2MNVKK265"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e65",
+          "label": "K2MNVKK265"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e66"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e66"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e67"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e67"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e68"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e68"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e69",
+          "label": "Songs, 0"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e69",
+          "label": "Songs, 0"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e70"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e70"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e71"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e71"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e72",
+          "label": "Songs, 0"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e72",
+          "label": "Songs, 0"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e72",
+          "label": "Songs, 0"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e73",
+          "label": "Songs"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e73",
+          "label": "Songs"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e74",
+          "label": "0"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e74",
+          "label": "0"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e75"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e75"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e76"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e76"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e77"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e77"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e78",
+          "label": "Videos, 0"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e78",
+          "label": "Videos, 0"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e79"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e79"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e80"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e80"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e81",
+          "label": "Videos, 0"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e81",
+          "label": "Videos, 0"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e81",
+          "label": "Videos, 0"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e82",
+          "label": "Videos"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e82",
+          "label": "Videos"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e83",
+          "label": "0"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e83",
+          "label": "0"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e84"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e84"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e85"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e85"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e86"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e86"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e87",
+          "label": "Photos, 6"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e87",
+          "label": "Photos, 6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e88"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e88"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e89"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e89"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e90",
+          "label": "Photos, 6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e90",
+          "label": "Photos, 6"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e90",
+          "label": "Photos, 6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e91",
+          "label": "Photos"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e91",
+          "label": "Photos"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e92",
+          "label": "6"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e92",
+          "label": "6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e93"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e93"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e94"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e94"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e95"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e95"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e96",
+          "label": "Capacity, 494.38 GB"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e96",
+          "label": "Capacity, 494.38 GB"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e97"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e97"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e98"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e98"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e99",
+          "label": "Capacity, 494.38 GB"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e99",
+          "label": "Capacity, 494.38 GB"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e99",
+          "label": "Capacity, 494.38 GB"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e100",
+          "label": "Capacity"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e100",
+          "label": "Capacity"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e101",
+          "label": "494.38 GB"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e101",
+          "label": "494.38 GB"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e102"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e102"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e103"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e103"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e104"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e104"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e105",
+          "label": "Available, 52.53 GB"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e105",
+          "label": "Available, 52.53 GB"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e106"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e106"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e107"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e107"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e108",
+          "label": "Available, 52.53 GB"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e108",
+          "label": "Available, 52.53 GB"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e108",
+          "label": "Available, 52.53 GB"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e109",
+          "label": "Available"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e109",
+          "label": "Available"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e110",
+          "label": "52.53 GB"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e110",
+          "label": "52.53 GB"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e111"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e111"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e112"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e112"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e113"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e113"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e114",
+          "label": "Certificate Trust Settings"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e114",
+          "label": "Certificate Trust Settings"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e114",
+          "label": "Certificate Trust Settings"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e115"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e115"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e116"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e116"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e117",
+          "label": "Certificate Trust Settings"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e117",
+          "label": "Certificate Trust Settings"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e118"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e118"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e119"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e119"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e120"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e120"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e122",
+          "label": "Vertical scroll bar, 1 page"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e122",
+          "label": "Vertical scroll bar, 1 page"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e123"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e123"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e124",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e124",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e125"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e125"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e126",
+          "label": "Vertical scroll bar, 1 page"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e126",
+          "label": "Vertical scroll bar, 1 page"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e127"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e127"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e128",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e128",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e129"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e129"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e130",
+          "label": "Certificate Trust Settings"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e130",
+          "label": "Certificate Trust Settings"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e130",
+          "label": "Certificate Trust Settings"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e131"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e131"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e132"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e132"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e133",
+          "label": "Certificate Trust Settings"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e133",
+          "label": "Certificate Trust Settings"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e134"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e134"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e135"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e135"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e136"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e136"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e138",
+          "label": "Available, 52.53 GB"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e138",
+          "label": "Available, 52.53 GB"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e139"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e139"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e140"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e140"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e141",
+          "label": "Available, 52.53 GB"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e141",
+          "label": "Available, 52.53 GB"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e141",
+          "label": "Available, 52.53 GB"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e142",
+          "label": "Available"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e142",
+          "label": "Available"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e143",
+          "label": "52.53 GB"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e143",
+          "label": "52.53 GB"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e144"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e144"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e145"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e145"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e146"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e146"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e147",
+          "label": "Capacity, 494.38 GB"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e147",
+          "label": "Capacity, 494.38 GB"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e148"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e148"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e149"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e149"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e150",
+          "label": "Capacity, 494.38 GB"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e150",
+          "label": "Capacity, 494.38 GB"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e150",
+          "label": "Capacity, 494.38 GB"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e151",
+          "label": "Capacity"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e151",
+          "label": "Capacity"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e152",
+          "label": "494.38 GB"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e152",
+          "label": "494.38 GB"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e153"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e153"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e154"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e154"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e155"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e155"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e156",
+          "label": "Photos, 6"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e156",
+          "label": "Photos, 6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e157"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e157"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e158"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e158"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e159",
+          "label": "Photos, 6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e159",
+          "label": "Photos, 6"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e159",
+          "label": "Photos, 6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e160",
+          "label": "Photos"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e160",
+          "label": "Photos"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e161",
+          "label": "6"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e161",
+          "label": "6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e162"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e162"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e163"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e163"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e164"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e164"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e165",
+          "label": "Videos, 0"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e165",
+          "label": "Videos, 0"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e166"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e166"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e167"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e167"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e168",
+          "label": "Videos, 0"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e168",
+          "label": "Videos, 0"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e168",
+          "label": "Videos, 0"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e169",
+          "label": "Videos"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e169",
+          "label": "Videos"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e170",
+          "label": "0"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e170",
+          "label": "0"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e171"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e171"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e172"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e172"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e173"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e173"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e174",
+          "label": "Songs, 0"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e174",
+          "label": "Songs, 0"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e175"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e175"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e176"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e176"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e177",
+          "label": "Songs, 0"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e177",
+          "label": "Songs, 0"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e177",
+          "label": "Songs, 0"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e178",
+          "label": "Songs"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e178",
+          "label": "Songs"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e179",
+          "label": "0"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e179",
+          "label": "0"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e180"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e180"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e181"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e181"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e182"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e182"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e183",
+          "label": "Serial Number, K2MNVKK265"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e183",
+          "label": "Serial Number, K2MNVKK265"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e184"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e184"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e185"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e185"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e186",
+          "label": "Serial Number, K2MNVKK265"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e186",
+          "label": "Serial Number, K2MNVKK265"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e186",
+          "label": "Serial Number, K2MNVKK265"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e187",
+          "label": "Serial Number"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e187",
+          "label": "Serial Number"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e188",
+          "label": "K2MNVKK265"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e188",
+          "label": "K2MNVKK265"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e189"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e189"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e190"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e190"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e191"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e191"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e192",
+          "label": "Model Number, A3257SA/A"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e192",
+          "label": "Model Number, A3257SA/A"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e193"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e193"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e194"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e194"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e195",
+          "label": "Model Number, A3257SA/A"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e195",
+          "label": "Model Number, A3257SA/A"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e195",
+          "label": "Model Number, A3257SA/A"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e196",
+          "label": "Model Number"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e196",
+          "label": "Model Number"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e197",
+          "label": "A3257SA/A"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e197",
+          "label": "A3257SA/A"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e198"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e198"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e199"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e199"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e200"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e200"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e201",
+          "label": "Model Name, iPhone 17 Pro Max"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e201",
+          "label": "Model Name, iPhone 17 Pro Max"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e202"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e202"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e203"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e203"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e204",
+          "label": "Model Name, iPhone 17 Pro Max"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e204",
+          "label": "Model Name, iPhone 17 Pro Max"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e204",
+          "label": "Model Name, iPhone 17 Pro Max"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e205",
+          "label": "Model Name"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e205",
+          "label": "Model Name"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e206",
+          "label": "iPhone 17 Pro Max"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e206",
+          "label": "iPhone 17 Pro Max"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e207"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e207"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e208"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e208"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e209"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e209"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e210",
+          "label": "iOS Version, 26.4.1"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e210",
+          "label": "iOS Version, 26.4.1"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e210",
+          "label": "iOS Version, 26.4.1"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e211"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e211"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e212"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e212"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e213",
+          "label": "iOS Version, 26.4.1"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e213",
+          "label": "iOS Version, 26.4.1"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e213",
+          "label": "iOS Version, 26.4.1"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e214",
+          "label": "iOS Version"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e214",
+          "label": "iOS Version"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e215",
+          "label": "26.4.1"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e215",
+          "label": "26.4.1"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e216"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e216"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e217"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e217"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e218"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e218"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e220",
+          "label": "Name, iPhone"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e220",
+          "label": "Name, iPhone"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e221"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e221"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e222"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e222"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e223",
+          "label": "Name, iPhone"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e223",
+          "label": "Name, iPhone"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e223",
+          "label": "Name, iPhone"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e224",
+          "label": "Name"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e224",
+          "label": "Name"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e225",
+          "label": "iPhone"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e225",
+          "label": "iPhone"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e226"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e226"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e227"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e227"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e228"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e228"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e229"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e229"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e230"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e230"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e231"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e231"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e232"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e232"
+        }
+      ]
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e26",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e22 --direction up --distance 0.5"
+  ]
+}

@@ -4,7 +4,7 @@ import { dirname, join } from 'node:path';
 import { createJevJudge } from '../../src/jev/index.js';
 import {
   ExperimentError, digest, implementationDigest, makeDraftManifest, renderLabelReview, runHeldout, runTuning,
-  validateFrozenExperiment, type ExperimentManifest, type FeasibilityCorpus,
+  validateFrozenExperiment, validateFrozenSelection, verifyCorpusAssets, type ExperimentManifest, type FeasibilityCorpus,
   type FrozenSelection, type OwnerApproval, type TuningRun,
 } from './harness.js';
 
@@ -37,7 +37,13 @@ function tuningReport(run: Awaited<ReturnType<typeof runTuning>>): string {
     '| Config | Threshold | Accepted / 10 | Wrong accepted | Top-1 correct / 10 | Input tokens | Qualifies |',
     '| --- | ---: | ---: | ---: | ---: | ---: | --- |',
     ...run.comparison.map(row => `| ${row.configuration} | ${row.threshold} | ${row.accepted} | ${row.incorrectAccepted} | ${row.top1Correct} | ${row.inputTokens} | ${row.qualifying ? 'yes' : 'no'} |`),
-    '', 'Held-out cases were not evaluated. See tuning.json for per-case answers and failures.', '',
+    '', 'Positional phrasing on the same tuning captures (excluded from threshold selection):', '',
+    '| Config | Acceptable top-1 / paired variants |', '| --- | ---: |',
+    ...['A', 'B', 'C', 'D'].map(id => {
+      const rows = run.positionalResults.filter(row => row.configuration === id);
+      return `| ${id} | ${rows.filter(row => row.top1Correct).length}/${rows.length} |`;
+    }), '',
+    'Held-out cases were not evaluated. See tuning.json for per-case answers and failures.', '',
   ].join('\n');
 }
 function heldoutReport(run: Awaited<ReturnType<typeof runHeldout>>): string {
@@ -62,6 +68,7 @@ async function main(): Promise<void> {
   const { command, flags } = parseArgs();
   const corpusPath = required(flags, 'corpus');
   const corpus = await json<FeasibilityCorpus>(corpusPath);
+  await verifyCorpusAssets(corpus, corpusPath);
   const out = required(flags, 'out');
   if (command === 'prepare') {
     const draft = makeDraftManifest(corpus);
@@ -86,6 +93,10 @@ async function main(): Promise<void> {
   if (flags.live !== 'true') throw new ExperimentError('LIVE_FLAG_REQUIRED');
   const selection = command === 'heldout' ? await json<FrozenSelection>(required(flags, 'selection')) : undefined;
   const tuning = command === 'heldout' ? await json<TuningRun>(required(flags, 'tuning')) : undefined;
+  if (command === 'heldout') {
+    if (!selection || !tuning) throw new ExperimentError('SELECTION_REQUIRED');
+    validateFrozenSelection(corpus, manifest, approval, selection, tuning);
+  }
   const expectedFiles = command === 'tune' ? ['tuning.json', 'tuning.md', 'selection.json'] : ['heldout.json', 'heldout.md'];
   for (const name of expectedFiles) {
     try { await access(join(out, name)); throw new ExperimentError('OUTPUT_ALREADY_EXISTS'); }

@@ -12,10 +12,19 @@ const page = `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="v
 const css = `body{margin:0;background:#f6f5f2;color:#222;font:16px/1.5 system-ui,sans-serif}main{max-width:960px;margin:auto;padding:32px}header{border-bottom:2px solid #164e63;margin-bottom:24px}h1{font-size:32px}article{background:white;border:1px solid #ddd;border-radius:8px;padding:16px;margin:12px 0}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}img{max-width:320px;max-height:600px}h2{font-size:18px;margin:0 0 8px}.passed{color:#176534}.failed{color:#a51c30}`;
 const script = `const query=new URLSearchParams(location.search);const token=query.get('token');const runId=query.get('run');
 const status=document.querySelector('#status');const timeline=document.querySelector('#timeline');let seen=0;
+const titles={started:'Scenario',prepared:'App ready',step:'Observe',judgment:'Jev judgments',action:'Action',error:'Execution problem',verdict:'Outcome'};
+function paragraph(card,value){const p=document.createElement('p');p.textContent=value;card.append(p);}
+function details(card,title,value){const box=document.createElement('details');const summary=document.createElement('summary');summary.textContent=title;const text=document.createElement('pre');text.textContent=value;box.append(summary,text);card.append(box);}
 async function refresh(){try{const response=await fetch('/events?run='+encodeURIComponent(runId),{headers:{Authorization:'Bearer '+token}});if(!response.ok)throw Error('Cannot read run ('+response.status+')');const report=await response.json();status.textContent=report.verdict+': '+report.reason;status.className=report.verdict;
-for(const event of report.events.slice(seen)){const card=document.createElement('article');const title=document.createElement('h2');title.textContent=event.sequence+'. '+event.type;card.append(title);const text=document.createElement('pre');text.textContent=JSON.stringify(event.data,null,2);card.append(text);
-if(event.type==='step'&&event.data.screenshotPath){const response=await fetch('/image?run='+encodeURIComponent(runId)+'&name='+encodeURIComponent(event.data.screenshotPath),{headers:{Authorization:'Bearer '+token}});if(response.ok){const img=document.createElement('img');img.alt='Screen captured at step '+event.data.step;img.src=URL.createObjectURL(await response.blob());card.append(img);}}
-timeline.append(card);}seen=report.events.length;}catch(error){status.textContent=error.message;}finally{setTimeout(refresh,1000);}}refresh();`;
+for(const event of report.events.slice(seen)){const card=document.createElement('article');const title=document.createElement('h2');title.textContent=event.sequence+'. '+(titles[event.type]||event.type);card.append(title);const data=event.data;
+if(event.type==='started')paragraph(card,data.goal||'Scenario submitted');
+if(event.type==='step'){paragraph(card,'Step '+data.step);if(data.observationSummary)details(card,'Screen description',data.observationSummary);if(data.logTails)for(const [name,tail] of Object.entries(data.logTails))details(card,'App log: '+name,tail);}
+if(event.type==='judgment'){const j=data.judgment||{};paragraph(card,'Chosen action: '+j.choice+'; confidence: '+Math.round(j.confidence*100)+'%.');paragraph(card,'Goal reached: '+Math.round(j.goalReached*100)+'% probability.');for(const [name,value] of Object.entries(j.assertions||{}))paragraph(card,'Assertion '+name+': '+Math.round(value*100)+'% probability.');}
+if(event.type==='action')paragraph(card,data.description||'Action recorded');
+if(event.type==='error')paragraph(card,data.message||'Execution could not continue');
+if(event.type==='verdict'){paragraph(card,data.reason||data.verdict);paragraph(card,'Steps: '+(data.steps||0)+'; input tokens: '+(data.inputTokens||0)+'.');}
+if(event.type==='step'&&data.screenshotPath){const response=await fetch('/image?run='+encodeURIComponent(runId)+'&name='+encodeURIComponent(data.screenshotPath),{headers:{Authorization:'Bearer '+token}});if(response.ok){const img=document.createElement('img');img.alt='Screen captured at step '+data.step;img.src=URL.createObjectURL(await response.blob());card.append(img);}}
+details(card,'Recorded event',JSON.stringify(data,null,2));timeline.append(card);}seen=report.events.length;}catch(error){status.textContent=error.message;}finally{setTimeout(refresh,1000);}}refresh();`;
 
 export async function startWatchServer(baseDir: string): Promise<{ url: string; close(): Promise<void> }> {
   const token = randomBytes(32).toString('hex');

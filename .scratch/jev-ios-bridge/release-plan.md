@@ -4,6 +4,8 @@ Status: preparatory phase reviewed by the main agent and in progress on `feat/v0
 
 ## Execution order and gates
 
+Current checkpoint: environment, preparatory implementation, offline checks, and the first owner-reviewed corpus are complete. The first live evaluation failed the fixed bar (15/20 correct actions; 7/20 accepted). [Ticket 18](issues/18-feasibility-revision.md) investigates a revision on fresh held-out cases. Release and production design remain gated. The owner explicitly deferred real wait-state coverage for the first corpus.
+
 | Phase | Work | Exit gate |
 | --- | --- | --- |
 | 0. Prepare offline | Finish ticket 06's MobileBuildMCP 2.7.1 and dedicated iOS 26.x simulator setup; check the key is available without exposing its value. Build ticket 08's throwaway harness under `spikes/feasibility/`. Capture 30 synthetic Settings, Contacts, and Reminders cases, propose labels, split by scenario into 10 tuning and 20 held-out cases, and prepare the experiment manifest. | Owner reviews every acceptable-action set, completion label, assertion label, and case/split before any Jev evaluation. Freeze questions, options, candidate and filtering rules, history rendering, thresholds, model, and gate logic in the manifest. |

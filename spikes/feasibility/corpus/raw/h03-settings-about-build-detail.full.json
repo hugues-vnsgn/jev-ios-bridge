@@ -1,0 +1,1165 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "protocol": "rs/1",
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+      "screenHash": "0mdkuui",
+      "seq": 135,
+      "capturedAtMs": 1790228011759,
+      "expiresAtMs": 1790228071759,
+      "elements": [
+        {
+          "ref": "e1",
+          "role": "application",
+          "label": "Settings",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e2",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e3",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e4",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e5",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e6",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e7",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e8",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e9",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e10",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e11",
+          "role": "other",
+          "identifier": "iOS Version",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 440,
+            "height": 54
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e12",
+          "role": "button",
+          "label": "About",
+          "identifier": "BackButton",
+          "frame": {
+            "x": 20,
+            "y": 62,
+            "width": 44,
+            "height": 44
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e13",
+          "role": "other",
+          "label": "iOS Version",
+          "frame": {
+            "x": 174,
+            "y": 72.67,
+            "width": 91.67,
+            "height": 22.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e14",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e15",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e16",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e17",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e18",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 116,
+            "width": 440,
+            "height": 806
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e19",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e20",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e21",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e22",
+          "role": "scroll-view",
+          "frame": {
+            "x": 20,
+            "y": 116,
+            "width": 400,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch",
+            "swipeWithin"
+          ]
+        },
+        {
+          "ref": "e23",
+          "role": "other",
+          "identifier": "OS_VERSION_CELL",
+          "frame": {
+            "x": 20,
+            "y": 171.33,
+            "width": 400,
+            "height": 92.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e24",
+          "role": "button",
+          "label": "iOS 26.4.1 (23E254a)",
+          "frame": {
+            "x": 40,
+            "y": 186.33,
+            "width": 360,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e25",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 213.67,
+            "width": 360,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e26",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 213.67,
+            "width": 360,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e27",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 213.67,
+            "width": 360,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e28",
+          "role": "text",
+          "value": "This update includes improvements and bug fixes for your iPhone.",
+          "frame": {
+            "x": 40,
+            "y": 213.67,
+            "width": 359,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e29",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 262.67,
+            "width": 400,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e30",
+          "role": "other",
+          "label": "iOS Version",
+          "frame": {
+            "x": 20,
+            "y": 116,
+            "width": 400,
+            "height": 55.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e31",
+          "role": "slider",
+          "label": "Vertical scroll bar, 1 page",
+          "value": "0%",
+          "frame": {
+            "x": 407,
+            "y": 116,
+            "width": 30,
+            "height": 778
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e32",
+          "role": "other",
+          "frame": {
+            "x": 434,
+            "y": 740,
+            "width": 3,
+            "height": 151
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e33",
+          "role": "slider",
+          "label": "Horizontal scroll bar, 1 page",
+          "value": "0%",
+          "frame": {
+            "x": 62,
+            "y": 923,
+            "width": 316,
+            "height": 30
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e34",
+          "role": "other",
+          "frame": {
+            "x": 65,
+            "y": 950,
+            "width": 310,
+            "height": 3
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e35",
+          "role": "slider",
+          "label": "Vertical scroll bar, 1 page",
+          "value": "0%",
+          "frame": {
+            "x": 407,
+            "y": 116,
+            "width": 30,
+            "height": 778
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e36",
+          "role": "other",
+          "frame": {
+            "x": 434,
+            "y": 740,
+            "width": 3,
+            "height": 151
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e37",
+          "role": "slider",
+          "label": "Horizontal scroll bar, 1 page",
+          "value": "0%",
+          "frame": {
+            "x": 62,
+            "y": 923,
+            "width": 316,
+            "height": 30
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e38",
+          "role": "other",
+          "frame": {
+            "x": 65,
+            "y": 950,
+            "width": 310,
+            "height": 3
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e39",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e40",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e41",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e42",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "action": "longPress",
+          "elementRef": "e2"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e2"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e3"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e3"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e4"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e4"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e5"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e5"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e6"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e7"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e7"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e8"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e8"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e9"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e9"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e10"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e10"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e11"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e11"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e12",
+          "label": "About"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e12",
+          "label": "About"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e12",
+          "label": "About"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e13",
+          "label": "iOS Version"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e13",
+          "label": "iOS Version"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e14"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e14"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e15"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e15"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e16"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e16"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e17"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e17"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e18"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e18"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e19"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e19"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e20"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e20"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e21"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e21"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e22"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e22"
+        },
+        {
+          "action": "swipeWithin",
+          "elementRef": "e22"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e23"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e23"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e24",
+          "label": "iOS 26.4.1 (23E254a)"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e24",
+          "label": "iOS 26.4.1 (23E254a)"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e24",
+          "label": "iOS 26.4.1 (23E254a)"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e25"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e25"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e26"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e26"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e27"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e27"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e28"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e28"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e29"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e29"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e30",
+          "label": "iOS Version"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e30",
+          "label": "iOS Version"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e31",
+          "label": "Vertical scroll bar, 1 page"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e31",
+          "label": "Vertical scroll bar, 1 page"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e32"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e32"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e33",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e33",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e34"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e34"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e35",
+          "label": "Vertical scroll bar, 1 page"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e35",
+          "label": "Vertical scroll bar, 1 page"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e36"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e36"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e37",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e37",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e38"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e38"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e39"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e39"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e40"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e40"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e41"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e41"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e42"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e42"
+        }
+      ]
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e12\"},{\"action\":\"tap\",\"elementRef\":\"e24\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e12",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e22 --direction up --distance 0.5"
+  ]
+}

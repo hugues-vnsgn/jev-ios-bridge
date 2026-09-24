@@ -128,6 +128,7 @@ export async function runScenario(options: RunOptions): Promise<RunReport> {
         step,
         observationSummary: observation.text.slice(0, 4_000),
         ...(snapshot.screenshotPath ? { screenshotPath: snapshot.screenshotPath } : {}),
+        ...(snapshot.logTails ? { logTails: snapshot.logTails } : {}),
       });
       if (snapshot.truncated) {
         reason = 'Snapshot omitted actionable elements';

@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "status": "draft",
+  "corpusSha256": "2d29737b595bff131ebdbd51898b88ac55fba8f2cb70dfadbf4d421c80d0fe54",
+  "implementationSha256": "3c3a5c61842b7dafbb787fc1f0562886a5f4a5e2e50ec17e4d34ca442681d620",
+  "model": "jev-1.13.0",
+  "configurations": [
+    {
+      "id": "A",
+      "variant": "compact",
+      "history": false
+    },
+    {
+      "id": "B",
+      "variant": "compact",
+      "history": true
+    },
+    {
+      "id": "C",
+      "variant": "full",
+      "history": false
+    },
+    {
+      "id": "D",
+      "variant": "full",
+      "history": true
+    }
+  ],
+  "thresholds": [
+    0.6,
+    0.7,
+    0.8,
+    0.9
+  ],
+  "noulYes": 0.9,
+  "noulNo": 0.1,
+  "maxHistory": 3,
+  "maxCandidates": 64,
+  "maxStateBytes": 24000,
+  "wording": {
+    "nextAction": "Which complete listed action is the appropriate next step toward the scenario goal, given the observation and supplied history? Select none if no listed action fits.",
+    "goalReached": "Does the current observation establish that the scenario goal has been reached?",
+    "assertion": "Does the current observation establish this specific scenario claim?"
+  },
+  "candidateRule": "visible-enabled-v1",
+  "optionRule": "complete-actions-v1",
+  "historyRule": "recent-steps-v1",
+  "gateRule": "ticket-07-v1",
+  "selectionRule": "coverage-correctness-tokens-order-threshold-v1"
+}

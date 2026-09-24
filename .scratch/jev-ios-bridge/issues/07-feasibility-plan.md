@@ -125,3 +125,7 @@ Do not tune against held-out outcomes. A failed evaluation remains recorded as a
 [Local environment](06-local-environment.md) remains a prerequisite. At plan resolution, the repo instructions say the API key is a placeholder; the owner must supply a real key before live Jev requests. Never print or copy the key.
 
 Before evaluation, finish the reviewed corpus and freeze its split, labels, question templates, candidate rules, filtering, history, thresholds, and model in the experiment manifest. The feasibility harness then records each case's judgments, probabilities, Choice confidence, acceptance or abstention reason, correctness, input tokens, and latency. Return the tuning comparison, held-out results, and owner-reviewed go/no-go call as ticket 08's evidence.
+
+## Comments
+
+2026-09-24: the owner explicitly approved the captured 30-case labels and deferred real wait-state coverage after reviewing the corpus. The simulator has no Software Update loading screen, and no captured state honestly supported a wait label. The 10/20 split and numerical go/no-go bar are unchanged. Scripted tests cover wait behavior; real wait-state judgment remains unverified. The frozen manifest and hash-bound approval are under `spikes/feasibility/corpus/review/` on the release branch.

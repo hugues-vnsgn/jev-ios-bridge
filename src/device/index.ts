@@ -1,8 +1,9 @@
 import { execFile } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
+import { constants } from 'node:fs';
 import { mkdir, open, readFile, unlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
+import { isAbsolute, join, resolve } from 'node:path';
 import type { Action, DeviceDriver, Element, Scenario, Snapshot } from '../contracts/index.js';
 
 type JsonObject = Record<string, unknown>;
@@ -55,8 +56,12 @@ function parseEnvelope(result: CliResult): JsonObject {
     throw new DeviceCliError('INVALID_JSON', `MobileBuildMCP returned invalid JSON (exit ${result.exitCode})`);
   }
   if (envelope.didError === true || result.exitCode !== 0) {
-    const error = record(envelope.error);
-    throw new DeviceCliError(string(error.code) ?? 'CLI_ERROR', string(error.message) ?? `MobileBuildMCP failed (exit ${result.exitCode})`);
+    const uiError = record(record(envelope.data).uiError);
+    const legacyError = record(envelope.error);
+    throw new DeviceCliError(
+      string(uiError.code) ?? string(legacyError.code) ?? 'CLI_ERROR',
+      string(uiError.message) ?? string(envelope.error) ?? string(legacyError.message) ?? `MobileBuildMCP failed (exit ${result.exitCode})`,
+    );
   }
   if (envelope.schemaVersion !== '2' || !envelope.data || typeof envelope.data !== 'object' || Array.isArray(envelope.data)) {
     throw new DeviceCliError('INVALID_ENVELOPE', 'MobileBuildMCP returned an unsupported envelope');
@@ -212,12 +217,32 @@ function rematch(target: Element, fresh: Snapshot): Element {
   return matches[0]!;
 }
 
+async function readLogTail(path: string): Promise<string> {
+  try {
+    const file = await open(path, constants.O_RDONLY | constants.O_NOFOLLOW);
+    try {
+      const stat = await file.stat();
+      if (!stat.isFile()) return '[unavailable: not a regular file]';
+      const length = Math.min(stat.size, 4_096);
+      if (length === 0) return '';
+      const bytes = Buffer.alloc(length);
+      const { bytesRead } = await file.read(bytes, 0, length, stat.size - length);
+      return bytes.subarray(0, bytesRead).toString('utf8');
+    } finally { await file.close(); }
+  } catch (error) {
+    const code = (error as NodeJS.ErrnoException).code;
+    return `[unavailable: ${code && /^[A-Z0-9_]+$/.test(code) ? code : 'READ_FAILED'}]`;
+  }
+}
+
 export class MobileBuildMcpDriver implements DeviceDriver {
   private readonly runner: CliRunner;
   private deviceId?: string;
   private bundleId?: string;
   private releaseLock: (() => Promise<void>) | undefined;
   private launched = false;
+  private logPaths: Record<string, string> = {};
+  private logNotes: Record<string, string> = {};
 
   constructor(private readonly options: MobileBuildMcpDriverOptions) {
     this.runner = options.runner ?? defaultRunner(options);
@@ -236,7 +261,16 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     this.deviceId = deviceId;
     this.bundleId = scenario.app.bundleId;
     try {
-      await this.call(['simulator', 'launch-app', '--simulator-id', deviceId, '--bundle-id', scenario.app.bundleId], signal);
+      const launched = await this.call(['simulator', 'launch-app', '--simulator-id', deviceId, '--bundle-id', scenario.app.bundleId], signal);
+      const artifacts = record(launched.artifacts);
+      this.logPaths = {};
+      this.logNotes = {};
+      for (const [name, field] of [['runtime', 'runtimeLogPath'], ['os', 'osLogPath']] as const) {
+        const path = string(artifacts[field]);
+        if (path && isAbsolute(path)) this.logPaths[name] = path;
+        else if (path) this.logNotes[name] = '[unavailable: invalid vendor log path]';
+        else this.logNotes[name] = '[unavailable: vendor supplied no log path]';
+      }
       this.launched = true;
     } catch (error) {
       await this.releaseLock();
@@ -256,7 +290,10 @@ export class MobileBuildMcpDriver implements DeviceDriver {
       const shot = await this.call(['ui-automation', 'screenshot', '--simulator-id', deviceId, '--return-format', 'path'], signal);
       screenshotPath = string(record(shot.artifacts).screenshotPath) ?? string(record(shot.capture).path) ?? string(shot.path);
     }
-    return parseSnapshot(data, deviceId, screenshotPath);
+    const logTails = { ...this.logNotes };
+    for (const [name, path] of Object.entries(this.logPaths)) logTails[name] = await readLogTail(path);
+    return { ...parseSnapshot(data, deviceId, screenshotPath),
+      ...(Object.keys(logTails).length ? { logTails } : {}) };
   }
 
   async act(action: Action, snapshot: Snapshot, scenario: Scenario, signal: AbortSignal): Promise<void> {
@@ -278,7 +315,7 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     const perform = (ref: string) => {
       const base = ['ui-automation'];
       if (action.kind === 'tap') return [...base, 'tap', '--simulator-id', this.deviceId!, '--element-ref', ref];
-      if (action.kind === 'type') return [...base, 'type-text', '--simulator-id', this.deviceId!, '--element-ref', ref, '--text', scenario.values[action.valueKey]!];
+      if (action.kind === 'type') return [...base, 'type-text', '--simulator-id', this.deviceId!, '--element-ref', ref, '--text', scenario.values[action.valueKey]!, '--replace-existing'];
       return [...base, 'swipe', '--simulator-id', this.deviceId!, '--within-element-ref', ref, '--direction', action.direction];
     };
     try {
@@ -305,6 +342,8 @@ export class MobileBuildMcpDriver implements DeviceDriver {
       stopError = error;
     } finally {
       this.launched = false;
+      this.logPaths = {};
+      this.logNotes = {};
       await release();
     }
     if (stopError) throw stopError;

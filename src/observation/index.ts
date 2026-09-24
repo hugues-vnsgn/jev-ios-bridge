@@ -47,13 +47,22 @@ function describe(element: Element, variant: ObservationVariant): string {
   return parts.join(' | ');
 }
 
+function hasSupportedAction(element: Element): boolean {
+  return element.actions.some(action => action === 'tap' || action === 'typeText' ||
+    (action === 'swipeWithin' && element.role !== 'application' && element.role !== 'window'));
+}
+
+function hasObservationEvidence(element: Element): boolean {
+  return hasSupportedAction(element) || Boolean(element.label?.trim() || element.value?.trim() || element.identifier?.trim()) ||
+    /^(text|statictext|title|heading|alert)$/i.test(element.role);
+}
+
 /** Stable within a captured screen, including duplicate labels. */
 export function actionOptions(snapshot: Snapshot, scenario: Scenario, maxCandidates = 64): ActionOption[] {
   const candidates = snapshot.elements.filter(element =>
     element.state?.visible !== false && element.state?.enabled !== false &&
     (!element.frame || (element.frame.width > 0 && element.frame.height > 0)) &&
-    element.actions.some(action => action === 'tap' || action === 'typeText' ||
-      (action === 'swipeWithin' && element.role !== 'application' && element.role !== 'window')));
+    hasSupportedAction(element));
   if (candidates.length > maxCandidates) throw new ObservationError('TOO_MANY_CANDIDATES');
   const options: ActionOption[] = [];
   const refs = new Set<string>();
@@ -67,7 +76,7 @@ export function actionOptions(snapshot: Snapshot, scenario: Scenario, maxCandida
     }
     if (element.actions.includes('typeText')) {
       for (const key of Object.keys(scenario.values).sort()) {
-        options.push({ id: `type:${ref}:${encodeURIComponent(key)}`, description: `Type the scenario value ${key} into ${target} (${element.role}, ref ${element.ref}).`, action: { kind: 'type', targetRef: element.ref, valueKey: key } });
+        options.push({ id: `type:${ref}:${encodeURIComponent(key)}`, description: `Replace all text in ${target} with the supplied scenario value ${key} (${element.role}, ref ${element.ref}).`, action: { kind: 'type', targetRef: element.ref, valueKey: key } });
       }
     }
     if (element.actions.includes('swipeWithin') && element.role !== 'application' && element.role !== 'window') {
@@ -107,7 +116,8 @@ export function buildObservation(
   if (recent.length) lines.push('Recent steps:', ...recent.map(entry => `${entry.step}. ${entry.description}`));
   const visibleElements = snapshot.elements.filter(element =>
     element.state?.visible !== false && element.state?.enabled !== false &&
-    (!element.frame || (element.frame.width > 0 && element.frame.height > 0)));
+    (!element.frame || (element.frame.width > 0 && element.frame.height > 0)) &&
+    hasObservationEvidence(element));
   lines.push('Visible elements:', ...visibleElements.map(element => describe(element, variant)));
   const text = lines.join('\n');
   // UTF-8 bytes are a deliberately conservative proxy for tokenizer input, with room for questions.

@@ -1,0 +1,45 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "1s30f2q",
+      "seq": 151,
+      "count": 92,
+      "targets": [
+        "e12|tap|button|General||BackButton",
+        "e34|tap|button|Hardware Keyboard||HardwareKeyboard",
+        "e54|tap|button|Dictation Languages||DictationSettings",
+        "e73|tap|button|Dictation Languages||DictationSettings",
+        "e81|tap|button|Hardware Keyboard||HardwareKeyboard"
+      ],
+      "scroll": [
+        "e32|swipe|scroll-view|||"
+      ],
+      "text": [
+        "e37|text|text|Hardware Keyboard||",
+        "e84|text|text|Hardware Keyboard||",
+        "e57|text|text|Dictation Languages||",
+        "e76|text|text|Dictation Languages||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e12\"},{\"action\":\"tap\",\"elementRef\":\"e34\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e12",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e32 --direction up --distance 0.5"
+  ]
+}

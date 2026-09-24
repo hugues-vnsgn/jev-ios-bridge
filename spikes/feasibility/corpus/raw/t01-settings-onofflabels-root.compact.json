@@ -1,0 +1,61 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "0bnlq2i",
+      "seq": 9,
+      "count": 142,
+      "targets": [
+        "e31|tap|button|Apple Account, Sign in to access your iCloud data, the App Store, Apple services, and more.||com.apple.settings.primaryAppleAccount",
+        "e40|tap|button|Ready for Apple Intelligence||com.apple.settings.followUpItem.com.apple.icloud.gm",
+        "e70|tap|button|Apple Intelligence & Siri||com.apple.settings.siri",
+        "e86|tap|button|Home Screen & App Library||com.apple.settings.homeScreen",
+        "e137|typeText|text-field||Search|",
+        "e47|tap|button|General||com.apple.settings.general",
+        "e54|tap|button|Accessibility||com.apple.settings.accessibility",
+        "e62|tap|button|Action Button||com.apple.settings.actionButton",
+        "e78|tap|button|Camera||com.apple.settings.camera",
+        "e94|tap|button|Search||com.apple.settings.search",
+        "e102|tap|button|StandBy||com.apple.settings.standBy",
+        "e111|tap|button|Screen Time||com.apple.settings.screenTime",
+        "e138|tap|button|Dictate||Dictate",
+        "e140|tap|button|Dictate||Dictate"
+      ],
+      "scroll": [
+        "e1|swipe|application|Settings||"
+      ],
+      "text": [
+        "e33|text|text|Apple Account||",
+        "e34|text|text|Sign in to access your iCloud data, the App Store, Apple services, and more.||",
+        "e41|text|text|Ready for Apple Intelligence||",
+        "e49|text|text|General||",
+        "e56|text|text|Accessibility||",
+        "e64|text|text|Action Button||",
+        "e72|text|text|Apple Intelligence & Siri||",
+        "e80|text|text|Camera||",
+        "e88|text|text|Home Screen & App Library||",
+        "e96|text|text|Search||",
+        "e104|text|text|StandBy||",
+        "e113|text|text|Screen Time||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e47\"},{\"action\":\"tap\",\"elementRef\":\"e54\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e31"
+  ]
+}

@@ -36,3 +36,7 @@ The research left two shapes viable. The owner chose between them on 2026-09-24.
 - **Escalation to the host agent has a cost.** A tool call cannot ask the host anything while it runs, so escalating means ending the call and resuming the run in a later one. "Step-loop policy" decides whether v1 escalates at all.
 - **The bridge owns timeouts, interruption, and cleanup**, since Jev holds no state.
 - **If Jev gains image input**, the observation can carry an image, and the loop keeps its shape.
+
+## Feasibility evidence, 2026-09-24
+
+The first frozen experiment did not meet the agreed bar: 15/20 correct next actions against a required 18, and 7/20 accepted steps against a required 16. There were no wrong accepted actions, false-pass assertions, or request failures. The decision is reopened and remains proposed; it is not approved for release. [Ticket 08](../../.scratch/jev-ios-bridge/issues/08-feasibility-run.md) records the results. [Ticket 18](../../.scratch/jev-ios-bridge/issues/18-feasibility-revision.md) investigates a revision using fresh held-out evidence.

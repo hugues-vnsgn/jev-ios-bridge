@@ -1,0 +1,60 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "1ei76a6",
+      "seq": 94,
+      "count": 156,
+      "targets": [
+        "e18|tap|button|Today, 0 reminders, September 24||",
+        "e19|tap|button|Scheduled, 0 reminders||",
+        "e20|tap|button|All, 0 reminders||",
+        "e35|tap|button|Reminders, 0 reminders|, Blue|<x-apple-reminderkit://REMCDList/3C8C2A71-84BF-4C87-8EFD-BB4827650D15>",
+        "e88|typeText|text-field||Follow up with Nia|",
+        "e21|tap|button|Completed||",
+        "e30|tap|button|Go to Settings||",
+        "e36|tap|other||Blue|Blue",
+        "e37|tap|image|||ListBadgeDefault",
+        "e38|tap|text|Reminders||",
+        "e39|tap|text|0||",
+        "e58|tap|button|New Reminder||",
+        "e74|tap|button|Show||",
+        "e90|tap|button|Clear text||",
+        "e31|tap|button|Close||xmark.circle.fill",
+        "e92|tap|button|Close||"
+      ],
+      "scroll": [
+        "e12|swipe|other|||AccountsList.ID.AccountsListTable",
+        "e62|swipe|other|Activate to dismiss||",
+        "e66|swipe|other|Search results||RemindersList.ID.RemindersTable"
+      ],
+      "text": [
+        "e75|text|text|Show||",
+        "e73|text|text|0 Completed||",
+        "e29|text|text|To access your reminders on all of your devices, sign into iCloud and enable Reminders.||",
+        "e34|text|text|My Lists||",
+        "e38|text|text|Reminders||",
+        "e39|text|text|0||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e21\"},{\"action\":\"tap\",\"elementRef\":\"e30\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e18",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e66 --direction up --distance 0.5"
+  ]
+}

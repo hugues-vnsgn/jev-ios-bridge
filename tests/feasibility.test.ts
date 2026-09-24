@@ -1,9 +1,14 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import test from 'node:test';
 import type { JevJudge, Scenario, Snapshot } from '../src/contracts/index.js';
 import { JevRequestError } from '../src/jev/index.js';
 import {
   digest, makeDraftManifest, runHeldout, runTuning, validateCorpus, validateFrozenExperiment,
+  verifyCorpusAssets,
   type ExperimentManifest, type FeasibilityCorpus, type OwnerApproval,
 } from '../spikes/feasibility/harness.js';
 
@@ -16,6 +21,7 @@ function corpus(): FeasibilityCorpus {
       sequence: 1, truncated: false, elements: [{ ref: 'e1', role: 'button', label: 'Continue', actions: ['tap'] }] };
     return { id, scenarioGroup: `group-${index}`, partition: index < 10 ? 'tuning' as const : 'heldout' as const,
       scenario, compactSnapshot: shot, fullSnapshot: shot, history: [{ step: 1, description: 'Opened screen' }],
+      ...(index === 0 ? { positionalVariant: { goal: 'Tap the second row', acceptableActionIds: ['tap:e1'] } } : {}),
       labels: { acceptableActionIds: ['tap:e1'], goalReached: false, assertions: { expected: index !== 10 } } };
   }) };
 }
@@ -27,7 +33,8 @@ function frozen(c: FeasibilityCorpus): { manifest: ExperimentManifest; approval:
 }
 function fakeJudge(calls: string[], failCase?: string, falsePassCase?: string): JevJudge {
   return { async judge(_scenario, observation) {
-    const id = /Goal: (case-\d+)/.exec(observation.text)?.[1] ?? 'unknown';
+    const id = /Goal: (case-\d+)/.exec(observation.text)?.[1] ??
+      (observation.text.includes('Goal: Tap the second row') ? 'positional:case-0' : 'unknown');
     calls.push(id);
     if (id === failCase) throw new JevRequestError('NETWORK');
     return { choice: 'tap:e1', confidence: 0.95,
@@ -67,7 +74,7 @@ test('a no-go tuning run retains every result and emits per-case evidence', asyn
     async result => { recorded.push(result.caseId); });
   assert.equal(run.selection, null);
   assert.equal(run.results.length, 40);
-  assert.equal(recorded.length, 40);
+  assert.equal(recorded.length, 44);
   assert.ok(run.results.every(result => result.gates['0.6']?.reason === 'none'));
 });
 
@@ -76,12 +83,44 @@ test('tuning evaluates four configs only on tuning cases and picks threshold wit
   const { manifest, approval } = frozen(c);
   const calls: string[] = [];
   const run = await runTuning(c, manifest, approval, fakeJudge(calls), new AbortController().signal);
-  assert.equal(calls.length, 40);
-  assert.ok(calls.every(id => Number(id.slice(5)) < 10));
+  assert.equal(calls.length, 44);
+  const primaryCalls = calls.filter(id => id.startsWith('case-'));
+  const positionalCalls = calls.filter(id => id.startsWith('positional:'));
+  assert.equal(primaryCalls.length, 40);
+  assert.ok(primaryCalls.every(id => Number(id.slice(5)) < 10));
+  assert.deepEqual(positionalCalls, Array(4).fill('positional:case-0'));
   assert.equal(run.comparison.length, 16);
+  assert.equal(run.results.length, 40);
+  assert.equal(run.positionalResults.length, 4);
   assert.equal(run.selection?.configuration, 'A');
   assert.equal(run.selection?.threshold, 0.6);
   assert.equal(run.results[0]?.gates['0.6']?.reason, 'accepted');
+});
+
+test('a manifest-permitted 25KB state can be gated after evaluation', async () => {
+  const c = corpus();
+  c.cases[0]!.fullSnapshot.elements[0]!.label = 'X'.repeat(25_000);
+  const { manifest, approval } = frozen(c);
+  manifest.maxStateBytes = 28_000;
+  approval.manifestSha256 = digest(manifest);
+  const run = await runTuning(c, manifest, approval, fakeJudge([]), new AbortController().signal);
+  assert.equal(run.results.length, 40);
+  assert.equal(run.results.find(result => result.caseId === 'case-0' && result.configuration === 'C')?.gates['0.6']?.reason, 'accepted');
+});
+
+test('asset preflight binds raw JSON and screenshot bytes under corpus root', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-assets-'));
+  try {
+    const c = corpus();
+    const files = { compact: 'compact.json', full: 'full.json', screenshot: 'screen.jpg' };
+    const bytes = { compact: '{}', full: '{}', screenshot: 'synthetic-image' };
+    await Promise.all(Object.entries(files).map(async ([key, name]) => writeFile(join(root, name), bytes[key as keyof typeof bytes])));
+    const sha256 = Object.fromEntries(Object.entries(bytes).map(([key, value]) => [key, createHash('sha256').update(value).digest('hex')])) as { compact: string; full: string; screenshot: string };
+    for (const item of c.cases) item.assets = { compactPath: files.compact, fullPath: files.full, screenshotPath: files.screenshot, sha256 };
+    await verifyCorpusAssets(c, join(root, 'corpus.json'));
+    await writeFile(join(root, files.full), 'changed');
+    await assert.rejects(verifyCorpusAssets(c, join(root, 'corpus.json')), /CAPTURE_HASH_MISMATCH/);
+  } finally { await rm(root, { recursive: true, force: true }); }
 });
 
 test('held-out denominators retain failures and count false-pass assertions even after action gating', async () => {

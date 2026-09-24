@@ -26,6 +26,7 @@ test('complete options bind target, value and direction; duplicate labels remain
   ]);
   assert.deepEqual(options.find(option => option.id === 'type:e2:email')?.action,
     { kind: 'type', targetRef: 'e2', valueKey: 'email' });
+  assert.match(options.find(option => option.id === 'type:e2:email')?.description ?? '', /Replace all text in Email with the supplied scenario value email/);
 });
 
 test('compact observation omits full fields, screenshot path and history when window is zero', () => {
@@ -55,4 +56,21 @@ test('state over conservative byte budget fails before a Jev request', () => {
   const shot = snapshot([{ ref: 'e1', role: 'text', label: 'x'.repeat(1000), actions: [] }]);
   assert.throws(() => buildObservation(scenario, shot, [], { maxStateBytes: 200 }),
     (error: unknown) => error instanceof ObservationError && error.code === 'STATE_BUDGET');
+});
+
+test('filtered full state drops empty containers but keeps semantic and actionable rows', () => {
+  const frame = { x: 0, y: 0, width: 20, height: 20 };
+  const empty = Array.from({ length: 150 }, (_, index) => ({ ref: `c${index}`, role: 'other', frame,
+    state: { enabled: true, visible: true }, actions: [] as string[] }));
+  const shot = snapshot([...empty,
+    { ref: 'title', role: 'text', label: 'About', frame, actions: [] },
+    { ref: 'alert', role: 'alert', frame, actions: [] },
+    { ref: 'go', role: 'button', frame, actions: ['tap'] },
+  ]);
+  const observation = buildObservation(scenario, shot, [], { variant: 'full', maxStateBytes: 1_000 });
+  assert.doesNotMatch(observation.text, /ref=c0\b|ref=c149\b/);
+  assert.match(observation.text, /ref=title\b/);
+  assert.match(observation.text, /ref=alert\b/);
+  assert.match(observation.text, /ref=go\b/);
+  assert.ok(observation.options.some(option => option.id === 'tap:go'));
 });

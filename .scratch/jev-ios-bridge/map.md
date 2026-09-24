@@ -29,6 +29,8 @@ A verified implementation and GitHub prerelease v0.1.0 of the bridge, including 
 
 ## Decisions so far
 
+- [First feasibility run](issues/08-feasibility-run.md): no-go. Filtered full observations with history and threshold 0.9 produced 15/20 correct actions and 7/20 accepted cases, with no accepted errors or false-pass assertions. [A revision](issues/18-feasibility-revision.md) must meet the same bar on fresh held-out cases before production design proceeds.
+
 - [Local environment](issues/06-local-environment.md): dedicated iOS 26.4 simulator is ready, pinned MobileBuildMCP captures work, and the supplied key authenticates. Settings, Contacts, Reminders, and Files are available; Weather is not installed.
 
 - [Jev today: model, API, SDK, limits](issues/01-jev-today.md): `jev-1.13.0` is text-only and stateless. A request is capped at 64k tokens, with 32k for the state plus the longest question. Noul answers carry no confidence. TypeSafe publishes no cookbook for choosing UI actions.
@@ -63,11 +65,12 @@ flowchart LR
     T15["15 Tool surface<br/><small>grilling</small>"]
     T16["16 Vertical slice<br/><small>prototype</small>"]
     T17["17 Slice measurements<br/><small>task</small>"]
+    T18["18 Feasibility revision<br/><small>prototype</small>"]
     T06 --> T08
     T07 --> T08
-    T08 --> T09
-    T08 --> T10
-    T08 --> T11
+    T18 --> T09
+    T18 --> T10
+    T18 --> T11
     T09 --> T11
     T10 --> T11
     T05 --> T12
@@ -86,12 +89,13 @@ flowchart LR
     T12 --> T16
     T15 --> T16
     T16 --> T17
+    T08 --> T18
     classDef resolved fill:#e4e4e7,stroke:#a1a1aa,color:#52525b
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T06,T07 resolved
-    class T08 claimed
+    class T01,T02,T03,T04,T05,T06,T07,T08 resolved
+    class T18 claimed
     class T09,T10,T11,T12,T13,T14,T15,T16,T17 blocked
 ```
 <!-- route:end -->

@@ -1,0 +1,61 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "0vc9h2h",
+      "seq": 142,
+      "count": 116,
+      "targets": [
+        "e23|tap|button|Keyboards, 3||KEYBOARDS",
+        "e26|tap|button|Keyboards, 3||KEYBOARDS",
+        "e41|tap|button|One-Handed Keyboard, Off||ReachableKeyboard",
+        "e44|tap|button|One-Handed Keyboard, Off||ReachableKeyboard",
+        "e85|tap|button|One-Handed Keyboard, Off||ReachableKeyboard",
+        "e88|tap|button|One-Handed Keyboard, Off||ReachableKeyboard",
+        "e103|tap|button|Keyboards, 3||KEYBOARDS",
+        "e106|tap|button|Keyboards, 3||KEYBOARDS",
+        "e12|tap|button|General||BackButton",
+        "e33|tap|button|Text Replacement||USER_DICTIONARY",
+        "e54|tap|button|Hardware Keyboard||HardwareKeyboard",
+        "e77|tap|button|Hardware Keyboard||HardwareKeyboard",
+        "e95|tap|button|Text Replacement||USER_DICTIONARY"
+      ],
+      "scroll": [
+        "e22|swipe|scroll-view|||"
+      ],
+      "text": [
+        "e27|text|text|Keyboards||",
+        "e107|text|text|Keyboards||",
+        "e28|text|text|3||",
+        "e108|text|text|3||",
+        "e36|text|text|Text Replacement||",
+        "e98|text|text|Text Replacement||",
+        "e45|text|text|One-Handed Keyboard||",
+        "e89|text|text|One-Handed Keyboard||",
+        "e46|text|text|Off||",
+        "e90|text|text|Off||",
+        "e57|text|text|Hardware Keyboard||",
+        "e80|text|text|Hardware Keyboard||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e12\"},{\"action\":\"tap\",\"elementRef\":\"e33\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e23",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e22 --direction up --distance 0.5"
+  ]
+}

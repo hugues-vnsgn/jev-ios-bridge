@@ -1,0 +1,50 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "00gov2g",
+      "seq": 108,
+      "count": 113,
+      "targets": [
+        "e73|typeText|text-field|||ContactCardDetailsView",
+        "e10|tap|button|Contacts||BackButton",
+        "e11|tap|button|Edit||",
+        "e62|tap|button|Contact Photo & Poster||SharedProfileAvatarView-SharedProfileTitleText-SharedProfileChevronImage",
+        "e81|tap|button|Share Contact||ContactCardActionsAfterProperties",
+        "e90|tap|button|Add to List||ContactCardActionsAfterProperties",
+        "e100|tap|button|Block Contact||ContactCardActionsFooter"
+      ],
+      "scroll": [
+        "e22|swipe|scroll-view|||ContactCardScrollViewReader",
+        "e30|swipe|scroll-view|||ContactCardScrollViewReader"
+      ],
+      "text": [
+        "e45|text|text|Mira Stone||ContactCardHeaderView",
+        "e64|text|text|Contact Photo & Poster||SharedProfileTitleText",
+        "e72|text|text|Notes||ContactCardDetailsView",
+        "e82|text|text|Share Contact||",
+        "e91|text|text|Add to List||",
+        "e101|text|text|Block Contact||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e10\"},{\"action\":\"tap\",\"elementRef\":\"e11\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e10",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e22 --direction up --distance 0.5"
+  ]
+}

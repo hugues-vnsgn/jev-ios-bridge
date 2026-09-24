@@ -2,7 +2,7 @@
 
 jev-ios-bridge lets a coding agent verify an iOS app by submitting a scenario and reading back a verdict. The bridge runs the scenario on a simulator. At each step, TypeSafe's Jev model chooses what to do from a text view of the screen, and MobileBuildMCP does the device work.
 
-There is no code yet. This repo holds the design, the decisions behind it, and the research that informed them.
+The implementation is in progress on the v0.1.0 release branch. The repo contains the bridge, offline tests, a feasibility harness, and the design and research behind them. The first live feasibility experiment did not meet the agreed bar; [the results](spikes/feasibility/results/heldout/heldout.md) block release pending a revised experiment.
 
 ## Why build it
 
@@ -14,11 +14,23 @@ Whether Jev can make those decisions well is unproven. TypeSafe publishes no exa
 
 ## Status
 
-- **Stage:** planning. Nothing is built.
+- **Stage:** implementation and feasibility preparation. The current code is experimental; no prerelease has been published.
 - **Decisions:** [ADR-0001](docs/adr/0001-bridge-perceives-and-acts-jev-decides.md) and [ADR-0002](docs/adr/0002-mobilebuildmcp-as-device-layer.md) are *proposed*.
   - ADR-0002 becomes accepted when this review closes.
   - ADR-0001 stays proposed until the feasibility run resolves. A go accepts it; a no-go reopens it.
 - **Route:** the [map](.scratch/jev-ios-bridge/map.md) lists every open decision and draws the order they have to be settled in.
+
+## Try the development build
+
+Use Node 24 or later:
+
+```sh
+npm ci
+npm run check
+node dist/cli.js --help
+```
+
+[Running the bridge](docs/usage.md) covers simulator selection, credentials, scenarios, MCP setup, reports, and the local watch view. The [release plan](.scratch/jev-ios-bridge/release-plan.md) separates completed engineering checks from the measurements still required before release.
 
 ## Reading order
 
