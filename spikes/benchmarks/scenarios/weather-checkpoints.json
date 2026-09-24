@@ -1,0 +1,72 @@
+{
+  "app": { "bundleId": "com.sentry.weather.Weather" },
+  "preconditions": [
+    "Use the pinned mock Weather app on a clean dedicated iPhone 17 Pro Max simulator with the same iOS runtime as the baseline.",
+    "Build and install Weather before timing this prepared-app UI run; start with the app's default settings and no previously selected London location."
+  ],
+  "checkpoints": [
+    {
+      "id": "temperature_celsius",
+      "goal": "The Weather Settings sheet is open and the Temperature control visibly selects °C.",
+      "assertions": [{ "id": "selected", "claim": "The Temperature control in Weather Settings shows °C selected." }]
+    },
+    {
+      "id": "wind_meters_per_second",
+      "goal": "The Weather Settings sheet is open and the Wind speed control visibly selects m/s.",
+      "assertions": [{ "id": "selected", "claim": "The Wind speed control in Weather Settings shows m/s selected." }]
+    },
+    {
+      "id": "pressure_inches_mercury",
+      "goal": "The Weather Settings sheet is open and the Pressure control visibly selects inHg.",
+      "assertions": [{ "id": "selected", "claim": "The Pressure control in Weather Settings shows inHg selected." }]
+    },
+    {
+      "id": "distance_kilometers",
+      "goal": "The Weather Settings sheet is open and the Distance control visibly selects km.",
+      "assertions": [{ "id": "selected", "claim": "The Distance control in Weather Settings shows km selected." }]
+    },
+    {
+      "id": "display_options",
+      "goal": "The Weather Settings DISPLAY controls visibly have Atmospheric animations off, Severe weather alerts off, and Reduce transparency on.",
+      "assertions": [
+        { "id": "animations_off", "claim": "Atmospheric animations is off in Weather Settings." },
+        { "id": "alerts_off", "claim": "Severe weather alerts is off in Weather Settings." },
+        { "id": "transparency_on", "claim": "Reduce transparency is on in Weather Settings." }
+      ]
+    },
+    {
+      "id": "london_selected",
+      "goal": "The London search result has been selected and the Weather main screen visibly shows London.",
+      "values": { "city": "London" },
+      "assertions": [{ "id": "city", "claim": "The main Weather screen shows London as the selected city." }]
+    },
+    {
+      "id": "london_top_weather",
+      "goal": "The London main Weather screen visibly shows its current temperature and precipitation forecast.",
+      "assertions": [
+        { "id": "temperature", "claim": "The London main Weather screen shows 11°." },
+        { "id": "precipitation", "claim": "The London main Weather screen shows precipitation 78%." }
+      ]
+    },
+    {
+      "id": "london_visibility",
+      "goal": "The London main Weather screen visibly shows its Visibility reading.",
+      "assertions": [{ "id": "visibility", "claim": "The London main Weather screen shows visibility 9.7 km." }]
+    },
+    {
+      "id": "precipitation_chance",
+      "goal": "The London precipitation detail is open with the chance over the next 24 hours visible.",
+      "assertions": [{ "id": "chance", "claim": "The precipitation detail shows 78% chance over the next 24 hours." }]
+    },
+    {
+      "id": "precipitation_metrics",
+      "goal": "The London precipitation detail shows its Total expected, Hours of rain, Storm distance, and Lightning readings together.",
+      "assertions": [
+        { "id": "total_expected", "claim": "Total expected is 10.7 mm." },
+        { "id": "hours_of_rain", "claim": "Hours of rain is 6 hrs." },
+        { "id": "storm_distance", "claim": "Storm distance is 14 km." },
+        { "id": "lightning", "claim": "Lightning is None." }
+      ]
+    }
+  ]
+}

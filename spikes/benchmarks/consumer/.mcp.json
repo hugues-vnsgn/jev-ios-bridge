@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "jev-ios-bridge": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "--env-file=/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.env",
+        "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/v0.1-release/dist/cli.js",
+        "mcp"
+      ],
+      "env": {
+        "JEV_DEVICE_UDID": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "JEV_RUNS_DIR": "/tmp/jev-ios-bridge-benchmark-runs",
+        "MOBILEBUILDMCP_SENTRY_DISABLED": "true"
+      }
+    }
+  }
+}

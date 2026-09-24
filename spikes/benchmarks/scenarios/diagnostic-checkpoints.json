@@ -1,0 +1,28 @@
+{
+  "app": { "bundleId": "dev.jevbridge.diagnostic" },
+  "preconditions": [
+    "Install the checked-in diagnostic app on a clean dedicated simulator before timing; its in-memory order starts empty when launched."
+  ],
+  "checkpoints": [
+    {
+      "id": "apple_selected",
+      "goal": "Sample Shop visibly shows Apple selected in the order.",
+      "assertions": [{ "id": "selection", "claim": "The selection summary reads Selected: Apple." }]
+    },
+    {
+      "id": "both_selected",
+      "goal": "Sample Shop visibly shows Apple and Bread selected in the order.",
+      "assertions": [{ "id": "selection", "claim": "The selection summary reads Selected: Apple, Bread." }]
+    },
+    {
+      "id": "confirmation",
+      "goal": "The Order complete confirmation for Apple and Bread is visible.",
+      "assertions": [
+        { "id": "confirmation_open", "claim": "The Order complete confirmation screen is visible." },
+        { "id": "apple_line", "claim": "The confirmation shows Apple: $2." },
+        { "id": "bread_line", "claim": "The confirmation shows Bread: $3." },
+        { "id": "total_correct", "claim": "The confirmation shows Total: $5." }
+      ]
+    }
+  ]
+}

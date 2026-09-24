@@ -1,0 +1,14 @@
+{
+  "checkedOn": "2026-09-24",
+  "tool": "mobilebuildmcp@2.7.1",
+  "command": "MOBILEBUILDMCP_SENTRY_DISABLED=true npx -y mobilebuildmcp@2.7.1 simulator build --project-path spikes/benchmarks/vendor/weather/Weather.xcodeproj --scheme Weather --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --configuration Debug --derived-data-path /tmp/jev-weather-dd-v2.7.1 --output json",
+  "result": "SUCCEEDED",
+  "warnings": 0,
+  "errors": 0,
+  "appPath": "/tmp/jev-weather-dd-v2.7.1/Build/Products/Debug-iphonesimulator/Weather.app",
+  "bundleIdFromBuiltInfoPlist": "com.sentry.weather.Weather",
+  "installedAtBuildTime": false,
+  "launchedAtBuildTime": false,
+  "laterInstalledAndLaunchedForFeasibilityV2": true,
+  "benchmarkRunPerformed": false
+}

@@ -10,3 +10,11 @@ Reviewed the fixed commit range (`e4c5ebe`, one commit) across source, spike, te
 2. **Low, Mysterious Name.** [harness.ts](../../spikes/feasibility/harness.ts#L350) calls its Markdown table-cell sanitizer `md`. It escapes pipes and removes line breaks. `escapeTableCell` would describe the actual behavior at the many call sites in the owner review sheet.
 
 No other baseline smell warranted a finding. Both findings are in the throwaway feasibility harness, so neither blocks the provisional production implementation.
+
+## Current WIP pass from `39b4653`
+
+Reviewed tracked work through current `HEAD` plus staged changes, and the new source, tests, benchmark scripts, and diagnostic app visible as untracked files. This is an interim Standards pass while the v3 corpus is being captured; it does not grade the pending experiment against its spec. The earlier harness findings are resolved: tuning and held-out now call one `chooseWinner`, and the Markdown helper is `escapeTableCell`.
+
+**Documented-standard breaches: none found.** The bridge still owns verdicts and uses MobileBuildMCP through its device adapter. The new Checkpoint glossary term matches the run and scenario types. Key handling in the changed code keeps `TYPESAFE_API_KEY` out of printed output.
+
+**Judgment-call smell, medium: Primitive Obsession.** [RunEvent.data](../../src/contracts/index.ts#L100) is an unrestricted `Record<string, unknown>` for every event type. The run writes checkpoint proof fields, while [renderReport](../../src/report/index.ts#L21) and the watch script interpret those fields through separate unchecked lookups. A misspelled or omitted proof field can compile and still leave the host with an incomplete report. A discriminated event-data union, validated when JSONL is read, would give the evidence contract one shape. This is a design hardening suggestion, not a tooling violation or a reason to alter the frozen feasibility inputs.

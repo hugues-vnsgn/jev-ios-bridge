@@ -1,0 +1,69 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "031v47a",
+      "seq": 203,
+      "count": 188,
+      "targets": [
+        "e37|tap|button|Contact photo for John Appleseed||",
+        "e45|tap|button|Contact photo for Kate Bell||",
+        "e53|tap|button|Contact photo for Anna Haro||",
+        "e58|tap|button|Contact photo for Daniel Higgins Jr.||",
+        "e66|tap|button|Contact photo for Iris Moss||",
+        "e71|tap|button|Contact photo for Iris Moss||",
+        "e79|tap|button|Contact photo for Noah Reed||",
+        "e84|tap|button|Contact photo for Noah Reed||",
+        "e92|tap|button|Contact photo for Mira Stone||",
+        "e116|typeText|text-field||Search|",
+        "e29|tap|button|View Duplicates||",
+        "e117|tap|button|Dictate||Dictate",
+        "e119|tap|button|Dictate||Dictate",
+        "e31|tap|button|Close||",
+        "e124|tap|button|close||"
+      ],
+      "scroll": [
+        "e14|swipe|other|||ContactsListView"
+      ],
+      "text": [
+        "e27|text|text|2 Duplicates Found||",
+        "e28|text|text|Merging duplicate cards for a contact combines the cards, keeping all unique information in a single card for that contact.||",
+        "e30|text|text|View Duplicates||",
+        "e35|text|text|A||",
+        "e39|text|text|John Appleseed||",
+        "e43|text|text|B||",
+        "e47|text|text|Kate Bell||",
+        "e51|text|text|H||",
+        "e55|text|text|Anna Haro||",
+        "e60|text|text|Daniel Higgins Jr.||",
+        "e64|text|text|M||",
+        "e68|text|text|Iris Moss||",
+        "e73|text|text|Iris Moss||",
+        "e77|text|text|R||",
+        "e81|text|text|Noah Reed||",
+        "e86|text|text|Noah Reed||",
+        "e90|text|text|S||",
+        "e94|text|text|Mira Stone||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e29\"},{\"action\":\"tap\",\"elementRef\":\"e117\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e37",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e14 --direction up --distance 0.5"
+  ]
+}

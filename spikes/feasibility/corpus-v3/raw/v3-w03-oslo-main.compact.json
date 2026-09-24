@@ -1,0 +1,82 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "1g782vg",
+      "seq": 71,
+      "count": 92,
+      "targets": [
+        "e85|tap|button|Oslo||weather.locationButton",
+        "e89|tap|button|Settings||weather.settingsButton"
+      ],
+      "scroll": [
+        "e7|swipe|scroll-view|||weather.mainScrollView",
+        "e17|swipe|scroll-view|||"
+      ],
+      "text": [
+        "e87|text|text|Oslo||",
+        "e9|text|text|Oslo||weather.heroLocation",
+        "e10|text|text|Norway||",
+        "e11|text|text|25||",
+        "e12|text|text|°||",
+        "e13|text|text|Light Snow||",
+        "e14|text|text|H:28° L:14°||",
+        "e15|text|text|\"A quiet hush of snow\"||",
+        "e16|text|text|HOURLY FORECAST||",
+        "e19|text|text|Now||",
+        "e20|text|text|2pm||",
+        "e21|text|text|3pm||",
+        "e22|text|text|4pm||",
+        "e23|text|text|5pm||",
+        "e24|text|text|6pm||",
+        "e25|text|text|7pm||",
+        "e26|text|text|8pm||",
+        "e31|text|text|25°||",
+        "e32|text|text|27°||",
+        "e33|text|text|27°||",
+        "e34|text|text|28°||",
+        "e35|text|text|27°||",
+        "e36|text|text|25°||",
+        "e37|text|text|21°||",
+        "e38|text|text|19°||",
+        "e43|text|text|7-DAY FORECAST||",
+        "e44|text|text|Today||",
+        "e45|text|text|14°||",
+        "e46|text|text|28°||",
+        "e47|text|text|Wed||",
+        "e48|text|text|12°||",
+        "e49|text|text|27°||",
+        "e50|text|text|Thu||",
+        "e51|text|text|16°||",
+        "e52|text|text|30°||",
+        "e53|text|text|Fri||",
+        "e54|text|text|19°||",
+        "e55|text|text|34°||",
+        "e56|text|text|Sat||",
+        "e57|text|text|18°||",
+        "e58|text|text|32°||",
+        "e59|text|text|Sun||",
+        "e60|text|text|10°||",
+        "e61|text|text|21°||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e7 --direction up --distance 0.5",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e85"
+  ]
+}

@@ -23,6 +23,8 @@ The three implementers can prepare separately while phase 0 runs. They can defin
 
 The main agent owns the tracker, shared public contracts, dependency changes, integration, owner review handoffs, spec, and release. Implementers own disjoint paths:
 
+Owner handoff update: Claude Code has stopped work in this repository. Codex owns every remaining ticket, the tracker, docs, and owner discussions. Delegate coding, builds, and testing to `gpt-6-sol` at high reasoning; the main agent integrates the results and writes the ticket decisions. The release branch supersedes the main checkout's stale ticket 06 claim and untracked simulator-name configuration. Reconcile those files when merging, using the tested dedicated simulator UUID configuration from this branch.
+
 | Implementer | Files owned | Preparation now; work after gates |
 | --- | --- | --- |
 | A: feasibility, Jev, and observation | `spikes/feasibility/*.ts`, `src/jev/**`, `src/observation/**`, matching tests | Harness, frozen-manifest checks, question projection, and typed answer parsing |

@@ -1,0 +1,44 @@
+{
+  "startedAt": "2026-09-24T07:06:11.290Z",
+  "requestedModel": "claude-opus-4-7",
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "parsedResult": true,
+  "resultIsError": false,
+  "replyWasReady": true,
+  "observedModels": {
+    "claude-opus-4-7": {
+      "inputTokens": 506,
+      "cacheCreationInputTokens": 0,
+      "cacheReadInputTokens": 0,
+      "outputTokens": 6,
+      "costUsdEstimate": 0.00268
+    }
+  },
+  "usage": {
+    "input_tokens": 506,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 6,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [],
+    "speed": "standard"
+  },
+  "totalCostUsdEstimate": 0.00268,
+  "stderrPresent": false,
+  "rawOutputSaved": false,
+  "isolation": "temporary empty cwd; no tools; no MCP; slash commands disabled; no session persistence"
+}

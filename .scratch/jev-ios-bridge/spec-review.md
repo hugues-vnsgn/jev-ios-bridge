@@ -11,3 +11,13 @@ Reviewed the fixed checkpoint on the **Spec** axis against ticket 07, the releas
 4. **P2 — Reviewed screen evidence is not bound to approval.** [spikes/feasibility/harness.ts:145](../../spikes/feasibility/harness.ts#L145) accepts absent asset paths, and approval hashes only the normalized corpus and manifest; raw captures and screenshots can change without invalidating the approval. Ticket 07 says each case records “the captured screen” and the owner settles labels against that capture ([lines 45, 54](issues/07-feasibility-plan.md#L45)). Require existing, digest-bound evidence assets before live evaluation.
 
 The 30-case corpus, owner labels, live Jev results, go/no-go decision, Claude Code smoke run, and release artifact are pending gates in the release plan, not findings against this checkpoint. I found no material scope creep in the preparatory code.
+
+## Follow-up at checkpoint prototype 5021c02
+
+The four original findings were fixed in the earlier hardening work: vendor codes come from `data.uiError.code`; scoring reuses the frozen observation limits; held-out selection validation precedes the run claim; asset digests are mandatory and checked before live requests. Their regressions remain in the suite.
+
+The independent checkpoint review found two report gaps. Selecting the current checkpoint from the last observed screen misidentified an already completed checkpoint when the global budget ended between checkpoints. A red/green regression now covers selection from recorded proofs, and earlier checkpoint assertion claims and probabilities are included. Earlier screen excerpts and artifact references still need to be linked into the report from the decisive step event; a coding agent is addressing this without changing the frozen experiment source.
+
+The benchmark review also identified differences between the upstream baseline and bridge host permissions, suggested actions, and Weather build timing. [Benchmark preparation](../../spikes/benchmarks/README.md) now discloses them. No comparison result has been claimed.
+
+Runtime calibration, live checkpoint feasibility, the installed Claude Code run, and comparison measurements remain expected gate work. No high-severity contradiction was found in ordered advancement, cancellation, the strict scenario union, or bridge-owned verdicts. The standards review found no documented-standard breach; its remaining event-typing concern is a design suggestion, not a live feasibility result.

@@ -1,0 +1,52 @@
+{
+  "app": { "bundleId": "com.apple.MobileAddressBook" },
+  "preconditions": [
+    "Use a clean dedicated iPhone 17 Pro Max simulator with the same iOS runtime as the baseline.",
+    "No contact named MCP Contact Benchmark exists. Dismiss only the first-run prompts dismissed by the pinned baseline before timing."
+  ],
+  "checkpoints": [
+    {
+      "id": "identity_fields",
+      "goal": "A single new contact form is open with the requested first name, last name, and organization entered.",
+      "values": {
+        "firstName": "MCP",
+        "lastName": "Contact Benchmark",
+        "organization": "MobileBuildMCP Benchmark"
+      },
+      "assertions": [
+        { "id": "first_name", "claim": "The new contact form shows first name MCP." },
+        { "id": "last_name", "claim": "The new contact form shows last name Contact Benchmark." },
+        { "id": "organization", "claim": "The new contact form shows organization MobileBuildMCP Benchmark, allowing case differences." }
+      ]
+    },
+    {
+      "id": "phone_field",
+      "goal": "The same new contact form has the requested phone number entered.",
+      "values": { "phone": "555-010-4242" },
+      "assertions": [{ "id": "phone", "claim": "The new contact form shows phone digits 5550104242, allowing display punctuation or grouping differences." }]
+    },
+    {
+      "id": "email_field",
+      "goal": "The same new contact form has the requested email address entered.",
+      "values": { "email": "mcp.contact.benchmark@example.com" },
+      "assertions": [{ "id": "email", "claim": "The new contact form shows email mcp.contact.benchmark@example.com." }]
+    },
+    {
+      "id": "saved_identity",
+      "goal": "The contact has been saved and its read-only card visibly shows the requested identity and organization.",
+      "assertions": [
+        { "id": "saved_card", "claim": "The saved contact card, not its edit form, is visible." },
+        { "id": "full_name", "claim": "The saved card shows MCP Contact Benchmark." },
+        { "id": "organization", "claim": "The saved card shows the words MobileBuildMCP Benchmark, allowing case differences." }
+      ]
+    },
+    {
+      "id": "saved_contact_methods",
+      "goal": "The same saved contact card visibly shows its phone and email details without entering edit mode.",
+      "assertions": [
+        { "id": "phone", "claim": "The saved card shows phone digits 5550104242, allowing display punctuation or grouping differences." },
+        { "id": "email", "claim": "The saved card shows mcp.contact.benchmark@example.com." }
+      ]
+    }
+  ]
+}

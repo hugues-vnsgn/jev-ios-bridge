@@ -1,0 +1,98 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "1vkcqan",
+      "seq": 182,
+      "count": 135,
+      "targets": [
+        "e27|typeText|text-field|First name|Iris|First name",
+        "e30|typeText|text-field|Last name|Moss|Last name",
+        "e33|typeText|text-field|Company|Summit|Company",
+        "e43|typeText|text-field||(555) 010-2001|mobile",
+        "e52|typeText|text-field||(555) 010-2002|home",
+        "e61|typeText|text-field||(555) 010-2003|work",
+        "e70|typeText|text-field||(555) 010-2004|school",
+        "e79|typeText|text-field||(555) 010-2005|iPhone",
+        "e88|typeText|text-field||(555) 010-2006|Apple Watch",
+        "e23|tap|button|Add photo||",
+        "e35|tap|other|mobile||",
+        "e36|tap|button|Remove mobile||",
+        "e38|tap|button|mobile||",
+        "e39|tap|text|mobile||",
+        "e42|tap|image|Forward||chevron.forward",
+        "e44|tap|other|home||",
+        "e45|tap|button|Remove home||",
+        "e47|tap|button|home||",
+        "e48|tap|text|home||",
+        "e51|tap|image|Forward||chevron.forward",
+        "e53|tap|other|work||",
+        "e54|tap|button|Remove work||",
+        "e56|tap|button|work||",
+        "e57|tap|text|work||",
+        "e60|tap|image|Forward||chevron.forward",
+        "e62|tap|other|school||",
+        "e63|tap|button|Remove school||",
+        "e65|tap|button|school||",
+        "e66|tap|text|school||",
+        "e69|tap|image|Forward||chevron.forward",
+        "e71|tap|other|iPhone||",
+        "e72|tap|button|Remove iPhone||",
+        "e74|tap|button|iPhone||",
+        "e75|tap|text|iPhone||",
+        "e78|tap|image|Forward||chevron.forward",
+        "e80|tap|other|Apple Watch||",
+        "e81|tap|button|Remove Apple Watch||",
+        "e83|tap|button|Apple Watch||",
+        "e84|tap|text|Apple Watch||",
+        "e87|tap|image|Forward||chevron.forward",
+        "e89|tap|button|add phone||",
+        "e90|tap|button|Insert add phone||",
+        "e120|tap|button|add phone||",
+        "e121|tap|button|Insert add phone||",
+        "e125|tap|button|Add photo||",
+        "e10|tap|button|close||",
+        "e37|tap|image|remove||minus.circle.fill",
+        "e46|tap|image|remove||minus.circle.fill",
+        "e55|tap|image|remove||minus.circle.fill",
+        "e64|tap|image|remove||minus.circle.fill",
+        "e73|tap|image|remove||minus.circle.fill",
+        "e82|tap|image|remove||minus.circle.fill"
+      ],
+      "scroll": [
+        "e25|swipe|scroll-view|||"
+      ],
+      "text": [
+        "e126|text|text|Add Photo||",
+        "e39|text|text|mobile||",
+        "e48|text|text|home||",
+        "e57|text|text|work||",
+        "e66|text|text|school||",
+        "e75|text|text|iPhone||",
+        "e84|text|text|Apple Watch||",
+        "e93|text|text|add phone||",
+        "e124|text|text|add phone||",
+        "e98|text|text|home||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e23\"},{\"action\":\"tap\",\"elementRef\":\"e35\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e23",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e25 --direction up --distance 0.5"
+  ]
+}

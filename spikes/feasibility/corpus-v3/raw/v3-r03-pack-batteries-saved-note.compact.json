@@ -1,0 +1,47 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "0uq5bm4",
+      "seq": 22,
+      "count": 68,
+      "targets": [
+        "e25|tap|other|Pack adapters, Incomplete, Pack the USB adapter||<x-apple-reminderkit://REMCDReminder/2DA5D81D-F038-4E1A-84FF-4E5CC23B5AD2>",
+        "e29|tap|slider|Vertical scroll bar, 1 page|0%|",
+        "e31|tap|other|Pack batteries, Incomplete, Bring charger||<x-apple-reminderkit://REMCDReminder/260813F0-6DD9-4538-A898-E657D76106C3>",
+        "e43|tap|slider|Vertical scroll bar, 1 page|0%|",
+        "e27|typeText|text-field|Title|Pack adapters|",
+        "e28|typeText|text-field|Notes|Pack the USB adapter|Notes text view",
+        "e34|typeText|text-field|Title|Pack batteries|",
+        "e42|typeText|text-field|Notes|Bring charger|Notes text view",
+        "e10|tap|button|Back||BackButton",
+        "e11|tap|button|More||",
+        "e26|tap|button|circle||",
+        "e32|tap|button|circle||",
+        "e63|tap|button|New Reminder||"
+      ],
+      "scroll": [
+        "e20|swipe|other|||RemindersList.ID.RemindersTable"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e11\"},{\"action\":\"tap\",\"elementRef\":\"e26\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e25",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e20 --direction up --distance 0.5"
+  ]
+}

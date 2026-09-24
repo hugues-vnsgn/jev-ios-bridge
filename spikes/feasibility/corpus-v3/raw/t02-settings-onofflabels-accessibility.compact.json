@@ -1,0 +1,82 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "0b2798w",
+      "seq": 23,
+      "count": 193,
+      "targets": [
+        "e33|tap|button|Hover Text, Off||HOVERTEXT_TITLE",
+        "e36|tap|button|Hover Text, Off||HOVERTEXT_TITLE",
+        "e176|tap|button|Hover Text, Off||HOVERTEXT_TITLE",
+        "e179|tap|button|Hover Text, Off||HOVERTEXT_TITLE",
+        "e12|tap|button|Settings||BackButton",
+        "e44|tap|button|Display & Text Size||DISPLAY_AND_TEXT",
+        "e47|tap|button|Display & Text Size||DISPLAY_AND_TEXT",
+        "e54|tap|button|Motion||MOTION_TITLE",
+        "e57|tap|button|Motion||MOTION_TITLE",
+        "e64|tap|button|Spoken Content||SPEECH_TITLE",
+        "e67|tap|button|Spoken Content||SPEECH_TITLE",
+        "e74|tap|button|Face ID & Attention||FACE_ID",
+        "e77|tap|button|Face ID & Attention||FACE_ID",
+        "e84|tap|button|Control Nearby Devices||CONTROL_NEARBY_DEVICES",
+        "e87|tap|button|Control Nearby Devices||CONTROL_NEARBY_DEVICES",
+        "e94|tap|button|Subtitles & Captioning||SUBTITLES_CAPTIONING",
+        "e97|tap|button|Subtitles & Captioning||SUBTITLES_CAPTIONING",
+        "e116|tap|button|Subtitles & Captioning||SUBTITLES_CAPTIONING",
+        "e119|tap|button|Subtitles & Captioning||SUBTITLES_CAPTIONING",
+        "e126|tap|button|Control Nearby Devices||CONTROL_NEARBY_DEVICES",
+        "e129|tap|button|Control Nearby Devices||CONTROL_NEARBY_DEVICES",
+        "e136|tap|button|Face ID & Attention||FACE_ID",
+        "e139|tap|button|Face ID & Attention||FACE_ID",
+        "e146|tap|button|Spoken Content||SPEECH_TITLE",
+        "e149|tap|button|Spoken Content||SPEECH_TITLE",
+        "e156|tap|button|Motion||MOTION_TITLE",
+        "e159|tap|button|Motion||MOTION_TITLE",
+        "e166|tap|button|Display & Text Size||DISPLAY_AND_TEXT",
+        "e169|tap|button|Display & Text Size||DISPLAY_AND_TEXT"
+      ],
+      "scroll": [
+        "e18|swipe|other|||AccessibilitySettingsControllerView",
+        "e22|swipe|scroll-view|||"
+      ],
+      "text": [
+        "e37|text|text|Hover Text||",
+        "e180|text|text|Hover Text||",
+        "e38|text|text|Off||",
+        "e181|text|text|Off||",
+        "e48|text|text|Display & Text Size||",
+        "e170|text|text|Display & Text Size||",
+        "e58|text|text|Motion||",
+        "e160|text|text|Motion||",
+        "e68|text|text|Spoken Content||",
+        "e150|text|text|Spoken Content||",
+        "e78|text|text|Face ID & Attention||",
+        "e140|text|text|Face ID & Attention||",
+        "e88|text|text|Control Nearby Devices||",
+        "e130|text|text|Control Nearby Devices||",
+        "e98|text|text|Subtitles & Captioning||",
+        "e120|text|text|Subtitles & Captioning||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e44\"},{\"action\":\"tap\",\"elementRef\":\"e47\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e33",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e22 --direction up --distance 0.5"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "checkedOn": "2026-09-24",
+  "sourceRepository": "https://github.com/getsentry/MobileBuildMCP",
+  "sourceTag": "v2.7.1",
+  "sourceCommit": "d13ff0c707b0681769cf31da0eb42c4f94ceafff",
+  "license": "MIT",
+  "licenseUrl": "https://github.com/getsentry/MobileBuildMCP/blob/d13ff0c707b0681769cf31da0eb42c4f94ceafff/LICENSE",
+  "copiedProject": {
+    "sourcePath": "example_projects/Weather",
+    "localPath": "spikes/benchmarks/vendor/weather",
+    "sourceFiles": 42,
+    "treeSha256": "9c62721f9c5d88d93262330293f10d1065f765ddb8037980c5587af38e855507",
+    "treeHashMethod": "SHA-256 of each sorted relative source path, NUL, file bytes, NUL; excludes LICENSE.upstream",
+    "excluded": ["example_projects/Weather/AGENTS.md", "example_projects/Weather/.mobilebuildmcp/config.yaml"],
+    "licenseCopySha256": "fef28fc4165c72b1f0e4ce94654ba44ad7ff7d5d2538b3d01e66e9cc5be3c4f6"
+  },
+  "inspectedSources": {
+    "benchmarks/claude-ui/README.md": "56a8a6e185e922bbba3f6cffdcdf5b3943f5c9016a05613be57c634da15df959",
+    "benchmarks/claude-ui/run.ts": "c8d739b4b1d27763093d67a680aa8422bf4e0b9f56178467a5cdb0fe706d345a",
+    "benchmarks/claude-ui/suites/weather.yml": "9ed922b95eb356cd03f965c455707083c2f1b108d8550f686f308d3b8c69fcc4",
+    "benchmarks/claude-ui/suites/reminders.yml": "8b22722095a1cca23c02896f46f019b156b703da2b56d2a475aba802b335184c",
+    "benchmarks/claude-ui/suites/contacts.yml": "29f0c29753bbec6d0605e46c072a6d26eb785cb59e5df7827da54a418aac1442",
+    "benchmarks/claude-ui/prompts/weather.md": "0c139a01832fb3bb7a9c2e6233420ddfab8a0cd3855fdfa3ea9d3a2adf596efc",
+    "benchmarks/claude-ui/prompts/reminders.md": "965357a8822bdf506a72a3911cb43c9dd17fc5d2d8e9fc701ca7ac54b6d2690a",
+    "benchmarks/claude-ui/prompts/contacts.md": "76aaf3546d25e7f4c26b553a2c5bef6c20596c86d79f11ba55898877f2dfb00e",
+    "example_projects/Weather/README.md": "e59d398f64ee96e0da618e3ebb375be08039deb21b1427c3a27bc59dbec740b7",
+    "example_projects/Weather/Weather.xcodeproj/project.pbxproj": "9e872a21a78f4e8e8d239e8ebc01b5cf63f7f5c9be3897b75fe4a37ce201e9d3",
+    "src/benchmarks/claude-ui/harness.ts": "ca6f760ded4cf596989f6f880499968dfc1192b9159fa4cad563a9f2785d985a",
+    "src/benchmarks/claude-ui/claude-invocation.ts": "561a7b0c90ea173cb2a89770391d42e73819e39889c233b22fc8d06e87820bfe"
+  }
+}

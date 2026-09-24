@@ -1,0 +1,72 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "0vo8adg",
+      "seq": 114,
+      "count": 259,
+      "targets": [
+        "e26|tap|other|Pack adapters, Incomplete, Pack the USB adapter||<x-apple-reminderkit://REMCDReminder/2DA5D81D-F038-4E1A-84FF-4E5CC23B5AD2>",
+        "e30|tap|slider|Vertical scroll bar, 1 page|0%|",
+        "e28|typeText|text-field|Title|Pack adapters|",
+        "e29|typeText|text-field|Notes|Pack the USB adapter|Notes text view",
+        "e73|typeText|text-field|Title|Pack adapters|Detail View Title Field",
+        "e79|typeText|text-field|Notes|Bring adapter|Notes text view",
+        "e11|tap|button|Back||BackButton",
+        "e12|tap|button|More||",
+        "e27|tap|button|circle||",
+        "e50|tap|button|New Reminder||",
+        "e60|tap|button|Cancel||",
+        "e62|tap|button|Done||",
+        "e97|tap|switch|Date|0|",
+        "e106|tap|switch|Time|0|",
+        "e110|tap|button|List|Market Errands, List badge, Blue|",
+        "e130|tap|switch|Location|0|",
+        "e159|tap|switch|Location|0|",
+        "e169|tap|button|List|Market Errands, List badge, Blue|",
+        "e183|tap|switch|Time|0|",
+        "e192|tap|switch|Date|0|"
+      ],
+      "scroll": [
+        "e21|swipe|other|||RemindersList.ID.RemindersTable",
+        "e66|swipe|other|||ReminderDetail.ID.DetailsTable",
+        "e70|swipe|scroll-view|||"
+      ],
+      "text": [
+        "e95|text|text|Date||",
+        "e190|text|text|Date||",
+        "e104|text|text|Time||",
+        "e181|text|text|Time||",
+        "e111|text|text|List||",
+        "e170|text|text|List||",
+        "e112|text|text|Market Errands||",
+        "e171|text|text|Market Errands||",
+        "e121|text|text|Priority||",
+        "e165|text|text|Priority||",
+        "e120|text|text|None||",
+        "e164|text|text|None||",
+        "e128|text|text|Location||",
+        "e157|text|text|Location||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch visible switch toggles: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e97\"},{\"action\":\"tap\",\"elementRef\":\"e106\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e26",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e70 --direction up --distance 0.5"
+  ]
+}

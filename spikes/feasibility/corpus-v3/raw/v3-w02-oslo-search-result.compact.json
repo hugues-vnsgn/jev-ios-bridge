@@ -1,0 +1,96 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "1uafa82",
+      "seq": 46,
+      "count": 188,
+      "targets": [
+        "e108|tap|button|Oslo, Norway, 10:24 PM · Snow Showers|not saved|",
+        "e102|typeText|text-field||Oslo|weather.locationsSheet",
+        "e86|tap|button|San Francisco||weather.locationButton",
+        "e90|tap|button|Settings||weather.settingsButton",
+        "e114|tap|button|Add||plus",
+        "e100|tap|button|Close||weather.locationsSheet",
+        "e103|tap|button|Clear search||weather.locationsSheet"
+      ],
+      "scroll": [
+        "e8|swipe|scroll-view|||weather.mainScrollView",
+        "e18|swipe|scroll-view|||",
+        "e105|swipe|scroll-view|||weather.locationsSheet"
+      ],
+      "text": [
+        "e88|text|text|San Francisco||",
+        "e10|text|text|San Francisco||weather.heroLocation",
+        "e11|text|text|Current Location||",
+        "e12|text|text|64||",
+        "e13|text|text|°||",
+        "e14|text|text|Mostly Sunny||",
+        "e15|text|text|H:68° L:54°||",
+        "e16|text|text|\"Crisp and clear\"||",
+        "e17|text|text|HOURLY FORECAST||",
+        "e99|text|text|Locations||weather.locationsSheet",
+        "e20|text|text|Now||",
+        "e21|text|text|2pm||",
+        "e22|text|text|3pm||",
+        "e23|text|text|4pm||",
+        "e24|text|text|5pm||",
+        "e25|text|text|6pm||",
+        "e26|text|text|7pm||",
+        "e27|text|text|8pm||",
+        "e104|text|text|1 RESULT||weather.locationsSheet",
+        "e32|text|text|64°||",
+        "e33|text|text|66°||",
+        "e34|text|text|66°||",
+        "e35|text|text|68°||",
+        "e36|text|text|66°||",
+        "e37|text|text|64°||",
+        "e38|text|text|63°||",
+        "e39|text|text|61°||",
+        "e109|text|text|Oslo||",
+        "e112|text|text|41°||",
+        "e110|text|text|Norway||",
+        "e113|text|text|H:46° L:34°||",
+        "e44|text|text|7-DAY FORECAST||",
+        "e111|text|text|10:24 PM · Snow Showers||",
+        "e45|text|text|Today||",
+        "e46|text|text|54°||",
+        "e47|text|text|68°||",
+        "e48|text|text|Wed||",
+        "e49|text|text|55°||",
+        "e50|text|text|70°||",
+        "e51|text|text|Thu||",
+        "e52|text|text|55°||",
+        "e53|text|text|70°||",
+        "e54|text|text|Fri||",
+        "e55|text|text|52°||",
+        "e56|text|text|66°||",
+        "e57|text|text|Sat||",
+        "e58|text|text|48°||",
+        "e59|text|text|61°||",
+        "e60|text|text|Sun||",
+        "e61|text|text|48°||",
+        "e62|text|text|57°||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Expand foreground sheet: mobilebuildmcp ui-automation drag --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e94 --direction up --distance 0.35 --duration 0.8 --steps 80 --post-delay 0.8",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e114",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e105 --direction up --distance 0.5"
+  ]
+}

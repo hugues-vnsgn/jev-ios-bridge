@@ -1,0 +1,9 @@
+{
+  "goal": "Add Apple and Bread, then open the order confirmation screen.",
+  "app": { "bundleId": "dev.jevbridge.diagnostic" },
+  "assertions": [
+    { "id": "confirmation_open", "claim": "The Order complete confirmation screen is visible." },
+    { "id": "total_correct", "claim": "The confirmation shows a total of $5 for Apple and Bread." }
+  ],
+  "values": {}
+}
