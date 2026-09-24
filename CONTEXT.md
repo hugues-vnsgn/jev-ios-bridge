@@ -1,31 +1,96 @@
-# jev-ios-bridge: domain glossary
+# jev-ios-bridge
 
-Shared vocabulary for the bridge between a coding agent, the Jev judgment model, and an iOS simulator. Terms here name concepts, never implementation.
+The bridge lets a coding agent verify an iOS app by running a scenario on a device, with Jev choosing each step from a text view of the screen. This glossary names concepts, not implementation.
 
-## Terms
+## Language
 
-- **Host agent**: the coding agent that asks for app verification. Claude Code by default; Codex via the same MCP surface. It never touches the device directly.
-- **Bridge**: this project. It perceives the device as text, acts on it, and asks Jev for decisions. Owns the whole loop.
-- **Jev**: TypeSafe's System One model. Text-only, stateless, returns typed judgments (Choice, Noul, Score) with probabilities. Never sees pixels, never performs actions.
-- **Judgment**: one typed answer from Jev to one question over one state. The only thing Jev produces.
-- **Scenario**: a developer's natural-language description of what to exercise on the app, plus the assertions that decide pass or fail. The unit of work the host agent submits.
-- **Assertion**: a claim about the app that must hold at some point in a scenario. Checked by asking Jev a Noul question over the current observation.
-- **Observation**: the device's screen expressed as text at one instant: the pruned accessibility tree plus device and app metadata. What Jev is shown as state.
-- **Screenshot**: a PNG of the screen at one instant. Captured for the report and the human. Never sent to Jev.
-- **Candidate**: one actionable element in an observation that the bridge could tap, swipe, or type into. Jev chooses among candidates; it cannot choose an element the bridge omitted.
-- **Step**: one turn of the loop: observe, ask Jev, act. A scenario is a bounded sequence of steps.
-- **Action**: the concrete device input the bridge performs after a judgment: tap, swipe, type, wait, or stop.
-- **Run**: one execution of one scenario on one device, from launch to verdict. Has a lifecycle and can be interrupted.
-- **Verdict**: the outcome of a run: passed, failed, or inconclusive, with the failing step and evidence attached.
-- **Report**: the token-efficient Markdown summary of a run that the host agent reads to decide whether the code change is good.
-- **Device**: an iOS simulator identified by its UDID. Physical devices are out of scope for this effort.
-- **Device driver**: the bridge's seam over XcodeBuildMCP. Boots, installs, launches, observes, acts. Never contains simulator logic of its own.
-- **Snapshot**: XcodeBuildMCP's semantic runtime UI capture (format rs/1). The raw material an observation is derived from.
-- **Element reference**: the id XcodeBuildMCP assigns to an element in a snapshot. A candidate's identity; actions are addressed by it.
-- **Fallback**: the path taken when Jev cannot decide confidently from text alone, where a vision-capable model in the host agent is handed the screenshot instead.
+### Parties
 
-## Avoid
+**Host agent**:
+The coding agent that asks the bridge to verify an app, then reads the report. Claude Code, or Codex.
+_Avoid_: client, caller
 
-- "Test" alone, when a scenario or a run is meant. Unit tests are a different thing.
-- "Session" for a Jev interaction. Jev has no sessions; each request is independent. Use run for the bridge's lifecycle.
-- "Agent" for Jev. Jev decides; the bridge acts.
+**Bridge**:
+This project. It runs the loop: it perceives the device as text, asks Jev for judgments, performs actions, and reports the verdict.
+_Avoid_: agent, runner
+
+**Jev**:
+TypeSafe's judgment model. It answers typed questions about a state it is given, with probabilities, and holds nothing between requests.
+_Avoid_: agent, LLM
+
+**Device layer**:
+The external tool that boots devices, installs and launches apps, captures snapshots and screenshots, and performs actions. The bridge contains no device automation of its own.
+
+**Device driver**:
+The bridge's adapter over a device layer. The only part of the bridge that knows which device layer is in use.
+
+### A run
+
+**Scenario**:
+What to exercise on the app, in plain language, with the assertions that decide pass or fail and the values to type. The unit of work a host agent submits.
+_Avoid_: test, test case
+
+**Assertion**:
+A claim about the app that must hold for a scenario to pass, judged by Jev against an observation.
+
+**App under test**:
+The iOS app a run exercises, identified by its bundle id.
+_Avoid_: target app
+
+**Device**:
+The simulator or iPhone a run executes on, identified by its UDID.
+
+**Run**:
+One execution of one scenario on one device, from launch to verdict.
+_Avoid_: session, test
+
+**Step**:
+One turn of a run: observe, ask Jev, act.
+
+**Verdict**:
+The outcome of a run: passed, failed, or inconclusive.
+
+**Report**:
+The summary of a run that the host agent reads when the run ends, carrying the verdict and the evidence behind it.
+
+### Perception
+
+**Snapshot**:
+The device layer's capture of the screen's accessibility elements at one instant. The raw material of an observation.
+
+**Observation**:
+The screen as Jev is shown it at one step: the candidates, plus the context needed to judge them, as text.
+_Avoid_: screen dump, page source
+
+**Candidate**:
+One actionable element in an observation. Jev can only choose among the candidates the bridge includes.
+
+**Element reference**:
+The device layer's handle for an element within one snapshot, used to address an action. A new snapshot issues new references, so a reference never identifies an element across steps.
+_Avoid_: element id
+
+**Screenshot**:
+An image of the screen at one instant, kept for people and for the report. Never sent to Jev.
+
+### Decisions
+
+**Judgment**:
+One typed answer from Jev to one question about one observation.
+_Avoid_: prediction, completion
+
+**Action**:
+What the bridge does after a judgment: a device input such as a tap, swipe, or typed value; a wait; or ending the run.
+
+**Escalation**:
+Handing a step Jev could not decide confidently to the host agent, which can look at the screenshot.
+_Avoid_: fallback
+
+### Watching
+
+**Run log**:
+The ordered record of a run, written as it happens: steps, judgments, actions, build output, and the verdict. The report and every watch view are built from it.
+_Avoid_: trace, transcript
+
+**Watch view**:
+A view of a run log that lets a person follow a run while it is in progress.
+_Avoid_: dashboard, panel

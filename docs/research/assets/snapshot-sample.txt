@@ -1,0 +1,43 @@
+
+📷 Snapshot UI
+
+   Simulator: 83BA9271-FC57-4D5B-81CF-DD1385DD99B7
+
+Targets (17) — ref|action|role|label|value|id
+  e32|tap|slider|Horizontal scroll bar, 1 page|0%|
+  e34|tap|slider|Horizontal scroll bar, 1 page|0%|
+  e52|tap|slider|Horizontal scroll bar, 1 page|0%|
+  e54|tap|slider|Horizontal scroll bar, 1 page|0%|
+  e21|tap|button|Maps|Widget|Maps
+  e41|tap|button|Calendar|Widget, Stack|Calendar
+  e44|tap|other|||widget-stack:<Calendar,News,Photos>
+  e61|tap|button|Calendar|Thursday, September 24|Calendar
+  e69|tap|button|Photos||Photos
+  e77|tap|button|Reminders||Reminders
+  e85|tap|button|News||News
+  e93|tap|button|Maps||Maps
+  e101|tap|button|Health||Health
+  e109|tap|button|Wallet||Wallet
+  e117|tap|button|Settings||Settings
+  e141|tap|button|Safari||Safari
+  e144|tap|button|Messages||Messages
+
+Scroll (3) — ref|action|role|label|value|id
+  e6|swipe|other|||Home screen icons
+  e25|swipe|scroll-view|||
+  e45|swipe|scroll-view|||
+
+Tips
+  - Use target refs with tap, type_text, long_press, and touch.
+  - Use scroll refs with swipe.
+  - Refs are snapshot-specific; after snapshot_ui or wait_for_ui, use refs from the latest output.
+  - Use wait_for_ui for text/assertions or changing UI.
+
+✅ Runtime UI snapshot captured with 219 elements, 17 likely targets, and 3 scroll areas.
+
+Next steps:
+1. Refresh after layout changes: xcodebuildmcp ui-automation snapshot-ui --simulator-id 83BA9271-FC57-4D5B-81CF-DD1385DD99B7
+2. Wait for UI to settle: xcodebuildmcp ui-automation wait-for-ui --simulator-id 83BA9271-FC57-4D5B-81CF-DD1385DD99B7 --predicate settled
+3. Batch same-screen taps: xcodebuildmcp ui-automation batch --json '{"simulatorId":"83BA9271-FC57-4D5B-81CF-DD1385DD99B7","steps":[{"action":"tap","elementRef":"e21"},{"action":"tap","elementRef":"e41"}]}'
+4. Tap an elementRef: xcodebuildmcp ui-automation tap --simulator-id 83BA9271-FC57-4D5B-81CF-DD1385DD99B7 --element-ref e32
+5. Scroll visible content: xcodebuildmcp ui-automation swipe --simulator-id 83BA9271-FC57-4D5B-81CF-DD1385DD99B7 --within-element-ref e25 --direction up --distance 0.5

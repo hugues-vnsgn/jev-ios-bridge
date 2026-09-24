@@ -1,26 +1,38 @@
-# ADR-0001: The bridge perceives and acts; Jev only decides
+---
+status: proposed
+date: 2026-09-21
+revised: 2026-09-24
+---
 
-Date: 2026-09-21
-Status: accepted
+# The bridge runs the loop; Jev only decides
 
-## Context
+Claude Code can already drive an iOS simulator through MobileBuildMCP. In Sentry's benchmark, Claude Opus 4.7 took 93 to 103 seconds and 14 to 19 tool calls per UI scenario, and every screen passed through Claude's context ([research](../research/claude-and-jev-integration.md), section 4). The bridge exists to make that cheaper. The host agent submits a scenario, the bridge carries out every step with Jev making each decision, and the host gets back a verdict and a report.
 
-The original brief assumed Jev (typesafe.ai) was a multimodal device-automation engine that would receive screen dimensions and instructions and run its own action loop. The live docs contradict this. Jev is a stateless, text-only judgment model exposed at one endpoint, `POST /v1/systemone`. It accepts strings and JSON as state, answers Choice, Noul, and Score questions with calibrated probabilities, and states that images, audio, and video are not supported. It has no sessions, no streaming, and no notion of actions.
+Jev cannot run a loop itself. It is a stateless, text-only judgment model. One request carries a state and a set of Choice, Noul, and Score questions, and returns typed answers with probabilities. It has no sessions, no actions, and no image input ([research](../research/jev-model-and-api.md)).
 
-Three options were considered:
+So the bridge owns the loop. At each step it:
 
-1. Reframe: the bridge observes the simulator as text (accessibility tree), performs actions, and asks Jev per-step questions such as "which candidate element advances the scenario" and "does this observation satisfy the assertion".
-2. Use Jev only for assertions and reports, and a vision-capable model for choosing steps.
-3. Drop Jev and target a different device-agent product.
+1. observes the device as text;
+2. asks Jev the step's questions, such as which candidate to act on and whether an assertion holds ("Feasibility plan: the go/no-go bar and the step questions" fixes the exact set);
+3. performs the action.
 
-## Decision
+When the run ends, it writes the report. Screenshots are kept for people, and never sent to Jev.
 
-Option 1, with option 2 as the documented fallback when the accessibility tree is too thin for Jev to choose from.
+## Considered options
+
+The research left two shapes viable. The owner chose between them on 2026-09-24.
+
+- **Bridge-owned loop, Jev decides each step.** Chosen. The host submits one scenario and reads one report, and never sees the screens. A Jev request over a 5,000-token observation costs about $0.0002.
+- **Claude drives the device, and the bridge offers Jev tools.** Rejected, whether Claude runs this in the main session or in a subagent on a cheaper model. Every step still costs the model two or three tool calls, and its context grows with every screen. For Jev to judge a screen, either Claude passes the snapshot through as tool input, or the bridge needs its own device access anyway.
+- **Claude Code's built-in simulator driving**, through the Desktop simulator pane or computer use. Rejected for the same reason as the option above, with image tokens added at every step. Its speed is unmeasured.
+- **Jev checks assertions only, and Claude drives.** Rejected as the smallest gain, because choosing each step stays with Claude.
+- **A vision model chooses each step.** Rejected for v1 on cost. It stays available as escalation.
 
 ## Consequences
 
-- Perception quality bounds the whole system. The accessibility tree must be pruned into a candidate list that fits Jev's 32k-token state limit and carries enough meaning to choose from. Apps with poor accessibility labels will degrade to the fallback more often.
-- Screenshots are captured on every step for the report and for the fallback, but are never sent to Jev.
-- Jev's per-step cost is tiny (input-only pricing, $0.042 per million tokens), so a run can afford many speculative questions per step in one request.
-- The bridge owns timeouts, interruption, and cleanup, since Jev holds no state to clean up.
-- Reversal cost: if Jev gains vision input, the observation could carry an image, but the loop shape stays the same. Switching to a device-agent product instead would replace the loop entirely.
+- **The decision rests on an unproven premise.** TypeSafe publishes no cookbook for choosing UI actions, and describes its models as "not agents". This ADR stays proposed until "Feasibility run: measure Jev on real screens" resolves. A go accepts it; a no-go reopens it.
+- **Perception bounds the whole system.** The observation must fit Jev's budget: 64k tokens per request, 32k for the state plus the longest question, and at most 255 options per Choice. Apps with poor accessibility labels give Jev less to choose from.
+- **Jev cannot write text.** Any value typed into the app has to come from the scenario.
+- **Escalation to the host agent has a cost.** A tool call cannot ask the host anything while it runs, so escalating means ending the call and resuming the run in a later one. "Step-loop policy" decides whether v1 escalates at all.
+- **The bridge owns timeouts, interruption, and cleanup**, since Jev holds no state.
+- **If Jev gains image input**, the observation can carry an image, and the loop keeps its shape.

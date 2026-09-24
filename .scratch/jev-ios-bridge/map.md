@@ -1,37 +1,111 @@
 # Map: jev-ios-bridge
 
 Label: wayfinder:map
-Created: 2026-09-21
+Created: 2026-09-21 · Re-charted: 2026-09-24
 
 ## Destination
 
-A spec for the bridge plus one working vertical slice: a single MCP tool that runs one scripted scenario on a booted iOS simulator, with Jev choosing each action from a text observation and judging the assertions, and returns a Markdown report Claude Code can act on.
+A reviewed v1 spec for the bridge. It covers the tools, run loop, observation, policy, report, and watch view. It is backed by measured evidence that Jev can choose actions on real screens, and it is complete enough that engineers can build v1 without re-deciding anything. Building v1 is a separate effort.
 
 ## Notes
 
-- Domain: agent tooling; Claude Code MCP servers, hooks, slash commands; iOS simulator automation; TypeSafe Jev.
-- Read `CONTEXT.md` and `docs/adr/0001` before any ticket. Jev is text-only and stateless: the bridge perceives and acts, Jev decides.
-- Skills every session should consult: `typesafe:typesafe-ai` (read the live docs), `grilling`, `domain-modeling`. Use `codebase-design` when a ticket shapes a module seam.
-- Stack fixed during charting: TypeScript on Node 20+, `@typesafe-ai/sdk`, official MCP TypeScript SDK, and getsentry/XcodeBuildMCP as the device layer (see `docs/adr/0002`) behind a `DeviceDriver` seam. Whether the bridge or the host agent owns the loop is ticket 08.
-- Blueprint and target tree: `docs/architecture.md`.
-- Tracker: local markdown, see `docs/agents/issue-tracker.md`.
+- **Domain:** agent tooling (Claude Code MCP servers and skills), iOS simulator automation through MobileBuildMCP, and TypeSafe Jev.
+- **Settled while re-charting on 2026-09-24**, from the research tickets and a grilling session with the owner:
+  - **Why the bridge exists.** Verification should be cheap and autonomous. The host agent submits one scenario and reads one report, and never sees the screens step by step. Jev decides each step.
+  - **The bridge owns the loop** ([ADR-0001](../../docs/adr/0001-bridge-perceives-and-acts-jev-decides.md)). The two feasibility tickets come before every design ticket, because each design ticket assumes Jev can choose actions.
+  - **Claude Code is the first-class host.** Codex is supported on a best-effort basis.
+  - **Device layer:** `mobilebuildmcp@2.7.1` ([ADR-0002](../../docs/adr/0002-mobilebuildmcp-as-device-layer.md)).
+  - **Stack:** TypeScript on Node 24, using `@typesafe-ai/sdk`. "Tool surface: tools, report format, and /test-ios" picks the MCP SDK line.
+- **Read before any ticket:** [`CONTEXT.md`](../../CONTEXT.md), both ADRs, and [`docs/architecture.md`](../../docs/architecture.md). The evidence is in [`docs/research/`](../../docs/research/).
+- **Skills:**
+  - `typesafe:typesafe-ai` for anything touching Jev (read the live docs);
+  - `grilling` and `domain-modeling` for grilling tickets;
+  - `prototype` for prototype tickets;
+  - `codebase-design` when a ticket shapes a module seam;
+  - `mermaid-diagrams` for diagrams;
+  - `unslop` before anything reviewers read.
+- **Tracker:** local markdown; see [`docs/agents/issue-tracker.md`](../../docs/agents/issue-tracker.md). Refer to tickets by name. After opening, claiming, closing, or rewiring a ticket, run `python3 scripts/render-route.py`.
+- **Reaching the destination:** once every ticket is resolved, write the spec from the resolved tickets and ADRs with the `to-spec` skill. Then send it to the engineers for the same review as these docs.
 
 ## Decisions so far
 
-<!-- one line per resolved ticket: gist + link -->
+- [Jev today: model, API, SDK, limits](issues/01-jev-today.md): `jev-1.13.0` is text-only and stateless. A request is capped at 64k tokens, with 32k for the state plus the longest question. Noul answers carry no confidence. TypeSafe publishes no cookbook for choosing UI actions.
+- [MobileBuildMCP: simulator and real-iPhone capability](issues/02-mobilebuildmcp-capability.md): the project was renamed on 2026-09-23. Element references expire after 60 s. Full snapshot data comes only from the CLI. There is no UI automation on a real iPhone.
+- [Claude and Jev: dividing the work](issues/03-claude-and-jev.md): a tool call cannot ask Claude anything mid-run, and `structuredContent` hides the text report. The evidence leaves two shapes viable: a loop run by the bridge, or a loop run by a Claude subagent. The owner chose the bridge.
+- [Watching a run: options for a live view](issues/04-watching-a-run.md): the Claude Code CLI shows one progress line, and MCP logging is deprecated. The practical watch view is a localhost page served from the run log.
+- [Driving a real iPhone: what a second device layer takes](issues/05-driving-a-real-iphone.md): WebDriverAgent through Appium is the plausible path, sized M. Most of that cost is per-developer signing and keeping it working across Xcode releases. Jev's view of the screen can stay the same.
+
+## Route
+
+Green nodes are the frontier (open and unblocked), blue are claimed, grey are resolved, and white are blocked. `scripts/render-route.py` generates this block, so don't edit it by hand.
+
+<!-- route:start -->
+```mermaid
+flowchart LR
+    T01["01 Jev today<br/><small>research</small>"]
+    T02["02 MobileBuildMCP<br/><small>research</small>"]
+    T03["03 Claude and Jev<br/><small>research</small>"]
+    T04["04 Watching a run<br/><small>research</small>"]
+    T05["05 Driving a real iPhone<br/><small>research</small>"]
+    T06["06 Local environment<br/><small>task</small>"]
+    T07["07 Feasibility plan<br/><small>grilling</small>"]
+    T08["08 Feasibility run<br/><small>prototype</small>"]
+    T09["09 Observation schema<br/><small>grilling</small>"]
+    T10["10 Scenario language<br/><small>grilling</small>"]
+    T11["11 Step-loop policy<br/><small>grilling</small>"]
+    T12["12 Device driver<br/><small>grilling</small>"]
+    T13["13 Run log<br/><small>grilling</small>"]
+    T14["14 Watch view<br/><small>prototype</small>"]
+    T15["15 Tool surface<br/><small>grilling</small>"]
+    T16["16 Vertical slice<br/><small>prototype</small>"]
+    T17["17 Slice measurements<br/><small>task</small>"]
+    T06 --> T08
+    T07 --> T08
+    T08 --> T09
+    T08 --> T10
+    T08 --> T11
+    T09 --> T11
+    T10 --> T11
+    T05 --> T12
+    T09 --> T12
+    T09 --> T13
+    T11 --> T13
+    T12 --> T13
+    T12 --> T14
+    T13 --> T14
+    T10 --> T15
+    T11 --> T15
+    T12 --> T15
+    T13 --> T15
+    T14 --> T15
+    T11 --> T16
+    T12 --> T16
+    T15 --> T16
+    T16 --> T17
+    classDef resolved fill:#e4e4e7,stroke:#a1a1aa,color:#52525b
+    classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
+    classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
+    classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
+    class T01,T02,T03,T04,T05 resolved
+    class T06,T07 frontier
+    class T08,T09,T10,T11,T12,T13,T14,T15,T16,T17 blocked
+```
+<!-- route:end -->
 
 ## Not yet specified
 
-- Which Claude Code hook events, if any, should trigger verification automatically (Stop, pre-commit, PostToolUse on Swift edits), and how noisy that is in practice. Depends on how long a run takes.
-- How the report references artifacts (paths vs MCP resources) and how much evidence the host agent needs to fix a bug without opening screenshots.
-- Details of the vision fallback: what the bridge hands back, and how the host agent's answer re-enters the loop.
-- Optional in-bridge `xcodebuild` step: config shape, scheme discovery, incremental builds.
-- Cost and latency budget per run and whether speculative fan-out per step is worth it.
-- Distribution: npm package name, `npx` invocation, Codex MCP config snippet.
+- **Hooks:** Claude Code hooks that start a run automatically, for example after Swift edits. This depends on how long a run takes, which "Slice measurements: cost, speed, and diagnosis against the baseline" measures.
+- **Distribution:** the npm package name and how releases are versioned.
+- **Non-English screens:** Jev is documented to be less accurate on them.
+- **Prompt injection:** screen text that steers Jev's answers, in apps that show user-written content.
+- **Cost budget per run:** what a run may cost, once the feasibility and slice measurements give real numbers.
 
 ## Out of scope
 
-- Physical iPhones: signing, `devicectl`, and an XCUITest runner bundle. Simulators cover the daily loop; revisit as a fresh effort.
-- Writing our own simulator or UI automation code over `xcrun simctl` or `idb`. XcodeBuildMCP already does this; see ADR-0002.
-- A Codex-native slash command. Codex gets the same tools over MCP.
-- Sending screenshots to Jev. Not supported by the model.
+- **Building real-iPhone support.** It needs a second device layer. "Driving a real iPhone: what a second device layer takes" sizes that work for a later effort.
+- **A loop owned by the host agent**, whether in the main session or in a subagent. The bridge's value is one scenario submission per run (ADR-0001).
+- **Running in CI or without a person.** v1 must not block it: scenarios are files, and a run needs no interactive host.
+- **Codex parity.** Codex's 60 s default timeout, and the fact that it shows no progress, would force either start-and-poll tools or a per-user timeout override. Codex would also need a watch view outside the host.
+- **A watch view built as an MCP App, or as an overlay inside the app under test.** MCP Apps do not render in the Claude Code CLI, and an overlay would change what Jev sees.
+- **Simulator or UI automation code of our own**, whether over `simctl`, `idb`, or AXe directly (ADR-0002).
+- **Sending screenshots to Jev.** Jev accepts text only.

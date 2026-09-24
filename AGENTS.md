@@ -1,5 +1,7 @@
 # jev-ios-bridge
 
+Planning-stage repo: no code yet. Humans start at `README.md`; agents working a ticket start at `.scratch/jev-ios-bridge/map.md`.
+
 ## Agent skills
 
 ### Issue tracker
