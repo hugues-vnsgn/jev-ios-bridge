@@ -1,0 +1,59 @@
+{
+  "app": {
+    "bundleId": "com.apple.MobileAddressBook"
+  },
+  "device": {
+    "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+  },
+  "preconditions": [
+    "Contacts list shows both Tessa Vale rows fully above the Search overlay and an empty Search field."
+  ],
+  "values": {},
+  "steps": [
+    {
+      "id": "tapAmbiguousTessa",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "Contacts"
+          },
+          {
+            "role": "text-field",
+            "value": "Search"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "Contact photo for Tessa Vale"
+        }
+      }
+    },
+    {
+      "id": "verify",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "Contacts"
+          },
+          {
+            "role": "text-field",
+            "value": "Search"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "claim",
+          "claim": "The Contacts list is visible."
+        }
+      ]
+    }
+  ]
+}

@@ -64,6 +64,10 @@ test('a scripted run writes private replay, numeric metrics, and exact scenario/
     assert.equal(metrics.actionEvents, 1);
     assert.equal(metrics.judgmentEvents, 1);
     assert.equal(metrics.captureEvents, 2);
+    assert.equal(metrics.jevLatencyMs, 3);
+    const phases = metrics.phaseTimingsMs as Record<string, number>;
+    assert.deepEqual(Object.keys(phases), ['prepareMs', 'observeMs', 'decideMs', 'actMs', 'waitMs', 'cleanupMs']);
+    assert.ok(Object.values(phases).every(value => Number.isFinite(value) && value >= 0));
     const provenance = JSON.parse(await readFile(result.provenancePath, 'utf8')) as Record<string, unknown>;
     assert.equal(provenance.deviceUdid, udid);
     assert.equal(provenance.mobileBuildMcpVersion, '2.7.1');

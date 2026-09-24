@@ -1,0 +1,69 @@
+{
+  "app": {
+    "bundleId": "com.apple.MobileAddressBook"
+  },
+  "device": {
+    "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+  },
+  "preconditions": [
+    "The saved Nolan Ames card is in front."
+  ],
+  "values": {},
+  "steps": [
+    {
+      "id": "openEdit",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "identifier": "ContactCardHeaderView",
+            "label": "Nolan Ames"
+          },
+          {
+            "role": "button",
+            "label": "Edit"
+          },
+          {
+            "role": "button",
+            "label": "home, nolan.final@example.test"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "Edit"
+        }
+      }
+    },
+    {
+      "id": "verify",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "text-field",
+            "identifier": "First name",
+            "value": "Nolan"
+          },
+          {
+            "role": "text-field",
+            "identifier": "home"
+          },
+          {
+            "role": "button",
+            "label": "close"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "claim",
+          "claim": "The Nolan Ames Edit form email field contains nolan.final@example.test."
+        }
+      ]
+    }
+  ]
+}

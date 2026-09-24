@@ -1,0 +1,70 @@
+{
+  "app": {
+    "bundleId": "com.sentry.weather.Weather"
+  },
+  "device": {
+    "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+  },
+  "preconditions": [
+    "Weather main screen is in front; no sheet is open."
+  ],
+  "values": {},
+  "steps": [
+    {
+      "id": "openLocations",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "button",
+            "identifier": "weather.locationButton"
+          },
+          {
+            "role": "button",
+            "identifier": "weather.settingsButton"
+          }
+        ],
+        "absent": [
+          {
+            "role": "text",
+            "label": "Locations"
+          },
+          {
+            "role": "text",
+            "label": "Settings"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "identifier": "weather.locationButton"
+        }
+      }
+    },
+    {
+      "id": "verify",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Locations"
+          },
+          {
+            "role": "button",
+            "label": "Close",
+            "identifier": "weather.locationsSheet"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "claim",
+          "claim": "The Locations sheet is open with its search field visible."
+        }
+      ]
+    }
+  ]
+}

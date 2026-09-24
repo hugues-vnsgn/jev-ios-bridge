@@ -104,8 +104,9 @@ function safeCode(error: unknown, signal: AbortSignal): string {
 }
 
 async function waitUntil(step: Extract<ScriptedStep, { kind: 'wait' }>, initial: Snapshot,
-  driver: DeviceDriver, signal: AbortSignal, pollIntervalMs: number,
-  onObserved: (snapshot: Snapshot, poll: number) => Promise<void>): Promise<void> {
+  pollIntervalMs: number, pause: (milliseconds: number) => Promise<void>,
+  capture: () => Promise<{ snapshot: Snapshot; observeDurationMs: number }>,
+  onObserved: (snapshot: Snapshot, poll: number, observeDurationMs: number) => Promise<void>): Promise<void> {
   const started = performance.now();
   let current = initial;
   let poll = 0;
@@ -117,10 +118,11 @@ async function waitUntil(step: Extract<ScriptedStep, { kind: 'wait' }>, initial:
     assertScreenGuard(current, step.guard);
     const left = step.timeoutMs - (performance.now() - started);
     if (left <= 0) throw new ScriptRunError('WAIT_TIMEOUT');
-    await abortableOperation(() => delay(Math.min(pollIntervalMs, left), undefined, { signal }), signal);
-    current = await abortableOperation(() => driver.observe(signal), signal);
+    await pause(Math.min(pollIntervalMs, left));
+    const captured = await capture();
+    current = captured.snapshot;
     poll++;
-    await onObserved(current, poll);
+    await onObserved(current, poll, captured.observeDurationMs);
   }
 }
 
@@ -147,21 +149,47 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
   let checkpointsPassed = 0;
   let phase = 'prepare';
   let activeStepId: string | undefined;
+  let activeStepStarted: number | undefined;
+  const phaseTimingsMs = { prepareMs: 0, observeMs: 0, decideMs: 0,
+    actMs: 0, waitMs: 0, cleanupMs: 0 };
+  type TimedPhase = keyof typeof phaseTimingsMs;
+  const timed = async <T>(key: TimedPhase, operation: () => Promise<T>,
+    onMeasured?: (durationMs: number) => void): Promise<T> => {
+    const began = performance.now();
+    try { return await operation(); }
+    finally {
+      const durationMs = Math.max(0, performance.now() - began);
+      phaseTimingsMs[key] += durationMs;
+      onMeasured?.(durationMs);
+    }
+  };
+  const capture = async (): Promise<{ snapshot: Snapshot; observeDurationMs: number }> => {
+    let observeDurationMs = 0;
+    const snapshot = await timed('observeMs', () => abortableOperation(() => options.driver.observe(signal), signal),
+      durationMs => { observeDurationMs = durationMs; });
+    return { snapshot, observeDurationMs };
+  };
 
   try {
     await options.log.append('started', { mode: 'scripted', bundleId: script.app.bundleId,
       plannedSteps: script.steps.map(step => ({ id: step.id, kind: step.kind })) });
-    await abortableOperation(() => options.driver.prepare(context, signal), signal);
-    await options.log.append('prepared', {});
+    let prepareDurationMs = 0;
+    await timed('prepareMs', () => abortableOperation(() => options.driver.prepare(context, signal), signal),
+      durationMs => { prepareDurationMs = durationMs; });
+    await options.log.append('prepared', { prepareDurationMs });
     for (const step of script.steps) {
+      activeStepId = undefined;
+      activeStepStarted = undefined;
+      phase = 'budget';
       if (signal.aborted) throw signal.reason;
       if (steps >= maxSteps) throw new ScriptRunError('STEP_LIMIT');
       activeStepId = step.id;
+      activeStepStarted = performance.now();
       steps++;
       phase = 'observe';
-      const snapshot = await abortableOperation(() => options.driver.observe(signal), signal);
+      const { snapshot, observeDurationMs } = await capture();
       await options.log.append('step', { step: steps, stepId: step.id, kind: step.kind,
-        snapshotSequence: snapshot.sequence, observationSummary: summary(snapshot),
+        snapshotSequence: snapshot.sequence, observationSummary: summary(snapshot), observeDurationMs,
         ...(snapshot.screenshotPath ? { screenshotPath: snapshot.screenshotPath } : {}),
         ...(snapshot.logTails ? { logTails: snapshot.logTails } : {}) });
       assertScreenGuard(snapshot, step.guard);
@@ -171,13 +199,19 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
         const target = resolveActionTarget(snapshot, step.action.selector, requiredAction(step));
         let selected = snapshot;
         let ref = target;
-        try { await abortableOperation(() => options.driver.act(deviceAction(step, ref), selected, context, signal), signal); }
+        let actDurationMs = 0;
+        const act = async () => timed('actMs',
+          () => abortableOperation(() => options.driver.act(deviceAction(step, ref), selected, context, signal), signal),
+          durationMs => { actDurationMs += durationMs; });
+        try { await act(); }
         catch (error) {
           if (!(error instanceof StaleSnapshotError)) throw error;
           phase = 'reobserve';
-          const fresh = await abortableOperation(() => options.driver.observe(signal), signal);
+          const refreshed = await capture();
+          const fresh = refreshed.snapshot;
           await options.log.append('step', { step: steps, stepId: step.id, kind: step.kind, attempt: 2,
             snapshotSequence: fresh.sequence, observationSummary: summary(fresh),
+            observeDurationMs: refreshed.observeDurationMs,
             ...(fresh.screenshotPath ? { screenshotPath: fresh.screenshotPath } : {}),
             ...(fresh.logTails ? { logTails: fresh.logTails } : {}) });
           if (snapshotChanged(snapshot, fresh)) throw new ScriptRunError('SCREEN_CHANGED');
@@ -185,36 +219,50 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
           ref = resolveActionTarget(fresh, step.action.selector, requiredAction(step));
           selected = fresh;
           phase = 'act';
-          await abortableOperation(() => options.driver.act(deviceAction(step, ref), selected, context, signal), signal);
+          await act();
         }
         await options.log.append('action', { step: steps, stepId: step.id, action: step.action.kind,
-          selector: step.action.selector, resolvedRef: ref.ref });
+          selector: step.action.selector, resolvedRef: ref.ref, actDurationMs,
+          stepDurationMs: Math.max(0, performance.now() - activeStepStarted) });
         continue;
       }
 
       if (step.kind === 'wait') {
         phase = 'wait';
-        await waitUntil(step, snapshot, options.driver, signal, pollIntervalMs, async (observed, poll) => {
+        const waitBefore = phaseTimingsMs.waitMs;
+        await waitUntil(step, snapshot, pollIntervalMs,
+          milliseconds => timed('waitMs', () => abortableOperation(
+            () => delay(milliseconds, undefined, { signal }), signal)), capture,
+          async (observed, poll, observedDurationMs) => {
           await options.log.append('step', { step: steps, stepId: step.id, kind: step.kind, poll,
             snapshotSequence: observed.sequence, observationSummary: summary(observed),
+            observeDurationMs: observedDurationMs,
             ...(observed.screenshotPath ? { screenshotPath: observed.screenshotPath } : {}),
             ...(observed.logTails ? { logTails: observed.logTails } : {}) });
         });
-        await options.log.append('action', { step: steps, stepId: step.id, action: 'wait', timeoutMs: step.timeoutMs });
+        await options.log.append('action', { step: steps, stepId: step.id, action: 'wait', timeoutMs: step.timeoutMs,
+          waitDurationMs: phaseTimingsMs.waitMs - waitBefore,
+          stepDurationMs: Math.max(0, performance.now() - activeStepStarted) });
         continue;
       }
 
-      phase = 'judge';
-      const state = renderAssertionState(snapshot);
-      const judgment = await abortableOperation(() => options.judge.judge(step.assertions, state, signal), signal);
-      checkedJudgment(judgment, step.assertions);
+      phase = 'decide';
+      let decideDurationMs = 0;
+      const judgment = await timed('decideMs', async () => {
+        const state = renderAssertionState(snapshot);
+        const result = await abortableOperation(() => options.judge.judge(step.assertions, state, signal), signal);
+        checkedJudgment(result, step.assertions);
+        return result;
+      }, durationMs => { decideDurationMs = durationMs; });
       inputTokens += judgment.inputTokens;
       await options.log.append('judgment', { step: steps, stepId: step.id, model: judgment.model,
-        probabilities: judgment.probabilities, inputTokens: judgment.inputTokens, latencyMs: judgment.latencyMs });
+        probabilities: judgment.probabilities, inputTokens: judgment.inputTokens, latencyMs: judgment.latencyMs,
+        decideDurationMs });
       const answers = step.assertions.map(assertion => judgment.probabilities[assertion.id]!);
       const status = answers.some(value => value > 0.1 && value < 0.9) ? 'inconclusive' :
         answers.some(value => value <= 0.1) ? 'failed' : 'passed';
       await options.log.append('checkpoint', { step: steps, stepId: step.id, status,
+        stepDurationMs: Math.max(0, performance.now() - activeStepStarted),
         assertions: step.assertions.map(assertion => ({ id: assertion.id, claim: assertion.claim,
           probability: judgment.probabilities[assertion.id] })) });
       if (status !== 'passed') {
@@ -232,13 +280,16 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
   } catch (error) {
     verdict = 'inconclusive';
     reason = safeCode(error, signal);
-    await options.log.append('error', { stepId: activeStepId, phase, code: reason });
+    await options.log.append('error', { stepId: activeStepId, phase, code: reason,
+      ...(activeStepStarted === undefined ? {} : {
+        stepDurationMs: Math.max(0, performance.now() - activeStepStarted),
+      }) });
   } finally {
     clearTimeout(timer);
     options.signal?.removeEventListener('abort', cancel);
     try {
       const cleanupSignal = AbortSignal.timeout(cleanupTimeMs);
-      await abortableOperation(() => options.driver.close(cleanupSignal), cleanupSignal);
+      await timed('cleanupMs', () => abortableOperation(() => options.driver.close(cleanupSignal), cleanupSignal));
     } catch {
       verdict = 'inconclusive';
       reason = 'CLEANUP_FAILED';
@@ -246,7 +297,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
     }
     await options.log.append('verdict', { verdict, reason, steps, inputTokens,
       durationMs: Math.max(0, performance.now() - started), checkpointsPassed,
-      checkpointCount: script.steps.filter(step => step.kind === 'checkpoint').length,
+      checkpointCount: script.steps.filter(step => step.kind === 'checkpoint').length, phaseTimingsMs,
       ...(options.driver.metrics ? { deviceMetrics: options.driver.metrics() } : {}) });
   }
   return buildScriptedReport(await options.log.read());

@@ -1,0 +1,64 @@
+{
+  "app": {
+    "bundleId": "com.apple.reminders"
+  },
+  "device": {
+    "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+  },
+  "preconditions": [
+    "The Signal Kit list is in front with its Charge lantern row visible."
+  ],
+  "values": {},
+  "steps": [
+    {
+      "id": "openLantern",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "other",
+            "label": "Signal Kit"
+          },
+          {
+            "role": "other",
+            "label": "Charge lantern, Incomplete, Use green cable"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "other",
+          "label": "Charge lantern, Incomplete, Use green cable"
+        }
+      }
+    },
+    {
+      "id": "verify",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "text-field",
+            "label": "Title",
+            "value": "Charge lantern"
+          },
+          {
+            "role": "text-field",
+            "label": "Notes"
+          },
+          {
+            "role": "button",
+            "label": "Done"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "claim",
+          "claim": "The Charge lantern Notes field is empty."
+        }
+      ]
+    }
+  ]
+}

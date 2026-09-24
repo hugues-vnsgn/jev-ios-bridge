@@ -1,0 +1,101 @@
+{
+  "app": {
+    "bundleId": "com.sentry.weather.Weather"
+  },
+  "device": {
+    "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+  },
+  "preconditions": [
+    "Weather Settings sheet is open with Distance mi selected and km not selected."
+  ],
+  "values": {},
+  "steps": [
+    {
+      "id": "selectKm",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Settings"
+          },
+          {
+            "role": "button",
+            "label": "mi",
+            "value": "selected"
+          },
+          {
+            "role": "button",
+            "label": "km",
+            "value": "not selected"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "km",
+          "value": "not selected"
+        }
+      }
+    },
+    {
+      "id": "settleKm",
+      "kind": "wait",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Settings"
+          },
+          {
+            "role": "text",
+            "label": "Distance"
+          }
+        ]
+      },
+      "until": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Settings"
+          },
+          {
+            "role": "button",
+            "label": "mi",
+            "value": "not selected"
+          },
+          {
+            "role": "button",
+            "label": "km",
+            "value": "selected"
+          }
+        ]
+      },
+      "timeoutMs": 10000
+    },
+    {
+      "id": "verify",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Settings"
+          },
+          {
+            "role": "text",
+            "label": "Distance"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "claim",
+          "claim": "The Distance setting has mi selected."
+        }
+      ]
+    }
+  ]
+}

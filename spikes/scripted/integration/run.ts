@@ -54,6 +54,15 @@ export function parseIntegrationArgs(argv: string[]): IntegrationArgs {
 
 function sha256(bytes: Buffer | string): string { return createHash('sha256').update(bytes).digest('hex'); }
 
+const phaseKeys = ['prepareMs', 'observeMs', 'decideMs', 'actMs', 'waitMs', 'cleanupMs'] as const;
+
+function recordedPhaseTimings(value: unknown): Record<(typeof phaseKeys)[number], number> | null {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+  const fields = value as Record<string, unknown>;
+  if (phaseKeys.some(key => typeof fields[key] !== 'number' || !Number.isFinite(fields[key]) || fields[key] < 0)) return null;
+  return Object.fromEntries(phaseKeys.map(key => [key, fields[key]])) as Record<(typeof phaseKeys)[number], number>;
+}
+
 async function runtimeDigest(): Promise<string> {
   const sources = [
     new URL('../../../package.json', import.meta.url),
@@ -131,9 +140,11 @@ export async function runIntegration(args: IntegrationArgs, ports: IntegrationPo
   const recorded = buildScriptedReport(await log.read());
   const verdictEvent = recorded.events.findLast(event => event.type === 'verdict');
   const deviceMetrics = verdictEvent?.data.deviceMetrics;
+  const phaseTimingsMs = recordedPhaseTimings(verdictEvent?.data.phaseTimingsMs);
   const metrics = {
     version: 1, runId, verdict: report.verdict, reason: report.reason,
     durationMs: report.durationMs, steps: report.steps, inputTokens: report.inputTokens,
+    phaseTimingsMs,
     checkpointCount: scenario.steps.filter(step => step.kind === 'checkpoint').length,
     checkpointResults: recorded.checkpoints.map(({ stepId, status }) => ({ stepId, status })),
     actionEvents: recorded.events.filter(event => event.type === 'action').length,

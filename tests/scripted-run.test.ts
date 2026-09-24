@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
+import { setTimeout as delay } from 'node:timers/promises';
 import type { DeviceDriver, Element, RunEvent, RunLog, Snapshot } from '../src/contracts/index.js';
 import type { ScriptedJudge, ScriptedScenario } from '../spikes/scripted/contracts.js';
 import { StaleSnapshotError } from '../src/device/index.js';
@@ -202,6 +203,95 @@ test('stale reference retries only after a same-screen guard and unique selector
   assert.equal(report.verdict, 'passed');
   assert.deepEqual(refs, ['e1', 'e2']);
   assert.equal(observes, 3);
+});
+
+test('phase timings include stale retry work, wait polling, and checkpoint judgment', async () => {
+  const visible = (label: string): Element => ({ ref: label, role: 'text', label, actions: [],
+    frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } });
+  const initial = snapshot([visible('Shop'), apple]);
+  const refreshed = snapshot([visible('Shop'), { ...apple, ref: 'e2' }]);
+  const loading = snapshot([visible('Loading')]);
+  const done = snapshot([visible('Done')]);
+  const script: ScriptedScenario = { app: { bundleId: 'com.example.shop' }, values: {}, steps: [
+    { id: 'add', kind: 'action', guard: { present: [{ label: 'Shop' }] },
+      action: { kind: 'tap', selector: { identifier: 'choose.apple' } } },
+    { id: 'load', kind: 'wait', guard: { present: [{ label: 'Loading' }] },
+      until: { present: [{ label: 'Done' }] }, timeoutMs: 100 },
+    { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Done' }] },
+      assertions: [{ id: 'ready', claim: 'Done is visible' }] },
+  ] };
+  let captures = 0;
+  let actions = 0;
+  const log = memoryLog();
+  const report = await runScriptedScenario({ runId: 'scripted-1', scenario: script, log,
+    limits: { pollIntervalMs: 8 },
+    driver: {
+      async prepare() { await delay(8); },
+      async observe() { await delay(8); captures++; return [initial, refreshed, loading, done, done][captures - 1]!; },
+      async act() { await delay(8); actions++; if (actions === 1) throw new StaleSnapshotError(); },
+      async close() { await delay(8); },
+    },
+    judge: { async judge() { await delay(8); return { probabilities: { ready: 0.99 },
+      inputTokens: 3, latencyMs: 2, model: 'jev-1.13.0' }; } },
+  });
+  assert.equal(report.verdict, 'passed');
+  const totals = report.events.at(-1)?.data.phaseTimingsMs as Record<string, number>;
+  for (const phase of ['prepareMs', 'observeMs', 'decideMs', 'actMs', 'waitMs', 'cleanupMs']) {
+    assert.ok(Number.isFinite(totals[phase]) && totals[phase]! >= 0, phase);
+  }
+  assert.ok(totals.prepareMs! >= 5);
+  assert.ok(totals.observeMs! >= 30, 'all five captures, including stale retry and wait poll, count');
+  assert.ok(totals.actMs! >= 12, 'both attempted actions count');
+  assert.ok(totals.waitMs! >= 5);
+  assert.ok(totals.decideMs! >= 5);
+  assert.ok(totals.cleanupMs! >= 5);
+  assert.equal(log.events.filter(event => event.type === 'step').length, 5);
+  assert.ok(log.events.filter(event => event.type === 'step').every(event =>
+    typeof event.data.observeDurationMs === 'number'));
+  const acted = log.events.find(event => event.type === 'action' && event.data.stepId === 'add');
+  assert.ok((acted?.data.actDurationMs as number) >= 12);
+  assert.ok((acted?.data.stepDurationMs as number) >= totals.actMs!);
+  assert.ok((log.events.find(event => event.type === 'judgment')?.data.decideDurationMs as number) >= 5);
+});
+
+test('failed prepare still records elapsed phase totals and cleanup', async () => {
+  const script: ScriptedScenario = { app: { bundleId: 'com.example.shop' }, values: {}, steps: [
+    { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Done' }] },
+      assertions: [{ id: 'ready', claim: 'Done is visible' }] },
+  ] };
+  const failed = await runScriptedScenario({ runId: 'scripted-1', scenario: script, log: memoryLog(),
+    driver: { async prepare() { await delay(8); throw new Error('prepare failed'); },
+      async observe() { assert.fail('No capture after failed prepare'); }, async act() {},
+      async close() { await delay(8); } },
+    judge: { async judge() { assert.fail('No judgment after failed prepare'); } },
+  });
+  assert.equal(failed.verdict, 'inconclusive');
+  const totals = failed.events.at(-1)?.data.phaseTimingsMs as Record<string, number>;
+  assert.ok(totals.prepareMs! >= 5);
+  assert.ok(totals.cleanupMs! >= 5);
+  assert.equal(totals.observeMs, 0);
+  assert.equal(totals.decideMs, 0);
+});
+
+test('failed action records its elapsed duration and failed step', async () => {
+  const script: ScriptedScenario = { app: { bundleId: 'com.example.shop' }, values: {}, steps: [
+    { id: 'add', kind: 'action', guard: { present: [{ identifier: 'choose.apple' }] },
+      action: { kind: 'tap', selector: { identifier: 'choose.apple' } } },
+    { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Done' }] },
+      assertions: [{ id: 'ready', claim: 'Done is visible' }] },
+  ] };
+  const report = await runScriptedScenario({ runId: 'scripted-1', scenario: script, log: memoryLog(),
+    driver: { async prepare() {}, async observe() { return snapshot([apple]); },
+      async act() { await delay(8); throw new Error('action failed'); }, async close() {} },
+    judge: { async judge() { assert.fail('No judgment after failed action'); } },
+  });
+  assert.equal(report.verdict, 'inconclusive');
+  assert.equal(report.reason, 'EXECUTION_ERROR');
+  const totals = report.events.at(-1)?.data.phaseTimingsMs as Record<string, number>;
+  assert.ok(totals.actMs! >= 5);
+  const error = report.events.find(event => event.type === 'error');
+  assert.equal(error?.data.phase, 'act');
+  assert.ok((error?.data.stepDurationMs as number) >= totals.actMs!);
 });
 
 test('changed screen after stale reference never retries an input', async () => {
@@ -416,6 +506,10 @@ test('cancellation waits for pending action acknowledgement before cleanup compl
   assert.equal(report.reason, 'CANCELLED');
   assert.equal(closed, true);
   assert.equal(report.events.some(event => event.type === 'action'), false);
+  const totals = report.events.at(-1)?.data.phaseTimingsMs as Record<string, number>;
+  assert.ok(totals.actMs! > 0, 'aborted action time is retained');
+  assert.ok(totals.cleanupMs! >= 0);
+  assert.ok((report.events.find(event => event.type === 'error')?.data.stepDurationMs as number) > 0);
 });
 
 test('report shows the wrong total beside the expected claim and never passes an interrupted journal', () => {
