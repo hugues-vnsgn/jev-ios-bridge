@@ -1,0 +1,66 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "1as6qzx",
+      "seq": 83,
+      "count": 65,
+      "targets": [],
+      "scroll": [
+        "e10|swipe|scroll-view|||",
+        "e17|swipe|scroll-view|||"
+      ],
+      "text": [
+        "e23|text|text|C: prebuilt outside · 1000000 rows||perfModalTitle",
+        "e25|text|text|Row #0 — payload string for realistic retained size||",
+        "e26|text|text|id=0||",
+        "e27|text|text|Row #1 — payload string for realistic retained size||",
+        "e28|text|text|id=1||",
+        "e29|text|text|Row #2 — payload string for realistic retained size||",
+        "e30|text|text|id=2||",
+        "e31|text|text|Row #3 — payload string for realistic retained size||",
+        "e32|text|text|id=3||",
+        "e33|text|text|Row #4 — payload string for realistic retained size||",
+        "e34|text|text|id=4||",
+        "e35|text|text|Row #5 — payload string for realistic retained size||",
+        "e36|text|text|id=5||",
+        "e37|text|text|Row #6 — payload string for realistic retained size||",
+        "e38|text|text|id=6||",
+        "e39|text|text|Row #7 — payload string for realistic retained size||",
+        "e40|text|text|id=7||",
+        "e41|text|text|Row #8 — payload string for realistic retained size||",
+        "e42|text|text|id=8||",
+        "e43|text|text|Row #9 — payload string for realistic retained size||",
+        "e44|text|text|id=9||",
+        "e45|text|text|Row #10 — payload string for realistic retained size||",
+        "e46|text|text|id=10||",
+        "e47|text|text|Row #11 — payload string for realistic retained size||",
+        "e48|text|text|id=11||",
+        "e49|text|text|Row #12 — payload string for realistic retained size||",
+        "e50|text|text|id=12||",
+        "e51|text|text|Row #13 — payload string for realistic retained size||",
+        "e52|text|text|id=13||",
+        "e53|text|text|Row #14 — payload string for realistic retained size||",
+        "e54|text|text|id=14||",
+        "e55|text|text|Row #15 — payload string for realistic retained size||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e10 --direction up --distance 0.5"
+  ]
+}

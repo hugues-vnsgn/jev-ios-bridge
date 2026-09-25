@@ -1,0 +1,70 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "0mfu9c6",
+      "seq": 91,
+      "count": 71,
+      "targets": [],
+      "scroll": [
+        "e10|swipe|scroll-view|||",
+        "e17|swipe|scroll-view|||"
+      ],
+      "text": [
+        "e28|text|text|id=33||",
+        "e29|text|text|Row #34 — derived at composition, no collection||",
+        "e30|text|text|id=34||",
+        "e31|text|text|Row #35 — derived at composition, no collection||",
+        "e23|text|text|B: index only · 1000000 rows||perfModalTitle",
+        "e32|text|text|id=35||",
+        "e33|text|text|Row #36 — derived at composition, no collection||",
+        "e34|text|text|id=36||",
+        "e35|text|text|Row #37 — derived at composition, no collection||",
+        "e36|text|text|id=37||",
+        "e37|text|text|Row #38 — derived at composition, no collection||",
+        "e38|text|text|id=38||",
+        "e39|text|text|Row #39 — derived at composition, no collection||",
+        "e40|text|text|id=39||",
+        "e41|text|text|Row #40 — derived at composition, no collection||",
+        "e42|text|text|id=40||",
+        "e43|text|text|Row #41 — derived at composition, no collection||",
+        "e44|text|text|id=41||",
+        "e45|text|text|Row #42 — derived at composition, no collection||",
+        "e46|text|text|id=42||",
+        "e47|text|text|Row #43 — derived at composition, no collection||",
+        "e48|text|text|id=43||",
+        "e49|text|text|Row #44 — derived at composition, no collection||",
+        "e50|text|text|id=44||",
+        "e51|text|text|Row #45 — derived at composition, no collection||",
+        "e52|text|text|id=45||",
+        "e53|text|text|Row #46 — derived at composition, no collection||",
+        "e54|text|text|id=46||",
+        "e55|text|text|Row #47 — derived at composition, no collection||",
+        "e56|text|text|id=47||",
+        "e57|text|text|Row #48 — derived at composition, no collection||",
+        "e58|text|text|id=48||",
+        "e59|text|text|Row #49 — derived at composition, no collection||",
+        "e60|text|text|id=49||",
+        "e61|text|text|Row #50 — derived at composition, no collection||",
+        "e62|text|text|id=50||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e10 --direction up --distance 0.5"
+  ]
+}
