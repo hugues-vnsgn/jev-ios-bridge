@@ -7,6 +7,8 @@ Created: 2026-09-25
 
 A reviewed **v1.0.0 release spec**, handed off to Codex to execute. It records the go/no-go judgment on v0.1.0, the frozen 1.0 contract, the assertion policy, the performance target and tuning plan, the Compose Multiplatform evidence plan, the live log pane, the developer guide outline, and the release gates. If the product assessment says no-go, the destination becomes another prerelease spec, not 1.0.
 
+**Destination reached (2026-09-25):** the [release spec](release-spec.md) is reviewed and accepted, ready for Codex. The only open ticket, "BFSOne evidence shortcut", is the owner's PR and doesn't block the handoff.
+
 ## Notes
 
 - **Domain:** agent tooling (a Claude Code MCP server and skill), iOS simulator automation through `mobilebuildmcp@2.7.1`, and TypeSafe Jev assertion judgment. Vocabulary: [`CONTEXT.md`](../../CONTEXT.md); design: [ADR-0003](../../docs/adr/0003-explicit-scripts-with-jev-assertions.md), [ADR-0002](../../docs/adr/0002-mobilebuildmcp-as-device-layer.md), [`docs/architecture.md`](../../docs/architecture.md).
@@ -28,6 +30,7 @@ A reviewed **v1.0.0 release spec**, handed off to Codex to execute. It records t
 
 ## Decisions so far
 
+- [Release gates and the spec's assembly](issues/15-release-gates-and-spec.md): eight phases with one PR each; blocking final checks (tests, contract tests, benchmark verdicts, Compose verdicts with no production traffic, clean install, a real quickstart walkthrough); speed is report-only apart from "not slower", resolving a conflict with the go conditions; cost per run is recorded for page 10; a fresh-agent review of the spec before handoff. [Release spec](release-spec.md).
 - [Data-handling statement for outside developers](issues/14-data-handling-statement.md): page 09 lists exactly what goes to TypeSafe (checkpoint screen text, including typed values) and to the host, and what stays local; it adds a dated TypeSafe summary (no training, open-ended retention, ZDR enterprise-only, US-hosted) and the test-data rule. Three bridge changes before 1.0: device children get no API key, one watch token per run, and a `.gitignore` in the evidence root.
 - [Live log pane](issues/12-live-log-pane.md): the pane follows MobileBuildMCP's two launch log files (app console, plus `os_log` under the bundle-ID subsystem only), in a `.command` window opened in the default terminal; there's no window under SSH or CI, where `jev-ios-bridge logs RUN_ID` attaches instead; it closes itself after a pass and stays open otherwise; values are masked and nothing leaves the machine; off with `JEV_LOG_PANE=off` or `--no-log-pane`. Prototype on local branch `prototype/log-pane`.
 - [Developer guide outline](issues/10-developer-guide-outline.md): `docs/guide/` with 11 numbered pages, SwiftUI (Weather) and Compose (BFSOne, read-only) worked examples, and reference pages; `docs/usage.md` folds in and is deleted, `README.md` shrinks; `/test-ios` links to installed guide paths; the tarball adds `docs/guide/`, `LICENSE`, `CHANGELOG.md`; **license MIT**. [Outline](guide-outline.md).
@@ -83,8 +86,8 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T06,T07,T08,T09,T10,T11,T12,T14 resolved
-    class T13,T15 frontier
+    class T01,T02,T03,T04,T05,T06,T07,T08,T09,T10,T11,T12,T14,T15 resolved
+    class T13 frontier
 ```
 <!-- route:end -->
 
