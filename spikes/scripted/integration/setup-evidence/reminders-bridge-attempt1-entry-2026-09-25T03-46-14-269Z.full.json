@@ -1,0 +1,2304 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "protocol": "rs/1",
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+      "screenHash": "1hgopj7",
+      "seq": 35,
+      "capturedAtMs": 1790307972532,
+      "expiresAtMs": 1790308032532,
+      "elements": [
+        {
+          "ref": "e1",
+          "role": "application",
+          "label": "Reminders",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e2",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e3",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e4",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e5",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e6",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e7",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e8",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e9",
+          "role": "other",
+          "identifier": "Reminders.TTRIAccountsListsView",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 440,
+            "height": 54
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e10",
+          "role": "button",
+          "label": "Search",
+          "frame": {
+            "x": 245.67,
+            "y": 66,
+            "width": 39.67,
+            "height": 36
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e11",
+          "role": "button",
+          "label": "Add List",
+          "frame": {
+            "x": 301.33,
+            "y": 66,
+            "width": 40.33,
+            "height": 36
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e12",
+          "role": "button",
+          "label": "Edit",
+          "frame": {
+            "x": 361.67,
+            "y": 66,
+            "width": 54.33,
+            "height": 36
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e13",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e14",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e15",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e16",
+          "role": "other",
+          "identifier": "AccountsList.ID.AccountsListTable",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch",
+            "swipeWithin"
+          ]
+        },
+        {
+          "ref": "e17",
+          "role": "other",
+          "frame": {
+            "x": -20,
+            "y": -1796,
+            "width": 480,
+            "height": 2108.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e18",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e19",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e20",
+          "role": "other",
+          "identifier": "5856D165-CB36-4CFB-8BF9-951814EE26FE",
+          "frame": {
+            "x": 20,
+            "y": 122,
+            "width": 400,
+            "height": 172.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e21",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 122,
+            "width": 400,
+            "height": 172.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e22",
+          "role": "button",
+          "label": "Today, 0 reminders, September 25",
+          "frame": {
+            "x": 20,
+            "y": 122,
+            "width": 196,
+            "height": 82.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e23",
+          "role": "button",
+          "label": "Scheduled, 0 reminders",
+          "frame": {
+            "x": 224,
+            "y": 122,
+            "width": 196,
+            "height": 82.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e24",
+          "role": "button",
+          "label": "All, 3 reminders",
+          "frame": {
+            "x": 20,
+            "y": 212.33,
+            "width": 196,
+            "height": 82.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e25",
+          "role": "button",
+          "label": "Completed",
+          "frame": {
+            "x": 224,
+            "y": 212.33,
+            "width": 196,
+            "height": 82.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e26",
+          "role": "other",
+          "frame": {
+            "x": -20,
+            "y": 312.33,
+            "width": 480,
+            "height": 215.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e27",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 312.33,
+            "width": 400,
+            "height": 198
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e28",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 312.33,
+            "width": 400,
+            "height": 198
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e29",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 312.33,
+            "width": 400,
+            "height": 198
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e30",
+          "role": "other",
+          "identifier": "TipView",
+          "frame": {
+            "x": 20,
+            "y": 312.33,
+            "width": 400,
+            "height": 198
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e31",
+          "role": "image",
+          "label": "Mostly Cloudy",
+          "identifier": "cloud",
+          "frame": {
+            "x": 42,
+            "y": 334.33,
+            "width": 38,
+            "height": 25
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e32",
+          "role": "other",
+          "label": "Sync Reminders with iCloud",
+          "frame": {
+            "x": 92,
+            "y": 329.58,
+            "width": 222,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e33",
+          "role": "text",
+          "label": "To access your reminders on all of your devices, sign into iCloud and enable Reminders.",
+          "frame": {
+            "x": 92,
+            "y": 355.91,
+            "width": 271.67,
+            "height": 64
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e34",
+          "role": "button",
+          "label": "Go to Settings",
+          "frame": {
+            "x": 36,
+            "y": 442,
+            "width": 368,
+            "height": 52.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e35",
+          "role": "button",
+          "label": "Close",
+          "identifier": "xmark.circle.fill",
+          "frame": {
+            "x": 379.67,
+            "y": 326,
+            "width": 26,
+            "height": 26
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e36",
+          "role": "other",
+          "frame": {
+            "x": -20,
+            "y": 527.67,
+            "width": 480,
+            "height": 2166.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e37",
+          "role": "other",
+          "label": "My Lists",
+          "identifier": "<x-apple-reminderkit://REMCDAccount/3B242529-8F5D-47A1-9351-444101218C30>",
+          "frame": {
+            "x": 20,
+            "y": 527.67,
+            "width": 400,
+            "height": 48.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e38",
+          "role": "text",
+          "label": "My Lists",
+          "frame": {
+            "x": 40,
+            "y": 537.67,
+            "width": 86,
+            "height": 28.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e39",
+          "role": "button",
+          "label": "Reminders, 0 reminders",
+          "value": ", Blue",
+          "identifier": "<x-apple-reminderkit://REMCDList/3C8C2A71-84BF-4C87-8EFD-BB4827650D15>",
+          "frame": {
+            "x": 20,
+            "y": 576,
+            "width": 400,
+            "height": 62
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e40",
+          "role": "other",
+          "value": "Blue",
+          "identifier": "Blue",
+          "frame": {
+            "x": 40,
+            "y": 591,
+            "width": 32,
+            "height": 32
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e41",
+          "role": "image",
+          "identifier": "ListBadgeDefault",
+          "frame": {
+            "x": 40,
+            "y": 591,
+            "width": 32,
+            "height": 32
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e42",
+          "role": "text",
+          "label": "Reminders",
+          "frame": {
+            "x": 88,
+            "y": 596,
+            "width": 79.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e43",
+          "role": "text",
+          "label": "0",
+          "frame": {
+            "x": 367,
+            "y": 596,
+            "width": 11,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e44",
+          "role": "button",
+          "label": "Market Errands, 2 reminders",
+          "value": ", Blue",
+          "identifier": "<x-apple-reminderkit://REMCDList/FB4A1C5C-24DB-413B-83F2-AC7359FBECC8>",
+          "frame": {
+            "x": 20,
+            "y": 638,
+            "width": 400,
+            "height": 62
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e45",
+          "role": "other",
+          "value": "Blue",
+          "identifier": "Blue",
+          "frame": {
+            "x": 40,
+            "y": 653,
+            "width": 32,
+            "height": 32
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e46",
+          "role": "image",
+          "identifier": "ListBadgeDefault",
+          "frame": {
+            "x": 40,
+            "y": 653,
+            "width": 32,
+            "height": 32
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e47",
+          "role": "text",
+          "label": "Market Errands",
+          "frame": {
+            "x": 88,
+            "y": 658,
+            "width": 112.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e48",
+          "role": "text",
+          "label": "2",
+          "frame": {
+            "x": 368,
+            "y": 658,
+            "width": 10,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e49",
+          "role": "other",
+          "frame": {
+            "x": 88,
+            "y": 637,
+            "width": 312,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e50",
+          "role": "button",
+          "label": "Signal Kit, 1 reminder",
+          "value": ", Blue",
+          "identifier": "<x-apple-reminderkit://REMCDList/61101A37-F412-4F1D-A701-2192D207B0B8>",
+          "frame": {
+            "x": 20,
+            "y": 700,
+            "width": 400,
+            "height": 62
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e51",
+          "role": "other",
+          "value": "Blue",
+          "identifier": "Blue",
+          "frame": {
+            "x": 40,
+            "y": 715,
+            "width": 32,
+            "height": 32
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e52",
+          "role": "image",
+          "identifier": "ListBadgeDefault",
+          "frame": {
+            "x": 40,
+            "y": 715,
+            "width": 32,
+            "height": 32
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e53",
+          "role": "text",
+          "label": "Signal Kit",
+          "frame": {
+            "x": 88,
+            "y": 720,
+            "width": 70.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e54",
+          "role": "text",
+          "label": "1",
+          "frame": {
+            "x": 370,
+            "y": 720,
+            "width": 8,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e55",
+          "role": "other",
+          "frame": {
+            "x": 88,
+            "y": 699,
+            "width": 312,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e56",
+          "role": "slider",
+          "label": "Vertical scroll bar, 1 page",
+          "value": "0%",
+          "frame": {
+            "x": 407,
+            "y": 116,
+            "width": 30,
+            "height": 754
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e57",
+          "role": "other",
+          "frame": {
+            "x": 434,
+            "y": 860,
+            "width": 3,
+            "height": 7
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e58",
+          "role": "slider",
+          "label": "Horizontal scroll bar, 1 page",
+          "value": "0%",
+          "frame": {
+            "x": 62,
+            "y": 837,
+            "width": 316,
+            "height": 30
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e59",
+          "role": "other",
+          "frame": {
+            "x": 368,
+            "y": 864,
+            "width": 7,
+            "height": 3
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e60",
+          "role": "slider",
+          "label": "Vertical scroll bar, 1 page",
+          "value": "0%",
+          "frame": {
+            "x": 407,
+            "y": 116,
+            "width": 30,
+            "height": 754
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e61",
+          "role": "other",
+          "frame": {
+            "x": 434,
+            "y": 860,
+            "width": 3,
+            "height": 7
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e62",
+          "role": "slider",
+          "label": "Horizontal scroll bar, 1 page",
+          "value": "0%",
+          "frame": {
+            "x": 62,
+            "y": 837,
+            "width": 316,
+            "height": 30
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e63",
+          "role": "other",
+          "frame": {
+            "x": 368,
+            "y": 864,
+            "width": 7,
+            "height": 3
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e64",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e65",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e66",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 870,
+            "width": 440,
+            "height": 86
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e67",
+          "role": "other",
+          "frame": {
+            "x": 28,
+            "y": 880,
+            "width": 384,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e68",
+          "role": "other",
+          "frame": {
+            "x": 28,
+            "y": 880,
+            "width": 384,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e69",
+          "role": "other",
+          "frame": {
+            "x": 28,
+            "y": 880,
+            "width": 0,
+            "height": 0
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e70",
+          "role": "other",
+          "frame": {
+            "x": 364,
+            "y": 880,
+            "width": 48,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e71",
+          "role": "other",
+          "frame": {
+            "x": 364,
+            "y": 880,
+            "width": 48,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e72",
+          "role": "other",
+          "frame": {
+            "x": 369,
+            "y": 885,
+            "width": 38,
+            "height": 38
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e73",
+          "role": "other",
+          "frame": {
+            "x": 369,
+            "y": 885,
+            "width": 38,
+            "height": 38
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e74",
+          "role": "button",
+          "label": "New Reminder",
+          "frame": {
+            "x": 369,
+            "y": 885,
+            "width": 38,
+            "height": 38
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e75",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e76",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e77",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e78",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e79",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "action": "longPress",
+          "elementRef": "e2"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e2"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e3"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e3"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e4"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e4"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e5"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e5"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e6"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e7"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e7"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e8"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e8"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e9"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e9"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e10",
+          "label": "Search"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e10",
+          "label": "Search"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e10",
+          "label": "Search"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e11",
+          "label": "Add List"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e11",
+          "label": "Add List"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e11",
+          "label": "Add List"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e12",
+          "label": "Edit"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e12",
+          "label": "Edit"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e12",
+          "label": "Edit"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e13"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e13"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e14"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e14"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e15"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e15"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e16"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e16"
+        },
+        {
+          "action": "swipeWithin",
+          "elementRef": "e16"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e18"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e18"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e19"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e19"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e20"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e20"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e21"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e21"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e22",
+          "label": "Today, 0 reminders, September 25"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e22",
+          "label": "Today, 0 reminders, September 25"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e22",
+          "label": "Today, 0 reminders, September 25"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e23",
+          "label": "Scheduled, 0 reminders"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e23",
+          "label": "Scheduled, 0 reminders"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e23",
+          "label": "Scheduled, 0 reminders"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e24",
+          "label": "All, 3 reminders"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e24",
+          "label": "All, 3 reminders"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e24",
+          "label": "All, 3 reminders"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e25",
+          "label": "Completed"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e25",
+          "label": "Completed"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e25",
+          "label": "Completed"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e26"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e26"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e27"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e27"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e28"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e28"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e29"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e29"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e30"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e30"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e31",
+          "label": "Mostly Cloudy"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e31",
+          "label": "Mostly Cloudy"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e32",
+          "label": "Sync Reminders with iCloud"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e32",
+          "label": "Sync Reminders with iCloud"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e33",
+          "label": "To access your reminders on all of your devices, sign into iCloud and enable Reminders."
+        },
+        {
+          "action": "touch",
+          "elementRef": "e33",
+          "label": "To access your reminders on all of your devices, sign into iCloud and enable Reminders."
+        },
+        {
+          "action": "tap",
+          "elementRef": "e34",
+          "label": "Go to Settings"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e34",
+          "label": "Go to Settings"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e34",
+          "label": "Go to Settings"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e35",
+          "label": "Close"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e35",
+          "label": "Close"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e35",
+          "label": "Close"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e37",
+          "label": "My Lists"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e37",
+          "label": "My Lists"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e38",
+          "label": "My Lists"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e38",
+          "label": "My Lists"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e39",
+          "label": "Reminders, 0 reminders"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e39",
+          "label": "Reminders, 0 reminders"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e39",
+          "label": "Reminders, 0 reminders"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e40"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e40"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e40"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e41"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e41"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e41"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e42",
+          "label": "Reminders"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e42",
+          "label": "Reminders"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e42",
+          "label": "Reminders"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e43",
+          "label": "0"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e43",
+          "label": "0"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e43",
+          "label": "0"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e44",
+          "label": "Market Errands, 2 reminders"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e44",
+          "label": "Market Errands, 2 reminders"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e44",
+          "label": "Market Errands, 2 reminders"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e45"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e45"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e45"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e46"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e46"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e46"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e47",
+          "label": "Market Errands"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e47",
+          "label": "Market Errands"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e47",
+          "label": "Market Errands"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e48",
+          "label": "2"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e48",
+          "label": "2"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e48",
+          "label": "2"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e49"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e49"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e50",
+          "label": "Signal Kit, 1 reminder"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e50",
+          "label": "Signal Kit, 1 reminder"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e50",
+          "label": "Signal Kit, 1 reminder"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e51"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e51"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e51"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e52"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e52"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e52"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e53",
+          "label": "Signal Kit"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e53",
+          "label": "Signal Kit"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e53",
+          "label": "Signal Kit"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e54",
+          "label": "1"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e54",
+          "label": "1"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e54",
+          "label": "1"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e55"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e55"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e56",
+          "label": "Vertical scroll bar, 1 page"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e56",
+          "label": "Vertical scroll bar, 1 page"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e57"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e57"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e58",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e58",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e59"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e59"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e60",
+          "label": "Vertical scroll bar, 1 page"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e60",
+          "label": "Vertical scroll bar, 1 page"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e61"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e61"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e62",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e62",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e63"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e63"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e64"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e64"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e65"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e65"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e66"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e66"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e67"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e67"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e68"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e68"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e70"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e70"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e71"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e71"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e72"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e72"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e73"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e73"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e74",
+          "label": "New Reminder"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e74",
+          "label": "New Reminder"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e74",
+          "label": "New Reminder"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e75"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e75"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e76"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e76"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e77"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e77"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e78"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e78"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e79"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e79"
+        }
+      ]
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e10\"},{\"action\":\"tap\",\"elementRef\":\"e11\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e22",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e16 --direction up --distance 0.5"
+  ]
+}

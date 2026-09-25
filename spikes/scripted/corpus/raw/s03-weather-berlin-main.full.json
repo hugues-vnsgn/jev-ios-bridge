@@ -1,0 +1,2276 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "protocol": "rs/1",
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+      "screenHash": "0ud36d1",
+      "seq": 21,
+      "capturedAtMs": 1790241569147,
+      "expiresAtMs": 1790241629147,
+      "elements": [
+        {
+          "ref": "e1",
+          "role": "application",
+          "label": "Weather",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e2",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e3",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e4",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e5",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e6",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e7",
+          "role": "scroll-view",
+          "identifier": "weather.mainScrollView",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch",
+            "swipeWithin"
+          ]
+        },
+        {
+          "ref": "e8",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 440,
+            "height": 1786.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e9",
+          "role": "text",
+          "label": "Berlin",
+          "identifier": "weather.heroLocation",
+          "frame": {
+            "x": 192.83,
+            "y": 158,
+            "width": 54.33,
+            "height": 26.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e10",
+          "role": "text",
+          "label": "Germany",
+          "frame": {
+            "x": 192,
+            "y": 186.33,
+            "width": 56,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e11",
+          "role": "text",
+          "label": "52",
+          "frame": {
+            "x": 144.83,
+            "y": 200,
+            "width": 143.33,
+            "height": 157.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e12",
+          "role": "text",
+          "label": "°",
+          "frame": {
+            "x": 282.17,
+            "y": 218,
+            "width": 13,
+            "height": 43
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e13",
+          "role": "text",
+          "label": "Light Rain",
+          "frame": {
+            "x": 178,
+            "y": 357.67,
+            "width": 84,
+            "height": 23
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e14",
+          "role": "text",
+          "label": "H:55° L:48°",
+          "frame": {
+            "x": 176.83,
+            "y": 382.67,
+            "width": 86.33,
+            "height": 18
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e15",
+          "role": "text",
+          "label": "\"A soft, steady rain\"",
+          "frame": {
+            "x": 156.67,
+            "y": 410.67,
+            "width": 126.67,
+            "height": 17
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e16",
+          "role": "text",
+          "label": "HOURLY FORECAST",
+          "frame": {
+            "x": 28,
+            "y": 459.67,
+            "width": 130,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e17",
+          "role": "scroll-view",
+          "frame": {
+            "x": 12,
+            "y": 479,
+            "width": 416,
+            "height": 116
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch",
+            "swipeWithin"
+          ]
+        },
+        {
+          "ref": "e18",
+          "role": "other",
+          "frame": {
+            "x": 12,
+            "y": 479,
+            "width": 672,
+            "height": 116
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e19",
+          "role": "text",
+          "label": "Now",
+          "frame": {
+            "x": 26.67,
+            "y": 478,
+            "width": 26.67,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e20",
+          "role": "text",
+          "label": "2pm",
+          "frame": {
+            "x": 82.5,
+            "y": 478,
+            "width": 27,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e21",
+          "role": "text",
+          "label": "3pm",
+          "frame": {
+            "x": 138.5,
+            "y": 478,
+            "width": 27,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e22",
+          "role": "text",
+          "label": "4pm",
+          "frame": {
+            "x": 194.5,
+            "y": 478,
+            "width": 27,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e23",
+          "role": "text",
+          "label": "5pm",
+          "frame": {
+            "x": 250.5,
+            "y": 478,
+            "width": 27,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e24",
+          "role": "text",
+          "label": "6pm",
+          "frame": {
+            "x": 306.5,
+            "y": 478,
+            "width": 27,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e25",
+          "role": "text",
+          "label": "7pm",
+          "frame": {
+            "x": 362.5,
+            "y": 478,
+            "width": 27,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e26",
+          "role": "text",
+          "label": "8pm",
+          "frame": {
+            "x": 418.5,
+            "y": 478,
+            "width": 27,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e27",
+          "role": "text",
+          "label": "9pm",
+          "frame": {
+            "x": 474.5,
+            "y": 478,
+            "width": 27,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e28",
+          "role": "text",
+          "label": "10pm",
+          "frame": {
+            "x": 526.5,
+            "y": 478,
+            "width": 35,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e29",
+          "role": "text",
+          "label": "11pm",
+          "frame": {
+            "x": 582.5,
+            "y": 478,
+            "width": 35,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e30",
+          "role": "text",
+          "label": "12am",
+          "frame": {
+            "x": 638.83,
+            "y": 478,
+            "width": 34.33,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e31",
+          "role": "text",
+          "label": "52°",
+          "frame": {
+            "x": 25.5,
+            "y": 573.67,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e32",
+          "role": "text",
+          "label": "54°",
+          "frame": {
+            "x": 81.5,
+            "y": 573.67,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e33",
+          "role": "text",
+          "label": "54°",
+          "frame": {
+            "x": 137.5,
+            "y": 573.67,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e34",
+          "role": "text",
+          "label": "55°",
+          "frame": {
+            "x": 193.5,
+            "y": 573.67,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e35",
+          "role": "text",
+          "label": "54°",
+          "frame": {
+            "x": 249.5,
+            "y": 573.67,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e36",
+          "role": "text",
+          "label": "54°",
+          "frame": {
+            "x": 305.5,
+            "y": 573.67,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e37",
+          "role": "text",
+          "label": "52°",
+          "frame": {
+            "x": 361.5,
+            "y": 573.67,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e38",
+          "role": "text",
+          "label": "52°",
+          "frame": {
+            "x": 417.5,
+            "y": 573.67,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e39",
+          "role": "text",
+          "label": "50°",
+          "frame": {
+            "x": 473.5,
+            "y": 573.67,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e40",
+          "role": "text",
+          "label": "48°",
+          "frame": {
+            "x": 529.5,
+            "y": 573.67,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e41",
+          "role": "text",
+          "label": "48°",
+          "frame": {
+            "x": 585.5,
+            "y": 573.67,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e42",
+          "role": "text",
+          "label": "48°",
+          "frame": {
+            "x": 641.5,
+            "y": 573.67,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e43",
+          "role": "text",
+          "label": "7-DAY FORECAST",
+          "frame": {
+            "x": 28,
+            "y": 623,
+            "width": 117,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e44",
+          "role": "text",
+          "label": "Today",
+          "frame": {
+            "x": 28,
+            "y": 661.5,
+            "width": 48,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e45",
+          "role": "text",
+          "label": "48°",
+          "frame": {
+            "x": 145,
+            "y": 662,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e46",
+          "role": "text",
+          "label": "55°",
+          "frame": {
+            "x": 385,
+            "y": 662,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e47",
+          "role": "text",
+          "label": "Wed",
+          "frame": {
+            "x": 28,
+            "y": 711.83,
+            "width": 34.67,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e48",
+          "role": "text",
+          "label": "46°",
+          "frame": {
+            "x": 145,
+            "y": 712.33,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e49",
+          "role": "text",
+          "label": "54°",
+          "frame": {
+            "x": 385,
+            "y": 712.33,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e50",
+          "role": "text",
+          "label": "Thu",
+          "frame": {
+            "x": 28,
+            "y": 762.17,
+            "width": 29.67,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e51",
+          "role": "text",
+          "label": "46°",
+          "frame": {
+            "x": 145,
+            "y": 762.67,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e52",
+          "role": "text",
+          "label": "55°",
+          "frame": {
+            "x": 385,
+            "y": 762.67,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e53",
+          "role": "text",
+          "label": "Fri",
+          "frame": {
+            "x": 28,
+            "y": 812.5,
+            "width": 19.33,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e54",
+          "role": "text",
+          "label": "48°",
+          "frame": {
+            "x": 145,
+            "y": 813,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e55",
+          "role": "text",
+          "label": "57°",
+          "frame": {
+            "x": 385,
+            "y": 813,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e56",
+          "role": "text",
+          "label": "Sat",
+          "frame": {
+            "x": 28,
+            "y": 862.83,
+            "width": 25.33,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e57",
+          "role": "text",
+          "label": "50°",
+          "frame": {
+            "x": 145,
+            "y": 863.33,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e58",
+          "role": "text",
+          "label": "63°",
+          "frame": {
+            "x": 385,
+            "y": 863.33,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e59",
+          "role": "text",
+          "label": "Sun",
+          "frame": {
+            "x": 28,
+            "y": 913.17,
+            "width": 29.67,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e60",
+          "role": "text",
+          "label": "48°",
+          "frame": {
+            "x": 145,
+            "y": 913.67,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e61",
+          "role": "text",
+          "label": "61°",
+          "frame": {
+            "x": 385,
+            "y": 913.67,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e62",
+          "role": "text",
+          "label": "Mon",
+          "frame": {
+            "x": 28,
+            "y": 963.5,
+            "width": 33.67,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e63",
+          "role": "text",
+          "label": "43°",
+          "frame": {
+            "x": 145,
+            "y": 964,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e64",
+          "role": "text",
+          "label": "54°",
+          "frame": {
+            "x": 385,
+            "y": 964,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e65",
+          "role": "text",
+          "label": "WIND",
+          "frame": {
+            "x": 30,
+            "y": 1026.67,
+            "width": 35,
+            "height": 12.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e66",
+          "role": "text",
+          "label": "N",
+          "frame": {
+            "x": 109.17,
+            "y": 1036.67,
+            "width": 9.67,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e67",
+          "role": "text",
+          "label": "LULL",
+          "frame": {
+            "x": 216,
+            "y": 1059.33,
+            "width": 30.67,
+            "height": 12
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e68",
+          "role": "text",
+          "label": "8",
+          "frame": {
+            "x": 368.33,
+            "y": 1052.67,
+            "width": 10.67,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e69",
+          "role": "text",
+          "label": "mph",
+          "frame": {
+            "x": 387,
+            "y": 1058.67,
+            "width": 23,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e70",
+          "role": "text",
+          "label": "SW",
+          "frame": {
+            "x": 103.5,
+            "y": 1096.33,
+            "width": 21,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e71",
+          "role": "text",
+          "label": "NOW",
+          "frame": {
+            "x": 216,
+            "y": 1101.67,
+            "width": 29.33,
+            "height": 12
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e72",
+          "role": "text",
+          "label": "14",
+          "frame": {
+            "x": 357.67,
+            "y": 1095,
+            "width": 21.33,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e73",
+          "role": "text",
+          "label": "mph",
+          "frame": {
+            "x": 387,
+            "y": 1101,
+            "width": 23,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e74",
+          "role": "text",
+          "label": "W",
+          "frame": {
+            "x": 18,
+            "y": 1126.67,
+            "width": 12,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e75",
+          "role": "text",
+          "label": "14",
+          "frame": {
+            "x": 96.83,
+            "y": 1111.67,
+            "width": 34.33,
+            "height": 36
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e76",
+          "role": "text",
+          "label": "E",
+          "frame": {
+            "x": 200,
+            "y": 1126.67,
+            "width": 8,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e77",
+          "role": "text",
+          "label": "mph",
+          "frame": {
+            "x": 103,
+            "y": 1149.67,
+            "width": 22,
+            "height": 12.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e78",
+          "role": "text",
+          "label": "GUST",
+          "frame": {
+            "x": 216,
+            "y": 1144,
+            "width": 34,
+            "height": 12
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e79",
+          "role": "text",
+          "label": "24",
+          "frame": {
+            "x": 357.67,
+            "y": 1137.33,
+            "width": 21.33,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e80",
+          "role": "text",
+          "label": "mph",
+          "frame": {
+            "x": 387,
+            "y": 1143.33,
+            "width": 23,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e81",
+          "role": "text",
+          "label": "From the southwest · Moderate breeze",
+          "frame": {
+            "x": 216,
+            "y": 1179.67,
+            "width": 117.67,
+            "height": 26.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e82",
+          "role": "text",
+          "label": "S",
+          "frame": {
+            "x": 109.67,
+            "y": 1216.67,
+            "width": 8.67,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e83",
+          "role": "text",
+          "label": "Updated just now",
+          "frame": {
+            "x": 171.5,
+            "y": 1741.33,
+            "width": 97,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e84",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e85",
+          "role": "button",
+          "label": "Berlin",
+          "identifier": "weather.locationButton",
+          "frame": {
+            "x": 12,
+            "y": 81.33,
+            "width": 122,
+            "height": 33.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e86",
+          "role": "image",
+          "label": "Map Pin",
+          "identifier": "mappin",
+          "frame": {
+            "x": 44.67,
+            "y": 91,
+            "width": 5.33,
+            "height": 14
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e87",
+          "role": "text",
+          "label": "Berlin",
+          "frame": {
+            "x": 61.67,
+            "y": 89.33,
+            "width": 38.67,
+            "height": 17.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e88",
+          "role": "image",
+          "label": "Go Down",
+          "identifier": "chevron.down",
+          "frame": {
+            "x": 109.67,
+            "y": 95.33,
+            "width": 9,
+            "height": 5.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e89",
+          "role": "button",
+          "label": "Settings",
+          "identifier": "weather.settingsButton",
+          "frame": {
+            "x": 390,
+            "y": 79,
+            "width": 38,
+            "height": 38
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e90",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e91",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e92",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "action": "longPress",
+          "elementRef": "e2"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e2"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e3"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e3"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e4"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e4"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e5"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e5"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e6"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e7"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e7"
+        },
+        {
+          "action": "swipeWithin",
+          "elementRef": "e7"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e8"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e8"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e9",
+          "label": "Berlin"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e9",
+          "label": "Berlin"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e10",
+          "label": "Germany"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e10",
+          "label": "Germany"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e11",
+          "label": "52"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e11",
+          "label": "52"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e12",
+          "label": "°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e12",
+          "label": "°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e13",
+          "label": "Light Rain"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e13",
+          "label": "Light Rain"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e14",
+          "label": "H:55° L:48°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e14",
+          "label": "H:55° L:48°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e15",
+          "label": "\"A soft, steady rain\""
+        },
+        {
+          "action": "touch",
+          "elementRef": "e15",
+          "label": "\"A soft, steady rain\""
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e16",
+          "label": "HOURLY FORECAST"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e16",
+          "label": "HOURLY FORECAST"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e17"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e17"
+        },
+        {
+          "action": "swipeWithin",
+          "elementRef": "e17"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e18"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e18"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e19",
+          "label": "Now"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e19",
+          "label": "Now"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e20",
+          "label": "2pm"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e20",
+          "label": "2pm"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e21",
+          "label": "3pm"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e21",
+          "label": "3pm"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e22",
+          "label": "4pm"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e22",
+          "label": "4pm"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e23",
+          "label": "5pm"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e23",
+          "label": "5pm"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e24",
+          "label": "6pm"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e24",
+          "label": "6pm"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e25",
+          "label": "7pm"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e25",
+          "label": "7pm"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e26",
+          "label": "8pm"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e26",
+          "label": "8pm"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e31",
+          "label": "52°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e31",
+          "label": "52°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e32",
+          "label": "54°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e32",
+          "label": "54°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e33",
+          "label": "54°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e33",
+          "label": "54°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e34",
+          "label": "55°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e34",
+          "label": "55°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e35",
+          "label": "54°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e35",
+          "label": "54°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e36",
+          "label": "54°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e36",
+          "label": "54°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e37",
+          "label": "52°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e37",
+          "label": "52°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e38",
+          "label": "52°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e38",
+          "label": "52°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e43",
+          "label": "7-DAY FORECAST"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e43",
+          "label": "7-DAY FORECAST"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e44",
+          "label": "Today"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e44",
+          "label": "Today"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e45",
+          "label": "48°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e45",
+          "label": "48°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e46",
+          "label": "55°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e46",
+          "label": "55°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e47",
+          "label": "Wed"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e47",
+          "label": "Wed"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e48",
+          "label": "46°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e48",
+          "label": "46°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e49",
+          "label": "54°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e49",
+          "label": "54°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e50",
+          "label": "Thu"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e50",
+          "label": "Thu"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e51",
+          "label": "46°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e51",
+          "label": "46°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e52",
+          "label": "55°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e52",
+          "label": "55°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e53",
+          "label": "Fri"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e53",
+          "label": "Fri"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e54",
+          "label": "48°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e54",
+          "label": "48°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e55",
+          "label": "57°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e55",
+          "label": "57°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e56",
+          "label": "Sat"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e56",
+          "label": "Sat"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e57",
+          "label": "50°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e57",
+          "label": "50°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e58",
+          "label": "63°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e58",
+          "label": "63°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e59",
+          "label": "Sun"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e59",
+          "label": "Sun"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e60",
+          "label": "48°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e60",
+          "label": "48°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e61",
+          "label": "61°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e61",
+          "label": "61°"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e85",
+          "label": "Berlin"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e85",
+          "label": "Berlin"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e85",
+          "label": "Berlin"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e86",
+          "label": "Map Pin"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e86",
+          "label": "Map Pin"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e87",
+          "label": "Berlin"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e87",
+          "label": "Berlin"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e88",
+          "label": "Go Down"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e88",
+          "label": "Go Down"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e89",
+          "label": "Settings"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e89",
+          "label": "Settings"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e89",
+          "label": "Settings"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e90"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e90"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e91"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e91"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e92"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e92"
+        }
+      ]
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e7 --direction up --distance 0.5",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e85"
+  ]
+}

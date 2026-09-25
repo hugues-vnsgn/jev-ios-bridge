@@ -1,0 +1,50 @@
+{
+  "version": 3,
+  "status": "draft",
+  "corpusSha256": "136dd6ed8e7880e6e1118b1691a31693b72a19f0498cd7ef8b4be475d58363cf",
+  "implementationSha256": "9ca22c17020c58b634068df87626911549d8600e1a67508732896d8c7cd317d8",
+  "model": "jev-1.13.0",
+  "configurations": [
+    {
+      "id": "A",
+      "variant": "compact",
+      "history": false
+    },
+    {
+      "id": "B",
+      "variant": "compact",
+      "history": true
+    },
+    {
+      "id": "C",
+      "variant": "full",
+      "history": false
+    },
+    {
+      "id": "D",
+      "variant": "full",
+      "history": true
+    }
+  ],
+  "thresholds": [
+    0.6,
+    0.7,
+    0.8,
+    0.9
+  ],
+  "noulYes": 0.9,
+  "noulNo": 0.1,
+  "maxHistory": 3,
+  "maxCandidates": 96,
+  "maxStateBytes": 24000,
+  "wording": {
+    "nextAction": "Which complete listed action most directly establishes the current checkpoint desired screen state from this observation? Choose stop-goal if that desired screen state visibly holds now. Choose stop-blocked only when explicit blocking, error, or finished empty-result evidence on this screen prevents progress. Choose none if no supported action fits.",
+    "goalReached": "Does this observation visibly satisfy the current checkpoint desired screen state now? Base the answer on evidence present on this screen.",
+    "assertion": "Does the current observation establish this specific scenario claim?"
+  },
+  "candidateRule": "visible-enabled-v2",
+  "optionRule": "complete-actions-v2",
+  "historyRule": "recent-steps-v1",
+  "gateRule": "ticket-07-v1",
+  "selectionRule": "coverage-correctness-tokens-order-threshold-v1"
+}

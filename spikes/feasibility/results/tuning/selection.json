@@ -1,0 +1,154 @@
+{
+  "version": 1,
+  "corpusSha256": "2d29737b595bff131ebdbd51898b88ac55fba8f2cb70dfadbf4d421c80d0fe54",
+  "manifestSha256": "9ecd716a0f9dfda4bd5df735f7f5e0e4203fcc01a6380217b297229c7e749c22",
+  "configuration": "D",
+  "threshold": 0.9,
+  "tuningSummary": [
+    {
+      "configuration": "A",
+      "threshold": 0.6,
+      "accepted": 8,
+      "incorrectAccepted": 2,
+      "top1Correct": 7,
+      "inputTokens": 17092,
+      "qualifying": false
+    },
+    {
+      "configuration": "A",
+      "threshold": 0.7,
+      "accepted": 7,
+      "incorrectAccepted": 2,
+      "top1Correct": 7,
+      "inputTokens": 17092,
+      "qualifying": false
+    },
+    {
+      "configuration": "A",
+      "threshold": 0.8,
+      "accepted": 6,
+      "incorrectAccepted": 1,
+      "top1Correct": 7,
+      "inputTokens": 17092,
+      "qualifying": false
+    },
+    {
+      "configuration": "A",
+      "threshold": 0.9,
+      "accepted": 6,
+      "incorrectAccepted": 1,
+      "top1Correct": 7,
+      "inputTokens": 17092,
+      "qualifying": false
+    },
+    {
+      "configuration": "B",
+      "threshold": 0.6,
+      "accepted": 8,
+      "incorrectAccepted": 2,
+      "top1Correct": 7,
+      "inputTokens": 17223,
+      "qualifying": false
+    },
+    {
+      "configuration": "B",
+      "threshold": 0.7,
+      "accepted": 8,
+      "incorrectAccepted": 2,
+      "top1Correct": 7,
+      "inputTokens": 17223,
+      "qualifying": false
+    },
+    {
+      "configuration": "B",
+      "threshold": 0.8,
+      "accepted": 6,
+      "incorrectAccepted": 1,
+      "top1Correct": 7,
+      "inputTokens": 17223,
+      "qualifying": false
+    },
+    {
+      "configuration": "B",
+      "threshold": 0.9,
+      "accepted": 6,
+      "incorrectAccepted": 1,
+      "top1Correct": 7,
+      "inputTokens": 17223,
+      "qualifying": false
+    },
+    {
+      "configuration": "C",
+      "threshold": 0.6,
+      "accepted": 7,
+      "incorrectAccepted": 1,
+      "top1Correct": 8,
+      "inputTokens": 39978,
+      "qualifying": false
+    },
+    {
+      "configuration": "C",
+      "threshold": 0.7,
+      "accepted": 6,
+      "incorrectAccepted": 1,
+      "top1Correct": 8,
+      "inputTokens": 39978,
+      "qualifying": false
+    },
+    {
+      "configuration": "C",
+      "threshold": 0.8,
+      "accepted": 5,
+      "incorrectAccepted": 1,
+      "top1Correct": 8,
+      "inputTokens": 39978,
+      "qualifying": false
+    },
+    {
+      "configuration": "C",
+      "threshold": 0.9,
+      "accepted": 3,
+      "incorrectAccepted": 0,
+      "top1Correct": 8,
+      "inputTokens": 39978,
+      "qualifying": true
+    },
+    {
+      "configuration": "D",
+      "threshold": 0.6,
+      "accepted": 7,
+      "incorrectAccepted": 1,
+      "top1Correct": 8,
+      "inputTokens": 40109,
+      "qualifying": false
+    },
+    {
+      "configuration": "D",
+      "threshold": 0.7,
+      "accepted": 7,
+      "incorrectAccepted": 1,
+      "top1Correct": 8,
+      "inputTokens": 40109,
+      "qualifying": false
+    },
+    {
+      "configuration": "D",
+      "threshold": 0.8,
+      "accepted": 5,
+      "incorrectAccepted": 1,
+      "top1Correct": 8,
+      "inputTokens": 40109,
+      "qualifying": false
+    },
+    {
+      "configuration": "D",
+      "threshold": 0.9,
+      "accepted": 4,
+      "incorrectAccepted": 0,
+      "top1Correct": 8,
+      "inputTokens": 40109,
+      "qualifying": true
+    }
+  ],
+  "tuningResultsSha256": "26498df09ddebd87e1b86313b0f9b355ef604ff1a53209ac95b72eff284c8b47"
+}

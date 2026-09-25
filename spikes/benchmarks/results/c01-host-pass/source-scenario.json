@@ -1,0 +1,98 @@
+{
+  "app": {
+    "bundleId": "com.apple.MobileAddressBook"
+  },
+  "device": {
+    "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+  },
+  "preconditions": [
+    "Contacts list or Search results is in front with one Search text field."
+  ],
+  "values": {
+    "query": "Nina Calder"
+  },
+  "steps": [
+    {
+      "id": "searchNina",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "Contacts"
+          },
+          {
+            "role": "text-field"
+          }
+        ],
+        "absent": [
+          {
+            "role": "text",
+            "identifier": "ContactCardHeaderView"
+          },
+          {
+            "role": "button",
+            "label": "Done"
+          },
+          {
+            "role": "button",
+            "label": "Cancel"
+          },
+          {
+            "role": "alert"
+          }
+        ]
+      },
+      "action": {
+        "kind": "replaceText",
+        "selector": {
+          "role": "text-field"
+        },
+        "valueKey": "query"
+      }
+    },
+    {
+      "id": "settleResults",
+      "kind": "wait",
+      "guard": {
+        "present": [
+          {
+            "role": "text-field",
+            "value": "Nina Calder"
+          }
+        ]
+      },
+      "until": {
+        "present": [
+          {
+            "role": "text",
+            "label": "No Results for “Nina Calder”"
+          }
+        ]
+      },
+      "timeoutMs": 10000
+    },
+    {
+      "id": "verify",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "text-field",
+            "value": "Nina Calder"
+          },
+          {
+            "role": "other",
+            "label": "Search results"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "claim",
+          "claim": "Contacts shows No Results for Nina Calder."
+        }
+      ]
+    }
+  ]
+}

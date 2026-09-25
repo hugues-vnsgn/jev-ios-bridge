@@ -1,0 +1,40 @@
+{
+  "app": { "bundleId": "com.apple.reminders" },
+  "preconditions": [
+    "Use a clean dedicated iPhone 17 Pro Max simulator with the same iOS runtime as the baseline.",
+    "No list named MCP Benchmark List exists. Dismiss only the first-run prompts dismissed by the pinned baseline before timing."
+  ],
+  "checkpoints": [
+    {
+      "id": "benchmark_list",
+      "goal": "The newly created MCP Benchmark List is open in Reminders.",
+      "values": { "listName": "MCP Benchmark List" },
+      "assertions": [{ "id": "list_name", "claim": "The open Reminders list is named MCP Benchmark List." }]
+    },
+    {
+      "id": "three_reminders",
+      "goal": "MCP Benchmark List contains exactly the three requested, still-incomplete reminders.",
+      "values": {
+        "firstReminder": "Buy milk benchmark",
+        "secondReminder": "File report benchmark",
+        "thirdReminder": "Call team benchmark"
+      },
+      "assertions": [
+        { "id": "first", "claim": "Buy milk benchmark is present and incomplete." },
+        { "id": "second", "claim": "File report benchmark is present and incomplete." },
+        { "id": "third", "claim": "Call team benchmark is present and incomplete." },
+        { "id": "no_extra", "claim": "The list contains no reminder other than those three." }
+      ]
+    },
+    {
+      "id": "final_completion_state",
+      "goal": "The saved MCP Benchmark List visibly shows all three requested reminders, with two complete and one incomplete.",
+      "assertions": [
+        { "id": "first_complete", "claim": "Buy milk benchmark is completed." },
+        { "id": "second_incomplete", "claim": "File report benchmark remains incomplete." },
+        { "id": "third_complete", "claim": "Call team benchmark is completed." },
+        { "id": "counts", "claim": "The saved list has exactly two completed reminders and one incomplete reminder, with no additional reminders." }
+      ]
+    }
+  ]
+}

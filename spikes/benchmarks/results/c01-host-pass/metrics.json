@@ -1,0 +1,77 @@
+{
+  "suite": null,
+  "benchmarkCompleted": null,
+  "terminalSuccess": true,
+  "claudeExitCode": null,
+  "parserExitCode": null,
+  "parseErrors": null,
+  "requestedModel": null,
+  "observedModel": "claude-opus-4-7",
+  "wallClockSeconds": 36.708635667,
+  "wallClockSource": "Claude result duration_ms; capture external process time for comparison",
+  "totalHostToolCalls": 2,
+  "mcpToolCalls": 2,
+  "uiAutomationCalls": null,
+  "tokens": {
+    "uncachedInput": 8,
+    "cacheCreationInput": 19196,
+    "cacheReadInput": 59169,
+    "output": 1229,
+    "allInputProcessed": 78373
+  },
+  "byModel": [
+    {
+      "model": "claude-opus-4-7",
+      "uncachedInputTokens": 8,
+      "cacheCreationInputTokens": 19196,
+      "cacheReadInputTokens": 59169,
+      "outputTokens": 1229,
+      "estimatedCostUsd": 0.2523095
+    }
+  ],
+  "estimatedCostUsd": 0.2523095,
+  "costMeaning": "Claude Code client estimate at API prices, not a subscription invoice",
+  "source": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-lZRPrt/claude.jsonl",
+  "startedAt": "2026-09-25T02:20:28.739Z",
+  "exitCode": 0,
+  "rawTranscriptPath": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-lZRPrt/claude.jsonl",
+  "stderrPresent": false,
+  "scenarioPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/v0.1-release/spikes/scripted/integration/scenarios/c01-nina-no-results.json",
+  "bridgeCli": "/tmp/jev-ios-bridge-package-smoke.ryEQ6v/consumer/node_modules/jev-ios-bridge/dist/cli.js",
+  "sourceSkill": "/tmp/jev-ios-bridge-package-smoke.ryEQ6v/consumer/node_modules/jev-ios-bridge/skills/test-ios/SKILL.md",
+  "limits": {
+    "maxSteps": 100,
+    "wallTimeMs": 900000
+  },
+  "bridgeRunCount": 1,
+  "bridgeRun": {
+    "runId": "dc601a4a-f31c-4156-8524-90523e58949b",
+    "runLogPath": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-lZRPrt/runs/dc601a4a-f31c-4156-8524-90523e58949b/run.jsonl",
+    "verdict": "passed",
+    "reason": "ALL_CHECKPOINTS_PASSED",
+    "steps": 3,
+    "inputTokens": 6228,
+    "durationMs": 17585.588875,
+    "checkpointsPassed": 1,
+    "checkpointCount": 1,
+    "recordedEvents": 10,
+    "actionEvents": 2,
+    "observationEvents": 3,
+    "jevJudgmentEvents": 1,
+    "phaseTimingsMs": {
+      "prepareMs": 2193.150040999999,
+      "observeMs": 8570.280624999998,
+      "decideMs": 1259.118083999998,
+      "actMs": 4579.478916,
+      "waitMs": 0,
+      "cleanupMs": 921.8008750000008
+    },
+    "deviceMetrics": {
+      "referenceRefreshes": 0,
+      "referenceExpiries": 0,
+      "nearTtlRefreshes": 0
+    }
+  },
+  "timingScope": "Claude host and prepared-app bridge UI run; excludes app build and install",
+  "comparisonStatus": "Pending manual review of task equivalence and saved UI outcome"
+}

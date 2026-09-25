@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "scripts": [
+    {
+      "id": "f01-missing-target",
+      "expectedVerdict": "inconclusive",
+      "expectedReason": "TARGET_MISSING"
+    },
+    {
+      "id": "f02-ambiguous-target",
+      "expectedVerdict": "inconclusive",
+      "expectedReason": "TARGET_AMBIGUOUS"
+    },
+    {
+      "id": "f03-cancel-wait",
+      "expectedVerdict": "inconclusive",
+      "expectedReason": "CANCELLED"
+    }
+  ]
+}

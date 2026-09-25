@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "runId": "befc90e6-4e3c-4ec9-a12a-1a7153f4be54",
+  "verdict": "inconclusive",
+  "reason": "GUARD_MISSING",
+  "durationMs": 5625.1612079999995,
+  "steps": 1,
+  "inputTokens": 0,
+  "phaseTimingsMs": {
+    "prepareMs": 1939.6035,
+    "observeMs": 2697.666375,
+    "decideMs": 0,
+    "actMs": 0,
+    "waitMs": 0,
+    "cleanupMs": 963.7328750000006
+  },
+  "checkpointCount": 1,
+  "checkpointResults": [],
+  "actionEvents": 0,
+  "judgmentEvents": 0,
+  "captureEvents": 1,
+  "errorEvents": 1,
+  "jevLatencyMs": 0,
+  "deviceMetrics": {
+    "referenceRefreshes": 0,
+    "referenceExpiries": 0,
+    "nearTtlRefreshes": 0
+  }
+}

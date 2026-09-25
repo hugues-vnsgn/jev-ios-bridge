@@ -1,0 +1,89 @@
+{
+  "kind": "verified-upstream-baseline",
+  "suite": "reminders",
+  "attempt": 2,
+  "precedingExcludedAttempt": "spikes/benchmarks/results/reminders-baseline-audit.json",
+  "sourceCommit": "d13ff0c707b0681769cf31da0eb42c4f94ceafff",
+  "promptSha256": "965357a8822bdf506a72a3911cb43c9dd17fc5d2d8e9fc701ca7ac54b6d2690a",
+  "axeBinary": {
+    "path": "/Users/hugues_mini/.npm/_npx/b998b4270960e258/node_modules/mobilebuildmcp/bundled/axe",
+    "version": "1.8.0",
+    "sha256": "a776cb6ebaa477bd04e8a829eb72ca179d869a1876111ca15a52dde1e91f9ab7"
+  },
+  "model": "claude-opus-4-7",
+  "claudeExitCode": 0,
+  "parserExitCode": 0,
+  "parseErrors": 0,
+  "toolInputErrorsRecovered": 0,
+  "verifiedTask": false,
+  "comparisonEligible": false,
+  "taskStatus": "saved-list-name-unverified",
+  "selectedUiEvidence": {
+    "typedListName": "MCP Benchmark List",
+    "observedListNameBeforeSave": "MCP Benchmark List",
+    "saveActionStatus": "SUCCEEDED",
+    "finalRowLabels": [
+      "Buy milk benchmark, Completed",
+      "File report benchmark, Incomplete",
+      "Call team benchmark, Completed"
+    ],
+    "finalCompletionControls": [
+      "circle.inset.filled",
+      "circle",
+      "circle.inset.filled"
+    ]
+  },
+  "verificationLimit": "No post-save vendor capture exposes the saved list title. The pre-save field was exact and the save action acknowledged, but commit-time autocorrection is possible; final reminder statuses cannot prove the required list name.",
+  "verificationHistory": [
+    {
+      "stage": "initial provisional audit",
+      "classification": "success with limit",
+      "basis": "Exact pre-save title, successful save acknowledgement, and correct final reminder statuses."
+    },
+    {
+      "stage": "corrected audit",
+      "classification": "not comparable",
+      "basis": "No saved overview row or opened-list title was captured after save; exact persisted name remains unverified."
+    }
+  ],
+  "hostWallClockSeconds": 133.569938375,
+  "simulatorSetupSeconds": 29.54,
+  "firstRunPromptDismissalsBeforeHostTimer": [
+    "Continue",
+    "Not Now"
+  ],
+  "hostToolCalls": 18,
+  "tokens": {
+    "uncachedInput": 28,
+    "cacheCreationInput": 24302,
+    "cacheReadInput": 922036,
+    "output": 4049,
+    "allInputProcessed": 946366
+  },
+  "estimatedHostCostUsd": 0.805403,
+  "temporarySimulatorId": "93B21808-4FFA-4C4C-A89D-54F089D32F61",
+  "temporarySimulatorDeletedByHarness": true,
+  "numericSummary": "spikes/benchmarks/results/reminders-baseline-1790304910175.json",
+  "rawResultPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T025511Z/result.json",
+  "rawResultSha256": "16980fea913abb47e48efe53a5cf0311cf9294e2055e0ae6280a18a0752fdc2a",
+  "rawTranscriptPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T025511Z/claude.jsonl",
+  "rawTranscriptSha256": "64411f4a7e8b0ecfcdf095441e8ffd986080ca7153c274ebe7e1619d689cd534",
+  "proof": [
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T025511Z/parsed/0015_tool_call_type_text.md",
+      "sha256": "d98b9ac13d93da1d728cec27d92109565279a99a1bc86d9ac28c0d6cd44fa45f"
+    },
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T025511Z/parsed/0016_tool_result_type_text.md",
+      "sha256": "e644aef7edfab27a5e040a6972f2a667f565fe1bf1df2f259392e49bf8cdec54"
+    },
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T025511Z/parsed/0018_tool_result_tap.md",
+      "sha256": "0b2f933366837f2f4bfe58f47837022c4c46dfb666e5e42130c49abc02172d53"
+    },
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T025511Z/parsed/0034_tool_result_batch.md",
+      "sha256": "58ffaade50d839f710aa6338f5bdefb5c612fb08272edf93bce933baf49e3f60"
+    }
+  ]
+}

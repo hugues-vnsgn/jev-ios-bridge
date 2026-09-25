@@ -1,0 +1,3929 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "protocol": "rs/1",
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+      "screenHash": "054noin",
+      "seq": 43,
+      "capturedAtMs": 1790309308265,
+      "expiresAtMs": 1790309368265,
+      "elements": [
+        {
+          "ref": "e1",
+          "role": "application",
+          "label": "Weather",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e2",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e3",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e4",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e5",
+          "role": "other",
+          "frame": {
+            "x": -440,
+            "y": -956,
+            "width": 1320,
+            "height": 2868
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e6",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e7",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e8",
+          "role": "scroll-view",
+          "identifier": "weather.mainScrollView",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch",
+            "swipeWithin"
+          ]
+        },
+        {
+          "ref": "e9",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": -758.67,
+            "width": 440,
+            "height": 1786.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e10",
+          "role": "text",
+          "label": "London",
+          "identifier": "weather.heroLocation",
+          "frame": {
+            "x": 184,
+            "y": -662.67,
+            "width": 72,
+            "height": 26.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e11",
+          "role": "text",
+          "label": "England, United Kingdom",
+          "frame": {
+            "x": 141,
+            "y": -634.33,
+            "width": 158,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e12",
+          "role": "text",
+          "label": "11",
+          "frame": {
+            "x": 144.83,
+            "y": -620.67,
+            "width": 143.33,
+            "height": 157.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e13",
+          "role": "text",
+          "label": "°",
+          "frame": {
+            "x": 282.17,
+            "y": -602.67,
+            "width": 13,
+            "height": 43
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e14",
+          "role": "text",
+          "label": "Light Rain",
+          "frame": {
+            "x": 178,
+            "y": -463,
+            "width": 84,
+            "height": 23
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e15",
+          "role": "text",
+          "label": "H:13° L:9°",
+          "frame": {
+            "x": 181.5,
+            "y": -438,
+            "width": 77,
+            "height": 18
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e16",
+          "role": "text",
+          "label": "\"A soft, steady rain\"",
+          "frame": {
+            "x": 156.67,
+            "y": -410,
+            "width": 126.67,
+            "height": 17
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e17",
+          "role": "text",
+          "label": "HOURLY FORECAST",
+          "frame": {
+            "x": 28,
+            "y": -361,
+            "width": 130,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e18",
+          "role": "scroll-view",
+          "frame": {
+            "x": 12,
+            "y": -341.67,
+            "width": 416,
+            "height": 116
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e19",
+          "role": "other",
+          "frame": {
+            "x": 12,
+            "y": -341.67,
+            "width": 672,
+            "height": 116
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e20",
+          "role": "text",
+          "label": "Now",
+          "frame": {
+            "x": 26.67,
+            "y": -342.67,
+            "width": 26.67,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e21",
+          "role": "text",
+          "label": "2pm",
+          "frame": {
+            "x": 82.5,
+            "y": -342.67,
+            "width": 27,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e22",
+          "role": "text",
+          "label": "3pm",
+          "frame": {
+            "x": 138.5,
+            "y": -342.67,
+            "width": 27,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e23",
+          "role": "text",
+          "label": "4pm",
+          "frame": {
+            "x": 194.5,
+            "y": -342.67,
+            "width": 27,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e24",
+          "role": "text",
+          "label": "5pm",
+          "frame": {
+            "x": 250.5,
+            "y": -342.67,
+            "width": 27,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e25",
+          "role": "text",
+          "label": "6pm",
+          "frame": {
+            "x": 306.5,
+            "y": -342.67,
+            "width": 27,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e26",
+          "role": "text",
+          "label": "7pm",
+          "frame": {
+            "x": 362.5,
+            "y": -342.67,
+            "width": 27,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e27",
+          "role": "text",
+          "label": "8pm",
+          "frame": {
+            "x": 418.5,
+            "y": -342.67,
+            "width": 27,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e28",
+          "role": "text",
+          "label": "9pm",
+          "frame": {
+            "x": 474.5,
+            "y": -342.67,
+            "width": 27,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e29",
+          "role": "text",
+          "label": "10pm",
+          "frame": {
+            "x": 526.5,
+            "y": -342.67,
+            "width": 35,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e30",
+          "role": "text",
+          "label": "11pm",
+          "frame": {
+            "x": 582.5,
+            "y": -342.67,
+            "width": 35,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e31",
+          "role": "text",
+          "label": "12am",
+          "frame": {
+            "x": 638.83,
+            "y": -342.67,
+            "width": 34.33,
+            "height": 15.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e32",
+          "role": "text",
+          "label": "11°",
+          "frame": {
+            "x": 25.5,
+            "y": -247,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e33",
+          "role": "text",
+          "label": "12°",
+          "frame": {
+            "x": 81.5,
+            "y": -247,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e34",
+          "role": "text",
+          "label": "12°",
+          "frame": {
+            "x": 137.5,
+            "y": -247,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e35",
+          "role": "text",
+          "label": "13°",
+          "frame": {
+            "x": 193.5,
+            "y": -247,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e36",
+          "role": "text",
+          "label": "12°",
+          "frame": {
+            "x": 249.5,
+            "y": -247,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e37",
+          "role": "text",
+          "label": "12°",
+          "frame": {
+            "x": 305.5,
+            "y": -247,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e38",
+          "role": "text",
+          "label": "11°",
+          "frame": {
+            "x": 361.5,
+            "y": -247,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e39",
+          "role": "text",
+          "label": "11°",
+          "frame": {
+            "x": 417.5,
+            "y": -247,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e40",
+          "role": "text",
+          "label": "10°",
+          "frame": {
+            "x": 473.5,
+            "y": -247,
+            "width": 29,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e41",
+          "role": "text",
+          "label": "9°",
+          "frame": {
+            "x": 534.83,
+            "y": -247,
+            "width": 18.33,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e42",
+          "role": "text",
+          "label": "9°",
+          "frame": {
+            "x": 590.83,
+            "y": -247,
+            "width": 18.33,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e43",
+          "role": "text",
+          "label": "9°",
+          "frame": {
+            "x": 646.83,
+            "y": -247,
+            "width": 18.33,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e44",
+          "role": "text",
+          "label": "7-DAY FORECAST",
+          "frame": {
+            "x": 28,
+            "y": -197.67,
+            "width": 117,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e45",
+          "role": "text",
+          "label": "Today",
+          "frame": {
+            "x": 28,
+            "y": -159.17,
+            "width": 48,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e46",
+          "role": "text",
+          "label": "9°",
+          "frame": {
+            "x": 155,
+            "y": -158.67,
+            "width": 17,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e47",
+          "role": "text",
+          "label": "13°",
+          "frame": {
+            "x": 385,
+            "y": -158.67,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e48",
+          "role": "text",
+          "label": "Wed",
+          "frame": {
+            "x": 28,
+            "y": -108.83,
+            "width": 34.67,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e49",
+          "role": "text",
+          "label": "8°",
+          "frame": {
+            "x": 155,
+            "y": -108.33,
+            "width": 17,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e50",
+          "role": "text",
+          "label": "12°",
+          "frame": {
+            "x": 385,
+            "y": -108.33,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e51",
+          "role": "text",
+          "label": "Thu",
+          "frame": {
+            "x": 28,
+            "y": -58.5,
+            "width": 29.67,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e52",
+          "role": "text",
+          "label": "8°",
+          "frame": {
+            "x": 155,
+            "y": -58,
+            "width": 17,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e53",
+          "role": "text",
+          "label": "13°",
+          "frame": {
+            "x": 385,
+            "y": -58,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e54",
+          "role": "text",
+          "label": "Fri",
+          "frame": {
+            "x": 28,
+            "y": -8.17,
+            "width": 19.33,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e55",
+          "role": "text",
+          "label": "9°",
+          "frame": {
+            "x": 155,
+            "y": -7.67,
+            "width": 17,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e56",
+          "role": "text",
+          "label": "14°",
+          "frame": {
+            "x": 385,
+            "y": -7.67,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e57",
+          "role": "text",
+          "label": "Sat",
+          "frame": {
+            "x": 28,
+            "y": 42.17,
+            "width": 25.33,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e58",
+          "role": "text",
+          "label": "10°",
+          "frame": {
+            "x": 145,
+            "y": 42.67,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e59",
+          "role": "text",
+          "label": "17°",
+          "frame": {
+            "x": 385,
+            "y": 42.67,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e60",
+          "role": "text",
+          "label": "Sun",
+          "frame": {
+            "x": 28,
+            "y": 92.5,
+            "width": 29.67,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e61",
+          "role": "text",
+          "label": "9°",
+          "frame": {
+            "x": 155,
+            "y": 93,
+            "width": 17,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e62",
+          "role": "text",
+          "label": "16°",
+          "frame": {
+            "x": 385,
+            "y": 93,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e63",
+          "role": "text",
+          "label": "Mon",
+          "frame": {
+            "x": 28,
+            "y": 142.83,
+            "width": 33.67,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e64",
+          "role": "text",
+          "label": "6°",
+          "frame": {
+            "x": 155,
+            "y": 143.33,
+            "width": 17,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e65",
+          "role": "text",
+          "label": "12°",
+          "frame": {
+            "x": 385,
+            "y": 143.33,
+            "width": 27,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e66",
+          "role": "text",
+          "label": "WIND",
+          "frame": {
+            "x": 30,
+            "y": 206,
+            "width": 35,
+            "height": 12.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e67",
+          "role": "text",
+          "label": "N",
+          "frame": {
+            "x": 109.17,
+            "y": 216,
+            "width": 9.67,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e68",
+          "role": "text",
+          "label": "LULL",
+          "frame": {
+            "x": 216,
+            "y": 238.67,
+            "width": 30.67,
+            "height": 12
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e69",
+          "role": "text",
+          "label": "3.6",
+          "frame": {
+            "x": 356.67,
+            "y": 232,
+            "width": 26.33,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e70",
+          "role": "text",
+          "label": "m/s",
+          "frame": {
+            "x": 391,
+            "y": 238,
+            "width": 19,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e71",
+          "role": "text",
+          "label": "SW",
+          "frame": {
+            "x": 103.5,
+            "y": 275.67,
+            "width": 21,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e72",
+          "role": "text",
+          "label": "NOW",
+          "frame": {
+            "x": 216,
+            "y": 281,
+            "width": 29.33,
+            "height": 12
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e73",
+          "role": "text",
+          "label": "6.4",
+          "frame": {
+            "x": 356.67,
+            "y": 274.33,
+            "width": 26.33,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e74",
+          "role": "text",
+          "label": "m/s",
+          "frame": {
+            "x": 391,
+            "y": 280.33,
+            "width": 19,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e75",
+          "role": "text",
+          "label": "W",
+          "frame": {
+            "x": 18,
+            "y": 306,
+            "width": 12,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e76",
+          "role": "text",
+          "label": "6.4",
+          "frame": {
+            "x": 94,
+            "y": 291,
+            "width": 40,
+            "height": 36
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e77",
+          "role": "text",
+          "label": "E",
+          "frame": {
+            "x": 200,
+            "y": 306,
+            "width": 8,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e78",
+          "role": "text",
+          "label": "m/s",
+          "frame": {
+            "x": 104.83,
+            "y": 329,
+            "width": 18.33,
+            "height": 12.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e79",
+          "role": "text",
+          "label": "GUST",
+          "frame": {
+            "x": 216,
+            "y": 323.33,
+            "width": 34,
+            "height": 12
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e80",
+          "role": "text",
+          "label": "10.6",
+          "frame": {
+            "x": 346.33,
+            "y": 316.67,
+            "width": 36.67,
+            "height": 20.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e81",
+          "role": "text",
+          "label": "m/s",
+          "frame": {
+            "x": 391,
+            "y": 322.67,
+            "width": 19,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e82",
+          "role": "text",
+          "label": "From the southwest · Moderate breeze",
+          "frame": {
+            "x": 216,
+            "y": 359,
+            "width": 117.67,
+            "height": 26.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e83",
+          "role": "text",
+          "label": "S",
+          "frame": {
+            "x": 109.67,
+            "y": 396,
+            "width": 8.67,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e84",
+          "role": "other",
+          "frame": {
+            "x": 12,
+            "y": 434.67,
+            "width": 337.67,
+            "height": 462
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e85",
+          "role": "text",
+          "label": "UV INDEX",
+          "frame": {
+            "x": 26,
+            "y": 434.67,
+            "width": 62,
+            "height": 12.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e86",
+          "role": "text",
+          "label": "1",
+          "frame": {
+            "x": 26,
+            "y": 453.33,
+            "width": 16.67,
+            "height": 33.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e87",
+          "role": "text",
+          "label": "Low",
+          "frame": {
+            "x": 26,
+            "y": 544.33,
+            "width": 23,
+            "height": 14.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e88",
+          "role": "text",
+          "label": "HUMIDITY",
+          "frame": {
+            "x": 239,
+            "y": 434.67,
+            "width": 64.67,
+            "height": 12.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e89",
+          "role": "text",
+          "label": "89%",
+          "frame": {
+            "x": 239,
+            "y": 453.33,
+            "width": 54.67,
+            "height": 33.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e90",
+          "role": "text",
+          "label": "Dew point: 8°",
+          "frame": {
+            "x": 239,
+            "y": 544.33,
+            "width": 77.33,
+            "height": 14.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e91",
+          "role": "button",
+          "label": "PRECIP., 78%, Next 24 hours",
+          "identifier": "weather.precipitationCard",
+          "frame": {
+            "x": 12,
+            "y": 582.67,
+            "width": 203,
+            "height": 152
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e92",
+          "role": "text",
+          "label": "PRECIP.",
+          "frame": {
+            "x": 26,
+            "y": 596.67,
+            "width": 50.33,
+            "height": 12.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e93",
+          "role": "text",
+          "label": "78%",
+          "frame": {
+            "x": 26,
+            "y": 615.33,
+            "width": 54.67,
+            "height": 33.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e94",
+          "role": "text",
+          "label": "Next 24 hours",
+          "frame": {
+            "x": 26,
+            "y": 706.33,
+            "width": 79.67,
+            "height": 14.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e95",
+          "role": "text",
+          "label": "VISIBILITY",
+          "frame": {
+            "x": 239,
+            "y": 596.67,
+            "width": 68.33,
+            "height": 12.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e96",
+          "role": "text",
+          "label": "9.7 km",
+          "frame": {
+            "x": 239,
+            "y": 615.33,
+            "width": 79.33,
+            "height": 33.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e97",
+          "role": "text",
+          "label": "Reduced",
+          "frame": {
+            "x": 239,
+            "y": 706.33,
+            "width": 50,
+            "height": 14.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e98",
+          "role": "text",
+          "label": "Pressure 29.71 inches of mercury, falling",
+          "value": "7 below standard",
+          "frame": {
+            "x": 12,
+            "y": 744.67,
+            "width": 203,
+            "height": 152
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e99",
+          "role": "text",
+          "label": "PRESSURE",
+          "frame": {
+            "x": 26,
+            "y": 757.17,
+            "width": 67,
+            "height": 12.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e100",
+          "role": "text",
+          "label": "29.71",
+          "frame": {
+            "x": 85.67,
+            "y": 811.5,
+            "width": 55.67,
+            "height": 26.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e101",
+          "role": "text",
+          "label": "inHg",
+          "frame": {
+            "x": 101.33,
+            "y": 838.83,
+            "width": 24.33,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e102",
+          "role": "text",
+          "label": "L",
+          "frame": {
+            "x": 31.83,
+            "y": 854.17,
+            "width": 7.33,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e103",
+          "role": "text",
+          "label": "H",
+          "frame": {
+            "x": 186.83,
+            "y": 854.17,
+            "width": 9.33,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e104",
+          "role": "text",
+          "label": "↓",
+          "frame": {
+            "x": 26,
+            "y": 869.83,
+            "width": 9.67,
+            "height": 14.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e105",
+          "role": "text",
+          "label": "Falling",
+          "frame": {
+            "x": 39.67,
+            "y": 869.83,
+            "width": 36.67,
+            "height": 14.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e106",
+          "role": "text",
+          "label": "SUNSET",
+          "frame": {
+            "x": 239,
+            "y": 752.5,
+            "width": 51.67,
+            "height": 12.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e107",
+          "role": "text",
+          "label": "7:18 PM",
+          "frame": {
+            "x": 239,
+            "y": 771.17,
+            "width": 77,
+            "height": 26.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e108",
+          "role": "text",
+          "label": "Sunrise was 6:42 AM",
+          "frame": {
+            "x": 239,
+            "y": 875.5,
+            "width": 110.67,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e109",
+          "role": "text",
+          "label": "Updated just now",
+          "frame": {
+            "x": 171.5,
+            "y": 920.67,
+            "width": 97,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e110",
+          "role": "button",
+          "label": "London",
+          "identifier": "weather.locationButton",
+          "frame": {
+            "x": 12,
+            "y": 81.33,
+            "width": 133.67,
+            "height": 33.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e111",
+          "role": "image",
+          "label": "Map Pin",
+          "identifier": "mappin",
+          "frame": {
+            "x": 44.67,
+            "y": 91,
+            "width": 5.33,
+            "height": 14
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e112",
+          "role": "text",
+          "label": "London",
+          "frame": {
+            "x": 61.67,
+            "y": 89.33,
+            "width": 50.33,
+            "height": 17.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e113",
+          "role": "image",
+          "label": "Go Down",
+          "identifier": "chevron.down",
+          "frame": {
+            "x": 121.33,
+            "y": 95.33,
+            "width": 9,
+            "height": 5.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e114",
+          "role": "button",
+          "label": "Settings",
+          "identifier": "weather.settingsButton",
+          "frame": {
+            "x": 390,
+            "y": 79,
+            "width": 38,
+            "height": 38
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e115",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e116",
+          "role": "other",
+          "frame": {
+            "x": -440,
+            "y": -956,
+            "width": 1320,
+            "height": 2868
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e117",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 440,
+            "height": 894
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e118",
+          "role": "button",
+          "label": "Sheet Grabber",
+          "value": "Expanded",
+          "frame": {
+            "x": 182,
+            "y": 57,
+            "width": 76,
+            "height": 25
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e119",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 440,
+            "height": 894
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e120",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 440,
+            "height": 894
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e121",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 440,
+            "height": 894
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e122",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 440,
+            "height": 894
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e123",
+          "role": "scroll-view",
+          "identifier": "weather.precipitationDetail",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 440.33,
+            "height": 894
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch",
+            "swipeWithin"
+          ]
+        },
+        {
+          "ref": "e124",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 440.17,
+            "height": 796
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e125",
+          "role": "button",
+          "label": "Back",
+          "frame": {
+            "x": 16.17,
+            "y": 116,
+            "width": 73.33,
+            "height": 33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e126",
+          "role": "image",
+          "label": "Back",
+          "identifier": "chevron.left",
+          "frame": {
+            "x": 27.17,
+            "y": 126.33,
+            "width": 7,
+            "height": 12.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e127",
+          "role": "text",
+          "label": "Back",
+          "frame": {
+            "x": 42.67,
+            "y": 124,
+            "width": 32.67,
+            "height": 17
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e128",
+          "role": "button",
+          "label": "Close",
+          "identifier": "xmark",
+          "frame": {
+            "x": 392.5,
+            "y": 116.67,
+            "width": 32,
+            "height": 32
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e129",
+          "role": "text",
+          "label": "PRECIPITATION",
+          "frame": {
+            "x": 16,
+            "y": 171,
+            "width": 103.33,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e130",
+          "role": "text",
+          "label": "78%",
+          "frame": {
+            "x": 16,
+            "y": 196.33,
+            "width": 88.33,
+            "height": 57.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e131",
+          "role": "text",
+          "label": "chance over the next 24 hours",
+          "frame": {
+            "x": 16,
+            "y": 265.67,
+            "width": 220,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e132",
+          "role": "text",
+          "label": "NEXT 24 HOURS",
+          "frame": {
+            "x": 32,
+            "y": 321,
+            "width": 109.33,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e133",
+          "role": "text",
+          "label": "Now",
+          "frame": {
+            "x": 32,
+            "y": 478.33,
+            "width": 23.33,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e134",
+          "role": "text",
+          "label": "6h",
+          "frame": {
+            "x": 124.67,
+            "y": 478.33,
+            "width": 13.67,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e135",
+          "role": "text",
+          "label": "12h",
+          "frame": {
+            "x": 207.67,
+            "y": 478.33,
+            "width": 20.67,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e136",
+          "role": "text",
+          "label": "18h",
+          "frame": {
+            "x": 297.67,
+            "y": 478.33,
+            "width": 20.67,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e137",
+          "role": "text",
+          "label": "24h",
+          "frame": {
+            "x": 387.67,
+            "y": 478.33,
+            "width": 20.67,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e138",
+          "role": "other",
+          "frame": {
+            "x": 32,
+            "y": 535.67,
+            "width": 296.83,
+            "height": 101.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e139",
+          "role": "text",
+          "label": "TOTAL EXPECTED",
+          "frame": {
+            "x": 32,
+            "y": 535.67,
+            "width": 115,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e140",
+          "role": "text",
+          "label": "10.7 mm",
+          "frame": {
+            "x": 32,
+            "y": 553,
+            "width": 82.67,
+            "height": 26.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e141",
+          "role": "text",
+          "label": "HOURS OF RAIN",
+          "frame": {
+            "x": 224.17,
+            "y": 535.67,
+            "width": 104.67,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e142",
+          "role": "text",
+          "label": "6 hrs",
+          "frame": {
+            "x": 224.17,
+            "y": 553,
+            "width": 45.67,
+            "height": 26.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e143",
+          "role": "text",
+          "label": "STORM DISTANCE",
+          "frame": {
+            "x": 32,
+            "y": 593.33,
+            "width": 116.67,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e144",
+          "role": "text",
+          "label": "14 km",
+          "frame": {
+            "x": 32,
+            "y": 610.67,
+            "width": 58,
+            "height": 26.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e145",
+          "role": "text",
+          "label": "LIGHTNING",
+          "frame": {
+            "x": 224.17,
+            "y": 593.33,
+            "width": 73.33,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e146",
+          "role": "text",
+          "label": "None",
+          "frame": {
+            "x": 224.17,
+            "y": 610.67,
+            "width": 49,
+            "height": 26.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e147",
+          "role": "text",
+          "label": "ABOUT",
+          "frame": {
+            "x": 32,
+            "y": 681.67,
+            "width": 46.67,
+            "height": 13.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e148",
+          "role": "text",
+          "label": "Light rain is expected to begin around 2 PM and continue intermittently through the evening. Total rainfall is forecast to be modest, with the heaviest period between 4 and 6 PM. No thunderstorm activity is expected.",
+          "frame": {
+            "x": 32,
+            "y": 703,
+            "width": 376.33,
+            "height": 79
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e149",
+          "role": "slider",
+          "label": "Vertical scroll bar, 1 page",
+          "value": "0%",
+          "frame": {
+            "x": 407,
+            "y": 98,
+            "width": 30,
+            "height": 796
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e150",
+          "role": "other",
+          "frame": {
+            "x": 434,
+            "y": 165,
+            "width": 3,
+            "height": 732
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e151",
+          "role": "slider",
+          "label": "Vertical scroll bar, 1 page",
+          "value": "0%",
+          "frame": {
+            "x": 407,
+            "y": 98,
+            "width": 30,
+            "height": 796
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e152",
+          "role": "other",
+          "frame": {
+            "x": 434,
+            "y": 165,
+            "width": 3,
+            "height": 732
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e153",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e154",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e155",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "action": "longPress",
+          "elementRef": "e2"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e2"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e3"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e3"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e4"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e4"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e5"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e5"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e6"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e7"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e7"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e8"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e8"
+        },
+        {
+          "action": "swipeWithin",
+          "elementRef": "e8"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e9"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e9"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e54",
+          "label": "Fri"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e54",
+          "label": "Fri"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e55",
+          "label": "9°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e55",
+          "label": "9°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e56",
+          "label": "14°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e56",
+          "label": "14°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e57",
+          "label": "Sat"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e57",
+          "label": "Sat"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e58",
+          "label": "10°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e58",
+          "label": "10°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e59",
+          "label": "17°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e59",
+          "label": "17°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e60",
+          "label": "Sun"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e60",
+          "label": "Sun"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e61",
+          "label": "9°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e61",
+          "label": "9°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e62",
+          "label": "16°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e62",
+          "label": "16°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e63",
+          "label": "Mon"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e63",
+          "label": "Mon"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e64",
+          "label": "6°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e64",
+          "label": "6°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e65",
+          "label": "12°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e65",
+          "label": "12°"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e66",
+          "label": "WIND"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e66",
+          "label": "WIND"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e67",
+          "label": "N"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e67",
+          "label": "N"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e68",
+          "label": "LULL"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e68",
+          "label": "LULL"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e69",
+          "label": "3.6"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e69",
+          "label": "3.6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e70",
+          "label": "m/s"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e70",
+          "label": "m/s"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e71",
+          "label": "SW"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e71",
+          "label": "SW"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e72",
+          "label": "NOW"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e72",
+          "label": "NOW"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e73",
+          "label": "6.4"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e73",
+          "label": "6.4"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e74",
+          "label": "m/s"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e74",
+          "label": "m/s"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e75",
+          "label": "W"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e75",
+          "label": "W"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e76",
+          "label": "6.4"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e76",
+          "label": "6.4"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e77",
+          "label": "E"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e77",
+          "label": "E"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e78",
+          "label": "m/s"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e78",
+          "label": "m/s"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e79",
+          "label": "GUST"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e79",
+          "label": "GUST"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e80",
+          "label": "10.6"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e80",
+          "label": "10.6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e81",
+          "label": "m/s"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e81",
+          "label": "m/s"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e82",
+          "label": "From the southwest · Moderate breeze"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e82",
+          "label": "From the southwest · Moderate breeze"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e83",
+          "label": "S"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e83",
+          "label": "S"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e84"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e84"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e85",
+          "label": "UV INDEX"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e85",
+          "label": "UV INDEX"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e86",
+          "label": "1"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e86",
+          "label": "1"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e87",
+          "label": "Low"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e87",
+          "label": "Low"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e88",
+          "label": "HUMIDITY"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e88",
+          "label": "HUMIDITY"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e89",
+          "label": "89%"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e89",
+          "label": "89%"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e90",
+          "label": "Dew point: 8°"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e90",
+          "label": "Dew point: 8°"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e91",
+          "label": "PRECIP., 78%, Next 24 hours"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e91",
+          "label": "PRECIP., 78%, Next 24 hours"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e91",
+          "label": "PRECIP., 78%, Next 24 hours"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e92",
+          "label": "PRECIP."
+        },
+        {
+          "action": "touch",
+          "elementRef": "e92",
+          "label": "PRECIP."
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e93",
+          "label": "78%"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e93",
+          "label": "78%"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e94",
+          "label": "Next 24 hours"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e94",
+          "label": "Next 24 hours"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e95",
+          "label": "VISIBILITY"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e95",
+          "label": "VISIBILITY"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e96",
+          "label": "9.7 km"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e96",
+          "label": "9.7 km"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e97",
+          "label": "Reduced"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e97",
+          "label": "Reduced"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e98",
+          "label": "Pressure 29.71 inches of mercury, falling"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e98",
+          "label": "Pressure 29.71 inches of mercury, falling"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e99",
+          "label": "PRESSURE"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e99",
+          "label": "PRESSURE"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e100",
+          "label": "29.71"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e100",
+          "label": "29.71"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e101",
+          "label": "inHg"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e101",
+          "label": "inHg"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e102",
+          "label": "L"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e102",
+          "label": "L"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e103",
+          "label": "H"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e103",
+          "label": "H"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e104",
+          "label": "↓"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e104",
+          "label": "↓"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e105",
+          "label": "Falling"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e105",
+          "label": "Falling"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e106",
+          "label": "SUNSET"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e106",
+          "label": "SUNSET"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e107",
+          "label": "7:18 PM"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e107",
+          "label": "7:18 PM"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e108",
+          "label": "Sunrise was 6:42 AM"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e108",
+          "label": "Sunrise was 6:42 AM"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e109",
+          "label": "Updated just now"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e109",
+          "label": "Updated just now"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e110",
+          "label": "London"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e110",
+          "label": "London"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e110",
+          "label": "London"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e111",
+          "label": "Map Pin"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e111",
+          "label": "Map Pin"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e112",
+          "label": "London"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e112",
+          "label": "London"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e113",
+          "label": "Go Down"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e113",
+          "label": "Go Down"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e114",
+          "label": "Settings"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e114",
+          "label": "Settings"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e114",
+          "label": "Settings"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e115"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e115"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e116"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e116"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e117"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e117"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e118",
+          "label": "Sheet Grabber"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e118",
+          "label": "Sheet Grabber"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e118",
+          "label": "Sheet Grabber"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e119"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e119"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e120"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e120"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e121"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e121"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e122"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e122"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e123"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e123"
+        },
+        {
+          "action": "swipeWithin",
+          "elementRef": "e123"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e124"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e124"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e125",
+          "label": "Back"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e125",
+          "label": "Back"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e125",
+          "label": "Back"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e126",
+          "label": "Back"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e126",
+          "label": "Back"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e127",
+          "label": "Back"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e127",
+          "label": "Back"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e128",
+          "label": "Close"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e128",
+          "label": "Close"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e128",
+          "label": "Close"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e129",
+          "label": "PRECIPITATION"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e129",
+          "label": "PRECIPITATION"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e130",
+          "label": "78%"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e130",
+          "label": "78%"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e131",
+          "label": "chance over the next 24 hours"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e131",
+          "label": "chance over the next 24 hours"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e132",
+          "label": "NEXT 24 HOURS"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e132",
+          "label": "NEXT 24 HOURS"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e133",
+          "label": "Now"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e133",
+          "label": "Now"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e134",
+          "label": "6h"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e134",
+          "label": "6h"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e135",
+          "label": "12h"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e135",
+          "label": "12h"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e136",
+          "label": "18h"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e136",
+          "label": "18h"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e137",
+          "label": "24h"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e137",
+          "label": "24h"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e138"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e138"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e139",
+          "label": "TOTAL EXPECTED"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e139",
+          "label": "TOTAL EXPECTED"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e140",
+          "label": "10.7 mm"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e140",
+          "label": "10.7 mm"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e141",
+          "label": "HOURS OF RAIN"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e141",
+          "label": "HOURS OF RAIN"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e142",
+          "label": "6 hrs"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e142",
+          "label": "6 hrs"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e143",
+          "label": "STORM DISTANCE"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e143",
+          "label": "STORM DISTANCE"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e144",
+          "label": "14 km"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e144",
+          "label": "14 km"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e145",
+          "label": "LIGHTNING"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e145",
+          "label": "LIGHTNING"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e146",
+          "label": "None"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e146",
+          "label": "None"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e147",
+          "label": "ABOUT"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e147",
+          "label": "ABOUT"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e148",
+          "label": "Light rain is expected to begin around 2 PM and continue intermittently through the evening. Total rainfall is forecast to be modest, with the heaviest period between 4 and 6 PM. No thunderstorm activity is expected."
+        },
+        {
+          "action": "touch",
+          "elementRef": "e148",
+          "label": "Light rain is expected to begin around 2 PM and continue intermittently through the evening. Total rainfall is forecast to be modest, with the heaviest period between 4 and 6 PM. No thunderstorm activity is expected."
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e149",
+          "label": "Vertical scroll bar, 1 page"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e149",
+          "label": "Vertical scroll bar, 1 page"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e150"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e150"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e151",
+          "label": "Vertical scroll bar, 1 page"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e151",
+          "label": "Vertical scroll bar, 1 page"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e152"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e152"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e153"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e153"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e154"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e154"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e155"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e155"
+        }
+      ]
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Drag visible sheet content: mobilebuildmcp ui-automation drag --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e123 --direction up --distance 0.7 --duration 0.8 --steps 80 --post-delay 0.5",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e125"
+  ]
+}

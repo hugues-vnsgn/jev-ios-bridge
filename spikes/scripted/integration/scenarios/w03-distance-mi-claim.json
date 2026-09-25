@@ -1,0 +1,134 @@
+{
+  "app": {
+    "bundleId": "com.sentry.weather.Weather"
+  },
+  "device": {
+    "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+  },
+  "preconditions": [
+    "Weather main is in front; Distance will be mi selected when Settings opens."
+  ],
+  "values": {},
+  "steps": [
+    {
+      "id": "openSettings",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "button",
+            "identifier": "weather.locationButton"
+          },
+          {
+            "role": "button",
+            "identifier": "weather.settingsButton"
+          }
+        ],
+        "absent": [
+          {
+            "role": "text",
+            "label": "Locations"
+          },
+          {
+            "role": "text",
+            "label": "Settings"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "identifier": "weather.settingsButton"
+        }
+      }
+    },
+    {
+      "id": "selectKm",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Settings"
+          },
+          {
+            "role": "button",
+            "label": "mi",
+            "value": "selected"
+          },
+          {
+            "role": "button",
+            "label": "km",
+            "value": "not selected"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "km",
+          "value": "not selected"
+        }
+      }
+    },
+    {
+      "id": "settleKm",
+      "kind": "wait",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Settings"
+          },
+          {
+            "role": "text",
+            "label": "Distance"
+          }
+        ]
+      },
+      "until": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Settings"
+          },
+          {
+            "role": "button",
+            "label": "mi",
+            "value": "not selected"
+          },
+          {
+            "role": "button",
+            "label": "km",
+            "value": "selected"
+          }
+        ]
+      },
+      "timeoutMs": 10000
+    },
+    {
+      "id": "verify",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Settings"
+          },
+          {
+            "role": "text",
+            "label": "Distance"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "claim",
+          "claim": "The Distance setting has mi selected."
+        }
+      ]
+    }
+  ]
+}

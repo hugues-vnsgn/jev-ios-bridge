@@ -1,0 +1,61 @@
+--- benchmarks/claude-ui/suites/weather.yml	2026-09-25 09:24:28
++++ benchmarks/claude-ui/suites/weather-prepared.yml	2026-09-25 11:01:27
+@@ -1,51 +1,23 @@
+-name: weather
+-prompt: ../prompts/weather.md
++name: weather-prepared
++prompt: ../prompts/weather-prepared.md
+ workingDirectory: example_projects/Weather
++temporarySimulator: false
+ sessionDefaults:
+-  projectPath: Weather.xcodeproj
+-  scheme: Weather
+-  simulatorName: iPhone 17 Pro Max
++  bundleId: com.sentry.weather.Weather
++  simulatorId: 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7
+ claude:
+   model: claude-opus-4-7
+   appendSystemPrompt: >-
+     Match the benchmark baseline tool pattern for Weather. If you need tool discovery, load all
+     required tools in one ToolSearch using the full MCP names: mcp__mobilebuildmcp-dev__session_show_defaults,
+-    mcp__mobilebuildmcp-dev__build_run_sim, mcp__mobilebuildmcp-dev__snapshot_ui,
++    mcp__mobilebuildmcp-dev__launch_app_sim, mcp__mobilebuildmcp-dev__snapshot_ui,
+     mcp__mobilebuildmcp-dev__tap, mcp__mobilebuildmcp-dev__batch,
+     mcp__mobilebuildmcp-dev__type_text, mcp__mobilebuildmcp-dev__swipe. Do not call ToolSearch
+-    again after that. Start with session_show_defaults, then build_run_sim. After build_run_sim, use
++    again after that. Start with session_show_defaults, then launch_app_sim. After launch_app_sim, use
+     this tracked UI sequence: snapshot_ui, tap, batch, tap,
+     tap, type_text, tap, tap, swipe, snapshot_ui, tap. Do not call snapshot_ui immediately after the
+     batch; the next two tracked UI calls after batch should be tap, then tap. Keep assistant text terse:
+     no progress narration beyond what is needed to choose tools, and keep the final answer to one sentence.
+-baseline:
+-  totalToolCalls: 14
+-  trackedToolCalls: 13
+-  mcpToolCalls: 13
+-  uiAutomationCalls: 11
+-  wallClockSeconds: 100.03
+-  tools:
+-    session_show_defaults: 1
+-    build_run_sim: 1
+-    snapshot_ui: 2
+-    tap: 6
+-    batch: 1
+-    type_text: 1
+-    swipe: 1
+-baselineToolSequence:
+-  - session_show_defaults
+-  - build_run_sim
+-  - snapshot_ui
+-  - tap
+-  - batch
+-  - tap
+-  - tap
+-  - type_text
+-  - tap
+-  - tap
+-  - swipe
+-  - snapshot_ui
+-  - tap
+ failurePatterns:
+   - STALE_ELEMENT_REF
+   - SNAPSHOT_MISSING

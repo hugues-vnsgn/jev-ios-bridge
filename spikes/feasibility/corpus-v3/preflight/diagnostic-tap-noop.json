@@ -1,0 +1,13 @@
+{
+  "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+  "bundleId": "dev.jevbridge.diagnostic",
+  "tool": "mobilebuildmcp@2.7.1 ui-automation tap",
+  "target": "e15|tap|button|Add Apple ($2)||choose.apple",
+  "attempts": 2,
+  "toolResultEachAttempt": "SUCCEEDED",
+  "beforeScreenHash": "12lj7j0",
+  "afterScreenHash": "12lj7j0",
+  "observedAfter": "Apple remained enabled; Complete order remained disabled; screenshot showed no selection",
+  "assetsPrefix": "preflight-diagnostic-tap-noop",
+  "jevRequests": 0
+}

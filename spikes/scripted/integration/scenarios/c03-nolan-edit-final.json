@@ -1,0 +1,170 @@
+{
+  "app": {
+    "bundleId": "com.apple.MobileAddressBook"
+  },
+  "device": {
+    "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+  },
+  "preconditions": [
+    "Contacts list or Search results is in front; synthetic Nolan Ames is saved with a final email."
+  ],
+  "values": {
+    "query": "Nolan Ames"
+  },
+  "steps": [
+    {
+      "id": "searchNolan",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "Contacts"
+          },
+          {
+            "role": "text-field"
+          }
+        ],
+        "absent": [
+          {
+            "role": "text",
+            "identifier": "ContactCardHeaderView"
+          },
+          {
+            "role": "button",
+            "label": "Done"
+          },
+          {
+            "role": "button",
+            "label": "Cancel"
+          },
+          {
+            "role": "alert"
+          }
+        ]
+      },
+      "action": {
+        "kind": "replaceText",
+        "selector": {
+          "role": "text-field"
+        },
+        "valueKey": "query"
+      }
+    },
+    {
+      "id": "settleNolan",
+      "kind": "wait",
+      "guard": {
+        "present": [
+          {
+            "role": "other",
+            "label": "Search results"
+          },
+          {
+            "role": "text-field",
+            "value": "Nolan Ames"
+          }
+        ]
+      },
+      "until": {
+        "present": [
+          {
+            "role": "other",
+            "label": "Search results"
+          },
+          {
+            "role": "text-field",
+            "value": "Nolan Ames"
+          },
+          {
+            "role": "button",
+            "label": "Contact photo for Nolan Ames"
+          }
+        ]
+      },
+      "timeoutMs": 10000
+    },
+    {
+      "id": "openNolan",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "other",
+            "label": "Search results"
+          },
+          {
+            "role": "text-field",
+            "value": "Nolan Ames"
+          },
+          {
+            "role": "button",
+            "label": "Contact photo for Nolan Ames"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "Contact photo for Nolan Ames"
+        }
+      }
+    },
+    {
+      "id": "openEdit",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "identifier": "ContactCardHeaderView",
+            "label": "Nolan Ames"
+          },
+          {
+            "role": "button",
+            "label": "Edit"
+          },
+          {
+            "role": "button",
+            "label": "home, nolan.final@example.test"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "Edit"
+        }
+      }
+    },
+    {
+      "id": "verify",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "text-field",
+            "identifier": "First name",
+            "value": "Nolan"
+          },
+          {
+            "role": "text-field",
+            "identifier": "home"
+          },
+          {
+            "role": "button",
+            "label": "close"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "claim",
+          "claim": "The Nolan Ames Edit form email field contains nolan.final@example.test."
+        }
+      ]
+    }
+  ]
+}

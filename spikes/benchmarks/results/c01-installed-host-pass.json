@@ -1,0 +1,61 @@
+{
+  "kind": "installed-host-scripted-pass",
+  "precedingAttempts": [
+    "spikes/benchmarks/results/c01-installed-host-smoke.json",
+    "spikes/benchmarks/results/c01-installed-host-repeat.json"
+  ],
+  "startedAt": "2026-09-25T02:20:28.739Z",
+  "package": {
+    "cliPath": "/tmp/jev-ios-bridge-package-smoke.ryEQ6v/consumer/node_modules/jev-ios-bridge/dist/cli.js",
+    "cliSha256": "4355b1dc6f47973ba54f169d1183137556844f755d394ea71bd995fbf2c698d2",
+    "skillPath": "/tmp/jev-ios-bridge-package-smoke.ryEQ6v/consumer/node_modules/jev-ios-bridge/skills/test-ios/SKILL.md",
+    "skillSha256": "f03f7c57e64cbd4c9b6831f52a205b03b428b590d85b5ea17290fca56621d2b2",
+    "wrapperPath": "spikes/benchmarks/run-bridge.mjs",
+    "wrapperSha256": "8afeee3eb4ba3bca60ec6196846de251f1c9d75faf3e40b461b52e6d8646df89"
+  },
+  "scenario": {
+    "path": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/v0.1-release/spikes/scripted/integration/scenarios/c01-nina-no-results.json",
+    "sha256": "ce8e5a2bca54f788811aac911b5b92ee2757548e735982b1a21e176d5e3a764b",
+    "submittedDeepEqualFile": true,
+    "submittedQuery": "Nina Calder"
+  },
+  "host": {
+    "model": "claude-opus-4-7",
+    "exitCode": 0,
+    "toolSequence": [
+      "mcp__jev-ios-bridge__start_scenario",
+      "mcp__jev-ios-bridge__get_report"
+    ],
+    "wallClockSeconds": 36.708635667,
+    "tokens": {
+      "uncachedInput": 8,
+      "cacheCreationInput": 19196,
+      "cacheReadInput": 59169,
+      "output": 1229,
+      "allInputProcessed": 78373
+    },
+    "estimatedCostUsd": 0.2523095,
+    "finalAnswer": "## Verdict: **PASSED**\n\nAll 3 steps and the checkpoint passed. Run completed in ~17.6 s.\n\n### Evidence\n- **Checkpoint `verify`**: passed\n- **Claim `claim`**: \"Contacts shows No Results for Nina Calder.\" — probability yes **0.980**\n- **Observed screen**: Search results view showing `text No Results for \"Nina Calder\"` and `text Check the spelling or try a new search.`, with the search text-field value = `Nina Calder`, under the `Search results` container.\n- **Screenshot**: `screen-7.jpg`\n- **Run log**: `/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-lZRPrt/runs/dc601a4a-f31c-4156-8524-90523e58949b/run.jsonl`\n- **Watch URL**: [private watch URL]",
+    "rawTranscriptPath": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-lZRPrt/claude.jsonl",
+    "rawTranscriptSha256": "27546a795640a4a344c947a62b651c5f9a8db5cb4589accb3256ee71effe58c0",
+    "stderrPresent": false
+  },
+  "bridge": {
+    "runId": "dc601a4a-f31c-4156-8524-90523e58949b",
+    "verdict": "passed",
+    "reason": "ALL_CHECKPOINTS_PASSED",
+    "steps": 3,
+    "actionEvents": 2,
+    "judgmentEvents": 1,
+    "inputTokens": 6228,
+    "checkpointStatus": "passed",
+    "judgmentModel": "jev-1.13.0",
+    "probabilityYes": 0.98,
+    "cleanupMs": 921.8008750000008,
+    "runLogPath": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-lZRPrt/runs/dc601a4a-f31c-4156-8524-90523e58949b/run.jsonl",
+    "runLogSha256": "8aee97b12d52fe4629a78ddccccfe9297e67a1ebf411c51f7ed26a5cc2c305b4",
+    "finalScreenshotPath": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-lZRPrt/runs/dc601a4a-f31c-4156-8524-90523e58949b/screen-7.jpg",
+    "finalScreenshotSha256": "ae5b1145fa28854240c0dc1e87a6e9b75f869d1fbd3971c1c1d3c08565602823"
+  },
+  "numericSummaryPath": "spikes/benchmarks/results/c01-nina-no-results-bridge-1790302865475.json"
+}

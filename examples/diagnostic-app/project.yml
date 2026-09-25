@@ -1,0 +1,40 @@
+name: DiagnosticApp
+options:
+  bundleIdPrefix: dev.jevbridge
+settings:
+  base:
+    IPHONEOS_DEPLOYMENT_TARGET: '17.0'
+    SWIFT_VERSION: '6.0'
+    TARGETED_DEVICE_FAMILY: '1'
+    CODE_SIGNING_ALLOWED: 'NO'
+targets:
+  DiagnosticApp:
+    type: application
+    platform: iOS
+    sources: [Sources]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.jevbridge.diagnostic
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+        INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
+  DiagnosticAppTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [Tests]
+    dependencies:
+      - target: DiagnosticApp
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.jevbridge.diagnostic.tests
+        GENERATE_INFOPLIST_FILE: YES
+schemes:
+  DiagnosticApp:
+    build:
+      targets:
+        DiagnosticApp: all
+        DiagnosticAppTests: [test]
+    test:
+      targets:
+        - DiagnosticAppTests

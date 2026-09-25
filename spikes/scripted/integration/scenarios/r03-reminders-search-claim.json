@@ -1,0 +1,58 @@
+{
+  "app": {
+    "bundleId": "com.apple.reminders"
+  },
+  "device": {
+    "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+  },
+  "preconditions": [
+    "My Lists is in front with a Signal Kit row showing one reminder."
+  ],
+  "values": {},
+  "steps": [
+    {
+      "id": "openSearch",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "My Lists"
+          },
+          {
+            "role": "button",
+            "label": "Signal Kit, 1 reminder"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "Search"
+        }
+      }
+    },
+    {
+      "id": "verify",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "My Lists"
+          },
+          {
+            "role": "text-field"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "claim",
+          "claim": "The Reminders Search field contains Charge lantern."
+        }
+      ]
+    }
+  ]
+}

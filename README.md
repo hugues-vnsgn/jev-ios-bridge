@@ -1,87 +1,42 @@
 # jev-ios-bridge
 
-jev-ios-bridge lets a coding agent verify an iOS app by submitting a scenario and reading back a verdict. The bridge runs the scenario on a simulator. At each step, TypeSafe's Jev model chooses what to do from a text view of the screen, and MobileBuildMCP does the device work.
+Verify an iOS app with one authored script and one recorded report. The bridge executes guarded actions through MobileBuildMCP; TypeSafe Jev judges assertions about the resulting screens. Claude Code submits the script and waits, without reading screens or choosing actions during the run.
 
-There is no code yet. This repo holds the design, the decisions behind it, and the research that informed them.
+**v0.1.0 is an experimental prerelease.** The frozen assertion experiment passed its gate, twelve real scripts matched their expected outcomes, and the installed Claude Code path passed. Full benchmark scripts passed Weather and Contacts; Reminders reached the correct visible state but returned inconclusive on a count assertion. [Measured results](docs/research/scripted-benchmarks.md) include unsuccessful attempts and comparison limits.
 
-## Why build it
+## What it does
 
-Claude Code can already drive a simulator through MobileBuildMCP. In Sentry's own benchmark, Claude Opus 4.7 took 93 to 103 seconds and 14 to 19 tool calls per UI scenario, reading every screen into its context.
+- Runs explicit taps, full-field text replacements, swipes, waits, and assertion checkpoints on a dedicated simulator.
+- Stops inconclusively on uncertain judgments, missing or ambiguous targets, unexpected screens, or execution limits.
+- Keeps private JSONL evidence and screenshots, returns a report, and serves a token-protected local watch page.
+- Preserves the recorded verdict after a run; an interrupted journal never becomes a pass.
 
-The bridge replaces all of that with one submission. Claude hands over a scenario and gets back a verdict and a report, while Jev makes each per-step decision. At Jev's price, a step over a 5,000-token observation costs about $0.0002.
+The script author supplies the route, selectors, guards, and typed values. The app must already be installed and its simulator booted. Preparation restarts the app, so scripts navigate from its observed launch state. The bridge does not build, install, seed, or reset apps.
 
-Whether Jev can make those decisions well is unproven. TypeSafe publishes no examples of choosing UI actions, so the first real work is a feasibility test, and the rest of the design depends on its result.
+## Development setup
 
-## Status
+Use Node 24 or later on a Mac with Xcode and an iOS simulator:
 
-- **Stage:** planning. Nothing is built.
-- **Decisions:** [ADR-0001](docs/adr/0001-bridge-perceives-and-acts-jev-decides.md) and [ADR-0002](docs/adr/0002-mobilebuildmcp-as-device-layer.md) are *proposed*.
-  - ADR-0002 becomes accepted when this review closes.
-  - ADR-0001 stays proposed until the feasibility run resolves. A go accepts it; a no-go reopens it.
-- **Route:** the [map](.scratch/jev-ios-bridge/map.md) lists every open decision and draws the order they have to be settled in.
-
-## Reading order
-
-This takes about 30 minutes.
-
-1. [`CONTEXT.md`](CONTEXT.md): the vocabulary. Terms like *run*, *observation*, and *escalation* have exact meanings here.
-2. [ADR-0001](docs/adr/0001-bridge-perceives-and-acts-jev-decides.md): why the bridge runs the loop and Jev only decides.
-3. [ADR-0002](docs/adr/0002-mobilebuildmcp-as-device-layer.md): why MobileBuildMCP does all the device work.
-4. [`docs/architecture.md`](docs/architecture.md): the context, the modules, one step, a run's lifecycle, and the hard limits.
-5. [The map](.scratch/jev-ios-bridge/map.md): the destination, the route, and what is out of scope. Then skim the [tickets](.scratch/jev-ios-bridge/issues/). Each is one page.
-
-The evidence is in [`docs/research/`](docs/research/). Read it as needed; each note opens with a short answer.
-
-## How the map works
-
-The map follows the same conventions throughout:
-
-- **Each ticket asks one question**, and the ticket is resolved when the question is answered.
-- **A ticket has one of four types:**
-  - *research* reads primary sources;
-  - *prototype* builds something rough to react to;
-  - *grilling* is a decision made in conversation with the owner;
-  - *task* is work that has to happen before a decision can be made.
-- **A ticket's status** is one of four:
-  - *open*;
-  - *claimed*, with a `Claimed by:` line naming who is working it;
-  - *resolved*;
-  - *out-of-scope*: closed without an answer and left off the route.
-- **The frontier** is every open ticket whose blockers are all resolved, so it can be taken now. The route diagram in the map shows the frontier in green.
-
-## What we would like from you
-
-1. Is the case for the bridge convincing, compared with Claude driving MobileBuildMCP directly? What would make it not worth building?
-2. Would you reverse either ADR?
-3. Is the feasibility test a fair gate? See [Feasibility plan](.scratch/jev-ios-bridge/issues/07-feasibility-plan.md). What result would convince you?
-4. Is anything missing from the route, in the wrong order, or wrongly out of scope?
-5. Does any glossary term mean something different to you than its definition says?
-
-Leave line comments on the review commit on GitHub, next to the line you're reacting to. Open an issue for anything broader than one line.
-
-## What changed since the first draft
-
-The first draft was dated 2026-09-21. Since then:
-
-- **The device layer's name changed.** XcodeBuildMCP was renamed MobileBuildMCP on 2026-09-23. We pin `mobilebuildmcp@2.7.1`.
-- **ADR-0001 now makes its case.** It states why the bridge is worth building, and rules out any loop run by Claude, whether in the main session or in a subagent.
-- **ADR-0002 is corrected.** Element references turned out to be short-lived handles, not identities.
-- **Real iPhones are sized.** MobileBuildMCP cannot automate a real iPhone's UI. A resolved research ticket sizes the second device layer that would take: WebDriverAgent through Appium, medium effort.
-- **The vision "fallback" became *escalation*.** It is an open decision, because a tool call cannot ask Claude anything mid-call.
-- **A watch view joined the route:** a localhost page that shows a run as it happens.
-- **Feasibility comes first, in two parts.** A plan fixes the bar and the questions before any data exists. A run then measures Jev against them.
-- **Jev's limits are corrected:** 64k tokens per request, and 32k for the state plus the longest question.
-- **The target file tree is gone.** The architecture page instead names each module and the ticket that defines it.
-- **The runtime target is Node 24.** Node 20 reached end of life on 2026-04-30 ([Node.js release schedule](https://github.com/nodejs/Release#release-schedule)).
-
-## Layout
-
+```sh
+npm ci
+npm run check
+node dist/cli.js --help
 ```
-CONTEXT.md                  glossary
-docs/adr/                   decisions, currently proposed
-docs/architecture.md        how the parts fit
-docs/research/              evidence, one note per question
-.scratch/jev-ios-bridge/    the map and its tickets
-scripts/render-route.py     redraws the route diagram in the map
-AGENTS.md, docs/agents/     instructions for coding agents working in this repo
-```
+
+[Usage](docs/usage.md) covers credentials, scripted JSON, MCP registration, the `/test-ios` skill, evidence, and limits. Install the package attached to the [GitHub v0.1.0 prerelease](https://github.com/hugues-vnsgn/jev-ios-bridge/releases/tag/v0.1.0). There is no npm registry publication.
+
+## Evidence and scope
+
+Three attempts at autonomous Jev action selection failed their preregistered gates. Those results remain intact: [first](spikes/feasibility/results/heldout/heldout.md), [revised](spikes/feasibility/results-v2/heldout/heldout.md), and [checkpoint](spikes/feasibility/results-v3/heldout/heldout.md). The owner then approved explicit scripts with Jev assertion checks.
+
+The [scripted assertion experiment](spikes/scripted/results/evaluation/results.md) used 24 fresh screens with one true and one false claim each. At fixed 0.9/0.1 bounds, 22/24 true claims and 23/24 false claims were confidently correct, with zero confidently wrong judgments. Three answers were uncertain. This is a small exploratory result, not a universal error guarantee.
+
+[Integration evidence](.scratch/jev-ios-bridge/scripted-integration-notes.md) records the real scripts, fault probes, and setup corrections. The blind diagnostic check used a failed report and app source to identify the planted checkout-total defect. The two verified comparisons showed lower model-cost estimates and longer host elapsed time. Initial script-authoring cost was not metered, and no verified Reminders baseline was established; total savings are unproven.
+
+Current scope: English screen evidence, printable US-keyboard input, simulator UI automation, Claude Code first, Codex best effort. Real iPhone UI automation, automatic hooks, and host escalation are outside v0.1.0. Legacy autonomous scenario forms are rejected by the supported CLI and MCP.
+
+## Design and project navigation
+
+Start with [CONTEXT.md](CONTEXT.md) for vocabulary, [domain boundaries](docs/domain-boundaries.md) for ownership, and [architecture](docs/architecture.md) for the execution and evidence flow. [ADR-0003](docs/adr/0003-explicit-scripts-with-jev-assertions.md) explains the scripted direction; [ADR-0002](docs/adr/0002-mobilebuildmcp-as-device-layer.md) explains the device boundary.
+
+The [map](.scratch/jev-ios-bridge/map.md) and [release plan](.scratch/jev-ios-bridge/release-plan.md) record decisions, evidence, and release verification. Research, frozen experiments, and historical source archives remain available for audit. The deliberately faulty [diagnostic app](examples/diagnostic-app/README.md) is a verification fixture, not a production example to copy unchanged.

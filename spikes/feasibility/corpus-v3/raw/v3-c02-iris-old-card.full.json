@@ -1,0 +1,4412 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "protocol": "rs/1",
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+      "screenHash": "011xvpu",
+      "seq": 179,
+      "capturedAtMs": 1790237566290,
+      "expiresAtMs": 1790237626290,
+      "elements": [
+        {
+          "ref": "e1",
+          "role": "application",
+          "label": "Contacts",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e2",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e3",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e4",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e5",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e6",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e7",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e8",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e9",
+          "role": "other",
+          "identifier": "CNContactView",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 440,
+            "height": 54
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e10",
+          "role": "button",
+          "label": "Contacts",
+          "identifier": "BackButton",
+          "frame": {
+            "x": 20,
+            "y": 62,
+            "width": 44,
+            "height": 44
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e11",
+          "role": "button",
+          "label": "Edit",
+          "frame": {
+            "x": 361.67,
+            "y": 66,
+            "width": 54.33,
+            "height": 36
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e12",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e13",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e14",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e15",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e16",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e17",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e18",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e19",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e20",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e21",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e22",
+          "role": "scroll-view",
+          "identifier": "ContactCardScrollViewReader",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch",
+            "swipeWithin"
+          ]
+        },
+        {
+          "ref": "e23",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e24",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e25",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e26",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e27",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e28",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e29",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e30",
+          "role": "scroll-view",
+          "identifier": "ContactCardScrollViewReader",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch",
+            "swipeWithin"
+          ]
+        },
+        {
+          "ref": "e31",
+          "role": "other",
+          "frame": {
+            "x": -20,
+            "y": -2124.67,
+            "width": 480,
+            "height": 2192.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e32",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": -212.67,
+            "width": 400,
+            "height": 280.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e33",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": -212.67,
+            "width": 400,
+            "height": 280.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e34",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": -212.67,
+            "width": 400,
+            "height": 280.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e35",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": -212.67,
+            "width": 400,
+            "height": 280.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e36",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": -212.67,
+            "width": 400,
+            "height": 280.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e37",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": -212.67,
+            "width": 400,
+            "height": 280.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e38",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e39",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 170.8
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e40",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e41",
+          "role": "other",
+          "frame": {
+            "x": -20,
+            "y": 67.67,
+            "width": 480,
+            "height": 94.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e42",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 67.67,
+            "width": 400,
+            "height": 94.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e43",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 67.67,
+            "width": 400,
+            "height": 94.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e44",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 67.67,
+            "width": 400,
+            "height": 94.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e45",
+          "role": "text",
+          "label": "SUMMIT",
+          "identifier": "ContactCardHeaderView",
+          "frame": {
+            "x": 185.83,
+            "y": 76.67,
+            "width": 68.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e46",
+          "role": "text",
+          "label": "Iris Moss",
+          "identifier": "ContactCardHeaderView",
+          "frame": {
+            "x": 137.33,
+            "y": 105,
+            "width": 165.33,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e47",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 67.67,
+            "width": 400,
+            "height": 94.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e48",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 67.67,
+            "width": 400,
+            "height": 94.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e49",
+          "role": "other",
+          "frame": {
+            "x": -20,
+            "y": 162,
+            "width": 480,
+            "height": 82
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e50",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 162,
+            "width": 400,
+            "height": 82
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e51",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 162,
+            "width": 400,
+            "height": 82
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e52",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 162,
+            "width": 400,
+            "height": 82
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e53",
+          "role": "button",
+          "label": "Message",
+          "identifier": "InlineActionsHStack",
+          "frame": {
+            "x": 74,
+            "y": 171,
+            "width": 64,
+            "height": 64
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e54",
+          "role": "button",
+          "frame": {
+            "x": 74,
+            "y": 171,
+            "width": 64,
+            "height": 64
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e55",
+          "role": "image",
+          "label": "Message",
+          "identifier": "InlineActionButtonBackground",
+          "frame": {
+            "x": 74,
+            "y": 171,
+            "width": 64,
+            "height": 64
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e56",
+          "role": "button",
+          "label": "Call",
+          "identifier": "InlineActionsHStack",
+          "frame": {
+            "x": 150,
+            "y": 171,
+            "width": 64,
+            "height": 64
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e57",
+          "role": "button",
+          "frame": {
+            "x": 150,
+            "y": 171,
+            "width": 64,
+            "height": 64
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e58",
+          "role": "image",
+          "label": "Call",
+          "identifier": "InlineActionButtonBackground",
+          "frame": {
+            "x": 150,
+            "y": 171,
+            "width": 64,
+            "height": 64
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e59",
+          "role": "image",
+          "label": "Video",
+          "identifier": "InlineActionsHStack",
+          "frame": {
+            "x": 226,
+            "y": 171,
+            "width": 64,
+            "height": 64
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e60",
+          "role": "button",
+          "label": "Mail",
+          "identifier": "InlineActionsHStack",
+          "frame": {
+            "x": 302,
+            "y": 171,
+            "width": 64,
+            "height": 64
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e61",
+          "role": "button",
+          "frame": {
+            "x": 302,
+            "y": 171,
+            "width": 64,
+            "height": 64
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e62",
+          "role": "image",
+          "label": "Get Mail",
+          "identifier": "InlineActionButtonBackground",
+          "frame": {
+            "x": 302,
+            "y": 171,
+            "width": 64,
+            "height": 64
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e63",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 162,
+            "width": 400,
+            "height": 82
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e64",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 162,
+            "width": 400,
+            "height": 82
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e65",
+          "role": "other",
+          "frame": {
+            "x": -20,
+            "y": 244,
+            "width": 480,
+            "height": 86
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e66",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 250,
+            "width": 400,
+            "height": 74
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e67",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 250,
+            "width": 400,
+            "height": 74
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e68",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 250,
+            "width": 400,
+            "height": 74
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e69",
+          "role": "button",
+          "label": "Contact Photo & Poster",
+          "identifier": "SharedProfileAvatarView-SharedProfileTitleText-SharedProfileChevronImage",
+          "frame": {
+            "x": 20,
+            "y": 250,
+            "width": 400,
+            "height": 74
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e70",
+          "role": "other",
+          "identifier": "SharedProfileAvatarView",
+          "frame": {
+            "x": 40,
+            "y": 265,
+            "width": 44,
+            "height": 44
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e71",
+          "role": "text",
+          "label": "Contact Photo & Poster",
+          "identifier": "SharedProfileTitleText",
+          "frame": {
+            "x": 92,
+            "y": 275.83,
+            "width": 179.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e72",
+          "role": "image",
+          "label": "Forward",
+          "identifier": "SharedProfileChevronImage",
+          "frame": {
+            "x": 390.67,
+            "y": 279.67,
+            "width": 8.33,
+            "height": 14.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e73",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 250,
+            "width": 400,
+            "height": 74
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e74",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 250,
+            "width": 400,
+            "height": 74
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e75",
+          "role": "other",
+          "frame": {
+            "x": -20,
+            "y": 330,
+            "width": 480,
+            "height": 628.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e76",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 336,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e77",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 336,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e78",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 336,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e79",
+          "role": "button",
+          "label": "mobile, (555) 010-2001",
+          "identifier": "ContactCardDetailsView",
+          "frame": {
+            "x": 20,
+            "y": 336,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e80",
+          "role": "text",
+          "label": "mobile",
+          "frame": {
+            "x": 40,
+            "y": 351,
+            "width": 46,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e81",
+          "role": "text",
+          "label": "(555) 010-2001",
+          "frame": {
+            "x": 40,
+            "y": 371,
+            "width": 120.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e82",
+          "role": "image",
+          "label": "Call",
+          "identifier": "phone.fill",
+          "frame": {
+            "x": 386.33,
+            "y": 366,
+            "width": 12.33,
+            "height": 12.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e83",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 336,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e84",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 336,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e85",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 408.33,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e86",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 408.33,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e87",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 408.33,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e88",
+          "role": "button",
+          "label": "home, (555) 010-2002",
+          "identifier": "ContactCardDetailsView",
+          "frame": {
+            "x": 20,
+            "y": 408.33,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e89",
+          "role": "text",
+          "label": "home",
+          "frame": {
+            "x": 40,
+            "y": 423.33,
+            "width": 38.67,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e90",
+          "role": "text",
+          "label": "(555) 010-2002",
+          "frame": {
+            "x": 40,
+            "y": 443.33,
+            "width": 122.67,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e91",
+          "role": "image",
+          "label": "Call",
+          "identifier": "phone.fill",
+          "frame": {
+            "x": 386.33,
+            "y": 438.33,
+            "width": 12.33,
+            "height": 12.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e92",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 408.33,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e93",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 408.33,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e94",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 407.33,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e95",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 480.67,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e96",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 480.67,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e97",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 480.67,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e98",
+          "role": "button",
+          "label": "work, (555) 010-2003",
+          "identifier": "ContactCardDetailsView",
+          "frame": {
+            "x": 20,
+            "y": 480.67,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e99",
+          "role": "text",
+          "label": "work",
+          "frame": {
+            "x": 40,
+            "y": 495.67,
+            "width": 33.33,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e100",
+          "role": "text",
+          "label": "(555) 010-2003",
+          "frame": {
+            "x": 40,
+            "y": 515.67,
+            "width": 123,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e101",
+          "role": "image",
+          "label": "Call",
+          "identifier": "phone.fill",
+          "frame": {
+            "x": 386.33,
+            "y": 510.67,
+            "width": 12.33,
+            "height": 12.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e102",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 480.67,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e103",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 480.67,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e104",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 479.67,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e105",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 553,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e106",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 553,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e107",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 553,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e108",
+          "role": "button",
+          "label": "school, (555) 010-2004",
+          "identifier": "ContactCardDetailsView",
+          "frame": {
+            "x": 20,
+            "y": 553,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e109",
+          "role": "text",
+          "label": "school",
+          "frame": {
+            "x": 40,
+            "y": 568,
+            "width": 45.33,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e110",
+          "role": "text",
+          "label": "(555) 010-2004",
+          "frame": {
+            "x": 40,
+            "y": 588,
+            "width": 123.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e111",
+          "role": "image",
+          "label": "Call",
+          "identifier": "phone.fill",
+          "frame": {
+            "x": 386.33,
+            "y": 583,
+            "width": 12.33,
+            "height": 12.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e112",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 553,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e113",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 553,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e114",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 552,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e115",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 625.33,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e116",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 625.33,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e117",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 625.33,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e118",
+          "role": "button",
+          "label": "iPhone, (555) 010-2005",
+          "identifier": "ContactCardDetailsView",
+          "frame": {
+            "x": 20,
+            "y": 625.33,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e119",
+          "role": "text",
+          "label": "iPhone",
+          "frame": {
+            "x": 40,
+            "y": 640.33,
+            "width": 47,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e120",
+          "role": "text",
+          "label": "(555) 010-2005",
+          "frame": {
+            "x": 40,
+            "y": 660.33,
+            "width": 123,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e121",
+          "role": "image",
+          "label": "Call",
+          "identifier": "phone.fill",
+          "frame": {
+            "x": 386.33,
+            "y": 655.33,
+            "width": 12.33,
+            "height": 12.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e122",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 625.33,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e123",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 625.33,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e124",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 624.33,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e125",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 697.67,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e126",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 697.67,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e127",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 697.67,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e128",
+          "role": "button",
+          "label": "Apple Watch, (555) 010-2006",
+          "identifier": "ContactCardDetailsView",
+          "frame": {
+            "x": 20,
+            "y": 697.67,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e129",
+          "role": "text",
+          "label": "Apple Watch",
+          "frame": {
+            "x": 40,
+            "y": 712.67,
+            "width": 87.33,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e130",
+          "role": "text",
+          "label": "(555) 010-2006",
+          "frame": {
+            "x": 40,
+            "y": 732.67,
+            "width": 123.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e131",
+          "role": "image",
+          "label": "Call",
+          "identifier": "phone.fill",
+          "frame": {
+            "x": 386.33,
+            "y": 727.67,
+            "width": 12.33,
+            "height": 12.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e132",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 697.67,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e133",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 697.67,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e134",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 696.67,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e135",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 770,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e136",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 770,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e137",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 770,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e138",
+          "role": "button",
+          "label": "home, iris.old@example.test",
+          "identifier": "ContactCardDetailsView",
+          "frame": {
+            "x": 20,
+            "y": 770,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e139",
+          "role": "text",
+          "label": "home",
+          "frame": {
+            "x": 40,
+            "y": 785,
+            "width": 38.67,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e140",
+          "role": "text",
+          "label": "iris.old@example.test",
+          "frame": {
+            "x": 40,
+            "y": 805,
+            "width": 162.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e141",
+          "role": "image",
+          "label": "Get Mail",
+          "identifier": "envelope.fill",
+          "frame": {
+            "x": 382.33,
+            "y": 800.33,
+            "width": 16,
+            "height": 11.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e142",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 770,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e143",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 770,
+            "width": 400,
+            "height": 72.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e144",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 769,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e145",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 842.33,
+            "width": 400,
+            "height": 110
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e146",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 842.33,
+            "width": 400,
+            "height": 110
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e147",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 842.33,
+            "width": 400,
+            "height": 110
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e148",
+          "role": "text",
+          "label": "Notes",
+          "identifier": "ContactCardDetailsView",
+          "frame": {
+            "x": 40,
+            "y": 857.33,
+            "width": 40.67,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e149",
+          "role": "text-field",
+          "identifier": "ContactCardDetailsView",
+          "frame": {
+            "x": 35,
+            "y": 877.33,
+            "width": 370,
+            "height": 60
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "typeText",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e150",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 842.33,
+            "width": 400,
+            "height": 110
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e151",
+          "role": "other",
+          "frame": {
+            "x": 20,
+            "y": 842.33,
+            "width": 400,
+            "height": 110
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e152",
+          "role": "other",
+          "frame": {
+            "x": 40,
+            "y": 841.33,
+            "width": 360,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e153",
+          "role": "other",
+          "label": "Toolbar",
+          "identifier": "Toolbar",
+          "frame": {
+            "x": 5,
+            "y": 136,
+            "width": 425,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e154",
+          "role": "other",
+          "frame": {
+            "x": 5,
+            "y": 136,
+            "width": 425,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e155",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e156",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e157",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e158",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e159",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e160",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e161",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "action": "longPress",
+          "elementRef": "e2"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e2"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e3"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e3"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e4"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e4"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e5"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e5"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e6"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e7"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e7"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e8"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e8"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e9"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e9"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e10",
+          "label": "Contacts"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e10",
+          "label": "Contacts"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e10",
+          "label": "Contacts"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e11",
+          "label": "Edit"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e11",
+          "label": "Edit"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e11",
+          "label": "Edit"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e12"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e12"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e13"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e13"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e14"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e14"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e15"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e15"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e16"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e16"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e17"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e17"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e18"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e18"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e19"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e19"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e20"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e20"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e21"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e21"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e22"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e22"
+        },
+        {
+          "action": "swipeWithin",
+          "elementRef": "e22"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e23"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e23"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e24"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e24"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e25"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e25"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e26"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e26"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e27"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e27"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e28"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e28"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e29"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e29"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e30"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e30"
+        },
+        {
+          "action": "swipeWithin",
+          "elementRef": "e30"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e38"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e38"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e39"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e39"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e40"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e40"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e41"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e41"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e42"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e42"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e43"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e43"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e44"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e44"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e45",
+          "label": "SUMMIT"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e45",
+          "label": "SUMMIT"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e46",
+          "label": "Iris Moss"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e46",
+          "label": "Iris Moss"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e47"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e47"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e48"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e48"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e49"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e49"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e50"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e50"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e51"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e51"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e52"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e52"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e53",
+          "label": "Message"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e53",
+          "label": "Message"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e53",
+          "label": "Message"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e54"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e54"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e54"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e55",
+          "label": "Message"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e55",
+          "label": "Message"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e56",
+          "label": "Call"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e56",
+          "label": "Call"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e56",
+          "label": "Call"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e57"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e57"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e57"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e58",
+          "label": "Call"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e58",
+          "label": "Call"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e59",
+          "label": "Video"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e59",
+          "label": "Video"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e60",
+          "label": "Mail"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e60",
+          "label": "Mail"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e60",
+          "label": "Mail"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e61"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e61"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e61"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e62",
+          "label": "Get Mail"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e62",
+          "label": "Get Mail"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e63"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e63"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e64"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e64"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e65"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e65"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e66"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e66"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e67"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e67"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e68"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e68"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e69",
+          "label": "Contact Photo & Poster"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e69",
+          "label": "Contact Photo & Poster"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e69",
+          "label": "Contact Photo & Poster"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e70"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e70"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e71",
+          "label": "Contact Photo & Poster"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e71",
+          "label": "Contact Photo & Poster"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e72",
+          "label": "Forward"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e72",
+          "label": "Forward"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e73"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e73"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e74"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e74"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e75"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e75"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e76"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e76"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e77"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e77"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e78"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e78"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e79",
+          "label": "mobile, (555) 010-2001"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e79",
+          "label": "mobile, (555) 010-2001"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e79",
+          "label": "mobile, (555) 010-2001"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e80",
+          "label": "mobile"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e80",
+          "label": "mobile"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e81",
+          "label": "(555) 010-2001"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e81",
+          "label": "(555) 010-2001"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e82",
+          "label": "Call"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e82",
+          "label": "Call"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e83"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e83"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e84"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e84"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e85"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e85"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e86"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e86"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e87"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e87"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e88",
+          "label": "home, (555) 010-2002"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e88",
+          "label": "home, (555) 010-2002"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e88",
+          "label": "home, (555) 010-2002"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e89",
+          "label": "home"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e89",
+          "label": "home"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e90",
+          "label": "(555) 010-2002"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e90",
+          "label": "(555) 010-2002"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e91",
+          "label": "Call"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e91",
+          "label": "Call"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e92"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e92"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e93"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e93"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e94"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e94"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e95"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e95"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e96"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e96"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e97"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e97"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e98",
+          "label": "work, (555) 010-2003"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e98",
+          "label": "work, (555) 010-2003"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e98",
+          "label": "work, (555) 010-2003"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e99",
+          "label": "work"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e99",
+          "label": "work"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e100",
+          "label": "(555) 010-2003"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e100",
+          "label": "(555) 010-2003"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e101",
+          "label": "Call"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e101",
+          "label": "Call"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e102"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e102"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e103"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e103"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e104"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e104"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e105"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e105"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e106"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e106"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e107"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e107"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e108",
+          "label": "school, (555) 010-2004"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e108",
+          "label": "school, (555) 010-2004"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e108",
+          "label": "school, (555) 010-2004"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e109",
+          "label": "school"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e109",
+          "label": "school"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e110",
+          "label": "(555) 010-2004"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e110",
+          "label": "(555) 010-2004"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e111",
+          "label": "Call"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e111",
+          "label": "Call"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e112"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e112"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e113"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e113"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e114"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e114"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e115"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e115"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e116"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e116"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e117"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e117"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e118",
+          "label": "iPhone, (555) 010-2005"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e118",
+          "label": "iPhone, (555) 010-2005"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e118",
+          "label": "iPhone, (555) 010-2005"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e119",
+          "label": "iPhone"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e119",
+          "label": "iPhone"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e120",
+          "label": "(555) 010-2005"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e120",
+          "label": "(555) 010-2005"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e121",
+          "label": "Call"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e121",
+          "label": "Call"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e122"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e122"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e123"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e123"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e124"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e124"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e125"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e125"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e126"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e126"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e127"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e127"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e128",
+          "label": "Apple Watch, (555) 010-2006"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e128",
+          "label": "Apple Watch, (555) 010-2006"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e128",
+          "label": "Apple Watch, (555) 010-2006"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e129",
+          "label": "Apple Watch"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e129",
+          "label": "Apple Watch"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e130",
+          "label": "(555) 010-2006"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e130",
+          "label": "(555) 010-2006"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e131",
+          "label": "Call"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e131",
+          "label": "Call"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e132"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e132"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e133"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e133"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e134"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e134"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e135"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e135"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e136"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e136"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e137"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e137"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e138",
+          "label": "home, iris.old@example.test"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e138",
+          "label": "home, iris.old@example.test"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e138",
+          "label": "home, iris.old@example.test"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e139",
+          "label": "home"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e139",
+          "label": "home"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e140",
+          "label": "iris.old@example.test"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e140",
+          "label": "iris.old@example.test"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e141",
+          "label": "Get Mail"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e141",
+          "label": "Get Mail"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e142"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e142"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e143"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e143"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e144"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e144"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e145"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e145"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e146"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e146"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e147"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e147"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e148",
+          "label": "Notes"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e148",
+          "label": "Notes"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e149"
+        },
+        {
+          "action": "typeText",
+          "elementRef": "e149"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e149"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e149"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e150"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e150"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e151"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e151"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e152"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e152"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e153",
+          "label": "Toolbar"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e153",
+          "label": "Toolbar"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e154"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e154"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e155"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e155"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e156"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e156"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e157"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e157"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e158"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e158"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e159"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e159"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e160"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e160"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e161"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e161"
+        }
+      ]
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e10\"},{\"action\":\"tap\",\"elementRef\":\"e11\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e79",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e22 --direction up --distance 0.5"
+  ]
+}

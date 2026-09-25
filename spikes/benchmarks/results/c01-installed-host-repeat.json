@@ -1,0 +1,56 @@
+{
+  "kind": "installed-host-scripted-repeat",
+  "firstAttemptEvidence": "spikes/benchmarks/results/c01-installed-host-smoke.json",
+  "startedAt": "2026-09-25T02:12:12.441Z",
+  "installedPackageCli": {
+    "path": "/tmp/jev-ios-bridge-package-smoke.ryEQ6v/consumer/node_modules/jev-ios-bridge/dist/cli.js",
+    "sha256": "4355b1dc6f47973ba54f169d1183137556844f755d394ea71bd995fbf2c698d2"
+  },
+  "scenario": {
+    "path": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/v0.1-release/spikes/scripted/integration/scenarios/c01-nina-no-results.json",
+    "sha256": "3619db0a0fd596e492d7d8b52be975014e46eefdc3a5909d15d61007752c7605",
+    "sourceRevision": "c40f4c96d000e1a10947a333dcd2c1a958ce7a16",
+    "submittedDeepEqualOriginal": true,
+    "note": "The worktree scenario was edited after this attempt. The hash and equality refer to the committed file at the time of submission.",
+    "submittedQuery": "Nina Calder"
+  },
+  "host": {
+    "model": "claude-opus-4-7",
+    "exitCode": 0,
+    "toolSequence": [
+      "mcp__jev-ios-bridge__start_scenario",
+      "mcp__jev-ios-bridge__get_report"
+    ],
+    "wallClockSeconds": 29.086377708,
+    "tokens": {
+      "uncachedInput": 8,
+      "cacheCreationInput": 19209,
+      "cacheReadInput": 59320,
+      "output": 1434,
+      "allInputProcessed": 78537
+    },
+    "estimatedCostUsd": 0.25764,
+    "finalResponse": "## Verdict: inconclusive\n\n**Reason:** `GUARD_AMBIGUOUS` during observe on the first step (`searchNina`).\n\n**Decisive evidence:** The observed screen shows two overlapping surfaces — the Contacts list (`ContactsListView` with alphabetized contacts) AND a Search results overlay (\"No Results for \"Case Probe\"\" with a `text-field Case Probe`, plus a second `image Search`). The guard's `{role: \"text-field\"}` selector matched more than one eligible text field (the search bar with residual \"Case Probe\" text is present), so the guard could not resolve a unique target.\n\nAdditionally, the guard requires exactly one text field but the state has a leftover search session from prior use, violating the precondition \"Contacts list or Search results is in front with one Search text field.\"\n\n**Watch URL:** [private watch URL]\n\n**Local evidence:** /var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-UD6uzp/runs/da1fa21c-76d6-41ef-b3b5-a80c837a02f1/run.jsonl\n\n**Stats:** 1 step executed; duration 8.58s.\n\n**Next step to investigate:** Clear the prior \"Case Probe\" search state (dismiss search / tap Clear text / close) so only one Search text field is present before rerunning, or tighten the selector to disambiguate the intended search field.",
+    "rawTranscriptPath": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-UD6uzp/claude.jsonl",
+    "rawTranscriptSha256": "39f40438f6b6beef6f78a91bf2564deaf62311d2820eb2a47f0375ec46c4cf84",
+    "stderrPresent": false
+  },
+  "bridge": {
+    "runId": "da1fa21c-76d6-41ef-b3b5-a80c837a02f1",
+    "verdict": "inconclusive",
+    "reason": "GUARD_AMBIGUOUS",
+    "steps": 1,
+    "actionEvents": 0,
+    "judgmentEvents": 0,
+    "inputTokens": 0,
+    "cleanupMs": 958.6272919999992,
+    "runLogPath": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-UD6uzp/runs/da1fa21c-76d6-41ef-b3b5-a80c837a02f1/run.jsonl",
+    "runLogSha256": "0c1b2c436dc9f95e922ace69d21ee6e9dc133b5167d37b02c1dfc06adf65dd19",
+    "firstScreenshotPath": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-UD6uzp/runs/da1fa21c-76d6-41ef-b3b5-a80c837a02f1/screen-3.jpg",
+    "firstScreenshotSha256": "792a1a1054814019a8b0362b469b8093719692412d0070555f01efe37d1fad00"
+  },
+  "diagnosis": "The keyboard probe left Contacts on a Case Probe empty-results screen. Its post-launch accessibility tree exposes two different Search magnifyingglass images, while the first guard requires exactly one; the bridge stopped before action or judgment.",
+  "hostDiagnosisCorrection": "The host identified the residual Case Probe state but attributed ambiguity to multiple text fields. The captured accessibility tree has one text field and two distinct magnifyingglass Search images; the image guard was ambiguous.",
+  "equivalentFullCapture": "spikes/scripted/integration/setup-evidence/keyboard-after-boot-uppercase-2026-09-25T02-09-11-397Z.full.json",
+  "numericSummaryPath": "spikes/benchmarks/results/c01-nina-no-results-bridge-1790302361560.json"
+}

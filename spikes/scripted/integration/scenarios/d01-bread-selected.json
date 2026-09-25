@@ -1,0 +1,92 @@
+{
+  "app": {
+    "bundleId": "dev.jevbridge.diagnostic"
+  },
+  "device": {
+    "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+  },
+  "preconditions": [
+    "Diagnostic App has been stopped and relaunched; selection summary reads Selected: None."
+  ],
+  "values": {},
+  "steps": [
+    {
+      "id": "addBread",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "identifier": "selection.summary",
+            "label": "Selected: None"
+          },
+          {
+            "role": "button",
+            "identifier": "choose.apple",
+            "label": "Add Apple ($2)"
+          },
+          {
+            "role": "button",
+            "identifier": "choose.bread",
+            "label": "Add Bread ($3)"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "identifier": "choose.bread"
+        }
+      }
+    },
+    {
+      "id": "settleBread",
+      "kind": "wait",
+      "guard": {
+        "present": [
+          {
+            "role": "other",
+            "label": "Sample Shop"
+          },
+          {
+            "role": "text",
+            "identifier": "selection.summary"
+          }
+        ]
+      },
+      "until": {
+        "present": [
+          {
+            "role": "text",
+            "identifier": "selection.summary",
+            "label": "Selected: Bread"
+          }
+        ]
+      },
+      "timeoutMs": 10000
+    },
+    {
+      "id": "verify",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "other",
+            "label": "Sample Shop"
+          },
+          {
+            "role": "text",
+            "identifier": "selection.summary"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "claim",
+          "claim": "The selection summary reads Selected: Bread."
+        }
+      ]
+    }
+  ]
+}

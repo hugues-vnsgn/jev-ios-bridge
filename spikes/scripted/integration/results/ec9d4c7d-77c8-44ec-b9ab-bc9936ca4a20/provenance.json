@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "startedAt": "2026-09-25T01:06:29.206Z",
+  "runId": "ec9d4c7d-77c8-44ec-b9ab-bc9936ca4a20",
+  "scenarioPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/v0.1-release/spikes/scripted/integration/faults/f02-ambiguous-target.json",
+  "scenarioSha256": "1de94b777bd22deae636e25772b13c472f5bbb0fab70161e4f70d3fb2c2b7db4",
+  "bundleId": "dev.jevbridge.diagnostic",
+  "deviceUdid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+  "model": "jev-1.13.0",
+  "mobileBuildMcpVersion": "2.7.1",
+  "tapAliasRule": "mobilebuildmcp-2.7.1",
+  "assertionImplementationSha256": "9e73c34e4a1ac75eaaf8773d8774ff52ab25af9dbc87e74e8e330816c6c10b32",
+  "scriptedRuntimeSha256": "361ec2f2a53005cf3d5aaa5948802f6193369be0be4b65daae038edf4d1c800a",
+  "gitHead": "c40f4c96d000e1a10947a333dcd2c1a958ce7a16",
+  "nodeVersion": "v26.8.1",
+  "maxSteps": 100,
+  "timeoutMs": 900000,
+  "timingScope": "Prepared-app scripted UI execution; app build, install, data setup and script authoring excluded"
+}

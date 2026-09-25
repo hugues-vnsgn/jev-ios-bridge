@@ -1,0 +1,43 @@
+{
+  "suite": "weather",
+  "benchmarkCompleted": true,
+  "terminalSuccess": true,
+  "claudeExitCode": 0,
+  "parserExitCode": 0,
+  "parseErrors": 0,
+  "requestedModel": "claude-opus-4-7",
+  "observedModel": "claude-opus-4-7",
+  "wallClockSeconds": 130.078585625,
+  "wallClockSource": "upstream harness process timer",
+  "totalHostToolCalls": 16,
+  "mcpToolCalls": 16,
+  "uiAutomationCalls": 14,
+  "tokens": {
+    "uncachedInput": 21,
+    "cacheCreationInput": 23122,
+    "cacheReadInput": 780352,
+    "output": 3321,
+    "allInputProcessed": 803495
+  },
+  "byModel": [
+    {
+      "model": "claude-opus-4-7",
+      "uncachedInputTokens": 21,
+      "cacheCreationInputTokens": 23122,
+      "cacheReadInputTokens": 780352,
+      "outputTokens": 3321,
+      "estimatedCostUsd": 0.704526
+    }
+  ],
+  "estimatedCostUsd": 0.704526,
+  "costMeaning": "Claude Code client estimate at API prices, not a subscription invoice",
+  "source": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/weather/20260925T023714Z/result.json",
+  "invokedAt": "2026-09-25T02:37:13.033Z",
+  "sourceCommit": "d13ff0c707b0681769cf31da0eb42c4f94ceafff",
+  "axeBinary": {
+    "path": "/Users/hugues_mini/.npm/_npx/b998b4270960e258/node_modules/mobilebuildmcp/bundled/axe",
+    "version": "1.8.0",
+    "sha256": "a776cb6ebaa477bd04e8a829eb72ca179d869a1876111ca15a52dde1e91f9ab7"
+  },
+  "rawResultPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/weather/20260925T023714Z/result.json"
+}

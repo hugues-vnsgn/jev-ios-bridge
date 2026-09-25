@@ -1,0 +1,86 @@
+{
+  "kind": "upstream-baseline-audit",
+  "suite": "reminders",
+  "attempt": 3,
+  "precedingAttempts": [
+    "spikes/benchmarks/results/reminders-baseline-audit.json",
+    "spikes/benchmarks/results/reminders-baseline-attempt2-audit.json"
+  ],
+  "sourceCommit": "d13ff0c707b0681769cf31da0eb42c4f94ceafff",
+  "promptSha256": "965357a8822bdf506a72a3911cb43c9dd17fc5d2d8e9fc701ca7ac54b6d2690a",
+  "suiteSha256": "8b22722095a1cca23c02896f46f019b156b703da2b56d2a475aba802b335184c",
+  "temporaryHarnessAuditPatch": "spikes/benchmarks/results/reminders-postrun-audit-seam.json",
+  "axeBinary": {
+    "path": "/Users/hugues_mini/.npm/_npx/b998b4270960e258/node_modules/mobilebuildmcp/bundled/axe",
+    "version": "1.8.0",
+    "sha256": "a776cb6ebaa477bd04e8a829eb72ca179d869a1876111ca15a52dde1e91f9ab7"
+  },
+  "model": "claude-opus-4-7",
+  "claudeExitCode": 0,
+  "parserExitCode": 0,
+  "parseErrors": 0,
+  "toolInputErrorsRecovered": 0,
+  "hostWallClockSeconds": 108.062876541,
+  "simulatorSetupSeconds": 28.12,
+  "hostToolCalls": 18,
+  "tokens": {
+    "uncachedInput": 28,
+    "cacheCreationInput": 30795,
+    "cacheReadInput": 909696,
+    "output": 3192,
+    "allInputProcessed": 940519
+  },
+  "estimatedHostCostUsd": 0.8427379999999999,
+  "selectedHostUiEvidence": {
+    "typedListName": "MCP Benchmark List",
+    "observedNameBeforeSave": "MCP Benchmark List",
+    "finalRowLabels": [
+      "Buy milk benchmark, Completed",
+      "File report benchmark, Incomplete",
+      "Call team benchmark, Completed"
+    ]
+  },
+  "postHostAudit": {
+    "status": "failed",
+    "errorCode": "POST_RUN_AUDIT_FAILED",
+    "durationSeconds": 0.315992584,
+    "failedCommand": "npx -y mobilebuildmcp@2.7.1 ui-automation snapshot-ui --verbose --simulator-id 8A0722FA-69B4-41EC-9DBE-184DEDD195A0 --output json",
+    "error": "mobilebuildmcp: command not found from the upstream source checkout",
+    "fullSnapshotCaptured": false,
+    "screenshotCaptured": false,
+    "countedInHostWallClock": false
+  },
+  "savedListTitleVerified": false,
+  "verifiedTask": false,
+  "comparisonEligible": false,
+  "reason": "The saved list title was absent from all post-save compact host captures; the post-host full UI audit failed before capture. Input intent and pre-save field do not prove persisted title.",
+  "temporarySimulatorId": "8A0722FA-69B4-41EC-9DBE-184DEDD195A0",
+  "temporarySimulatorDeletedByHarness": true,
+  "numericSummary": "spikes/benchmarks/results/reminders-baseline-1790305520742.json",
+  "rawResultPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T030522Z/result.json",
+  "rawResultSha256": "cb4eb408e97e6307baed319020dcca35aeedfaa0a443d709d571c421cbe31a2d",
+  "rawTranscriptPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T030522Z/claude.jsonl",
+  "rawTranscriptSha256": "2ecf490ec7cf5048008c1a5d9e457aefb118b06828fe6b49fefa6dd7b9869e5c",
+  "proof": [
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T030522Z/parsed/0015_tool_call_type_text.md",
+      "sha256": "9dedee9f37c4be8a274bace491699beef2a9bfaf129a9da0ca0b7312467a9eb0"
+    },
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T030522Z/parsed/0016_tool_result_type_text.md",
+      "sha256": "0bc938053d3c40cec771db9e45712964b712fed79dfc36a34dc6247ead866db5"
+    },
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T030522Z/parsed/0034_tool_result_batch.md",
+      "sha256": "5cd85ca7ef4f13db1c7aa94d542fcd62b46002a5cca79d38f1642f3bbe5cf4d0"
+    },
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T030522Z/post-run-audit.json",
+      "sha256": "263a8476dd4d8d2b5bdb483d0241996da3eb0e62f716f68e15f3be85aeb0ba68"
+    },
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T030522Z/post-run-audit-error.txt",
+      "sha256": "d8f2741775da909f88c8aacda30ddcb94ae16e0b5f60b5389f76a82233a6cbaf"
+    }
+  ]
+}

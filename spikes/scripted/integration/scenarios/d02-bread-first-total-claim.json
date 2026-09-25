@@ -1,0 +1,111 @@
+{
+  "app": {
+    "bundleId": "dev.jevbridge.diagnostic"
+  },
+  "device": {
+    "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+  },
+  "preconditions": [
+    "Diagnostic App has been stopped and relaunched; selection summary reads Selected: None."
+  ],
+  "values": {},
+  "steps": [
+    {
+      "id": "addBread",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "identifier": "selection.summary",
+            "label": "Selected: None"
+          },
+          {
+            "role": "button",
+            "identifier": "choose.apple",
+            "label": "Add Apple ($2)"
+          },
+          {
+            "role": "button",
+            "identifier": "choose.bread",
+            "label": "Add Bread ($3)"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "identifier": "choose.bread"
+        }
+      }
+    },
+    {
+      "id": "addApple",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "identifier": "selection.summary",
+            "label": "Selected: Bread"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "identifier": "choose.apple"
+        }
+      }
+    },
+    {
+      "id": "finishOrder",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "identifier": "selection.summary",
+            "label": "Selected: Bread, Apple"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "identifier": "order.complete"
+        }
+      }
+    },
+    {
+      "id": "verify",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "identifier": "confirmation.title",
+            "label": "Order complete"
+          },
+          {
+            "role": "text",
+            "label": "Bread: $3"
+          },
+          {
+            "role": "text",
+            "label": "Apple: $2"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "claim",
+          "claim": "The Order complete confirmation shows Total: $5."
+        }
+      ]
+    }
+  ]
+}

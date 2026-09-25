@@ -1,0 +1,3 @@
+# Archived unified diffs retain the required prefix on blank context lines.
+spikes/benchmarks/prepared-weather/*.diff whitespace=-blank-at-eol
+spikes/benchmarks/results/weather-prepared-baseline-verified/*.diff whitespace=-blank-at-eol

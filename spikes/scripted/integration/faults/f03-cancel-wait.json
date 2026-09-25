@@ -1,0 +1,68 @@
+{
+  "app": {
+    "bundleId": "dev.jevbridge.diagnostic"
+  },
+  "device": {
+    "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+  },
+  "preconditions": [
+    "Diagnostic App starts at Selected: None. Send SIGINT after the first wait poll."
+  ],
+  "values": {},
+  "steps": [
+    {
+      "id": "waitForAbsentMarker",
+      "kind": "wait",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "identifier": "selection.summary",
+            "label": "Selected: None"
+          },
+          {
+            "role": "button",
+            "identifier": "choose.apple",
+            "label": "Add Apple ($2)"
+          },
+          {
+            "role": "button",
+            "identifier": "choose.bread",
+            "label": "Add Bread ($3)"
+          }
+        ]
+      },
+      "until": {
+        "present": [
+          {
+            "role": "text",
+            "label": "This marker never appears"
+          }
+        ]
+      },
+      "timeoutMs": 60000
+    },
+    {
+      "id": "verify",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "other",
+            "label": "Sample Shop"
+          },
+          {
+            "role": "text",
+            "identifier": "selection.summary"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "claim",
+          "claim": "The Sample Shop screen is open."
+        }
+      ]
+    }
+  ]
+}

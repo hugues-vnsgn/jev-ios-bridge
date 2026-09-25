@@ -1,0 +1,441 @@
+{
+  "deviceId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+  "capturedAt": 1790241747111,
+  "expiresAt": 1790241807111,
+  "sequence": 50,
+  "elements": [
+    {
+      "ref": "e1",
+      "role": "application",
+      "label": "DiagnosticApp",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": []
+    },
+    {
+      "ref": "e2",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e3",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e4",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e5",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e6",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e7",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e8",
+      "role": "other",
+      "identifier": "Sample Shop",
+      "frame": {
+        "x": 0,
+        "y": 62,
+        "width": 440,
+        "height": 106
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e9",
+      "role": "other",
+      "label": "Sample Shop",
+      "frame": {
+        "x": 20,
+        "y": 120,
+        "width": 208.67,
+        "height": 42.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e10",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e11",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e12",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e13",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e14",
+      "role": "text",
+      "label": "Choose two items",
+      "frame": {
+        "x": 16,
+        "y": 184,
+        "width": 234.33,
+        "height": 37.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e15",
+      "role": "text",
+      "label": "Selected: Bread, Apple",
+      "identifier": "selection.summary",
+      "frame": {
+        "x": 16,
+        "y": 241.67,
+        "width": 174,
+        "height": 22.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e16",
+      "role": "button",
+      "label": "Add Apple ($2)",
+      "identifier": "choose.apple",
+      "frame": {
+        "x": 16,
+        "y": 284,
+        "width": 408,
+        "height": 36.33
+      },
+      "state": {
+        "enabled": false,
+        "visible": true
+      },
+      "actions": []
+    },
+    {
+      "ref": "e17",
+      "role": "text",
+      "label": "Add Apple ($2)",
+      "frame": {
+        "x": 16,
+        "y": 284,
+        "width": 408,
+        "height": 36.33
+      },
+      "state": {
+        "enabled": false,
+        "visible": true
+      },
+      "actions": []
+    },
+    {
+      "ref": "e18",
+      "role": "image",
+      "label": "Selected",
+      "identifier": "checkmark.circle.fill",
+      "frame": {
+        "x": 393.67,
+        "y": 293.67,
+        "width": 17,
+        "height": 17
+      },
+      "state": {
+        "enabled": false,
+        "visible": true
+      },
+      "actions": []
+    },
+    {
+      "ref": "e19",
+      "role": "button",
+      "label": "Add Bread ($3)",
+      "identifier": "choose.bread",
+      "frame": {
+        "x": 16,
+        "y": 340.33,
+        "width": 408,
+        "height": 36.33
+      },
+      "state": {
+        "enabled": false,
+        "visible": true
+      },
+      "actions": []
+    },
+    {
+      "ref": "e20",
+      "role": "text",
+      "label": "Add Bread ($3)",
+      "frame": {
+        "x": 16,
+        "y": 340.33,
+        "width": 408,
+        "height": 36.33
+      },
+      "state": {
+        "enabled": false,
+        "visible": true
+      },
+      "actions": []
+    },
+    {
+      "ref": "e21",
+      "role": "image",
+      "label": "Selected",
+      "identifier": "checkmark.circle.fill",
+      "frame": {
+        "x": 393.67,
+        "y": 350,
+        "width": 17,
+        "height": 17
+      },
+      "state": {
+        "enabled": false,
+        "visible": true
+      },
+      "actions": []
+    },
+    {
+      "ref": "e22",
+      "role": "button",
+      "label": "Complete order",
+      "identifier": "order.complete",
+      "frame": {
+        "x": 16,
+        "y": 396.67,
+        "width": 408,
+        "height": 36.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "tap",
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e23",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e24",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    }
+  ],
+  "truncated": false,
+  "screenHash": "1ochr8r",
+  "screenshotPath": "raw/s23-diagnostic-bread-apple-selected.jpg"
+}

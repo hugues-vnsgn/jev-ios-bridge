@@ -1,0 +1,3354 @@
+{
+  "results": [
+    {
+      "caseId": "t01-settings-onofflabels-root",
+      "configuration": "A",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e54",
+      "confidence": 0.91,
+      "probabilities": {
+        "tap:e31": 0,
+        "tap:e40": 0,
+        "tap:e70": 0,
+        "tap:e86": 0,
+        "tap:e47": 0.01,
+        "tap:e54": 0.92,
+        "tap:e62": 0,
+        "tap:e78": 0,
+        "tap:e94": 0,
+        "tap:e102": 0,
+        "tap:e111": 0,
+        "tap:e138": 0,
+        "tap:e140": 0,
+        "wait": 0,
+        "stop-goal": 0.04,
+        "stop-blocked": 0,
+        "none": 0.03
+      },
+      "goalReached": 0.04,
+      "assertions": {
+        "accessibility_vision_visible": 0.03
+      },
+      "inputTokens": 1572,
+      "latencyMs": 844.7083749999999,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": true,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t02-settings-onofflabels-accessibility",
+      "configuration": "A",
+      "variant": "primary",
+      "top1Correct": false,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "stop-goal",
+      "confidence": 0.56,
+      "probabilities": {
+        "tap:e33": 0.01,
+        "tap:e36": 0,
+        "tap:e176": 0.01,
+        "tap:e179": 0,
+        "tap:e12": 0.04,
+        "tap:e44": 0.09,
+        "tap:e47": 0,
+        "tap:e54": 0,
+        "tap:e57": 0,
+        "tap:e64": 0,
+        "tap:e67": 0,
+        "tap:e74": 0,
+        "tap:e77": 0,
+        "tap:e84": 0,
+        "tap:e87": 0,
+        "tap:e94": 0,
+        "tap:e97": 0,
+        "tap:e116": 0,
+        "tap:e119": 0,
+        "tap:e126": 0,
+        "tap:e129": 0,
+        "tap:e136": 0,
+        "tap:e139": 0,
+        "tap:e146": 0,
+        "tap:e149": 0,
+        "tap:e156": 0,
+        "tap:e159": 0,
+        "tap:e166": 0.01,
+        "tap:e169": 0,
+        "swipe:e18:up": 0.02,
+        "swipe:e18:down": 0.01,
+        "swipe:e18:left": 0,
+        "swipe:e18:right": 0,
+        "swipe:e22:up": 0.04,
+        "swipe:e22:down": 0.03,
+        "swipe:e22:left": 0,
+        "swipe:e22:right": 0,
+        "wait": 0,
+        "stop-goal": 0.58,
+        "stop-blocked": 0,
+        "none": 0.16
+      },
+      "goalReached": 0.34,
+      "assertions": {
+        "onoff_control_visible": 0.21
+      },
+      "inputTokens": 2950,
+      "latencyMs": 320.9765830000001,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 0,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": false
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": false
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": false
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": false
+        }
+      }
+    },
+    {
+      "caseId": "t03-settings-onofflabels-off",
+      "configuration": "A",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e35",
+      "confidence": 0.86,
+      "probabilities": {
+        "tap:e24": 0,
+        "tap:e27": 0,
+        "tap:e62": 0,
+        "tap:e65": 0,
+        "tap:e12": 0,
+        "tap:e35": 0.88,
+        "tap:e37": 0.1,
+        "swipe:e22:up": 0,
+        "swipe:e22:down": 0,
+        "swipe:e22:left": 0,
+        "swipe:e22:right": 0,
+        "wait": 0,
+        "stop-goal": 0.01,
+        "stop-blocked": 0,
+        "none": 0.01
+      },
+      "goalReached": 0.07,
+      "assertions": {
+        "onoff_on": 0.02
+      },
+      "inputTokens": 1254,
+      "latencyMs": 388.3784579999999,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": true,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t04-settings-onofflabels-on",
+      "configuration": "A",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 0,
+      "falsePassAssertions": 0,
+      "choice": "stop-goal",
+      "confidence": 0.99,
+      "probabilities": {
+        "tap:e24": 0,
+        "tap:e27": 0,
+        "tap:e62": 0,
+        "tap:e65": 0,
+        "tap:e12": 0,
+        "tap:e35": 0,
+        "tap:e37": 0,
+        "swipe:e22:up": 0,
+        "swipe:e22:down": 0,
+        "swipe:e22:left": 0,
+        "swipe:e22:right": 0,
+        "wait": 0,
+        "stop-goal": 1,
+        "stop-blocked": 0,
+        "none": 0
+      },
+      "goalReached": 0.92,
+      "assertions": {
+        "onoff_on": 0.96
+      },
+      "inputTokens": 1254,
+      "latencyMs": 362.29162500000007,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": true,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true,
+          "verdict": "passed"
+        },
+        "0.7": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true,
+          "verdict": "passed"
+        },
+        "0.8": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true,
+          "verdict": "passed"
+        },
+        "0.9": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true,
+          "verdict": "passed"
+        }
+      }
+    },
+    {
+      "caseId": "t05-contacts-create-list",
+      "configuration": "A",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e89",
+      "confidence": 0.71,
+      "probabilities": {
+        "tap:e26": 0,
+        "tap:e34": 0,
+        "tap:e42": 0,
+        "tap:e47": 0,
+        "tap:e55": 0,
+        "tap:e63": 0,
+        "tap:e10": 0.03,
+        "tap:e82": 0,
+        "tap:e84": 0,
+        "tap:e89": 0.73,
+        "swipe:e17:up": 0,
+        "swipe:e17:down": 0,
+        "swipe:e17:left": 0,
+        "swipe:e17:right": 0,
+        "wait": 0,
+        "stop-goal": 0.05,
+        "stop-blocked": 0.01,
+        "none": 0.18
+      },
+      "goalReached": 0.05,
+      "assertions": {
+        "new_contact_form_open": 0.06
+      },
+      "inputTokens": 1504,
+      "latencyMs": 294.0982079999999,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": true,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t06-contacts-create-blank",
+      "configuration": "A",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "type:e116:firstName",
+      "confidence": 0.98,
+      "probabilities": {
+        "tap:e27": 0,
+        "tap:e35": 0,
+        "tap:e43": 0,
+        "tap:e48": 0,
+        "tap:e56": 0,
+        "tap:e64": 0,
+        "type:e82:firstName": 0,
+        "type:e116:firstName": 0.98,
+        "type:e119:firstName": 0,
+        "type:e122:firstName": 0,
+        "tap:e11": 0,
+        "tap:e83": 0,
+        "tap:e85": 0,
+        "tap:e90": 0,
+        "tap:e112": 0,
+        "tap:e124": 0,
+        "tap:e125": 0,
+        "tap:e129": 0,
+        "tap:e130": 0,
+        "tap:e134": 0,
+        "tap:e135": 0,
+        "tap:e149": 0,
+        "tap:e150": 0,
+        "tap:e174": 0,
+        "tap:e175": 0,
+        "tap:e179": 0,
+        "tap:e180": 0,
+        "tap:e184": 0,
+        "tap:e185": 0,
+        "tap:e189": 0,
+        "tap:e190": 0,
+        "tap:e194": 0,
+        "tap:e101": 0,
+        "swipe:e18:up": 0,
+        "swipe:e18:down": 0,
+        "swipe:e18:left": 0,
+        "swipe:e18:right": 0,
+        "swipe:e114:up": 0,
+        "swipe:e114:down": 0,
+        "swipe:e114:left": 0,
+        "swipe:e114:right": 0,
+        "wait": 0,
+        "stop-goal": 0.01,
+        "stop-blocked": 0,
+        "none": 0.01
+      },
+      "goalReached": 0.14,
+      "assertions": {
+        "first_name_mira": 0.08
+      },
+      "inputTokens": 3094,
+      "latencyMs": 337.1470419999996,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t07-contacts-create-filled",
+      "configuration": "A",
+      "variant": "primary",
+      "top1Correct": false,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "stop-goal",
+      "confidence": 0.23,
+      "probabilities": {
+        "tap:e27": 0,
+        "tap:e35": 0,
+        "tap:e43": 0,
+        "tap:e48": 0,
+        "tap:e56": 0,
+        "tap:e64": 0,
+        "tap:e11": 0.16,
+        "tap:e83": 0,
+        "tap:e85": 0,
+        "tap:e90": 0.09,
+        "tap:e103": 0.18000000000000002,
+        "tap:e112": 0,
+        "tap:e120": 0,
+        "tap:e125": 0,
+        "tap:e126": 0,
+        "tap:e130": 0,
+        "tap:e131": 0,
+        "tap:e135": 0,
+        "tap:e136": 0,
+        "tap:e150": 0,
+        "tap:e151": 0,
+        "tap:e175": 0,
+        "tap:e176": 0,
+        "tap:e180": 0,
+        "tap:e181": 0,
+        "tap:e185": 0,
+        "tap:e186": 0,
+        "tap:e190": 0,
+        "tap:e191": 0,
+        "tap:e195": 0.01,
+        "tap:e101": 0.01,
+        "swipe:e18:up": 0.02,
+        "swipe:e18:down": 0.02,
+        "swipe:e18:left": 0,
+        "swipe:e18:right": 0.01,
+        "swipe:e114:up": 0,
+        "swipe:e114:down": 0,
+        "swipe:e114:left": 0,
+        "swipe:e114:right": 0,
+        "wait": 0,
+        "stop-goal": 0.26,
+        "stop-blocked": 0.03,
+        "none": 0.2
+      },
+      "goalReached": 0.13,
+      "assertions": {
+        "saved_mira_card": 0.2
+      },
+      "inputTokens": 3017,
+      "latencyMs": 298.26587500000005,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 0,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": false
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": false
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": false
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": false
+        }
+      }
+    },
+    {
+      "caseId": "t08-reminders-create-onboarding",
+      "configuration": "A",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e78",
+      "confidence": 0.43,
+      "probabilities": {
+        "tap:e11": 0.04,
+        "tap:e12": 0.04,
+        "tap:e45": 0,
+        "tap:e78": 0.48,
+        "swipe:e57:up": 0.13,
+        "swipe:e57:down": 0.12,
+        "swipe:e57:left": 0,
+        "swipe:e57:right": 0.01,
+        "wait": 0,
+        "stop-goal": 0.09,
+        "stop-blocked": 0,
+        "none": 0.09
+      },
+      "goalReached": 0.19,
+      "assertions": {
+        "icloud_choice_visible": 0.07
+      },
+      "inputTokens": 991,
+      "latencyMs": 292.44100000000026,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t09-reminders-create-icloud-prompt",
+      "configuration": "A",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e71",
+      "confidence": 0.52,
+      "probabilities": {
+        "tap:e10": 0.01,
+        "tap:e11": 0,
+        "tap:e44": 0.01,
+        "tap:e71": 0.55,
+        "tap:e72": 0.03,
+        "swipe:e50:up": 0.01,
+        "swipe:e50:down": 0,
+        "swipe:e50:left": 0,
+        "swipe:e50:right": 0,
+        "swipe:e55:up": 0,
+        "swipe:e55:down": 0,
+        "swipe:e55:left": 0,
+        "swipe:e55:right": 0,
+        "swipe:e68:up": 0,
+        "swipe:e68:down": 0,
+        "swipe:e68:left": 0,
+        "swipe:e68:right": 0,
+        "wait": 0,
+        "stop-goal": 0.32,
+        "stop-blocked": 0.05,
+        "none": 0.02
+      },
+      "goalReached": 0.19,
+      "assertions": {
+        "local_list_unblocked": 0.06
+      },
+      "inputTokens": 1522,
+      "latencyMs": 344.56799999999976,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t10-reminders-create-empty-list",
+      "configuration": "A",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e44",
+      "confidence": 0.93,
+      "probabilities": {
+        "tap:e10": 0,
+        "tap:e11": 0,
+        "tap:e44": 0.94,
+        "wait": 0,
+        "stop-goal": 0.04,
+        "stop-blocked": 0.01,
+        "none": 0.01
+      },
+      "goalReached": 0.07,
+      "assertions": {
+        "composer_title_visible": 0.06
+      },
+      "inputTokens": 715,
+      "latencyMs": 276.5189169999999,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": true,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t01-settings-onofflabels-root",
+      "configuration": "B",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e54",
+      "confidence": 0.95,
+      "probabilities": {
+        "tap:e31": 0,
+        "tap:e40": 0,
+        "tap:e70": 0,
+        "tap:e86": 0,
+        "tap:e47": 0.01,
+        "tap:e54": 0.95,
+        "tap:e62": 0,
+        "tap:e78": 0,
+        "tap:e94": 0,
+        "tap:e102": 0,
+        "tap:e111": 0,
+        "tap:e138": 0,
+        "tap:e140": 0,
+        "wait": 0,
+        "stop-goal": 0.03,
+        "stop-blocked": 0,
+        "none": 0.01
+      },
+      "goalReached": 0.04,
+      "assertions": {
+        "accessibility_vision_visible": 0.03
+      },
+      "inputTokens": 1572,
+      "latencyMs": 276.70587499999965,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": true,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t02-settings-onofflabels-accessibility",
+      "configuration": "B",
+      "variant": "primary",
+      "top1Correct": false,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "stop-goal",
+      "confidence": 0.34,
+      "probabilities": {
+        "tap:e33": 0,
+        "tap:e36": 0,
+        "tap:e176": 0.01,
+        "tap:e179": 0,
+        "tap:e12": 0.02,
+        "tap:e44": 0.26,
+        "tap:e47": 0.01,
+        "tap:e54": 0,
+        "tap:e57": 0,
+        "tap:e64": 0,
+        "tap:e67": 0,
+        "tap:e74": 0,
+        "tap:e77": 0,
+        "tap:e84": 0,
+        "tap:e87": 0,
+        "tap:e94": 0,
+        "tap:e97": 0,
+        "tap:e116": 0,
+        "tap:e119": 0,
+        "tap:e126": 0,
+        "tap:e129": 0,
+        "tap:e136": 0,
+        "tap:e139": 0.01,
+        "tap:e146": 0,
+        "tap:e149": 0,
+        "tap:e156": 0,
+        "tap:e159": 0,
+        "tap:e166": 0.05,
+        "tap:e169": 0.01,
+        "swipe:e18:up": 0.02,
+        "swipe:e18:down": 0,
+        "swipe:e18:left": 0,
+        "swipe:e18:right": 0,
+        "swipe:e22:up": 0.05,
+        "swipe:e22:down": 0.03,
+        "swipe:e22:left": 0,
+        "swipe:e22:right": 0,
+        "wait": 0,
+        "stop-goal": 0.37,
+        "stop-blocked": 0,
+        "none": 0.16
+      },
+      "goalReached": 0.21,
+      "assertions": {
+        "onoff_control_visible": 0.15
+      },
+      "inputTokens": 2962,
+      "latencyMs": 336.0165420000003,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 0,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": false
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": false
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": false
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": false
+        }
+      }
+    },
+    {
+      "caseId": "t03-settings-onofflabels-off",
+      "configuration": "B",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e35",
+      "confidence": 0.9,
+      "probabilities": {
+        "tap:e24": 0,
+        "tap:e27": 0,
+        "tap:e62": 0,
+        "tap:e65": 0,
+        "tap:e12": 0,
+        "tap:e35": 0.91,
+        "tap:e37": 0.07,
+        "swipe:e22:up": 0,
+        "swipe:e22:down": 0,
+        "swipe:e22:left": 0,
+        "swipe:e22:right": 0,
+        "wait": 0,
+        "stop-goal": 0.01,
+        "stop-blocked": 0,
+        "none": 0.01
+      },
+      "goalReached": 0.06,
+      "assertions": {
+        "onoff_on": 0.02
+      },
+      "inputTokens": 1274,
+      "latencyMs": 280.50491599999987,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": true,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t04-settings-onofflabels-on",
+      "configuration": "B",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 0,
+      "falsePassAssertions": 0,
+      "choice": "stop-goal",
+      "confidence": 0.99,
+      "probabilities": {
+        "tap:e24": 0,
+        "tap:e27": 0,
+        "tap:e62": 0,
+        "tap:e65": 0,
+        "tap:e12": 0,
+        "tap:e35": 0,
+        "tap:e37": 0,
+        "swipe:e22:up": 0,
+        "swipe:e22:down": 0,
+        "swipe:e22:left": 0,
+        "swipe:e22:right": 0,
+        "wait": 0,
+        "stop-goal": 1,
+        "stop-blocked": 0,
+        "none": 0
+      },
+      "goalReached": 0.92,
+      "assertions": {
+        "onoff_on": 0.96
+      },
+      "inputTokens": 1277,
+      "latencyMs": 285.48579100000006,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": true,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true,
+          "verdict": "passed"
+        },
+        "0.7": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true,
+          "verdict": "passed"
+        },
+        "0.8": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true,
+          "verdict": "passed"
+        },
+        "0.9": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true,
+          "verdict": "passed"
+        }
+      }
+    },
+    {
+      "caseId": "t05-contacts-create-list",
+      "configuration": "B",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e89",
+      "confidence": 0.63,
+      "probabilities": {
+        "tap:e26": 0,
+        "tap:e34": 0,
+        "tap:e42": 0,
+        "tap:e47": 0,
+        "tap:e55": 0,
+        "tap:e63": 0,
+        "tap:e10": 0.06,
+        "tap:e82": 0,
+        "tap:e84": 0,
+        "tap:e89": 0.66,
+        "swipe:e17:up": 0,
+        "swipe:e17:down": 0,
+        "swipe:e17:left": 0,
+        "swipe:e17:right": 0,
+        "wait": 0,
+        "stop-goal": 0.06,
+        "stop-blocked": 0.01,
+        "none": 0.21000000000000002
+      },
+      "goalReached": 0.05,
+      "assertions": {
+        "new_contact_form_open": 0.06
+      },
+      "inputTokens": 1504,
+      "latencyMs": 280.1545420000002,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": true,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t06-contacts-create-blank",
+      "configuration": "B",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "type:e116:firstName",
+      "confidence": 0.95,
+      "probabilities": {
+        "tap:e27": 0,
+        "tap:e35": 0,
+        "tap:e43": 0,
+        "tap:e48": 0,
+        "tap:e56": 0,
+        "tap:e64": 0,
+        "type:e82:firstName": 0,
+        "type:e116:firstName": 0.96,
+        "type:e119:firstName": 0,
+        "type:e122:firstName": 0,
+        "tap:e11": 0,
+        "tap:e83": 0,
+        "tap:e85": 0,
+        "tap:e90": 0,
+        "tap:e112": 0,
+        "tap:e124": 0,
+        "tap:e125": 0,
+        "tap:e129": 0,
+        "tap:e130": 0,
+        "tap:e134": 0,
+        "tap:e135": 0,
+        "tap:e149": 0,
+        "tap:e150": 0,
+        "tap:e174": 0,
+        "tap:e175": 0,
+        "tap:e179": 0,
+        "tap:e180": 0,
+        "tap:e184": 0,
+        "tap:e185": 0,
+        "tap:e189": 0,
+        "tap:e190": 0,
+        "tap:e194": 0,
+        "tap:e101": 0,
+        "swipe:e18:up": 0,
+        "swipe:e18:down": 0,
+        "swipe:e18:left": 0,
+        "swipe:e18:right": 0,
+        "swipe:e114:up": 0,
+        "swipe:e114:down": 0,
+        "swipe:e114:left": 0,
+        "swipe:e114:right": 0,
+        "wait": 0,
+        "stop-goal": 0.03,
+        "stop-blocked": 0,
+        "none": 0.01
+      },
+      "goalReached": 0.19,
+      "assertions": {
+        "first_name_mira": 0.12
+      },
+      "inputTokens": 3107,
+      "latencyMs": 280.0271249999996,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 0,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t07-contacts-create-filled",
+      "configuration": "B",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e103",
+      "confidence": 0.4,
+      "probabilities": {
+        "tap:e27": 0,
+        "tap:e35": 0,
+        "tap:e43": 0,
+        "tap:e48": 0,
+        "tap:e56": 0,
+        "tap:e64": 0,
+        "tap:e11": 0.16,
+        "tap:e83": 0,
+        "tap:e85": 0,
+        "tap:e90": 0.02,
+        "tap:e103": 0.43,
+        "tap:e112": 0,
+        "tap:e120": 0,
+        "tap:e125": 0,
+        "tap:e126": 0,
+        "tap:e130": 0,
+        "tap:e131": 0,
+        "tap:e135": 0,
+        "tap:e136": 0,
+        "tap:e150": 0,
+        "tap:e151": 0,
+        "tap:e175": 0,
+        "tap:e176": 0,
+        "tap:e180": 0,
+        "tap:e181": 0,
+        "tap:e185": 0,
+        "tap:e186": 0,
+        "tap:e190": 0,
+        "tap:e191": 0,
+        "tap:e195": 0,
+        "tap:e101": 0,
+        "swipe:e18:up": 0.02,
+        "swipe:e18:down": 0.01,
+        "swipe:e18:left": 0,
+        "swipe:e18:right": 0.01,
+        "swipe:e114:up": 0,
+        "swipe:e114:down": 0,
+        "swipe:e114:left": 0,
+        "swipe:e114:right": 0,
+        "wait": 0,
+        "stop-goal": 0.25,
+        "stop-blocked": 0.01,
+        "none": 0.09
+      },
+      "goalReached": 0.16,
+      "assertions": {
+        "saved_mira_card": 0.16
+      },
+      "inputTokens": 3041,
+      "latencyMs": 291.95554100000027,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 0,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t08-reminders-create-onboarding",
+      "configuration": "B",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e78",
+      "confidence": 0.47,
+      "probabilities": {
+        "tap:e11": 0.05,
+        "tap:e12": 0.03,
+        "tap:e45": 0,
+        "tap:e78": 0.52,
+        "swipe:e57:up": 0.12,
+        "swipe:e57:down": 0.12,
+        "swipe:e57:left": 0,
+        "swipe:e57:right": 0.01,
+        "wait": 0,
+        "stop-goal": 0.08,
+        "stop-blocked": 0,
+        "none": 0.07
+      },
+      "goalReached": 0.17,
+      "assertions": {
+        "icloud_choice_visible": 0.06
+      },
+      "inputTokens": 991,
+      "latencyMs": 331.0233330000001,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t09-reminders-create-icloud-prompt",
+      "configuration": "B",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e71",
+      "confidence": 0.58,
+      "probabilities": {
+        "tap:e10": 0.01,
+        "tap:e11": 0,
+        "tap:e44": 0.01,
+        "tap:e71": 0.61,
+        "tap:e72": 0.02,
+        "swipe:e50:up": 0.01,
+        "swipe:e50:down": 0,
+        "swipe:e50:left": 0,
+        "swipe:e50:right": 0,
+        "swipe:e55:up": 0,
+        "swipe:e55:down": 0,
+        "swipe:e55:left": 0,
+        "swipe:e55:right": 0,
+        "swipe:e68:up": 0,
+        "swipe:e68:down": 0,
+        "swipe:e68:left": 0,
+        "swipe:e68:right": 0,
+        "wait": 0,
+        "stop-goal": 0.28,
+        "stop-blocked": 0.04,
+        "none": 0.02
+      },
+      "goalReached": 0.19,
+      "assertions": {
+        "local_list_unblocked": 0.07
+      },
+      "inputTokens": 1538,
+      "latencyMs": 279.5243330000003,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t10-reminders-create-empty-list",
+      "configuration": "B",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e44",
+      "confidence": 0.79,
+      "probabilities": {
+        "tap:e10": 0,
+        "tap:e11": 0,
+        "tap:e44": 0.83,
+        "wait": 0,
+        "stop-goal": 0.13,
+        "stop-blocked": 0.01,
+        "none": 0.03
+      },
+      "goalReached": 0.12,
+      "assertions": {
+        "composer_title_visible": 0.12
+      },
+      "inputTokens": 738,
+      "latencyMs": 320.4002499999997,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 0,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t01-settings-onofflabels-root",
+      "configuration": "C",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e54",
+      "confidence": 0.87,
+      "probabilities": {
+        "tap:e31": 0,
+        "tap:e40": 0,
+        "tap:e47": 0.01,
+        "tap:e54": 0.89,
+        "tap:e62": 0,
+        "tap:e70": 0,
+        "tap:e78": 0,
+        "tap:e86": 0,
+        "tap:e94": 0,
+        "tap:e102": 0,
+        "tap:e111": 0,
+        "tap:e137": 0,
+        "tap:e138": 0,
+        "wait": 0,
+        "stop-goal": 0.04,
+        "stop-blocked": 0,
+        "none": 0.06
+      },
+      "goalReached": 0.04,
+      "assertions": {
+        "accessibility_vision_visible": 0.05
+      },
+      "inputTokens": 3486,
+      "latencyMs": 310.67462499999965,
+      "model": "jev-1.13.0",
+      "collapsedTapRefs": {
+        "e138": [
+          "e140"
+        ]
+      },
+      "completionLabelCorrect": true,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t02-settings-onofflabels-accessibility",
+      "configuration": "C",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e44",
+      "confidence": 0.88,
+      "probabilities": {
+        "tap:e12": 0,
+        "swipe:e18:up": 0,
+        "swipe:e18:down": 0,
+        "swipe:e18:left": 0,
+        "swipe:e18:right": 0,
+        "swipe:e22:up": 0,
+        "swipe:e22:down": 0,
+        "swipe:e22:left": 0,
+        "swipe:e22:right": 0,
+        "tap:e33": 0,
+        "tap:e44": 0.9,
+        "tap:e54": 0,
+        "tap:e64": 0,
+        "tap:e74": 0,
+        "tap:e84": 0,
+        "tap:e94": 0,
+        "wait": 0,
+        "stop-goal": 0.08,
+        "stop-blocked": 0,
+        "none": 0.02
+      },
+      "goalReached": 0.14,
+      "assertions": {
+        "onoff_control_visible": 0.1
+      },
+      "inputTokens": 3324,
+      "latencyMs": 295.82574999999997,
+      "model": "jev-1.13.0",
+      "collapsedTapRefs": {
+        "e33": [
+          "e176",
+          "e36",
+          "e179"
+        ],
+        "e44": [
+          "e166",
+          "e47",
+          "e169"
+        ],
+        "e54": [
+          "e156",
+          "e57",
+          "e159"
+        ],
+        "e64": [
+          "e146",
+          "e67",
+          "e149"
+        ],
+        "e74": [
+          "e136",
+          "e77",
+          "e139"
+        ],
+        "e84": [
+          "e126",
+          "e87",
+          "e129"
+        ],
+        "e94": [
+          "e116",
+          "e97",
+          "e119"
+        ]
+      },
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t03-settings-onofflabels-off",
+      "configuration": "C",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e35",
+      "confidence": 0.85,
+      "probabilities": {
+        "tap:e12": 0,
+        "swipe:e22:up": 0,
+        "swipe:e22:down": 0,
+        "swipe:e22:left": 0,
+        "swipe:e22:right": 0,
+        "tap:e24": 0,
+        "tap:e35": 0.87,
+        "wait": 0,
+        "stop-goal": 0.11,
+        "stop-blocked": 0,
+        "none": 0.02
+      },
+      "goalReached": 0.48,
+      "assertions": {
+        "onoff_on": 0.02
+      },
+      "inputTokens": 2412,
+      "latencyMs": 296.98612500000036,
+      "model": "jev-1.13.0",
+      "collapsedTapRefs": {
+        "e24": [
+          "e62",
+          "e27",
+          "e65"
+        ],
+        "e35": [
+          "e37"
+        ]
+      },
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t04-settings-onofflabels-on",
+      "configuration": "C",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 0,
+      "falsePassAssertions": 0,
+      "choice": "stop-goal",
+      "confidence": 0.76,
+      "probabilities": {
+        "tap:e12": 0,
+        "swipe:e22:up": 0,
+        "swipe:e22:down": 0,
+        "swipe:e22:left": 0,
+        "swipe:e22:right": 0,
+        "tap:e24": 0,
+        "tap:e35": 0.2,
+        "wait": 0,
+        "stop-goal": 0.79,
+        "stop-blocked": 0,
+        "none": 0.01
+      },
+      "goalReached": 0.75,
+      "assertions": {
+        "onoff_on": 0.9
+      },
+      "inputTokens": 2412,
+      "latencyMs": 275.0082910000001,
+      "model": "jev-1.13.0",
+      "collapsedTapRefs": {
+        "e24": [
+          "e62",
+          "e27",
+          "e65"
+        ],
+        "e35": [
+          "e37"
+        ]
+      },
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "completion-not-yes",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "completion-not-yes",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t05-contacts-create-list",
+      "configuration": "C",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e89",
+      "confidence": 0.94,
+      "probabilities": {
+        "tap:e10": 0,
+        "swipe:e17:up": 0,
+        "swipe:e17:down": 0,
+        "swipe:e17:left": 0,
+        "swipe:e17:right": 0,
+        "tap:e26": 0,
+        "tap:e34": 0,
+        "tap:e42": 0,
+        "tap:e47": 0,
+        "tap:e55": 0,
+        "tap:e63": 0,
+        "tap:e81": 0,
+        "tap:e82": 0,
+        "tap:e89": 0.95,
+        "wait": 0,
+        "stop-goal": 0.02,
+        "stop-blocked": 0,
+        "none": 0.03
+      },
+      "goalReached": 0.04,
+      "assertions": {
+        "new_contact_form_open": 0.03
+      },
+      "inputTokens": 3082,
+      "latencyMs": 347.0681659999991,
+      "model": "jev-1.13.0",
+      "collapsedTapRefs": {
+        "e82": [
+          "e84"
+        ]
+      },
+      "completionLabelCorrect": true,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t06-contacts-create-blank",
+      "configuration": "C",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "type:e116:firstName",
+      "confidence": 0.98,
+      "probabilities": {
+        "tap:e11": 0,
+        "swipe:e18:up": 0,
+        "swipe:e18:down": 0,
+        "swipe:e18:left": 0,
+        "swipe:e18:right": 0,
+        "tap:e27": 0,
+        "tap:e35": 0,
+        "tap:e43": 0,
+        "tap:e48": 0,
+        "tap:e56": 0,
+        "tap:e64": 0,
+        "type:e82:firstName": 0,
+        "tap:e83": 0,
+        "tap:e90": 0,
+        "tap:e96": 0,
+        "tap:e101": 0,
+        "tap:e112": 0,
+        "swipe:e114:up": 0,
+        "swipe:e114:down": 0,
+        "swipe:e114:left": 0,
+        "swipe:e114:right": 0,
+        "type:e116:firstName": 0.99,
+        "type:e119:firstName": 0,
+        "type:e122:firstName": 0,
+        "tap:e124": 0,
+        "tap:e125": 0,
+        "tap:e129": 0,
+        "tap:e130": 0,
+        "tap:e134": 0,
+        "tap:e135": 0,
+        "tap:e149": 0,
+        "tap:e150": 0,
+        "tap:e174": 0,
+        "tap:e175": 0,
+        "tap:e179": 0,
+        "tap:e180": 0,
+        "tap:e184": 0,
+        "tap:e185": 0,
+        "tap:e189": 0,
+        "tap:e190": 0,
+        "tap:e194": 0,
+        "wait": 0,
+        "stop-goal": 0.01,
+        "stop-blocked": 0,
+        "none": 0
+      },
+      "goalReached": 0.08,
+      "assertions": {
+        "first_name_mira": 0.03
+      },
+      "inputTokens": 7070,
+      "latencyMs": 303.8703749999986,
+      "model": "jev-1.13.0",
+      "collapsedTapRefs": {
+        "e83": [
+          "e85"
+        ]
+      },
+      "completionLabelCorrect": true,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t07-contacts-create-filled",
+      "configuration": "C",
+      "variant": "primary",
+      "top1Correct": false,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e11",
+      "confidence": 0.26,
+      "probabilities": {
+        "tap:e11": 0.29000000000000004,
+        "swipe:e18:up": 0.01,
+        "swipe:e18:down": 0.01,
+        "swipe:e18:left": 0,
+        "swipe:e18:right": 0,
+        "tap:e27": 0,
+        "tap:e35": 0,
+        "tap:e43": 0,
+        "tap:e48": 0,
+        "tap:e56": 0,
+        "tap:e64": 0,
+        "tap:e82": 0,
+        "tap:e83": 0,
+        "tap:e90": 0.01,
+        "tap:e96": 0.01,
+        "tap:e101": 0.14,
+        "tap:e103": 0.15000000000000002,
+        "tap:e112": 0,
+        "swipe:e114:up": 0,
+        "swipe:e114:down": 0,
+        "swipe:e114:left": 0,
+        "swipe:e114:right": 0,
+        "tap:e116": 0,
+        "tap:e119": 0,
+        "tap:e120": 0,
+        "tap:e123": 0,
+        "tap:e125": 0.01,
+        "tap:e126": 0,
+        "tap:e130": 0,
+        "tap:e131": 0,
+        "tap:e135": 0,
+        "tap:e136": 0,
+        "tap:e150": 0,
+        "tap:e151": 0,
+        "tap:e175": 0,
+        "tap:e176": 0,
+        "tap:e180": 0,
+        "tap:e181": 0,
+        "tap:e185": 0,
+        "tap:e186": 0,
+        "tap:e190": 0,
+        "tap:e191": 0,
+        "tap:e195": 0,
+        "wait": 0,
+        "stop-goal": 0.22,
+        "stop-blocked": 0.03,
+        "none": 0.11
+      },
+      "goalReached": 0.16,
+      "assertions": {
+        "saved_mira_card": 0.3
+      },
+      "inputTokens": 7162,
+      "latencyMs": 338.4086669999997,
+      "model": "jev-1.13.0",
+      "collapsedTapRefs": {
+        "e83": [
+          "e85"
+        ]
+      },
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 0,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": false
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": false
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": false
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": false
+        }
+      }
+    },
+    {
+      "caseId": "t08-reminders-create-onboarding",
+      "configuration": "C",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e78",
+      "confidence": 0.84,
+      "probabilities": {
+        "tap:e11": 0.1,
+        "tap:e12": 0.02,
+        "tap:e45": 0,
+        "swipe:e57:up": 0,
+        "swipe:e57:down": 0,
+        "swipe:e57:left": 0,
+        "swipe:e57:right": 0,
+        "tap:e78": 0.86,
+        "wait": 0,
+        "stop-goal": 0.01,
+        "stop-blocked": 0,
+        "none": 0.01
+      },
+      "goalReached": 0.04,
+      "assertions": {
+        "icloud_choice_visible": 0.03
+      },
+      "inputTokens": 1870,
+      "latencyMs": 274.7399999999998,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": true,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t09-reminders-create-icloud-prompt",
+      "configuration": "C",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e71",
+      "confidence": 0.51,
+      "probabilities": {
+        "tap:e10": 0.01,
+        "tap:e11": 0,
+        "tap:e44": 0,
+        "swipe:e50:up": 0,
+        "swipe:e50:down": 0,
+        "swipe:e50:left": 0,
+        "swipe:e50:right": 0,
+        "swipe:e55:up": 0,
+        "swipe:e55:down": 0,
+        "swipe:e55:left": 0,
+        "swipe:e55:right": 0,
+        "swipe:e68:up": 0,
+        "swipe:e68:down": 0,
+        "swipe:e68:left": 0,
+        "swipe:e68:right": 0,
+        "tap:e71": 0.54,
+        "tap:e72": 0.03,
+        "wait": 0,
+        "stop-goal": 0.28,
+        "stop-blocked": 0.12,
+        "none": 0.01
+      },
+      "goalReached": 0.16,
+      "assertions": {
+        "local_list_unblocked": 0.05
+      },
+      "inputTokens": 2185,
+      "latencyMs": 329.6621669999986,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t10-reminders-create-empty-list",
+      "configuration": "C",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e44",
+      "confidence": 0.95,
+      "probabilities": {
+        "tap:e10": 0,
+        "tap:e11": 0,
+        "tap:e44": 0.96,
+        "wait": 0,
+        "stop-goal": 0.02,
+        "stop-blocked": 0.01,
+        "none": 0.01
+      },
+      "goalReached": 0.05,
+      "assertions": {
+        "composer_title_visible": 0.06
+      },
+      "inputTokens": 1145,
+      "latencyMs": 284.14629199999945,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": true,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t01-settings-onofflabels-root",
+      "configuration": "D",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e54",
+      "confidence": 0.82,
+      "probabilities": {
+        "tap:e31": 0,
+        "tap:e40": 0,
+        "tap:e47": 0,
+        "tap:e54": 0.84,
+        "tap:e62": 0,
+        "tap:e70": 0,
+        "tap:e78": 0,
+        "tap:e86": 0,
+        "tap:e94": 0,
+        "tap:e102": 0,
+        "tap:e111": 0,
+        "tap:e137": 0,
+        "tap:e138": 0,
+        "wait": 0,
+        "stop-goal": 0.06,
+        "stop-blocked": 0,
+        "none": 0.09999999999999999
+      },
+      "goalReached": 0.04,
+      "assertions": {
+        "accessibility_vision_visible": 0.04
+      },
+      "inputTokens": 3486,
+      "latencyMs": 278.51674999999886,
+      "model": "jev-1.13.0",
+      "collapsedTapRefs": {
+        "e138": [
+          "e140"
+        ]
+      },
+      "completionLabelCorrect": true,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t02-settings-onofflabels-accessibility",
+      "configuration": "D",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e44",
+      "confidence": 0.86,
+      "probabilities": {
+        "tap:e12": 0,
+        "swipe:e18:up": 0,
+        "swipe:e18:down": 0,
+        "swipe:e18:left": 0,
+        "swipe:e18:right": 0,
+        "swipe:e22:up": 0,
+        "swipe:e22:down": 0,
+        "swipe:e22:left": 0,
+        "swipe:e22:right": 0,
+        "tap:e33": 0,
+        "tap:e44": 0.87,
+        "tap:e54": 0,
+        "tap:e64": 0,
+        "tap:e74": 0,
+        "tap:e84": 0,
+        "tap:e94": 0,
+        "wait": 0,
+        "stop-goal": 0.09999999999999999,
+        "stop-blocked": 0,
+        "none": 0.03
+      },
+      "goalReached": 0.16,
+      "assertions": {
+        "onoff_control_visible": 0.18
+      },
+      "inputTokens": 3336,
+      "latencyMs": 323.6113749999986,
+      "model": "jev-1.13.0",
+      "collapsedTapRefs": {
+        "e33": [
+          "e176",
+          "e36",
+          "e179"
+        ],
+        "e44": [
+          "e166",
+          "e47",
+          "e169"
+        ],
+        "e54": [
+          "e156",
+          "e57",
+          "e159"
+        ],
+        "e64": [
+          "e146",
+          "e67",
+          "e149"
+        ],
+        "e74": [
+          "e136",
+          "e77",
+          "e139"
+        ],
+        "e84": [
+          "e126",
+          "e87",
+          "e129"
+        ],
+        "e94": [
+          "e116",
+          "e97",
+          "e119"
+        ]
+      },
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 0,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t03-settings-onofflabels-off",
+      "configuration": "D",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e35",
+      "confidence": 0.89,
+      "probabilities": {
+        "tap:e12": 0,
+        "swipe:e22:up": 0,
+        "swipe:e22:down": 0,
+        "swipe:e22:left": 0,
+        "swipe:e22:right": 0,
+        "tap:e24": 0,
+        "tap:e35": 0.91,
+        "wait": 0,
+        "stop-goal": 0.08,
+        "stop-blocked": 0,
+        "none": 0.01
+      },
+      "goalReached": 0.23,
+      "assertions": {
+        "onoff_on": 0.03
+      },
+      "inputTokens": 2432,
+      "latencyMs": 364.2807909999992,
+      "model": "jev-1.13.0",
+      "collapsedTapRefs": {
+        "e24": [
+          "e62",
+          "e27",
+          "e65"
+        ],
+        "e35": [
+          "e37"
+        ]
+      },
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "completion-not-no",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t04-settings-onofflabels-on",
+      "configuration": "D",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 0,
+      "falsePassAssertions": 0,
+      "choice": "stop-goal",
+      "confidence": 0.97,
+      "probabilities": {
+        "tap:e12": 0,
+        "swipe:e22:up": 0,
+        "swipe:e22:down": 0,
+        "swipe:e22:left": 0,
+        "swipe:e22:right": 0,
+        "tap:e24": 0,
+        "tap:e35": 0.02,
+        "wait": 0,
+        "stop-goal": 0.98,
+        "stop-blocked": 0,
+        "none": 0
+      },
+      "goalReached": 0.8,
+      "assertions": {
+        "onoff_on": 0.96
+      },
+      "inputTokens": 2435,
+      "latencyMs": 296.58541700000023,
+      "model": "jev-1.13.0",
+      "collapsedTapRefs": {
+        "e24": [
+          "e62",
+          "e27",
+          "e65"
+        ],
+        "e35": [
+          "e37"
+        ]
+      },
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "completion-not-yes",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "completion-not-yes",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "completion-not-yes",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "completion-not-yes",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t05-contacts-create-list",
+      "configuration": "D",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e89",
+      "confidence": 0.94,
+      "probabilities": {
+        "tap:e10": 0,
+        "swipe:e17:up": 0,
+        "swipe:e17:down": 0,
+        "swipe:e17:left": 0,
+        "swipe:e17:right": 0,
+        "tap:e26": 0,
+        "tap:e34": 0,
+        "tap:e42": 0,
+        "tap:e47": 0,
+        "tap:e55": 0,
+        "tap:e63": 0,
+        "tap:e81": 0,
+        "tap:e82": 0,
+        "tap:e89": 0.95,
+        "wait": 0,
+        "stop-goal": 0.02,
+        "stop-blocked": 0,
+        "none": 0.03
+      },
+      "goalReached": 0.04,
+      "assertions": {
+        "new_contact_form_open": 0.03
+      },
+      "inputTokens": 3082,
+      "latencyMs": 301.6567499999983,
+      "model": "jev-1.13.0",
+      "collapsedTapRefs": {
+        "e82": [
+          "e84"
+        ]
+      },
+      "completionLabelCorrect": true,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t06-contacts-create-blank",
+      "configuration": "D",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "type:e116:firstName",
+      "confidence": 0.98,
+      "probabilities": {
+        "tap:e11": 0,
+        "swipe:e18:up": 0,
+        "swipe:e18:down": 0,
+        "swipe:e18:left": 0,
+        "swipe:e18:right": 0,
+        "tap:e27": 0,
+        "tap:e35": 0,
+        "tap:e43": 0,
+        "tap:e48": 0,
+        "tap:e56": 0,
+        "tap:e64": 0,
+        "type:e82:firstName": 0,
+        "tap:e83": 0,
+        "tap:e90": 0,
+        "tap:e96": 0,
+        "tap:e101": 0,
+        "tap:e112": 0,
+        "swipe:e114:up": 0,
+        "swipe:e114:down": 0,
+        "swipe:e114:left": 0,
+        "swipe:e114:right": 0,
+        "type:e116:firstName": 0.99,
+        "type:e119:firstName": 0,
+        "type:e122:firstName": 0,
+        "tap:e124": 0,
+        "tap:e125": 0,
+        "tap:e129": 0,
+        "tap:e130": 0,
+        "tap:e134": 0,
+        "tap:e135": 0,
+        "tap:e149": 0,
+        "tap:e150": 0,
+        "tap:e174": 0,
+        "tap:e175": 0,
+        "tap:e179": 0,
+        "tap:e180": 0,
+        "tap:e184": 0,
+        "tap:e185": 0,
+        "tap:e189": 0,
+        "tap:e190": 0,
+        "tap:e194": 0,
+        "wait": 0,
+        "stop-goal": 0.01,
+        "stop-blocked": 0,
+        "none": 0
+      },
+      "goalReached": 0.1,
+      "assertions": {
+        "first_name_mira": 0.07
+      },
+      "inputTokens": 7083,
+      "latencyMs": 329.30758400000013,
+      "model": "jev-1.13.0",
+      "collapsedTapRefs": {
+        "e83": [
+          "e85"
+        ]
+      },
+      "completionLabelCorrect": true,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t07-contacts-create-filled",
+      "configuration": "D",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e103",
+      "confidence": 0.4,
+      "probabilities": {
+        "tap:e11": 0.22,
+        "swipe:e18:up": 0.01,
+        "swipe:e18:down": 0.01,
+        "swipe:e18:left": 0,
+        "swipe:e18:right": 0,
+        "tap:e27": 0,
+        "tap:e35": 0,
+        "tap:e43": 0,
+        "tap:e48": 0,
+        "tap:e56": 0,
+        "tap:e64": 0,
+        "tap:e82": 0,
+        "tap:e83": 0,
+        "tap:e90": 0,
+        "tap:e96": 0,
+        "tap:e101": 0.06999999999999999,
+        "tap:e103": 0.42,
+        "tap:e112": 0,
+        "swipe:e114:up": 0,
+        "swipe:e114:down": 0,
+        "swipe:e114:left": 0,
+        "swipe:e114:right": 0,
+        "tap:e116": 0,
+        "tap:e119": 0,
+        "tap:e120": 0,
+        "tap:e123": 0,
+        "tap:e125": 0,
+        "tap:e126": 0,
+        "tap:e130": 0,
+        "tap:e131": 0,
+        "tap:e135": 0,
+        "tap:e136": 0,
+        "tap:e150": 0,
+        "tap:e151": 0,
+        "tap:e175": 0,
+        "tap:e176": 0,
+        "tap:e180": 0,
+        "tap:e181": 0,
+        "tap:e185": 0,
+        "tap:e186": 0,
+        "tap:e190": 0,
+        "tap:e191": 0,
+        "tap:e195": 0,
+        "wait": 0,
+        "stop-goal": 0.17,
+        "stop-blocked": 0.02,
+        "none": 0.08
+      },
+      "goalReached": 0.16,
+      "assertions": {
+        "saved_mira_card": 0.14
+      },
+      "inputTokens": 7186,
+      "latencyMs": 294.76637499999924,
+      "model": "jev-1.13.0",
+      "collapsedTapRefs": {
+        "e83": [
+          "e85"
+        ]
+      },
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 0,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t08-reminders-create-onboarding",
+      "configuration": "D",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e78",
+      "confidence": 0.86,
+      "probabilities": {
+        "tap:e11": 0.09,
+        "tap:e12": 0.02,
+        "tap:e45": 0,
+        "swipe:e57:up": 0,
+        "swipe:e57:down": 0,
+        "swipe:e57:left": 0,
+        "swipe:e57:right": 0,
+        "tap:e78": 0.87,
+        "wait": 0,
+        "stop-goal": 0.01,
+        "stop-blocked": 0,
+        "none": 0.01
+      },
+      "goalReached": 0.05,
+      "assertions": {
+        "icloud_choice_visible": 0.03
+      },
+      "inputTokens": 1870,
+      "latencyMs": 272.3585000000003,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": true,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t09-reminders-create-icloud-prompt",
+      "configuration": "D",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e71",
+      "confidence": 0.52,
+      "probabilities": {
+        "tap:e10": 0,
+        "tap:e11": 0,
+        "tap:e44": 0,
+        "swipe:e50:up": 0,
+        "swipe:e50:down": 0,
+        "swipe:e50:left": 0,
+        "swipe:e50:right": 0,
+        "swipe:e55:up": 0,
+        "swipe:e55:down": 0,
+        "swipe:e55:left": 0,
+        "swipe:e55:right": 0,
+        "swipe:e68:up": 0,
+        "swipe:e68:down": 0,
+        "swipe:e68:left": 0,
+        "swipe:e68:right": 0,
+        "tap:e71": 0.55,
+        "tap:e72": 0.02,
+        "wait": 0,
+        "stop-goal": 0.32,
+        "stop-blocked": 0.08,
+        "none": 0.02
+      },
+      "goalReached": 0.44,
+      "assertions": {
+        "local_list_unblocked": 0.07
+      },
+      "inputTokens": 2201,
+      "latencyMs": 294.59883400000035,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": false,
+          "reason": "choice-confidence",
+          "correct": true
+        }
+      }
+    },
+    {
+      "caseId": "t10-reminders-create-empty-list",
+      "configuration": "D",
+      "variant": "primary",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e44",
+      "confidence": 0.94,
+      "probabilities": {
+        "tap:e10": 0.01,
+        "tap:e11": 0,
+        "tap:e44": 0.94,
+        "wait": 0,
+        "stop-goal": 0.03,
+        "stop-blocked": 0.01,
+        "none": 0.01
+      },
+      "goalReached": 0.08,
+      "assertions": {
+        "composer_title_visible": 0.1
+      },
+      "inputTokens": 1168,
+      "latencyMs": 265.0349580000002,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": true,
+      "assertionLabelMatches": 1,
+      "gates": {
+        "0.6": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.7": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.8": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        },
+        "0.9": {
+          "accepted": true,
+          "reason": "accepted",
+          "correct": true
+        }
+      }
+    }
+  ],
+  "positionalResults": [
+    {
+      "caseId": "t02-settings-onofflabels-accessibility",
+      "configuration": "A",
+      "variant": "positional",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e44",
+      "confidence": 0.51,
+      "probabilities": {
+        "tap:e33": 0.01,
+        "tap:e36": 0,
+        "tap:e176": 0,
+        "tap:e179": 0,
+        "tap:e12": 0.01,
+        "tap:e44": 0.54,
+        "tap:e47": 0.05,
+        "tap:e54": 0,
+        "tap:e57": 0,
+        "tap:e64": 0,
+        "tap:e67": 0,
+        "tap:e74": 0,
+        "tap:e77": 0,
+        "tap:e84": 0,
+        "tap:e87": 0,
+        "tap:e94": 0,
+        "tap:e97": 0,
+        "tap:e116": 0,
+        "tap:e119": 0,
+        "tap:e126": 0,
+        "tap:e129": 0,
+        "tap:e136": 0,
+        "tap:e139": 0,
+        "tap:e146": 0,
+        "tap:e149": 0,
+        "tap:e156": 0,
+        "tap:e159": 0,
+        "tap:e166": 0.04,
+        "tap:e169": 0.01,
+        "swipe:e18:up": 0.03,
+        "swipe:e18:down": 0.02,
+        "swipe:e18:left": 0,
+        "swipe:e18:right": 0,
+        "swipe:e22:up": 0.01,
+        "swipe:e22:down": 0.03,
+        "swipe:e22:left": 0,
+        "swipe:e22:right": 0,
+        "wait": 0,
+        "stop-goal": 0.22,
+        "stop-blocked": 0,
+        "none": 0.03
+      },
+      "goalReached": 0.29,
+      "assertions": {
+        "onoff_control_visible": 0.04
+      },
+      "inputTokens": 2951,
+      "latencyMs": 275.7680839999998,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 1
+    },
+    {
+      "caseId": "t02-settings-onofflabels-accessibility",
+      "configuration": "B",
+      "variant": "positional",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e44",
+      "confidence": 0.71,
+      "probabilities": {
+        "tap:e33": 0.01,
+        "tap:e36": 0,
+        "tap:e176": 0,
+        "tap:e179": 0,
+        "tap:e12": 0,
+        "tap:e44": 0.72,
+        "tap:e47": 0.03,
+        "tap:e54": 0,
+        "tap:e57": 0,
+        "tap:e64": 0,
+        "tap:e67": 0,
+        "tap:e74": 0,
+        "tap:e77": 0,
+        "tap:e84": 0,
+        "tap:e87": 0,
+        "tap:e94": 0,
+        "tap:e97": 0,
+        "tap:e116": 0,
+        "tap:e119": 0,
+        "tap:e126": 0,
+        "tap:e129": 0,
+        "tap:e136": 0,
+        "tap:e139": 0,
+        "tap:e146": 0,
+        "tap:e149": 0,
+        "tap:e156": 0,
+        "tap:e159": 0,
+        "tap:e166": 0.060000000000000005,
+        "tap:e169": 0.01,
+        "swipe:e18:up": 0.02,
+        "swipe:e18:down": 0.01,
+        "swipe:e18:left": 0,
+        "swipe:e18:right": 0,
+        "swipe:e22:up": 0.01,
+        "swipe:e22:down": 0.01,
+        "swipe:e22:left": 0,
+        "swipe:e22:right": 0,
+        "wait": 0,
+        "stop-goal": 0.11,
+        "stop-blocked": 0,
+        "none": 0.01
+      },
+      "goalReached": 0.18,
+      "assertions": {
+        "onoff_control_visible": 0.04
+      },
+      "inputTokens": 2963,
+      "latencyMs": 318.4505420000005,
+      "model": "jev-1.13.0",
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 1
+    },
+    {
+      "caseId": "t02-settings-onofflabels-accessibility",
+      "configuration": "C",
+      "variant": "positional",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e44",
+      "confidence": 0.76,
+      "probabilities": {
+        "tap:e12": 0,
+        "swipe:e18:up": 0.01,
+        "swipe:e18:down": 0.01,
+        "swipe:e18:left": 0,
+        "swipe:e18:right": 0,
+        "swipe:e22:up": 0,
+        "swipe:e22:down": 0.02,
+        "swipe:e22:left": 0,
+        "swipe:e22:right": 0,
+        "tap:e33": 0.01,
+        "tap:e44": 0.79,
+        "tap:e54": 0,
+        "tap:e64": 0,
+        "tap:e74": 0,
+        "tap:e84": 0,
+        "tap:e94": 0,
+        "wait": 0,
+        "stop-goal": 0.14,
+        "stop-blocked": 0,
+        "none": 0.02
+      },
+      "goalReached": 0.42,
+      "assertions": {
+        "onoff_control_visible": 0.03
+      },
+      "inputTokens": 3325,
+      "latencyMs": 307.7540420000005,
+      "model": "jev-1.13.0",
+      "collapsedTapRefs": {
+        "e33": [
+          "e176",
+          "e36",
+          "e179"
+        ],
+        "e44": [
+          "e166",
+          "e47",
+          "e169"
+        ],
+        "e54": [
+          "e156",
+          "e57",
+          "e159"
+        ],
+        "e64": [
+          "e146",
+          "e67",
+          "e149"
+        ],
+        "e74": [
+          "e136",
+          "e77",
+          "e139"
+        ],
+        "e84": [
+          "e126",
+          "e87",
+          "e129"
+        ],
+        "e94": [
+          "e116",
+          "e97",
+          "e119"
+        ]
+      },
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 1
+    },
+    {
+      "caseId": "t02-settings-onofflabels-accessibility",
+      "configuration": "D",
+      "variant": "positional",
+      "top1Correct": true,
+      "knownFailingAssertions": 1,
+      "falsePassAssertions": 0,
+      "choice": "tap:e44",
+      "confidence": 0.79,
+      "probabilities": {
+        "tap:e12": 0,
+        "swipe:e18:up": 0,
+        "swipe:e18:down": 0.01,
+        "swipe:e18:left": 0,
+        "swipe:e18:right": 0,
+        "swipe:e22:up": 0,
+        "swipe:e22:down": 0.01,
+        "swipe:e22:left": 0,
+        "swipe:e22:right": 0,
+        "tap:e33": 0.01,
+        "tap:e44": 0.8,
+        "tap:e54": 0,
+        "tap:e64": 0,
+        "tap:e74": 0,
+        "tap:e84": 0,
+        "tap:e94": 0,
+        "wait": 0,
+        "stop-goal": 0.13,
+        "stop-blocked": 0,
+        "none": 0.03
+      },
+      "goalReached": 0.38,
+      "assertions": {
+        "onoff_control_visible": 0.03
+      },
+      "inputTokens": 3337,
+      "latencyMs": 297.0633749999997,
+      "model": "jev-1.13.0",
+      "collapsedTapRefs": {
+        "e33": [
+          "e176",
+          "e36",
+          "e179"
+        ],
+        "e44": [
+          "e166",
+          "e47",
+          "e169"
+        ],
+        "e54": [
+          "e156",
+          "e57",
+          "e159"
+        ],
+        "e64": [
+          "e146",
+          "e67",
+          "e149"
+        ],
+        "e74": [
+          "e136",
+          "e77",
+          "e139"
+        ],
+        "e84": [
+          "e126",
+          "e87",
+          "e129"
+        ],
+        "e94": [
+          "e116",
+          "e97",
+          "e119"
+        ]
+      },
+      "completionLabelCorrect": false,
+      "assertionLabelMatches": 1
+    }
+  ],
+  "comparison": [
+    {
+      "configuration": "A",
+      "threshold": 0.6,
+      "accepted": 5,
+      "incorrectAccepted": 0,
+      "top1Correct": 8,
+      "inputTokens": 17873,
+      "qualifying": true
+    },
+    {
+      "configuration": "A",
+      "threshold": 0.7,
+      "accepted": 5,
+      "incorrectAccepted": 0,
+      "top1Correct": 8,
+      "inputTokens": 17873,
+      "qualifying": true
+    },
+    {
+      "configuration": "A",
+      "threshold": 0.8,
+      "accepted": 4,
+      "incorrectAccepted": 0,
+      "top1Correct": 8,
+      "inputTokens": 17873,
+      "qualifying": true
+    },
+    {
+      "configuration": "A",
+      "threshold": 0.9,
+      "accepted": 3,
+      "incorrectAccepted": 0,
+      "top1Correct": 8,
+      "inputTokens": 17873,
+      "qualifying": true
+    },
+    {
+      "configuration": "B",
+      "threshold": 0.6,
+      "accepted": 4,
+      "incorrectAccepted": 0,
+      "top1Correct": 9,
+      "inputTokens": 18004,
+      "qualifying": true
+    },
+    {
+      "configuration": "B",
+      "threshold": 0.7,
+      "accepted": 3,
+      "incorrectAccepted": 0,
+      "top1Correct": 9,
+      "inputTokens": 18004,
+      "qualifying": true
+    },
+    {
+      "configuration": "B",
+      "threshold": 0.8,
+      "accepted": 3,
+      "incorrectAccepted": 0,
+      "top1Correct": 9,
+      "inputTokens": 18004,
+      "qualifying": true
+    },
+    {
+      "configuration": "B",
+      "threshold": 0.9,
+      "accepted": 3,
+      "incorrectAccepted": 0,
+      "top1Correct": 9,
+      "inputTokens": 18004,
+      "qualifying": true
+    },
+    {
+      "configuration": "C",
+      "threshold": 0.6,
+      "accepted": 5,
+      "incorrectAccepted": 0,
+      "top1Correct": 9,
+      "inputTokens": 34148,
+      "qualifying": true
+    },
+    {
+      "configuration": "C",
+      "threshold": 0.7,
+      "accepted": 5,
+      "incorrectAccepted": 0,
+      "top1Correct": 9,
+      "inputTokens": 34148,
+      "qualifying": true
+    },
+    {
+      "configuration": "C",
+      "threshold": 0.8,
+      "accepted": 5,
+      "incorrectAccepted": 0,
+      "top1Correct": 9,
+      "inputTokens": 34148,
+      "qualifying": true
+    },
+    {
+      "configuration": "C",
+      "threshold": 0.9,
+      "accepted": 3,
+      "incorrectAccepted": 0,
+      "top1Correct": 9,
+      "inputTokens": 34148,
+      "qualifying": true
+    },
+    {
+      "configuration": "D",
+      "threshold": 0.6,
+      "accepted": 5,
+      "incorrectAccepted": 0,
+      "top1Correct": 10,
+      "inputTokens": 34279,
+      "qualifying": true
+    },
+    {
+      "configuration": "D",
+      "threshold": 0.7,
+      "accepted": 5,
+      "incorrectAccepted": 0,
+      "top1Correct": 10,
+      "inputTokens": 34279,
+      "qualifying": true
+    },
+    {
+      "configuration": "D",
+      "threshold": 0.8,
+      "accepted": 5,
+      "incorrectAccepted": 0,
+      "top1Correct": 10,
+      "inputTokens": 34279,
+      "qualifying": true
+    },
+    {
+      "configuration": "D",
+      "threshold": 0.9,
+      "accepted": 3,
+      "incorrectAccepted": 0,
+      "top1Correct": 10,
+      "inputTokens": 34279,
+      "qualifying": true
+    }
+  ],
+  "selection": {
+    "version": 3,
+    "corpusSha256": "136dd6ed8e7880e6e1118b1691a31693b72a19f0498cd7ef8b4be475d58363cf",
+    "manifestSha256": "ced6bfb11cc14e1138f2f28d5fca66ec16dade716a0aa126ddd4ca94a204a172",
+    "configuration": "D",
+    "threshold": 0.6,
+    "tuningSummary": [
+      {
+        "configuration": "A",
+        "threshold": 0.6,
+        "accepted": 5,
+        "incorrectAccepted": 0,
+        "top1Correct": 8,
+        "inputTokens": 17873,
+        "qualifying": true
+      },
+      {
+        "configuration": "A",
+        "threshold": 0.7,
+        "accepted": 5,
+        "incorrectAccepted": 0,
+        "top1Correct": 8,
+        "inputTokens": 17873,
+        "qualifying": true
+      },
+      {
+        "configuration": "A",
+        "threshold": 0.8,
+        "accepted": 4,
+        "incorrectAccepted": 0,
+        "top1Correct": 8,
+        "inputTokens": 17873,
+        "qualifying": true
+      },
+      {
+        "configuration": "A",
+        "threshold": 0.9,
+        "accepted": 3,
+        "incorrectAccepted": 0,
+        "top1Correct": 8,
+        "inputTokens": 17873,
+        "qualifying": true
+      },
+      {
+        "configuration": "B",
+        "threshold": 0.6,
+        "accepted": 4,
+        "incorrectAccepted": 0,
+        "top1Correct": 9,
+        "inputTokens": 18004,
+        "qualifying": true
+      },
+      {
+        "configuration": "B",
+        "threshold": 0.7,
+        "accepted": 3,
+        "incorrectAccepted": 0,
+        "top1Correct": 9,
+        "inputTokens": 18004,
+        "qualifying": true
+      },
+      {
+        "configuration": "B",
+        "threshold": 0.8,
+        "accepted": 3,
+        "incorrectAccepted": 0,
+        "top1Correct": 9,
+        "inputTokens": 18004,
+        "qualifying": true
+      },
+      {
+        "configuration": "B",
+        "threshold": 0.9,
+        "accepted": 3,
+        "incorrectAccepted": 0,
+        "top1Correct": 9,
+        "inputTokens": 18004,
+        "qualifying": true
+      },
+      {
+        "configuration": "C",
+        "threshold": 0.6,
+        "accepted": 5,
+        "incorrectAccepted": 0,
+        "top1Correct": 9,
+        "inputTokens": 34148,
+        "qualifying": true
+      },
+      {
+        "configuration": "C",
+        "threshold": 0.7,
+        "accepted": 5,
+        "incorrectAccepted": 0,
+        "top1Correct": 9,
+        "inputTokens": 34148,
+        "qualifying": true
+      },
+      {
+        "configuration": "C",
+        "threshold": 0.8,
+        "accepted": 5,
+        "incorrectAccepted": 0,
+        "top1Correct": 9,
+        "inputTokens": 34148,
+        "qualifying": true
+      },
+      {
+        "configuration": "C",
+        "threshold": 0.9,
+        "accepted": 3,
+        "incorrectAccepted": 0,
+        "top1Correct": 9,
+        "inputTokens": 34148,
+        "qualifying": true
+      },
+      {
+        "configuration": "D",
+        "threshold": 0.6,
+        "accepted": 5,
+        "incorrectAccepted": 0,
+        "top1Correct": 10,
+        "inputTokens": 34279,
+        "qualifying": true
+      },
+      {
+        "configuration": "D",
+        "threshold": 0.7,
+        "accepted": 5,
+        "incorrectAccepted": 0,
+        "top1Correct": 10,
+        "inputTokens": 34279,
+        "qualifying": true
+      },
+      {
+        "configuration": "D",
+        "threshold": 0.8,
+        "accepted": 5,
+        "incorrectAccepted": 0,
+        "top1Correct": 10,
+        "inputTokens": 34279,
+        "qualifying": true
+      },
+      {
+        "configuration": "D",
+        "threshold": 0.9,
+        "accepted": 3,
+        "incorrectAccepted": 0,
+        "top1Correct": 10,
+        "inputTokens": 34279,
+        "qualifying": true
+      }
+    ],
+    "tuningResultsSha256": "1002b854f1dfeed188d6c5223757ca73c06913ac7ecfc73d58d1368395582ed8"
+  }
+}

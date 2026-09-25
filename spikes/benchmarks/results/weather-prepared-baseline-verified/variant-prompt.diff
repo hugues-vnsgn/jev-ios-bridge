@@ -1,0 +1,12 @@
+--- benchmarks/claude-ui/prompts/weather.md	2026-09-25 09:24:28
++++ benchmarks/claude-ui/prompts/weather-prepared.md	2026-09-25 11:01:27
+@@ -1,7 +1,7 @@
+-# Weather UI benchmark
++# Weather prepared-app UI benchmark
+ 
+ Task:
+-1. Build and run the Weather example app on the configured simulator.
++1. Launch the already installed Weather example app (`com.sentry.weather.Weather`) on the configured simulator.
+ 2. Open the settings sheet.
+ 3. Change these settings:
+    - Temperature: °C

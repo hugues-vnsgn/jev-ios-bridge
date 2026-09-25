@@ -1,0 +1,329 @@
+{
+  "app": {
+    "bundleId": "com.apple.MobileAddressBook"
+  },
+  "preconditions": [
+    "Use a clean dedicated iPhone 17 Pro Max simulator with the same iOS runtime as the baseline.",
+    "No contact named MCP Contact Benchmark exists. Dismiss only the first-run prompts dismissed by the pinned baseline before timing."
+  ],
+  "values": {
+    "firstName": "MCP",
+    "lastName": "Contact Benchmark",
+    "organization": "MobileBuildMCP Benchmark",
+    "phone": "555-010-4242",
+    "email": "mcp.contact.benchmark@example.com"
+  },
+  "steps": [
+    {
+      "id": "openNewContact",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "Contacts"
+          },
+          {
+            "role": "image",
+            "identifier": "magnifyingglass",
+            "label": "Search"
+          },
+          {
+            "role": "text-field"
+          },
+          {
+            "role": "button",
+            "label": "Add"
+          }
+        ],
+        "absent": [
+          {
+            "role": "text",
+            "identifier": "ContactCardHeaderView"
+          },
+          {
+            "role": "button",
+            "label": "Done"
+          },
+          {
+            "role": "button",
+            "label": "Cancel"
+          },
+          {
+            "role": "alert"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "Add"
+        }
+      }
+    },
+    {
+      "id": "enterFirstName",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "button",
+            "label": "close"
+          },
+          {
+            "role": "text-field",
+            "identifier": "First name"
+          },
+          {
+            "role": "text-field",
+            "identifier": "Last name"
+          },
+          {
+            "role": "text-field",
+            "identifier": "Company"
+          }
+        ]
+      },
+      "action": {
+        "kind": "replaceText",
+        "selector": {
+          "role": "text-field",
+          "identifier": "First name"
+        },
+        "valueKey": "firstName"
+      }
+    },
+    {
+      "id": "enterLastName",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "button",
+            "label": "close"
+          },
+          {
+            "role": "text-field",
+            "identifier": "First name",
+            "value": "MCP"
+          },
+          {
+            "role": "text-field",
+            "identifier": "Last name"
+          }
+        ]
+      },
+      "action": {
+        "kind": "replaceText",
+        "selector": {
+          "role": "text-field",
+          "identifier": "Last name"
+        },
+        "valueKey": "lastName"
+      }
+    },
+    {
+      "id": "enterOrganization",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text-field",
+            "identifier": "Last name",
+            "value": "Contact Benchmark"
+          },
+          {
+            "role": "text-field",
+            "identifier": "Company"
+          }
+        ]
+      },
+      "action": {
+        "kind": "replaceText",
+        "selector": {
+          "role": "text-field",
+          "identifier": "Company"
+        },
+        "valueKey": "organization"
+      }
+    },
+    {
+      "id": "addPhoneField",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text-field",
+            "identifier": "Company",
+            "value": "MobileBuildMCP Benchmark"
+          },
+          {
+            "role": "button",
+            "label": "add phone"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "add phone"
+        }
+      }
+    },
+    {
+      "id": "enterPhone",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text-field",
+            "identifier": "Company",
+            "value": "MobileBuildMCP Benchmark"
+          },
+          {
+            "role": "text-field",
+            "value": "Phone"
+          }
+        ]
+      },
+      "action": {
+        "kind": "replaceText",
+        "selector": {
+          "role": "text-field",
+          "value": "Phone"
+        },
+        "valueKey": "phone"
+      }
+    },
+    {
+      "id": "addEmailField",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text-field",
+            "identifier": "Company",
+            "value": "MobileBuildMCP Benchmark"
+          },
+          {
+            "role": "button",
+            "label": "add email"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "add email"
+        }
+      }
+    },
+    {
+      "id": "enterEmail",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "button",
+            "label": "close"
+          },
+          {
+            "role": "text-field",
+            "identifier": "home"
+          }
+        ]
+      },
+      "action": {
+        "kind": "replaceText",
+        "selector": {
+          "role": "text-field",
+          "identifier": "home"
+        },
+        "valueKey": "email"
+      }
+    },
+    {
+      "id": "saveContact",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text-field",
+            "identifier": "First name",
+            "value": "MCP"
+          },
+          {
+            "role": "text-field",
+            "identifier": "Last name",
+            "value": "Contact Benchmark"
+          },
+          {
+            "role": "text-field",
+            "identifier": "Company",
+            "value": "MobileBuildMCP Benchmark"
+          },
+          {
+            "role": "text-field",
+            "identifier": "home",
+            "value": "mcp.contact.benchmark@example.com"
+          },
+          {
+            "role": "button",
+            "label": "Done"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "Done"
+        }
+      }
+    },
+    {
+      "id": "verifySavedCard",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "identifier": "ContactCardHeaderView",
+            "label": "MCP Contact Benchmark"
+          },
+          {
+            "role": "button",
+            "label": "home, mcp.contact.benchmark@example.com"
+          }
+        ],
+        "absent": [
+          {
+            "role": "button",
+            "label": "Done"
+          },
+          {
+            "role": "button",
+            "label": "close"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "identity",
+          "claim": "A saved MCP Contact Benchmark card is open and shows organization MobileBuildMCP Benchmark, allowing case differences."
+        },
+        {
+          "id": "phone",
+          "claim": "The saved card shows phone digits 5550104242, allowing display punctuation or grouping differences."
+        },
+        {
+          "id": "email",
+          "claim": "The saved card shows mcp.contact.benchmark@example.com."
+        }
+      ]
+    }
+  ]
+}

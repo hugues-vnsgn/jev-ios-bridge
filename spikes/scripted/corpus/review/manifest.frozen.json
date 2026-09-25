@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "status": "frozen",
+  "corpusSha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303",
+  "implementationSha256": "dbdb58f782d86191a2d35b7a932b0ca9cc38568503d1908c03310795f6c44884",
+  "model": "jev-1.13.0",
+  "projectionRule": "visible-full-text-v1",
+  "questionTemplate": "Does the visible evidence on this current screen support this specific claim?",
+  "maxStateBytes": 24000,
+  "stateQuestionMaxBytes": 28000,
+  "requestMaxBytes": 56000,
+  "noulYes": 0.9,
+  "noulNo": 0.1,
+  "gateRule": "ticket-21-paired-24-v1"
+}

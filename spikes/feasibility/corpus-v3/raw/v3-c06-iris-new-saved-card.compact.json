@@ -1,0 +1,72 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "08osbvp",
+      "seq": 196,
+      "count": 161,
+      "targets": [
+        "e79|tap|button|mobile, (555) 010-2001||ContactCardDetailsView",
+        "e88|tap|button|home, (555) 010-2002||ContactCardDetailsView",
+        "e98|tap|button|work, (555) 010-2003||ContactCardDetailsView",
+        "e108|tap|button|school, (555) 010-2004||ContactCardDetailsView",
+        "e118|tap|button|iPhone, (555) 010-2005||ContactCardDetailsView",
+        "e128|tap|button|Apple Watch, (555) 010-2006||ContactCardDetailsView",
+        "e138|tap|button|home, iris.new@example.test||ContactCardDetailsView",
+        "e149|typeText|text-field|||ContactCardDetailsView",
+        "e10|tap|button|Contacts||BackButton",
+        "e11|tap|button|Edit||",
+        "e53|tap|button|Message||InlineActionsHStack",
+        "e54|tap|button|||",
+        "e56|tap|button|Call||InlineActionsHStack",
+        "e57|tap|button|||",
+        "e60|tap|button|Mail||InlineActionsHStack",
+        "e61|tap|button|||",
+        "e69|tap|button|Contact Photo & Poster||SharedProfileAvatarView-SharedProfileTitleText-SharedProfileChevronImage"
+      ],
+      "scroll": [
+        "e22|swipe|scroll-view|||ContactCardScrollViewReader",
+        "e30|swipe|scroll-view|||ContactCardScrollViewReader"
+      ],
+      "text": [
+        "e45|text|text|SUMMIT||ContactCardHeaderView",
+        "e46|text|text|Iris Moss||ContactCardHeaderView",
+        "e71|text|text|Contact Photo & Poster||SharedProfileTitleText",
+        "e80|text|text|mobile||",
+        "e81|text|text|(555) 010-2001||",
+        "e89|text|text|home||",
+        "e90|text|text|(555) 010-2002||",
+        "e99|text|text|work||",
+        "e100|text|text|(555) 010-2003||",
+        "e109|text|text|school||",
+        "e110|text|text|(555) 010-2004||",
+        "e119|text|text|iPhone||",
+        "e120|text|text|(555) 010-2005||",
+        "e129|text|text|Apple Watch||",
+        "e130|text|text|(555) 010-2006||",
+        "e139|text|text|home||",
+        "e140|text|text|iris.new@example.test||",
+        "e148|text|text|Notes||ContactCardDetailsView"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e10\"},{\"action\":\"tap\",\"elementRef\":\"e11\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e79",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e22 --direction up --distance 0.5"
+  ]
+}

@@ -1,0 +1,1392 @@
+{
+  "kind": "bridge-step-timings",
+  "version": 1,
+  "selectedRunCounts": {
+    "runs": 3,
+    "checkpoints": 6,
+    "claims": 18,
+    "uncertainClaims": 1
+  },
+  "allAttemptCounts": {
+    "runs": 4,
+    "checkpoints": 8,
+    "claims": 22,
+    "uncertainClaims": 1
+  },
+  "runs": [
+    {
+      "attempt": "weather-bridge-attempt1",
+      "runId": "5983b886-9e04-470c-8db5-c8e66fbbac76",
+      "manifestRef": "spikes/benchmarks/results/weather-bridge-attempt1/manifest.json",
+      "journalSha256": "469f35d6701a30d15843a26b3ad3667c0414242e8a7c623f63d4e31403416738",
+      "verdict": "inconclusive",
+      "reason": "GUARD_MISSING",
+      "checkpointCount": 2,
+      "claimCount": 4,
+      "uncertainClaimCount": 0,
+      "runReferenceCounters": {
+        "referenceRefreshes": 0,
+        "referenceExpiries": 0,
+        "nearTtlRefreshes": 0
+      },
+      "runPhaseTimingsMs": {
+        "prepareMs": 2575.6249169999974,
+        "observeMs": 42940.84733100002,
+        "decideMs": 3532.680374000003,
+        "actMs": 39336.840000000004,
+        "waitMs": 0,
+        "cleanupMs": 840.1363750000019
+      },
+      "phaseReconciliationDeltasMs": {
+        "observeMs": 0,
+        "actMs": 0,
+        "waitMs": 0,
+        "judgeMs": 0
+      },
+      "steps": [
+        {
+          "step": 1,
+          "stepId": "openSettings",
+          "kind": "action",
+          "observationEvents": [
+            3
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2979.038124999999,
+          "actMs": 2239.4630419999958,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5226.407999999999,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 2,
+          "stepId": "selectCelsius",
+          "kind": "action",
+          "observationEvents": [
+            5
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2552.2765,
+          "actMs": 2279.773291000005,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 4837.008458000004,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 3,
+          "stepId": "selectMetersPerSecond",
+          "kind": "action",
+          "observationEvents": [
+            7
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2543.149832999996,
+          "actMs": 3432.4416249999995,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5981.7575,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 4,
+          "stepId": "selectInHg",
+          "kind": "action",
+          "observationEvents": [
+            9
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2486.033958,
+          "actMs": 2324.700874999995,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 4818.586792000002,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 5,
+          "stepId": "selectKm",
+          "kind": "action",
+          "observationEvents": [
+            11
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2459.046166,
+          "actMs": 3545.1612499999974,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 6011.002084,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 6,
+          "stepId": "disableAnimations",
+          "kind": "action",
+          "observationEvents": [
+            13
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2530.117250000003,
+          "actMs": 2921.136624999999,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5461.7251659999965,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 7,
+          "stepId": "disableAlerts",
+          "kind": "action",
+          "observationEvents": [
+            15
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2433.6147500000006,
+          "actMs": 3233.3642910000053,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5672.187167000004,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 8,
+          "stepId": "enableTransparencyReduction",
+          "kind": "action",
+          "observationEvents": [
+            17
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2524.8221670000057,
+          "actMs": 3312.430667000008,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5843.522542000006,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 9,
+          "stepId": "verifySettings",
+          "kind": "checkpoint",
+          "observationEvents": [
+            19
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2481.317249999993,
+          "actMs": 0,
+          "waitMs": 0,
+          "judgeMs": 2404.0229160000017,
+          "modelLatencyMs": 2403.526958000002,
+          "totalStepMs": 4901.501000000004,
+          "checkpointStatus": "passed",
+          "probabilities": {
+            "units": 0.98,
+            "display": 0.97
+          },
+          "checkpointClaimCount": 2,
+          "errorCode": null
+        },
+        {
+          "step": 10,
+          "stepId": "closeSettings",
+          "kind": "action",
+          "observationEvents": [
+            22
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2453.567750000002,
+          "actMs": 2616.703416999997,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5076.955041000008,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 11,
+          "stepId": "openLocations",
+          "kind": "action",
+          "observationEvents": [
+            24
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2439.384167000011,
+          "actMs": 2259.038499999995,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 4704.60841700001,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 12,
+          "stepId": "redacted_86ea2c28356de66cda0e7d5bb345b275",
+          "kind": "action",
+          "observationEvents": [
+            26
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2450.6870409999974,
+          "actMs": 3437.5692090000084,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5895.296791000001,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 13,
+          "stepId": "redacted_4549326eff11bb1beb436a18c08d58b7",
+          "kind": "wait",
+          "observationEvents": [
+            28
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2404.297332999995,
+          "actMs": 0,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 2410.8496670000022,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 14,
+          "stepId": "redacted_8739011c0fc39c94d6e3514f204ec6a6",
+          "kind": "action",
+          "observationEvents": [
+            30
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2411.9685000000027,
+          "actMs": 3731.9700830000074,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 6150.796000000002,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 15,
+          "stepId": "redacted_81bc1a2e000eac291c07346d27bf3bc5",
+          "kind": "checkpoint",
+          "observationEvents": [
+            32
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2714.5286659999983,
+          "actMs": 0,
+          "waitMs": 0,
+          "judgeMs": 1128.6574580000015,
+          "modelLatencyMs": 1128.4446250000037,
+          "totalStepMs": 3857.1384580000013,
+          "checkpointStatus": "passed",
+          "probabilities": {
+            "city": 0.98,
+            "temperature": 0.97
+          },
+          "checkpointClaimCount": 2,
+          "errorCode": null
+        },
+        {
+          "step": 16,
+          "stepId": "revealConditions",
+          "kind": "action",
+          "observationEvents": [
+            35
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2550.6061250000057,
+          "actMs": 4003.087124999991,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 6561.473041999998,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 17,
+          "stepId": "redacted_07a5028dda4217f908b7be139777a068",
+          "kind": "checkpoint",
+          "observationEvents": [
+            37
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2526.39175000001,
+          "actMs": 0,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 2531.9956660000025,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": "GUARD_MISSING"
+        }
+      ]
+    },
+    {
+      "attempt": "weather-bridge-attempt2",
+      "runId": "72682f2a-7057-482c-8c77-d3282f5090f4",
+      "manifestRef": "spikes/benchmarks/results/weather-bridge-attempt2/manifest.json",
+      "journalSha256": "ab5b52d68f15ac8656e89fb8b575b79ab128ea263e9bc491c6a267b7215d90c6",
+      "verdict": "passed",
+      "reason": "ALL_CHECKPOINTS_PASSED",
+      "checkpointCount": 4,
+      "claimCount": 11,
+      "uncertainClaimCount": 0,
+      "runReferenceCounters": {
+        "referenceRefreshes": 0,
+        "referenceExpiries": 0,
+        "nearTtlRefreshes": 0
+      },
+      "runPhaseTimingsMs": {
+        "prepareMs": 2435.988416,
+        "observeMs": 51515.41103999996,
+        "decideMs": 3472.7268330000225,
+        "actMs": 49017.541458,
+        "waitMs": 0,
+        "cleanupMs": 937.5659999999916
+      },
+      "phaseReconciliationDeltasMs": {
+        "observeMs": 0,
+        "actMs": 0,
+        "waitMs": 0,
+        "judgeMs": 0
+      },
+      "steps": [
+        {
+          "step": 1,
+          "stepId": "openSettings",
+          "kind": "action",
+          "observationEvents": [
+            3
+          ],
+          "observationCaptures": 1,
+          "observeMs": 3527.8933339999967,
+          "actMs": 2302.842499999999,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5841.9516250000015,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 2,
+          "stepId": "selectCelsius",
+          "kind": "action",
+          "observationEvents": [
+            5
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2571.2812080000003,
+          "actMs": 3438.4248330000046,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 6016.225207999996,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 3,
+          "stepId": "selectMetersPerSecond",
+          "kind": "action",
+          "observationEvents": [
+            7
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2505.204958000002,
+          "actMs": 3412.8856250000026,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5927.311249999999,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 4,
+          "stepId": "selectInHg",
+          "kind": "action",
+          "observationEvents": [
+            9
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2523.0449579999986,
+          "actMs": 3428.318708999999,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5957.341292000005,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 5,
+          "stepId": "selectKm",
+          "kind": "action",
+          "observationEvents": [
+            11
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2473.7363750000004,
+          "actMs": 3362.4947079999984,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5842.428832999998,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 6,
+          "stepId": "disableAnimations",
+          "kind": "action",
+          "observationEvents": [
+            13
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2377.141334,
+          "actMs": 3487.170124999997,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5870.074959000005,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 7,
+          "stepId": "disableAlerts",
+          "kind": "action",
+          "observationEvents": [
+            15
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2446.978083000009,
+          "actMs": 3273.012791999994,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5728.002540999994,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 8,
+          "stepId": "enableTransparencyReduction",
+          "kind": "action",
+          "observationEvents": [
+            17
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2501.391583000004,
+          "actMs": 3354.882958000002,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5862.162417,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 9,
+          "stepId": "verifySettings",
+          "kind": "checkpoint",
+          "observationEvents": [
+            19
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2437.452165999988,
+          "actMs": 0,
+          "waitMs": 0,
+          "judgeMs": 1128.5327499999985,
+          "modelLatencyMs": 1128.172458999994,
+          "totalStepMs": 3580.5438339999964,
+          "checkpointStatus": "passed",
+          "probabilities": {
+            "units": 0.98,
+            "display": 0.97
+          },
+          "checkpointClaimCount": 2,
+          "errorCode": null
+        },
+        {
+          "step": 10,
+          "stepId": "closeSettings",
+          "kind": "action",
+          "observationEvents": [
+            22
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2560.7477079999953,
+          "actMs": 2700.9809590000077,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5268.393333,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 11,
+          "stepId": "openLocations",
+          "kind": "action",
+          "observationEvents": [
+            24
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2464.059666000001,
+          "actMs": 2427.860625000001,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 4898.50450000001,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 12,
+          "stepId": "redacted_4e54c6db2bf966b8087d2cbff54dd03a",
+          "kind": "action",
+          "observationEvents": [
+            26
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2522.609083999996,
+          "actMs": 4029.0204159999994,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 6558.768790999995,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 13,
+          "stepId": "redacted_3ac7dc48d65ffe4910be32b3e912f0e2",
+          "kind": "wait",
+          "observationEvents": [
+            28
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2669.543458,
+          "actMs": 0,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 2675.247000000003,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 14,
+          "stepId": "redacted_89ab8298e6d5ff47c52d5267698ae265",
+          "kind": "action",
+          "observationEvents": [
+            30
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2586.73324999999,
+          "actMs": 3822.316040999998,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 6417.1678329999995,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 15,
+          "stepId": "closeLocations",
+          "kind": "action",
+          "observationEvents": [
+            32
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2715.230792000002,
+          "actMs": 2864.811791999993,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5584.706124999997,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 16,
+          "stepId": "redacted_577323c3a684c3d7bf8ec052b49f7dee",
+          "kind": "checkpoint",
+          "observationEvents": [
+            34
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2448.2610829999903,
+          "actMs": 0,
+          "waitMs": 0,
+          "judgeMs": 702.6600409999955,
+          "modelLatencyMs": 702.3983749999898,
+          "totalStepMs": 3165.1814999999915,
+          "checkpointStatus": "passed",
+          "probabilities": {
+            "city": 0.98,
+            "temperature": 0.98
+          },
+          "checkpointClaimCount": 2,
+          "errorCode": null
+        },
+        {
+          "step": 17,
+          "stepId": "revealConditions",
+          "kind": "action",
+          "observationEvents": [
+            37
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2427.973834000004,
+          "actMs": 4748.140125000005,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 7183.676041999992,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 18,
+          "stepId": "redacted_a6aa062ca348c6ed6b7fd096f587a384",
+          "kind": "checkpoint",
+          "observationEvents": [
+            39
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2673.9665410000016,
+          "actMs": 0,
+          "waitMs": 0,
+          "judgeMs": 798.6745000000083,
+          "modelLatencyMs": 798.5610840000008,
+          "totalStepMs": 3484.166791999989,
+          "checkpointStatus": "passed",
+          "probabilities": {
+            "precipitation": 0.98,
+            "visibility": 0.98
+          },
+          "checkpointClaimCount": 2,
+          "errorCode": null
+        },
+        {
+          "step": 19,
+          "stepId": "openPrecipitation",
+          "kind": "action",
+          "observationEvents": [
+            42
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2506.592915999994,
+          "actMs": 2364.379249999998,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 4879.188208000007,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 20,
+          "stepId": "verifyPrecipitation",
+          "kind": "checkpoint",
+          "observationEvents": [
+            44
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2575.5687089999847,
+          "actMs": 0,
+          "waitMs": 0,
+          "judgeMs": 842.8595420000202,
+          "modelLatencyMs": 842.653707999998,
+          "totalStepMs": 3431.488167000003,
+          "checkpointStatus": "passed",
+          "probabilities": {
+            "chance": 0.98,
+            "total": 0.98,
+            "hours": 0.98,
+            "storm": 0.98,
+            "lightning": 0.98
+          },
+          "checkpointClaimCount": 5,
+          "errorCode": null
+        }
+      ]
+    },
+    {
+      "attempt": "contacts-bridge-attempt1",
+      "runId": "ba16e0bc-81b9-4945-8f38-b3e5f69d6d91",
+      "manifestRef": "spikes/benchmarks/results/contacts-bridge-attempt1/manifest.json",
+      "journalSha256": "7fe43245905f059626ce156fde1c874021a3666841465bc5ec58d3f986927c97",
+      "verdict": "passed",
+      "reason": "ALL_CHECKPOINTS_PASSED",
+      "checkpointCount": 1,
+      "claimCount": 3,
+      "uncertainClaimCount": 0,
+      "runReferenceCounters": {
+        "referenceRefreshes": 0,
+        "referenceExpiries": 0,
+        "nearTtlRefreshes": 0
+      },
+      "runPhaseTimingsMs": {
+        "prepareMs": 2214.206917000003,
+        "observeMs": 28166.77645800003,
+        "decideMs": 1456.393167000002,
+        "actMs": 41845.213456999976,
+        "waitMs": 0,
+        "cleanupMs": 898.1095830000122
+      },
+      "phaseReconciliationDeltasMs": {
+        "observeMs": 0,
+        "actMs": 0,
+        "waitMs": 0,
+        "judgeMs": 0
+      },
+      "steps": [
+        {
+          "step": 1,
+          "stepId": "openNewContact",
+          "kind": "action",
+          "observationEvents": [
+            3
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2936.6084169999995,
+          "actMs": 4949.0265,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 7893.436874999999,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 2,
+          "stepId": "enterFirstName",
+          "kind": "action",
+          "observationEvents": [
+            5
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2739.977332999999,
+          "actMs": 5256.088040999999,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 8003.471958999999,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 3,
+          "stepId": "enterLastName",
+          "kind": "action",
+          "observationEvents": [
+            7
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2903.9440410000025,
+          "actMs": 4402.431375,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 7312.602666999999,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 4,
+          "stepId": "enterOrganization",
+          "kind": "action",
+          "observationEvents": [
+            9
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2819.5810420000053,
+          "actMs": 4592.930042,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 7423.624374999999,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 5,
+          "stepId": "addPhoneField",
+          "kind": "action",
+          "observationEvents": [
+            11
+          ],
+          "observationCaptures": 1,
+          "observeMs": 3026.0527090000032,
+          "actMs": 4212.244500000001,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 7256.096666999998,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 6,
+          "stepId": "enterPhone",
+          "kind": "action",
+          "observationEvents": [
+            13
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2942.878749999996,
+          "actMs": 5045.2411659999925,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 7994.823541999998,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 7,
+          "stepId": "addEmailField",
+          "kind": "action",
+          "observationEvents": [
+            15
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2779.826165999999,
+          "actMs": 3367.822042,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 6153.783374999999,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 8,
+          "stepId": "enterEmail",
+          "kind": "action",
+          "observationEvents": [
+            17
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2758.8507500000123,
+          "actMs": 5284.077124999996,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 8049.176624999993,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 9,
+          "stepId": "saveContact",
+          "kind": "action",
+          "observationEvents": [
+            19
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2875.8589590000047,
+          "actMs": 4735.352665999992,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 7618.1681249999965,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 10,
+          "stepId": "verifySavedCard",
+          "kind": "checkpoint",
+          "observationEvents": [
+            21
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2383.198291000008,
+          "actMs": 0,
+          "waitMs": 0,
+          "judgeMs": 1456.393167000002,
+          "modelLatencyMs": 1455.9002499999915,
+          "totalStepMs": 3857.069166000001,
+          "checkpointStatus": "passed",
+          "probabilities": {
+            "identity": 0.92,
+            "phone": 0.97,
+            "email": 0.98
+          },
+          "checkpointClaimCount": 3,
+          "errorCode": null
+        }
+      ]
+    },
+    {
+      "attempt": "reminders-bridge-attempt1",
+      "runId": "0fb5c786-d4ed-4b60-bfed-68a5452b533a",
+      "manifestRef": "spikes/benchmarks/results/reminders-bridge-attempt1/manifest.json",
+      "journalSha256": "8d23bd2dc83b0feadb918b9214b72f5032daa57288062de46710eb83731f9b4b",
+      "verdict": "inconclusive",
+      "reason": "ASSERTION_UNCERTAIN",
+      "checkpointCount": 1,
+      "claimCount": 4,
+      "uncertainClaimCount": 1,
+      "runReferenceCounters": {
+        "referenceRefreshes": 0,
+        "referenceExpiries": 0,
+        "nearTtlRefreshes": 0
+      },
+      "runPhaseTimingsMs": {
+        "prepareMs": 1954.6392909999995,
+        "observeMs": 41597.52954099997,
+        "decideMs": 960.6742079999967,
+        "actMs": 45545.484042,
+        "waitMs": 0,
+        "cleanupMs": 879.9343749999971
+      },
+      "phaseReconciliationDeltasMs": {
+        "observeMs": 0,
+        "actMs": 0,
+        "waitMs": 0,
+        "judgeMs": 0
+      },
+      "steps": [
+        {
+          "step": 1,
+          "stepId": "openNewList",
+          "kind": "action",
+          "observationEvents": [
+            3
+          ],
+          "observationCaptures": 1,
+          "observeMs": 3120.0177079999994,
+          "actMs": 3049.333834000001,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 6176.311582999999,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 2,
+          "stepId": "nameList",
+          "kind": "action",
+          "observationEvents": [
+            5
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2550.2645840000005,
+          "actMs": 3834.3086250000015,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 6390.450375,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 3,
+          "stepId": "saveList",
+          "kind": "action",
+          "observationEvents": [
+            7
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2504.1929579999996,
+          "actMs": 3417.204583999999,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5928.765542000001,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 4,
+          "stepId": "beginFirst",
+          "kind": "action",
+          "observationEvents": [
+            9
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2370.009624999999,
+          "actMs": 3247.283000000003,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5622.169125,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 5,
+          "stepId": "typeFirst",
+          "kind": "action",
+          "observationEvents": [
+            11
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2483.7187080000003,
+          "actMs": 3115.1730409999946,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5606.038667000001,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 6,
+          "stepId": "saveFirst",
+          "kind": "action",
+          "observationEvents": [
+            13
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2403.272582999998,
+          "actMs": 2837.525249999999,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5246.585417000002,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 7,
+          "stepId": "completeFirst",
+          "kind": "action",
+          "observationEvents": [
+            15
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2311.501249999994,
+          "actMs": 1956.3076250000013,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 4276.362249999998,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 8,
+          "stepId": "beginThird",
+          "kind": "action",
+          "observationEvents": [
+            17
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2349.4341249999998,
+          "actMs": 3112.159833000005,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5467.021832999992,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 9,
+          "stepId": "typeThird",
+          "kind": "action",
+          "observationEvents": [
+            19
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2418.513791999998,
+          "actMs": 3321.036208999998,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5744.195500000002,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 10,
+          "stepId": "saveThird",
+          "kind": "action",
+          "observationEvents": [
+            21
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2532.7216669999907,
+          "actMs": 2666.1987079999963,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5206.694875000001,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 11,
+          "stepId": "completeThird",
+          "kind": "action",
+          "observationEvents": [
+            23
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2333.3983749999898,
+          "actMs": 1798.7913750000007,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 4138.191374999995,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 12,
+          "stepId": "beginSecond",
+          "kind": "action",
+          "observationEvents": [
+            25
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2286.5727909999987,
+          "actMs": 2569.975999999995,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 4863.862374999997,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 13,
+          "stepId": "typeSecond",
+          "kind": "action",
+          "observationEvents": [
+            27
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2448.7392499999987,
+          "actMs": 3116.220457999996,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5572.164457999999,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 14,
+          "stepId": "saveSecond",
+          "kind": "action",
+          "observationEvents": [
+            29
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2406.302125000002,
+          "actMs": 2607.8787500000035,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5020.9903750000085,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 15,
+          "stepId": "openMore",
+          "kind": "action",
+          "observationEvents": [
+            31
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2365.816500000001,
+          "actMs": 2214.5306249999994,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 4586.555458000003,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 16,
+          "stepId": "showCompleted",
+          "kind": "action",
+          "observationEvents": [
+            33
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2427.1509169999918,
+          "actMs": 2681.556125000003,
+          "waitMs": 0,
+          "judgeMs": 0,
+          "modelLatencyMs": 0,
+          "totalStepMs": 5115.514249999993,
+          "checkpointStatus": null,
+          "probabilities": null,
+          "checkpointClaimCount": 0,
+          "errorCode": null
+        },
+        {
+          "step": 17,
+          "stepId": "verifyFinalList",
+          "kind": "checkpoint",
+          "observationEvents": [
+            35
+          ],
+          "observationCaptures": 1,
+          "observeMs": 2285.902583000003,
+          "actMs": 0,
+          "waitMs": 0,
+          "judgeMs": 960.6742079999967,
+          "modelLatencyMs": 960.2578749999957,
+          "totalStepMs": 3263.422041999991,
+          "checkpointStatus": "inconclusive",
+          "probabilities": {
+            "first": 0.97,
+            "third": 0.97,
+            "second": 0.97,
+            "counts": 0.87
+          },
+          "checkpointClaimCount": 4,
+          "errorCode": null
+        }
+      ]
+    }
+  ]
+}

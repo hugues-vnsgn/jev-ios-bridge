@@ -1,0 +1,33 @@
+{
+  "kind": "temporary-upstream-post-host-audit-seam",
+  "sourceCommit": "d13ff0c707b0681769cf31da0eb42c4f94ceafff",
+  "changedFile": "src/benchmarks/claude-ui/harness.ts",
+  "originalSourceSha256": "ca6f760ded4cf596989f6f880499968dfc1192b9159fa4cad563a9f2785d985a",
+  "modifiedSourceSha256": "f132d468cda29f19da7e70ad3b8a4740b1b7f45980f54b5c3d8c0f34dcdd01e0",
+  "patchPath": "spikes/benchmarks/results/reminders-postrun-audit-v2.patch",
+  "patchSha256": "a9e74457129e6b7defe23db4bbaa722b3d837980d2bd626bc74f45a7ca3629a7",
+  "promptSha256": "965357a8822bdf506a72a3911cb43c9dd17fc5d2d8e9fc701ca7ac54b6d2690a",
+  "suiteSha256": "8b22722095a1cca23c02896f46f019b156b703da2b56d2a475aba802b335184c",
+  "typecheck": "npm run typecheck passed",
+  "precedingFailedAuditSeam": "spikes/benchmarks/results/reminders-postrun-audit-seam.json",
+  "verifiedAuditCli": {
+    "path": "/Users/hugues_mini/.npm/_npx/b998b4270960e258/node_modules/mobilebuildmcp/build/cli.js",
+    "sha256": "3e5756ce8b953875237bb76f737882de7a9b407f77496a98b401c4d6ed219c2c",
+    "packageJsonSha256": "fad6902321eaa9000664b78339c467c3ffb1cbf0b27e419821e867446915bf1a"
+  },
+  "readOnlyPreflight": "spikes/benchmarks/results/postrun-audit-preflight-2LzmYO/meta.json",
+  "audit": {
+    "optInEnv": "JEV_BASELINE_POSTRUN_AUDIT=1 and JEV_BASELINE_AUDIT_CLI_PATH=<verified absolute CLI>",
+    "measuredHostEnvReceivesOptInFlag": false,
+    "timing": "After runCommand returns its fixed Claude duration and compareBenchmark runs; before normal simulator deletion.",
+    "actions": "Pinned MobileBuildMCP 2.7.1 full UI snapshot and simulator screenshot on the exact harness-created UUID.",
+    "readOnly": true,
+    "modelRequests": 0,
+    "outputs": [
+      "post-run-audit.full.json",
+      "post-run-audit.jpg",
+      "post-run-audit.json"
+    ],
+    "failureHandling": "Capture error recorded privately; host result retained; outer finally still deletes simulator."
+  }
+}

@@ -1,10 +1,12 @@
 ---
-status: proposed
+status: superseded
 date: 2026-09-21
 revised: 2026-09-24
 ---
 
 # The bridge runs the loop; Jev only decides
+
+Superseded on 2026-09-25 by [ADR-0003](0003-explicit-scripts-with-jev-assertions.md), after all three autonomous-action experiments failed. The original decision and evidence below are retained as history.
 
 Claude Code can already drive an iOS simulator through MobileBuildMCP. In Sentry's benchmark, Claude Opus 4.7 took 93 to 103 seconds and 14 to 19 tool calls per UI scenario, and every screen passed through Claude's context ([research](../research/claude-and-jev-integration.md), section 4). The bridge exists to make that cheaper. The host agent submits a scenario, the bridge carries out every step with Jev making each decision, and the host gets back a verdict and a report.
 
@@ -36,3 +38,11 @@ The research left two shapes viable. The owner chose between them on 2026-09-24.
 - **Escalation to the host agent has a cost.** A tool call cannot ask the host anything while it runs, so escalating means ending the call and resuming the run in a later one. "Step-loop policy" decides whether v1 escalates at all.
 - **The bridge owns timeouts, interruption, and cleanup**, since Jev holds no state.
 - **If Jev gains image input**, the observation can carry an image, and the loop keeps its shape.
+
+## Feasibility evidence, 2026-09-24
+
+The first frozen experiment did not meet the agreed bar: 15/20 correct next actions against a required 18, and 7/20 accepted steps against a required 16. There were no wrong accepted actions, false-pass assertions, or request failures. The decision is reopened and remains proposed; it is not approved for release. [Ticket 08](../../.scratch/jev-ios-bridge/issues/08-feasibility-run.md) records the results. [Ticket 18](../../.scratch/jev-ios-bridge/issues/18-feasibility-revision.md) investigates a revision using fresh held-out evidence.
+
+The second experiment also failed: 16/20 correct actions, 14/20 accepted, two incorrect accepted actions, and no false-pass assertions or request failures. [Ticket 19](../../.scratch/jev-ios-bridge/issues/19-checkpoint-feasibility.md) now tests explicit ordered checkpoints. It retains bridge-owned execution while narrowing what each Jev judgment must decide. General broad-goal navigation is not approved for release.
+
+The third experiment tested ordered observable checkpoints and also failed: 17/20 correct actions, 10/20 accepted, zero incorrect accepted actions, and zero false-pass assertions across 20 known-false claims. No transport or response failure explains the result. Narrowing goals improved top-choice accuracy but did not establish enough accepted coverage. This ADR remains reopened and proposed; it does not authorize a product release. [Ticket 20](../../.scratch/jev-ios-bridge/issues/20-post-feasibility-direction.md) records the next owner decision. Preserve all three experiments without lowering their criteria or relabelling from their answers.

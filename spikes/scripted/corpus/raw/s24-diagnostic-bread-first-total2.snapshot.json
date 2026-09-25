@@ -1,0 +1,380 @@
+{
+  "deviceId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+  "capturedAt": 1790241771110,
+  "expiresAt": 1790241831110,
+  "sequence": 54,
+  "elements": [
+    {
+      "ref": "e1",
+      "role": "application",
+      "label": "DiagnosticApp",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": []
+    },
+    {
+      "ref": "e2",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e3",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e4",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e5",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e6",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e7",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e8",
+      "role": "other",
+      "identifier": "Confirmation",
+      "frame": {
+        "x": 0,
+        "y": 62,
+        "width": 440,
+        "height": 106
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e9",
+      "role": "button",
+      "label": "Sample Shop",
+      "identifier": "BackButton",
+      "frame": {
+        "x": 20,
+        "y": 62,
+        "width": 44,
+        "height": 44
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "tap",
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e10",
+      "role": "other",
+      "label": "Confirmation",
+      "frame": {
+        "x": 20,
+        "y": 120,
+        "width": 208,
+        "height": 42.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e11",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e12",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e13",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e14",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e15",
+      "role": "text",
+      "label": "Order complete",
+      "identifier": "confirmation.title",
+      "frame": {
+        "x": 118,
+        "y": 184,
+        "width": 204,
+        "height": 37.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e16",
+      "role": "text",
+      "label": "Bread: $3",
+      "frame": {
+        "x": 118,
+        "y": 237.67,
+        "width": 74.33,
+        "height": 22.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e17",
+      "role": "text",
+      "label": "Apple: $2",
+      "frame": {
+        "x": 118,
+        "y": 276,
+        "width": 73.33,
+        "height": 22.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e18",
+      "role": "text",
+      "label": "Total: $2",
+      "identifier": "confirmation.total",
+      "frame": {
+        "x": 118,
+        "y": 314.33,
+        "width": 88.67,
+        "height": 28.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e19",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e20",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 440,
+        "height": 956
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    }
+  ],
+  "truncated": false,
+  "screenHash": "1r9jxyt",
+  "screenshotPath": "raw/s24-diagnostic-bread-first-total2.jpg"
+}

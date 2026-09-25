@@ -1,0 +1,597 @@
+{
+  "app": {
+    "bundleId": "com.sentry.weather.Weather"
+  },
+  "preconditions": [
+    "Use the pinned mock Weather app on a clean dedicated iPhone 17 Pro Max simulator with the same iOS runtime as the baseline.",
+    "Build and install the app outside the prepared-app timer. Start at Weather main with default units and display switches; London is not already selected or saved."
+  ],
+  "values": {
+    "city": "London"
+  },
+  "steps": [
+    {
+      "id": "openSettings",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "button",
+            "identifier": "weather.locationButton"
+          },
+          {
+            "role": "button",
+            "identifier": "weather.settingsButton"
+          }
+        ],
+        "absent": [
+          {
+            "role": "text",
+            "label": "Settings"
+          },
+          {
+            "role": "text",
+            "label": "Locations"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "identifier": "weather.settingsButton"
+        }
+      }
+    },
+    {
+      "id": "selectCelsius",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Settings"
+          },
+          {
+            "role": "button",
+            "label": "°F",
+            "value": "selected"
+          },
+          {
+            "role": "button",
+            "label": "°C",
+            "value": "not selected"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "°C",
+          "value": "not selected"
+        }
+      }
+    },
+    {
+      "id": "selectMetersPerSecond",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Settings"
+          },
+          {
+            "role": "button",
+            "label": "°C",
+            "value": "selected"
+          },
+          {
+            "role": "button",
+            "label": "m/s",
+            "value": "not selected"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "m/s",
+          "value": "not selected"
+        }
+      }
+    },
+    {
+      "id": "selectInHg",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Settings"
+          },
+          {
+            "role": "button",
+            "label": "m/s",
+            "value": "selected"
+          },
+          {
+            "role": "button",
+            "label": "inHg",
+            "value": "not selected"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "inHg",
+          "value": "not selected"
+        }
+      }
+    },
+    {
+      "id": "selectKm",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Settings"
+          },
+          {
+            "role": "button",
+            "label": "inHg",
+            "value": "selected"
+          },
+          {
+            "role": "button",
+            "label": "km",
+            "value": "not selected"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "km",
+          "value": "not selected"
+        }
+      }
+    },
+    {
+      "id": "disableAnimations",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Settings"
+          },
+          {
+            "role": "switch",
+            "label": "Atmospheric animations",
+            "value": "1"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "switch",
+          "label": "Atmospheric animations",
+          "value": "1"
+        }
+      }
+    },
+    {
+      "id": "disableAlerts",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Settings"
+          },
+          {
+            "role": "switch",
+            "label": "Atmospheric animations",
+            "value": "0"
+          },
+          {
+            "role": "switch",
+            "label": "Severe weather alerts",
+            "value": "1"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "switch",
+          "label": "Severe weather alerts",
+          "value": "1"
+        }
+      }
+    },
+    {
+      "id": "enableTransparencyReduction",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Settings"
+          },
+          {
+            "role": "switch",
+            "label": "Severe weather alerts",
+            "value": "0"
+          },
+          {
+            "role": "switch",
+            "label": "Reduce transparency",
+            "value": "0"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "switch",
+          "label": "Reduce transparency",
+          "value": "0"
+        }
+      }
+    },
+    {
+      "id": "verifySettings",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Settings"
+          },
+          {
+            "role": "button",
+            "label": "°C",
+            "value": "selected"
+          },
+          {
+            "role": "button",
+            "label": "m/s",
+            "value": "selected"
+          },
+          {
+            "role": "button",
+            "label": "inHg",
+            "value": "selected"
+          },
+          {
+            "role": "button",
+            "label": "km",
+            "value": "selected"
+          },
+          {
+            "role": "switch",
+            "label": "Atmospheric animations",
+            "value": "0"
+          },
+          {
+            "role": "switch",
+            "label": "Severe weather alerts",
+            "value": "0"
+          },
+          {
+            "role": "switch",
+            "label": "Reduce transparency",
+            "value": "1"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "units",
+          "claim": "Weather Settings has Temperature °C, Wind speed m/s, Pressure inHg, and Distance km selected."
+        },
+        {
+          "id": "display",
+          "claim": "Weather Settings has Atmospheric animations off, Severe weather alerts off, and Reduce transparency on."
+        }
+      ]
+    },
+    {
+      "id": "closeSettings",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Settings"
+          },
+          {
+            "role": "switch",
+            "label": "Reduce transparency",
+            "value": "1"
+          },
+          {
+            "role": "button",
+            "identifier": "xmark",
+            "label": "Close"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "identifier": "xmark",
+          "label": "Close"
+        }
+      }
+    },
+    {
+      "id": "openLocations",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "button",
+            "identifier": "weather.locationButton"
+          },
+          {
+            "role": "button",
+            "identifier": "weather.settingsButton"
+          }
+        ],
+        "absent": [
+          {
+            "role": "text",
+            "label": "Settings"
+          },
+          {
+            "role": "text",
+            "label": "Locations"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "identifier": "weather.locationButton"
+        }
+      }
+    },
+    {
+      "id": "searchLondon",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Locations"
+          },
+          {
+            "role": "text-field",
+            "identifier": "weather.locationsSheet"
+          }
+        ]
+      },
+      "action": {
+        "kind": "replaceText",
+        "selector": {
+          "role": "text-field",
+          "identifier": "weather.locationsSheet"
+        },
+        "valueKey": "city"
+      }
+    },
+    {
+      "id": "settleLondonResult",
+      "kind": "wait",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Locations"
+          },
+          {
+            "role": "text-field",
+            "identifier": "weather.locationsSheet",
+            "value": "London"
+          }
+        ]
+      },
+      "until": {
+        "present": [
+          {
+            "role": "text",
+            "label": "1 RESULT"
+          },
+          {
+            "role": "button",
+            "value": "not saved"
+          }
+        ]
+      },
+      "timeoutMs": 10000
+    },
+    {
+      "id": "selectLondon",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Locations"
+          },
+          {
+            "role": "text-field",
+            "identifier": "weather.locationsSheet",
+            "value": "London"
+          },
+          {
+            "role": "text",
+            "label": "1 RESULT"
+          },
+          {
+            "role": "button",
+            "value": "not saved"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "value": "not saved"
+        }
+      }
+    },
+    {
+      "id": "verifyLondonTop",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "identifier": "weather.heroLocation",
+            "label": "London"
+          },
+          {
+            "role": "button",
+            "identifier": "weather.locationButton",
+            "label": "London"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "city",
+          "claim": "The Weather main screen shows London as the selected city."
+        },
+        {
+          "id": "temperature",
+          "claim": "The London main screen shows a current temperature of 11°."
+        }
+      ]
+    },
+    {
+      "id": "revealConditions",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "identifier": "weather.heroLocation",
+            "label": "London"
+          },
+          {
+            "role": "scroll-view",
+            "identifier": "weather.mainScrollView"
+          }
+        ]
+      },
+      "action": {
+        "kind": "swipe",
+        "selector": {
+          "role": "scroll-view",
+          "identifier": "weather.mainScrollView"
+        },
+        "direction": "up"
+      }
+    },
+    {
+      "id": "verifyLondonConditions",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "button",
+            "identifier": "weather.precipitationCard"
+          },
+          {
+            "role": "text",
+            "label": "VISIBILITY"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "precipitation",
+          "claim": "The London main screen shows precipitation 78%."
+        },
+        {
+          "id": "visibility",
+          "claim": "The London main screen shows visibility 9.7 km."
+        }
+      ]
+    },
+    {
+      "id": "openPrecipitation",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "button",
+            "identifier": "weather.precipitationCard"
+          },
+          {
+            "role": "text",
+            "label": "VISIBILITY"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "identifier": "weather.precipitationCard"
+        }
+      }
+    },
+    {
+      "id": "verifyPrecipitation",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "identifier": "weather.precipitationDetail"
+          },
+          {
+            "role": "text",
+            "label": "PRECIPITATION"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "chance",
+          "claim": "The London precipitation detail shows 78% chance over the next 24 hours."
+        },
+        {
+          "id": "total",
+          "claim": "The detail shows 10.7 mm total expected."
+        },
+        {
+          "id": "hours",
+          "claim": "The detail shows 6 hrs of rain."
+        },
+        {
+          "id": "storm",
+          "claim": "The detail shows storm distance 14 km."
+        },
+        {
+          "id": "lightning",
+          "claim": "The detail shows lightning None."
+        }
+      ]
+    }
+  ]
+}

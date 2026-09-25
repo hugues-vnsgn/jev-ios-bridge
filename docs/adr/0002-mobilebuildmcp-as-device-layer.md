@@ -1,7 +1,7 @@
 ---
-status: proposed
+status: accepted
 date: 2026-09-21
-revised: 2026-09-24
+revised: 2026-09-25
 ---
 
 # MobileBuildMCP is the device layer
@@ -18,3 +18,7 @@ We pin `mobilebuildmcp@2.7.1`. The rename changed the package, binary, config di
 - **Screenshots are small.** MobileBuildMCP returns a JPEG at most 800 pixels on its longest side. A full-resolution image means calling `simctl` directly, which would be the bridge's first device code of its own.
 - **Real iPhones need a second device layer.** MobileBuildMCP builds, installs, launches, stops, and runs `xcodebuild test` on a physical device, but has no snapshot, tap, type, screenshot, or log tools for one. Supporting iPhones means a second device layer behind the same device driver. The ticket "Driving a real iPhone: what a second device layer takes" sized that path: WebDriverAgent through Appium, medium effort, most of it per-developer signing ([research](../research/physical-iphone-device-layer.md)).
 - **The bridge depends on a third party that just renamed itself.** Any upgrade is deliberate, and an Xcode upgrade can force one. MobileBuildMCP sends error reports to Sentry by default, and the device driver turns that off.
+
+## Validated integration
+
+Accepted after real scripted execution through the pinned CLI, including tap, replacement typing, capture, reference refresh, and cleanup. Production requires an already booted simulator and installed app; preparation restarts the app. Simulator provisioning remains an operator task. The bridge itself contains no direct `simctl`, AXe, or other device automation. [Device decision](../../.scratch/jev-ios-bridge/issues/12-device-driver.md) records the concrete transport and acknowledgement rules.

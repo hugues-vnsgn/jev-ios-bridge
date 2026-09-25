@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "purpose": "Offline request-payload equivalence after correcting only scripted device UDID validation",
+  "corpusSha256": "4d7e3853e79c7ffd3315ce9d908ebe9d4685ce28cff59674470ca0f861b43303",
+  "archivedImplementationSha256": "dbdb58f782d86191a2d35b7a932b0ca9cc38568503d1908c03310795f6c44884",
+  "currentImplementationSha256": "9e73c34e4a1ac75eaaf8773d8774ff52ab25af9dbc87e74e8e330816c6c10b32",
+  "requestSerialization": "SHA-256 of JSON.stringify(buildAssertionRequest([{id,claim},...],renderAssertionState(snapshot))) in corpus order",
+  "archivedAggregateSha256": "b80de5ec6d796e77aa70796619f3eaae81ad37edbd750cedbe749aba2842d46c",
+  "currentAggregateSha256": "b80de5ec6d796e77aa70796619f3eaae81ad37edbd750cedbe749aba2842d46c",
+  "identicalRequestCount": 24,
+  "cases": [
+    {
+      "id": "s01-weather-ber-query",
+      "archivedSha256": "ac5a0e3f5902c860bff2d889d71c1ee4ad78bda59cac6cab97b42a147c791583",
+      "currentSha256": "ac5a0e3f5902c860bff2d889d71c1ee4ad78bda59cac6cab97b42a147c791583"
+    },
+    {
+      "id": "s02-weather-berlin-results",
+      "archivedSha256": "6fd1adca6c3ea2773643edc887264cc95aa5465b3510d141b1c4313851912bfc",
+      "currentSha256": "6fd1adca6c3ea2773643edc887264cc95aa5465b3510d141b1c4313851912bfc"
+    },
+    {
+      "id": "s03-weather-berlin-main",
+      "archivedSha256": "03d0a20f21cd467ccded06c5bbe215d93b454e4691f30b5c0cb7b71b41c72fdb",
+      "currentSha256": "03d0a20f21cd467ccded06c5bbe215d93b454e4691f30b5c0cb7b71b41c72fdb"
+    },
+    {
+      "id": "s04-weather-lisbon-main",
+      "archivedSha256": "9b1313b93337e05788150fc3591efe9a0f28f00b97e89c579778753522425254",
+      "currentSha256": "9b1313b93337e05788150fc3591efe9a0f28f00b97e89c579778753522425254"
+    },
+    {
+      "id": "s05-weather-lisbon-distance-mi",
+      "archivedSha256": "95a41bfeda7887967366c74e5730d7ea9da35f906d9b0fc1a3a8bff24637f293",
+      "currentSha256": "95a41bfeda7887967366c74e5730d7ea9da35f906d9b0fc1a3a8bff24637f293"
+    },
+    {
+      "id": "s06-weather-lisbon-distance-km",
+      "archivedSha256": "0a0bba0dcc9288a646dec2fc4c8e84c9bdfaaaf525309cb6dd32a88ad2bc3741",
+      "currentSha256": "0a0bba0dcc9288a646dec2fc4c8e84c9bdfaaaf525309cb6dd32a88ad2bc3741"
+    },
+    {
+      "id": "s07-contacts-tessa-duplicate-list",
+      "archivedSha256": "b7e1cd11cb0b7aad3bb615f8307c59d1196a19b1d44b9ac2ea16241c99a56a08",
+      "currentSha256": "b7e1cd11cb0b7aad3bb615f8307c59d1196a19b1d44b9ac2ea16241c99a56a08"
+    },
+    {
+      "id": "s08-contacts-tessa-email-offscreen",
+      "archivedSha256": "fd3be5fc48e4b3ae6929b8895018c9feabcbe417d4dc15b324e1ce350b963b32",
+      "currentSha256": "fd3be5fc48e4b3ae6929b8895018c9feabcbe417d4dc15b324e1ce350b963b32"
+    },
+    {
+      "id": "s09-contacts-tessa-old-email-visible",
+      "archivedSha256": "4ee01849fcb665a7e6a31f209816c629b906630c2a1be076b34413fa3b63d221",
+      "currentSha256": "4ee01849fcb665a7e6a31f209816c629b906630c2a1be076b34413fa3b63d221"
+    },
+    {
+      "id": "s10-contacts-nolan-old-email-edit",
+      "archivedSha256": "a9c34ba59d74178574d3ebe5b305da7cbb8b80ca063b8a37f07a23f846e95ba8",
+      "currentSha256": "a9c34ba59d74178574d3ebe5b305da7cbb8b80ca063b8a37f07a23f846e95ba8"
+    },
+    {
+      "id": "s11-contacts-nolan-new-email-unsaved",
+      "archivedSha256": "a59856ab4fbdbfcdf33977d6b7db8a6b0ab0c9c43dfd5add443b8504786eda7d",
+      "currentSha256": "a59856ab4fbdbfcdf33977d6b7db8a6b0ab0c9c43dfd5add443b8504786eda7d"
+    },
+    {
+      "id": "s12-contacts-nolan-new-email-saved",
+      "archivedSha256": "75c0533313063e89c4bdaa81b6ac9a6c17f16994d94c401f52372e7c3d06941a",
+      "currentSha256": "75c0533313063e89c4bdaa81b6ac9a6c17f16994d94c401f52372e7c3d06941a"
+    },
+    {
+      "id": "s13-contacts-nina-query",
+      "archivedSha256": "1ea26b1942e02cb2598bc19d0d838029dcc7b3b826c80f8ce11271750e360a72",
+      "currentSha256": "1ea26b1942e02cb2598bc19d0d838029dcc7b3b826c80f8ce11271750e360a72"
+    },
+    {
+      "id": "s14-contacts-nina-calder-no-results",
+      "archivedSha256": "d1a31a7dff55357c3a198dda4fa0d7bbcc1588e59353df3a476864ecad237596",
+      "currentSha256": "d1a31a7dff55357c3a198dda4fa0d7bbcc1588e59353df3a476864ecad237596"
+    },
+    {
+      "id": "s15-contacts-tessa-search-two-results",
+      "archivedSha256": "98072879275a1603bb4a8e65c316e64109c5b7434ffeb3a8a7a21b10ff1f4d49",
+      "currentSha256": "98072879275a1603bb4a8e65c316e64109c5b7434ffeb3a8a7a21b10ff1f4d49"
+    },
+    {
+      "id": "s16-reminders-new-list-blank",
+      "archivedSha256": "98bfc65452b30ec56c39db035add0a7accfc8375ba64cb43c1bbd8e1ebf23726",
+      "currentSha256": "98bfc65452b30ec56c39db035add0a7accfc8375ba64cb43c1bbd8e1ebf23726"
+    },
+    {
+      "id": "s17-reminders-signal-kit-unsaved",
+      "archivedSha256": "000edec04c6d6734310e17f68f4c758e4c72010ec45a62eb5a3d142d0c3dd061",
+      "currentSha256": "000edec04c6d6734310e17f68f4c758e4c72010ec45a62eb5a3d142d0c3dd061"
+    },
+    {
+      "id": "s18-reminders-signal-kit-saved",
+      "archivedSha256": "448eac8a0d093271231442f5e0252be7908a3e636fc7c7c490e60913a674d4e6",
+      "currentSha256": "448eac8a0d093271231442f5e0252be7908a3e636fc7c7c490e60913a674d4e6"
+    },
+    {
+      "id": "s19-reminders-charge-lantern-note-empty",
+      "archivedSha256": "55753f6bb2d7b7d3d12666c81ea4d7d8a153f498ede2a4cc479a8e2d0b2995e5",
+      "currentSha256": "55753f6bb2d7b7d3d12666c81ea4d7d8a153f498ede2a4cc479a8e2d0b2995e5"
+    },
+    {
+      "id": "s20-reminders-charge-lantern-note-unsaved",
+      "archivedSha256": "da08373c4b9f7a323ea64812afe89eeee309a0cd727da807787f6ea925a2f43e",
+      "currentSha256": "da08373c4b9f7a323ea64812afe89eeee309a0cd727da807787f6ea925a2f43e"
+    },
+    {
+      "id": "s21-reminders-charge-lantern-note-saved",
+      "archivedSha256": "c50a8ca5107f82fda5c6560593ea0342846fd04938b4d94f00f915a502154d23",
+      "currentSha256": "c50a8ca5107f82fda5c6560593ea0342846fd04938b4d94f00f915a502154d23"
+    },
+    {
+      "id": "s22-diagnostic-bread-selected",
+      "archivedSha256": "98a09b0a2402d801344169dae7e31df1a35cb69b53490b3071b4bb6199471671",
+      "currentSha256": "98a09b0a2402d801344169dae7e31df1a35cb69b53490b3071b4bb6199471671"
+    },
+    {
+      "id": "s23-diagnostic-bread-apple-selected",
+      "archivedSha256": "667a04140a62a5229e863f33282a797745c4822e6fcd8c35549580e9d90321fe",
+      "currentSha256": "667a04140a62a5229e863f33282a797745c4822e6fcd8c35549580e9d90321fe"
+    },
+    {
+      "id": "s24-diagnostic-bread-first-total2",
+      "archivedSha256": "ce5ea608a208bc926d35171619e4c84a049fc0c13b6b031af32ee6d1e0184276",
+      "currentSha256": "ce5ea608a208bc926d35171619e4c84a049fc0c13b6b031af32ee6d1e0184276"
+    }
+  ]
+}

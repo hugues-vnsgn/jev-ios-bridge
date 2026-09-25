@@ -1,0 +1,172 @@
+{
+  "kind": "archived-bridge-attempt",
+  "slug": "weather-bridge-attempt2",
+  "runId": "72682f2a-7057-482c-8c77-d3282f5090f4",
+  "scenarioSourcePath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/v0.1-release/spikes/benchmarks/scenarios/weather-scripted.json",
+  "scenarioSourceSha256AtExecution": "65bdee069165cd4f3fa6e742927ee7bc6c37a19ff2a8d1ebbd5c1837436b5009",
+  "submittedScenarioSha256": "6acc75148dd80bbf60ba53b28c72f3c6bb5743690f1c84850704a27c4f99e488",
+  "submittedScenarioCanonicalSha256": "a2655ad7d72464cdf66e7cd564579c987702224822030320c370a42abfad7e56",
+  "hostToolSequence": [
+    "mcp__jev-ios-bridge__start_scenario",
+    "mcp__jev-ios-bridge__get_report",
+    "mcp__jev-ios-bridge__get_report",
+    "mcp__jev-ios-bridge__get_report"
+  ],
+  "hostModel": "claude-opus-4-7",
+  "hostWallSeconds": 147.575659375,
+  "hostTokens": {
+    "uncachedInput": 10,
+    "cacheCreationInput": 29942,
+    "cacheReadInput": 141847,
+    "output": 4310,
+    "allInputProcessed": 171799
+  },
+  "hostEstimatedCostUsd": 0.47814349999999994,
+  "bridgeVerdict": "passed",
+  "bridgeReason": "ALL_CHECKPOINTS_PASSED",
+  "bridgeDurationMs": 107670.206042,
+  "bridgeInputTokens": 18227,
+  "cleanupMs": 937.5659999999916,
+  "installedCliPath": "/tmp/jev-post-review-check.JT6czu/consumer/node_modules/jev-ios-bridge/dist/cli.js",
+  "installedCliSha256": "4355b1dc6f47973ba54f169d1183137556844f755d394ea71bd995fbf2c698d2",
+  "privateRawTranscriptPath": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-xlmC4b/claude.jsonl",
+  "privateRawTranscriptSha256": "273a5d4abd3a8d5c9f0007c87a355b3a2768c53922691653816ebf0dd0f92a99",
+  "privateRunDirectory": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-xlmC4b/runs/72682f2a-7057-482c-8c77-d3282f5090f4",
+  "saved": [
+    {
+      "name": "submitted-scenario.json",
+      "sha256": "6acc75148dd80bbf60ba53b28c72f3c6bb5743690f1c84850704a27c4f99e488",
+      "bytes": 14000
+    },
+    {
+      "name": "report.md",
+      "sha256": "eb4413670b734aea479eb7651be9e40f2f2aa4e2957f4c1132ecac05399e3763",
+      "bytes": 6485
+    },
+    {
+      "name": "host-final.md",
+      "sha256": "7036cb4645b7d54098c73b8c8090b50c73774d8e204da165dfdd466291e6d25e",
+      "bytes": 896
+    },
+    {
+      "name": "journal.jsonl",
+      "sha256": "ab5b52d68f15ac8656e89fb8b575b79ab128ea263e9bc491c6a267b7215d90c6",
+      "bytes": 113291
+    },
+    {
+      "name": "metrics.json",
+      "sha256": "1f6645cce5a641255dd369d9c0b523ef930bcf6e3fcc1b1e6041112d1749dd91",
+      "bytes": 2932
+    },
+    {
+      "name": "screen-11.jpg",
+      "sha256": "dd0b6bba4e7840527d6f8844cbe3140bf35f7abef63a38f1acedb1c7c5ed2ad8",
+      "bytes": 36025
+    },
+    {
+      "name": "screen-13.jpg",
+      "sha256": "43d3d2bdf2b75af4de573e3e572d1a12ec7873bb53089480d3af212a2e7824d7",
+      "bytes": 36038
+    },
+    {
+      "name": "screen-15.jpg",
+      "sha256": "b7c1d3363ce6ff45b49d7caa44dcdca64c34cf1878b67ef11a2f77b2bdca36ef",
+      "bytes": 35789
+    },
+    {
+      "name": "screen-17.jpg",
+      "sha256": "b7bb61c5c6065371a88ed6d109f88bb863f0a5b86526a609b620b1bf09399f2d",
+      "bytes": 35512
+    },
+    {
+      "name": "screen-19.jpg",
+      "sha256": "834097b7152329307fdaa0f8e8d5df9578b408ca2d53a969f81c129f731bfae9",
+      "bytes": 34596
+    },
+    {
+      "name": "screen-22.jpg",
+      "sha256": "834097b7152329307fdaa0f8e8d5df9578b408ca2d53a969f81c129f731bfae9",
+      "bytes": 34596
+    },
+    {
+      "name": "screen-24.jpg",
+      "sha256": "aed01828dd30da31c6587edd5025772b6ce21a2704274f5198df9cd30a15ad37",
+      "bytes": 39432
+    },
+    {
+      "name": "screen-26.jpg",
+      "sha256": "ca06b4446bcac030f83f0d146ac5db4a6c359cd27cc06c510d40c6e953733561",
+      "bytes": 36638
+    },
+    {
+      "name": "screen-28.jpg",
+      "sha256": "c30e3783818a17130f9e888d8638a5aa2b1e8e9b3e8cb8eaa3aa9dc66b8120c6",
+      "bytes": 25492
+    },
+    {
+      "name": "screen-3.jpg",
+      "sha256": "a7181b0e270c101fabee146a17cc33163551f0c7351f22182fa978825ed4e922",
+      "bytes": 50845
+    },
+    {
+      "name": "screen-30.jpg",
+      "sha256": "291734c2f0a689f9db0a4fd3699f6f7ba113117bbead1beb89b06722e58b3c6f",
+      "bytes": 25512
+    },
+    {
+      "name": "screen-32.jpg",
+      "sha256": "f212929d3c2cc360ff07b9809a1b481e19034eda1bcc18e22218fde1a5908ea9",
+      "bytes": 25502
+    },
+    {
+      "name": "screen-34.jpg",
+      "sha256": "12400205376608542ab259a4d916eb63e77355353678db5bda8a008433ab86d5",
+      "bytes": 41024
+    },
+    {
+      "name": "screen-37.jpg",
+      "sha256": "12400205376608542ab259a4d916eb63e77355353678db5bda8a008433ab86d5",
+      "bytes": 41024
+    },
+    {
+      "name": "screen-39.jpg",
+      "sha256": "a9e7b3aa44fbdfcad1b9d660e4c828e0e823eee028d5ba858e5c14ea0b365187",
+      "bytes": 40667
+    },
+    {
+      "name": "screen-42.jpg",
+      "sha256": "a9e7b3aa44fbdfcad1b9d660e4c828e0e823eee028d5ba858e5c14ea0b365187",
+      "bytes": 40667
+    },
+    {
+      "name": "screen-44.jpg",
+      "sha256": "f948b4bd496fef635f7c2c5b26ef2afc2acbd66bb5030ad72e4a8d19f7a35e07",
+      "bytes": 42028
+    },
+    {
+      "name": "screen-5.jpg",
+      "sha256": "b2706885b46d13a7ec4ec40c8810e0c5881fb995e73bbd94e5a72ec393068450",
+      "bytes": 36170
+    },
+    {
+      "name": "screen-7.jpg",
+      "sha256": "dd8d455d8bbef1bc56bc4bf90e84bd60d8171dd1aa7047dfc9a3b6f9dbcdd167",
+      "bytes": 35969
+    },
+    {
+      "name": "screen-9.jpg",
+      "sha256": "37512986d9d51c81db79612f825487d7fb968512ffdcfa05ce7a4f92d0ea9df6",
+      "bytes": 35978
+    },
+    {
+      "name": "source-scenario.json",
+      "sha256": "65bdee069165cd4f3fa6e742927ee7bc6c37a19ff2a8d1ebbd5c1837436b5009",
+      "bytes": 14000
+    }
+  ],
+  "sourceScenarioArchive": {
+    "name": "source-scenario.json",
+    "sha256": "65bdee069165cd4f3fa6e742927ee7bc6c37a19ff2a8d1ebbd5c1837436b5009",
+    "submittedDeepEqualSource": true
+  }
+}

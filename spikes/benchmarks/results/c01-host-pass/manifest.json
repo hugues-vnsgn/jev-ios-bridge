@@ -1,0 +1,85 @@
+{
+  "kind": "archived-bridge-attempt",
+  "slug": "c01-host-pass",
+  "runId": "dc601a4a-f31c-4156-8524-90523e58949b",
+  "scenarioSourcePath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/v0.1-release/spikes/scripted/integration/scenarios/c01-nina-no-results.json",
+  "scenarioSourceSha256AtExecution": "ce8e5a2bca54f788811aac911b5b92ee2757548e735982b1a21e176d5e3a764b",
+  "submittedScenarioSha256": "eeaba4f5cc8d8867e842006a138cc2835e873084e3e0fe0d20ee2f6ec82d95be",
+  "submittedScenarioCanonicalSha256": "ea508716b0498151a73834e231e9b9e9825972f77d849ba57c39f3f8776ca043",
+  "hostToolSequence": [
+    "mcp__jev-ios-bridge__start_scenario",
+    "mcp__jev-ios-bridge__get_report"
+  ],
+  "hostModel": "claude-opus-4-7",
+  "hostWallSeconds": 36.708635667,
+  "hostTokens": {
+    "uncachedInput": 8,
+    "cacheCreationInput": 19196,
+    "cacheReadInput": 59169,
+    "output": 1229,
+    "allInputProcessed": 78373
+  },
+  "hostEstimatedCostUsd": 0.2523095,
+  "bridgeVerdict": "passed",
+  "bridgeReason": "ALL_CHECKPOINTS_PASSED",
+  "bridgeDurationMs": 17585.588875,
+  "bridgeInputTokens": 6228,
+  "cleanupMs": 921.8008750000008,
+  "installedCliPath": "/tmp/jev-ios-bridge-package-smoke.ryEQ6v/consumer/node_modules/jev-ios-bridge/dist/cli.js",
+  "installedCliSha256": "4355b1dc6f47973ba54f169d1183137556844f755d394ea71bd995fbf2c698d2",
+  "privateRawTranscriptPath": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-lZRPrt/claude.jsonl",
+  "privateRawTranscriptSha256": "27546a795640a4a344c947a62b651c5f9a8db5cb4589accb3256ee71effe58c0",
+  "privateRunDirectory": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-lZRPrt/runs/dc601a4a-f31c-4156-8524-90523e58949b",
+  "saved": [
+    {
+      "name": "submitted-scenario.json",
+      "sha256": "eeaba4f5cc8d8867e842006a138cc2835e873084e3e0fe0d20ee2f6ec82d95be",
+      "bytes": 1922
+    },
+    {
+      "name": "report.md",
+      "sha256": "8a4509cd4a258607286d55bd4a7bb48011108684a740cce556a52fce9e6f54b9",
+      "bytes": 2040
+    },
+    {
+      "name": "host-final.md",
+      "sha256": "1db3fe28cfd2455bd36ffbac4b3a1b4a0d044ef7dd4e597a05e28dce16f11fb6",
+      "bytes": 676
+    },
+    {
+      "name": "journal.jsonl",
+      "sha256": "8aee97b12d52fe4629a78ddccccfe9297e67a1ebf411c51f7ed26a5cc2c305b4",
+      "bytes": 29892
+    },
+    {
+      "name": "metrics.json",
+      "sha256": "0fded92dde136971af3903937d02d9cb0cee4704395ef2cc8e4df999da1317de",
+      "bytes": 2785
+    },
+    {
+      "name": "screen-3.jpg",
+      "sha256": "0b0d700d9ae50bf67da8296463246c111c26ef56eb57b24a099f1a9eb5712dc2",
+      "bytes": 34746
+    },
+    {
+      "name": "screen-5.jpg",
+      "sha256": "3062d8db6df214176088e72081294c2e9d8821fa6d7adb6bcdb7c24c87256166",
+      "bytes": 15824
+    },
+    {
+      "name": "screen-7.jpg",
+      "sha256": "ae5b1145fa28854240c0dc1e87a6e9b75f869d1fbd3971c1c1d3c08565602823",
+      "bytes": 15945
+    },
+    {
+      "name": "source-scenario.json",
+      "sha256": "ce8e5a2bca54f788811aac911b5b92ee2757548e735982b1a21e176d5e3a764b",
+      "bytes": 1922
+    }
+  ],
+  "sourceScenarioArchive": {
+    "name": "source-scenario.json",
+    "sha256": "ce8e5a2bca54f788811aac911b5b92ee2757548e735982b1a21e176d5e3a764b",
+    "submittedDeepEqualSource": true
+  }
+}

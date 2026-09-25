@@ -1,0 +1,46 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "0vakw1x",
+      "seq": 53,
+      "count": 91,
+      "targets": [
+        "e10|tap|button|Back||BackButton",
+        "e11|tap|button|More||",
+        "e44|tap|button|New Reminder||",
+        "e71|tap|button|Not Now||",
+        "e72|tap|button|Go to Settings||"
+      ],
+      "scroll": [
+        "e50|swipe|other|Enable iCloud Syncing?||",
+        "e55|swipe|scroll-view|||",
+        "e68|swipe|scroll-view|||"
+      ],
+      "text": [
+        "e57|text|text|Enable iCloud Syncing?||",
+        "e58|text|text|To enjoy the latest features in Reminders, enable Reminders syncing for your Apple Account in Settings.||",
+        "e33|text|text|No Reminders||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e11\"},{\"action\":\"tap\",\"elementRef\":\"e44\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e11",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e55 --direction up --distance 0.5"
+  ]
+}

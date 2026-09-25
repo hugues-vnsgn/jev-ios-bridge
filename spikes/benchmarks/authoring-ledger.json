@@ -1,0 +1,194 @@
+{
+  "version": 1,
+  "measurementScope": "Focused offline/live preflight and selector maintenance after the initial three scripted drafts; excludes earlier unmetered authoring.",
+  "initialAuthoring": {
+    "wallTimeSeconds": null,
+    "tokens": null,
+    "reason": "No timer or token meter began before the first drafts; do not estimate retrospectively."
+  },
+  "modelAuthoringCalls": [],
+  "sessions": [
+    {
+      "id": "preflight-and-maintenance-1",
+      "startedAt": "2026-09-25T02:23:44.164Z",
+      "startedMonotonicNs": "6012712828541",
+      "status": "closed",
+      "baseline": [
+        {
+          "path": "spikes/benchmarks/scenarios/weather-scripted.json",
+          "sha256": "79e2f4c7d666967f7f1e424b1d2b620608890a885ef2f45785a977c47be3928e"
+        },
+        {
+          "path": "spikes/benchmarks/scenarios/contacts-scripted.json",
+          "sha256": "f850eb7c32be96caa1b21abfe71b53e32a6f94070f9f0eb55f5ea5c612dfa0ce"
+        },
+        {
+          "path": "spikes/benchmarks/scenarios/reminders-scripted.json",
+          "sha256": "f6cf087d559be3c64a38ebce6bc64c01aab02c53a7e1e19754610ae161339a68"
+        }
+      ],
+      "events": [
+        {
+          "kind": "baseline_start",
+          "detail": "weather upstream official suite; excluded from authoring wall time",
+          "at": "2026-09-25T02:25:59.254Z",
+          "monotonicNs": "6147800732333"
+        },
+        {
+          "kind": "baseline_end",
+          "detail": "weather upstream official suite ended; no UI actions because AXe unavailable in source clone; excluded from authoring wall time",
+          "at": "2026-09-25T02:27:30.859Z",
+          "monotonicNs": "6239404216083"
+        }
+      ],
+      "edits": [],
+      "endedAt": "2026-09-25T02:34:10.633Z",
+      "endedMonotonicNs": "6639170911375",
+      "grossWallSeconds": 626.458082834,
+      "measurementClassification": "mixed benchmark setup and wrapper repair; excluded from script-authoring cost"
+    },
+    {
+      "id": "preflight-and-maintenance-2",
+      "startedAt": "2026-09-25T02:52:22.062Z",
+      "startedMonotonicNs": "7730504687791",
+      "status": "closed",
+      "measurementClassification": "mixed baseline audit/harness repair/reruns; excluded from narrow script-authoring time",
+      "baseline": [
+        {
+          "path": "spikes/benchmarks/scenarios/weather-scripted.json",
+          "sha256": "79e2f4c7d666967f7f1e424b1d2b620608890a885ef2f45785a977c47be3928e"
+        },
+        {
+          "path": "spikes/benchmarks/scenarios/contacts-scripted.json",
+          "sha256": "f850eb7c32be96caa1b21abfe71b53e32a6f94070f9f0eb55f5ea5c612dfa0ce"
+        },
+        {
+          "path": "spikes/benchmarks/scenarios/reminders-scripted.json",
+          "sha256": "f6cf087d559be3c64a38ebce6bc64c01aab02c53a7e1e19754610ae161339a68"
+        }
+      ],
+      "events": [],
+      "edits": [],
+      "endedAt": "2026-09-25T03:17:43.280Z",
+      "endedMonotonicNs": "9251673311458",
+      "grossWallSeconds": 1521.168623667
+    },
+    {
+      "id": "focused-script-preflight-3",
+      "startedAt": "2026-09-25T03:17:43.280Z",
+      "startedMonotonicNs": "9251673644625",
+      "status": "closed",
+      "measurementClassification": "focused scripted benchmark guard/selector preflight and maintenance",
+      "baseline": [
+        {
+          "path": "spikes/benchmarks/scenarios/weather-scripted.json",
+          "sha256": "79e2f4c7d666967f7f1e424b1d2b620608890a885ef2f45785a977c47be3928e"
+        },
+        {
+          "path": "spikes/benchmarks/scenarios/contacts-scripted.json",
+          "sha256": "f850eb7c32be96caa1b21abfe71b53e32a6f94070f9f0eb55f5ea5c612dfa0ce"
+        },
+        {
+          "path": "spikes/benchmarks/scenarios/reminders-scripted.json",
+          "sha256": "f6cf087d559be3c64a38ebce6bc64c01aab02c53a7e1e19754610ae161339a68"
+        }
+      ],
+      "events": [
+        {
+          "kind": "reminders_keyboard_preflight",
+          "detail": "Dedicated sim typed MCP Benchmark List exactly in List Name, then Cancel; no benchmark list persisted. Captures reminders-benchmark-preflight-typed-2026-09-25T03-20-29-453Z and cancelled-2026-09-25T03-20-57-270Z.",
+          "at": "2026-09-25T03:21:14.019Z",
+          "monotonicNs": "9462406291125"
+        },
+        {
+          "kind": "weather_setup_preflight",
+          "detail": "Dedicated Weather main reset/default confirmed: °F,mph,mb,mi selected; animations/alerts on, transparency reduction off. Captures weather-benchmark-settings-before-2026-09-25T03-22-20-597Z and weather-benchmark-main-before-2026-09-25T03-22-52-927Z.",
+          "at": "2026-09-25T03:23:05.085Z",
+          "monotonicNs": "9573468747333"
+        },
+        {
+          "kind": "weather_attempt2_setup",
+          "detail": "Vendor relaunch reset Weather to San Francisco and seven default settings without manual mutation; setup captures weather-benchmark-reset-before-2026-09-25T03-33-24-151Z and attempt2-entry-2026-09-25T03-33-47-654Z.",
+          "at": "2026-09-25T03:33:54.163Z",
+          "monotonicNs": "10222538131500"
+        },
+        {
+          "kind": "contacts_attempt1_setup",
+          "detail": "Searched exact MCP Contact Benchmark and observed No Results, cleared/dismissed Search, relaunched Contacts; postlaunch hash 06acpex first guard and Add target matched. Captures contacts-benchmark-absence-search-2026-09-25T03-40-56-224Z and attempt1-entry-2026-09-25T03-42-03-413Z.",
+          "at": "2026-09-25T03:42:21.457Z",
+          "monotonicNs": "10729914111875"
+        },
+        {
+          "kind": "reminders_attempt1_setup",
+          "detail": "Dedicated My Lists postlaunch hash 1hgopj7; no Benchmark List row; unique role-text My Lists and Add List target passed offline first-guard resolution. Capture reminders-bridge-attempt1-entry-2026-09-25T03-46-14-269Z.",
+          "at": "2026-09-25T03:46:58.347Z",
+          "monotonicNs": "11006803805750"
+        },
+        {
+          "kind": "final_bridge_outcomes",
+          "detail": "Weather full script passed after one authored close-sheet edit; Contacts full script passed unchanged; Reminders UI visibly correct but verifier abstained on exact-count claim 0.87. No further reruns/tuning.",
+          "at": "2026-09-25T03:53:07.202Z",
+          "monotonicNs": "11375658201083"
+        }
+      ],
+      "edits": [
+        {
+          "at": "2026-09-25T03:19:07.515Z",
+          "monotonicNs": "9335906741583",
+          "path": "spikes/benchmarks/scenarios/reminders-scripted.json",
+          "beforeSha256": "f6cf087d559be3c64a38ebce6bc64c01aab02c53a7e1e19754610ae161339a68",
+          "afterSha256": "77eb815d4dc9d802516fd35ec5354a5dcf1cb980ecdceb4aaa4c31bc3bc619e2",
+          "reason": "Removed redundant openList action; Reminders save transitions directly into the new list",
+          "evidence": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T025511Z/parsed/0018_tool_result_tap.md"
+        },
+        {
+          "at": "2026-09-25T03:28:22.719Z",
+          "monotonicNs": "9891103186500",
+          "path": "spikes/benchmarks/scenarios/weather-scripted.json",
+          "beforeSha256": "79e2f4c7d666967f7f1e424b1d2b620608890a885ef2f45785a977c47be3928e",
+          "afterSha256": "65bdee069165cd4f3fa6e742927ee7bc6c37a19ff2a8d1ebbd5c1837436b5009",
+          "reason": "Add explicit Locations Close and forbid open sheet before main/scroll; previous bridge swipe expanded sheet",
+          "evidence": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-Ybo26w/runs/5983b886-9e04-470c-8db5-c8e66fbbac76/screen-37.jpg"
+        }
+      ],
+      "excludedIntervals": [
+        {
+          "kind": "weather_bridge_timed_host",
+          "startedAt": "2026-09-25T03:23:46.866Z",
+          "endedAt": "2026-09-25T03:26:04.038Z",
+          "wallSeconds": 137.172835458,
+          "summary": "spikes/benchmarks/results/weather-scripted-bridge-1790306764066.json"
+        },
+        {
+          "kind": "weather_bridge_attempt2_timed_host",
+          "startedAt": "2026-09-25T03:34:55.770Z",
+          "endedAt": "2026-09-25T03:37:23.345Z",
+          "wallSeconds": 147.575659375,
+          "summary": "spikes/benchmarks/results/weather-scripted-bridge-1790307443380.json"
+        },
+        {
+          "kind": "contacts_bridge_attempt1_timed_host",
+          "startedAt": "2026-09-25T03:42:47.495Z",
+          "endedAt": "2026-09-25T03:44:33.594Z",
+          "wallSeconds": 106.0990975,
+          "summary": "spikes/benchmarks/results/contacts-scripted-bridge-1790307873635.json"
+        },
+        {
+          "kind": "reminders_bridge_attempt1_timed_host",
+          "startedAt": "2026-09-25T03:47:26.165Z",
+          "endedAt": "2026-09-25T03:49:34.052Z",
+          "wallSeconds": 127.887232542,
+          "summary": "spikes/benchmarks/results/reminders-scripted-bridge-1790308174091.json"
+        }
+      ],
+      "endedAt": "2026-09-25T03:53:19.263Z",
+      "endedMonotonicNs": "11387719178541",
+      "grossWallSeconds": 2136.045533916,
+      "excludedTimedHostSeconds": 518.734824875,
+      "nonHostWallSeconds": 1617.3107090409999,
+      "activeAuthoringSeconds": null,
+      "authoringTokens": null,
+      "measurementLimit": "Gross and non-host wall windows include coordination, evidence archiving, setup, waiting, and analysis; they are not pure active script-authoring time. Initial drafts were unmetered. No authoring-token meter was available."
+    }
+  ]
+}

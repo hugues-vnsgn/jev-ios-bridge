@@ -1,0 +1,21 @@
+{
+  "kind": "upstream-baseline-setup-failure",
+  "suite": "weather",
+  "attempt": 1,
+  "sourceCommit": "d13ff0c707b0681769cf31da0eb42c4f94ceafff",
+  "promptSha256": "0c139a01832fb3bb7a9c2e6233420ddfab8a0cd3855fdfa3ea9d3a2adf596efc",
+  "model": "claude-opus-4-7",
+  "numericSummary": "spikes/benchmarks/results/weather-baseline-1790303168011.json",
+  "rawResult": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/weather/20260925T022611Z/result.json",
+  "rawTranscript": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/weather/20260925T022611Z/claude.jsonl",
+  "harnessCompleted": true,
+  "taskVerified": false,
+  "reason": "The source checkout did not contain a bundled AXe binary. Both snapshot_ui calls returned AXe tool not found; there were zero tap, batch, type_text, or swipe calls.",
+  "hostWallClockSeconds": 38.486510167,
+  "hostToolCalls": 5,
+  "estimatedHostCostUsd": 0.5283875000000001,
+  "temporarySimulatorId": "ACF58BD1-5CE8-4EA7-9EEF-884773D786EA",
+  "temporarySimulatorDeletedByHarness": true,
+  "comparisonEligible": false,
+  "nextAttemptEnvironment": "Use the upstream-supported MOBILEBUILDMCP_AXE_PATH override with the verified MobileBuildMCP 2.7.1 bundled AXe 1.8.0 binary."
+}

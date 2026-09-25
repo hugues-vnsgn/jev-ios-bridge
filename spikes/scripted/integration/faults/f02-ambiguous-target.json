@@ -1,0 +1,65 @@
+{
+  "app": {
+    "bundleId": "dev.jevbridge.diagnostic"
+  },
+  "device": {
+    "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+  },
+  "preconditions": [
+    "Diagnostic App starts at Selected: None with distinct Apple and Bread buttons."
+  ],
+  "values": {},
+  "steps": [
+    {
+      "id": "tapAmbiguousButton",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "identifier": "selection.summary",
+            "label": "Selected: None"
+          },
+          {
+            "role": "button",
+            "identifier": "choose.apple",
+            "label": "Add Apple ($2)"
+          },
+          {
+            "role": "button",
+            "identifier": "choose.bread",
+            "label": "Add Bread ($3)"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button"
+        }
+      }
+    },
+    {
+      "id": "verify",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "other",
+            "label": "Sample Shop"
+          },
+          {
+            "role": "text",
+            "identifier": "selection.summary"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "claim",
+          "claim": "The Sample Shop screen is open."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "090qjam",
+      "seq": 102,
+      "count": 112,
+      "targets": [
+        "e27|typeText|text-field|First name|Mira|First name",
+        "e30|typeText|text-field|Last name|Vale|Last name",
+        "e33|typeText|text-field||Company|Company",
+        "e23|tap|button|Add photo||",
+        "e35|tap|button|add phone||",
+        "e36|tap|button|Insert add phone||",
+        "e40|tap|button|add email||",
+        "e41|tap|button|Insert add email||",
+        "e45|tap|button|add pronouns||",
+        "e46|tap|button|Insert add pronouns||",
+        "e60|tap|button|add url||",
+        "e61|tap|button|Insert add url||",
+        "e82|tap|button|add url||",
+        "e83|tap|button|Insert add url||",
+        "e87|tap|button|add pronouns||",
+        "e88|tap|button|Insert add pronouns||",
+        "e92|tap|button|add email||",
+        "e93|tap|button|Insert add email||",
+        "e97|tap|button|add phone||",
+        "e98|tap|button|Insert add phone||",
+        "e102|tap|button|Add photo||",
+        "e10|tap|button|close||"
+      ],
+      "scroll": [
+        "e25|swipe|scroll-view|||"
+      ],
+      "text": [
+        "e103|text|text|Add Photo||",
+        "e39|text|text|add phone||",
+        "e101|text|text|add phone||",
+        "e44|text|text|add email||",
+        "e96|text|text|add email||",
+        "e49|text|text|add pronouns||",
+        "e91|text|text|add pronouns||",
+        "e53|text|text|Default||",
+        "e51|text|text|Ringtone||",
+        "e58|text|text|Default||",
+        "e56|text|text|Text Tone||",
+        "e64|text|text|add url||",
+        "e86|text|text|add url||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e23\"},{\"action\":\"tap\",\"elementRef\":\"e35\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e23",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e25 --direction up --distance 0.5"
+  ]
+}

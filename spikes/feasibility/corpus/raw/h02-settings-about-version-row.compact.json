@@ -1,0 +1,102 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "0tbfh5y",
+      "seq": 130,
+      "count": 232,
+      "targets": [
+        "e26|tap|button|Name, iPhone||NAME_CELL_ID",
+        "e32|tap|button|iOS Version, 26.4.1||SW_VERSION_SPECIFIER",
+        "e35|tap|button|iOS Version, 26.4.1||SW_VERSION_SPECIFIER",
+        "e45|tap|button|Model Name, iPhone 17 Pro Max||ProductModelName",
+        "e54|tap|button|Model Number, A3257SA/A||ProductModel",
+        "e63|tap|button|Serial Number, K2MNVKK265||SerialNumber",
+        "e72|tap|button|Songs, 0||SONGS",
+        "e81|tap|button|Videos, 0||VIDEOS",
+        "e90|tap|button|Photos, 6||PHOTOS",
+        "e99|tap|button|Capacity, 494.38 GB||User Data Capacity",
+        "e108|tap|button|Available, 52.53 GB||User Data Available",
+        "e114|tap|button|Certificate Trust Settings||CERT_TRUST_SETTINGS",
+        "e130|tap|button|Certificate Trust Settings||CERT_TRUST_SETTINGS",
+        "e141|tap|button|Available, 52.53 GB||User Data Available",
+        "e150|tap|button|Capacity, 494.38 GB||User Data Capacity",
+        "e159|tap|button|Photos, 6||PHOTOS",
+        "e168|tap|button|Videos, 0||VIDEOS",
+        "e177|tap|button|Songs, 0||SONGS",
+        "e186|tap|button|Serial Number, K2MNVKK265||SerialNumber",
+        "e195|tap|button|Model Number, A3257SA/A||ProductModel",
+        "e204|tap|button|Model Name, iPhone 17 Pro Max||ProductModelName",
+        "e210|tap|button|iOS Version, 26.4.1||SW_VERSION_SPECIFIER",
+        "e213|tap|button|iOS Version, 26.4.1||SW_VERSION_SPECIFIER",
+        "e223|tap|button|Name, iPhone||NAME_CELL_ID",
+        "e12|tap|button|General||BackButton"
+      ],
+      "scroll": [
+        "e22|swipe|scroll-view|||"
+      ],
+      "text": [
+        "e27|text|text|Name||",
+        "e224|text|text|Name||",
+        "e28|text|text|iPhone||",
+        "e225|text|text|iPhone||",
+        "e36|text|text|iOS Version||",
+        "e214|text|text|iOS Version||",
+        "e37|text|text|26.4.1||",
+        "e215|text|text|26.4.1||",
+        "e46|text|text|Model Name||",
+        "e205|text|text|Model Name||",
+        "e47|text|text|iPhone 17 Pro Max||",
+        "e206|text|text|iPhone 17 Pro Max||",
+        "e55|text|text|Model Number||",
+        "e196|text|text|Model Number||",
+        "e56|text|text|A3257SA/A||",
+        "e197|text|text|A3257SA/A||",
+        "e64|text|text|Serial Number||",
+        "e187|text|text|Serial Number||",
+        "e65|text|text|K2MNVKK265||",
+        "e188|text|text|K2MNVKK265||",
+        "e73|text|text|Songs||",
+        "e178|text|text|Songs||",
+        "e74|text|text|0||",
+        "e179|text|text|0||",
+        "e82|text|text|Videos||",
+        "e169|text|text|Videos||",
+        "e83|text|text|0||",
+        "e170|text|text|0||",
+        "e91|text|text|Photos||",
+        "e160|text|text|Photos||",
+        "e92|text|text|6||",
+        "e161|text|text|6||",
+        "e100|text|text|Capacity||",
+        "e151|text|text|Capacity||",
+        "e101|text|text|494.38 GB||",
+        "e152|text|text|494.38 GB||",
+        "e109|text|text|Available||",
+        "e142|text|text|Available||",
+        "e110|text|text|52.53 GB||",
+        "e143|text|text|52.53 GB||",
+        "e117|text|text|Certificate Trust Settings||",
+        "e133|text|text|Certificate Trust Settings||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e26",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e22 --direction up --distance 0.5"
+  ]
+}

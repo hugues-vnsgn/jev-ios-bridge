@@ -1,0 +1,91 @@
+{
+  "kind": "dedicated-simulator-keyboard-preflight",
+  "date": "2026-09-25",
+  "deviceUdid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+  "deviceLayer": "mobilebuildmcp@2.7.1",
+  "installedHostAttempt": {
+    "runId": "52d47482-1705-4eda-8a52-516cbac6d33b",
+    "submittedScenarioEqualsOriginalC01": true,
+    "submittedQuery": "Nina Calder",
+    "observedQuery": "nina calder",
+    "observedResultHeading": "No Results for “nina calder”",
+    "verdict": "inconclusive",
+    "reason": "GUARD_MISSING"
+  },
+  "controlledVendorInput": [
+    {
+      "app": "Contacts",
+      "input": "Case Probe",
+      "startingField": "Search",
+      "observedField": "case probe",
+      "capture": "keyboard-case-test-2026-09-25T01-44-16-955Z.full.json"
+    },
+    {
+      "app": "Contacts",
+      "input": "Cap Test",
+      "startingField": "case probe",
+      "observedField": "case probeacap test",
+      "capture": "keyboard-hardware-case-test-2026-09-25T01-46-01-567Z.full.json"
+    },
+    {
+      "app": "Weather",
+      "input": "Case Probe",
+      "startingField": "Search for a city, airport, or country",
+      "observedField": "acase probe",
+      "capture": "keyboard-weather-uppercase-probe-2026-09-25T01-54-55-069Z.full.json"
+    },
+    {
+      "app": "Weather",
+      "input": "Case Probe",
+      "startingField": "Search for a city, airport, or country",
+      "preAction": "Open the already booted dedicated Simulator frontend through pinned MobileBuildMCP in the same tool invocation.",
+      "observedField": "case probe",
+      "capture": "keyboard-focused-empty-2026-09-25T02-02-19-668Z.full.json"
+    },
+    {
+      "app": "Weather",
+      "input": "Next Probe",
+      "startingField": "case probe",
+      "preAction": "Open the already booted dedicated Simulator frontend through pinned MobileBuildMCP in the same tool invocation.",
+      "observedField": "case probenext probe",
+      "capture": "keyboard-focused-replace-2026-09-25T02-02-40-042Z.full.json"
+    }
+  ],
+  "keyboardSettings": {
+    "observed": "English & Vietnamese (Bilingual) and Emoji",
+    "capture": "keyboard-settings-bilingual-2026-09-25T01-52-54-625Z.full.json",
+    "englishUsAddRow": "Visible in Add New Keyboard, but the pinned accessibility snapshot exposes no tap or touch action; pinned tap returned TARGET_NOT_ACTIONABLE.",
+    "hardwareToggleReadback": "Unavailable from the pinned public tool; no keyboard connection state is inferred from a successful shortcut response."
+  },
+  "backend": {
+    "source": "bundled",
+    "version": "1.8.0",
+    "binaryPath": "/Users/hugues_mini/.npm/_npx/b998b4270960e258/node_modules/mobilebuildmcp/bundled/axe",
+    "sha256": "a776cb6ebaa477bd04e8a829eb72ca179d869a1876111ca15a52dde1e91f9ab7",
+    "packageMtime": "2026-09-24T09:40:24+0700"
+  },
+  "powerCycleRecovery": {
+    "oneOffException": "xcrun simctl shutdown 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "shutdownExitCode": 149,
+    "shutdownResult": "Already Shutdown; no change made by this command.",
+    "pinnedBoot": "mobilebuildmcp@2.7.1 simulator boot on the same dedicated UUID succeeded.",
+    "fixturesPreserved": [
+      "Contacts list still contained Nolan Ames.",
+      "Reminders My Lists still showed Signal Kit, 1 reminder.",
+      "Weather and Diagnostic App still launched with their expected controls."
+    ],
+    "uppercaseProbe": {
+      "input": "Case Probe",
+      "observedField": "Case Probe",
+      "capture": "keyboard-after-boot-uppercase-2026-09-25T02-09-11-397Z.full.json"
+    },
+    "replacementProbe": {
+      "startingField": "Case Probe",
+      "input": "Next Probe",
+      "observedField": "Next Probe",
+      "capture": "keyboard-after-boot-replace-2026-09-25T02-10-44-368Z.full.json"
+    },
+    "jevOrHostRerunDuringPreflight": false
+  },
+  "conclusion": "The installed host submitted the original mixed-case literal. Direct pinned vendor typing in two apps had lowercased capitals and failed replacement; frontend focus did not correct it. After the already-shut-down dedicated simulator was booted through pinned MobileBuildMCP, both uppercase entry and nonempty replacement worked exactly. The same cached AXe binary predates the earlier successful C01 run, but no earlier byte hash was archived."
+}

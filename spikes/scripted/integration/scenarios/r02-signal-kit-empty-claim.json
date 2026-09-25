@@ -1,0 +1,59 @@
+{
+  "app": {
+    "bundleId": "com.apple.reminders"
+  },
+  "device": {
+    "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+  },
+  "preconditions": [
+    "My Lists is in front with a Signal Kit row showing one reminder."
+  ],
+  "values": {},
+  "steps": [
+    {
+      "id": "openSignalKit",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "My Lists"
+          },
+          {
+            "role": "button",
+            "label": "Signal Kit, 1 reminder"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "Signal Kit, 1 reminder"
+        }
+      }
+    },
+    {
+      "id": "verify",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "other",
+            "label": "Signal Kit"
+          },
+          {
+            "role": "button",
+            "label": "New Reminder"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "claim",
+          "claim": "The Signal Kit list has no reminders."
+        }
+      ]
+    }
+  ]
+}

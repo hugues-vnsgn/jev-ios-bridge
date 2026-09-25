@@ -1,0 +1,16 @@
+{
+  "goal": "Open Weather Settings and verify that Fahrenheit is selected.",
+  "app": {
+    "bundleId": "com.sentry.weather.Weather"
+  },
+  "assertions": [
+    {
+      "id": "fahrenheit_selected",
+      "claim": "The Weather Settings sheet visibly shows Fahrenheit selected."
+    }
+  ],
+  "values": {},
+  "device": {
+    "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+  }
+}

@@ -1,0 +1,96 @@
+diff --git a/src/benchmarks/claude-ui/harness.ts b/src/benchmarks/claude-ui/harness.ts
+index 73efad4..c4c7ef3 100644
+--- a/src/benchmarks/claude-ui/harness.ts
++++ b/src/benchmarks/claude-ui/harness.ts
+@@ -1,5 +1,5 @@
+-import { spawn } from 'node:child_process';
+-import { randomUUID } from 'node:crypto';
++import { execFileSync, spawn } from 'node:child_process';
++import { createHash, randomUUID } from 'node:crypto';
+ import { createWriteStream } from 'node:fs';
+ import { access, cp, mkdir, readdir, readFile, stat, writeFile } from 'node:fs/promises';
+ import path from 'node:path';
+@@ -651,6 +651,9 @@ export async function runSuite(
+       simulatorId: effectiveSimulatorId,
+     });
+     const benchmarkEnv = claudeBenchmarkEnv(process.env, contextEnv);
++    // The operator's post-run audit flag must not enter the measured host environment.
++    delete benchmarkEnv.JEV_BASELINE_POSTRUN_AUDIT;
++    delete benchmarkEnv.JEV_BASELINE_AUDIT_CLI_PATH;
+     await runPreflightCommands({
+       commands: config.preflightCommands,
+       cwd: workingDirectory,
+@@ -812,6 +815,73 @@ export async function runSuite(
+       },
+     };
+     result = compareBenchmark(config, audit, run);
++    if (process.env.JEV_BASELINE_POSTRUN_AUDIT === '1' &&
++        temporarySimulator?.createdByHarness === true) {
++      const auditStarted = process.hrtime.bigint();
++      const auditRecord: Record<string, unknown> = {
++        kind: 'post-host-read-only-ui-audit',
++        simulatorId: temporarySimulator.simulatorId,
++        startedAt: new Date().toISOString(),
++        mobileBuildMcpVersion: '2.7.1',
++        hostWallClockSeconds: claude.durationSeconds,
++        modelRequests: 0,
++      };
++      try {
++        const auditCliPath = process.env.JEV_BASELINE_AUDIT_CLI_PATH;
++        if (!auditCliPath || !path.isAbsolute(auditCliPath)) {
++          throw new Error('Absolute pinned MobileBuildMCP audit CLI path required');
++        }
++        const packageBytes = await readFile(path.join(path.dirname(path.dirname(auditCliPath)), 'package.json'));
++        const packageJson = JSON.parse(packageBytes.toString('utf8'));
++        const cliBytes = await readFile(auditCliPath);
++        const cliSha256 = createHash('sha256').update(cliBytes).digest('hex');
++        if (packageJson.version !== '2.7.1' || packageJson.bin?.mobilebuildmcp !== 'build/cli.js' ||
++            cliSha256 !== '3e5756ce8b953875237bb76f737882de7a9b407f77496a98b401c4d6ed219c2c') {
++          throw new Error('Pinned MobileBuildMCP audit CLI identity mismatch');
++        }
++        auditRecord.cliPath = auditCliPath;
++        auditRecord.cliSha256 = cliSha256;
++        auditRecord.packageJsonSha256 = createHash('sha256').update(packageBytes).digest('hex');
++        const common = ['--simulator-id', temporarySimulator.simulatorId, '--output', 'json'];
++        const execOptions = {
++          cwd: repoRoot, env: benchmarkEnv, encoding: 'utf8' as const,
++          timeout: 30_000, maxBuffer: 20 * 1024 * 1024,
++        };
++        const snapshotArgs = [auditCliPath, 'ui-automation', 'snapshot-ui', '--verbose', ...common];
++        const screenshotArgs = [auditCliPath, 'simulator', 'screenshot', '--return-format', 'path', ...common];
++        auditRecord.commands = [snapshotArgs, screenshotArgs].map(args => ({ executable: process.execPath, args }));
++        const snapshotText = execFileSync(process.execPath, snapshotArgs, execOptions);
++        const snapshotResult = JSON.parse(snapshotText);
++        if (snapshotResult.didError || snapshotResult.data?.summary?.status === 'FAILED') {
++          throw new Error('Pinned MobileBuildMCP full snapshot failed');
++        }
++        await writeFile(path.join(runDirectory, 'post-run-audit.full.json'), snapshotText,
++          { flag: 'wx', mode: 0o600 });
++        const screenshotText = execFileSync(process.execPath, screenshotArgs, execOptions);
++        const screenshotResult = JSON.parse(screenshotText);
++        const screenshotSource = screenshotResult.data?.artifacts?.screenshotPath;
++        if (screenshotResult.didError || typeof screenshotSource !== 'string') {
++          throw new Error('Pinned MobileBuildMCP screenshot failed');
++        }
++        await writeFile(path.join(runDirectory, 'post-run-audit.jpg'), await readFile(screenshotSource),
++          { flag: 'wx', mode: 0o600 });
++        auditRecord.status = 'succeeded';
++        auditRecord.screenHash = snapshotResult.data?.capture?.screenHash ?? null;
++      } catch (error) {
++        auditRecord.status = 'failed';
++        auditRecord.errorCode = 'POST_RUN_AUDIT_FAILED';
++        try {
++          await writeFile(path.join(runDirectory, 'post-run-audit-error.txt'),
++            error instanceof Error ? error.message : String(error), { flag: 'wx', mode: 0o600 });
++        } catch { /* Preserve the host result and normal simulator cleanup. */ }
++      }
++      auditRecord.endedAt = new Date().toISOString();
++      auditRecord.durationSeconds = Number(process.hrtime.bigint() - auditStarted) / 1e9;
++      try {
++        await writeFile(path.join(runDirectory, 'post-run-audit.json'),
++          `${JSON.stringify(auditRecord, null, 2)}\n`, { flag: 'wx', mode: 0o600 });
++      } catch { /* The audit must never replace the measured host result. */ }
++    }
+   } finally {
+     if (temporarySimulator?.createdByHarness === true) {
+       progress?.event(`cleaning up simulator ${temporarySimulator.simulatorId}`);

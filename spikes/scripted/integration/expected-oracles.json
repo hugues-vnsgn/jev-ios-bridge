@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "scripts": [
+    {
+      "id": "w01-locations-open",
+      "app": "weather",
+      "expectedVerdict": "passed"
+    },
+    {
+      "id": "w02-distance-km",
+      "app": "weather",
+      "expectedVerdict": "passed"
+    },
+    {
+      "id": "w03-distance-mi-claim",
+      "app": "weather",
+      "expectedVerdict": "failed"
+    },
+    {
+      "id": "c01-nina-no-results",
+      "app": "contacts",
+      "expectedVerdict": "passed"
+    },
+    {
+      "id": "c02-nina-card-claim",
+      "app": "contacts",
+      "expectedVerdict": "failed"
+    },
+    {
+      "id": "c03-nolan-edit-final",
+      "app": "contacts",
+      "expectedVerdict": "passed"
+    },
+    {
+      "id": "r01-signal-kit-note",
+      "app": "reminders",
+      "expectedVerdict": "passed"
+    },
+    {
+      "id": "r02-signal-kit-empty-claim",
+      "app": "reminders",
+      "expectedVerdict": "failed"
+    },
+    {
+      "id": "r03-reminders-search-claim",
+      "app": "reminders",
+      "expectedVerdict": "failed"
+    },
+    {
+      "id": "d01-bread-selected",
+      "app": "diagnostic",
+      "expectedVerdict": "passed"
+    },
+    {
+      "id": "d02-bread-first-total-claim",
+      "app": "diagnostic",
+      "expectedVerdict": "failed"
+    },
+    {
+      "id": "d03-apple-first-order-claim",
+      "app": "diagnostic",
+      "expectedVerdict": "failed"
+    }
+  ]
+}

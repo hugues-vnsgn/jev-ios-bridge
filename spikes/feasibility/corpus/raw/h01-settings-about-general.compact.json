@@ -1,0 +1,85 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "0c8s9aw",
+      "seq": 126,
+      "count": 203,
+      "targets": [
+        "e12|tap|button|Settings||BackButton",
+        "e32|tap|button|About||About",
+        "e35|tap|button|About||About",
+        "e42|tap|button|Screen Capture||SCREEN_CAPTURE",
+        "e45|tap|button|Screen Capture||SCREEN_CAPTURE",
+        "e52|tap|button|AutoFill & Passwords||AUTOFILL",
+        "e55|tap|button|AutoFill & Passwords||AUTOFILL",
+        "e62|tap|button|Dictionary||DICTIONARY",
+        "e65|tap|button|Dictionary||DICTIONARY",
+        "e72|tap|button|Fonts||FONT_SETTING",
+        "e75|tap|button|Fonts||FONT_SETTING",
+        "e82|tap|button|Keyboard||Keyboard",
+        "e85|tap|button|Keyboard||Keyboard",
+        "e92|tap|button|Language & Region||INTERNATIONAL",
+        "e95|tap|button|Language & Region||INTERNATIONAL",
+        "e102|tap|button|VPN & Device Management||ManagedConfigurationList",
+        "e105|tap|button|VPN & Device Management||ManagedConfigurationList",
+        "e120|tap|button|VPN & Device Management||ManagedConfigurationList",
+        "e123|tap|button|VPN & Device Management||ManagedConfigurationList",
+        "e130|tap|button|Language & Region||INTERNATIONAL",
+        "e133|tap|button|Language & Region||INTERNATIONAL",
+        "e140|tap|button|Keyboard||Keyboard",
+        "e143|tap|button|Keyboard||Keyboard",
+        "e150|tap|button|Fonts||FONT_SETTING",
+        "e153|tap|button|Fonts||FONT_SETTING",
+        "e160|tap|button|Dictionary||DICTIONARY",
+        "e163|tap|button|Dictionary||DICTIONARY",
+        "e170|tap|button|AutoFill & Passwords||AUTOFILL",
+        "e173|tap|button|AutoFill & Passwords||AUTOFILL",
+        "e180|tap|button|Screen Capture||SCREEN_CAPTURE",
+        "e183|tap|button|Screen Capture||SCREEN_CAPTURE",
+        "e190|tap|button|About||About",
+        "e193|tap|button|About||About"
+      ],
+      "scroll": [
+        "e22|swipe|scroll-view|||"
+      ],
+      "text": [
+        "e36|text|text|About||",
+        "e194|text|text|About||",
+        "e46|text|text|Screen Capture||",
+        "e184|text|text|Screen Capture||",
+        "e56|text|text|AutoFill & Passwords||",
+        "e174|text|text|AutoFill & Passwords||",
+        "e66|text|text|Dictionary||",
+        "e164|text|text|Dictionary||",
+        "e76|text|text|Fonts||",
+        "e154|text|text|Fonts||",
+        "e86|text|text|Keyboard||",
+        "e144|text|text|Keyboard||",
+        "e96|text|text|Language & Region||",
+        "e134|text|text|Language & Region||",
+        "e106|text|text|VPN & Device Management||",
+        "e124|text|text|VPN & Device Management||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e32\"},{\"action\":\"tap\",\"elementRef\":\"e35\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e32",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e22 --direction up --distance 0.5"
+  ]
+}

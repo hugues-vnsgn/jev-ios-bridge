@@ -1,0 +1,38 @@
+{
+  "suite": "weather",
+  "benchmarkCompleted": true,
+  "terminalSuccess": true,
+  "claudeExitCode": 0,
+  "parserExitCode": 0,
+  "parseErrors": 0,
+  "requestedModel": "claude-opus-4-7",
+  "observedModel": "claude-opus-4-7",
+  "wallClockSeconds": 38.486510167,
+  "wallClockSource": "upstream harness process timer",
+  "totalHostToolCalls": 5,
+  "mcpToolCalls": 4,
+  "uiAutomationCalls": 2,
+  "tokens": {
+    "uncachedInput": 15,
+    "cacheCreationInput": 41382,
+    "cacheReadInput": 198335,
+    "output": 613,
+    "allInputProcessed": 239732
+  },
+  "byModel": [
+    {
+      "model": "claude-opus-4-7",
+      "uncachedInputTokens": 15,
+      "cacheCreationInputTokens": 41382,
+      "cacheReadInputTokens": 198335,
+      "outputTokens": 613,
+      "estimatedCostUsd": 0.5283875000000001
+    }
+  ],
+  "estimatedCostUsd": 0.5283875000000001,
+  "costMeaning": "Claude Code client estimate at API prices, not a subscription invoice",
+  "source": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/weather/20260925T022611Z/result.json",
+  "invokedAt": "2026-09-25T02:26:08.011Z",
+  "sourceCommit": "d13ff0c707b0681769cf31da0eb42c4f94ceafff",
+  "rawResultPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/weather/20260925T022611Z/result.json"
+}

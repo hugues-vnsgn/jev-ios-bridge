@@ -1,0 +1,32 @@
+{
+  "kind": "host-wall-clock-annotation-correction",
+  "issue": "The prior bridge wrapper overwrote the extractor wallClockSeconds with external monotonic process time but retained the extractor wallClockSource label, which incorrectly named Claude result duration_ms.",
+  "correction": "The numeric wallClockSeconds in each listed summary is external process time around Claude. CLI-reported duration is listed separately from each private raw result event. No original numeric result is changed.",
+  "correctedWrapper": "spikes/benchmarks/run-bridge.mjs",
+  "attempts": [
+    {
+      "summaryPath": "spikes/benchmarks/results/c01-nina-no-results-bridge-1790300319374.json",
+      "runId": "52d47482-1705-4eda-8a52-516cbac6d33b",
+      "externalProcessWallSeconds": 38.396088958,
+      "claudeResultDurationSeconds": 36.467,
+      "claudeResultApiSeconds": 25.141,
+      "originalWallClockSourceField": "Claude result duration_ms; capture external process time for comparison"
+    },
+    {
+      "summaryPath": "spikes/benchmarks/results/c01-nina-no-results-bridge-1790302361560.json",
+      "runId": "da1fa21c-76d6-41ef-b3b5-a80c837a02f1",
+      "externalProcessWallSeconds": 29.086377708,
+      "claudeResultDurationSeconds": 28.226,
+      "claudeResultApiSeconds": 23.984,
+      "originalWallClockSourceField": "Claude result duration_ms; capture external process time for comparison"
+    },
+    {
+      "summaryPath": "spikes/benchmarks/results/c01-nina-no-results-bridge-1790302865475.json",
+      "runId": "dc601a4a-f31c-4156-8524-90523e58949b",
+      "externalProcessWallSeconds": 36.708635667,
+      "claudeResultDurationSeconds": 36.137,
+      "claudeResultApiSeconds": 21.58,
+      "originalWallClockSourceField": "Claude result duration_ms; capture external process time for comparison"
+    }
+  ]
+}

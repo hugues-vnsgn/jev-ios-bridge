@@ -1,0 +1,604 @@
+{
+  "cases": [
+    {
+      "id": "s01-weather-ber-query",
+      "workflowGroup": "weather-berlin-search",
+      "app": {
+        "bundleId": "com.sentry.weather.Weather"
+      },
+      "setupSteps": [
+        "Launch the Sentry Weather mock fixture.",
+        "Tap the San Francisco location button.",
+        "Type Ber into the location search field."
+      ],
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The location search field contains Ber.",
+          "expected": true,
+          "rationale": "The visible search text field has value Ber."
+        },
+        {
+          "id": "b",
+          "claim": "The location search field contains the complete word Berlin.",
+          "expected": false,
+          "rationale": "Berlin appears as a result, but the search field itself contains only Ber."
+        }
+      ]
+    },
+    {
+      "id": "s02-weather-berlin-results",
+      "workflowGroup": "weather-berlin-search",
+      "app": {
+        "bundleId": "com.sentry.weather.Weather"
+      },
+      "setupSteps": [
+        "From the Ber search, replace the location search text with Berlin.",
+        "Wait for the Berlin, Germany result to settle."
+      ],
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The main Weather location button already reads Berlin.",
+          "expected": false,
+          "rationale": "The underlying main location button still reads San Francisco."
+        },
+        {
+          "id": "b",
+          "claim": "The location search results include Berlin, Germany.",
+          "expected": true,
+          "rationale": "The locations sheet has a Berlin, Germany result button."
+        }
+      ]
+    },
+    {
+      "id": "s03-weather-berlin-main",
+      "workflowGroup": "weather-berlin-search",
+      "app": {
+        "bundleId": "com.sentry.weather.Weather"
+      },
+      "setupSteps": [
+        "Tap the Berlin, Germany search result.",
+        "Tap Close on the locations sheet."
+      ],
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The main Weather location button reads Berlin.",
+          "expected": true,
+          "rationale": "The unsheeted main location button is labeled Berlin."
+        },
+        {
+          "id": "a",
+          "claim": "The main Weather location button reads Oslo.",
+          "expected": false,
+          "rationale": "The same main location button is not labeled Oslo."
+        }
+      ]
+    },
+    {
+      "id": "s04-weather-lisbon-main",
+      "workflowGroup": "weather-lisbon-distance",
+      "app": {
+        "bundleId": "com.sentry.weather.Weather"
+      },
+      "setupSteps": [
+        "From Berlin main, open the locations sheet.",
+        "Search for Lisbon.",
+        "Tap the Lisbon, Portugal result.",
+        "Close the locations sheet."
+      ],
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The main Weather location button reads Berlin.",
+          "expected": false,
+          "rationale": "The location button has changed from Berlin to Lisbon."
+        },
+        {
+          "id": "a",
+          "claim": "The main Weather location button reads Lisbon.",
+          "expected": true,
+          "rationale": "The unsheeted location button and hero title read Lisbon."
+        }
+      ]
+    },
+    {
+      "id": "s05-weather-lisbon-distance-mi",
+      "workflowGroup": "weather-lisbon-distance",
+      "app": {
+        "bundleId": "com.sentry.weather.Weather"
+      },
+      "setupSteps": [
+        "From Lisbon main, tap Settings.",
+        "Leave Distance at its initial mi selection."
+      ],
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Distance setting has mi selected.",
+          "expected": true,
+          "rationale": "The mi button value is selected in the Distance section."
+        },
+        {
+          "id": "b",
+          "claim": "The Distance setting has km selected.",
+          "expected": false,
+          "rationale": "The km button value is not selected."
+        }
+      ]
+    },
+    {
+      "id": "s06-weather-lisbon-distance-km",
+      "workflowGroup": "weather-lisbon-distance",
+      "app": {
+        "bundleId": "com.sentry.weather.Weather"
+      },
+      "setupSteps": [
+        "From Lisbon Settings with mi selected, tap the km Distance choice."
+      ],
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Distance setting has mi selected.",
+          "expected": false,
+          "rationale": "The mi button value is not selected."
+        },
+        {
+          "id": "b",
+          "claim": "The Distance setting has km selected.",
+          "expected": true,
+          "rationale": "The km button value is selected in the Distance section."
+        }
+      ]
+    },
+    {
+      "id": "s07-contacts-tessa-duplicate-list",
+      "workflowGroup": "contacts-tessa-duplicate",
+      "app": {
+        "bundleId": "com.apple.MobileAddressBook"
+      },
+      "setupSteps": [
+        "Create synthetic Northstar Lab Tessa Vale with six phone numbers and tessa.seed@example.test.",
+        "Create synthetic Harbor Lab Tessa Vale with tessa.harbor@example.test.",
+        "Return to the Contacts list and scroll until both Tessa Vale rows are above the Search overlay."
+      ],
+      "claims": [
+        {
+          "id": "b",
+          "claim": "Two separate Tessa Vale rows are visible in the Contacts list.",
+          "expected": true,
+          "rationale": "The screenshot and full capture show two distinct Tessa Vale list rows with separate frames."
+        },
+        {
+          "id": "a",
+          "claim": "A Tessa Vale contact card is open.",
+          "expected": false,
+          "rationale": "The current screen is the Contacts list, not an opened contact card."
+        }
+      ]
+    },
+    {
+      "id": "s08-contacts-tessa-email-offscreen",
+      "workflowGroup": "contacts-tessa-duplicate",
+      "app": {
+        "bundleId": "com.apple.MobileAddressBook"
+      },
+      "setupSteps": [
+        "From the visible duplicate rows, open the six-phone Northstar Lab Tessa Vale card.",
+        "Tap Edit without scrolling the form."
+      ],
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The tessa.seed@example.test email field is visible in the current viewport.",
+          "expected": false,
+          "rationale": "The email field lies below the viewport and has no visible text field in this capture."
+        },
+        {
+          "id": "a",
+          "claim": "The Tessa Vale Edit form shows six phone number fields.",
+          "expected": true,
+          "rationale": "Six populated phone fields appear in the foreground Edit form."
+        }
+      ]
+    },
+    {
+      "id": "s09-contacts-tessa-old-email-visible",
+      "workflowGroup": "contacts-tessa-duplicate",
+      "app": {
+        "bundleId": "com.apple.MobileAddressBook"
+      },
+      "setupSteps": [
+        "Open Edit on the six-phone Northstar Lab Tessa Vale card.",
+        "Swipe upward within the Edit form by distance 0.25."
+      ],
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The visible Tessa Vale email field contains tessa.seed@example.test.",
+          "expected": true,
+          "rationale": "The foreground Edit form now exposes the email field with the seed value."
+        },
+        {
+          "id": "b",
+          "claim": "The visible Tessa Vale email field contains tessa.final@example.test.",
+          "expected": false,
+          "rationale": "The exposed field has the seed value, not the proposed final value."
+        }
+      ]
+    },
+    {
+      "id": "s10-contacts-nolan-old-email-edit",
+      "workflowGroup": "contacts-nolan-email",
+      "app": {
+        "bundleId": "com.apple.MobileAddressBook"
+      },
+      "setupSteps": [
+        "Create synthetic Nolan Ames with nolan.seed@example.test and save the contact.",
+        "Open Nolan Ames Edit."
+      ],
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Nolan Ames Edit form email field contains nolan.final@example.test.",
+          "expected": false,
+          "rationale": "The visible email field has not been replaced yet."
+        },
+        {
+          "id": "b",
+          "claim": "The Nolan Ames Edit form email field contains nolan.seed@example.test.",
+          "expected": true,
+          "rationale": "The foreground Edit form visibly shows the seed email value."
+        }
+      ]
+    },
+    {
+      "id": "s11-contacts-nolan-new-email-unsaved",
+      "workflowGroup": "contacts-nolan-email",
+      "app": {
+        "bundleId": "com.apple.MobileAddressBook"
+      },
+      "setupSteps": [
+        "From Nolan Ames Edit, replace the seed email with nolan.final@example.test.",
+        "Leave the Edit form open with Done available."
+      ],
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Nolan Ames Edit form email field contains nolan.final@example.test.",
+          "expected": true,
+          "rationale": "The visible Edit form email field has the final value and Done is still available."
+        },
+        {
+          "id": "a",
+          "claim": "The foreground Nolan Ames screen is the saved contact card with an Edit button.",
+          "expected": false,
+          "rationale": "The foreground screen is still the Edit form rather than the saved card."
+        }
+      ]
+    },
+    {
+      "id": "s12-contacts-nolan-new-email-saved",
+      "workflowGroup": "contacts-nolan-email",
+      "app": {
+        "bundleId": "com.apple.MobileAddressBook"
+      },
+      "setupSteps": [
+        "From Nolan Ames Edit with final email entered, tap Done."
+      ],
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The saved Nolan Ames contact card shows nolan.seed@example.test.",
+          "expected": false,
+          "rationale": "The saved card email row shows the final value, not the seed value."
+        },
+        {
+          "id": "a",
+          "claim": "The saved Nolan Ames contact card shows nolan.final@example.test.",
+          "expected": true,
+          "rationale": "The card header and email row visibly show Nolan Ames and the final email."
+        }
+      ]
+    },
+    {
+      "id": "s13-contacts-nina-query",
+      "workflowGroup": "contacts-search-contrast",
+      "app": {
+        "bundleId": "com.apple.MobileAddressBook"
+      },
+      "setupSteps": [
+        "Return to the Contacts list.",
+        "Type Nina in Search and wait for the result area to settle."
+      ],
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Contacts search field contains Nina.",
+          "expected": true,
+          "rationale": "The search field value is Nina."
+        },
+        {
+          "id": "b",
+          "claim": "The Contacts search field contains Nina Calder.",
+          "expected": false,
+          "rationale": "Nina Calder is not the current search field value."
+        }
+      ]
+    },
+    {
+      "id": "s14-contacts-nina-calder-no-results",
+      "workflowGroup": "contacts-search-contrast",
+      "app": {
+        "bundleId": "com.apple.MobileAddressBook"
+      },
+      "setupSteps": [
+        "Replace Nina in Contacts Search with Nina Calder.",
+        "Wait for explicit No Results text."
+      ],
+      "claims": [
+        {
+          "id": "a",
+          "claim": "A Nina Calder contact card is open.",
+          "expected": false,
+          "rationale": "No contact card is open; the screen remains in Search results."
+        },
+        {
+          "id": "b",
+          "claim": "Contacts shows No Results for Nina Calder.",
+          "expected": true,
+          "rationale": "The foreground results text says No Results for Nina Calder."
+        }
+      ]
+    },
+    {
+      "id": "s15-contacts-tessa-search-two-results",
+      "workflowGroup": "contacts-search-contrast",
+      "app": {
+        "bundleId": "com.apple.MobileAddressBook"
+      },
+      "setupSteps": [
+        "Replace Nina Calder in Contacts Search with Tessa Vale.",
+        "Wait for both matching rows."
+      ],
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Contacts search results show two Tessa Vale rows.",
+          "expected": true,
+          "rationale": "Two separate matching Tessa Vale result rows are visible at the top of results."
+        },
+        {
+          "id": "a",
+          "claim": "Contacts shows No Results for Tessa Vale.",
+          "expected": false,
+          "rationale": "The search result area contains two matching rows, not a No Results message."
+        }
+      ]
+    },
+    {
+      "id": "s16-reminders-new-list-blank",
+      "workflowGroup": "reminders-signal-kit-list",
+      "app": {
+        "bundleId": "com.apple.reminders"
+      },
+      "setupSteps": [
+        "Open Reminders My Lists.",
+        "Tap Add List and leave the New List name blank."
+      ],
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The List Name field contains Signal Kit.",
+          "expected": false,
+          "rationale": "Signal Kit has not been typed into the field."
+        },
+        {
+          "id": "a",
+          "claim": "The New List form shows an empty List Name field.",
+          "expected": true,
+          "rationale": "The foreground New List form has a blank List Name value."
+        }
+      ]
+    },
+    {
+      "id": "s17-reminders-signal-kit-unsaved",
+      "workflowGroup": "reminders-signal-kit-list",
+      "app": {
+        "bundleId": "com.apple.reminders"
+      },
+      "setupSteps": [
+        "From the blank New List form, type Signal Kit into List Name.",
+        "Leave the New List form open with Done available."
+      ],
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The New List form List Name field contains Signal Kit.",
+          "expected": true,
+          "rationale": "The foreground New List form shows Signal Kit in the text field."
+        },
+        {
+          "id": "b",
+          "claim": "A Signal Kit row is already visible under My Lists.",
+          "expected": false,
+          "rationale": "The form is still open and the background My Lists has no Signal Kit row."
+        }
+      ]
+    },
+    {
+      "id": "s18-reminders-signal-kit-saved",
+      "workflowGroup": "reminders-signal-kit-list",
+      "app": {
+        "bundleId": "com.apple.reminders"
+      },
+      "setupSteps": [
+        "From the typed Signal Kit New List form, tap Done.",
+        "Return to My Lists."
+      ],
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Signal Kit row shows 2 reminders.",
+          "expected": false,
+          "rationale": "A separate Market Errands row has 2 reminders, but Signal Kit has 0."
+        },
+        {
+          "id": "b",
+          "claim": "My Lists shows a Signal Kit row with 0 reminders.",
+          "expected": true,
+          "rationale": "The saved Signal Kit list row is explicitly labeled 0 reminders."
+        }
+      ]
+    },
+    {
+      "id": "s19-reminders-charge-lantern-note-empty",
+      "workflowGroup": "reminders-charge-lantern-note",
+      "app": {
+        "bundleId": "com.apple.reminders"
+      },
+      "setupSteps": [
+        "Open the Signal Kit list.",
+        "Tap New Reminder and type Charge lantern in Title.",
+        "Leave Notes empty."
+      ],
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Charge lantern editor has an empty Notes field.",
+          "expected": true,
+          "rationale": "The foreground editor shows the title and a blank Notes field."
+        },
+        {
+          "id": "a",
+          "claim": "The Charge lantern Notes field contains Use green cable.",
+          "expected": false,
+          "rationale": "Use green cable has not been entered."
+        }
+      ]
+    },
+    {
+      "id": "s20-reminders-charge-lantern-note-unsaved",
+      "workflowGroup": "reminders-charge-lantern-note",
+      "app": {
+        "bundleId": "com.apple.reminders"
+      },
+      "setupSteps": [
+        "From the Charge lantern editor, type Use green cable in Notes.",
+        "Leave the editor open with Done available."
+      ],
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Charge lantern Notes field is empty.",
+          "expected": false,
+          "rationale": "The Notes field visibly contains Use green cable."
+        },
+        {
+          "id": "a",
+          "claim": "The open Charge lantern editor shows Notes value Use green cable and a Done button.",
+          "expected": true,
+          "rationale": "The full capture and screenshot show the populated Notes field with Done still present."
+        }
+      ]
+    },
+    {
+      "id": "s21-reminders-charge-lantern-note-saved",
+      "workflowGroup": "reminders-charge-lantern-note",
+      "app": {
+        "bundleId": "com.apple.reminders"
+      },
+      "setupSteps": [
+        "From the Charge lantern editor with its note entered, tap Done."
+      ],
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Charge lantern list row includes the note Use green cable.",
+          "expected": true,
+          "rationale": "The visible list row label includes Charge lantern, Incomplete, Use green cable."
+        },
+        {
+          "id": "b",
+          "claim": "The Charge lantern list row has no note text.",
+          "expected": false,
+          "rationale": "The row visibly includes note text after Done."
+        }
+      ]
+    },
+    {
+      "id": "s22-diagnostic-bread-selected",
+      "workflowGroup": "diagnostic-bread-first",
+      "app": {
+        "bundleId": "dev.jevbridge.diagnostic"
+      },
+      "setupSteps": [
+        "Stop and relaunch the Diagnostic App to clear its in-memory selection.",
+        "Tap Add Bread ($3)."
+      ],
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Sample Shop selection summary reads Selected: Apple.",
+          "expected": false,
+          "rationale": "Apple is not the selected item in this screen."
+        },
+        {
+          "id": "b",
+          "claim": "The Sample Shop selection summary reads Selected: Bread.",
+          "expected": true,
+          "rationale": "The visible selection summary has only Bread."
+        }
+      ]
+    },
+    {
+      "id": "s23-diagnostic-bread-apple-selected",
+      "workflowGroup": "diagnostic-bread-first",
+      "app": {
+        "bundleId": "dev.jevbridge.diagnostic"
+      },
+      "setupSteps": [
+        "From Bread selected, tap Add Apple ($2)."
+      ],
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Sample Shop selection summary reads Selected: Bread, Apple.",
+          "expected": true,
+          "rationale": "The visible summary lists Bread before Apple."
+        },
+        {
+          "id": "a",
+          "claim": "The Sample Shop selection summary reads Selected: Apple, Bread.",
+          "expected": false,
+          "rationale": "The displayed order is not Apple before Bread."
+        }
+      ]
+    },
+    {
+      "id": "s24-diagnostic-bread-first-total2",
+      "workflowGroup": "diagnostic-bread-first",
+      "app": {
+        "bundleId": "dev.jevbridge.diagnostic"
+      },
+      "setupSteps": [
+        "With Bread then Apple selected, tap Complete order."
+      ],
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Order complete confirmation shows Total: $5.",
+          "expected": false,
+          "rationale": "The visible total is $2 rather than the expected arithmetic sum $5."
+        },
+        {
+          "id": "a",
+          "claim": "The Order complete confirmation shows Total: $2.",
+          "expected": true,
+          "rationale": "The confirmation lists Bread $3 and Apple $2, and the displayed total is $2."
+        }
+      ]
+    }
+  ]
+}

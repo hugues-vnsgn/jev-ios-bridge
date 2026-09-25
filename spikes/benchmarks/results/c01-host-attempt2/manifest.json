@@ -1,0 +1,75 @@
+{
+  "kind": "archived-bridge-attempt",
+  "slug": "c01-host-attempt2",
+  "runId": "da1fa21c-76d6-41ef-b3b5-a80c837a02f1",
+  "scenarioSourcePath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/v0.1-release/spikes/scripted/integration/scenarios/c01-nina-no-results.json",
+  "scenarioSourceSha256AtExecution": "3619db0a0fd596e492d7d8b52be975014e46eefdc3a5909d15d61007752c7605",
+  "submittedScenarioSha256": "e5b4c4b905683154e914d471633e2b5a4f529dd6cd80d2116ae5a15589d0ba55",
+  "submittedScenarioCanonicalSha256": "c4423bc804e8f43f6208fe80489b43e3d5ca450f57f5392f4bd48b6bdb2890e9",
+  "hostToolSequence": [
+    "mcp__jev-ios-bridge__start_scenario",
+    "mcp__jev-ios-bridge__get_report"
+  ],
+  "hostModel": "claude-opus-4-7",
+  "hostWallSeconds": 29.086377708,
+  "hostTokens": {
+    "uncachedInput": 8,
+    "cacheCreationInput": 19209,
+    "cacheReadInput": 59320,
+    "output": 1434,
+    "allInputProcessed": 78537
+  },
+  "hostEstimatedCostUsd": 0.25764,
+  "bridgeVerdict": "inconclusive",
+  "bridgeReason": "GUARD_AMBIGUOUS",
+  "bridgeDurationMs": 8583.32025,
+  "bridgeInputTokens": 0,
+  "cleanupMs": 958.6272919999992,
+  "installedCliPath": "/tmp/jev-ios-bridge-package-smoke.ryEQ6v/consumer/node_modules/jev-ios-bridge/dist/cli.js",
+  "installedCliSha256": "4355b1dc6f47973ba54f169d1183137556844f755d394ea71bd995fbf2c698d2",
+  "privateRawTranscriptPath": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-UD6uzp/claude.jsonl",
+  "privateRawTranscriptSha256": "39f40438f6b6beef6f78a91bf2564deaf62311d2820eb2a47f0375ec46c4cf84",
+  "privateRunDirectory": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-UD6uzp/runs/da1fa21c-76d6-41ef-b3b5-a80c837a02f1",
+  "saved": [
+    {
+      "name": "submitted-scenario.json",
+      "sha256": "e5b4c4b905683154e914d471633e2b5a4f529dd6cd80d2116ae5a15589d0ba55",
+      "bytes": 2051
+    },
+    {
+      "name": "report.md",
+      "sha256": "052a1434dc2abb55e93090c89565b2643d8a7a2e75acf024a0df2b2a07b6a262",
+      "bytes": 1829
+    },
+    {
+      "name": "host-final.md",
+      "sha256": "5e535688b84442a767089f1954f2f3e405717b2f7db385fbff6d71bc43458d2e",
+      "bytes": 1258
+    },
+    {
+      "name": "journal.jsonl",
+      "sha256": "0c1b2c436dc9f95e922ace69d21ee6e9dc133b5167d37b02c1dfc06adf65dd19",
+      "bytes": 4058
+    },
+    {
+      "name": "metrics.json",
+      "sha256": "e27ee86d5369f7e6a012ab7eff7637ba76bcff359c6396f4ea3a6fe2cb01fc53",
+      "bytes": 2743
+    },
+    {
+      "name": "screen-3.jpg",
+      "sha256": "792a1a1054814019a8b0362b469b8093719692412d0070555f01efe37d1fad00",
+      "bytes": 15721
+    },
+    {
+      "name": "source-scenario.json",
+      "sha256": "3619db0a0fd596e492d7d8b52be975014e46eefdc3a5909d15d61007752c7605",
+      "bytes": 2051
+    }
+  ],
+  "sourceScenarioArchive": {
+    "name": "source-scenario.json",
+    "sha256": "3619db0a0fd596e492d7d8b52be975014e46eefdc3a5909d15d61007752c7605",
+    "submittedDeepEqualSource": true
+  }
+}

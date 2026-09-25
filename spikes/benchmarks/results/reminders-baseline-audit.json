@@ -1,0 +1,87 @@
+{
+  "kind": "verified-upstream-baseline",
+  "suite": "reminders",
+  "attempt": 1,
+  "sourceCommit": "d13ff0c707b0681769cf31da0eb42c4f94ceafff",
+  "promptSha256": "965357a8822bdf506a72a3911cb43c9dd17fc5d2d8e9fc701ca7ac54b6d2690a",
+  "axeBinary": {
+    "path": "/Users/hugues_mini/.npm/_npx/b998b4270960e258/node_modules/mobilebuildmcp/bundled/axe",
+    "version": "1.8.0",
+    "sha256": "a776cb6ebaa477bd04e8a829eb72ca179d869a1876111ca15a52dde1e91f9ab7"
+  },
+  "model": "claude-opus-4-7",
+  "claudeExitCode": 0,
+  "parserExitCode": 0,
+  "parseErrors": 0,
+  "toolInputErrorsRecovered": 0,
+  "verifiedTask": false,
+  "selectedUiEvidence": {
+    "typedListName": "MCP Benchmark List (input literal only)",
+    "finalRowLabels": [
+      "Buy milk benchmark, Completed",
+      "File report benchmark, Incomplete",
+      "Call team benchmark, Completed"
+    ],
+    "finalCompletionControls": [
+      "circle.inset.filled",
+      "circle",
+      "circle.inset.filled"
+    ],
+    "observedNewListField": "Mộc Benchmark List"
+  },
+  "hostWallClockSeconds": 99.527001292,
+  "simulatorSetupSeconds": 23.2,
+  "firstRunPromptDismissalsBeforeHostTimer": [
+    "Continue",
+    "Not Now"
+  ],
+  "hostToolCalls": 15,
+  "tokens": {
+    "uncachedInput": 20,
+    "cacheCreationInput": 31284,
+    "cacheReadInput": 699662,
+    "output": 4215,
+    "allInputProcessed": 730966
+  },
+  "estimatedHostCostUsd": 0.7681460000000001,
+  "temporarySimulatorId": "5115DD0B-4C30-4AB1-AE8B-253476B235F5",
+  "temporarySimulatorDeletedByHarness": true,
+  "numericSummary": "spikes/benchmarks/results/reminders-baseline-1790304122581.json",
+  "rawResultPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T024203Z/result.json",
+  "rawResultSha256": "6f8069498ea3a6787d61f9196204e202445a4004952501959bea2929ce00ced7",
+  "rawTranscriptPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T024203Z/claude.jsonl",
+  "rawTranscriptSha256": "47e623274b3b040dad603300cca2e271587e9954058d7f5a26d5e931a20d1407",
+  "proof": [
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T024203Z/parsed/0012_tool_call_type_text.md",
+      "sha256": "a7c93df785a02fbe2468a78adab3da4f0afcb54873013477acc94ffb4ee5f7f5"
+    },
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T024203Z/parsed/0031_tool_result_batch.md",
+      "sha256": "afc8df7f368024f6759559aef8f3e1ebd74af8c019443dba1e2d6f4e49562ca7"
+    },
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T024203Z/parsed/0012_tool_call_type_text.md",
+      "sha256": "a7c93df785a02fbe2468a78adab3da4f0afcb54873013477acc94ffb4ee5f7f5"
+    },
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T024203Z/parsed/0013_tool_result_type_text.md",
+      "sha256": "2fcaa101a4baff4025f0598cb1d77c689d813707d8fdc5e462a695078b63755f"
+    }
+  ],
+  "comparisonEligible": false,
+  "taskStatus": "list-name-mismatch-or-unverified",
+  "verificationLimit": "The saved list title was omitted from later compact captures. The immediate post-typing field showed Mộc Benchmark List and no correction action followed, so the exact MCP Benchmark List task cannot be accepted.",
+  "verificationHistory": [
+    {
+      "stage": "initial audit",
+      "classification": "verified",
+      "basis": "The final vendor capture showed all three reminder statuses; the list name was inferred from the typed input and Claude final response."
+    },
+    {
+      "stage": "corrected audit",
+      "classification": "not comparable",
+      "basis": "The immediate post-type AX value was Mộc Benchmark List, and no later capture showed a corrected saved title. Original numeric summary and raw result are preserved."
+    }
+  ]
+}
