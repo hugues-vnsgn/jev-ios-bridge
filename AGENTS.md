@@ -1,6 +1,6 @@
 # jev-ios-bridge
 
-Humans start at `README.md`; agents working a ticket start at `.scratch/jev-ios-bridge/map.md`. The current effort carries the planning tickets through implementation and a GitHub prerelease, v0.1.0.
+Humans start at `README.md`; agents working a ticket start at `.scratch/v1-release/map.md`. The current effort plans the v1.0.0 release and ends at a release spec that Codex executes. The finished v0.1.0 effort, `.scratch/jev-ios-bridge/map.md`, remains as history.
 
 ## Local secrets
 
