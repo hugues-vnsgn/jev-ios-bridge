@@ -13,3 +13,8 @@ Review found additional production edge cases before release: a wait could accep
 The three same-machine benchmark comparisons are in progress. Initial script drafting was not instrumented; that cost cannot be recovered from file timestamps. Subsequent maintenance is measured and the missing initial cost will be disclosed. Prepared-execution savings, if observed, cannot establish total savings or break-even.
 
 Final independent review, clean package validation, main-checkout reconciliation, CI, merge, tag, and GitHub prerelease remain outstanding. The [release plan](../../.scratch/jev-ios-bridge/release-plan.md) tracks these gates.
+
+
+Final measurements are complete. Weather and Contacts passed their full scripts; Reminders reached the correct visible state but abstained on its count claim at 0.87. Four upstream Reminders attempts did not establish a verified baseline; the last screenshot proved the wrong saved list name. The separately labelled prepared-app Weather baseline passed in 90.449 seconds, versus the bridge's 147.576 seconds. Observed model cost was lower through the bridge, while host elapsed time was longer. Initial authoring cost remains unknown; no total-savings claim is made.
+
+Independent Standards review found no documented breach and one accepted duplication heuristic. Spec review's late-cancellation race was fixed and re-reviewed. The final runtime passes 157 tests, typecheck/build and Node 24 CI. Clean package installation and runtime/skill hash parity passed. The original main-checkout edits are preserved in a local stash, with their accepted decisions incorporated in the release branch and `.env` untouched. Publication verification is the remaining operational step.

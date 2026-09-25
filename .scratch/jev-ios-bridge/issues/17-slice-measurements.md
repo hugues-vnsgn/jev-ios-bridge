@@ -1,8 +1,7 @@
 # Slice measurements: cost, speed, and diagnosis against the baseline
 
 Type: task
-Status: claimed
-Claimed by: Codex main; live_execution closes the matched Weather timing gap
+Status: resolved
 Blocked by: 16
 
 ## Question
@@ -72,3 +71,8 @@ The measured maintenance window was 2,136.046 seconds gross; excluding 518.735 s
 The main agent accepts these as completed exploratory measurements under the owner's release delegation. The invalid Reminders baseline and conservative abstention are explicit prerelease limits; they do not change the accepted fixed assertion experiment or claim universal reliability. The production spec and release notes carry those limits. Publication and downloaded-asset verification remain operational release gates.
 
 Final release review identified one promised measure still missing: a prepared-app Weather baseline matching the bridge's no-build timing scope. The main agent reopened this ticket to collect a separately labelled variant with the same UI task and an already installed app, preserving the official build-inclusive result. No further Reminders attempt is authorized.
+
+
+### Final closure: matched Weather timing
+
+The single prepared-app Weather baseline succeeded: 90.449 seconds, 14 host calls, estimated host cost $0.737118, with the same UI task and no app build/install inside the timer. It used the existing dedicated simulator and preserved the official build-inclusive baseline separately. Prompt/suite diffs, starting-state proof and final UI capture are recorded in the variant manifest. The bridge's 147.576 seconds and estimated combined cost $0.4789090 show fewer calls/lower observed model cost and longer host elapsed time in this matched timing scope. No repeated run was used to select a nicer time. This closes the final promised measurement; all known limitations above remain.

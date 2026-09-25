@@ -609,6 +609,64 @@
         "jevInputTokens": 6228,
         "jevInputEstimateUsd": 0.000261576
       }
+    },
+    "derivedPreparedAppBaseline": {
+      "weather": {
+        "attempts": 1,
+        "classifications": {
+          "verified_success": 1
+        },
+        "hostWallSeconds": 90.449257417,
+        "hostToolCalls": 14,
+        "hostMcpToolCalls": 13,
+        "hostUiAutomationCalls": 11,
+        "hostTokens": {
+          "uncachedInput": 24,
+          "cacheCreationInput": 33372,
+          "cacheReadInput": 674356,
+          "output": 2644,
+          "allInputProcessed": 707752
+        },
+        "hostClientEstimateUsd": 0.737118,
+        "jevInputTokens": null,
+        "jevInputEstimateUsd": null
+      }
     }
+  },
+  "derivedPreparedAppBaselineAttempts": [
+    {
+      "suite": "weather",
+      "attempt": 1,
+      "variant": "derived_prepared_app",
+      "classification": "verified_success",
+      "taskVerified": true,
+      "manifestRef": "spikes/benchmarks/results/weather-prepared-baseline-verified/manifest.json",
+      "numericSummaryRef": "spikes/benchmarks/results/weather-prepared-baseline-verified/numeric-summary.json",
+      "variantSourceRef": "spikes/benchmarks/prepared-weather/manifest.json",
+      "derivedPromptSha256": "6dd184a9fe51e6d9f34600f3b9b87b08dfb4819e110c4263dcfbd4d1a2a65134",
+      "derivedSuiteSha256": "653a9310276f88e2dbf449fb0d9051606cc1b140d36c534a56fef25bfd47308e",
+      "wallScope": "Measured Claude host from session_show_defaults through installed-app launch and UI verification; excludes npm build, app installation, and setup.",
+      "setupNotTimed": true,
+      "simulatorDeletedByHarness": false,
+      "hostWallSeconds": 90.449257417,
+      "hostModel": "claude-opus-4-7",
+      "hostToolCalls": 14,
+      "hostMcpToolCalls": 13,
+      "hostUiAutomationCalls": 11,
+      "hostTokens": {
+        "uncachedInput": 24,
+        "cacheCreationInput": 33372,
+        "cacheReadInput": 674356,
+        "output": 2644,
+        "allInputProcessed": 707752
+      },
+      "hostClientEstimateUsd": 0.737118,
+      "parseErrorCount": 0,
+      "auditFailureCount": 0
+    }
+  ],
+  "preparedWeatherPair": {
+    "derivedBaselineManifestRef": "spikes/benchmarks/results/weather-prepared-baseline-verified/manifest.json",
+    "bridgeManifestRef": "spikes/benchmarks/results/weather-bridge-attempt2/manifest.json"
   }
 }

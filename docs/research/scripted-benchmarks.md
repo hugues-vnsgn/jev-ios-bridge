@@ -93,3 +93,12 @@ The corrected three bridge scripts produced two passes and one inconclusive resu
 
 
 The closed maintenance window totals 2,136.046 seconds. Removing 518.735 seconds of timed host execution leaves 1,617.311 seconds of mixed setup, coordination, archival and analysis work. Treat that as elapsed session overhead, not pure active authoring. Initial drafting and active model-authoring tokens remain unknown. Two flow/guard edits are bound to before/after hashes and observed evidence.
+
+
+## Matched prepared-app Weather baseline
+
+A separately recorded variant closes the app-build timing gap. It launches the already installed Weather app, then performs the same steps 2–6 and verification rules. The custom suite removes build hints, keeps the same model, device backend, permissions and suggested UI sequence, and targets the existing dedicated simulator without creating or deleting it. Its default-settings/start-screen captures, prompt/suite hashes and exact diffs are preserved in [the variant manifest](../../spikes/benchmarks/prepared-weather/manifest.json). The official build-inclusive result remains unchanged.
+
+The single measured run succeeded in **90.449 seconds**, with 14 total host calls (13 MCP), no tool errors, and estimated host cost **$0.737118**. Tokens: 24 uncached input, 33,372 cache creation, 674,356 cache read, and 2,644 output. The timer includes session defaults, launching the installed app and UI work; it excludes app build/install and operator setup. A read-only final capture after timing confirmed the precipitation values. That audit is outside the host timer and makes no additional model request.
+
+Against this prepared-app baseline, the bridge's 147.576-second host run took longer and used fewer calls. Its estimated combined host/Jev cost was $0.4789090. This comparison now shares the no-app-build scope, while the documented permission/tool-sequence and cache-history differences remain. It is one observation, not an average or a total-cost claim.

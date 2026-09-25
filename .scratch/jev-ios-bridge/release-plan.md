@@ -1,6 +1,6 @@
 # v0.1.0 release plan
 
-Status: production integration and release verification, 2026-09-25. Target: tested code merged to `main`, tagged `v0.1.0`, and published as a GitHub prerelease with an installable npm tarball. The owner authorized work through release; no npm registry publication is planned.
+Status: implementation, measurements, review and package validation complete; merge/publication verification pending, 2026-09-25. Target: tested code merged to `main`, tagged `v0.1.0`, and published as a GitHub prerelease with an installable npm tarball. The owner authorized work through release; no npm registry publication is planned.
 
 ## Accepted direction and evidence
 
@@ -16,7 +16,7 @@ Production follows [the scripted integration plan](scripted-production-plan.md).
 | --- | --- |
 | Watch view and tool decision, tickets 14–15 | **Passed.** Actual scripted log rendered at desktop/narrow widths; screenshot/timeline/judgment/verdict agreement, token access and inert text checked. Three-tool contract and skill packaging recorded. |
 | Installed host, ticket 16 | **Passed.** Clean-installed package and `/test-ios` submitted the reviewed script once and returned the correct report. Two inconclusive attempts remain preserved. |
-| Measurements, ticket 17 | **One matching variant pending.** Collect the promised prepared-app Weather baseline. Weather/Contacts bridge scripts passed; Reminders reached correct visible state but abstained at 0.87. No verified Reminders baseline exists after four preserved attempts. All costs, maintenance windows and missing authoring data are recorded; no Reminders ratio or total-savings claim. |
+| Measurements, ticket 17 | **Complete with limits.** The prepared-app Weather baseline passed in 90.449 seconds and is recorded separately from the official build-inclusive run. Weather/Contacts bridge scripts passed; Reminders reached correct visible state but abstained at 0.87. No verified Reminders baseline exists after four preserved attempts. All costs, maintenance windows and missing authoring data are recorded; no Reminders ratio or total-savings claim. |
 | Final specification | **Reviewed.** Runtime contract and measured limitations consolidated in the spec. |
 | Review and package | **Code review closed.** One nonblocking duplication heuristic accepted; the cancellation race was fixed and independently verified. 157 tests, typecheck/build, Node 24 CI, and clean 42-file tarball install passed. Final documentation/package and published-asset checks remain. |
 | Merge and release | **Pending.** Original checkout changes preserved/reconciled; push final docs, verify CI, merge to `main`, tag tested commit, publish prerelease/tarball, and verify its download/install path. |

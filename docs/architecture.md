@@ -1,6 +1,6 @@
 # jev-ios-bridge architecture
 
-The bridge executes an authored script and asks Jev only to judge assertions. The assertion, real-execution, and installed-host gates passed; final hardening, measurements, and release checks remain in progress. [ADR-0003](adr/0003-explicit-scripts-with-jev-assertions.md) records the change after three autonomous-action experiments failed.
+The bridge executes an authored script and asks Jev only to judge assertions. The assertion, real-execution, and installed-host gates passed; hardening, measurements and code review are complete, with the documented experimental limits. [ADR-0003](adr/0003-explicit-scripts-with-jev-assertions.md) records the change after three autonomous-action experiments failed.
 
 ## Context and authority
 
@@ -61,4 +61,4 @@ The run log stores decisive assertion observations and copied screenshots. Repor
 - Full observation cap 24,000 bytes; state plus longest question 28,000 bytes; total request 56,000 bytes. Overflow stops rather than silently removing evidence.
 - Printable US-keyboard literals; no leading hyphen under the pinned typing limitation.
 
-See [usage](usage.md), [the tracker](../.scratch/jev-ios-bridge/map.md), and [the release plan](../.scratch/jev-ios-bridge/release-plan.md) for setup and remaining verification.
+See [usage](usage.md), [the tracker](../.scratch/jev-ios-bridge/map.md), and [the release plan](../.scratch/jev-ios-bridge/release-plan.md) for setup, evidence and release verification.

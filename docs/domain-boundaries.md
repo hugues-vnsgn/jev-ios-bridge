@@ -57,4 +57,4 @@ The run log, report, and watch view stay inside the verification context. Their 
 
 **Recorded run facts:** preparation, observations, acknowledged actions, assertion judgments, checkpoint outcomes, errors, and a final policy verdict. They remain inside this context; no published domain-event integration is introduced.
 
-**Remaining release evidence:** comparative measurements and final package/review gates. The installed-host submission/report path has passed. Earlier failed experiments remain preserved and do not establish autonomous navigation.
+**Release evidence:** the installed-host path, comparative measurements, code review and clean-package checks are complete. Publication verification is recorded in the release plan. Earlier failed experiments remain preserved and do not establish autonomous navigation.

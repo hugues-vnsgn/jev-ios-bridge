@@ -1,0 +1,135 @@
+{
+  "kind": "archived-derived-prepared-weather-baseline",
+  "slug": "weather-prepared-baseline-verified",
+  "variantSourceRef": "spikes/benchmarks/prepared-weather/manifest.json",
+  "variantSourceSha256": "1a0716a90c3d8f4bdcc4c089fe6004106ba701024454310fcc5ec366c224d8fa",
+  "sourceCommit": "d13ff0c707b0681769cf31da0eb42c4f94ceafff",
+  "sourceHarnessSha256": "ca6f760ded4cf596989f6f880499968dfc1192b9159fa4cad563a9f2785d985a",
+  "officialPromptSha256": "0c139a01832fb3bb7a9c2e6233420ddfab8a0cd3855fdfa3ea9d3a2adf596efc",
+  "officialSuiteSha256": "9ed922b95eb356cd03f965c455707083c2f1b108d8550f686f308d3b8c69fcc4",
+  "derivedPromptSha256": "6dd184a9fe51e6d9f34600f3b9b87b08dfb4819e110c4263dcfbd4d1a2a65134",
+  "derivedSuiteSha256": "653a9310276f88e2dbf449fb0d9051606cc1b140d36c534a56fef25bfd47308e",
+  "sharedSuffixSha256": "a563bfb0d3eea5b3b03a148d5a4e6863bdfae4c89fbedc0637e271d874985f27",
+  "requestedModel": "claude-opus-4-7",
+  "observedModel": "claude-opus-4-7",
+  "hostWallSeconds": 90.449257417,
+  "hostTotalToolCalls": 14,
+  "hostMcpToolCalls": 13,
+  "hostUiAutomationCalls": 11,
+  "hostTokens": {
+    "uncachedInput": 24,
+    "cacheCreationInput": 33372,
+    "cacheReadInput": 674356,
+    "output": 2644,
+    "allInputProcessed": 707752
+  },
+  "hostEstimatedCostUsd": 0.737118,
+  "claudeExitCode": 0,
+  "parserExitCode": 0,
+  "parseErrorCount": 0,
+  "auditFailureCount": 0,
+  "patternFailureCount": 0,
+  "taskVerified": true,
+  "timingScope": "Measured Claude host from session_show_defaults through installed-app launch and UI verification; excludes npm build, app installation, and setup.",
+  "setupNotTimed": true,
+  "dedicatedSimulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+  "simulatorDeletedByHarness": false,
+  "rawResultPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/weather-prepared/20260925T040600Z/result.json",
+  "rawResultSha256": "26278342506de6e48c3b02383c7168f8c3e96c91fe2e91baee0494d8e1e82594",
+  "privateRawTranscriptPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/weather-prepared/20260925T040600Z/claude.jsonl",
+  "privateRawTranscriptSha256": "692cf8b7e8bfc40eabfb738622e776164e4ed316a38e22aaf97fbc9dea90a9b0",
+  "proof": [
+    {
+      "name": "proof-0010-settings.md",
+      "originalPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/weather-prepared/20260925T040600Z/parsed/0010_tool_result_batch.md",
+      "sha256": "044719acf2e9bb03a811aef2579b6eb1412e6a7dd0443e8fb1bcf4231c20c49d"
+    },
+    {
+      "name": "proof-0020-london.md",
+      "originalPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/weather-prepared/20260925T040600Z/parsed/0020_tool_result_tap.md",
+      "sha256": "3c8ee2df63a81be1fd6b91c61f27e11505d73f36b216d9c2b22a531bdea8d6e0"
+    },
+    {
+      "name": "proof-0024-conditions.md",
+      "originalPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/weather-prepared/20260925T040600Z/parsed/0024_tool_result_snapshot_ui.md",
+      "sha256": "cf6e811715138035592bdcedc5bf987f387869c7c71d8ec3401f612722e82cd1"
+    },
+    {
+      "name": "proof-0026-detail.md",
+      "originalPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/weather-prepared/20260925T040600Z/parsed/0026_tool_result_tap.md",
+      "sha256": "df24e26ffc5619d85fd63f9bcddad224e5c8304ba85252a776260c95b5f869da"
+    }
+  ],
+  "saved": [
+    {
+      "name": "variant-manifest.json",
+      "sha256": "1a0716a90c3d8f4bdcc4c089fe6004106ba701024454310fcc5ec366c224d8fa",
+      "bytes": 3394
+    },
+    {
+      "name": "variant-prompt.md",
+      "sha256": "6dd184a9fe51e6d9f34600f3b9b87b08dfb4819e110c4263dcfbd4d1a2a65134",
+      "bytes": 1030
+    },
+    {
+      "name": "variant-suite.yml",
+      "sha256": "653a9310276f88e2dbf449fb0d9051606cc1b140d36c534a56fef25bfd47308e",
+      "bytes": 1302
+    },
+    {
+      "name": "variant-prompt.diff",
+      "sha256": "a5c855fab58ba5f1c0923bb872a12acf913c3088bfce131499513e81cb5064b9",
+      "bytes": 486
+    },
+    {
+      "name": "variant-suite.diff",
+      "sha256": "ced6b914073aeb44138f95e403dcd6a9abc0f8153faf8c51cd641adf46611b37",
+      "bytes": 2247
+    },
+    {
+      "name": "numeric-summary.json",
+      "sha256": "ee1143c6284097fe10a0a3eb0ae5b4213995cad35eb7da90e0cbd9335c29dd3b",
+      "bytes": 1055
+    },
+    {
+      "name": "proof-0010-settings.md",
+      "sha256": "044719acf2e9bb03a811aef2579b6eb1412e6a7dd0443e8fb1bcf4231c20c49d",
+      "bytes": 4095
+    },
+    {
+      "name": "proof-0020-london.md",
+      "sha256": "3c8ee2df63a81be1fd6b91c61f27e11505d73f36b216d9c2b22a531bdea8d6e0",
+      "bytes": 2773
+    },
+    {
+      "name": "proof-0024-conditions.md",
+      "sha256": "cf6e811715138035592bdcedc5bf987f387869c7c71d8ec3401f612722e82cd1",
+      "bytes": 3371
+    },
+    {
+      "name": "proof-0026-detail.md",
+      "sha256": "df24e26ffc5619d85fd63f9bcddad224e5c8304ba85252a776260c95b5f869da",
+      "bytes": 3969
+    },
+    {
+      "name": "final.full.json",
+      "sha256": "6aa303022c0af32ecf4b71691e24e817261bd287a13a5fc3ed32d092bd1eb92b",
+      "bytes": 86508
+    },
+    {
+      "name": "final.jpg",
+      "sha256": "3c831af5a9627ae38d17293f060c1b4736950a228412a40d4b795ed08d10ed28",
+      "bytes": 41977
+    },
+    {
+      "name": "final.meta.json",
+      "sha256": "1bfc518d4f4563862ef7503ce3252f35e8556bff9ad81e9397e5a272aed58e9b",
+      "bytes": 777
+    },
+    {
+      "name": "selected-evidence.json",
+      "sha256": "5f5594941ba39edf19a0263d782d3e70b155bf1ef8728f1bc317b52220a182bb",
+      "bytes": 1366
+    }
+  ]
+}

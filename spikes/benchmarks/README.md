@@ -1,6 +1,6 @@
 # Ticket 17 benchmarks
 
-The scripted assertion and real-execution gates passed. The installed Claude Code path and blind report-and-source diagnosis also passed. The three full-suite comparisons are in progress. Preserved inconclusive host attempts remain in `results/`; an installed Contacts search smoke test is not the full Contacts benchmark.
+The scripted assertion and real-execution gates passed. The installed Claude Code path and blind report-and-source diagnosis also passed. The full-suite measurements are complete, including the separately recorded prepared-app Weather baseline. Preserved inconclusive host attempts remain in `results/`; an installed Contacts search smoke test is not the full Contacts benchmark.
 
 ## Pinned source and local readiness
 
@@ -39,7 +39,7 @@ The [Weather](https://github.com/getsentry/MobileBuildMCP/blob/d13ff0c707b068176
 | Reminders | 92.79 s | 17 | not reported |
 | Contacts | 102.94 s | 19 | not reported |
 
-Reclone if the checked upstream copy has been removed, then run each suite separately. These commands are prepared for later execution; they have not been run here:
+Reclone if the checked upstream copy has been removed, then run each suite separately. These are the upstream reproduction commands; use the verified AXe override described below when running from a source checkout:
 
 ```sh
 if [ ! -d /tmp/jev-mobilebuildmcp-benchmark-v2.7.1 ]; then
@@ -103,3 +103,8 @@ The pinned upstream harness has no keep-simulator option and deletes its tempora
 
 
 The third host run completed, but its added audit failed in 0.316 seconds: `npx` could not resolve the executable from inside the same package's source checkout. It therefore remains name-unverified. The main agent authorized one additional attempt beyond the upstream three-attempt recommendation, solely after repairing this measurement seam and proving both read-only commands against the owned dedicated simulator. The repair uses the verified npm package CLI by absolute path. Task, prompt, keyboard setup, and success criteria stay unchanged. All four attempts and costs must be reported; if the additional attempt is still unverified, stop rerunning and record the limitation. This exception does not change or rerun any frozen assertion experiment.
+
+
+## Completed prepared-app Weather variant
+
+The separately labelled `weather-prepared` variant launches the installed app on the dedicated simulator and preserves official task steps 2–6. It passed once in 90.449 seconds with 14 total host calls and estimated host cost $0.737118. [The manifest](prepared-weather/manifest.json) binds the exact prompt/suite changes, default-state preflight and retained-simulator plan. The official build-inclusive result is not replaced. [Final measurements](../../docs/research/scripted-benchmarks.md) distinguish both scopes and the bridge run.
