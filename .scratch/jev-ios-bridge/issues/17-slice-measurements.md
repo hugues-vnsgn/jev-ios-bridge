@@ -22,3 +22,10 @@ Nothing to decide. The spec needs these numbers before it can say the bridge is 
 - **Diagnosis.** Build a two-screen SwiftUI app under `examples/`, plant a bug in it, and check whether the report alone lets Claude find the cause.
 
 Resolve with the measurements table and a sample report, linked as assets.
+
+
+## Progress, 2026-09-25
+
+The blind diagnosis passed. Claude received only the actual failed Diagnostic report and two app source files, with the answer-bearing README/tests, screenshots, tools, and oracle withheld. It identified `CheckoutModel.totalCents` returning the last selected price and proposed summing the selected prices. The [evidence artifact](../../../spikes/benchmarks/blind-diagnosis.json) records input hashes, invocation, response, usage, and 5.787 seconds elapsed. The planted bug remains unchanged.
+
+The Weather, Contacts, and Reminders scripted benchmark drafts are undergoing live preflight before the paired same-machine runs. Initial drafting time and model tokens were not instrumented and cannot be reconstructed honestly. Subsequent preflight/maintenance sessions will record elapsed time, edits, and selector changes. Any execution-cost comparison must disclose the missing initial authoring cost and cannot support a total-savings or break-even claim.

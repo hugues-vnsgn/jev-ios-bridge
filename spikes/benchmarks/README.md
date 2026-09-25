@@ -1,6 +1,6 @@
-# Ticket 17 benchmark preparation
+# Ticket 17 benchmarks
 
-No ticket 17 benchmark run has been made. Both broad-goal feasibility evaluations were no-go results; checkpoint feasibility and the vertical-slice gate precede ticket 17 measurements. One isolated text-only Claude call checked host model access, outside any benchmark.
+The scripted assertion and real-execution gates passed. The installed Claude Code path and blind report-and-source diagnosis also passed. The three full-suite comparisons are in progress. Preserved inconclusive host attempts remain in `results/`; an installed Contacts search smoke test is not the full Contacts benchmark.
 
 ## Pinned source and local readiness
 
@@ -55,7 +55,7 @@ MOBILEBUILDMCP_SENTRY_DISABLED=true npm run bench:claude-ui -- --suite contacts 
 
 For each run, keep the upstream `result.json`, `claude.jsonl`, lifecycle log, prompt, and exact model/version metadata. Run [extract-claude-usage.mjs](extract-claude-usage.mjs) on `result.json` to add uncached input, cache creation, cache read, output, and total processed input tokens to the upstream call and time metrics. The script also accepts a raw Claude Code stream JSONL file for the later bridge host run. It reads the terminal `modelUsage` breakdown so subagent usage is included and assistant messages are not double-counted, following [Anthropic's cost-tracking guidance](https://code.claude.com/docs/en/agent-sdk/cost-tracking). `total_cost_usd` is a client-side API price estimate, not the amount billed to this Max subscription. Require a zero Claude exit code, zero parser errors, a completed task, and manual verification of the saved UI state. The upstream harness recommends up to three attempts when establishing a clean baseline and records no baseline if none succeeds.
 
-[run-baseline.mjs](run-baseline.mjs) wraps one pinned upstream suite, checks the source commit, and writes a numeric summary after completion. It is dry by default: `node spikes/benchmarks/run-baseline.mjs weather` prints the planned command. Add `--execute` only after the gate. Prepare the upstream clone with `npm ci` first. Its runner creates and deletes temporary simulators, never the dedicated or `OPS iPhone` simulator.
+[run-baseline.mjs](run-baseline.mjs) wraps one pinned upstream suite, checks the source commit, and writes a numeric summary after completion. It is dry by default: `node spikes/benchmarks/run-baseline.mjs weather` prints the planned command. Add `--execute` only after the gate. Prepare the upstream clone with `npm ci` first. A source checkout lacks the bundled AXe binary: set the supported `MOBILEBUILDMCP_AXE_PATH` override to the AXe 1.8.0 binary shipped with `mobilebuildmcp@2.7.1`. The wrapper verifies its recorded SHA-256 before executing and passes the path through to the upstream MCP process. Its runner creates and deletes temporary simulators, never the dedicated or `OPS iPhone` simulator.
 
 ## Compare the bridge on the same tasks
 
@@ -69,26 +69,27 @@ Use the same iOS 26.4 runtime and device type, synthetic values, model request, 
 
 Run the bridge through Claude Code's `/test-ios` skill and MCP server so host tool calls and tokens include scenario submission and report polling. Capture Claude Code stream JSONL with `--verbose --output-format stream-json --model claude-opus-4-7`, and use the same token extractor. Read the bridge's `run.jsonl` for Jev `inputTokens`, total duration, action decisions, and verdict. At measurement time, verify Jev's price in the [official model docs](https://docs.typesafe.ai/models.md); the checked 2026-09-24 rate is $0.042 per million input tokens, with free output tokens. Report Jev cost as input tokens times that rate, separate from Claude's API price estimate.
 
-The isolated [consumer](consumer/.mcp.json) has an exact copy of the project [test-ios skill](consumer/.claude/skills/test-ios/SKILL.md). Its MCP config runs the built bridge with Node's `--env-file` pointing to the original private `.env` path and pins the dedicated simulator UDID. The config contains no key value. [run-bridge.mjs](run-bridge.mjs) reads a supplied scenario JSON, sends it to Claude Code's `/test-ios` skill from that consumer directory, saves raw host JSONL under a private temporary directory, and writes only numeric usage to `spikes/benchmarks/results/`. It is dry by default:
+[run-bridge.mjs](run-bridge.mjs) creates a private temporary consumer, copies `/test-ios` from the selected installed package, and registers that package's CLI. Its MCP child loads the original private `.env` by reference and pins the dedicated simulator. The host environment excludes the API key. Raw host transcripts and run evidence stay in the private temporary directory; sanitized summaries go to `results/`.
+
+The supported scripts are `weather-scripted.json`, `contacts-scripted.json`, and `reminders-scripted.json` under [scenarios](scenarios). Each contains explicit guarded actions and assertion checkpoints. Older goal/checkpoint files are historical inputs and are rejected by the production parser. Benchmark limits are 100 steps and 900 seconds, with the same assertion thresholds as production.
+
+Run a dry check, then execute against a clean-installed package:
 
 ```sh
-node spikes/benchmarks/run-bridge.mjs spikes/benchmarks/scenarios/weather-temperature-smoke.json
+node spikes/benchmarks/run-bridge.mjs spikes/benchmarks/scenarios/weather-scripted.json \
+  --bridge-cli /absolute/consumer/node_modules/jev-ios-bridge/dist/cli.js
+node spikes/benchmarks/run-bridge.mjs spikes/benchmarks/scenarios/weather-scripted.json \
+  --bridge-cli /absolute/consumer/node_modules/jev-ios-bridge/dist/cli.js --execute
 ```
 
-Add `--execute` only after the gate and after rebuilding `dist/cli.js`. The sample Weather scenario checks a single prepared-app setting; it is a smoke scenario, not an equivalent of the official Weather suite.
-
-Experimental ordered inputs are prepared in [scenarios](scenarios): `weather-checkpoints.json`, `reminders-checkpoints.json`, `contacts-checkpoints.json`, and `diagnostic-checkpoints.json`. All four pass the scenario parser and dry-run wrapper checks. Their live behavior and full-suite equivalence remain unverified. The wrapper gives checkpoint runs 60 steps and 900 seconds for the entire run; this does not change confidence thresholds. Each checkpoint proves its own observable screen state before the controller advances. Runtime wording, observation rules, and thresholds must match the frozen winning experiment before execution.
+The wrapper records external host-process elapsed time as well as bridge phase timing. Review the final screen, script equivalence, and submitted JSON; a successful host process alone is not a successful UI verification.
 
 Use a clean, dedicated iPhone 17 Pro Max simulator on iOS 26.4 for each task. Restore Weather defaults and ensure the synthetic benchmark list and contact do not already exist. Dismiss only the first-run prompts dismissed by the upstream baseline. Record build, install, and reset time separately from the bridge's prepared-app loop. The official Weather baseline includes its build inside the measured task, so that total alone is not a matched UI-loop speed comparison.
 
-After the gate and runtime calibration:
+Run each official baseline separately through `run-baseline.mjs <suite> --execute`, followed by the corresponding installed-package bridge measurement when setup is ready. Keep timed runs free of other GUI/build activity. The diagnostic scenario is bridge-only; it is not an upstream comparison suite.
 
-```sh
-npm run build
-node spikes/benchmarks/run-baseline.mjs weather --execute
-node spikes/benchmarks/run-bridge.mjs spikes/benchmarks/scenarios/weather-checkpoints.json --execute
-```
+[scripted-authoring-evidence.json](scripted-authoring-evidence.json) records script hashes and preflight assumptions. Initial draft time and tokens were not metered. Record subsequent maintenance time, selector edits, and all failed attempts. This missing initial cost prevents total-savings and break-even claims, even if prepared execution is cheaper.
 
-Repeat for Reminders and Contacts. The diagnostic scenario is bridge-only and checks the planted false-total assertion; it is not an upstream comparison suite.
+The baseline wrapper and generated upstream MCP config both disable Sentry telemetry. The upstream host uses `bypassPermissions` and a suggested action sequence; the bridge host uses an explicit MCP/Skill allowlist without that permission mode. Disclose this difference alongside measurements. Bridge logs now record monotonic prepare, observe, decide, act, and cleanup durations plus reference refresh/expiry counts. Current result summaries retain these fields; the final comparison must distinguish prepared execution, setup/build, and authoring costs.
 
-The baseline wrapper and generated upstream MCP config both disable Sentry telemetry. The upstream host uses `bypassPermissions` and a suggested action sequence; the bridge host uses an explicit MCP/Skill allowlist without that permission mode. Disclose this difference alongside measurements. Bridge logs now record monotonic prepare, observe, decide, act, and cleanup durations plus reference refresh/expiry counts. These fields have scripted coverage but no benchmark measurements yet.
+The first Weather baseline attempt lacked AXe and could not capture the UI. Its process completed, but the task did not; it is excluded from successful comparisons and retained in the attempt/cost record. `results/host-timing-annotation-correction.json` also corrects the timing-source labels of the three installed Contacts smoke summaries: their numeric wall times came from the wrapper’s monotonic process timer, not Claude’s shorter terminal-result duration. Original summaries remain unchanged.

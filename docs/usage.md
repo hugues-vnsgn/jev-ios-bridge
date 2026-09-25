@@ -1,10 +1,10 @@
 # Running the bridge
 
-The v0.1.0 implementation is under verification. The feasibility gate is still open; current policy defaults are provisional. See the [release plan](../.scratch/jev-ios-bridge/release-plan.md) for evidence required before publication.
+The supported input is an explicit script. Jev judges current-screen assertions; it does not choose actions. Release verification is in progress; see the [release plan](../.scratch/jev-ios-bridge/release-plan.md).
 
-## Local setup
+## Install and prepare
 
-Use Node 24 or later and a Mac with Xcode and an iOS simulator runtime. Install dependencies and build:
+Use Node 24 or later and a Mac with Xcode and an iOS simulator runtime. From a source checkout:
 
 ```sh
 npm ci
@@ -12,79 +12,124 @@ npm run build
 node dist/cli.js --help
 ```
 
-The bridge invokes `mobilebuildmcp@2.7.1` through `npx`. Its first invocation may download the pinned package. Configure a dedicated simulator, separate from the one used for interactive development. Set `JEV_DEVICE_UDID`, supply `scenario.device.udid`, or put `sessionDefaults.simulatorId` in `.mobilebuildmcp/config.yaml`. The bridge only launches already-installed apps in this initial implementation.
+For a downloaded GitHub package, install the local archive in the consuming project:
 
-Keep `TYPESAFE_API_KEY` in the environment or a private `.env`. Node can load it without the bridge copying the file:
+```sh
+npm install /path/to/jev-ios-bridge-0.1.0.tgz
+node node_modules/jev-ios-bridge/dist/cli.js --version
+```
+
+The bridge invokes `mobilebuildmcp@2.7.1` through `npx`; its first invocation may download the pinned package. Boot a dedicated simulator and install the app before a run. Use MobileBuildMCP for that setup. Keep other device clients out of the dedicated simulator during execution.
+
+Select its UUID with `scenario.device.udid`, `JEV_DEVICE_UDID`, or `sessionDefaults.simulatorId` in `.mobilebuildmcp/config.yaml`, in that precedence order. Device aliases such as `booted` are rejected. Set `sentryDisabled: true` in that config; the bridge also disables vendor telemetry in its child commands.
+
+Keep `TYPESAFE_API_KEY` in the environment or a private, ignored `.env`. Load it by reference:
 
 ```sh
 node --env-file=/absolute/path/to/.env dist/cli.js run scenario.json
 ```
 
-## Scenario
+The simulator must be booted: the vendor can misleadingly report a stock app as missing when it is shut down. The bridge restarts the installed app during preparation. Persistent app data remains, but navigation may reset or restore differently by app. Scripts must perform their own navigation from the actual post-launch screen.
 
-A scenario supplies the goal, bundle ID, assertions, and every value the bridge may type. Save it as JSON:
+## Script shape
 
-```json
-{
-  "goal": "Open Settings and verify the Settings title is visible.",
-  "app": { "bundleId": "com.apple.Preferences" },
-  "assertions": [
-    { "id": "title", "claim": "The screen shows the Settings title." }
-  ],
-  "values": {}
-}
-```
-
-Typed values must use printable US-keyboard characters and replace the entire field value. MobileBuildMCP 2.7.1's AXe input path rejects a leading hyphen, so the bridge rejects values beginning with `-` before device work. Preconditions describe setup the author must arrange; the bridge does not seed accounts or reset app data. Assertions describe the current screen.
-
-Run the scenario with `node dist/cli.js run scenario.json`. The command prints a local watch URL to stderr and a final report to stdout. Exit codes are 0 for passed, 1 for failed, and 2 for inconclusive or startup failure.
-
-For a flow across screens, the experimental checkpoint form gives each stage an observable desired state:
+This example uses the repository's installed diagnostic fixture and checks its first selection:
 
 ```json
 {
-  "app": { "bundleId": "com.sentry.weather.Weather" },
-  "checkpoints": [
+  "app": { "bundleId": "dev.jevbridge.diagnostic" },
+  "values": {},
+  "steps": [
     {
-      "id": "settings",
-      "goal": "The Weather Settings sheet is open with Temperature choices visible.",
-      "assertions": [{ "id": "choices", "claim": "The Temperature controls show °C and °F choices." }]
+      "id": "addApple",
+      "kind": "action",
+      "guard": { "present": [
+        { "role": "text", "identifier": "selection.summary", "label": "Selected: None" }
+      ] },
+      "action": { "kind": "tap", "selector": { "role": "button", "identifier": "choose.apple" } }
     },
     {
-      "id": "fahrenheit",
-      "goal": "The °F Temperature control is selected in Settings.",
-      "assertions": [{ "id": "selected", "claim": "The °F Temperature control is selected." }]
+      "id": "verify",
+      "kind": "checkpoint",
+      "guard": { "present": [{ "role": "text", "identifier": "selection.summary" }] },
+      "assertions": [{ "id": "selection", "claim": "The selection summary reads Selected: Apple." }]
     }
   ]
 }
 ```
 
-Use 2 to 10 checkpoints with unique IDs. Put typed `values` only inside the checkpoint that needs them; omitted values mean none. The checkpoint form rejects root-level `goal`, `assertions`, or `values`. The bridge prepares the app once, records each passing checkpoint, and passes the run only after every checkpoint passes in order. A failed or uncertain checkpoint ends the run. This input form is still awaiting its live feasibility result.
+Adapt selectors and claims to the app's actual accessibility evidence. The diagnostic fixture's source/build instructions are in the repository, not the installed package.
 
-Step and time limits cover the whole run. Override them with `--max-steps 60 --timeout-ms 600000`, or the MCP `limits` object. These options do not change the judgment thresholds.
+A script has 1–100 steps with unique IDs and ends at a checkpoint. Optional `preconditions` describe setup the author arranges; they do not execute setup. Each guard requires one or more `present` selectors and can forbid `absent` selectors. A selector matches exact `identifier`, `role`, `label`, and/or `value`; at least one nonblank identifier/role/label is required. An empty value can be an additional filter. Captured refs and list indices are not durable selectors.
 
-## MCP hosts
+| Step | Additional fields |
+| --- | --- |
+| `kind: "action"` | `action: {kind: "tap", selector}` |
+| `kind: "action"` | `action: {kind: "replaceText", selector, valueKey}` |
+| `kind: "action"` | `action: {kind: "swipe", selector, direction: "up"}`; down/left/right also supported |
+| `kind: "wait"` | `until: {present: [...]}`, optional absent selectors, and `timeoutMs` up to 60000 |
+| `kind: "checkpoint"` | 1–20 `assertions: [{id, claim}]` about the current screen |
 
-Start the stdio server with `node --env-file=/absolute/path/to/.env /absolute/path/to/dist/cli.js mcp`. Register this command with the host using the consuming app's repository as its working directory. Export `JEV_DEVICE_UDID` to select its dedicated simulator.
+Every step also has `id` and `guard`. Guards must identify the intended view: one text field could be Search or a card's Notes field. Missing, ambiguous, hidden, disabled, or invalid targets do not trigger guessed actions. The pinned driver recognizes narrowly proven aliases of the same physical button tap; distinct targets remain ambiguous.
 
-The server exposes:
+Put every typed literal in root `values` and reference its key from `replaceText`. Replacement requests clearing the whole field. Check the resulting text with the next guard: simulator keyboard state can change how typing and modifier keys are applied. Values are limited to 32 entries of at most 2048 printable US-keyboard characters. Leading hyphens are rejected because of the pinned vendor typing limitation. Jev never generates input text.
+
+The former `goal` and autonomous `checkpoints` forms are unsupported. Ordered verification uses explicit checkpoint steps after the actions that establish their screen.
+
+## Run and interpret
+
+```sh
+node --env-file=/absolute/path/to/.env dist/cli.js run scenario.json --max-steps 100 --timeout-ms 300000
+```
+
+The command prints the watch URL to stderr and the report to stdout. Defaults are 100 steps and 300 seconds across the entire run; the maximum wall limit is one hour. Limits do not alter assertion thresholds. Exit codes: 0 passed, 1 failed, 2 inconclusive or startup failure.
+
+At each checkpoint, probability at least 0.9 establishes a claim; at most 0.1 rejects it. Any uncertain claim makes that checkpoint inconclusive; otherwise a false claim fails it. Passing requires every step/checkpoint and successful cleanup. Unexpected UI, budget overflow, missing targets, provider errors, or interruption leave verification inconclusive. Earlier checkpoint proofs stay in the log.
+
+Cancellation stops new work, waits for issued device acknowledgements, then stops the app. If an action or cleanup remains unconfirmed, the device lock is retained and the result is inconclusive. Do not blindly remove such a lock: first establish that no command remains in flight. Completed verdicts are not rewritten by a later cancellation request.
+
+## MCP and the host skill
+
+Register a stdio server with the consuming project as working directory:
+
+```json
+{
+  "mcpServers": {
+    "jev-ios-bridge": {
+      "command": "node",
+      "args": [
+        "--env-file=/absolute/path/to/.env",
+        "/absolute/path/to/node_modules/jev-ios-bridge/dist/cli.js",
+        "mcp"
+      ],
+      "env": { "JEV_DEVICE_UDID": "YOUR-DEDICATED-SIMULATOR-UUID" }
+    }
+  }
+}
+```
+
+Copy the package's `skills/test-ios/SKILL.md` to the consuming project's `.claude/skills/test-ios/SKILL.md` for Claude Code, or `.agents/skills/test-ios/SKILL.md` for Codex. MCP registration is separate. Codex support is best effort.
 
 | Tool | Input | Result |
 | --- | --- | --- |
-| `start_scenario` | `scenario` object, optional `limits: {maxSteps, wallTimeMs}` | A run ID and local watch URL |
-| `get_report` | `runId`, optional `waitMs` up to 45000 | Progress while running; the recorded outcome and evidence once finished or interrupted |
-| `cancel_run` | `runId` | Cancellation after cleanup |
+| `start_scenario` | `scenario` script, optional `limits: {maxSteps, wallTimeMs}` | Run ID and local watch URL |
+| `get_report` | `runId`, optional `waitMs` up to 45000 | Progress while running; recorded report after completion/interruption |
+| `cancel_run` | `runId` | Cancellation request followed by cleanup |
 
-The host submits once and waits for the report with `get_report` and `waitMs: 45000`. Running replies contain progress only; per-step screen evidence stays out of the host's context until the final report. It must leave the simulator to the bridge during a run. The bridge uses text content for its responses so hosts receive the complete report. Closing the server cancels active runs and ends the watch page.
-
-Copy [the test-ios skill](../skills/test-ios/SKILL.md) into the consuming repository's `.claude/skills/test-ios/SKILL.md` for Claude Code, or `.agents/skills/test-ios/SKILL.md` for Codex. Register the MCP server separately. Codex support remains best effort.
+Submit once, then use `get_report` with `waitMs: 45000`. Running replies contain no step-by-step screen evidence for host control. Closing the server cancels its active runs and closes the watch page.
 
 ## Evidence and data handling
 
-Run logs and copied screenshots live in `.jev-runs/<run-id>/` in the current directory. Override the root with `JEV_RUNS_DIR`. Directories use owner-only permissions, as do logs and screenshot files. Artifacts remain until the owner removes the run directory; there is no automatic retention cleanup.
+Artifacts live in `.jev-runs/<run-id>/` in the current directory, or under `JEV_RUNS_DIR`. Directories and files have owner-only permissions. Retention is manual. Reports link checkpoint claims/probabilities to observed text, screenshot filenames, and JSONL events. Large reports mark truncation and point to complete local evidence.
 
-Screen text and supplied values go to TypeSafe. The scenario and report enter the host model's context. Every supplied value and the API key are redacted from textual run events. Screenshots are images: text redaction does not remove visible private data from them. Use synthetic test data and agree on data handling before testing apps containing real user information. Screenshots never go to Jev.
+TypeSafe receives current observed screen text and assertion claims. Supplied values go to device actions and can subsequently appear in captured text. The host provider sees the submitted script and final report. The API key and exact supplied values are redacted from textual journal content. Transformed values, such as different casing, may not match that literal redaction. Screenshots remain images and can contain visible private data. Screenshots and bounded device log excerpts are not sent to Jev. Use synthetic data for verification and agree on this data flow before using real user information.
 
-The watch server binds to `127.0.0.1` on an available port. Its URL contains a private access token. Anyone with that URL on the machine can read the run evidence while the server lives. The page shows per-step captures, recorded judgments, and bounded runtime/OS log excerpts supplied by the device layer. Each log excerpt is at most 4 KiB; unavailable logs are identified. These excerpts remain local and are excluded from Jev's observation. The page does not stream video.
+The watch server binds to `127.0.0.1` and requires the token in its URL. Anyone on the machine with that URL can read the run evidence while the server lives. It presents the recorded verdict and screenshots, without streaming video or re-judging outcomes.
 
-After a process interruption, use `node dist/cli.js report <run-id>` from the same evidence directory. A log without a final verdict is reported as inconclusive. This version does not resume interrupted runs or escalate to the host agent.
+After interruption:
+
+```sh
+node dist/cli.js report RUN_ID
+```
+
+Read from the same evidence root. A journal without a final verdict is inconclusive. This version has no resume or host escalation.

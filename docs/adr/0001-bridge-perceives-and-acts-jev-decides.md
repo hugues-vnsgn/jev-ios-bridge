@@ -1,10 +1,12 @@
 ---
-status: proposed
+status: superseded
 date: 2026-09-21
 revised: 2026-09-24
 ---
 
 # The bridge runs the loop; Jev only decides
+
+Superseded on 2026-09-25 by [ADR-0003](0003-explicit-scripts-with-jev-assertions.md), after all three autonomous-action experiments failed. The original decision and evidence below are retained as history.
 
 Claude Code can already drive an iOS simulator through MobileBuildMCP. In Sentry's benchmark, Claude Opus 4.7 took 93 to 103 seconds and 14 to 19 tool calls per UI scenario, and every screen passed through Claude's context ([research](../research/claude-and-jev-integration.md), section 4). The bridge exists to make that cheaper. The host agent submits a scenario, the bridge carries out every step with Jev making each decision, and the host gets back a verdict and a report.
 

@@ -1,7 +1,8 @@
 # Watch view: a localhost timeline page
 
 Type: prototype
-Status: open
+Status: claimed
+Claimed by: Codex main; production_ports verifies the prototype
 Blocked by: 12, 13
 
 ## Question

@@ -2,7 +2,7 @@
 
 This two-screen SwiftUI app gives the bridge a known failure to report. On **Sample Shop**, add Apple ($2) and Bread ($3), then tap **Complete order**. The confirmation lists both items and says **Order complete**, but shows **Total: $3**. The correct total is $5. The planted bug is in `CheckoutModel.totalCents`: it returns the last selected item's price.
 
-`scenario.json` asks the bridge to reach the confirmation screen, then check both that the screen opened and that the total is $5. A useful report should mark the run failed and show enough screen text to identify the bad total. The app uses in-memory synthetic items and resets when launched.
+`scenario.json` supplies guarded taps for Apple, Bread, and Complete order, then checks the confirmation screen and the expected $5 total. A useful report should mark the run failed and show enough screen text to identify the bad total. The app uses in-memory synthetic items and resets when launched.
 
 The first screen also exposes `Selected: Apple` and `Selected: Apple, Bread` as accessibility text after each tap. This makes the intermediate state visible in a MobileBuildMCP snapshot.
 

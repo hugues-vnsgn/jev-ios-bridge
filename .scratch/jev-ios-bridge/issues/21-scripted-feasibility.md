@@ -1,8 +1,7 @@
 # Scripted feasibility: deterministic execution and Jev assertion checks
 
 Type: prototype
-Status: claimed
-Claimed by: Codex main; gpt-6-sol high implementation and test agents
+Status: resolved
 Blocked by: 20
 
 ## Question
@@ -26,3 +25,11 @@ The evaluation ran once and **met the preregistered assertion gate**: 22/24 true
 Three answers were uncertain: the false saved-card claim in s11 scored 0.22; the true empty List Name claim in s16 scored 0.80; the true empty Notes claim in s19 scored 0.78. No labels, thresholds, or source changed, and no case was rerun. [Full results](../../../spikes/scripted/results/evaluation/results.md) and the partial journal remain preserved.
 
 Under the owner's implementation-through-release delegation and approval of the scripted evaluation, the main agent advances to the protocol's real execution checks. This is an exploratory go for scripted integration testing, not production acceptance. The 12 real scripts, installed-host path, diagnosis, comparison measurements, and release review remain outstanding. The three autonomous-navigation no-go results remain unchanged.
+
+## Answer
+
+**Go for the explicit-script architecture.** The frozen assertion gate passed, and all 12 reviewed real scripts matched their separate oracles: six passed and six failed on the intended assertions. Independent review matched scenario hashes, ordered journals, fresh captures, final screenshots, probabilities, reports, and cleanup. The three fault probes returned `TARGET_MISSING`, `TARGET_AMBIGUOUS`, and `CANCELLED` with no actions or Jev requests and successful cleanup.
+
+Integration uncovered and corrected script entry assumptions, a broad Contacts guard that could select a card's Notes field, and duplicate vendor tap aliases. The first Weather setup failure is preserved as an inconclusive attempt with zero actions and model tokens. The [integration notes](../scripted-integration-notes.md) describe the changes and evidence; none altered the held-out assertion results. The first Weather pass used an earlier runtime. Its repeat on the final prototype passed in run `f62f2099-6680-4672-a9a1-2528f0d530ff`; both attempts remain preserved.
+
+The main agent accepts this architecture under the owner's delegated authority and explicit approval of scripted evaluation. This does not make the autonomous designs pass. Production integration follows [the reviewed plan](../scripted-production-plan.md). Reports must fix the observed accessibility-summary truncation before host diagnosis. Installed Claude Code testing, baseline comparisons, final spec/review, packaging, and release remain gated work in tickets 16–17 and the release plan.
