@@ -15,3 +15,7 @@ Nothing to decide; "Compose app evidence plan" needs this change before its BFSO
 - [ ] The PR is merged, and its merge commit hash is recorded in this ticket's answer. Codex pins that commit.
 
 If it isn't merged when Codex reaches the Compose gate, the `cmp` fallback in "Compose app evidence plan" applies. This ticket is then closed as not done, with no effect on 1.0.
+
+## Comments
+
+- 2026-09-25: the owner has asked a coding agent to add `-of-evidence-gallery` in BFSOne. This ticket stays open until the PR is merged and its commit hash is recorded here.
