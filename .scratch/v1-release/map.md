@@ -28,6 +28,7 @@ A reviewed **v1.0.0 release spec**, handed off to Codex to execute. It records t
 
 ## Decisions so far
 
+- [Compose app evidence plan](issues/09-compose-evidence-plan.md): the real Compose app `BFSOne_Mobile_App` (CMP 1.9.0), run offline through a debug-only gallery shortcut the owner adds; six gallery scripts (four pass, one planted fail, one planted inconclusive), one run each; an unexpected verdict or any production request blocks 1.0; `cmp` is the fallback. The bridge gains optional `app.launchArgs` and rejects `value: ''`.
 - [The 1.0 stable contract](issues/08-stable-contract.md): scripts need `"version": 1`; `report.json` (not the prose) is the frozen report; reason codes and roles are bridge-owned lists; CLI exits 0/1/2/3; evidence names, envelope, event types, and the verdict event are frozen; semantic versioning; pinned MobileBuildMCP with a cheap upgrade check; golden-file contract tests gate every release. Adds the live log pane as a 1.0 requirement ([ADR-0005](../../docs/adr/0005-the-1-0-stability-contract.md)).
 - [Product assessment: is v0.1.0 worth a stable promise?](issues/05-product-assessment.md): **go, conditionally.** 1.0 serves repeatable checks kept in the repo. Five go conditions: fix the three review defects, implement ADR-0004, meet the speed target, pass the Compose checks, and remove dead code while versioning frozen surfaces. Slower-than-direct speed, prompt injection, non-English screens, and unmeasured authoring cost are documented limits.
 - [Performance target and tuning plan](issues/06-performance-target.md): 1.0 drops `npx`, reuses MobileBuildMCP's post-action capture, and screenshots concurrently; no long-lived client. Pass means at least 30% faster prepared execution per benchmark script, one run each, with unchanged verdicts.
@@ -57,6 +58,7 @@ flowchart LR
     T10["10 Developer guide outline<br/><small>prototype</small>"]
     T11["11 Live Compose capture<br/><small>task</small>"]
     T12["12 Live log pane<br/><small>prototype</small>"]
+    T13["13 BFSOne evidence shortcut<br/><small>task</small>"]
     T01 --> T05
     T02 --> T05
     T03 --> T05
@@ -75,8 +77,8 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T06,T07,T08,T11 resolved
-    class T09,T10,T12 frontier
+    class T01,T02,T03,T04,T05,T06,T07,T08,T09,T11 resolved
+    class T10,T12,T13 frontier
 ```
 <!-- route:end -->
 
