@@ -14,3 +14,7 @@ What exactly does guide page `09-data-handling.md` promise and warn about, befor
 - **Redaction:** what the bridge redacts (the API key, exact typed values) and its stated limits (transformed values aren't caught).
 - **Prompt injection** through on-screen text, and the "synthetic data in apps you control" rule.
 - **The watch page token**, and who on the machine can read a run's evidence.
+
+## Comments
+
+- 2026-09-25, from "Live log pane": the pane masks supplied values, sends nothing to Jev or the host, and keeps no copy of its own. The app's logs remain in MobileBuildMCP's own log files (`~/Library/Developer/MobileBuildMCP/workspaces/<workspace>/logs/`), under its retention, not the bridge's. Page 09 must say so, and warn that debug network logs, like BFSOne's, can put tokens in those files.
