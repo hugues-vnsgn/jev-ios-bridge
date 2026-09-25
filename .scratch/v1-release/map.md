@@ -28,6 +28,7 @@ A reviewed **v1.0.0 release spec**, handed off to Codex to execute. It records t
 
 ## Decisions so far
 
+- [Where bridge time goes](issues/01-where-bridge-time-goes.md): Jev is 3% of step time. `npx` adds ~0.5 s to every device command (~26% of recorded time), CLI startup ~0.33 s more, and each action already returns a settled capture that the bridge discards. Ranked options: resolved binary, capture reuse, concurrent screenshot, long-lived client. [Findings](../../docs/research/bridge-latency.md).
 - [Assertion policy for 1.0](issues/07-assertion-policy.md): 0.9/0.1 fixed; a confidently false claim now fails even beside uncertain ones; one judgment per checkpoint, no re-asks; claim rules taught, not enforced; model pinned per release behind a corpus gate; observation-shape experiment runs before 1.0 ([ADR-0004](../../docs/adr/0004-fixed-assertion-bounds-single-judgment.md)).
 - [Compose Multiplatform on iOS through MobileBuildMCP](issues/04-compose-multiplatform-on-ios.md): `testTag` maps to the accessibility identifier with no opt-in since CMP 1.8.0; recommend 1.12.1+ and unique tags on actionable nodes; no bridge change expected. Candidate app: Alkaa (pinned fork). [Findings](../../docs/research/compose-multiplatform-ios.md); nine questions await a live capture.
 - [Why assertions abstain](issues/03-why-assertions-abstain.md): uncertainty comes from implicit evidence (empty fields, unprinted list ends, saved-state inference), not compound claims or truncation. Keep 0.9/0.1 and teach claim-authoring rules; no blind re-asks. [Findings](../../docs/research/assertion-uncertainty.md).
@@ -68,9 +69,9 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T03,T04,T07 resolved
-    class T01,T02,T11 frontier
-    class T05,T06,T08,T09,T10 blocked
+    class T01,T03,T04,T07 resolved
+    class T02,T06,T11 frontier
+    class T05,T08,T09,T10 blocked
 ```
 <!-- route:end -->
 
