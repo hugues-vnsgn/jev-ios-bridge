@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "runId": "1cdfbb80-4646-4ead-ad3d-0326f52108d4",
+  "verdict": "inconclusive",
+  "reason": "CANCELLED",
+  "durationMs": 7327.213292,
+  "steps": 1,
+  "inputTokens": 0,
+  "phaseTimingsMs": {
+    "prepareMs": 1805.650625,
+    "observeMs": 4334.058916,
+    "decideMs": 0,
+    "actMs": 0,
+    "waitMs": 263.2977090000004,
+    "cleanupMs": 891.6392500000002
+  },
+  "checkpointCount": 1,
+  "checkpointResults": [],
+  "actionEvents": 0,
+  "judgmentEvents": 0,
+  "captureEvents": 2,
+  "errorEvents": 1,
+  "jevLatencyMs": 0,
+  "deviceMetrics": {
+    "referenceRefreshes": 0,
+    "referenceExpiries": 0,
+    "nearTtlRefreshes": 0
+  }
+}

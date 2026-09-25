@@ -47,6 +47,8 @@ A verified implementation and GitHub prerelease v0.1.0 of the bridge, including 
 
 - [Scripted feasibility](issues/21-scripted-feasibility.md): 22/24 true and 23/24 false claims confidently correct, zero confidently wrong judgments. Twelve real scripts matched their oracles; three fault probes stopped safely. Production integration passes 147 tests. The blind report-and-source diagnosis succeeded; installed-host testing and same-machine benchmarks are in progress.
 
+- [Watch view](issues/14-watch-view.md): actual scripted evidence renders at desktop and narrow widths, with token access and inert text rendering verified. [Tool surface](issues/15-tool-surface.md) is resolved as start/report/cancel over stdio. [Installed host](issues/16-vertical-slice.md) passed the packaged Contacts script; [measurements](issues/17-slice-measurements.md) are the remaining ticket.
+
 ## Route
 
 Green nodes are the frontier (open and unblocked), blue are claimed, grey are resolved, and white are blocked. `scripts/render-route.py` generates this block, so don't edit it by hand.
@@ -106,9 +108,8 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T06,T07,T08,T09,T10,T11,T12,T13,T18,T19,T20,T21 resolved
-    class T14 claimed
-    class T15,T16,T17 blocked
+    class T01,T02,T03,T04,T05,T06,T07,T08,T09,T10,T11,T12,T13,T14,T15,T16,T18,T19,T20,T21 resolved
+    class T17 claimed
 ```
 <!-- route:end -->
 

@@ -1,8 +1,7 @@
 # Watch view: a localhost timeline page
 
 Type: prototype
-Status: claimed
-Claimed by: Codex main; production_ports verifies the prototype
+Status: resolved
 Blocked by: 12, 13
 
 ## Question
@@ -25,3 +24,14 @@ Go through it with the human, then decide:
 - **Fallback, if the page costs too much:** the Claude Code progress line plus a statusline, both fed by the run log.
 
 Link the prototype and a screenshot as assets.
+
+
+## Answer
+
+Keep the localhost timeline. It renders the same recorded verdict, actions, checkpoint claims/probabilities, screenshots, and available app-log tails as the report. Bind to `127.0.0.1` on an available port and return the token-bearing URL with the run ID. The server and page end with the bridge process. Use Simulator.app for a live device view; the bridge provides captured screenshots, not video or an overlay.
+
+The supported scripted path has no Jev Choice or build stages: Jev judges assertions, while build/install happen before the run. The timeline labels those facts directly. A misleading "Checkpoint confirmed" heading on failed assertions was corrected to "Checkpoint result."
+
+Verification replayed actual Diagnostic d03: 12 events, three actions, four decoded screenshots, a 4% assertion probability, and matching failed checkpoint/final verdict. Desktop and 375-pixel layouts rendered without overflow or browser errors. Missing/wrong tokens returned 401, invalid image names returned 400, CSP was present, and injected markup remained inert text. The main agent inspected the corrected screenshots and accepts the view under the owner's implementation-through-release delegation.
+
+Assets: [full timeline](../../../docs/research/assets/watch-scripted-d03-full.png), [final result](../../../docs/research/assets/watch-scripted-d03-final.png), [narrow screen](../../../docs/research/assets/watch-scripted-d03-narrow.png), and [check evidence](../../../docs/research/assets/watch-scripted-d03-evidence.json). Browser inspection used an isolated headless profile and did not control the simulator.

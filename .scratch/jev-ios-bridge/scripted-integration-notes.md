@@ -52,3 +52,24 @@ An operator-only attempt to shut down the dedicated simulator returned “alread
 The second installed attempt restored Contacts’ empty-results screen, which contains two distinct Search images. Its initial unique-image guard stopped with `GUARD_AMBIGUOUS`, zero actions and zero Jev calls. The revised c01/c02/c03 entry guards remove that redundant image anchor while retaining the Contacts application, a unique actionable text field, and exclusions for saved-card headers, Done, Cancel, and alerts. Offline checks cover plain lists, query results, empty results, saved cards, and editors. The real empty-results regression failed before the guard change and passed after it. Values, assertion claims, and judgment thresholds did not change.
 
 Both installed attempts and the keyboard captures remain under `spikes/benchmarks/results/` and `spikes/scripted/integration/setup-evidence/`. Their failures are part of the execution record; neither counts as a successful installed-host test.
+
+## Final twelve-script execution record
+
+This table selects the final-runtime w01 repeat and the corrected w02 attempt. The earlier pass and setup failure remain in the artifact directory and are not new held-out assertion cases. Contacts entry guards were subsequently broadened for the installed-host empty-results case; these historical runs retain their own script hashes.
+
+| Script | Recorded verdict | Jev input tokens | Prepared run seconds | Run |
+| --- | --- | ---: | ---: | --- |
+| c01-nina-no-results | passed | 6,228 | 17.070 | [evidence](../../spikes/scripted/integration/results/93a38a87-8b56-4f97-a77a-60b49a72b9eb/report.md) |
+| c02-nina-card-claim | failed | 6,228 | 16.632 | [evidence](../../spikes/scripted/integration/results/b8af254f-872e-440a-adc8-5b8df5603767/report.md) |
+| c03-nolan-edit-final | passed | 5,190 | 27.737 | [evidence](../../spikes/scripted/integration/results/4637d2ce-0d19-4531-9130-431c8a790018/report.md) |
+| d01-bread-selected | passed | 1,273 | 11.131 | [evidence](../../spikes/scripted/integration/results/f7a6e547-3083-4479-9a28-e0676b2f17c8/report.md) |
+| d02-bread-first-total-claim | failed | 1,157 | 16.405 | [evidence](../../spikes/scripted/integration/results/85cd9ac0-91b0-4865-8473-753f9fe0373f/report.md) |
+| d03-apple-first-order-claim | failed | 1,384 | 14.729 | [evidence](../../spikes/scripted/integration/results/60144c1a-3df8-4c8b-b02c-9efd992cc4d0/report.md) |
+| r01-signal-kit-note | passed | 2,297 | 10.913 | [evidence](../../spikes/scripted/integration/results/8ad60dd9-c7c3-4362-ab91-4878d3cc7b5a/report.md) |
+| r02-signal-kit-empty-claim | failed | 2,290 | 10.844 | [evidence](../../spikes/scripted/integration/results/72a83600-e2df-4725-a59f-3c8c4c18ee96/report.md) |
+| r03-reminders-search-claim | failed | 4,152 | 11.273 | [evidence](../../spikes/scripted/integration/results/9f4be496-3876-46f3-b8fd-b0d58bb0ed51/report.md) |
+| w01-locations-open | passed | 6,211 | 12.252 | [evidence](../../spikes/scripted/integration/results/f62f2099-6680-4672-a9a1-2528f0d530ff/report.md) |
+| w02-distance-km | passed | 5,539 | 19.146 | [evidence](../../spikes/scripted/integration/results/d1e7cfe3-8a47-4631-ba7d-d760b1d1db88/report.md) |
+| w03-distance-mi-claim | failed | 5,539 | 20.397 | [evidence](../../spikes/scripted/integration/results/6e2ca6ba-b062-40d5-b489-af0e124ac512/report.md) |
+
+Totals: 47,488 Jev input tokens and 188.529 seconds of prepared bridge execution across twelve runs. These totals exclude build, installation, setup, authoring, unsuccessful attempts, and fault probes; they are not a host-cost benchmark.

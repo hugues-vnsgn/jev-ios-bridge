@@ -1,0 +1,48 @@
+{
+  "scope": "production watch UI replay of actual scripted diagnostic d03 run",
+  "sourceRunSha256": "a832d9245187ec28cf6c1030c38e63947f3ce7e3dee53d16c20e17c657759319",
+  "browser": "Chrome/153.0.8010.54",
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "narrowLayout": {
+    "viewportWidth": 375,
+    "documentWidth": 375,
+    "largestImageWidth": 276
+  },
+  "checks": {
+    "recordedEvents": 12,
+    "actionCards": 3,
+    "renderedScreenshots": 4,
+    "checkpointProbabilityPercent": 4,
+    "finalVerdict": "failed",
+    "unauthorizedEventsStatus": 401,
+    "wrongTokenStatus": 401,
+    "unauthorizedImageStatus": 401,
+    "invalidImageNameStatus": 400,
+    "cspPresent": true,
+    "pageErrors": 0,
+    "failedRequests": 0,
+    "inertMarkupProbe": {
+      "visibleAsText": true,
+      "injectedImageCount": 0,
+      "executed": false
+    }
+  },
+  "screenshots": [
+    {
+      "file": "watch-scripted-d03-full.png",
+      "sha256": "3ab73d50b4a6a933d80bcf7db8ab3105f0dae71f06eccc5be39933698c9f7794"
+    },
+    {
+      "file": "watch-scripted-d03-final.png",
+      "sha256": "d21d1171675bf30733f0b096c736844aff8c3fef1339b32a6c69f2ca3e49692d"
+    },
+    {
+      "file": "watch-scripted-d03-narrow.png",
+      "sha256": "205996b88d642588771913fe42ddc2aa168b032f88f8f6f3245435530f76a596"
+    }
+  ],
+  "note": "Browser profile and localhost bearer tokens stayed in private temporary storage; screenshots show only the synthetic Sample Shop diagnostic run."
+}

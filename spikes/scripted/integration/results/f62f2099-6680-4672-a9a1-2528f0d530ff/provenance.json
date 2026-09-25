@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "startedAt": "2026-09-25T01:10:19.274Z",
+  "runId": "f62f2099-6680-4672-a9a1-2528f0d530ff",
+  "scenarioPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/v0.1-release/spikes/scripted/integration/scenarios/w01-locations-open.json",
+  "scenarioSha256": "34e2970bf2da70798d334e3a82c6a991fa4a1afefdebdc9c63034f201d7ec4bb",
+  "bundleId": "com.sentry.weather.Weather",
+  "deviceUdid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+  "model": "jev-1.13.0",
+  "mobileBuildMcpVersion": "2.7.1",
+  "tapAliasRule": "mobilebuildmcp-2.7.1",
+  "assertionImplementationSha256": "9e73c34e4a1ac75eaaf8773d8774ff52ab25af9dbc87e74e8e330816c6c10b32",
+  "scriptedRuntimeSha256": "361ec2f2a53005cf3d5aaa5948802f6193369be0be4b65daae038edf4d1c800a",
+  "gitHead": "c40f4c96d000e1a10947a333dcd2c1a958ce7a16",
+  "nodeVersion": "v26.8.1",
+  "maxSteps": 100,
+  "timeoutMs": 900000,
+  "timingScope": "Prepared-app scripted UI execution; app build, install, data setup and script authoring excluded"
+}

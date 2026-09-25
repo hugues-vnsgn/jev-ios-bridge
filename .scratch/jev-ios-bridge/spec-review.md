@@ -23,3 +23,14 @@ The benchmark review also identified differences between the upstream baseline a
 The earlier-screen evidence gap is now fixed. The report correlates each checkpoint proof with its preceding recorded step and includes the screen excerpt, screenshot artifact name, snapshot sequence, and device provenance. Missing evidence and output truncation are explicit. Regressions cover Settings-to-Home-to-detail evidence, an interrupted boundary, and oversized output. The coding agent ran `npm run check`: all 93 tests, type checking, and build passed; no frozen experiment source changed.
 
 Runtime calibration, live checkpoint feasibility, the installed Claude Code run, and comparison measurements remain expected gate work. No high-severity contradiction was found in ordered advancement, cancellation, the strict scenario union, or bridge-owned verdicts. The standards review found no documented-standard breach; its remaining event-typing concern is a design suggestion, not a live feasibility result.
+
+
+## Scripted production review, `39b4653...9f8a25e`
+
+A fresh `gpt-6-sol` reviewer at high reasoning compared the fixed implementation against the current scripted spec, originating tickets, and production plan, separately from the Standards review. No model/device calls or tests were made by the reviewer.
+
+**One confirmed policy race:** ticket 11 requires interruption to end inconclusively. `src/scripted/run.ts:323` only changes a pending passed verdict on cancellation during cleanup. If an assertion already failed and cancellation arrives while cleanup is pending, successful cleanup leaves a failed final verdict. Preserve the failed checkpoint evidence, but make the still-active cancelled run's terminal verdict inconclusive. A focused regression and fix are assigned before release.
+
+A preliminary report-metrics concern was withdrawn after checking ticket 13 and the production plan. Phase timings and reference counters are required in journal events, where they are present. The bounded host report prioritizes decisive evidence and its local journal pointer. The main agent clarified an overbroad sentence in the consolidated spec; no implemented data was removed or requirement weakened.
+
+No other confirmed missing requirement or scope creep was found. Measurement and release gates remain expected outstanding work.

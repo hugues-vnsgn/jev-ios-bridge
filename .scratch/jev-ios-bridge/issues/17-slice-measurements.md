@@ -1,7 +1,8 @@
 # Slice measurements: cost, speed, and diagnosis against the baseline
 
 Type: task
-Status: open
+Status: claimed
+Claimed by: Codex main; live_execution measures the suites
 Blocked by: 16
 
 ## Question

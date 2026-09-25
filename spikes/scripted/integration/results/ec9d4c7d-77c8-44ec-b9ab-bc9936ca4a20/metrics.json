@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "runId": "ec9d4c7d-77c8-44ec-b9ab-bc9936ca4a20",
+  "verdict": "inconclusive",
+  "reason": "TARGET_AMBIGUOUS",
+  "durationMs": 4904.632208,
+  "steps": 1,
+  "inputTokens": 0,
+  "phaseTimingsMs": {
+    "prepareMs": 1820.0710000000001,
+    "observeMs": 2126.618208,
+    "decideMs": 0,
+    "actMs": 0,
+    "waitMs": 0,
+    "cleanupMs": 911.8017500000001
+  },
+  "checkpointCount": 1,
+  "checkpointResults": [],
+  "actionEvents": 0,
+  "judgmentEvents": 0,
+  "captureEvents": 1,
+  "errorEvents": 1,
+  "jevLatencyMs": 0,
+  "deviceMetrics": {
+    "referenceRefreshes": 0,
+    "referenceExpiries": 0,
+    "nearTtlRefreshes": 0
+  }
+}

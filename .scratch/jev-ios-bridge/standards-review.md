@@ -18,3 +18,16 @@ Reviewed tracked work through current `HEAD` plus staged changes, and the new so
 **Documented-standard breaches: none found.** The bridge still owns verdicts and uses MobileBuildMCP through its device adapter. The new Checkpoint glossary term matches the run and scenario types. Key handling in the changed code keeps `TYPESAFE_API_KEY` out of printed output.
 
 **Judgment-call smell, medium: Primitive Obsession.** [RunEvent.data](../../src/contracts/index.ts#L100) is an unrestricted `Record<string, unknown>` for every event type. The run writes checkpoint proof fields, while [renderReport](../../src/report/index.ts#L21) and the watch script interpret those fields through separate unchecked lookups. A misspelled or omitted proof field can compile and still leave the host with an incomplete report. A discriminated event-data union, validated when JSONL is read, would give the evidence contract one shape. This is a design hardening suggestion, not a tooling violation or a reason to alter the frozen feasibility inputs.
+
+
+## Scripted production review, `39b4653...9f8a25e`
+
+A fresh `gpt-6-sol` reviewer at high reasoning inspected the fixed 20-commit range against AGENTS.md, the agent documentation, glossary, architecture, and accepted device boundary. This is independent of the implementation agents and separate from the Spec axis.
+
+**Documented-standard breaches: none found.** The authored selector accompanies the temporary `resolvedRef` in action events, so the journal retains a durable target description. A preliminary claim that the ref was the only identity was withdrawn after checking the complete event.
+
+**One low-priority heuristic: possible Duplicated Code.** `src/scripted/run.ts:51` and `src/device/index.ts:221` both compare `screenHash`, then compare element serialization without references. Both guard stale-reference handling; a future identity change must keep them aligned. A shared helper could reduce that maintenance risk. The main agent accepts this nonblocking duplication for v0.1: the algorithms currently agree, and changing the boundary is not needed to correct observed behavior.
+
+The watch action summary shows the temporary reference, while its expandable event includes the selector. Displaying the selector directly would be easier to read, but the reviewer did not classify this as a documented breach. It does not alter target selection or recorded evidence.
+
+Standards result: zero hard findings, one nonblocking heuristic. The separate Spec review and final measurement/doc deltas remain pending.

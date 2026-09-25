@@ -40,7 +40,7 @@ Pin `jev-1.13.0` and `@typesafe-ai/sdk` 0.6.0. Send the validated full-screen te
 
 A probability at least 0.9 is true; at most 0.1 is false; anything between is uncertain. An uncertain claim makes the checkpoint inconclusive even when another claim is false. Otherwise any false claim fails. Every step and checkpoint must complete successfully for a passed run. Cleanup failure prevents a pass. Malformed or missing probabilities, model mismatch, transport failure, missing/ambiguous targets, wrong guards, timeout, cancellation, and unknown device outcomes stop inconclusively. No fallback asks the host to choose an action.
 
-Public run limits are integer `maxSteps` 1–100 and `wallTimeMs` 1–3,600,000, defaulting to 100 and 300,000. Budgets apply across the whole script, not separately per checkpoint. The report records the reason, step count, tokens, phase durations, and device reference counters.
+Public run limits are integer `maxSteps` 1–100 and `wallTimeMs` 1–3,600,000, defaulting to 100 and 300,000. Budgets apply across the whole script, not separately per checkpoint. The report records the reason, step count, tokens, and total duration. The final journal event also records phase durations and device reference counters for measurement.
 
 ## Evidence, report, and watch
 
@@ -66,6 +66,6 @@ The frozen owner-approved assertion experiment scored 22/24 true and 23/24 false
 
 The installed Claude Code path passed Contacts c01 after two preserved inconclusive attempts exposed keyboard behavior and an overly narrow Search-icon guard. The host submitted the corrected script unchanged; the bridge made one assertion request, returned the expected pass, and released its lock. The blind diagnosis correctly identified the Diagnostic app's planted total-calculation bug from its failed report and source.
 
-The production suite currently passes 147 tests, type checking, and build. Final watch evidence, three same-machine benchmark comparisons, independent review, and release package checks are pending. Initial script drafting was not metered; record that missing authoring cost and measure subsequent maintenance. No total cost-saving or break-even claim is supported by prepared execution alone.
+The hardened production suite passes 155 tests, type checking, and build. Real-log watch verification and a clean 42-file tarball installation passed. Three same-machine benchmark comparisons, independent review, CI, and final release-asset checks remain pending. Initial script drafting was not metered; record that missing authoring cost and measure subsequent maintenance. No total cost-saving or break-even claim is supported by prepared execution alone.
 
 v0.1 excludes real-iPhone UI automation, autonomous navigation, automatic hooks, CI operation, and guaranteed non-English behavior. Real transient-wait corpus coverage is deferred; deterministic wait/cancellation behavior has scripted tests and a live cancellation probe. Simulator keyboard drift and restored app state require deliberate setup and distinguishing guards. Failure artifacts remain part of the evidence.

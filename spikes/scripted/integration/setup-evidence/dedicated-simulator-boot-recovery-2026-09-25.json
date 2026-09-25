@@ -1,0 +1,35 @@
+{
+  "kind": "operator-observed-environment-preflight",
+  "date": "2026-09-25",
+  "tool": "mobilebuildmcp@2.7.1",
+  "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+  "simulatorName": "jev-ios-bridge",
+  "runtime": "iOS 26.4",
+  "events": [
+    {
+      "operation": "simulator launch-app com.apple.MobileAddressBook",
+      "result": "FAILED",
+      "diagnostic": "App is not installed on the simulator. Please use install_app_sim before launching. Workflow: build -> install -> launch."
+    },
+    {
+      "operation": "simulator list",
+      "result": "Dedicated simulator available but Shutdown"
+    },
+    {
+      "operation": "simulator boot",
+      "result": "SUCCEEDED"
+    },
+    {
+      "operation": "simulator launch-app com.apple.MobileAddressBook",
+      "result": "SUCCEEDED"
+    },
+    {
+      "operation": "ui-automation snapshot-ui --verbose",
+      "result": "Contacts plain list with synthetic Nolan Ames and one actionable Search text field",
+      "screenHash": "0gt1zuc"
+    }
+  ],
+  "interpretation": "The initial missing-app diagnostic was caused by the dedicated simulator being shut down; booting the same device restored Contacts without erase or reinstall.",
+  "captureAfterRecovery": "c01-nina-no-results-2026-09-25T00-53-36-614Z.full.json",
+  "liveRunStartedBeforeRecovery": false
+}

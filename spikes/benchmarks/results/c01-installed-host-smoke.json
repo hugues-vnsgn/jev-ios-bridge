@@ -1,0 +1,52 @@
+{
+  "kind": "installed-host-scripted-smoke",
+  "startedAt": "2026-09-25T01:38:00.943Z",
+  "packageCli": {
+    "path": "/tmp/jev-ios-bridge-package-smoke.ryEQ6v/consumer/node_modules/jev-ios-bridge/dist/cli.js",
+    "sha256": "4355b1dc6f47973ba54f169d1183137556844f755d394ea71bd995fbf2c698d2"
+  },
+  "packageSkill": {
+    "path": "/tmp/jev-ios-bridge-package-smoke.ryEQ6v/consumer/node_modules/jev-ios-bridge/skills/test-ios/SKILL.md",
+    "sha256": "f03f7c57e64cbd4c9b6831f52a205b03b428b590d85b5ea17290fca56621d2b2"
+  },
+  "scenario": {
+    "path": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/v0.1-release/spikes/scripted/integration/scenarios/c01-nina-no-results.json",
+    "sha256": "3619db0a0fd596e492d7d8b52be975014e46eefdc3a5909d15d61007752c7605"
+  },
+  "host": {
+    "model": "claude-opus-4-7",
+    "exitCode": 0,
+    "toolSequence": [
+      "mcp__jev-ios-bridge__start_scenario",
+      "mcp__jev-ios-bridge__get_report"
+    ],
+    "wallClockSeconds": 38.396088958,
+    "tokens": {
+      "uncachedInput": 8,
+      "cacheCreationInput": 27225,
+      "cacheReadInput": 51300,
+      "output": 1541,
+      "allInputProcessed": 78533
+    },
+    "estimatedCostUsd": 0.336465,
+    "finalResponse": "## Verdict: inconclusive (GUARD_MISSING)\n\n**Run ID:** `52d47482-1705-4eda-8a52-516cbac6d33b`\n**Watch URL:** [private watch URL]\n**Evidence:** `/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-AmTroS/runs/52d47482-1705-4eda-8a52-516cbac6d33b/run.jsonl`\n**Last screenshot:** `screen-5.jpg`\n\n### Decisive evidence\n- Execution problem: `GUARD_MISSING during observe` after 2 steps completed (14.4s).\n- The observed screen actually contains the target evidence — `text No Results for “nina calder”` and `other Search results` are both present, alongside the `text-field nina calder`.\n- The script's `settleResults` wait guard requires `text-field` with `value: \"Nina Calder\"` (title case) and the \"No Results for\" text with title-case `\"Nina Calder\"`. On device the text-field value and the results banner both render as lowercase `nina calder`, so the guard/until selectors never match the exact strings and the wait's guard failed on re-observation.\n- The `verify` checkpoint would have the same case-sensitivity mismatch on the `text-field` value.\n\n### Why the run is inconclusive, not failed\nNo assertion was ever confidently evaluated — the run halted at guard evaluation, so the claim \"Contacts shows No Results for Nina Calder\" was neither confirmed nor refuted by the bridge. To resolve, adjust the script's `Nina Calder` selector values to match the device's lowercased rendering (`nina calder`) for the `text-field value` and the `No Results for` label.",
+    "rawTranscriptPath": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-AmTroS/claude.jsonl",
+    "rawTranscriptSha256": "414d71c1bc2d203a1849b92ddbc9af43e8f11348980363193a87f052690737a2",
+    "stderrPresent": true
+  },
+  "bridge": {
+    "runId": "52d47482-1705-4eda-8a52-516cbac6d33b",
+    "verdict": "inconclusive",
+    "reason": "GUARD_MISSING",
+    "inputTokens": 0,
+    "actionEvents": 1,
+    "judgmentEvents": 0,
+    "cleanupMs": 845.0463749999981,
+    "runLogPath": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-AmTroS/runs/52d47482-1705-4eda-8a52-516cbac6d33b/run.jsonl",
+    "runLogSha256": "9357d1a83d3213a06355e470b341e6272c2e776310362e459c282cebbde8bdb1",
+    "finalScreenshotPath": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-AmTroS/runs/52d47482-1705-4eda-8a52-516cbac6d33b/screen-5.jpg",
+    "finalScreenshotSha256": "8b0040e72130b8ff830e032aa1ecffc6b8d7ef8d885f537bba57085e291c3ed2"
+  },
+  "observedMismatch": "Contacts rendered the typed query and empty-results heading as lowercase nina calder while the submitted script requires exact title-case Nina Calder. A first-run keyboard tutorial was visible. The wait guard stopped before any Jev judgment.",
+  "numericSummaryPath": "spikes/benchmarks/results/c01-nina-no-results-bridge-1790300319374.json"
+}

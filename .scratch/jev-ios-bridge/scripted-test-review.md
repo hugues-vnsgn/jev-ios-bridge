@@ -36,3 +36,10 @@ Production initially passed 147 tests, type checking, and build. New review regr
 Independent browser checks exercised a real scripted failed log, four screenshots, checkpoint probabilities, token-gated endpoints, CSP, and literal rendering of hostile-looking text. Desktop and narrow layouts rendered without overflow or browser errors. A misleading checkpoint heading was found and is being corrected. Evidence lives in `docs/research/assets/watch-scripted-d03-*`.
 
 Release remains UNVERIFIED until final hardening checks, paired benchmark evidence, independent code reviews, and the release artifact smoke test finish. Prior green suites are evidence for their exact source state, not substitutes for those gates.
+
+
+## Hardened production check
+
+`npm run check` passed **155/155 tests, zero failures/cancellations/skips**, type checking, and build after the timing and redaction fixes. The clean 42-file tarball contained only allowlisted package files, and its installed CLI returned `0.1.0`. Packed/source/installed CLI and skill hashes matched. [Machine-readable evidence](../../spikes/benchmarks/results/production-release-check-2026-09-25.json) records the exact 42-file working-tree source manifest, raw check output hash, Node version, and tarball hash. The implementation was committed at `9f8a25e` without changing its tested source bytes; packaged prose is also bound by the manifest.
+
+Watch inspection passed on the corrected heading. Timing and redaction regressions retained their original expectations after the fixes. Comparative measurements and final review/release checks remain outstanding; this check alone is not a release declaration.
