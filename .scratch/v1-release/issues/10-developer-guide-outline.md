@@ -14,3 +14,7 @@ What should the developer guide look like for someone who wants to use the bridg
 - what ships in the tarball.
 
 Link the outline as the asset.
+
+## Comments
+
+- 2026-09-25, from "Product assessment": build the guide around **repeatable checks** (scripts kept in the repo and re-run after changes). State plainly that the bridge can be slower than Claude driving the app directly, that script-authoring cost is unmeasured, that 1.0 assurance covers English screens only, and that verification should use synthetic data in apps the developer controls (prompt-injection risk). Live Compose findings to teach: guards need identifier or role, not label alone, because merged buttons repeat their label on a text child; empty Compose fields omit `value`; tags must be unique per instance (see "Live Compose capture").

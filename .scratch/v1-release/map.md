@@ -28,6 +28,7 @@ A reviewed **v1.0.0 release spec**, handed off to Codex to execute. It records t
 
 ## Decisions so far
 
+- [Product assessment: is v0.1.0 worth a stable promise?](issues/05-product-assessment.md): **go, conditionally.** 1.0 serves repeatable checks kept in the repo. Five go conditions: fix the three review defects, implement ADR-0004, meet the speed target, pass the Compose checks, and remove dead code while versioning frozen surfaces. Slower-than-direct speed, prompt injection, non-English screens, and unmeasured authoring cost are documented limits.
 - [Performance target and tuning plan](issues/06-performance-target.md): 1.0 drops `npx`, reuses MobileBuildMCP's post-action capture, and screenshots concurrently; no long-lived client. Pass means at least 30% faster prepared execution per benchmark script, one run each, with unchanged verdicts.
 - [Live Compose capture: settle the open questions on a real simulator](issues/11-live-compose-capture.md): on the owner's `cmp` demo (Compose Multiplatform 1.11.1), `testTag` reaches `identifier`, text fields are `text-field`, and empty Compose fields omit `value`. Merged buttons duplicate their label on a text child, so guards need identifier or role. No stale-element crash occurred. The app's number fields all share one identifier, and its launch screen animates for ~25 s. [Findings](../../docs/research/compose-cmp-capture.md).
 - [Code and design review of v0.1.0 before a stability promise](issues/02-code-and-design-review.md): no false-pass path found. `value: ''` selectors never match, ADR-0004 is unimplemented, a retained device lock can only be cleared by deleting its file by hand, 745 lines of dead autonomous-design code ship, and the surfaces to freeze are unversioned. Don't freeze the driver seam before tuning option B is decided. [Review](code-review.md).
@@ -72,9 +73,8 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T06,T07,T11 resolved
-    class T05 frontier
-    class T08,T09,T10 blocked
+    class T01,T02,T03,T04,T05,T06,T07,T11 resolved
+    class T08,T09,T10 frontier
 ```
 <!-- route:end -->
 
@@ -85,7 +85,6 @@ flowchart LR
 - **Migrating 0.1.0 scripts:** whether an unversioned 0.1.0 script is accepted, upgraded, or rejected once the format carries a version.
 - **Data-handling statement for outside developers:** what the guide must say about screen text going to TypeSafe and unredacted local screenshots before developers point this at real apps.
 - **Cost budget per run:** carried over from the previous map; a number for the docs once tuning changes the measurements.
-- **Prompt injection through screen text:** carried over. The assessment decides whether 1.0 must address it or only document it.
 
 ## Out of scope
 
