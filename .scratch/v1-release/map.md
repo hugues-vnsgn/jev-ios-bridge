@@ -28,6 +28,7 @@ A reviewed **v1.0.0 release spec**, handed off to Codex to execute. It records t
 
 ## Decisions so far
 
+- [Live log pane](issues/12-live-log-pane.md): the pane follows MobileBuildMCP's two launch log files (app console, plus `os_log` under the bundle-ID subsystem only), in a `.command` window opened in the default terminal; there's no window under SSH or CI, where `jev-ios-bridge logs RUN_ID` attaches instead; it closes itself after a pass and stays open otherwise; values are masked and nothing leaves the machine; off with `JEV_LOG_PANE=off` or `--no-log-pane`. Prototype on local branch `prototype/log-pane`.
 - [Developer guide outline](issues/10-developer-guide-outline.md): `docs/guide/` with 11 numbered pages, SwiftUI (Weather) and Compose (BFSOne, read-only) worked examples, and reference pages; `docs/usage.md` folds in and is deleted, `README.md` shrinks; `/test-ios` links to installed guide paths; the tarball adds `docs/guide/`, `LICENSE`, `CHANGELOG.md`; **license MIT**. [Outline](guide-outline.md).
 - [Compose app evidence plan](issues/09-compose-evidence-plan.md): the real Compose app `BFSOne_Mobile_App` (CMP 1.9.0), run offline through a debug-only gallery shortcut the owner adds; six gallery scripts (four pass, one planted fail, one planted inconclusive), one run each; an unexpected verdict or any production request blocks 1.0; `cmp` is the fallback. The bridge gains optional `app.launchArgs` and rejects `value: ''`.
 - [The 1.0 stable contract](issues/08-stable-contract.md): scripts need `"version": 1`; `report.json` (not the prose) is the frozen report; reason codes and roles are bridge-owned lists; CLI exits 0/1/2/3; evidence names, envelope, event types, and the verdict event are frozen; semantic versioning; pinned MobileBuildMCP with a cheap upgrade check; golden-file contract tests gate every release. Adds the live log pane as a 1.0 requirement ([ADR-0005](../../docs/adr/0005-the-1-0-stability-contract.md)).
@@ -80,9 +81,8 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T06,T07,T08,T09,T10,T11 resolved
-    class T12,T13 frontier
-    class T14 blocked
+    class T01,T02,T03,T04,T05,T06,T07,T08,T09,T10,T11,T12 resolved
+    class T13,T14 frontier
 ```
 <!-- route:end -->
 
