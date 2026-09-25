@@ -49,11 +49,19 @@ const contactsList = present(
   { role: 'application', label: 'Contacts' },
   { role: 'text-field', value: 'Search' },
 );
-const contactsSearchReady = present(
-  { role: 'application', label: 'Contacts' },
-  { role: 'other', label: 'Search results' },
-  { role: 'text-field' },
-);
+const contactsSearchReady = {
+  present: [
+    { role: 'application', label: 'Contacts' },
+    { role: 'image', identifier: 'magnifyingglass', label: 'Search' },
+    { role: 'text-field' },
+  ],
+  absent: [
+    { role: 'text', identifier: 'ContactCardHeaderView' },
+    { role: 'button', label: 'Done' },
+    { role: 'button', label: 'Cancel' },
+    { role: 'alert' },
+  ],
+};
 const ninaQuery = present({ role: 'text-field', value: 'Nina Calder' });
 const ninaNoResults = present(
   { role: 'text-field', value: 'Nina Calder' },
@@ -141,21 +149,21 @@ const cases = [
     ])],
 
   ['c01-nina-no-results', 'contacts', 'passed',
-    script(app.contacts, ['Contacts Search is in front with one active Search text field.'],
+    script(app.contacts, ['Contacts list or Search results is in front with one Search text field.'],
       { query: 'Nina Calder' }, [
         action('searchNina', contactsSearchReady, { kind: 'replaceText', selector: { role: 'text-field' }, valueKey: 'query' }),
         wait('settleResults', ninaQuery, present({ role: 'text', label: 'No Results for “Nina Calder”' })),
         checkpoint(ninaReady, 'Contacts shows No Results for Nina Calder.'),
       ])],
   ['c02-nina-card-claim', 'contacts', 'failed',
-    script(app.contacts, ['Contacts Search is in front with one active Search text field.'],
+    script(app.contacts, ['Contacts list or Search results is in front with one Search text field.'],
       { query: 'Nina Calder' }, [
         action('searchNina', contactsSearchReady, { kind: 'replaceText', selector: { role: 'text-field' }, valueKey: 'query' }),
         wait('settleResults', ninaQuery, present({ role: 'text', label: 'No Results for “Nina Calder”' })),
         checkpoint(ninaReady, 'A Nina Calder contact card is open.'),
       ])],
   ['c03-nolan-edit-final', 'contacts', 'passed',
-    script(app.contacts, ['Contacts Search is in front and synthetic Nolan Ames is saved with a final email.'],
+    script(app.contacts, ['Contacts list or Search results is in front; synthetic Nolan Ames is saved with a final email.'],
       { query: 'Nolan Ames' }, [
       action('searchNolan', contactsSearchReady,
         { kind: 'replaceText', selector: { role: 'text-field' }, valueKey: 'query' }),

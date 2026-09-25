@@ -25,9 +25,9 @@ const fixtures: Record<string, string[]> = {
     's06-weather-lisbon-distance-km', 's06-weather-lisbon-distance-km'],
   'w03-distance-mi-claim': ['s04-weather-lisbon-main', 's05-weather-lisbon-distance-mi',
     's06-weather-lisbon-distance-km', 's06-weather-lisbon-distance-km'],
-  'c01-nina-no-results': ['launch-contacts-after-card', 's14-contacts-nina-calder-no-results', 's14-contacts-nina-calder-no-results'],
-  'c02-nina-card-claim': ['launch-contacts-after-card', 's14-contacts-nina-calder-no-results', 's14-contacts-nina-calder-no-results'],
-  'c03-nolan-edit-final': ['launch-contacts-after-card', 'nolan-duplicate-result',
+  'c01-nina-no-results': ['launch-contacts-plain', 's14-contacts-nina-calder-no-results', 's14-contacts-nina-calder-no-results'],
+  'c02-nina-card-claim': ['launch-contacts-plain', 's14-contacts-nina-calder-no-results', 's14-contacts-nina-calder-no-results'],
+  'c03-nolan-edit-final': ['launch-contacts-plain', 'nolan-duplicate-result',
     'nolan-duplicate-result', 's12-contacts-nolan-new-email-saved', 's11-contacts-nolan-new-email-unsaved'],
   'r01-signal-kit-note': ['reminders-lists', 's21-reminders-charge-lantern-note-saved'],
   'r02-signal-kit-empty-claim': ['reminders-lists', 's21-reminders-charge-lantern-note-saved'],
@@ -55,6 +55,24 @@ for (const [id, states] of Object.entries(fixtures)) {
     } catch (error) {
       throw new Error(`${id}/${step.id} fixture ${states[index]}: ${error instanceof Error ? error.message : String(error)}`);
     }
+  }
+}
+for (const id of ['c01-nina-no-results', 'c02-nina-card-claim', 'c03-nolan-edit-final']) {
+  const script = parseScriptedScenario(read(`spikes/scripted/integration/scenarios/${id}.json`));
+  const step = script.steps[0]!;
+  if (step.kind !== 'action') throw new Error(`${id}: expected initial action`);
+  for (const restored of ['launch-contacts-after-card', 'launch-contacts-after-list']) {
+    const restoredSearch = byId(restored);
+    assertScreenGuard(restoredSearch, step.guard, pinnedTapAlias);
+    resolveActionTarget(restoredSearch, step.action.selector, 'typeText', pinnedTapAlias);
+  }
+  for (const excluded of ['s11-contacts-nolan-new-email-unsaved', 's12-contacts-nolan-new-email-saved']) {
+    try { assertScreenGuard(byId(excluded), step.guard, pinnedTapAlias); }
+    catch (error) {
+      if (error instanceof ScriptSelectionError && error.code.startsWith('GUARD_')) continue;
+      throw error;
+    }
+    throw new Error(`${id}: first guard accepted ${excluded}`);
   }
 }
 const faultFixtures = [
@@ -85,4 +103,4 @@ catch (error) {
   markerMissing = true;
 }
 if (!markerMissing) throw new Error('f03: cancellation marker already present');
-process.stdout.write(`Validated ${checked} guarded steps and three fault setups against saved full simulator snapshots. No Jev calls.\n`);
+process.stdout.write(`Validated ${checked} guarded steps, six alternate Contacts starts, six rejected card/editor starts, and three fault setups against saved full simulator snapshots. No Jev calls.\n`);

@@ -6,7 +6,7 @@
     "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
   },
   "preconditions": [
-    "Contacts Search is in front and synthetic Nolan Ames is saved with a final email."
+    "Contacts list or Search results is in front; synthetic Nolan Ames is saved with a final email."
   ],
   "values": {
     "query": "Nolan Ames"
@@ -22,11 +22,29 @@
             "label": "Contacts"
           },
           {
-            "role": "other",
-            "label": "Search results"
+            "role": "image",
+            "identifier": "magnifyingglass",
+            "label": "Search"
           },
           {
             "role": "text-field"
+          }
+        ],
+        "absent": [
+          {
+            "role": "text",
+            "identifier": "ContactCardHeaderView"
+          },
+          {
+            "role": "button",
+            "label": "Done"
+          },
+          {
+            "role": "button",
+            "label": "Cancel"
+          },
+          {
+            "role": "alert"
           }
         ]
       },
