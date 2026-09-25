@@ -1,6 +1,6 @@
 # v0.1.0 release plan
 
-Status: implementation, measurements, review and package validation complete; merge/publication verification pending, 2026-09-25. Target: tested code merged to `main`, tagged `v0.1.0`, and published as a GitHub prerelease with an installable npm tarball. The owner authorized work through release; no npm registry publication is planned.
+Status: complete. GitHub prerelease v0.1.0 published and its downloaded package verified, 2026-09-25. Target: tested code merged to `main`, tagged `v0.1.0`, and published as a GitHub prerelease with an installable npm tarball. The owner authorized work through release; no npm registry publication is planned.
 
 ## Accepted direction and evidence
 
@@ -18,8 +18,8 @@ Production follows [the scripted integration plan](scripted-production-plan.md).
 | Installed host, ticket 16 | **Passed.** Clean-installed package and `/test-ios` submitted the reviewed script once and returned the correct report. Two inconclusive attempts remain preserved. |
 | Measurements, ticket 17 | **Complete with limits.** The prepared-app Weather baseline passed in 90.449 seconds and is recorded separately from the official build-inclusive run. Weather/Contacts bridge scripts passed; Reminders reached correct visible state but abstained at 0.87. No verified Reminders baseline exists after four preserved attempts. All costs, maintenance windows and missing authoring data are recorded; no Reminders ratio or total-savings claim. |
 | Final specification | **Reviewed.** Runtime contract and measured limitations consolidated in the spec. |
-| Review and package | **Code review closed.** One nonblocking duplication heuristic accepted; the cancellation race was fixed and independently verified. 157 tests, typecheck/build, Node 24 CI, and clean 42-file tarball install passed. Final documentation/package and published-asset checks remain. |
-| Merge and release | **Pending.** Original checkout changes preserved/reconciled; push final docs, verify CI, merge to `main`, tag tested commit, publish prerelease/tarball, and verify its download/install path. |
+| Review and package | **Code review closed.** One nonblocking duplication heuristic accepted; the cancellation race was fixed and independently verified. 157 tests, typecheck/build, Node 24 CI, and clean 42-file tarball install passed. Final documentation/package and published-asset checks passed. |
+| Merge and release | **Complete.** PR 1 merged to `main`; merge-commit CI passed; tag/prerelease published; fresh public download and clean install verified. |
 
 The release cannot describe an inconclusive host attempt as a pass or hide benchmark failures. A contradictory measurement reopens the relevant decision. Architecture acceptance does not itself authorize an unsupported performance claim.
 
@@ -43,3 +43,10 @@ Real iPhone UI automation, autonomous navigation, CI operation, automatic hooks,
 ## Original checkout reconciliation
 
 The original tracked edits and two untracked planning/config files were preserved in local stash `8c56c963cf05de6bc90a97443a51dc75d6248a7c` before merge preparation. Ticket 07 and domain-boundary decisions are incorporated in the release branch; its completed ticket 06 and UUID configuration supersede the stale claim and simulator-name config as the owner directed. The stash remains available and will not be blindly applied over the completed branch. The original `.env` stayed in place at mode 600 and was not part of the stash. A local Git exclude keeps `.worktrees/` ignored while old `main` awaits the merge.
+
+
+## Published release
+
+[GitHub prerelease v0.1.0](https://github.com/hugues-vnsgn/jev-ios-bridge/releases/tag/v0.1.0) was published at 2026-09-25 04:21:30 UTC from tested merge commit `f4a3c87036c2ab1dfb0834e40b3efacc988b88ca`. [PR 1](https://github.com/hugues-vnsgn/jev-ios-bridge/pull/1) is merged; [main CI](https://github.com/hugues-vnsgn/jev-ios-bridge/actions/runs/36094046112) passed. The source trees of the reviewed branch and merge commit are identical.
+
+The 46,196-byte asset `jev-ios-bridge-0.1.0.tgz` has SHA-256 `a0dc94da40f11695ca8fc701766966e9e6ccb78086cd7f372cce99132d365495`. A fresh public download matched that digest, installed cleanly, and returned `0.1.0` through both executable entrypoints. All 42 installed files matched the tested package. [Publication verification](../../spikes/benchmarks/results/publication-verification.json) records the evidence. This audit update changes only release records after the tag; runtime/package content remains that tested release.

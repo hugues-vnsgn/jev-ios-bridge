@@ -14,3 +14,6 @@ Standards: zero hard findings, one accepted low-priority heuristic. Spec: one fi
 
 
 Final documentation review found two corrections: add the tested Xcode/runtime combination to prerelease notes, and obtain the promised prepared-app Weather baseline. Both are closed: the notes state Xcode 26.4.1/iOS 26.4, and the single prepared-app variant passed in 90.449 seconds with source/diff/start/final evidence. The reviewer found no false outcome, cost or timing claim; Reminders failures/abstention and missing authoring data remain explicit. The final comparison artifact's stale draft label was corrected without changing metrics.
+
+
+Release closure: merge commit `f4a3c87036c2ab1dfb0834e40b3efacc988b88ca` passed CI, was tagged `v0.1.0`, and the public prerelease download passed checksum, clean-install and 42-file parity verification. No review finding remains open that blocks this experimental release.

@@ -1,6 +1,6 @@
 # Production verification
 
-**Verdict: UNVERIFIED for release.** The scripted runtime, installed-host path, watch view, measurements, code review and package smoke checks are complete. Final documentation/package checks and published-asset verification remain open.
+**Verdict: SHIP as the documented experimental prerelease.** The scripted runtime, installed-host path, watch view, measurements, code review and package smoke checks are complete. Final documentation/package checks and published-asset verification passed.
 
 Oracle: [v0.1 specification](spec.md), accepted tickets 09–16, and [scripted evaluation protocol](scripted-evaluation-plan.md). Final implementation snapshot: `29da755`, including the post-review cancellation fix `8fb9aac`. The [post-review check artifact](../../spikes/benchmarks/results/production-release-check-post-review-2026-09-25.json) binds 42 files by SHA-256; the main agent independently matched every hash to that commit.
 
@@ -21,7 +21,7 @@ Oracle: [v0.1 specification](spec.md), accepted tickets 09–16, and [scripted e
 | Report supports diagnosis | Blind Claude task received failed report plus two source files only and identified the planted total-calculation defect | PASS |
 | Clean package contents | Exactly 42 allowlisted files, no private paths or `.env`, clean install and matching CLI/skill hashes | PASS |
 | Comparative task measurements | All three tasks measured: two bridge passes, one intended abstention on a 0.87 claim; no verified Reminders baseline, no ratio claimed; all failed attempts and unknown initial authoring cost retained | PASS with recorded limits |
-| Final release commit and asset | Code review and Node 24 CI passed; final prose/package checks, merge/tag/prerelease and downloaded-asset smoke pending | UNVERIFIED |
+| Final release commit and asset | Final branch and merge-commit CI passed; v0.1.0 published; fresh public asset download, checksum, clean install and both executable entrypoints verified | PASS |
 
 The initial redaction regression caused one integrated run to fail before its fix; it was not skipped or weakened. The final 155-test check includes the unchanged expectation. No held-out labels or assertion thresholds were changed during hardening.
 
@@ -38,3 +38,6 @@ The main agent independently read the hash-verified raw Weather and Contacts too
 The promised prepared-app Weather baseline also passed once: 90.449 seconds with no app build/install inside the timer. The main agent checked the raw setting, main-screen and detail captures. Source/prompt/suite differences and starting-state proof are archived separately from the original baseline. Final tarball `a0dc94da40f11695ca8fc701766966e9e6ccb78086cd7f372cce99132d365495` passed clean install, direct bin and node CLI version checks, with all 38 dist files and the skill unchanged from the tested runtime. Packaged documents and source were independently bound to `abf6922`.
 
 The prose checker found only intentional numeric ranges and domain terms after edits. Local links in the main docs/spec/release notes resolve. Archived unified diffs retain required blank-line context prefixes; a narrowly scoped Git attribute preserves those bytes while excluding that artifact syntax from trailing-space diagnostics.
+
+
+Published `f4a3c87036c2ab1dfb0834e40b3efacc988b88ca` as [v0.1.0](https://github.com/hugues-vnsgn/jev-ios-bridge/releases/tag/v0.1.0). The fresh public-download audit matched the 46,196-byte tarball digest and all 42 installed files, and both CLI entrypoints returned `0.1.0`. The final pre-publication exact-key scan covered 1,583 reachable Git blobs and all 42 tarball files with zero matches. [Publication evidence](../../spikes/benchmarks/results/publication-verification.json).
