@@ -8,6 +8,14 @@ export interface ScenarioContext {
   device?: { udid?: string };
 }
 
+/** Device preparation needs only launch identity and environmental prerequisites. */
+export type PrepareScenarioContext = ScenarioContext;
+
+/** Actions additionally receive explicit typed values. */
+export interface ActionScenarioContext extends ScenarioContext {
+  values: Record<string, string>;
+}
+
 export interface Assertion { id: string; claim: string }
 
 /** Existing single-goal scenario; Jev and the feasibility harness consume this shape. */
@@ -77,9 +85,9 @@ export interface Judgment {
 }
 
 export interface DeviceDriver {
-  prepare(scenario: RunScenario, signal: AbortSignal): Promise<void>;
+  prepare(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void>;
   observe(signal: AbortSignal): Promise<Snapshot>;
-  act(action: Action, snapshot: Snapshot, scenario: Scenario, signal: AbortSignal): Promise<void>;
+  act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<void>;
   close(signal: AbortSignal): Promise<void>;
   metrics?(): DeviceMetrics;
 }

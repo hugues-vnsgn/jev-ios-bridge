@@ -22,6 +22,8 @@ test('stdio server negotiates and exposes start/report/cancel without a key', { 
     child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' }) + '\n');
     const list = await request(2, 'tools/list');
     assert.deepEqual(list.result.tools.map((tool: { name: string }) => tool.name).sort(), ['cancel_run', 'get_report', 'start_scenario']);
+    const startSchema = list.result.tools.find((tool: { name: string }) => tool.name === 'start_scenario').inputSchema;
+    assert.ok(startSchema.properties.scenario);
     const report = await request(3, 'tools/call', { name: 'get_report', arguments: { runId: 'missing' } });
     assert.equal(report.result.isError, true);
     assert.equal(report.result.structuredContent, undefined);
@@ -42,12 +44,16 @@ test('running MCP reports hide screen evidence and bounded waiting returns the f
   try{
     await request(1,'initialize',{protocolVersion:'2025-03-26',capabilities:{},clientInfo:{name:'contract',version:'1'}});
     child.stdin.write(JSON.stringify({jsonrpc:'2.0',method:'notifications/initialized'})+'\n');
-    const start=await request(2,'tools/call',{name:'start_scenario',arguments:{scenario:{goal:'A marker is visible',app:{bundleId:'com.example.app'},assertions:[{id:'shown',claim:'Marker visible'}],values:{}}}});
+    const legacy=await request(2,'tools/call',{name:'start_scenario',arguments:{scenario:{goal:'A marker is visible',app:{bundleId:'com.example.app'},assertions:[{id:'shown',claim:'Marker visible'}],values:{}}}});
+    assert.equal(legacy.result.isError,true);
+    const tooManySteps=await request(3,'tools/call',{name:'start_scenario',arguments:{scenario:{app:{bundleId:'com.example.app'},values:{},steps:[{id:'verify',kind:'checkpoint',guard:{present:[{role:'text',label:'SCREEN_EVIDENCE_MARKER'}]},assertions:[{id:'shown',claim:'Marker visible'}]}]},limits:{maxSteps:101}}});
+    assert.equal(tooManySteps.result.isError,true);
+    const start=await request(4,'tools/call',{name:'start_scenario',arguments:{scenario:{app:{bundleId:'com.example.app'},values:{},steps:[{id:'verify',kind:'checkpoint',guard:{present:[{role:'text',label:'SCREEN_EVIDENCE_MARKER'}]},assertions:[{id:'shown',claim:'Marker visible'}]}]}}});
     const {runId}=JSON.parse(start.result.content[0].text);
-    const interim=await request(3,'tools/call',{name:'get_report',arguments:{runId}});
+    const interim=await request(5,'tools/call',{name:'get_report',arguments:{runId}});
     assert.match(interim.result.content[0].text,/Status: running/);
     assert.doesNotMatch(interim.result.content[0].text,/SCREEN_EVIDENCE_MARKER|probabilities|observation/);
-    const final=await request(4,'tools/call',{name:'get_report',arguments:{runId,waitMs:2000}});
+    const final=await request(6,'tools/call',{name:'get_report',arguments:{runId,waitMs:2000}});
     assert.match(final.result.content[0].text,/Status: finished/);
     assert.match(final.result.content[0].text,/SCREEN_EVIDENCE_MARKER/);
   }finally{child.stdin.end();lines.close();if(child.exitCode===null)child.kill('SIGTERM');await rm(root,{recursive:true,force:true});}

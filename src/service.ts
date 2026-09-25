@@ -1,18 +1,18 @@
 import { randomUUID } from 'node:crypto';
 import { resolve } from 'node:path';
 import { z } from 'zod/v4';
-import type { DeviceDriver, JevJudge, RunReport, RunScenario } from './contracts/index.js';
-import { parseScenario } from './scenario/index.js';
+import type { DeviceDriver } from './contracts/index.js';
+import type { ScriptedJudge, ScriptedScenario } from './scripted/contracts.js';
+import { parseScriptedScenario } from './scripted/schema.js';
 import { createRunLog, readRunEvents, validateRunId } from './log/index.js';
-import { buildReport } from './report/index.js';
-import { runScenario, type RunLimits } from './run/index.js';
-import { buildObservation, type ObservationBuildOptions } from './observation/index.js';
+import { buildScriptedReport, type ScriptedReport } from './scripted/report.js';
+import { runScriptedScenario, type ScriptedRunLimits, type ScriptedRunOptions } from './scripted/run.js';
 import { startWatchServer } from './watch/index.js';
 
 interface Job { abort: AbortController; done: Promise<void>; state: 'running' | 'finished' }
 
 export const startLimitsSchema = z.strictObject({
-  maxSteps: z.number().int().min(1).max(1000).optional(),
+  maxSteps: z.number().int().min(1).max(100).optional(),
   wallTimeMs: z.number().int().min(1).max(3_600_000).optional(),
 });
 
@@ -24,17 +24,18 @@ export class BridgeService {
   readonly baseDir: string;
   constructor(private readonly options: {
     baseDir: string;
-    createDriver: (scenario: RunScenario) => DeviceDriver;
-    createJudge: (scenario: RunScenario) => JevJudge;
-    policy?: RunLimits;
-    observation?: ObservationBuildOptions;
+    createDriver: (scenario: ScriptedScenario) => DeviceDriver;
+    createJudge: (scenario: ScriptedScenario) => ScriptedJudge;
+    policy?: ScriptedRunLimits;
+    /** Only the pinned MobileBuildMCP driver may enable its proven tap alias rule. */
+    tapAliasRule?: ScriptedRunOptions['tapAliasRule'];
   }) { this.baseDir = resolve(options.baseDir); }
 
   async start(input: unknown, requestedLimits: unknown = {}): Promise<{ runId: string; watchUrl: string }> {
     if (this.stopping) throw new Error('Bridge is shutting down');
-    const scenario = parseScenario(input);
+    const scenario = parseScriptedScenario(input);
     const parsedLimits = startLimitsSchema.parse(requestedLimits);
-    const limits: RunLimits = { ...this.options.policy,
+    const limits: ScriptedRunLimits = { ...this.options.policy,
       ...(parsedLimits.maxSteps === undefined ? {} : { maxSteps: parsedLimits.maxSteps }),
       ...(parsedLimits.wallTimeMs === undefined ? {} : { wallTimeMs: parsedLimits.wallTimeMs }),
     };
@@ -42,19 +43,15 @@ export class BridgeService {
     const judge = this.options.createJudge(scenario);
     if (this.stopping) throw new Error('Bridge is shutting down');
     const runId = randomUUID();
-    const values = scenario.checkpoints
-      ? scenario.checkpoints.flatMap(checkpoint => Object.values(checkpoint.values ?? {}))
-      : Object.values(scenario.values);
-    const log = await createRunLog(this.baseDir, runId, { values });
+    const log = await createRunLog(this.baseDir, runId, { values: Object.values(scenario.values) });
     if (this.stopping) throw new Error('Bridge is shutting down');
     this.startingWatch ??= startWatchServer(this.baseDir);
     this.watch = await this.startingWatch;
     if (this.stopping) throw new Error('Bridge is shutting down');
     const job: Job = { abort: new AbortController(), done: Promise.resolve(), state: 'running' };
     this.jobs.set(runId, job);
-    job.done = runScenario({ runId, scenario, driver, judge, log, signal: job.abort.signal,
-      observationBuilder: buildObservation, limits,
-      ...(this.options.observation ? { observationOptions: this.options.observation } : {}),
+    job.done = runScriptedScenario({ runId, scenario, driver, judge, log, signal: job.abort.signal, limits,
+      ...(this.options.tapAliasRule ? { tapAliasRule: this.options.tapAliasRule } : {}),
     }).then(() => { job.state = 'finished'; }, async () => {
       // Never serialize upstream exceptions, which can carry screen text or credentials.
       try {
@@ -68,7 +65,7 @@ export class BridgeService {
     return { runId, watchUrl: `${this.watch.url}&run=${runId}` };
   }
 
-  async status(runId: string, waitMs = 0, signal?: AbortSignal): Promise<{ state: 'running' | 'finished' | 'interrupted'; report: RunReport }> {
+  async status(runId: string, waitMs = 0, signal?: AbortSignal): Promise<{ state: 'running' | 'finished' | 'interrupted'; report: ScriptedReport }> {
     validateRunId(runId);
     if (!Number.isInteger(waitMs) || waitMs < 0 || waitMs > 45_000) throw new Error('Invalid report wait');
     const job = this.jobs.get(runId);
@@ -85,7 +82,7 @@ export class BridgeService {
     }
     const events = await readRunEvents(this.baseDir, runId);
     const state = this.jobs.get(runId)?.state ?? (events.some(event => event.type === 'verdict') ? 'finished' : 'interrupted');
-    return { state, report: buildReport(events) };
+    return { state, report: buildScriptedReport(events) };
   }
 
   async cancel(runId: string): Promise<void> {

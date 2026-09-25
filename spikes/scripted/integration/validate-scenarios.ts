@@ -61,15 +61,26 @@ for (const id of ['c01-nina-no-results', 'c02-nina-card-claim', 'c03-nolan-edit-
   const script = parseScriptedScenario(read(`spikes/scripted/integration/scenarios/${id}.json`));
   const step = script.steps[0]!;
   if (step.kind !== 'action') throw new Error(`${id}: expected initial action`);
-  for (const restored of ['launch-contacts-after-card', 'launch-contacts-after-list']) {
-    const restoredSearch = byId(restored);
-    assertScreenGuard(restoredSearch, step.guard, pinnedTapAlias);
-    resolveActionTarget(restoredSearch, step.action.selector, 'typeText', pinnedTapAlias);
+  const caseProbeEmpty = parseSnapshot(read('spikes/scripted/integration/setup-evidence/keyboard-after-boot-uppercase-2026-09-25T02-09-11-397Z.full.json').data, udid);
+  for (const accepted of [byId('launch-contacts-after-card'), byId('launch-contacts-after-list'), caseProbeEmpty]) {
+    assertScreenGuard(accepted, step.guard, pinnedTapAlias);
+    resolveActionTarget(accepted, step.action.selector, 'typeText', pinnedTapAlias);
   }
-  for (const excluded of ['s11-contacts-nolan-new-email-unsaved', 's12-contacts-nolan-new-email-saved']) {
-    try { assertScreenGuard(byId(excluded), step.guard, pinnedTapAlias); }
+  const editor = byId('s11-contacts-nolan-new-email-unsaved');
+  const savedCard = byId('s12-contacts-nolan-new-email-saved');
+  const oneEditorField = editor.elements.find(element => element.role === 'text-field' &&
+    element.state?.visible === true && element.actions.includes('typeText'));
+  if (!oneEditorField) throw new Error('Editor fixture has no actionable text field');
+  const editorWithOneField = { ...editor, elements: editor.elements.filter(element =>
+    element.role !== 'text-field' || element.ref === oneEditorField.ref) };
+  for (const [excluded, snapshot, expected] of [
+    ['saved card', savedCard, 'GUARD_FORBIDDEN'],
+    ['editor', editor, 'GUARD_AMBIGUOUS'],
+    ['editor with one field', editorWithOneField, 'GUARD_FORBIDDEN'],
+  ] as const) {
+    try { assertScreenGuard(snapshot, step.guard, pinnedTapAlias); }
     catch (error) {
-      if (error instanceof ScriptSelectionError && error.code.startsWith('GUARD_')) continue;
+      if (error instanceof ScriptSelectionError && error.code === expected) continue;
       throw error;
     }
     throw new Error(`${id}: first guard accepted ${excluded}`);
@@ -103,4 +114,4 @@ catch (error) {
   markerMissing = true;
 }
 if (!markerMissing) throw new Error('f03: cancellation marker already present');
-process.stdout.write(`Validated ${checked} guarded steps, six alternate Contacts starts, six rejected card/editor starts, and three fault setups against saved full simulator snapshots. No Jev calls.\n`);
+process.stdout.write(`Validated ${checked} guarded steps, nine alternate Contacts starts, nine rejected card/editor starts, and three fault setups against saved full simulator snapshots. No Jev calls.\n`);

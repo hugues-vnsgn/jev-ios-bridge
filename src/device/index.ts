@@ -4,7 +4,7 @@ import { constants } from 'node:fs';
 import { mkdir, open, readFile, unlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { isAbsolute, join, resolve } from 'node:path';
-import type { Action, DeviceDriver, DeviceMetrics, Element, RunScenario, Scenario, Snapshot } from '../contracts/index.js';
+import type { Action, ActionScenarioContext, DeviceDriver, DeviceMetrics, Element, PrepareScenarioContext, Snapshot } from '../contracts/index.js';
 
 type JsonObject = Record<string, unknown>;
 export type CliResult = { stdout: string; stderr: string; exitCode: number };
@@ -338,18 +338,19 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     }
   }
 
-  prepare(scenario: RunScenario, signal: AbortSignal): Promise<void> {
+  prepare(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void> {
     return this.trackOperation(() => this.prepareIssued(scenario, signal));
   }
 
-  private async prepareIssued(scenario: RunScenario, signal: AbortSignal): Promise<void> {
+  private async prepareIssued(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void> {
     if (this.releaseLock) throw new Error('Driver is already prepared');
     if (signal.aborted) throw signal.reason;
-    const deviceId = scenario.device?.udid ?? this.options.defaultUdid ?? await configuredUdid(this.options.cwd);
-    if (!deviceId) throw new DeviceCliError('NO_DEVICE', 'Set a dedicated simulator UDID in the scenario or MobileBuildMCP config');
-    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(deviceId)) {
+    const selectedDeviceId = scenario.device?.udid ?? this.options.defaultUdid ?? await configuredUdid(this.options.cwd);
+    if (!selectedDeviceId) throw new DeviceCliError('NO_DEVICE', 'Set a dedicated simulator UDID in the scenario or MobileBuildMCP config');
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(selectedDeviceId)) {
       throw new DeviceCliError('INVALID_DEVICE', 'Set a dedicated simulator UUID; device aliases are not supported');
     }
+    const deviceId = selectedDeviceId.toUpperCase();
     this.releaseLock = await acquireLock(this.options.lockRoot ?? join(tmpdir(), 'jev-ios-bridge-device-locks'), deviceId);
     this.referenceRefreshes = 0;
     this.referenceExpiries = 0;
@@ -401,11 +402,11 @@ export class MobileBuildMcpDriver implements DeviceDriver {
       ...(Object.keys(logTails).length ? { logTails } : {}) };
   }
 
-  act(action: Action, snapshot: Snapshot, scenario: Scenario, signal: AbortSignal): Promise<void> {
+  act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<void> {
     return this.trackOperation(() => this.actIssued(action, snapshot, scenario, signal));
   }
 
-  private async actIssued(action: Action, snapshot: Snapshot, scenario: Scenario, signal: AbortSignal): Promise<void> {
+  private async actIssued(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<void> {
     if (action.kind === 'wait') return;
     if (!('targetRef' in action)) throw new Error(`Cannot send ${action.kind} to device`);
     if (!this.deviceId || snapshot.deviceId !== this.deviceId) throw new Error('Snapshot belongs to a different device');

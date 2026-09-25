@@ -1,9 +1,57 @@
 {
-  "goal": "Add Apple and Bread, then open the order confirmation screen.",
   "app": { "bundleId": "dev.jevbridge.diagnostic" },
-  "assertions": [
-    { "id": "confirmation_open", "claim": "The Order complete confirmation screen is visible." },
-    { "id": "total_correct", "claim": "The confirmation shows a total of $5 for Apple and Bread." }
+  "preconditions": [
+    "Diagnostic App starts with Selected: None."
   ],
-  "values": {}
+  "values": {},
+  "steps": [
+    {
+      "id": "addApple",
+      "kind": "action",
+      "guard": {
+        "present": [
+          { "role": "text", "identifier": "selection.summary", "label": "Selected: None" },
+          { "role": "button", "identifier": "choose.apple", "label": "Add Apple ($2)" },
+          { "role": "button", "identifier": "choose.bread", "label": "Add Bread ($3)" }
+        ]
+      },
+      "action": { "kind": "tap", "selector": { "role": "button", "identifier": "choose.apple" } }
+    },
+    {
+      "id": "addBread",
+      "kind": "action",
+      "guard": {
+        "present": [
+          { "role": "text", "identifier": "selection.summary", "label": "Selected: Apple" },
+          { "role": "button", "identifier": "choose.bread", "label": "Add Bread ($3)" }
+        ]
+      },
+      "action": { "kind": "tap", "selector": { "role": "button", "identifier": "choose.bread" } }
+    },
+    {
+      "id": "finishOrder",
+      "kind": "action",
+      "guard": {
+        "present": [
+          { "role": "text", "identifier": "selection.summary", "label": "Selected: Apple, Bread" },
+          { "role": "button", "identifier": "order.complete" }
+        ]
+      },
+      "action": { "kind": "tap", "selector": { "role": "button", "identifier": "order.complete" } }
+    },
+    {
+      "id": "verify",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          { "role": "text", "identifier": "confirmation.title", "label": "Order complete" },
+          { "role": "text", "label": "Apple: $2" },
+          { "role": "text", "label": "Bread: $3" }
+        ]
+      },
+      "assertions": [
+        { "id": "total", "claim": "The Order complete confirmation shows Total: $5." }
+      ]
+    }
+  ]
 }

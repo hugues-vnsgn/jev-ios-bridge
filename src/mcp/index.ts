@@ -1,8 +1,8 @@
 import { McpServer } from '@modelcontextprotocol/server';
 import { z } from 'zod/v4';
-import { scenarioSchema } from '../scenario/index.js';
+import { scriptedScenarioSchema } from '../scripted/schema.js';
 import { BridgeService, startLimitsSchema } from '../service.js';
-import { renderReport } from '../report/index.js';
+import { renderScriptedReport } from '../scripted/report.js';
 
 const idInput = z.object({ runId: z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$/) });
 const result = (text: string) => ({ content: [{ type: 'text' as const, text }] });
@@ -11,8 +11,8 @@ const failed = () => ({ ...result('Bridge operation failed. Check the run id and
 export function createMcpServer(service: BridgeService): McpServer {
   const server = new McpServer({ name: 'jev-ios-bridge', version: '0.1.0' });
   server.registerTool('start_scenario', {
-    description: 'Start an iOS verification scenario. Returns a run id and local watch URL. Poll get_report for completion; use cancel_run to stop. Screen text and supplied values are sent to TypeSafe.',
-    inputSchema: z.object({ scenario: scenarioSchema, limits: startLimitsSchema.optional() }),
+    description: 'Start an explicit iOS action script with assertion checkpoints. Returns a run id and local watch URL. Poll get_report for completion; use cancel_run to stop. TypeSafe receives observed screen text and current assertion claims. Typed values go to device actions and may later appear in screen text; screenshots stay local.',
+    inputSchema: z.object({ scenario: scriptedScenarioSchema, limits: startLimitsSchema.optional() }),
   }, async ({ scenario, limits }) => {
     try { return result(JSON.stringify(await service.start(scenario, limits))); } catch { return failed(); }
   });
@@ -24,7 +24,7 @@ export function createMcpServer(service: BridgeService): McpServer {
     try {
       const { state, report } = await service.status(runId, waitMs, ctx.mcpReq.signal);
       if (state === 'running') return result(`Status: running\nRun: ${runId}\nRecorded steps: ${report.steps}. Call get_report with waitMs: 45000 to wait for completion.`);
-      return result(`Status: ${state}\n${renderReport(report)}\nFull local evidence: ${service.baseDir}/${runId}/run.jsonl`);
+      return result(`Status: ${state}\n${renderScriptedReport(report)}\nFull local evidence: ${service.baseDir}/${runId}/run.jsonl`);
     } catch { return failed(); }
   });
   server.registerTool('cancel_run', {

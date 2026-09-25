@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { parseScriptedScenario } from '../spikes/scripted/schema.js';
+import { parseScriptedScenario } from '../src/scripted/schema.js';
 
 const scenario = {
   app: { bundleId: 'dev.example.Sample' },

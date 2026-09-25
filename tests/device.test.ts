@@ -172,6 +172,31 @@ test('locks a device across drivers and releases it after close', async () => {
   }
 });
 
+test('mixed-case spellings of one simulator UUID share the lock and canonical device identity', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-case-lock-'));
+  const calls: string[][] = [];
+  const runner: CliRunner = async args => {
+    calls.push(args);
+    return { stdout: commandEnvelope(args, args.includes('snapshot-ui') ? capture() : {}), stderr: '', exitCode: 0 };
+  };
+  const first = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const second = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  try {
+    await first.prepare({ app: scenario.app, device: { udid: udid.toLowerCase() } }, new AbortController().signal);
+    const observed = await first.observe(new AbortController().signal);
+    assert.equal(observed.deviceId, udid);
+    await assert.rejects(second.prepare({ app: scenario.app, device: { udid } }, new AbortController().signal),
+      (error: unknown) => error instanceof DeviceCliError && error.code === 'DEVICE_BUSY');
+    assert.ok(calls.every(args => !args.includes(udid.toLowerCase())));
+    await first.close(new AbortController().signal);
+    await second.prepare({ app: scenario.app, device: { udid } }, new AbortController().signal);
+  } finally {
+    await first.close(new AbortController().signal);
+    await second.close(new AbortController().signal);
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
 test('normalizes full captures and preserves structured CLI errors', () => {
   const snapshot = parseSnapshot({ capture: { type: 'runtime-snapshot', protocol: 'rs/1', seq: 4,
     elements: [{ ref: 'e3', role: 'text-field', label: 'Name', state: { enabled: true, visible: true }, actions: ['tap', 'typeText'] }] } }, udid);

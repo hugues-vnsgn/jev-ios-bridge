@@ -52,7 +52,6 @@ const contactsList = present(
 const contactsSearchReady = {
   present: [
     { role: 'application', label: 'Contacts' },
-    { role: 'image', identifier: 'magnifyingglass', label: 'Search' },
     { role: 'text-field' },
   ],
   absent: [

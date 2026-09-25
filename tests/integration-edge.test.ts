@@ -5,25 +5,26 @@ import { mkdtemp, readFile, rm, appendFile, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
-import type { DeviceDriver, JevJudge, Judgment, Scenario, Snapshot } from '../src/contracts/index.js';
+import type { DeviceDriver, Snapshot } from '../src/contracts/index.js';
+import type { ScriptedJudge } from '../src/scripted/contracts.js';
 import { createRunLog, readRunEvents } from '../src/log/index.js';
 import { buildReport } from '../src/report/index.js';
 import { BridgeService } from '../src/service.js';
 import { startWatchServer } from '../src/watch/index.js';
 
 const execute = promisify(execFile);
-const scenario: Scenario = {
-  goal: 'Home is visible', app: { bundleId: 'com.example.app' },
-  assertions: [{ id: 'visible', claim: 'Home is visible' }], values: {},
-};
+const scenario = (id = 'verify') => ({ app: { bundleId: 'com.example.app' }, values: {},
+  steps: [{ id, kind: 'checkpoint', guard: { present: [{ role: 'text', label: 'Home' }] },
+    assertions: [{ id: 'visible', claim: 'Home is visible' }] }],
+});
 const snapshot: Snapshot = {
   deviceId: 'fake', capturedAt: Date.now(), expiresAt: Date.now() + 60_000,
-  sequence: 1, elements: [], truncated: false,
+  sequence: 1, elements: [{ ref: 'home', role: 'text', label: 'Home',
+    frame: { x: 0, y: 0, width: 100, height: 30 },
+    state: { visible: true, enabled: true }, actions: [] }], truncated: false,
 };
-const success: Judgment = {
-  choice: 'stop-goal', confidence: 1, probabilities: { 'stop-goal': 1 }, goalReached: 1,
-  assertions: { visible: 1 }, inputTokens: 3, latencyMs: 1, model: 'fixture',
-};
+const success = { probabilities: { visible: 1 }, inputTokens: 3, latencyMs: 1,
+  model: 'jev-1.13.0' };
 
 function fakeDriver(overrides: Partial<DeviceDriver> = {}): DeviceDriver {
   return {
@@ -32,7 +33,7 @@ function fakeDriver(overrides: Partial<DeviceDriver> = {}): DeviceDriver {
   };
 }
 
-const judge: JevJudge = { async judge() { return success; } };
+const judge: ScriptedJudge = { async judge() { return success; } };
 
 async function finished(service: BridgeService, runId: string): Promise<Awaited<ReturnType<BridgeService['status']>>> {
   for (let i = 0; i < 100; i++) {
@@ -47,7 +48,7 @@ test('simultaneous starts keep distinct logs and share one watch server', async 
   const root = await mkdtemp(join(tmpdir(), 'jev-two-starts-'));
   const service = new BridgeService({ baseDir: root, createDriver: () => fakeDriver(), createJudge: () => judge });
   try {
-    const [left, right] = await Promise.all([service.start(scenario), service.start(scenario)]);
+    const [left, right] = await Promise.all([service.start(scenario()), service.start(scenario())]);
     assert.notEqual(left.runId, right.runId);
     assert.equal(new URL(left.watchUrl).port, new URL(right.watchUrl).port);
     const [a, b] = await Promise.all([finished(service, left.runId), finished(service, right.runId)]);
@@ -61,12 +62,12 @@ test('simultaneous starts keep distinct logs and share one watch server', async 
 test('cancel waits for cleanup and leaves a recoverable inconclusive report', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-cancel-'));
   let closed = false;
-  const pending: JevJudge = { judge: async (_scenario, _observation, signal) => new Promise<Judgment>((_resolve, reject) => {
+  const pending: ScriptedJudge = { judge: async (_assertions, _observation, signal) => new Promise<never>((_resolve, reject) => {
     signal.addEventListener('abort', () => reject(signal.reason), { once: true });
   }) };
   const service = new BridgeService({ baseDir: root, createDriver: () => fakeDriver({ async close() { closed = true; } }), createJudge: () => pending });
   try {
-    const { runId } = await service.start(scenario);
+    const { runId } = await service.start(scenario());
     await service.cancel(runId);
     const status = await service.status(runId);
     assert.equal(status.state, 'finished');
@@ -80,20 +81,20 @@ test('failed prepare and failed cleanup each record an inconclusive verdict', as
   const root = await mkdtemp(join(tmpdir(), 'jev-errors-'));
   let prepareClosed = false;
   const service = new BridgeService({ baseDir: root,
-    createDriver: (selected) => selected.goal === 'Prepare fails'
+    createDriver: (selected) => selected.steps[0]?.id === 'prepareFails'
       ? fakeDriver({ async prepare() { throw new Error('launch failed'); }, async close() { prepareClosed = true; } })
       : fakeDriver({ async close() { throw new Error('stop failed'); } }),
     createJudge: () => judge,
   });
   try {
-    const prepare = await service.start({ ...scenario, goal: 'Prepare fails' });
-    const cleanup = await service.start({ ...scenario, goal: 'Cleanup fails' });
+    const prepare = await service.start(scenario('prepareFails'));
+    const cleanup = await service.start(scenario('cleanupFails'));
     const [a, b] = await Promise.all([finished(service, prepare.runId), finished(service, cleanup.runId)]);
     assert.equal(prepareClosed, true);
     assert.equal(a.report.verdict, 'inconclusive');
     assert.equal(b.report.verdict, 'inconclusive');
-    assert.match(a.report.reason, /launch failed/);
-    assert.match(b.report.reason, /cleanup failed/);
+    assert.equal(a.report.reason, 'EXECUTION_ERROR');
+    assert.equal(b.report.reason, 'CLEANUP_FAILED');
     assert.ok(a.report.events.some(event => event.type === 'error'));
     assert.ok(b.report.events.some(event => event.type === 'error'));
   } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
@@ -118,7 +119,7 @@ test('service preserves the run handle and inconclusive verdict when screenshot 
     createJudge: () => judge,
   });
   try {
-    const { runId } = await service.start(scenario);
+    const { runId } = await service.start(scenario());
     const status = await finished(service, runId);
     assert.equal(status.report.verdict, 'inconclusive');
     assert.equal(status.report.events.at(-1)?.type, 'verdict');
@@ -209,7 +210,7 @@ test('service close racing with start prevents a job from escaping shutdown', as
     createJudge: () => judge,
   });
   try {
-    await assert.rejects(service.start(scenario), /shutting down/);
+    await assert.rejects(service.start(scenario()), /shutting down/);
     await closing;
   } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
 });

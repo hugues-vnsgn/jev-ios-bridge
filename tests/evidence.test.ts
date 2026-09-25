@@ -3,8 +3,9 @@ import assert from 'node:assert/strict';
 import { mkdtemp, readFile, rm, appendFile, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { createRunLog, readRunEvents } from '../src/log/index.js';
+import { createRunLog, readRunEvents, redact } from '../src/log/index.js';
 import { buildReport, renderReport } from '../src/report/index.js';
+import { buildScriptedReport } from '../src/scripted/report.js';
 import { startWatchServer } from '../src/watch/index.js';
 
 test('events are ordered, private values redacted, and report uses recorded verdict', async () => {
@@ -24,6 +25,102 @@ test('events are ordered, private values redacted, and report uses recorded verd
     assert.doesNotMatch(await readFile(join(root, 'test/run.jsonl'), 'utf8'), /private-value/);
     await assert.rejects(createRunLog(root, 'test'));
     await assert.rejects(readRunEvents(root, '../test'));
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('short typed values redact screen evidence without breaking scripted event structure', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-structural-redaction-'));
+  try {
+    const log = await createRunLog(root, 'scripted', { values: ['a', 'e'] });
+    await log.append('started', { mode: 'scripted', bundleId: 'dev.example.app',
+      plannedSteps: [{ id: 'tap', kind: 'action' }, { id: 'verify', kind: 'checkpoint' }] });
+    await log.append('step', { step: 1, stepId: 'tap', kind: 'action',
+      observationSummary: 'a e', selector: { label: 'a' } });
+    await log.append('action', { step: 1, stepId: 'tap', action: 'tap', resolvedRef: 'e1' });
+    await log.append('judgment', { step: 2, stepId: 'verify', model: 'jev-1.13.0',
+      probabilities: { claim: 0.04 } });
+    await log.append('checkpoint', { step: 2, stepId: 'verify', status: 'failed',
+      assertions: [{ id: 'claim', claim: 'a e', probability: 0.04 }] });
+    await log.append('verdict', { verdict: 'failed', reason: 'ASSERTION_FALSE', steps: 2 });
+    const events = await log.read();
+    assert.equal(events[0]?.data.mode, 'scripted');
+    assert.notEqual(events[0]?.data.bundleId, 'dev.example.app');
+    const planned = events[0]?.data.plannedSteps as Array<{ id: string; kind: string }>;
+    assert.deepEqual(planned.map(step => step.kind), ['action', 'checkpoint']);
+    assert.match(planned[0]!.id, /^redacted_[a-f0-9]{32}$/);
+    assert.match(planned[1]!.id, /^redacted_[a-f0-9]{32}$/);
+    assert.notEqual(planned[0]!.id, planned[1]!.id);
+    assert.equal(events[1]?.data.kind, 'action');
+    assert.equal(events[1]?.data.stepId, planned[0]!.id);
+    assert.equal(events[2]?.data.action, 'tap');
+    assert.equal(events[2]?.data.stepId, planned[0]!.id);
+    assert.equal(events[3]?.data.stepId, planned[1]!.id);
+    assert.equal(events[3]?.data.model, 'jev-1.13.0');
+    assert.equal(events[4]?.data.stepId, planned[1]!.id);
+    const assertion = (events[4]?.data.assertions as Array<{ id: string; claim: string; probability: number }>)[0]!;
+    assert.match(assertion.id, /^redacted_[a-f0-9]{32}$/);
+    assert.deepEqual(events[3]?.data.probabilities, { [assertion.id]: 0.04 });
+    assert.equal(assertion.claim, '[REDACTED] [REDACTED]');
+    assert.equal(assertion.probability, 0.04);
+    assert.equal(events[1]?.data.observationSummary, '[REDACTED] [REDACTED]');
+    assert.deepEqual(events[1]?.data.selector, { label: '[REDACTED]' });
+    const report = buildScriptedReport(events);
+    assert.equal(report.verdict, 'failed');
+    assert.equal(report.checkpoints[0]?.stepId, planned[1]!.id);
+    assert.equal(report.checkpoints[0]?.assertions[0]?.id, assertion.id);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('two sensitive assertion IDs stay distinct and correlate with Noul answers', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-id-redaction-'));
+  try {
+    const log = await createRunLog(root, 'ids', { values: ['a', 'b'] });
+    await log.append('started', { mode: 'scripted' });
+    await log.append('judgment', { stepId: 'verify', probabilities: { a: 0.99, b: 0.01 } });
+    await log.append('checkpoint', { stepId: 'verify', status: 'failed', assertions: [
+      { id: 'a', claim: 'a is visible', probability: 0.99 },
+      { id: 'b', claim: 'b is visible', probability: 0.01 },
+    ] });
+    await log.append('verdict', { verdict: 'failed', reason: 'ASSERTION_FALSE', steps: 1 });
+    const events = await log.read();
+    const assertions = events[2]?.data.assertions as Array<{ id: string; claim: string; probability: number }>;
+    assert.equal(new Set(assertions.map(item => item.id)).size, 2);
+    assert.ok(assertions.every(item => /^redacted_[a-f0-9]{32}$/.test(item.id)));
+    assert.deepEqual(Object.keys(events[1]?.data.probabilities as object), assertions.map(item => item.id));
+    assert.deepEqual(Object.values(events[1]?.data.probabilities as object), [0.99, 0.01]);
+    assert.ok(assertions.every(item => item.claim.includes('[REDACTED]')));
+    assert.equal(buildScriptedReport(events).checkpoints[0]?.assertions.length, 2);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('unknown protocol-looking strings and regex characters remain literal-redacted', () => {
+  assert.deepEqual(redact({ kind: 'a+b', action: 'a+b', status: 'a+b', code: 'a+b',
+    model: 'a+b', claim: 'a+b and a.b', observationSummary: 'E' }, ['a+b', 'a.b', 'E']), {
+    kind: '[REDACTED]', action: '[REDACTED]', status: '[REDACTED]',
+    code: '[REDACTED]', model: '[REDACTED]',
+    claim: '[REDACTED] and [REDACTED]', observationSummary: '[REDACTED]',
+  });
+});
+
+test('legacy checkpoint and option IDs are pseudonymized consistently across events', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-legacy-id-redaction-'));
+  try {
+    const log = await createRunLog(root, 'legacy', { values: ['a', 'b'] });
+    await log.append('started', { checkpoints: [{ id: 'a', goal: 'b',
+      assertions: [{ id: 'b', claim: 'b is visible' }] }] });
+    await log.append('judgment', { checkpointId: 'a', judgment: {
+      choice: 'type:e1:a', probabilities: { 'type:e1:a': 0.8 }, assertions: { b: 0.01 },
+    } });
+    const events = await log.read();
+    const checkpoint = (events[0]?.data.checkpoints as Array<{ id: string; assertions: Array<{ id: string }> }>)[0]!;
+    const judgment = events[1]?.data.judgment as { choice: string; probabilities: Record<string, number>;
+      assertions: Record<string, number> };
+    assert.equal(events[1]?.data.checkpointId, checkpoint.id);
+    assert.match(checkpoint.id, /^redacted_[a-f0-9]{32}$/);
+    assert.match(checkpoint.assertions[0]!.id, /^redacted_[a-f0-9]{32}$/);
+    assert.equal(judgment.choice, Object.keys(judgment.probabilities)[0]);
+    assert.deepEqual(judgment.assertions, { [checkpoint.assertions[0]!.id]: 0.01 });
+    assert.doesNotMatch(await readFile(join(root, 'legacy/run.jsonl'), 'utf8'), /type:e1:a|"goal":"b"/);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 

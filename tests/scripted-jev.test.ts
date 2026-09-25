@@ -2,8 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { TypeSafeClient } from '@typesafe-ai/sdk';
 import type { Assertion, Snapshot } from '../src/contracts/index.js';
-import { buildAssertionRequest, createAssertionJudge, parseAssertionResult, ScriptedJevError } from '../spikes/scripted/jev.js';
-import { renderAssertionState, ScriptedObservationError } from '../spikes/scripted/observe.js';
+import { buildAssertionRequest, createAssertionJudge, parseAssertionResult, ScriptedJevError } from '../src/scripted/jev.js';
+import { renderAssertionState, ScriptedObservationError } from '../src/scripted/observe.js';
 
 const assertions: Assertion[] = [
   { id: 'a', claim: 'The saved card visibly shows Berlin.' },

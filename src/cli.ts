@@ -6,8 +6,8 @@ import { serveStdio } from '@modelcontextprotocol/server/stdio';
 import { BridgeService } from './service.js';
 import { createMcpServer } from './mcp/index.js';
 import { createMobileBuildMcpDriver } from './device/index.js';
-import { createJevJudge } from './jev/index.js';
-import { renderReport } from './report/index.js';
+import { createAssertionJudge } from './scripted/jev.js';
+import { renderScriptedReport } from './scripted/report.js';
 
 async function main(): Promise<void> {
   const parsed = parseArgs({ allowPositionals: true, options: {
@@ -16,7 +16,7 @@ async function main(): Promise<void> {
   } });
   const [command, argument] = parsed.positionals;
   if (parsed.values.help || (!command && !parsed.values.version)) {
-    console.log('jev-ios-bridge mcp | run <scenario.json> [--max-steps N] [--timeout-ms N] | report <run-id>\nSet TYPESAFE_API_KEY and JEV_DEVICE_UDID. Optional JEV_RUNS_DIR selects the local evidence directory.');
+    console.log('jev-ios-bridge mcp | run <script.json> [--max-steps N] [--timeout-ms N] | report <run-id>\nSet TYPESAFE_API_KEY and JEV_DEVICE_UDID. Optional JEV_RUNS_DIR selects the local evidence directory.');
     return;
   }
   if (parsed.values.version) { console.log('0.1.0'); return; }
@@ -31,7 +31,8 @@ async function main(): Promise<void> {
     createDriver: () => createMobileBuildMcpDriver({ cwd: process.cwd(),
       ...(process.env.JEV_DEVICE_UDID ? { defaultUdid: process.env.JEV_DEVICE_UDID } : {}),
       capture: 'full', screenshots: true }),
-    createJudge: () => createJevJudge(),
+    createJudge: () => createAssertionJudge(),
+    tapAliasRule: 'mobilebuildmcp-2.7.1',
   });
   let closing = false;
   const close = async () => {
@@ -49,7 +50,7 @@ async function main(): Promise<void> {
   try {
     if (command === 'report' && argument) {
       const status = await service.status(argument);
-      console.log(`Status: ${status.state}\n${renderReport(status.report)}`);
+      console.log(`Status: ${status.state}\n${renderScriptedReport(status.report)}\nFull local evidence: ${service.baseDir}/${argument}/run.jsonl`);
     } else if (command === 'run' && argument) {
       const { runId, watchUrl } = await service.start(JSON.parse(await readFile(resolve(argument), 'utf8')), limits);
       console.error(`Watch: ${watchUrl}`);
@@ -57,7 +58,7 @@ async function main(): Promise<void> {
         await new Promise(done => setTimeout(done, 500));
         const { state, report } = await service.status(runId);
         if (state !== 'running') {
-          console.log(renderReport(report));
+          console.log(`${renderScriptedReport(report)}\nFull local evidence: ${service.baseDir}/${runId}/run.jsonl`);
           process.exitCode = report.verdict === 'passed' ? 0 : report.verdict === 'failed' ? 1 : 2;
           break;
         }
