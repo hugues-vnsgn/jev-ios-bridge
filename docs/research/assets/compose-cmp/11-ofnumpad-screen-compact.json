@@ -1,0 +1,55 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "0csor8x",
+      "seq": 63,
+      "count": 49,
+      "targets": [
+        "e32|typeText|text-field||2.500.000|numberInput.field",
+        "e39|typeText|text-field||1,234.56|numberInput.field",
+        "e45|typeText|text-field||8.00|numberInput.field",
+        "e16|tap|button|modal-perf||tabModalPerf",
+        "e18|tap|button|no-host||tabNoHostKeypad",
+        "e20|tap|button|ofnumpad||tabOFNumpad",
+        "e22|tap|button|☀||toggleTheme"
+      ],
+      "scroll": [
+        "e10|swipe|scroll-view|||"
+      ],
+      "text": [
+        "e17|text|text|modal-perf||",
+        "e19|text|text|no-host||",
+        "e21|text|text|ofnumpad||",
+        "e23|text|text|☀||",
+        "e26|text|text|Settlement Request||",
+        "e28|text|text|Amount *||",
+        "e33|text|text|VND||",
+        "e34|text|text|Tối đa 12 chữ số · tự chèn dấu phân cách nghìn||",
+        "e35|text|text|Amount (USD)||",
+        "e40|text|text|USD||",
+        "e41|text|text|VAT rate||",
+        "e46|text|text|%||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e16\"},{\"action\":\"tap\",\"elementRef\":\"e18\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e16",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e10 --direction up --distance 0.5"
+  ]
+}

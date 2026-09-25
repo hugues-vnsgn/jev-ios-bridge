@@ -28,6 +28,9 @@ A reviewed **v1.0.0 release spec**, handed off to Codex to execute. It records t
 
 ## Decisions so far
 
+- [Performance target and tuning plan](issues/06-performance-target.md): 1.0 drops `npx`, reuses MobileBuildMCP's post-action capture, and screenshots concurrently; no long-lived client. Pass means at least 30% faster prepared execution per benchmark script, one run each, with unchanged verdicts.
+- [Live Compose capture: settle the open questions on a real simulator](issues/11-live-compose-capture.md): on the owner's `cmp` demo (Compose Multiplatform 1.11.1), `testTag` reaches `identifier`, text fields are `text-field`, and empty Compose fields omit `value`. Merged buttons duplicate their label on a text child, so guards need identifier or role. No stale-element crash occurred. The app's number fields all share one identifier, and its launch screen animates for ~25 s. [Findings](../../docs/research/compose-cmp-capture.md).
+- [Code and design review of v0.1.0 before a stability promise](issues/02-code-and-design-review.md): no false-pass path found. `value: ''` selectors never match, ADR-0004 is unimplemented, a retained device lock can only be cleared by deleting its file by hand, 745 lines of dead autonomous-design code ship, and the surfaces to freeze are unversioned. Don't freeze the driver seam before tuning option B is decided. [Review](code-review.md).
 - [Where bridge time goes](issues/01-where-bridge-time-goes.md): Jev is 3% of step time. `npx` adds ~0.5 s to every device command (~26% of recorded time), CLI startup ~0.33 s more, and each action already returns a settled capture that the bridge discards. Ranked options: resolved binary, capture reuse, concurrent screenshot, long-lived client. [Findings](../../docs/research/bridge-latency.md).
 - [Assertion policy for 1.0](issues/07-assertion-policy.md): 0.9/0.1 fixed; a confidently false claim now fails even beside uncertain ones; one judgment per checkpoint, no re-asks; claim rules taught, not enforced; model pinned per release behind a corpus gate; observation-shape experiment runs before 1.0 ([ADR-0004](../../docs/adr/0004-fixed-assertion-bounds-single-judgment.md)).
 - [Compose Multiplatform on iOS through MobileBuildMCP](issues/04-compose-multiplatform-on-ios.md): `testTag` maps to the accessibility identifier with no opt-in since CMP 1.8.0; recommend 1.12.1+ and unique tags on actionable nodes; no bridge change expected. Candidate app: Alkaa (pinned fork). [Findings](../../docs/research/compose-multiplatform-ios.md); nine questions await a live capture.
@@ -69,9 +72,9 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T03,T04,T07 resolved
-    class T02,T06,T11 frontier
-    class T05,T08,T09,T10 blocked
+    class T01,T02,T03,T04,T06,T07,T11 resolved
+    class T05 frontier
+    class T08,T09,T10 blocked
 ```
 <!-- route:end -->
 

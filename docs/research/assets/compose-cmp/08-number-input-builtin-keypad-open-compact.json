@@ -1,0 +1,71 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "144m7iz",
+      "seq": 53,
+      "count": 90,
+      "targets": [
+        "e29|typeText|text-field||1,234.50|numberInput.field",
+        "e35|typeText|text-field||2.500.000|numberInput.field",
+        "e41|typeText|text-field||1.234,500|numberInput.field",
+        "e47|typeText|text-field||42.00|numberInput.field",
+        "e53|typeText|text-field||Betrag eingeben|numberInput.field",
+        "e14|tap|button|number-input||tabNumberInput",
+        "e16|tap|button|fullscreen-modal||tabFullScreenModal",
+        "e18|tap|button|modal-perf||tabModalPerf",
+        "e55|tap|button|||",
+        "e62|tap|button|Fertig||numberInput.toolbar.done",
+        "e64|tap|button|1||numberInput.keypad.1",
+        "e66|tap|button|2||numberInput.keypad.2",
+        "e68|tap|button|3||numberInput.keypad.3",
+        "e70|tap|button|4||numberInput.keypad.4",
+        "e72|tap|button|5||numberInput.keypad.5",
+        "e74|tap|button|6||numberInput.keypad.6",
+        "e76|tap|button|7||numberInput.keypad.7",
+        "e78|tap|button|8||numberInput.keypad.8",
+        "e80|tap|button|9||numberInput.keypad.9",
+        "e82|tap|button|Decimal separator||numberInput.keypad.decimal",
+        "e84|tap|button|0||numberInput.keypad.0"
+      ],
+      "scroll": [
+        "e10|swipe|scroll-view|||"
+      ],
+      "text": [
+        "e15|text|text|number-input||",
+        "e17|text|text|fullscreen-modal||",
+        "e19|text|text|modal-perf||",
+        "e24|text|text|number-input on CMP||",
+        "e25|text|text|en-US, sig=2||",
+        "e30|text|text|value = 1234.5||",
+        "e31|text|text|vi-VN, sig=0 (đồng)||",
+        "e36|text|text|rawText='2500000' len=7 value=2500000.0||",
+        "e37|text|text|de-DE, sig=3||",
+        "e42|text|text|value = 1234.5||",
+        "e43|text|text|en-US, sig=2, unsigned||",
+        "e48|text|text|value = 42.0||",
+        "e49|text|text|de-DE, sig=2, built-in keypad||",
+        "e54|text|text|value = null||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e14\"},{\"action\":\"tap\",\"elementRef\":\"e16\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e14",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e10 --direction up --distance 0.5"
+  ]
+}

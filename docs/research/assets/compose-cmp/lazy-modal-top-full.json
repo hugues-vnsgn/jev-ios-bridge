@@ -1,0 +1,1819 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "protocol": "rs/1",
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+      "screenHash": "19k7l3o",
+      "seq": 4,
+      "capturedAtMs": 1790322659573,
+      "expiresAtMs": 1790322719573,
+      "elements": [
+        {
+          "ref": "e1",
+          "role": "application",
+          "label": "cmp",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e2",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e3",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e4",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e5",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e6",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e7",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e8",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e9",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e10",
+          "role": "scroll-view",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch",
+            "swipeWithin"
+          ]
+        },
+        {
+          "ref": "e11",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e12",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e13",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e14",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e15",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e16",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e17",
+          "role": "scroll-view",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch",
+            "swipeWithin"
+          ]
+        },
+        {
+          "ref": "e18",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e19",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e20",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e21",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e22",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e23",
+          "role": "text",
+          "label": "A: eager in modal · 1000000 rows",
+          "identifier": "perfModalTitle",
+          "frame": {
+            "x": 8,
+            "y": 70,
+            "width": 424,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e24",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 102,
+            "width": 440,
+            "height": 854
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e25",
+          "role": "text",
+          "label": "Row #10 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": -62.67,
+            "width": 313.67,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e26",
+          "role": "text",
+          "label": "id=10",
+          "frame": {
+            "x": 12,
+            "y": -38.67,
+            "width": 28.67,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e27",
+          "role": "text",
+          "label": "Row #11 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": -6.67,
+            "width": 311.67,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e28",
+          "role": "text",
+          "label": "id=11",
+          "frame": {
+            "x": 12,
+            "y": 17.33,
+            "width": 27,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e29",
+          "role": "text",
+          "label": "Row #12 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": 49.33,
+            "width": 313.33,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e30",
+          "role": "text",
+          "label": "id=12",
+          "frame": {
+            "x": 12,
+            "y": 73.33,
+            "width": 28.33,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e31",
+          "role": "text",
+          "label": "Row #13 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": 105.33,
+            "width": 313.67,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e32",
+          "role": "text",
+          "label": "id=13",
+          "frame": {
+            "x": 12,
+            "y": 129.33,
+            "width": 28.33,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e33",
+          "role": "text",
+          "label": "Row #14 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": 161.33,
+            "width": 313.67,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e34",
+          "role": "text",
+          "label": "id=14",
+          "frame": {
+            "x": 12,
+            "y": 185.33,
+            "width": 28.67,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e35",
+          "role": "text",
+          "label": "Row #15 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": 217.33,
+            "width": 313.33,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e36",
+          "role": "text",
+          "label": "id=15",
+          "frame": {
+            "x": 12,
+            "y": 241.33,
+            "width": 28.33,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e37",
+          "role": "text",
+          "label": "Row #16 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": 273.33,
+            "width": 313.67,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e38",
+          "role": "text",
+          "label": "id=16",
+          "frame": {
+            "x": 12,
+            "y": 297.33,
+            "width": 28.67,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e39",
+          "role": "text",
+          "label": "Row #17 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": 329.33,
+            "width": 313,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e40",
+          "role": "text",
+          "label": "id=17",
+          "frame": {
+            "x": 12,
+            "y": 353.33,
+            "width": 28,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e41",
+          "role": "text",
+          "label": "Row #18 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": 385.33,
+            "width": 313.67,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e42",
+          "role": "text",
+          "label": "id=18",
+          "frame": {
+            "x": 12,
+            "y": 409.33,
+            "width": 28.67,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e43",
+          "role": "text",
+          "label": "Row #19 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": 441.33,
+            "width": 313.67,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e44",
+          "role": "text",
+          "label": "id=19",
+          "frame": {
+            "x": 12,
+            "y": 465.33,
+            "width": 28.67,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e45",
+          "role": "text",
+          "label": "Row #20 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": 497.33,
+            "width": 315.33,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e46",
+          "role": "text",
+          "label": "id=20",
+          "frame": {
+            "x": 12,
+            "y": 521.33,
+            "width": 30,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e47",
+          "role": "text",
+          "label": "Row #21 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": 553.33,
+            "width": 313.33,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e48",
+          "role": "text",
+          "label": "id=21",
+          "frame": {
+            "x": 12,
+            "y": 577.33,
+            "width": 28.33,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e49",
+          "role": "text",
+          "label": "Row #22 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": 609.33,
+            "width": 315,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e50",
+          "role": "text",
+          "label": "id=22",
+          "frame": {
+            "x": 12,
+            "y": 633.33,
+            "width": 29.67,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e51",
+          "role": "text",
+          "label": "Row #23 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": 665.33,
+            "width": 315.33,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e52",
+          "role": "text",
+          "label": "id=23",
+          "frame": {
+            "x": 12,
+            "y": 689.33,
+            "width": 30,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e53",
+          "role": "text",
+          "label": "Row #24 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": 721.33,
+            "width": 315.33,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e54",
+          "role": "text",
+          "label": "id=24",
+          "frame": {
+            "x": 12,
+            "y": 745.33,
+            "width": 30,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e55",
+          "role": "text",
+          "label": "Row #25 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": 777.33,
+            "width": 315,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e56",
+          "role": "text",
+          "label": "id=25",
+          "frame": {
+            "x": 12,
+            "y": 801.33,
+            "width": 29.67,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e57",
+          "role": "text",
+          "label": "Row #26 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": 833.33,
+            "width": 315.33,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e58",
+          "role": "text",
+          "label": "id=26",
+          "frame": {
+            "x": 12,
+            "y": 857.33,
+            "width": 30,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e59",
+          "role": "text",
+          "label": "Row #27 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": 889.33,
+            "width": 314.67,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e60",
+          "role": "text",
+          "label": "id=27",
+          "frame": {
+            "x": 12,
+            "y": 913.33,
+            "width": 29.33,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e61",
+          "role": "text",
+          "label": "Row #28 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": 945.33,
+            "width": 315.33,
+            "height": 10.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e62",
+          "role": "text",
+          "label": "id=28",
+          "frame": {
+            "x": 12,
+            "y": 969.33,
+            "width": 30,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e63",
+          "role": "text",
+          "label": "Row #29 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": 1001.33,
+            "width": 315.33,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e64",
+          "role": "text",
+          "label": "id=29",
+          "frame": {
+            "x": 12,
+            "y": 1025.33,
+            "width": 30,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e65",
+          "role": "text",
+          "label": "Row #30 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": 1057.33,
+            "width": 315.67,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e66",
+          "role": "text",
+          "label": "id=30",
+          "frame": {
+            "x": 12,
+            "y": 1081.33,
+            "width": 30,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e67",
+          "role": "text",
+          "label": "Row #31 — payload string for realistic retained size",
+          "frame": {
+            "x": 12,
+            "y": -115,
+            "width": 313.67,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e68",
+          "role": "text",
+          "label": "id=31",
+          "frame": {
+            "x": 12,
+            "y": -91,
+            "width": 28.33,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        }
+      ],
+      "actions": [
+        {
+          "action": "longPress",
+          "elementRef": "e2"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e2"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e3"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e3"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e4"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e4"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e5"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e5"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e6"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e7"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e7"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e8"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e8"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e9"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e9"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e10"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e10"
+        },
+        {
+          "action": "swipeWithin",
+          "elementRef": "e10"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e11"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e11"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e12"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e12"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e13"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e13"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e14"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e14"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e15"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e15"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e16"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e16"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e17"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e17"
+        },
+        {
+          "action": "swipeWithin",
+          "elementRef": "e17"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e18"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e18"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e19"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e19"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e20"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e20"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e21"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e21"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e22"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e22"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e23",
+          "label": "A: eager in modal · 1000000 rows"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e23",
+          "label": "A: eager in modal · 1000000 rows"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e24"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e24"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e27",
+          "label": "Row #11 — payload string for realistic retained size"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e27",
+          "label": "Row #11 — payload string for realistic retained size"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e28",
+          "label": "id=11"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e28",
+          "label": "id=11"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e29",
+          "label": "Row #12 — payload string for realistic retained size"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e29",
+          "label": "Row #12 — payload string for realistic retained size"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e30",
+          "label": "id=12"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e30",
+          "label": "id=12"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e31",
+          "label": "Row #13 — payload string for realistic retained size"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e31",
+          "label": "Row #13 — payload string for realistic retained size"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e32",
+          "label": "id=13"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e32",
+          "label": "id=13"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e33",
+          "label": "Row #14 — payload string for realistic retained size"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e33",
+          "label": "Row #14 — payload string for realistic retained size"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e34",
+          "label": "id=14"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e34",
+          "label": "id=14"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e35",
+          "label": "Row #15 — payload string for realistic retained size"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e35",
+          "label": "Row #15 — payload string for realistic retained size"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e36",
+          "label": "id=15"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e36",
+          "label": "id=15"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e37",
+          "label": "Row #16 — payload string for realistic retained size"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e37",
+          "label": "Row #16 — payload string for realistic retained size"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e38",
+          "label": "id=16"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e38",
+          "label": "id=16"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e39",
+          "label": "Row #17 — payload string for realistic retained size"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e39",
+          "label": "Row #17 — payload string for realistic retained size"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e40",
+          "label": "id=17"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e40",
+          "label": "id=17"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e41",
+          "label": "Row #18 — payload string for realistic retained size"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e41",
+          "label": "Row #18 — payload string for realistic retained size"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e42",
+          "label": "id=18"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e42",
+          "label": "id=18"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e43",
+          "label": "Row #19 — payload string for realistic retained size"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e43",
+          "label": "Row #19 — payload string for realistic retained size"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e44",
+          "label": "id=19"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e44",
+          "label": "id=19"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e45",
+          "label": "Row #20 — payload string for realistic retained size"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e45",
+          "label": "Row #20 — payload string for realistic retained size"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e46",
+          "label": "id=20"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e46",
+          "label": "id=20"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e47",
+          "label": "Row #21 — payload string for realistic retained size"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e47",
+          "label": "Row #21 — payload string for realistic retained size"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e48",
+          "label": "id=21"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e48",
+          "label": "id=21"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e49",
+          "label": "Row #22 — payload string for realistic retained size"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e49",
+          "label": "Row #22 — payload string for realistic retained size"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e50",
+          "label": "id=22"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e50",
+          "label": "id=22"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e51",
+          "label": "Row #23 — payload string for realistic retained size"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e51",
+          "label": "Row #23 — payload string for realistic retained size"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e52",
+          "label": "id=23"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e52",
+          "label": "id=23"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e53",
+          "label": "Row #24 — payload string for realistic retained size"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e53",
+          "label": "Row #24 — payload string for realistic retained size"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e54",
+          "label": "id=24"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e54",
+          "label": "id=24"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e55",
+          "label": "Row #25 — payload string for realistic retained size"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e55",
+          "label": "Row #25 — payload string for realistic retained size"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e56",
+          "label": "id=25"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e56",
+          "label": "id=25"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e57",
+          "label": "Row #26 — payload string for realistic retained size"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e57",
+          "label": "Row #26 — payload string for realistic retained size"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e58",
+          "label": "id=26"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e58",
+          "label": "id=26"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e59",
+          "label": "Row #27 — payload string for realistic retained size"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e59",
+          "label": "Row #27 — payload string for realistic retained size"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e60",
+          "label": "id=27"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e60",
+          "label": "id=27"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e61",
+          "label": "Row #28 — payload string for realistic retained size"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e61",
+          "label": "Row #28 — payload string for realistic retained size"
+        }
+      ]
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e10 --direction up --distance 0.5"
+  ]
+}

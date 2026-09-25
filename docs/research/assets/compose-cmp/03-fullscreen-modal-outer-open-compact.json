@@ -1,0 +1,45 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "0d827p2",
+      "seq": 28,
+      "count": 31,
+      "targets": [
+        "e25|typeText|text-field|Type here (IME gate)||imeField",
+        "e28|tap|button|Open nested modal||openNested",
+        "e30|tap|button|Close outer||closeOuter"
+      ],
+      "scroll": [
+        "e10|swipe|scroll-view|||",
+        "e17|swipe|scroll-view|||"
+      ],
+      "text": [
+        "e23|text|text|OUTER MODAL||outerTitle",
+        "e24|text|text|The green must reach behind the status bar and past the home indicator.||",
+        "e26|text|text|Type here (IME gate)||",
+        "e29|text|text|Open nested modal||",
+        "e31|text|text|Close outer||"
+      ],
+      "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e28\"},{\"action\":\"tap\",\"elementRef\":\"e30\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e28",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e10 --direction up --distance 0.5"
+  ]
+}
