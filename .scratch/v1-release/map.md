@@ -28,6 +28,7 @@ A reviewed **v1.0.0 release spec**, handed off to Codex to execute. It records t
 
 ## Decisions so far
 
+- [Developer guide outline](issues/10-developer-guide-outline.md): `docs/guide/` with 11 numbered pages, SwiftUI (Weather) and Compose (BFSOne, read-only) worked examples, and reference pages; `docs/usage.md` folds in and is deleted, `README.md` shrinks; `/test-ios` links to installed guide paths; the tarball adds `docs/guide/`, `LICENSE`, `CHANGELOG.md`; **license MIT**. [Outline](guide-outline.md).
 - [Compose app evidence plan](issues/09-compose-evidence-plan.md): the real Compose app `BFSOne_Mobile_App` (CMP 1.9.0), run offline through a debug-only gallery shortcut the owner adds; six gallery scripts (four pass, one planted fail, one planted inconclusive), one run each; an unexpected verdict or any production request blocks 1.0; `cmp` is the fallback. The bridge gains optional `app.launchArgs` and rejects `value: ''`.
 - [The 1.0 stable contract](issues/08-stable-contract.md): scripts need `"version": 1`; `report.json` (not the prose) is the frozen report; reason codes and roles are bridge-owned lists; CLI exits 0/1/2/3; evidence names, envelope, event types, and the verdict event are frozen; semantic versioning; pinned MobileBuildMCP with a cheap upgrade check; golden-file contract tests gate every release. Adds the live log pane as a 1.0 requirement ([ADR-0005](../../docs/adr/0005-the-1-0-stability-contract.md)).
 - [Product assessment: is v0.1.0 worth a stable promise?](issues/05-product-assessment.md): **go, conditionally.** 1.0 serves repeatable checks kept in the repo. Five go conditions: fix the three review defects, implement ADR-0004, meet the speed target, pass the Compose checks, and remove dead code while versioning frozen surfaces. Slower-than-direct speed, prompt injection, non-English screens, and unmeasured authoring cost are documented limits.
@@ -59,6 +60,7 @@ flowchart LR
     T11["11 Live Compose capture<br/><small>task</small>"]
     T12["12 Live log pane<br/><small>prototype</small>"]
     T13["13 BFSOne evidence shortcut<br/><small>task</small>"]
+    T14["14 Data-handling statement for outside developers<br/><small>grilling</small>"]
     T01 --> T05
     T02 --> T05
     T03 --> T05
@@ -73,19 +75,20 @@ flowchart LR
     T04 --> T10
     T05 --> T10
     T04 --> T11
+    T12 --> T14
     classDef resolved fill:#e4e4e7,stroke:#a1a1aa,color:#52525b
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T06,T07,T08,T09,T11 resolved
-    class T10,T12,T13 frontier
+    class T01,T02,T03,T04,T05,T06,T07,T08,T09,T10,T11 resolved
+    class T12,T13 frontier
+    class T14 blocked
 ```
 <!-- route:end -->
 
 ## Not yet specified
 
 - **Release gates and the spec's assembly:** the checklist Codex must pass before tagging 1.0 (tests, re-run benchmarks, Compose evidence, clean install, docs walkthrough). Its shape depends on the contract, the performance target, and the evidence plan.
-- **Data-handling statement for outside developers:** what the guide must say about screen text going to TypeSafe and unredacted local screenshots before developers point this at real apps.
 - **Cost budget per run:** carried over from the previous map; a number for the docs once tuning changes the measurements.
 
 ## Out of scope
