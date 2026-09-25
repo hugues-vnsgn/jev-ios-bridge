@@ -1,35 +1,41 @@
 {
   "app": {
-    "bundleId": "com.apple.MobileAddressBook"
+    "bundleId": "dev.jevbridge.diagnostic"
   },
   "device": {
     "udid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
   },
   "preconditions": [
-    "Contacts list shows both Tessa Vale rows fully above the Search overlay and an empty Search field."
+    "Diagnostic App starts at Selected: None with distinct Apple and Bread buttons."
   ],
   "values": {},
   "steps": [
     {
-      "id": "tapAmbiguousTessa",
+      "id": "tapAmbiguousButton",
       "kind": "action",
       "guard": {
         "present": [
           {
-            "role": "application",
-            "label": "Contacts"
+            "role": "text",
+            "identifier": "selection.summary",
+            "label": "Selected: None"
           },
           {
-            "role": "text-field",
-            "value": "Search"
+            "role": "button",
+            "identifier": "choose.apple",
+            "label": "Add Apple ($2)"
+          },
+          {
+            "role": "button",
+            "identifier": "choose.bread",
+            "label": "Add Bread ($3)"
           }
         ]
       },
       "action": {
         "kind": "tap",
         "selector": {
-          "role": "button",
-          "label": "Contact photo for Tessa Vale"
+          "role": "button"
         }
       }
     },
@@ -39,19 +45,19 @@
       "guard": {
         "present": [
           {
-            "role": "application",
-            "label": "Contacts"
+            "role": "other",
+            "label": "Sample Shop"
           },
           {
-            "role": "text-field",
-            "value": "Search"
+            "role": "text",
+            "identifier": "selection.summary"
           }
         ]
       },
       "assertions": [
         {
           "id": "claim",
-          "claim": "The Contacts list is visible."
+          "claim": "The Sample Shop screen is open."
         }
       ]
     }

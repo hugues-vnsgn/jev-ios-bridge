@@ -1,0 +1,3559 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "protocol": "rs/1",
+      "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+      "screenHash": "0ztereu",
+      "seq": 59,
+      "capturedAtMs": 1790298045145,
+      "expiresAtMs": 1790298105145,
+      "elements": [
+        {
+          "ref": "e1",
+          "role": "application",
+          "label": "Contacts",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e2",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e3",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e4",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e5",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e6",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e7",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e8",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e9",
+          "role": "other",
+          "identifier": "Contacts",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 440,
+            "height": 54
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e10",
+          "role": "button",
+          "label": "Back",
+          "identifier": "BackButton",
+          "frame": {
+            "x": 20,
+            "y": 62,
+            "width": 44,
+            "height": 44
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e11",
+          "role": "other",
+          "label": "Contacts",
+          "frame": {
+            "x": 183.67,
+            "y": 72.67,
+            "width": 72.33,
+            "height": 22.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e12",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e13",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e14",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e15",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e16",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e17",
+          "role": "other",
+          "identifier": "ContactsListView",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch",
+            "swipeWithin"
+          ]
+        },
+        {
+          "ref": "e18",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e19",
+          "role": "other",
+          "frame": {
+            "x": -2,
+            "y": -100,
+            "width": 462,
+            "height": 160
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e20",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e21",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e22",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 210.8
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e23",
+          "role": "image",
+          "identifier": "AdditionalDimmingOverlay",
+          "frame": {
+            "x": -120,
+            "y": -166,
+            "width": 680,
+            "height": 332
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e24",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 146
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e25",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 210.8
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e26",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 210.8
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e27",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 210.8
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e28",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 210.8
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e29",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 210.8
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e30",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 210.8
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e31",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 210.8
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e32",
+          "role": "other",
+          "label": "Daniel Higgins Jr.",
+          "frame": {
+            "x": 2,
+            "y": 0,
+            "width": 418,
+            "height": 60
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e33",
+          "role": "button",
+          "label": "Contact photo for Daniel Higgins Jr.",
+          "frame": {
+            "x": 22,
+            "y": 10,
+            "width": 40,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e34",
+          "role": "image",
+          "frame": {
+            "x": 22,
+            "y": 10,
+            "width": 40,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e35",
+          "role": "text",
+          "label": "Daniel Higgins Jr.",
+          "frame": {
+            "x": 72,
+            "y": 19,
+            "width": 135,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e36",
+          "role": "other",
+          "frame": {
+            "x": -2,
+            "y": 60,
+            "width": 462,
+            "height": 160
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e37",
+          "role": "other",
+          "label": "Iris Moss",
+          "frame": {
+            "x": 2,
+            "y": 100,
+            "width": 418,
+            "height": 60
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e38",
+          "role": "button",
+          "label": "Contact photo for Iris Moss",
+          "frame": {
+            "x": 22,
+            "y": 110,
+            "width": 40,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e39",
+          "role": "image",
+          "frame": {
+            "x": 22,
+            "y": 110,
+            "width": 40,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e40",
+          "role": "text",
+          "label": "Iris Moss",
+          "frame": {
+            "x": 72,
+            "y": 119,
+            "width": 69.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e41",
+          "role": "other",
+          "frame": {
+            "x": 18,
+            "y": 100,
+            "width": 402,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e42",
+          "role": "other",
+          "label": "m",
+          "frame": {
+            "x": 0,
+            "y": 116,
+            "width": 440,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e43",
+          "role": "text",
+          "label": "M",
+          "frame": {
+            "x": 22,
+            "y": 126,
+            "width": 13,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e44",
+          "role": "slider",
+          "label": "Section index",
+          "frame": {
+            "x": 425,
+            "y": 116,
+            "width": 15,
+            "height": 754
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e45",
+          "role": "other",
+          "label": "Iris Moss",
+          "frame": {
+            "x": 2,
+            "y": 160,
+            "width": 418,
+            "height": 60
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e46",
+          "role": "button",
+          "label": "Contact photo for Iris Moss",
+          "frame": {
+            "x": 22,
+            "y": 170,
+            "width": 40,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e47",
+          "role": "image",
+          "frame": {
+            "x": 22,
+            "y": 170,
+            "width": 40,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e48",
+          "role": "text",
+          "label": "Iris Moss",
+          "frame": {
+            "x": 72,
+            "y": 179,
+            "width": 69.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e49",
+          "role": "other",
+          "frame": {
+            "x": 72,
+            "y": 159,
+            "width": 348,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e50",
+          "role": "other",
+          "frame": {
+            "x": -2,
+            "y": 220,
+            "width": 462,
+            "height": 160
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e51",
+          "role": "other",
+          "label": "r",
+          "frame": {
+            "x": 0,
+            "y": 220,
+            "width": 440,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e52",
+          "role": "text",
+          "label": "R",
+          "frame": {
+            "x": 22,
+            "y": 230,
+            "width": 9.67,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e53",
+          "role": "other",
+          "label": "Noah Reed",
+          "frame": {
+            "x": 2,
+            "y": 260,
+            "width": 418,
+            "height": 60
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e54",
+          "role": "button",
+          "label": "Contact photo for Noah Reed",
+          "frame": {
+            "x": 22,
+            "y": 270,
+            "width": 40,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e55",
+          "role": "image",
+          "frame": {
+            "x": 22,
+            "y": 270,
+            "width": 40,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e56",
+          "role": "text",
+          "label": "Noah Reed",
+          "frame": {
+            "x": 72,
+            "y": 279,
+            "width": 85.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e57",
+          "role": "other",
+          "frame": {
+            "x": 18,
+            "y": 260,
+            "width": 402,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e58",
+          "role": "other",
+          "label": "Noah Reed",
+          "frame": {
+            "x": 2,
+            "y": 320,
+            "width": 418,
+            "height": 60
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e59",
+          "role": "button",
+          "label": "Contact photo for Noah Reed",
+          "frame": {
+            "x": 22,
+            "y": 330,
+            "width": 40,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e60",
+          "role": "image",
+          "frame": {
+            "x": 22,
+            "y": 330,
+            "width": 40,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e61",
+          "role": "text",
+          "label": "Noah Reed",
+          "frame": {
+            "x": 72,
+            "y": 339,
+            "width": 85.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e62",
+          "role": "other",
+          "frame": {
+            "x": 72,
+            "y": 319,
+            "width": 348,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e63",
+          "role": "other",
+          "frame": {
+            "x": -2,
+            "y": 380,
+            "width": 462,
+            "height": 100
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e64",
+          "role": "other",
+          "label": "s",
+          "frame": {
+            "x": 0,
+            "y": 380,
+            "width": 440,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e65",
+          "role": "text",
+          "label": "S",
+          "frame": {
+            "x": 22,
+            "y": 390,
+            "width": 9.33,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e66",
+          "role": "other",
+          "label": "Mira Stone",
+          "frame": {
+            "x": 2,
+            "y": 420,
+            "width": 418,
+            "height": 60
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e67",
+          "role": "button",
+          "label": "Contact photo for Mira Stone",
+          "frame": {
+            "x": 22,
+            "y": 430,
+            "width": 40,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e68",
+          "role": "image",
+          "frame": {
+            "x": 22,
+            "y": 430,
+            "width": 40,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e69",
+          "role": "text",
+          "label": "Mira Stone",
+          "frame": {
+            "x": 72,
+            "y": 439,
+            "width": 84.33,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e70",
+          "role": "other",
+          "frame": {
+            "x": 18,
+            "y": 420,
+            "width": 402,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e71",
+          "role": "other",
+          "frame": {
+            "x": -2,
+            "y": 480,
+            "width": 462,
+            "height": 100
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e72",
+          "role": "other",
+          "label": "t",
+          "frame": {
+            "x": 0,
+            "y": 480,
+            "width": 440,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e73",
+          "role": "text",
+          "label": "T",
+          "frame": {
+            "x": 22,
+            "y": 490,
+            "width": 9.33,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e74",
+          "role": "other",
+          "label": "David Taylor",
+          "frame": {
+            "x": 2,
+            "y": 520,
+            "width": 418,
+            "height": 60
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e75",
+          "role": "button",
+          "label": "Contact photo for David Taylor",
+          "frame": {
+            "x": 22,
+            "y": 530,
+            "width": 40,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e76",
+          "role": "image",
+          "frame": {
+            "x": 22,
+            "y": 530,
+            "width": 40,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e77",
+          "role": "text",
+          "label": "David Taylor",
+          "frame": {
+            "x": 72,
+            "y": 539,
+            "width": 96,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e78",
+          "role": "other",
+          "frame": {
+            "x": 18,
+            "y": 520,
+            "width": 402,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e79",
+          "role": "other",
+          "frame": {
+            "x": -2,
+            "y": 580,
+            "width": 462,
+            "height": 160
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e80",
+          "role": "other",
+          "label": "v",
+          "frame": {
+            "x": 0,
+            "y": 580,
+            "width": 440,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e81",
+          "role": "text",
+          "label": "V",
+          "frame": {
+            "x": 22,
+            "y": 590,
+            "width": 10,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e82",
+          "role": "other",
+          "label": "Tessa Vale",
+          "frame": {
+            "x": 2,
+            "y": 620,
+            "width": 418,
+            "height": 60
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e83",
+          "role": "button",
+          "label": "Contact photo for Tessa Vale",
+          "frame": {
+            "x": 22,
+            "y": 630,
+            "width": 40,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e84",
+          "role": "image",
+          "frame": {
+            "x": 22,
+            "y": 630,
+            "width": 40,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e85",
+          "role": "text",
+          "label": "Tessa Vale",
+          "frame": {
+            "x": 72,
+            "y": 639,
+            "width": 82,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e86",
+          "role": "other",
+          "frame": {
+            "x": 18,
+            "y": 620,
+            "width": 402,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e87",
+          "role": "other",
+          "label": "Tessa Vale",
+          "frame": {
+            "x": 2,
+            "y": 680,
+            "width": 418,
+            "height": 60
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e88",
+          "role": "button",
+          "label": "Contact photo for Tessa Vale",
+          "frame": {
+            "x": 22,
+            "y": 690,
+            "width": 40,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e89",
+          "role": "image",
+          "frame": {
+            "x": 22,
+            "y": 690,
+            "width": 40,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e90",
+          "role": "text",
+          "label": "Tessa Vale",
+          "frame": {
+            "x": 72,
+            "y": 699,
+            "width": 82,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e91",
+          "role": "other",
+          "frame": {
+            "x": 72,
+            "y": 679,
+            "width": 348,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e92",
+          "role": "other",
+          "frame": {
+            "x": -2,
+            "y": 740,
+            "width": 462,
+            "height": 2012
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e93",
+          "role": "other",
+          "label": "z",
+          "frame": {
+            "x": 0,
+            "y": 740,
+            "width": 440,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e94",
+          "role": "text",
+          "label": "Z",
+          "frame": {
+            "x": 22,
+            "y": 750,
+            "width": 10,
+            "height": 20
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e95",
+          "role": "other",
+          "label": "Hank M. Zakroff",
+          "frame": {
+            "x": 2,
+            "y": 780,
+            "width": 418,
+            "height": 60
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e96",
+          "role": "button",
+          "label": "Contact photo for Hank M. Zakroff",
+          "frame": {
+            "x": 22,
+            "y": 790,
+            "width": 40,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e97",
+          "role": "image",
+          "frame": {
+            "x": 22,
+            "y": 790,
+            "width": 40,
+            "height": 40
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e98",
+          "role": "text",
+          "label": "Hank M. Zakroff",
+          "frame": {
+            "x": 72,
+            "y": 799,
+            "width": 126,
+            "height": 22.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e99",
+          "role": "other",
+          "frame": {
+            "x": 18,
+            "y": 780,
+            "width": 402,
+            "height": 1
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e100",
+          "role": "text",
+          "frame": {
+            "x": 0,
+            "y": 840,
+            "width": 440,
+            "height": 30
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e101",
+          "role": "slider",
+          "label": "Horizontal scroll bar, 1 page",
+          "value": "0%",
+          "frame": {
+            "x": 62,
+            "y": 837,
+            "width": 316,
+            "height": 30
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e102",
+          "role": "other",
+          "frame": {
+            "x": 65,
+            "y": 864,
+            "width": 310,
+            "height": 3
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e103",
+          "role": "slider",
+          "label": "Horizontal scroll bar, 1 page",
+          "value": "0%",
+          "frame": {
+            "x": 62,
+            "y": 837,
+            "width": 316,
+            "height": 30
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e104",
+          "role": "other",
+          "frame": {
+            "x": 65,
+            "y": 864,
+            "width": 310,
+            "height": 3
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e105",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e106",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e107",
+          "role": "other",
+          "label": "Toolbar",
+          "identifier": "Toolbar",
+          "frame": {
+            "x": 0,
+            "y": 870,
+            "width": 440,
+            "height": 86
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e108",
+          "role": "other",
+          "frame": {
+            "x": 28,
+            "y": 880,
+            "width": 384,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e109",
+          "role": "other",
+          "frame": {
+            "x": 28,
+            "y": 880,
+            "width": 384,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e110",
+          "role": "other",
+          "frame": {
+            "x": 28,
+            "y": 880,
+            "width": 0,
+            "height": 0
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e111",
+          "role": "other",
+          "frame": {
+            "x": 28,
+            "y": 880,
+            "width": 324,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e112",
+          "role": "other",
+          "frame": {
+            "x": 28,
+            "y": 880,
+            "width": 324,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e113",
+          "role": "other",
+          "frame": {
+            "x": 33,
+            "y": 885,
+            "width": 314,
+            "height": 38
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e114",
+          "role": "text-field",
+          "value": "Search",
+          "frame": {
+            "x": 33,
+            "y": 885,
+            "width": 314,
+            "height": 38
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "typeText",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e115",
+          "role": "button",
+          "label": "Dictate",
+          "identifier": "Dictate",
+          "frame": {
+            "x": 313.67,
+            "y": 893,
+            "width": 17.33,
+            "height": 22
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e116",
+          "role": "image",
+          "label": "Search",
+          "identifier": "magnifyingglass",
+          "frame": {
+            "x": 46,
+            "y": 894,
+            "width": 20.67,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e117",
+          "role": "button",
+          "label": "Dictate",
+          "identifier": "Dictate",
+          "frame": {
+            "x": 313.67,
+            "y": 893,
+            "width": 17.33,
+            "height": 22
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e118",
+          "role": "other",
+          "frame": {
+            "x": 364,
+            "y": 880,
+            "width": 48,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e119",
+          "role": "other",
+          "frame": {
+            "x": 364,
+            "y": 880,
+            "width": 48,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e120",
+          "role": "other",
+          "frame": {
+            "x": 369,
+            "y": 885,
+            "width": 38,
+            "height": 38
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e121",
+          "role": "other",
+          "frame": {
+            "x": 369,
+            "y": 885,
+            "width": 38,
+            "height": 38
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e122",
+          "role": "button",
+          "label": "Add",
+          "frame": {
+            "x": 369,
+            "y": 885,
+            "width": 38,
+            "height": 38
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e123",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e124",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e125",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e126",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e127",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 440,
+            "height": 956
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "action": "longPress",
+          "elementRef": "e2"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e2"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e3"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e3"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e4"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e4"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e5"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e5"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e6"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e7"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e7"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e8"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e8"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e9"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e9"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e10",
+          "label": "Back"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e10",
+          "label": "Back"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e10",
+          "label": "Back"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e11",
+          "label": "Contacts"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e11",
+          "label": "Contacts"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e12"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e12"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e13"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e13"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e14"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e14"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e15"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e15"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e16"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e16"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e17"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e17"
+        },
+        {
+          "action": "swipeWithin",
+          "elementRef": "e17"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e18"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e18"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e20"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e20"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e21"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e21"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e22"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e22"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e23"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e23"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e24"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e24"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e25"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e25"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e26"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e26"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e27"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e27"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e28"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e28"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e29"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e29"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e30"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e30"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e31"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e31"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e32",
+          "label": "Daniel Higgins Jr."
+        },
+        {
+          "action": "touch",
+          "elementRef": "e32",
+          "label": "Daniel Higgins Jr."
+        },
+        {
+          "action": "tap",
+          "elementRef": "e33",
+          "label": "Contact photo for Daniel Higgins Jr."
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e33",
+          "label": "Contact photo for Daniel Higgins Jr."
+        },
+        {
+          "action": "touch",
+          "elementRef": "e33",
+          "label": "Contact photo for Daniel Higgins Jr."
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e34"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e34"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e35",
+          "label": "Daniel Higgins Jr."
+        },
+        {
+          "action": "touch",
+          "elementRef": "e35",
+          "label": "Daniel Higgins Jr."
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e36"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e36"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e37",
+          "label": "Iris Moss"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e37",
+          "label": "Iris Moss"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e38",
+          "label": "Contact photo for Iris Moss"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e38",
+          "label": "Contact photo for Iris Moss"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e38",
+          "label": "Contact photo for Iris Moss"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e39"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e39"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e40",
+          "label": "Iris Moss"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e40",
+          "label": "Iris Moss"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e41"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e41"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e42",
+          "label": "m"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e42",
+          "label": "m"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e43",
+          "label": "M"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e43",
+          "label": "M"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e44",
+          "label": "Section index"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e44",
+          "label": "Section index"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e45",
+          "label": "Iris Moss"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e45",
+          "label": "Iris Moss"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e46",
+          "label": "Contact photo for Iris Moss"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e46",
+          "label": "Contact photo for Iris Moss"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e46",
+          "label": "Contact photo for Iris Moss"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e47"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e47"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e48",
+          "label": "Iris Moss"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e48",
+          "label": "Iris Moss"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e49"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e49"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e50"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e50"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e51",
+          "label": "r"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e51",
+          "label": "r"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e52",
+          "label": "R"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e52",
+          "label": "R"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e53",
+          "label": "Noah Reed"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e53",
+          "label": "Noah Reed"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e54",
+          "label": "Contact photo for Noah Reed"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e54",
+          "label": "Contact photo for Noah Reed"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e54",
+          "label": "Contact photo for Noah Reed"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e55"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e55"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e56",
+          "label": "Noah Reed"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e56",
+          "label": "Noah Reed"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e57"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e57"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e58",
+          "label": "Noah Reed"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e58",
+          "label": "Noah Reed"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e59",
+          "label": "Contact photo for Noah Reed"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e59",
+          "label": "Contact photo for Noah Reed"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e59",
+          "label": "Contact photo for Noah Reed"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e60"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e60"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e61",
+          "label": "Noah Reed"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e61",
+          "label": "Noah Reed"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e62"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e62"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e63"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e63"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e64",
+          "label": "s"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e64",
+          "label": "s"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e65",
+          "label": "S"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e65",
+          "label": "S"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e66",
+          "label": "Mira Stone"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e66",
+          "label": "Mira Stone"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e67",
+          "label": "Contact photo for Mira Stone"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e67",
+          "label": "Contact photo for Mira Stone"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e67",
+          "label": "Contact photo for Mira Stone"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e68"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e68"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e69",
+          "label": "Mira Stone"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e69",
+          "label": "Mira Stone"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e70"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e70"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e71"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e71"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e72",
+          "label": "t"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e72",
+          "label": "t"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e73",
+          "label": "T"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e73",
+          "label": "T"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e74",
+          "label": "David Taylor"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e74",
+          "label": "David Taylor"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e75",
+          "label": "Contact photo for David Taylor"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e75",
+          "label": "Contact photo for David Taylor"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e75",
+          "label": "Contact photo for David Taylor"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e76"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e76"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e77",
+          "label": "David Taylor"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e77",
+          "label": "David Taylor"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e78"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e78"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e79"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e79"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e80",
+          "label": "v"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e80",
+          "label": "v"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e81",
+          "label": "V"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e81",
+          "label": "V"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e82",
+          "label": "Tessa Vale"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e82",
+          "label": "Tessa Vale"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e83",
+          "label": "Contact photo for Tessa Vale"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e83",
+          "label": "Contact photo for Tessa Vale"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e83",
+          "label": "Contact photo for Tessa Vale"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e84"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e84"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e85",
+          "label": "Tessa Vale"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e85",
+          "label": "Tessa Vale"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e86"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e86"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e87",
+          "label": "Tessa Vale"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e87",
+          "label": "Tessa Vale"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e88",
+          "label": "Contact photo for Tessa Vale"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e88",
+          "label": "Contact photo for Tessa Vale"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e88",
+          "label": "Contact photo for Tessa Vale"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e89"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e89"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e90",
+          "label": "Tessa Vale"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e90",
+          "label": "Tessa Vale"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e91"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e91"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e93",
+          "label": "z"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e93",
+          "label": "z"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e94",
+          "label": "Z"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e94",
+          "label": "Z"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e95",
+          "label": "Hank M. Zakroff"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e95",
+          "label": "Hank M. Zakroff"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e96",
+          "label": "Contact photo for Hank M. Zakroff"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e96",
+          "label": "Contact photo for Hank M. Zakroff"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e96",
+          "label": "Contact photo for Hank M. Zakroff"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e97"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e97"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e98",
+          "label": "Hank M. Zakroff"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e98",
+          "label": "Hank M. Zakroff"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e99"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e99"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e100"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e100"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e101",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e101",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e102"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e102"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e103",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e103",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e104"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e104"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e105"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e105"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e106"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e106"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e107",
+          "label": "Toolbar"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e107",
+          "label": "Toolbar"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e108"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e108"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e109"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e109"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e111"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e111"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e112"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e112"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e113"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e113"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e114"
+        },
+        {
+          "action": "typeText",
+          "elementRef": "e114"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e114"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e114"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e115",
+          "label": "Dictate"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e115",
+          "label": "Dictate"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e115",
+          "label": "Dictate"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e116",
+          "label": "Search"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e116",
+          "label": "Search"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e117",
+          "label": "Dictate"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e117",
+          "label": "Dictate"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e117",
+          "label": "Dictate"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e118"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e118"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e119"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e119"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e120"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e120"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e121"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e121"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e122",
+          "label": "Add"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e122",
+          "label": "Add"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e122",
+          "label": "Add"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e123"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e123"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e124"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e124"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e125"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e125"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e126"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e126"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e127"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e127"
+        }
+      ]
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"0E42FDE2-5E09-42D3-9876-9EF0037FCBE7\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e115\"},{\"action\":\"tap\",\"elementRef\":\"e117\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --element-ref e33",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 --within-element-ref e17 --direction up --distance 0.5"
+  ]
+}

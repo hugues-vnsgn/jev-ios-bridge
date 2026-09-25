@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "runId": "72a83600-e2df-4725-a59f-3c8c4c18ee96",
+  "verdict": "failed",
+  "reason": "ASSERTION_FALSE",
+  "durationMs": 10843.782542,
+  "steps": 2,
+  "inputTokens": 2290,
+  "phaseTimingsMs": {
+    "prepareMs": 1796.890917,
+    "observeMs": 4812.610583,
+    "decideMs": 988.1931670000013,
+    "actMs": 2312.6602080000002,
+    "waitMs": 0,
+    "cleanupMs": 888.2282919999998
+  },
+  "checkpointCount": 1,
+  "checkpointResults": [
+    {
+      "stepId": "verify",
+      "status": "failed"
+    }
+  ],
+  "actionEvents": 1,
+  "judgmentEvents": 1,
+  "captureEvents": 2,
+  "errorEvents": 0,
+  "jevLatencyMs": 987.4139579999992,
+  "deviceMetrics": {
+    "referenceRefreshes": 0,
+    "referenceExpiries": 0,
+    "nearTtlRefreshes": 0
+  }
+}

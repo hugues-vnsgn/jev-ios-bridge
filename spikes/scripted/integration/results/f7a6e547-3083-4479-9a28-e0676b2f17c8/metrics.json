@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "runId": "f7a6e547-3083-4479-9a28-e0676b2f17c8",
+  "verdict": "passed",
+  "reason": "ALL_CHECKPOINTS_PASSED",
+  "durationMs": 11131.048165999999,
+  "steps": 3,
+  "inputTokens": 1273,
+  "phaseTimingsMs": {
+    "prepareMs": 1682.584792,
+    "observeMs": 6326.757081999999,
+    "decideMs": 698.3033340000002,
+    "actMs": 1387.1873749999995,
+    "waitMs": 0,
+    "cleanupMs": 965.6280000000006
+  },
+  "checkpointCount": 1,
+  "checkpointResults": [
+    {
+      "stepId": "verify",
+      "status": "passed"
+    }
+  ],
+  "actionEvents": 2,
+  "judgmentEvents": 1,
+  "captureEvents": 3,
+  "errorEvents": 0,
+  "jevLatencyMs": 697.7419170000012,
+  "deviceMetrics": {
+    "referenceRefreshes": 0,
+    "referenceExpiries": 0,
+    "nearTtlRefreshes": 0
+  }
+}

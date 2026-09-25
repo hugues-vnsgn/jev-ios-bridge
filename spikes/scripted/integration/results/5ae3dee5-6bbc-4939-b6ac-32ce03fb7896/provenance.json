@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "startedAt": "2026-09-25T00:59:59.435Z",
+  "runId": "5ae3dee5-6bbc-4939-b6ac-32ce03fb7896",
+  "scenarioPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/v0.1-release/spikes/scripted/integration/faults/f01-missing-target.json",
+  "scenarioSha256": "845e976c5b749fef6200217cd1a812e3e854028a14ca473a24b3399f86c57295",
+  "bundleId": "dev.jevbridge.diagnostic",
+  "deviceUdid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+  "model": "jev-1.13.0",
+  "mobileBuildMcpVersion": "2.7.1",
+  "tapAliasRule": "mobilebuildmcp-2.7.1",
+  "assertionImplementationSha256": "9e73c34e4a1ac75eaaf8773d8774ff52ab25af9dbc87e74e8e330816c6c10b32",
+  "scriptedRuntimeSha256": "361ec2f2a53005cf3d5aaa5948802f6193369be0be4b65daae038edf4d1c800a",
+  "gitHead": "22ca2c8d2b7a4235c7bccd3d18c4bb7402442777",
+  "nodeVersion": "v26.8.1",
+  "maxSteps": 100,
+  "timeoutMs": 900000,
+  "timingScope": "Prepared-app scripted UI execution; app build, install, data setup and script authoring excluded"
+}

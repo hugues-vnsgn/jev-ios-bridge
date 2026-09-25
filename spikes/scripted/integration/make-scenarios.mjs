@@ -226,11 +226,10 @@ const faults = [
       action('tapMissing', shopNone, { kind: 'tap', selector: { role: 'button', identifier: 'choose.nonexistent' } }),
       checkpoint(shopReady, 'The Sample Shop screen is open.'),
     ])],
-  ['f02-ambiguous-target', 'TARGET_AMBIGUOUS', script(app.contacts,
-    ['Contacts list shows both Tessa Vale rows fully above the Search overlay and an empty Search field.'], {}, [
-      action('tapAmbiguousTessa', contactsList,
-        { kind: 'tap', selector: { role: 'button', label: 'Contact photo for Tessa Vale' } }),
-      checkpoint(contactsList, 'The Contacts list is visible.'),
+  ['f02-ambiguous-target', 'TARGET_AMBIGUOUS', script(app.diagnostic,
+    ['Diagnostic App starts at Selected: None with distinct Apple and Bread buttons.'], {}, [
+      action('tapAmbiguousButton', shopNone, { kind: 'tap', selector: { role: 'button' } }),
+      checkpoint(shopReady, 'The Sample Shop screen is open.'),
     ])],
   ['f03-cancel-wait', 'CANCELLED', script(app.diagnostic,
     ['Diagnostic App starts at Selected: None. Send SIGINT after the first wait poll.'], {}, [

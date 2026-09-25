@@ -77,7 +77,7 @@ for (const id of ['c01-nina-no-results', 'c02-nina-card-claim', 'c03-nolan-edit-
 }
 const faultFixtures = [
   ['f01-missing-target', 'v3-d01-shop-empty', 'TARGET_MISSING'],
-  ['f02-ambiguous-target', 's07-contacts-tessa-duplicate-list', 'TARGET_AMBIGUOUS'],
+  ['f02-ambiguous-target', 'v3-d01-shop-empty', 'TARGET_AMBIGUOUS'],
 ] as const;
 for (const [id, fixture, expected] of faultFixtures) {
   const scenario = parseScriptedScenario(read(`spikes/scripted/integration/faults/${id}.json`));

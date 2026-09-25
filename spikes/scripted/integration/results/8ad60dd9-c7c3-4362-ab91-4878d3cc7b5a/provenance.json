@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "startedAt": "2026-09-25T00:56:20.772Z",
+  "runId": "8ad60dd9-c7c3-4362-ab91-4878d3cc7b5a",
+  "scenarioPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/v0.1-release/spikes/scripted/integration/scenarios/r01-signal-kit-note.json",
+  "scenarioSha256": "1cedc2179b0b03f3fdb03afa725b2ce8193e4be485c70b74b9dcee1094b2aeda",
+  "bundleId": "com.apple.reminders",
+  "deviceUdid": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+  "model": "jev-1.13.0",
+  "mobileBuildMcpVersion": "2.7.1",
+  "tapAliasRule": "mobilebuildmcp-2.7.1",
+  "assertionImplementationSha256": "9e73c34e4a1ac75eaaf8773d8774ff52ab25af9dbc87e74e8e330816c6c10b32",
+  "scriptedRuntimeSha256": "361ec2f2a53005cf3d5aaa5948802f6193369be0be4b65daae038edf4d1c800a",
+  "gitHead": "22ca2c8d2b7a4235c7bccd3d18c4bb7402442777",
+  "nodeVersion": "v26.8.1",
+  "maxSteps": 100,
+  "timeoutMs": 900000,
+  "timingScope": "Prepared-app scripted UI execution; app build, install, data setup and script authoring excluded"
+}
