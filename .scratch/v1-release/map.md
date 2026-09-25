@@ -28,6 +28,7 @@ A reviewed **v1.0.0 release spec**, handed off to Codex to execute. It records t
 
 ## Decisions so far
 
+- [Data-handling statement for outside developers](issues/14-data-handling-statement.md): page 09 lists exactly what goes to TypeSafe (checkpoint screen text, including typed values) and to the host, and what stays local; it adds a dated TypeSafe summary (no training, open-ended retention, ZDR enterprise-only, US-hosted) and the test-data rule. Three bridge changes before 1.0: device children get no API key, one watch token per run, and a `.gitignore` in the evidence root.
 - [Live log pane](issues/12-live-log-pane.md): the pane follows MobileBuildMCP's two launch log files (app console, plus `os_log` under the bundle-ID subsystem only), in a `.command` window opened in the default terminal; there's no window under SSH or CI, where `jev-ios-bridge logs RUN_ID` attaches instead; it closes itself after a pass and stays open otherwise; values are masked and nothing leaves the machine; off with `JEV_LOG_PANE=off` or `--no-log-pane`. Prototype on local branch `prototype/log-pane`.
 - [Developer guide outline](issues/10-developer-guide-outline.md): `docs/guide/` with 11 numbered pages, SwiftUI (Weather) and Compose (BFSOne, read-only) worked examples, and reference pages; `docs/usage.md` folds in and is deleted, `README.md` shrinks; `/test-ios` links to installed guide paths; the tarball adds `docs/guide/`, `LICENSE`, `CHANGELOG.md`; **license MIT**. [Outline](guide-outline.md).
 - [Compose app evidence plan](issues/09-compose-evidence-plan.md): the real Compose app `BFSOne_Mobile_App` (CMP 1.9.0), run offline through a debug-only gallery shortcut the owner adds; six gallery scripts (four pass, one planted fail, one planted inconclusive), one run each; an unexpected verdict or any production request blocks 1.0; `cmp` is the fallback. The bridge gains optional `app.launchArgs` and rejects `value: ''`.
@@ -62,6 +63,7 @@ flowchart LR
     T12["12 Live log pane<br/><small>prototype</small>"]
     T13["13 BFSOne evidence shortcut<br/><small>task</small>"]
     T14["14 Data-handling statement for outside developers<br/><small>grilling</small>"]
+    T15["15 Release gates and the spec's assembly<br/><small>grilling</small>"]
     T01 --> T05
     T02 --> T05
     T03 --> T05
@@ -81,15 +83,14 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T06,T07,T08,T09,T10,T11,T12 resolved
-    class T13,T14 frontier
+    class T01,T02,T03,T04,T05,T06,T07,T08,T09,T10,T11,T12,T14 resolved
+    class T13,T15 frontier
 ```
 <!-- route:end -->
 
 ## Not yet specified
 
-- **Release gates and the spec's assembly:** the checklist Codex must pass before tagging 1.0 (tests, re-run benchmarks, Compose evidence, clean install, docs walkthrough). Its shape depends on the contract, the performance target, and the evidence plan.
-- **Cost budget per run:** carried over from the previous map; a number for the docs once tuning changes the measurements.
+_Nothing left: the last fog graduated into "Release gates and the spec's assembly"._
 
 ## Out of scope
 
