@@ -86,3 +86,7 @@ The verdict and supporting evidence presented to the host agent after a run.
 
 **Watch view**:
 The person's view of recorded progress and evidence during a run.
+
+**Log pane**:
+The person's live view of the app under test's own output (prints, system logs, crashes) during a run, in a window separate from the host agent.
+_Avoid_: console, run log
