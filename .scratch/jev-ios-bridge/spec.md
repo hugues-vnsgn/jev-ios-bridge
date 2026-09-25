@@ -1,6 +1,6 @@
 # jev-ios-bridge v0.1 specification
 
-Status: current production contract, awaiting final measurements and independent review. Accepted decisions are in tickets 09–13 and ADR-0003; remaining evidence gates are tracked in the [release plan](release-plan.md). This spec describes explicit scripts. It does not revive the three failed autonomous-navigation designs.
+Status: reviewed v0.1 contract; implementation, live evidence and comparisons complete, with release-asset verification pending. Accepted decisions are in tickets 09–13 and ADR-0003; remaining evidence gates are tracked in the [release plan](release-plan.md). This spec describes explicit scripts. It does not revive the three failed autonomous-navigation designs.
 
 ## Purpose and boundary
 
@@ -28,7 +28,7 @@ At most 32 typed values are allowed, each at most 2,048 printable ASCII characte
 
 Actions require known visibility and enabled state, a positive frame, and the required action capability. No positional index or first-match fallback is allowed. Generic aliases may collapse only under the tested same-identifier and contained-frame rule. The concrete MobileBuildMCP 2.7.1 integration also enables the source-proven identical-button tap rule: same nonempty label, value, exact frame, action set, and eligibility, without identifiers. That rule is internal, applies only to taps and matching button anchors, and does not authorize ambiguous typing or swipes.
 
-Use fresh observations for script steps and after actions before continuing. References are snapshot-scoped. On a stale reference, capture again, reject a changed screen, recheck the guard, and resolve the target again. Never repeat an action with an unknown execution outcome. Distinguishing post-action guards are the script author's responsibility; broad app-title guards do not prove a UI transition.
+Use fresh observations for script steps and after actions before continuing. References are snapshot-scoped. On a stale reference, capture again, reject a changed screen, recheck the guard, and resolve the target again. Never repeat an action with an unknown execution outcome. Distinguishing post-action guards are the script author's responsibility; broad app-title guards do not prove a UI transition. Accessibility data may retain background controls under a sheet. Explicitly exclude known overlays before main-view actions; a passing content assertion does not establish that the view is unobstructed.
 
 Only `mobilebuildmcp@2.7.1` performs product device operations. Use its CLI JSON/full snapshot output, with error reporting disabled. The simulator must already be booted and the app installed. Preparation restarts the app, so script navigation begins from the post-launch screen. Persistent setup data may be a precondition; transient preopened sheets cannot be assumed to survive preparation.
 
@@ -66,6 +66,6 @@ The frozen owner-approved assertion experiment scored 22/24 true and 23/24 false
 
 The installed Claude Code path passed Contacts c01 after two preserved inconclusive attempts exposed keyboard behavior and an overly narrow Search-icon guard. The host submitted the corrected script unchanged; the bridge made one assertion request, returned the expected pass, and released its lock. The blind diagnosis correctly identified the Diagnostic app's planted total-calculation bug from its failed report and source.
 
-The hardened production suite passes 155 tests, type checking, and build. Real-log watch verification and a clean 42-file tarball installation passed. Three same-machine benchmark comparisons, independent review, CI, and final release-asset checks remain pending. Initial script drafting was not metered; record that missing authoring cost and measure subsequent maintenance. No total cost-saving or break-even claim is supported by prepared execution alone.
+The hardened production suite passes 157 tests, type checking, and build. Real-log watch verification and a clean 42-file tarball installation passed. The independent code review and Node 24 CI passed. Weather and Contacts full scripts passed; Reminders executed the correct observed state but abstained on a 0.87 count claim. No verified Reminders baseline was established. The measured limits are in [benchmark results](../../docs/research/scripted-benchmarks.md); final release-asset verification remains. Initial script drafting was not metered; record that missing authoring cost and measure subsequent maintenance. No total cost-saving or break-even claim is supported by prepared execution alone.
 
 v0.1 excludes real-iPhone UI automation, autonomous navigation, automatic hooks, CI operation, and guaranteed non-English behavior. Real transient-wait corpus coverage is deferred; deterministic wait/cancellation behavior has scripted tests and a live cancellation probe. Simulator keyboard drift and restored app state require deliberate setup and distinguishing guards. Failure artifacts remain part of the evidence.

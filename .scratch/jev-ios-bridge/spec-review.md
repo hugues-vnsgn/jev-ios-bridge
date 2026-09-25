@@ -34,3 +34,10 @@ A fresh `gpt-6-sol` reviewer at high reasoning compared the fixed implementation
 A preliminary report-metrics concern was withdrawn after checking ticket 13 and the production plan. Phase timings and reference counters are required in journal events, where they are present. The bounded host report prioritizes decisive evidence and its local journal pointer. The main agent clarified an overbroad sentence in the consolidated spec; no implemented data was removed or requirement weakened.
 
 No other confirmed missing requirement or scope creep was found. Measurement and release gates remain expected outstanding work.
+
+
+### Closure at `8fb9aac`, verified on `29da755`
+
+The independent reviewer confirmed the cancellation finding is resolved. The final override applies to aborted runs unless cleanup itself failed. A deterministic close-barrier regression preserves the failed checkpoint and 0.04 probability while requiring `inconclusive/CANCELLED`; a companion test preserves `CLEANUP_FAILED` priority. No concrete new issue was found in the focused diff. The implementation agent separately ran the full 157-test check and clean package verification.
+
+Spec result: one confirmed finding, fixed and independently closed; zero remaining confirmed code gaps. Final measurement/doc and release-asset checks remain gates.

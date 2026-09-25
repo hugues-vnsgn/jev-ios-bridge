@@ -1,0 +1,94 @@
+{
+  "kind": "verified-upstream-baseline",
+  "suite": "weather",
+  "attempt": 2,
+  "priorExcludedAttempt": "spikes/benchmarks/results/weather-baseline-axe-missing.json",
+  "sourceCommit": "d13ff0c707b0681769cf31da0eb42c4f94ceafff",
+  "promptSha256": "0c139a01832fb3bb7a9c2e6233420ddfab8a0cd3855fdfa3ea9d3a2adf596efc",
+  "axeBinary": {
+    "path": "/Users/hugues_mini/.npm/_npx/b998b4270960e258/node_modules/mobilebuildmcp/bundled/axe",
+    "version": "1.8.0",
+    "sha256": "a776cb6ebaa477bd04e8a829eb72ca179d869a1876111ca15a52dde1e91f9ab7"
+  },
+  "model": "claude-opus-4-7",
+  "claudeExitCode": 0,
+  "parserExitCode": 0,
+  "parseErrors": 0,
+  "toolInputErrorsRecovered": 2,
+  "verifiedTask": true,
+  "verification": [
+    "Successful batch capture shows °C, m/s, inHg, km selected and animations/alerts off, transparency reduction on.",
+    "Post-swipe main-screen capture shows London, precipitation 78%, and visibility 9.7 km.",
+    "Final precipitation-detail capture shows 78% chance, 10.7 mm, 6 hrs, 14 km, and lightning None."
+  ],
+  "hostWallClockSeconds": 130.078585625,
+  "simulatorSetupSeconds": 23.88,
+  "hostToolCalls": 16,
+  "tokens": {
+    "uncachedInput": 21,
+    "cacheCreationInput": 23122,
+    "cacheReadInput": 780352,
+    "output": 3321,
+    "allInputProcessed": 803495
+  },
+  "estimatedHostCostUsd": 0.704526,
+  "temporarySimulatorId": "B17FE356-9B08-4185-B4A6-D03CB9A42263",
+  "temporarySimulatorDeletedByHarness": true,
+  "numericSummary": "spikes/benchmarks/results/weather-baseline-1790303833033.json",
+  "rawResultPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/weather/20260925T023714Z/result.json",
+  "rawResultSha256": "6008d37d6adf7d94b3eab03d8f6a5ded13816c1cd02703d7d3a7ba91886ca799",
+  "rawTranscriptPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/weather/20260925T023714Z/claude.jsonl",
+  "rawTranscriptSha256": "df071d09ed96362eb774c861ab87fefa5d4d9e6475798fc88fc18d96f452ff30",
+  "proof": [
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/weather/20260925T023714Z/parsed/0014_tool_result_batch.md",
+      "sha256": "c63e4ca83ad84a48ba32033343ac54f5ae24817bc98be3e3ef92a0160bbf9499"
+    },
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/weather/20260925T023714Z/parsed/0032_tool_result_snapshot_ui.md",
+      "sha256": "cc6ffa9bf2763332d2c9b39785296b029ddf508427e9caf95850b99f2c529113"
+    },
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/weather/20260925T023714Z/parsed/0034_tool_result_tap.md",
+      "sha256": "5f27da9a5a720c4ce583124d57d82164718cd599d476e2a43f239d4008cc9c6d"
+    },
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/weather/20260925T023714Z/parsed/0027_tool_result_tap.md",
+      "sha256": "a63fe45eb61c4685afeea40200c22e7521749d7f34d72fed38c2cc5f1a6ae9e3"
+    }
+  ],
+  "selectedUiEvidence": {
+    "settings": [
+      "°C|selected",
+      "m/s|selected",
+      "inHg|selected",
+      "km|selected",
+      "Atmospheric animations|0",
+      "Severe weather alerts|0",
+      "Reduce transparency|1"
+    ],
+    "londonMain": [
+      "London|weather.heroLocation",
+      "11",
+      "11°"
+    ],
+    "londonConditions": [
+      "PRECIP., 78%, Next 24 hours|weather.precipitationCard",
+      "78%",
+      "9.7 km"
+    ],
+    "precipitationDetail": [
+      "PRECIPITATION",
+      "78%",
+      "chance over the next 24 hours",
+      "TOTAL EXPECTED",
+      "10.7 mm",
+      "HOURS OF RAIN",
+      "6 hrs",
+      "STORM DISTANCE",
+      "14 km",
+      "LIGHTNING",
+      "None"
+    ]
+  }
+}

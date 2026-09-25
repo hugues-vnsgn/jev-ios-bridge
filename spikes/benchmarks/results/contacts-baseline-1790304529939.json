@@ -1,0 +1,43 @@
+{
+  "suite": "contacts",
+  "benchmarkCompleted": true,
+  "terminalSuccess": true,
+  "claudeExitCode": 0,
+  "parserExitCode": 0,
+  "parseErrors": 0,
+  "requestedModel": "claude-opus-4-7",
+  "observedModel": "claude-opus-4-7",
+  "wallClockSeconds": 93.329170167,
+  "wallClockSource": "upstream harness process timer",
+  "totalHostToolCalls": 20,
+  "mcpToolCalls": 19,
+  "uiAutomationCalls": 17,
+  "tokens": {
+    "uncachedInput": 30,
+    "cacheCreationInput": 41473,
+    "cacheReadInput": 1016066,
+    "output": 2143,
+    "allInputProcessed": 1057569
+  },
+  "byModel": [
+    {
+      "model": "claude-opus-4-7",
+      "uncachedInputTokens": 30,
+      "cacheCreationInputTokens": 41473,
+      "cacheReadInputTokens": 1016066,
+      "outputTokens": 2143,
+      "estimatedCostUsd": 0.9764879999999998
+    }
+  ],
+  "estimatedCostUsd": 0.9764879999999998,
+  "costMeaning": "Claude Code client estimate at API prices, not a subscription invoice",
+  "source": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/contacts/20260925T024850Z/result.json",
+  "invokedAt": "2026-09-25T02:48:49.939Z",
+  "sourceCommit": "d13ff0c707b0681769cf31da0eb42c4f94ceafff",
+  "axeBinary": {
+    "path": "/Users/hugues_mini/.npm/_npx/b998b4270960e258/node_modules/mobilebuildmcp/bundled/axe",
+    "version": "1.8.0",
+    "sha256": "a776cb6ebaa477bd04e8a829eb72ca179d869a1876111ca15a52dde1e91f9ab7"
+  },
+  "rawResultPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/contacts/20260925T024850Z/result.json"
+}

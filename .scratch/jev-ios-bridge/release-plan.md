@@ -8,18 +8,18 @@ The autonomous-action designs failed all three unchanged feasibility gates. Thei
 
 The separate frozen scripted assertion experiment passed: 22/24 true and 23/24 false claims confidently correct, with zero confidently wrong judgments. The 12 reviewed real scripts matched six pass and six assertion-failure oracles; three fault probes stopped inconclusively without actions or model requests. These are exploratory results, not a universal error bound. Real transient-wait corpus coverage remains explicitly deferred.
 
-Production follows [the scripted integration plan](scripted-production-plan.md). Public CLI/MCP inputs are scripts; legacy goal/checkpoint inputs are rejected. The integrated check passed 147 tests, type checking, and build. The blind report-and-source diagnosis identified the planted bug. Installed-host testing has exposed two preserved inconclusive attempts, and remains in progress.
+Production follows [the scripted integration plan](scripted-production-plan.md). Public CLI/MCP inputs are scripts; legacy goal/checkpoint inputs are rejected. The integrated check passed 157 tests, type checking, and build. The blind report-and-source diagnosis identified the planted bug. Installed-host testing passed after two preserved inconclusive attempts. The watch and tool-interface decisions are resolved.
 
-## Remaining gates
+## Execution gates
 
-| Work | Required evidence |
+| Work | Evidence and status |
 | --- | --- |
-| Watch view and tool decision, tickets 14–15 | Render a real scripted log, inspect the visual result, verify screenshot/timeline/judgment/verdict agreement and private access. Record the chosen three-tool contract and skill packaging. |
-| Installed host, ticket 16 | Clean-installed package and `/test-ios` submit one complete script; the bridge executes it and the host reads its correct terminal report. Preserve unsuccessful attempts. |
-| Measurements, ticket 17 | Run the Weather, Contacts, and Reminders scripts and upstream baselines on this machine. Record wall time, calls, usage, Jev costs, phase timing, uncertainty and reference expiry. Separate build/setup and execution. Measure authoring/maintenance where instrumented and disclose uncaptured initial work. Do not claim total savings from prepared execution alone. |
-| Final specification | Consolidate the resolved tickets and ADRs into `.scratch/jev-ios-bridge/spec.md`, including measured limitations and unsupported cases. |
-| Review and package | Independent standards and spec reviews, resolved findings, final applicable checks, secret scan, and clean tarball install. Preserve assertion request parity and evidence provenance. |
-| Merge and release | Reconcile original-checkout changes, push reviewed commits, verify CI, merge to `main`, tag the tested commit, publish GitHub prerelease and tarball, and verify its download/install path. |
+| Watch view and tool decision, tickets 14–15 | **Passed.** Actual scripted log rendered at desktop/narrow widths; screenshot/timeline/judgment/verdict agreement, token access and inert text checked. Three-tool contract and skill packaging recorded. |
+| Installed host, ticket 16 | **Passed.** Clean-installed package and `/test-ios` submitted the reviewed script once and returned the correct report. Two inconclusive attempts remain preserved. |
+| Measurements, ticket 17 | **One matching variant pending.** Collect the promised prepared-app Weather baseline. Weather/Contacts bridge scripts passed; Reminders reached correct visible state but abstained at 0.87. No verified Reminders baseline exists after four preserved attempts. All costs, maintenance windows and missing authoring data are recorded; no Reminders ratio or total-savings claim. |
+| Final specification | **Reviewed.** Runtime contract and measured limitations consolidated in the spec. |
+| Review and package | **Code review closed.** One nonblocking duplication heuristic accepted; the cancellation race was fixed and independently verified. 157 tests, typecheck/build, Node 24 CI, and clean 42-file tarball install passed. Final documentation/package and published-asset checks remain. |
+| Merge and release | **Pending.** Original checkout changes preserved/reconciled; push final docs, verify CI, merge to `main`, tag tested commit, publish prerelease/tarball, and verify its download/install path. |
 
 The release cannot describe an inconclusive host attempt as a pass or hide benchmark failures. A contradictory measurement reopens the relevant decision. Architecture acceptance does not itself authorize an unsupported performance claim.
 
@@ -38,3 +38,8 @@ At merge, the release branch supersedes the main checkout's stale ticket 06 clai
 Ship the CLI/MCP server, `/test-ios` skill, setup instructions, measured results, known limitations, and installable `jev-ios-bridge-0.1.0.tgz`. The package remains private for npm registry purposes. GitHub prerelease notes must say simulator only, Claude Code first, Codex best effort, explicit scripts, printable US-keyboard typing, and the tested Xcode/runtime combination.
 
 Real iPhone UI automation, autonomous navigation, CI operation, automatic hooks, non-English assurance, and Codex parity are outside v0.1.0. Screenshots stay local but are not redacted; observed screen text and checkpoint claims are sent to TypeSafe. Unknown device acknowledgement retains the device lock for manual recovery. These limits belong in usage and release notes.
+
+
+## Original checkout reconciliation
+
+The original tracked edits and two untracked planning/config files were preserved in local stash `8c56c963cf05de6bc90a97443a51dc75d6248a7c` before merge preparation. Ticket 07 and domain-boundary decisions are incorporated in the release branch; its completed ticket 06 and UUID configuration supersede the stale claim and simulator-name config as the owner directed. The stash remains available and will not be blindly applied over the completed branch. The original `.env` stayed in place at mode 600 and was not part of the stash. A local Git exclude keeps `.worktrees/` ignored while old `main` awaits the merge.

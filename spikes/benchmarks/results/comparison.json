@@ -1,0 +1,614 @@
+{
+  "kind": "numeric-comparison",
+  "version": 1,
+  "jevPricingRef": "spikes/benchmarks/jev-pricing.json",
+  "jevInputUsdPerMillionTokens": 0.042,
+  "initialAuthoringWallSeconds": null,
+  "initialAuthoringTokens": null,
+  "focusedMaintenanceWallSeconds": null,
+  "focusedMaintenanceTokens": null,
+  "authoringLedgerRef": "spikes/benchmarks/authoring-ledger.json",
+  "focusedSessionGrossWallSeconds": 2136.045533916,
+  "focusedSessionExcludedTimedHostSeconds": 518.734824875,
+  "focusedSessionRemainingNonHostWallSeconds": 1617.310709041,
+  "focusedSessionMeasuredScriptEdits": 2,
+  "focusedSessionPureActiveAuthoringSeconds": null,
+  "focusedSessionAuthoringModelTokens": null,
+  "remainingNonHostWallIncludes": [
+    "setup",
+    "coordination",
+    "archiving",
+    "analysis"
+  ],
+  "stepTimingsJsonRef": "spikes/benchmarks/results/bridge-step-timings.json",
+  "stepTimingsCsvRef": "spikes/benchmarks/results/bridge-step-timings.csv",
+  "selectedRunCounts": {
+    "runs": 3,
+    "checkpoints": 6,
+    "claims": 18,
+    "uncertainClaims": 1
+  },
+  "allAttemptCounts": {
+    "runs": 4,
+    "checkpoints": 8,
+    "claims": 22,
+    "uncertainClaims": 1
+  },
+  "upstreamBaselineAttempts": [
+    {
+      "suite": "weather",
+      "attempt": 1,
+      "classification": "setup_failure",
+      "taskVerified": false,
+      "auditRef": "spikes/benchmarks/results/weather-baseline-axe-missing.json",
+      "numericSummaryRef": "spikes/benchmarks/results/weather-baseline-1790303168011.json",
+      "wallScope": "official-upstream-host-timed",
+      "wallSeconds": 38.486510167,
+      "simulatorSetupSeconds": null,
+      "hostModel": "claude-opus-4-7",
+      "hostToolCalls": 5,
+      "hostTokens": {
+        "uncachedInput": 15,
+        "cacheCreationInput": 41382,
+        "cacheReadInput": 198335,
+        "output": 613,
+        "allInputProcessed": 239732
+      },
+      "hostClientEstimateUsd": 0.5283875000000001,
+      "hostTerminalSuccess": true
+    },
+    {
+      "suite": "weather",
+      "attempt": 2,
+      "classification": "verified_success",
+      "taskVerified": true,
+      "auditRef": "spikes/benchmarks/results/weather-baseline-verified.json",
+      "numericSummaryRef": "spikes/benchmarks/results/weather-baseline-1790303833033.json",
+      "wallScope": "official-upstream-host-timed",
+      "wallSeconds": 130.078585625,
+      "simulatorSetupSeconds": 23.88,
+      "hostModel": "claude-opus-4-7",
+      "hostToolCalls": 16,
+      "hostTokens": {
+        "uncachedInput": 21,
+        "cacheCreationInput": 23122,
+        "cacheReadInput": 780352,
+        "output": 3321,
+        "allInputProcessed": 803495
+      },
+      "hostClientEstimateUsd": 0.704526,
+      "hostTerminalSuccess": true
+    },
+    {
+      "suite": "contacts",
+      "attempt": 1,
+      "classification": "verified_success",
+      "taskVerified": true,
+      "auditRef": "spikes/benchmarks/results/contacts-baseline-verified.json",
+      "numericSummaryRef": "spikes/benchmarks/results/contacts-baseline-1790304529939.json",
+      "wallScope": "official-upstream-host-timed",
+      "wallSeconds": 93.329170167,
+      "simulatorSetupSeconds": 22.99,
+      "hostModel": "claude-opus-4-7",
+      "hostToolCalls": 20,
+      "hostTokens": {
+        "uncachedInput": 30,
+        "cacheCreationInput": 41473,
+        "cacheReadInput": 1016066,
+        "output": 2143,
+        "allInputProcessed": 1057569
+      },
+      "hostClientEstimateUsd": 0.9764879999999998,
+      "hostTerminalSuccess": true
+    },
+    {
+      "suite": "reminders",
+      "attempt": 1,
+      "classification": "failed_name_unverified",
+      "taskVerified": false,
+      "auditRef": "spikes/benchmarks/results/reminders-baseline-audit.json",
+      "numericSummaryRef": "spikes/benchmarks/results/reminders-baseline-1790304122581.json",
+      "wallScope": "official-upstream-host-timed",
+      "wallSeconds": 99.527001292,
+      "simulatorSetupSeconds": 23.2,
+      "hostModel": "claude-opus-4-7",
+      "hostToolCalls": 15,
+      "hostTokens": {
+        "uncachedInput": 20,
+        "cacheCreationInput": 31284,
+        "cacheReadInput": 699662,
+        "output": 4215,
+        "allInputProcessed": 730966
+      },
+      "hostClientEstimateUsd": 0.7681460000000001,
+      "hostTerminalSuccess": true
+    },
+    {
+      "suite": "reminders",
+      "attempt": 2,
+      "classification": "failed_name_unverified",
+      "taskVerified": false,
+      "auditRef": "spikes/benchmarks/results/reminders-baseline-attempt2-audit.json",
+      "numericSummaryRef": "spikes/benchmarks/results/reminders-baseline-1790304910175.json",
+      "wallScope": "official-upstream-host-timed",
+      "wallSeconds": 133.569938375,
+      "simulatorSetupSeconds": 29.54,
+      "hostModel": "claude-opus-4-7",
+      "hostToolCalls": 18,
+      "hostTokens": {
+        "uncachedInput": 28,
+        "cacheCreationInput": 24302,
+        "cacheReadInput": 922036,
+        "output": 4049,
+        "allInputProcessed": 946366
+      },
+      "hostClientEstimateUsd": 0.805403,
+      "hostTerminalSuccess": true
+    },
+    {
+      "suite": "reminders",
+      "attempt": 3,
+      "classification": "failed_name_unverified",
+      "taskVerified": false,
+      "auditRef": "spikes/benchmarks/results/reminders-baseline-attempt3-audit.json",
+      "numericSummaryRef": "spikes/benchmarks/results/reminders-baseline-1790305520742.json",
+      "wallScope": "official-upstream-host-timed",
+      "wallSeconds": 108.062876541,
+      "simulatorSetupSeconds": 28.12,
+      "hostModel": "claude-opus-4-7",
+      "hostToolCalls": 18,
+      "hostTokens": {
+        "uncachedInput": 28,
+        "cacheCreationInput": 30795,
+        "cacheReadInput": 909696,
+        "output": 3192,
+        "allInputProcessed": 940519
+      },
+      "hostClientEstimateUsd": 0.8427379999999999,
+      "hostTerminalSuccess": true
+    },
+    {
+      "suite": "reminders",
+      "attempt": 4,
+      "classification": "failed_name_unverified",
+      "taskVerified": false,
+      "auditRef": "spikes/benchmarks/results/reminders-baseline-attempt4-audit.json",
+      "numericSummaryRef": "spikes/benchmarks/results/reminders-baseline-1790305995589.json",
+      "wallScope": "official-upstream-host-timed",
+      "wallSeconds": 115.947785708,
+      "simulatorSetupSeconds": 23.76,
+      "hostModel": "claude-opus-4-7",
+      "hostToolCalls": 18,
+      "hostTokens": {
+        "uncachedInput": 28,
+        "cacheCreationInput": 24112,
+        "cacheReadInput": 920588,
+        "output": 4008,
+        "allInputProcessed": 944728
+      },
+      "hostClientEstimateUsd": 0.8017539999999999,
+      "hostTerminalSuccess": true
+    }
+  ],
+  "fullSuiteBridgeAttempts": [
+    {
+      "suite": "contacts",
+      "attempt": 1,
+      "outcome": "passed",
+      "taskVerified": null,
+      "manifestRef": "spikes/benchmarks/results/contacts-bridge-attempt1/manifest.json",
+      "numericSummaryRef": "spikes/benchmarks/results/contacts-scripted-bridge-1790307873635.json",
+      "sourceScenarioSha256": "f850eb7c32be96caa1b21abfe71b53e32a6f94070f9f0eb55f5ea5c612dfa0ce",
+      "submittedCanonicalSha256": "66413cac77c8c2f27b681f0ce734bd145774a750cea5d13a4fc9bbedfd5e9b7b",
+      "wallScope": "Claude host and prepared-app bridge UI run; excludes app build and install",
+      "hostWallSeconds": 106.0990975,
+      "hostModel": "claude-opus-4-7",
+      "hostToolCalls": 3,
+      "hostTokens": {
+        "uncachedInput": 9,
+        "cacheCreationInput": 23093,
+        "cacheReadInput": 95795,
+        "output": 2691,
+        "allInputProcessed": 118897
+      },
+      "hostClientEstimateUsd": 0.34614750000000005,
+      "bridgeDurationMs": 74766.1965,
+      "bridgeInputTokens": 5456,
+      "jevInputEstimateUsd": 0.000229152,
+      "bridgePhaseTimingsMs": {
+        "prepareMs": 2214.206917000003,
+        "observeMs": 28166.77645800003,
+        "decideMs": 1456.393167000002,
+        "actMs": 41845.213456999976,
+        "waitMs": 0,
+        "cleanupMs": 898.1095830000122
+      },
+      "deviceReferenceCounters": {
+        "referenceRefreshes": 0,
+        "referenceExpiries": 0,
+        "nearTtlRefreshes": 0
+      },
+      "checkpointsPassed": 1,
+      "checkpointCount": 1
+    },
+    {
+      "suite": "reminders",
+      "attempt": 1,
+      "outcome": "inconclusive",
+      "taskVerified": null,
+      "manifestRef": "spikes/benchmarks/results/reminders-bridge-attempt1/manifest.json",
+      "numericSummaryRef": "spikes/benchmarks/results/reminders-scripted-bridge-1790308174091.json",
+      "sourceScenarioSha256": "77eb815d4dc9d802516fd35ec5354a5dcf1cb980ecdceb4aaa4c31bc3bc619e2",
+      "submittedCanonicalSha256": "2ba6fdfa3121ac9069523a4460f57084464b03504d9d598a331f4c03662f07f6",
+      "wallScope": "Claude host and prepared-app bridge UI run; excludes app build and install",
+      "hostWallSeconds": 127.887232542,
+      "hostModel": "claude-opus-4-7",
+      "hostToolCalls": 3,
+      "hostTokens": {
+        "uncachedInput": 9,
+        "cacheCreationInput": 24492,
+        "cacheReadInput": 99467,
+        "output": 3498,
+        "allInputProcessed": 123968
+      },
+      "hostClientEstimateUsd": 0.3821485,
+      "bridgeDurationMs": 91172.94025000001,
+      "bridgeInputTokens": 3164,
+      "jevInputEstimateUsd": 0.000132888,
+      "bridgePhaseTimingsMs": {
+        "prepareMs": 1954.6392909999995,
+        "observeMs": 41597.52954099997,
+        "decideMs": 960.6742079999967,
+        "actMs": 45545.484042,
+        "waitMs": 0,
+        "cleanupMs": 879.9343749999971
+      },
+      "deviceReferenceCounters": {
+        "referenceRefreshes": 0,
+        "referenceExpiries": 0,
+        "nearTtlRefreshes": 0
+      },
+      "checkpointsPassed": 0,
+      "checkpointCount": 1
+    },
+    {
+      "suite": "weather",
+      "attempt": 1,
+      "outcome": "inconclusive",
+      "taskVerified": null,
+      "manifestRef": "spikes/benchmarks/results/weather-bridge-attempt1/manifest.json",
+      "numericSummaryRef": "spikes/benchmarks/results/weather-scripted-bridge-1790306764066.json",
+      "sourceScenarioSha256": "79e2f4c7d666967f7f1e424b1d2b620608890a885ef2f45785a977c47be3928e",
+      "submittedCanonicalSha256": "01dcc3f6317103d08b0152146e401ee58d9e840559b5169bd33f1b51383554bd",
+      "wallScope": "Claude host and prepared-app bridge UI run; excludes app build and install",
+      "hostWallSeconds": 137.172835458,
+      "hostModel": "claude-opus-4-7",
+      "hostToolCalls": 3,
+      "hostTokens": {
+        "uncachedInput": 9,
+        "cacheCreationInput": 36340,
+        "cacheReadInput": 97569,
+        "output": 4558,
+        "allInputProcessed": 133918
+      },
+      "hostClientEstimateUsd": 0.5261795,
+      "bridgeDurationMs": 89476.20512500001,
+      "bridgeInputTokens": 10866,
+      "jevInputEstimateUsd": 0.000456372,
+      "bridgePhaseTimingsMs": {
+        "prepareMs": 2575.6249169999974,
+        "observeMs": 42940.84733100002,
+        "decideMs": 3532.680374000003,
+        "actMs": 39336.840000000004,
+        "waitMs": 0,
+        "cleanupMs": 840.1363750000019
+      },
+      "deviceReferenceCounters": {
+        "referenceRefreshes": 0,
+        "referenceExpiries": 0,
+        "nearTtlRefreshes": 0
+      },
+      "checkpointsPassed": 2,
+      "checkpointCount": 4
+    },
+    {
+      "suite": "weather",
+      "attempt": 2,
+      "outcome": "passed",
+      "taskVerified": null,
+      "manifestRef": "spikes/benchmarks/results/weather-bridge-attempt2/manifest.json",
+      "numericSummaryRef": "spikes/benchmarks/results/weather-scripted-bridge-1790307443380.json",
+      "sourceScenarioSha256": "65bdee069165cd4f3fa6e742927ee7bc6c37a19ff2a8d1ebbd5c1837436b5009",
+      "submittedCanonicalSha256": "a2655ad7d72464cdf66e7cd564579c987702224822030320c370a42abfad7e56",
+      "wallScope": "Claude host and prepared-app bridge UI run; excludes app build and install",
+      "hostWallSeconds": 147.575659375,
+      "hostModel": "claude-opus-4-7",
+      "hostToolCalls": 4,
+      "hostTokens": {
+        "uncachedInput": 10,
+        "cacheCreationInput": 29942,
+        "cacheReadInput": 141847,
+        "output": 4310,
+        "allInputProcessed": 171799
+      },
+      "hostClientEstimateUsd": 0.47814349999999994,
+      "bridgeDurationMs": 107670.206042,
+      "bridgeInputTokens": 18227,
+      "jevInputEstimateUsd": 0.000765534,
+      "bridgePhaseTimingsMs": {
+        "prepareMs": 2435.988416,
+        "observeMs": 51515.41103999996,
+        "decideMs": 3472.7268330000225,
+        "actMs": 49017.541458,
+        "waitMs": 0,
+        "cleanupMs": 937.5659999999916
+      },
+      "deviceReferenceCounters": {
+        "referenceRefreshes": 0,
+        "referenceExpiries": 0,
+        "nearTtlRefreshes": 0
+      },
+      "checkpointsPassed": 4,
+      "checkpointCount": 4
+    }
+  ],
+  "hostSmokes": [
+    {
+      "suite": "c01",
+      "attempt": "attempt1",
+      "outcome": "inconclusive",
+      "taskVerified": null,
+      "manifestRef": "spikes/benchmarks/results/c01-host-attempt1/manifest.json",
+      "numericSummaryRef": "spikes/benchmarks/results/c01-nina-no-results-bridge-1790300319374.json",
+      "sourceScenarioSha256": "3619db0a0fd596e492d7d8b52be975014e46eefdc3a5909d15d61007752c7605",
+      "submittedCanonicalSha256": "c4423bc804e8f43f6208fe80489b43e3d5ca450f57f5392f4bd48b6bdb2890e9",
+      "wallScope": "Claude host and prepared-app bridge UI run; excludes app build and install",
+      "hostWallSeconds": 38.396088958,
+      "hostModel": "claude-opus-4-7",
+      "hostToolCalls": 2,
+      "hostTokens": {
+        "uncachedInput": 8,
+        "cacheCreationInput": 27225,
+        "cacheReadInput": 51300,
+        "output": 1541,
+        "allInputProcessed": 78533
+      },
+      "hostClientEstimateUsd": 0.336465,
+      "bridgeDurationMs": 14440.823208000002,
+      "bridgeInputTokens": 0,
+      "jevInputEstimateUsd": 0,
+      "bridgePhaseTimingsMs": {
+        "prepareMs": 2430.4929580000007,
+        "observeMs": 6420.006167,
+        "decideMs": 0,
+        "actMs": 4705.667749999999,
+        "waitMs": 0,
+        "cleanupMs": 845.0463749999981
+      },
+      "deviceReferenceCounters": {
+        "referenceRefreshes": 0,
+        "referenceExpiries": 0,
+        "nearTtlRefreshes": 0
+      },
+      "checkpointsPassed": 0,
+      "checkpointCount": 1
+    },
+    {
+      "suite": "c01",
+      "attempt": "attempt2",
+      "outcome": "inconclusive",
+      "taskVerified": null,
+      "manifestRef": "spikes/benchmarks/results/c01-host-attempt2/manifest.json",
+      "numericSummaryRef": "spikes/benchmarks/results/c01-nina-no-results-bridge-1790302361560.json",
+      "sourceScenarioSha256": "3619db0a0fd596e492d7d8b52be975014e46eefdc3a5909d15d61007752c7605",
+      "submittedCanonicalSha256": "c4423bc804e8f43f6208fe80489b43e3d5ca450f57f5392f4bd48b6bdb2890e9",
+      "wallScope": "Claude host and prepared-app bridge UI run; excludes app build and install",
+      "hostWallSeconds": 29.086377708,
+      "hostModel": "claude-opus-4-7",
+      "hostToolCalls": 2,
+      "hostTokens": {
+        "uncachedInput": 8,
+        "cacheCreationInput": 19209,
+        "cacheReadInput": 59320,
+        "output": 1434,
+        "allInputProcessed": 78537
+      },
+      "hostClientEstimateUsd": 0.25764,
+      "bridgeDurationMs": 8583.32025,
+      "bridgeInputTokens": 0,
+      "jevInputEstimateUsd": 0,
+      "bridgePhaseTimingsMs": {
+        "prepareMs": 3208.1712500000003,
+        "observeMs": 4373.555542,
+        "decideMs": 0,
+        "actMs": 0,
+        "waitMs": 0,
+        "cleanupMs": 958.6272919999992
+      },
+      "deviceReferenceCounters": {
+        "referenceRefreshes": 0,
+        "referenceExpiries": 0,
+        "nearTtlRefreshes": 0
+      },
+      "checkpointsPassed": 0,
+      "checkpointCount": 1
+    },
+    {
+      "suite": "c01",
+      "attempt": "pass",
+      "outcome": "passed",
+      "taskVerified": null,
+      "manifestRef": "spikes/benchmarks/results/c01-host-pass/manifest.json",
+      "numericSummaryRef": "spikes/benchmarks/results/c01-nina-no-results-bridge-1790302865475.json",
+      "sourceScenarioSha256": "ce8e5a2bca54f788811aac911b5b92ee2757548e735982b1a21e176d5e3a764b",
+      "submittedCanonicalSha256": "ea508716b0498151a73834e231e9b9e9825972f77d849ba57c39f3f8776ca043",
+      "wallScope": "Claude host and prepared-app bridge UI run; excludes app build and install",
+      "hostWallSeconds": 36.708635667,
+      "hostModel": "claude-opus-4-7",
+      "hostToolCalls": 2,
+      "hostTokens": {
+        "uncachedInput": 8,
+        "cacheCreationInput": 19196,
+        "cacheReadInput": 59169,
+        "output": 1229,
+        "allInputProcessed": 78373
+      },
+      "hostClientEstimateUsd": 0.2523095,
+      "bridgeDurationMs": 17585.588875,
+      "bridgeInputTokens": 6228,
+      "jevInputEstimateUsd": 0.000261576,
+      "bridgePhaseTimingsMs": {
+        "prepareMs": 2193.150040999999,
+        "observeMs": 8570.280624999998,
+        "decideMs": 1259.118083999998,
+        "actMs": 4579.478916,
+        "waitMs": 0,
+        "cleanupMs": 921.8008750000008
+      },
+      "deviceReferenceCounters": {
+        "referenceRefreshes": 0,
+        "referenceExpiries": 0,
+        "nearTtlRefreshes": 0
+      },
+      "checkpointsPassed": 1,
+      "checkpointCount": 1
+    }
+  ],
+  "totals": {
+    "upstreamBaseline": {
+      "contacts": {
+        "attempts": 1,
+        "classifications": {
+          "verified_success": 1
+        },
+        "hostWallSeconds": 93.329170167,
+        "hostToolCalls": 20,
+        "hostTokens": {
+          "uncachedInput": 30,
+          "cacheCreationInput": 41473,
+          "cacheReadInput": 1016066,
+          "output": 2143,
+          "allInputProcessed": 1057569
+        },
+        "hostClientEstimateUsd": 0.976488,
+        "jevInputTokens": null,
+        "jevInputEstimateUsd": null
+      },
+      "reminders": {
+        "attempts": 4,
+        "classifications": {
+          "failed_name_unverified": 4
+        },
+        "hostWallSeconds": 457.107601916,
+        "hostToolCalls": 69,
+        "hostTokens": {
+          "uncachedInput": 104,
+          "cacheCreationInput": 110493,
+          "cacheReadInput": 3451982,
+          "output": 15464,
+          "allInputProcessed": 3562579
+        },
+        "hostClientEstimateUsd": 3.218041,
+        "jevInputTokens": null,
+        "jevInputEstimateUsd": null
+      },
+      "weather": {
+        "attempts": 2,
+        "classifications": {
+          "setup_failure": 1,
+          "verified_success": 1
+        },
+        "hostWallSeconds": 168.565095792,
+        "hostToolCalls": 21,
+        "hostTokens": {
+          "uncachedInput": 36,
+          "cacheCreationInput": 64504,
+          "cacheReadInput": 978687,
+          "output": 3934,
+          "allInputProcessed": 1043227
+        },
+        "hostClientEstimateUsd": 1.2329135,
+        "jevInputTokens": null,
+        "jevInputEstimateUsd": null
+      }
+    },
+    "fullSuiteBridge": {
+      "contacts": {
+        "attempts": 1,
+        "classifications": {
+          "passed": 1
+        },
+        "hostWallSeconds": 106.0990975,
+        "hostToolCalls": 3,
+        "hostTokens": {
+          "uncachedInput": 9,
+          "cacheCreationInput": 23093,
+          "cacheReadInput": 95795,
+          "output": 2691,
+          "allInputProcessed": 118897
+        },
+        "hostClientEstimateUsd": 0.3461475,
+        "jevInputTokens": 5456,
+        "jevInputEstimateUsd": 0.000229152
+      },
+      "reminders": {
+        "attempts": 1,
+        "classifications": {
+          "inconclusive": 1
+        },
+        "hostWallSeconds": 127.887232542,
+        "hostToolCalls": 3,
+        "hostTokens": {
+          "uncachedInput": 9,
+          "cacheCreationInput": 24492,
+          "cacheReadInput": 99467,
+          "output": 3498,
+          "allInputProcessed": 123968
+        },
+        "hostClientEstimateUsd": 0.3821485,
+        "jevInputTokens": 3164,
+        "jevInputEstimateUsd": 0.000132888
+      },
+      "weather": {
+        "attempts": 2,
+        "classifications": {
+          "inconclusive": 1,
+          "passed": 1
+        },
+        "hostWallSeconds": 284.748494833,
+        "hostToolCalls": 7,
+        "hostTokens": {
+          "uncachedInput": 19,
+          "cacheCreationInput": 66282,
+          "cacheReadInput": 239416,
+          "output": 8868,
+          "allInputProcessed": 305717
+        },
+        "hostClientEstimateUsd": 1.004323,
+        "jevInputTokens": 29093,
+        "jevInputEstimateUsd": 0.001221906
+      }
+    },
+    "hostSmokes": {
+      "c01": {
+        "attempts": 3,
+        "classifications": {
+          "inconclusive": 2,
+          "passed": 1
+        },
+        "hostWallSeconds": 104.191102333,
+        "hostToolCalls": 6,
+        "hostTokens": {
+          "uncachedInput": 24,
+          "cacheCreationInput": 65630,
+          "cacheReadInput": 169789,
+          "output": 4204,
+          "allInputProcessed": 235443
+        },
+        "hostClientEstimateUsd": 0.8464145,
+        "jevInputTokens": 6228,
+        "jevInputEstimateUsd": 0.000261576
+      }
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "kind": "scripted-benchmark-authoring-evidence",
+  "status": "offline drafts; not validated on a benchmark simulator",
+  "pinnedUpstreamCommit": "d13ff0c707b0681769cf31da0eb42c4f94ceafff",
+  "upstreamPromptSha256": {
+    "weather": "0c139a01832fb3bb7a9c2e6233420ddfab8a0cd3855fdfa3ea9d3a2adf596efc",
+    "contacts": "76aaf3546d25e7f4c26b553a2c5bef6c20596c86d79f11ba55898877f2dfb00e",
+    "reminders": "965357a8822bdf506a72a3911cb43c9dd17fc5d2d8e9fc701ca7ac54b6d2690a"
+  },
+  "scripts": [
+    {
+      "name": "weather",
+      "path": "spikes/benchmarks/scenarios/weather-scripted.json",
+      "sha256": "79e2f4c7d666967f7f1e424b1d2b620608890a885ef2f45785a977c47be3928e",
+      "steps": 19,
+      "checkpoints": 4
+    },
+    {
+      "name": "contacts",
+      "path": "spikes/benchmarks/scenarios/contacts-scripted.json",
+      "sha256": "f850eb7c32be96caa1b21abfe71b53e32a6f94070f9f0eb55f5ea5c612dfa0ce",
+      "steps": 10,
+      "checkpoints": 1
+    },
+    {
+      "name": "reminders",
+      "path": "spikes/benchmarks/scenarios/reminders-scripted.json",
+      "sha256": "f6cf087d559be3c64a38ebce6bc64c01aab02c53a7e1e19754610ae161339a68",
+      "steps": 18,
+      "checkpoints": 1
+    }
+  ],
+  "capturedAXExamples": [
+    "spikes/scripted/corpus/raw/s05-weather-lisbon-distance-mi.full.json",
+    "spikes/scripted/corpus/raw/s02-weather-berlin-results.full.json",
+    "spikes/feasibility/corpus-v3/raw/t06-contacts-create-blank.full.json",
+    "spikes/scripted/corpus/raw/s10-contacts-nolan-old-email-edit.full.json",
+    "spikes/scripted/corpus/raw/s16-reminders-new-list-blank.full.json",
+    "spikes/scripted/corpus/raw/s19-reminders-charge-lantern-note-empty.full.json",
+    "spikes/feasibility/corpus/raw/h16-reminders-complete-menu.full.json",
+    "spikes/feasibility/corpus/raw/h17-reminders-complete-confirmed.full.json"
+  ],
+  "sourceOnlyEvidence": [
+    "spikes/benchmarks/vendor/weather/Weather/Views/Sections/ConditionGrid.swift",
+    "spikes/benchmarks/vendor/weather/Weather/Views/Overlays/PrecipitationDetailView.swift"
+  ],
+  "unresolvedPreflight": {
+    "weather": [
+      "One upward swipe must expose weather.precipitationCard and VISIBILITY together.",
+      "weather.precipitationDetail must appear as a unique visible foreground accessibility element after opening the card.",
+      "The London result must be the unique not-saved result and its main/detail values must be visible after the scripted transitions."
+    ],
+    "contacts": [
+      "A new phone field must expose the captured Phone placeholder and a new email field the captured home identifier without another home field.",
+      "The saved MCP Contact Benchmark card must expose its email button with the inferred home label and preserve the locale-dependent phone digits."
+    ],
+    "reminders": [
+      "The newly saved MCP Benchmark List row label and new-reminder Title/Done transitions are inferred from equivalent Signal Kit captures.",
+      "Completed items must cease exposing the circle button so each staged completion remains a unique physical target.",
+      "Show Completed must expose two Completed rows and one Incomplete row with the inferred exact labels.",
+      "Completion is staged while each circle is unique; action order differs from the prompt list, though the requested final state is the same."
+    ]
+  },
+  "authoringTimeBasis": {
+    "measuredSeconds": null,
+    "measuredTokens": null,
+    "status": "No instrumented authoring timer or token meter began before drafting. File timestamps are not a valid time or token measurement. Do not make a savings claim from these drafts."
+  }
+}

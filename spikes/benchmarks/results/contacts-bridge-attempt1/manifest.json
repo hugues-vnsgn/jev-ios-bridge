@@ -1,0 +1,121 @@
+{
+  "kind": "archived-bridge-attempt",
+  "slug": "contacts-bridge-attempt1",
+  "runId": "ba16e0bc-81b9-4945-8f38-b3e5f69d6d91",
+  "scenarioSourcePath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/v0.1-release/spikes/benchmarks/scenarios/contacts-scripted.json",
+  "scenarioSourceSha256AtExecution": "f850eb7c32be96caa1b21abfe71b53e32a6f94070f9f0eb55f5ea5c612dfa0ce",
+  "submittedScenarioSha256": "87e7c9a38be9ceb340b4b22387e61bd5e84b64344208f6adeb9588146300c6fb",
+  "submittedScenarioCanonicalSha256": "66413cac77c8c2f27b681f0ce734bd145774a750cea5d13a4fc9bbedfd5e9b7b",
+  "hostToolSequence": [
+    "mcp__jev-ios-bridge__start_scenario",
+    "mcp__jev-ios-bridge__get_report",
+    "mcp__jev-ios-bridge__get_report"
+  ],
+  "hostModel": "claude-opus-4-7",
+  "hostWallSeconds": 106.0990975,
+  "hostTokens": {
+    "uncachedInput": 9,
+    "cacheCreationInput": 23093,
+    "cacheReadInput": 95795,
+    "output": 2691,
+    "allInputProcessed": 118897
+  },
+  "hostEstimatedCostUsd": 0.34614750000000005,
+  "bridgeVerdict": "passed",
+  "bridgeReason": "ALL_CHECKPOINTS_PASSED",
+  "bridgeDurationMs": 74766.1965,
+  "bridgeInputTokens": 5456,
+  "cleanupMs": 898.1095830000122,
+  "installedCliPath": "/tmp/jev-post-review-check.JT6czu/consumer/node_modules/jev-ios-bridge/dist/cli.js",
+  "installedCliSha256": "4355b1dc6f47973ba54f169d1183137556844f755d394ea71bd995fbf2c698d2",
+  "privateRawTranscriptPath": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-yiPKi6/claude.jsonl",
+  "privateRawTranscriptSha256": "4a6be84ee5f2f6c1f3ccff0f81bd2dfbec0b3aa30623988da9a78f59233a22e5",
+  "privateRunDirectory": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-yiPKi6/runs/ba16e0bc-81b9-4945-8f38-b3e5f69d6d91",
+  "saved": [
+    {
+      "name": "submitted-scenario.json",
+      "sha256": "87e7c9a38be9ceb340b4b22387e61bd5e84b64344208f6adeb9588146300c6fb",
+      "bytes": 7368
+    },
+    {
+      "name": "report.md",
+      "sha256": "85945378c99c2407496f0ebef71d73307502c60449f54a6013beddbe308cf54f",
+      "bytes": 1490
+    },
+    {
+      "name": "host-final.md",
+      "sha256": "80bc9f6637e7f63038dcf93544b7a1cdfbeaf30382b9e4da55339572556392c8",
+      "bytes": 714
+    },
+    {
+      "name": "journal.jsonl",
+      "sha256": "7fe43245905f059626ce156fde1c874021a3666841465bc5ec58d3f986927c97",
+      "bytes": 55001
+    },
+    {
+      "name": "metrics.json",
+      "sha256": "4b7be67d9d83caff78e0be6f02830edf3ebcc1efe42be11debd597e2f056807e",
+      "bytes": 2931
+    },
+    {
+      "name": "screen-11.jpg",
+      "sha256": "034e835bb18db6da77a9c81cb1bfcbba9bd5aa2e1cd9a8ef686dcb1246c52387",
+      "bytes": 35284
+    },
+    {
+      "name": "screen-13.jpg",
+      "sha256": "6b4eb01e13bb1b0bc3c9266e82f3a8c4cdcd843f7a0bbab20cb58a9e3b3f224a",
+      "bytes": 34740
+    },
+    {
+      "name": "screen-15.jpg",
+      "sha256": "0fbdce26dbdf8c359a1da41649eb01628a7f5af1f33bbc53dddbd9533b8d5b52",
+      "bytes": 35885
+    },
+    {
+      "name": "screen-17.jpg",
+      "sha256": "5af5b92f7b821bdaf07c998aecf4aebdcddf0ce50e2e46e7a2bc10f99894c28d",
+      "bytes": 35058
+    },
+    {
+      "name": "screen-19.jpg",
+      "sha256": "765805061e0c88de9cd7f4fe2b80612b0053ce988c1853c79c68e394dfd6761a",
+      "bytes": 37275
+    },
+    {
+      "name": "screen-21.jpg",
+      "sha256": "02148214053028dab190f027f2d537dab3e758411a7c7feb2db22b42f00449dc",
+      "bytes": 37744
+    },
+    {
+      "name": "screen-3.jpg",
+      "sha256": "77ee4fe2423488c8abb91ef401ea72692349fdf8da69246e50e71722fded1fea",
+      "bytes": 34861
+    },
+    {
+      "name": "screen-5.jpg",
+      "sha256": "30b691437a02d0d9f16587cbd660f0ace7737ee860d43937b8859167485c3ae1",
+      "bytes": 31338
+    },
+    {
+      "name": "screen-7.jpg",
+      "sha256": "7cfd460074c2a5100a90a221a484b61d6919a81ff78ab8730c776d0c7016a142",
+      "bytes": 31671
+    },
+    {
+      "name": "screen-9.jpg",
+      "sha256": "1537ea951094e9f6503141ab4b805f71d811b8a980d915e834a2c537a80d789f",
+      "bytes": 33409
+    },
+    {
+      "name": "source-scenario.json",
+      "sha256": "f850eb7c32be96caa1b21abfe71b53e32a6f94070f9f0eb55f5ea5c612dfa0ce",
+      "bytes": 7368
+    }
+  ],
+  "sourceScenarioArchive": {
+    "name": "source-scenario.json",
+    "sha256": "f850eb7c32be96caa1b21abfe71b53e32a6f94070f9f0eb55f5ea5c612dfa0ce",
+    "submittedDeepEqualSource": true
+  }
+}

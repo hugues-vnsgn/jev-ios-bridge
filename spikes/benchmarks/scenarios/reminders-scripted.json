@@ -1,0 +1,448 @@
+{
+  "app": {
+    "bundleId": "com.apple.reminders"
+  },
+  "preconditions": [
+    "Use a clean dedicated iPhone 17 Pro Max simulator with the same iOS runtime as the baseline.",
+    "No list named MCP Benchmark List exists. Dismiss only the first-run prompts dismissed by the pinned baseline before timing.",
+    "The script completes each of two reminders while its completion circle is unique, then adds the reminder that remains incomplete."
+  ],
+  "values": {
+    "listName": "MCP Benchmark List",
+    "firstReminder": "Buy milk benchmark",
+    "thirdReminder": "Call team benchmark",
+    "secondReminder": "File report benchmark"
+  },
+  "steps": [
+    {
+      "id": "openNewList",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "My Lists"
+          },
+          {
+            "role": "button",
+            "label": "Add List"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "Add List"
+        }
+      }
+    },
+    {
+      "id": "nameList",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text-field",
+            "label": "List Name"
+          },
+          {
+            "role": "button",
+            "label": "Cancel"
+          }
+        ]
+      },
+      "action": {
+        "kind": "replaceText",
+        "selector": {
+          "role": "text-field",
+          "label": "List Name"
+        },
+        "valueKey": "listName"
+      }
+    },
+    {
+      "id": "saveList",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text-field",
+            "label": "List Name",
+            "value": "MCP Benchmark List"
+          },
+          {
+            "role": "button",
+            "label": "Done"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "Done"
+        }
+      }
+    },
+    {
+      "id": "beginFirst",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "other",
+            "label": "MCP Benchmark List"
+          },
+          {
+            "role": "button",
+            "label": "New Reminder"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "New Reminder"
+        }
+      }
+    },
+    {
+      "id": "typeFirst",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "other",
+            "label": "MCP Benchmark List"
+          },
+          {
+            "role": "text-field",
+            "label": "Title"
+          }
+        ]
+      },
+      "action": {
+        "kind": "replaceText",
+        "selector": {
+          "role": "text-field",
+          "label": "Title"
+        },
+        "valueKey": "firstReminder"
+      }
+    },
+    {
+      "id": "saveFirst",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text-field",
+            "label": "Title",
+            "value": "Buy milk benchmark"
+          },
+          {
+            "role": "button",
+            "label": "Done"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "Done"
+        }
+      }
+    },
+    {
+      "id": "completeFirst",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "other",
+            "label": "MCP Benchmark List"
+          },
+          {
+            "role": "other",
+            "label": "Buy milk benchmark, Incomplete"
+          },
+          {
+            "role": "button",
+            "label": "circle"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "circle"
+        }
+      }
+    },
+    {
+      "id": "beginThird",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "other",
+            "label": "MCP Benchmark List"
+          },
+          {
+            "role": "button",
+            "label": "New Reminder"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "New Reminder"
+        }
+      }
+    },
+    {
+      "id": "typeThird",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "other",
+            "label": "MCP Benchmark List"
+          },
+          {
+            "role": "text-field",
+            "label": "Title"
+          }
+        ]
+      },
+      "action": {
+        "kind": "replaceText",
+        "selector": {
+          "role": "text-field",
+          "label": "Title"
+        },
+        "valueKey": "thirdReminder"
+      }
+    },
+    {
+      "id": "saveThird",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text-field",
+            "label": "Title",
+            "value": "Call team benchmark"
+          },
+          {
+            "role": "button",
+            "label": "Done"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "Done"
+        }
+      }
+    },
+    {
+      "id": "completeThird",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "other",
+            "label": "MCP Benchmark List"
+          },
+          {
+            "role": "other",
+            "label": "Call team benchmark, Incomplete"
+          },
+          {
+            "role": "button",
+            "label": "circle"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "circle"
+        }
+      }
+    },
+    {
+      "id": "beginSecond",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "other",
+            "label": "MCP Benchmark List"
+          },
+          {
+            "role": "button",
+            "label": "New Reminder"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "New Reminder"
+        }
+      }
+    },
+    {
+      "id": "typeSecond",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "other",
+            "label": "MCP Benchmark List"
+          },
+          {
+            "role": "text-field",
+            "label": "Title"
+          }
+        ]
+      },
+      "action": {
+        "kind": "replaceText",
+        "selector": {
+          "role": "text-field",
+          "label": "Title"
+        },
+        "valueKey": "secondReminder"
+      }
+    },
+    {
+      "id": "saveSecond",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text-field",
+            "label": "Title",
+            "value": "File report benchmark"
+          },
+          {
+            "role": "button",
+            "label": "Done"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "Done"
+        }
+      }
+    },
+    {
+      "id": "openMore",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "other",
+            "label": "MCP Benchmark List"
+          },
+          {
+            "role": "other",
+            "label": "File report benchmark, Incomplete"
+          },
+          {
+            "role": "button",
+            "label": "More"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "More"
+        }
+      }
+    },
+    {
+      "id": "showCompleted",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "button",
+            "label": "Show Completed"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "Show Completed"
+        }
+      }
+    },
+    {
+      "id": "verifyFinalList",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "other",
+            "label": "MCP Benchmark List"
+          },
+          {
+            "role": "text",
+            "label": "2 Completed"
+          },
+          {
+            "role": "other",
+            "label": "Buy milk benchmark, Completed"
+          },
+          {
+            "role": "other",
+            "label": "Call team benchmark, Completed"
+          },
+          {
+            "role": "other",
+            "label": "File report benchmark, Incomplete"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "first",
+          "claim": "Buy milk benchmark is completed in MCP Benchmark List."
+        },
+        {
+          "id": "third",
+          "claim": "Call team benchmark is completed in MCP Benchmark List."
+        },
+        {
+          "id": "second",
+          "claim": "File report benchmark remains incomplete in MCP Benchmark List."
+        },
+        {
+          "id": "counts",
+          "claim": "The saved list has exactly two completed reminders and one incomplete reminder, with no additional reminders."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "kind": "derived-prepared-weather-baseline",
+  "sourceCommit": "d13ff0c707b0681769cf31da0eb42c4f94ceafff",
+  "sourceHarnessSha256": "ca6f760ded4cf596989f6f880499968dfc1192b9159fa4cad563a9f2785d985a",
+  "official": {
+    "promptPath": "benchmarks/claude-ui/prompts/weather.md",
+    "promptSha256": "0c139a01832fb3bb7a9c2e6233420ddfab8a0cd3855fdfa3ea9d3a2adf596efc",
+    "suitePath": "benchmarks/claude-ui/suites/weather.yml",
+    "suiteSha256": "9ed922b95eb356cd03f965c455707083c2f1b108d8550f686f308d3b8c69fcc4"
+  },
+  "derived": {
+    "promptPath": "benchmarks/claude-ui/prompts/weather-prepared.md",
+    "promptSha256": "6dd184a9fe51e6d9f34600f3b9b87b08dfb4819e110c4263dcfbd4d1a2a65134",
+    "suitePath": "benchmarks/claude-ui/suites/weather-prepared.yml",
+    "suiteSha256": "653a9310276f88e2dbf449fb0d9051606cc1b140d36c534a56fef25bfd47308e",
+    "promptDiffSha256": "a5c855fab58ba5f1c0923bb872a12acf913c3088bfce131499513e81cb5064b9",
+    "suiteDiffSha256": "ced6b914073aeb44138f95e403dcd6a9abc0f8153faf8c51cd641adf46611b37"
+  },
+  "sharedSteps2ThroughVerificationByteIdentical": true,
+  "sharedSuffixSha256": "a563bfb0d3eea5b3b03a148d5a4e6863bdfae4c89fbedc0637e271d874985f27",
+  "installedAppBundleId": "com.sentry.weather.Weather",
+  "dedicatedSimulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+  "simulatorPlan": "temporarySimulator false; existingSimulatorId exact dedicated UUID; harness does not delete preexisting simulators",
+  "requestedModel": "claude-opus-4-7",
+  "mcpServer": "pinned upstream source MobileBuildMCP 2.7.1",
+  "axeBinary": {
+    "path": "/Users/hugues_mini/.npm/_npx/b998b4270960e258/node_modules/mobilebuildmcp/bundled/axe",
+    "version": "1.8.0",
+    "sha256": "a776cb6ebaa477bd04e8a829eb72ca179d869a1876111ca15a52dde1e91f9ab7"
+  },
+  "permissionMode": "upstream default bypassPermissions, unchanged",
+  "timingScope": "Measured Claude host from session_show_defaults through installed-app launch and UI verification; excludes npm build, app installation, and setup.",
+  "invocation": "env -u TYPESAFE_API_KEY MOBILEBUILDMCP_AXE_PATH=/Users/hugues_mini/.npm/_npx/b998b4270960e258/node_modules/mobilebuildmcp/bundled/axe MOBILEBUILDMCP_SENTRY_DISABLED=true npm run bench:claude-ui -- --suite benchmarks/claude-ui/suites/weather-prepared.yml --model claude-opus-4-7"
+}

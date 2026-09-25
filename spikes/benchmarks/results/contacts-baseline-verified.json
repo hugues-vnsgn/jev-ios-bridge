@@ -1,0 +1,55 @@
+{
+  "kind": "verified-upstream-baseline",
+  "suite": "contacts",
+  "attempt": 1,
+  "sourceCommit": "d13ff0c707b0681769cf31da0eb42c4f94ceafff",
+  "promptSha256": "76aaf3546d25e7f4c26b553a2c5bef6c20596c86d79f11ba55898877f2dfb00e",
+  "axeBinary": {
+    "path": "/Users/hugues_mini/.npm/_npx/b998b4270960e258/node_modules/mobilebuildmcp/bundled/axe",
+    "version": "1.8.0",
+    "sha256": "a776cb6ebaa477bd04e8a829eb72ca179d869a1876111ca15a52dde1e91f9ab7"
+  },
+  "model": "claude-opus-4-7",
+  "claudeExitCode": 0,
+  "parserExitCode": 0,
+  "parseErrors": 0,
+  "toolInputErrorsRecovered": 0,
+  "verifiedTask": true,
+  "selectedUiEvidence": {
+    "savedCardHeader": [
+      "MCP Contact Benchmark",
+      "MOBILEBUILDMCP BENCHMARK"
+    ],
+    "phoneButton": "mobile, (555) 010-4242",
+    "emailButton": "home, mcp.contact.benchmark@example.com",
+    "doneButtonVisibleOnFinalCard": false
+  },
+  "hostWallClockSeconds": 93.329170167,
+  "simulatorSetupSeconds": 22.99,
+  "hostToolCalls": 20,
+  "tokens": {
+    "uncachedInput": 30,
+    "cacheCreationInput": 41473,
+    "cacheReadInput": 1016066,
+    "output": 2143,
+    "allInputProcessed": 1057569
+  },
+  "estimatedHostCostUsd": 0.9764879999999998,
+  "temporarySimulatorId": "93222C8C-50B8-4DF0-B7FC-7560CC4E105C",
+  "temporarySimulatorDeletedByHarness": true,
+  "numericSummary": "spikes/benchmarks/results/contacts-baseline-1790304529939.json",
+  "rawResultPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/contacts/20260925T024850Z/result.json",
+  "rawResultSha256": "5c5036d8cc349ebf00212baee7cb8311637833b79ab71a353d7f44f8348942da",
+  "rawTranscriptPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/contacts/20260925T024850Z/claude.jsonl",
+  "rawTranscriptSha256": "7b80f6b1243382f11b67aa5a8493556d1b4aaf6b0d54c67870b6ac0f83368701",
+  "proof": [
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/contacts/20260925T024850Z/parsed/0036_tool_result_tap.md",
+      "sha256": "b590178c9602fd8d332739d4ba5beab450d8d9d27ebdb9528eb877b01730ef4b"
+    },
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/contacts/20260925T024850Z/parsed/0038_tool_result_snapshot_ui.md",
+      "sha256": "04e26b6821031af910a753d9f3d77fa496eb99ad91a93f099cfa200d375c2de8"
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "kind": "upstream-baseline-audit",
+  "suite": "reminders",
+  "attempt": 4,
+  "exception": "One additional attempt authorized after the third attempt post-run audit integration defect; prior three attempts and costs preserved.",
+  "precedingAttempts": [
+    "spikes/benchmarks/results/reminders-baseline-audit.json",
+    "spikes/benchmarks/results/reminders-baseline-attempt2-audit.json",
+    "spikes/benchmarks/results/reminders-baseline-attempt3-audit.json"
+  ],
+  "sourceCommit": "d13ff0c707b0681769cf31da0eb42c4f94ceafff",
+  "promptSha256": "965357a8822bdf506a72a3911cb43c9dd17fc5d2d8e9fc701ca7ac54b6d2690a",
+  "suiteSha256": "8b22722095a1cca23c02896f46f019b156b703da2b56d2a475aba802b335184c",
+  "temporaryHarnessAuditPatch": "spikes/benchmarks/results/reminders-postrun-audit-seam-v2.json",
+  "axeBinary": {
+    "path": "/Users/hugues_mini/.npm/_npx/b998b4270960e258/node_modules/mobilebuildmcp/bundled/axe",
+    "version": "1.8.0",
+    "sha256": "a776cb6ebaa477bd04e8a829eb72ca179d869a1876111ca15a52dde1e91f9ab7"
+  },
+  "model": "claude-opus-4-7",
+  "claudeExitCode": 0,
+  "parserExitCode": 0,
+  "parseErrors": 0,
+  "toolInputErrorsRecovered": 0,
+  "hostWallClockSeconds": 115.947785708,
+  "simulatorSetupSeconds": 23.76,
+  "hostToolCalls": 18,
+  "tokens": {
+    "uncachedInput": 28,
+    "cacheCreationInput": 24112,
+    "cacheReadInput": 920588,
+    "output": 4008,
+    "allInputProcessed": 944728
+  },
+  "estimatedHostCostUsd": 0.8017539999999999,
+  "submittedListName": "MCP Benchmark List",
+  "immediatePostTypeField": "Mộc Benchmark List",
+  "savedUiRows": [
+    {
+      "role": "other",
+      "label": "Mộc Benchmark List"
+    },
+    {
+      "role": "other",
+      "label": "File report benchmark, Incomplete",
+      "identifier": "<x-apple-reminderkit://REMCDReminder/7DCF8476-7EE9-412E-B036-D97FD8E52A9B>"
+    }
+  ],
+  "completionRowsBeforeAudit": [
+    "Buy milk benchmark, Completed",
+    "File report benchmark, Incomplete",
+    "Call team benchmark, Completed"
+  ],
+  "screenshotPath": "spikes/benchmarks/results/reminders-attempt4-screen.jpg",
+  "screenshotSha256": "18d7a6b95c7b14dec09f73f343e7395746fe1fddd68bdb068b4db2dc81ed0427",
+  "postHostAudit": {
+    "status": "succeeded",
+    "durationSeconds": 3.1065465,
+    "countedInHostWallClock": false,
+    "modelRequests": 0,
+    "simulatorId": "0393DDB0-3502-4FE9-881E-366386DA7E21",
+    "commands": [
+      {
+        "executable": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "args": [
+          "/Users/hugues_mini/.npm/_npx/b998b4270960e258/node_modules/mobilebuildmcp/build/cli.js",
+          "ui-automation",
+          "snapshot-ui",
+          "--verbose",
+          "--simulator-id",
+          "0393DDB0-3502-4FE9-881E-366386DA7E21",
+          "--output",
+          "json"
+        ]
+      },
+      {
+        "executable": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "args": [
+          "/Users/hugues_mini/.npm/_npx/b998b4270960e258/node_modules/mobilebuildmcp/build/cli.js",
+          "simulator",
+          "screenshot",
+          "--return-format",
+          "path",
+          "--simulator-id",
+          "0393DDB0-3502-4FE9-881E-366386DA7E21",
+          "--output",
+          "json"
+        ]
+      }
+    ],
+    "cliPath": "/Users/hugues_mini/.npm/_npx/b998b4270960e258/node_modules/mobilebuildmcp/build/cli.js",
+    "cliSha256": "3e5756ce8b953875237bb76f737882de7a9b407f77496a98b401c4d6ed219c2c",
+    "packageJsonSha256": "fad6902321eaa9000664b78339c467c3ffb1cbf0b27e419821e867446915bf1a",
+    "screenHash": "186xhot",
+    "fullPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T031317Z/post-run-audit.full.json",
+    "fullSha256": "f6ced09a658d318356e003d95fda0300a662362ba44c25ccbdda247a5b80d7e1",
+    "rawScreenshotPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T031317Z/post-run-audit.jpg",
+    "metadataPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T031317Z/post-run-audit.json",
+    "metadataSha256": "5e4b3d5410d71cf2b03ea33e21f427834ddc7cde9496134818a81a969b31b981"
+  },
+  "verifiedTask": false,
+  "comparisonEligible": false,
+  "reason": "The saved list title is Mộc Benchmark List, not the required MCP Benchmark List. The final reminder completion states are correct.",
+  "temporarySimulatorId": "0393DDB0-3502-4FE9-881E-366386DA7E21",
+  "temporarySimulatorDeletedByHarness": true,
+  "numericSummary": "spikes/benchmarks/results/reminders-baseline-1790305995589.json",
+  "rawResultPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T031317Z/result.json",
+  "rawResultSha256": "3fcfa3bf7e9b13426a39f0a7d765598a6648416a99b762876b9e1e28f10c7530",
+  "rawTranscriptPath": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T031317Z/claude.jsonl",
+  "rawTranscriptSha256": "01df59416c30f34182174bd27520c4c59cd48cfa56711d3f7dd5298a6429d526",
+  "proof": [
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T031317Z/parsed/0015_tool_call_type_text.md",
+      "sha256": "4b3bf458ba0148592f84c3c8d7076da7658ec6a0caeb0028d8b02357e1e54555"
+    },
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T031317Z/parsed/0016_tool_result_type_text.md",
+      "sha256": "6553153ba301dc61cef4de2bcbc75148cffa77edf0e7fc0f21de9bc513ef8705"
+    },
+    {
+      "path": "/tmp/jev-mobilebuildmcp-benchmark-v2.7.1/out.nosync/claude-benchmarks/reminders/20260925T031317Z/parsed/0034_tool_result_batch.md",
+      "sha256": "944a70df2b0831fb6736d51eea743527e7edb96a20c40fbe782347ed563e98b2"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
+import { createHash } from 'node:crypto';
 import { execFileSync, spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, readdirSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -21,9 +22,17 @@ if (!execute) {
 if (!existsSync(join(source, 'node_modules'))) throw new Error('Pinned upstream dependencies missing; run npm ci in the source clone');
 const actualCommit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: source, encoding: 'utf8' }).trim();
 if (actualCommit !== sourceCommit) throw new Error('Upstream source commit differs from pinned v2.7.1');
+const axePath = process.env.MOBILEBUILDMCP_AXE_PATH;
+if (!axePath || !existsSync(axePath)) throw new Error('Set MOBILEBUILDMCP_AXE_PATH to the pinned 2.7.1 bundled AXe binary');
+const axeSha256 = createHash('sha256').update(readFileSync(axePath)).digest('hex');
+if (axeSha256 !== 'a776cb6ebaa477bd04e8a829eb72ca179d869a1876111ca15a52dde1e91f9ab7') {
+  throw new Error('AXe binary differs from the verified MobileBuildMCP 2.7.1 bundle');
+}
+const axeVersion = execFileSync(axePath, ['--version'], { encoding: 'utf8' }).trim();
+if (axeVersion !== '1.8.0') throw new Error('AXe version differs from the pinned bundle');
 
 const startedAt = Date.now();
-const baselineEnv = { ...process.env, MOBILEBUILDMCP_SENTRY_DISABLED: 'true' };
+const baselineEnv = { ...process.env, MOBILEBUILDMCP_SENTRY_DISABLED: 'true', MOBILEBUILDMCP_AXE_PATH: axePath };
 delete baselineEnv.TYPESAFE_API_KEY;
 const child = spawnSync(command[0], command.slice(1), {
   cwd: source,
@@ -49,5 +58,6 @@ const resultsDir = join(dirname(fileURLToPath(import.meta.url)), 'results');
 mkdirSync(resultsDir, { recursive: true, mode: 0o700 });
 const outputPath = join(resultsDir, `${suite}-baseline-${startedAt}.json`);
 writeFileSync(outputPath, JSON.stringify({ ...measured, invokedAt: new Date(startedAt).toISOString(),
-  sourceCommit, rawResultPath: resultPath }, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
+  sourceCommit, axeBinary: { path: axePath, version: axeVersion, sha256: axeSha256 },
+  rawResultPath: resultPath }, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
 process.stdout.write(`Numeric summary: ${outputPath}\n`);

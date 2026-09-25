@@ -1,0 +1,47 @@
+{
+  "kind": "post-run-audit-cli-preflight",
+  "at": "2026-09-25T03:12:13.654Z",
+  "sourceCwd": "/private/tmp/jev-mobilebuildmcp-benchmark-v2.7.1",
+  "simulatorId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+  "packageVersion": "2.7.1",
+  "packageJsonSha256": "fad6902321eaa9000664b78339c467c3ffb1cbf0b27e419821e867446915bf1a",
+  "cliPath": "/Users/hugues_mini/.npm/_npx/b998b4270960e258/node_modules/mobilebuildmcp/build/cli.js",
+  "cliSha256": "3e5756ce8b953875237bb76f737882de7a9b407f77496a98b401c4d6ed219c2c",
+  "axePath": "/Users/hugues_mini/.npm/_npx/b998b4270960e258/node_modules/mobilebuildmcp/bundled/axe",
+  "commands": [
+    {
+      "executable": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "args": [
+        "/Users/hugues_mini/.npm/_npx/b998b4270960e258/node_modules/mobilebuildmcp/build/cli.js",
+        "ui-automation",
+        "snapshot-ui",
+        "--verbose",
+        "--simulator-id",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "--output",
+        "json"
+      ]
+    },
+    {
+      "executable": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "args": [
+        "/Users/hugues_mini/.npm/_npx/b998b4270960e258/node_modules/mobilebuildmcp/build/cli.js",
+        "simulator",
+        "screenshot",
+        "--return-format",
+        "path",
+        "--simulator-id",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "--output",
+        "json"
+      ]
+    }
+  ],
+  "durationSeconds": 2.558249375,
+  "screenHash": "0t6gqf2",
+  "visibleTitleMatches": 2,
+  "fullSha256": "d03878a9bd81c369d7a8860a8f4958596670d7cc277d2237f68b03377ef7cb5b",
+  "screenshotSha256": "2f9e01d21116bd05a8e9dae300f419cc186c99127753e21da56a2d09196ae3d3",
+  "fullPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/v0.1-release/spikes/benchmarks/results/postrun-audit-preflight-2LzmYO/full.json",
+  "screenshotPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/v0.1-release/spikes/benchmarks/results/postrun-audit-preflight-2LzmYO/screen.jpg"
+}

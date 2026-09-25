@@ -1,0 +1,26 @@
+{
+  "kind": "temporary-upstream-post-host-audit-seam",
+  "sourceCommit": "d13ff0c707b0681769cf31da0eb42c4f94ceafff",
+  "changedFile": "src/benchmarks/claude-ui/harness.ts",
+  "originalSourceSha256": "ca6f760ded4cf596989f6f880499968dfc1192b9159fa4cad563a9f2785d985a",
+  "modifiedSourceSha256": "b43f523057199af3ef366ed8551b52aa9ee72b4d991701079fd626d74a993303",
+  "patchPath": "spikes/benchmarks/results/reminders-postrun-audit.patch",
+  "patchSha256": "acba9bf0840a6f5ba0851c90cbaad9a09de8017b41ac2a0c418f2fbe0ad0dd51",
+  "promptSha256": "965357a8822bdf506a72a3911cb43c9dd17fc5d2d8e9fc701ca7ac54b6d2690a",
+  "suiteSha256": "8b22722095a1cca23c02896f46f019b156b703da2b56d2a475aba802b335184c",
+  "typecheck": "npm run typecheck passed",
+  "audit": {
+    "optInEnv": "JEV_BASELINE_POSTRUN_AUDIT=1",
+    "measuredHostEnvReceivesOptInFlag": false,
+    "timing": "After runCommand returns its fixed Claude duration and compareBenchmark runs; before normal simulator deletion.",
+    "actions": "Pinned MobileBuildMCP 2.7.1 full UI snapshot and simulator screenshot on the exact harness-created UUID.",
+    "readOnly": true,
+    "modelRequests": 0,
+    "outputs": [
+      "post-run-audit.full.json",
+      "post-run-audit.jpg",
+      "post-run-audit.json"
+    ],
+    "failureHandling": "Capture error recorded privately; host result retained; outer finally still deletes simulator."
+  }
+}

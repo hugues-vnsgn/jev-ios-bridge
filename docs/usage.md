@@ -1,6 +1,6 @@
 # Running the bridge
 
-The supported input is an explicit script. Jev judges current-screen assertions; it does not choose actions. Release verification is in progress; see the [release plan](../.scratch/jev-ios-bridge/release-plan.md).
+The supported input is an explicit script. Jev judges current-screen assertions; it does not choose actions. This is an experimental prerelease. A correct visible state can still yield an inconclusive result when an assertion is uncertain.
 
 ## Install and prepare
 
@@ -70,7 +70,7 @@ A script has 1–100 steps with unique IDs and ends at a checkpoint. Optional `p
 | `kind: "wait"` | `until: {present: [...]}`, optional absent selectors, and `timeoutMs` up to 60000 |
 | `kind: "checkpoint"` | 1–20 `assertions: [{id, claim}]` about the current screen |
 
-Every step also has `id` and `guard`. Guards must identify the intended view: one text field could be Search or a card's Notes field. Missing, ambiguous, hidden, disabled, or invalid targets do not trigger guessed actions. The pinned driver recognizes narrowly proven aliases of the same physical button tap; distinct targets remain ambiguous.
+Every step also has `id` and `guard`. Guards must identify the intended view: one text field could be Search or a card's Notes field. A sheet can leave background controls in the accessibility capture. Before acting on the main view, close the sheet explicitly and forbid its distinguishing anchors; visible background text does not prove the view is unobstructed. Missing, ambiguous, hidden, disabled, or invalid targets do not trigger guessed actions. The pinned driver recognizes narrowly proven aliases of the same physical button tap; distinct targets remain ambiguous.
 
 Put every typed literal in root `values` and reference its key from `replaceText`. Replacement requests clearing the whole field. Check the resulting text with the next guard: simulator keyboard state can change how typing and modifier keys are applied. Values are limited to 32 entries of at most 2048 printable US-keyboard characters. Leading hyphens are rejected because of the pinned vendor typing limitation. Jev never generates input text.
 

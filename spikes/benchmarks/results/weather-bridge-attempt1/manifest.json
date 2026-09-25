@@ -1,0 +1,156 @@
+{
+  "kind": "archived-bridge-attempt",
+  "slug": "weather-bridge-attempt1",
+  "runId": "5983b886-9e04-470c-8db5-c8e66fbbac76",
+  "scenarioSourcePath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/v0.1-release/spikes/benchmarks/scenarios/weather-scripted.json",
+  "scenarioSourceSha256AtExecution": "79e2f4c7d666967f7f1e424b1d2b620608890a885ef2f45785a977c47be3928e",
+  "submittedScenarioSha256": "9f27eae3e5f08497bd65e31d5e1a5862512ccf4ac2b4acb65f685bfdf96dce76",
+  "submittedScenarioCanonicalSha256": "01dcc3f6317103d08b0152146e401ee58d9e840559b5169bd33f1b51383554bd",
+  "hostToolSequence": [
+    "mcp__jev-ios-bridge__start_scenario",
+    "mcp__jev-ios-bridge__get_report",
+    "mcp__jev-ios-bridge__get_report"
+  ],
+  "hostModel": "claude-opus-4-7",
+  "hostWallSeconds": 137.172835458,
+  "hostTokens": {
+    "uncachedInput": 9,
+    "cacheCreationInput": 36340,
+    "cacheReadInput": 97569,
+    "output": 4558,
+    "allInputProcessed": 133918
+  },
+  "hostEstimatedCostUsd": 0.5261795,
+  "bridgeVerdict": "inconclusive",
+  "bridgeReason": "GUARD_MISSING",
+  "bridgeDurationMs": 89476.20512500001,
+  "bridgeInputTokens": 10866,
+  "cleanupMs": 840.1363750000019,
+  "installedCliPath": "/tmp/jev-post-review-check.JT6czu/consumer/node_modules/jev-ios-bridge/dist/cli.js",
+  "installedCliSha256": "4355b1dc6f47973ba54f169d1183137556844f755d394ea71bd995fbf2c698d2",
+  "privateRawTranscriptPath": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-Ybo26w/claude.jsonl",
+  "privateRawTranscriptSha256": "eec3a6ac30034bdd2570a236d3e1a3a7a0fe63791c1522a106847abbe1b4e631",
+  "privateRunDirectory": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-Ybo26w/runs/5983b886-9e04-470c-8db5-c8e66fbbac76",
+  "saved": [
+    {
+      "name": "submitted-scenario.json",
+      "sha256": "9f27eae3e5f08497bd65e31d5e1a5862512ccf4ac2b4acb65f685bfdf96dce76",
+      "bytes": 13104
+    },
+    {
+      "name": "report.md",
+      "sha256": "ea22d463cd7db693fbdd06534db65d168d5fe2193b70fb16496c828c798ce180",
+      "bytes": 4786
+    },
+    {
+      "name": "host-final.md",
+      "sha256": "f7e532fff6d61bf82252ec77db6cc2db9fcc8487c93609f0e265240a9a4420c5",
+      "bytes": 2593
+    },
+    {
+      "name": "journal.jsonl",
+      "sha256": "469f35d6701a30d15843a26b3ad3667c0414242e8a7c623f63d4e31403416738",
+      "bytes": 84008
+    },
+    {
+      "name": "metrics.json",
+      "sha256": "eb2bae0cadc76422bfd2d2deba2fcea8f04b68817b65d1840786ebf4498ec1f6",
+      "bytes": 2920
+    },
+    {
+      "name": "screen-11.jpg",
+      "sha256": "6db528d4c1939dffd9b6b0f0f4d8d45dcf1ca21d70dabf85ef9930788c71c9bd",
+      "bytes": 35995
+    },
+    {
+      "name": "screen-13.jpg",
+      "sha256": "fb1801081ae4895aa1dc08aaa645b9cc7edc8816f625ddd933e5a087e508eba5",
+      "bytes": 35963
+    },
+    {
+      "name": "screen-15.jpg",
+      "sha256": "221c5ec0ec43a8c5faf3d298ab5c1e7a86d30efa1791c5d4e4071123d51c3672",
+      "bytes": 35724
+    },
+    {
+      "name": "screen-17.jpg",
+      "sha256": "16e9914e4914f133d38425349a127a5e2a0fadad787cefc1fc57e5af1ada1659",
+      "bytes": 35446
+    },
+    {
+      "name": "screen-19.jpg",
+      "sha256": "827e12caeed2a5cd7024bd1b04e26ead2e093b42663c52b84c729f26189bafec",
+      "bytes": 34593
+    },
+    {
+      "name": "screen-22.jpg",
+      "sha256": "827e12caeed2a5cd7024bd1b04e26ead2e093b42663c52b84c729f26189bafec",
+      "bytes": 34593
+    },
+    {
+      "name": "screen-24.jpg",
+      "sha256": "b0587a5014d6e294fd468a7ccb9eaf741ee9ffd56920499a5e7a0a179d465856",
+      "bytes": 39424
+    },
+    {
+      "name": "screen-26.jpg",
+      "sha256": "32b9457d7bddd05ebc48f22c9f41c69e852b9b4df8f01e6d1b7bec7f76fe4504",
+      "bytes": 36637
+    },
+    {
+      "name": "screen-28.jpg",
+      "sha256": "851be488fd3b8bfae75380919ffecdce5f4bcf1b070ebc60d061def532936316",
+      "bytes": 25467
+    },
+    {
+      "name": "screen-3.jpg",
+      "sha256": "d6343cb0f39741c10a0a37630d079b17503dfc55d617f5ef872bb6c5ab889603",
+      "bytes": 50734
+    },
+    {
+      "name": "screen-30.jpg",
+      "sha256": "61d444b758aec034e03b84733ea5e8a6b668c87dd4c656b72fc4f43bca2e9bfe",
+      "bytes": 25526
+    },
+    {
+      "name": "screen-32.jpg",
+      "sha256": "81ebc313ae8ba568d7a95dedecc9456732432486e6dba1c5613505fb01bd0903",
+      "bytes": 25499
+    },
+    {
+      "name": "screen-35.jpg",
+      "sha256": "81ebc313ae8ba568d7a95dedecc9456732432486e6dba1c5613505fb01bd0903",
+      "bytes": 25499
+    },
+    {
+      "name": "screen-37.jpg",
+      "sha256": "d494b10569a1965536d7d0f8d30aaf8dea9940716dc5a4b743dc1b52033ad5c0",
+      "bytes": 17697
+    },
+    {
+      "name": "screen-5.jpg",
+      "sha256": "3e33b87e038b9d1c4ce7e522cb87330585ea83652f83a1ee03424459ae1a2ffb",
+      "bytes": 36115
+    },
+    {
+      "name": "screen-7.jpg",
+      "sha256": "11944ce713b59b5000773c91263d5c0ecf581d4f924ed1060edb73bf799b0d85",
+      "bytes": 35887
+    },
+    {
+      "name": "screen-9.jpg",
+      "sha256": "8e4d13a14878f9b7c0c038d071357a5e10d1c8496aeca60bcdb1f67e51b283a1",
+      "bytes": 35935
+    },
+    {
+      "name": "source-scenario.json",
+      "sha256": "79e2f4c7d666967f7f1e424b1d2b620608890a885ef2f45785a977c47be3928e",
+      "bytes": 13104
+    }
+  ],
+  "sourceScenarioArchive": {
+    "name": "source-scenario.json",
+    "sha256": "79e2f4c7d666967f7f1e424b1d2b620608890a885ef2f45785a977c47be3928e",
+    "submittedDeepEqualSource": true
+  }
+}
