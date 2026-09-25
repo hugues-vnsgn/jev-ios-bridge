@@ -175,6 +175,64 @@ test('cancellation during independent cleanup cannot leave a passed verdict', as
   assert.equal(report.checkpoints[0]?.status, 'passed');
 });
 
+test('cancellation during cleanup makes an earlier failed checkpoint inconclusive without erasing its evidence', async () => {
+  const abort = new AbortController();
+  const ready = element('ready', 'text', 'Ready');
+  const scenario: ScriptedScenario = { app: { bundleId: 'dev.example.app' }, values: {}, steps: [
+    { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Ready' }] },
+      assertions: [{ id: 'claim', claim: 'Ready is false.' }] },
+  ] };
+  let enteredClose!: () => void;
+  let releaseClose!: () => void;
+  const closing = new Promise<void>(resolve => { enteredClose = resolve; });
+  const closeBarrier = new Promise<void>(resolve => { releaseClose = resolve; });
+  const log = memoryLog();
+  const run = runScriptedScenario({ runId: 'failed-cleanup-cancel', scenario, log, signal: abort.signal,
+    driver: { async prepare() {}, async observe() { return snapshot([ready]); }, async act() {},
+      async close() { enteredClose(); await closeBarrier; } },
+    judge: { async judge() { return { probabilities: { claim: 0.04 }, inputTokens: 1,
+      latencyMs: 1, model: 'jev-1.13.0' }; } },
+  });
+  await closing;
+  assert.equal(log.events.find(event => event.type === 'checkpoint')?.data.status, 'failed');
+  assert.equal(log.events.some(event => event.type === 'verdict'), false);
+  abort.abort();
+  releaseClose();
+  const report = await run;
+  assert.equal(report.verdict, 'inconclusive');
+  assert.equal(report.reason, 'CANCELLED');
+  assert.equal(report.checkpoints[0]?.status, 'failed');
+  assert.equal(report.checkpoints[0]?.assertions[0]?.probability, 0.04);
+  assert.equal(report.events.at(-1)?.data.verdict, 'inconclusive');
+  assert.ok(report.events.some(event => event.type === 'error' && event.data.code === 'CANCELLED'));
+});
+
+test('cleanup failure remains the terminal reason when cancellation occurs during cleanup', async () => {
+  const abort = new AbortController();
+  const ready = element('ready', 'text', 'Ready');
+  const scenario: ScriptedScenario = { app: { bundleId: 'dev.example.app' }, values: {}, steps: [
+    { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Ready' }] },
+      assertions: [{ id: 'claim', claim: 'Ready is false.' }] },
+  ] };
+  let enteredClose!: () => void;
+  let releaseClose!: () => void;
+  const closing = new Promise<void>(resolve => { enteredClose = resolve; });
+  const closeBarrier = new Promise<void>(resolve => { releaseClose = resolve; });
+  const run = runScriptedScenario({ runId: 'failed-cleanup-priority', scenario, log: memoryLog(), signal: abort.signal,
+    driver: { async prepare() {}, async observe() { return snapshot([ready]); }, async act() {},
+      async close() { enteredClose(); await closeBarrier; throw new Error('stop failed'); } },
+    judge: { async judge() { return { probabilities: { claim: 0.04 }, inputTokens: 1,
+      latencyMs: 1, model: 'jev-1.13.0' }; } },
+  });
+  await closing;
+  abort.abort();
+  releaseClose();
+  const report = await run;
+  assert.equal(report.verdict, 'inconclusive');
+  assert.equal(report.reason, 'CLEANUP_FAILED');
+  assert.equal(report.checkpoints[0]?.status, 'failed');
+});
+
 test('typed model failures retain their safe reason in an inconclusive run', async () => {
   const ready = element('ready', 'text', 'Ready');
   const scenario: ScriptedScenario = { app: { bundleId: 'dev.example.app' }, values: {}, steps: [

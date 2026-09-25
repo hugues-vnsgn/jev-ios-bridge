@@ -320,7 +320,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
       reason = 'CLEANUP_FAILED';
       await options.log.append('error', { phase: 'cleanup', code: reason });
     }
-    if (signal.aborted && verdict === 'passed') {
+    if (signal.aborted && reason !== 'CLEANUP_FAILED') {
       verdict = 'inconclusive';
       reason = safeCode(signal.reason, signal);
       await options.log.append('error', { phase: 'cleanup', code: reason });
