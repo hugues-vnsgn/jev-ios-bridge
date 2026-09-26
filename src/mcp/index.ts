@@ -3,13 +3,14 @@ import { z } from 'zod/v4';
 import { scriptedScenarioSchema } from '../scripted/schema.js';
 import { BridgeService, startLimitsSchema } from '../service.js';
 import { renderScriptedReport } from '../scripted/report.js';
+import { BRIDGE_VERSION } from '../version.js';
 
 const idInput = z.object({ runId: z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$/) });
 const result = (text: string) => ({ content: [{ type: 'text' as const, text }] });
 const failed = () => ({ ...result('Bridge operation failed. Check the run id and local configuration.'), isError: true });
 
 export function createMcpServer(service: BridgeService): McpServer {
-  const server = new McpServer({ name: 'jev-ios-bridge', version: '0.1.0' });
+  const server = new McpServer({ name: 'jev-ios-bridge', version: BRIDGE_VERSION });
   server.registerTool('start_scenario', {
     description: 'Start an explicit iOS action script with assertion checkpoints. Returns a run id and local watch URL. Poll get_report for completion; use cancel_run to stop. TypeSafe receives observed screen text and current assertion claims. Typed values go to device actions and may later appear in screen text; screenshots stay local.',
     inputSchema: z.object({ scenario: scriptedScenarioSchema, limits: startLimitsSchema.optional() }),

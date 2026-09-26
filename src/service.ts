@@ -4,8 +4,9 @@ import { z } from 'zod/v4';
 import type { DeviceDriver } from './contracts/index.js';
 import type { ScriptedJudge, ScriptedScenario } from './scripted/contracts.js';
 import { parseScriptedScenario } from './scripted/schema.js';
-import { createRunLog, readRunEvents, validateRunId } from './log/index.js';
+import { createRunLog, readRunEvents, readRunReport, validateRunId } from './log/index.js';
 import { buildScriptedReport, type ScriptedReport } from './scripted/report.js';
+import { buildReportJson, type ReportJson } from './scripted/report-json.js';
 import { runScriptedScenario, type ScriptedRunLimits, type ScriptedRunOptions } from './scripted/run.js';
 import { startWatchServer } from './watch/index.js';
 
@@ -57,7 +58,8 @@ export class BridgeService {
       try {
         const events = await log.read();
         if (!events.some(event => event.type === 'verdict')) {
-          await log.append('verdict', { verdict: 'inconclusive', reason: 'Run could not complete. Check local setup.', steps: 0, inputTokens: 0, durationMs: 0 });
+          await log.append('verdict', { verdict: 'inconclusive', reason: 'INTERNAL_ERROR', steps: 0, inputTokens: 0, durationMs: 0 });
+          await log.writeReport?.(buildReportJson(await log.read()));
         }
       } finally { job.state = 'finished'; }
     }).catch(() => { job.state = 'finished'; });
@@ -83,6 +85,12 @@ export class BridgeService {
     const events = await readRunEvents(this.baseDir, runId);
     const state = this.jobs.get(runId)?.state ?? (events.some(event => event.type === 'verdict') ? 'finished' : 'interrupted');
     return { state, report: buildScriptedReport(events) };
+  }
+
+  /** The frozen report: report.json when the run recorded one, otherwise built from run.jsonl. */
+  async reportJson(runId: string): Promise<ReportJson> {
+    const stored = await readRunReport(this.baseDir, runId);
+    return (stored ?? buildReportJson(await readRunEvents(this.baseDir, runId))) as ReportJson;
   }
 
   async cancel(runId: string): Promise<void> {

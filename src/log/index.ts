@@ -1,7 +1,10 @@
-import { mkdir, readFile, open, copyFile, chmod, realpath } from 'node:fs/promises';
+import { mkdir, readFile, open, copyFile, chmod, realpath, rename, writeFile } from 'node:fs/promises';
 import { createHmac, randomBytes } from 'node:crypto';
 import { resolve, join, basename } from 'node:path';
 import type { RunEvent, RunLog } from '../contracts/index.js';
+import { PROJECTION_RULE } from '../scripted/observe.js';
+import { REASON_CODES } from '../scripted/vocabulary.js';
+import { BRIDGE_VERSION } from '../version.js';
 
 export function validateRunId(runId: string): string {
   if (!/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$/.test(runId)) throw new Error('Invalid run id');
@@ -22,21 +25,12 @@ const protocolValues: Record<string, ReadonlySet<string>> = {
   phase: new Set(['prepare', 'observe', 'decide', 'act', 'wait', 'budget', 'reobserve', 'cleanup', 'run']),
   model: new Set(['jev-1.13.0']),
 };
-const errorCodes = new Set([
-  'ABORTED', 'ACTION_FAILED', 'AUTH', 'CANCELLED', 'CLEANUP_FAILED', 'CLI_ERROR',
-  'DEVICE_BUSY', 'DEVICE_ERROR', 'ELEMENT_REF_NOT_FOUND', 'EMPTY_CAPTURE', 'EMPTY_SCREEN',
-  'EXECUTION_ERROR', 'GUARD_AMBIGUOUS', 'GUARD_FORBIDDEN', 'GUARD_MISSING',
-  'INVALID_CAPTURE', 'INVALID_DEVICE', 'INVALID_ENVELOPE', 'INVALID_INPUT',
-  'INVALID_JSON', 'INVALID_JUDGMENT', 'INVALID_SELECTOR', 'MALFORMED_RESPONSE',
-  'MISSING_VALUE', 'NETWORK', 'NO_DEVICE', 'RATE_LIMIT', 'READ_FAILED', 'REQUEST_BUDGET',
-  'SCREEN_CHANGED', 'SCRIPT_INCOMPLETE', 'SERVICE', 'SNAPSHOT_EXPIRED',
-  'SNAPSHOT_TRUNCATED', 'STATE_BUDGET', 'STEP_LIMIT', 'TARGET_AMBIGUOUS',
-  'TARGET_MISSING', 'TARGET_UNAVAILABLE', 'TERMINAL_ACK_MISSING', 'TIMEOUT',
-  'TRUNCATED', 'UI_ACTION_UNCONFIRMED', 'UNKNOWN', 'UNSUPPORTED_ACTION',
-  'UNSUPPORTED_LEADING_DASH_TEXT', 'WAIT_TIMEOUT', 'WALL_LIMIT',
-]);
+const errorCodes: ReadonlySet<string> = new Set(Object.keys(REASON_CODES));
 protocolValues.code = errorCodes;
-protocolValues.reason = new Set([...errorCodes, 'ALL_CHECKPOINTS_PASSED', 'ASSERTION_FALSE', 'ASSERTION_UNCERTAIN']);
+protocolValues.reason = errorCodes;
+protocolValues.bridgeVersion = new Set([BRIDGE_VERSION]);
+protocolValues.jevModel = protocolValues.model!;
+protocolValues.projectionRule = new Set([PROJECTION_RULE]);
 const identifierParents = new Set(['plannedSteps', 'checkpoints', 'assertions', 'options']);
 
 function createRedactor(secrets: string[]): (value: unknown) => unknown {
@@ -69,6 +63,15 @@ function createRedactor(secrets: string[]): (value: unknown) => unknown {
 
 export function redact(value: unknown, secrets: string[]): unknown {
   return createRedactor(secrets)(value);
+}
+
+/** Read a run's report.json, or undefined when the run recorded none (for example, it was interrupted). */
+export async function readRunReport(baseDir: string, runId: string): Promise<unknown> {
+  try { return JSON.parse(await readFile(join(resolve(baseDir), validateRunId(runId), 'report.json'), 'utf8')); }
+  catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') return undefined;
+    throw error;
+  }
 }
 
 export async function readRunEvents(baseDir: string, runId: string): Promise<RunEvent[]> {
@@ -131,5 +134,12 @@ export async function createRunLog(baseDir: string, runId: string, options: { va
       return pending;
     },
     async read() { await queue; return readRunEvents(root, runId); },
+    async writeReport(report) {
+      await queue;
+      // Write-then-rename, so a reader never sees a partial report.json.
+      const temporary = join(directory, 'report.json.tmp');
+      await writeFile(temporary, JSON.stringify(report, null, 2) + '\n', { mode: 0o600 });
+      await rename(temporary, join(directory, 'report.json'));
+    },
   };
 }

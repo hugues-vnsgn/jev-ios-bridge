@@ -1,5 +1,6 @@
 import { z } from 'zod/v4';
 import type { ScriptedScenario } from './contracts.js';
+import { ROLES } from './vocabulary.js';
 
 const key = /^[A-Za-z][A-Za-z0-9_-]{0,63}$/;
 const bundleId = /^[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+$/;
@@ -7,9 +8,11 @@ const udid = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a
 const printableAscii = /^[\x20-\x7e]*$/;
 const identity = z.string().min(1).max(500).refine(value => value.trim().length > 0);
 
+const roleSchema = z.enum(ROLES, { error: `role must be one of: ${ROLES.join(', ')}` });
+
 export const selectorSchema = z.strictObject({
   identifier: identity.optional(),
-  role: identity.optional(),
+  role: roleSchema.optional(),
   label: identity.optional(),
   value: z.string().max(500).optional(),
 }).refine(selector => Boolean(selector.identifier || selector.role || selector.label),
@@ -41,7 +44,14 @@ const actionSchema = z.discriminatedUnion('kind', [
     direction: z.enum(['up', 'down', 'left', 'right']) }),
 ]);
 
+export const SCRIPT_VERSION = 1;
+
+const versionSchema = z.literal(SCRIPT_VERSION, { error: issue => issue.input === undefined
+  ? 'Add "version": 1 to the script; this bridge reads script format version 1'
+  : 'Unsupported script version; this bridge reads "version": 1' });
+
 export const scriptedScenarioSchema = z.strictObject({
+  version: versionSchema,
   app: z.strictObject({ bundleId: z.string().regex(bundleId) }),
   device: z.strictObject({ udid: z.string().regex(udid).optional() }).optional(),
   preconditions: z.array(z.string().trim().min(1).max(500)).max(20).optional(),

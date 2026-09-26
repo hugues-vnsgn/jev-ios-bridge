@@ -41,7 +41,7 @@ test('production selector keeps unidentified button aliases opt-in and rejects d
 test('runner uses narrow device contexts and retains full checkpoint observation without changing Jev text', async () => {
   const rows = Array.from({ length: 70 }, (_, index) => element(`noise-${index}`, 'other', '', []));
   const screen = snapshot([...rows, element('choice', 'button', 'Distance km selected', ['tap'])]);
-  const scenario: ScriptedScenario = { app: { bundleId: 'dev.example.app' }, values: { query: 'private-value' },
+  const scenario: ScriptedScenario = { version: 1, app: { bundleId: 'dev.example.app' }, values: { query: 'private-value' },
     steps: [{ id: 'verify', kind: 'checkpoint', guard: { present: [{ role: 'button', label: 'Distance km selected' }] },
       assertions: [{ id: 'claim', claim: 'Distance km is selected.' }] }] };
   const log = memoryLog();
@@ -65,7 +65,7 @@ test('runner uses narrow device contexts and retains full checkpoint observation
 test('action context contains values and local checkpoint evidence redacts typed values', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-scripted-evidence-'));
   try {
-    const scenario: ScriptedScenario = { app: { bundleId: 'dev.example.app' }, values: { query: 'private-value' },
+    const scenario: ScriptedScenario = { version: 1, app: { bundleId: 'dev.example.app' }, values: { query: 'private-value' },
       steps: [
         { id: 'tap', kind: 'action', guard: { present: [{ identifier: 'go' }] },
           action: { kind: 'tap', selector: { identifier: 'go' } } },
@@ -106,7 +106,7 @@ test('interrupted wait reports the script step number rather than poll captures'
 test('a wait target captured after its timeout cannot advance to the checkpoint', async () => {
   const loading = element('loading', 'text', 'Loading');
   const done = element('done', 'text', 'Done');
-  const scenario: ScriptedScenario = { app: { bundleId: 'dev.example.app' }, values: {}, steps: [
+  const scenario: ScriptedScenario = { version: 1, app: { bundleId: 'dev.example.app' }, values: {}, steps: [
     { id: 'wait', kind: 'wait', guard: { present: [{ label: 'Loading' }] },
       until: { present: [{ label: 'Done' }] }, timeoutMs: 2 },
     { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Done' }] },
@@ -131,7 +131,7 @@ test('a wait target captured after its timeout cannot advance to the checkpoint'
 
 test('cancellation during final judgment or checkpoint logging cannot yield a pass', async () => {
   const ready = element('ready', 'text', 'Ready');
-  const scenario: ScriptedScenario = { app: { bundleId: 'dev.example.app' }, values: {}, steps: [
+  const scenario: ScriptedScenario = { version: 1, app: { bundleId: 'dev.example.app' }, values: {}, steps: [
     { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Ready' }] },
       assertions: [{ id: 'claim', claim: 'Ready is visible.' }] },
   ] };
@@ -159,7 +159,7 @@ test('cancellation during final judgment or checkpoint logging cannot yield a pa
 test('cancellation during independent cleanup cannot leave a passed verdict', async () => {
   const abort = new AbortController();
   const ready = element('ready', 'text', 'Ready');
-  const scenario: ScriptedScenario = { app: { bundleId: 'dev.example.app' }, values: {}, steps: [
+  const scenario: ScriptedScenario = { version: 1, app: { bundleId: 'dev.example.app' }, values: {}, steps: [
     { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Ready' }] },
       assertions: [{ id: 'claim', claim: 'Ready is visible.' }] },
   ] };
@@ -178,7 +178,7 @@ test('cancellation during independent cleanup cannot leave a passed verdict', as
 test('cancellation during cleanup makes an earlier failed checkpoint inconclusive without erasing its evidence', async () => {
   const abort = new AbortController();
   const ready = element('ready', 'text', 'Ready');
-  const scenario: ScriptedScenario = { app: { bundleId: 'dev.example.app' }, values: {}, steps: [
+  const scenario: ScriptedScenario = { version: 1, app: { bundleId: 'dev.example.app' }, values: {}, steps: [
     { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Ready' }] },
       assertions: [{ id: 'claim', claim: 'Ready is false.' }] },
   ] };
@@ -210,7 +210,7 @@ test('cancellation during cleanup makes an earlier failed checkpoint inconclusiv
 test('cleanup failure remains the terminal reason when cancellation occurs during cleanup', async () => {
   const abort = new AbortController();
   const ready = element('ready', 'text', 'Ready');
-  const scenario: ScriptedScenario = { app: { bundleId: 'dev.example.app' }, values: {}, steps: [
+  const scenario: ScriptedScenario = { version: 1, app: { bundleId: 'dev.example.app' }, values: {}, steps: [
     { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Ready' }] },
       assertions: [{ id: 'claim', claim: 'Ready is false.' }] },
   ] };
@@ -235,7 +235,7 @@ test('cleanup failure remains the terminal reason when cancellation occurs durin
 
 test('typed model failures retain their safe reason in an inconclusive run', async () => {
   const ready = element('ready', 'text', 'Ready');
-  const scenario: ScriptedScenario = { app: { bundleId: 'dev.example.app' }, values: {}, steps: [
+  const scenario: ScriptedScenario = { version: 1, app: { bundleId: 'dev.example.app' }, values: {}, steps: [
     { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Ready' }] },
       assertions: [{ id: 'claim', claim: 'Ready is visible.' }] },
   ] };
