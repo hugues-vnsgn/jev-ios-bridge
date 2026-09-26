@@ -815,3 +815,36 @@ test('capture reuse is off by default, so actions stay non-verbose and the run c
     assert.ok(!calls.find(args => args.includes('tap'))!.includes('--verbose'));
   } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
 });
+
+test('launch arguments go to MobileBuildMCP as JSON, so a leading hyphen is not read as a CLI flag', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-launch-args-'));
+  const calls: string[][] = [];
+  const runner: CliRunner = async args => { calls.push(args); return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 }; };
+  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  try {
+    await driver.prepare({ app: { bundleId: 'com.example.app', launchArgs: ['-of-evidence-gallery'] }, device: { udid } },
+      new AbortController().signal);
+    const launch = calls.find(args => args.includes('launch-app'))!;
+    assert.deepEqual(JSON.parse(launch[launch.indexOf('--json') + 1]!), { launchArgs: ['-of-evidence-gallery'] });
+    await driver.close(new AbortController().signal);
+    calls.length = 0;
+    await driver.prepare(scenario, new AbortController().signal);
+    assert.ok(!calls.find(args => args.includes('launch-app'))!.includes('--json'));
+  } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
+});
+
+test('an acknowledged stop failure (the app already exited) still releases the lock', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-stop-dead-'));
+  const failedStop = JSON.stringify({ schema: 'mobilebuildmcp.output.stop-result', schemaVersion: '2', didError: true,
+    error: 'App is not running', data: { summary: { status: 'FAILED' }, artifacts: { simulatorId: udid }, diagnostics: {} } });
+  const runner: CliRunner = async args => args.includes('stop')
+    ? { stdout: failedStop, stderr: '', exitCode: 1 }
+    : { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
+  const first = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const second = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  try {
+    await first.prepare(scenario, new AbortController().signal);
+    await first.close(new AbortController().signal);
+    await second.prepare(scenario, new AbortController().signal);
+  } finally { await second.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
+});

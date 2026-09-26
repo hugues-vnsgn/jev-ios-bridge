@@ -104,6 +104,31 @@
       }
     ]
   },
+  "withLaunchArgs": {
+    "accepted": true
+  },
+  "controlCharacterLaunchArg": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.launchArgs.0",
+        "message": "Launch arguments must be printable ASCII text"
+      }
+    ]
+  },
+  "emptyLaunchArg": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.launchArgs.0",
+        "message": "Too small: expected string to have >=1 characters"
+      },
+      {
+        "path": "app.launchArgs.0",
+        "message": "Launch arguments must be printable ASCII text"
+      }
+    ]
+  },
   "legacyGoalForm": {
     "accepted": false,
     "issues": [

@@ -1,0 +1,17 @@
+app: cmp 1.0 | os: macOS 26.6.2 (25G83) | captured: 2026-09-26 13:32:11.00 +0700
+exception: EXC_BAD_ACCESS SIGSEGV KERN_INVALID_ADDRESS at 0x0000000000000008
+crashing thread frames (top 14):
+   cmp.debug.dylib kfun:androidx.compose.ui.platform.AccessibilityElement.<get-node>#internal
+   cmp.debug.dylib kfun:androidx.compose.ui.platform.AccessibilityElement.contentOffset#internal
+   cmp.debug.dylib kfun:androidx.compose.ui.platform.AccessibilityElement.bounds#internal
+   cmp.debug.dylib _6f72672e6a6574627261696e732e636f6d706f73652e75693a75692f6f70742f6275696c644167656e742f776f726b2f3466643138316
+   cmp.debug.dylib _6f72672e6a6574627261696e732e636f6d706f73652e75693a75692f6f70742f6275696c644167656e742f776f726b2f3466643138316
+   UIAccessibility -[UIAccessibilityElementSuperCategory accessibilityFrame]
+   cmp.debug.dylib -[CMPAccessibilityElement accessibilityFrame]
+   UIAccessibility -[NSObject(AXPrivCategory) _iosAccessibilityAttributeValue:]
+   UIAccessibility _copyAttributeValueCallback
+   AXRuntime ___AXXMIGCopyAttributeValue_block_invoke
+   AXRuntime _handleNonMainThreadCallback
+   AXRuntime _AXXMIGCopyAttributeValue
+   AXRuntime _XCopyAttributeValue
+   AXRuntime mshMIGPerform

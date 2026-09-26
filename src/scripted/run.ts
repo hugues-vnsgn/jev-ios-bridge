@@ -29,6 +29,10 @@ export interface ScriptedRunOptions {
   limits?: ScriptedRunLimits;
   /** Set only by a driver integration whose pinned tap semantics were verified. */
   tapAliasRule?: SelectionOptions['tapAliasRule'];
+  /** Called once the app is launched, with the log files the device layer writes for it. */
+  onPrepared?(info: { logSources: { runtime?: string; os?: string } }): void;
+  /** Called just before cleanup stops the app. */
+  onCleanup?(): void;
 }
 
 class ScriptRunError extends Error {
@@ -207,12 +211,16 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
 
   try {
     await options.log.append('started', { mode: 'scripted', bundleId: script.app.bundleId,
+      ...(script.app.launchArgs ? { launchArgs: script.app.launchArgs } : {}),
       bridgeVersion: BRIDGE_VERSION, jevModel: SCRIPTED_JEV_MODEL, projectionRule: PROJECTION_RULE,
       plannedSteps: script.steps.map(step => ({ id: step.id, kind: step.kind })) });
     let prepareDurationMs = 0;
     await timed('prepareMs', () => abortableOperation(() => options.driver.prepare(preparedContext, signal), signal),
       durationMs => { prepareDurationMs = durationMs; });
-    await options.log.append('prepared', { prepareDurationMs });
+    const logSources = options.driver.logSources?.() ?? {};
+    await options.log.append('prepared', { prepareDurationMs,
+      ...(Object.keys(logSources).length ? { logSources } : {}) });
+    try { options.onPrepared?.({ logSources }); } catch { /* the log pane never affects a run */ }
     for (const step of script.steps) {
       activeStepId = undefined;
       activeStepStarted = undefined;
@@ -328,7 +336,9 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
     }
   } catch (error) {
     verdict = 'inconclusive';
-    const failure = failureOf(error, signal);
+    // A step that failed because the app died is reported as that, not as the symptom it caused.
+    const failure = !signal.aborted && options.driver.appRunning?.() === false
+      ? { code: 'APP_EXITED' } as Failure : failureOf(error, signal);
     reason = failure.code;
     await options.log.append('error', { stepId: activeStepId, phase, code: reason,
       ...(failure.vendorCode === undefined ? {} : { vendorCode: failure.vendorCode }),
@@ -337,6 +347,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
       }) });
   } finally {
     clearTimeout(timer);
+    try { options.onCleanup?.(); } catch { /* the log pane never affects a run */ }
     try {
       const cleanupSignal = AbortSignal.timeout(cleanupTimeMs);
       await timed('cleanupMs', () => abortableOperation(() => options.driver.close(cleanupSignal), cleanupSignal));

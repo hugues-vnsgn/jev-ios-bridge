@@ -4,6 +4,7 @@ import { BridgeService } from '../../src/service.js';
 import { createMcpServer } from '../../src/mcp/index.js';
 
 const service = new BridgeService({ baseDir: process.argv[2]!,
+  logPane: { cliPath: '/fixture/dist/cli.js', openWindow: false },
   createDriver: () => ({
     async prepare() {},
     async observe() { return { deviceId: 'fixture', sequence: 1, capturedAt: Date.now(), expiresAt: Date.now()+60000,

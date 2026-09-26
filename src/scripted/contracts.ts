@@ -24,7 +24,7 @@ export type ScriptedStep =
 
 export interface ScriptedScenario {
   version: 1;
-  app: { bundleId: string };
+  app: { bundleId: string; launchArgs?: string[] };
   device?: { udid?: string };
   preconditions?: string[];
   values: Record<string, string>;

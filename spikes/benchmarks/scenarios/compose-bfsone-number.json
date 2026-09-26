@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "app": {
+    "bundleId": "com.beelogistics.BFSOne",
+    "launchArgs": [
+      "-of-evidence-gallery"
+    ]
+  },
+  "preconditions": [
+    "Build BFSOne_Mobile_App from the pinned commit carrying the debug-only -of-evidence-gallery launch argument (Compose Multiplatform 1.9.0) and install it on the dedicated simulator.",
+    "The argument opens the Design System gallery offline: no login and no request to api.beelogistics.com. Never log in or submit anything in this app."
+  ],
+  "values": {},
+  "steps": [
+    {
+      "id": "focusQuantity",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Quantity"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "identifier": "numberInput.field",
+          "value": "0"
+        }
+      }
+    },
+    {
+      "id": "key4",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "identifier": "numberInput.toolbar.done"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "identifier": "numberInput.keypad.4"
+        }
+      }
+    },
+    {
+      "id": "key2",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "identifier": "numberInput.toolbar.done"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "identifier": "numberInput.keypad.2"
+        }
+      }
+    },
+    {
+      "id": "quantity",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Quantity"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "value",
+          "claim": "The Quantity field shows 42."
+        }
+      ]
+    }
+  ]
+}

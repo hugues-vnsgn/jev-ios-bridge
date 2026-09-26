@@ -368,6 +368,22 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     this.uiCommandTimeoutMs = timeout;
   }
 
+  /**
+   * Whether the launched app is still running, from the console helper MobileBuildMCP started for it
+   * (its PID is in the log file name, and it exits with the app). Undefined when that can't be told.
+   */
+  appRunning(): boolean | undefined {
+    const pid = Number(this.logPaths.runtime?.match(/_helperpid(\d+)_/)?.[1]);
+    if (!this.launched || !Number.isSafeInteger(pid) || pid <= 0) return undefined;
+    try { process.kill(pid, 0); return true; }
+    catch (error) { return (error as NodeJS.ErrnoException).code === 'EPERM'; }
+  }
+
+  logSources(): { runtime?: string; os?: string } {
+    return { ...(this.logPaths.runtime ? { runtime: this.logPaths.runtime } : {}),
+      ...(this.logPaths.os ? { os: this.logPaths.os } : {}) };
+  }
+
   metrics(): DeviceMetrics {
     return {
       referenceRefreshes: this.referenceRefreshes,
@@ -425,7 +441,10 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     this.deviceId = deviceId;
     this.bundleId = scenario.app.bundleId;
     try {
-      const launched = await this.issueCommand(['simulator', 'launch-app', '--simulator-id', deviceId, '--bundle-id', scenario.app.bundleId], signal,
+      const launchArgs = scenario.app.launchArgs ?? [];
+      // Array parameters go through --json, so arguments that start with "-" aren't read as CLI flags.
+      const launched = await this.issueCommand(['simulator', 'launch-app', '--simulator-id', deviceId, '--bundle-id', scenario.app.bundleId,
+        ...(launchArgs.length ? ['--json', JSON.stringify({ launchArgs })] : [])], signal,
         'mobilebuildmcp.output.launch-result');
       const artifacts = record(launched.artifacts);
       this.logPaths = {};
@@ -586,8 +605,13 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     if (this.launched && this.options.stopAppOnClose !== false && this.deviceId && this.bundleId) {
       // Stop is not in MobileBuildMCP's UI queue. Keep our lock if its CLI
       // response is lost, so another run cannot overlap uncertain cleanup.
-      await this.call(['simulator', 'stop', '--simulator-id', this.deviceId, '--bundle-id', this.bundleId], signal,
-        'mobilebuildmcp.output.stop-result');
+      try {
+        await this.call(['simulator', 'stop', '--simulator-id', this.deviceId, '--bundle-id', this.bundleId], signal,
+          'mobilebuildmcp.output.stop-result');
+      } catch (error) {
+        // An acknowledged stop failure (typically: the app already exited) leaves no command in flight.
+        if (!(error instanceof DeviceCliError && error.terminalAcknowledged)) throw error;
+      }
     }
     await release();
     this.releaseLock = undefined;

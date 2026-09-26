@@ -54,3 +54,13 @@ Decided with the owner on 2026-09-25, from "Compose Multiplatform on iOS through
    | 5 | Label-only guard on "Close outer" | inconclusive |
 
 7. **Not covered, and stated as "not tested" in the guide:** `heading()` (BFSOne has none), SwiftUI navigation or tab chrome around Compose, and `usingNativeTextInput`. BFSOne covers checkboxes, radio buttons, list scrolling, placeholders, and dialogs, which `cmp` lacked.
+
+## Comments
+
+- 2026-09-26, phase 5 authoring, on BFSOne commit `2b03477` (the owner's `-of-evidence-gallery` branch, built in a temporary clone): **two planned flows can't produce evidence Jev can see, so they were adapted.** BFSOne's `OFCheckbox` and `OFRadio` expose no checked or selected state to accessibility; they capture as plain buttons. Its `OFTextField` "Reason" has no label or identifier, so it can't be selected among the other text fields. The scripts keep each flow's intent with controls whose state is printed:
+  - **Selection:** the "Dark mode" checkbox, whose label flips OFF→ON (`compose-bfsone-toggle.json`). Radio coverage is lost and becomes a documented "not tested".
+  - **Text entry:** the tagged `of-picker-search` field, which filters the units list to "Container 20'" and "Container 40'" (`compose-bfsone-text.json`).
+  - **Unchanged in intent:** number entry (Quantity = 42 through the keypad), dialog plus bottom sheet (8 swipes down the gallery), the planted false claim, and the planted ambiguous guard (`{label: "Disabled"}` matches a text field and a radio).
+
+  Trial runs: all six gave their expected verdicts, after rewording two claims to name printed text instead of widget meaning or history. The guide should teach this: components need accessibility state semantics, and claims should name printed text.
+- 2026-09-26, `cmp` fallback trial: four of five gave their expected verdicts. The number run hit Compose Multiplatform 1.11.1's stale-accessibility-element crash (`EXC_BAD_ACCESS` in `AccessibilityElement.<get-node>`) while the bridge polled through the perf harness's 1M-row dialogs. Summary: `spikes/benchmarks/results/v1.0.0/compose-cmp-crash/`. The bridge now reports such runs as `APP_EXITED`. Per item 5, a crash in the phase 7 runs goes to the owner.

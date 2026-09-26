@@ -626,3 +626,17 @@ test('the step after an action uses the settled screen the action returned, with
   assert.equal(steps[1]?.data.reusedCapture, true);
   assert.equal(steps[1]?.data.observeDurationMs, 0);
 });
+
+test('a step that fails because the app died is reported as APP_EXITED', async () => {
+  const home = snapshot([{ ref: 'h', role: 'button', label: 'Contacts', actions: ['tap'],
+    frame: { x: 0, y: 0, width: 60, height: 60 }, state: { enabled: true, visible: true } }]);
+  const log = memoryLog();
+  const report = await runScriptedScenario({ runId: 'scripted-1', log,
+    scenario: { version: 1, app: { bundleId: 'com.example.shop' }, values: {}, steps: [
+      { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Order complete' }] },
+        assertions: [{ id: 'done', claim: 'Order complete is visible' }] }] },
+    driver: { async prepare() {}, async observe() { return home; }, async act() {}, async close() {}, appRunning: () => false },
+    judge: { async judge() { assert.fail('No judgment on the home screen'); } } });
+  assert.equal(report.verdict, 'inconclusive');
+  assert.equal(report.reason, 'APP_EXITED');
+});
