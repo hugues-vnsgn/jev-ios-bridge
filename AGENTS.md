@@ -1,6 +1,6 @@
 # jev-ios-bridge
 
-Humans start at `README.md`; agents working a ticket start at `.scratch/v1-release/map.md`. The current effort planned the v1.0.0 release. Its spec, `.scratch/v1-release/release-spec.md`, is what Codex executes. The finished v0.1.0 effort, `.scratch/jev-ios-bridge/map.md`, remains as history.
+Humans start at `README.md`; agents working a ticket start at `.scratch/v1-release/map.md`. The current effort planned the v1.0.0 release. Its spec, `.scratch/v1-release/release-spec.md`, is being executed by Claude Code (reassigned from Codex on 2026-09-26). The finished v0.1.0 effort, `.scratch/jev-ios-bridge/map.md`, remains as history.
 
 ## Local secrets
 
