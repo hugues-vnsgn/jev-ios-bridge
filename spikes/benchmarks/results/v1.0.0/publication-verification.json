@@ -1,0 +1,28 @@
+{
+  "release": "https://github.com/hugues-vnsgn/jev-ios-bridge/releases/tag/v1.0.0",
+  "tag": "v1.0.0",
+  "tagObject": "a458deebe557060f6bf959cee32e7062ad80a40b",
+  "commit": "5ee82e52514ef0cd293faae937def55196608536",
+  "publishedAt": "2026-09-26T11:22:25Z",
+  "prerelease": false,
+  "asset": {
+    "name": "jev-ios-bridge-1.0.0.tgz",
+    "sizeBytes": 63745,
+    "sha256": "8fb0c0c9a9e492c0612406f2ec6a2a2d3a58a3fdc7288c30eceaa43477839827"
+  },
+  "checksOnTaggedCommit": {
+    "npmRunCheck": "162 tests passed (typecheck, tests including golden contract tests, build)",
+    "ci": "https://github.com/hugues-vnsgn/jev-ios-bridge/actions/runs/36237555858 (main push of 5ee82e5: success)",
+    "cleanInstall": "npx jev-ios-bridge --version = 1.0.0; node dist/cli.js --version = 1.0.0; 43 installed files"
+  },
+  "freshPublicDownload": {
+    "method": "unauthenticated curl of the release asset URL, then npm install into an empty project",
+    "sha256Matches": true,
+    "versions": { "npx": "1.0.0", "node": "1.0.0" },
+    "installedFiles": 43
+  },
+  "quickstartPostTagSteps": {
+    "ghReleaseDownload": "same SHA-256",
+    "gitCloneBranchV1": "checks out 5ee82e5 with examples/diagnostic-app/scenario.json"
+  }
+}

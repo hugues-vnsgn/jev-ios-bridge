@@ -1,6 +1,6 @@
 # v1.0.0 release spec
 
-Status: **accepted by the owner, 2026-09-25**, after an independent review against every ticket and ADR. Executor: Claude Code (the owner reassigned it from Codex on 2026-09-26). Owner: Do Viet Hung. The owner approved merging each phase PR after CI passes; the executor stops for the owner's go-ahead before tagging and publishing.
+Status: **executed; v1.0.0 published 2026-09-26** ([release](https://github.com/hugues-vnsgn/jev-ios-bridge/releases/tag/v1.0.0), tag on `5ee82e5`, asset SHA-256 `8fb0c0c9…839827`, [verification](../../spikes/benchmarks/results/v1.0.0/publication-verification.json)). Accepted by the owner 2026-09-25 after an independent review; executed by Claude Code (reassigned from Codex 2026-09-26).
 
 This spec is an index of the decisions it depends on. Each work item names the ticket or ADR that holds its detail; read that source before starting the item. Where this spec and a source disagree, stop and ask the owner. Don't pick one yourself. "Review #N" means row N of the defects table in [`code-review.md`](code-review.md) §4.
 
