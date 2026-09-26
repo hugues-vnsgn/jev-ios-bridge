@@ -7,7 +7,7 @@ Created: 2026-09-25
 
 A reviewed **v1.0.0 release spec**, handed off to Codex to execute. It records the go/no-go judgment on v0.1.0, the frozen 1.0 contract, the assertion policy, the performance target and tuning plan, the Compose Multiplatform evidence plan, the live log pane, the developer guide outline, and the release gates. If the product assessment says no-go, the destination becomes another prerelease spec, not 1.0.
 
-**Destination reached (2026-09-25):** the [release spec](release-spec.md) is reviewed and accepted, ready for Codex. The only open ticket, "BFSOne evidence shortcut", is the owner's PR and doesn't block the handoff.
+**Destination reached (2026-09-25), and executed:** the [release spec](release-spec.md) was carried out by Claude Code, and **v1.0.0 was published on 2026-09-26** ([release](https://github.com/hugues-vnsgn/jev-ios-bridge/releases/tag/v1.0.0)). Every ticket is resolved.
 
 ## Notes
 
@@ -86,8 +86,7 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T06,T07,T08,T09,T10,T11,T12,T14,T15 resolved
-    class T13 frontier
+    class T01,T02,T03,T04,T05,T06,T07,T08,T09,T10,T11,T12,T13,T14,T15 resolved
 ```
 <!-- route:end -->
 
