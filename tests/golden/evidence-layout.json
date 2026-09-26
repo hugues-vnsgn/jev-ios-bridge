@@ -1,0 +1,45 @@
+{
+  "runFolder": "${JEV_RUNS_DIR:-$PWD/.jev-runs}/<run-id>/",
+  "files": [
+    "report.json",
+    "run.jsonl",
+    "screen-3.png"
+  ],
+  "envelopeKeys": [
+    "at",
+    "data",
+    "runId",
+    "sequence",
+    "type",
+    "version"
+  ],
+  "envelopeVersion": [
+    1
+  ],
+  "eventTypes": [
+    "started",
+    "prepared",
+    "step",
+    "judgment",
+    "checkpoint",
+    "verdict"
+  ],
+  "startedFields": [
+    "bridgeVersion",
+    "bundleId",
+    "jevModel",
+    "mode",
+    "plannedSteps",
+    "projectionRule"
+  ],
+  "verdictFields": [
+    "checkpointCount",
+    "checkpointsPassed",
+    "durationMs",
+    "inputTokens",
+    "phaseTimingsMs",
+    "reason",
+    "steps",
+    "verdict"
+  ]
+}

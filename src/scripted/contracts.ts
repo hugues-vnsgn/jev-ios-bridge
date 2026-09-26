@@ -23,6 +23,7 @@ export type ScriptedStep =
   | { id: string; kind: 'checkpoint'; guard: ScreenGuard; assertions: Assertion[] };
 
 export interface ScriptedScenario {
+  version: 1;
   app: { bundleId: string };
   device?: { udid?: string };
   preconditions?: string[];

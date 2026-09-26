@@ -3,8 +3,11 @@ import type { Action, ActionScenarioContext, DeviceDriver, Element, PrepareScena
 import { DeviceCliError, StaleSnapshotError } from '../device/index.js';
 import type { AssertionJudgment, ScriptedJudge, ScriptedScenario, ScriptedStep } from './contracts.js';
 import { SCRIPTED_JEV_MODEL, ScriptedJevError } from './jev.js';
-import { renderAssertionState, ScriptedObservationError } from './observe.js';
+import { PROJECTION_RULE, renderAssertionState, ScriptedObservationError } from './observe.js';
 import { buildScriptedReport, type ScriptedReport } from './report.js';
+import { buildReportJson } from './report-json.js';
+import { isReasonCode } from './vocabulary.js';
+import { BRIDGE_VERSION } from '../version.js';
 import { parseScriptedScenario } from './schema.js';
 import { assertScreenGuard, resolveActionTarget, ScriptSelectionError,
   type SelectionOptions } from './select.js';
@@ -102,12 +105,18 @@ function checkedJudgment(judgment: AssertionJudgment, assertions: Extract<Script
   }
 }
 
-function safeCode(error: unknown, signal: AbortSignal): string {
-  if (signal.aborted) return signal.reason instanceof ScriptRunError ? signal.reason.code : 'CANCELLED';
+/** A bridge-owned reason code, plus the device layer's own code when the bridge doesn't own it. */
+interface Failure { code: string; vendorCode?: string }
+
+function failureOf(error: unknown, signal: AbortSignal): Failure {
+  if (signal.aborted) return { code: signal.reason instanceof ScriptRunError ? signal.reason.code : 'CANCELLED' };
   if (error instanceof ScriptRunError || error instanceof ScriptSelectionError ||
-      error instanceof ScriptedObservationError || error instanceof ScriptedJevError) return error.code;
-  if (error instanceof DeviceCliError) return /^[A-Z0-9_]+$/.test(error.code) ? error.code : 'DEVICE_ERROR';
-  return 'EXECUTION_ERROR';
+      error instanceof ScriptedObservationError || error instanceof ScriptedJevError) return { code: error.code };
+  if (error instanceof DeviceCliError) {
+    if (isReasonCode(error.code)) return { code: error.code };
+    return { code: 'DEVICE_ERROR', ...(/^[A-Za-z0-9_.-]{1,80}$/.test(error.code) ? { vendorCode: error.code } : {}) };
+  }
+  return { code: 'EXECUTION_ERROR' };
 }
 
 async function waitUntil(step: Extract<ScriptedStep, { kind: 'wait' }>, initial: Snapshot,
@@ -188,6 +197,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
 
   try {
     await options.log.append('started', { mode: 'scripted', bundleId: script.app.bundleId,
+      bridgeVersion: BRIDGE_VERSION, jevModel: SCRIPTED_JEV_MODEL, projectionRule: PROJECTION_RULE,
       plannedSteps: script.steps.map(step => ({ id: step.id, kind: step.kind })) });
     let prepareDurationMs = 0;
     await timed('prepareMs', () => abortableOperation(() => options.driver.prepare(preparedContext, signal), signal),
@@ -305,8 +315,10 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
     }
   } catch (error) {
     verdict = 'inconclusive';
-    reason = safeCode(error, signal);
+    const failure = failureOf(error, signal);
+    reason = failure.code;
     await options.log.append('error', { stepId: activeStepId, phase, code: reason,
+      ...(failure.vendorCode === undefined ? {} : { vendorCode: failure.vendorCode }),
       ...(activeStepStarted === undefined ? {} : {
         stepDurationMs: Math.max(0, performance.now() - activeStepStarted),
       }) });
@@ -322,7 +334,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
     }
     if (signal.aborted && reason !== 'CLEANUP_FAILED') {
       verdict = 'inconclusive';
-      reason = safeCode(signal.reason, signal);
+      reason = failureOf(signal.reason, signal).code;
       await options.log.append('error', { phase: 'cleanup', code: reason });
     }
     options.signal?.removeEventListener('abort', cancel);
@@ -330,6 +342,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
       durationMs: Math.max(0, performance.now() - started), checkpointsPassed,
       checkpointCount: script.steps.filter(step => step.kind === 'checkpoint').length, phaseTimingsMs,
       ...(options.driver.metrics ? { deviceMetrics: options.driver.metrics() } : {}) });
+    await options.log.writeReport?.(buildReportJson(await options.log.read()));
   }
   return buildScriptedReport(await options.log.read());
 }

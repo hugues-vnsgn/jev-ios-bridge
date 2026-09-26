@@ -1,0 +1,805 @@
+{
+  "tools": [
+    {
+      "name": "cancel_run",
+      "inputSchema": {
+        "type": "object",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "runId": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$"
+          }
+        },
+        "required": [
+          "runId"
+        ]
+      }
+    },
+    {
+      "name": "get_report",
+      "inputSchema": {
+        "type": "object",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "runId": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$"
+          },
+          "waitMs": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 45000
+          }
+        },
+        "required": [
+          "runId"
+        ]
+      }
+    },
+    {
+      "name": "start_scenario",
+      "inputSchema": {
+        "type": "object",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "scenario": {
+            "type": "object",
+            "properties": {
+              "version": {
+                "type": "number",
+                "const": 1
+              },
+              "app": {
+                "type": "object",
+                "properties": {
+                  "bundleId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9-]+(?:\\.[A-Za-z0-9-]+)+$"
+                  }
+                },
+                "required": [
+                  "bundleId"
+                ],
+                "additionalProperties": false
+              },
+              "device": {
+                "type": "object",
+                "properties": {
+                  "udid": {
+                    "type": "string",
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "preconditions": {
+                "maxItems": 20,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                }
+              },
+              "values": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                },
+                "additionalProperties": {
+                  "type": "string",
+                  "maxLength": 2048,
+                  "pattern": "^[\\x20-\\x7e]*$"
+                }
+              },
+              "steps": {
+                "minItems": 1,
+                "maxItems": 100,
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                        },
+                        "kind": {
+                          "type": "string",
+                          "const": "action"
+                        },
+                        "guard": {
+                          "type": "object",
+                          "properties": {
+                            "present": {
+                              "minItems": 1,
+                              "maxItems": 12,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "identifier": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 500
+                                  },
+                                  "role": {
+                                    "type": "string",
+                                    "enum": [
+                                      "application",
+                                      "window",
+                                      "button",
+                                      "keyboard-key",
+                                      "text-field",
+                                      "menu",
+                                      "text",
+                                      "image",
+                                      "switch",
+                                      "slider",
+                                      "cell",
+                                      "scroll-view",
+                                      "list",
+                                      "tab",
+                                      "other"
+                                    ]
+                                  },
+                                  "label": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 500
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "maxLength": 500
+                                  }
+                                },
+                                "additionalProperties": false
+                              }
+                            },
+                            "absent": {
+                              "maxItems": 12,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "identifier": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 500
+                                  },
+                                  "role": {
+                                    "type": "string",
+                                    "enum": [
+                                      "application",
+                                      "window",
+                                      "button",
+                                      "keyboard-key",
+                                      "text-field",
+                                      "menu",
+                                      "text",
+                                      "image",
+                                      "switch",
+                                      "slider",
+                                      "cell",
+                                      "scroll-view",
+                                      "list",
+                                      "tab",
+                                      "other"
+                                    ]
+                                  },
+                                  "label": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 500
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "maxLength": 500
+                                  }
+                                },
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "present"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "action": {
+                          "oneOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "kind": {
+                                  "type": "string",
+                                  "const": "tap"
+                                },
+                                "selector": {
+                                  "type": "object",
+                                  "properties": {
+                                    "identifier": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 500
+                                    },
+                                    "role": {
+                                      "type": "string",
+                                      "enum": [
+                                        "application",
+                                        "window",
+                                        "button",
+                                        "keyboard-key",
+                                        "text-field",
+                                        "menu",
+                                        "text",
+                                        "image",
+                                        "switch",
+                                        "slider",
+                                        "cell",
+                                        "scroll-view",
+                                        "list",
+                                        "tab",
+                                        "other"
+                                      ]
+                                    },
+                                    "label": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 500
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "maxLength": 500
+                                    }
+                                  },
+                                  "additionalProperties": false
+                                }
+                              },
+                              "required": [
+                                "kind",
+                                "selector"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "kind": {
+                                  "type": "string",
+                                  "const": "replaceText"
+                                },
+                                "selector": {
+                                  "type": "object",
+                                  "properties": {
+                                    "identifier": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 500
+                                    },
+                                    "role": {
+                                      "type": "string",
+                                      "enum": [
+                                        "application",
+                                        "window",
+                                        "button",
+                                        "keyboard-key",
+                                        "text-field",
+                                        "menu",
+                                        "text",
+                                        "image",
+                                        "switch",
+                                        "slider",
+                                        "cell",
+                                        "scroll-view",
+                                        "list",
+                                        "tab",
+                                        "other"
+                                      ]
+                                    },
+                                    "label": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 500
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "maxLength": 500
+                                    }
+                                  },
+                                  "additionalProperties": false
+                                },
+                                "valueKey": {
+                                  "type": "string",
+                                  "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                                }
+                              },
+                              "required": [
+                                "kind",
+                                "selector",
+                                "valueKey"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "kind": {
+                                  "type": "string",
+                                  "const": "swipe"
+                                },
+                                "selector": {
+                                  "type": "object",
+                                  "properties": {
+                                    "identifier": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 500
+                                    },
+                                    "role": {
+                                      "type": "string",
+                                      "enum": [
+                                        "application",
+                                        "window",
+                                        "button",
+                                        "keyboard-key",
+                                        "text-field",
+                                        "menu",
+                                        "text",
+                                        "image",
+                                        "switch",
+                                        "slider",
+                                        "cell",
+                                        "scroll-view",
+                                        "list",
+                                        "tab",
+                                        "other"
+                                      ]
+                                    },
+                                    "label": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 500
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "maxLength": 500
+                                    }
+                                  },
+                                  "additionalProperties": false
+                                },
+                                "direction": {
+                                  "type": "string",
+                                  "enum": [
+                                    "up",
+                                    "down",
+                                    "left",
+                                    "right"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "kind",
+                                "selector",
+                                "direction"
+                              ],
+                              "additionalProperties": false
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "kind",
+                        "guard",
+                        "action"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                        },
+                        "kind": {
+                          "type": "string",
+                          "const": "wait"
+                        },
+                        "guard": {
+                          "type": "object",
+                          "properties": {
+                            "present": {
+                              "minItems": 1,
+                              "maxItems": 12,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "identifier": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 500
+                                  },
+                                  "role": {
+                                    "type": "string",
+                                    "enum": [
+                                      "application",
+                                      "window",
+                                      "button",
+                                      "keyboard-key",
+                                      "text-field",
+                                      "menu",
+                                      "text",
+                                      "image",
+                                      "switch",
+                                      "slider",
+                                      "cell",
+                                      "scroll-view",
+                                      "list",
+                                      "tab",
+                                      "other"
+                                    ]
+                                  },
+                                  "label": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 500
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "maxLength": 500
+                                  }
+                                },
+                                "additionalProperties": false
+                              }
+                            },
+                            "absent": {
+                              "maxItems": 12,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "identifier": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 500
+                                  },
+                                  "role": {
+                                    "type": "string",
+                                    "enum": [
+                                      "application",
+                                      "window",
+                                      "button",
+                                      "keyboard-key",
+                                      "text-field",
+                                      "menu",
+                                      "text",
+                                      "image",
+                                      "switch",
+                                      "slider",
+                                      "cell",
+                                      "scroll-view",
+                                      "list",
+                                      "tab",
+                                      "other"
+                                    ]
+                                  },
+                                  "label": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 500
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "maxLength": 500
+                                  }
+                                },
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "present"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "until": {
+                          "type": "object",
+                          "properties": {
+                            "present": {
+                              "minItems": 1,
+                              "maxItems": 12,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "identifier": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 500
+                                  },
+                                  "role": {
+                                    "type": "string",
+                                    "enum": [
+                                      "application",
+                                      "window",
+                                      "button",
+                                      "keyboard-key",
+                                      "text-field",
+                                      "menu",
+                                      "text",
+                                      "image",
+                                      "switch",
+                                      "slider",
+                                      "cell",
+                                      "scroll-view",
+                                      "list",
+                                      "tab",
+                                      "other"
+                                    ]
+                                  },
+                                  "label": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 500
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "maxLength": 500
+                                  }
+                                },
+                                "additionalProperties": false
+                              }
+                            },
+                            "absent": {
+                              "maxItems": 12,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "identifier": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 500
+                                  },
+                                  "role": {
+                                    "type": "string",
+                                    "enum": [
+                                      "application",
+                                      "window",
+                                      "button",
+                                      "keyboard-key",
+                                      "text-field",
+                                      "menu",
+                                      "text",
+                                      "image",
+                                      "switch",
+                                      "slider",
+                                      "cell",
+                                      "scroll-view",
+                                      "list",
+                                      "tab",
+                                      "other"
+                                    ]
+                                  },
+                                  "label": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 500
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "maxLength": 500
+                                  }
+                                },
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "present"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "timeoutMs": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 60000
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "kind",
+                        "guard",
+                        "until",
+                        "timeoutMs"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                        },
+                        "kind": {
+                          "type": "string",
+                          "const": "checkpoint"
+                        },
+                        "guard": {
+                          "type": "object",
+                          "properties": {
+                            "present": {
+                              "minItems": 1,
+                              "maxItems": 12,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "identifier": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 500
+                                  },
+                                  "role": {
+                                    "type": "string",
+                                    "enum": [
+                                      "application",
+                                      "window",
+                                      "button",
+                                      "keyboard-key",
+                                      "text-field",
+                                      "menu",
+                                      "text",
+                                      "image",
+                                      "switch",
+                                      "slider",
+                                      "cell",
+                                      "scroll-view",
+                                      "list",
+                                      "tab",
+                                      "other"
+                                    ]
+                                  },
+                                  "label": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 500
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "maxLength": 500
+                                  }
+                                },
+                                "additionalProperties": false
+                              }
+                            },
+                            "absent": {
+                              "maxItems": 12,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "identifier": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 500
+                                  },
+                                  "role": {
+                                    "type": "string",
+                                    "enum": [
+                                      "application",
+                                      "window",
+                                      "button",
+                                      "keyboard-key",
+                                      "text-field",
+                                      "menu",
+                                      "text",
+                                      "image",
+                                      "switch",
+                                      "slider",
+                                      "cell",
+                                      "scroll-view",
+                                      "list",
+                                      "tab",
+                                      "other"
+                                    ]
+                                  },
+                                  "label": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 500
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "maxLength": 500
+                                  }
+                                },
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "present"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "assertions": {
+                          "minItems": 1,
+                          "maxItems": 20,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                              },
+                              "claim": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 1000
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "claim"
+                            ],
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "kind",
+                        "guard",
+                        "assertions"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              }
+            },
+            "required": [
+              "version",
+              "app",
+              "values",
+              "steps"
+            ],
+            "additionalProperties": false
+          },
+          "limits": {
+            "type": "object",
+            "properties": {
+              "maxSteps": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100
+              },
+              "wallTimeMs": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 3600000
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "scenario"
+        ]
+      }
+    }
+  ],
+  "startScenarioReplyKeys": [
+    "runId",
+    "watchUrl"
+  ]
+}

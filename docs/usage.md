@@ -37,6 +37,7 @@ This example uses the repository's installed diagnostic fixture and checks its f
 
 ```json
 {
+  "version": 1,
   "app": { "bundleId": "dev.jevbridge.diagnostic" },
   "values": {},
   "steps": [
@@ -82,7 +83,7 @@ The former `goal` and autonomous `checkpoints` forms are unsupported. Ordered ve
 node --env-file=/absolute/path/to/.env dist/cli.js run scenario.json --max-steps 100 --timeout-ms 300000
 ```
 
-The command prints the watch URL to stderr and the report to stdout. Defaults are 100 steps and 300 seconds across the entire run; the maximum wall limit is one hour. Limits do not alter assertion thresholds. Exit codes: 0 passed, 1 failed, 2 inconclusive or startup failure.
+The command prints the watch URL to stderr and the report to stdout. Defaults are 100 steps and 300 seconds across the entire run; the maximum wall limit is one hour. Limits do not alter assertion thresholds. Add `--json` to print the run's `report.json` instead of the prose report. Exit codes: 0 passed, 1 failed, 2 inconclusive, 3 could not start (invalid script, missing key, no dedicated simulator); 130 and 143 after SIGINT and SIGTERM. `report RUN_ID` returns the same codes.
 
 At each checkpoint, probability at least 0.9 establishes a claim; at most 0.1 rejects it. Any uncertain claim makes that checkpoint inconclusive; otherwise a false claim fails it. Passing requires every step/checkpoint and successful cleanup. Unexpected UI, budget overflow, missing targets, provider errors, or interruption leave verification inconclusive. Earlier checkpoint proofs stay in the log.
 

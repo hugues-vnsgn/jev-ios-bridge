@@ -1,0 +1,120 @@
+{
+  "minimal": {
+    "accepted": true
+  },
+  "allStepKinds": {
+    "accepted": true
+  },
+  "missingVersion": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "version",
+        "message": "Add \"version\": 1 to the script; this bridge reads script format version 1"
+      }
+    ]
+  },
+  "futureVersion": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "version",
+        "message": "Unsupported script version; this bridge reads \"version\": 1"
+      }
+    ]
+  },
+  "unknownRole": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "steps.0.guard.present.0.role",
+        "message": "role must be one of: application, window, button, keyboard-key, text-field, menu, text, image, switch, slider, cell, scroll-view, list, tab, other"
+      }
+    ]
+  },
+  "selectorWithoutIdentity": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "steps.0.guard.present.0",
+        "message": "A selector needs an identifier, role, or label; value is only a filter"
+      }
+    ]
+  },
+  "leadingHyphenValue": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "values",
+        "message": "MobileBuildMCP 2.7.1 cannot type text starting with a leading hyphen"
+      }
+    ]
+  },
+  "nonKeyboardValue": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "values.query",
+        "message": "Typed values must use printable US keyboard characters"
+      }
+    ]
+  },
+  "tooManyValues": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "values",
+        "message": "A script may supply at most 32 typed values"
+      }
+    ]
+  },
+  "duplicateStepIds": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "steps.1.id",
+        "message": "Step IDs must be unique"
+      }
+    ]
+  },
+  "endsWithAction": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "steps",
+        "message": "A script must end at an assertion checkpoint"
+      }
+    ]
+  },
+  "unknownValueKey": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "steps.0.action.valueKey",
+        "message": "replaceText valueKey must name a supplied value"
+      }
+    ]
+  },
+  "duplicateAssertionIds": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "steps.0.assertions",
+        "message": "Assertion IDs must be unique within a checkpoint"
+      }
+    ]
+  },
+  "legacyGoalForm": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "steps",
+        "message": "Invalid input: expected array, received undefined"
+      },
+      {
+        "path": "",
+        "message": "Unrecognized keys: \"goal\", \"assertions\""
+      }
+    ]
+  }
+}

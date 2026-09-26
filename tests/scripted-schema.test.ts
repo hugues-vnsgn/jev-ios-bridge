@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { parseScriptedScenario } from '../src/scripted/schema.js';
 
 const scenario = {
+  version: 1,
   app: { bundleId: 'dev.example.Sample' },
   values: { query: 'Berlin' },
   steps: [

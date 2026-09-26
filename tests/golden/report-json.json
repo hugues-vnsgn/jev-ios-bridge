@@ -1,0 +1,111 @@
+{
+  "passed": {
+    "reportVersion": 1,
+    "runId": "<runId>",
+    "bridgeVersion": "<bridgeVersion>",
+    "jevModel": "jev-1.13.0",
+    "projectionRule": "visible-full-text-v1",
+    "bundleId": "com.example.app",
+    "verdict": "passed",
+    "reason": "ALL_CHECKPOINTS_PASSED",
+    "error": null,
+    "steps": 1,
+    "plannedSteps": 1,
+    "checkpointsPassed": 1,
+    "checkpointCount": 1,
+    "inputTokens": 10,
+    "durationMs": "<ms>",
+    "startedAt": "<timestamp>",
+    "finishedAt": "<timestamp>",
+    "checkpoints": [
+      {
+        "stepId": "verify",
+        "status": "passed",
+        "claims": [
+          {
+            "id": "shown",
+            "claim": "The marker is visible.",
+            "probability": 1
+          }
+        ],
+        "screenshot": "screen-3.png",
+        "evidenceEvent": 3
+      }
+    ],
+    "evidence": {
+      "log": "run.jsonl",
+      "screenshots": [
+        "screen-3.png"
+      ]
+    }
+  },
+  "failed": {
+    "reportVersion": 1,
+    "runId": "<runId>",
+    "bridgeVersion": "<bridgeVersion>",
+    "jevModel": "jev-1.13.0",
+    "projectionRule": "visible-full-text-v1",
+    "bundleId": "com.example.app",
+    "verdict": "failed",
+    "reason": "ASSERTION_FALSE",
+    "error": null,
+    "steps": 1,
+    "plannedSteps": 1,
+    "checkpointsPassed": 0,
+    "checkpointCount": 1,
+    "inputTokens": 10,
+    "durationMs": "<ms>",
+    "startedAt": "<timestamp>",
+    "finishedAt": "<timestamp>",
+    "checkpoints": [
+      {
+        "stepId": "verify",
+        "status": "failed",
+        "claims": [
+          {
+            "id": "shown",
+            "claim": "The marker is visible.",
+            "probability": 0
+          }
+        ],
+        "screenshot": "screen-3.png",
+        "evidenceEvent": 3
+      }
+    ],
+    "evidence": {
+      "log": "run.jsonl",
+      "screenshots": [
+        "screen-3.png"
+      ]
+    }
+  },
+  "deviceError": {
+    "reportVersion": 1,
+    "runId": "<runId>",
+    "bridgeVersion": "<bridgeVersion>",
+    "jevModel": "jev-1.13.0",
+    "projectionRule": "visible-full-text-v1",
+    "bundleId": "com.example.app",
+    "verdict": "inconclusive",
+    "reason": "DEVICE_ERROR",
+    "error": {
+      "code": "DEVICE_ERROR",
+      "phase": "prepare",
+      "stepId": null,
+      "vendorCode": "APP_NOT_INSTALLED"
+    },
+    "steps": 0,
+    "plannedSteps": 1,
+    "checkpointsPassed": 0,
+    "checkpointCount": 1,
+    "inputTokens": 0,
+    "durationMs": "<ms>",
+    "startedAt": "<timestamp>",
+    "finishedAt": "<timestamp>",
+    "checkpoints": [],
+    "evidence": {
+      "log": "run.jsonl",
+      "screenshots": []
+    }
+  }
+}

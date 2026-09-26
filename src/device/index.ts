@@ -5,6 +5,7 @@ import { mkdir, open, readFile, unlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { isAbsolute, join, resolve } from 'node:path';
 import type { Action, ActionScenarioContext, DeviceDriver, DeviceMetrics, Element, PrepareScenarioContext, Snapshot } from '../contracts/index.js';
+import { bridgeRole } from '../scripted/vocabulary.js';
 
 type JsonObject = Record<string, unknown>;
 export type CliResult = { stdout: string; stderr: string; exitCode: number };
@@ -70,7 +71,7 @@ function parseEnvelope(result: CliResult, expectedSchema?: string): JsonObject {
     const legacyError = record(envelope.error);
     const terminalAcknowledged = expectedSchema !== undefined && terminalPayloadMatches(envelope, expectedSchema, false);
     throw new DeviceCliError(
-      string(uiError.code) ?? string(legacyError.code) ?? 'CLI_ERROR',
+      string(uiError.code) ?? string(legacyError.code) ?? 'DEVICE_ERROR',
       string(uiError.message) ?? string(envelope.error) ?? string(legacyError.message) ?? `MobileBuildMCP failed (exit ${result.exitCode})`,
       terminalAcknowledged,
     );
@@ -96,7 +97,7 @@ function parseCompactRow(row: unknown): Element | undefined {
   });
   return {
     ref,
-    role,
+    role: bridgeRole(role),
     ...(label ? { label } : {}),
     ...(value ? { value } : {}),
     ...(identifier ? { identifier } : {}),
@@ -114,7 +115,7 @@ function parseFullElement(value: unknown): Element | undefined {
   const hasFrame = ['x', 'y', 'width', 'height'].every((key) => number(frame[key]) !== undefined);
   return {
     ref,
-    role,
+    role: bridgeRole(role),
     ...(string(item.label) !== undefined ? { label: string(item.label)! } : {}),
     ...(string(item.value) !== undefined ? { value: string(item.value)! } : {}),
     ...(string(item.identifier) !== undefined ? { identifier: string(item.identifier)! } : {}),
@@ -193,6 +194,21 @@ async function configuredUdid(cwd: string): Promise<string | undefined> {
     if ((error as NodeJS.ErrnoException).code === 'ENOENT') return undefined;
     throw error;
   }
+}
+
+const SIMULATOR_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/**
+ * The dedicated simulator a run will use: the script's UDID, then the configured default
+ * (JEV_DEVICE_UDID), then `.mobilebuildmcp/config.yaml`. Aliases such as `booted` are refused.
+ */
+export async function selectDeviceId(cwd: string, scriptUdid?: string, defaultUdid?: string): Promise<string> {
+  const selected = scriptUdid ?? defaultUdid ?? await configuredUdid(cwd);
+  if (!selected) throw new DeviceCliError('NO_DEVICE', 'Set a dedicated simulator UDID in the scenario or MobileBuildMCP config');
+  if (!SIMULATOR_UUID.test(selected)) {
+    throw new DeviceCliError('INVALID_DEVICE', 'Set a dedicated simulator UUID; device aliases are not supported');
+  }
+  return selected.toUpperCase();
 }
 
 async function acquireLock(root: string, deviceId: string): Promise<() => Promise<void>> {
@@ -345,12 +361,7 @@ export class MobileBuildMcpDriver implements DeviceDriver {
   private async prepareIssued(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void> {
     if (this.releaseLock) throw new Error('Driver is already prepared');
     if (signal.aborted) throw signal.reason;
-    const selectedDeviceId = scenario.device?.udid ?? this.options.defaultUdid ?? await configuredUdid(this.options.cwd);
-    if (!selectedDeviceId) throw new DeviceCliError('NO_DEVICE', 'Set a dedicated simulator UDID in the scenario or MobileBuildMCP config');
-    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(selectedDeviceId)) {
-      throw new DeviceCliError('INVALID_DEVICE', 'Set a dedicated simulator UUID; device aliases are not supported');
-    }
-    const deviceId = selectedDeviceId.toUpperCase();
+    const deviceId = await selectDeviceId(this.options.cwd, scenario.device?.udid, this.options.defaultUdid);
     this.releaseLock = await acquireLock(this.options.lockRoot ?? join(tmpdir(), 'jev-ios-bridge-device-locks'), deviceId);
     this.referenceRefreshes = 0;
     this.referenceExpiries = 0;

@@ -17,7 +17,7 @@ const checkpoint = (id: string, claim = 'Marker visible') => ({
   id, kind: 'checkpoint', guard: { present: [{ role: 'text', label: 'SCREEN_EVIDENCE_MARKER' }] },
   assertions: [{ id: 'shown', claim }],
 });
-const script = (steps = [checkpoint('verify')]) => ({ app: { bundleId: 'com.example.app' },
+const script = (steps = [checkpoint('verify')]) => ({ version: 1, app: { bundleId: 'com.example.app' },
   values: {}, steps });
 
 test('scripted start returns a recoverable run id and report reflects assertion verdict', async () => {

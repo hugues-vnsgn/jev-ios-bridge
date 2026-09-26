@@ -13,7 +13,7 @@ import { BridgeService } from '../src/service.js';
 import { startWatchServer } from '../src/watch/index.js';
 
 const execute = promisify(execFile);
-const scenario = (id = 'verify') => ({ app: { bundleId: 'com.example.app' }, values: {},
+const scenario = (id = 'verify') => ({ version: 1, app: { bundleId: 'com.example.app' }, values: {},
   steps: [{ id, kind: 'checkpoint', guard: { present: [{ role: 'text', label: 'Home' }] },
     assertions: [{ id: 'visible', claim: 'Home is visible' }] }],
 });
@@ -223,7 +223,10 @@ test('CLI report reads persisted evidence without a device or key', async () => 
     await log.append('verdict', { verdict: 'failed', reason: 'Assertion false', steps: 1, inputTokens: 5, durationMs: 4 });
     const env: NodeJS.ProcessEnv = { ...process.env, JEV_RUNS_DIR: root };
     delete env.TYPESAFE_API_KEY;
-    const result = await execute(process.execPath, ['--import', 'tsx', 'src/cli.ts', 'report', 'offline'], { cwd: process.cwd(), env });
+    // A recorded failed verdict exits 1, the same code `run` would have returned.
+    const result = await execute(process.execPath, ['--import', 'tsx', 'src/cli.ts', 'report', 'offline'], { cwd: process.cwd(), env })
+      .then(() => assert.fail('report of a failed run must exit 1'), (error: { code: number; stdout: string; stderr: string }) => error);
+    assert.equal(result.code, 1);
     assert.match(result.stdout, /Status: finished/);
     assert.match(result.stdout, /Run offline: failed/);
     assert.equal(result.stderr, '');

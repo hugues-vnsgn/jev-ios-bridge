@@ -127,4 +127,6 @@ export interface RunReport {
 export interface RunLog {
   append(type: RunEvent['type'], data: Record<string, unknown>): Promise<void>;
   read(): Promise<RunEvent[]>;
+  /** Persist the frozen report.json beside run.jsonl, after the verdict event. */
+  writeReport?(report: unknown): Promise<void>;
 }
