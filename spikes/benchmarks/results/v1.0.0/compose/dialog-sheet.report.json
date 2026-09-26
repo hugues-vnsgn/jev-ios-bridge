@@ -1,0 +1,83 @@
+{
+  "reportVersion": 1,
+  "runId": "d4284008-fb43-4093-b71e-6b74375825e7",
+  "bridgeVersion": "1.0.0",
+  "jevModel": "jev-1.13.0",
+  "projectionRule": "visible-full-text-v2",
+  "bundleId": "com.beelogistics.BFSOne",
+  "launchArgs": [
+    "-of-evidence-gallery"
+  ],
+  "verdict": "passed",
+  "reason": "ALL_CHECKPOINTS_PASSED",
+  "error": null,
+  "steps": 15,
+  "plannedSteps": 15,
+  "checkpointsPassed": 3,
+  "checkpointCount": 3,
+  "inputTokens": 5657,
+  "durationMs": 43796.630083,
+  "startedAt": "2026-09-26T07:23:24.444Z",
+  "finishedAt": "2026-09-26T07:24:08.241Z",
+  "checkpoints": [
+    {
+      "stepId": "dialogOpen",
+      "status": "passed",
+      "claims": [
+        {
+          "id": "question",
+          "claim": "A Delete Request dialog asks: Are you sure you want to delete this request?",
+          "probability": 0.98
+        }
+      ],
+      "screenshot": "screen-21.jpg",
+      "evidenceEvent": 21
+    },
+    {
+      "stepId": "sheetOpen",
+      "status": "passed",
+      "claims": [
+        {
+          "id": "title",
+          "claim": "A bottom sheet titled OFBottomSheet is open.",
+          "probability": 0.98
+        }
+      ],
+      "screenshot": "screen-28.jpg",
+      "evidenceEvent": 28
+    },
+    {
+      "stepId": "backToGallery",
+      "status": "passed",
+      "claims": [
+        {
+          "id": "buttons",
+          "claim": "A Bottom Sheet button is visible.",
+          "probability": 0.98
+        }
+      ],
+      "screenshot": "screen-33.jpg",
+      "evidenceEvent": 33
+    }
+  ],
+  "evidence": {
+    "log": "run.jsonl",
+    "screenshots": [
+      "screen-3.jpg",
+      "screen-5.jpg",
+      "screen-7.jpg",
+      "screen-9.jpg",
+      "screen-11.jpg",
+      "screen-13.jpg",
+      "screen-15.jpg",
+      "screen-17.jpg",
+      "screen-19.jpg",
+      "screen-21.jpg",
+      "screen-24.jpg",
+      "screen-26.jpg",
+      "screen-28.jpg",
+      "screen-31.jpg",
+      "screen-33.jpg"
+    ]
+  }
+}

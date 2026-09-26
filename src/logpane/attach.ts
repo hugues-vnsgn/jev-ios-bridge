@@ -40,7 +40,9 @@ export function attachLogPane(runId: string, output: NodeJS.WriteStream = proces
         print('\n' + bold(`── run finished: ${message.verdict} (${message.reason}) ──`, color));
         print(dim(`evidence: ${message.evidencePath}`, color));
         if (message.closeAfterMs !== undefined) {
-          print(dim(`This window closes in ${Math.round(message.closeAfterMs / 1000)} s.`, color));
+          // A process can't close its Terminal window; Terminal's "When the shell exits" setting decides.
+          print(dim('The pane has finished. Close this window when you like; Terminal closes it by itself if its ' +
+            'profile is set to close the window when the shell exits.', color));
           setTimeout(() => resolveAttach(true), message.closeAfterMs);
         } else {
           print(dim('This window stays open. Close it or press Ctrl-C.', color));

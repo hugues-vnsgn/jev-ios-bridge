@@ -1,7 +1,7 @@
 # BFSOne evidence shortcut: a debug-only gallery entry point
 
 Type: task
-Status: open
+Status: resolved
 Blocked by: none
 
 ## Question
@@ -31,3 +31,4 @@ Merged: PR #120 (https://github.com/PHQUY/BFSOne_Mobile_App/pull/120), merge com
 - 2026-09-25: the owner has asked a coding agent to add `-of-evidence-gallery` in BFSOne. This ticket stays open until the PR is merged and its commit hash is recorded here.
 - 2026-09-25: PR #120 merged as `8eccf629`; answer recorded above.
 - 2026-09-26: the change exists as BFSOne commit `2b03477102f3410b51e7bd2a1e88239b7e3f4bfb` on branch `agent/BFSOne_Mobile_App-su7r-evidence-gallery` (pushed), and isn't merged into BFSOne `main` yet. Its commit message reports that it was checked on a simulator: the gallery opens offline, with no request to `api.beelogistics.com`.
+- 2026-09-26: **merged** as PR #120, merge commit `8eccf629b232cd040848f0dd03a99cfa9656db63` (2026-09-25 10:27 UTC). Release check 5 built this commit from a clean clone and ran the six BFSOne scripts.

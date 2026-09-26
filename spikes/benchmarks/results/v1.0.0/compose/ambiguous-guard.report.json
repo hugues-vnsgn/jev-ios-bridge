@@ -1,0 +1,35 @@
+{
+  "reportVersion": 1,
+  "runId": "23ae1782-0156-4e5a-8852-ebf446179e1c",
+  "bridgeVersion": "1.0.0",
+  "jevModel": "jev-1.13.0",
+  "projectionRule": "visible-full-text-v2",
+  "bundleId": "com.beelogistics.BFSOne",
+  "launchArgs": [
+    "-of-evidence-gallery"
+  ],
+  "verdict": "inconclusive",
+  "reason": "GUARD_AMBIGUOUS",
+  "error": {
+    "code": "GUARD_AMBIGUOUS",
+    "phase": "observe",
+    "stepId": "labelOnlyGuard"
+  },
+  "steps": 3,
+  "plannedSteps": 3,
+  "checkpointsPassed": 0,
+  "checkpointCount": 1,
+  "inputTokens": 0,
+  "durationMs": 9543.230417,
+  "startedAt": "2026-09-26T07:24:12.386Z",
+  "finishedAt": "2026-09-26T07:24:21.929Z",
+  "checkpoints": [],
+  "evidence": {
+    "log": "run.jsonl",
+    "screenshots": [
+      "screen-3.jpg",
+      "screen-5.jpg",
+      "screen-7.jpg"
+    ]
+  }
+}

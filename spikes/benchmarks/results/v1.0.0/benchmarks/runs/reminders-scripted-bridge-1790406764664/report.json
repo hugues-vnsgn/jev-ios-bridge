@@ -1,0 +1,43 @@
+{
+  "reportVersion": 1,
+  "runId": "ab8e690e-93da-47ab-9e39-9aa8f8fb8079",
+  "bridgeVersion": "1.0.0",
+  "jevModel": "jev-1.13.0",
+  "projectionRule": "visible-full-text-v2",
+  "bundleId": "com.apple.reminders",
+  "launchArgs": [],
+  "verdict": "inconclusive",
+  "reason": "SCREEN_CHANGED",
+  "error": {
+    "code": "SCREEN_CHANGED",
+    "phase": "reobserve",
+    "stepId": "beginSecond"
+  },
+  "steps": 12,
+  "plannedSteps": 17,
+  "checkpointsPassed": 0,
+  "checkpointCount": 1,
+  "inputTokens": 0,
+  "durationMs": 51251.216625,
+  "startedAt": "2026-09-26T07:11:42.088Z",
+  "finishedAt": "2026-09-26T07:12:33.339Z",
+  "checkpoints": [],
+  "evidence": {
+    "log": "run.jsonl",
+    "screenshots": [
+      "screen-3.jpg",
+      "screen-5.jpg",
+      "screen-7.jpg",
+      "screen-9.jpg",
+      "screen-11.jpg",
+      "screen-13.jpg",
+      "screen-15.jpg",
+      "screen-17.jpg",
+      "screen-19.jpg",
+      "screen-21.jpg",
+      "screen-23.jpg",
+      "screen-25.jpg",
+      "screen-26.jpg"
+    ]
+  }
+}

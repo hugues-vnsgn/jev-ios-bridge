@@ -14,7 +14,8 @@ What 1.0 does not do, or does less well than you might expect.
 
 - **English screens only.** Jev is less accurate on other languages, and 1.0's assurance covers English screen text.
 - **Only what's on screen, as text.** Jev can't use screenshots, hidden state, history, or source code. See [write claims](05-writing-claims.md).
-- **Near the bounds, answers vary.** Identical requests have differed by up to 0.07. A claim close to 0.9 or 0.1 can land on either side from run to run, so write claims that aren't close.
+- **Near the bounds, answers vary.** Identical requests have differed by up to 0.07. A claim close to 0.9 or 0.1 can land on either side from run to run, so write claims that aren't close. The Reminders benchmark's count claim is the example: 0.87 (inconclusive) in v0.1.0, and 0.90 (passed) in the 1.0 check.
+- **Typing can drop a keystroke.** In one Compose release check, MobileBuildMCP typed "Contan" for "Contain". Guard on the typed text in the next step, so a dropped key stops the run as inconclusive instead of failing a claim.
 - **Prompt injection:** text on screen can try to steer Jev. Test with data you wrote.
 - **Measured accuracy is small-sample.** In the project's frozen 24-screen test and 300 archived judgments, no claim was confidently wrong at 0.9/0.1. That's encouraging, but it isn't a guaranteed error rate.
 
@@ -25,11 +26,11 @@ What 1.0 does not do, or does less well than you might expect.
 
   | Script | v0.1.0 | v1.0.0 |
   | --- | ---: | ---: |
-  | Weather | 107.7 s | _to be measured_ |
-  | Contacts | 74.8 s | _to be measured_ |
-  | Reminders | 91.2 s | _to be measured_ |
+  | Weather | 107.7 s | 63.1 s (−41%) |
+  | Contacts | 74.8 s | 54.7 s (−27%) |
+  | Reminders | 91.2 s | 55.5 s (−39%) |
 
-- **Cost per run:** Jev costs _to be measured_ per checkpoint, and _to be measured_ per run of the benchmark scripts, at TypeSafe's pricing on _date_. Your host agent's cost depends on your plan and isn't included.
+- **Cost per run:** Jev costs about $0.00016 per checkpoint (3,705 input tokens on average), and $0.0001–$0.0008 per run of the benchmark and Compose scripts, at TypeSafe's published $0.042 per million input tokens (output free) as of 2026-09-26. Your host agent's cost depends on your plan and isn't included; in the benchmark harness, Claude Code cost $0.34–$0.51 per run.
 - **Writing scripts takes time,** and that time hasn't been measured. The worked examples and `/test-ios` are there to make it faster.
 
 ## Input and devices

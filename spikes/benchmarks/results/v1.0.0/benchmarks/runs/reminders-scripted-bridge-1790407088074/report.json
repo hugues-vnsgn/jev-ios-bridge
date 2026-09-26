@@ -1,0 +1,72 @@
+{
+  "reportVersion": 1,
+  "runId": "ddb25b8d-3a53-4e36-b39b-d026985eae5d",
+  "bridgeVersion": "1.0.0",
+  "jevModel": "jev-1.13.0",
+  "projectionRule": "visible-full-text-v2",
+  "bundleId": "com.apple.reminders",
+  "launchArgs": [],
+  "verdict": "passed",
+  "reason": "ALL_CHECKPOINTS_PASSED",
+  "error": null,
+  "steps": 17,
+  "plannedSteps": 17,
+  "checkpointsPassed": 1,
+  "checkpointCount": 1,
+  "inputTokens": 3375,
+  "durationMs": 67542.079917,
+  "startedAt": "2026-09-26T07:16:51.990Z",
+  "finishedAt": "2026-09-26T07:17:59.532Z",
+  "checkpoints": [
+    {
+      "stepId": "verifyFinalList",
+      "status": "passed",
+      "claims": [
+        {
+          "id": "first",
+          "claim": "[REDACTED] is completed in [REDACTED].",
+          "probability": 0.97
+        },
+        {
+          "id": "third",
+          "claim": "[REDACTED] is completed in [REDACTED].",
+          "probability": 0.97
+        },
+        {
+          "id": "second",
+          "claim": "[REDACTED] remains incomplete in [REDACTED].",
+          "probability": 0.97
+        },
+        {
+          "id": "counts",
+          "claim": "The saved list has exactly two completed reminders and one incomplete reminder, with no additional reminders.",
+          "probability": 0.9
+        }
+      ],
+      "screenshot": "screen-35.jpg",
+      "evidenceEvent": 35
+    }
+  ],
+  "evidence": {
+    "log": "run.jsonl",
+    "screenshots": [
+      "screen-3.jpg",
+      "screen-5.jpg",
+      "screen-7.jpg",
+      "screen-9.jpg",
+      "screen-11.jpg",
+      "screen-13.jpg",
+      "screen-15.jpg",
+      "screen-17.jpg",
+      "screen-19.jpg",
+      "screen-21.jpg",
+      "screen-23.jpg",
+      "screen-25.jpg",
+      "screen-27.jpg",
+      "screen-29.jpg",
+      "screen-31.jpg",
+      "screen-33.jpg",
+      "screen-35.jpg"
+    ]
+  }
+}
