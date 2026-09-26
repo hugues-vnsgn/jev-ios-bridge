@@ -46,6 +46,8 @@ export interface Snapshot {
   screenshotAgreement?: boolean;
   /** Measurement only: time spent on that extra capture, so speed figures can exclude it. */
   verifyMs?: number;
+  /** Measurement only: captures taken until the screenshot and capture agreed, when more than one. */
+  verifyAttempts?: number;
 }
 
 export type Action =

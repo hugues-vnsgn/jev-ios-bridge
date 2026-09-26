@@ -484,7 +484,7 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     extra: Partial<Snapshot> = {}): Promise<Snapshot> {
     const snapshot = parseSnapshot(data, deviceId, screenshotPath);
     let verification: Partial<Snapshot> = {};
-    if (this.options.verifyScreenshotAgreement && screenshotPath) {
+    if (this.options.verifyScreenshotAgreement && screenshotPath && extra.screenshotAgreement === undefined) {
       const began = performance.now();
       const after = parseSnapshot(await this.issueCommand(this.captureArgs(deviceId), signal, 'mobilebuildmcp.output.capture-result'), deviceId);
       verification = { screenshotAgreement: sameScreen(snapshot, after), verifyMs: performance.now() - began };
@@ -499,13 +499,38 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     if (!deviceId || !this.releaseLock) throw new Error('Driver is not prepared');
     // The capture and the screenshot run concurrently. Wait for both to settle, so a failure in one
     // never leaves the other in flight after this operation reports done.
-    const [capture, shot] = await Promise.allSettled([
-      this.issueCommand(this.captureArgs(deviceId), signal, 'mobilebuildmcp.output.capture-result'),
-      this.options.screenshots ? this.screenshot(deviceId, signal) : Promise.resolve(undefined),
-    ]);
-    if (capture.status === 'rejected') throw capture.reason;
-    if (shot.status === 'rejected') throw shot.reason;
-    return this.evidence(capture.value, deviceId, shot.value, signal);
+    const captureWithScreenshot = async () => {
+      const [capture, shot] = await Promise.allSettled([
+        this.issueCommand(this.captureArgs(deviceId), signal, 'mobilebuildmcp.output.capture-result'),
+        this.options.screenshots ? this.screenshot(deviceId, signal) : Promise.resolve(undefined),
+      ]);
+      if (capture.status === 'rejected') throw capture.reason;
+      if (shot.status === 'rejected') throw shot.reason;
+      return { data: capture.value, screenshotPath: shot.value };
+    };
+    if (!this.options.verifyScreenshotAgreement || !this.options.screenshots) {
+      const { data, screenshotPath } = await captureWithScreenshot();
+      return this.evidence(data, deviceId, screenshotPath, signal);
+    }
+    // Measurement mode. MobileBuildMCP resolves element references against its latest capture, so the
+    // extra agreement capture must never leave the run holding references from an older one. When the
+    // screen moved, capture again until the screenshot and capture agree (at most 3 tries). If they never
+    // agree, the run gets the newest capture. All of this time counts as measurement time, not observation.
+    let spentOnRetries = 0;
+    for (let attempt = 1; ; attempt++) {
+      const attemptBegan = performance.now();
+      const { data, screenshotPath } = await captureWithScreenshot();
+      const snapshot = parseSnapshot(data, deviceId, screenshotPath);
+      const checkBegan = performance.now();
+      const after = await this.issueCommand(this.captureArgs(deviceId), signal, 'mobilebuildmcp.output.capture-result');
+      const agrees = sameScreen(snapshot, parseSnapshot(after, deviceId));
+      if (agrees || attempt === 3) {
+        const verifyMs = spentOnRetries + (performance.now() - checkBegan);
+        return this.evidence(agrees ? data : after, deviceId, screenshotPath, signal,
+          { screenshotAgreement: agrees, verifyMs, ...(attempt > 1 ? { verifyAttempts: attempt } : {}) });
+      }
+      spentOnRetries += performance.now() - attemptBegan;
+    }
   }
 
   act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined> {
