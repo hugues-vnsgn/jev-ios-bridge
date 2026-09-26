@@ -1,42 +1,57 @@
 # jev-ios-bridge
 
-Verify an iOS app with one authored script and one recorded report. The bridge executes guarded actions through MobileBuildMCP; TypeSafe Jev judges assertions about the resulting screens. Claude Code submits the script and waits, without reading screens or choosing actions during the run.
+Check an iOS app the way a person reads its screen. You write a script: taps, typing, swipes, waits, and checkpoints with claims like "The order total reads $5". The bridge runs it on a simulator through [MobileBuildMCP](https://github.com/getsentry/MobileBuildMCP), TypeSafe's Jev model judges each claim against the screen's text, and you get one verdict (passed, failed, or inconclusive), with screenshots and a log behind it.
 
-**v0.1.0 is an experimental prerelease.** The frozen assertion experiment passed its gate, twelve real scripts matched their expected outcomes, and the installed Claude Code path passed. Full benchmark scripts passed Weather and Contacts; Reminders reached the correct visible state but returned inconclusive on a count assertion. [Measured results](docs/research/scripted-benchmarks.md) include unsuccessful attempts and comparison limits.
+It's built for **repeatable checks**: scripts you keep in your app's repository and re-run after changes, for SwiftUI, UIKit, and Compose Multiplatform apps. Claude Code can write and run them through the bundled `/test-ios` skill and MCP server.
 
-## What it does
-
-- Runs explicit taps, full-field text replacements, swipes, waits, and assertion checkpoints on a dedicated simulator.
-- Stops inconclusively on uncertain judgments, missing or ambiguous targets, unexpected screens, or execution limits.
-- Keeps private JSONL evidence and screenshots, returns a report, and serves a token-protected local watch page.
-- Preserves the recorded verdict after a run; an interrupted journal never becomes a pass.
-
-The script author supplies the route, selectors, guards, and typed values. The app must already be installed and its simulator booted. Preparation restarts the app, so scripts navigate from its observed launch state. The bridge does not build, install, seed, or reset apps.
-
-## Development setup
-
-Use Node 24 or later on a Mac with Xcode and an iOS simulator:
-
-```sh
-npm ci
-npm run check
-node dist/cli.js --help
+```text
+script ─► bridge ─► MobileBuildMCP ─► simulator
+            │  at each checkpoint: screen text + claims ─► Jev ─► probabilities
+            └─► verdict · report.json · screenshots · run.jsonl · live log pane
 ```
 
-[Usage](docs/usage.md) covers credentials, scripted JSON, MCP registration, the `/test-ios` skill, evidence, and limits. Install the package attached to the [GitHub v0.1.0 prerelease](https://github.com/hugues-vnsgn/jev-ios-bridge/releases/tag/v0.1.0). There is no npm registry publication.
+## Install
 
-## Evidence and scope
+jev-ios-bridge ships as a GitHub release, not on npm. You need a Mac with Xcode, Node 24 or later, and a TypeSafe API key.
 
-Three attempts at autonomous Jev action selection failed their preregistered gates. Those results remain intact: [first](spikes/feasibility/results/heldout/heldout.md), [revised](spikes/feasibility/results-v2/heldout/heldout.md), and [checkpoint](spikes/feasibility/results-v3/heldout/heldout.md). The owner then approved explicit scripts with Jev assertion checks.
+```sh
+gh release download v1.0.0 -R hugues-vnsgn/jev-ios-bridge -p 'jev-ios-bridge-1.0.0.tgz'
+npm install ./jev-ios-bridge-1.0.0.tgz
+npx jev-ios-bridge --version
+```
 
-The [scripted assertion experiment](spikes/scripted/results/evaluation/results.md) used 24 fresh screens with one true and one false claim each. At fixed 0.9/0.1 bounds, 22/24 true claims and 23/24 false claims were confidently correct, with zero confidently wrong judgments. Three answers were uncertain. This is a small exploratory result, not a universal error guarantee.
+Then follow the [quickstart](docs/guide/01-quickstart.md). It takes you from here to a first run on a bundled example app in about 15 minutes.
 
-[Integration evidence](.scratch/jev-ios-bridge/scripted-integration-notes.md) records the real scripts, fault probes, and setup corrections. The blind diagnostic check used a failed report and app source to identify the planted checkout-total defect. The two verified comparisons showed lower model-cost estimates and longer host elapsed time. Initial script-authoring cost was not metered, and no verified Reminders baseline was established; total savings are unproven.
+## Guide
 
-Current scope: English screen evidence, printable US-keyboard input, simulator UI automation, Claude Code first, Codex best effort. Real iPhone UI automation, automatic hooks, and host escalation are outside v0.1.0. Legacy autonomous scenario forms are rejected by the supported CLI and MCP.
+The [guide](docs/guide/README.md) covers:
+- preparing your app;
+- making SwiftUI, UIKit, and Compose elements selectable;
+- writing scripts and claims;
+- running from the terminal or Claude Code;
+- reading reports;
+- troubleshooting;
+- data handling;
+- limits;
+- what 1.x keeps stable.
 
-## Design and project navigation
+It's in the package too: `node_modules/jev-ios-bridge/docs/guide/`.
 
-Start with [CONTEXT.md](CONTEXT.md) for vocabulary, [domain boundaries](docs/domain-boundaries.md) for ownership, and [architecture](docs/architecture.md) for the execution and evidence flow. [ADR-0003](docs/adr/0003-explicit-scripts-with-jev-assertions.md) explains the scripted direction; [ADR-0002](docs/adr/0002-mobilebuildmcp-as-device-layer.md) explains the device boundary.
+## Status
 
-The [map](.scratch/jev-ios-bridge/map.md) and [release plan](.scratch/jev-ios-bridge/release-plan.md) record decisions, evidence, and release verification. Research, frozen experiments, and historical source archives remain available for audit. The deliberately faulty [diagnostic app](examples/diagnostic-app/README.md) is a verification fixture, not a production example to copy unchanged.
+v1.0.0 is the first stable release. The script format, CLI and MCP tools, verdict rules, and report and evidence layout stay compatible for all of 1.x ([stability](docs/guide/11-stability.md)).
+
+Before you use it, know that:
+- it drives simulators, not real iPhones;
+- its judgment covers English screens;
+- it can be slower than letting Claude drive the simulator directly.
+
+See [limits](docs/guide/10-limits.md), and read [data handling](docs/guide/09-data-handling.md) before pointing it at an app. Screen text goes to TypeSafe at each checkpoint.
+
+## Project
+
+- **Design:** [architecture](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.0.0/docs/architecture.md) and [decision records](https://github.com/hugues-vnsgn/jev-ios-bridge/tree/v1.0.0/docs/adr). The key ones are [ADR-0004, verdict rules](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.0.0/docs/adr/0004-fixed-assertion-bounds-single-judgment.md), and [ADR-0005, the 1.0 contract](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.0.0/docs/adr/0005-the-1-0-stability-contract.md).
+- **Evidence:** [benchmarks and experiments](https://github.com/hugues-vnsgn/jev-ios-bridge/tree/v1.0.0/spikes/benchmarks), and the [release notes](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.0.0/docs/releases/v1.0.0.md) with measured results.
+- **Changes:** [CHANGELOG](CHANGELOG.md).
+- **Development:** `npm ci && npm run check` in a source checkout.
+- **License:** [MIT](LICENSE).

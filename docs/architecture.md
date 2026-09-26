@@ -61,4 +61,4 @@ The run log stores decisive assertion observations and copied screenshots. Repor
 - Full observation cap 24,000 bytes; state plus longest question 28,000 bytes; total request 56,000 bytes. Overflow stops rather than silently removing evidence.
 - Printable US-keyboard literals; no leading hyphen under the pinned typing limitation.
 
-See [usage](usage.md), [the tracker](../.scratch/jev-ios-bridge/map.md), and [the release plan](../.scratch/jev-ios-bridge/release-plan.md) for setup, evidence and release verification.
+See the [guide](guide/README.md) for setup and use, and the v0.1.0 [tracker](../.scratch/jev-ios-bridge/map.md) and [release plan](../.scratch/jev-ios-bridge/release-plan.md) for that release's evidence and verification. The v1.0.0 plan is the [release spec](../.scratch/v1-release/release-spec.md).
