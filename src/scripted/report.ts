@@ -67,10 +67,15 @@ export function buildScriptedReport(events: RunEvent[]): ScriptedReport {
 export function renderScriptedReport(report: ScriptedReport): string {
   const lastError = report.events.findLast(event => event.type === 'error');
   const lastStep = report.events.findLast(event => event.type === 'step');
+  const started = report.events.find(event => event.type === 'started')?.data;
+  const model = typeof started?.jevModel === 'string' ? started.jevModel
+    : report.events.find(event => event.type === 'judgment' && typeof event.data.model === 'string')?.data.model;
   const header = [
     `Run ${report.runId}: ${report.verdict}`,
     report.reason,
     `Steps: ${report.steps}; Jev input tokens: ${report.inputTokens}; duration: ${report.durationMs} ms.`,
+    ...(typeof model === 'string' ? [`Jev model: ${model}` +
+      (typeof started?.bridgeVersion === 'string' ? `; bridge ${started.bridgeVersion}.` : '.')] : []),
   ].join('\n');
   const checkpointBlock = (checkpoint: ScriptedReport['checkpoints'][number], decisive: boolean): string => [
       `Checkpoint ${checkpoint.stepId}: ${checkpoint.status}.`,

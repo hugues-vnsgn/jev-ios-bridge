@@ -2,11 +2,11 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { setTimeout as delay } from 'node:timers/promises';
 import type { DeviceDriver, Element, RunEvent, RunLog, Snapshot } from '../src/contracts/index.js';
-import type { ScriptedJudge, ScriptedScenario } from '../spikes/scripted/contracts.js';
+import type { ScriptedJudge, ScriptedScenario } from '../src/scripted/contracts.js';
 import { StaleSnapshotError } from '../src/device/index.js';
-import { assertScreenGuard, resolveActionTarget, ScriptSelectionError } from '../spikes/scripted/select.js';
-import { runScriptedScenario } from '../spikes/scripted/run.js';
-import { buildScriptedReport, renderScriptedReport } from '../spikes/scripted/report.js';
+import { assertScreenGuard, resolveActionTarget, ScriptSelectionError } from '../src/scripted/select.js';
+import { runScriptedScenario } from '../src/scripted/run.js';
+import { buildScriptedReport, renderScriptedReport } from '../src/scripted/report.js';
 
 function snapshot(elements: Element[], truncated = false): Snapshot {
   return { deviceId: 'sim', capturedAt: Date.now(), expiresAt: Date.now() + 60_000,
@@ -113,12 +113,12 @@ test('screen guards require unique present anchors and zero forbidden anchors', 
   (error: unknown) => error instanceof ScriptSelectionError && error.code === 'GUARD_FORBIDDEN');
 });
 
-test('selector treats an empty value as an exact field, not as an omitted filter', () => {
-  const empty: Element = { ...apple, ref: 'empty', value: '', actions: ['typeText'] };
-  const filled: Element = { ...apple, ref: 'filled', value: 'London', actions: ['typeText'],
+test('a value filter selects the field whose value matches exactly', () => {
+  const paris: Element = { ...apple, ref: 'paris', value: 'Paris', actions: ['typeText'] };
+  const london: Element = { ...apple, ref: 'london', value: 'London', actions: ['typeText'],
     frame: { x: 20, y: 300, width: 200, height: 60 } };
-  assert.equal(resolveActionTarget(snapshot([empty, filled]),
-    { identifier: 'choose.apple', value: '' }, 'typeText').ref, 'empty');
+  assert.equal(resolveActionTarget(snapshot([paris, london]),
+    { identifier: 'choose.apple', value: 'London' }, 'typeText').ref, 'london');
 });
 
 function memoryLog(): RunLog & { events: RunEvent[] } {
@@ -136,7 +136,7 @@ test('one submitted script prepares once, acts on a unique target, and passes a 
   const selected = snapshot([{ ref: 'selection', role: 'text', label: 'Selected: Apple', actions: [],
     frame: { x: 20, y: 20, width: 200, height: 30 }, state: { enabled: true, visible: true } }]);
   const scripted: ScriptedScenario = {
-    app: { bundleId: 'dev.jevbridge.diagnostic' }, values: {}, steps: [
+    version: 1, app: { bundleId: 'dev.jevbridge.diagnostic' }, values: {}, steps: [
       { id: 'addApple', kind: 'action', guard: { present: [{ label: 'Sample Shop' }] },
         action: { kind: 'tap', selector: { identifier: 'choose.apple' } } },
       { id: 'selected', kind: 'checkpoint', guard: { present: [{ label: 'Selected: Apple' }] },
@@ -177,7 +177,7 @@ test('ambiguous targets stop inconclusively before any device action', async () 
   const { identifier: _identifier, ...buttonWithoutId } = apple;
   const first: Element = { ...buttonWithoutId, ref: 'a', label: 'Submit' };
   const second: Element = { ...first, ref: 'b', frame: { x: 20, y: 300, width: 200, height: 60 } };
-  const scripted: ScriptedScenario = { app: { bundleId: 'com.example.app' }, values: {}, steps: [
+  const scripted: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [
     { id: 'submit', kind: 'action', guard: { present: [{ label: 'Form' }] },
       action: { kind: 'tap', selector: { label: 'Submit' } } },
     { id: 'result', kind: 'checkpoint', guard: { present: [{ label: 'Done' }] },
@@ -200,7 +200,7 @@ test('ambiguous targets stop inconclusively before any device action', async () 
 test('checkpoint false fails and uncertain abstains with recorded probabilities', async () => {
   const marker: Element = { ref: 'm', role: 'text', label: 'Order complete', actions: [],
     frame: { x: 0, y: 0, width: 200, height: 30 }, state: { enabled: true, visible: true } };
-  const scripted: ScriptedScenario = { app: { bundleId: 'com.example.app' }, values: {}, steps: [
+  const scripted: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [
     { id: 'total', kind: 'checkpoint', guard: { present: [{ label: 'Order complete' }] },
       assertions: [{ id: 'correct', claim: 'Total is $5' }] },
   ] };
@@ -217,10 +217,31 @@ test('checkpoint false fails and uncertain abstains with recorded probabilities'
   }
 });
 
+test('ADR-0004: a confidently false claim fails beside an uncertain one, and both stay in the report', async () => {
+  const marker: Element = { ref: 'm', role: 'text', label: 'Order complete', actions: [],
+    frame: { x: 0, y: 0, width: 200, height: 30 }, state: { enabled: true, visible: true } };
+  const scripted: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [
+    { id: 'total', kind: 'checkpoint', guard: { present: [{ label: 'Order complete' }] },
+      assertions: [{ id: 'total', claim: 'Total is $5' }, { id: 'saved', claim: 'The order was saved' }] },
+  ] };
+  const log = memoryLog();
+  const report = await runScriptedScenario({ runId: 'scripted-1', scenario: scripted, log,
+    driver: { async prepare() {}, async observe() { return snapshot([marker]); },
+      async act() { assert.fail('No action in this script'); }, async close() {} },
+    judge: { async judge() { return { probabilities: { total: 0.04, saved: 0.6 }, inputTokens: 12,
+      latencyMs: 2, model: 'jev-1.13.0' }; } } });
+  assert.equal(report.verdict, 'failed');
+  assert.equal(report.reason, 'ASSERTION_FALSE');
+  assert.equal(report.checkpoints[0]?.status, 'failed');
+  assert.deepEqual(report.checkpoints[0]?.assertions.map(assertion => [assertion.id, assertion.probability]),
+    [['total', 0.04], ['saved', 0.6]]);
+  assert.match(renderScriptedReport(report), /Jev model: jev-1\.13\.0/);
+});
+
 test('checkpoint refuses an assertion judgment from a different model', async () => {
   const marker: Element = { ref: 'm', role: 'text', label: 'Ready', actions: [],
     frame: { x: 0, y: 0, width: 100, height: 20 }, state: { enabled: true, visible: true } };
-  const scripted: ScriptedScenario = { app: { bundleId: 'com.example.app' }, values: {}, steps: [
+  const scripted: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [
     { id: 'ready', kind: 'checkpoint', guard: { present: [{ label: 'Ready' }] },
       assertions: [{ id: 'ready', claim: 'Ready is visible' }] },
   ] };
@@ -238,7 +259,7 @@ test('stale reference retries only after a same-screen guard and unique selector
   const before = snapshot([heading, apple]);
   const refreshed = snapshot([heading, { ...apple, ref: 'e2' }]);
   const done = snapshot([{ ...heading, label: 'Done' }]);
-  const scripted: ScriptedScenario = { app: { bundleId: 'com.example.shop' }, values: {}, steps: [
+  const scripted: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.shop' }, values: {}, steps: [
     { id: 'add', kind: 'action', guard: { present: [{ label: 'Shop' }] },
       action: { kind: 'tap', selector: { identifier: 'choose.apple' } } },
     { id: 'done', kind: 'checkpoint', guard: { present: [{ label: 'Done' }] },
@@ -264,7 +285,7 @@ test('phase timings include stale retry work, wait polling, and checkpoint judgm
   const refreshed = snapshot([visible('Shop'), { ...apple, ref: 'e2' }]);
   const loading = snapshot([visible('Loading')]);
   const done = snapshot([visible('Done')]);
-  const script: ScriptedScenario = { app: { bundleId: 'com.example.shop' }, values: {}, steps: [
+  const script: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.shop' }, values: {}, steps: [
     { id: 'add', kind: 'action', guard: { present: [{ label: 'Shop' }] },
       action: { kind: 'tap', selector: { identifier: 'choose.apple' } } },
     { id: 'load', kind: 'wait', guard: { present: [{ label: 'Loading' }] },
@@ -307,7 +328,7 @@ test('phase timings include stale retry work, wait polling, and checkpoint judgm
 });
 
 test('failed prepare still records elapsed phase totals and cleanup', async () => {
-  const script: ScriptedScenario = { app: { bundleId: 'com.example.shop' }, values: {}, steps: [
+  const script: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.shop' }, values: {}, steps: [
     { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Done' }] },
       assertions: [{ id: 'ready', claim: 'Done is visible' }] },
   ] };
@@ -326,7 +347,7 @@ test('failed prepare still records elapsed phase totals and cleanup', async () =
 });
 
 test('failed action records its elapsed duration and failed step', async () => {
-  const script: ScriptedScenario = { app: { bundleId: 'com.example.shop' }, values: {}, steps: [
+  const script: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.shop' }, values: {}, steps: [
     { id: 'add', kind: 'action', guard: { present: [{ identifier: 'choose.apple' }] },
       action: { kind: 'tap', selector: { identifier: 'choose.apple' } } },
     { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Done' }] },
@@ -351,7 +372,7 @@ test('changed screen after stale reference never retries an input', async () => 
     frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } };
   const before = snapshot([heading, apple]);
   const changed: Snapshot = { ...snapshot([heading, { ...apple, ref: 'e2' }]), screenHash: 'changed' };
-  const scripted: ScriptedScenario = { app: { bundleId: 'com.example.shop' }, values: {}, steps: [
+  const scripted: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.shop' }, values: {}, steps: [
     { id: 'add', kind: 'action', guard: { present: [{ label: 'Shop' }] },
       action: { kind: 'tap', selector: { identifier: 'choose.apple' } } },
     { id: 'done', kind: 'checkpoint', guard: { present: [{ label: 'Done' }] },
@@ -375,7 +396,7 @@ test('pre-cancelled script does not dispatch device preparation', async () => {
   abort.abort();
   const marker: Element = { ref: 'm', role: 'text', label: 'Ready', actions: [],
     frame: { x: 0, y: 0, width: 100, height: 20 }, state: { enabled: true, visible: true } };
-  const scripted: ScriptedScenario = { app: { bundleId: 'com.example.app' }, values: {}, steps: [
+  const scripted: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [
     { id: 'ready', kind: 'checkpoint', guard: { present: [{ label: 'Ready' }] },
       assertions: [{ id: 'ready', claim: 'Ready visible' }] },
   ] };
@@ -390,7 +411,7 @@ test('pre-cancelled script does not dispatch device preparation', async () => {
 test('wall deadline ends a non-cooperative device observation', async () => {
   const marker: Element = { ref: 'm', role: 'text', label: 'Ready', actions: [],
     frame: { x: 0, y: 0, width: 100, height: 20 }, state: { enabled: true, visible: true } };
-  const scripted: ScriptedScenario = { app: { bundleId: 'com.example.app' }, values: {}, steps: [
+  const scripted: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [
     { id: 'ready', kind: 'checkpoint', guard: { present: [{ label: 'Ready' }] },
       assertions: [{ id: 'ready', claim: 'Ready visible' }] },
   ] };
@@ -411,7 +432,7 @@ test('wall deadline ends a non-cooperative device observation', async () => {
 test('wrong-screen guard records the fresh capture before stopping', async () => {
   const unexpected: Element = { ref: 'u', role: 'text', label: 'Unexpected screen', actions: [],
     frame: { x: 0, y: 0, width: 200, height: 20 }, state: { enabled: true, visible: true } };
-  const scripted: ScriptedScenario = { app: { bundleId: 'com.example.app' }, values: {}, steps: [
+  const scripted: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [
     { id: 'ready', kind: 'checkpoint', guard: { present: [{ label: 'Ready' }] },
       assertions: [{ id: 'ready', claim: 'Ready visible' }] },
   ] };
@@ -429,7 +450,7 @@ test('wrong-screen guard records the fresh capture before stopping', async () =>
 test('wait stops on an unexpected third screen instead of polling until timeout', async () => {
   const element = (label: string): Element => ({ ref: label, role: 'text', label, actions: [],
     frame: { x: 0, y: 0, width: 100, height: 20 }, state: { enabled: true, visible: true } });
-  const scripted: ScriptedScenario = { app: { bundleId: 'com.example.app' }, values: {}, steps: [
+  const scripted: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [
     { id: 'loading', kind: 'wait', guard: { present: [{ label: 'Loading' }] },
       until: { present: [{ label: 'Done' }] }, timeoutMs: 50 },
     { id: 'done', kind: 'checkpoint', guard: { present: [{ label: 'Done' }] },
@@ -448,7 +469,7 @@ test('wait stops on an unexpected third screen instead of polling until timeout'
 test('global step budget stops before an unexecuted checkpoint', async () => {
   const title: Element = { ref: 'title', role: 'text', label: 'Shop', actions: [],
     frame: { x: 0, y: 0, width: 100, height: 20 }, state: { enabled: true, visible: true } };
-  const scripted: ScriptedScenario = { app: { bundleId: 'com.example.shop' }, values: {}, steps: [
+  const scripted: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.shop' }, values: {}, steps: [
     { id: 'add', kind: 'action', guard: { present: [{ label: 'Shop' }] },
       action: { kind: 'tap', selector: { identifier: 'choose.apple' } } },
     { id: 'done', kind: 'checkpoint', guard: { present: [{ label: 'Done' }] },
@@ -472,7 +493,7 @@ test('global step budget stops before an unexecuted checkpoint', async () => {
 test('bounded wait observes the desired screen before the next checkpoint', async () => {
   const element = (label: string): Element => ({ ref: label, role: 'text', label, actions: [],
     frame: { x: 0, y: 0, width: 100, height: 20 }, state: { enabled: true, visible: true } });
-  const scripted: ScriptedScenario = { app: { bundleId: 'com.example.app' }, values: {}, steps: [
+  const scripted: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [
     { id: 'loading', kind: 'wait', guard: { present: [{ label: 'Loading' }] },
       until: { present: [{ label: 'Done' }] }, timeoutMs: 100 },
     { id: 'done', kind: 'checkpoint', guard: { present: [{ label: 'Done' }] },
@@ -494,7 +515,7 @@ test('bounded wait observes the desired screen before the next checkpoint', asyn
 test('wait timeout remains inconclusive and does not query Jev', async () => {
   const loading: Element = { ref: 'loading', role: 'text', label: 'Loading', actions: [],
     frame: { x: 0, y: 0, width: 100, height: 20 }, state: { enabled: true, visible: true } };
-  const scripted: ScriptedScenario = { app: { bundleId: 'com.example.app' }, values: {}, steps: [
+  const scripted: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [
     { id: 'loading', kind: 'wait', guard: { present: [{ label: 'Loading' }] },
       until: { present: [{ label: 'Done' }] }, timeoutMs: 5 },
     { id: 'done', kind: 'checkpoint', guard: { present: [{ label: 'Done' }] },
@@ -512,7 +533,7 @@ test('wait timeout remains inconclusive and does not query Jev', async () => {
 test('cleanup failure prevents a pass even after assertion proof was recorded', async () => {
   const done: Element = { ref: 'done', role: 'text', label: 'Done', actions: [],
     frame: { x: 0, y: 0, width: 100, height: 20 }, state: { enabled: true, visible: true } };
-  const scripted: ScriptedScenario = { app: { bundleId: 'com.example.app' }, values: {}, steps: [
+  const scripted: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [
     { id: 'done', kind: 'checkpoint', guard: { present: [{ label: 'Done' }] },
       assertions: [{ id: 'done', claim: 'Done visible' }] },
   ] };
@@ -529,7 +550,7 @@ test('cleanup failure prevents a pass even after assertion proof was recorded', 
 test('cancellation waits for pending action acknowledgement before cleanup completes', { timeout: 2_000 }, async () => {
   const title: Element = { ref: 'title', role: 'text', label: 'Shop', actions: [],
     frame: { x: 0, y: 0, width: 100, height: 20 }, state: { enabled: true, visible: true } };
-  const scripted: ScriptedScenario = { app: { bundleId: 'com.example.shop' }, values: {}, steps: [
+  const scripted: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.shop' }, values: {}, steps: [
     { id: 'add', kind: 'action', guard: { present: [{ label: 'Shop' }] },
       action: { kind: 'tap', selector: { identifier: 'choose.apple' } } },
     { id: 'done', kind: 'checkpoint', guard: { present: [{ label: 'Done' }] },

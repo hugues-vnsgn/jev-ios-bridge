@@ -8,13 +8,16 @@ const udid = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a
 const printableAscii = /^[\x20-\x7e]*$/;
 const identity = z.string().min(1).max(500).refine(value => value.trim().length > 0);
 
+const EMPTY_VALUE_MESSAGE = 'A selector value cannot be empty: captures omit the value of an empty field ' +
+  '(Compose) or report its placeholder (native), so emptiness is not selectable';
+
 const roleSchema = z.enum(ROLES, { error: `role must be one of: ${ROLES.join(', ')}` });
 
 export const selectorSchema = z.strictObject({
   identifier: identity.optional(),
   role: roleSchema.optional(),
   label: identity.optional(),
-  value: z.string().max(500).optional(),
+  value: z.string().min(1, EMPTY_VALUE_MESSAGE).max(500).optional(),
 }).refine(selector => Boolean(selector.identifier || selector.role || selector.label),
   'A selector needs an identifier, role, or label; value is only a filter');
 

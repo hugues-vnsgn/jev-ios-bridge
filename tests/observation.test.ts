@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import type { Scenario, Snapshot } from '../src/contracts/index.js';
-import { actionOptions, buildObservation, ObservationError } from '../src/observation/index.js';
+import type { Snapshot } from '../src/contracts/index.js';
+import type { Scenario } from '../spikes/legacy/contracts.js';
+import { actionOptions, buildObservation, ObservationError } from '../spikes/legacy/observation.js';
 
 const scenario: Scenario = {
   goal: 'Enter the synthetic email', app: { bundleId: 'test.app' },

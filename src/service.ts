@@ -64,7 +64,7 @@ export class BridgeService {
       } finally { job.state = 'finished'; }
     }).catch(() => { job.state = 'finished'; });
     await log.read();
-    return { runId, watchUrl: `${this.watch.url}&run=${runId}` };
+    return { runId, watchUrl: this.watch.urlFor(runId) };
   }
 
   async status(runId: string, waitMs = 0, signal?: AbortSignal): Promise<{ state: 'running' | 'finished' | 'interrupted'; report: ScriptedReport }> {

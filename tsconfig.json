@@ -17,7 +17,8 @@
     "src/**/*.ts",
     "tests/**/*.ts",
     "spikes/feasibility/**/*.ts",
-    "spikes/scripted/**/*.ts"
+    "spikes/scripted/**/*.ts",
+    "spikes/legacy/**/*.ts"
   ],
   "exclude": [
     "node_modules",

@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { projectActionOptions } from '../../../src/observation/index.ts';
+import { projectActionOptions } from '../../legacy/observation.ts';
 
 const dir = dirname(fileURLToPath(import.meta.url));
 const simulatorId = '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7';

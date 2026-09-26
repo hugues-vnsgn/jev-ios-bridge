@@ -25,7 +25,7 @@ The run policy owns the verdict. Jev supplies probabilities; the device layer su
 3. Capture the current screen before each step. Check distinguishing guards and resolve exactly one eligible target for an action. A missing, ambiguous, or unexpected state stops inconclusively.
 4. Execute authored tap, text replacement or swipe actions, or poll a bounded wait. Use current references and require terminal acknowledgements. Fresh references never justify guessing after a changed screen.
 5. At a checkpoint, project the current full accessibility capture and ask one Noul per claim. There is no Choice, completion question, future script, or value dictionary in the request.
-6. Record the checkpoint result. Any uncertain claim yields inconclusive; otherwise any false claim fails. Passing requires all steps and checkpoints, followed by successful cleanup.
+6. Record the checkpoint result. Any confidently false claim (probability at or below 0.1) fails it, even beside uncertain claims ([ADR-0004](adr/0004-fixed-assertion-bounds-single-judgment.md)); otherwise any uncertain claim yields inconclusive. Passing requires all steps and checkpoints, followed by successful cleanup.
 7. Stop the app, release the confirmed lease, and append the final verdict. Unknown device outcomes or cleanup failures retain the lease and prevent a pass.
 
 The script has finite steps and global time/step budgets. It does not escalate to the host or resume an interrupted run. The host polls progress with bounded waits; running responses contain no screen evidence for selecting another action.

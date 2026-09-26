@@ -154,7 +154,8 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
   const maxSteps = bounded(limits.maxSteps, 100, 1, 100);
   const wallTimeMs = bounded(limits.wallTimeMs, 300_000, 1, 3_600_000);
   const pollIntervalMs = bounded(limits.pollIntervalMs, 250, 1, 5_000);
-  const cleanupTimeMs = bounded(limits.cleanupTimeMs, 10_000, 1, 60_000);
+  // Longer than one device command's own deadline (35 s), so cleanup can see an in-flight command finish.
+  const cleanupTimeMs = bounded(limits.cleanupTimeMs, 45_000, 1, 120_000);
   const preparedContext = prepareContext(script);
   const actionContext: ActionScenarioContext = { ...preparedContext, values: script.values };
   const selectionOptions: SelectionOptions = options.tapAliasRule
@@ -293,8 +294,9 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
         decideDurationMs });
       requireActive();
       const answers = step.assertions.map(assertion => judgment.probabilities[assertion.id]!);
-      const status = answers.some(value => value > 0.1 && value < 0.9) ? 'inconclusive' :
-        answers.some(value => value <= 0.1) ? 'failed' : 'passed';
+      // ADR-0004: a confidently false claim fails the checkpoint even beside uncertain claims.
+      const status = answers.some(value => value <= 0.1) ? 'failed' :
+        answers.some(value => value < 0.9) ? 'inconclusive' : 'passed';
       await options.log.append('checkpoint', { step: steps, stepId: step.id, status,
         stepDurationMs: Math.max(0, performance.now() - activeStepStarted),
         assertions: step.assertions.map(assertion => ({ id: assertion.id, claim: assertion.claim,

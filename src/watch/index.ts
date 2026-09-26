@@ -3,7 +3,6 @@ import { randomBytes, timingSafeEqual } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { readRunEvents, validateRunId } from '../log/index.js';
-import { buildReport } from '../report/index.js';
 import { buildScriptedReport } from '../scripted/report.js';
 
 const page = `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width">
@@ -28,8 +27,14 @@ if(event.type==='verdict'){paragraph(card,data.reason||data.verdict);paragraph(c
 if(event.type==='step'&&data.screenshotPath){const response=await fetch('/image?run='+encodeURIComponent(runId)+'&name='+encodeURIComponent(data.screenshotPath),{headers:{Authorization:'Bearer '+token}});if(response.ok){const img=document.createElement('img');img.alt='Screen captured at step '+data.step;img.src=URL.createObjectURL(await response.blob());card.append(img);}}
 details(card,'Recorded event',JSON.stringify(data,null,2));timeline.append(card);}seen=report.events.length;}catch(error){status.textContent=error.message;}finally{setTimeout(refresh,1000);}}refresh();`;
 
-export async function startWatchServer(baseDir: string): Promise<{ url: string; close(): Promise<void> }> {
-  const token = randomBytes(32).toString('hex');
+export interface WatchServer {
+  /** The watch URL for one run. Its token opens only that run's evidence, for as long as this server lives. */
+  urlFor(runId: string): string;
+  close(): Promise<void>;
+}
+
+export async function startWatchServer(baseDir: string): Promise<WatchServer> {
+  const tokens = new Map<string, string>();
   const root = resolve(baseDir);
   const server = createServer(async (request, response) => {
     response.setHeader('Cache-Control', 'no-store');
@@ -44,15 +49,14 @@ export async function startWatchServer(baseDir: string): Promise<{ url: string; 
           : url.pathname === '/app.js' ? ['application/javascript', script] : ['text/css', css];
         response.writeHead(200, { 'Content-Type': `${mime}; charset=utf-8` }).end(body); return;
       }
-      const presented = (request.headers.authorization ?? '').replace(/^Bearer /, '');
-      if (presented.length !== token.length || !timingSafeEqual(Buffer.from(presented), Buffer.from(token))) {
+      const runId = validateRunId(url.searchParams.get('run') ?? '');
+      const token = tokens.get(runId);
+      const presented = Buffer.from((request.headers.authorization ?? '').replace(/^Bearer /, ''));
+      if (!token || presented.length !== token.length || !timingSafeEqual(presented, Buffer.from(token))) {
         response.writeHead(401).end('Unauthorized'); return;
       }
-      const runId = validateRunId(url.searchParams.get('run') ?? '');
       if (url.pathname === '/events') {
-        const events = await readRunEvents(root, runId);
-        const report = events[0]?.type === 'started' && events[0].data.mode === 'scripted'
-          ? buildScriptedReport(events) : buildReport(events);
+        const report = buildScriptedReport(await readRunEvents(root, runId));
         response.writeHead(200, { 'Content-Type': 'application/json' }).end(JSON.stringify(report)); return;
       }
       if (url.pathname === '/image') {
@@ -70,7 +74,12 @@ export async function startWatchServer(baseDir: string): Promise<{ url: string; 
   const address = server.address();
   if (!address || typeof address === 'string') throw new Error('Watch server did not bind');
   return {
-    url: `http://127.0.0.1:${address.port}/?token=${token}`,
+    urlFor(runId: string) {
+      validateRunId(runId);
+      let token = tokens.get(runId);
+      if (!token) { token = randomBytes(32).toString('hex'); tokens.set(runId, token); }
+      return `http://127.0.0.1:${address.port}/?token=${token}&run=${runId}`;
+    },
     close: () => new Promise<void>((done, reject) => server.close(error => error ? reject(error) : done())),
   };
 }

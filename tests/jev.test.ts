@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { TypeSafeClient } from '@typesafe-ai/sdk';
-import type { Observation, Scenario, Snapshot } from '../src/contracts/index.js';
-import { buildJevRequest, createJevJudge, JevContractError, JevRequestError, parseJevResult, V2_WORDING, V3_WORDING } from '../src/jev/index.js';
-import { buildObservation } from '../src/observation/index.js';
+import type { Snapshot } from '../src/contracts/index.js';
+import type { Observation, Scenario } from '../spikes/legacy/contracts.js';
+import { buildJevRequest, createJevJudge, JevContractError, JevRequestError, parseJevResult, V2_WORDING, V3_WORDING } from '../spikes/legacy/jev.js';
+import { buildObservation } from '../spikes/legacy/observation.js';
 
 const scenario: Scenario = {
   goal: 'Open the synthetic result', app: { bundleId: 'test.app' },
