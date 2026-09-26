@@ -1,20 +1,45 @@
 ---
 name: test-ios
-description: Verify an iOS app through the jev-ios-bridge MCP tools using an explicit action script, then report its recorded verdict. Use for iOS UI verification when the bridge tools are available.
+description: Verify an iOS app (SwiftUI, UIKit, or Compose Multiplatform) on a simulator with a jev-ios-bridge script and report the recorded verdict. Use when asked to check, verify, or test iOS app behaviour on screen and the jev-ios-bridge MCP tools are available.
 ---
 
-# Verify an iOS scenario
+# Verify an iOS app with jev-ios-bridge
 
-1. Establish the installed app bundle ID and configured dedicated, booted simulator. Arrange persistent test data before starting. Preparation restarts the app, so the script must navigate from its post-launch screen. The bridge does not build, install, seed, or reset app data.
-2. Use the supplied script unchanged when the request specifies an exact scenario. Otherwise author the complete script from app source, known accessibility identifiers, and reviewed UI evidence before submitting it. The shape is `{version: 1, app: {bundleId}, device?: {udid}, preconditions?: [...], values: {name: literal}, steps: [...]}`; `version: 1` is required. A selector `role` must be one of: application, window, button, keyboard-key, text-field, menu, text, image, switch, slider, cell, scroll-view, list, tab, other. Give every step a unique ID and end at an assertion checkpoint.
-   - An action step has `kind: "action"`, a `guard`, and an `action`: `tap` with a `selector`; `replaceText` with `selector` and `valueKey`; or `swipe` with `selector` and `direction`.
-   - A wait step has `kind: "wait"`, a starting `guard`, an `until` guard, and `timeoutMs` up to 60000.
-   - A checkpoint has `kind: "checkpoint"`, a `guard`, and `assertions: [{id, claim}]` about the current visible screen.
-   - A guard has `present: [selector, ...]` and optional `absent: [...]`. A selector uses exact `identifier`, `role`, `label`, or `value`; at least one identifier/role/label is required. A value filter can't be empty; empty fields carry no value to match. Use distinguishing screen anchors: one editable field alone could be a search field or a contact's Notes field. The bridge requires a unique eligible physical target; snapshot refs and list indices are not authored selectors.
-3. Supply every typed literal in `values`. Text replacement replaces the entire field. Values must be printable US-keyboard text, at most 2048 characters, and cannot start with a hyphen for the pinned device layer. Use 1–100 steps and 1–20 claims per checkpoint. Claims must describe visible evidence; a visible editor does not establish whether backend storage has committed. Legacy `goal` and autonomous `checkpoints` inputs are unsupported.
-4. Call `start_scenario` once with `{scenario}` and optional `limits: {maxSteps, wallTimeMs}`. These are whole-run limits (maxSteps at most 100) and cannot change judgment thresholds. Save the run ID and show its local watch URL. TypeSafe receives observed screen text and current claims; typed values can appear in that screen text. Screenshots remain local.
-5. Let the bridge control the simulator. Call `get_report` with `{runId, waitMs: 45000}` and repeat only while running. Running replies contain progress, not screen evidence for choosing another action. The complete script is fixed for that run; there is no per-step host control or resume.
-6. Return the recorded verdict, decisive evidence, and local evidence path. Passed means every scripted step and checkpoint passed; failed means a declared assertion was confidently false; inconclusive means verification remains unresolved. Preserve reported setup, selector, model, and cleanup problems. A missing tool or inconclusive run is never a pass.
-7. If asked to stop an active run, call `cancel_run`, await cleanup, and read its report. Completed verdicts remain authoritative.
+The bridge runs one complete script on a dedicated simulator and returns a recorded verdict. You author the script and submit it once; the bridge drives the device, and Jev judges the checkpoint claims. The guide ships with the bridge at `node_modules/jev-ios-bridge/docs/guide/`, and each step below names the page it relies on.
 
-The task is complete when the user has the recorded outcome and evidence needed to investigate it. Keep the simulator available to the bridge until that run finishes.
+## Steps
+
+1. **Establish the target.** Find the app's bundle ID and confirm that it's installed on the dedicated, booted simulator, with the test data the check needs already in place. The bridge restarts the app, so the script starts from whatever screen the app opens on. Done when you know the launch screen, the data, and any debug `launchArgs` that give a stable start (guide `02-prepare-your-app.md`).
+
+2. **Author the script, or take the one you're given.** If the user supplies a script, use it unchanged. Otherwise, write it from the app's source, its accessibility identifiers or `testTag`s, and a real capture of each screen you touch (`npx mobilebuildmcp ui-automation snapshot-ui --simulator-id <UUID> --verbose --output json`). Read guide `04-writing-scripts.md`, `03-identifiers.md`, and `reference/script-format.md` before your first script. Done when:
+   - every step has a guard of anchors that only its screen has;
+   - every action's selector matches exactly one element in the capture: an identifier, or a `role` plus `label`;
+   - every typed literal lives in `values`;
+   - the script starts with `"version": 1` and ends with a checkpoint.
+
+3. **Write claims Jev can decide.** Jev sees the screen's text (roles, labels, values, identifiers), not the screenshot. Follow guide `05-writing-claims.md`:
+   - one piece of printed evidence per claim ("The order total reads $5");
+   - absence only through text the app prints ("No Results");
+   - the app's own totals instead of row counts;
+   - persisted state only on the screen after saving;
+   - printed text rather than widget meaning ("A button labelled ON is visible").
+
+   Done when every claim names text you can point to in a capture.
+
+4. **Submit once.** Call `start_scenario` with `{scenario}` and optional `limits: {maxSteps, wallTimeMs}`. Show the user the `watchUrl`, and mention `logsCommand` for following the app's own output. A log pane window usually opens by itself.
+
+5. **Wait for the verdict.** Call `get_report` with `{runId, waitMs: 45000}`, and repeat while the status is running. Running replies carry progress only; the run follows its script to the end. Done when the status is finished or interrupted.
+
+6. **Report what was recorded.** Give the user:
+   - the verdict and its reason code;
+   - the decisive checkpoint and its claim probabilities;
+   - the evidence path;
+   - any setup, selector, device, or TypeSafe problem the report names.
+
+   Present the verdict as recorded: **passed** means every step and checkpoint passed; **failed** means a claim was confidently false (≤ 0.1); **inconclusive** means verification is unresolved, which is never a pass. For an inconclusive run, point to guide `08-troubleshooting.md` for its reason code. A `GUARD_*` or `TARGET_*` code means the script, not the app, needs fixing.
+
+7. **To stop a run,** call `cancel_run` and read the report it leaves. A verdict already recorded stays final.
+
+## Data
+
+Checkpoint screen text, including typed values, goes to TypeSafe. Screenshots and logs stay local. Author checks against test data in apps the user controls (guide `09-data-handling.md`).

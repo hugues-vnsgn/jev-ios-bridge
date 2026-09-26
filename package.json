@@ -1,7 +1,8 @@
 {
   "name": "jev-ios-bridge",
   "version": "1.0.0",
-  "description": "Evidence-backed iOS scenario verification with Jev and MobileBuildMCP",
+  "description": "Check iOS apps (SwiftUI, UIKit, Compose Multiplatform) on a simulator with scripted steps and Jev-judged screen claims",
+  "license": "MIT",
   "type": "module",
   "private": true,
   "engines": {
@@ -17,7 +18,9 @@
     "dist",
     "skills",
     "README.md",
-    "docs/usage.md"
+    "docs/guide",
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
