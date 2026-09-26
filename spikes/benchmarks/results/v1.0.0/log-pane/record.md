@@ -11,3 +11,5 @@ Checked on 2026-09-26 in the owner's logged-in desktop session, where Terminal i
 | **`JEV_LOG_PANE=off`** | No window. `Log pane: no window (turned off with JEV_LOG_PANE=off). Follow the app's output with: … logs <run-id>` |
 | **SSH** (`SSH_CONNECTION` set) | No window. `Log pane: no window (running over SSH). Follow …` |
 | **`logs <run-id>` in a plain terminal** | Shows the same masked pane, ends with the passed line, and exits 3 s later. |
+
+**Owner decision (2026-09-26):** keep the window open after a pass, with no Automation permission. The pane's final message and guide page 06 now tell people to close the window, or to set Terminal's "When the shell exits" to close it.

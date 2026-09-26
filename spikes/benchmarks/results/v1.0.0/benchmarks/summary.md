@@ -29,3 +29,5 @@ Jev `jev-1.13.0` input costs $0.042 per million tokens, and output is free ([Typ
 | BFSOne Compose scripts (5 judged) | 21,001 | 7 | $0.00088 in total |
 
 Across all 13 judged checkpoints, the average was 3,705 input tokens, which is **$0.00016 per checkpoint**. Host-model cost (the harness's Claude Code estimate) was $0.34–$0.51 per benchmark run. It depends on the developer's plan and isn't part of the bridge's cost.
+
+**Owner decision (2026-09-26):** the Reminders change from inconclusive to passed is **accepted**. The claim is true, and it's recorded and published as a borderline pass at the bound.

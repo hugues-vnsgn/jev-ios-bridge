@@ -48,3 +48,7 @@ Decided with the owner on 2026-09-25, after they watched the prototype run. **Pr
    - There's no level or keyword filter in 1.0.
 8. **Setting:** on by default for both the CLI and MCP. It turns itself off under SSH, CI, or no GUI session. To turn it off yourself, use `JEV_LOG_PANE=off` (which also works in the MCP config's `env` block) or the CLI flag `--no-log-pane`.
 9. **Contract:** per ADR-0005 the pane itself isn't frozen. `logs`, `--no-log-pane`, `JEV_LOG_PANE`, and `JEV_LOG_PANE_APP` are new 1.x-compatible additions and are documented in guide page 06.
+
+## Comments
+
+- 2026-09-26, release check 8: after a pass the pane process ends 3 s later, as designed, but Terminal keeps the window (`[Process completed]`) under its default "When the shell exits: Don't close the window" setting. Closing it would need macOS Automation permission. **Owner decision:** keep it open, and the docs and the pane's final message explain the Terminal setting. Item 6's "closes itself after a pass" now means "the pane finishes; Terminal's setting decides the window".

@@ -55,7 +55,9 @@ Codex can use the same MCP server and skill (copy the skill to `.agents/skills/t
   - values from your script are masked as `[value:<key>]`;
   - if the app dies mid-run, the pane says so.
 
-  When the run ends, the pane prints the verdict and where the evidence is. After a pass it closes itself after a few seconds; otherwise it stays open until you close it.
+  When the run ends, the pane prints the verdict and where the evidence is.
+  - **After a failed or inconclusive run,** the pane keeps running, so its output stays in front of you until you close it.
+  - **After a pass,** the pane finishes a few seconds later. Terminal then shows `[Process completed]` and keeps the window until you close it (⌘W). To have Terminal close these windows by itself, set Terminal → Settings → Profiles → Shell → "When the shell exits" to "Close if the shell exited cleanly". The bridge doesn't close windows itself: that would need macOS Automation permission.
 
 **Log pane settings:**
 - **Terminal app:** the window opens in the app macOS uses for `.command` files (Terminal, unless you've changed it). `JEV_LOG_PANE_APP=iTerm` picks another.
