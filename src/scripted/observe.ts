@@ -1,7 +1,12 @@
 import type { Element, Snapshot } from '../contracts/index.js';
 
 export const MAX_STATE_BYTES = 24_000;
-export const PROJECTION_RULE = 'visible-full-text-v1' as const;
+/**
+ * v2 keeps scroll-bar sliders ("Vertical scroll bar, 1 page 0%"), which v1 dropped: the observation-shape
+ * experiment (spikes/observation-shape) passed ADR-0004's corpus gate with them. Explicit empty values were
+ * rejected there, because they made Jev confidently call a field with withheld content empty.
+ */
+export const PROJECTION_RULE = 'visible-full-text-v2' as const;
 
 export class ScriptedObservationError extends Error {
   constructor(readonly code: 'TRUNCATED' | 'EMPTY_SCREEN' | 'STATE_BUDGET') {
@@ -10,13 +15,9 @@ export class ScriptedObservationError extends Error {
   }
 }
 
-function isScrollBar(element: Element): boolean {
-  return element.role === 'slider' && /^(?:vertical|horizontal) scroll bar,?\s*\d+ pages?$/i.test(element.label?.trim() ?? '');
-}
-
 function isVisibleEvidence(element: Element): boolean {
   if (element.state?.visible === false || (element.frame && (element.frame.width <= 0 || element.frame.height <= 0))) return false;
-  if (/status.?bar/i.test(`${element.role} ${element.identifier ?? ''}`) || isScrollBar(element)) return false;
+  if (/status.?bar/i.test(`${element.role} ${element.identifier ?? ''}`)) return false;
   return Boolean(element.label?.trim() || element.value?.trim() || element.identifier?.trim() ||
     element.actions.length > 0 || /^(text|statictext|title|heading|alert)$/i.test(element.role));
 }

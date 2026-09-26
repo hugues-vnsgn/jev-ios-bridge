@@ -18,7 +18,8 @@
     "tests/**/*.ts",
     "spikes/feasibility/**/*.ts",
     "spikes/scripted/**/*.ts",
-    "spikes/legacy/**/*.ts"
+    "spikes/legacy/**/*.ts",
+    "spikes/observation-shape/**/*.ts"
   ],
   "exclude": [
     "node_modules",

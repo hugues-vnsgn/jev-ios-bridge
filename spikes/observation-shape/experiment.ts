@@ -8,45 +8,13 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import type { Assertion, Element, Snapshot } from '../../src/contracts/index.js';
 import { createAssertionJudge, SCRIPTED_JEV_MODEL } from '../../src/scripted/jev.js';
-import { MAX_STATE_BYTES, renderAssertionState } from '../../src/scripted/observe.js';
-
-type Variant = 'V0' | 'A' | 'B' | 'AB';
+import { render, type Variant } from './variants.js';
+import { renderAssertionState as renderFrozenV1 } from '../scripted/observe.js';
 interface Claim extends Assertion { expected: boolean }
 interface Request { group: 'corpus' | 'reminders' | 'control'; caseId: string; variant: Variant; repeat?: number; state: string; claims: Claim[] }
 
 const here = (path: string) => fileURLToPath(new URL(path, import.meta.url));
 const root = (path: string) => here(`../../${path}`);
-
-// ---------- renderer variants (V0 must equal production byte for byte) ----------
-
-function isScrollBar(element: Element): boolean {
-  return element.role === 'slider' && /^(?:vertical|horizontal) scroll bar,?\s*\d+ pages?$/i.test(element.label?.trim() ?? '');
-}
-
-function isVisibleEvidence(element: Element, keepScrollBars: boolean): boolean {
-  if (element.state?.visible === false || (element.frame && (element.frame.width <= 0 || element.frame.height <= 0))) return false;
-  if (/status.?bar/i.test(`${element.role} ${element.identifier ?? ''}`) || (!keepScrollBars && isScrollBar(element))) return false;
-  return Boolean(element.label?.trim() || element.value?.trim() || element.identifier?.trim() ||
-    element.actions.length > 0 || /^(text|statictext|title|heading|alert)$/i.test(element.role));
-}
-
-function render(snapshot: Snapshot, variant: Variant): string {
-  const explicitEmpty = variant === 'A' || variant === 'AB';
-  const keepScrollBars = variant === 'B' || variant === 'AB';
-  const elements = snapshot.elements.filter(element => isVisibleEvidence(element, keepScrollBars));
-  const lines = ['Current iOS screen (full accessibility capture):', ...elements.map(element => JSON.stringify({
-    role: element.role,
-    ...(element.label !== undefined ? { label: element.label } : {}),
-    ...(element.value !== undefined ? { value: element.value }
-      : explicitEmpty && element.role === 'text-field' ? { value: '' } : {}),
-    ...(element.identifier !== undefined ? { identifier: element.identifier } : {}),
-    ...(element.frame ? { frame: element.frame } : {}),
-    ...(element.state ? { state: element.state } : {}),
-  }))];
-  const state = lines.join('\n');
-  if (Buffer.byteLength(state, 'utf8') > MAX_STATE_BYTES) throw new Error(`STATE_BUDGET ${variant}`);
-  return state;
-}
 
 // ---------- cases ----------
 
@@ -57,7 +25,7 @@ async function buildRequests(): Promise<Request[]> {
   assert.equal(corpus.cases.length, 24);
   const requests: Request[] = [];
   for (const item of corpus.cases) {
-    assert.equal(render(item.snapshot, 'V0'), renderAssertionState(item.snapshot), `V0 must equal production for ${item.id}`);
+    assert.equal(render(item.snapshot, 'V0'), renderFrozenV1(item.snapshot), `V0 must equal the v1 projection for ${item.id}`);
     for (const variant of ['V0', 'A', 'B', 'AB'] as const) {
       requests.push({ group: 'corpus', caseId: item.id, variant, state: render(item.snapshot, variant),
         claims: item.claims.map(({ id, claim, expected }) => ({ id, claim, expected })) });
@@ -104,7 +72,7 @@ async function buildRequests(): Promise<Request[]> {
   // Negative controls: a populated field with its value withheld, claimed empty (truly false).
   const withheld = (id: string, match: (element: Element) => boolean) => {
     const item = corpus.cases.find(candidate => candidate.id.startsWith(id))!;
-    const elements = item.snapshot.elements.map(element => {
+    const elements: Element[] = item.snapshot.elements.map(element => {
       if (!match(element)) return element;
       const { value: _value, ...rest } = element;
       return rest;
@@ -176,13 +144,13 @@ async function main(): Promise<void> {
   const passing = decisions.filter(d => d.passes).sort((l, r) => l.uncertain - r.uncertain || l.candidate.length - r.candidate.length);
   const adopted = passing[0]?.candidate ?? 'V0';
   const inputTokens = results.reduce((sum, r) => sum + r.inputTokens, 0);
-  await writeFile(here('results.json'), JSON.stringify({ ranAt: new Date().toISOString(), model: SCRIPTED_JEV_MODEL,
+  await writeFile(root('spikes/benchmarks/results/v1.0.0/observation-shape/results.json'), JSON.stringify({ ranAt: new Date().toISOString(), model: SCRIPTED_JEV_MODEL,
     requests: results.length, inputTokens, stats, remindersResolvedByB, controlHarm, decisions, adopted, results }, null, 2) + '\n');
 
   const table = (variant: Variant) => `| ${variant} | ${stats[variant].wrongCount} | ${stats[variant].uncertainCount} | ${stats[variant].uncertainClaims.join(', ') || '—'} |`;
   const md = [
     '# Observation-shape experiment: results', '',
-    `Run ${new Date().toISOString().slice(0, 10)} per [PREREGISTRATION.md](PREREGISTRATION.md); ${results.length} requests to \`${SCRIPTED_JEV_MODEL}\`, ${inputTokens} input tokens.`, '',
+    `Run ${new Date().toISOString().slice(0, 10)} per [PREREGISTRATION.md](../../../../observation-shape/PREREGISTRATION.md); ${results.length} requests to \`${SCRIPTED_JEV_MODEL}\`, ${inputTokens} input tokens.`, '',
     `**Decision: ${adopted === 'V0' ? 'keep today\'s shape (V0, `visible-full-text-v1`)' : `adopt ${adopted} as \`visible-full-text-v2\``}.**`, '',
     '## Corpus (48 claims per variant)', '',
     '| Variant | Confidently wrong | Uncertain | Uncertain claims |', '| --- | ---: | ---: | --- |',
@@ -197,7 +165,7 @@ async function main(): Promise<void> {
     '| Candidate | Corpus gate (0 wrong, ≤3 uncertain) | Improves on V0 | Controls safe | Passes |', '| --- | --- | --- | --- | --- |',
     ...decisions.map(d => `| ${d.candidate} | ${d.gate ? 'yes' : 'no'} | ${d.improves ? 'yes' : 'no'} | ${d.controlsOk ? 'yes' : 'no'} | ${d.passes ? '**yes**' : 'no'} |`), '',
   ].join('\n');
-  await writeFile(here('results.md'), md);
+  await writeFile(root('spikes/benchmarks/results/v1.0.0/observation-shape/results.md'), md);
   console.log(md);
 }
 
