@@ -1,0 +1,134 @@
+{
+  "reportVersion": 1,
+  "runId": "2184bc88-5713-402d-b144-68287ca8a181",
+  "bridgeVersion": "1.0.0",
+  "jevModel": "jev-1.13.0",
+  "projectionRule": "visible-full-text-v2",
+  "bundleId": "com.sentry.weather.Weather",
+  "launchArgs": [],
+  "verdict": "passed",
+  "reason": "ALL_CHECKPOINTS_PASSED",
+  "error": null,
+  "steps": 20,
+  "plannedSteps": 20,
+  "checkpointsPassed": 4,
+  "checkpointCount": 4,
+  "inputTokens": 18335,
+  "durationMs": 78288.69125,
+  "startedAt": "2026-09-26T07:06:28.019Z",
+  "finishedAt": "2026-09-26T07:07:46.308Z",
+  "checkpoints": [
+    {
+      "stepId": "verifySettings",
+      "status": "passed",
+      "claims": [
+        {
+          "id": "units",
+          "claim": "Weather Settings has Temperature °C, Wind speed m/s, Pressure inHg, and Distance km selected.",
+          "probability": 0.98
+        },
+        {
+          "id": "display",
+          "claim": "Weather Settings has Atmospheric animations off, Severe weather alerts off, and Reduce transparency on.",
+          "probability": 0.97
+        }
+      ],
+      "screenshot": "screen-19.jpg",
+      "evidenceEvent": 19
+    },
+    {
+      "stepId": "redacted_87319594da3dbc0f7038647a317ad428",
+      "status": "passed",
+      "claims": [
+        {
+          "id": "city",
+          "claim": "The Weather main screen shows [REDACTED] as the selected city.",
+          "probability": 0.98
+        },
+        {
+          "id": "temperature",
+          "claim": "The [REDACTED] main screen shows a current temperature of 11°.",
+          "probability": 0.98
+        }
+      ],
+      "screenshot": "screen-34.jpg",
+      "evidenceEvent": 34
+    },
+    {
+      "stepId": "redacted_f802fefe10afba0216b0db73976ee7f4",
+      "status": "passed",
+      "claims": [
+        {
+          "id": "precipitation",
+          "claim": "The [REDACTED] main screen shows precipitation 78%.",
+          "probability": 0.98
+        },
+        {
+          "id": "visibility",
+          "claim": "The [REDACTED] main screen shows visibility 9.7 km.",
+          "probability": 0.98
+        }
+      ],
+      "screenshot": "screen-39.jpg",
+      "evidenceEvent": 39
+    },
+    {
+      "stepId": "verifyPrecipitation",
+      "status": "passed",
+      "claims": [
+        {
+          "id": "chance",
+          "claim": "The [REDACTED] precipitation detail shows 78% chance over the next 24 hours.",
+          "probability": 0.98
+        },
+        {
+          "id": "total",
+          "claim": "The detail shows 10.7 mm total expected.",
+          "probability": 0.98
+        },
+        {
+          "id": "hours",
+          "claim": "The detail shows 6 hrs of rain.",
+          "probability": 0.98
+        },
+        {
+          "id": "storm",
+          "claim": "The detail shows storm distance 14 km.",
+          "probability": 0.98
+        },
+        {
+          "id": "lightning",
+          "claim": "The detail shows lightning None.",
+          "probability": 0.98
+        }
+      ],
+      "screenshot": "screen-44.jpg",
+      "evidenceEvent": 44
+    }
+  ],
+  "evidence": {
+    "log": "run.jsonl",
+    "screenshots": [
+      "screen-3.jpg",
+      "screen-5.jpg",
+      "screen-7.jpg",
+      "screen-9.jpg",
+      "screen-11.jpg",
+      "screen-13.jpg",
+      "screen-15.jpg",
+      "screen-17.jpg",
+      "screen-19.jpg",
+      "screen-22.jpg",
+      "screen-24.jpg",
+      "screen-26.jpg",
+      "screen-28.jpg",
+      "screen-30.jpg",
+      "screen-32.jpg",
+      "screen-34.jpg",
+      "screen-37.jpg",
+      "screen-39.jpg",
+      "screen-42.jpg",
+      "screen-44.jpg"
+    ]
+  }
+}

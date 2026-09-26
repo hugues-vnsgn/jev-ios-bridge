@@ -1,0 +1,60 @@
+{
+  "reportVersion": 1,
+  "runId": "801e5981-8d0d-49eb-b676-8e3e170bc9cf",
+  "bridgeVersion": "1.0.0",
+  "jevModel": "jev-1.13.0",
+  "projectionRule": "visible-full-text-v2",
+  "bundleId": "com.apple.MobileAddressBook",
+  "launchArgs": [],
+  "verdict": "passed",
+  "reason": "ALL_CHECKPOINTS_PASSED",
+  "error": null,
+  "steps": 10,
+  "plannedSteps": 10,
+  "checkpointsPassed": 1,
+  "checkpointCount": 1,
+  "inputTokens": 5456,
+  "durationMs": 66037.224792,
+  "startedAt": "2026-09-26T07:09:42.678Z",
+  "finishedAt": "2026-09-26T07:10:48.715Z",
+  "checkpoints": [
+    {
+      "stepId": "verifySavedCard",
+      "status": "passed",
+      "claims": [
+        {
+          "id": "identity",
+          "claim": "A saved [REDACTED] [REDACTED] card is open and shows organization [REDACTED], allowing case differences.",
+          "probability": 0.92
+        },
+        {
+          "id": "phone",
+          "claim": "The saved card shows phone digits 5550104242, allowing display punctuation or grouping differences.",
+          "probability": 0.97
+        },
+        {
+          "id": "email",
+          "claim": "The saved card shows [REDACTED].",
+          "probability": 0.98
+        }
+      ],
+      "screenshot": "screen-21.jpg",
+      "evidenceEvent": 21
+    }
+  ],
+  "evidence": {
+    "log": "run.jsonl",
+    "screenshots": [
+      "screen-3.jpg",
+      "screen-5.jpg",
+      "screen-7.jpg",
+      "screen-9.jpg",
+      "screen-11.jpg",
+      "screen-13.jpg",
+      "screen-15.jpg",
+      "screen-17.jpg",
+      "screen-19.jpg",
+      "screen-21.jpg"
+    ]
+  }
+}

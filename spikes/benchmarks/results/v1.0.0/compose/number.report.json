@@ -1,0 +1,46 @@
+{
+  "reportVersion": 1,
+  "runId": "cfeeb4bc-1f49-4cdd-a945-23be72b081a2",
+  "bridgeVersion": "1.0.0",
+  "jevModel": "jev-1.13.0",
+  "projectionRule": "visible-full-text-v2",
+  "bundleId": "com.beelogistics.BFSOne",
+  "launchArgs": [
+    "-of-evidence-gallery"
+  ],
+  "verdict": "passed",
+  "reason": "ALL_CHECKPOINTS_PASSED",
+  "error": null,
+  "steps": 4,
+  "plannedSteps": 4,
+  "checkpointsPassed": 1,
+  "checkpointCount": 1,
+  "inputTokens": 4927,
+  "durationMs": 11605.326792,
+  "startedAt": "2026-09-26T07:23:12.263Z",
+  "finishedAt": "2026-09-26T07:23:23.869Z",
+  "checkpoints": [
+    {
+      "stepId": "quantity",
+      "status": "passed",
+      "claims": [
+        {
+          "id": "value",
+          "claim": "The Quantity field shows 42.",
+          "probability": 0.99
+        }
+      ],
+      "screenshot": "screen-9.jpg",
+      "evidenceEvent": 9
+    }
+  ],
+  "evidence": {
+    "log": "run.jsonl",
+    "screenshots": [
+      "screen-3.jpg",
+      "screen-5.jpg",
+      "screen-7.jpg",
+      "screen-9.jpg"
+    ]
+  }
+}

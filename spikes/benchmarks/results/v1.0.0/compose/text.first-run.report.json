@@ -1,0 +1,56 @@
+{
+  "reportVersion": 1,
+  "runId": "0490bc5f-4997-4586-9b3e-df5f70586b63",
+  "bridgeVersion": "1.0.0",
+  "jevModel": "jev-1.13.0",
+  "projectionRule": "visible-full-text-v2",
+  "bundleId": "com.beelogistics.BFSOne",
+  "launchArgs": [
+    "-of-evidence-gallery"
+  ],
+  "verdict": "failed",
+  "reason": "ASSERTION_FALSE",
+  "error": null,
+  "steps": 9,
+  "plannedSteps": 9,
+  "checkpointsPassed": 0,
+  "checkpointCount": 1,
+  "inputTokens": 2536,
+  "durationMs": 30346.917458,
+  "startedAt": "2026-09-26T07:22:41.523Z",
+  "finishedAt": "2026-09-26T07:23:11.870Z",
+  "checkpoints": [
+    {
+      "stepId": "filtered",
+      "status": "failed",
+      "claims": [
+        {
+          "id": "count",
+          "claim": "The unit picker's results line reports 2 results.",
+          "probability": 0.58
+        },
+        {
+          "id": "containers",
+          "claim": "The unit picker lists [REDACTED]er 20' and [REDACTED]er 40'.",
+          "probability": 0.05
+        }
+      ],
+      "screenshot": "screen-19.jpg",
+      "evidenceEvent": 19
+    }
+  ],
+  "evidence": {
+    "log": "run.jsonl",
+    "screenshots": [
+      "screen-3.jpg",
+      "screen-5.jpg",
+      "screen-7.jpg",
+      "screen-9.jpg",
+      "screen-11.jpg",
+      "screen-13.jpg",
+      "screen-15.jpg",
+      "screen-17.jpg",
+      "screen-19.jpg"
+    ]
+  }
+}
