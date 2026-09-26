@@ -1,4 +1,5 @@
 import { execFile } from 'node:child_process';
+import { createRequire } from 'node:module';
 import { randomUUID } from 'node:crypto';
 import { constants } from 'node:fs';
 import { mkdir, open, readFile, unlink } from 'node:fs/promises';
@@ -22,6 +23,24 @@ export interface MobileBuildMcpDriverOptions {
   runner?: CliRunner;
   lockRoot?: string;
   uiCommandTimeoutMs?: number;
+  /**
+   * Use the settled full capture MobileBuildMCP returns with each action (schema "3") as the next
+   * observation, instead of capturing again. Off by default: MobileBuildMCP 2.7.1 can report a screen
+   * as settled mid-transition, mixing the old and new screens (spikes/benchmarks/results/v1.0.0/capture-reuse).
+   */
+  reuseActionCapture?: boolean;
+  /**
+   * Measurement aid: after each screenshot, capture again and record whether the screen hash still
+   * matches the capture the screenshot accompanies. Costs one extra capture per observation.
+   */
+  verifyScreenshotAgreement?: boolean;
+}
+
+const UI_ACTION_RESULT = 'mobilebuildmcp.output.ui-action-result';
+
+/** Envelope versions the pinned MobileBuildMCP 2.7.1 returns: "2", or "3" for a verbose UI action. */
+function supportedVersion(schema: unknown, version: unknown): boolean {
+  return version === '2' || (schema === UI_ACTION_RESULT && version === '3');
 }
 
 export class DeviceCliError extends Error {
@@ -51,10 +70,10 @@ function number(value: unknown): number | undefined {
 }
 
 function terminalPayloadMatches(envelope: JsonObject, expectedSchema: string, success: boolean): boolean {
-  if (envelope.schema !== expectedSchema || envelope.schemaVersion !== '2') return false;
+  if (envelope.schema !== expectedSchema || !supportedVersion(envelope.schema, envelope.schemaVersion)) return false;
   const data = record(envelope.data);
   if (Object.keys(record(data.artifacts)).length === 0) return false;
-  if (expectedSchema === 'mobilebuildmcp.output.ui-action-result' && Object.keys(record(data.action)).length === 0) return false;
+  if (expectedSchema === UI_ACTION_RESULT && Object.keys(record(data.action)).length === 0) return false;
   if (expectedSchema === 'mobilebuildmcp.output.capture-result' && success && Object.keys(record(data.capture)).length === 0) return false;
   return true;
 }
@@ -76,7 +95,7 @@ function parseEnvelope(result: CliResult, expectedSchema?: string): JsonObject {
       terminalAcknowledged,
     );
   }
-  if (envelope.schemaVersion !== '2' || !envelope.data || typeof envelope.data !== 'object' || Array.isArray(envelope.data)) {
+  if (!supportedVersion(envelope.schema, envelope.schemaVersion) || !envelope.data || typeof envelope.data !== 'object' || Array.isArray(envelope.data)) {
     throw new DeviceCliError('INVALID_ENVELOPE', 'MobileBuildMCP returned an unsupported envelope');
   }
   if (expectedSchema && !terminalPayloadMatches(envelope, expectedSchema, true)) {
@@ -173,9 +192,14 @@ export function deviceEnvironment(source: NodeJS.ProcessEnv = process.env): Node
   return { ...environment, MOBILEBUILDMCP_SENTRY_DISABLED: 'true' };
 }
 
+/** The pinned MobileBuildMCP CLI installed with the bridge, run directly by Node (no npx round trip). */
+export function pinnedMobileBuildMcpCli(): string {
+  return createRequire(import.meta.url).resolve('mobilebuildmcp');
+}
+
 function defaultRunner(options: MobileBuildMcpDriverOptions): CliRunner {
-  const executable = options.executable ?? 'npx';
-  const prefix = options.prefixArgs ?? (options.executable ? [] : ['--yes', 'mobilebuildmcp@2.7.1']);
+  const executable = options.executable ?? process.execPath;
+  const prefix = options.prefixArgs ?? (options.executable ? [] : [pinnedMobileBuildMcpCli()]);
   return (args, signal) => new Promise((resolveResult, reject) => {
     execFile(executable, [...prefix, ...args], {
       cwd: resolve(options.cwd),
@@ -426,29 +450,65 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     return this.trackOperation(() => this.observeIssued(signal));
   }
 
-  private async observeIssued(signal: AbortSignal): Promise<Snapshot> {
-    const deviceId = this.deviceId;
-    if (!deviceId || !this.releaseLock) throw new Error('Driver is not prepared');
-    const args = ['ui-automation', 'snapshot-ui', '--simulator-id', deviceId];
-    if (this.options.capture === 'full') args.push('--verbose');
-    const data = await this.issueCommand(args, signal, 'mobilebuildmcp.output.capture-result');
-    let screenshotPath: string | undefined;
-    if (this.options.screenshots) {
-      const shot = await this.issueCommand(['ui-automation', 'screenshot', '--simulator-id', deviceId, '--return-format', 'path'], signal,
-        'mobilebuildmcp.output.capture-result');
-      screenshotPath = string(record(shot.artifacts).screenshotPath) ?? string(record(shot.capture).path) ?? string(shot.path);
+  private captureArgs(deviceId: string): string[] {
+    return ['ui-automation', 'snapshot-ui', '--simulator-id', deviceId, ...(this.options.capture === 'full' ? ['--verbose'] : [])];
+  }
+
+  private async screenshot(deviceId: string, signal: AbortSignal): Promise<string | undefined> {
+    const shot = await this.issueCommand(['ui-automation', 'screenshot', '--simulator-id', deviceId, '--return-format', 'path'], signal,
+      'mobilebuildmcp.output.capture-result');
+    return string(record(shot.artifacts).screenshotPath) ?? string(record(shot.capture).path) ?? string(shot.path);
+  }
+
+  /** Complete a capture with its screenshot, app log tails, and the optional screenshot agreement check. */
+  private async evidence(data: JsonObject, deviceId: string, screenshotPath: string | undefined, signal: AbortSignal,
+    extra: Partial<Snapshot> = {}): Promise<Snapshot> {
+    const snapshot = parseSnapshot(data, deviceId, screenshotPath);
+    let verification: Partial<Snapshot> = {};
+    if (this.options.verifyScreenshotAgreement && screenshotPath) {
+      const began = performance.now();
+      const after = parseSnapshot(await this.issueCommand(this.captureArgs(deviceId), signal, 'mobilebuildmcp.output.capture-result'), deviceId);
+      verification = { screenshotAgreement: sameScreen(snapshot, after), verifyMs: performance.now() - began };
     }
     const logTails = { ...this.logNotes };
     for (const [name, path] of Object.entries(this.logPaths)) logTails[name] = await readLogTail(path);
-    return { ...parseSnapshot(data, deviceId, screenshotPath),
-      ...(Object.keys(logTails).length ? { logTails } : {}) };
+    return { ...snapshot, ...extra, ...verification, ...(Object.keys(logTails).length ? { logTails } : {}) };
   }
 
-  act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<void> {
+  private async observeIssued(signal: AbortSignal): Promise<Snapshot> {
+    const deviceId = this.deviceId;
+    if (!deviceId || !this.releaseLock) throw new Error('Driver is not prepared');
+    // The capture and the screenshot run concurrently. Wait for both to settle, so a failure in one
+    // never leaves the other in flight after this operation reports done.
+    const [capture, shot] = await Promise.allSettled([
+      this.issueCommand(this.captureArgs(deviceId), signal, 'mobilebuildmcp.output.capture-result'),
+      this.options.screenshots ? this.screenshot(deviceId, signal) : Promise.resolve(undefined),
+    ]);
+    if (capture.status === 'rejected') throw capture.reason;
+    if (shot.status === 'rejected') throw shot.reason;
+    return this.evidence(capture.value, deviceId, shot.value, signal);
+  }
+
+  act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined> {
     return this.trackOperation(() => this.actIssued(action, snapshot, scenario, signal));
   }
 
-  private async actIssued(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<void> {
+  private get reusesActionCapture(): boolean {
+    return this.options.reuseActionCapture === true && this.options.capture === 'full';
+  }
+
+  /**
+   * The settled screen MobileBuildMCP captured after the action, completed with its screenshot, or
+   * undefined when it returned none (the screen didn't settle within its 2.5 s window) or it can't be parsed.
+   */
+  private async settledCapture(result: JsonObject, signal: AbortSignal): Promise<Snapshot | undefined> {
+    if (!this.reusesActionCapture || !this.deviceId || Object.keys(record(result.capture)).length === 0) return undefined;
+    try { parseSnapshot(result, this.deviceId); } catch { return undefined; }
+    const screenshotPath = this.options.screenshots ? await this.screenshot(this.deviceId, signal) : undefined;
+    return this.evidence(result, this.deviceId, screenshotPath, signal, { reusedFromAction: true });
+  }
+
+  private async actIssued(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined> {
     if (!this.deviceId || snapshot.deviceId !== this.deviceId) throw new Error('Snapshot belongs to a different device');
     const old = snapshot.elements.find((element) => element.ref === action.targetRef);
     if (!old) throw new StaleSnapshotError('Target reference is absent from observation');
@@ -467,17 +527,18 @@ export class MobileBuildMcpDriver implements DeviceDriver {
       if (!sameScreen(snapshot, fresh)) throw new StaleSnapshotError();
       selected = rematch(old, fresh);
     }
+    const verbose = this.reusesActionCapture ? ['--verbose'] : [];
     const perform = (ref: string) => {
       const base = ['ui-automation'];
-      if (action.kind === 'tap') return [...base, 'tap', '--simulator-id', this.deviceId!, '--element-ref', ref];
+      if (action.kind === 'tap') return [...base, 'tap', '--simulator-id', this.deviceId!, '--element-ref', ref, ...verbose];
       if (action.kind === 'type') return [...base, 'type-text', '--json', JSON.stringify({
         simulatorId: this.deviceId!, elementRef: ref, text: scenario.values[action.valueKey]!, replaceExisting: true,
-      })];
-      return [...base, 'swipe', '--simulator-id', this.deviceId!, '--within-element-ref', ref, '--direction', action.direction];
+      }), ...verbose];
+      return [...base, 'swipe', '--simulator-id', this.deviceId!, '--within-element-ref', ref, '--direction', action.direction, ...verbose];
     };
     if (signal.aborted) throw signal.reason;
     try {
-      await this.issueCommand(perform(selected.ref), signal, 'mobilebuildmcp.output.ui-action-result');
+      return await this.settledCapture(await this.issueCommand(perform(selected.ref), signal, UI_ACTION_RESULT), signal);
     } catch (error) {
       if (signal.aborted || !(error instanceof DeviceCliError) || !['SNAPSHOT_EXPIRED', 'ELEMENT_REF_NOT_FOUND'].includes(error.code)) throw error;
       if (error.code === 'SNAPSHOT_EXPIRED') this.referenceExpiries++;
@@ -486,7 +547,7 @@ export class MobileBuildMcpDriver implements DeviceDriver {
       if (!sameScreen(snapshot, fresh)) throw new StaleSnapshotError();
       selected = rematch(old, fresh);
       if (signal.aborted) throw signal.reason;
-      await this.issueCommand(perform(selected.ref), signal, 'mobilebuildmcp.output.ui-action-result');
+      return this.settledCapture(await this.issueCommand(perform(selected.ref), signal, UI_ACTION_RESULT), signal);
     }
   }
 

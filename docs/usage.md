@@ -19,7 +19,7 @@ npm install /path/to/jev-ios-bridge-0.1.0.tgz
 node node_modules/jev-ios-bridge/dist/cli.js --version
 ```
 
-The bridge invokes `mobilebuildmcp@2.7.1` through `npx`; its first invocation may download the pinned package. Boot a dedicated simulator and install the app before a run. Use MobileBuildMCP for that setup. Keep other device clients out of the dedicated simulator during execution.
+The bridge installs `mobilebuildmcp@2.7.1` as a dependency and runs its CLI directly with Node, with no `npx` round trip. Boot a dedicated simulator and install the app before a run. Use MobileBuildMCP for that setup. Keep other device clients out of the dedicated simulator during execution.
 
 Select its UUID with `scenario.device.udid`, `JEV_DEVICE_UDID`, or `sessionDefaults.simulatorId` in `.mobilebuildmcp/config.yaml`, in that precedence order. Device aliases such as `booted` are rejected. Set `sentryDisabled: true` in that config; the bridge also disables vendor telemetry in its child commands.
 

@@ -30,3 +30,7 @@ None of these changes adds automation code of our own, so ADR-0002 is unaffected
 - each verdict matches v0.1.0, except where ADR-0004's precedence change legitimately alters it. A changed verdict is a bug to fix, not a speed trade-off.
 
 A script that improves but misses 30% is reported, not a release blocker.
+
+## Comments
+
+- 2026-09-26, during phase 4: **option B is not shipped in 1.0.** On a navigation tap in the diagnostic app, MobileBuildMCP 2.7.1 returned a mid-transition screen (old and new screens mixed) as its settled capture, so reusing it would weaken guards and evidence, which this ticket forbids. B stays in the driver behind `reuseActionCapture: true`, off by default. Evidence: `spikes/benchmarks/results/v1.0.0/capture-reuse/`. 1.0 ships A and C, and the speed check (report-only past "not slower") runs on that.

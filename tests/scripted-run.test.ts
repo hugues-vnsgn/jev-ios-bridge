@@ -604,3 +604,25 @@ test('report shows the wrong total beside the expected claim and never passes an
   assert.equal(interrupted.verdict, 'inconclusive');
   assert.match(renderScriptedReport(interrupted), /No final verdict recorded/);
 });
+
+test('the step after an action uses the settled screen the action returned, without capturing again', async () => {
+  const before = snapshot([apple]);
+  const after: Snapshot = { ...snapshot([{ ref: 'done', role: 'text', label: 'Selected: Apple', actions: [],
+    frame: { x: 20, y: 20, width: 200, height: 30 }, state: { enabled: true, visible: true } }]), reusedFromAction: true };
+  let observes = 0;
+  const log = memoryLog();
+  const report = await runScriptedScenario({ runId: 'scripted-1', log,
+    scenario: { version: 1, app: { bundleId: 'com.example.shop' }, values: {}, steps: [
+      { id: 'add', kind: 'action', guard: { present: [{ identifier: 'choose.apple' }] },
+        action: { kind: 'tap', selector: { identifier: 'choose.apple' } } },
+      { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Selected: Apple' }] },
+        assertions: [{ id: 'apple', claim: 'Selected: Apple is visible' }] },
+    ] },
+    driver: { async prepare() {}, async observe() { observes++; return before; }, async act() { return after; }, async close() {} },
+    judge: { async judge() { return { probabilities: { apple: 0.98 }, inputTokens: 5, latencyMs: 1, model: 'jev-1.13.0' }; } } });
+  assert.equal(report.verdict, 'passed');
+  assert.equal(observes, 1);
+  const steps = log.events.filter(event => event.type === 'step');
+  assert.equal(steps[1]?.data.reusedCapture, true);
+  assert.equal(steps[1]?.data.observeDurationMs, 0);
+});

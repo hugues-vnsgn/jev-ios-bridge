@@ -78,7 +78,9 @@ async function main(): Promise<void> {
     baseDir: process.env.JEV_RUNS_DIR ?? join(process.cwd(), '.jev-runs'),
     createDriver: () => createMobileBuildMcpDriver({ cwd: process.cwd(),
       ...(process.env.JEV_DEVICE_UDID ? { defaultUdid: process.env.JEV_DEVICE_UDID } : {}),
-      capture: 'full', screenshots: true }),
+      capture: 'full', screenshots: true,
+      // Measurement aid for release checks; costs one extra capture per observation.
+      ...(process.env.JEV_VERIFY_SCREENSHOT_AGREEMENT === '1' ? { verifyScreenshotAgreement: true } : {}) }),
     createJudge: () => createAssertionJudge(),
     tapAliasRule: 'mobilebuildmcp-2.7.1',
   });
