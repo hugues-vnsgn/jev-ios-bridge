@@ -1,0 +1,2724 @@
+{
+  "ranAt": "2026-09-26T06:02:59.418Z",
+  "model": "jev-1.13.0",
+  "requests": 104,
+  "inputTokens": 487878,
+  "stats": {
+    "V0": {
+      "wrongCount": 0,
+      "uncertainCount": 4,
+      "uncertainClaims": [
+        "s11-contacts-nolan-new-email-unsaved:b=0.87",
+        "s11-contacts-nolan-new-email-unsaved:a=0.25",
+        "s16-reminders-new-list-blank:a=0.79",
+        "s19-reminders-charge-lantern-note-empty:b=0.78"
+      ]
+    },
+    "A": {
+      "wrongCount": 0,
+      "uncertainCount": 1,
+      "uncertainClaims": [
+        "s11-contacts-nolan-new-email-unsaved:a=0.21"
+      ]
+    },
+    "B": {
+      "wrongCount": 0,
+      "uncertainCount": 3,
+      "uncertainClaims": [
+        "s11-contacts-nolan-new-email-unsaved:a=0.19",
+        "s16-reminders-new-list-blank:a=0.81",
+        "s19-reminders-charge-lantern-note-empty:b=0.78"
+      ]
+    },
+    "AB": {
+      "wrongCount": 0,
+      "uncertainCount": 2,
+      "uncertainClaims": [
+        "s11-contacts-nolan-new-email-unsaved:b=0.89",
+        "s11-contacts-nolan-new-email-unsaved:a=0.21"
+      ]
+    }
+  },
+  "remindersResolvedByB": false,
+  "controlHarm": true,
+  "decisions": [
+    {
+      "candidate": "A",
+      "gate": true,
+      "improves": true,
+      "controlsOk": false,
+      "passes": false,
+      "uncertain": 1
+    },
+    {
+      "candidate": "B",
+      "gate": true,
+      "improves": true,
+      "controlsOk": true,
+      "passes": true,
+      "uncertain": 3
+    },
+    {
+      "candidate": "AB",
+      "gate": true,
+      "improves": true,
+      "controlsOk": false,
+      "passes": false,
+      "uncertain": 2
+    }
+  ],
+  "adopted": "B",
+  "results": [
+    {
+      "group": "corpus",
+      "caseId": "s01-weather-ber-query",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The location search field contains Ber.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "The location search field contains the complete word Berlin.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 14415,
+      "probabilities": {
+        "a": 0.98,
+        "b": 0.05
+      },
+      "inputTokens": 5908,
+      "latencyMs": 960,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s01-weather-ber-query",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The location search field contains Ber.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "The location search field contains the complete word Berlin.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 14415,
+      "probabilities": {
+        "a": 0.98,
+        "b": 0.06
+      },
+      "inputTokens": 5908,
+      "latencyMs": 330,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s01-weather-ber-query",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The location search field contains Ber.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "The location search field contains the complete word Berlin.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 15425,
+      "probabilities": {
+        "a": 0.98,
+        "b": 0.04
+      },
+      "inputTokens": 6290,
+      "latencyMs": 688,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s01-weather-ber-query",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The location search field contains Ber.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "The location search field contains the complete word Berlin.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 15425,
+      "probabilities": {
+        "a": 0.98,
+        "b": 0.05
+      },
+      "inputTokens": 6290,
+      "latencyMs": 314,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s02-weather-berlin-results",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The main Weather location button already reads Berlin.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "The location search results include Berlin, Germany.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 12873,
+      "probabilities": {
+        "a": 0.02,
+        "b": 0.99
+      },
+      "inputTokens": 5306,
+      "latencyMs": 317,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s02-weather-berlin-results",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The main Weather location button already reads Berlin.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "The location search results include Berlin, Germany.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 12873,
+      "probabilities": {
+        "a": 0.02,
+        "b": 0.98
+      },
+      "inputTokens": 5306,
+      "latencyMs": 316,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s02-weather-berlin-results",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The main Weather location button already reads Berlin.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "The location search results include Berlin, Germany.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 13215,
+      "probabilities": {
+        "a": 0.02,
+        "b": 0.99
+      },
+      "inputTokens": 5440,
+      "latencyMs": 701,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s02-weather-berlin-results",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The main Weather location button already reads Berlin.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "The location search results include Berlin, Germany.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 13215,
+      "probabilities": {
+        "a": 0.02,
+        "b": 0.99
+      },
+      "inputTokens": 5440,
+      "latencyMs": 307,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s03-weather-berlin-main",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The main Weather location button reads Berlin.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "The main Weather location button reads Oslo.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 7761,
+      "probabilities": {
+        "b": 0.98,
+        "a": 0.01
+      },
+      "inputTokens": 3321,
+      "latencyMs": 328,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s03-weather-berlin-main",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The main Weather location button reads Berlin.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "The main Weather location button reads Oslo.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 7761,
+      "probabilities": {
+        "b": 0.98,
+        "a": 0.01
+      },
+      "inputTokens": 3321,
+      "latencyMs": 326,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s03-weather-berlin-main",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The main Weather location button reads Berlin.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "The main Weather location button reads Oslo.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 7761,
+      "probabilities": {
+        "b": 0.98,
+        "a": 0.01
+      },
+      "inputTokens": 3321,
+      "latencyMs": 394,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s03-weather-berlin-main",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The main Weather location button reads Berlin.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "The main Weather location button reads Oslo.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 7761,
+      "probabilities": {
+        "b": 0.98,
+        "a": 0.01
+      },
+      "inputTokens": 3321,
+      "latencyMs": 458,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s04-weather-lisbon-main",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The main Weather location button reads Berlin.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The main Weather location button reads Lisbon.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 7760,
+      "probabilities": {
+        "b": 0.01,
+        "a": 0.98
+      },
+      "inputTokens": 3326,
+      "latencyMs": 402,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s04-weather-lisbon-main",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The main Weather location button reads Berlin.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The main Weather location button reads Lisbon.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 7760,
+      "probabilities": {
+        "b": 0.01,
+        "a": 0.98
+      },
+      "inputTokens": 3326,
+      "latencyMs": 445,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s04-weather-lisbon-main",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The main Weather location button reads Berlin.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The main Weather location button reads Lisbon.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 7760,
+      "probabilities": {
+        "b": 0.01,
+        "a": 0.98
+      },
+      "inputTokens": 3326,
+      "latencyMs": 371,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s04-weather-lisbon-main",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The main Weather location button reads Berlin.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The main Weather location button reads Lisbon.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 7760,
+      "probabilities": {
+        "b": 0.01,
+        "a": 0.98
+      },
+      "inputTokens": 3326,
+      "latencyMs": 364,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s05-weather-lisbon-distance-mi",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Distance setting has mi selected.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "The Distance setting has km selected.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 13866,
+      "probabilities": {
+        "a": 0.98,
+        "b": 0.02
+      },
+      "inputTokens": 5685,
+      "latencyMs": 398,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s05-weather-lisbon-distance-mi",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Distance setting has mi selected.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "The Distance setting has km selected.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 13866,
+      "probabilities": {
+        "a": 0.98,
+        "b": 0.02
+      },
+      "inputTokens": 5685,
+      "latencyMs": 378,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s05-weather-lisbon-distance-mi",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Distance setting has mi selected.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "The Distance setting has km selected.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 13866,
+      "probabilities": {
+        "a": 0.98,
+        "b": 0.02
+      },
+      "inputTokens": 5685,
+      "latencyMs": 442,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s05-weather-lisbon-distance-mi",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Distance setting has mi selected.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "The Distance setting has km selected.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 13866,
+      "probabilities": {
+        "a": 0.98,
+        "b": 0.01
+      },
+      "inputTokens": 5685,
+      "latencyMs": 401,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s06-weather-lisbon-distance-km",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Distance setting has mi selected.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "The Distance setting has km selected.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 13866,
+      "probabilities": {
+        "a": 0.02,
+        "b": 0.98
+      },
+      "inputTokens": 5685,
+      "latencyMs": 394,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s06-weather-lisbon-distance-km",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Distance setting has mi selected.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "The Distance setting has km selected.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 13866,
+      "probabilities": {
+        "a": 0.02,
+        "b": 0.99
+      },
+      "inputTokens": 5685,
+      "latencyMs": 292,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s06-weather-lisbon-distance-km",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Distance setting has mi selected.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "The Distance setting has km selected.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 13866,
+      "probabilities": {
+        "a": 0.02,
+        "b": 0.98
+      },
+      "inputTokens": 5685,
+      "latencyMs": 343,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s06-weather-lisbon-distance-km",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Distance setting has mi selected.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "The Distance setting has km selected.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 13866,
+      "probabilities": {
+        "a": 0.01,
+        "b": 0.99
+      },
+      "inputTokens": 5685,
+      "latencyMs": 355,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s07-contacts-tessa-duplicate-list",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "Two separate Tessa Vale rows are visible in the Contacts list.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "A Tessa Vale contact card is open.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 14668,
+      "probabilities": {
+        "b": 0.98,
+        "a": 0.07
+      },
+      "inputTokens": 5688,
+      "latencyMs": 335,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s07-contacts-tessa-duplicate-list",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "Two separate Tessa Vale rows are visible in the Contacts list.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "A Tessa Vale contact card is open.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 14668,
+      "probabilities": {
+        "b": 0.98,
+        "a": 0.06
+      },
+      "inputTokens": 5688,
+      "latencyMs": 295,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s07-contacts-tessa-duplicate-list",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "Two separate Tessa Vale rows are visible in the Contacts list.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "A Tessa Vale contact card is open.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 14988,
+      "probabilities": {
+        "b": 0.98,
+        "a": 0.06
+      },
+      "inputTokens": 5796,
+      "latencyMs": 374,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s07-contacts-tessa-duplicate-list",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "Two separate Tessa Vale rows are visible in the Contacts list.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "A Tessa Vale contact card is open.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 14988,
+      "probabilities": {
+        "b": 0.98,
+        "a": 0.07
+      },
+      "inputTokens": 5796,
+      "latencyMs": 296,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s08-contacts-tessa-email-offscreen",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The tessa.seed@example.test email field is visible in the current viewport.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The Tessa Vale Edit form shows six phone number fields.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 15578,
+      "probabilities": {
+        "b": 0.02,
+        "a": 0.94
+      },
+      "inputTokens": 6040,
+      "latencyMs": 394,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s08-contacts-tessa-email-offscreen",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The tessa.seed@example.test email field is visible in the current viewport.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The Tessa Vale Edit form shows six phone number fields.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 15578,
+      "probabilities": {
+        "b": 0.02,
+        "a": 0.94
+      },
+      "inputTokens": 6040,
+      "latencyMs": 305,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s08-contacts-tessa-email-offscreen",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The tessa.seed@example.test email field is visible in the current viewport.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The Tessa Vale Edit form shows six phone number fields.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 16218,
+      "probabilities": {
+        "b": 0.02,
+        "a": 0.95
+      },
+      "inputTokens": 6258,
+      "latencyMs": 336,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s08-contacts-tessa-email-offscreen",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The tessa.seed@example.test email field is visible in the current viewport.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The Tessa Vale Edit form shows six phone number fields.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 16218,
+      "probabilities": {
+        "b": 0.02,
+        "a": 0.94
+      },
+      "inputTokens": 6258,
+      "latencyMs": 319,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s09-contacts-tessa-old-email-visible",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The visible Tessa Vale email field contains tessa.seed@example.test.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "The visible Tessa Vale email field contains tessa.final@example.test.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 20313,
+      "probabilities": {
+        "a": 0.96,
+        "b": 0.01
+      },
+      "inputTokens": 7805,
+      "latencyMs": 316,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s09-contacts-tessa-old-email-visible",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The visible Tessa Vale email field contains tessa.seed@example.test.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "The visible Tessa Vale email field contains tessa.final@example.test.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 20313,
+      "probabilities": {
+        "a": 0.96,
+        "b": 0.01
+      },
+      "inputTokens": 7805,
+      "latencyMs": 319,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s09-contacts-tessa-old-email-visible",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The visible Tessa Vale email field contains tessa.seed@example.test.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "The visible Tessa Vale email field contains tessa.final@example.test.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 20955,
+      "probabilities": {
+        "a": 0.96,
+        "b": 0.01
+      },
+      "inputTokens": 8025,
+      "latencyMs": 832,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s09-contacts-tessa-old-email-visible",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The visible Tessa Vale email field contains tessa.seed@example.test.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "The visible Tessa Vale email field contains tessa.final@example.test.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 20955,
+      "probabilities": {
+        "a": 0.97,
+        "b": 0.01
+      },
+      "inputTokens": 8025,
+      "latencyMs": 543,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s10-contacts-nolan-old-email-edit",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Nolan Ames Edit form email field contains nolan.final@example.test.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "The Nolan Ames Edit form email field contains nolan.seed@example.test.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 13413,
+      "probabilities": {
+        "a": 0.01,
+        "b": 0.98
+      },
+      "inputTokens": 5243,
+      "latencyMs": 525,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s10-contacts-nolan-old-email-edit",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Nolan Ames Edit form email field contains nolan.final@example.test.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "The Nolan Ames Edit form email field contains nolan.seed@example.test.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 13413,
+      "probabilities": {
+        "a": 0.01,
+        "b": 0.98
+      },
+      "inputTokens": 5243,
+      "latencyMs": 555,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s10-contacts-nolan-old-email-edit",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Nolan Ames Edit form email field contains nolan.final@example.test.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "The Nolan Ames Edit form email field contains nolan.seed@example.test.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 14053,
+      "probabilities": {
+        "a": 0.01,
+        "b": 0.98
+      },
+      "inputTokens": 5461,
+      "latencyMs": 890,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s10-contacts-nolan-old-email-edit",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Nolan Ames Edit form email field contains nolan.final@example.test.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "The Nolan Ames Edit form email field contains nolan.seed@example.test.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 14053,
+      "probabilities": {
+        "a": 0.01,
+        "b": 0.98
+      },
+      "inputTokens": 5461,
+      "latencyMs": 444,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s11-contacts-nolan-new-email-unsaved",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Nolan Ames Edit form email field contains nolan.final@example.test.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "The foreground Nolan Ames screen is the saved contact card with an Edit button.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 13755,
+      "probabilities": {
+        "b": 0.87,
+        "a": 0.25
+      },
+      "inputTokens": 5368,
+      "latencyMs": 565,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s11-contacts-nolan-new-email-unsaved",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Nolan Ames Edit form email field contains nolan.final@example.test.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "The foreground Nolan Ames screen is the saved contact card with an Edit button.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 13755,
+      "probabilities": {
+        "b": 0.96,
+        "a": 0.21
+      },
+      "inputTokens": 5368,
+      "latencyMs": 396,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s11-contacts-nolan-new-email-unsaved",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Nolan Ames Edit form email field contains nolan.final@example.test.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "The foreground Nolan Ames screen is the saved contact card with an Edit button.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 14395,
+      "probabilities": {
+        "b": 0.97,
+        "a": 0.19
+      },
+      "inputTokens": 5586,
+      "latencyMs": 396,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s11-contacts-nolan-new-email-unsaved",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Nolan Ames Edit form email field contains nolan.final@example.test.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "The foreground Nolan Ames screen is the saved contact card with an Edit button.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 14395,
+      "probabilities": {
+        "b": 0.89,
+        "a": 0.21
+      },
+      "inputTokens": 5586,
+      "latencyMs": 434,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s12-contacts-nolan-new-email-saved",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The saved Nolan Ames contact card shows nolan.seed@example.test.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The saved Nolan Ames contact card shows nolan.final@example.test.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 13227,
+      "probabilities": {
+        "b": 0.02,
+        "a": 0.98
+      },
+      "inputTokens": 5187,
+      "latencyMs": 366,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s12-contacts-nolan-new-email-saved",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The saved Nolan Ames contact card shows nolan.seed@example.test.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The saved Nolan Ames contact card shows nolan.final@example.test.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 13238,
+      "probabilities": {
+        "b": 0.02,
+        "a": 0.98
+      },
+      "inputTokens": 5189,
+      "latencyMs": 417,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s12-contacts-nolan-new-email-saved",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The saved Nolan Ames contact card shows nolan.seed@example.test.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The saved Nolan Ames contact card shows nolan.final@example.test.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 13227,
+      "probabilities": {
+        "b": 0.02,
+        "a": 0.98
+      },
+      "inputTokens": 5187,
+      "latencyMs": 329,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s12-contacts-nolan-new-email-saved",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The saved Nolan Ames contact card shows nolan.seed@example.test.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The saved Nolan Ames contact card shows nolan.final@example.test.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 13238,
+      "probabilities": {
+        "b": 0.02,
+        "a": 0.98
+      },
+      "inputTokens": 5189,
+      "latencyMs": 299,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s13-contacts-nina-query",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Contacts search field contains Nina.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "The Contacts search field contains Nina Calder.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 16971,
+      "probabilities": {
+        "a": 0.98,
+        "b": 0.04
+      },
+      "inputTokens": 6404,
+      "latencyMs": 420,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s13-contacts-nina-query",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Contacts search field contains Nina.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "The Contacts search field contains Nina Calder.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 16971,
+      "probabilities": {
+        "a": 0.98,
+        "b": 0.04
+      },
+      "inputTokens": 6404,
+      "latencyMs": 444,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s13-contacts-nina-query",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Contacts search field contains Nina.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "The Contacts search field contains Nina Calder.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 17927,
+      "probabilities": {
+        "a": 0.98,
+        "b": 0.05
+      },
+      "inputTokens": 6728,
+      "latencyMs": 579,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s13-contacts-nina-query",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Contacts search field contains Nina.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "The Contacts search field contains Nina Calder.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 17927,
+      "probabilities": {
+        "a": 0.98,
+        "b": 0.04
+      },
+      "inputTokens": 6728,
+      "latencyMs": 377,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s14-contacts-nina-calder-no-results",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "A Nina Calder contact card is open.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "Contacts shows No Results for Nina Calder.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 16990,
+      "probabilities": {
+        "a": 0.03,
+        "b": 0.96
+      },
+      "inputTokens": 6412,
+      "latencyMs": 508,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s14-contacts-nina-calder-no-results",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "A Nina Calder contact card is open.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "Contacts shows No Results for Nina Calder.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 16990,
+      "probabilities": {
+        "a": 0.03,
+        "b": 0.97
+      },
+      "inputTokens": 6412,
+      "latencyMs": 400,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s14-contacts-nina-calder-no-results",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "A Nina Calder contact card is open.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "Contacts shows No Results for Nina Calder.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 17946,
+      "probabilities": {
+        "a": 0.03,
+        "b": 0.97
+      },
+      "inputTokens": 6736,
+      "latencyMs": 377,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s14-contacts-nina-calder-no-results",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "A Nina Calder contact card is open.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "Contacts shows No Results for Nina Calder.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 17946,
+      "probabilities": {
+        "a": 0.03,
+        "b": 0.98
+      },
+      "inputTokens": 6736,
+      "latencyMs": 391,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s15-contacts-tessa-search-two-results",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Contacts search results show two Tessa Vale rows.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "Contacts shows No Results for Tessa Vale.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 17784,
+      "probabilities": {
+        "b": 0.96,
+        "a": 0.02
+      },
+      "inputTokens": 6686,
+      "latencyMs": 375,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s15-contacts-tessa-search-two-results",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Contacts search results show two Tessa Vale rows.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "Contacts shows No Results for Tessa Vale.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 17784,
+      "probabilities": {
+        "b": 0.95,
+        "a": 0.02
+      },
+      "inputTokens": 6686,
+      "latencyMs": 339,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s15-contacts-tessa-search-two-results",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Contacts search results show two Tessa Vale rows.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "Contacts shows No Results for Tessa Vale.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 18740,
+      "probabilities": {
+        "b": 0.95,
+        "a": 0.03
+      },
+      "inputTokens": 7010,
+      "latencyMs": 329,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s15-contacts-tessa-search-two-results",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Contacts search results show two Tessa Vale rows.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "Contacts shows No Results for Tessa Vale.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 18740,
+      "probabilities": {
+        "b": 0.95,
+        "a": 0.03
+      },
+      "inputTokens": 7010,
+      "latencyMs": 314,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s16-reminders-new-list-blank",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The List Name field contains Signal Kit.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The New List form shows an empty List Name field.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 14002,
+      "probabilities": {
+        "b": 0.02,
+        "a": 0.79
+      },
+      "inputTokens": 5418,
+      "latencyMs": 320,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s16-reminders-new-list-blank",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The List Name field contains Signal Kit.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The New List form shows an empty List Name field.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 14013,
+      "probabilities": {
+        "b": 0.01,
+        "a": 0.98
+      },
+      "inputTokens": 5420,
+      "latencyMs": 328,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s16-reminders-new-list-blank",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The List Name field contains Signal Kit.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The New List form shows an empty List Name field.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 15278,
+      "probabilities": {
+        "b": 0.02,
+        "a": 0.81
+      },
+      "inputTokens": 5854,
+      "latencyMs": 323,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s16-reminders-new-list-blank",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The List Name field contains Signal Kit.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The New List form shows an empty List Name field.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 15289,
+      "probabilities": {
+        "b": 0.01,
+        "a": 0.98
+      },
+      "inputTokens": 5856,
+      "latencyMs": 290,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s17-reminders-signal-kit-unsaved",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The New List form List Name field contains Signal Kit.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "A Signal Kit row is already visible under My Lists.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 14150,
+      "probabilities": {
+        "a": 0.98,
+        "b": 0.06
+      },
+      "inputTokens": 5470,
+      "latencyMs": 301,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s17-reminders-signal-kit-unsaved",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The New List form List Name field contains Signal Kit.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "A Signal Kit row is already visible under My Lists.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 14150,
+      "probabilities": {
+        "a": 0.98,
+        "b": 0.05
+      },
+      "inputTokens": 5470,
+      "latencyMs": 429,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s17-reminders-signal-kit-unsaved",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The New List form List Name field contains Signal Kit.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "A Signal Kit row is already visible under My Lists.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 15426,
+      "probabilities": {
+        "a": 0.98,
+        "b": 0.06
+      },
+      "inputTokens": 5906,
+      "latencyMs": 461,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s17-reminders-signal-kit-unsaved",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The New List form List Name field contains Signal Kit.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "A Signal Kit row is already visible under My Lists.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 15426,
+      "probabilities": {
+        "a": 0.98,
+        "b": 0.06
+      },
+      "inputTokens": 5906,
+      "latencyMs": 422,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s18-reminders-signal-kit-saved",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Signal Kit row shows 2 reminders.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "My Lists shows a Signal Kit row with 0 reminders.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 9497,
+      "probabilities": {
+        "a": 0.01,
+        "b": 0.98
+      },
+      "inputTokens": 3852,
+      "latencyMs": 480,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s18-reminders-signal-kit-saved",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Signal Kit row shows 2 reminders.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "My Lists shows a Signal Kit row with 0 reminders.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 9497,
+      "probabilities": {
+        "a": 0.01,
+        "b": 0.98
+      },
+      "inputTokens": 3852,
+      "latencyMs": 423,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s18-reminders-signal-kit-saved",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Signal Kit row shows 2 reminders.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "My Lists shows a Signal Kit row with 0 reminders.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 10135,
+      "probabilities": {
+        "a": 0.01,
+        "b": 0.97
+      },
+      "inputTokens": 4070,
+      "latencyMs": 618,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s18-reminders-signal-kit-saved",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Signal Kit row shows 2 reminders.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "My Lists shows a Signal Kit row with 0 reminders.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 10135,
+      "probabilities": {
+        "a": 0.01,
+        "b": 0.97
+      },
+      "inputTokens": 4070,
+      "latencyMs": 364,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s19-reminders-charge-lantern-note-empty",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Charge lantern editor has an empty Notes field.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "The Charge lantern Notes field contains Use green cable.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 7973,
+      "probabilities": {
+        "b": 0.78,
+        "a": 0.05
+      },
+      "inputTokens": 3242,
+      "latencyMs": 363,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s19-reminders-charge-lantern-note-empty",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Charge lantern editor has an empty Notes field.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "The Charge lantern Notes field contains Use green cable.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 7984,
+      "probabilities": {
+        "b": 0.98,
+        "a": 0.01
+      },
+      "inputTokens": 3244,
+      "latencyMs": 403,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s19-reminders-charge-lantern-note-empty",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Charge lantern editor has an empty Notes field.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "The Charge lantern Notes field contains Use green cable.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 8769,
+      "probabilities": {
+        "b": 0.78,
+        "a": 0.06
+      },
+      "inputTokens": 3514,
+      "latencyMs": 425,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s19-reminders-charge-lantern-note-empty",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Charge lantern editor has an empty Notes field.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "The Charge lantern Notes field contains Use green cable.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 8780,
+      "probabilities": {
+        "b": 0.98,
+        "a": 0.01
+      },
+      "inputTokens": 3516,
+      "latencyMs": 351,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s20-reminders-charge-lantern-note-unsaved",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Charge lantern Notes field is empty.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The open Charge lantern editor shows Notes value Use green cable and a Done button.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 8347,
+      "probabilities": {
+        "b": 0.01,
+        "a": 0.98
+      },
+      "inputTokens": 3389,
+      "latencyMs": 285,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s20-reminders-charge-lantern-note-unsaved",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Charge lantern Notes field is empty.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The open Charge lantern editor shows Notes value Use green cable and a Done button.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 8347,
+      "probabilities": {
+        "b": 0.01,
+        "a": 0.98
+      },
+      "inputTokens": 3389,
+      "latencyMs": 277,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s20-reminders-charge-lantern-note-unsaved",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Charge lantern Notes field is empty.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The open Charge lantern editor shows Notes value Use green cable and a Done button.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 9143,
+      "probabilities": {
+        "b": 0.01,
+        "a": 0.98
+      },
+      "inputTokens": 3661,
+      "latencyMs": 294,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s20-reminders-charge-lantern-note-unsaved",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Charge lantern Notes field is empty.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The open Charge lantern editor shows Notes value Use green cable and a Done button.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 9143,
+      "probabilities": {
+        "b": 0.01,
+        "a": 0.98
+      },
+      "inputTokens": 3661,
+      "latencyMs": 652,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s21-reminders-charge-lantern-note-saved",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Charge lantern list row includes the note Use green cable.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "The Charge lantern list row has no note text.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 6175,
+      "probabilities": {
+        "a": 0.98,
+        "b": 0.02
+      },
+      "inputTokens": 2573,
+      "latencyMs": 325,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s21-reminders-charge-lantern-note-saved",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Charge lantern list row includes the note Use green cable.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "The Charge lantern list row has no note text.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 6175,
+      "probabilities": {
+        "a": 0.98,
+        "b": 0.02
+      },
+      "inputTokens": 2573,
+      "latencyMs": 272,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s21-reminders-charge-lantern-note-saved",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Charge lantern list row includes the note Use green cable.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "The Charge lantern list row has no note text.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 6971,
+      "probabilities": {
+        "a": 0.98,
+        "b": 0.02
+      },
+      "inputTokens": 2845,
+      "latencyMs": 331,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s21-reminders-charge-lantern-note-saved",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Charge lantern list row includes the note Use green cable.",
+          "expected": true
+        },
+        {
+          "id": "b",
+          "claim": "The Charge lantern list row has no note text.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 6971,
+      "probabilities": {
+        "a": 0.98,
+        "b": 0.02
+      },
+      "inputTokens": 2845,
+      "latencyMs": 314,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s22-diagnostic-bread-selected",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Sample Shop selection summary reads Selected: Apple.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "The Sample Shop selection summary reads Selected: Bread.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 2806,
+      "probabilities": {
+        "a": 0.02,
+        "b": 0.98
+      },
+      "inputTokens": 1318,
+      "latencyMs": 307,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s22-diagnostic-bread-selected",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Sample Shop selection summary reads Selected: Apple.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "The Sample Shop selection summary reads Selected: Bread.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 2806,
+      "probabilities": {
+        "a": 0.02,
+        "b": 0.98
+      },
+      "inputTokens": 1318,
+      "latencyMs": 280,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s22-diagnostic-bread-selected",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Sample Shop selection summary reads Selected: Apple.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "The Sample Shop selection summary reads Selected: Bread.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 2806,
+      "probabilities": {
+        "a": 0.02,
+        "b": 0.98
+      },
+      "inputTokens": 1318,
+      "latencyMs": 310,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s22-diagnostic-bread-selected",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "a",
+          "claim": "The Sample Shop selection summary reads Selected: Apple.",
+          "expected": false
+        },
+        {
+          "id": "b",
+          "claim": "The Sample Shop selection summary reads Selected: Bread.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 2806,
+      "probabilities": {
+        "a": 0.02,
+        "b": 0.98
+      },
+      "inputTokens": 1318,
+      "latencyMs": 328,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s23-diagnostic-bread-apple-selected",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Sample Shop selection summary reads Selected: Bread, Apple.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "The Sample Shop selection summary reads Selected: Apple, Bread.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 3116,
+      "probabilities": {
+        "b": 0.98,
+        "a": 0.07
+      },
+      "inputTokens": 1431,
+      "latencyMs": 355,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s23-diagnostic-bread-apple-selected",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Sample Shop selection summary reads Selected: Bread, Apple.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "The Sample Shop selection summary reads Selected: Apple, Bread.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 3116,
+      "probabilities": {
+        "b": 0.98,
+        "a": 0.08
+      },
+      "inputTokens": 1431,
+      "latencyMs": 277,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s23-diagnostic-bread-apple-selected",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Sample Shop selection summary reads Selected: Bread, Apple.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "The Sample Shop selection summary reads Selected: Apple, Bread.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 3116,
+      "probabilities": {
+        "b": 0.98,
+        "a": 0.08
+      },
+      "inputTokens": 1431,
+      "latencyMs": 339,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s23-diagnostic-bread-apple-selected",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Sample Shop selection summary reads Selected: Bread, Apple.",
+          "expected": true
+        },
+        {
+          "id": "a",
+          "claim": "The Sample Shop selection summary reads Selected: Apple, Bread.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 3116,
+      "probabilities": {
+        "b": 0.98,
+        "a": 0.06
+      },
+      "inputTokens": 1431,
+      "latencyMs": 280,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s24-diagnostic-bread-first-total2",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Order complete confirmation shows Total: $5.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The Order complete confirmation shows Total: $2.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 2449,
+      "probabilities": {
+        "b": 0.02,
+        "a": 0.98
+      },
+      "inputTokens": 1200,
+      "latencyMs": 313,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s24-diagnostic-bread-first-total2",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Order complete confirmation shows Total: $5.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The Order complete confirmation shows Total: $2.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 2449,
+      "probabilities": {
+        "b": 0.02,
+        "a": 0.98
+      },
+      "inputTokens": 1200,
+      "latencyMs": 300,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s24-diagnostic-bread-first-total2",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Order complete confirmation shows Total: $5.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The Order complete confirmation shows Total: $2.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 2449,
+      "probabilities": {
+        "b": 0.02,
+        "a": 0.98
+      },
+      "inputTokens": 1200,
+      "latencyMs": 271,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "corpus",
+      "caseId": "s24-diagnostic-bread-first-total2",
+      "variant": "AB",
+      "claims": [
+        {
+          "id": "b",
+          "claim": "The Order complete confirmation shows Total: $5.",
+          "expected": false
+        },
+        {
+          "id": "a",
+          "claim": "The Order complete confirmation shows Total: $2.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 2449,
+      "probabilities": {
+        "b": 0.02,
+        "a": 0.98
+      },
+      "inputTokens": 1200,
+      "latencyMs": 321,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "reminders",
+      "caseId": "reminders-e35",
+      "variant": "V0",
+      "repeat": 1,
+      "claims": [
+        {
+          "id": "counts",
+          "claim": "The saved list has exactly two completed reminders and one incomplete reminder, with no additional reminders.",
+          "expected": true
+        },
+        {
+          "id": "header",
+          "claim": "The list header reads 2 Completed.",
+          "expected": true
+        },
+        {
+          "id": "oneIncomplete",
+          "claim": "Exactly one reminder row is marked Incomplete.",
+          "expected": true
+        },
+        {
+          "id": "noOthers",
+          "claim": "The list contains no reminders other than the three named ones.",
+          "expected": true
+        },
+        {
+          "id": "threeRows",
+          "claim": "The list shows exactly three reminder rows.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 7455,
+      "probabilities": {
+        "counts": 0.88,
+        "header": 0.91,
+        "oneIncomplete": 0.96,
+        "noOthers": 0.72,
+        "threeRows": 0.91
+      },
+      "inputTokens": 3205,
+      "latencyMs": 312,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "reminders",
+      "caseId": "reminders-e35",
+      "variant": "V0",
+      "repeat": 2,
+      "claims": [
+        {
+          "id": "counts",
+          "claim": "The saved list has exactly two completed reminders and one incomplete reminder, with no additional reminders.",
+          "expected": true
+        },
+        {
+          "id": "header",
+          "claim": "The list header reads 2 Completed.",
+          "expected": true
+        },
+        {
+          "id": "oneIncomplete",
+          "claim": "Exactly one reminder row is marked Incomplete.",
+          "expected": true
+        },
+        {
+          "id": "noOthers",
+          "claim": "The list contains no reminders other than the three named ones.",
+          "expected": true
+        },
+        {
+          "id": "threeRows",
+          "claim": "The list shows exactly three reminder rows.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 7455,
+      "probabilities": {
+        "counts": 0.86,
+        "header": 0.95,
+        "oneIncomplete": 0.95,
+        "noOthers": 0.65,
+        "threeRows": 0.87
+      },
+      "inputTokens": 3205,
+      "latencyMs": 319,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "reminders",
+      "caseId": "reminders-e35",
+      "variant": "V0",
+      "repeat": 3,
+      "claims": [
+        {
+          "id": "counts",
+          "claim": "The saved list has exactly two completed reminders and one incomplete reminder, with no additional reminders.",
+          "expected": true
+        },
+        {
+          "id": "header",
+          "claim": "The list header reads 2 Completed.",
+          "expected": true
+        },
+        {
+          "id": "oneIncomplete",
+          "claim": "Exactly one reminder row is marked Incomplete.",
+          "expected": true
+        },
+        {
+          "id": "noOthers",
+          "claim": "The list contains no reminders other than the three named ones.",
+          "expected": true
+        },
+        {
+          "id": "threeRows",
+          "claim": "The list shows exactly three reminder rows.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 7455,
+      "probabilities": {
+        "counts": 0.87,
+        "header": 0.9,
+        "oneIncomplete": 0.94,
+        "noOthers": 0.68,
+        "threeRows": 0.9
+      },
+      "inputTokens": 3205,
+      "latencyMs": 672,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "reminders",
+      "caseId": "reminders-e35",
+      "variant": "B",
+      "claims": [
+        {
+          "id": "counts",
+          "claim": "The saved list has exactly two completed reminders and one incomplete reminder, with no additional reminders.",
+          "expected": true
+        },
+        {
+          "id": "header",
+          "claim": "The list header reads 2 Completed.",
+          "expected": true
+        },
+        {
+          "id": "oneIncomplete",
+          "claim": "Exactly one reminder row is marked Incomplete.",
+          "expected": true
+        },
+        {
+          "id": "noOthers",
+          "claim": "The list contains no reminders other than the three named ones.",
+          "expected": true
+        },
+        {
+          "id": "threeRows",
+          "claim": "The list shows exactly three reminder rows.",
+          "expected": true
+        }
+      ],
+      "stateBytes": 7695,
+      "probabilities": {
+        "counts": 0.87,
+        "header": 0.97,
+        "oneIncomplete": 0.95,
+        "noOthers": 0.71,
+        "threeRows": 0.9
+      },
+      "inputTokens": 3277,
+      "latencyMs": 353,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "control",
+      "caseId": "NC1-s20-notes-withheld",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "empty",
+          "claim": "The Charge lantern Notes field is empty.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 8321,
+      "probabilities": {
+        "empty": 0.81
+      },
+      "inputTokens": 3334,
+      "latencyMs": 407,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "control",
+      "caseId": "NC2-s01-search-withheld",
+      "variant": "V0",
+      "claims": [
+        {
+          "id": "empty",
+          "claim": "The location search field is empty.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 14401,
+      "probabilities": {
+        "empty": 0.84
+      },
+      "inputTokens": 5861,
+      "latencyMs": 411,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "control",
+      "caseId": "NC1-s20-notes-withheld",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "empty",
+          "claim": "The Charge lantern Notes field is empty.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 8332,
+      "probabilities": {
+        "empty": 0.98
+      },
+      "inputTokens": 3336,
+      "latencyMs": 408,
+      "model": "jev-1.13.0"
+    },
+    {
+      "group": "control",
+      "caseId": "NC2-s01-search-withheld",
+      "variant": "A",
+      "claims": [
+        {
+          "id": "empty",
+          "claim": "The location search field is empty.",
+          "expected": false
+        }
+      ],
+      "stateBytes": 14412,
+      "probabilities": {
+        "empty": 0.97
+      },
+      "inputTokens": 5863,
+      "latencyMs": 343,
+      "model": "jev-1.13.0"
+    }
+  ]
+}

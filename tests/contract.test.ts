@@ -205,9 +205,13 @@ test('contract: MCP tool names, input schemas, and the start_scenario reply', { 
     assert.match(String(reply.watchUrl), /^http:\/\/127\.0\.0\.1:\d+\/\?token=[0-9a-f]{64}&run=/);
     await golden('mcp', { tools, startScenarioReplyKeys: Object.keys(reply).sort() });
   } finally {
+    // Let the server finish its run and exit before deleting the folder it writes into.
+    const exited = child.exitCode !== null ? Promise.resolve() : new Promise<void>(done => child.once('exit', () => done()));
     child.stdin.end();
     lines.close();
-    if (child.exitCode === null) child.kill('SIGTERM');
+    const timer = setTimeout(() => child.kill('SIGTERM'), 5_000);
+    await exited;
+    clearTimeout(timer);
     await rm(root, { recursive: true, force: true });
   }
 });

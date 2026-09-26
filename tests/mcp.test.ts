@@ -56,5 +56,11 @@ test('running MCP reports hide screen evidence and bounded waiting returns the f
     const final=await request(6,'tools/call',{name:'get_report',arguments:{runId,waitMs:2000}});
     assert.match(final.result.content[0].text,/Status: finished/);
     assert.match(final.result.content[0].text,/SCREEN_EVIDENCE_MARKER/);
-  }finally{child.stdin.end();lines.close();if(child.exitCode===null)child.kill('SIGTERM');await rm(root,{recursive:true,force:true});}
+  }finally{
+    // Let the fixture server finish writing before deleting its folder.
+    const exited=child.exitCode!==null?Promise.resolve():new Promise<void>(done=>child.once('exit',()=>done()));
+    child.stdin.end();lines.close();
+    const timer=setTimeout(()=>child.kill('SIGTERM'),5000);await exited;clearTimeout(timer);
+    await rm(root,{recursive:true,force:true});
+  }
 });
