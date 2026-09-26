@@ -848,3 +848,30 @@ test('an acknowledged stop failure (the app already exited) still releases the l
     await second.prepare(scenario, new AbortController().signal);
   } finally { await second.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
 });
+
+test('measurement mode never leaves the run holding references from an older capture', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-verify-retry-'));
+  const shot = join(root, 'shot.png');
+  await writeFile(shot, Buffer.from([0x89, 0x50]));
+  const hashes = ['moving-1', 'moving-2', 'moving-3', 'settled', 'settled'];
+  let captures = 0;
+  const runner: CliRunner = async args => {
+    if (args.includes('screenshot')) return { stdout: envelope({ artifacts: { screenshotPath: shot }, capture: { format: 'image/png' } }), stderr: '', exitCode: 0 };
+    if (args.includes('snapshot-ui')) return { stdout: envelope(capture(hashes[Math.min(captures++, hashes.length - 1)])), stderr: '', exitCode: 0 };
+    return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
+  };
+  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner, screenshots: true, verifyScreenshotAgreement: true });
+  try {
+    await driver.prepare(scenario, new AbortController().signal);
+    const observed = await driver.observe(new AbortController().signal);
+    // Attempt 1 disagreed (moving-1 vs moving-2); attempt 2 disagreed (moving-3 vs settled); attempt 3 agreed.
+    assert.equal(observed.screenshotAgreement, true);
+    assert.equal(observed.verifyAttempts, 3);
+    assert.equal(observed.screenHash, 'settled');
+    captures = 0;
+    hashes.splice(0, hashes.length, 'a', 'b', 'c', 'd', 'e', 'f');
+    const neverSettles = await driver.observe(new AbortController().signal);
+    assert.equal(neverSettles.screenshotAgreement, false);
+    assert.equal(neverSettles.screenHash, 'f', 'the run gets the newest capture, the one MobileBuildMCP resolves references against');
+  } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
+});

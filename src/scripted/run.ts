@@ -207,6 +207,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
     ...(snapshot.logTails ? { logTails: snapshot.logTails } : {}),
     ...(snapshot.reusedFromAction ? { reusedCapture: true } : {}),
     ...(snapshot.screenshotAgreement === undefined ? {} : { screenshotAgreement: snapshot.screenshotAgreement }),
+    ...(snapshot.verifyAttempts === undefined ? {} : { verifyAttempts: snapshot.verifyAttempts }),
   });
 
   try {
