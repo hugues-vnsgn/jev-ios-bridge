@@ -1,6 +1,6 @@
 # v1.0.0 release spec
 
-Status: **accepted by the owner, 2026-09-25**, after an independent review against every ticket and ADR. Executor: Codex. Owner: Do Viet Hung.
+Status: **accepted by the owner, 2026-09-25**, after an independent review against every ticket and ADR. Executor: Claude Code (the owner reassigned it from Codex on 2026-09-26). Owner: Do Viet Hung. The owner approved merging each phase PR after CI passes; the executor stops for the owner's go-ahead before tagging and publishing.
 
 This spec is an index of the decisions it depends on. Each work item names the ticket or ADR that holds its detail; read that source before starting the item. Where this spec and a source disagree, stop and ask the owner. Don't pick one yourself. "Review #N" means row N of the defects table in [`code-review.md`](code-review.md) §4.
 
@@ -49,11 +49,11 @@ Each phase is one PR. Unit and golden tests land with the phase that needs them.
    - Require `"version": 1`, and reject an unversioned script with a message telling the author to add it.
    - Add `"version": 1` to every script in the repo: `spikes/benchmarks/scenarios/*.json`, `examples/diagnostic-app/scenario.json`, and any script under `tests/`.
 2. **`report.json`.**
-   - Write a versioned `report.json` into each run's evidence folder. It records the verdict, reason, checkpoints, claims with probabilities, evidence file names, Jev model, and bridge version. Codex names its version field.
+   - Write a versioned `report.json` into each run's evidence folder. It records the verdict, reason, checkpoints, claims with probabilities, evidence file names, Jev model, and bridge version. The executor names its version field.
    - Add `run --json`, which prints it.
    - MCP `get_report` keeps returning prose plus the evidence path.
    - `start_scenario`'s `{runId, watchUrl}` reply is frozen. Phase 5 adds one optional field to it.
-3. **Reason codes:** publish a fixed, bridge-owned list. An unknown MobileBuildMCP code becomes `DEVICE_ERROR`, with the vendor code kept as detail. The service fallback gets its own code, which Codex names.
+3. **Reason codes:** publish a fixed, bridge-owned list. An unknown MobileBuildMCP code becomes `DEVICE_ERROR`, with the vendor code kept as detail. The service fallback gets its own code, which the executor names.
 4. **Roles:** publish a bridge-owned list. The driver translates any vendor rename.
 5. **CLI exit codes.**
    - `0` passed, `1` failed, `2` inconclusive, `3` could not start (bad script, missing key, no simulator).
@@ -122,7 +122,7 @@ None of these may weaken guards, reference-freshness checks, or evidence complet
 1. **`app.launchArgs`:** an optional array of strings, passed to `simulator launch-app --launch-args` and recorded in `run.jsonl` and `report.json` ([Compose app evidence plan](issues/09-compose-evidence-plan.md) item 3).
 2. **The log pane and `jev-ios-bridge logs RUN_ID`** ([Live log pane](issues/12-live-log-pane.md)).
    - It covers the sources, layout, `.command` window, fallback, lifecycle (a passed run closes after a few seconds), masking, `JEV_LOG_PANE=off`, `JEV_LOG_PANE_APP`, and `--no-log-pane`.
-   - The attach command goes into `start_scenario`'s reply as a new optional field (ticket item 5), which Codex names. It's an allowed 1.x addition, so update the golden files.
+   - The attach command goes into `start_scenario`'s reply as a new optional field (ticket item 5), which the executor names. It's an allowed 1.x addition, so update the golden files.
    - The throwaway prototype is on the owner's local branch `prototype/log-pane` (commit `977c5a4`, `spikes/log-pane/PROTOTYPE-log-pane.mjs`). Treat it as a reference, not code to ship.
 3. **Compose evidence scripts.** Author them now that `launchArgs` exists, as `"version": 1` scripts:
    - the six BFSOne gallery scripts in `spikes/benchmarks/scenarios/compose-bfsone-*.json`;
@@ -191,13 +191,13 @@ Run every check on the candidate merge commit (the last of phases 1–6), and pu
 2. **Tag and publish.** Tag `v1.0.0` from it, and publish a **regular** GitHub release (not a prerelease) from `docs/releases/v1.0.0.md`, attaching the packed tarball.
 3. **Verify the published asset.** Record the asset's size and SHA-256. Download it fresh from the public release, check the digest, install it cleanly, and confirm both entry points report `1.0.0`. Save the evidence the way `spikes/benchmarks/results/publication-verification.json` did for v0.1.0.
 
-## What Codex reports back
+## What the executor reports back
 
 - the filled checks table, with a link to each piece of evidence;
 - the PR list;
 - the release URL, the asset SHA-256, and the fresh-download result;
 - every stop-and-ask event and the owner's answer;
-- the names Codex chose (the `report.json` version field, the service-fallback code, and the `start_scenario` log field).
+- the names the executor chose (the `report.json` version field, the service-fallback code, and the `start_scenario` log field).
 
 Unsuccessful attempts stay in the record, as they did for v0.1.0. Never describe an inconclusive or failed attempt as a pass.
 
