@@ -9,6 +9,18 @@ import { buildScriptedReport, type ScriptedReport } from './scripted/report.js';
 import { buildReportJson, type ReportJson } from './scripted/report-json.js';
 import { runScriptedScenario, type ScriptedRunLimits, type ScriptedRunOptions } from './scripted/run.js';
 import { startWatchServer } from './watch/index.js';
+import { startLogStream, type LogStream } from './logpane/stream.js';
+import { logsCommand, openPaneWindow } from './logpane/window.js';
+
+/** How the live log pane is offered. Without this, runs have no pane. */
+export interface LogPaneOptions {
+  /** Absolute path of this bridge's cli.js, used in the attach command. */
+  cliPath: string;
+  /** Open a terminal window automatically (still subject to SSH, CI, and desktop checks). */
+  openWindow: boolean;
+  /** Told whether a window opened, and the attach command otherwise. */
+  onNotice?(runId: string, text: string): void;
+}
 
 interface Job { abort: AbortController; done: Promise<void>; state: 'running' | 'finished' }
 
@@ -30,9 +42,10 @@ export class BridgeService {
     policy?: ScriptedRunLimits;
     /** Only the pinned MobileBuildMCP driver may enable its proven tap alias rule. */
     tapAliasRule?: ScriptedRunOptions['tapAliasRule'];
+    logPane?: LogPaneOptions;
   }) { this.baseDir = resolve(options.baseDir); }
 
-  async start(input: unknown, requestedLimits: unknown = {}): Promise<{ runId: string; watchUrl: string }> {
+  async start(input: unknown, requestedLimits: unknown = {}): Promise<{ runId: string; watchUrl: string; logsCommand?: string }> {
     if (this.stopping) throw new Error('Bridge is shutting down');
     const scenario = parseScriptedScenario(input);
     const parsedLimits = startLimitsSchema.parse(requestedLimits);
@@ -51,8 +64,24 @@ export class BridgeService {
     if (this.stopping) throw new Error('Bridge is shutting down');
     const job: Job = { abort: new AbortController(), done: Promise.resolve(), state: 'running' };
     this.jobs.set(runId, job);
+    const pane = this.options.logPane;
+    let stream: Promise<LogStream | undefined> | undefined;
+    const attach = pane ? logsCommand(pane.cliPath, runId) : undefined;
+    const startPane = (logSources: { runtime?: string; os?: string }) => {
+      if (!pane || !attach) return;
+      stream = startLogStream({ runId, bundleId: scenario.app.bundleId, sources: logSources, values: scenario.values })
+        .then(async started => {
+          const window = pane.openWindow ? await openPaneWindow(resolve(this.baseDir, runId), attach)
+            : { opened: false as const, reason: 'turned off with --no-log-pane' };
+          pane.onNotice?.(runId, window.opened ? `Log pane: opened in ${window.app}.`
+            : `Log pane: no window (${window.reason}). Follow the app's output with: ${attach}`);
+          return started;
+        }, () => undefined);
+    };
     job.done = runScriptedScenario({ runId, scenario, driver, judge, log, signal: job.abort.signal, limits,
       ...(this.options.tapAliasRule ? { tapAliasRule: this.options.tapAliasRule } : {}),
+      ...(pane ? { onPrepared: ({ logSources }) => startPane(logSources),
+        onCleanup: () => { void stream?.then(started => started?.expectStop()); } } : {}),
     }).then(() => { job.state = 'finished'; }, async () => {
       // Never serialize upstream exceptions, which can carry screen text or credentials.
       try {
@@ -62,9 +91,15 @@ export class BridgeService {
           await log.writeReport?.(buildReportJson(await log.read()));
         }
       } finally { job.state = 'finished'; }
-    }).catch(() => { job.state = 'finished'; });
+    }).catch(() => { job.state = 'finished'; }).then(async () => {
+      const started = await stream;
+      if (!started) return;
+      const { report } = await this.status(runId).catch(() => ({ report: undefined }));
+      await started.finish({ verdict: report?.verdict ?? 'inconclusive', reason: report?.reason ?? 'INTERRUPTED',
+        evidencePath: resolve(this.baseDir, runId), ...(report?.verdict === 'passed' ? { closeAfterMs: 3_000 } : {}) });
+    }).catch(() => {});
     await log.read();
-    return { runId, watchUrl: this.watch.urlFor(runId) };
+    return { runId, watchUrl: this.watch.urlFor(runId), ...(attach ? { logsCommand: attach } : {}) };
   }
 
   async status(runId: string, waitMs = 0, signal?: AbortSignal): Promise<{ state: 'running' | 'finished' | 'interrupted'; report: ScriptedReport }> {

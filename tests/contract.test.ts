@@ -84,6 +84,9 @@ const scriptCases: Record<string, unknown> = {
     action: { kind: 'replaceText', selector: { role: 'text-field' }, valueKey: 'missing' } }, checkpoint] },
   duplicateAssertionIds: { ...validScript, steps: [{ ...checkpoint, assertions: [
     { id: 'shown', claim: 'A' }, { id: 'shown', claim: 'B' }] }] },
+  withLaunchArgs: { ...validScript, app: { bundleId: 'com.example.app', launchArgs: ['-of-evidence-gallery', '-flag', 'value'] } },
+  controlCharacterLaunchArg: { ...validScript, app: { bundleId: 'com.example.app', launchArgs: ['-a\nb'] } },
+  emptyLaunchArg: { ...validScript, app: { bundleId: 'com.example.app', launchArgs: [''] } },
   legacyGoalForm: { version: 1, goal: 'Open settings', app: validScript.app, values: {},
     assertions: [{ id: 'shown', claim: 'Settings are open.' }] },
 };
@@ -259,6 +262,9 @@ test('contract: CLI exit codes for every outcome and start failure', { timeout: 
       ['reportInterrupted', ['report', 'interrupted'], {}],
       ['reportPassedJson', ['report', 'passed', '--json'], {}],
       ['reportUnknownRun', ['report', 'missing'], {}],
+      ['logsRecordedRun', ['logs', 'passed'], {}],
+      ['logsUnknownRun', ['logs', 'missing'], {}],
+      ['noLogPaneOnReport', ['report', 'passed', '--no-log-pane'], {}],
     ];
     const results: Record<string, number> = {};
     for (const [name, args, extra] of cases) {

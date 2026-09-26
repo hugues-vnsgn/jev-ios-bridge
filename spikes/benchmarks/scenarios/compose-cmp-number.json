@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "app": {
+    "bundleId": "org.example.project.cmp"
+  },
+  "preconditions": [
+    "Build ~/Codes/cmp as it is (Compose Multiplatform 1.11.1) and install it on the dedicated simulator.",
+    "The app opens on its modal-perf tab, whose harness runs about 25 s after launch; the first step waits it out."
+  ],
+  "values": {},
+  "steps": [
+    {
+      "id": "harnessIdle",
+      "kind": "wait",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "cmp"
+          }
+        ]
+      },
+      "until": {
+        "present": [
+          {
+            "role": "text",
+            "label": "done (or idle) — see logcat tag MODALPERF"
+          }
+        ],
+        "absent": [
+          {
+            "role": "text",
+            "label": "idle"
+          },
+          {
+            "role": "text",
+            "label": "running…"
+          }
+        ]
+      },
+      "timeoutMs": 60000
+    },
+    {
+      "id": "openNumberTab",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "identifier": "tabNumberInput"
+          },
+          {
+            "identifier": "runPerf"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "identifier": "tabNumberInput"
+        }
+      }
+    },
+    {
+      "id": "focusKeypadField",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "de-DE, sig=2, built-in keypad"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "identifier": "numberInput.field",
+          "value": "Betrag eingeben"
+        }
+      }
+    },
+    {
+      "id": "key4",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "identifier": "numberInput.keypad"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "identifier": "numberInput.keypad.4"
+        }
+      }
+    },
+    {
+      "id": "key2",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "identifier": "numberInput.keypad"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "identifier": "numberInput.keypad.2"
+        }
+      }
+    },
+    {
+      "id": "enteredNumber",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "de-DE, sig=2, built-in keypad"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "value",
+          "claim": "The number field under de-DE, sig=2, built-in keypad holds the number 42."
+        }
+      ]
+    }
+  ]
+}

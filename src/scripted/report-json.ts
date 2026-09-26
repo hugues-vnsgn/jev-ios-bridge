@@ -24,6 +24,8 @@ export interface ReportJson {
   jevModel: string | null;
   projectionRule: string | null;
   bundleId: string | null;
+  /** Arguments the app was launched with (app.launchArgs), empty when none. */
+  launchArgs: string[];
   verdict: Verdict;
   reason: ReasonCode;
   error: { code: ReasonCode; phase: string | null; stepId: string | null; vendorCode?: string } | null;
@@ -81,6 +83,8 @@ export function buildReportJson(events: RunEvent[]): ReportJson {
     jevModel: text(started?.data.jevModel) ?? text(judged?.data.model),
     projectionRule: text(started?.data.projectionRule),
     bundleId: text(started?.data.bundleId),
+    launchArgs: Array.isArray(started?.data.launchArgs)
+      ? started.data.launchArgs.filter((argument): argument is string => typeof argument === 'string') : [],
     verdict,
     reason,
     error: lastError ? {

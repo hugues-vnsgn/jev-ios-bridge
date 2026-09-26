@@ -1,0 +1,148 @@
+{
+  "version": 1,
+  "app": {
+    "bundleId": "org.example.project.cmp"
+  },
+  "preconditions": [
+    "Build ~/Codes/cmp as it is (Compose Multiplatform 1.11.1) and install it on the dedicated simulator.",
+    "The app opens on its modal-perf tab, whose harness runs about 25 s after launch; the first step waits it out."
+  ],
+  "values": {
+    "first": "hello compose",
+    "second": "replaced"
+  },
+  "steps": [
+    {
+      "id": "harnessIdle",
+      "kind": "wait",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "cmp"
+          }
+        ]
+      },
+      "until": {
+        "present": [
+          {
+            "role": "text",
+            "label": "done (or idle) — see logcat tag MODALPERF"
+          }
+        ],
+        "absent": [
+          {
+            "role": "text",
+            "label": "idle"
+          },
+          {
+            "role": "text",
+            "label": "running…"
+          }
+        ]
+      },
+      "timeoutMs": 60000
+    },
+    {
+      "id": "openModalTab",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "identifier": "tabFullScreenModal"
+          },
+          {
+            "identifier": "runPerf"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "identifier": "tabFullScreenModal"
+        }
+      }
+    },
+    {
+      "id": "openOuter",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "identifier": "openModal"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "identifier": "openModal"
+        }
+      }
+    },
+    {
+      "id": "typeFirst",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "identifier": "outerTitle"
+          },
+          {
+            "identifier": "closeOuter"
+          }
+        ]
+      },
+      "action": {
+        "kind": "replaceText",
+        "selector": {
+          "identifier": "imeField",
+          "role": "text-field"
+        },
+        "valueKey": "first"
+      }
+    },
+    {
+      "id": "typeSecond",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "identifier": "imeField",
+            "role": "text-field",
+            "value": "hello compose"
+          }
+        ]
+      },
+      "action": {
+        "kind": "replaceText",
+        "selector": {
+          "identifier": "imeField",
+          "role": "text-field"
+        },
+        "valueKey": "second"
+      }
+    },
+    {
+      "id": "secondTextShown",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "identifier": "outerTitle"
+          },
+          {
+            "identifier": "imeField",
+            "role": "text-field"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "fieldText",
+          "claim": "The Type here (IME gate) field contains the text replaced."
+        }
+      ]
+    }
+  ]
+}

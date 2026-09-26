@@ -71,6 +71,7 @@ export const REASON_CODES = {
   UNSUPPORTED_LEADING_DASH_TEXT: 'The pinned device layer cannot type text that starts with a hyphen.',
   UI_ACTION_UNCONFIRMED: 'A device operation was never acknowledged, so the device lock was kept.',
   CLEANUP_FAILED: 'Device cleanup did not finish.',
+  APP_EXITED: 'The app under test exited during the run (a crash or a quit); check its crash report.',
   // Bridge
   EXECUTION_ERROR: 'The run stopped on an unexpected execution error.',
   INTERNAL_ERROR: 'The bridge could not complete the run; check local setup.',

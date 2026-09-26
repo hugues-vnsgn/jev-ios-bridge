@@ -3,7 +3,7 @@ export type Verdict = 'passed' | 'failed' | 'inconclusive';
 export type Direction = 'up' | 'down' | 'left' | 'right';
 
 export interface ScenarioContext {
-  app: { bundleId: string };
+  app: { bundleId: string; launchArgs?: string[] };
   preconditions?: string[];
   device?: { udid?: string };
 }
@@ -61,6 +61,10 @@ export interface DeviceDriver {
   act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined | void>;
   close(signal: AbortSignal): Promise<void>;
   metrics?(): DeviceMetrics;
+  /** Whether the launched app is still running; undefined when the driver can't tell. */
+  appRunning?(): boolean | undefined;
+  /** The app's own log files the device layer is writing for this launch, for the live log pane. */
+  logSources?(): { runtime?: string; os?: string };
 }
 
 export interface DeviceMetrics {

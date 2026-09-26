@@ -53,9 +53,16 @@ const versionSchema = z.literal(SCRIPT_VERSION, { error: issue => issue.input ==
   ? 'Add "version": 1 to the script; this bridge reads script format version 1'
   : 'Unsupported script version; this bridge reads "version": 1' });
 
+const launchArgument = z.string().min(1).max(200)
+  .regex(/^[\x20-\x7e]+$/, 'Launch arguments must be printable ASCII text');
+
 export const scriptedScenarioSchema = z.strictObject({
   version: versionSchema,
-  app: z.strictObject({ bundleId: z.string().regex(bundleId) }),
+  app: z.strictObject({
+    bundleId: z.string().regex(bundleId),
+    /** Passed to the app process at launch, for example a debug-only entry point such as -of-evidence-gallery. */
+    launchArgs: z.array(launchArgument).max(20).optional(),
+  }),
   device: z.strictObject({ udid: z.string().regex(udid).optional() }).optional(),
   preconditions: z.array(z.string().trim().min(1).max(500)).max(20).optional(),
   values: valuesSchema,

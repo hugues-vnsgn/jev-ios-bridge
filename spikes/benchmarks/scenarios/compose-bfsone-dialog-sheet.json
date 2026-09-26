@@ -1,0 +1,316 @@
+{
+  "version": 1,
+  "app": {
+    "bundleId": "com.beelogistics.BFSOne",
+    "launchArgs": [
+      "-of-evidence-gallery"
+    ]
+  },
+  "preconditions": [
+    "Build BFSOne_Mobile_App from the pinned commit carrying the debug-only -of-evidence-gallery launch argument (Compose Multiplatform 1.9.0) and install it on the dedicated simulator.",
+    "The argument opens the Design System gallery offline: no login and no request to api.beelogistics.com. Never log in or submit anything in this app."
+  ],
+  "values": {},
+  "steps": [
+    {
+      "id": "scroll1",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "BFS One"
+          }
+        ]
+      },
+      "action": {
+        "kind": "swipe",
+        "selector": {
+          "role": "scroll-view"
+        },
+        "direction": "up"
+      }
+    },
+    {
+      "id": "scroll2",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "BFS One"
+          }
+        ]
+      },
+      "action": {
+        "kind": "swipe",
+        "selector": {
+          "role": "scroll-view"
+        },
+        "direction": "up"
+      }
+    },
+    {
+      "id": "scroll3",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "BFS One"
+          }
+        ]
+      },
+      "action": {
+        "kind": "swipe",
+        "selector": {
+          "role": "scroll-view"
+        },
+        "direction": "up"
+      }
+    },
+    {
+      "id": "scroll4",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "BFS One"
+          }
+        ]
+      },
+      "action": {
+        "kind": "swipe",
+        "selector": {
+          "role": "scroll-view"
+        },
+        "direction": "up"
+      }
+    },
+    {
+      "id": "scroll5",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "BFS One"
+          }
+        ]
+      },
+      "action": {
+        "kind": "swipe",
+        "selector": {
+          "role": "scroll-view"
+        },
+        "direction": "up"
+      }
+    },
+    {
+      "id": "scroll6",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "BFS One"
+          }
+        ]
+      },
+      "action": {
+        "kind": "swipe",
+        "selector": {
+          "role": "scroll-view"
+        },
+        "direction": "up"
+      }
+    },
+    {
+      "id": "scroll7",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "BFS One"
+          }
+        ]
+      },
+      "action": {
+        "kind": "swipe",
+        "selector": {
+          "role": "scroll-view"
+        },
+        "direction": "up"
+      }
+    },
+    {
+      "id": "scroll8",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "BFS One"
+          }
+        ]
+      },
+      "action": {
+        "kind": "swipe",
+        "selector": {
+          "role": "scroll-view"
+        },
+        "direction": "up"
+      }
+    },
+    {
+      "id": "openDialog",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "§02 OFDialog / OFBottomSheet / OFEmptyState"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "Confirm 2 nút"
+        }
+      }
+    },
+    {
+      "id": "dialogOpen",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Delete Request"
+          }
+        ],
+        "absent": [
+          {
+            "role": "text",
+            "label": "§02 OFDialog / OFBottomSheet / OFEmptyState"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "question",
+          "claim": "A Delete Request dialog asks: Are you sure you want to delete this request?"
+        }
+      ]
+    },
+    {
+      "id": "closeDialog",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "Delete Request"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "CLOSE"
+        }
+      }
+    },
+    {
+      "id": "openSheet",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "§02 OFDialog / OFBottomSheet / OFEmptyState"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "Bottom Sheet"
+        }
+      }
+    },
+    {
+      "id": "sheetOpen",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "OFBottomSheet"
+          }
+        ],
+        "absent": [
+          {
+            "role": "text",
+            "label": "§02 OFDialog / OFBottomSheet / OFEmptyState"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "title",
+          "claim": "A bottom sheet titled OFBottomSheet is open."
+        }
+      ]
+    },
+    {
+      "id": "closeSheet",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "OFBottomSheet"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "Close"
+        }
+      }
+    },
+    {
+      "id": "backToGallery",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "§02 OFDialog / OFBottomSheet / OFEmptyState"
+          }
+        ],
+        "absent": [
+          {
+            "role": "text",
+            "label": "OFBottomSheet"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "buttons",
+          "claim": "A Bottom Sheet button is visible."
+        }
+      ]
+    }
+  ]
+}

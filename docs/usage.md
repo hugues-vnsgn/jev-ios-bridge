@@ -61,6 +61,8 @@ This example uses the repository's installed diagnostic fixture and checks its f
 
 Adapt selectors and claims to the app's actual accessibility evidence. The diagnostic fixture's source/build instructions are in the repository, not the installed package.
 
+`app.launchArgs` (optional, up to 20 printable strings) passes arguments to the app process at launch, for example a debug-only entry point that skips login so runs repeat. They're recorded in `run.jsonl` and `report.json`.
+
 A script has 1–100 steps with unique IDs and ends at a checkpoint. Optional `preconditions` describe setup the author arranges; they do not execute setup. Each guard requires one or more `present` selectors and can forbid `absent` selectors. A selector matches exact `identifier`, `role`, `label`, and/or `value`; at least one nonblank identifier/role/label is required. A value filter must not be empty: an empty Compose field has no value and an empty native field reports its placeholder, so emptiness can't be selected. Captured refs and list indices are not durable selectors.
 
 | Step | Additional fields |
@@ -83,7 +85,7 @@ The former `goal` and autonomous `checkpoints` forms are unsupported. Ordered ve
 node --env-file=/absolute/path/to/.env dist/cli.js run scenario.json --max-steps 100 --timeout-ms 300000
 ```
 
-The command prints the watch URL to stderr and the report to stdout. Defaults are 100 steps and 300 seconds across the entire run; the maximum wall limit is one hour. Limits do not alter assertion thresholds. Add `--json` to print the run's `report.json` instead of the prose report. Exit codes: 0 passed, 1 failed, 2 inconclusive, 3 could not start (invalid script, missing key, no dedicated simulator); 130 and 143 after SIGINT and SIGTERM. `report RUN_ID` returns the same codes.
+The command prints the watch URL to stderr and the report to stdout. After the app launches, a **log pane** opens in a new terminal window with the app's own output (`print`, `NSLog`, and `os_log` under the bundle ID's subsystem), with script values masked. It closes a few seconds after a passed run and stays open otherwise. Over SSH, in CI, with no desktop session, with `--no-log-pane`, or with `JEV_LOG_PANE=off`, no window opens; follow the output from any terminal with `jev-ios-bridge logs RUN_ID` instead. `JEV_LOG_PANE_APP` chooses the terminal app. Nothing in the pane goes to Jev or the host. Defaults are 100 steps and 300 seconds across the entire run; the maximum wall limit is one hour. Limits do not alter assertion thresholds. Add `--json` to print the run's `report.json` instead of the prose report. Exit codes: 0 passed, 1 failed, 2 inconclusive, 3 could not start (invalid script, missing key, no dedicated simulator); 130 and 143 after SIGINT and SIGTERM. `report RUN_ID` returns the same codes.
 
 At each checkpoint, probability at least 0.9 establishes a claim; at most 0.1 rejects it. A confidently false claim fails that checkpoint even when other claims are uncertain; otherwise any uncertain claim makes it inconclusive. Each checkpoint is judged once. Passing requires every step/checkpoint and successful cleanup. Unexpected UI, budget overflow, missing targets, provider errors, or interruption leave verification inconclusive. Earlier checkpoint proofs stay in the log.
 

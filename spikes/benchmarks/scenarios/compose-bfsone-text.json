@@ -1,0 +1,196 @@
+{
+  "version": 1,
+  "app": {
+    "bundleId": "com.beelogistics.BFSOne",
+    "launchArgs": [
+      "-of-evidence-gallery"
+    ]
+  },
+  "preconditions": [
+    "Build BFSOne_Mobile_App from the pinned commit carrying the debug-only -of-evidence-gallery launch argument (Compose Multiplatform 1.9.0) and install it on the dedicated simulator.",
+    "The argument opens the Design System gallery offline: no login and no request to api.beelogistics.com. Never log in or submit anything in this app."
+  ],
+  "values": {
+    "query": "Contain"
+  },
+  "steps": [
+    {
+      "id": "scroll1",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "BFS One"
+          }
+        ]
+      },
+      "action": {
+        "kind": "swipe",
+        "selector": {
+          "role": "scroll-view"
+        },
+        "direction": "up"
+      }
+    },
+    {
+      "id": "scroll2",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "BFS One"
+          }
+        ]
+      },
+      "action": {
+        "kind": "swipe",
+        "selector": {
+          "role": "scroll-view"
+        },
+        "direction": "up"
+      }
+    },
+    {
+      "id": "scroll3",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "BFS One"
+          }
+        ]
+      },
+      "action": {
+        "kind": "swipe",
+        "selector": {
+          "role": "scroll-view"
+        },
+        "direction": "up"
+      }
+    },
+    {
+      "id": "scroll4",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "BFS One"
+          }
+        ]
+      },
+      "action": {
+        "kind": "swipe",
+        "selector": {
+          "role": "scroll-view"
+        },
+        "direction": "up"
+      }
+    },
+    {
+      "id": "scroll5",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "BFS One"
+          }
+        ]
+      },
+      "action": {
+        "kind": "swipe",
+        "selector": {
+          "role": "scroll-view"
+        },
+        "direction": "up"
+      }
+    },
+    {
+      "id": "scroll6",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "BFS One"
+          }
+        ]
+      },
+      "action": {
+        "kind": "swipe",
+        "selector": {
+          "role": "scroll-view"
+        },
+        "direction": "up"
+      }
+    },
+    {
+      "id": "scroll7",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "application",
+            "label": "BFS One"
+          }
+        ]
+      },
+      "action": {
+        "kind": "swipe",
+        "selector": {
+          "role": "scroll-view"
+        },
+        "direction": "up"
+      }
+    },
+    {
+      "id": "searchUnits",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "label": "OFPickerBody (full-screen pickers)"
+          },
+          {
+            "identifier": "of-picker-search"
+          }
+        ]
+      },
+      "action": {
+        "kind": "replaceText",
+        "selector": {
+          "identifier": "of-picker-search",
+          "role": "text-field"
+        },
+        "valueKey": "query"
+      }
+    },
+    {
+      "id": "filtered",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "identifier": "of-picker-search",
+            "role": "text-field"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "count",
+          "claim": "The unit picker's results line reports 2 results."
+        },
+        {
+          "id": "containers",
+          "claim": "The unit picker lists Container 20' and Container 40'."
+        }
+      ]
+    }
+  ]
+}

@@ -12,7 +12,7 @@ const failed = () => ({ ...result('Bridge operation failed. Check the run id and
 export function createMcpServer(service: BridgeService): McpServer {
   const server = new McpServer({ name: 'jev-ios-bridge', version: BRIDGE_VERSION });
   server.registerTool('start_scenario', {
-    description: 'Start an explicit iOS action script with assertion checkpoints. Returns a run id and local watch URL. Poll get_report for completion; use cancel_run to stop. TypeSafe receives observed screen text and current assertion claims. Typed values go to device actions and may later appear in screen text; screenshots stay local.',
+    description: 'Start an explicit iOS action script with assertion checkpoints. Returns a run id, a local watch URL, and logsCommand, a terminal command that follows the app\'s own output live (a log pane window usually opens by itself). Poll get_report for completion; use cancel_run to stop. TypeSafe receives observed screen text and current assertion claims. Typed values go to device actions and may later appear in screen text; screenshots stay local.',
     inputSchema: z.object({ scenario: scriptedScenarioSchema, limits: startLimitsSchema.optional() }),
   }, async ({ scenario, limits }) => {
     try { return result(JSON.stringify(await service.start(scenario, limits))); } catch { return failed(); }

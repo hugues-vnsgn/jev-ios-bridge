@@ -56,6 +56,16 @@
                   "bundleId": {
                     "type": "string",
                     "pattern": "^[A-Za-z0-9-]+(?:\\.[A-Za-z0-9-]+)+$"
+                  },
+                  "launchArgs": {
+                    "maxItems": 20,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 200,
+                      "pattern": "^[\\x20-\\x7e]+$"
+                    }
                   }
                 },
                 "required": [
@@ -810,6 +820,7 @@
     }
   ],
   "startScenarioReplyKeys": [
+    "logsCommand",
     "runId",
     "watchUrl"
   ]
