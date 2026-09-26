@@ -718,3 +718,100 @@ test('rejects booted aliases from defaults before any device command', async () 
     assert.equal(calls,0);
   } finally {await driver.close(new AbortController().signal);await rm(root,{recursive:true,force:true});}
 });
+
+function verboseActionEnvelope(capturePayload?: unknown): string {
+  return JSON.stringify({ schema: 'mobilebuildmcp.output.ui-action-result', schemaVersion: '3', didError: false, error: null,
+    data: { summary: { status: 'SUCCEEDED' }, action: { type: 'tap', elementRef: 'e1' }, artifacts: { simulatorId: udid },
+      ...(capturePayload ? { capture: capturePayload } : {}) } });
+}
+
+const settledFullCapture = { type: 'runtime-snapshot', protocol: 'rs/1', screenHash: 'after', seq: 9,
+  capturedAtMs: Date.now(), expiresAtMs: Date.now() + 60_000,
+  elements: [{ ref: 'e7', role: 'text', label: 'Settled', frame: { x: 0, y: 0, width: 100, height: 20 },
+    state: { enabled: true, visible: true }, actions: [] }] };
+
+test('with reuse enabled, actions request the settled capture and return it, with its screenshot, as the next observation', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-reuse-'));
+  const shot = join(root, 'shot.png');
+  await writeFile(shot, Buffer.from([0x89, 0x50]));
+  const calls: string[][] = [];
+  const runner: CliRunner = async args => {
+    calls.push(args);
+    if (args.includes('tap')) return { stdout: verboseActionEnvelope(settledFullCapture), stderr: '', exitCode: 0 };
+    if (args.includes('screenshot')) return { stdout: envelope({ artifacts: { screenshotPath: shot }, capture: { format: 'image/png' } }), stderr: '', exitCode: 0 };
+    return { stdout: commandEnvelope(args, args.includes('snapshot-ui') ? capture() : {}), stderr: '', exitCode: 0 };
+  };
+  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner, capture: 'full', screenshots: true, reuseActionCapture: true });
+  try {
+    await driver.prepare(scenario, new AbortController().signal);
+    const observed = await driver.observe(new AbortController().signal);
+    const snapshotsBefore = calls.filter(args => args.includes('snapshot-ui')).length;
+    const next = await driver.act({ kind: 'tap', targetRef: 'e1' }, observed, scenario, new AbortController().signal);
+    assert.ok(calls.find(args => args.includes('tap'))!.includes('--verbose'));
+    assert.equal(next?.reusedFromAction, true);
+    assert.equal(next?.screenHash, 'after');
+    assert.equal(next?.elements[0]?.label, 'Settled');
+    assert.equal(next?.screenshotPath, shot);
+    assert.equal(calls.filter(args => args.includes('snapshot-ui')).length, snapshotsBefore, 'no extra capture after the action');
+  } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
+});
+
+test('an action without a settled capture returns nothing, so the run captures again', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-no-settle-'));
+  const runner: CliRunner = async args => args.includes('tap')
+    ? { stdout: verboseActionEnvelope(), stderr: '', exitCode: 0 }
+    : { stdout: commandEnvelope(args, args.includes('snapshot-ui') ? capture() : {}), stderr: '', exitCode: 0 };
+  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner, capture: 'full', reuseActionCapture: true });
+  try {
+    await driver.prepare(scenario, new AbortController().signal);
+    const observed = await driver.observe(new AbortController().signal);
+    assert.equal(await driver.act({ kind: 'tap', targetRef: 'e1' }, observed, scenario, new AbortController().signal), undefined);
+  } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
+});
+
+test('observe starts the capture and the screenshot together, and can check they show the same screen', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-concurrent-'));
+  const shot = join(root, 'shot.png');
+  await writeFile(shot, Buffer.from([0x89, 0x50]));
+  let inFlight = 0, peak = 0;
+  const runner: CliRunner = async args => {
+    inFlight++; peak = Math.max(peak, inFlight);
+    await new Promise(done => setTimeout(done, 20));
+    inFlight--;
+    if (args.includes('screenshot')) return { stdout: envelope({ artifacts: { screenshotPath: shot }, capture: { format: 'image/png' } }), stderr: '', exitCode: 0 };
+    return { stdout: commandEnvelope(args, args.includes('snapshot-ui') ? capture() : {}), stderr: '', exitCode: 0 };
+  };
+  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner, screenshots: true, verifyScreenshotAgreement: true });
+  try {
+    await driver.prepare(scenario, new AbortController().signal);
+    const observed = await driver.observe(new AbortController().signal);
+    assert.equal(peak, 2);
+    assert.equal(observed.screenshotPath, shot);
+    assert.equal(observed.screenshotAgreement, true);
+    assert.ok((observed.verifyMs ?? -1) >= 0);
+  } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
+});
+
+test('the default runner executes the pinned MobileBuildMCP CLI with Node, not npx', async () => {
+  const { pinnedMobileBuildMcpCli } = await import('../src/device/index.js');
+  assert.match(pinnedMobileBuildMcpCli(), /node_modules\/mobilebuildmcp\/build\/cli\.js$/);
+  const { readFile: read } = await import('node:fs/promises');
+  const pinned = JSON.parse(await read(join(pinnedMobileBuildMcpCli(), '../../package.json'), 'utf8')) as { version: string };
+  assert.equal(pinned.version, '2.7.1');
+});
+
+test('capture reuse is off by default, so actions stay non-verbose and the run captures again', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-reuse-off-'));
+  const calls: string[][] = [];
+  const runner: CliRunner = async args => {
+    calls.push(args);
+    return { stdout: commandEnvelope(args, args.includes('snapshot-ui') ? capture() : {}), stderr: '', exitCode: 0 };
+  };
+  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner, capture: 'full' });
+  try {
+    await driver.prepare(scenario, new AbortController().signal);
+    const observed = await driver.observe(new AbortController().signal);
+    assert.equal(await driver.act({ kind: 'tap', targetRef: 'e1' }, observed, scenario, new AbortController().signal), undefined);
+    assert.ok(!calls.find(args => args.includes('tap'))!.includes('--verbose'));
+  } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
+});

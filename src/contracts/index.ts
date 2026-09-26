@@ -40,6 +40,12 @@ export interface Snapshot {
   screenHash?: string;
   screenshotPath?: string;
   logTails?: Record<string, string>;
+  /** The settled capture the device layer returned with the previous action, reused instead of capturing again. */
+  reusedFromAction?: boolean;
+  /** Measurement only: whether a capture taken after the screenshot still had this capture's screen hash. */
+  screenshotAgreement?: boolean;
+  /** Measurement only: time spent on that extra capture, so speed figures can exclude it. */
+  verifyMs?: number;
 }
 
 export type Action =
@@ -51,7 +57,8 @@ export type Action =
 export interface DeviceDriver {
   prepare(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void>;
   observe(signal: AbortSignal): Promise<Snapshot>;
-  act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<void>;
+  /** Perform the action. May return the settled screen after it, which the run then uses as its next observation. */
+  act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined | void>;
   close(signal: AbortSignal): Promise<void>;
   metrics?(): DeviceMetrics;
 }

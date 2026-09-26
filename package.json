@@ -27,8 +27,9 @@
     "feasibility": "tsx spikes/feasibility/cli.ts"
   },
   "dependencies": {
-    "@typesafe-ai/sdk": "0.6.0",
     "@modelcontextprotocol/server": "2.1.0",
+    "@typesafe-ai/sdk": "0.6.0",
+    "mobilebuildmcp": "2.7.1",
     "zod": "4.6.5"
   },
   "devDependencies": {

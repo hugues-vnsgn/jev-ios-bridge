@@ -1,0 +1,15 @@
+choose.apple hash 1m93tx1 1m93tx1 n 11 11
+choose.bread hash 1ad9b3j 1ad9b3j n 13 13
+order.complete hash 0zhihht 02byema n 21 9
+  only-settled {"role":"other","frame":{"x":0,"y":0,"width":440,"height":956},"state":{"enabled":true,"visible":true},"actions":["longPress","touch","swipeWithin"]}
+  only-settled {"role":"other","frame":{"x":-132,"y":0,"width":440,"height":956},"state":{"enabled":true,"visible":true},"actions":["longPress","touch"]}
+  only-settled {"role":"text","label":"Choose two items","frame":{"x":-116,"y":184,"width":234.33,"height":37.67},"state":{"enabled":true,"visible":true},"actions":["longPress","touch"]}
+  only-settled {"role":"text","label":"Selected: Apple, Bread","identifier":"selection.summary","frame":{"x":-116,"y":241.67,"width":174,"height":22.33},"state":{"enabled":true,"visible":true},"actions":[]}
+  only-settled {"role":"button","label":"Add Apple ($2)","identifier":"choose.apple","frame":{"x":-116,"y":284,"width":408,"height":36.33},"state":{"enabled":false,"visible":true},"actions":[]}
+  only-settled {"role":"text","label":"Add Apple ($2)","frame":{"x":-116,"y":284,"width":408,"height":36.33},"state":{"enabled":false,"visible":true},"actions":[]}
+  only-settled {"role":"image","label":"Selected","identifier":"checkmark.circle.fill","frame":{"x":261.67,"y":293.67,"width":17,"height":17},"state":{"enabled":false,"visible":true},"actions":[]}
+  only-settled {"role":"button","label":"Add Bread ($3)","identifier":"choose.bread","frame":{"x":-116,"y":340.33,"width":408,"height":36.33},"state":{"enabled":false,"visible":true},"actions":[]}
+  only-settled {"role":"text","label":"Add Bread ($3)","frame":{"x":-116,"y":340.33,"width":408,"height":36.33},"state":{"enabled":false,"visible":true},"actions":[]}
+  only-settled {"role":"image","label":"Selected","identifier":"checkmark.circle.fill","frame":{"x":261.67,"y":350,"width":17,"height":17},"state":{"enabled":false,"visible":true},"actions":[]}
+  only-settled {"role":"button","label":"Complete order","identifier":"order.complete","frame":{"x":-116,"y":396.67,"width":408,"height":36.33},"state":{"enabled":true,"visible":true},"actions":["tap","longPress","t
+  only-settled {"role":"other","frame":{"x":100,"y":0,"width":1,"height":1},"state":{"enabled":true,"visible":true},"actions":["longPress","touch"]}

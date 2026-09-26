@@ -177,7 +177,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
   let activeStepId: string | undefined;
   let activeStepStarted: number | undefined;
   const phaseTimingsMs = { prepareMs: 0, observeMs: 0, decideMs: 0,
-    actMs: 0, waitMs: 0, cleanupMs: 0 };
+    actMs: 0, waitMs: 0, cleanupMs: 0, verifyMs: 0 };
   type TimedPhase = keyof typeof phaseTimingsMs;
   const timed = async <T>(key: TimedPhase, operation: () => Promise<T>,
     onMeasured?: (durationMs: number) => void): Promise<T> => {
@@ -193,8 +193,17 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
     let observeDurationMs = 0;
     const snapshot = await timed('observeMs', () => abortableOperation(() => options.driver.observe(signal), signal),
       durationMs => { observeDurationMs = durationMs; });
+    phaseTimingsMs.verifyMs += snapshot.verifyMs ?? 0;
     return { snapshot, observeDurationMs };
   };
+  // The settled screen the last action returned; the next step uses it instead of capturing again.
+  let settled: Snapshot | undefined;
+  const evidenceFields = (snapshot: Snapshot) => ({
+    ...(snapshot.screenshotPath ? { screenshotPath: snapshot.screenshotPath } : {}),
+    ...(snapshot.logTails ? { logTails: snapshot.logTails } : {}),
+    ...(snapshot.reusedFromAction ? { reusedCapture: true } : {}),
+    ...(snapshot.screenshotAgreement === undefined ? {} : { screenshotAgreement: snapshot.screenshotAgreement }),
+  });
 
   try {
     await options.log.append('started', { mode: 'scripted', bundleId: script.app.bundleId,
@@ -214,7 +223,8 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
       activeStepStarted = performance.now();
       steps++;
       phase = 'observe';
-      const { snapshot, observeDurationMs } = await capture();
+      const { snapshot, observeDurationMs } = settled ? { snapshot: settled, observeDurationMs: 0 } : await capture();
+      settled = undefined;
       let assertionObservation: string | undefined;
       let observationError: unknown;
       try {
@@ -224,8 +234,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
       await options.log.append('step', { step: steps, stepId: step.id, kind: step.kind,
         snapshotSequence: snapshot.sequence, observationSummary: summary(snapshot), observeDurationMs,
         ...(assertionObservation === undefined ? {} : { assertionObservation }),
-        ...(snapshot.screenshotPath ? { screenshotPath: snapshot.screenshotPath } : {}),
-        ...(snapshot.logTails ? { logTails: snapshot.logTails } : {}) });
+        ...evidenceFields(snapshot) });
       if (observationError) throw observationError;
 
       if (step.kind === 'action') {
@@ -237,7 +246,12 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
         const act = async () => timed('actMs',
           () => abortableOperation(() => options.driver.act(deviceAction(step, ref), selected, actionContext, signal), signal),
           durationMs => { actDurationMs += durationMs; });
-        try { await act(); }
+        const keepSettled = (result: Snapshot | undefined | void) => {
+          if (!result) return;
+          settled = result;
+          phaseTimingsMs.verifyMs += result.verifyMs ?? 0;
+        };
+        try { keepSettled(await act()); }
         catch (error) {
           if (!(error instanceof StaleSnapshotError)) throw error;
           phase = 'reobserve';
@@ -245,15 +259,13 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
           const fresh = refreshed.snapshot;
           await options.log.append('step', { step: steps, stepId: step.id, kind: step.kind, attempt: 2,
             snapshotSequence: fresh.sequence, observationSummary: summary(fresh),
-            observeDurationMs: refreshed.observeDurationMs,
-            ...(fresh.screenshotPath ? { screenshotPath: fresh.screenshotPath } : {}),
-            ...(fresh.logTails ? { logTails: fresh.logTails } : {}) });
+            observeDurationMs: refreshed.observeDurationMs, ...evidenceFields(fresh) });
           if (snapshotChanged(snapshot, fresh)) throw new ScriptRunError('SCREEN_CHANGED');
           assertScreenGuard(fresh, step.guard, selectionOptions);
           ref = resolveActionTarget(fresh, step.action.selector, requiredAction(step), selectionOptions);
           selected = fresh;
           phase = 'act';
-          await act();
+          keepSettled(await act());
         }
         await options.log.append('action', { step: steps, stepId: step.id, action: step.action.kind,
           selector: step.action.selector, resolvedRef: ref.ref, actDurationMs,
@@ -271,8 +283,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
           await options.log.append('step', { step: steps, stepId: step.id, kind: step.kind, poll,
             snapshotSequence: observed.sequence, observationSummary: summary(observed),
             observeDurationMs: observedDurationMs,
-            ...(observed.screenshotPath ? { screenshotPath: observed.screenshotPath } : {}),
-            ...(observed.logTails ? { logTails: observed.logTails } : {}) });
+            ...evidenceFields(observed) });
         }, selectionOptions);
         await options.log.append('action', { step: steps, stepId: step.id, action: 'wait', timeoutMs: step.timeoutMs,
           waitDurationMs: phaseTimingsMs.waitMs - waitBefore,
