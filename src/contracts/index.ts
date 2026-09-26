@@ -1,4 +1,4 @@
-/** Provisional seams; the checkpoint path is experimental after ticket 18. */
+/** Shared types for scripted runs: device seam, snapshots, the run log, and verdicts. */
 export type Verdict = 'passed' | 'failed' | 'inconclusive';
 export type Direction = 'up' | 'down' | 'left' | 'right';
 
@@ -18,24 +18,6 @@ export interface ActionScenarioContext extends ScenarioContext {
 
 export interface Assertion { id: string; claim: string }
 
-/** Existing single-goal scenario; Jev and the feasibility harness consume this shape. */
-export interface Scenario extends ScenarioContext {
-  goal: string;
-  assertions: Assertion[];
-  values: Record<string, string>;
-  checkpoints?: never;
-}
-
-export interface Checkpoint { id: string; goal: string; assertions: Assertion[]; values?: Record<string, string> }
-
-export interface CheckpointScenario extends ScenarioContext {
-  checkpoints: Checkpoint[];
-  goal?: never;
-  assertions?: never;
-  values?: never;
-}
-
-export type RunScenario = Scenario | CheckpointScenario;
 
 export interface Element {
   ref: string;
@@ -63,26 +45,8 @@ export interface Snapshot {
 export type Action =
   | { kind: 'tap'; targetRef: string }
   | { kind: 'type'; targetRef: string; valueKey: string }
-  | { kind: 'swipe'; targetRef: string; direction: Direction }
-  | { kind: 'wait' | 'stop-goal' | 'stop-blocked' | 'none' };
+  | { kind: 'swipe'; targetRef: string; direction: Direction };
 
-export interface ActionOption { id: string; description: string; action: Action }
-export interface HistoryEntry { step: number; description: string }
-export interface Observation {
-  snapshot: Snapshot;
-  text: string;
-  options: ActionOption[];
-}
-export interface Judgment {
-  choice: string;
-  confidence: number;
-  probabilities: Record<string, number>;
-  goalReached: number;
-  assertions: Record<string, number>;
-  inputTokens: number;
-  latencyMs: number;
-  model: string;
-}
 
 export interface DeviceDriver {
   prepare(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void>;
@@ -101,9 +65,6 @@ export interface DeviceMetrics {
   nearTtlRefreshes: number;
 }
 
-export interface JevJudge {
-  judge(scenario: Scenario, observation: Observation, signal: AbortSignal): Promise<Judgment>;
-}
 
 export interface RunEvent {
   version: 1;

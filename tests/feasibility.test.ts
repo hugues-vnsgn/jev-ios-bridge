@@ -4,8 +4,9 @@ import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
-import type { JevJudge, Scenario, Snapshot } from '../src/contracts/index.js';
-import { JevRequestError } from '../src/jev/index.js';
+import type { Snapshot } from '../src/contracts/index.js';
+import type { JevJudge, Scenario } from '../spikes/legacy/contracts.js';
+import { JevRequestError } from '../spikes/legacy/jev.js';
 import {
   digest, makeDraftManifest, runHeldout, runTuning, validateCorpus, validateFrozenExperiment,
   verifyCorpusAssets,

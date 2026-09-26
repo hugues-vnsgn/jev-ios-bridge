@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { access, mkdir, open, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
-import { createJevJudge } from '../../src/jev/index.js';
+import { createJevJudge } from '../legacy/jev.js';
 import {
   ExperimentError, digest, implementationDigest, makeDraftManifest, renderLabelReview, runHeldout, runTuning,
   validateFrozenExperiment, validateFrozenSelection, verifyCorpusAssets, type ExperimentManifest, type FeasibilityCorpus,

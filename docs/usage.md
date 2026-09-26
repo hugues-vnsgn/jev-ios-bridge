@@ -61,7 +61,7 @@ This example uses the repository's installed diagnostic fixture and checks its f
 
 Adapt selectors and claims to the app's actual accessibility evidence. The diagnostic fixture's source/build instructions are in the repository, not the installed package.
 
-A script has 1–100 steps with unique IDs and ends at a checkpoint. Optional `preconditions` describe setup the author arranges; they do not execute setup. Each guard requires one or more `present` selectors and can forbid `absent` selectors. A selector matches exact `identifier`, `role`, `label`, and/or `value`; at least one nonblank identifier/role/label is required. An empty value can be an additional filter. Captured refs and list indices are not durable selectors.
+A script has 1–100 steps with unique IDs and ends at a checkpoint. Optional `preconditions` describe setup the author arranges; they do not execute setup. Each guard requires one or more `present` selectors and can forbid `absent` selectors. A selector matches exact `identifier`, `role`, `label`, and/or `value`; at least one nonblank identifier/role/label is required. A value filter must not be empty: an empty Compose field has no value and an empty native field reports its placeholder, so emptiness can't be selected. Captured refs and list indices are not durable selectors.
 
 | Step | Additional fields |
 | --- | --- |
@@ -85,9 +85,11 @@ node --env-file=/absolute/path/to/.env dist/cli.js run scenario.json --max-steps
 
 The command prints the watch URL to stderr and the report to stdout. Defaults are 100 steps and 300 seconds across the entire run; the maximum wall limit is one hour. Limits do not alter assertion thresholds. Add `--json` to print the run's `report.json` instead of the prose report. Exit codes: 0 passed, 1 failed, 2 inconclusive, 3 could not start (invalid script, missing key, no dedicated simulator); 130 and 143 after SIGINT and SIGTERM. `report RUN_ID` returns the same codes.
 
-At each checkpoint, probability at least 0.9 establishes a claim; at most 0.1 rejects it. Any uncertain claim makes that checkpoint inconclusive; otherwise a false claim fails it. Passing requires every step/checkpoint and successful cleanup. Unexpected UI, budget overflow, missing targets, provider errors, or interruption leave verification inconclusive. Earlier checkpoint proofs stay in the log.
+At each checkpoint, probability at least 0.9 establishes a claim; at most 0.1 rejects it. A confidently false claim fails that checkpoint even when other claims are uncertain; otherwise any uncertain claim makes it inconclusive. Each checkpoint is judged once. Passing requires every step/checkpoint and successful cleanup. Unexpected UI, budget overflow, missing targets, provider errors, or interruption leave verification inconclusive. Earlier checkpoint proofs stay in the log.
 
-Cancellation stops new work, waits for issued device acknowledgements, then stops the app. If an action or cleanup remains unconfirmed, the device lock is retained and the result is inconclusive. Do not blindly remove such a lock: first establish that no command remains in flight. Completed verdicts are not rewritten by a later cancellation request.
+Cancellation stops new work, waits for issued device acknowledgements, then stops the app. Cleanup waits up to 45 seconds, longer than one device command's own 35-second deadline. If an action or cleanup still remains unconfirmed, the device lock is retained and the result is inconclusive; when the late command does acknowledge, the bridge finishes cleanup and releases the lock by itself.
+
+The lock is a file, `$TMPDIR/jev-ios-bridge-device-locks/<SIMULATOR-UUID>.lock`, holding the owning bridge process ID. A run that finds a lock whose process has exited removes it and continues. A `DEVICE_BUSY` message names the process and the lock file. If that process is a bridge you no longer need, stop it (for example, restart the MCP server); the next run then clears the lock. Never delete a lock while its process is still running: a device command may still be in flight. Completed verdicts are not rewritten by a later cancellation request.
 
 ## MCP and the host skill
 
@@ -121,11 +123,11 @@ Submit once, then use `get_report` with `waitMs: 45000`. Running replies contain
 
 ## Evidence and data handling
 
-Artifacts live in `.jev-runs/<run-id>/` in the current directory, or under `JEV_RUNS_DIR`. Directories and files have owner-only permissions. Retention is manual. Reports link checkpoint claims/probabilities to observed text, screenshot filenames, and JSONL events. Large reports mark truncation and point to complete local evidence.
+Artifacts live in `.jev-runs/<run-id>/` in the current directory, or under `JEV_RUNS_DIR`. Directories and files have owner-only permissions, and the bridge writes a `.gitignore` containing `*` into the evidence folder so runs are never committed by accident. Each finished run has a `report.json` beside its `run.jsonl`. Retention is manual. Reports link checkpoint claims/probabilities to observed text, screenshot filenames, and JSONL events. Large reports mark truncation and point to complete local evidence.
 
-TypeSafe receives current observed screen text and assertion claims. Supplied values go to device actions and can subsequently appear in captured text. The host provider sees the submitted script and final report. The API key and exact supplied values are redacted from textual journal content. Transformed values, such as different casing, may not match that literal redaction. Screenshots remain images and can contain visible private data. Screenshots and bounded device log excerpts are not sent to Jev. Use synthetic data for verification and agree on this data flow before using real user information.
+TypeSafe receives current observed screen text and assertion claims. Supplied values go to device actions and can subsequently appear in captured text. The host provider sees the submitted script and final report. The API key goes only to TypeSafe: device-layer processes run without it. The API key and exact supplied values are redacted from textual journal content. Transformed values, such as different casing, may not match that literal redaction. Screenshots remain images and can contain visible private data. Screenshots and bounded device log excerpts are not sent to Jev. Use synthetic data for verification and agree on this data flow before using real user information.
 
-The watch server binds to `127.0.0.1` and requires the token in its URL. Anyone on the machine with that URL can read the run evidence while the server lives. It presents the recorded verdict and screenshots, without streaming video or re-judging outcomes.
+The watch server binds to `127.0.0.1` and requires the token in its URL. Each run gets its own token, which opens only that run and only while the server lives. Anyone on the machine with that URL can read that run's evidence during that time. It presents the recorded verdict and screenshots, without streaming video or re-judging outcomes.
 
 After interruption:
 

@@ -3,7 +3,7 @@ import {
   TypeSafeClient, choice, noul,
   type Questions, type SystemOneRequest,
 } from '@typesafe-ai/sdk';
-import type { JevJudge, Judgment, Observation, Scenario } from '../contracts/index.js';
+import type { JevJudge, Judgment, Observation, Scenario } from './contracts.js';
 
 export const JEV_MODEL = 'jev-1.13.0';
 export interface QuestionWording {

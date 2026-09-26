@@ -10,6 +10,9 @@
   "bin": {
     "jev-ios-bridge": "dist/cli.js"
   },
+  "exports": {
+    "./package.json": "./package.json"
+  },
   "files": [
     "dist",
     "skills",
@@ -17,7 +20,7 @@
     "docs/usage.md"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",
     "check": "npm run typecheck && npm test && npm run build",

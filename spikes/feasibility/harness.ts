@@ -2,10 +2,11 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { readFile, realpath } from 'node:fs/promises';
 import { dirname, isAbsolute, relative, resolve } from 'node:path';
-import type { HistoryEntry, JevJudge, Scenario, Snapshot } from '../../src/contracts/index.js';
-import { actionOptions, buildObservation, projectActionOptions, type ObservationVariant, type OptionRule } from '../../src/observation/index.js';
-import { DEFAULT_WORDING, V2_WORDING, V3_WORDING, JEV_MODEL, JevContractError, JevRequestError, type QuestionWording } from '../../src/jev/index.js';
-import { ObservationError } from '../../src/observation/index.js';
+import type { Snapshot } from '../../src/contracts/index.js';
+import type { HistoryEntry, JevJudge, Scenario } from '../legacy/contracts.js';
+import { actionOptions, buildObservation, projectActionOptions, type ObservationVariant, type OptionRule } from '../legacy/observation.js';
+import { DEFAULT_WORDING, V2_WORDING, V3_WORDING, JEV_MODEL, JevContractError, JevRequestError, type QuestionWording } from '../legacy/jev.js';
+import { ObservationError } from '../legacy/observation.js';
 
 export interface FeasibilityCase {
   id: string;
@@ -161,8 +162,9 @@ export async function verifyCorpusAssets(corpus: FeasibilityCorpus, corpusPath: 
 export function implementationDigest(): string {
   const sources = [
     new URL('../../src/contracts/index.ts', import.meta.url),
-    new URL('../../src/observation/index.ts', import.meta.url),
-    new URL('../../src/jev/index.ts', import.meta.url),
+    new URL('../legacy/contracts.ts', import.meta.url),
+    new URL('../legacy/observation.ts', import.meta.url),
+    new URL('../legacy/jev.ts', import.meta.url),
     new URL('./harness.ts', import.meta.url),
     new URL('./cli.ts', import.meta.url),
   ];

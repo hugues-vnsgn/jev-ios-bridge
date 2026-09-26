@@ -1,5 +1,6 @@
 import { setTimeout as delay } from 'node:timers/promises';
-import type { Action, DeviceDriver, Element, RunLog, Scenario, Snapshot, Verdict } from '../../src/contracts/index.js';
+import type { Action, DeviceDriver, Element, RunLog, Snapshot, Verdict } from '../../src/contracts/index.js';
+import type { Scenario } from '../legacy/contracts.js';
 import { DeviceCliError, StaleSnapshotError } from '../../src/device/index.js';
 import type { AssertionJudgment, ScriptedJudge, ScriptedScenario, ScriptedStep } from './contracts.js';
 import { SCRIPTED_JEV_MODEL } from './jev.js';

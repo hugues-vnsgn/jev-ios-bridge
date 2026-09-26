@@ -1,4 +1,5 @@
-import type { ActionOption, Element, HistoryEntry, Observation, Scenario, Snapshot } from '../contracts/index.js';
+import type { Element, Snapshot } from '../../src/contracts/index.js';
+import type { ActionOption, HistoryEntry, Observation, Scenario } from './contracts.js';
 
 export type ObservationVariant = 'compact' | 'full';
 export type OptionRule = 'v1' | 'v2';

@@ -295,7 +295,7 @@ test('watch serves scripted verdict and progress with token, text rendering, and
     await log.append('checkpoint', { step: 2, stepId: 'verify', status: 'passed', assertions: [] });
     await log.append('verdict', { verdict: 'passed', reason: 'ALL_CHECKPOINTS_PASSED', steps: 2 });
     watch = await startWatchServer(root);
-    const address = new URL(watch.url);
+    const address = new URL(watch.urlFor('scripted-watch'));
     const headers = { Authorization: `Bearer ${address.searchParams.get('token')}` };
     const denied = await fetch(`${address.origin}/events?run=scripted-watch`);
     assert.equal(denied.status, 401);

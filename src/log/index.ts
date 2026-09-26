@@ -13,12 +13,9 @@ export function validateRunId(runId: string): string {
 
 const protocolValues: Record<string, ReadonlySet<string>> = {
   mode: new Set(['scripted']),
-  kind: new Set(['action', 'wait', 'checkpoint', 'tap', 'type', 'replaceText', 'swipe',
-    'stop-goal', 'stop-blocked', 'none']),
+  kind: new Set(['action', 'wait', 'checkpoint']),
   'plannedSteps.kind': new Set(['action', 'wait', 'checkpoint']),
-  action: new Set(['tap', 'type', 'replaceText', 'swipe', 'wait']),
-  'action.kind': new Set(['tap', 'type', 'replaceText', 'swipe', 'wait',
-    'stop-goal', 'stop-blocked', 'none']),
+  action: new Set(['tap', 'replaceText', 'swipe', 'wait']),
   'action.direction': new Set(['up', 'down', 'left', 'right']),
   status: new Set(['passed', 'failed', 'inconclusive']),
   verdict: new Set(['passed', 'failed', 'inconclusive']),
@@ -31,7 +28,7 @@ protocolValues.reason = errorCodes;
 protocolValues.bridgeVersion = new Set([BRIDGE_VERSION]);
 protocolValues.jevModel = protocolValues.model!;
 protocolValues.projectionRule = new Set([PROJECTION_RULE]);
-const identifierParents = new Set(['plannedSteps', 'checkpoints', 'assertions', 'options']);
+const identifierParents = new Set(['plannedSteps', 'assertions']);
 
 function createRedactor(secrets: string[]): (value: unknown) => unknown {
   const ordered = [...new Set(secrets.filter(Boolean))].sort((a, b) => b.length - a.length);
@@ -46,8 +43,7 @@ function createRedactor(secrets: string[]): (value: unknown) => unknown {
       const field = path.join('.');
       if (protocolValues[field]?.has(input)) return input;
       if (field === 'screenshotPath' && /^screen-\d+\.(jpg|png)$/.test(input)) return input;
-      if (field === 'stepId' || field === 'checkpointId' || field === 'judgment.choice' ||
-          (path.at(-1) === 'id' && identifierParents.has(path.at(-2) ?? ''))) return identifier(input);
+      if (field === 'stepId' || (path.at(-1) === 'id' && identifierParents.has(path.at(-2) ?? ''))) return identifier(input);
       return text(input);
     }
     if (Array.isArray(input)) return input.map(item => walk(item, path));
@@ -99,6 +95,9 @@ export async function readRunEvents(baseDir: string, runId: string): Promise<Run
 export async function createRunLog(baseDir: string, runId: string, options: { values?: string[] } = {}): Promise<RunLog> {
   const root = resolve(baseDir);
   await mkdir(root, { recursive: true, mode: 0o700 });
+  // Evidence holds unredacted screenshots; keep the whole folder out of the app's git repository.
+  await writeFile(join(root, '.gitignore'), '# jev-ios-bridge run evidence (screenshots, logs); never commit it\n*\n',
+    { flag: 'wx', mode: 0o600 }).catch((error: NodeJS.ErrnoException) => { if (error.code !== 'EEXIST') throw error; });
   const directory = join(root, validateRunId(runId));
   // Exclusive creation prevents accidental resume/overwrite of another run.
   await mkdir(directory, { mode: 0o700 });

@@ -8,7 +8,7 @@ import { test } from 'node:test';
 import type { DeviceDriver, Snapshot } from '../src/contracts/index.js';
 import type { ScriptedJudge } from '../src/scripted/contracts.js';
 import { createRunLog, readRunEvents } from '../src/log/index.js';
-import { buildReport } from '../src/report/index.js';
+import { buildScriptedReport } from '../src/scripted/report.js';
 import { BridgeService } from '../src/service.js';
 import { startWatchServer } from '../src/watch/index.js';
 
@@ -135,7 +135,7 @@ test('partial final JSONL record cannot turn an interrupted run into a pass', as
     await appendFile(join(root, 'partial', 'run.jsonl'), '{"version":1,"runId":"partial","sequence":2');
     const events = await readRunEvents(root, 'partial');
     assert.equal(events.length, 1);
-    assert.equal(buildReport(events).verdict, 'inconclusive');
+    assert.equal(buildScriptedReport(events).verdict, 'inconclusive');
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
@@ -159,10 +159,10 @@ test('private values are redacted in recorded and served evidence; HTML remains 
     await log.append('started', { goal: 'Safe' });
     await log.append('step', { step: 1, observationSummary: `${html} ${privateValue}` });
     await log.append('verdict', { verdict: 'inconclusive', reason: privateValue, steps: 1, inputTokens: 0, durationMs: 1 });
-    const report = buildReport(await readRunEvents(root, 'safe'));
+    const report = buildScriptedReport(await readRunEvents(root, 'safe'));
     assert.ok(!JSON.stringify(report).includes(privateValue));
     watch = await startWatchServer(root);
-    const url = new URL(watch.url);
+    const url = new URL(watch.urlFor('safe'));
     const response = await fetch(`${url.origin}/events?run=safe`, { headers: { Authorization: `Bearer ${url.searchParams.get('token')}` } });
     assert.equal(response.status, 200);
     const body = await response.text();
@@ -186,7 +186,7 @@ test('watch serves copied images only with its token and a safe basename', async
     const stored = (await log.read())[1]?.data.screenshotPath;
     assert.equal(stored, 'screen-2.jpg');
     watch = await startWatchServer(root);
-    const url = new URL(watch.url);
+    const url = new URL(watch.urlFor('image'));
     const endpoint = `${url.origin}/image?run=image&name=${stored}`;
     assert.equal((await fetch(endpoint)).status, 401);
     const headers = { Authorization: `Bearer ${url.searchParams.get('token')}` };
@@ -197,7 +197,12 @@ test('watch serves copied images only with its token and a safe basename', async
     assert.deepEqual(Buffer.from(await image.arrayBuffer()), Buffer.from([0xff, 0xd8, 0xff, 0xd9]));
     assert.equal((await fetch(`${url.origin}/image?run=image&name=..%2Fsource.jpg`, { headers })).status, 400);
     assert.equal((await fetch(`${url.origin}/image?run=image&name=screen-99.jpg`, { headers })).status, 404);
-    assert.equal((await fetch(`${url.origin}/events?run=missing`, { headers })).status, 404);
+    // A run's token opens only that run.
+    assert.equal((await fetch(`${url.origin}/events?run=missing`, { headers })).status, 401);
+    const other = await createRunLog(root, 'other');
+    await other.append('started', {});
+    new URL(watch.urlFor('other'));
+    assert.equal((await fetch(`${url.origin}/events?run=other`, { headers })).status, 401);
   } finally { await watch?.close(); await rm(root, { recursive: true, force: true }); }
 });
 

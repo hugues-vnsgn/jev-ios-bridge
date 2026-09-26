@@ -167,13 +167,19 @@ export function parseSnapshot(data: JsonObject, deviceId: string, screenshotPath
   };
 }
 
+/** The environment for device-layer processes: the bridge's own, minus the Jev key, with vendor telemetry off. */
+export function deviceEnvironment(source: NodeJS.ProcessEnv = process.env): NodeJS.ProcessEnv {
+  const { TYPESAFE_API_KEY: _jevKey, ...environment } = source;
+  return { ...environment, MOBILEBUILDMCP_SENTRY_DISABLED: 'true' };
+}
+
 function defaultRunner(options: MobileBuildMcpDriverOptions): CliRunner {
   const executable = options.executable ?? 'npx';
   const prefix = options.prefixArgs ?? (options.executable ? [] : ['--yes', 'mobilebuildmcp@2.7.1']);
   return (args, signal) => new Promise((resolveResult, reject) => {
     execFile(executable, [...prefix, ...args], {
       cwd: resolve(options.cwd),
-      env: { ...process.env, MOBILEBUILDMCP_SENTRY_DISABLED: 'true' },
+      env: deviceEnvironment(),
       signal,
       maxBuffer: 8 * 1024 * 1024,
     }, (error, stdout, stderr) => {
@@ -211,17 +217,41 @@ export async function selectDeviceId(cwd: string, scriptUdid?: string, defaultUd
   return selected.toUpperCase();
 }
 
+/** Where device locks live. Documented so a person can inspect one; the bridge clears stale ones itself. */
+export const DEFAULT_LOCK_ROOT = join(tmpdir(), 'jev-ios-bridge-device-locks');
+
+function processAlive(pid: unknown): boolean {
+  if (!Number.isSafeInteger(pid) || (pid as number) <= 0) return true; // unknown owner: never assume stale
+  try { process.kill(pid as number, 0); return true; }
+  catch (error) { return (error as NodeJS.ErrnoException).code === 'EPERM'; }
+}
+
+async function lockOwner(path: string): Promise<{ pid?: unknown } | undefined> {
+  try { return JSON.parse(await readFile(path, 'utf8')) as { pid?: unknown }; }
+  catch { return undefined; }
+}
+
 async function acquireLock(root: string, deviceId: string): Promise<() => Promise<void>> {
   await mkdir(root, { recursive: true });
   const path = join(root, `${deviceId.toUpperCase()}.lock`);
   const token = randomUUID();
   let file;
-  try { file = await open(path, 'wx', 0o600); }
-  catch (error) {
-    if ((error as NodeJS.ErrnoException).code === 'EEXIST') throw new DeviceCliError('DEVICE_BUSY', `Device ${deviceId} is already locked`);
-    throw error;
+  for (let attempt = 0; !file; attempt++) {
+    try { file = await open(path, 'wx', 0o600); }
+    catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error;
+      const owner = await lockOwner(path);
+      // A lock whose bridge process has exited can't be protecting an in-flight command.
+      if (attempt === 0 && owner && !processAlive(owner.pid)) {
+        await unlink(path).catch((unlinkError: NodeJS.ErrnoException) => { if (unlinkError.code !== 'ENOENT') throw unlinkError; });
+        continue;
+      }
+      const holder = owner && Number.isSafeInteger(owner.pid) ? `bridge process ${String(owner.pid)}` : 'another bridge process';
+      throw new DeviceCliError('DEVICE_BUSY', `Device ${deviceId} is locked by ${holder} (lock file ${path}). ` +
+        'Wait for that run to finish, or stop that process; the next run then clears the lock.');
+    }
   }
-  try { await file.writeFile(JSON.stringify({ pid: process.pid, token })); }
+  try { await file.writeFile(JSON.stringify({ pid: process.pid, token, deviceId, createdAt: new Date().toISOString() })); }
   catch (error) { await file.close(); await unlink(path); throw error; }
   await file.close();
   return async () => {
@@ -304,6 +334,7 @@ export class MobileBuildMcpDriver implements DeviceDriver {
   private readonly unconfirmedCommands = new Set<symbol>();
   private readonly pendingOperations = new Set<Promise<unknown>>();
   private closing: Promise<void> | undefined;
+  private lateCleanup: Promise<void> | undefined;
   private readonly uiCommandTimeoutMs: number;
 
   constructor(private readonly options: MobileBuildMcpDriverOptions) {
@@ -362,7 +393,7 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     if (this.releaseLock) throw new Error('Driver is already prepared');
     if (signal.aborted) throw signal.reason;
     const deviceId = await selectDeviceId(this.options.cwd, scenario.device?.udid, this.options.defaultUdid);
-    this.releaseLock = await acquireLock(this.options.lockRoot ?? join(tmpdir(), 'jev-ios-bridge-device-locks'), deviceId);
+    this.releaseLock = await acquireLock(this.options.lockRoot ?? DEFAULT_LOCK_ROOT, deviceId);
     this.referenceRefreshes = 0;
     this.referenceExpiries = 0;
     this.nearTtlRefreshes = 0;
@@ -418,8 +449,6 @@ export class MobileBuildMcpDriver implements DeviceDriver {
   }
 
   private async actIssued(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<void> {
-    if (action.kind === 'wait') return;
-    if (!('targetRef' in action)) throw new Error(`Cannot send ${action.kind} to device`);
     if (!this.deviceId || snapshot.deviceId !== this.deviceId) throw new Error('Snapshot belongs to a different device');
     const old = snapshot.elements.find((element) => element.ref === action.targetRef);
     if (!old) throw new StaleSnapshotError('Target reference is absent from observation');
@@ -463,8 +492,24 @@ export class MobileBuildMcpDriver implements DeviceDriver {
 
   close(signal: AbortSignal): Promise<void> {
     if (this.closing) return this.closing;
-    this.closing = this.finishClose(signal).finally(() => { this.closing = undefined; });
+    this.closing = this.finishClose(signal).catch((error: unknown) => {
+      if (error instanceof DeviceCliError && error.code === 'UI_ACTION_UNCONFIRMED') this.finishWhenAcknowledged();
+      throw error;
+    }).finally(() => { this.closing = undefined; });
     return this.closing;
+  }
+
+  /**
+   * Cleanup gave up while an issued command was still running. When that command does acknowledge,
+   * finish cleanup (stop the app, release the lock) so the device doesn't stay locked for the life
+   * of this process. A command whose outcome stays unknown keeps the lock, as before.
+   */
+  private finishWhenAcknowledged(): void {
+    if (this.pendingOperations.size === 0 || this.lateCleanup) return;
+    this.lateCleanup = Promise.allSettled([...this.pendingOperations])
+      .then(() => this.close(AbortSignal.timeout(this.uiCommandTimeoutMs + 5_000)))
+      .catch(() => {})
+      .finally(() => { this.lateCleanup = undefined; });
   }
 
   private async finishClose(signal: AbortSignal): Promise<void> {

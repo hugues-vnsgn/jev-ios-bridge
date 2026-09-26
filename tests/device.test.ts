@@ -3,14 +3,11 @@ import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
-import type { DeviceDriver, Scenario } from '../src/contracts/index.js';
+import type { ActionScenarioContext, DeviceDriver } from '../src/contracts/index.js';
 import { DeviceCliError, MobileBuildMcpDriver, StaleSnapshotError, parseSnapshot, type CliRunner } from '../src/device/index.js';
 
 const udid = '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7';
-const scenario: Scenario = {
-  goal: 'Open Settings', app: { bundleId: 'com.apple.Preferences' },
-  assertions: [{ id: 'open', claim: 'Settings is open' }], values: {}, device: { udid },
-};
+const scenario: ActionScenarioContext = { app: { bundleId: 'com.apple.Preferences' }, values: {}, device: { udid } };
 
 function envelope(data: unknown, didError = false, schema = 'mobilebuildmcp.output.capture-result'): string {
   const payload = data && typeof data === 'object' ? data as Record<string, unknown> : {};
@@ -448,6 +445,71 @@ test('cleanup deadline retains lock until the pending CLI later acknowledges and
     await second.close(new AbortController().signal);
     await rm(root, { recursive: true, force: true });
   }
+});
+
+test('a late acknowledgement finishes cleanup and releases the lock without another close call', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-late-ack-'));
+  let actionStarted!: () => void;
+  let finishAction!: (result: { stdout: string; stderr: string; exitCode: number }) => void;
+  const started = new Promise<void>(resolve => { actionStarted = resolve; });
+  const terminal = new Promise<{ stdout: string; stderr: string; exitCode: number }>(resolve => { finishAction = resolve; });
+  let stops = 0;
+  const runner: CliRunner = async args => {
+    if (args.includes('snapshot-ui')) return { stdout: envelope(capture()), stderr: '', exitCode: 0 };
+    if (args.includes('tap')) { actionStarted(); return terminal; }
+    if (args.includes('stop')) stops++;
+    return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
+  };
+  const first = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner, uiCommandTimeoutMs: 1_000 });
+  const second = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  try {
+    await first.prepare(scenario, new AbortController().signal);
+    const observed = await first.observe(new AbortController().signal);
+    const runAbort = new AbortController();
+    const action = first.act({ kind: 'tap', targetRef: 'e1' }, observed, scenario, runAbort.signal).catch(() => {});
+    await started;
+    runAbort.abort();
+    const cleanup = new AbortController();
+    const closing = first.close(cleanup.signal);
+    cleanup.abort();
+    await assert.rejects(closing, (error: unknown) => error instanceof DeviceCliError && error.code === 'UI_ACTION_UNCONFIRMED');
+    finishAction({ stdout: actionEnvelope(), stderr: '', exitCode: 0 });
+    await action;
+    for (let attempt = 0; attempt < 100 && stops === 0; attempt++) await new Promise(done => setTimeout(done, 10));
+    assert.equal(stops, 1);
+    await second.prepare(scenario, new AbortController().signal);
+  } finally {
+    finishAction({ stdout: actionEnvelope(), stderr: '', exitCode: 0 });
+    await second.close(new AbortController().signal);
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test('a lock left by an exited bridge process is cleared by the next run', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-stale-lock-'));
+  const { spawnSync } = await import('node:child_process');
+  const exited = spawnSync(process.execPath, ['-e', '0']).pid;
+  await writeFile(join(root, `${udid}.lock`), JSON.stringify({ pid: exited, token: 'old' }));
+  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root,
+    runner: async args => ({ stdout: commandEnvelope(args), stderr: '', exitCode: 0 }) });
+  try {
+    await driver.prepare(scenario, new AbortController().signal);
+  } finally {
+    await driver.close(new AbortController().signal);
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test('a lock held by a live process names its holder and the lock file', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-live-lock-'));
+  await writeFile(join(root, `${udid}.lock`), JSON.stringify({ pid: process.pid, token: 'other' }));
+  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root,
+    runner: async args => ({ stdout: commandEnvelope(args), stderr: '', exitCode: 0 }) });
+  try {
+    await assert.rejects(driver.prepare(scenario, new AbortController().signal), (error: unknown) =>
+      error instanceof DeviceCliError && error.code === 'DEVICE_BUSY' &&
+      error.message.includes(`bridge process ${process.pid}`) && error.message.includes(join(root, `${udid}.lock`)));
+  } finally { await rm(root, { recursive: true, force: true }); }
 });
 
 test('unconfirmed app stop keeps the bridge device lock until cleanup retry', async () => {
