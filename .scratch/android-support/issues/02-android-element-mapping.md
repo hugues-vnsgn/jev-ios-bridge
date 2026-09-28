@@ -1,7 +1,8 @@
 # How Android elements map onto the bridge's elements
 
 Type: prototype
-Status: open
+Status: claimed
+Claimed by: Claude Code (owner session)
 Blocked by: none
 
 ## Question
