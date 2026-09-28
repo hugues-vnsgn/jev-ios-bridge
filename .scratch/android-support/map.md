@@ -31,6 +31,7 @@ A reviewed **v1.2.0 release spec for Android support**, written for Claude Code 
 
 ## Decisions so far
 
+- [What Jev sees on Android, and the 10-screen check](issues/04-what-jev-sees-on-android.md): Android passes (31 claims on 10 screens, plain claims 18 right, 2 uncertain, 0 wrong) once an empty field's hint is shown as `placeholder`, which fixed the one confidently wrong answer; view rule `android-full-text-v1` with an Android header and the iOS fields.
 - [How a script names an Android app and device](issues/03-script-and-device-identity.md): `"platform": "android"` with a required `app.package` (Android's naming rule), optional `app.activity` and string-only `app.intentExtras`, and `launchArgs` rejected; the device is `device.serial` or `device.avd`, else `JEV_ANDROID_DEVICE`, else `NO_DEVICE`; the plugin's simulator setting becomes optional; restart with force-stop then `am start -W`; refuse unauthorized, unbooted, locked or app-missing devices, and only wake a dark screen.
 - [How Android elements map onto the bridge's elements](issues/02-android-element-mapping.md): roles from the Android class or Compose's role-marker child; a blank button takes its first inner text as its label, and that text stays in Jev's view but can't be selected; system bars and empty layout boxes are dropped; full resource-ids; switches are `0`/`1`; no new roles. Prototype on branch `prototype/android-element-mapping`.
 - [mobilecli as a dependency: pinning, shipping, telemetry, and lifecycle](issues/01-mobilecli-as-a-dependency.md): pin `mobilecli@1.0.14` and run its binary directly; no telemetry, and the keychain and cloud fleet are turned off by flags and env; a private `MOBILECLI_HOME` per bridge process; `close` stops the daemon, kills the `DeviceServer`, and removes the `adb forward`; emulator IDs come from the AVD name. [Note](../../docs/research/mobilecli-dependency.md).
@@ -69,8 +70,7 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03 resolved
-    class T04 claimed
+    class T01,T02,T03,T04 resolved
     class T05,T06,T07 frontier
     class T08,T09 blocked
 ```
@@ -78,10 +78,10 @@ flowchart LR
 
 ## Not yet specified
 
-- **Guide pages:** what an Android setup page covers (`testTagsAsResourceId`, which apps without it lack entirely; custom Compose tabs and toggles that must expose `selected` or checked state; emulator settings, the Xiaomi input setting, `pm grant` for permission dialogs), and how the limits page and quickstart change. This clears once the element mapping, script shape and actions are settled.
+- **Guide pages:** what an Android setup page covers (`testTagsAsResourceId`, which apps without it lack entirely; custom Compose tabs and toggles that must expose `selected` or checked state; emulator settings, the Xiaomi input setting, `pm grant` for permission dialogs), and how the limits page and quickstart change. Claim-writing notes from the Jev check: quote numbers exactly as the app formats them, and never claim that an empty field "contains" its hint. This clears once the element mapping, script shape and actions are settled.
 - **The `/test-android` skill:** how much it shares with `/test-ios`, and how it captures a screen while authoring (mobilecli directly, or a bridge command).
 - **Speed:** whether v1.2.0 needs a speed target, or only reports the numbers. Typing ran at about 0.28 s per character in the spike.
-- **Contract additions in detail:** the exact new reason codes, roles and report fields. This follows from the mapping, script shape and actions tickets.
+- **Contract additions in detail:** the exact new reason codes, roles and report fields (already fixed: projection rule `android-full-text-v1`, and a `placeholder` field in the Android view). This follows from the mapping, script shape and actions tickets.
 
 ## Out of scope
 
