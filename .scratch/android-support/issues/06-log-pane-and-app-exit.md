@@ -1,7 +1,8 @@
 # Log pane and app-exit detection on Android
 
 Type: task
-Status: open
+Status: claimed
+Claimed by: subagent (owner session, 2026-09-28)
 Blocked by: 01
 
 ## Question
