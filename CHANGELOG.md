@@ -2,6 +2,13 @@
 
 jev-ios-bridge follows [semantic versioning](https://semver.org). What 1.x keeps stable: [stability](docs/guide/11-stability.md).
 
+## Unreleased
+
+### Added
+
+- **A Claude Code plugin build.** `npm run build:plugin` packs the bridge, the `/test-ios` skill, and the MCP server into one zip for a GitHub release, with a `marketplace.json` that points at it. On install, Claude Code asks for the TypeSafe key, which it keeps in secure storage, and the simulator's UDID. See `plugin/README.md`.
+- **`JEV_PROJECT_DIR`,** which stands in for the working directory: where `.jev-runs/`, `.mobilebuildmcp/config.yaml`, and relative script paths are found. The plugin sets it to your project, because Claude Code starts plugin servers in the plugin's own folder. Unset, nothing changes.
+
 ## 1.0.0
 
 The first stable release. The script format, CLI and MCP tools, verdict rules, and report and evidence layout are now frozen for 1.x.

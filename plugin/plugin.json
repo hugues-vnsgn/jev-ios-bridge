@@ -1,0 +1,35 @@
+{
+  "name": "jev-ios-bridge",
+  "description": "Check iOS apps (SwiftUI, UIKit, Compose Multiplatform) on a simulator with scripted steps and Jev-judged screen claims",
+  "author": { "name": "hugues-vnsgn", "url": "https://github.com/hugues-vnsgn" },
+  "homepage": "https://github.com/hugues-vnsgn/jev-ios-bridge",
+  "repository": "https://github.com/hugues-vnsgn/jev-ios-bridge",
+  "license": "MIT",
+  "keywords": ["ios", "simulator", "testing", "swiftui", "compose-multiplatform", "jev"],
+  "userConfig": {
+    "typesafe_api_key": {
+      "type": "string",
+      "title": "TypeSafe API key",
+      "description": "Your key for Jev, from TypeSafe. Kept in your system's secure storage, never in a project file.",
+      "sensitive": true,
+      "required": true
+    },
+    "simulator_udid": {
+      "type": "string",
+      "title": "Simulator UDID",
+      "description": "UUID of a simulator that only these checks drive (xcrun simctl list devices). Aliases such as booted are refused.",
+      "required": true
+    }
+  },
+  "mcpServers": {
+    "jev-ios-bridge": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/dist/cli.js", "mcp"],
+      "env": {
+        "TYPESAFE_API_KEY": "${user_config.typesafe_api_key}",
+        "JEV_DEVICE_UDID": "${user_config.simulator_udid}",
+        "JEV_PROJECT_DIR": "${CLAUDE_PROJECT_DIR}"
+      }
+    }
+  }
+}

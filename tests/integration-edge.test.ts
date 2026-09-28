@@ -238,3 +238,20 @@ test('CLI report reads persisted evidence without a device or key', async () => 
     assert.equal((await readFile(join(root, 'offline', 'run.jsonl'), 'utf8')).split('\n').length, 3);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
+
+test('JEV_PROJECT_DIR stands in for the working directory, as a plugin-launched server needs', async () => {
+  // Claude Code starts a plugin's MCP server in the plugin's own folder, not the user's project.
+  const project = await mkdtemp(join(tmpdir(), 'jev-cli-project-'));
+  try {
+    const log = await createRunLog(join(project, '.jev-runs'), 'elsewhere');
+    await log.append('started', { goal: 'Project dir' });
+    await log.append('verdict', { verdict: 'passed', reason: 'All passed', steps: 1, inputTokens: 5, durationMs: 4 });
+    const env: NodeJS.ProcessEnv = { ...process.env, JEV_PROJECT_DIR: project };
+    delete env.JEV_RUNS_DIR;
+    delete env.TYPESAFE_API_KEY;
+    const cli = join(process.cwd(), 'src/cli.ts');
+    const result = await execute(process.execPath, ['--import', import.meta.resolve('tsx'), cli, 'report', 'elsewhere'], { cwd: tmpdir(), env });
+    assert.match(result.stdout, /Run elsewhere: passed/);
+    assert.match(result.stdout, new RegExp(`${project}/\\.jev-runs/elsewhere/run\\.jsonl`));
+  } finally { await rm(project, { recursive: true, force: true }); }
+});
