@@ -1,7 +1,8 @@
 # mobilecli as a dependency: pinning, shipping, telemetry, and lifecycle
 
 Type: research
-Status: open
+Status: resolved
+Claimed by: research subagent (charting session)
 Blocked by: none
 
 ## Question
@@ -16,3 +17,21 @@ What does the bridge have to do to depend on mobilecli safely, the way it pins M
 - **Output contract:** the JSON envelope (`status`, `data`, `error`), exit codes, and which commands the bridge needs: `dump ui --format raw`, `io tap`, `io swipe`, `io text`, `screenshot`, `apps launch/terminate`, `device logs`.
 
 Only the emulator may be used for experiments, with cleanup afterwards (see the map's Notes).
+
+## Comments
+
+- Research note: `docs/research/mobilecli-dependency.md` on branch `research/mobilecli-dependency` (commit `f785c75`). Gist:
+  - Pin the unscoped `mobilecli@1.0.14`, which is FSL-1.1-ALv2 (npm said MIT only up to 1.0.11, a packaging bug). Run the platform binary directly, because the npm wrapper orphans the process on SIGTERM. `npm ci --ignore-scripts` keeps it executable.
+  - mobilecli has no telemetry. Its only cloud path is the `api.mobilenext.ai` fleet, used only if a login token exists. Pass `--insecure-storage` with a private `XDG_CONFIG_HOME` and set `MOBILECLI_FLEET_URL=ws://127.0.0.1:9`. Its first device lookup still reads properties from every phone on the Mac.
+  - Give each bridge process its own `MOBILECLI_HOME` and pre-start the daemon with `--idle-timeout`. `close` runs `daemon stop`, `pkill` of the `DeviceServer`, and `adb forward --remove` (the forward leaks otherwise).
+  - Emulator IDs come from `getprop ro.boot.qemu.avd_name` on the serial. Every error exits 1. `dump ui --format raw` returns a JSON string, or XML when it falls back to uiautomator.
+
+## Answer
+
+Resolved 2026-09-28 by research. Full note: `docs/research/mobilecli-dependency.md` on branch `research/mobilecli-dependency` (`f785c75`).
+
+- **Pin** the unscoped `mobilecli` at exactly 1.0.14 (FSL-1.1-ALv2; it becomes Apache-2.0 on 2028-09-27). Run the platform binary directly, not the npm wrapper, which orphans the process on SIGTERM. `npm ci --ignore-scripts` keeps it executable.
+- **Network:** no telemetry. To keep it off the keychain and the cloud fleet, pass `--insecure-storage`, use a private empty `XDG_CONFIG_HOME`, and set `MOBILECLI_FLEET_URL=ws://127.0.0.1:9`. Its first device lookup still reads every Android phone and paired iPhone on the Mac.
+- **Lifecycle:** give each bridge process a private `MOBILECLI_HOME` and start the daemon with a short `--idle-timeout`. `close` stops the daemon, kills the on-device `DeviceServer`, and removes its `adb forward`.
+- **Device IDs:** an emulator's mobilecli ID is `getprop ro.boot.qemu.avd_name` read over its serial. It isn't unique when two emulators run the same AVD.
+- **Output:** a `status`/`data`/`error` envelope, and every failure exits 1. `dump ui --format raw` returns a JSON string, or uiautomator XML on fallback.

@@ -24,12 +24,14 @@ A reviewed **v1.2.0 release spec for Android support**, written for Claude Code 
 - **Devices and secrets:**
   - Use only the emulator `emulator-5554` (mobilecli calls it `Medium_Phone_API_36.1`), or another emulator you create.
   - Don't touch the Xiaomi `2985e9c` (another agent is using it) or BFSOne.
-  - After any mobilecli use, stop its daemon (`mobilecli daemon stop`) and kill its device server (`adb shell pkill -f com.mobilenext.mobilecli.DeviceServer`).
+  - After any mobilecli use, stop its daemon (`mobilecli daemon stop`) and kill its device server (`adb shell pkill -f com.mobilenext.mobilecli.DeviceServer`), and remove its `adb forward`. mobilecli's first device lookup reads *every* connected phone, so experiments must hide the Xiaomi, for example with a private adb server on another port.
   - Load the Jev key from the main checkout's `.env` by path, as `AGENTS.md` says. Never print, copy or commit it.
 - **Skills:** `grilling` and `domain-modeling` for grilling tickets; `prototype` for prototype tickets; `research` for research tickets; `typesafe:typesafe-ai` for anything touching Jev; `codebase-design` for seams; `compose-multiplatform-ui` for Compose semantics; `unslop` before anything people read.
 - **Tracker:** local markdown ([`docs/agents/issue-tracker.md`](../../docs/agents/issue-tracker.md)). Refer to tickets by name. After opening, claiming, closing or rewiring a ticket, run `python3 scripts/render-route.py .scratch/android-support`.
 
 ## Decisions so far
+
+- [mobilecli as a dependency: pinning, shipping, telemetry, and lifecycle](issues/01-mobilecli-as-a-dependency.md): pin `mobilecli@1.0.14` and run its binary directly; no telemetry, and the keychain and cloud fleet are turned off by flags and env; a private `MOBILECLI_HOME` per bridge process; `close` stops the daemon, kills the `DeviceServer`, and removes the `adb forward`; emulator IDs come from the AVD name. [Note](../../docs/research/mobilecli-dependency.md) on branch `research/mobilecli-dependency`.
 
 ## Route
 
@@ -65,8 +67,9 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03 frontier
-    class T04,T05,T06,T07,T08,T09 blocked
+    class T01 resolved
+    class T02,T03,T05,T06 frontier
+    class T04,T07,T08,T09 blocked
 ```
 <!-- route:end -->
 
