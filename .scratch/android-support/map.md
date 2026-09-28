@@ -69,7 +69,8 @@ flowchart LR
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
     class T01,T02 resolved
-    class T03,T04,T05,T06 frontier
+    class T03 claimed
+    class T04,T05,T06 frontier
     class T07,T08,T09 blocked
 ```
 <!-- route:end -->

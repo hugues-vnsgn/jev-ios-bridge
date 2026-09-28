@@ -1,7 +1,8 @@
 # How a script names an Android app and device
 
 Type: grilling
-Status: open
+Status: claimed
+Claimed by: Claude Code (owner session)
 Blocked by: none
 
 ## Question
