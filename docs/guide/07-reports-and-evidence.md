@@ -17,7 +17,7 @@ The `reason` says which one: a code from the [reason-code list](reference/reason
 
 ## The evidence folder
 
-Every run gets `.jev-runs/<run-id>/` in the directory you ran from, or under `JEV_RUNS_DIR`:
+Every run gets `.jev-runs/<run-id>/` in the directory you ran from (or in `JEV_PROJECT_DIR`, when that's set), or under `JEV_RUNS_DIR`:
 
 | File | Contents |
 | --- | --- |

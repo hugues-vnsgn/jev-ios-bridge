@@ -27,6 +27,7 @@
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",
     "check": "npm run typecheck && npm test && npm run build",
+    "build:plugin": "node scripts/build-plugin.mjs",
     "feasibility": "tsx spikes/feasibility/cli.ts"
   },
   "dependencies": {

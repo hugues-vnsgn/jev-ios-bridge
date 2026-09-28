@@ -28,6 +28,7 @@ Usage:
   jev-ios-bridge --version | --help
 Set TYPESAFE_API_KEY and a dedicated simulator (JEV_DEVICE_UDID, the script's device.udid, or
 .mobilebuildmcp/config.yaml). JEV_RUNS_DIR selects the evidence directory (default ./.jev-runs).
+JEV_PROJECT_DIR, when set, stands in for the working directory (a plugin sets it to your project).
 A run opens a live log pane of the app's own output in a new terminal window; turn it off with
 --no-log-pane or JEV_LOG_PANE=off, or choose the terminal app with JEV_LOG_PANE_APP.
 Exit codes: 0 passed, 1 failed, 2 inconclusive, 3 could not start.`;
@@ -44,9 +45,13 @@ function limitValue(name: string, raw: string | undefined): number | undefined {
   return value;
 }
 
+/** The user's project. A Claude Code plugin starts the server in the plugin's folder, so it passes the project in. */
+const projectDir = resolve(process.env.JEV_PROJECT_DIR?.trim() || process.cwd());
+const runsDir = () => process.env.JEV_RUNS_DIR ?? join(projectDir, '.jev-runs');
+
 async function readScript(path: string): Promise<unknown> {
   let text: string;
-  try { text = await readFile(resolve(path), 'utf8'); }
+  try { text = await readFile(resolve(projectDir, path), 'utf8'); }
   catch { throw new StartError(`Cannot read script file ${path}`); }
   try { return JSON.parse(text); }
   catch { throw new StartError(`Script file ${path} is not valid JSON`); }
@@ -75,10 +80,9 @@ async function main(): Promise<void> {
   if (command !== 'run' && parsed.values['no-log-pane']) throw new StartError('--no-log-pane applies only to run');
   if (command === 'logs') {
     if (await attachLogPane(argument!)) return;
-    const runsDir = process.env.JEV_RUNS_DIR ?? join(process.cwd(), '.jev-runs');
     let events;
-    try { events = await readRunEvents(runsDir, argument!); }
-    catch { throw new StartError(`No live run ${argument}, and no recorded run with that ID in ${runsDir}`); }
+    try { events = await readRunEvents(runsDir(), argument!); }
+    catch { throw new StartError(`No live run ${argument}, and no recorded run with that ID in ${runsDir()}`); }
     const sources = events.find(event => event.type === 'prepared')?.data.logSources as { runtime?: string; os?: string } | undefined;
     console.log(`Run ${argument} is not running, so there is no live log to follow.` +
       (sources ? `\nThe app's own log files (not masked): ${[sources.runtime, sources.os].filter(Boolean).join(', ')}` : ''));
@@ -89,12 +93,12 @@ async function main(): Promise<void> {
   if (command === 'run') {
     script = parseScriptedScenario(await readScript(argument!));
     if (!process.env.TYPESAFE_API_KEY?.trim()) throw new StartError('TYPESAFE_API_KEY is not set; load your .env with node --env-file=/path/to/.env');
-    await selectDeviceId(process.cwd(), script.device?.udid, process.env.JEV_DEVICE_UDID);
+    await selectDeviceId(projectDir, script.device?.udid, process.env.JEV_DEVICE_UDID);
   }
 
   const service = new BridgeService({
-    baseDir: process.env.JEV_RUNS_DIR ?? join(process.cwd(), '.jev-runs'),
-    createDriver: () => createMobileBuildMcpDriver({ cwd: process.cwd(),
+    baseDir: runsDir(),
+    createDriver: () => createMobileBuildMcpDriver({ cwd: projectDir,
       ...(process.env.JEV_DEVICE_UDID ? { defaultUdid: process.env.JEV_DEVICE_UDID } : {}),
       capture: 'full', screenshots: true,
       // Measurement aid for release checks; costs one extra capture per observation.
