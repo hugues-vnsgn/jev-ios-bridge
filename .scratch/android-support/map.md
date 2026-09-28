@@ -31,6 +31,7 @@ A reviewed **v1.2.0 release spec for Android support**, written for Claude Code 
 
 ## Decisions so far
 
+- [How a script names an Android app and device](issues/03-script-and-device-identity.md): `"platform": "android"` with a required `app.package` (Android's naming rule), optional `app.activity` and string-only `app.intentExtras`, and `launchArgs` rejected; the device is `device.serial` or `device.avd`, else `JEV_ANDROID_DEVICE`, else `NO_DEVICE`; the plugin's simulator setting becomes optional; restart with force-stop then `am start -W`; refuse unauthorized, unbooted, locked or app-missing devices, and only wake a dark screen.
 - [How Android elements map onto the bridge's elements](issues/02-android-element-mapping.md): roles from the Android class or Compose's role-marker child; a blank button takes its first inner text as its label, and that text stays in Jev's view but can't be selected; system bars and empty layout boxes are dropped; full resource-ids; switches are `0`/`1`; no new roles. Prototype on branch `prototype/android-element-mapping`.
 - [mobilecli as a dependency: pinning, shipping, telemetry, and lifecycle](issues/01-mobilecli-as-a-dependency.md): pin `mobilecli@1.0.14` and run its binary directly; no telemetry, and the keychain and cloud fleet are turned off by flags and env; a private `MOBILECLI_HOME` per bridge process; `close` stops the daemon, kills the `DeviceServer`, and removes the `adb forward`; emulator IDs come from the AVD name. [Note](../../docs/research/mobilecli-dependency.md).
 
@@ -68,10 +69,9 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02 resolved
-    class T03 claimed
-    class T04,T05,T06 frontier
-    class T07,T08,T09 blocked
+    class T01,T02,T03 resolved
+    class T04,T05,T06,T07 frontier
+    class T08,T09 blocked
 ```
 <!-- route:end -->
 
