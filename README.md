@@ -2,7 +2,7 @@
 
 Check an iOS app the way a person reads its screen. You write a script: taps, typing, swipes, waits, and checkpoints with claims like "The order total reads $5". The bridge runs it on a simulator through [MobileBuildMCP](https://github.com/getsentry/MobileBuildMCP), TypeSafe's Jev model judges each claim against the screen's text, and you get one verdict (passed, failed, or inconclusive), with screenshots and a log behind it.
 
-It's built for **repeatable checks**: scripts you keep in your app's repository and re-run after changes, for SwiftUI, UIKit, and Compose Multiplatform apps. Claude Code can write and run them through the bundled `/test-ios` skill and MCP server.
+It's built for **repeatable checks**: scripts you keep in your app's repository and re-run after changes, for SwiftUI, UIKit, and Compose Multiplatform apps. Claude Code can write and run them through its plugin: the `/test-ios` skill and an MCP server.
 
 ```text
 script ─► bridge ─► MobileBuildMCP ─► simulator
@@ -12,11 +12,20 @@ script ─► bridge ─► MobileBuildMCP ─► simulator
 
 ## Install
 
-jev-ios-bridge ships as a GitHub release, not on npm. You need a Mac with Xcode, Node 24 or later, and a TypeSafe API key.
+You need a Mac with Xcode, Node 24 or later, and a TypeSafe API key.
+
+**With Claude Code,** install the plugin. It brings the MCP server and the `/jev-ios-bridge:test-ios` skill, and asks for your TypeSafe key and simulator:
 
 ```sh
-gh release download v1.0.0 -R hugues-vnsgn/jev-ios-bridge -p 'jev-ios-bridge-1.0.0.tgz'
-npm install ./jev-ios-bridge-1.0.0.tgz
+claude plugin marketplace add hugues-vnsgn/jev-ios-bridge
+claude plugin install jev-ios-bridge@jev-ios-bridge
+```
+
+**For the command line** (or Codex, or CI), install the package from the GitHub release. It isn't on npm.
+
+```sh
+gh release download v1.1.0 -R hugues-vnsgn/jev-ios-bridge -p 'jev-ios-bridge-1.1.0.tgz'
+npm install ./jev-ios-bridge-1.1.0.tgz
 npx jev-ios-bridge --version
 ```
 
@@ -39,7 +48,7 @@ It's in the package too: `node_modules/jev-ios-bridge/docs/guide/`.
 
 ## Status
 
-v1.0.0 is the first stable release. The script format, CLI and MCP tools, verdict rules, and report and evidence layout stay compatible for all of 1.x ([stability](docs/guide/11-stability.md)).
+Since v1.0.0, the script format, CLI and MCP tools, verdict rules, and report and evidence layout stay compatible for all of 1.x ([stability](docs/guide/11-stability.md)).
 
 Before you use it, know that:
 - it drives simulators, not real iPhones;

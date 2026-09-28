@@ -33,7 +33,7 @@ node --env-file=.env node_modules/jev-ios-bridge/dist/cli.js run checks/login.js
 
 ## From Claude Code (MCP and `/test-ios`)
 
-Register the server and copy the skill as in the [quickstart](01-quickstart.md#6-let-claude-code-run-it). Then ask Claude to verify something with `/test-ios`. The skill writes the script from your app's source and identifiers, or uses one you give it, and submits it once.
+Install the plugin as in the [quickstart](01-quickstart.md#6-let-claude-code-run-it). Then ask Claude to verify something with `/jev-ios-bridge:test-ios`. The skill writes the script from your app's source and identifiers, or uses one you give it, and submits it once.
 
 | Tool | Input | Returns |
 | --- | --- | --- |
@@ -42,6 +42,33 @@ Register the server and copy the skill as in the [quickstart](01-quickstart.md#6
 | `cancel_run` | `runId` | Stops the run and waits for cleanup |
 
 While a run is going, `get_report` shows progress only, never screen contents. Claude can't steer a run once it's started. Closing the server cancels its runs.
+
+### Without the plugin
+
+With the npm install from the quickstart, register the server in your project's `.mcp.json`, using absolute paths:
+
+```json
+{
+  "mcpServers": {
+    "jev-ios-bridge": {
+      "command": "node",
+      "args": [
+        "--env-file=/absolute/path/to/your-project/.env",
+        "/absolute/path/to/your-project/node_modules/jev-ios-bridge/dist/cli.js",
+        "mcp"
+      ],
+      "env": { "JEV_DEVICE_UDID": "<UUID>" }
+    }
+  }
+}
+```
+
+Then copy the skill, and restart Claude Code. The skill is `/test-ios` this way:
+
+```sh
+mkdir -p .claude/skills/test-ios
+cp node_modules/jev-ios-bridge/skills/test-ios/SKILL.md .claude/skills/test-ios/
+```
 
 Codex can use the same MCP server and skill (copy the skill to `.agents/skills/test-ios/SKILL.md`). Support for Codex is best effort.
 

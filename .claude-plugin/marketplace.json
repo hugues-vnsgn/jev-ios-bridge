@@ -1,0 +1,19 @@
+{
+  "name": "jev-ios-bridge",
+  "owner": {
+    "name": "hugues-vnsgn",
+    "url": "https://github.com/hugues-vnsgn"
+  },
+  "description": "jev-ios-bridge: scripted iOS simulator checks judged by Jev",
+  "plugins": [
+    {
+      "name": "jev-ios-bridge",
+      "description": "Check iOS apps (SwiftUI, UIKit, Compose Multiplatform) on a simulator with scripted steps and Jev-judged screen claims",
+      "source": {
+        "source": "archive",
+        "url": "https://github.com/hugues-vnsgn/jev-ios-bridge/releases/download/v1.1.0/jev-ios-bridge-plugin-1.1.0.zip",
+        "sha256": "21ba7027f305d413261f3b91202f841b0c1038a6be67919cbbb7ee5bedcce8d2"
+      }
+    }
+  ]
+}

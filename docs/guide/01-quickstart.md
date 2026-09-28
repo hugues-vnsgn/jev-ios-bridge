@@ -15,9 +15,9 @@ jev-ios-bridge ships as a GitHub release, not on npm. Download the tarball and i
 
 ```sh
 cd /path/to/your-project
-gh release download v1.0.0 -R hugues-vnsgn/jev-ios-bridge -p 'jev-ios-bridge-1.0.0.tgz'
-npm install ./jev-ios-bridge-1.0.0.tgz
-npx jev-ios-bridge --version     # 1.0.0
+gh release download v1.1.0 -R hugues-vnsgn/jev-ios-bridge -p 'jev-ios-bridge-1.1.0.tgz'
+npm install ./jev-ios-bridge-1.1.0.tgz
+npx jev-ios-bridge --version     # 1.1.0
 ```
 
 This also installs the device layer the bridge uses, `mobilebuildmcp@2.7.1`.
@@ -57,7 +57,7 @@ You can also set `JEV_DEVICE_UDID=<UUID>`, or put `device.udid` in a script. The
 The diagnostic app's source isn't in the package. Get it from the release tag, then build and install it with MobileBuildMCP:
 
 ```sh
-git clone --depth 1 --branch v1.0.0 https://github.com/hugues-vnsgn/jev-ios-bridge.git jev-ios-bridge-src
+git clone --depth 1 --branch v1.1.0 https://github.com/hugues-vnsgn/jev-ios-bridge.git jev-ios-bridge-src
 npx mobilebuildmcp simulator build-and-run \
   --project-path jev-ios-bridge-src/examples/diagnostic-app/DiagnosticApp.xcodeproj \
   --scheme DiagnosticApp --simulator-id <UUID>
@@ -84,38 +84,24 @@ Evidence is in `.jev-runs/<run-id>/`: `report.json`, `run.jsonl`, and a screensh
 
 ## 6. Let Claude Code run it
 
-Register the MCP server in your project's `.mcp.json`, using absolute paths:
-
-```json
-{
-  "mcpServers": {
-    "jev-ios-bridge": {
-      "command": "node",
-      "args": [
-        "--env-file=/absolute/path/to/your-project/.env",
-        "/absolute/path/to/your-project/node_modules/jev-ios-bridge/dist/cli.js",
-        "mcp"
-      ],
-      "env": { "JEV_DEVICE_UDID": "<UUID>" }
-    }
-  }
-}
-```
-
-Copy the skill into your project:
+Install the Claude Code plugin. It brings the MCP server and the `/test-ios` skill, so there's nothing to copy or register by hand:
 
 ```sh
-mkdir -p .claude/skills/test-ios
-cp node_modules/jev-ios-bridge/skills/test-ios/SKILL.md .claude/skills/test-ios/
+claude plugin marketplace add hugues-vnsgn/jev-ios-bridge
+claude plugin install jev-ios-bridge@jev-ios-bridge
 ```
 
-Restart Claude Code in the project, then ask:
+Claude Code asks for two values: your TypeSafe key, which it keeps in your system's secure storage, and the simulator's UUID from step 3. To change them later, open `/plugin` and manage the plugin.
+
+Start Claude Code in your project, then ask:
 
 ```text
-/test-ios run jev-ios-bridge-src/examples/diagnostic-app/scenario.json and tell me what the report says
+/jev-ios-bridge:test-ios run jev-ios-bridge-src/examples/diagnostic-app/scenario.json and tell me what the report says
 ```
 
-Claude submits the script once, waits for the result, and reports the **failed** verdict with the $3 total as the evidence.
+Claude submits the script once, waits for the result, and reports the **failed** verdict with the $3 total as the evidence. The evidence lands in your project's `.jev-runs/`, as in step 5.
+
+Not using the plugin, or using Codex? [Running](06-running.md#without-the-plugin) shows how to register the server and copy the skill by hand.
 
 ## Next
 
