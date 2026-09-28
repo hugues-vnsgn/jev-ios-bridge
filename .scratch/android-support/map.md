@@ -31,6 +31,7 @@ A reviewed **v1.2.0 release spec for Android support**, written for Claude Code 
 
 ## Decisions so far
 
+- [How Android elements map onto the bridge's elements](issues/02-android-element-mapping.md): roles from the Android class or Compose's role-marker child; a blank button takes its first inner text as its label, and that text stays in Jev's view but can't be selected; system bars and empty layout boxes are dropped; full resource-ids; switches are `0`/`1`; no new roles. Prototype on branch `prototype/android-element-mapping`.
 - [mobilecli as a dependency: pinning, shipping, telemetry, and lifecycle](issues/01-mobilecli-as-a-dependency.md): pin `mobilecli@1.0.14` and run its binary directly; no telemetry, and the keychain and cloud fleet are turned off by flags and env; a private `MOBILECLI_HOME` per bridge process; `close` stops the daemon, kills the `DeviceServer`, and removes the `adb forward`; emulator IDs come from the AVD name. [Note](../../docs/research/mobilecli-dependency.md).
 
 ## Route
@@ -67,16 +68,15 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01 resolved
-    class T02 claimed
-    class T03,T05,T06 frontier
-    class T04,T07,T08,T09 blocked
+    class T01,T02 resolved
+    class T03,T04,T05,T06 frontier
+    class T07,T08,T09 blocked
 ```
 <!-- route:end -->
 
 ## Not yet specified
 
-- **Guide pages:** what an Android setup page covers (`testTagsAsResourceId`, emulator settings, the Xiaomi input setting, `pm grant` for permission dialogs), and how the limits page and quickstart change. This clears once the element mapping, script shape and actions are settled.
+- **Guide pages:** what an Android setup page covers (`testTagsAsResourceId`, which apps without it lack entirely; custom Compose tabs and toggles that must expose `selected` or checked state; emulator settings, the Xiaomi input setting, `pm grant` for permission dialogs), and how the limits page and quickstart change. This clears once the element mapping, script shape and actions are settled.
 - **The `/test-android` skill:** how much it shares with `/test-ios`, and how it captures a screen while authoring (mobilecli directly, or a bridge command).
 - **Speed:** whether v1.2.0 needs a speed target, or only reports the numbers. Typing ran at about 0.28 s per character in the spike.
 - **Contract additions in detail:** the exact new reason codes, roles and report fields. This follows from the mapping, script shape and actions tickets.
