@@ -1,6 +1,6 @@
-# iOS Scenario Verification
+# Mobile Scenario Verification
 
-The bridge verifies an iOS app by executing an authored scenario and judging its screen assertions. This glossary names the domain concepts shared by authors, execution, and evidence.
+The bridge verifies an iOS or Android app by executing an authored scenario and judging its screen assertions. This glossary names the domain concepts shared by authors, execution, and evidence.
 
 ## Parties
 
@@ -46,12 +46,15 @@ A declared point in a script where the current screen's assertions are judged.
 **Assertion**:
 A claim about visible app evidence that must hold for the scenario to pass.
 
+**Platform**:
+The mobile operating system a scenario targets: iOS or Android. Each platform has its own device layer.
+
 **App under test**:
-The app exercised by a scenario, identified by its bundle ID.
+The app exercised by a scenario, identified by its bundle ID on iOS or its package name on Android.
 _Avoid_: target app
 
 **Device**:
-The simulator or phone on which a run takes place.
+The simulator, emulator, or phone on which a run takes place.
 
 **Run**:
 One execution of one scenario on one device, from preparation to its recorded outcome.
