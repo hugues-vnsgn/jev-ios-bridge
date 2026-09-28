@@ -1,7 +1,8 @@
 # What Jev sees on Android, and the 10-screen check
 
 Type: task
-Status: open
+Status: claimed
+Claimed by: Claude Code (owner session)
 Blocked by: 02
 
 ## Question
