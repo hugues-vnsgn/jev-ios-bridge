@@ -23,6 +23,8 @@ Prototype the mapping over captures of the Android twin app, `cmp` or `cmp-test`
 
 - 2026-09-28, from "What Jev sees on Android, and the 10-screen check": an empty field's placeholder is now dropped from Jev's view, and the field shows it as `placeholder` rather than `label`. It had caused a confidently wrong answer. Selection is unchanged.
 
+- 2026-09-29, from the second spec review: the port must **not trim a text field's text** (`element-mapping.cjs` line 95 does). Trimming changes a typed value with a leading or trailing space, so the exact-value redactor misses it, and a field holding only spaces would count as empty and show its placeholder. Emptiness means the empty string. None of the 10 captures is affected. The spec's phase 4 item 5 carries the correction.
+
 ## Answer
 
 Resolved 2026-09-28 by the owner over the prototype (branch `prototype/android-element-mapping`, `c7c0e49`). The validated rules are the pure module `spikes/android/element-mapping.cjs` there, ready to lift into the Android driver.

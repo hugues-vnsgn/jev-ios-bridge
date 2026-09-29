@@ -15,6 +15,10 @@ Which commands perform tap, replace text and swipe reliably on Android 12 throug
 - **Typing speed:** the spike measured 4.8 s for 17 characters. Is there a faster path?
 - **After an action:** mobilecli returns no settled screen. Decide whether the next capture waits for the screen to settle, and how animations affect dumps (with emulator animations on and off).
 
+## Comments
+
+- 2026-09-29, from the second spec review: item 8's "250 ms apart" is measured from when the earlier capture **returned** to when the later one **starts**. `settle.py` timestamped each capture before its request, and a capture reads the tree at the end of its ~0.6 s idle wait, so two requests 610 ms apart could read trees 30 ms apart. Replaying the corrected rule on the same 24 timelines: still 0 false settles, but a still screen now settles at 0.85–0.94 s, not 0.60–0.66 s (about 0.25 s more). The spec's phase 4 item 7 carries the corrected rule.
+
 ## Answer
 
 Resolved 2026-09-29 with the owner; every recommendation accepted. Measured by a subagent on two emulators, Android 12 (`jev-actions-api31`, API 31) and Android 16 (`Medium_Phone_API_36.1`), using a throwaway Compose probe app. Evidence: [`findings/05-actions.md`](../findings/05-actions.md) and [`findings/05-assets/`](../findings/05-assets/) (scripts, raw results, probe-app sources).

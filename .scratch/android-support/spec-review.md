@@ -233,3 +233,15 @@ Every finding was checked against the code or the source it cites before changin
 | 29 | Fixed: "Android runs in CI or on headless emulator farms." |
 
 **Disagreements:** only #26, where I avoided the iOS change instead of documenting it, and #22, where I made the new check report-only instead of blocking. Everything else was accepted as found.
+
+## Second review (GPT-6-Astra, 2026-09-29)
+
+Reviewed PR head `8c7f764`, with the prototype branch at `2366759`, offline only: no devices and no credentials. Verdict: **ready after fixes**. All three findings were checked against the code and are correct.
+
+| # | Severity | Finding | Resolution |
+| --- | --- | --- | --- |
+| 1 | blocker | Phase 4's `close` stopped the app and released the lock without waiting for commands still running. The run abandons a cancelled driver call and then calls `close`, so a cancel during `am start -W` could stop the app, release the lock, and then let the launch finish. `docs/architecture.md` ("One run", step 7) requires unknown outcomes to keep the lock. The iOS driver does this (`pendingOperations`, `unconfirmedCommands`, `finishWhenAcknowledged`). | Fixed. Phase 4 item 8 now tracks every command the driver starts, waits for them before stopping the app, keeps the lock on an unknown outcome or failed cleanup (`UI_ACTION_UNCONFIRMED`, reported as `CLEANUP_FAILED`), and releases it when a late command exits. Five fake-runner tests are named. |
+| 2 | should-fix | The prototype mapper trims a text field's text, so a typed value with a space at either end comes back changed: the exact-value redactor misses it, the shown value is wrong, and a field of spaces counts as empty. | Fixed. Phase 4 item 5 keeps field text verbatim, with emptiness meaning the empty string, and adds tests. None of the 6 text fields in the 10 captures has text with spaces around it (checked), so the golden files are unaffected. A comment was added to "How Android elements map onto the bridge's elements". |
+| 3 | should-fix | `settle.py` stamped captures at the request's start, so the first capture's ~0.6 s idle wait could count toward "250 ms apart". | Fixed. Phase 4 item 7 measures from when the earlier capture returned, with a slow-first-capture test. Replaying the corrected rule on the 24 recorded timelines gave 0 false settles and about 0.25 s more on a still screen. A correction note is in [`findings/05-actions.md`](findings/05-actions.md), and a comment in "Actions across Android versions". |
+
+**Disagreements:** none.
