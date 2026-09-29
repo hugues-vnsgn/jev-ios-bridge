@@ -32,6 +32,7 @@ A reviewed **v1.2.0 release spec for Android support**, written for Claude Code 
 
 ## Decisions so far
 
+- [Evidence plan and release gates for v1.2.0](issues/08-evidence-plan-and-release-gates.md): six Android scripts with planted pass, fail and inconclusive results on Android 16, three repeated on Android 12 including Vietnamese typing, a live crash run, a cleanup gate after every run, iOS benchmarks re-run, real phones marked untested with a Xiaomi checklist, an Android-only plugin install, and speed reported without a target.
 - [Where Android plugs into the code](issues/07-where-android-plugs-into-the-code.md): one platform switch in `src/device/` builds the driver; new code in `src/device/android/`, sharing only locks and log tails with iOS; the tap alias rule moves onto the iOS driver; one Jev renderer with a per-platform header and rule; password values show as dots; `logSources()` gains `logcat`; golden tests from the 10 captures; device reason codes shared, with their wording broadened.
 - [Log pane and app-exit detection on Android](issues/06-log-pane-and-app-exit.md): the pane follows one `adb logcat --uid` stream written to a private file, which works on Android 12 too; a second stream of system process events keeps `appRunning()` synchronous and catches crashes behind a dialog; a frozen app gets a new reason code, `APP_NOT_RESPONDING`. [Findings](findings/06-log-pane.md).
 - [Actions across Android versions](issues/05-actions-across-android-versions.md): replace text with `ctrl+a`, a pause, then backspace; type with mobilecli `io text`, which is exact, including non-English text; tap by coordinates; read the full tree from mobilecli's on-device agent, to keep the `scrollable` and `password` flags; swipe from 90% to 10% over 1 s; a settle rule after every action (two matching captures ≥250 ms apart, 3 s cap). Non-English typing is now in scope. [Findings](findings/05-actions.md).
@@ -76,8 +77,7 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T06,T07 resolved
-    class T08 claimed
+    class T01,T02,T03,T04,T05,T06,T07,T08 resolved
     class T10 frontier
     class T09 blocked
 ```
