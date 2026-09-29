@@ -1,6 +1,6 @@
 # Reason codes
 
-Every verdict and error event carries one of these codes, in `reason` and `error.code` in [`report.json`](report-json.md). The list is owned by the bridge and frozen for 1.x: releases may add codes but never rename or remove one, or change its meaning. A MobileBuildMCP error the bridge has no code for becomes `DEVICE_ERROR`, and MobileBuildMCP's own code is kept in `error.vendorCode`.
+Every verdict and error event carries one of these codes, in `reason` and `error.code` in [`report.json`](report-json.md). The list is owned by the bridge and frozen for 1.x: releases may add codes but never rename or remove one, or change its meaning. A MobileBuildMCP error whose code isn't one of the bridge's codes shipped through 1.1 becomes `DEVICE_ERROR`, and MobileBuildMCP's own code is kept in `error.vendorCode`; this keeps a later Android-only addition from silently changing an iOS error's reason.
 
 What to do about each: [troubleshooting](../08-troubleshooting.md).
 
@@ -64,9 +64,9 @@ What to do about each: [troubleshooting](../08-troubleshooting.md).
 
 | Code | Meaning |
 | --- | --- |
-| `NO_DEVICE` | No dedicated simulator UUID was configured. |
-| `INVALID_DEVICE` | The configured device is not a simulator UUID. |
-| `DEVICE_BUSY` | Another run holds the device lock. |
+| `NO_DEVICE` | No device was configured for the script's platform. |
+| `INVALID_DEVICE` | The configured device does not have the shape the script's platform requires. |
+| `DEVICE_BUSY` | The device is in use, by another run or by another tool's UI-automation agent (a foreign agent). |
 | `DEVICE_ERROR` | The device layer reported an error; its own code is kept as vendorCode. |
 | `INVALID_JSON` | The device layer returned output that was not JSON. |
 | `INVALID_ENVELOPE` | The device layer returned an unsupported result envelope. |
@@ -79,6 +79,20 @@ What to do about each: [troubleshooting](../08-troubleshooting.md).
 | `UI_ACTION_UNCONFIRMED` | A device operation was never acknowledged, so the device lock was kept. |
 | `CLEANUP_FAILED` | Device cleanup did not finish. |
 | `APP_EXITED` | The app under test exited during the run (a crash or a quit); check its crash report. |
+
+## Device and app (Android)
+
+| Code | Meaning |
+| --- | --- |
+| `DEVICE_NOT_CONNECTED` | The named serial isn't listed by adb or is offline, or no running emulator has the named AVD. |
+| `DEVICE_AMBIGUOUS` | More than one running emulator has the named AVD, so the bridge can't tell them apart. |
+| `DEVICE_UNAUTHORIZED` | The device hasn't accepted this Mac's USB-debugging key. |
+| `DEVICE_NOT_BOOTED` | The device hasn't finished booting. |
+| `DEVICE_LOCKED` | The device's screen is locked. |
+| `APP_NOT_INSTALLED` | The app's package isn't installed on the device. |
+| `APP_NOT_RESPONDING` | The app froze (Android showed "App isn't responding") during the run. |
+| `DEVICE_UNSUPPORTED` | The device is below Android 12 (API 31), which this bridge does not support. |
+| `ANDROID_TOOLS_UNAVAILABLE` | adb could not be found, the pinned mobilecli package is missing, or its agent does not match the pinned SHA-256. |
 
 ## Bridge
 
