@@ -245,3 +245,15 @@ Reviewed PR head `8c7f764`, with the prototype branch at `2366759`, offline only
 | 3 | should-fix | `settle.py` stamped captures at the request's start, so the first capture's ~0.6 s idle wait could count toward "250 ms apart". | Fixed. Phase 4 item 7 measures from when the earlier capture returned, with a slow-first-capture test. Replaying the corrected rule on the 24 recorded timelines gave 0 false settles and about 0.25 s more on a still screen. A correction note is in [`findings/05-actions.md`](findings/05-actions.md), and a comment in "Actions across Android versions". |
 
 **Disagreements:** none.
+
+## Re-review (GPT-6-Astra, 2026-09-29)
+
+Reviewed `8c7f764...cf356c4`, offline only. Verdict: **ready after fixes**. The trimming fix is resolved, the settle clock is resolved in the rule, and the cleanup race is partly resolved. All three new findings were checked and are correct.
+
+| # | Severity | Finding | Resolution |
+| --- | --- | --- | --- |
+| 1 | blocker | Phase 4's `close` waited for "every `adb` or mobilecli command" to exit. That includes phase 5's two `logcat` streams, which only `close` stops, so a healthy run would wait until cleanup timed out and end `CLEANUP_FAILED`. | Fixed. Only finite commands are tracked. The `logcat` streams and the mobilecli daemon are owned long-running processes: `close` kills the streams (SIGTERM, then SIGKILL after 1 s) and waits for them, as the first cleanup step after stopping the app. Phase 5 item 1 says so, and phase 5 item 7 adds a normal-close test with both streams running. |
+| 2 | should-fix | The new settle test said a 600 ms first capture and an instant second one "must not settle on that pair", but under the corrected rule that pair can't happen, and matching captures should settle. | Fixed. With a fake clock, the second capture must not start before 850 ms, nothing settles earlier, and a matching second capture settles when it returns. |
+| 3 | minor | The correction gave 0.85–0.94 s as settle times, but those are the comparison capture's request starts. | Fixed. The note and the ticket comment now say the capture starts at 0.85–0.94 s (like the old 0.60–0.66 s, a request start) and returns at about 0.90–0.99 s, the reviewer's reproduced figure. |
+
+**Disagreements:** none.

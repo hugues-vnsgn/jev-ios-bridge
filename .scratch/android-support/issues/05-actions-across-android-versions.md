@@ -17,7 +17,7 @@ Which commands perform tap, replace text and swipe reliably on Android 12 throug
 
 ## Comments
 
-- 2026-09-29, from the second spec review: item 8's "250 ms apart" is measured from when the earlier capture **returned** to when the later one **starts**. `settle.py` timestamped each capture before its request, and a capture reads the tree at the end of its ~0.6 s idle wait, so two requests 610 ms apart could read trees 30 ms apart. Replaying the corrected rule on the same 24 timelines: still 0 false settles, but a still screen now settles at 0.85–0.94 s, not 0.60–0.66 s (about 0.25 s more). The spec's phase 4 item 7 carries the corrected rule.
+- 2026-09-29, from the second spec review: item 8's "250 ms apart" is measured from when the earlier capture **returned** to when the later one **starts**. `settle.py` timestamped each capture before its request, and a capture reads the tree at the end of its ~0.6 s idle wait, so two requests 610 ms apart could read trees 30 ms apart. Replaying the corrected rule on the same 24 timelines: still 0 false settles. On a still screen the matching capture now starts at 0.85–0.94 s, not 0.60–0.66 s (about 0.25 s more, both measured at the request's start), and returns at about 0.90–0.99 s. The spec's phase 4 item 7 carries the corrected rule.
 
 ## Answer
 
