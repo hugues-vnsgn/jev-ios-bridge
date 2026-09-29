@@ -28,6 +28,8 @@ Only the emulator may be used for experiments, with cleanup afterwards (see the 
   - Give each bridge process its own `MOBILECLI_HOME` and pre-start the daemon with `--idle-timeout`. `close` runs `daemon stop`, `pkill` of the `DeviceServer`, and `adb forward --remove` (the forward leaks otherwise).
   - Emulator IDs come from `getprop ro.boot.qemu.avd_name` on the serial. Every error exits 1. `dump ui --format raw` returns a JSON string, or XML when it falls back to uiautomator.
 
+- 2026-09-29, from the domain-model session ([`domain-model.md`](../domain-model.md), [ADR-0006](../../../docs/adr/0006-mobilecli-device-agent-as-android-device-layer.md), decision G): **the bridge never runs mobilecli.** It copies mobilecli's device agent out of the pinned program, checks it against a pinned SHA-256, and drives it directly over JSON-RPC. So this Answer's host-daemon rules no longer apply: the private `MOBILECLI_HOME`, the explicit daemon start, `--device`, the envelope parsing, and the fleet, token and keychain guards. The pin, the licence, the agent's lifecycle on the device, and the cleanup of the agent and forward still stand.
+
 ## Answer
 
 Resolved 2026-09-28 by research. Full note: `docs/research/mobilecli-dependency.md` on branch `research/mobilecli-dependency` (`f785c75`).

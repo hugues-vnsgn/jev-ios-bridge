@@ -17,7 +17,7 @@ The external judgment model that answers the scenario's screen assertions with p
 _Avoid_: planner, agent
 
 **Device layer**:
-The external capability that operates the device and captures its screen.
+The external capability that operates the device and captures its screen. On Android it is the device agent together with Android's own debugging tools, both driven by the bridge.
 
 **Device driver**:
 The bridge's adapter to one device layer.
@@ -56,12 +56,38 @@ _Avoid_: target app
 **Device**:
 The simulator, emulator, or phone on which a run takes place.
 
+**Launch options**:
+How the app under test is started: launch arguments on iOS; an activity and intent extras on Android.
+
 **Run**:
 One execution of one scenario on one device, from preparation to its recorded outcome.
 _Avoid_: session
 
 **Verdict**:
 The run's recorded outcome: passed, failed, or inconclusive.
+
+## Devices
+
+**Device name**:
+What a scenario or setting uses to name a device: a simulator UDID, an adb serial, or an emulator's AVD name.
+
+**Device identity**:
+The stable identity a device name resolves to: the UDID for a simulator, the AVD name for an emulator, the serial for a phone. An emulator's serial is not one, because it changes with start order.
+_Avoid_: device ID, mobilecli ID
+
+**Device lease**:
+A bridge's exclusive, recorded hold on one device for one run, keyed by its device identity. Once released, nothing the run started can still act on the device.
+_Avoid_: lock
+
+**Device agent**:
+The UI-automation program the bridge runs on an Android device to read its screen and act on it.
+_Avoid_: DeviceServer, server, mobilecli
+
+**Foreign agent**:
+Another tool's UI-automation program holding a device. Android allows only one at a time, so a foreign agent makes the device busy.
+
+**Fence**:
+Stopping the device agent and confirming it is gone, so that no agent command whose outcome was unknown can still take effect.
 
 ## Perception and evidence
 
@@ -73,13 +99,22 @@ The current screen evidence presented to the assertion judge.
 _Avoid_: screen dump
 
 **Element reference**:
-A device-layer handle tied to a captured element, rather than a durable identity.
+A handle to one element in one snapshot, valid only for that snapshot rather than a durable identity. The device layer issues it on iOS; the device driver issues it on Android.
+
+**Settled snapshot**:
+A snapshot taken once the screen stopped changing after an action.
+
+**Screen still changing**:
+A step's mark when the screen never settled within the bridge's limit, so the step went on with the last snapshot.
 
 **Action**:
 An authored device interaction with a resolved target and explicit arguments.
 
 **Typed value**:
 A literal supplied by the scenario author for a text-entry action.
+
+**Shown value**:
+What a text field displays after the bridge typed a typed value into it. It may legitimately differ from the typed value.
 
 **Run log**:
 The ordered record of a run's observations, actions, judgments, and outcome.

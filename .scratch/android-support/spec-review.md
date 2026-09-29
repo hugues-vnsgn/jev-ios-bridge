@@ -257,3 +257,25 @@ Reviewed `8c7f764...cf356c4`, offline only. Verdict: **ready after fixes**. The 
 | 3 | minor | The correction gave 0.85–0.94 s as settle times, but those are the comparison capture's request starts. | Fixed. The note and the ticket comment now say the capture starts at 0.85–0.94 s (like the old 0.60–0.66 s, a request start) and returns at about 0.90–0.99 s, the reviewer's reproduced figure. |
 
 **Disagreements:** none.
+
+## Review of the device-agent redesign (GPT-6-Astra, 2026-09-29)
+
+Reviewed `main...63b45cc`, offline only. It re-extracted both pinned Mac binaries in memory and confirmed the SHA-256, and found no remaining product path through mobilecli's CLI or daemon. Verdict: **ready after fixes**. All findings were checked against the spec and `src/scripted/run.ts` and are correct.
+
+| # | Severity | Finding | Resolution |
+| --- | --- | --- | --- |
+| 1 | P1 (both axes) | `close` killed agents by class name (`pkill -f …DeviceServer`), which matches a foreign agent too. `run.ts:349-354` calls `close` even after a `DEVICE_BUSY` refusal, so cleanup would kill the foreign agent it had just refused, and force-stop an app the run never restarted. That breaks Q2.4. | Fixed. `close` undoes only what its run started: it kills the agent it started, by pid after an ownership check, and force-stops the app only if it restarted it. A new test covers `DEVICE_BUSY` followed by `close`. |
+| 2 | P1 | The fence ran before the wait for `adb` commands, so a pending agent-start command could start an agent after the fence. The spec also disagreed with the domain model's diagram. | Fixed. Once `close` begins, no new device work is issued. The order is now: wait, then fence, then stop the app, then stop the streams and forward, then release. It matches the diagram again, and new tests cover a cancel during agent start and abandoned operations. |
+| 3 | P2 | After `kill -9`, the dead run's host `adb logcat` processes survive, and the takeover sweep and check 15 missed them. | Fixed. The lease's holder record lists what the run started (its `logcat` pids, agent pid and forward port). The takeover sweeps exactly that, killing a pid only if its command line still matches. Check 6 and check 15 now look for leftover `logcat` processes. |
+
+**Disagreements:** none.
+
+### Re-review (GPT-6-Astra via Codex, 2026-09-29)
+
+Reviewed `63b45cc..0fb3725`. Verdict: **ready after fixes**. All three previous findings are resolved, and the spec and domain model agree.
+
+| # | Severity | Finding | Resolution |
+| --- | --- | --- | --- |
+| 1 | P2 | The manual cleanup rule in the device rules still said `pkill -f com.mobilenext.mobilecli.DeviceServer`, which kills by class name and so could kill a foreign agent the bridge had correctly left alone. | Fixed. The rule now cleans up by ownership: find the pid, check it's the bridge's own (open point 22) or a mobilecli agent you started yourself, kill that pid, and remove only your own forward. It says never to `pkill` by class name. |
+
+**Disagreements:** none.
