@@ -23,3 +23,5 @@ Known inputs so far:
   - troubleshooting entries: `adb logcat -b crash -d` and `dumpsys activity exit-info <package>`;
   - the limits page: going to HOME isn't detected, and an upper-case copy of a value isn't masked;
   - how the quickstart changes.
+- **New CLI command:** `jev-ios-bridge capture` (Android only in 1.2; `--serial`, `--avd`, `--jev`), from "The /test-android skill".
+- **Skill:** `skills/test-android/SKILL.md` as settled in "The /test-android skill", plus the `build-plugin.mjs` copy and path rewrite.
