@@ -276,6 +276,35 @@ test('release waits for a write already in flight, so a pending rename can\'t re
   });
 });
 
+test('release rechecks releasable once its own turn comes: an own() that arrives after release is queued loses to it and fails "not held", instead of putting the file back', async () => {
+  await withRoot(async (root) => {
+    const path = join(root, `${deviceId}.lock`);
+    const heldWrite = deferred<void>();
+    let calls = 0;
+    const writer = async (tempPath: string, data: string) => {
+      calls++;
+      if (calls === 2) await heldWrite.promise; // hold the disown()'s write open
+      await writeFile(tempPath, data, { mode: 0o600 });
+    };
+    const lease = new DeviceLease({ root, writeTempFile: writer });
+    await lease.take(deviceId);
+    await lease.own('agent:5555'); // call 1, completes normally
+
+    const disowning = lease.disown('agent:5555'); // call 2, held open by heldWrite
+    const releasing = lease.release(); // queued right behind the held disown write
+
+    const owning = lease.own('agent:7777'); // arrives after release is already queued
+
+    heldWrite.resolve(); // let the disown write, then release's check and delete, then own's run in turn
+    await assert.rejects(owning, /Device lease is not held/, 'too late: it lost the race to release');
+    await disowning;
+    await releasing;
+
+    assert.deepEqual(await readdir(root), [], 'release deleted the file; the late own() never put it back');
+    await new DeviceLease({ root }).take(deviceId);
+  });
+});
+
 test('settle waits for every tracked operation, including one started meanwhile, and gives up when its signal aborts', async () => {
   await withRoot(async (root) => {
     const lease = new DeviceLease({ root });

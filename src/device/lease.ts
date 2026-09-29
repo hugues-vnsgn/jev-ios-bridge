@@ -188,14 +188,14 @@ export class DeviceLease {
   async own(description: string): Promise<void> {
     if (this.owned.includes(description)) return;
     this.owned.push(description);
-    await this.rewrite();
+    await this.rewrite([...this.owned]);
   }
 
   /** Record that something the run owned is confirmed stopped. */
   async disown(description: string): Promise<void> {
     if (!this.owned.includes(description)) return;
     this.owned = this.owned.filter(item => item !== description);
-    await this.rewrite();
+    await this.rewrite([...this.owned]);
   }
 
   /** True when nothing the run started can still act on the device: every command exited or was fenced, nothing is owned. */
@@ -206,14 +206,31 @@ export class DeviceLease {
   /**
    * Release the lease if it is releasable; otherwise keep it and throw `DeviceLeaseKeptError`. A lease
    * file that can't be read or parsed keeps the lease too: the error is rethrown and the file stays.
-   * Waits for any `own()`/`disown()` write still in flight to settle first, so a pending rename can't
-   * land after the file is deleted and put a stale record back for a later `take()` to trip over.
+   *
+   * The read-token-and-unlink step runs as a task on the same write queue as `own()`/`disown()`, so it
+   * can't race their writes: it always runs after whichever of their writes was already queued, and
+   * before whichever arrives once release is queued. Once its turn comes, it checks again that this is
+   * still the same file and that nothing durably written is still owned, and keeps the lease if not. An
+   * `own()`/`disown()` that arrives after release is queued then runs after it and fails with "not
+   * held", instead of racing release's delete with a rename that would put the file back.
    */
   async release(): Promise<void> {
     const file = this.file;
     if (!file) return;
     if (!this.releasable) throw new DeviceLeaseKeptError(file.deviceIdentity);
-    await this.writeQueue;
+    const task = this.writeQueue.then(() => this.releaseNow(file));
+    this.writeQueue = task.then(() => undefined, () => undefined);
+    return task;
+  }
+
+  /** Whatever `own()`/`disown()` last durably wrote, plus the in-flight command ledger, which isn't queued. */
+  private durablyReleasable(file: { content: LeaseFile }): boolean {
+    return (file.content.ownedProcesses?.length ?? 0) === 0 &&
+      [...this.commands].every(entry => entry.state === 'exited' || entry.state === 'fenced');
+  }
+
+  private async releaseNow(file: { path: string; deviceIdentity: string; content: LeaseFile }): Promise<void> {
+    if (this.file !== file || !this.durablyReleasable(file)) throw new DeviceLeaseKeptError(file.deviceIdentity);
     try {
       const current = JSON.parse(await readFile(file.path, 'utf8')) as { token?: string };
       if (current.token === file.content.token) await unlink(file.path);
@@ -236,12 +253,17 @@ export class DeviceLease {
   }
 
   /**
-   * Queue this rewrite behind any still in flight, so concurrent `own()`/`disown()` calls on this lease
-   * can't interleave their writes. Each queued rewrite reads `this.owned` fresh when it runs, so the
-   * last one to actually write always persists the current state, whatever order the calls arrived in.
+   * Queue this rewrite behind any write, or release, still in flight, so concurrent `own()`/`disown()`
+   * calls on this lease can't interleave their writes. `owned` is `this.owned` as of this call, captured
+   * synchronously by the caller, not read fresh when the write actually runs: that keeps a write already
+   * queued from picking up an `own()`/`disown()` that arrives later and is queued behind it (behind a
+   * `release()` in particular), which release relies on to judge what's durably owned by its own turn.
+   * The last call's write still ends up as the final state, since each later call's own synchronous
+   * mutation of `this.owned` happens before it captures its snapshot, which is why the queue's last
+   * write always reflects everything that had happened by the time it was queued.
    */
-  private rewrite(): Promise<void> {
-    const task = this.writeQueue.then(() => this.rewriteNow());
+  private rewrite(owned: string[]): Promise<void> {
+    const task = this.writeQueue.then(() => this.rewriteNow(owned));
     this.writeQueue = task.then(() => undefined, () => undefined);
     return task;
   }
@@ -252,11 +274,11 @@ export class DeviceLease {
    * file. The temp name never ends in `.lock`, so a 1.1 bridge, which only opens `<ID>.lock`, ignores it.
    * On any failure the temp file is cleaned up and the lease file is left exactly as it was.
    */
-  private async rewriteNow(): Promise<void> {
+  private async rewriteNow(owned: string[]): Promise<void> {
     const file = this.file;
     if (!file) throw new Error('Device lease is not held');
     const { ownedProcesses: _previous, ...rest } = file.content;
-    const content: LeaseFile = { ...rest, ...(this.owned.length ? { ownedProcesses: [...this.owned] } : {}) };
+    const content: LeaseFile = { ...rest, ...(owned.length ? { ownedProcesses: owned } : {}) };
     const tempPath = `${file.path}.${randomUUID()}.tmp`;
     try {
       await this.writeTempFile(tempPath, JSON.stringify(content));
