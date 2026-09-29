@@ -1,6 +1,7 @@
 # Phase 3: Android script fields and the app's identity
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: implementer-03
 Blocked by: none
 
 Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase 3](../../android-support/release-spec.md#phase-3-contract-additions-how-a-script-names-an-android-app-and-device-what-jev-sees-on-android-decisions-1-to-2-actions-across-android-versions-items-2-to-4-log-pane-and-app-exit-detection-item-6-where-android-plugs-into-the-code-items-4-8-and-9) item 1, with its parts of items 8 and 9. Read item 1 in full, and the ticket it cites, [How a script names an Android app and device](../../android-support/issues/03-script-and-device-identity.md). The detail below only adds acceptance criteria.
