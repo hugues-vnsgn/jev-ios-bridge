@@ -305,6 +305,28 @@ test('release rechecks releasable once its own turn comes: an own() that arrives
   });
 });
 
+test('after a failed disown() write, release still releases: the run confirmed the process stopped, so a stale owned record in the file does not keep the lease', async () => {
+  await withRoot(async (root) => {
+    let calls = 0;
+    const writer = async (tempPath: string, data: string) => {
+      calls++;
+      await writeFile(tempPath, data, { mode: 0o600 });
+      if (calls === 2) throw new Error('disk full'); // the disown()'s write fails
+    };
+    const lease = new DeviceLease({ root, writeTempFile: writer });
+    await lease.take(deviceId);
+    await lease.own('agent:5555');
+    await assert.rejects(lease.disown('agent:5555'), /disk full/);
+    assert.equal(lease.releasable, true);
+
+    await lease.release();
+
+    assert.equal(lease.held, false);
+    assert.deepEqual(await readdir(root), []);
+    await new DeviceLease({ root }).take(deviceId);
+  });
+});
+
 test('settle waits for every tracked operation, including one started meanwhile, and gives up when its signal aborts', async () => {
   await withRoot(async (root) => {
     const lease = new DeviceLease({ root });

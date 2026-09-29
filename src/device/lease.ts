@@ -200,7 +200,7 @@ export class DeviceLease {
 
   /** True when nothing the run started can still act on the device: every command exited or was fenced, nothing is owned. */
   get releasable(): boolean {
-    return this.owned.length === 0 && [...this.commands].every(entry => entry.state === 'exited' || entry.state === 'fenced');
+    return this.owned.length === 0 && this.commandsSettled;
   }
 
   /**
@@ -209,10 +209,12 @@ export class DeviceLease {
    *
    * The read-token-and-unlink step runs as a task on the same write queue as `own()`/`disown()`, so it
    * can't race their writes: it always runs after whichever of their writes was already queued, and
-   * before whichever arrives once release is queued. Once its turn comes, it checks again that this is
-   * still the same file and that nothing durably written is still owned, and keeps the lease if not. An
-   * `own()`/`disown()` that arrives after release is queued then runs after it and fails with "not
-   * held", instead of racing release's delete with a rename that would put the file back.
+   * before whichever arrives once release is queued. What the run owns is judged when release is called,
+   * from `owned`: a `disown()` means the run confirmed that process stopped, even if its write to the
+   * file failed. Once its turn comes, release checks again that this is still the same file and that
+   * every command exited or was fenced, since the command ledger isn't queued, and keeps the lease if
+   * not. An `own()`/`disown()` that arrives after release is queued then runs after it and fails with
+   * "not held", instead of racing release's delete with a rename that would put the file back.
    */
   async release(): Promise<void> {
     const file = this.file;
@@ -223,14 +225,13 @@ export class DeviceLease {
     return task;
   }
 
-  /** Whatever `own()`/`disown()` last durably wrote, plus the in-flight command ledger, which isn't queued. */
-  private durablyReleasable(file: { content: LeaseFile }): boolean {
-    return (file.content.ownedProcesses?.length ?? 0) === 0 &&
-      [...this.commands].every(entry => entry.state === 'exited' || entry.state === 'fenced');
+  /** The in-flight command ledger isn't queued, so release checks it again once its turn comes. */
+  private get commandsSettled(): boolean {
+    return [...this.commands].every(entry => entry.state === 'exited' || entry.state === 'fenced');
   }
 
   private async releaseNow(file: { path: string; deviceIdentity: string; content: LeaseFile }): Promise<void> {
-    if (this.file !== file || !this.durablyReleasable(file)) throw new DeviceLeaseKeptError(file.deviceIdentity);
+    if (this.file !== file || !this.commandsSettled) throw new DeviceLeaseKeptError(file.deviceIdentity);
     try {
       const current = JSON.parse(await readFile(file.path, 'utf8')) as { token?: string };
       if (current.token === file.content.token) await unlink(file.path);
@@ -257,7 +258,7 @@ export class DeviceLease {
    * calls on this lease can't interleave their writes. `owned` is `this.owned` as of this call, captured
    * synchronously by the caller, not read fresh when the write actually runs: that keeps a write already
    * queued from picking up an `own()`/`disown()` that arrives later and is queued behind it (behind a
-   * `release()` in particular), which release relies on to judge what's durably owned by its own turn.
+   * `release()` in particular, where that later call fails "not held" and must leave no trace in the file).
    * The last call's write still ends up as the final state, since each later call's own synchronous
    * mutation of `this.owned` happens before it captures its snapshot, which is why the queue's last
    * write always reflects everything that had happened by the time it was queued.
