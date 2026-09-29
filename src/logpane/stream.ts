@@ -7,7 +7,7 @@ import { appLine, masker, osLine, type PaneLine } from './format.js';
 
 /** Messages on the pane socket, one JSON object per line. */
 export type PaneMessage =
-  | { type: 'hello'; runId: string; bundleId: string; sources: { runtime?: string; os?: string } }
+  | { type: 'hello'; runId: string; appId: string; sources: { runtime?: string; os?: string } }
   | ({ type: 'line' } & PaneLine)
   | { type: 'note'; text: string }
   | { type: 'end'; verdict: string; reason: string; evidencePath: string; closeAfterMs?: number };
@@ -73,7 +73,7 @@ export async function startLogStream(options: {
     }
     for (const client of clients) client.write(text);
   };
-  const hello: PaneMessage = { type: 'hello', runId: options.runId, bundleId: options.bundleId, sources: options.sources };
+  const hello: PaneMessage = { type: 'hello', runId: options.runId, appId: options.bundleId, sources: options.sources };
   await unlink(socketPath).catch(() => {});
   const server: Server = createServer(client => {
     clients.add(client);

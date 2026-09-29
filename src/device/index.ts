@@ -289,7 +289,8 @@ export class MobileBuildMcpDriver implements DeviceDriver {
   readonly tapAliasRule: TapAliasRule = 'mobilebuildmcp-2.7.1';
   private readonly runner: CliRunner;
   private deviceId?: string;
-  private bundleId?: string;
+  /** The app's identity: its bundle ID on iOS. */
+  private appId?: string;
   private readonly lease: DeviceLease;
   private launched = false;
   private logPaths: Record<string, string> = {};
@@ -373,7 +374,7 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     this.referenceExpiries = 0;
     this.nearTtlRefreshes = 0;
     this.deviceId = deviceId;
-    this.bundleId = scenario.app.bundleId;
+    this.appId = scenario.app.bundleId;
     try {
       const launchArgs = scenario.app.launchArgs ?? [];
       // Array parameters go through --json, so arguments that start with "-" aren't read as CLI flags.
@@ -547,11 +548,11 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     // A lost CLI response has no proven acknowledgement. A new daemon snapshot
     // alone cannot establish that an earlier request will never arrive late.
     if (!this.lease.releasable) throw new DeviceCliError('UI_ACTION_UNCONFIRMED', 'Device operation outcome is unknown; device lock retained');
-    if (this.launched && this.options.stopAppOnClose !== false && this.deviceId && this.bundleId) {
+    if (this.launched && this.options.stopAppOnClose !== false && this.deviceId && this.appId) {
       // Stop is not in MobileBuildMCP's UI queue. Keep the lease if its CLI
       // response is lost, so another run cannot overlap uncertain cleanup.
       try {
-        await this.call(['simulator', 'stop', '--simulator-id', this.deviceId, '--bundle-id', this.bundleId], signal,
+        await this.call(['simulator', 'stop', '--simulator-id', this.deviceId, '--bundle-id', this.appId], signal,
           'mobilebuildmcp.output.stop-result');
       } catch (error) {
         // An acknowledged stop failure (typically: the app already exited) leaves no command in flight.
