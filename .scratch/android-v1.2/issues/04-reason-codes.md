@@ -1,6 +1,7 @@
 # Phase 3: new reason codes, with iOS vendor codes kept
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: implementer-04
 Blocked by: none
 
 Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase 3](../../android-support/release-spec.md#phase-3-contract-additions-how-a-script-names-an-android-app-and-device-what-jev-sees-on-android-decisions-1-to-2-actions-across-android-versions-items-2-to-4-log-pane-and-app-exit-detection-item-6-where-android-plugs-into-the-code-items-4-8-and-9) item 3, with its parts of items 8 and 9, and [open point 3](../../android-support/release-spec.md#open-points-for-the-executor). Read them in full. The detail below only adds acceptance criteria.
@@ -22,3 +23,11 @@ Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase
 - No device, simulator or emulator is touched.
 
 ## Comments
+
+**implementer-04 (2026-09-29).**
+
+- **MobileBuildMCP 2.7.1 overlap check.** Searched `node_modules/mobilebuildmcp/build` for each of the nine new names (`DEVICE_NOT_CONNECTED`, `DEVICE_AMBIGUOUS`, `DEVICE_UNAUTHORIZED`, `DEVICE_NOT_BOOTED`, `DEVICE_LOCKED`, `APP_NOT_INSTALLED`, `APP_NOT_RESPONDING`, `DEVICE_UNSUPPORTED`, `ANDROID_TOOLS_UNAVAILABLE`) and the vendor's own `code:` literals (`ACTION_FAILED`, `TARGET_NOT_ACTIONABLE`, `SNAPSHOT_MISSING`, `SNAPSHOT_EXPIRED`, `TARGET_NOT_FOUND`, `ELEMENT_REF_NOT_FOUND`, `TARGET_AMBIGUOUS`, `WAIT_TIMEOUT`, `SNAPSHOT_PARSE_FAILED`, `SIMULATOR_RESOLUTION_FAILED`, and the daemon/CLI-only codes). **No overlap**: none of the nine new names match anything MobileBuildMCP 2.7.1 actually raises. (Note: `WAIT_TIMEOUT` and `TARGET_AMBIGUOUS` are pre-existing 1.1 bridge codes MobileBuildMCP also uses; unaffected by this Issue.)
+- **Scoping mechanism.** Split `REASON_CODES` into a private `REASON_CODES_1_1` literal (the 49 codes shipped through 1.1) merged with the nine new entries. `MOBILEBUILDMCP_PASSTHROUGH_CODES` is `Object.keys(REASON_CODES_1_1)` frozen as a `Set`, so `failureOf`'s `DeviceCliError` branch checks membership in that frozen set rather than the live `REASON_CODES`. This is a local implementation choice (the "for example a separate error type" in item 3 covers the design intent; the exact split/naming isn't spec'd).
+- **Android driver's own path.** Added `DeviceReasonError` (`src/device/index.ts`), a small error class carrying a `ReasonCode` directly; `failureOf` passes its code through unconditionally, no `vendorCode`. No Android driver exists yet (phase 4), so it's exercised only by a fake driver in `tests/scripted-run.test.ts` ("an Android-path error reports its own new reason code, with no vendorCode").
+- Confirmed the existing `tests/contract.test.ts` "device-error" run (iOS vendor `APP_NOT_INSTALLED` via `DeviceCliError`) still reports `DEVICE_ERROR` + `vendorCode: "APP_NOT_INSTALLED"` after `APP_NOT_INSTALLED` became a bridge code, and that the `deviceError` golden entry in `report-json.json` stayed byte-identical — this is the scoping regression the Issue calls out.
+- Rewording of `NO_DEVICE`/`INVALID_DEVICE`/`DEVICE_BUSY` only touches `REASON_CODES`' internal descriptions (used by `docs/guide/reference/reason-codes.md` and the docs test); confirmed the user-visible "is locked by" lease message (`src/device/lease.ts`) is untouched.
