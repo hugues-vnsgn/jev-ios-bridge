@@ -28,3 +28,7 @@ This file is the execution index for [the v1.2.0 release spec](../android-suppor
   - `runScriptedScenario` with a fake driver that carries the tap alias rule (`tests/scripted-run.test.ts`);
   - `renderAssertionState(snapshot, platform?)` (`tests/scripted-jev.test.ts`, `tests/scripted-production-parity.test.ts`);
   - the golden tests (`tests/contract.test.ts` and the others that read `tests/golden/`).
+
+## Rulings during execution
+
+- **2026-09-29, phase 2 item 6 (owner):** existing tests build test data with `app: { bundleId }` (`tests/device.test.ts:10,825`) and `startLogStream({ bundleId })` (`tests/logpane.test.ts:45,70`), so renaming those inputs would break existing tests. Phase 2 renames only what no existing test touches: the iOS driver's private field, the log pane's internal `hello` message field, and `BridgeService`'s local use. Renaming `ScenarioContext.app` and `startLogStream`'s option moves to **phase 3**, which adds Android's `app.package` and reshapes the app type once, as an iOS or Android identity.
