@@ -1,0 +1,399 @@
+# v1.2.0 release spec: Android support
+
+Status: **accepted by the owner** (2026-09-29), after a fresh-agent review and two reviews by GPT-6-Astra ([`spec-review.md`](spec-review.md)). Written for Claude Code as the executor. The owner's decisions are [listed at the end](#decisions-the-owner-accepted).
+
+This spec is an index of the decisions it depends on. Each phase names the tickets that hold its detail. Read a ticket's `## Answer` before starting its work: the Answer is the source of truth, and the [map](map.md) only gives the gist. Where this spec and an Answer disagree, stop and ask the owner. Don't pick one yourself. Where the tickets left a detail open, this spec says so under [Open points](#open-points-for-the-executor) and gives a recommended default.
+
+## Goal
+
+Ship **jev-ios-bridge v1.2.0** with Android support, as a regular GitHub release with the npm tarball and the Claude Code plugin zip, the way v1.1.0 shipped. The bridge drives Android emulators and phones through mobilecli plus `adb`. A script opts in with `"platform": "android"`. Android is additive: iOS scripts, reports and exit codes keep working unchanged under the 1.x contract ([ADR-0005](../../docs/adr/0005-the-1-0-stability-contract.md)). v1.2.0 ships after the emulator checks pass. Real Android phones are supported in code but marked untested until the owner's Xiaomi is free.
+
+## Sources
+
+| Decision | Source |
+| --- | --- |
+| Destination, owner decisions, device and secret rules, out of scope | [Map](map.md) |
+| Depending on mobilecli: pin, network guards, lifecycle, device IDs, output | [mobilecli as a dependency](issues/01-mobilecli-as-a-dependency.md), [`mobilecli-dependency.md`](../../docs/research/mobilecli-dependency.md) |
+| Element mapping: roles, labels, lifted text, what is dropped | [How Android elements map onto the bridge's elements](issues/02-android-element-mapping.md); `spikes/android/element-mapping.cjs` on branch `prototype/android-element-mapping` |
+| Script fields, device choice, restart, checks before a run | [How a script names an Android app and device](issues/03-script-and-device-identity.md) |
+| What Jev sees: projection rule, header, `placeholder` | [What Jev sees on Android, and the 10-screen check](issues/04-what-jev-sees-on-android.md); `spikes/android/jev-check/` on the prototype branch |
+| Tap, replace text, type, swipe, capture source, settle rule | [Actions across Android versions](issues/05-actions-across-android-versions.md), [findings](findings/05-actions.md) |
+| Log pane, app-exit detection, `APP_NOT_RESPONDING` | [Log pane and app-exit detection on Android](issues/06-log-pane-and-app-exit.md), [findings](findings/06-log-pane.md) |
+| Code layout, driver choice, shared parts, tests | [Where Android plugs into the code](issues/07-where-android-plugs-into-the-code.md) |
+| Release checks | [Evidence plan and release gates for v1.2.0](issues/08-evidence-plan-and-release-gates.md) |
+| The `/test-android` skill and the `capture` command | [The /test-android skill](issues/10-the-test-android-skill.md) |
+| The spike this builds on | [Research and plan](plan.md) |
+| How the last releases were checked and published | [v1.0.0 spec](../v1-release/release-spec.md), [`docs/releases/v1.1.0.md`](../../docs/releases/v1.1.0.md), [`plugin/README.md`](../../plugin/README.md) |
+
+## Rules for the whole release
+
+- **The 1.x contract ([ADR-0005](../../docs/adr/0005-the-1-0-stability-contract.md)).** Only add: optional script fields, reason codes, report fields, event types and a CLI command. Don't rename, remove or change the meaning of anything frozen, and don't make any valid script invalid.
+  - iOS scripts, iOS error messages, `report.json` for iOS runs, and exit codes stay as they are.
+  - **Golden files** (`tests/golden/`): add new entries freely. Existing entries may change only as follows, and anything else is a bug:
+    - `vocabulary.json`: the new reason codes are appended to `reasonCodes`;
+    - `mcp.json`: the `start_scenario` input schema changes exactly as phase 3 item 1 describes, which accepts more scripts and rejects none (owner decision A below);
+    - every other existing entry stays byte-identical, including every `scripts.json` message **and path**, the three `report-json.json` runs, and `evidence-layout.json`'s `startedFields`.
+
+    The rewordings in "Where Android plugs into the code" item 9 (the `NO_DEVICE`, `INVALID_DEVICE` and `DEVICE_BUSY` descriptions, the `start_scenario` description, the CLI help) aren't in any golden file today. They change the docs and the source only.
+  - **The iOS observation text doesn't change by a single byte.** [ADR-0004](../../docs/adr/0004-fixed-assertion-bounds-single-judgment.md) would require the corpus gate for any change.
+- **Test first.** For every behaviour, write the failing test, then the code. The Android driver takes injected runners for mobilecli, `adb` and the agent client, as `CliRunner` does for MobileBuildMCP, so unit tests never need a device. CI runs on Linux without the Android SDK, and it must stay green.
+- **One PR per phase.** Branch from `main`, push, open the PR, and wait for CI. **Ask the owner before merging.** Merge with a merge commit, delete the branch, and sync local `main`.
+- **Never commit the owner's modified `.mcp.json`.**
+- **Devices** (map, "Devices and secrets"):
+  - Use only emulators: `Medium_Phone_API_36.1` (Android 16, usually `emulator-5554`) and `jev-actions-api31` (Android 12, API 31), or another emulator you create. Name them by AVD, since serials change with start order.
+  - Never touch the Xiaomi `2985e9c` (another agent is using it), any other phone, or BFSOne.
+  - **Run every Android command through a private adb server that hides USB phones:** `adb -P 5099 --one-device NO_SUCH_USB_DEVICE start-server`, with `ANDROID_ADB_SERVER_PORT=5099` exported for every command, including the bridge and Claude Code. Before each run, check that `adb devices` lists only `emulator-*` serials. Stop if it lists anything else.
+  - Never run `adb kill-server` or any other command against the default server on port 5037: it belongs to the other agent. Kill only your private server when you finish.
+  - **Run mobilecli by hand only through a guarded wrapper** like [`mcli.sh`](findings/06-assets/mcli.sh) and [`env.sh`](findings/05-assets/env.sh): the pinned binary, a private `MOBILECLI_HOME` and `XDG_CONFIG_HOME`, `MOBILECLI_TOKEN` unset, `MOBILECLI_FLEET_URL=ws://127.0.0.1:9`, a dead `USBMUXD_SOCKET_ADDRESS` (so no paired iPhone is queried), and a refusal when `adb devices` lists anything but `emulator-*`. Never run mobilecli on the default `~/.mobilecli` home, and never run `mobilecli daemon stop` against it: another tool's daemon may live there.
+  - **Clean up mobilecli fully after any use,** including your own: `mobilecli daemon stop` with your private home, `adb -s <serial> shell pkill -f com.mobilenext.mobilecli.DeviceServer`, and `adb -s <serial> forward --remove tcp:<port>` for that serial's `localabstract:mobilecli-server` line. Its `DeviceServer` blocks every other UI tool until it is killed.
+  - Export a dead `USBMUXD_SOCKET_ADDRESS` for every Android evidence command, including the bridge and Claude Code in checks 9 and 10. Don't set it for the iOS regression runs.
+  - **Install apps only with `adb -s <emulator serial> install -r <apk>`** through the private server, after the `adb devices` check. Build with Gradle's `assembleDebug` only. Never use `installDebug`, any other Gradle `install*` task, or an IDE run: they install on every device their adb server sees, and a Gradle daemon started without `ANDROID_ADB_SERVER_PORT` uses port 5037, where the Xiaomi is.
+  - The emulator's quickboot snapshot rolls back apps installed after it was taken. Boot with `-no-snapshot-save`, and check that the evidence apps are installed after each boot. Shut down an emulator you started.
+  - Keep the Android 12 image and the `jev-actions-api31` AVD (about 5 GB). The owner decides later whether to delete them.
+  - For the iOS regression runs, use only the dedicated simulator from the [v1.0.0 spec](../v1-release/release-spec.md)'s rules.
+- **Secrets.** Load the Jev key from the main checkout's `.env` by an explicit path (`node --env-file=<main checkout>/.env …`), as [`AGENTS.md`](../../AGENTS.md) says. Never read, print, copy or commit `.env` or any credential file. To check that the key is set, test for the variable without echoing it. A live authentication failure is a blocker to report.
+  - **The plugin checks (9, 10, and the install in phase 9) need the key in the plugin's settings.** Never pass it with `--config` or anywhere else on a command line. Stop and ask the owner to type it into Claude Code's prompt. Afterwards, delete the throwaway `CLAUDE_CONFIG_DIR`, and tell the owner that a secure-storage item may remain, so they can remove it.
+- **Other people's repos.** The owner's `cmp` app is at `~/Codes/cmp` (not a git repo). Build it there, without editing its source, with `./gradlew :androidApp:assembleDebug`. Its build output lands in the owner's tree, as it did for 1.0. Its package is `org.example.project` in `androidApp/build.gradle.kts`: confirm it before writing scripts. If its captures show no identifiers, its scripts use `role` plus `label` selectors.
+- **Where evidence goes:** `spikes/benchmarks/results/v1.2.0/`, one subfolder per check. Fill in the checks table in this file in phase 9's release-records PR.
+- **Before phase 1:** this spec, the map and the spike branch `spike/android-emulator` (including `examples/diagnostic-app-android`) land on `main` in one PR, after the owner accepts the spec (map, "Delivery").
+- **Stop and ask the owner when:**
+  - a check fails for a cause outside the bridge (mobilecli, the emulator, Android, TypeSafe, `cmp`, Settings), including an app crash you didn't cause;
+  - this spec contradicts a ticket's Answer, or an open point's default turns out to be wrong;
+  - a USB phone shows up on the private adb server;
+  - Claude Code or a desktop session isn't available for a check that needs one.
+- **A verdict that misses its expected one** gets a diagnosis, a fix, and one rerun. Never re-roll. If the fix is to a script rather than the bridge, record why.
+- Run `unslop` over everything people read: docs, the skill, the CHANGELOG, release notes and PR bodies.
+
+## Work, in order
+
+Each phase is one PR. Unit and golden tests land with the phase that needs them. Phase 2 comes before the contract phase so that it can prove the refactors change nothing for iOS: its golden files stay byte-identical.
+
+### Phase 1: ADR-0006, mobilecli as the Android device layer ([mobilecli as a dependency](issues/01-mobilecli-as-a-dependency.md); [`mobilecli-dependency.md`](../../docs/research/mobilecli-dependency.md))
+
+Write `docs/adr/0006-mobilecli-as-android-device-layer.md`, in the style of [ADR-0002](../../docs/adr/0002-mobilebuildmcp-as-device-layer.md). It records:
+
+1. **The decision:** the Android device layer is an existing tool, mobilecli, called as a CLI and pinned exactly at `mobilecli@1.0.14`, like MobileBuildMCP. The bridge runs the platform binary directly, not the npm wrapper, because the wrapper orphans the process on SIGTERM. Plain `adb` does what mobilecli doesn't: restarting the app with intent extras, logcat, the device checks, and the `adb forward` lookup.
+2. **The licence trade-off.** mobilecli 1.0.14 is FSL-1.1-ALv2: source-available, not open source.
+   - The bridge uses it as a tool for its own purpose, which the licence permits. A hosted "run your app on devices" service built on it could count as a "Competing Use".
+   - Each release becomes Apache-2.0 two years after it ships, so 1.0.14 converts on 2028-09-27.
+   - History: AGPL-3.0 until 2026-05-24. The npm "MIT" label up to 1.0.11 was a packaging error.
+   - The bridge doesn't redistribute mobilecli (npm and Claude Code install it from the registry), so the bridge stays MIT and the ADR links the licence.
+   - The owner accepted this trade-off (map, "Settled while charting").
+3. **Rejected alternatives:** the abandoned `@mobilenext/mobilecli` name; mobile-mcp, which sends PostHog and Scarf telemetry and pulls in Playwright; and writing our own adb driver, which stays the fallback.
+4. **Network:** no telemetry. The keychain and the cloud fleet are turned off by `--insecure-storage`, a private empty `XDG_CONFIG_HOME`, no `MOBILECLI_TOKEN`, and `MOBILECLI_FLEET_URL=ws://127.0.0.1:9`. mobilecli's first device lookup still reads the properties of every Android phone and paired iPhone on the Mac.
+5. **Lifecycle:** a private `MOBILECLI_HOME` for each run (owner decision B), a daemon started with a short `--idle-timeout`, and a `close` that stops the daemon, kills the on-device `DeviceServer` and removes its `adb forward`.
+6. **An internal protocol:** the driver reads the full tree straight from mobilecli's on-device agent, because mobilecli's own `dump ui` drops the `scrollable` and `password` flags ("Actions across Android versions" item 6). The exact pin guards this. Asking mobilecli upstream to keep the fields is a later, optional step.
+7. **Upgrades are deliberate.** mobilecli shipped 12 releases in 5 weeks. A new version is adopted when the contract tests pass and the Android evidence scripts keep their verdicts (see [open point 1](#open-points-for-the-executor)), and it ships as a minor release.
+8. **Changes to Android's view** (owner decision F): ADR-0004's corpus gate covers only iOS screens. A later change to `android-full-text-v1`, or a new Jev model, re-runs the 10-screen check from "What Jev sees on Android" (its 31 claims, one run) and needs zero confidently wrong answers.
+
+Docs only. No code.
+
+### Phase 2: refactors that change nothing for iOS ([Where Android plugs into the code](issues/07-where-android-plugs-into-the-code.md) items 1 to 4)
+
+Every existing test and golden file passes unchanged in this PR.
+
+1. **The driver factory.** Add one function in `src/device/` that builds the driver from the script's platform. `src/cli.ts`, which also serves MCP, passes it to `BridgeService` as `createDriver`. For now it only builds the MobileBuildMCP driver. One bridge process serves both platforms, so the driver is chosen per script, never per process.
+2. **Shared locks and log tails.** Move `acquireLock` and its helpers, and `readLogTail`, from `src/device/index.ts` into shared files in `src/device/`. The lock folder (`jev-ios-bridge-device-locks`) and lock behaviour stay the same. Nothing else is shared: no base class, and the reference-refresh logic stays in the iOS driver.
+3. **The tap alias rule moves onto the MobileBuildMCP driver.** Today `BridgeService` takes a process-wide `tapAliasRule` option and passes it to the run. Make the MobileBuildMCP driver carry the rule itself, for example as a read-only property that the run reads. Remove the option from `BridgeService` and `src/cli.ts`. Otherwise a process that serves both platforms would leak the rule onto Android runs.
+4. **The renderer takes the platform.** `renderAssertionState` in `src/scripted/observe.ts` takes the platform, as an optional parameter that defaults to iOS so existing callers and tests don't change, and picks the header and projection rule from it. iOS keeps `Current iOS screen (full accessibility capture):` and `visible-full-text-v2`, byte for byte.
+
+### Phase 3: contract additions ([How a script names an Android app and device](issues/03-script-and-device-identity.md); [What Jev sees on Android](issues/04-what-jev-sees-on-android.md) decisions 1 to 2; [Actions across Android versions](issues/05-actions-across-android-versions.md) items 2 to 4; [Log pane and app-exit detection](issues/06-log-pane-and-app-exit.md) item 6; [Where Android plugs into the code](issues/07-where-android-plugs-into-the-code.md) items 4, 8 and 9)
+
+1. **Script fields** (`src/scripted/schema.ts`, `contracts.ts`):
+   - An optional top-level `platform`: `"ios"` or `"android"`. When it is absent or `"ios"`, the script is read exactly as today, and the Android fields below are rejected.
+   - For `"platform": "android"`:
+     - `app.package` is required. It follows Android's rule: two or more dot-separated parts, each starting with a letter, then letters, digits or `_` (`com.hugues.test_cmp` is valid).
+     - `app.activity` is optional: relative (`.DebugGalleryActivity`) or fully qualified.
+     - `app.intentExtras` is optional: string keys to string values, at most 20 entries, printable ASCII values of at most 200 characters (the `launchArgs` limits).
+     - `device.serial` (the adb serial as `adb devices` prints it) or `device.avd` (an emulator's AVD name). A script names at most one of them. Both must match a character pattern ([open point 20](#open-points-for-the-executor)), because they reach `adb -s`, the device shell and the lock file's name.
+     - Rejected: `app.bundleId`, `app.launchArgs` (the message points to `app.intentExtras`), and `device.udid`.
+     - Typed values may start with `-`, and may be non-English text (see [open point 2](#open-points-for-the-executor) for the exact character rule).
+   - iOS keeps its printable US-keyboard rule and its leading-hyphen ban, with the same messages **at the same paths**.
+   - **The schema's shape.** Keep one object schema. `app.bundleId` becomes optional in the object, the ASCII pattern moves off `values`, and the new fields are optional properties. A platform-aware refinement then enforces each platform's rules and emits today's iOS messages at today's paths. Zod runs a refinement only after the base object parses, so check that every existing `scripts.json` entry still gives the same message and path; if one moves, fix the schema, not the golden file. The resulting `mcp.json` diff is exactly: `bundleId` leaves `app.required`; the pattern leaves `values.additionalProperties`; and `platform`, `app.package`, `app.activity`, `app.intentExtras`, `device.serial` and `device.avd` appear as optional properties. This is owner decision A.
+2. **Choosing the device before a run.** Split today's `selectDeviceId` by platform. iOS is unchanged. Android takes the script's `device.serial` or `device.avd`, then `JEV_ANDROID_DEVICE` (a serial or an AVD name; an empty value counts as unset), then fails with `NO_DEVICE`. There's no config file and no "any device" shortcut. A run fails only when its own platform's device is missing: an Android run never needs `JEV_DEVICE_UDID`. As on iOS, the CLI's pre-run check refuses a missing or malformed device with exit code 3, and `INVALID_DEVICE`'s message names the Android patterns.
+3. **Reason codes** (`src/scripted/vocabulary.ts`). Add these. The names are this spec's, because "How a script names an Android app and device" left the naming to it:
+
+   | Code | Meaning |
+   | --- | --- |
+   | `DEVICE_NOT_CONNECTED` | The named serial isn't listed by adb or is offline, or no running emulator has the named AVD. |
+   | `DEVICE_AMBIGUOUS` | More than one running emulator has the named AVD, so neither the bridge nor mobilecli can tell them apart. |
+   | `DEVICE_UNAUTHORIZED` | The device hasn't accepted this Mac's USB-debugging key. |
+   | `DEVICE_NOT_BOOTED` | The device hasn't finished booting. |
+   | `DEVICE_LOCKED` | The device's screen is locked. |
+   | `APP_NOT_INSTALLED` | The app's package isn't installed on the device. |
+   | `APP_NOT_RESPONDING` | The app froze (Android showed "App isn't responding") during the run. |
+
+   Reword `NO_DEVICE`, `INVALID_DEVICE` and `DEVICE_BUSY` so they serve both platforms, for example "No device was configured for the script's platform." Their meaning doesn't change. See [open point 3](#open-points-for-the-executor) for two further codes. These names become permanent once shipped, so they are owner decision E.
+
+   **Keep iOS vendor codes as they are.** Today `failureOf` in `src/scripted/run.ts` passes any device-layer code that is also a bridge code straight through. The iOS `deviceError` golden run throws MobileBuildMCP's `APP_NOT_INSTALLED` and records `DEVICE_ERROR` with `vendorCode: "APP_NOT_INSTALLED"`. Adding `APP_NOT_INSTALLED` as a bridge code would silently change that. So scope the pass-through: MobileBuildMCP errors pass through only the 1.1 codes (freeze that set in code), and wrap everything else as `DEVICE_ERROR` plus `vendorCode`. The Android driver raises its new codes through its own path. Test that an iOS vendor `APP_NOT_INSTALLED` still reports `DEVICE_ERROR` with the vendor code, and that the `deviceError` golden entry stays byte-identical. Check each new name against MobileBuildMCP 2.7.1's codes too.
+4. **The element and Jev's view.**
+   - `Element` gains an optional `placeholder`, which only the Android driver sets. It also gains an internal "not selectable" marker ([open point 4](#open-points-for-the-executor)).
+   - The renderer's Android branch uses the header `Current Android screen (full accessibility capture):` and the rule `android-full-text-v1`. It has the iOS field set (role, label, value, identifier, frame, state; state may carry `focused` and `selected`). When an element has a `placeholder`, the line shows `"placeholder": "<text>"` in place of `label`. The 24,000-byte budget is the same.
+   - Password fields show their value as dots of the same length, never the characters, as on iOS. (This refines "Actions across Android versions" item 4, which said "only whether it has text".) The mapping (phase 4) writes the dots into `value`, so the renderer, selectors, `capture` and the shown value after typing all see dots. `Element` needs no password flag.
+5. **Run log and reports.**
+   - The `started` event records the platform's projection rule, and the run-log allowlist in `src/log/index.ts` accepts both rule names.
+   - The Android app identity goes into `started` and `report.json` as new fields, **on Android runs only**, so iOS reports and `started` events don't change ([open point 5](#open-points-for-the-executor); owner decision C). `bundleId` is `null` on Android runs, which it can already be.
+   - The shown value after typing is a contract addition in "Assemble the v1.2.0 spec" ([open point 11](#open-points-for-the-executor); owner decision D).
+6. **Entry points.** The MCP `start_scenario` description says "an explicit iOS or Android action script". The CLI help names `JEV_ANDROID_DEVICE`. The server name stays `jev-ios-bridge` until 2.0.
+7. **Until phase 4 lands,** the driver factory refuses an Android script with a clear "Android isn't available in this build" start error, so `main` never sends an Android script to the iOS driver. No release happens in between.
+8. **Golden tests**, adding entries only:
+   - accepted and rejected Android scripts with exact messages, including every rejected-field case above, and an iOS script that uses an Android field;
+   - the new reason codes in `vocabulary.json`;
+   - the `mcp.json` input-schema diff from item 1, and nothing else in that file;
+   - `report.json` for an Android run, and the three iOS runs unchanged;
+   - CLI exit codes for an Android script with no device (3). The test's environment helper must also delete `JEV_ANDROID_DEVICE`, or the result depends on the shell;
+   - the Android renderer on hand-written elements, including a `placeholder` and a password field.
+9. **Reference docs that tests check.** `tests/docs.test.ts` requires the reason-code reference to list exactly the bridge-owned codes, so update `docs/guide/reference/reason-codes.md` and `reference/script-format.md` in this PR. The full docs come in phase 7.
+
+### Phase 4: the Android driver ([mobilecli as a dependency](issues/01-mobilecli-as-a-dependency.md); [How Android elements map onto the bridge's elements](issues/02-android-element-mapping.md); [How a script names an Android app and device](issues/03-script-and-device-identity.md); [Actions across Android versions](issues/05-actions-across-android-versions.md); [Where Android plugs into the code](issues/07-where-android-plugs-into-the-code.md) items 2, 5, 6 and 8)
+
+New code goes in `src/device/android/`: the driver, the mobilecli and `adb` runners, the agent client, the element mapping, the settle rule, and the preparation checks. The iOS driver stays in `src/device/index.ts`. The factory from phase 2 now builds this driver for Android scripts.
+
+1. **mobilecli pin and guards.**
+   - Add `"mobilecli": "1.0.14"` (exact) to `dependencies`. Don't list the platform packages directly: that breaks `npm install` on Intel Macs.
+   - `pinnedMobilecli()` resolves `@mobilenext/mobilecli-darwin-<arch>` from the wrapper's location, as the research note shows, and the runner runs that binary directly.
+   - Check `mobilecli --version` against the pin once per run.
+   - `mobilecliEnvironment()` builds on `deviceEnvironment()`, which already strips `TYPESAFE_API_KEY`. It removes `MOBILECLI_TOKEN`, sets a private empty `XDG_CONFIG_HOME`, `MOBILECLI_FLEET_URL=ws://127.0.0.1:9` and a private `MOBILECLI_HOME` (one per run: owner decision B), optionally a dead `USBMUXD_SOCKET_ADDRESS` ([open point 21](#open-points-for-the-executor)), and passes `--insecure-storage` on every call. It keeps `ANDROID_ADB_SERVER_PORT`, so the private adb server reaches both adb and mobilecli. Test that.
+   - Start the daemon explicitly with `daemon start --idle-timeout 5m`, wait until `daemon status` reports it running, and pass `--device <mobilecli id>` on every call.
+   - Parse the envelope: exit 0 means `status: "ok"`. On exit 1, read `error` from stdout if it is JSON, else stderr. Always pass `--` before typed text.
+2. **Device identity and checks before a run** ("How a script names an Android app and device").
+   - Resolve the device from `device.serial`, `device.avd` or `JEV_ANDROID_DEVICE`.
+   - An emulator's mobilecli ID is `getprop ro.boot.qemu.avd_name`, read over its serial. A phone's ID is its serial. Read that property only from `emulator-*` serials.
+   - **Take the shared device lock right after resolving the ID** ([open point 7](#open-points-for-the-executor) for its key), before anything that touches the device: waking it, force-stopping the app, or starting the `DeviceServer`. `capture` does the same.
+   - Refuse, with the phase 3 codes, when the device isn't connected, is unauthorized, hasn't finished booting (`sys.boot_completed` isn't `1`), has its screen locked, or doesn't have the app installed. Also refuse when two running emulators share the AVD name.
+   - Wake a screen that is only off. Never change a device setting (animations, permissions, stay-awake).
+3. **Restart.** `am force-stop <package>`, then `adb shell am start -W` of `app.activity` or the launcher activity, with each extra passed as `--es <key> <value>`. Don't use mobilecli's `apps launch`: it neither waits nor passes extras. Never clear app data. Quote every argument for the device shell ([open point 8](#open-points-for-the-executor)).
+4. **Reading the screen.** Start mobilecli's `DeviceServer` through mobilecli (the first `dump ui` does it). Then read the full tree from the agent: find the `localabstract:mobilecli-server` line **for this run's serial** (the first column) in `adb forward --list`, which lists every device's forwards, and POST `{"jsonrpc":"2.0","id":"1","method":"device.dump.ui","params":{"waitUntilIdle":2000}}` to `http://127.0.0.1:<port>/` ([`direct-dump.sh`](findings/05-assets/direct-dump.sh)). That tree keeps `scrollable` and `password`. The agent's JSON is a superset of `dump ui --format raw`, so one parser reads both. Take a screenshot for each observation ([open point 9](#open-points-for-the-executor)).
+5. **Mapping.** Port `spikes/android/element-mapping.cjs` (prototype branch, commit `2366759`) into TypeScript, keeping its default options and dropping the prototype-only `note` and `source` fields. The rules are the Answer of "How Android elements map onto the bridge's elements". In short:
+   - roles come from the class or from Compose's role-marker child;
+   - a blank button takes its first inner text as its label, and that text stays in Jev's view but can't be selected;
+   - system bars, invisible and zero-size nodes, and layout wrappers are dropped;
+   - IDs are full resource-ids;
+   - switches are `"1"`/`"0"`;
+   - no new roles.
+
+   Two additions from "Actions across Android versions" item 6 and "Where Android plugs into the code" item 6: any node with `scrollable: true` is a `scroll-view`, whatever its class, except that the text-field rule comes first (a multi-line `EditText` reports `scrollable` and must keep `typeText`); and a `password: true` field shows dots of its text's length, never the raw text (a classic field briefly shows its last character). `bridgeRole` stays MobileBuildMCP's translator.
+
+   One correction to the prototype: **keep a text field's text exactly as the device reports it.** The prototype trims it (`element-mapping.cjs` line 95), which breaks three things. A value typed with a leading or trailing space would come back as a different string, so the run log's redactor, which masks exact values, would store it unmasked. The shown value would be wrong. And a field holding only spaces would count as empty and show its hint as a placeholder. So don't trim the field's text, and call a field empty only when its text is the empty string. Labels, hints and other text may stay trimmed. Test a typed value with a trailing space (the shown value keeps the space, and `run.jsonl` masks it), and a field holding only spaces (it has a `value`, not a `placeholder`). None of the 6 text fields in the 10 captures has text with spaces around it, so the golden files are unaffected.
+6. **Actions** ("Actions across Android versions" items 1 to 7):
+   - **Tap** the element's centre by coordinates (`io tap X,Y`), from the settled capture the step just matched. Never use mobilecli refs.
+   - **Replace text:** focus the field ([open point 10](#open-points-for-the-executor)), then `io keys ctrl+a`, a 0.2 s pause, a separate `io keys backspace`, then `io text -- <value>`. Never send `ctrl+a backspace` in one call, and don't use `adb shell input text`.
+   - **After typing,** record the field's shown value from the settled capture ([open point 11](#open-points-for-the-executor)). Don't fail the step on a mismatch: formatting fields legitimately differ.
+   - **Swipe** within the element's bounds along its centre line, from 90% to 10% of its length in the swipe's direction, over 1000 ms. "Up" means the finger moves up, as on iOS.
+7. **The settle rule** (item 8). After every action, capture until two captures taken at least 250 ms apart match, with the status bar left out of the comparison. **Measure the 250 ms from when the earlier capture returned to when the later capture starts**, not between the two requests' starts. A capture waits up to about 0.6 s for the app to go idle and reads the tree at the end of that wait, so two requests started 610 ms apart can read trees only 30 ms apart. So: capture, wait until 250 ms after it returned, capture again, and compare. If they differ, the newer capture becomes the one to match. Cap it at 3 s. When the cap is hit, use the last capture and mark the step "screen still changing" ([open point 11](#open-points-for-the-executor)). `act` returns the settled capture, which the run then uses as its next observation (the `DeviceDriver` interface already allows this). Base `screenHash` on the same comparison. Test with a fake clock and a first capture that returns at 600 ms: the second capture must not start before 850 ms, nothing may settle earlier, and a matching second capture settles when it returns.
+8. **`close`** follows the run's rule in [`docs/architecture.md`](../../docs/architecture.md) ("One run", step 7): unknown device outcomes or cleanup failures keep the lock and prevent a pass. The run abandons a cancelled or timed-out driver call without waiting for it, then calls `close`, so the driver itself must track what it started. Do it as the iOS driver does (`pendingOperations`, `unconfirmedCommands` and `finishWhenAcknowledged` in `src/device/index.ts`):
+   - Every finite `adb` or mobilecli command the driver starts (the restart, captures, taps, typing, swipes, screenshots) is tracked until its process exits.
+   - The long-running processes the driver owns are **not** tracked this way, because only `close` stops them: phase 5's two `adb logcat` streams and the mobilecli daemon. They are local processes, so stopping them is never an unknown device outcome.
+   - `close` first waits, within its own time limit, for every tracked command to exit. Only then does it stop the app. A command that is still running when the limit ends, or whose outcome is unknown (killed, no exit status), keeps the lock: `close` fails with `UI_ACTION_UNCONFIRMED`, and the run ends inconclusive with `CLEANUP_FAILED`, as on iOS. When that command exits later, finish the cleanup and release the lock, as `finishWhenAcknowledged` does.
+   - Then clean up in this order, tolerating "not running" at each step: once phase 5 lands, kill both `logcat` streams (SIGTERM, then SIGKILL after 1 s) and wait for them to exit; `mobilecli daemon stop`; `adb -s <serial> shell pkill -f com.mobilenext.mobilecli.DeviceServer`; `adb -s <serial> forward --remove tcp:<port>` for this serial's `localabstract:mobilecli-server` line; delete the private `MOBILECLI_HOME`; release the lock. Leave `/data/local/tmp/mobilecli.dex` alone. Any other failure in these steps keeps the lock and fails `close` (`CLEANUP_FAILED`).
+   - The CLI's SIGINT and SIGTERM handlers close the service, which calls this same `close`; they don't replace it.
+
+   Test with fakes: the order and the tolerance; a cancel during `am start -W` (the app is stopped only after the launch returns, never before); a late exit after `close`'s limit (the lock is kept, then released when the command exits); a command that never exits (the lock stays); and a failed cleanup step (the lock stays, and the run doesn't pass).
+9. **Golden tests from the captures** ("Where Android plugs into the code" item 8; "Evidence plan and release gates" item 8).
+   - Copy the 10 captures (`spikes/android/captures/*.json`, without the PNGs) and the 10 judged texts (`spikes/android/jev-check/observations/*.txt`) from the prototype branch at `2366759` into `tests/fixtures/android/`. The worktree is `/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/proto-android-mapping`. Name the source commit in the test file. Copy the files; don't merge the prototype branch.
+   - For each screen, test three things: raw tree, then elements (a new golden file), then Jev's text. **The production renderer must emit each `observations/*.txt` byte for byte.** That text is exactly what Jev judged in "What Jev sees on Android, and the 10-screen check". `cmp-3-number-input.txt` is the version re-checked after the placeholder fix.
+   - The captures come from `dump ui --format raw`, so they lack `scrollable` and `password`. Add small fixtures for those two flags from [`api36-lists-direct.json`](findings/05-assets/api36-lists-direct.json) and a hand-made password field.
+   - Driver tests with fake runners cover: device resolution and every refusal code, the restart commands, replace text (the two separate key calls and the pause), leading-dash and Vietnamese values reaching `io text` after `--`, swipe coordinates, the settle rule (settles, never early, the cap), the version check, `close`, a forward listing that holds two emulators' forwards, and a multi-line `EditText` that reports `scrollable`.
+
+### Phase 5: the log pane and app-exit detection ([Log pane and app-exit detection on Android](issues/06-log-pane-and-app-exit.md); [Where Android plugs into the code](issues/07-where-android-plugs-into-the-code.md) item 7)
+
+1. **The log stream.** In `prepare`, before `am start -W`, the driver:
+   - finds the app's uid by an exact match on the package in the full `pm list packages -U` output (passing the name as a filter matches substrings);
+   - reads the device time (`adb shell date +%s.%3N`);
+   - starts one `adb logcat -v threadtime,year,uid --uid=<uid> -T <device time>` for the run. `-T` needs a time: a count returns nothing with `--uid`.
+
+   The stream follows restarts by itself and keeps native crash dumps. It is written to an owner-only file (0600) in a private temp folder (0700), for example `$TMPDIR/jev-android-logs/`. Delete files there older than 3 days at the next run. `close` kills the stream and waits for it to exit (phase 4 item 8). It is never a tracked command, so `close` doesn't wait for it to end by itself.
+2. **Into the pane.**
+   - `logSources()` gains an optional `logcat` path.
+   - `src/logpane/stream.ts` gains a logcat line parser, lifted from [`logcat-line.mjs`](findings/06-assets/logcat-line.mjs): `System.out` and `System.err` show as `[app]`, other tags as `[os] [Tag]`, levels `E`, `F` and `A` in red, `V` and `D` dim.
+   - Show every line from the app's uid.
+   - Per-step `logTails` and the `logs` command (and its after-the-run fallback, which then also lists the logcat file) work from the same file.
+   - Where the pane and `BridgeService` pass `bundleId`, pass the app's identity instead: the bundle ID or the package.
+3. **Masking** is the iOS rule, unchanged: script values show as `[value:<key>]` in the pane and `[REDACTED]` in `run.jsonl`. As on iOS, an upper-case copy of a value isn't masked.
+4. **Is the app running?** A second small stream, `adb logcat -b events` filtered to `am_crash`, `am_anr`, `am_kill` and `am_proc_died` (plus `am_proc_start` if the watcher needs it), folds into a running/exited state. Start it from the same device time as the log stream (`-T`), read before `am start -W`: without it, logcat replays the buffer, and an old native crash, which is matched by package rather than pid, would mark a fresh launch as exited. The state keeps `appRunning()` synchronous. so `appRunning()` stays synchronous. Run `pidof` once, after `am start -W`, to learn the pid, and never earlier, because it blinks during a cold start. The bridge's own force-stops, at restart and in `close`, are expected, as `expectStop()` does on iOS. Match a native crash by package name plus `Native crash`, because its `am_crash` carries `system_server`'s pid. [`exit-watch.mjs`](findings/06-assets/exit-watch.mjs) is the prototype.
+5. **The pane's "app stopped" check moves onto the driver.** Today it reads MobileBuildMCP's `_helperpid` from a file name. It now takes the driver's `appRunning`, on both platforms, in this same change.
+6. **Reason codes.**
+   - Java and native crashes (even with the "app has stopped" dialog still up), kills, exits, and force-stops the bridge didn't send are `APP_EXITED`.
+   - A frozen app is `APP_NOT_RESPONDING`. The run needs to tell "not responding" apart from "exited", so the driver exposes that state beside `appRunning()`, for example an optional method that returns the cause. The interface isn't frozen.
+   - Going to HOME isn't detected, as on iOS.
+   - The pane note names the cause, for example "crashed: FATAL EXCEPTION on main", "native crash: SIGSEGV", "force-stopped by another process" or "exited".
+7. **Tests** feed the recorded lines in [`findings/06-assets/captures/`](findings/06-assets/captures/) to the parser and the watcher. Copy the lines you use into `tests/fixtures/android/`, so tests don't depend on `.scratch`. The watcher must sort every captured run as the prototype did, must ignore a stale native crash placed before the run's start time, and `probe-anr` must give `APP_NOT_RESPONDING`. Update the iOS pane tests that read `_helperpid` to the new `appRunning` path. That test is the only `APP_NOT_RESPONDING` evidence: there's no live freeze run. Also test a normal `close` with both `logcat` streams still running: the streams are stopped, the lock is released, and the run can pass.
+
+### Phase 6: the `capture` command, the `/test-android` skill, and the plugin ([The /test-android skill](issues/10-the-test-android-skill.md); [How a script names an Android app and device](issues/03-script-and-device-identity.md), "Default device")
+
+1. **`jev-ios-bridge capture`**, for Android only in 1.2.
+   - It picks the device with `--serial`, then `--avd`, then `JEV_ANDROID_DEVICE`, and runs the same checks before capturing.
+   - It captures the current screen without launching or restarting the app, holds the device lock while it does, and cleans up afterwards: mobilecli's daemon, the on-device `DeviceServer`, and the `adb forward`.
+   - It prints one JSON line per element (role, label, value, identifier, placeholder, state), with `"selectable": false` on lifted texts.
+   - `--jev` prints Jev's text for the screen instead: the Android projection, byte for byte.
+   - It needs no TypeSafe key. See [open point 12](#open-points-for-the-executor) for exit codes and settling.
+   - Add it to the CLI help, with golden tests for its output on a fixture and for its exit codes.
+2. **The skill:** a new, self-contained `skills/test-android/SKILL.md`. `/test-ios` is untouched.
+   - It follows the same seven steps as `/test-ios`, with Android details, and calls `capture` instead of mobilecli.
+   - When a capture shows Compose elements with no identifiers, it tells the user to add `Modifier.semantics { testTagsAsResourceId = true }` at the root composable (`androidMain`) and shows where. It doesn't edit or rebuild the app unless asked. Meanwhile it writes `role` plus `label` selectors.
+   - Android notes, each linking to its guide page rather than repeating it:
+     - `app.package`; `device.avd` for emulators and `device.serial` for phones; `app.activity` and `app.intentExtras` for a stable start screen;
+     - `placeholder` on empty fields, so never claim a field "contains" it;
+     - dots for password fields;
+     - numbers quoted exactly as printed;
+     - custom tabs and toggles need a selected or checked state;
+     - non-English text types exactly, but Jev's promise covers English screens;
+     - real phones are untested.
+   - Its description triggers on verifying an Android app (Jetpack Compose, Compose Multiplatform or classic Views) on an emulator or phone.
+   - Write it with `writing-for-agents`, then `unslop`.
+3. **`scripts/build-plugin.mjs`** copies `skills/test-android/SKILL.md` into the plugin with the same kind of path rewrite as `/test-ios`, failing loudly when an expected string is missing ([open point 13](#open-points-for-the-executor)). The plugin ships it as `/jev-ios-bridge:test-android`.
+4. **`plugin/plugin.json`:**
+   - "Simulator UDID" becomes optional (`required: false`).
+   - Add an optional "Android device" setting (a serial or an AVD name), passed to the server as `JEV_ANDROID_DEVICE`.
+   - With either setting left empty, the server must start, so a user with only Android, or only iOS, can use the plugin. An empty `JEV_ANDROID_DEVICE` counts as unset. The MCP path already ignores an empty `JEV_DEVICE_UDID`; leave the iOS CLI's handling of it as it is. Test both.
+   - Update `plugin/README.md` to match. See [open point 14](#open-points-for-the-executor) for the descriptions.
+
+### Phase 7: docs, version, and CHANGELOG ([Assemble the v1.2.0 spec](issues/09-assemble-the-spec.md), "Guide pages"; the Answers named per item)
+
+Shipped docs link only to files inside the tarball. Link anything outside it (ADR-0006, research, findings, example app sources) by its GitHub URL at the `v1.2.0` tag, as 1.0 did.
+
+1. **A new Android setup page** ([open point 15](#open-points-for-the-executor) for its name). It covers:
+   - what you need: the Android SDK's `adb`, Android 12 (API 31) or later, and on Apple Silicon an arm64 emulator image;
+   - naming the device: `device.avd` for emulators, `device.serial` for phones, `JEV_ANDROID_DEVICE`, and the plugin's Android setting;
+   - `testTagsAsResourceId`: apps without it have no identifiers at all, and where to set it;
+   - custom Compose tabs and toggles must expose their selected or checked state;
+   - turning animations off is optional and makes runs faster; the bridge never changes device settings;
+   - `pm grant` for permission dialogs;
+   - on Xiaomi phones, "USB debugging (Security settings)" for input;
+   - mobilecli reads the properties of every connected device when it starts, the bridge ignores any `mobilecli auth login`, and no other UI tool (mobile-mcp, Appium, `uiautomator`) may drive the same device during a check;
+   - screen lock ([open point 16](#open-points-for-the-executor)).
+2. **Quickstart** (`01-quickstart.md`): a new Android section that runs twin-fail on an emulator through `/test-android`, expecting **failed** on the $3 total. The iOS steps stay as they are.
+3. **Claim writing** (`05-writing-claims.md`): quote numbers exactly as the app formats them (`2.500.000`, not `2,500,000`), and never claim that an empty field "contains" its hint.
+4. **Troubleshooting** (`08-troubleshooting.md`): every new reason code; `adb logcat -b crash -d` and `adb shell dumpsys activity exit-info <package>` for crashes; "screen still changing"; and how to clear a leftover `DeviceServer` or `adb forward` by hand.
+5. **Limits** (`10-limits.md`):
+   - going to HOME isn't detected;
+   - an upper-case copy of a value isn't masked;
+   - real Android phones are untested;
+   - Jev's accuracy promise covers English screens, though non-English text types exactly;
+   - Android 12 or later;
+   - custom tabs without selection state give uncertain claims;
+   - two emulators running the same AVD are refused;
+   - the Intel-Mac mobilecli binary is untested;
+   - Android speed, with placeholders for phase 8's numbers.
+6. **Data handling** (`09-data-handling.md`): the Android log file (owner-only, deleted after 3 days, not masked, the same as iOS); password fields shown as dots; intent extras recorded and not masked, like `launchArgs`; mobilecli's network behaviour (no telemetry, fleet turned off) and its read of other connected devices.
+7. **Reference:** `script-format.md` (every new field, per platform), `reason-codes.md` (the final wording), `report-json.md` (the new fields), and the `capture` command wherever the CLI is documented (`06-running.md`).
+8. **Also:** `02-prepare-your-app.md` and `README.md` (the guide index) link the Android page; `11-stability.md` says what 1.2 added, including which parts of `capture` are stable (its flags, exit codes and named fields) and that its element lines may gain fields; `README.md` at the root mentions Android; `docs/architecture.md` gains `src/device/android/`.
+9. **`CHANGELOG.md`** for 1.2.0: Added (Android, the `capture` command, `/test-android`, the new codes and fields), Changed (reworded codes, optional simulator setting), and "Upgrading from 1.1": nothing to change for iOS scripts.
+10. **Bump `package.json` to `1.2.0`** here, so that phase 8 checks the real candidate. Add `docs/releases/v1.2.0.md`, shaped like the v1.1.0 notes, with placeholders for phase 8's numbers.
+11. **The evidence scripts** go in this PR, so they are part of the candidate: the six Android scripts that phase 8 runs, plus the Vietnamese variant of settings-search, as `"version": 1`, `"platform": "android"` scripts with the flows and expected verdicts in phase 8's table ([open point 17](#open-points-for-the-executor) for where they live and how they name the device). Write them against real `capture` output from the emulators, following the device rules. The quickstart's Android section uses twin-fail.
+
+### Phase 8: release checks on the candidate ([Evidence plan and release gates for v1.2.0](issues/08-evidence-plan-and-release-gates.md))
+
+**Before the checks:**
+
+- Start the private adb server, and boot `Medium_Phone_API_36.1` and `jev-actions-api31` with `-no-snapshot-save`.
+- Build and install the twin app (`examples/diagnostic-app-android`, package `dev.jevbridge.diagnostic`: `./gradlew :app:assembleDebug`, then `adb -s <serial> install -r app/build/outputs/apk/debug/app-debug.apk`) and `cmp` (see the Rules) on both emulators. `cmp` goes on Android 12 only if it installs there; if it doesn't, record why and skip that run.
+- Record a baseline of `pgrep -fl mobilecli` before the first Android run, for the cleanup gate.
+- For the iOS regression, rebuild and reinstall Weather and the diagnostic app on the dedicated simulator, as the v1.0.0 spec's phase 7 did, if either is missing.
+- Load the Jev key by path.
+
+Run every check on the candidate merge commit (the last of phases 1 to 7). Put the evidence under `spikes/benchmarks/results/v1.2.0/`. **Blocking** checks must pass. **Report-only** checks are recorded, and a miss doesn't block.
+
+| # | Check | Kind | How | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | `npm run check` and CI | Blocking | Local run, plus CI on the merge commit | |
+| 2 | Golden tests | Blocking | Part of 1. Existing entries changed only as the Rules allow. The Android renderer emits the 10 judged texts byte for byte. `APP_NOT_RESPONDING` comes from the recorded event lines. | |
+| 3 | Android 16 scripts, **one run each** on `Medium_Phone_API_36.1` | Blocking | twin-fail (Add Apple and Bread, complete, claim `Total: $5`) → **failed**; twin-pass (`Selected: Apple, Bread`, `Order complete`) → **passed**; twin-ambiguous (a planted guard matching two elements) → **inconclusive**; cmp-number-input (replace text, type into the empty placeholder field, claim the formatted value) → **passed**; cmp-list-swipe (`swipeWithin` on the Compose million-row list, claim a later row is visible) → **passed**; settings-search (type into a classic field, open Display, claim Dark theme is off) → **passed** | |
+| 4 | Android 12 runs on `jev-actions-api31` | Blocking | twin-fail → **failed**; settings-search typing `Tiếng Việt`, checked by a guard (the non-English typing gate) → **passed**; cmp-number-input → **passed**, only if `cmp` installs on API 31 | |
+| 5 | Crash run | Blocking | One manual twin-pass run with `adb shell am crash dev.jevbridge.diagnostic` sent partway through, in the owner's desktop session. Expect `APP_EXITED`, the crash in the log pane, and the pane closing cleanly. Save a `screencapture` of the pane. | |
+| 6 | Cleanup gate, **after every Android run** in checks 3 to 5 and 9 to 10 | Blocking | For the run's emulator: no mobilecli process beyond the baseline, and no leftover `$TMPDIR/jev-mcli-*` folder; `adb -s <serial> shell pgrep -f com.mobilenext.mobilecli.DeviceServer` prints nothing; no `localabstract:mobilecli-server` line for that serial in `adb forward --list`; and no lock file named after that AVD or serial in the lock folder. Any leftover fails the release. Record each check. | |
+| 7 | iOS regression | Blocking | All tests pass (1). One run each, with the v0.1.0 harness `spikes/benchmarks/run-bridge.mjs` as 1.0 used it, of `spikes/benchmarks/scenarios/weather-scripted.json`, `contacts-scripted.json`, `reminders-scripted.json` and `examples/diagnostic-app/scenario.json`, on the dedicated simulator `0E42FDE2-5E09-42D3-9876-9EF0037FCBE7`. Expected: Weather, Contacts and Reminders **passed** (Reminders' 0.90 count claim stays accepted as borderline), and the diagnostic app **failed** on its $3 total. | |
+| 8 | Real phones | Blocking (docs only) | The release notes and the limits page say real Android phones are untested. Write the Xiaomi checklist at `spikes/benchmarks/results/v1.2.0/real-phones/xiaomi-checklist.md`: twin-fail, settings-search with Vietnamese, the Xiaomi input setting, and the cleanup check. Problems found later go into 1.2.1. **Don't run it.** | |
+| 9 | Plugin install, Android only | Blocking | A fresh install on this Mac with a throwaway `CLAUDE_CONFIG_DIR`, the Android device set and no simulator UDID ([open point 18](#open-points-for-the-executor)). The owner types the key (see the Rules). The MCP server starts, mobilecli's binary is executable, and the server sees `ANDROID_ADB_SERVER_PORT`. | |
+| 10 | Quickstart walkthrough | Blocking | Follow the quickstart's new Android section as written, through Claude Code and `/test-android`: twin-fail on the emulator gives **failed**, pointing at the $3 total. The `v1.2.0` tag doesn't exist yet, so use the candidate commit where the quickstart names the tag, and record it as a pre-tag deviation, as 1.0 did. | |
+| 11 | Tarball install | Blocking | `npm install <tgz>` into an empty project. Both entry points print `1.2.0`, the installed file list matches `files`, and `skills/test-android/SKILL.md` is there. `npx jev-ios-bridge capture --avd NoSuchAvd` (private adb server) exits 3 with `DEVICE_NOT_CONNECTED`, which shows the pinned mobilecli resolved. | |
+| 12 | Speed | Report-only | From checks 3 to 4: per-script durations, capture and settle times, and typing speed. There's no target. | |
+| 13 | iOS log pane | Report-only | Phase 5 changed the pane's "app stopped" check on iOS too. Run the diagnostic app in check 7 with the pane on, and record what it showed. | |
+
+There is no new Jev corpus: check 2's golden test stands in for it ("Evidence plan and release gates" item 8).
+
+### Phase 9: release records, tag, and publish (as v1.1.0 was; [`plugin/README.md`](../../plugin/README.md), "Release")
+
+1. **Release-records PR** (docs only):
+   - write phase 8's numbers into the limits page and `docs/releases/v1.2.0.md`;
+   - fix any guide step that check 10 found wrong;
+   - fill in the checks table in this file;
+   - run `npm run build:plugin`, and copy `build/plugin/marketplace.json` to `.claude-plugin/marketplace.json`.
+
+   Re-run checks 1, 2 and 11 on the branch. **Ask the owner before merging.**
+2. **Tag and publish,** only with the owner's approval, and back to back with the merge, because `marketplace.json` points at the asset URL.
+   - Tag `v1.2.0` on the release-records merge commit.
+   - Publish a **regular** GitHub release from `docs/releases/v1.2.0.md`.
+   - Attach `jev-ios-bridge-1.2.0.tgz` and the exact `jev-ios-bridge-plugin-1.2.0.zip` whose SHA-256 is in `marketplace.json`. Zips aren't reproducible, so never rebuild it.
+3. **Verify the published assets.**
+   - Download the tarball fresh, check its SHA-256, install it cleanly, and confirm both entry points report `1.2.0`.
+   - Install the plugin from the real marketplace with a throwaway `CLAUDE_CONFIG_DIR`, set up for Android only, and confirm the server starts.
+   - Save the record as `spikes/benchmarks/results/v1.2.0/publication-verification.json`.
+
+## Open points for the executor
+
+The tickets leave these details open. Use the recommended default unless it turns out to be wrong, and say which you used in your report. If a default would contradict an Answer, stop and ask.
+
+1. **What a mobilecli upgrade re-runs.** Default: the contract tests, plus the six Android 16 scripts from check 3, one run each, with the cleanup gate.
+2. **Which characters Android typed values allow.** Default: any Unicode text except control characters, still at most 2,048 characters and 32 values, and a leading `-` allowed. iOS keeps its rule and message.
+3. **Two more refusal codes** (owner decision E). Default: add `DEVICE_UNSUPPORTED` for a device below Android 12 (API 31), whose `--uid`, `ctrl+a` and agent paths were never checked; and `ANDROID_TOOLS_UNAVAILABLE` when `adb` can't be found, or the pinned mobilecli binary is missing or isn't version 1.0.14. Find `adb` through `ANDROID_HOME`, then `ANDROID_SDK_ROOT`, then `PATH`, then `~/Library/Android/sdk/platform-tools/adb`. Other mobilecli and `adb` failures become `DEVICE_ERROR` with `vendorCode` `mobilecli` or `adb`. Never store their messages: they can carry screen text. A uiautomator-XML dump (the `DeviceServer` couldn't start, usually because another UI tool holds the device) is a `DEVICE_ERROR`, and troubleshooting says so.
+4. **How "can't be selected" is marked.** Default: an internal `selectable?: false` on `Element`, honoured by `src/scripted/select.ts` and never shown to Jev. The same name appears in `capture`'s output.
+5. **New `report.json` fields** (owner decision C). Default: on Android runs only, `platform: "android"`, `package`, `activity` (or `null`) and `intentExtras` (`{}` when none), also recorded in the `started` event. iOS reports carry none of them, so a reader treats a report without `platform` as iOS. The `prepared` event records the serial and the mobilecli ID, and the prose report names both, as the research note asks. `report.json` doesn't.
+6. **Moved to owner decision B** (one mobilecli home per run).
+7. **The lock key.** "Where Android plugs into the code" says "keyed by serial or AVD name". Default: key it by the resolved mobilecli ID (the AVD name for an emulator, the serial for a phone), so a script that names `emulator-5554` and one that names its AVD share one lock.
+8. **Quoting intent extras.** `adb shell` joins its arguments into one device-shell command. Default: single-quote every argument for the device shell, and test with a value holding spaces, quotes, `&`, `;` and `%`.
+9. **Screenshots.** Default: `mobilecli screenshot` as JPEG, longest side 800 pixels (the iOS size), one per observation, taken on the settled capture and saved as `screen-N.jpg`.
+10. **Focusing the field before replace text.** mobilecli types only into the focused field. Default: tap the field's centre first, then clear and type.
+11. **Where "shown value" and "screen still changing" go** (owner decision D). Ticket 09 lists the shown value as a contract addition, and `report.json` has no per-step list today. Default:
+    - the `action` event records `shownValue`, and the `step` event records `settled: false` when the cap was hit, both through the run log's redactor as usual;
+    - `report.json` on Android runs gains an optional `typedFields` array, one `{ "stepId", "shownValue" }` per replace-text step, built from those events;
+    - the prose report shows both;
+    - a password field's shown value is the mapping's dots, never raw text.
+12. **`capture`'s exit codes and settling** (owner decision E). Default: exit 0 when it printed, and 3 when it couldn't capture, with the reason code and a plain message on stderr. It applies the settle rule before printing, so it shows what a run would see. No screenshot.
+13. **The skill's path rewrites.** Default: the skill uses `npx jev-ios-bridge capture` and `node_modules/jev-ios-bridge/docs/guide/`, and the plugin copy rewrites them to `node "${CLAUDE_PLUGIN_ROOT}/dist/cli.js" capture` and `${CLAUDE_PLUGIN_ROOT}/docs/guide/`. The skill passes `--avd` or `--serial` explicitly, taken from the script or asked of the user, because a shell started by Claude Code doesn't get the plugin's `JEV_ANDROID_DEVICE`.
+14. **Descriptions that say "iOS".** Default: update the descriptions and keywords in `package.json`, `plugin/plugin.json` and the marketplace entry in `build-plugin.mjs` to say iOS and Android. Names stay.
+15. **The setup page's name.** Default: `docs/guide/12-android-setup.md`, so existing page numbers and links don't move.
+16. **A swipe-only lock screen.** Default: after waking the screen, a keyguard that is still showing is `DEVICE_LOCKED`. Dismissing it would change the device. The setup page tells users to set Screen lock to None on a test device.
+17. **Evidence scripts.** Default: `examples/diagnostic-app-android/scenario.json` holds twin-fail (the quickstart uses it). The other scripts go in `spikes/benchmarks/scenarios/android-*.json`, with a separate `android-settings-search-vi.json` for the Vietnamese run. None names a device. Set `JEV_ANDROID_DEVICE` to the AVD name for each run, so one script runs on both emulators.
+18. **Installing the plugin before it is published.** Default: in phase 8, install from the local build (a local marketplace pointing at the built zip, or `claude --plugin-dir`), passing the Android device with `--config` (never the key). Phase 9 repeats the install from the real release.
+19. **The settle rule on the first capture after launch.** An activity switch can give a blank capture. Default: apply the settle rule after `am start -W` too, not only after actions.
+20. **Device name patterns.** Default: `device.serial` matches `^[A-Za-z0-9._:-]{1,100}$` (network serials carry a `:`), and `device.avd` matches `^[A-Za-z0-9._-]{1,100}$`. `JEV_ANDROID_DEVICE` must match one of them, and a value that `adb devices` lists as a serial is a serial; otherwise it's an AVD name. Anything else is `INVALID_DEVICE`, with golden cases.
+21. **Hiding paired iPhones in the product.** The research note lists a dead `USBMUXD_SOCKET_ADDRESS` as an optional guard (tested: mobilecli then skips iOS). No Answer settled it for the product. Default: set it in `mobilecliEnvironment()`, because an Android run has no reason to query iPhones.
+
+## Decisions the owner accepted
+
+**Accepted by the owner on 2026-09-29:** all six decisions below as written, and the recommended defaults for all 21 open points above. The executor still reports which defaults it used, and stops to ask if one would contradict an Answer.
+
+The fresh-agent review ([`spec-review.md`](spec-review.md)) found points where the spec must go beyond, or slightly against, a ticket's words. Accepting the spec accepts these. Say so if you want otherwise.
+
+- **A. The MCP input schema grows** (phase 3 item 1). Ticket 08 item 5 says golden files change only for reworded descriptions, but Android scripts can't validate unless `bundleId` leaves `required` and the ASCII pattern leaves `values` in `mcp.json`. ADR-0005 allows it: the schema accepts more and rejects nothing it accepted before.
+- **B. One mobilecli home per run, not per process** (phase 1 item 5, phase 4 item 1). Ticket 01's Answer says per process. One MCP process can drive two emulators at once, and the first run's `close` would stop the second run's daemon.
+- **C. New report fields only on Android runs** (open point 5), so iOS reports stay byte-identical.
+- **D. The shown value after typing goes into `report.json`** as `typedFields` on Android runs (open point 11).
+- **E. Names that become permanent in 1.x:** the seven phase 3 codes, `DEVICE_UNSUPPORTED` and `ANDROID_TOOLS_UNAVAILABLE` (open point 3), and `capture`'s exit codes (open point 12).
+- **F. A gate for Android's view** (phase 1 item 8): a later change to `android-full-text-v1` or the Jev model re-runs the 10-screen check and needs zero confidently wrong answers.
+
+## What the executor reports back
+
+- the filled checks table, with a link to each piece of evidence, and every cleanup-gate result;
+- the PR list;
+- the release URL, the SHA-256 of both assets, and the fresh-download and fresh-install results;
+- every stop-and-ask event and the owner's answer;
+- for each open point, the default used, or what you did instead and why;
+- the path of the Xiaomi checklist.
+
+Unsuccessful attempts stay in the record. Never describe an inconclusive or failed attempt as a pass.
+
+## Out of scope for this release
+
+- One script for both platforms: each script targets one platform.
+- Android runs in CI or on headless emulator farms.
+- Building, installing or seeding apps, as on iOS.
+- Renaming the package: that waits for 2.0.
+- BFSOne as evidence, and any use of the Xiaomi or another phone before the owner frees it.
+- New roles such as `checkbox` or `radio`; typed intent extras; a paste-typing option.
+- A new Jev corpus, and a speed target.
+- A freeze button in the twin app.
+- Asking mobilecli upstream to keep the dropped flags (a later, optional step).
+- Hiding other connected phones from mobilecli inside the product (the setup page documents it instead).
+- `capture` for iOS, and any change to `/test-ios`.

@@ -1,0 +1,85 @@
+[
+ {
+  "at": 1790612600798,
+  "what": "launch",
+  "out": [
+   "Status: ok",
+   "TotalTime: 672"
+  ]
+ },
+ {
+  "at": 1790612600843,
+  "what": "pid",
+  "pid": "15898"
+ },
+ {
+  "at": 1790612601754,
+  "what": "dump",
+  "n": 53
+ },
+ {
+  "at": 1790612601783,
+  "what": "tap choose.apple",
+  "ok": true
+ },
+ {
+  "at": 1790612602342,
+  "what": "disrupt forcestop",
+  "out": ""
+ },
+ {
+  "at": 1790612603245,
+  "what": "tap choose.bread",
+  "ok": false,
+  "n": 70,
+  "ids": [
+   "com.android.systemui:id/status_bar_launch_animation_container",
+   "com.android.systemui:id/status_bar_container",
+   "com.android.systemui:id/status_bar",
+   "com.android.systemui:id/status_bar_contents",
+   "com.android.systemui:id/status_bar_start_side_container",
+   "com.android.systemui:id/status_bar_start_side_content",
+   "com.android.systemui:id/status_bar_start_side_except_heads_up",
+   "com.android.systemui:id/clock",
+   "com.android.systemui:id/notification_icon_area",
+   "com.android.systemui:id/notificationIcons",
+   "com.android.systemui:id/status_bar_end_side_container",
+   "com.android.systemui:id/status_bar_end_side_content"
+  ]
+ },
+ {
+  "at": 1790612603291,
+  "what": "tap order.complete",
+  "ok": false,
+  "n": 70,
+  "ids": [
+   "com.android.systemui:id/status_bar_launch_animation_container",
+   "com.android.systemui:id/status_bar_container",
+   "com.android.systemui:id/status_bar",
+   "com.android.systemui:id/status_bar_contents",
+   "com.android.systemui:id/status_bar_start_side_container",
+   "com.android.systemui:id/status_bar_start_side_content",
+   "com.android.systemui:id/status_bar_start_side_except_heads_up",
+   "com.android.systemui:id/clock",
+   "com.android.systemui:id/notification_icon_area",
+   "com.android.systemui:id/notificationIcons",
+   "com.android.systemui:id/status_bar_end_side_container",
+   "com.android.systemui:id/status_bar_end_side_content"
+  ]
+ },
+ {
+  "at": 1790612603335,
+  "what": "final",
+  "total": null
+ },
+ {
+  "at": 1790612603352,
+  "what": "pidof at end",
+  "pid": "(none)"
+ },
+ {
+  "at": 1790612603377,
+  "what": "top activity",
+  "top": "topResumedActivity=ActivityRecord{244124579 u0 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t2}\n  ResumedActivity: ActivityRecord{244124579 u0 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t2}"
+ }
+]

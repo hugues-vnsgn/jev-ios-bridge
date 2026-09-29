@@ -1,0 +1,10 @@
+{"test": "exact.mcli", "sent": "Wi-Fi & 50% \"off\"", "echo": "[Wi-Fi & 50% \"off\"]", "ok": true, "secs": 0.972}
+{"test": "exact.mcli", "sent": "a\"b'c$d&e;f|g\\h%i j ", "echo": "[a\"b'c$d&e;f|g\\h%i j ]", "ok": true, "secs": 0.404}
+{"test": "exact.mcli", "sent": "`~!@#*()<>?[]{}^=+_,./:", "echo": "[a\"b'c$d&e;f|g\\h%i j`~!@#*()<>?[]{}^=+_,./:]", "ok": false, "secs": 0.591}
+{"test": "exact.mcli", "sent": "50%s off", "echo": "[a\"b'c$d&e;f|g\\h%i j`~!@#*()<>?[]{}^=+_,./50%s off]", "ok": false, "secs": 0.061}
+{"test": "exact.mcli", "sent": "  two  spaces", "echo": "[a\"b'c$d&e;f|g\\h%i j`~!@#*()<>?[]{}^=+_,./50%s of  two  spaces]", "ok": false, "secs": 0.194}
+{"test": "exact.adb", "sent": "Wi-Fi & 50% \"off\"", "echo": "[a\"b'c$d&e;f|g\\h%i j`~!@#*()<>?[]{}^=+_,./50%s of  two  spaceWi-Fi & 50% \"off\"]", "ok": false, "secs": 0.308}
+{"test": "exact.adb", "sent": "a\"b'c$d&e;f|g\\h%i j ", "echo": "[a\"b'c$d&e;f|g\\h%i j`~!@#*()<>?[]{}^=+_,./50%s of  two  spaceWi-Fi & 50% \"offa\"b'c$d&e;f|g\\h%i j ]", "ok": false, "secs": 0.418}
+{"test": "exact.adb", "sent": "`~!@#*()<>?[]{}^=+_,./:", "echo": "[a\"b'c$d&e;f|g\\h%i j`~!@#*()<>?[]{}^=+_,./50%s of  two  spaceWi-Fi & 50% \"offa\"b'c$d&e;f|g\\h%i j`~!@#*()<>?[]{}^=+_,./:]", "ok": false, "secs": 0.439}
+{"test": "exact.adb", "sent": "50%s off", "echo": "[a\"b'c$d&e;f|g\\h%i j`~!@#*()<>?[]{}^=+_,./50%s of  two  spaceWi-Fi & 50% \"offa\"b'c$d&e;f|g\\h%i j`~!@#*()<>?[]{}^=+_,./50  off]", "ok": false, "secs": 0.085}
+{"test": "exact.adb", "sent": "  two  spaces", "echo": "[a\"b'c$d&e;f|g\\h%i j`~!@#*()<>?[]{}^=+_,./50%s of  two  spaceWi-Fi & 50% \"offa\"b'c$d&e;f|g\\h%i j`~!@#*()<>?[]{}^=+_,./50  of  two  spaces]", "ok": false, "secs": 0.12}

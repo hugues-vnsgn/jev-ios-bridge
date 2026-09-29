@@ -1,0 +1,6 @@
+{"test": "replace-repeat", "api": "31", "target": "field.plain", "method": "mcli keys ctrl+a backspace (one call)", "runs": 5, "cleared_at_once": 0, "cleared_after_1_5s": 0, "error": null}
+{"test": "replace-repeat", "api": "31", "target": "field.plain", "method": "mcli keys ctrl+a; keys backspace", "runs": 5, "cleared_at_once": 5, "cleared_after_1_5s": 5, "error": null}
+{"test": "replace-repeat", "api": "31", "target": "field.plain", "method": "adb keyevent MOVE_END + 40 DEL", "runs": 5, "cleared_at_once": 5, "cleared_after_1_5s": 5, "error": null}
+{"test": "replace-repeat", "api": "31", "target": "classic.plain", "method": "mcli keys ctrl+a backspace (one call)", "runs": 5, "cleared_at_once": 5, "cleared_after_1_5s": 5, "error": null}
+{"test": "replace-repeat", "api": "31", "target": "classic.plain", "method": "mcli keys ctrl+a; keys backspace", "runs": 5, "cleared_at_once": 5, "cleared_after_1_5s": 5, "error": null}
+{"test": "replace-repeat", "api": "31", "target": "classic.plain", "method": "adb keyevent MOVE_END + 40 DEL", "runs": 5, "cleared_at_once": 5, "cleared_after_1_5s": 5, "error": null}

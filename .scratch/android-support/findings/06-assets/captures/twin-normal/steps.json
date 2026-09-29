@@ -1,0 +1,52 @@
+[
+ {
+  "at": 1790612563608,
+  "what": "launch",
+  "out": [
+   "Status: ok",
+   "TotalTime: 777"
+  ]
+ },
+ {
+  "at": 1790612563643,
+  "what": "pid",
+  "pid": "14688"
+ },
+ {
+  "at": 1790612564572,
+  "what": "dump",
+  "n": 53
+ },
+ {
+  "at": 1790612564604,
+  "what": "tap choose.apple",
+  "ok": true
+ },
+ {
+  "at": 1790612565214,
+  "what": "tap choose.bread",
+  "ok": true,
+  "n": 54
+ },
+ {
+  "at": 1790612565853,
+  "what": "tap order.complete",
+  "ok": true,
+  "n": 55
+ },
+ {
+  "at": 1790612566470,
+  "what": "final",
+  "total": "Total: $3"
+ },
+ {
+  "at": 1790612566490,
+  "what": "pidof at end",
+  "pid": "14688"
+ },
+ {
+  "at": 1790612566516,
+  "what": "top activity",
+  "top": "topResumedActivity=ActivityRecord{90149170 u0 dev.jevbridge.diagnostic/.MainActivity t74}\n  ResumedActivity: ActivityRecord{90149170 u0 dev.jevbridge.diagnostic/.MainActivity t74}"
+ }
+]

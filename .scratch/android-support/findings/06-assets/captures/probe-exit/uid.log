@@ -1,0 +1,72 @@
+1790612260515 --------- beginning of main
+1790612260516 2026-09-28 23:17:38.576 10226 11064 11064 I Zygote  : Process 11064 created for dev.jevbridge.logprobe
+1790612260516 2026-09-28 23:17:38.576 10226 11064 11064 I bridge.logprobe: Late-enabling -Xcheck:jni
+1790612260522 2026-09-28 23:17:38.601 10226 11064 11064 I bridge.logprobe: Using CollectorTypeCMC GC.
+1790612260578 2026-09-28 23:17:38.656 10226 11064 11064 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+1790612260741 2026-09-28 23:17:38.815 10226 11064 11064 D nativeloader: Configuring clns-9 for other apk /data/app/~~gfQBLhWKvODG4bHeg6DUwg==/dev.jevbridge.logprobe-6hTxKC_lNsuKWAqywik0pQ==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~gfQBLhWKvODG4bHeg6DUwg==/dev.jevbridge.logprobe-6hTxKC_lNsuKWAqywik0pQ==/lib/arm64, permitted_path=/data:/mnt/expand:/data/user/0/dev.jevbridge.logprobe
+1790612260742 2026-09-28 23:17:38.818 10226 11064 11064 V GraphicsEnvironment: Currently set values for:
+1790612260742 2026-09-28 23:17:38.818 10226 11064 11064 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+1790612260742 2026-09-28 23:17:38.818 10226 11064 11064 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+1790612260742 2026-09-28 23:17:38.818 10226 11064 11064 V GraphicsEnvironment: dev.jevbridge.logprobe is not listed in per-application setting
+1790612260742 2026-09-28 23:17:38.818 10226 11064 11064 V GraphicsEnvironment: ANGLE allowlist from config: com.dreamgames.royalmatch com.dts.freefiremax com.dxx.firenow com.gramgames.mergedragons com.ludo.king com.mojang.minecraftpe com.my.defense com.nintendo.zaka com.os.airforce com.playrix.fishdomdd.gplay io.teslatech.callbreak jp.konami.prospia net.peakgames.toonblast
+1790612260742 2026-09-28 23:17:38.818 10226 11064 11064 V GraphicsEnvironment: No special selections for ANGLE, returning default driver choice
+1790612260742 2026-09-28 23:17:38.818 10226 11064 11064 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+1790612260755 --------- beginning of system
+1790612260755 2026-09-28 23:17:38.831 10226 11064 11081 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+1790612260756 2026-09-28 23:17:38.832 10226 11064 11064 E ashmem  : Pinning is deprecated since Android Q. Please use trim or other methods.
+1790612260762 2026-09-28 23:17:38.840 10226 11064 11064 D CompatChangeReporter: Compat change id reported: 377864165; UID 10226; state: ENABLED
+1790612260762 2026-09-28 23:17:38.840 10226 11064 11064 D DesktopExperienceFlags: Toggle override initialized to: false
+1790612260762 2026-09-28 23:17:38.840 10226 11064 11064 D DesktopModeFlags: Toggle override initialized to: OVERRIDE_UNSET
+1790612260774 2026-09-28 23:17:38.848 10226 11064 11064 V JevProbe: verbose line
+1790612260774 2026-09-28 23:17:38.849 10226 11064 11064 D JevProbe: debug line
+1790612260774 2026-09-28 23:17:38.849 10226 11064 11064 I JevProbe: info line mode=exit pid=11064
+1790612260774 2026-09-28 23:17:38.849 10226 11064 11064 W JevProbe: warn line
+1790612260774 2026-09-28 23:17:38.849 10226 11064 11064 E JevProbe: error line
+1790612260774 2026-09-28 23:17:38.849 10226 11064 11064 I System.out: System.out println line
+1790612260774 2026-09-28 23:17:38.849 10226 11064 11064 W System.err: System.err line
+1790612260774 2026-09-28 23:17:38.849 10226 11064 11064 I JevProbe: multi-line first
+1790612260774 2026-09-28 23:17:38.849 10226 11064 11064 I JevProbe: multi-line second
+1790612260774 2026-09-28 23:17:38.849 10226 11064 11064 I JevProbe: unicode line: café ✓ Tiếng Việt
+1790612260774 2026-09-28 23:17:38.849 10226 11064 11064 I JevProbe: secret is hunter2-SECRET and upper HUNTER2-SECRET
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: handled exception
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: java.lang.IllegalArgumentException: handled boom
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: 	at dev.jevbridge.logprobe.MainActivity.onCreate(MainActivity.java:35)
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: 	at android.app.Activity.performCreate(Activity.java:9306)
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: 	at android.app.Activity.performCreate(Activity.java:9284)
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: 	at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1541)
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: 	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:4480)
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: 	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:4699)
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: 	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:224)
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: 	at android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:133)
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: 	at android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:103)
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: 	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:80)
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2961)
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: 	at android.os.Handler.dispatchMessage(Handler.java:132)
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: 	at android.os.Looper.dispatchMessage(Looper.java:333)
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: 	at android.os.Looper.loopOnce(Looper.java:263)
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: 	at android.os.Looper.loop(Looper.java:367)
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: 	at android.app.ActivityThread.main(ActivityThread.java:9287)
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: 	at java.lang.reflect.Method.invoke(Native Method)
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:566)
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11064 E JevProbe: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:929)
+1790612260774 2026-09-28 23:17:38.850 10226 11064 11083 I JevProbe: tick 1 epochMs=1790612258850
+1790612260781 2026-09-28 23:17:38.860 10226 11064 11064 W HWUI    : Unknown dataspace 0
+1790612260831 2026-09-28 23:17:38.908 10226 11064 11081 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv1_CM_emulation.so
+1790612260831 2026-09-28 23:17:38.908 10226 11064 11081 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv2_emulation.so
+1790612260842 2026-09-28 23:17:38.920 10226 11064 11081 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+1790612260843 2026-09-28 23:17:38.921 10226 11064 11081 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+1790612260938 2026-09-28 23:17:39.015 10226 11064 11064 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@fb3afe5
+1790612260938 2026-09-28 23:17:39.016 10226 11064 11064 D VRI[MainActivity]: WindowInsets changed: 1080x2400 statusBars:[0,63,0,0] navigationBars:[0,0,0,63] mandatorySystemGestures:[0,63,0,84] 
+1790612260938 2026-09-28 23:17:39.016 10226 11064 11064 I HWUI    : Using FreeType backend (prop=Auto)
+1790612261018 2026-09-28 23:17:39.093 10226 11064 11064 D InsetsController: hide(ime())
+1790612261018 2026-09-28 23:17:39.093 10226 11064 11064 I ImeTracker: dev.jevbridge.logprobe:1d08aa70: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+1790612261275 2026-09-28 23:17:39.354 10226 11064 11083 I JevProbe: tick 2 epochMs=1790612259353
+1790612261544 2026-09-28 23:17:39.623 10226 11064 11070 I bridge.logprobe: Compiler allocated 5145KB to compile void android.view.ViewRootImpl.performTraversals()
+1790612261778 2026-09-28 23:17:39.857 10226 11064 11083 I JevProbe: tick 3 epochMs=1790612259857
+1790612262281 2026-09-28 23:17:40.359 10226 11064 11083 I JevProbe: tick 4 epochMs=1790612260359
+1790612262781 2026-09-28 23:17:40.859 10226 11064 11083 I JevProbe: tick 5 epochMs=1790612260859
+1790612263281 2026-09-28 23:17:41.360 10226 11064 11083 I JevProbe: tick 6 epochMs=1790612261360
+1790612263775 2026-09-28 23:17:41.852 10226 11064 11064 I JevProbe: misbehave exit at epochMs=1790612261852
+1790612263784 2026-09-28 23:17:41.855 10226 11064 11064 I bridge.logprobe: System.exit called, status: 0
+1790612263784 2026-09-28 23:17:41.855 10226 11064 11064 I AndroidRuntime: VM exiting with result code 0, cleanup skipped.
+1790612273143 EXIT code=null signal=SIGTERM

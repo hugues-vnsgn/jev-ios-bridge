@@ -1,0 +1,23 @@
+{"test": "replace", "api": "36", "target": "field.plain", "method": "mcli io keys ctrl+a backspace (one call)", "after": {"text": "", "hint": ""}, "cleared": true, "secs": 0.066, "error": null}
+{"test": "replace", "api": "36", "target": "field.plain", "method": "mcli io keys ctrl+a, then io keys backspace", "after": {"text": "", "hint": ""}, "cleared": true, "secs": 0.071, "error": null}
+{"test": "replace", "api": "36", "target": "field.plain", "method": "adb MOVE_END + 40x DEL (one call)", "after": {"text": "", "hint": ""}, "cleared": true, "secs": 0.116, "error": null}
+{"test": "replace", "api": "36", "target": "field.plain", "method": "adb MOVE_HOME + 40x FORWARD_DEL", "after": {"text": "value 123", "hint": ""}, "cleared": false, "secs": 0.064, "error": null}
+{"test": "replace", "api": "36", "target": "field.plain", "method": "adb keyevent --longpress DEL", "after": {"text": "old value 1", "hint": ""}, "cleared": false, "secs": 0.435, "error": null}
+{"test": "replace", "api": "36", "target": "field.plain", "method": "adb keycombination 113 29 + DEL", "after": {"text": "old value 12", "hint": ""}, "cleared": false, "secs": 0.063, "error": null}
+{"test": "replace", "api": "36", "target": "field.plain", "method": "adb keyevent CTRL_LEFT A + DEL", "after": {"text": "old value 123", "hint": ""}, "cleared": false, "secs": 0.048, "error": null}
+{"test": "replace", "api": "36", "target": "field.plain", "method": "mcli ctrl+a, clipboard set, ctrl+v", "after": {"text": "new text", "hint": ""}, "replaced": true, "secs": 0.278}
+{"test": "replace", "api": "36", "target": "classic.plain", "method": "mcli io keys ctrl+a backspace (one call)", "after": {"text": "", "hint": "Classic plain"}, "cleared": true, "secs": 0.031, "error": null}
+{"test": "replace", "api": "36", "target": "classic.plain", "method": "mcli io keys ctrl+a, then io keys backspace", "after": {"text": "", "hint": "Classic plain"}, "cleared": true, "secs": 0.048, "error": null}
+{"test": "replace", "api": "36", "target": "classic.plain", "method": "adb MOVE_END + 40x DEL (one call)", "after": {"text": "", "hint": "Classic plain"}, "cleared": true, "secs": 0.041, "error": null}
+{"test": "replace", "api": "36", "target": "classic.plain", "method": "adb MOVE_HOME + 40x FORWARD_DEL", "after": {"text": "", "hint": "Classic plain"}, "cleared": true, "secs": 0.035, "error": null}
+{"test": "replace", "api": "36", "target": "classic.plain", "method": "adb keyevent --longpress DEL", "after": {"text": "old value 1", "hint": "Classic plain"}, "cleared": false, "secs": 0.49, "error": null}
+{"test": "replace", "api": "36", "target": "classic.plain", "method": "adb keycombination 113 29 + DEL", "after": {"text": "", "hint": "Classic plain"}, "cleared": true, "secs": 0.064, "error": null}
+{"test": "replace", "api": "36", "target": "classic.plain", "method": "adb keyevent CTRL_LEFT A + DEL", "after": {"text": "old value 123", "hint": "Classic plain"}, "cleared": false, "secs": 0.041, "error": null}
+{"test": "replace", "api": "36", "target": "classic.plain", "method": "mcli ctrl+a, clipboard set, ctrl+v", "after": {"text": "new text", "hint": "Classic plain"}, "replaced": true, "secs": 0.105}
+{"test": "field", "api": "36", "target": "field.password", "sent": "Secr3t!", "node_text": "\u2022\u2022\u2022\u2022\u2022\u2022\u2022", "node_hint": "", "echo": "[Secr3t!]"}
+{"test": "field", "api": "36", "target": "classic.password", "sent": "Secr3t!", "node_text": "\u2022\u2022\u2022\u2022\u2022\u2022!", "node_hint": "Classic password", "echo": null}
+{"test": "field", "api": "36", "target": "field.phone", "sent": "5551234567", "node_text": "(555) 123-4567", "node_hint": "", "echo": "[5551234567]"}
+{"test": "field", "api": "36", "target": "field.phone", "sent": "555-12a34567890", "node_text": "(555) 123-4567", "node_hint": "", "echo": "[5551234567]"}
+{"test": "field", "api": "36", "target": "field.upper", "sent": "abc Def", "node_text": "ADEF", "node_hint": "", "echo": "[ADEF]"}
+{"test": "field", "api": "36", "target": "classic.plain", "sent": "hello", "node_text": "hello", "node_hint": "Classic plain", "echo": null}
+{"test": "field", "api": "36", "target": "field.password (empty)", "node_text": "", "node_hint": ""}

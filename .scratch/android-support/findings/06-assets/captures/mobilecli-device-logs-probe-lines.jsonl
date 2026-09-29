@@ -1,0 +1,109 @@
+1790612453956 {"timestamp":"2026-09-28 23:20:51.822","message":"tick 36 epochMs=1790612451822","level":"Info","pid":13416,"process":"dev.jevbridge.logprobe","tag":"JevProbe"}
+1790612454245 {"timestamp":"2026-09-28 23:20:52.322","message":"tick 37 epochMs=1790612452322","level":"Info","pid":13416,"process":"dev.jevbridge.logprobe","tag":"JevProbe"}
+1790612454745 {"timestamp":"2026-09-28 23:20:52.823","message":"tick 38 epochMs=1790612452823","level":"Info","pid":13416,"process":"dev.jevbridge.logprobe","tag":"JevProbe"}
+1790612455245 {"timestamp":"2026-09-28 23:20:53.323","message":"tick 39 epochMs=1790612453323","level":"Info","pid":13416,"process":"dev.jevbridge.logprobe","tag":"JevProbe"}
+1790612455746 {"timestamp":"2026-09-28 23:20:53.823","message":"tick 40 epochMs=1790612453823","level":"Info","pid":13416,"process":"dev.jevbridge.logprobe","tag":"JevProbe"}
+1790612456246 {"timestamp":"2026-09-28 23:20:54.323","message":"tick 41 epochMs=1790612454323","level":"Info","pid":13416,"process":"dev.jevbridge.logprobe","tag":"JevProbe"}
+1790612456394 {"timestamp":"2026-09-28 23:20:54.410","message":"Process 13416 exited due to signal 9 (Killed)","level":"Info","pid":477,"process":"zygote64","tag":"Zygote"}
+1790612457671 {"timestamp":"2026-09-28 23:20:55.747","message":"Forked child process 13784","level":"Debug","pid":477,"process":"zygote64","tag":"Zygote"}
+1790612457714 {"timestamp":"2026-09-28 23:20:55.756","message":"Process 13784 created for dev.jevbridge.logprobe","level":"Info","pid":13784,"process":"zygote64","tag":"Zygote"}
+1790612458334 {"timestamp":"2026-09-28 23:20:56.408","message":"verbose line","level":"Verbose","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458334 {"timestamp":"2026-09-28 23:20:56.408","message":"debug line","level":"Debug","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458334 {"timestamp":"2026-09-28 23:20:56.408","message":"info line mode=crash pid=13784","level":"Info","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.408","message":"warn line","level":"Warning","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.408","message":"error line","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.408","message":"System.out println line","level":"Info","pid":13784,"process":"zygote64","tag":"System.out"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.408","message":"System.err line","level":"Warning","pid":13784,"process":"zygote64","tag":"System.err"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.408","message":"multi-line first","level":"Info","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.408","message":"multi-line second","level":"Info","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.408","message":"unicode line: café ✓ Tiếng Việt","level":"Info","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.408","message":"secret is hunter2-SECRET and upper HUNTER2-SECRET","level":"Info","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"handled exception","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"java.lang.IllegalArgumentException: handled boom","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"\tat dev.jevbridge.logprobe.MainActivity.onCreate(MainActivity.java:35)","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"\tat android.app.Activity.performCreate(Activity.java:9306)","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"\tat android.app.Activity.performCreate(Activity.java:9284)","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"\tat android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1541)","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"\tat android.app.ActivityThread.performLaunchActivity(ActivityThread.java:4480)","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"\tat android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:4699)","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"\tat android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:224)","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"\tat android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:133)","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"\tat android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:103)","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"\tat android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:80)","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"\tat android.app.ActivityThread$H.handleMessage(ActivityThread.java:2961)","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"\tat android.os.Handler.dispatchMessage(Handler.java:132)","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"\tat android.os.Looper.dispatchMessage(Looper.java:333)","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"\tat android.os.Looper.loopOnce(Looper.java:263)","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"\tat android.os.Looper.loop(Looper.java:367)","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"\tat android.app.ActivityThread.main(ActivityThread.java:9287)","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"\tat java.lang.reflect.Method.invoke(Native Method)","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"\tat com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:566)","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.409","message":"\tat com.android.internal.os.ZygoteInit.main(ZygoteInit.java:929)","level":"Error","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458335 {"timestamp":"2026-09-28 23:20:56.410","message":"tick 1 epochMs=1790612456410","level":"Info","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612458837 {"timestamp":"2026-09-28 23:20:56.912","message":"tick 2 epochMs=1790612456912","level":"Info","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612459339 {"timestamp":"2026-09-28 23:20:57.415","message":"tick 3 epochMs=1790612457415","level":"Info","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612459860 {"timestamp":"2026-09-28 23:20:57.915","message":"tick 4 epochMs=1790612457915","level":"Info","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612460338 {"timestamp":"2026-09-28 23:20:58.415","message":"tick 5 epochMs=1790612458415","level":"Info","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612460838 {"timestamp":"2026-09-28 23:20:58.915","message":"tick 6 epochMs=1790612458915","level":"Info","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612461334 {"timestamp":"2026-09-28 23:20:59.410","message":"misbehave crash at epochMs=1790612459409","level":"Info","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612461334 {"timestamp":"2026-09-28 23:20:59.410","message":"Shutting down VM","level":"Debug","pid":13784,"process":"zygote64","tag":"AndroidRuntime"}
+1790612461334 {"timestamp":"2026-09-28 23:20:59.410","message":"FATAL EXCEPTION: main","level":"Error","pid":13784,"process":"zygote64","tag":"AndroidRuntime"}
+1790612461334 {"timestamp":"2026-09-28 23:20:59.410","message":"Process: dev.jevbridge.logprobe, PID: 13784","level":"Error","pid":13784,"process":"zygote64","tag":"AndroidRuntime"}
+1790612461334 {"timestamp":"2026-09-28 23:20:59.410","message":"java.lang.IllegalStateException: probe crash on main thread","level":"Error","pid":13784,"process":"zygote64","tag":"AndroidRuntime"}
+1790612461334 {"timestamp":"2026-09-28 23:20:59.410","message":"\tat dev.jevbridge.logprobe.MainActivity.misbehave(MainActivity.java:59)","level":"Error","pid":13784,"process":"zygote64","tag":"AndroidRuntime"}
+1790612461334 {"timestamp":"2026-09-28 23:20:59.410","message":"\tat dev.jevbridge.logprobe.MainActivity.lambda$onCreate$1$dev-jevbridge-logprobe-MainActivity(MainActivity.java:53)","level":"Error","pid":13784,"process":"zygote64","tag":"AndroidRuntime"}
+1790612461334 {"timestamp":"2026-09-28 23:20:59.410","message":"\tat dev.jevbridge.logprobe.MainActivity$$ExternalSyntheticLambda2.run(D8$$SyntheticClass:0)","level":"Error","pid":13784,"process":"zygote64","tag":"AndroidRuntime"}
+1790612461334 {"timestamp":"2026-09-28 23:20:59.410","message":"\tat android.os.Handler.handleCallback(Handler.java:1070)","level":"Error","pid":13784,"process":"zygote64","tag":"AndroidRuntime"}
+1790612461334 {"timestamp":"2026-09-28 23:20:59.410","message":"\tat android.os.Handler.dispatchMessage(Handler.java:125)","level":"Error","pid":13784,"process":"zygote64","tag":"AndroidRuntime"}
+1790612461334 {"timestamp":"2026-09-28 23:20:59.410","message":"\tat android.os.Looper.dispatchMessage(Looper.java:333)","level":"Error","pid":13784,"process":"zygote64","tag":"AndroidRuntime"}
+1790612461334 {"timestamp":"2026-09-28 23:20:59.410","message":"\tat android.os.Looper.loopOnce(Looper.java:263)","level":"Error","pid":13784,"process":"zygote64","tag":"AndroidRuntime"}
+1790612461334 {"timestamp":"2026-09-28 23:20:59.410","message":"\tat android.os.Looper.loop(Looper.java:367)","level":"Error","pid":13784,"process":"zygote64","tag":"AndroidRuntime"}
+1790612461334 {"timestamp":"2026-09-28 23:20:59.410","message":"\tat android.app.ActivityThread.main(ActivityThread.java:9287)","level":"Error","pid":13784,"process":"zygote64","tag":"AndroidRuntime"}
+1790612461334 {"timestamp":"2026-09-28 23:20:59.410","message":"\tat java.lang.reflect.Method.invoke(Native Method)","level":"Error","pid":13784,"process":"zygote64","tag":"AndroidRuntime"}
+1790612461334 {"timestamp":"2026-09-28 23:20:59.410","message":"\tat com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:566)","level":"Error","pid":13784,"process":"zygote64","tag":"AndroidRuntime"}
+1790612461334 {"timestamp":"2026-09-28 23:20:59.410","message":"\tat com.android.internal.os.ZygoteInit.main(ZygoteInit.java:929)","level":"Error","pid":13784,"process":"zygote64","tag":"AndroidRuntime"}
+1790612461339 {"timestamp":"2026-09-28 23:20:59.416","message":"tick 7 epochMs=1790612459416","level":"Info","pid":13784,"process":"zygote64","tag":"JevProbe"}
+1790612461375 {"timestamp":"2026-09-28 23:20:59.451","message":"Process 13784 exited due to signal 9 (Killed)","level":"Info","pid":477,"process":"zygote64","tag":"Zygote"}
+1790612470941 {"timestamp":"2026-09-28 23:21:09.017","message":"Forked child process 14107","level":"Debug","pid":477,"process":"zygote64","tag":"Zygote"}
+1790612470979 {"timestamp":"2026-09-28 23:21:09.026","message":"Process 14107 created for dev.jevbridge.logprobe","level":"Info","pid":14107,"process":"zygote64","tag":"Zygote"}
+1790612471280 {"timestamp":"2026-09-28 23:21:09.358","message":"verbose line","level":"Verbose","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471281 {"timestamp":"2026-09-28 23:21:09.358","message":"debug line","level":"Debug","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471281 {"timestamp":"2026-09-28 23:21:09.359","message":"info line mode=normal pid=14107","level":"Info","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471281 {"timestamp":"2026-09-28 23:21:09.359","message":"warn line","level":"Warning","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471282 {"timestamp":"2026-09-28 23:21:09.359","message":"error line","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471282 {"timestamp":"2026-09-28 23:21:09.359","message":"System.out println line","level":"Info","pid":14107,"process":"zygote64","tag":"System.out"}
+1790612471284 {"timestamp":"2026-09-28 23:21:09.360","message":"System.err line","level":"Warning","pid":14107,"process":"zygote64","tag":"System.err"}
+1790612471285 {"timestamp":"2026-09-28 23:21:09.360","message":"multi-line first","level":"Info","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471285 {"timestamp":"2026-09-28 23:21:09.360","message":"multi-line second","level":"Info","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471285 {"timestamp":"2026-09-28 23:21:09.360","message":"unicode line: café ✓ Tiếng Việt","level":"Info","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"handled exception","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"java.lang.IllegalArgumentException: handled boom","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"\tat dev.jevbridge.logprobe.MainActivity.onCreate(MainActivity.java:35)","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"\tat android.app.Activity.performCreate(Activity.java:9306)","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"\tat android.app.Activity.performCreate(Activity.java:9284)","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"\tat android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1541)","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"\tat android.app.ActivityThread.performLaunchActivity(ActivityThread.java:4480)","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"\tat android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:4699)","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"\tat android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:224)","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"\tat android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:133)","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"\tat android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:103)","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"\tat android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:80)","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"\tat android.app.ActivityThread$H.handleMessage(ActivityThread.java:2961)","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"\tat android.os.Handler.dispatchMessage(Handler.java:132)","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"\tat android.os.Looper.dispatchMessage(Looper.java:333)","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"\tat android.os.Looper.loopOnce(Looper.java:263)","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"\tat android.os.Looper.loop(Looper.java:367)","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"\tat android.app.ActivityThread.main(ActivityThread.java:9287)","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"\tat java.lang.reflect.Method.invoke(Native Method)","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"\tat com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:566)","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471292 {"timestamp":"2026-09-28 23:21:09.366","message":"\tat com.android.internal.os.ZygoteInit.main(ZygoteInit.java:929)","level":"Error","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471293 {"timestamp":"2026-09-28 23:21:09.367","message":"tick 1 epochMs=1790612469367","level":"Info","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612471795 {"timestamp":"2026-09-28 23:21:09.867","message":"tick 2 epochMs=1790612469867","level":"Info","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612472293 {"timestamp":"2026-09-28 23:21:10.370","message":"tick 3 epochMs=1790612470370","level":"Info","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612472799 {"timestamp":"2026-09-28 23:21:10.873","message":"tick 4 epochMs=1790612470873","level":"Info","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612473299 {"timestamp":"2026-09-28 23:21:11.376","message":"tick 5 epochMs=1790612471376","level":"Info","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612473800 {"timestamp":"2026-09-28 23:21:11.877","message":"tick 6 epochMs=1790612471877","level":"Info","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612474293 {"timestamp":"2026-09-28 23:21:12.368","message":"misbehave normal at epochMs=1790612472368","level":"Info","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612474302 {"timestamp":"2026-09-28 23:21:12.378","message":"tick 7 epochMs=1790612472378","level":"Info","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612474801 {"timestamp":"2026-09-28 23:21:12.879","message":"tick 8 epochMs=1790612472879","level":"Info","pid":14107,"process":"zygote64","tag":"JevProbe"}
+1790612475303 {"timestamp":"2026-09-28 23:21:13.379","message":"tick 9 epochMs=1790612473379","level":"Info","pid":14107,"process":"zygote64","tag":"JevProbe"}

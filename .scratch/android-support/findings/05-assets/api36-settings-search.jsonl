@@ -1,0 +1,5 @@
+{"test": "settings-search", "api": "36", "field_id": "com.google.android.settings.intelligence:id/open_search_view_edit_text", "hint": "Search settings", "focused": true}
+{"test": "settings-search", "api": "36", "sent": "Wi-Fi & 50% \"off\"", "got": "Wi-Fi & 50% \"off\"", "ok": true}
+{"test": "settings-search", "api": "36", "sent": "a\"b'c$d&e;f|g\\h%i j ", "got": "a\"b'c$d&e;f|g\\h%i j ", "ok": true}
+{"test": "settings-search-clear", "api": "36", "method": "ctrl+a; backspace", "text": "", "hint": "Search settings", "cleared": true}
+{"test": "settings-search-clear", "api": "36", "method": "end + 30 backspace", "text": "", "hint": "Search settings", "cleared": true}

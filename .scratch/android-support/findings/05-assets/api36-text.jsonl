@@ -1,0 +1,29 @@
+{"test": "exact.mcli", "sent": "Wi-Fi & 50% \"off\"", "echo": "[Wi-Fi & 50% \"off\"]", "ok": true, "secs": 0.189}
+{"test": "exact.mcli", "sent": "a\"b'c$d&e;f|g\\h%i j ", "echo": "[a\"b'c$d&e;f|g\\h%i j ]", "ok": true, "secs": 0.482}
+{"test": "exact.mcli", "sent": "`~!@#*()<>?[]{}^=+_,./:", "echo": "[`~!@#*()<>?[]{}^=+_,./:]", "ok": true, "secs": 0.37}
+{"test": "exact.mcli", "sent": "50%s off", "echo": "[50%s off]", "ok": true, "secs": 0.099}
+{"test": "exact.mcli", "sent": "  two  spaces", "echo": "[  two  spaces]", "ok": true, "secs": 0.11}
+{"test": "exact.adb", "sent": "Wi-Fi & 50% \"off\"", "echo": "[Wi-Fi & 50% \"off\"]", "ok": true, "secs": 0.487}
+{"test": "exact.adb", "sent": "a\"b'c$d&e;f|g\\h%i j ", "echo": "[a\"b'c$d&e;f|g\\h%i j ]", "ok": true, "secs": 0.429}
+{"test": "exact.adb", "sent": "`~!@#*()<>?[]{}^=+_,./:", "echo": "[`~!@#*()<>?[]{}^=+_,./:]", "ok": true, "secs": 0.484}
+{"test": "exact.adb", "sent": "50%s off", "echo": "[50  off]", "ok": false, "secs": 0.085}
+{"test": "exact.adb", "sent": "  two  spaces", "echo": "[  two  spaces]", "ok": true, "secs": 0.088}
+{"test": "replace", "api": "36", "target": "field.plain", "method": "mcli io keys ctrl+a backspace (one call)", "after": {"text": "old value 12", "hint": ""}, "cleared": false, "secs": 0.038, "error": null}
+{"test": "replace", "api": "36", "target": "field.plain", "method": "mcli io keys ctrl+a, then io keys backspace", "after": {"text": "", "hint": ""}, "cleared": true, "secs": 0.08, "error": null}
+{"test": "replace", "api": "36", "target": "field.plain", "method": "adb MOVE_END + 40x DEL (one call)", "after": {"text": "", "hint": ""}, "cleared": true, "secs": 0.116, "error": null}
+{"test": "replace", "api": "36", "target": "field.plain", "method": "adb MOVE_HOME + 40x FORWARD_DEL", "after": {"text": "", "hint": ""}, "cleared": true, "secs": 0.118, "error": null}
+{"test": "replace", "api": "36", "target": "field.plain", "method": "adb keyevent --longpress DEL", "after": {"text": "old value 1", "hint": ""}, "cleared": false, "secs": 0.436, "error": null}
+{"test": "replace", "api": "36", "target": "field.plain", "method": "adb keycombination 113 29 + DEL", "after": {"text": "", "hint": ""}, "cleared": true, "secs": 0.078, "error": null}
+{"test": "replace", "api": "36", "target": "field.plain", "method": "adb keyevent CTRL_LEFT A + DEL", "after": {"text": "old value 123", "hint": ""}, "cleared": false, "secs": 0.033, "error": null}
+Traceback (most recent call last):
+  File "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/spike-android/.scratch/android-support/findings/05-assets/text_tests.py", line 198, in <module>
+    {"exact": exactness, "replace": lambda: replace_methods(api), "fields": lambda: special_fields(api),
+  File "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/spike-android/.scratch/android-support/findings/05-assets/text_tests.py", line 198, in <lambda>
+    {"exact": exactness, "replace": lambda: replace_methods(api), "fields": lambda: special_fields(api),
+                                            ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/spike-android/.scratch/android-support/findings/05-assets/text_tests.py", line 127, in replace_methods
+    mcli("clipboard", "set", "--device", AVD, "--", "new text")
+  File "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/spike-android/.scratch/android-support/findings/05-assets/probe.py", line 33, in mcli
+    raise RuntimeError(f"mobilecli {args} failed: {p.stdout} {p.stderr}")
+RuntimeError: mobilecli ('clipboard', 'set', '--device', 'Medium_Phone_API_36.1', '--', 'new text') failed:  unknown command "clipboard" for "mobilecli"
+

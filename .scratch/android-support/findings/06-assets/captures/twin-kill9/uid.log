@@ -1,0 +1,34 @@
+1790612593359 --------- beginning of main
+1790612593359 2026-09-28 23:23:11.433 10225 15702 15702 I Zygote  : Process 15702 created for dev.jevbridge.diagnostic
+1790612593359 2026-09-28 23:23:11.435 10225 15702 15702 I idge.diagnostic: Late-enabling -Xcheck:jni
+1790612593390 2026-09-28 23:23:11.464 10225 15702 15702 I idge.diagnostic: Using CollectorTypeCMC GC.
+1790612593413 2026-09-28 23:23:11.490 10225 15702 15702 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+1790612593480 2026-09-28 23:23:11.556 10225 15702 15702 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+1790612593480 2026-09-28 23:23:11.557 10225 15702 15702 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
+1790612593792 2026-09-28 23:23:11.868 10225 15702 15702 D nativeloader: Configuring clns-9 for other apk /data/app/~~0-oxJFaGDZ0wTd0CCL-A0g==/dev.jevbridge.diagnostic-yhB86cb5QGiiQ03jcIQGbw==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~0-oxJFaGDZ0wTd0CCL-A0g==/dev.jevbridge.diagnostic-yhB86cb5QGiiQ03jcIQGbw==/lib/arm64:/data/app/~~0-oxJFaGDZ0wTd0CCL-A0g==/dev.jevbridge.diagnostic-yhB86cb5QGiiQ03jcIQGbw==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/dev.jevbridge.diagnostic
+1790612593795 2026-09-28 23:23:11.872 10225 15702 15702 V GraphicsEnvironment: Currently set values for:
+1790612593795 2026-09-28 23:23:11.872 10225 15702 15702 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+1790612593795 2026-09-28 23:23:11.872 10225 15702 15702 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+1790612593795 2026-09-28 23:23:11.872 10225 15702 15702 V GraphicsEnvironment: dev.jevbridge.diagnostic is not listed in per-application setting
+1790612593795 2026-09-28 23:23:11.872 10225 15702 15702 V GraphicsEnvironment: ANGLE allowlist from config: com.dreamgames.royalmatch com.dts.freefiremax com.dxx.firenow com.gramgames.mergedragons com.ludo.king com.mojang.minecraftpe com.my.defense com.nintendo.zaka com.os.airforce com.playrix.fishdomdd.gplay io.teslatech.callbreak jp.konami.prospia net.peakgames.toonblast
+1790612593796 2026-09-28 23:23:11.872 10225 15702 15702 V GraphicsEnvironment: No special selections for ANGLE, returning default driver choice
+1790612593796 2026-09-28 23:23:11.873 10225 15702 15702 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+1790612593812 --------- beginning of system
+1790612593812 2026-09-28 23:23:11.889 10225 15702 15725 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+1790612593828 2026-09-28 23:23:11.905 10225 15702 15702 E ashmem  : Pinning is deprecated since Android Q. Please use trim or other methods.
+1790612593845 2026-09-28 23:23:11.922 10225 15702 15702 D CompatChangeReporter: Compat change id reported: 377864165; UID 10225; state: ENABLED
+1790612593846 2026-09-28 23:23:11.923 10225 15702 15702 D DesktopExperienceFlags: Toggle override initialized to: false
+1790612593846 2026-09-28 23:23:11.923 10225 15702 15702 D DesktopModeFlags: Toggle override initialized to: OVERRIDE_UNSET
+1790612593856 2026-09-28 23:23:11.930 10225 15702 15725 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv1_CM_emulation.so
+1790612593856 2026-09-28 23:23:11.931 10225 15702 15725 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv2_emulation.so
+1790612593860 2026-09-28 23:23:11.937 10225 15702 15725 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+1790612593861 2026-09-28 23:23:11.938 10225 15702 15725 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+1790612593873 2026-09-28 23:23:11.950 10225 15702 15702 W HWUI    : Unknown dataspace 0
+1790612593888 2026-09-28 23:23:11.962 10225 15702 15702 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@7d016d3
+1790612593922 2026-09-28 23:23:11.999 10225 15702 15702 I idge.diagnostic: hiddenapi: Accessing hidden method Landroid/os/SystemProperties;->addChangeCallback(Ljava/lang/Runnable;)V (runtime_flags=0, domain=platform, api=unsupported) from Landroidx/compose/ui/platform/AndroidComposeView$Companion; (domain=app, TargetSdkVersion=36) using reflection: allowed
+1790612593954 2026-09-28 23:23:12.030 10225 15702 15702 D VRI[MainActivity]: WindowInsets changed: 1080x2400 statusBars:[0,63,0,0] navigationBars:[0,0,0,63] mandatorySystemGestures:[0,63,0,84] 
+1790612593959 2026-09-28 23:23:12.036 10225 15702 15702 I HWUI    : Using FreeType backend (prop=Auto)
+1790612594057 2026-09-28 23:23:12.129 10225 15702 15702 D InsetsController: hide(ime())
+1790612594057 2026-09-28 23:23:12.129 10225 15702 15702 I ImeTracker: dev.jevbridge.diagnostic:e93f02d1: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+1790612594718 2026-09-28 23:23:12.795 10225 15702 15707 I idge.diagnostic: Compiler allocated 5145KB to compile void android.view.ViewRootImpl.performTraversals()
+1790612598195 EXIT code=null signal=SIGTERM
