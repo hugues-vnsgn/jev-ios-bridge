@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
@@ -146,6 +146,106 @@ test('releasing a lease this run no longer holds leaves the new holder\'s file a
     await writeFile(path, JSON.stringify({ pid: process.pid, token: 'someone-else', deviceId }));
     await lease.release();
     assert.equal((JSON.parse(await readFile(path, 'utf8')) as { token: string }).token, 'someone-else');
+  });
+});
+
+test('rewrite writes via a private temp file: an interrupted write leaves the lease file holding its previous complete record, and cleans up the temp file', async () => {
+  await withRoot(async (root) => {
+    const path = join(root, `${deviceId}.lock`);
+    const injectedWriter = async (tempPath: string, data: string) => {
+      await writeFile(tempPath, data, { mode: 0o600 });
+      throw new Error('interrupted after the temp file was created');
+    };
+    const lease = new DeviceLease({ root, writeFile: injectedWriter });
+    await lease.take(deviceId, { runId: 'run-9' });
+    const before = await readFile(path, 'utf8');
+
+    await assert.rejects(lease.own('agent:5555'), /interrupted after the temp file was created/);
+
+    assert.equal(await readFile(path, 'utf8'), before, 'the lease file still holds the previous complete record, never emptied');
+    assert.deepEqual(await readdir(root), [`${deviceId}.lock`], 'the temp file was cleaned up after the failed write');
+  });
+});
+
+test('after an interrupted rewrite, a dead holder\'s lease can still be taken over', async () => {
+  await withRoot(async (root) => {
+    const injectedWriter = async (tempPath: string, data: string) => {
+      await writeFile(tempPath, data, { mode: 0o600 });
+      throw new Error('interrupted after the temp file was created');
+    };
+    const pid = deadPid();
+    const lease = new DeviceLease({ root, processId: pid, writeFile: injectedWriter });
+    await lease.take(deviceId, { runId: 'crashed-run' });
+    await assert.rejects(lease.own('agent:5555'), /interrupted after the temp file was created/);
+
+    const takenOver = await new DeviceLease({ root }).take(deviceId);
+    assert.deepEqual(takenOver, { runId: 'crashed-run', processId: pid, ownedProcesses: [] },
+      'the pre-interruption record is still intact and readable');
+  });
+});
+
+test('rewrite\'s temp file lives in the lease root and its name never ends in .lock, so a 1.1 bridge, which only opens <ID>.lock, ignores it', async () => {
+  await withRoot(async (root) => {
+    let seenPath: string | undefined;
+    const capturingWriter = async (tempPath: string, data: string) => {
+      seenPath = tempPath;
+      await writeFile(tempPath, data, { mode: 0o600 });
+    };
+    const lease = new DeviceLease({ root, writeFile: capturingWriter });
+    await lease.take(deviceId);
+    await lease.own('agent:5555');
+
+    assert.equal(seenPath !== undefined && seenPath.startsWith(`${root}/`), true, 'temp file is in the lease root');
+    assert.equal(seenPath!.endsWith('.lock'), false, 'temp file name never ends in .lock');
+  });
+});
+
+test('rewrite writes the temp file mode 0600', async () => {
+  await withRoot(async (root) => {
+    const path = join(root, `${deviceId}.lock`);
+    const lease = new DeviceLease({ root });
+    await lease.take(deviceId);
+    await lease.own('agent:5555');
+    assert.equal((await stat(path)).mode & 0o777, 0o600, 'the renamed file keeps the temp file\'s mode');
+  });
+});
+
+function deferred<T = void>(): { promise: Promise<T>; resolve: (value: T) => void } {
+  let resolve!: (value: T) => void;
+  const promise = new Promise<T>(r => { resolve = r; });
+  return { promise, resolve };
+}
+
+test('own() and disown() calls on one lease serialize their writes, so concurrent updates can\'t interleave', async () => {
+  await withRoot(async (root) => {
+    const path = join(root, `${deviceId}.lock`);
+    const starts = [deferred<void>(), deferred<void>()];
+    const releases = [deferred<void>(), deferred<void>()];
+    let callIndex = 0;
+    const writer = async (tempPath: string, data: string) => {
+      const index = callIndex++;
+      starts[index]!.resolve();
+      await releases[index]!.promise;
+      await writeFile(tempPath, data, { mode: 0o600 });
+    };
+    const lease = new DeviceLease({ root, writeFile: writer });
+    await lease.take(deviceId);
+
+    const first = lease.own('agent:1111');
+    const second = lease.own('agent:2222');
+
+    await starts[0]!.promise;
+    assert.equal(callIndex, 1, 'the second write has not started until the first one finishes');
+    releases[0]!.resolve();
+
+    await starts[1]!.promise;
+    assert.equal(callIndex, 2, 'the second write starts only once the first has settled');
+    releases[1]!.resolve();
+
+    await Promise.all([first, second]);
+
+    const written = JSON.parse(await readFile(path, 'utf8')) as { ownedProcesses: string[] };
+    assert.deepEqual([...written.ownedProcesses].sort(), ['agent:1111', 'agent:2222']);
   });
 });
 

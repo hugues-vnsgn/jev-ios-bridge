@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { mkdir, open, readFile, unlink, writeFile } from 'node:fs/promises';
+import { mkdir, open, readFile, rename, unlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { processAlive } from '../process.js';
@@ -82,18 +82,28 @@ function holderOf(file: Partial<LeaseFile>): LeaseHolder {
   };
 }
 
+/** Writes the temp file rewrite() renames over the lease file. Injectable so a test can interrupt it. */
+type TempFileWriter = (path: string, data: string) => Promise<void>;
+
+async function writeTempFile(path: string, data: string): Promise<void> {
+  await writeFile(path, data, { mode: 0o600 });
+}
+
 export class DeviceLease {
   private readonly root: string;
   private readonly processId: number;
+  private readonly writeTempFile: TempFileWriter;
   private readonly operations = new Set<Promise<unknown>>();
   private readonly commands = new Set<{ kind: DeviceCommandKind; state: DeviceCommandState }>();
   private owned: string[] = [];
   private file: { path: string; deviceIdentity: string; content: LeaseFile } | undefined;
   private late: Promise<void> | undefined;
+  private writeQueue: Promise<void> = Promise.resolve();
 
-  constructor(options: { root?: string; processId?: number } = {}) {
+  constructor(options: { root?: string; processId?: number; writeFile?: TempFileWriter } = {}) {
     this.root = options.root ?? DEFAULT_LEASE_ROOT;
     this.processId = options.processId ?? process.pid;
+    this.writeTempFile = options.writeFile ?? writeTempFile;
   }
 
   get held(): boolean { return this.file !== undefined; }
@@ -222,11 +232,36 @@ export class DeviceLease {
       .finally(() => { this.late = undefined; });
   }
 
-  private async rewrite(): Promise<void> {
+  /**
+   * Queue this rewrite behind any still in flight, so concurrent `own()`/`disown()` calls on this lease
+   * can't interleave their writes. Each queued rewrite reads `this.owned` fresh when it runs, so the
+   * last one to actually write always persists the current state, whatever order the calls arrived in.
+   */
+  private rewrite(): Promise<void> {
+    const task = this.writeQueue.then(() => this.rewriteNow());
+    this.writeQueue = task.then(() => undefined, () => undefined);
+    return task;
+  }
+
+  /**
+   * Write the new record to a private temp file in the same folder, then rename it over the lease file,
+   * so the path always holds either the old complete record or the new one, never an empty or partial
+   * file. The temp name never ends in `.lock`, so a 1.1 bridge, which only opens `<ID>.lock`, ignores it.
+   * On any failure the temp file is cleaned up and the lease file is left exactly as it was.
+   */
+  private async rewriteNow(): Promise<void> {
     const file = this.file;
     if (!file) throw new Error('Device lease is not held');
     const { ownedProcesses: _previous, ...rest } = file.content;
-    file.content = { ...rest, ...(this.owned.length ? { ownedProcesses: [...this.owned] } : {}) };
-    await writeFile(file.path, JSON.stringify(file.content));
+    const content: LeaseFile = { ...rest, ...(this.owned.length ? { ownedProcesses: [...this.owned] } : {}) };
+    const tempPath = `${file.path}.${randomUUID()}.tmp`;
+    try {
+      await this.writeTempFile(tempPath, JSON.stringify(content));
+      await rename(tempPath, file.path);
+    } catch (error) {
+      await unlink(tempPath).catch(() => {});
+      throw error;
+    }
+    file.content = content;
   }
 }
