@@ -1,7 +1,8 @@
 # Where Android plugs into the code
 
 Type: grilling
-Status: open
+Status: claimed
+Claimed by: Claude Code (owner session)
 Blocked by: 03
 
 ## Question
