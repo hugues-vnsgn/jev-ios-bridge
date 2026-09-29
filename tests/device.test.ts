@@ -839,7 +839,8 @@ test('the MobileBuildMCP driver refuses an Android app identity instead of launc
   const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
   try {
     await assert.rejects(driver.prepare({ app: { package: 'com.example.app' }, device: { udid } },
-      new AbortController().signal), /iOS/);
+      new AbortController().signal),
+      { message: 'The MobileBuildMCP driver only runs iOS scripts; this scenario has no app.bundleId' });
   } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
 });
 

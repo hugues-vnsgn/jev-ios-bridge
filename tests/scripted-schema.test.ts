@@ -28,7 +28,7 @@ test('strict scripted schema omits undefined optionals', () => {
 test('script device accepts the real dedicated simulator 8-4-4-4-12 UUID shape', () => {
   const parsed = parseScriptedScenario({ ...scenario,
     device: { udid: '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7' } });
-  assert.equal(parsed.device?.udid, '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7');
+  assert.equal(parsed.platform === 'android' ? undefined : parsed.device?.udid, '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7');
 });
 
 test('selectors require identity and reject ephemeral refs, indices, and value-only guesses', () => {

@@ -94,7 +94,9 @@ async function main(): Promise<void> {
   if (command === 'run') {
     script = parseScriptedScenario(await readScript(argument!));
     if (!process.env.TYPESAFE_API_KEY?.trim()) throw new StartError('TYPESAFE_API_KEY is not set; load your .env with node --env-file=/path/to/.env');
-    await selectDeviceId(projectDir, script.device?.udid, process.env.JEV_DEVICE_UDID);
+    // The Android device is chosen elsewhere (phase 4); an Android script never carries a udid.
+    await selectDeviceId(projectDir, script.platform === 'android' ? undefined : script.device?.udid,
+      process.env.JEV_DEVICE_UDID);
   }
 
   const service = new BridgeService({
