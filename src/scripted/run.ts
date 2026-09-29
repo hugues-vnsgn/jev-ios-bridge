@@ -1,12 +1,12 @@
 import { setTimeout as delay } from 'node:timers/promises';
 import type { Action, ActionScenarioContext, DeviceDriver, Element, PrepareScenarioContext, RunLog, Snapshot, Verdict } from '../contracts/index.js';
-import { DeviceCliError, StaleSnapshotError } from '../device/index.js';
+import { DeviceCliError, DeviceReasonError, StaleSnapshotError } from '../device/index.js';
 import type { AssertionJudgment, ScriptedJudge, ScriptedScenario, ScriptedStep } from './contracts.js';
 import { SCRIPTED_JEV_MODEL, ScriptedJevError } from './jev.js';
 import { PROJECTION_RULE, renderAssertionState, ScriptedObservationError } from './observe.js';
 import { buildScriptedReport, type ScriptedReport } from './report.js';
 import { buildReportJson } from './report-json.js';
-import { isReasonCode } from './vocabulary.js';
+import { MOBILEBUILDMCP_PASSTHROUGH_CODES } from './vocabulary.js';
 import { BRIDGE_VERSION } from '../version.js';
 import { parseScriptedScenario } from './schema.js';
 import { assertScreenGuard, resolveActionTarget, ScriptSelectionError,
@@ -113,9 +113,10 @@ interface Failure { code: string; vendorCode?: string }
 function failureOf(error: unknown, signal: AbortSignal): Failure {
   if (signal.aborted) return { code: signal.reason instanceof ScriptRunError ? signal.reason.code : 'CANCELLED' };
   if (error instanceof ScriptRunError || error instanceof ScriptSelectionError ||
-      error instanceof ScriptedObservationError || error instanceof ScriptedJevError) return { code: error.code };
+      error instanceof ScriptedObservationError || error instanceof ScriptedJevError ||
+      error instanceof DeviceReasonError) return { code: error.code };
   if (error instanceof DeviceCliError) {
-    if (isReasonCode(error.code)) return { code: error.code };
+    if (MOBILEBUILDMCP_PASSTHROUGH_CODES.has(error.code)) return { code: error.code };
     return { code: 'DEVICE_ERROR', ...(/^[A-Za-z0-9_.-]{1,80}$/.test(error.code) ? { vendorCode: error.code } : {}) };
   }
   return { code: 'EXECUTION_ERROR' };

@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import { setTimeout as delay } from 'node:timers/promises';
 import type { DeviceDriver, Element, RunEvent, RunLog, Snapshot } from '../src/contracts/index.js';
 import type { ScriptedJudge, ScriptedScenario } from '../src/scripted/contracts.js';
-import { StaleSnapshotError } from '../src/device/index.js';
+import { DeviceReasonError, StaleSnapshotError } from '../src/device/index.js';
 import { assertScreenGuard, resolveActionTarget, ScriptSelectionError } from '../src/scripted/select.js';
 import { runScriptedScenario } from '../src/scripted/run.js';
 import { buildScriptedReport, renderScriptedReport } from '../src/scripted/report.js';
@@ -639,6 +639,23 @@ test('a step that fails because the app died is reported as APP_EXITED', async (
     judge: { async judge() { assert.fail('No judgment on the home screen'); } } });
   assert.equal(report.verdict, 'inconclusive');
   assert.equal(report.reason, 'APP_EXITED');
+});
+
+test('an Android-path error reports its own new reason code, with no vendorCode', async () => {
+  const home = snapshot([{ ref: 'h', role: 'button', label: 'Contacts', actions: ['tap'],
+    frame: { x: 0, y: 0, width: 60, height: 60 }, state: { enabled: true, visible: true } }]);
+  const log = memoryLog();
+  const report = await runScriptedScenario({ runId: 'scripted-1', log,
+    scenario: { version: 1, app: { bundleId: 'com.example.shop' }, values: {}, steps: [
+      { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Order complete' }] },
+        assertions: [{ id: 'done', claim: 'Order complete is visible' }] }] },
+    driver: { async prepare() { throw new DeviceReasonError('DEVICE_LOCKED', 'the screen is locked'); },
+      async observe() { return home; }, async act() {}, async close() {} },
+    judge: { async judge() { assert.fail('No judgment after a prepare failure'); } } });
+  assert.equal(report.verdict, 'inconclusive');
+  assert.equal(report.reason, 'DEVICE_LOCKED');
+  const error = log.events.find(event => event.type === 'error');
+  assert.equal(error?.data.vendorCode, undefined);
 });
 
 test('the run reads the tap alias rule from the driver, not from a run-wide option', async () => {
