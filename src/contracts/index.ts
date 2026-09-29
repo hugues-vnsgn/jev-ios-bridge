@@ -1,6 +1,8 @@
 /** Shared types for scripted runs: device seam, snapshots, the run log, and verdicts. */
 export type Verdict = 'passed' | 'failed' | 'inconclusive';
 export type Direction = 'up' | 'down' | 'left' | 'right';
+/** The device platform a scenario runs on. Scripts without one are iOS. */
+export type Platform = 'ios' | 'android';
 
 export interface ScenarioContext {
   app: { bundleId: string; launchArgs?: string[] };

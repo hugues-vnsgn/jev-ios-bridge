@@ -32,3 +32,9 @@ test('the experiment baseline V0 is the frozen v1 projection, and the Noul reque
       `screen ${index + 1} request`);
   }
 });
+
+test('the renderer defaults to iOS: naming the iOS platform gives the same v2 projection, byte for byte', async () => {
+  for (const [index, item] of (await corpus()).entries()) {
+    assert.equal(productionState(item.snapshot, 'ios'), experimentState(item.snapshot, 'B'), `screen ${index + 1} projection`);
+  }
+});
