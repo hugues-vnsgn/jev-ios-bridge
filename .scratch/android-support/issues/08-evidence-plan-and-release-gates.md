@@ -1,7 +1,8 @@
 # Evidence plan and release gates for v1.2.0
 
 Type: grilling
-Status: open
+Status: claimed
+Claimed by: Claude Code (owner session)
 Blocked by: 04, 05
 
 ## Question
