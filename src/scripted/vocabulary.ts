@@ -12,10 +12,9 @@ export const ROLES = [
 export type Role = typeof ROLES[number];
 
 /**
- * The 1.1 bridge reason codes, frozen exactly as shipped. MobileBuildMCP's device-layer errors pass
- * through only when their code is one of these; every other vendor code becomes DEVICE_ERROR plus
- * vendorCode. This keeps a later addition to REASON_CODES (for example an Android-only code that
- * happens to share a name with a MobileBuildMCP code) from silently starting to pass through too.
+ * The reason codes shipped through 1.1. Only this set of keys is frozen (see MOBILEBUILDMCP_PASSTHROUGH_CODES
+ * below); their descriptions may still be reworded, as NO_DEVICE, INVALID_DEVICE and DEVICE_BUSY were
+ * in 1.2, to serve both platforms without changing what each code means.
  */
 const REASON_CODES_1_1 = {
   // Outcomes
@@ -89,7 +88,7 @@ export const REASON_CODES = {
   APP_NOT_INSTALLED: 'The app\'s package isn\'t installed on the device.',
   APP_NOT_RESPONDING: 'The app froze (Android showed "App isn\'t responding") during the run.',
   DEVICE_UNSUPPORTED: 'The device is below Android 12 (API 31), which this bridge does not support.',
-  ANDROID_TOOLS_UNAVAILABLE: 'adb could not be found, the pinned mobilecli package is missing, or its agent does not match the pinned SHA-256.',
+  ANDROID_TOOLS_UNAVAILABLE: 'adb could not be found, the pinned mobilecli package is missing, or the device agent copied out of it does not match the pinned SHA-256.',
 } as const satisfies Record<string, string>;
 export type ReasonCode = keyof typeof REASON_CODES;
 
@@ -98,9 +97,10 @@ export function isReasonCode(value: unknown): value is ReasonCode {
 }
 
 /**
- * MobileBuildMCP device-layer errors pass through only when their code is one of these — the codes
- * shipped in 1.1, frozen here rather than read off the live REASON_CODES. A 1.2+ addition to
- * REASON_CODES (an Android-only code, or a future one) never starts passing through automatically:
- * see ADR-0005 and "Reason codes" in the Android release spec.
+ * MobileBuildMCP device-layer errors pass through only when their code is one of these: the codes
+ * shipped in 1.1, frozen here rather than read off the live REASON_CODES. This keeps a later addition
+ * to REASON_CODES (for example an Android-only code that happens to share a name with a MobileBuildMCP
+ * code) from silently starting to pass through too. See ADR-0005 and "Reason codes" in the Android
+ * release spec.
  */
 export const MOBILEBUILDMCP_PASSTHROUGH_CODES: ReadonlySet<string> = new Set(Object.keys(REASON_CODES_1_1));

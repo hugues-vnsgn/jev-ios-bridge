@@ -92,7 +92,7 @@ What to do about each: [troubleshooting](../08-troubleshooting.md).
 | `APP_NOT_INSTALLED` | The app's package isn't installed on the device. |
 | `APP_NOT_RESPONDING` | The app froze (Android showed "App isn't responding") during the run. |
 | `DEVICE_UNSUPPORTED` | The device is below Android 12 (API 31), which this bridge does not support. |
-| `ANDROID_TOOLS_UNAVAILABLE` | adb could not be found, the pinned mobilecli package is missing, or its agent does not match the pinned SHA-256. |
+| `ANDROID_TOOLS_UNAVAILABLE` | adb could not be found, the pinned mobilecli package is missing, or the device agent copied out of it does not match the pinned SHA-256. |
 
 ## Bridge
 
