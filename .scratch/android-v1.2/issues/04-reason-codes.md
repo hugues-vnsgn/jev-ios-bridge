@@ -1,6 +1,7 @@
 # Phase 3: new reason codes, with iOS vendor codes kept
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase3 at 75c41fd
 Claimed by: implementer-04
 Blocked by: none
 
