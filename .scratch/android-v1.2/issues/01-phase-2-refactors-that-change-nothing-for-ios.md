@@ -46,3 +46,12 @@ Spec: [../spec.md](../spec.md). The work is [the release spec's phase 2](../../a
 - `Platform` (`'ios' | 'android'`) lives in `src/contracts/index.ts`. The renderer's Android branch has only the header phase 3 names; the projection rule constant is left to phase 3.
 - Item 6 was blocked because the full rename would change existing tests. The owner ruled on 2026-09-29 (see item 6), and it is now built as ruled: the iOS driver's `appId` field, the pane's `hello.appId`, and `BridgeService`'s local `appId`.
 
+
+**implementer-01, 2026-09-29, review round 1.** Fixed in `de24561`:
+- `release()` again rethrows read and parse errors other than ENOENT, as 1.1's release did, so the lease and its file stay.
+- A driver test pins the iOS lease file to exactly `pid`, `token`, `deviceId` and `createdAt`.
+- `lease.ts` says "device identity" for these names; only the on-disk `deviceId` field keeps its 1.1 name.
+- `readLogTail` now lives in `src/device/logs.ts`. `processAlive` now lives in `src/process.ts`, used by the lease and the log pane. The pane's call site already required a positive integer pid, so its behaviour is unchanged.
+- Command kinds are the `DeviceCommandKind` union, `'mobilebuildmcp'` for now.
+- `lease.settle(signal)` replaces the driver's settlement loop, and `operationsInFlight` and `operationsSettled` are gone.
+- `DeviceCommand` no longer has a `state` getter.
