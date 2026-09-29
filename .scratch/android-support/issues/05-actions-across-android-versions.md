@@ -19,6 +19,8 @@ Which commands perform tap, replace text and swipe reliably on Android 12 throug
 
 - 2026-09-29, from the second spec review: item 8's "250 ms apart" is measured from when the earlier capture **returned** to when the later one **starts**. `settle.py` timestamped each capture before its request, and a capture reads the tree at the end of its ~0.6 s idle wait, so two requests 610 ms apart could read trees 30 ms apart. Replaying the corrected rule on the same 24 timelines: still 0 false settles. On a still screen the matching capture now starts at 0.85–0.94 s, not 0.60–0.66 s (about 0.25 s more, both measured at the request's start), and returns at about 0.90–0.99 s. The spec's phase 4 item 7 carries the corrected rule.
 
+- 2026-09-29, from the domain-model session ([`domain-model.md`](../domain-model.md), [ADR-0006](../../../docs/adr/0006-mobilecli-device-agent-as-android-device-layer.md), decision G): the same operations are sent as device agent calls instead of mobilecli commands. `io tap` becomes `device.io.tap`, `io keys` becomes `device.io.keys` (still two separate calls with the 0.2 s pause), and `io swipe` becomes `device.io.swipe`. `io text` becomes `device.io.text` for ASCII, and for other text the agent's clipboard then `KEYCODE_PASTE`, exactly as mobilecli did it. The measurements still hold, because they were taken on the same agent.
+
 ## Answer
 
 Resolved 2026-09-29 with the owner; every recommendation accepted. Measured by a subagent on two emulators, Android 12 (`jev-actions-api31`, API 31) and Android 16 (`Medium_Phone_API_36.1`), using a throwaway Compose probe app. Evidence: [`findings/05-actions.md`](../findings/05-actions.md) and [`findings/05-assets/`](../findings/05-assets/) (scripts, raw results, probe-app sources).

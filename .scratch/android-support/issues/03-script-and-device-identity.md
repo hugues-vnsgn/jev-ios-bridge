@@ -15,6 +15,10 @@ The shape is settled: an optional top-level `"platform": "android"`, with `app.p
 - **Launch:** how the app is restarted (force-stop, then launch), which activity starts, and how intent extras are passed.
 - **Preconditions the bridge checks** before a run: device authorized, booted, screen awake and unlocked.
 
+## Comments
+
+- 2026-09-29, from the domain-model session ([`domain-model.md`](../domain-model.md), [ADR-0006](../../../docs/adr/0006-mobilecli-device-agent-as-android-device-layer.md), decision G): "mobilecli ID" is gone. The device lease is keyed by the **device identity**: the AVD name for an emulator, the serial for a phone. Another tool's UI-automation agent on the device is refused with `DEVICE_BUSY`.
+
 ## Answer
 
 Resolved 2026-09-28 with the owner; every recommendation accepted.
