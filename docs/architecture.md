@@ -26,7 +26,7 @@ The run policy owns the verdict. Jev supplies probabilities; the device layer su
 4. Execute authored tap, text replacement or swipe actions, or poll a bounded wait. Use current references and require terminal acknowledgements. Fresh references never justify guessing after a changed screen.
 5. At a checkpoint, project the current full accessibility capture and ask one Noul per claim. There is no Choice, completion question, future script, or value dictionary in the request.
 6. Record the checkpoint result. Any confidently false claim (probability at or below 0.1) fails it, even beside uncertain claims ([ADR-0004](adr/0004-fixed-assertion-bounds-single-judgment.md)); otherwise any uncertain claim yields inconclusive. Passing requires all steps and checkpoints, followed by successful cleanup.
-7. Stop the app, release the confirmed lease, and append the final verdict. Unknown device outcomes or cleanup failures retain the lease and prevent a pass.
+7. Stop the app, release the device lease, and append the final verdict. When the lease is released, nothing the run started can still act on the device. Until that can be shown (an unknown device outcome, a cleanup failure), the run keeps the lease, which prevents a pass, and releases it late once it can.
 
 The script has finite steps and global time/step budgets. It does not escalate to the host or resume an interrupted run. The host polls progress with bounded waits; running responses contain no screen evidence for selecting another action.
 
@@ -38,7 +38,7 @@ The script has finite steps and global time/step budgets. It does not escalate t
 | `src/scripted/select` | Unique eligible target resolution and guard checks |
 | `src/scripted/run` | Ordered execution, limits, checkpoint policy and cleanup |
 | `src/scripted/observe`, `jev` | Frozen assertion projection, pinned SDK request and response validation |
-| `src/device` | MobileBuildMCP commands, references, locks and acknowledged lifecycle |
+| `src/device` | The driver factory, the shared device lease (`lease.ts`), and MobileBuildMCP commands, references and acknowledged lifecycle |
 | `src/log`, `src/scripted/report`, `src/watch` | Private evidence, report reconstruction and human viewing |
 | `src/service`, `src/mcp`, `src/cli` | Job lifetime and public entrypoints |
 
