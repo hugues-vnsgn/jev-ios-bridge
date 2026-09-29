@@ -23,3 +23,12 @@ Spec: [../spec.md](../spec.md). This fixes a finding from GPT-6-Astra's review o
 - Every existing test and every file in `tests/golden/` passes unchanged, including phase 2's new tests.
 - iOS behaviour and messages are unchanged. iOS doesn't call `own()` or `disown()` today.
 - `npm run check` passes.
+
+## Comments
+
+**implementer-02, review round 3 (2026-09-29).** Two P3 findings on 72838cf fixed, each test-first in `tests/lease.test.ts`:
+
+1. `release()`'s queued recheck no longer reads `ownedProcesses` from the last written file content. What the run owns is judged from `owned` when `release()` is called, so after a failed `disown()` write (the run confirmed the process stopped; only the file record is stale) release still deletes the file. The queued turn keeps the same-file check and the live command-ledger check. Test: "after a failed disown() write, release still releases".
+2. When release's queued turn finds this lease file already released (a concurrent `release()` ran first), it resolves without error instead of throwing `DeviceLeaseKeptError`, restoring the pre-Issue behaviour where both calls resolved. Test: "two concurrent release() calls both resolve".
+
+Local choice: the ledger check is a private getter `commandsSettled`, shared by `releasable`. The round-2 regression test (an `own()` during a pending release fails "not held") still passes unchanged.
