@@ -141,5 +141,111 @@
         "message": "Unrecognized keys: \"goal\", \"assertions\""
       }
     ]
+  },
+  "androidWithSerial": {
+    "accepted": true
+  },
+  "androidWithAvd": {
+    "accepted": true
+  },
+  "androidWithActivityAndIntentExtras": {
+    "accepted": true
+  },
+  "androidTypedValues": {
+    "accepted": true
+  },
+  "androidRejectsBundleId": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.bundleId",
+        "message": "app.bundleId is not supported on Android; use app.package"
+      },
+      {
+        "path": "app.package",
+        "message": "app.package is required on Android"
+      }
+    ]
+  },
+  "androidRejectsLaunchArgs": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.launchArgs",
+        "message": "app.launchArgs is not supported on Android; use app.intentExtras"
+      }
+    ]
+  },
+  "androidRejectsDeviceUdid": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "device.udid",
+        "message": "device.udid is not supported on Android; use device.serial or device.avd"
+      }
+    ]
+  },
+  "androidMissingPackage": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.package",
+        "message": "app.package is required on Android"
+      }
+    ]
+  },
+  "androidDeviceConflict": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "device",
+        "message": "A script may name at most one of device.serial or device.avd"
+      }
+    ]
+  },
+  "androidInvalidSerial": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "device.serial",
+        "message": "device.serial must match ^[A-Za-z0-9._:-]{1,100}$"
+      }
+    ]
+  },
+  "androidInvalidAvd": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "device.avd",
+        "message": "device.avd must match ^[A-Za-z0-9._-]{1,100}$"
+      }
+    ]
+  },
+  "androidControlCharacterValue": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "values.query",
+        "message": "Typed values must not contain control characters"
+      }
+    ]
+  },
+  "iosScriptUsesAndroidPackage": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.package",
+        "message": "app.package requires \"platform\": \"android\""
+      }
+    ]
+  },
+  "iosScriptUsesAndroidSerial": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "device.serial",
+        "message": "device.serial requires \"platform\": \"android\""
+      }
+    ]
   }
 }
