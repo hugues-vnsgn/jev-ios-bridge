@@ -32,6 +32,7 @@ A reviewed **v1.2.0 release spec for Android support**, written for Claude Code 
 
 ## Decisions so far
 
+- [Where Android plugs into the code](issues/07-where-android-plugs-into-the-code.md): one platform switch in `src/device/` builds the driver; new code in `src/device/android/`, sharing only locks and log tails with iOS; the tap alias rule moves onto the iOS driver; one Jev renderer with a per-platform header and rule; password values show as dots; `logSources()` gains `logcat`; golden tests from the 10 captures; device reason codes shared, with their wording broadened.
 - [Log pane and app-exit detection on Android](issues/06-log-pane-and-app-exit.md): the pane follows one `adb logcat --uid` stream written to a private file, which works on Android 12 too; a second stream of system process events keeps `appRunning()` synchronous and catches crashes behind a dialog; a frozen app gets a new reason code, `APP_NOT_RESPONDING`. [Findings](findings/06-log-pane.md).
 - [Actions across Android versions](issues/05-actions-across-android-versions.md): replace text with `ctrl+a`, a pause, then backspace; type with mobilecli `io text`, which is exact, including non-English text; tap by coordinates; read the full tree from mobilecli's on-device agent, to keep the `scrollable` and `password` flags; swipe from 90% to 10% over 1 s; a settle rule after every action (two matching captures ≥250 ms apart, 3 s cap). Non-English typing is now in scope. [Findings](findings/05-actions.md).
 - [What Jev sees on Android, and the 10-screen check](issues/04-what-jev-sees-on-android.md): Android passes (31 claims on 10 screens, plain claims 18 right, 2 uncertain, 0 wrong) once an empty field's hint is shown as `placeholder`, which fixed the one confidently wrong answer; view rule `android-full-text-v1` with an Android header and the iOS fields.
@@ -55,6 +56,7 @@ flowchart LR
     T07["07 Where Android plugs into the code<br/><small>grilling</small>"]
     T08["08 Evidence plan and release gates for v1.2.0<br/><small>grilling</small>"]
     T09["09 Assemble the v1.2.0 spec<br/><small>task</small>"]
+    T10["10 The /test-android skill<br/><small>grilling</small>"]
     T02 --> T04
     T01 --> T05
     T01 --> T06
@@ -69,20 +71,20 @@ flowchart LR
     T06 --> T09
     T07 --> T09
     T08 --> T09
+    T10 --> T09
     classDef resolved fill:#e4e4e7,stroke:#a1a1aa,color:#52525b
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T06 resolved
-    class T07 claimed
-    class T08 frontier
+    class T01,T02,T03,T04,T05,T06,T07 resolved
+    class T08,T10 frontier
     class T09 blocked
 ```
 <!-- route:end -->
 
 ## Not yet specified
 
-- **The `/test-android` skill:** how much it shares with `/test-ios`, and how it captures a screen while authoring (mobilecli directly, or a bridge command).
+Nothing left in the fog: every remaining question is a ticket.
 
 ## Out of scope
 
