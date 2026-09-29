@@ -23,3 +23,30 @@ Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase
 - No device, simulator or emulator is touched.
 
 ## Comments
+
+- 2026-09-29, implementer-03: resumed after an earlier session was interrupted. Audited its four commits
+  (823e0de claim, 20221b9 schema + app-identity reshape, 3c5916b service/MobileBuildMCP seam tests, 53e2edc
+  scripts.json goldens) against this ticket's acceptance and the release spec's phase 3 item 1:
+  - Script fields, the schema's platform-aware refinement, and the `mcp.json` diff match item 1 and owner
+    decision A exactly (`bundleId` leaves `app.required`, the ASCII pattern leaves
+    `values.additionalProperties`, and `platform`/`app.package`/`app.activity`/`app.intentExtras`/
+    `device.serial`/`device.avd` appear as optional properties, nothing else in that file moves).
+  - Every existing `scripts.json` entry is untouched byte-for-byte (`git diff` against the pre-Issue commit
+    shows only added lines); the new entries cover both device-name patterns, the serial/avd conflict,
+    every rejected-field case, an Android typed value with a leading hyphen and non-English Unicode, a
+    control character rejection, and an iOS script using an Android field.
+  - `tests/logpane.test.ts` changed only the two ruled-on calls (lines 45, 70); `tests/device.test.ts` and
+    `tests/service.test.ts` only gained new tests, no existing assertions changed.
+  - The app's identity reshape (`AppIdentity`, `isIosApp`) is used consistently by `BridgeService`,
+    `MobileBuildMcpDriver`, and `startLogStream`; two spikes files needed a one-line fixup each to keep
+    compiling under the reshaped type (they're in `tsconfig.json`'s `include`, so `npm run typecheck`
+    covers them).
+  - Missing: `docs/guide/reference/script-format.md` had no mention of the new fields (item 5). Added a
+    red-then-green test to `tests/docs.test.ts` (`script-format reference documents platform and the
+    Android app/device fields`) and documented `platform`, `app.package`/`activity`/`intentExtras`, and
+    `device.serial`/`avd` in the reference doc.
+  - Considered narrowing `ScriptedScenario.app.bundleId` to optional in `src/scripted/contracts.ts` for
+    type accuracy on Android scripts, but reverted: it breaks `exactOptionalPropertyTypes` assignability
+    to `AppIdentity` at three call sites and would need a discriminated-union reshape of `ScriptedScenario`
+    itself, which is out of this Issue's scope and not required by any test or acceptance criterion.
+  - `npm run check` passes (typecheck, 200 tests, build) at the branch tip.
