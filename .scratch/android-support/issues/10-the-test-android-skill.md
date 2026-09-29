@@ -1,7 +1,8 @@
 # The /test-android skill
 
 Type: grilling
-Status: open
+Status: claimed
+Claimed by: Claude Code (owner session)
 Blocked by: none
 
 ## Question
