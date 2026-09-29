@@ -1,4 +1,4 @@
-import type { Element, Snapshot } from '../contracts/index.js';
+import type { Element, Snapshot, TapAliasRule } from '../contracts/index.js';
 import type { ScreenGuard, Selector } from './contracts.js';
 
 export type SelectionErrorCode =
@@ -15,7 +15,7 @@ export class ScriptSelectionError extends Error {
 
 /** Internal driver capability; authored scenarios cannot request alias collapsing. */
 export interface SelectionOptions {
-  tapAliasRule?: 'mobilebuildmcp-2.7.1';
+  tapAliasRule?: TapAliasRule;
 }
 
 function usableFrame(element: Element): boolean {

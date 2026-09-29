@@ -27,8 +27,6 @@ export interface ScriptedRunOptions {
   log: RunLog;
   signal?: AbortSignal;
   limits?: ScriptedRunLimits;
-  /** Set only by a driver integration whose pinned tap semantics were verified. */
-  tapAliasRule?: SelectionOptions['tapAliasRule'];
   /** Called once the app is launched, with the log files the device layer writes for it. */
   onPrepared?(info: { logSources: { runtime?: string; os?: string } }): void;
   /** Called just before cleanup stops the app. */
@@ -162,8 +160,9 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
   const cleanupTimeMs = bounded(limits.cleanupTimeMs, 45_000, 1, 120_000);
   const preparedContext = prepareContext(script);
   const actionContext: ActionScenarioContext = { ...preparedContext, values: script.values };
-  const selectionOptions: SelectionOptions = options.tapAliasRule
-    ? { tapAliasRule: options.tapAliasRule } : {};
+  // The driver carries its own pinned tap semantics; the run reads it rather than taking it as an option.
+  const selectionOptions: SelectionOptions = options.driver.tapAliasRule
+    ? { tapAliasRule: options.driver.tapAliasRule } : {};
   const started = performance.now();
   const controller = new AbortController();
   const signal = controller.signal;

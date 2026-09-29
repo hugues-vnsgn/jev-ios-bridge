@@ -36,6 +36,17 @@ test('assertion projection keeps visible evidence and excludes screenshot, refs,
     (error: unknown) => error instanceof ScriptedObservationError && error.code === 'STATE_BUDGET');
 });
 
+test('the platform parameter defaults to iOS and picks the header per platform', () => {
+  const defaulted = renderAssertionState(snapshot);
+  const explicitIos = renderAssertionState(snapshot, 'ios');
+  assert.equal(defaulted, explicitIos);
+  assert.match(defaulted, /^Current iOS screen \(full accessibility capture\):/);
+  const android = renderAssertionState(snapshot, 'android');
+  assert.match(android, /^Current Android screen \(full accessibility capture\):/);
+  assert.equal(android.slice(android.indexOf('\n')), defaulted.slice(defaulted.indexOf('\n')),
+    'only the header differs; the projected elements are identical');
+});
+
 test('request contains only neutral a/b Noul questions and current claims, never truth labels or action choices', () => {
   const labeled = [
     { ...assertions[0]!, expected: true, rationale: 'oracle says true' },

@@ -11,13 +11,6 @@ export const ROLES = [
 ] as const;
 export type Role = typeof ROLES[number];
 
-const roleSet: ReadonlySet<string> = new Set(ROLES);
-
-/** Translate a device-layer role into the bridge's vocabulary. Unknown roles become `other`. */
-export function bridgeRole(vendorRole: string): Role {
-  return roleSet.has(vendorRole) ? vendorRole as Role : 'other';
-}
-
 /** Every reason a verdict or error event can carry, with the meaning the guide documents. */
 export const REASON_CODES = {
   // Outcomes

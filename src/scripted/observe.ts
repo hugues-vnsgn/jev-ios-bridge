@@ -1,4 +1,4 @@
-import type { Element, Snapshot } from '../contracts/index.js';
+import type { Element, Platform, Snapshot } from '../contracts/index.js';
 
 export const MAX_STATE_BYTES = 24_000;
 /**
@@ -22,12 +22,20 @@ function isVisibleEvidence(element: Element): boolean {
     element.actions.length > 0 || /^(text|statictext|title|heading|alert)$/i.test(element.role));
 }
 
-/** Full text evidence for assertion judgments; no action options, values, history or screenshots. */
-export function renderAssertionState(snapshot: Snapshot): string {
+const HEADERS: Record<Platform, string> = {
+  ios: 'Current iOS screen (full accessibility capture):',
+  android: 'Current Android screen (full accessibility capture):',
+};
+
+/**
+ * Full text evidence for assertion judgments; no action options, values, history or screenshots.
+ * The platform picks the header; it defaults to iOS, whose output is frozen byte for byte.
+ */
+export function renderAssertionState(snapshot: Snapshot, platform: Platform = 'ios'): string {
   if (snapshot.truncated) throw new ScriptedObservationError('TRUNCATED');
   const elements = snapshot.elements.filter(isVisibleEvidence);
   if (elements.length === 0) throw new ScriptedObservationError('EMPTY_SCREEN');
-  const lines = ['Current iOS screen (full accessibility capture):', ...elements.map(element => JSON.stringify({
+  const lines = [HEADERS[platform], ...elements.map(element => JSON.stringify({
     role: element.role,
     ...(element.label !== undefined ? { label: element.label } : {}),
     ...(element.value !== undefined ? { value: element.value } : {}),

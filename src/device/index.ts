@@ -1,12 +1,11 @@
 import { execFile } from 'node:child_process';
 import { createRequire } from 'node:module';
-import { randomUUID } from 'node:crypto';
-import { constants } from 'node:fs';
-import { mkdir, open, readFile, unlink } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
+import { readFile } from 'node:fs/promises';
 import { isAbsolute, join, resolve } from 'node:path';
-import type { Action, ActionScenarioContext, DeviceDriver, DeviceMetrics, Element, PrepareScenarioContext, Snapshot } from '../contracts/index.js';
-import { bridgeRole } from '../scripted/vocabulary.js';
+import type { Action, ActionScenarioContext, DeviceDriver, DeviceMetrics, Element, PrepareScenarioContext, Snapshot, TapAliasRule } from '../contracts/index.js';
+import { ROLES, type Role } from '../scripted/vocabulary.js';
+import { DeviceLease, DeviceLeaseBusyError } from './lease.js';
+import { readLogTail } from './logs.js';
 
 type JsonObject = Record<string, unknown>;
 export type CliResult = { stdout: string; stderr: string; exitCode: number };
@@ -55,6 +54,13 @@ export class StaleSnapshotError extends Error {
     super(message);
     this.name = 'StaleSnapshotError';
   }
+}
+
+const roleSet: ReadonlySet<string> = new Set(ROLES);
+
+/** Translate MobileBuildMCP's role into the bridge's vocabulary. Unknown roles become `other`. */
+export function bridgeRole(vendorRole: string): Role {
+  return roleSet.has(vendorRole) ? vendorRole as Role : 'other';
 }
 
 function record(value: unknown): JsonObject {
@@ -241,69 +247,10 @@ export async function selectDeviceId(cwd: string, scriptUdid?: string, defaultUd
   return selected.toUpperCase();
 }
 
-/** Where device locks live. Documented so a person can inspect one; the bridge clears stale ones itself. */
-export const DEFAULT_LOCK_ROOT = join(tmpdir(), 'jev-ios-bridge-device-locks');
-
-function processAlive(pid: unknown): boolean {
-  if (!Number.isSafeInteger(pid) || (pid as number) <= 0) return true; // unknown owner: never assume stale
-  try { process.kill(pid as number, 0); return true; }
-  catch (error) { return (error as NodeJS.ErrnoException).code === 'EPERM'; }
-}
-
-async function lockOwner(path: string): Promise<{ pid?: unknown } | undefined> {
-  try { return JSON.parse(await readFile(path, 'utf8')) as { pid?: unknown }; }
-  catch { return undefined; }
-}
-
-async function acquireLock(root: string, deviceId: string): Promise<() => Promise<void>> {
-  await mkdir(root, { recursive: true });
-  const path = join(root, `${deviceId.toUpperCase()}.lock`);
-  const token = randomUUID();
-  let file;
-  for (let attempt = 0; !file; attempt++) {
-    try { file = await open(path, 'wx', 0o600); }
-    catch (error) {
-      if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error;
-      const owner = await lockOwner(path);
-      // A lock whose bridge process has exited can't be protecting an in-flight command.
-      if (attempt === 0 && owner && !processAlive(owner.pid)) {
-        await unlink(path).catch((unlinkError: NodeJS.ErrnoException) => { if (unlinkError.code !== 'ENOENT') throw unlinkError; });
-        continue;
-      }
-      const holder = owner && Number.isSafeInteger(owner.pid) ? `bridge process ${String(owner.pid)}` : 'another bridge process';
-      throw new DeviceCliError('DEVICE_BUSY', `Device ${deviceId} is locked by ${holder} (lock file ${path}). ` +
-        'Wait for that run to finish, or stop that process; the next run then clears the lock.');
-    }
-  }
-  try { await file.writeFile(JSON.stringify({ pid: process.pid, token, deviceId, createdAt: new Date().toISOString() })); }
-  catch (error) { await file.close(); await unlink(path); throw error; }
-  await file.close();
-  return async () => {
-    try {
-      const current = JSON.parse(await readFile(path, 'utf8')) as { token?: string };
-      if (current.token === token) await unlink(path);
-    } catch (error) {
-      if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
-    }
-  };
-}
-
 function sameScreen(before: Snapshot, after: Snapshot): boolean {
   if (before.screenHash && after.screenHash) return before.screenHash === after.screenHash;
   const identity = (snapshot: Snapshot) => snapshot.elements.map(({ ref: _ref, ...element }) => element);
   return JSON.stringify(identity(before)) === JSON.stringify(identity(after));
-}
-
-async function awaitSettlement(pending: Promise<unknown>, signal: AbortSignal): Promise<void> {
-  if (signal.aborted) throw signal.reason;
-  await new Promise<void>((resolveDone, reject) => {
-    const onAbort = () => { signal.removeEventListener('abort', onAbort); reject(signal.reason); };
-    signal.addEventListener('abort', onAbort, { once: true });
-    pending.then(
-      () => { signal.removeEventListener('abort', onAbort); resolveDone(); },
-      () => { signal.removeEventListener('abort', onAbort); resolveDone(); },
-    );
-  });
 }
 
 function awaitResultOrAbort<T>(pending: Promise<T>, signal: AbortSignal): Promise<T> {
@@ -326,43 +273,26 @@ function rematch(target: Element, fresh: Snapshot): Element {
   return matches[0]!;
 }
 
-async function readLogTail(path: string): Promise<string> {
-  try {
-    const file = await open(path, constants.O_RDONLY | constants.O_NOFOLLOW);
-    try {
-      const stat = await file.stat();
-      if (!stat.isFile()) return '[unavailable: not a regular file]';
-      const length = Math.min(stat.size, 4_096);
-      if (length === 0) return '';
-      const bytes = Buffer.alloc(length);
-      const { bytesRead } = await file.read(bytes, 0, length, stat.size - length);
-      return bytes.subarray(0, bytesRead).toString('utf8');
-    } finally { await file.close(); }
-  } catch (error) {
-    const code = (error as NodeJS.ErrnoException).code;
-    return `[unavailable: ${code && /^[A-Z0-9_]+$/.test(code) ? code : 'READ_FAILED'}]`;
-  }
-}
-
 export class MobileBuildMcpDriver implements DeviceDriver {
+  /** This pinned integration's proven tap-alias collapsing. The run reads it from the driver. */
+  readonly tapAliasRule: TapAliasRule = 'mobilebuildmcp-2.7.1';
   private readonly runner: CliRunner;
   private deviceId?: string;
-  private bundleId?: string;
-  private releaseLock: (() => Promise<void>) | undefined;
+  /** The app's identity: its bundle ID on iOS. */
+  private appId?: string;
+  private readonly lease: DeviceLease;
   private launched = false;
   private logPaths: Record<string, string> = {};
   private logNotes: Record<string, string> = {};
   private referenceRefreshes = 0;
   private referenceExpiries = 0;
   private nearTtlRefreshes = 0;
-  private readonly unconfirmedCommands = new Set<symbol>();
-  private readonly pendingOperations = new Set<Promise<unknown>>();
   private closing: Promise<void> | undefined;
-  private lateCleanup: Promise<void> | undefined;
   private readonly uiCommandTimeoutMs: number;
 
   constructor(private readonly options: MobileBuildMcpDriverOptions) {
     this.runner = options.runner ?? defaultRunner(options);
+    this.lease = new DeviceLease(options.lockRoot ? { root: options.lockRoot } : {});
     const timeout = options.uiCommandTimeoutMs ?? 35_000;
     if (!Number.isSafeInteger(timeout) || timeout < 1 || timeout > 300_000) throw new RangeError('uiCommandTimeoutMs must be between 1 and 300000');
     this.uiCommandTimeoutMs = timeout;
@@ -397,28 +327,18 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     return parseEnvelope(await this.runner([...args, '--output', 'json'], signal), expectedSchema);
   }
 
-  private trackOperation<T>(operation: () => Promise<T>): Promise<T> {
-    const pending = Promise.resolve().then(operation);
-    this.pendingOperations.add(pending);
-    void pending.then(
-      () => { this.pendingOperations.delete(pending); },
-      () => { this.pendingOperations.delete(pending); },
-    );
-    return pending;
-  }
-
   private async issueCommand(args: string[], runSignal: AbortSignal, expectedSchema: string): Promise<JsonObject> {
     if (runSignal.aborted) throw runSignal.reason;
     const command = new AbortController();
     const deadline = setTimeout(() => command.abort(new Error('UI command deadline reached')), this.uiCommandTimeoutMs);
-    const token = Symbol(expectedSchema);
-    this.unconfirmedCommands.add(token);
+    const issued = this.lease.command('mobilebuildmcp');
     try {
       const result = await awaitResultOrAbort(this.call(args, command.signal, expectedSchema), command.signal);
-      this.unconfirmedCommands.delete(token);
+      issued.exited();
       return result;
     } catch (error) {
-      if (error instanceof DeviceCliError && error.terminalAcknowledged) this.unconfirmedCommands.delete(token);
+      if (error instanceof DeviceCliError && error.terminalAcknowledged) issued.exited();
+      else issued.unknown();
       throw error;
     } finally {
       clearTimeout(deadline);
@@ -426,20 +346,24 @@ export class MobileBuildMcpDriver implements DeviceDriver {
   }
 
   prepare(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void> {
-    return this.trackOperation(() => this.prepareIssued(scenario, signal));
+    return this.lease.track(() => this.prepareIssued(scenario, signal));
   }
 
   private async prepareIssued(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void> {
-    if (this.releaseLock) throw new Error('Driver is already prepared');
+    if (this.lease.held) throw new Error('Driver is already prepared');
     if (signal.aborted) throw signal.reason;
     const deviceId = await selectDeviceId(this.options.cwd, scenario.device?.udid, this.options.defaultUdid);
-    this.releaseLock = await acquireLock(this.options.lockRoot ?? DEFAULT_LOCK_ROOT, deviceId);
+    // A crashed holder's record lists nothing to sweep on iOS: MobileBuildMCP owns its own processes.
+    try { await this.lease.take(deviceId); }
+    catch (error) {
+      if (error instanceof DeviceLeaseBusyError) throw new DeviceCliError('DEVICE_BUSY', error.message);
+      throw error;
+    }
     this.referenceRefreshes = 0;
     this.referenceExpiries = 0;
     this.nearTtlRefreshes = 0;
-    this.unconfirmedCommands.clear();
     this.deviceId = deviceId;
-    this.bundleId = scenario.app.bundleId;
+    this.appId = scenario.app.bundleId;
     try {
       const launchArgs = scenario.app.launchArgs ?? [];
       // Array parameters go through --json, so arguments that start with "-" aren't read as CLI flags.
@@ -457,16 +381,13 @@ export class MobileBuildMcpDriver implements DeviceDriver {
       }
       this.launched = true;
     } catch (error) {
-      if (this.unconfirmedCommands.size === 0) {
-        await this.releaseLock();
-        this.releaseLock = undefined;
-      }
+      if (this.lease.releasable) await this.lease.release();
       throw error;
     }
   }
 
   observe(signal: AbortSignal): Promise<Snapshot> {
-    return this.trackOperation(() => this.observeIssued(signal));
+    return this.lease.track(() => this.observeIssued(signal));
   }
 
   private captureArgs(deviceId: string): string[] {
@@ -496,7 +417,7 @@ export class MobileBuildMcpDriver implements DeviceDriver {
 
   private async observeIssued(signal: AbortSignal): Promise<Snapshot> {
     const deviceId = this.deviceId;
-    if (!deviceId || !this.releaseLock) throw new Error('Driver is not prepared');
+    if (!deviceId || !this.lease.held) throw new Error('Driver is not prepared');
     // The capture and the screenshot run concurrently. Wait for both to settle, so a failure in one
     // never leaves the other in flight after this operation reports done.
     const captureWithScreenshot = async () => {
@@ -534,7 +455,7 @@ export class MobileBuildMcpDriver implements DeviceDriver {
   }
 
   act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined> {
-    return this.trackOperation(() => this.actIssued(action, snapshot, scenario, signal));
+    return this.lease.track(() => this.actIssued(action, snapshot, scenario, signal));
   }
 
   private get reusesActionCapture(): boolean {
@@ -598,48 +519,34 @@ export class MobileBuildMcpDriver implements DeviceDriver {
   close(signal: AbortSignal): Promise<void> {
     if (this.closing) return this.closing;
     this.closing = this.finishClose(signal).catch((error: unknown) => {
-      if (error instanceof DeviceCliError && error.code === 'UI_ACTION_UNCONFIRMED') this.finishWhenAcknowledged();
+      // Keep the lease; once the issued operation acknowledges, finish cleanup and release it late.
+      if (error instanceof DeviceCliError && error.code === 'UI_ACTION_UNCONFIRMED') {
+        this.lease.releaseLate(() => this.close(AbortSignal.timeout(this.uiCommandTimeoutMs + 5_000)));
+      }
       throw error;
     }).finally(() => { this.closing = undefined; });
     return this.closing;
   }
 
-  /**
-   * Cleanup gave up while an issued command was still running. When that command does acknowledge,
-   * finish cleanup (stop the app, release the lock) so the device doesn't stay locked for the life
-   * of this process. A command whose outcome stays unknown keeps the lock, as before.
-   */
-  private finishWhenAcknowledged(): void {
-    if (this.pendingOperations.size === 0 || this.lateCleanup) return;
-    this.lateCleanup = Promise.allSettled([...this.pendingOperations])
-      .then(() => this.close(AbortSignal.timeout(this.uiCommandTimeoutMs + 5_000)))
-      .catch(() => {})
-      .finally(() => { this.lateCleanup = undefined; });
-  }
-
   private async finishClose(signal: AbortSignal): Promise<void> {
-    while (this.pendingOperations.size > 0) {
-      try { await awaitSettlement(Promise.allSettled([...this.pendingOperations]), signal); }
-      catch { throw new DeviceCliError('UI_ACTION_UNCONFIRMED', 'Cleanup ended before the issued device operation acknowledged; device lock retained'); }
-    }
-    const release = this.releaseLock;
-    if (!release) return;
+    try { await this.lease.settle(signal); }
+    catch { throw new DeviceCliError('UI_ACTION_UNCONFIRMED', 'Cleanup ended before the issued device operation acknowledged; device lock retained'); }
+    if (!this.lease.held) return;
     // A lost CLI response has no proven acknowledgement. A new daemon snapshot
     // alone cannot establish that an earlier request will never arrive late.
-    if (this.unconfirmedCommands.size > 0) throw new DeviceCliError('UI_ACTION_UNCONFIRMED', 'Device operation outcome is unknown; device lock retained');
-    if (this.launched && this.options.stopAppOnClose !== false && this.deviceId && this.bundleId) {
-      // Stop is not in MobileBuildMCP's UI queue. Keep our lock if its CLI
+    if (!this.lease.releasable) throw new DeviceCliError('UI_ACTION_UNCONFIRMED', 'Device operation outcome is unknown; device lock retained');
+    if (this.launched && this.options.stopAppOnClose !== false && this.deviceId && this.appId) {
+      // Stop is not in MobileBuildMCP's UI queue. Keep the lease if its CLI
       // response is lost, so another run cannot overlap uncertain cleanup.
       try {
-        await this.call(['simulator', 'stop', '--simulator-id', this.deviceId, '--bundle-id', this.bundleId], signal,
+        await this.call(['simulator', 'stop', '--simulator-id', this.deviceId, '--bundle-id', this.appId], signal,
           'mobilebuildmcp.output.stop-result');
       } catch (error) {
         // An acknowledged stop failure (typically: the app already exited) leaves no command in flight.
         if (!(error instanceof DeviceCliError && error.terminalAcknowledged)) throw error;
       }
     }
-    await release();
-    this.releaseLock = undefined;
+    await this.lease.release();
     this.launched = false;
     this.logPaths = {};
     this.logNotes = {};

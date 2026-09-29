@@ -640,3 +640,35 @@ test('a step that fails because the app died is reported as APP_EXITED', async (
   assert.equal(report.verdict, 'inconclusive');
   assert.equal(report.reason, 'APP_EXITED');
 });
+
+test('the run reads the tap alias rule from the driver, not from a run-wide option', async () => {
+  // Two same-frame, unidentified tap buttons: ambiguous unless the driver carries the pinned alias rule.
+  const heading: Element = { ref: 'h', role: 'text', label: 'Contacts', actions: [],
+    frame: { x: 0, y: 0, width: 200, height: 30 }, state: { enabled: true, visible: true } };
+  const label = 'Contact photo for Nolan Ames';
+  const nolan: Element = { ref: 'e30', role: 'button', label, frame: { x: 22, y: 112, width: 40, height: 40 },
+    state: { enabled: true, visible: true }, actions: ['tap'] };
+  const alias: Element = { ...nolan, ref: 'e117' };
+  const captured = snapshot([heading, nolan, alias]);
+  const scripted: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [
+    { id: 'open', kind: 'action', guard: { present: [{ label: 'Contacts' }] },
+      action: { kind: 'tap', selector: { role: 'button', label } } },
+    { id: 'confirm', kind: 'checkpoint', guard: { present: [{ label: 'Contacts' }] },
+      assertions: [{ id: 'shown', claim: 'The Nolan photo button is visible' }] },
+  ] };
+  const taps: string[] = [];
+  const withoutRule = await runScriptedScenario({ runId: 'scripted-1', scenario: scripted, log: memoryLog(),
+    driver: { async prepare() {}, async observe() { return captured; },
+      async act(action) { if (action.kind === 'tap') taps.push(action.targetRef); }, async close() {} },
+    judge: { async judge() { assert.fail('An ambiguous target must not reach the judge'); } } });
+  assert.equal(withoutRule.verdict, 'inconclusive');
+  assert.equal(withoutRule.reason, 'TARGET_AMBIGUOUS');
+  assert.equal(taps.length, 0, 'an ambiguous target is never tapped');
+
+  const withRule = await runScriptedScenario({ runId: 'scripted-2', scenario: scripted, log: memoryLog(),
+    driver: { tapAliasRule: 'mobilebuildmcp-2.7.1', async prepare() {}, async observe() { return captured; },
+      async act(action) { if (action.kind === 'tap') taps.push(action.targetRef); }, async close() {} },
+    judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 3, latencyMs: 1, model: 'jev-1.13.0' }; } } });
+  assert.equal(withRule.verdict, 'passed');
+  assert.deepEqual(taps, ['e30']);
+});
