@@ -85,7 +85,7 @@ function holderOf(file: Partial<LeaseFile>): LeaseHolder {
 /** Writes the temp file rewrite() renames over the lease file. Injectable so a test can interrupt it. */
 type TempFileWriter = (path: string, data: string) => Promise<void>;
 
-async function writeTempFile(path: string, data: string): Promise<void> {
+async function defaultWriteTempFile(path: string, data: string): Promise<void> {
   await writeFile(path, data, { mode: 0o600 });
 }
 
@@ -100,10 +100,10 @@ export class DeviceLease {
   private late: Promise<void> | undefined;
   private writeQueue: Promise<void> = Promise.resolve();
 
-  constructor(options: { root?: string; processId?: number; writeFile?: TempFileWriter } = {}) {
+  constructor(options: { root?: string; processId?: number; writeTempFile?: TempFileWriter } = {}) {
     this.root = options.root ?? DEFAULT_LEASE_ROOT;
     this.processId = options.processId ?? process.pid;
-    this.writeTempFile = options.writeFile ?? writeTempFile;
+    this.writeTempFile = options.writeTempFile ?? defaultWriteTempFile;
   }
 
   get held(): boolean { return this.file !== undefined; }
@@ -206,11 +206,14 @@ export class DeviceLease {
   /**
    * Release the lease if it is releasable; otherwise keep it and throw `DeviceLeaseKeptError`. A lease
    * file that can't be read or parsed keeps the lease too: the error is rethrown and the file stays.
+   * Waits for any `own()`/`disown()` write still in flight to settle first, so a pending rename can't
+   * land after the file is deleted and put a stale record back for a later `take()` to trip over.
    */
   async release(): Promise<void> {
     const file = this.file;
     if (!file) return;
     if (!this.releasable) throw new DeviceLeaseKeptError(file.deviceIdentity);
+    await this.writeQueue;
     try {
       const current = JSON.parse(await readFile(file.path, 'utf8')) as { token?: string };
       if (current.token === file.content.token) await unlink(file.path);

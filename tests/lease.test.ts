@@ -156,7 +156,7 @@ test('rewrite writes via a private temp file: an interrupted write leaves the le
       await writeFile(tempPath, data, { mode: 0o600 });
       throw new Error('interrupted after the temp file was created');
     };
-    const lease = new DeviceLease({ root, writeFile: injectedWriter });
+    const lease = new DeviceLease({ root, writeTempFile: injectedWriter });
     await lease.take(deviceId, { runId: 'run-9' });
     const before = await readFile(path, 'utf8');
 
@@ -174,7 +174,7 @@ test('after an interrupted rewrite, a dead holder\'s lease can still be taken ov
       throw new Error('interrupted after the temp file was created');
     };
     const pid = deadPid();
-    const lease = new DeviceLease({ root, processId: pid, writeFile: injectedWriter });
+    const lease = new DeviceLease({ root, processId: pid, writeTempFile: injectedWriter });
     await lease.take(deviceId, { runId: 'crashed-run' });
     await assert.rejects(lease.own('agent:5555'), /interrupted after the temp file was created/);
 
@@ -191,7 +191,7 @@ test('rewrite\'s temp file lives in the lease root and its name never ends in .l
       seenPath = tempPath;
       await writeFile(tempPath, data, { mode: 0o600 });
     };
-    const lease = new DeviceLease({ root, writeFile: capturingWriter });
+    const lease = new DeviceLease({ root, writeTempFile: capturingWriter });
     await lease.take(deviceId);
     await lease.own('agent:5555');
 
@@ -228,7 +228,7 @@ test('own() and disown() calls on one lease serialize their writes, so concurren
       await releases[index]!.promise;
       await writeFile(tempPath, data, { mode: 0o600 });
     };
-    const lease = new DeviceLease({ root, writeFile: writer });
+    const lease = new DeviceLease({ root, writeTempFile: writer });
     await lease.take(deviceId);
 
     const first = lease.own('agent:1111');
@@ -246,6 +246,33 @@ test('own() and disown() calls on one lease serialize their writes, so concurren
 
     const written = JSON.parse(await readFile(path, 'utf8')) as { ownedProcesses: string[] };
     assert.deepEqual([...written.ownedProcesses].sort(), ['agent:1111', 'agent:2222']);
+  });
+});
+
+test('release waits for a write already in flight, so a pending rename can\'t restore the file release just deleted', async () => {
+  await withRoot(async (root) => {
+    const path = join(root, `${deviceId}.lock`);
+    const heldWrite = deferred<void>();
+    let calls = 0;
+    const writer = async (tempPath: string, data: string) => {
+      calls++;
+      if (calls === 2) await heldWrite.promise; // hold the disown()'s write open
+      await writeFile(tempPath, data, { mode: 0o600 });
+    };
+    const lease = new DeviceLease({ root, writeTempFile: writer });
+    await lease.take(deviceId);
+    await lease.own('agent:5555'); // call 1, completes normally
+
+    const disowning = lease.disown('agent:5555'); // call 2, held open by heldWrite
+    assert.equal(lease.releasable, true, 'owned is already empty even though the write has not landed yet');
+
+    const releasing = lease.release();
+    heldWrite.resolve(); // let the pending disown write, and its rename, finish
+    await disowning;
+    await releasing;
+
+    assert.deepEqual(await readdir(root), [], 'the lease file is gone once release actually completes');
+    await new DeviceLease({ root }).take(deviceId);
   });
 });
 
