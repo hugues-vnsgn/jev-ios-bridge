@@ -26,10 +26,10 @@ export function attachLogPane(runId: string, output: NodeJS.WriteStream = proces
       let message: PaneMessage;
       try { message = JSON.parse(raw) as PaneMessage; } catch { return; }
       if (message.type === 'hello') {
-        if (color) output.write(`\x1b]0;jev log · ${message.bundleId}\x07`);
-        print(bold(`jev-ios-bridge log pane · ${message.bundleId} · run ${message.runId}`, color));
+        if (color) output.write(`\x1b]0;jev log · ${message.appId}\x07`);
+        print(bold(`jev-ios-bridge log pane · ${message.appId} · run ${message.runId}`, color));
         print(dim(`app output: ${message.sources.runtime ?? 'unavailable'}`, color));
-        print(dim(`system log (subsystem ${message.bundleId}): ${message.sources.os ?? 'unavailable'}`, color));
+        print(dim(`system log (subsystem ${message.appId}): ${message.sources.os ?? 'unavailable'}`, color));
         print(dim('Local only: nothing here goes to Jev or the host agent. Values from the script are masked.\n', color));
       } else if (message.type === 'line') {
         print(renderLine(message, color));

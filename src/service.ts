@@ -7,7 +7,7 @@ import { parseScriptedScenario } from './scripted/schema.js';
 import { createRunLog, readRunEvents, readRunReport, validateRunId } from './log/index.js';
 import { buildScriptedReport, type ScriptedReport } from './scripted/report.js';
 import { buildReportJson, type ReportJson } from './scripted/report-json.js';
-import { runScriptedScenario, type ScriptedRunLimits, type ScriptedRunOptions } from './scripted/run.js';
+import { runScriptedScenario, type ScriptedRunLimits } from './scripted/run.js';
 import { startWatchServer } from './watch/index.js';
 import { startLogStream, type LogStream } from './logpane/stream.js';
 import { logsCommand, openPaneWindow } from './logpane/window.js';
@@ -40,8 +40,6 @@ export class BridgeService {
     createDriver: (scenario: ScriptedScenario) => DeviceDriver;
     createJudge: (scenario: ScriptedScenario) => ScriptedJudge;
     policy?: ScriptedRunLimits;
-    /** Only the pinned MobileBuildMCP driver may enable its proven tap alias rule. */
-    tapAliasRule?: ScriptedRunOptions['tapAliasRule'];
     logPane?: LogPaneOptions;
   }) { this.baseDir = resolve(options.baseDir); }
 
@@ -67,9 +65,10 @@ export class BridgeService {
     const pane = this.options.logPane;
     let stream: Promise<LogStream | undefined> | undefined;
     const attach = pane ? logsCommand(pane.cliPath, runId) : undefined;
+    const appId = scenario.app.bundleId;
     const startPane = (logSources: { runtime?: string; os?: string }) => {
       if (!pane || !attach) return;
-      stream = startLogStream({ runId, bundleId: scenario.app.bundleId, sources: logSources, values: scenario.values })
+      stream = startLogStream({ runId, bundleId: appId, sources: logSources, values: scenario.values })
         .then(async started => {
           const window = pane.openWindow ? await openPaneWindow(resolve(this.baseDir, runId), attach)
             : { opened: false as const, reason: 'turned off with --no-log-pane' };
@@ -79,7 +78,6 @@ export class BridgeService {
         }, () => undefined);
     };
     job.done = runScriptedScenario({ runId, scenario, driver, judge, log, signal: job.abort.signal, limits,
-      ...(this.options.tapAliasRule ? { tapAliasRule: this.options.tapAliasRule } : {}),
       ...(pane ? { onPrepared: ({ logSources }) => startPane(logSources),
         onCleanup: () => { void stream?.then(started => started?.expectStop()); } } : {}),
     }).then(() => { job.state = 'finished'; }, async () => {

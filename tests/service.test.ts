@@ -93,3 +93,40 @@ test('public service rejects legacy autonomous scenarios before creating a devic
     assert.equal(created, 0);
   } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
 });
+
+test('createDriver builds a driver per run from that run\'s scenario, and the run reads the tap alias rule from it', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-service-driver-per-scenario-'));
+  const label = 'Contact photo for Nolan Ames';
+  const button = { role: 'button', label, frame: { x: 22, y: 112, width: 40, height: 40 },
+    state: { visible: true, enabled: true }, actions: ['tap'] };
+  const aliased = () => ({ ...screen(), elements: [...screen().elements,
+    { ref: 'e30', ...button }, { ref: 'e117', ...button }] });
+  const tapScript = (bundleId: string) => ({ version: 1, app: { bundleId }, values: {}, steps: [{ id: 'open', kind: 'action',
+    guard: { present: [{ role: 'text', label: 'SCREEN_EVIDENCE_MARKER' }] },
+    action: { kind: 'tap', selector: { role: 'button', label } } }, checkpoint('verify')] });
+  const built: string[] = [];
+  const taps: string[] = [];
+  const service = new BridgeService({ baseDir: root,
+    createDriver: (scenario) => {
+      built.push(scenario.app.bundleId);
+      const driver: DeviceDriver = {
+        async prepare() {}, async observe() { return aliased(); },
+        async act(action) { taps.push(`${scenario.app.bundleId}:${action.targetRef}`); },
+        async close() {},
+      };
+      return scenario.app.bundleId === 'com.example.pinned' ? { ...driver, tapAliasRule: 'mobilebuildmcp-2.7.1' } : driver;
+    },
+    createJudge: () => ({ async judge() { return { probabilities: { shown: 1 },
+      inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } }),
+  });
+  try {
+    const pinned = await service.start(tapScript('com.example.pinned'));
+    assert.equal((await service.status(pinned.runId, 2_000)).report.verdict, 'passed');
+    const strict = await service.start(tapScript('com.example.strict'));
+    const status = await service.status(strict.runId, 2_000);
+    assert.equal(status.report.verdict, 'inconclusive');
+    assert.equal(status.report.reason, 'TARGET_AMBIGUOUS');
+    assert.deepEqual(built, ['com.example.pinned', 'com.example.strict']);
+    assert.deepEqual(taps, ['com.example.pinned:e30']);
+  } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
+});

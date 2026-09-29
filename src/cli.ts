@@ -7,7 +7,8 @@ import { serveStdio } from '@modelcontextprotocol/server/stdio';
 import { z } from 'zod/v4';
 import { BridgeService } from './service.js';
 import { createMcpServer } from './mcp/index.js';
-import { createMobileBuildMcpDriver, DeviceCliError, selectDeviceId } from './device/index.js';
+import { DeviceCliError, selectDeviceId } from './device/index.js';
+import { createDriverFactory } from './device/factory.js';
 import { createAssertionJudge } from './scripted/jev.js';
 import { renderScriptedReport } from './scripted/report.js';
 import { parseScriptedScenario } from './scripted/schema.js';
@@ -98,13 +99,12 @@ async function main(): Promise<void> {
 
   const service = new BridgeService({
     baseDir: runsDir(),
-    createDriver: () => createMobileBuildMcpDriver({ cwd: projectDir,
+    createDriver: createDriverFactory({ mobileBuildMcp: { cwd: projectDir,
       ...(process.env.JEV_DEVICE_UDID ? { defaultUdid: process.env.JEV_DEVICE_UDID } : {}),
       capture: 'full', screenshots: true,
       // Measurement aid for release checks; costs one extra capture per observation.
-      ...(process.env.JEV_VERIFY_SCREENSHOT_AGREEMENT === '1' ? { verifyScreenshotAgreement: true } : {}) }),
+      ...(process.env.JEV_VERIFY_SCREENSHOT_AGREEMENT === '1' ? { verifyScreenshotAgreement: true } : {}) } }),
     createJudge: () => createAssertionJudge(),
-    tapAliasRule: 'mobilebuildmcp-2.7.1',
     logPane: { cliPath: fileURLToPath(import.meta.url), openWindow: !parsed.values['no-log-pane'],
       // MCP's stdout carries the protocol, so pane notices go to stderr in both modes.
       onNotice: (_runId, text) => { console.error(text); } },
