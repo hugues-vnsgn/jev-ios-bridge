@@ -20,6 +20,8 @@ Only the emulator may be used for experiments, with cleanup afterwards (see the 
 
 ## Comments
 
+- 2026-09-29, from "Assemble the v1.2.0 spec" (owner decision B): the private `MOBILECLI_HOME` is per **run**, not per bridge process, because one MCP process can drive two emulators and one run's `close` would stop the other's daemon.
+
 - Research note: `docs/research/mobilecli-dependency.md` on branch `research/mobilecli-dependency` (commit `f785c75`). Gist:
   - Pin the unscoped `mobilecli@1.0.14`, which is FSL-1.1-ALv2 (npm said MIT only up to 1.0.11, a packaging bug). Run the platform binary directly, because the npm wrapper orphans the process on SIGTERM. `npm ci --ignore-scripts` keeps it executable.
   - mobilecli has no telemetry. Its only cloud path is the `api.mobilenext.ai` fleet, used only if a login token exists. Pass `--insecure-storage` with a private `XDG_CONFIG_HOME` and set `MOBILECLI_FLEET_URL=ws://127.0.0.1:9`. Its first device lookup still reads properties from every phone on the Mac.

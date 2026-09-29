@@ -32,6 +32,7 @@ A reviewed **v1.2.0 release spec for Android support**, written for Claude Code 
 
 ## Decisions so far
 
+- [Assemble the v1.2.0 spec](issues/09-assemble-the-spec.md): [the v1.2.0 release spec](release-spec.md) is written, reviewed by a fresh agent, and accepted by the owner, with six owner decisions and 21 open-point defaults. **The destination is reached.**
 - [The /test-android skill](issues/10-the-test-android-skill.md): a separate, self-contained `/test-android` skill (`/test-ios` untouched); a new `jev-ios-bridge capture` command shows authors the elements exactly as selectors and Jev see them, and cleans up the device; the skill asks for `testTagsAsResourceId` but never edits the app.
 - [Evidence plan and release gates for v1.2.0](issues/08-evidence-plan-and-release-gates.md): six Android scripts with planted pass, fail and inconclusive results on Android 16, three repeated on Android 12 including Vietnamese typing, a live crash run, a cleanup gate after every run, iOS benchmarks re-run, real phones marked untested with a Xiaomi checklist, an Android-only plugin install, and speed reported without a target.
 - [Where Android plugs into the code](issues/07-where-android-plugs-into-the-code.md): one platform switch in `src/device/` builds the driver; new code in `src/device/android/`, sharing only locks and log tails with iOS; the tap alias rule moves onto the iOS driver; one Jev renderer with a per-platform header and rule; password values show as dots; `logSources()` gains `logcat`; golden tests from the 10 captures; device reason codes shared, with their wording broadened.
@@ -78,8 +79,7 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T06,T07,T08,T10 resolved
-    class T09 claimed
+    class T01,T02,T03,T04,T05,T06,T07,T08,T09,T10 resolved
 ```
 <!-- route:end -->
 

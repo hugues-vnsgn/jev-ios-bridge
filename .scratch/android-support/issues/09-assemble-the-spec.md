@@ -1,7 +1,7 @@
 # Assemble the v1.2.0 spec
 
 Type: task
-Status: claimed
+Status: resolved
 Claimed by: subagent (owner session, 2026-09-29)
 Blocked by: 01, 02, 03, 04, 05, 06, 07, 08, 10
 
@@ -26,3 +26,30 @@ Known inputs so far:
   - how the quickstart changes.
 - **New CLI command:** `jev-ios-bridge capture` (Android only in 1.2; `--serial`, `--avd`, `--jev`), from "The /test-android skill".
 - **Skill:** `skills/test-android/SKILL.md` as settled in "The /test-android skill", plus the `build-plugin.mjs` copy and path rewrite.
+
+## Answer
+
+Resolved 2026-09-29; the owner accepted the spec.
+
+- **The spec:** [`release-spec.md`](../release-spec.md), 388 lines, written by a subagent from every ticket's Answer and shaped like `.scratch/v1-release/release-spec.md`. It has nine phases, one PR each:
+  1. ADR-0006;
+  2. refactors that change nothing for iOS;
+  3. contract additions;
+  4. the Android driver;
+  5. the log pane and app exit;
+  6. `capture`, `/test-android` and the plugin;
+  7. docs;
+  8. release checks;
+  9. records and publish.
+- **Review:** [`spec-review.md`](../spec-review.md), a fresh-agent review against the Answers. It found 29 points (2 blockers, 13 should-fix, 14 minor), all handled or argued in its table.
+  - Blocker 1: a new reason code would have changed an iOS golden report. The fix is a pass-through allowlist, plus a test.
+  - Blocker 2: Android scripts can't validate without widening the MCP input schema (owner decision A).
+  - The reviewer also confirmed that the prototype's 10 captures re-render, byte for byte, into the texts Jev judged.
+- **Owner decisions accepted (A to F):**
+  - A: the MCP input schema widens, only accepting more.
+  - B: one mobilecli home per run, which amends "mobilecli as a dependency".
+  - C: the new report fields appear on Android runs only.
+  - D: `shownValue` and `typedFields` go into `report.json`.
+  - E: nine new reason codes and `capture`'s exit codes 0/3 become permanent.
+  - F: a later change to Android's view, or to the Jev model, re-runs the 10-screen check with zero confidently wrong answers allowed.
+- **Also accepted:** the recommended defaults for all 21 open points.
