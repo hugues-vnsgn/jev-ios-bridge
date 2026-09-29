@@ -1,6 +1,7 @@
 # Fix: atomic lease file updates (PR #26 review)
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: implementer-02
 
 Spec: [../spec.md](../spec.md). This fixes a finding from GPT-6-Astra's review of PR #26 (phase 2) on the feature branch `agent/android-v1.2`.
 
