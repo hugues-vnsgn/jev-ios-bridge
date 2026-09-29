@@ -104,7 +104,6 @@ async function main(): Promise<void> {
       // Measurement aid for release checks; costs one extra capture per observation.
       ...(process.env.JEV_VERIFY_SCREENSHOT_AGREEMENT === '1' ? { verifyScreenshotAgreement: true } : {}) }),
     createJudge: () => createAssertionJudge(),
-    tapAliasRule: 'mobilebuildmcp-2.7.1',
     logPane: { cliPath: fileURLToPath(import.meta.url), openWindow: !parsed.values['no-log-pane'],
       // MCP's stdout carries the protocol, so pane notices go to stderr in both modes.
       onNotice: (_runId, text) => { console.error(text); } },

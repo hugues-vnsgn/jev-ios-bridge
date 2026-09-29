@@ -5,7 +5,7 @@ import { constants } from 'node:fs';
 import { mkdir, open, readFile, unlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { isAbsolute, join, resolve } from 'node:path';
-import type { Action, ActionScenarioContext, DeviceDriver, DeviceMetrics, Element, PrepareScenarioContext, Snapshot } from '../contracts/index.js';
+import type { Action, ActionScenarioContext, DeviceDriver, DeviceMetrics, Element, PrepareScenarioContext, Snapshot, TapAliasRule } from '../contracts/index.js';
 import { bridgeRole } from '../scripted/vocabulary.js';
 
 type JsonObject = Record<string, unknown>;
@@ -345,6 +345,8 @@ async function readLogTail(path: string): Promise<string> {
 }
 
 export class MobileBuildMcpDriver implements DeviceDriver {
+  /** This pinned integration's proven tap-alias collapsing. The run reads it from the driver. */
+  readonly tapAliasRule: TapAliasRule = 'mobilebuildmcp-2.7.1';
   private readonly runner: CliRunner;
   private deviceId?: string;
   private bundleId?: string;

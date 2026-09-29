@@ -58,6 +58,9 @@ export type Action =
   | { kind: 'swipe'; targetRef: string; direction: Direction };
 
 
+/** MobileBuildMCP 2.7.1's proven tap-alias collapsing. Only the pinned integration may carry it. */
+export type TapAliasRule = 'mobilebuildmcp-2.7.1';
+
 export interface DeviceDriver {
   prepare(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void>;
   observe(signal: AbortSignal): Promise<Snapshot>;
@@ -69,6 +72,8 @@ export interface DeviceDriver {
   appRunning?(): boolean | undefined;
   /** The app's own log files the device layer is writing for this launch, for the live log pane. */
   logSources?(): { runtime?: string; os?: string };
+  /** Set only by a driver integration whose pinned tap semantics were verified. The run reads it. */
+  readonly tapAliasRule?: TapAliasRule;
 }
 
 export interface DeviceMetrics {
