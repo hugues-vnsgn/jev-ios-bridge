@@ -247,5 +247,94 @@
         "message": "device.serial requires \"platform\": \"android\""
       }
     ]
+  },
+  "missingBundleId": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.bundleId",
+        "message": "Invalid input: expected string, received undefined"
+      }
+    ]
+  },
+  "iosMultipleErrors": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.bundleId",
+        "message": "Invalid string: must match pattern /^[A-Za-z0-9-]+(?:\\.[A-Za-z0-9-]+)+$/"
+      },
+      {
+        "path": "values.query",
+        "message": "Typed values must use printable US keyboard characters"
+      },
+      {
+        "path": "steps.1.id",
+        "message": "Step IDs must be unique"
+      }
+    ]
+  },
+  "androidActivityBareName": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.activity",
+        "message": "app.activity must be a relative (\".DebugGalleryActivity\") or fully qualified activity name"
+      }
+    ]
+  },
+  "androidMalformedPackage": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.package",
+        "message": "app.package must be an Android package name: two or more dot-separated parts, each starting with a letter, then letters, digits or \"_\""
+      }
+    ]
+  },
+  "androidTooManyIntentExtras": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.intentExtras",
+        "message": "A script may supply at most 20 intent extras"
+      }
+    ]
+  },
+  "androidNonAsciiIntentExtraValue": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.intentExtras.screen",
+        "message": "app.intentExtras values must be printable ASCII text"
+      }
+    ]
+  },
+  "androidIntentExtraValueTooLong": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.intentExtras.screen",
+        "message": "Too big: expected string to have <=200 characters"
+      }
+    ]
+  },
+  "androidValueTooLong": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "values.query",
+        "message": "Too big: expected string to have <=2048 characters"
+      }
+    ]
+  },
+  "androidTooManyValues": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "values",
+        "message": "A script may supply at most 32 typed values"
+      }
+    ]
   }
 }

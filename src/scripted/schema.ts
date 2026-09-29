@@ -1,4 +1,5 @@
 import { z } from 'zod/v4';
+import { PLATFORMS } from '../contracts/index.js';
 import type { ScriptedScenario } from './contracts.js';
 import { ROLES } from './vocabulary.js';
 
@@ -10,8 +11,9 @@ const identity = z.string().min(1).max(500).refine(value => value.trim().length 
 
 // Android's own rule: two or more dot-separated parts, each starting with a letter, then letters, digits or `_`.
 const androidPackage = /^[A-Za-z][A-Za-z0-9_]*(?:\.[A-Za-z][A-Za-z0-9_]*)+$/;
-// Relative (".DebugGalleryActivity") or fully qualified (a dotted class name).
-const androidActivity = /^\.?[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*$/;
+// Relative (a leading dot, then a dotted name) or fully qualified (two or more dot-separated parts). A bare
+// name with neither a leading dot nor an internal one is ambiguous, so it's rejected.
+const androidActivity = /^(?:\.[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*|[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)+)$/;
 // device.serial is the adb serial as `adb devices` prints it (network serials carry a `:`).
 const androidSerial = /^[A-Za-z0-9._:-]{1,100}$/;
 // device.avd is an emulator's AVD name.
@@ -45,8 +47,8 @@ const assertionsSchema = z.array(assertionSchema).min(1).max(20).refine(
   assertions => new Set(assertions.map(assertion => assertion.id)).size === assertions.length,
   'Assertion IDs must be unique within a checkpoint',
 );
-// The character rule differs by platform (open point 2), so it's enforced in the top-level superRefine
-// instead of here: this keeps the ASCII pattern off `values` in the exported JSON schema (owner decision A).
+// The character rule differs by platform, so it's enforced in the top-level superRefine instead of here:
+// this keeps the ASCII pattern off `values` in the exported JSON schema.
 const valuesSchema = z.record(z.string().regex(key), z.string().max(2_048))
   .refine(values => Object.keys(values).length <= 32, 'A script may supply at most 32 typed values');
 
@@ -66,7 +68,7 @@ const versionSchema = z.literal(SCRIPT_VERSION, { error: issue => issue.input ==
 const launchArgument = z.string().min(1).max(200)
   .regex(/^[\x20-\x7e]+$/, 'Launch arguments must be printable ASCII text');
 
-// Intent extras are passed with `am start --es`, so they share launchArgs' value limits (open point 8).
+// Intent extras are passed with `am start --es`, so they share launchArgs' value limits.
 const intentExtraValue = z.string().min(1).max(200)
   .regex(/^[\x20-\x7e]+$/, 'app.intentExtras values must be printable ASCII text');
 const intentExtrasSchema = z.record(z.string().min(1).max(200), intentExtraValue)
@@ -75,7 +77,7 @@ const intentExtrasSchema = z.record(z.string().min(1).max(200), intentExtraValue
 export const scriptedScenarioSchema = z.strictObject({
   version: versionSchema,
   /** The device platform this script targets. Absent, or "ios", reads the script exactly as in 1.1. */
-  platform: z.enum(['ios', 'android']).optional(),
+  platform: z.enum(PLATFORMS).optional(),
   app: z.strictObject({
     bundleId: z.string().regex(bundleId).optional(),
     /** Passed to the app process at launch, for example a debug-only entry point such as -of-evidence-gallery. */
@@ -108,20 +110,8 @@ export const scriptedScenarioSchema = z.strictObject({
       assertions: assertionsSchema }),
   ])).min(1).max(100),
 }).superRefine((scenario, context) => {
-  if (scenario.steps.at(-1)?.kind !== 'checkpoint') {
-    context.addIssue({ code: 'custom', message: 'A script must end at an assertion checkpoint', path: ['steps'] });
-  }
-  const seen = new Set<string>();
-  for (const [index, step] of scenario.steps.entries()) {
-    if (seen.has(step.id)) context.addIssue({ code: 'custom', message: 'Step IDs must be unique', path: ['steps', index, 'id'] });
-    seen.add(step.id);
-    if (step.kind === 'action' && step.action.kind === 'replaceText' &&
-        !Object.hasOwn(scenario.values, step.action.valueKey)) {
-      context.addIssue({ code: 'custom', message: 'replaceText valueKey must name a supplied value',
-        path: ['steps', index, 'action', 'valueKey'] });
-    }
-  }
-
+  // Checked in the base schema's field order (app, then device, then values, then steps), so an iOS
+  // script's issues list in the same order 1.1 produced, before Android added platform-aware checks.
   const platform = scenario.platform ?? 'ios';
   if (platform === 'android') {
     if (scenario.app.bundleId !== undefined) context.addIssue({ code: 'custom',
@@ -135,8 +125,10 @@ export const scriptedScenarioSchema = z.strictObject({
     if (scenario.device?.serial !== undefined && scenario.device?.avd !== undefined) context.addIssue({ code: 'custom',
       message: 'A script may name at most one of device.serial or device.avd', path: ['device'] });
   } else {
-    if (scenario.app.bundleId === undefined) context.addIssue({ code: 'custom',
-      message: 'app.bundleId is required', path: ['app', 'bundleId'] });
+    // Matches the message and path zod's own "required" check gave app.bundleId before it became optional
+    // in the base schema (needed so the same field can be required on iOS and forbidden on Android).
+    if (scenario.app.bundleId === undefined) context.addIssue({ code: 'invalid_type', expected: 'string',
+      input: undefined, message: 'Invalid input: expected string, received undefined', path: ['app', 'bundleId'] });
     if (scenario.app.package !== undefined) context.addIssue({ code: 'custom',
       message: 'app.package requires "platform": "android"', path: ['app', 'package'] });
     if (scenario.app.activity !== undefined) context.addIssue({ code: 'custom',
@@ -161,6 +153,20 @@ export const scriptedScenarioSchema = z.strictObject({
   if (platform !== 'android' && Object.values(scenario.values).some(value => value.startsWith('-'))) {
     context.addIssue({ code: 'custom',
       message: 'MobileBuildMCP 2.7.1 cannot type text starting with a leading hyphen', path: ['values'] });
+  }
+
+  if (scenario.steps.at(-1)?.kind !== 'checkpoint') {
+    context.addIssue({ code: 'custom', message: 'A script must end at an assertion checkpoint', path: ['steps'] });
+  }
+  const seen = new Set<string>();
+  for (const [index, step] of scenario.steps.entries()) {
+    if (seen.has(step.id)) context.addIssue({ code: 'custom', message: 'Step IDs must be unique', path: ['steps', index, 'id'] });
+    seen.add(step.id);
+    if (step.kind === 'action' && step.action.kind === 'replaceText' &&
+        !Object.hasOwn(scenario.values, step.action.valueKey)) {
+      context.addIssue({ code: 'custom', message: 'replaceText valueKey must name a supplied value',
+        path: ['steps', index, 'action', 'valueKey'] });
+    }
   }
 });
 
