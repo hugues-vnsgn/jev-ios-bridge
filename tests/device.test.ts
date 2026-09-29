@@ -833,6 +833,16 @@ test('launch arguments go to MobileBuildMCP as JSON, so a leading hyphen is not 
   } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
 });
 
+test('the MobileBuildMCP driver refuses an Android app identity instead of launching an undefined bundle ID', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-android-identity-'));
+  const runner: CliRunner = async args => ({ stdout: commandEnvelope(args), stderr: '', exitCode: 0 });
+  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  try {
+    await assert.rejects(driver.prepare({ app: { package: 'com.example.app' }, device: { udid } },
+      new AbortController().signal), /iOS/);
+  } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
+});
+
 test('an acknowledged stop failure (the app already exited) still releases the lock', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-device-stop-dead-'));
   const failedStop = JSON.stringify({ schema: 'mobilebuildmcp.output.stop-result', schemaVersion: '2', didError: true,
