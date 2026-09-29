@@ -1,0 +1,12 @@
+ACTIVITY MANAGER PROCESS EXIT INFO (dumpsys activity exit-info)
+Last Timestamp of Persistence Into Persistent Storage: 2026-09-28 23:21:17.153
+  package: dev.jevbridge.diagnostic
+    Historical Process Exit for uid=10225
+        ApplicationExitInfo #0:
+          timestamp=2026-09-28 23:23:13.588 pid=15702 realUid=10225 packageUid=10225 definingUid=10225 user=0
+          process=dev.jevbridge.diagnostic reason=2 (SIGNALED) subreason=0 (UNKNOWN) status=9
+          importance=100 pss=0.00 rss=0.00 description=null state=empty trace=null
+        ApplicationExitInfo #1:
+          timestamp=2026-09-28 23:23:02.617 pid=15403 realUid=10225 packageUid=10225 definingUid=10225 user=0
+          process=dev.jevbridge.diagnostic reason=5 (APP CRASH(NATIVE)) subreason=0 (UNKNOWN) status=11
+          importance=100 pss=0.00 rss=0.00 description=crash state=empty trace=null

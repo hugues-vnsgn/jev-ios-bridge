@@ -1,0 +1,17 @@
+1790612222494 --------- beginning of crash
+1790612222494 2026-09-28 23:17:00.572 10226 10160 10160 E AndroidRuntime: FATAL EXCEPTION: main
+1790612222494 2026-09-28 23:17:00.572 10226 10160 10160 E AndroidRuntime: Process: dev.jevbridge.logprobe, PID: 10160
+1790612222494 2026-09-28 23:17:00.572 10226 10160 10160 E AndroidRuntime: java.lang.IllegalStateException: probe crash on main thread
+1790612222494 2026-09-28 23:17:00.572 10226 10160 10160 E AndroidRuntime: 	at dev.jevbridge.logprobe.MainActivity.misbehave(MainActivity.java:59)
+1790612222494 2026-09-28 23:17:00.572 10226 10160 10160 E AndroidRuntime: 	at dev.jevbridge.logprobe.MainActivity.lambda$onCreate$1$dev-jevbridge-logprobe-MainActivity(MainActivity.java:53)
+1790612222494 2026-09-28 23:17:00.572 10226 10160 10160 E AndroidRuntime: 	at dev.jevbridge.logprobe.MainActivity$$ExternalSyntheticLambda2.run(D8$$SyntheticClass:0)
+1790612222494 2026-09-28 23:17:00.572 10226 10160 10160 E AndroidRuntime: 	at android.os.Handler.handleCallback(Handler.java:1070)
+1790612222494 2026-09-28 23:17:00.572 10226 10160 10160 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:125)
+1790612222494 2026-09-28 23:17:00.572 10226 10160 10160 E AndroidRuntime: 	at android.os.Looper.dispatchMessage(Looper.java:333)
+1790612222494 2026-09-28 23:17:00.572 10226 10160 10160 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:263)
+1790612222494 2026-09-28 23:17:00.572 10226 10160 10160 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:367)
+1790612222494 2026-09-28 23:17:00.572 10226 10160 10160 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:9287)
+1790612222494 2026-09-28 23:17:00.572 10226 10160 10160 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+1790612222494 2026-09-28 23:17:00.572 10226 10160 10160 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:566)
+1790612222494 2026-09-28 23:17:00.572 10226 10160 10160 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:929)
+1790612231742 EXIT code=null signal=SIGTERM

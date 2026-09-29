@@ -1,0 +1,16 @@
+1790612576725 --------- beginning of crash
+1790612576726 2026-09-28 23:22:54.801 10225 15149 15149 E AndroidRuntime: FATAL EXCEPTION: main
+1790612576726 2026-09-28 23:22:54.801 10225 15149 15149 E AndroidRuntime: Process: dev.jevbridge.diagnostic, PID: 15149
+1790612576726 2026-09-28 23:22:54.801 10225 15149 15149 E AndroidRuntime: android.app.RemoteServiceException$CrashedByAdbException: shell-induced crash
+1790612576726 2026-09-28 23:22:54.801 10225 15149 15149 E AndroidRuntime: 	at android.app.ActivityThread.throwRemoteServiceException(ActivityThread.java:2513)
+1790612576726 2026-09-28 23:22:54.801 10225 15149 15149 E AndroidRuntime: 	at android.app.ActivityThread.-$$Nest$mthrowRemoteServiceException(Unknown Source:0)
+1790612576726 2026-09-28 23:22:54.801 10225 15149 15149 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2879)
+1790612576726 2026-09-28 23:22:54.801 10225 15149 15149 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:132)
+1790612576726 2026-09-28 23:22:54.801 10225 15149 15149 E AndroidRuntime: 	at android.os.Looper.dispatchMessage(Looper.java:333)
+1790612576726 2026-09-28 23:22:54.801 10225 15149 15149 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:263)
+1790612576726 2026-09-28 23:22:54.801 10225 15149 15149 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:367)
+1790612576726 2026-09-28 23:22:54.801 10225 15149 15149 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:9287)
+1790612576726 2026-09-28 23:22:54.801 10225 15149 15149 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+1790612576726 2026-09-28 23:22:54.801 10225 15149 15149 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:566)
+1790612576726 2026-09-28 23:22:54.801 10225 15149 15149 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:929)
+1790612579829 EXIT code=null signal=SIGTERM

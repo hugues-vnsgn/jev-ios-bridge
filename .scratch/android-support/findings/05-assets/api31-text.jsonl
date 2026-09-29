@@ -1,0 +1,33 @@
+{"test": "exact.mcli", "sent": "Wi-Fi & 50% \"off\"", "echo": "[Wi-Fi & 50% \"off\"]", "ok": true, "secs": 0.991}
+{"test": "exact.mcli", "sent": "a\"b'c$d&e;f|g\\h%i j ", "echo": "[a\"b'c$d&e;f|g\\h%i j ]", "ok": true, "secs": 0.771}
+{"test": "exact.mcli", "sent": "`~!@#*()<>?[]{}^=+_,./:", "echo": "[`~!@#*()<>?[]{}^=+_,./:]", "ok": true, "secs": 0.467}
+{"test": "exact.mcli", "sent": "50%s off", "echo": "[50%s off]", "ok": true, "secs": 0.02}
+{"test": "exact.mcli", "sent": "  two  spaces", "echo": "[  two  spaces]", "ok": true, "secs": 0.47}
+{"test": "exact.adb", "sent": "Wi-Fi & 50% \"off\"", "echo": "[Wi-Fi & 50% \"off\"]", "ok": true, "secs": 0.38}
+{"test": "exact.adb", "sent": "a\"b'c$d&e;f|g\\h%i j ", "echo": "[a\"b'c$d&e;f|g\\h%i j ]", "ok": true, "secs": 0.385}
+{"test": "exact.adb", "sent": "`~!@#*()<>?[]{}^=+_,./:", "echo": "[`~!@#*()<>?[]{}^=+_,./:]", "ok": true, "secs": 0.6}
+{"test": "exact.adb", "sent": "50%s off", "echo": "[50  off]", "ok": false, "secs": 0.169}
+{"test": "exact.adb", "sent": "  two  spaces", "echo": "[  two  spaces]", "ok": true, "secs": 0.315}
+{"test": "replace", "api": "31", "target": "field.plain", "method": "mcli io keys ctrl+a backspace (one call)", "after": {"text": "", "hint": ""}, "cleared": true, "secs": 0.058, "error": null}
+{"test": "replace", "api": "31", "target": "field.plain", "method": "mcli io keys ctrl+a, then io keys backspace", "after": {"text": "", "hint": ""}, "cleared": true, "secs": 0.082, "error": null}
+{"test": "replace", "api": "31", "target": "field.plain", "method": "adb MOVE_END + 40x DEL (one call)", "after": {"text": "", "hint": ""}, "cleared": true, "secs": 0.195, "error": null}
+{"test": "replace", "api": "31", "target": "field.plain", "method": "adb MOVE_HOME + 40x FORWARD_DEL", "after": {"text": "", "hint": ""}, "cleared": true, "secs": 0.413, "error": null}
+{"test": "replace", "api": "31", "target": "field.plain", "method": "adb keyevent --longpress DEL", "after": {"text": "old value 1", "hint": ""}, "cleared": false, "secs": 0.037, "error": null}
+{"test": "replace", "api": "31", "target": "field.plain", "method": "adb keycombination 113 29 + DEL", "after": {"text": "old value 123", "hint": ""}, "cleared": false, "secs": 0.188, "error": null}
+{"test": "replace", "api": "31", "target": "field.plain", "method": "adb keyevent CTRL_LEFT A + DEL", "after": {"text": "old value 123", "hint": ""}, "cleared": false, "secs": 0.033, "error": null}
+{"test": "replace", "api": "31", "target": "field.plain", "method": "mcli ctrl+a, clipboard set, ctrl+v", "after": {"text": "new text", "hint": ""}, "replaced": true, "secs": 0.133}
+{"test": "replace", "api": "31", "target": "classic.plain", "method": "mcli io keys ctrl+a backspace (one call)", "after": {"text": "", "hint": "Classic plain"}, "cleared": true, "secs": 0.094, "error": null}
+{"test": "replace", "api": "31", "target": "classic.plain", "method": "mcli io keys ctrl+a, then io keys backspace", "after": {"text": "", "hint": "Classic plain"}, "cleared": true, "secs": 0.078, "error": null}
+{"test": "replace", "api": "31", "target": "classic.plain", "method": "adb MOVE_END + 40x DEL (one call)", "after": {"text": "", "hint": "Classic plain"}, "cleared": true, "secs": 0.335, "error": null}
+{"test": "replace", "api": "31", "target": "classic.plain", "method": "adb MOVE_HOME + 40x FORWARD_DEL", "after": {"text": "", "hint": "Classic plain"}, "cleared": true, "secs": 0.147, "error": null}
+{"test": "replace", "api": "31", "target": "classic.plain", "method": "adb keyevent --longpress DEL", "after": {"text": "old value 1", "hint": "Classic plain"}, "cleared": false, "secs": 0.068, "error": null}
+{"test": "replace", "api": "31", "target": "classic.plain", "method": "adb keycombination 113 29 + DEL", "after": {"text": "old value 123", "hint": "Classic plain"}, "cleared": false, "secs": 0.167, "error": null}
+{"test": "replace", "api": "31", "target": "classic.plain", "method": "adb keyevent CTRL_LEFT A + DEL", "after": {"text": "old value 123", "hint": "Classic plain"}, "cleared": false, "secs": 0.05, "error": null}
+{"test": "replace", "api": "31", "target": "classic.plain", "method": "mcli ctrl+a, clipboard set, ctrl+v", "after": {"text": "new text", "hint": "Classic plain"}, "replaced": true, "secs": 0.116}
+{"test": "field", "api": "31", "target": "field.password", "sent": "Secr3t!", "node_text": "\u2022\u2022\u2022\u2022\u2022\u2022\u2022", "node_hint": "", "echo": "[Secr3t!]"}
+{"test": "field", "api": "31", "target": "classic.password", "sent": "Secr3t!", "node_text": "\u2022\u2022\u2022\u2022\u2022\u2022!", "node_hint": "Classic password", "echo": null}
+{"test": "field", "api": "31", "target": "field.phone", "sent": "5551234567", "node_text": "(555) 123-4567", "node_hint": "", "echo": "[5551234567]"}
+{"test": "field", "api": "31", "target": "field.phone", "sent": "555-12a34567890", "node_text": "(555) 123-4567", "node_hint": "", "echo": "[5551234567]"}
+{"test": "field", "api": "31", "target": "field.upper", "sent": "abc Def", "node_text": "ABC DEF", "node_hint": "", "echo": "[ABC DEF]"}
+{"test": "field", "api": "31", "target": "classic.plain", "sent": "hello", "node_text": "hello", "node_hint": "Classic plain", "echo": null}
+{"test": "field", "api": "31", "target": "field.password (empty)", "node_text": "", "node_hint": ""}

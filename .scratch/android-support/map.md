@@ -20,6 +20,7 @@ A reviewed **v1.2.0 release spec for Android support**, written for Claude Code 
   - **Oldest Android version:** Android 12 (API 31).
   - **Evidence apps:** `examples/diagnostic-app-android`, the owner's `cmp` or `cmp-test` demo, and Settings as a light classic-View check.
   - **Jev check:** about 10 Android screens, one run.
+  - **Non-English typing (owner, 2026-09-29):** in scope for v1.2.0, tested on the emulator, after "Actions across Android versions" showed mobilecli types it exactly. It was ruled out while charting. Jev's accuracy promise still covers English screens only.
   - **Delivery:** the map is charted on the local branch `spike/android-emulator` and merged in one PR together with the spike.
 - **Devices and secrets:**
   - Use only the emulator `emulator-5554` (mobilecli calls it `Medium_Phone_API_36.1`), or another emulator you create.
@@ -31,6 +32,8 @@ A reviewed **v1.2.0 release spec for Android support**, written for Claude Code 
 
 ## Decisions so far
 
+- [Log pane and app-exit detection on Android](issues/06-log-pane-and-app-exit.md): the pane follows one `adb logcat --uid` stream written to a private file, which works on Android 12 too; a second stream of system process events keeps `appRunning()` synchronous and catches crashes behind a dialog; a frozen app gets a new reason code, `APP_NOT_RESPONDING`. [Findings](findings/06-log-pane.md).
+- [Actions across Android versions](issues/05-actions-across-android-versions.md): replace text with `ctrl+a`, a pause, then backspace; type with mobilecli `io text`, which is exact, including non-English text; tap by coordinates; read the full tree from mobilecli's on-device agent, to keep the `scrollable` and `password` flags; swipe from 90% to 10% over 1 s; a settle rule after every action (two matching captures ≥250 ms apart, 3 s cap). Non-English typing is now in scope. [Findings](findings/05-actions.md).
 - [What Jev sees on Android, and the 10-screen check](issues/04-what-jev-sees-on-android.md): Android passes (31 claims on 10 screens, plain claims 18 right, 2 uncertain, 0 wrong) once an empty field's hint is shown as `placeholder`, which fixed the one confidently wrong answer; view rule `android-full-text-v1` with an Android header and the iOS fields.
 - [How a script names an Android app and device](issues/03-script-and-device-identity.md): `"platform": "android"` with a required `app.package` (Android's naming rule), optional `app.activity` and string-only `app.intentExtras`, and `launchArgs` rejected; the device is `device.serial` or `device.avd`, else `JEV_ANDROID_DEVICE`, else `NO_DEVICE`; the plugin's simulator setting becomes optional; restart with force-stop then `am start -W`; refuse unauthorized, unbooted, locked or app-missing devices, and only wake a dark screen.
 - [How Android elements map onto the bridge's elements](issues/02-android-element-mapping.md): roles from the Android class or Compose's role-marker child; a blank button takes its first inner text as its label, and that text stays in Jev's view but can't be selected; system bars and empty layout boxes are dropped; full resource-ids; switches are `0`/`1`; no new roles. Prototype on branch `prototype/android-element-mapping`.
@@ -70,23 +73,18 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04 resolved
-    class T05,T06 claimed
-    class T07 frontier
-    class T08,T09 blocked
+    class T01,T02,T03,T04,T05,T06 resolved
+    class T07,T08 frontier
+    class T09 blocked
 ```
 <!-- route:end -->
 
 ## Not yet specified
 
-- **Guide pages:** what an Android setup page covers (`testTagsAsResourceId`, which apps without it lack entirely; custom Compose tabs and toggles that must expose `selected` or checked state; emulator settings, the Xiaomi input setting, `pm grant` for permission dialogs), and how the limits page and quickstart change. Claim-writing notes from the Jev check: quote numbers exactly as the app formats them, and never claim that an empty field "contains" its hint. This clears once the element mapping, script shape and actions are settled.
 - **The `/test-android` skill:** how much it shares with `/test-ios`, and how it captures a screen while authoring (mobilecli directly, or a bridge command).
-- **Speed:** whether v1.2.0 needs a speed target, or only reports the numbers. Typing ran at about 0.28 s per character in the spike.
-- **Contract additions in detail:** the exact new reason codes, roles and report fields (already fixed: projection rule `android-full-text-v1`, and a `placeholder` field in the Android view). This follows from the mapping, script shape and actions tickets.
 
 ## Out of scope
 
-- **Non-English typing** (for example Vietnamese): it needs a helper app on the device.
 - **One script for both platforms:** each script targets one platform.
 - **CI and headless emulator farms.**
 - **Building, installing or seeding apps:** the same rule as iOS.

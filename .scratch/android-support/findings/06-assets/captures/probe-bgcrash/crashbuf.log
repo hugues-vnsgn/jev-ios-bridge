@@ -1,0 +1,8 @@
+1790612236177 --------- beginning of crash
+1790612236177 2026-09-28 23:17:14.255 10226 10460 10543 E AndroidRuntime: FATAL EXCEPTION: bg
+1790612236177 2026-09-28 23:17:14.255 10226 10460 10543 E AndroidRuntime: Process: dev.jevbridge.logprobe, PID: 10460
+1790612236177 2026-09-28 23:17:14.255 10226 10460 10543 E AndroidRuntime: java.lang.IllegalStateException: probe crash on background thread
+1790612236177 2026-09-28 23:17:14.255 10226 10460 10543 E AndroidRuntime: 	at dev.jevbridge.logprobe.MainActivity.lambda$misbehave$2(MainActivity.java:61)
+1790612236177 2026-09-28 23:17:14.255 10226 10460 10543 E AndroidRuntime: 	at dev.jevbridge.logprobe.MainActivity$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+1790612236177 2026-09-28 23:17:14.255 10226 10460 10543 E AndroidRuntime: 	at java.lang.Thread.run(Thread.java:1563)
+1790612245471 EXIT code=null signal=SIGTERM

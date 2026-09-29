@@ -1,0 +1,7 @@
+{"test": "replace-repeat2", "api": "31", "target": "field.plain", "method": "mcli keys end + 20x backspace (one call)", "runs": 10, "cleared": 10, "mean_secs": 0.2, "fails": []}
+{"test": "replace-repeat2", "api": "31", "target": "field.plain", "method": "mcli keys ctrl+a; sleep 0.2; keys backspace", "runs": 10, "cleared": 10, "mean_secs": 0.265, "fails": []}
+{"test": "replace-repeat2", "api": "31", "target": "field.plain", "method": "mcli keys ctrl+a; keys backspace", "runs": 10, "cleared": 10, "mean_secs": 0.058, "fails": []}
+{"test": "replace-repeat2", "api": "31", "target": "field.plain", "method": "adb keyevent MOVE_END + 20 DEL", "runs": 10, "cleared": 10, "mean_secs": 0.198, "fails": []}
+{"test": "upper-field", "api": "31", "path": "io text", "sent": "abc Def", "echoes": ["[ABC DEF]", "[ABC DEF]", "[ABC DEF]"]}
+{"test": "upper-field", "api": "31", "path": "adb input text", "sent": "abc Def", "echoes": ["[ABC DEF]", "[ABC DEF]", "[ABC DEF]"]}
+{"test": "upper-field", "api": "31", "path": "clipboard+ctrl+v", "sent": "abc Def", "echoes": ["[ABC DEF]", "[ABC DEF]", "[ABC DEF]"]}

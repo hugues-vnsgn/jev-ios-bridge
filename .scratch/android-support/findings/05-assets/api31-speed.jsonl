@@ -1,0 +1,21 @@
+{"test": "speed", "api": "31", "path": "mobilecli io text", "chars": 17, "secs": 0.089, "ok": true}
+{"test": "speed", "api": "31", "path": "mobilecli io text", "chars": 17, "secs": 0.256, "ok": true}
+{"test": "speed", "api": "31", "path": "mobilecli io text", "chars": 17, "secs": 0.189, "ok": true}
+{"test": "speed", "api": "31", "path": "adb shell input text", "chars": 17, "secs": 0.322, "ok": true}
+{"test": "speed", "api": "31", "path": "adb shell input text", "chars": 17, "secs": 0.158, "ok": true}
+{"test": "speed", "api": "31", "path": "adb shell input text", "chars": 17, "secs": 0.281, "ok": true}
+{"test": "speed", "api": "31", "path": "mobilecli io clipboard set + io keys ctrl+v", "chars": 17, "secs": 0.067, "ok": true}
+{"test": "speed", "api": "31", "path": "mobilecli io clipboard set + io keys ctrl+v", "chars": 17, "secs": 0.083, "ok": true}
+{"test": "speed", "api": "31", "path": "mobilecli io clipboard set + io keys ctrl+v", "chars": 17, "secs": 0.106, "ok": true}
+{"test": "speed", "api": "31", "path": "mobilecli io text", "chars": 100, "secs": 1.171, "ok": true}
+{"test": "speed", "api": "31", "path": "mobilecli io text", "chars": 100, "secs": 1.445, "ok": true}
+{"test": "speed", "api": "31", "path": "mobilecli io text", "chars": 100, "secs": 1.266, "ok": true}
+{"test": "speed", "api": "31", "path": "adb shell input text", "chars": 100, "secs": 1.44, "ok": true}
+{"test": "speed", "api": "31", "path": "adb shell input text", "chars": 100, "secs": 1.259, "ok": true}
+{"test": "speed", "api": "31", "path": "adb shell input text", "chars": 100, "secs": 1.463, "ok": true}
+{"test": "speed", "api": "31", "path": "mobilecli io clipboard set + io keys ctrl+v", "chars": 100, "secs": 0.115, "ok": true}
+{"test": "speed", "api": "31", "path": "mobilecli io clipboard set + io keys ctrl+v", "chars": 100, "secs": 0.085, "ok": true}
+{"test": "speed", "api": "31", "path": "mobilecli io clipboard set + io keys ctrl+v", "chars": 100, "secs": 0.081, "ok": true}
+{"test": "speed", "api": "31", "path": "clear: io keys ctrl+a, then io keys backspace", "secs": 0.041}
+{"test": "speed", "api": "31", "path": "clear: io keys ctrl+a, then io keys backspace", "secs": 0.111}
+{"test": "speed", "api": "31", "path": "clear: io keys ctrl+a, then io keys backspace", "secs": 0.032}
