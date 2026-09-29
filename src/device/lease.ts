@@ -211,9 +211,9 @@ export class DeviceLease {
    * can't race their writes: it always runs after whichever of their writes was already queued, and
    * before whichever arrives once release is queued. What the run owns is judged when release is called,
    * from `owned`: a `disown()` means the run confirmed that process stopped, even if its write to the
-   * file failed. Once its turn comes, release checks again that this is still the same file and that
-   * every command exited or was fenced, since the command ledger isn't queued, and keeps the lease if
-   * not. An `own()`/`disown()` that arrives after release is queued then runs after it and fails with
+   * file failed. Once its turn comes, release does nothing if this lease file was already released
+   * meanwhile (by a concurrent `release()`), and otherwise checks again that every command exited or
+   * was fenced, since the command ledger isn't queued, and keeps the lease if not. An `own()`/`disown()` that arrives after release is queued then runs after it and fails with
    * "not held", instead of racing release's delete with a rename that would put the file back.
    */
   async release(): Promise<void> {
@@ -231,7 +231,9 @@ export class DeviceLease {
   }
 
   private async releaseNow(file: { path: string; deviceIdentity: string; content: LeaseFile }): Promise<void> {
-    if (this.file !== file || !this.commandsSettled) throw new DeviceLeaseKeptError(file.deviceIdentity);
+    // Already released (or re-taken) by the time this turn came: nothing of ours left to delete.
+    if (this.file !== file) return;
+    if (!this.commandsSettled) throw new DeviceLeaseKeptError(file.deviceIdentity);
     try {
       const current = JSON.parse(await readFile(file.path, 'utf8')) as { token?: string };
       if (current.token === file.content.token) await unlink(file.path);

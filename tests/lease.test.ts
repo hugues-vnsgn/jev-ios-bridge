@@ -327,6 +327,19 @@ test('after a failed disown() write, release still releases: the run confirmed t
   });
 });
 
+test('two concurrent release() calls both resolve, and the lease file is gone', async () => {
+  await withRoot(async (root) => {
+    const lease = new DeviceLease({ root });
+    await lease.take(deviceId);
+
+    await Promise.all([lease.release(), lease.release()]);
+
+    assert.equal(lease.held, false);
+    assert.deepEqual(await readdir(root), []);
+    await new DeviceLease({ root }).take(deviceId);
+  });
+});
+
 test('settle waits for every tracked operation, including one started meanwhile, and gives up when its signal aborts', async () => {
   await withRoot(async (root) => {
     const lease = new DeviceLease({ root });
