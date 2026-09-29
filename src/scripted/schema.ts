@@ -8,6 +8,17 @@ const udid = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a
 const printableAscii = /^[\x20-\x7e]*$/;
 const identity = z.string().min(1).max(500).refine(value => value.trim().length > 0);
 
+// Android's own rule: two or more dot-separated parts, each starting with a letter, then letters, digits or `_`.
+const androidPackage = /^[A-Za-z][A-Za-z0-9_]*(?:\.[A-Za-z][A-Za-z0-9_]*)+$/;
+// Relative (".DebugGalleryActivity") or fully qualified (a dotted class name).
+const androidActivity = /^\.?[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*$/;
+// device.serial is the adb serial as `adb devices` prints it (network serials carry a `:`).
+const androidSerial = /^[A-Za-z0-9._:-]{1,100}$/;
+// device.avd is an emulator's AVD name.
+const androidAvd = /^[A-Za-z0-9._-]{1,100}$/;
+// Any control character (C0, DEL, and C1), banned from Android typed values.
+const controlCharacter = /[\u0000-\u001f\u007f-\u009f]/;
+
 const EMPTY_VALUE_MESSAGE = 'A selector value cannot be empty: captures omit the value of an empty field ' +
   '(Compose) or report its placeholder (native), so emptiness is not selectable';
 
@@ -34,11 +45,10 @@ const assertionsSchema = z.array(assertionSchema).min(1).max(20).refine(
   assertions => new Set(assertions.map(assertion => assertion.id)).size === assertions.length,
   'Assertion IDs must be unique within a checkpoint',
 );
-const valuesSchema = z.record(z.string().regex(key), z.string().max(2_048)
-  .regex(printableAscii, 'Typed values must use printable US keyboard characters'))
-  .refine(values => Object.keys(values).length <= 32, 'A script may supply at most 32 typed values')
-  .refine(values => Object.values(values).every(value => !value.startsWith('-')),
-    'MobileBuildMCP 2.7.1 cannot type text starting with a leading hyphen');
+// The character rule differs by platform (open point 2), so it's enforced in the top-level superRefine
+// instead of here: this keeps the ASCII pattern off `values` in the exported JSON schema (owner decision A).
+const valuesSchema = z.record(z.string().regex(key), z.string().max(2_048))
+  .refine(values => Object.keys(values).length <= 32, 'A script may supply at most 32 typed values');
 
 const actionSchema = z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('tap'), selector: selectorSchema }),
@@ -56,14 +66,37 @@ const versionSchema = z.literal(SCRIPT_VERSION, { error: issue => issue.input ==
 const launchArgument = z.string().min(1).max(200)
   .regex(/^[\x20-\x7e]+$/, 'Launch arguments must be printable ASCII text');
 
+// Intent extras are passed with `am start --es`, so they share launchArgs' value limits (open point 8).
+const intentExtraValue = z.string().min(1).max(200)
+  .regex(/^[\x20-\x7e]+$/, 'app.intentExtras values must be printable ASCII text');
+const intentExtrasSchema = z.record(z.string().min(1).max(200), intentExtraValue)
+  .refine(extras => Object.keys(extras).length <= 20, 'A script may supply at most 20 intent extras');
+
 export const scriptedScenarioSchema = z.strictObject({
   version: versionSchema,
+  /** The device platform this script targets. Absent, or "ios", reads the script exactly as in 1.1. */
+  platform: z.enum(['ios', 'android']).optional(),
   app: z.strictObject({
-    bundleId: z.string().regex(bundleId),
+    bundleId: z.string().regex(bundleId).optional(),
     /** Passed to the app process at launch, for example a debug-only entry point such as -of-evidence-gallery. */
     launchArgs: z.array(launchArgument).max(20).optional(),
+    /** The installed app's package name. Required, Android only. */
+    package: z.string().regex(androidPackage,
+      'app.package must be an Android package name: two or more dot-separated parts, each starting with a ' +
+      'letter, then letters, digits or "_"').optional(),
+    /** A specific activity to start instead of the launcher activity: relative or fully qualified. */
+    activity: z.string().min(1).max(200).regex(androidActivity,
+      'app.activity must be a relative (".DebugGalleryActivity") or fully qualified activity name').optional(),
+    /** Passed to the launch intent with `am start --es <key> <value>`. */
+    intentExtras: intentExtrasSchema.optional(),
   }),
-  device: z.strictObject({ udid: z.string().regex(udid).optional() }).optional(),
+  device: z.strictObject({
+    udid: z.string().regex(udid).optional(),
+    /** The adb serial exactly as `adb devices` prints it. At most one of serial or avd. */
+    serial: z.string().regex(androidSerial, 'device.serial must match ^[A-Za-z0-9._:-]{1,100}$').optional(),
+    /** An emulator's AVD name, stable across start order. At most one of serial or avd. */
+    avd: z.string().regex(androidAvd, 'device.avd must match ^[A-Za-z0-9._-]{1,100}$').optional(),
+  }).optional(),
   preconditions: z.array(z.string().trim().min(1).max(500)).max(20).optional(),
   values: valuesSchema,
   steps: z.array(z.discriminatedUnion('kind', [
@@ -87,6 +120,47 @@ export const scriptedScenarioSchema = z.strictObject({
       context.addIssue({ code: 'custom', message: 'replaceText valueKey must name a supplied value',
         path: ['steps', index, 'action', 'valueKey'] });
     }
+  }
+
+  const platform = scenario.platform ?? 'ios';
+  if (platform === 'android') {
+    if (scenario.app.bundleId !== undefined) context.addIssue({ code: 'custom',
+      message: 'app.bundleId is not supported on Android; use app.package', path: ['app', 'bundleId'] });
+    if (scenario.app.launchArgs !== undefined) context.addIssue({ code: 'custom',
+      message: 'app.launchArgs is not supported on Android; use app.intentExtras', path: ['app', 'launchArgs'] });
+    if (scenario.app.package === undefined) context.addIssue({ code: 'custom',
+      message: 'app.package is required on Android', path: ['app', 'package'] });
+    if (scenario.device?.udid !== undefined) context.addIssue({ code: 'custom',
+      message: 'device.udid is not supported on Android; use device.serial or device.avd', path: ['device', 'udid'] });
+    if (scenario.device?.serial !== undefined && scenario.device?.avd !== undefined) context.addIssue({ code: 'custom',
+      message: 'A script may name at most one of device.serial or device.avd', path: ['device'] });
+  } else {
+    if (scenario.app.bundleId === undefined) context.addIssue({ code: 'custom',
+      message: 'app.bundleId is required', path: ['app', 'bundleId'] });
+    if (scenario.app.package !== undefined) context.addIssue({ code: 'custom',
+      message: 'app.package requires "platform": "android"', path: ['app', 'package'] });
+    if (scenario.app.activity !== undefined) context.addIssue({ code: 'custom',
+      message: 'app.activity requires "platform": "android"', path: ['app', 'activity'] });
+    if (scenario.app.intentExtras !== undefined) context.addIssue({ code: 'custom',
+      message: 'app.intentExtras requires "platform": "android"', path: ['app', 'intentExtras'] });
+    if (scenario.device?.serial !== undefined) context.addIssue({ code: 'custom',
+      message: 'device.serial requires "platform": "android"', path: ['device', 'serial'] });
+    if (scenario.device?.avd !== undefined) context.addIssue({ code: 'custom',
+      message: 'device.avd requires "platform": "android"', path: ['device', 'avd'] });
+  }
+
+  for (const [valueKey, value] of Object.entries(scenario.values)) {
+    if (platform === 'android') {
+      if (controlCharacter.test(value)) context.addIssue({ code: 'custom',
+        message: 'Typed values must not contain control characters', path: ['values', valueKey] });
+    } else if (!printableAscii.test(value)) {
+      context.addIssue({ code: 'custom', message: 'Typed values must use printable US keyboard characters',
+        path: ['values', valueKey] });
+    }
+  }
+  if (platform !== 'android' && Object.values(scenario.values).some(value => value.startsWith('-'))) {
+    context.addIssue({ code: 'custom',
+      message: 'MobileBuildMCP 2.7.1 cannot type text starting with a leading hyphen', path: ['values'] });
   }
 });
 

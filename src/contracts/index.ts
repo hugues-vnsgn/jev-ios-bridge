@@ -4,10 +4,21 @@ export type Direction = 'up' | 'down' | 'left' | 'right';
 /** The device platform a scenario runs on. Scripts without one are iOS. */
 export type Platform = 'ios' | 'android';
 
+/** An app's launch identity: a bundle ID and optional launch args on iOS, or a package, optional activity
+ *  and optional intent extras on Android. */
+export type AppIdentity =
+  | { bundleId: string; launchArgs?: string[] }
+  | { package: string; activity?: string; intentExtras?: Record<string, string> };
+
 export interface ScenarioContext {
-  app: { bundleId: string; launchArgs?: string[] };
+  app: AppIdentity;
   preconditions?: string[];
   device?: { udid?: string };
+}
+
+/** Narrows an app identity to its iOS shape (a bundle ID). */
+export function isIosApp(app: AppIdentity): app is { bundleId: string; launchArgs?: string[] } {
+  return 'bundleId' in app;
 }
 
 /** Device preparation needs only launch identity and environmental prerequisites. */

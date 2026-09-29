@@ -50,6 +50,13 @@
                 "type": "number",
                 "const": 1
               },
+              "platform": {
+                "type": "string",
+                "enum": [
+                  "ios",
+                  "android"
+                ]
+              },
               "app": {
                 "type": "object",
                 "properties": {
@@ -66,11 +73,32 @@
                       "maxLength": 200,
                       "pattern": "^[\\x20-\\x7e]+$"
                     }
+                  },
+                  "package": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_]*(?:\\.[A-Za-z][A-Za-z0-9_]*)+$"
+                  },
+                  "activity": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200,
+                    "pattern": "^\\.?[A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)*$"
+                  },
+                  "intentExtras": {
+                    "type": "object",
+                    "propertyNames": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 200
+                    },
+                    "additionalProperties": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 200,
+                      "pattern": "^[\\x20-\\x7e]+$"
+                    }
                   }
                 },
-                "required": [
-                  "bundleId"
-                ],
                 "additionalProperties": false
               },
               "device": {
@@ -79,6 +107,14 @@
                   "udid": {
                     "type": "string",
                     "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                  },
+                  "serial": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9._:-]{1,100}$"
+                  },
+                  "avd": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9._-]{1,100}$"
                   }
                 },
                 "additionalProperties": false
@@ -100,8 +136,7 @@
                 },
                 "additionalProperties": {
                   "type": "string",
-                  "maxLength": 2048,
-                  "pattern": "^[\\x20-\\x7e]*$"
+                  "maxLength": 2048
                 }
               },
               "steps": {

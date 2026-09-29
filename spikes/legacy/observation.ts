@@ -1,4 +1,4 @@
-import type { Element, Snapshot } from '../../src/contracts/index.js';
+import { isIosApp, type Element, type Snapshot } from '../../src/contracts/index.js';
 import type { ActionOption, HistoryEntry, Observation, Scenario } from './contracts.js';
 
 export type ObservationVariant = 'compact' | 'full';
@@ -184,7 +184,7 @@ export function buildObservation(
   const recent = maxHistory === 0 ? [] : history.slice(-maxHistory);
   const lines = [
     `Goal: ${scenario.goal}`,
-    `App bundle: ${scenario.app.bundleId}`,
+    `App bundle: ${isIosApp(scenario.app) ? scenario.app.bundleId : scenario.app.package}`,
     `Step: ${buildOptions.step ?? history.length + 1}`,
     `Observation: ${variant}; snapshot sequence ${snapshot.sequence}; captured ${new Date(snapshot.capturedAt).toISOString()}; truncated ${snapshot.truncated}`,
     `Supplied scenario values: ${JSON.stringify(scenario.values)}`,

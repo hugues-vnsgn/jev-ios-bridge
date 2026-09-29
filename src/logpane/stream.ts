@@ -3,8 +3,14 @@ import { closeSync, fstatSync, openSync, readSync } from 'node:fs';
 import { chmod, unlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { isIosApp, type AppIdentity } from '../contracts/index.js';
 import { processAlive } from '../process.js';
 import { appLine, masker, osLine, type PaneLine } from './format.js';
+
+/** The label shown in the pane header and window title: the bundle ID on iOS, the package on Android. */
+function appLabel(app: AppIdentity): string {
+  return isIosApp(app) ? app.bundleId : app.package;
+}
 
 /** Messages on the pane socket, one JSON object per line. */
 export type PaneMessage =
@@ -54,7 +60,7 @@ const HISTORY_LIMIT = 5_000;
  * serve the lines to panes over a Unix socket that only this user can open. Nothing is written to disk.
  */
 export async function startLogStream(options: {
-  runId: string; bundleId: string; sources: { runtime?: string; os?: string }; values: Record<string, string>;
+  runId: string; app: AppIdentity; sources: { runtime?: string; os?: string }; values: Record<string, string>;
   pollMs?: number;
 }): Promise<LogStream> {
   const socketPath = paneSocketPath(options.runId);
@@ -69,7 +75,7 @@ export async function startLogStream(options: {
     }
     for (const client of clients) client.write(text);
   };
-  const hello: PaneMessage = { type: 'hello', runId: options.runId, appId: options.bundleId, sources: options.sources };
+  const hello: PaneMessage = { type: 'hello', runId: options.runId, appId: appLabel(options.app), sources: options.sources };
   await unlink(socketPath).catch(() => {});
   const server: Server = createServer(client => {
     clients.add(client);

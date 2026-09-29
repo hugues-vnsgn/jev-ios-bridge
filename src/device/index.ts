@@ -2,7 +2,7 @@ import { execFile } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { readFile } from 'node:fs/promises';
 import { isAbsolute, join, resolve } from 'node:path';
-import type { Action, ActionScenarioContext, DeviceDriver, DeviceMetrics, Element, PrepareScenarioContext, Snapshot, TapAliasRule } from '../contracts/index.js';
+import { isIosApp, type Action, type ActionScenarioContext, type DeviceDriver, type DeviceMetrics, type Element, type PrepareScenarioContext, type Snapshot, type TapAliasRule } from '../contracts/index.js';
 import { ROLES, type Role } from '../scripted/vocabulary.js';
 import { DeviceLease, DeviceLeaseBusyError } from './lease.js';
 import { readLogTail } from './logs.js';
@@ -352,6 +352,10 @@ export class MobileBuildMcpDriver implements DeviceDriver {
   private async prepareIssued(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void> {
     if (this.lease.held) throw new Error('Driver is already prepared');
     if (signal.aborted) throw signal.reason;
+    if (!isIosApp(scenario.app)) {
+      throw new Error('The MobileBuildMCP driver only runs iOS scripts; this scenario has no app.bundleId');
+    }
+    const bundleId = scenario.app.bundleId;
     const deviceId = await selectDeviceId(this.options.cwd, scenario.device?.udid, this.options.defaultUdid);
     // A crashed holder's record lists nothing to sweep on iOS: MobileBuildMCP owns its own processes.
     try { await this.lease.take(deviceId); }
@@ -363,11 +367,11 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     this.referenceExpiries = 0;
     this.nearTtlRefreshes = 0;
     this.deviceId = deviceId;
-    this.appId = scenario.app.bundleId;
+    this.appId = bundleId;
     try {
       const launchArgs = scenario.app.launchArgs ?? [];
       // Array parameters go through --json, so arguments that start with "-" aren't read as CLI flags.
-      const launched = await this.issueCommand(['simulator', 'launch-app', '--simulator-id', deviceId, '--bundle-id', scenario.app.bundleId,
+      const launched = await this.issueCommand(['simulator', 'launch-app', '--simulator-id', deviceId, '--bundle-id', bundleId,
         ...(launchArgs.length ? ['--json', JSON.stringify({ launchArgs })] : [])], signal,
         'mobilebuildmcp.output.launch-result');
       const artifacts = record(launched.artifacts);

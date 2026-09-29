@@ -24,8 +24,11 @@ export type ScriptedStep =
 
 export interface ScriptedScenario {
   version: 1;
-  app: { bundleId: string; launchArgs?: string[] };
-  device?: { udid?: string };
+  /** The device platform this script targets. Absent, or "ios", reads exactly as in 1.1. */
+  platform?: 'ios' | 'android';
+  app: { bundleId: string; launchArgs?: string[]; package?: string; activity?: string;
+    intentExtras?: Record<string, string> };
+  device?: { udid?: string; serial?: string; avd?: string };
   preconditions?: string[];
   values: Record<string, string>;
   steps: ScriptedStep[];
