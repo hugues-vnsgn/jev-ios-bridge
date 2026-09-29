@@ -1,7 +1,8 @@
 # Assemble the v1.2.0 spec
 
 Type: task
-Status: open
+Status: claimed
+Claimed by: subagent (owner session, 2026-09-29)
 Blocked by: 01, 02, 03, 04, 05, 06, 07, 08, 10
 
 ## Question
