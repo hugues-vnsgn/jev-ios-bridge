@@ -1,8 +1,8 @@
 import { randomUUID } from 'node:crypto';
-import { constants } from 'node:fs';
 import { mkdir, open, readFile, unlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { processAlive } from '../process.js';
 
 /**
  * The device lease (see `CONTEXT.md`): a bridge process's exclusive, recorded hold on one device for
@@ -14,6 +14,9 @@ import { join } from 'node:path';
 /** Where device leases live. Documented so a person can inspect one; the bridge clears stale ones itself. */
 export const DEFAULT_LEASE_ROOT = join(tmpdir(), 'jev-ios-bridge-device-locks');
 
+/** Who issues a device command, so a driver can fence one kind at once. Phase 4 adds Android's kinds. */
+export type DeviceCommandKind = 'mobilebuildmcp';
+
 /** Who held a lease: the run, its bridge process, and what that run started that outlives a crash. */
 export interface LeaseHolder {
   runId?: string;
@@ -23,7 +26,10 @@ export interface LeaseHolder {
   ownedProcesses: string[];
 }
 
-/** The lease file. A 1.1 bridge reads only `pid` and `token`, so both stay; the other fields are additions. */
+/**
+ * The lease file. A 1.1 bridge reads `pid` and `token`, so the iOS file keeps exactly the 1.1 fields;
+ * `runId` and `ownedProcesses` are additions written only when set. `deviceId` keeps its 1.1 name.
+ */
 interface LeaseFile {
   pid: number;
   token: string;
@@ -34,9 +40,9 @@ interface LeaseFile {
 }
 
 export class DeviceLeaseBusyError extends Error {
-  constructor(readonly deviceId: string, readonly holder: LeaseHolder | undefined, readonly path: string) {
+  constructor(readonly deviceIdentity: string, readonly holder: LeaseHolder | undefined, readonly path: string) {
     const description = holder?.processId !== undefined ? `bridge process ${String(holder.processId)}` : 'another bridge process';
-    super(`Device ${deviceId} is locked by ${description} (lock file ${path}). ` +
+    super(`Device ${deviceIdentity} is locked by ${description} (lock file ${path}). ` +
       'Wait for that run to finish, or stop that process; the next run then clears the lock.');
     this.name = 'DeviceLeaseBusyError';
   }
@@ -44,32 +50,24 @@ export class DeviceLeaseBusyError extends Error {
 
 /** Release was refused: something the run started may still act on the device, so the lease is kept. */
 export class DeviceLeaseKeptError extends Error {
-  constructor(readonly deviceId: string) {
-    super(`Device ${deviceId} lease kept: something the run started may still act on the device`);
+  constructor(readonly deviceIdentity: string) {
+    super(`Device ${deviceIdentity} lease kept: something the run started may still act on the device`);
     this.name = 'DeviceLeaseKeptError';
   }
 }
 
-export type DeviceCommandState = 'in flight' | 'exited' | 'unknown' | 'fenced';
+type DeviceCommandState = 'in flight' | 'exited' | 'unknown' | 'fenced';
 
 /** One command the run issued to the device, in the lease's in-flight ledger. */
 export interface DeviceCommand {
-  readonly kind: string;
-  readonly state: DeviceCommandState;
   /** The command's outcome is known (success or an acknowledged failure): it can no longer act. */
   exited(): void;
   /** The outcome was lost: the command may still act on the device until it is fenced. */
   unknown(): void;
 }
 
-/** A process id that can't be read is an unknown owner, and an unknown owner is never assumed dead. */
-export function processAlive(pid: unknown): boolean {
-  if (!Number.isSafeInteger(pid) || (pid as number) <= 0) return true;
-  try { process.kill(pid as number, 0); return true; }
-  catch (error) { return (error as NodeJS.ErrnoException).code === 'EPERM'; }
-}
-
-async function readLeaseFile(path: string): Promise<Partial<LeaseFile> | undefined> {
+/** A lease file that can't be read or parsed names an unknown holder. Used only while taking the lease. */
+async function readHolderFile(path: string): Promise<Partial<LeaseFile> | undefined> {
   try {
     const parsed = JSON.parse(await readFile(path, 'utf8')) as unknown;
     return parsed && typeof parsed === 'object' ? parsed as Partial<LeaseFile> : undefined;
@@ -88,9 +86,9 @@ export class DeviceLease {
   private readonly root: string;
   private readonly processId: number;
   private readonly operations = new Set<Promise<unknown>>();
-  private commands = new Set<{ kind: string; state: DeviceCommandState }>();
+  private readonly commands = new Set<{ kind: DeviceCommandKind; state: DeviceCommandState }>();
   private owned: string[] = [];
-  private file: { path: string; deviceId: string; content: LeaseFile } | undefined;
+  private file: { path: string; deviceIdentity: string; content: LeaseFile } | undefined;
   private late: Promise<void> | undefined;
 
   constructor(options: { root?: string; processId?: number } = {}) {
@@ -104,32 +102,32 @@ export class DeviceLease {
    * Take the lease on a device identity. A live holder makes the device busy. A dead holder loses the
    * lease, and its record is returned so the driver can sweep exactly what that holder started.
    */
-  async take(deviceId: string, holder: { runId?: string } = {}): Promise<LeaseHolder | undefined> {
+  async take(deviceIdentity: string, holder: { runId?: string } = {}): Promise<LeaseHolder | undefined> {
     if (this.file) throw new Error('Device lease is already held');
     await mkdir(this.root, { recursive: true });
-    const path = join(this.root, `${deviceId.toUpperCase()}.lock`);
+    const path = join(this.root, `${deviceIdentity.toUpperCase()}.lock`);
     let handle;
     let deadHolder: LeaseHolder | undefined;
     for (let attempt = 0; !handle; attempt++) {
       try { handle = await open(path, 'wx', 0o600); }
       catch (error) {
         if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error;
-        const existing = await readLeaseFile(path);
+        const existing = await readHolderFile(path);
         // A holder whose bridge process has exited can't be protecting an in-flight command.
         if (attempt === 0 && existing && !processAlive(existing.pid)) {
           deadHolder = holderOf(existing);
           await unlink(path).catch((unlinkError: NodeJS.ErrnoException) => { if (unlinkError.code !== 'ENOENT') throw unlinkError; });
           continue;
         }
-        throw new DeviceLeaseBusyError(deviceId, existing && holderOf(existing), path);
+        throw new DeviceLeaseBusyError(deviceIdentity, existing && holderOf(existing), path);
       }
     }
-    const content: LeaseFile = { pid: this.processId, token: randomUUID(), deviceId, createdAt: new Date().toISOString(),
-      ...(holder.runId !== undefined ? { runId: holder.runId } : {}) };
+    const content: LeaseFile = { pid: this.processId, token: randomUUID(), deviceId: deviceIdentity,
+      createdAt: new Date().toISOString(), ...(holder.runId !== undefined ? { runId: holder.runId } : {}) };
     try { await handle.writeFile(JSON.stringify(content)); }
     catch (error) { await handle.close(); await unlink(path); throw error; }
     await handle.close();
-    this.file = { path, deviceId, content };
+    this.file = { path, deviceIdentity, content };
     this.commands.clear();
     this.owned = [];
     return deadHolder;
@@ -144,18 +142,24 @@ export class DeviceLease {
     return pending;
   }
 
-  get operationsInFlight(): boolean { return this.operations.size > 0; }
-
-  /** Settles once every operation tracked so far has settled. */
-  async operationsSettled(): Promise<void> { await Promise.allSettled([...this.operations]); }
+  /** Wait until every tracked operation has settled, including ones started meanwhile. Rejects with the signal's reason if it aborts first. */
+  async settle(signal: AbortSignal): Promise<void> {
+    while (this.operations.size > 0) {
+      if (signal.aborted) throw signal.reason;
+      const settled = Promise.allSettled([...this.operations]);
+      await new Promise<void>((resolveDone, reject) => {
+        const onAbort = () => { signal.removeEventListener('abort', onAbort); reject(signal.reason); };
+        signal.addEventListener('abort', onAbort, { once: true });
+        void settled.then(() => { signal.removeEventListener('abort', onAbort); resolveDone(); });
+      });
+    }
+  }
 
   /** Record a command about to be issued to the device. */
-  command(kind: string): DeviceCommand {
-    const entry: { kind: string; state: DeviceCommandState } = { kind, state: 'in flight' };
+  command(kind: DeviceCommandKind): DeviceCommand {
+    const entry: { kind: DeviceCommandKind; state: DeviceCommandState } = { kind, state: 'in flight' };
     this.commands.add(entry);
     return {
-      kind,
-      get state() { return entry.state; },
       exited: () => {
         if (entry.state !== 'in flight' && entry.state !== 'unknown') return;
         entry.state = 'exited';
@@ -166,7 +170,7 @@ export class DeviceLease {
   }
 
   /** The fence hook: the driver proved every command of this kind dead, so the unknown ones can't act any more. */
-  fence(kind: string): void {
+  fence(kind: DeviceCommandKind): void {
     for (const entry of this.commands) if (entry.kind === kind && entry.state === 'unknown') entry.state = 'fenced';
   }
 
@@ -189,14 +193,17 @@ export class DeviceLease {
     return this.owned.length === 0 && [...this.commands].every(entry => entry.state === 'exited' || entry.state === 'fenced');
   }
 
-  /** Release the lease if it is releasable; otherwise keep it and throw `DeviceLeaseKeptError`. */
+  /**
+   * Release the lease if it is releasable; otherwise keep it and throw `DeviceLeaseKeptError`. A lease
+   * file that can't be read or parsed keeps the lease too: the error is rethrown and the file stays.
+   */
   async release(): Promise<void> {
     const file = this.file;
     if (!file) return;
-    if (!this.releasable) throw new DeviceLeaseKeptError(file.deviceId);
+    if (!this.releasable) throw new DeviceLeaseKeptError(file.deviceIdentity);
     try {
-      const current = await readLeaseFile(file.path);
-      if (current?.token === file.content.token) await unlink(file.path);
+      const current = JSON.parse(await readFile(file.path, 'utf8')) as { token?: string };
+      if (current.token === file.content.token) await unlink(file.path);
     } catch (error) {
       if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
     }
@@ -209,7 +216,7 @@ export class DeviceLease {
    */
   releaseLate(finish: () => Promise<void>): void {
     if (this.operations.size === 0 || this.late) return;
-    this.late = this.operationsSettled()
+    this.late = Promise.allSettled([...this.operations])
       .then(finish)
       .catch(() => {})
       .finally(() => { this.late = undefined; });
@@ -218,27 +225,8 @@ export class DeviceLease {
   private async rewrite(): Promise<void> {
     const file = this.file;
     if (!file) throw new Error('Device lease is not held');
-    file.content = { ...file.content, ...(this.owned.length ? { ownedProcesses: [...this.owned] } : {}) };
-    if (!this.owned.length) delete file.content.ownedProcesses;
+    const { ownedProcesses: _previous, ...rest } = file.content;
+    file.content = { ...rest, ...(this.owned.length ? { ownedProcesses: [...this.owned] } : {}) };
     await writeFile(file.path, JSON.stringify(file.content));
-  }
-}
-
-/** The last 4 KiB of an app log file, or a bracketed reason it can't be read. Shared by the device drivers. */
-export async function readLogTail(path: string): Promise<string> {
-  try {
-    const file = await open(path, constants.O_RDONLY | constants.O_NOFOLLOW);
-    try {
-      const stat = await file.stat();
-      if (!stat.isFile()) return '[unavailable: not a regular file]';
-      const length = Math.min(stat.size, 4_096);
-      if (length === 0) return '';
-      const bytes = Buffer.alloc(length);
-      const { bytesRead } = await file.read(bytes, 0, length, stat.size - length);
-      return bytes.subarray(0, bytesRead).toString('utf8');
-    } finally { await file.close(); }
-  } catch (error) {
-    const code = (error as NodeJS.ErrnoException).code;
-    return `[unavailable: ${code && /^[A-Z0-9_]+$/.test(code) ? code : 'READ_FAILED'}]`;
   }
 }

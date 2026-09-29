@@ -3,6 +3,7 @@ import { closeSync, fstatSync, openSync, readSync } from 'node:fs';
 import { chmod, unlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { processAlive } from '../process.js';
 import { appLine, masker, osLine, type PaneLine } from './format.js';
 
 /** Messages on the pane socket, one JSON object per line. */
@@ -36,11 +37,6 @@ class Follower {
       for (const raw of lines) { const line = this.parse(raw); if (line) emit(line); }
     } finally { closeSync(descriptor); }
   }
-}
-
-function processAlive(pid: number): boolean {
-  try { process.kill(pid, 0); return true; }
-  catch (error) { return (error as NodeJS.ErrnoException).code === 'EPERM'; }
 }
 
 export interface LogStream {

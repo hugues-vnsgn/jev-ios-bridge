@@ -4,7 +4,8 @@ import { readFile } from 'node:fs/promises';
 import { isAbsolute, join, resolve } from 'node:path';
 import type { Action, ActionScenarioContext, DeviceDriver, DeviceMetrics, Element, PrepareScenarioContext, Snapshot, TapAliasRule } from '../contracts/index.js';
 import { ROLES, type Role } from '../scripted/vocabulary.js';
-import { DEFAULT_LEASE_ROOT, DeviceLease, DeviceLeaseBusyError, readLogTail } from './lease.js';
+import { DeviceLease, DeviceLeaseBusyError } from './lease.js';
+import { readLogTail } from './logs.js';
 
 type JsonObject = Record<string, unknown>;
 export type CliResult = { stdout: string; stderr: string; exitCode: number };
@@ -252,18 +253,6 @@ function sameScreen(before: Snapshot, after: Snapshot): boolean {
   return JSON.stringify(identity(before)) === JSON.stringify(identity(after));
 }
 
-async function awaitSettlement(pending: Promise<unknown>, signal: AbortSignal): Promise<void> {
-  if (signal.aborted) throw signal.reason;
-  await new Promise<void>((resolveDone, reject) => {
-    const onAbort = () => { signal.removeEventListener('abort', onAbort); reject(signal.reason); };
-    signal.addEventListener('abort', onAbort, { once: true });
-    pending.then(
-      () => { signal.removeEventListener('abort', onAbort); resolveDone(); },
-      () => { signal.removeEventListener('abort', onAbort); resolveDone(); },
-    );
-  });
-}
-
 function awaitResultOrAbort<T>(pending: Promise<T>, signal: AbortSignal): Promise<T> {
   if (signal.aborted) return Promise.reject(signal.reason);
   return new Promise<T>((resolveResult, reject) => {
@@ -303,7 +292,7 @@ export class MobileBuildMcpDriver implements DeviceDriver {
 
   constructor(private readonly options: MobileBuildMcpDriverOptions) {
     this.runner = options.runner ?? defaultRunner(options);
-    this.lease = new DeviceLease({ root: options.lockRoot ?? DEFAULT_LEASE_ROOT });
+    this.lease = new DeviceLease(options.lockRoot ? { root: options.lockRoot } : {});
     const timeout = options.uiCommandTimeoutMs ?? 35_000;
     if (!Number.isSafeInteger(timeout) || timeout < 1 || timeout > 300_000) throw new RangeError('uiCommandTimeoutMs must be between 1 and 300000');
     this.uiCommandTimeoutMs = timeout;
@@ -540,10 +529,8 @@ export class MobileBuildMcpDriver implements DeviceDriver {
   }
 
   private async finishClose(signal: AbortSignal): Promise<void> {
-    while (this.lease.operationsInFlight) {
-      try { await awaitSettlement(this.lease.operationsSettled(), signal); }
-      catch { throw new DeviceCliError('UI_ACTION_UNCONFIRMED', 'Cleanup ended before the issued device operation acknowledged; device lock retained'); }
-    }
+    try { await this.lease.settle(signal); }
+    catch { throw new DeviceCliError('UI_ACTION_UNCONFIRMED', 'Cleanup ended before the issued device operation acknowledged; device lock retained'); }
     if (!this.lease.held) return;
     // A lost CLI response has no proven acknowledgement. A new daemon snapshot
     // alone cannot establish that an earlier request will never arrive late.

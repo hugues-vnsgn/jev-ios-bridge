@@ -76,37 +76,31 @@ test('a command in flight or with an unknown outcome keeps the lease; one that e
   await withRoot(async (root) => {
     const lease = new DeviceLease({ root });
     await lease.take(deviceId);
-    const done = lease.command('ui');
-    const lost = lease.command('ui');
-    assert.equal(done.state, 'in flight');
-    assert.equal(lease.releasable, false);
+    const done = lease.command('mobilebuildmcp');
+    assert.equal(lease.releasable, false, 'in flight');
     done.exited();
-    assert.equal(done.state, 'exited');
+    assert.equal(lease.releasable, true, 'exited');
+    const lost = lease.command('mobilebuildmcp');
     lost.unknown();
-    assert.equal(lost.state, 'unknown');
-    assert.equal(lease.releasable, false);
+    assert.equal(lease.releasable, false, 'unknown');
     await assert.rejects(lease.release(), DeviceLeaseKeptError);
     assert.equal(lease.held, true);
     assert.deepEqual(await readdir(root), [`${deviceId}.lock`], 'kept: the lost command might still act on the device');
   });
 });
 
-test('the fence hook fences every unknown command of one kind, which frees the lease', async () => {
+test('the fence hook fences the unknown commands of its kind, which frees the lease, but not those still in flight', async () => {
   await withRoot(async (root) => {
     const lease = new DeviceLease({ root });
     await lease.take(deviceId);
-    const agentCall = lease.command('agent');
-    const adbCall = lease.command('adb');
-    const running = lease.command('agent');
-    agentCall.unknown();
-    adbCall.unknown();
-    lease.fence('agent');
-    assert.equal(agentCall.state, 'fenced');
-    assert.equal(adbCall.state, 'unknown', 'fencing one kind leaves the others');
-    assert.equal(running.state, 'in flight', 'only commands with an unknown outcome are fenced');
-    adbCall.exited();
+    const lost = lease.command('mobilebuildmcp');
+    const running = lease.command('mobilebuildmcp');
+    lost.unknown();
+    lease.fence('mobilebuildmcp');
+    assert.equal(lease.releasable, false, 'a command in flight is not fenced');
     running.exited();
-    assert.equal(lease.releasable, true);
+    assert.equal(lease.releasable, true, 'the fenced command can no longer act on the device');
+    lost.exited();
     await lease.release();
     assert.deepEqual(await readdir(root), []);
   });
@@ -132,7 +126,6 @@ test('late release: once every operation the run started settles, the kept lease
     let acknowledge!: () => void;
     const operation = lease.track(() => new Promise<void>(resolve => { acknowledge = resolve; }));
     await lease.take(deviceId);
-    assert.equal(lease.operationsInFlight, true);
     let finished!: () => void;
     const lateFinish = new Promise<void>(resolve => { finished = resolve; });
     lease.releaseLate(async () => { await lease.release(); finished(); });
@@ -141,7 +134,6 @@ test('late release: once every operation the run started settles, the kept lease
     acknowledge();
     await operation;
     await lateFinish;
-    assert.equal(lease.operationsInFlight, false);
     assert.deepEqual(await readdir(root), []);
   });
 });
@@ -156,3 +148,29 @@ test('releasing a lease this run no longer holds leaves the new holder\'s file a
     assert.equal((JSON.parse(await readFile(path, 'utf8')) as { token: string }).token, 'someone-else');
   });
 });
+
+test('settle waits for every tracked operation, including one started meanwhile, and gives up when its signal aborts', async () => {
+  await withRoot(async (root) => {
+    const lease = new DeviceLease({ root });
+    let finishFirst!: () => void;
+    let finishSecond!: () => void;
+    let second: Promise<void> | undefined;
+    void lease.track(() => new Promise<void>(resolve => { finishFirst = () => { second = lease.track(() => new Promise<void>(done => { finishSecond = done; })); resolve(); }; }));
+    await new Promise(resolve => setTimeout(resolve, 0));
+    const stop = new AbortController();
+    const abandoned = lease.settle(stop.signal);
+    stop.abort(new Error('cleanup deadline'));
+    await assert.rejects(abandoned, /cleanup deadline/);
+
+    let settled = false;
+    const waiting = lease.settle(new AbortController().signal).then(() => { settled = true; });
+    finishFirst();
+    await new Promise(resolve => setTimeout(resolve, 10));
+    assert.equal(settled, false, 'the operation started meanwhile is still in flight');
+    finishSecond();
+    await second;
+    await waiting;
+    assert.equal(settled, true);
+  });
+});
+
