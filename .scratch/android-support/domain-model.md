@@ -135,6 +135,7 @@ classDiagram
         <<Value Object>>
         +runId
         +processId
+        +ownedProcesses
     }
     class DeviceIdentity {
         <<Value Object>>
@@ -158,7 +159,7 @@ classDiagram
     DeviceLease ..> LeaseKept : emits
     DeviceLease ..> LeaseReleased : emits
 
-    note for DeviceLease "Invariant: at most one lease per device identity across every bridge process. It is released only when nothing its run started can still act on the device: every command exited or was fenced, and the agent, app, log streams and forward are stopped or removed. Otherwise it is kept, and releases itself once that can be shown. A holder whose process is dead loses the lease to the next run, which sweeps only what the bridge owns."
+    note for DeviceLease "Invariant: at most one lease per device identity across every bridge process. It is released only when nothing its run started can still act on the device: every command exited or was fenced, and the agent, app, log streams and forward are stopped or removed. Otherwise it is kept, and releases itself once that can be shown. A holder whose process is dead loses the lease to the next run, which sweeps exactly what the dead holder's record lists: its log streams, its agent and its forward. Cleanup undoes only what its own run started, so a foreign agent, or an app the run never restarted, is left alone."
 ```
 
 ### Android device session
@@ -249,9 +250,10 @@ sequenceDiagram
     end
     Note over Android,Run: AppExited is held by the app watch; the run reads it through appRunning()
     Run->>Android: close
-    Android->>Android: wait for finite adb commands; force-stop (StopExpected); stop both logcat streams
-    Android->>Agent: kill, then confirm it is gone (AgentFenced)
-    Android->>Android: remove the forward
+    Android->>Android: issue no new device work; wait for finite adb commands
+    Android->>Agent: kill the agent this run started, by pid, then confirm it is gone (AgentFenced)
+    Android->>Android: force-stop the app if this run restarted it (StopExpected); stop this run's logcat streams
+    Android->>Android: remove this run's forward
     Android->>Lease: release
     Lease-->>Android: LeaseReleased, or LeaseKept (CLEANUP_FAILED)
     Run->>Evidence: verdict
@@ -278,7 +280,7 @@ All accepted by the owner on 2026-09-29.
 | Q4.1 | Lease invariant | Released only when nothing the run started can still act on the device |
 | Q4.2 | Fencing | Stopping the agent, confirmed, ends agent commands with unknown outcomes |
 | Q4.3 | Session invariant | Every action targets the latest settled snapshot |
-| Q4.4 | After a crash | The next run takes the lease and sweeps only what the bridge owns |
+| Q4.4 | After a crash | The next run takes the lease and sweeps only what the bridge owns: what the dead holder's record lists (log streams, agent, forward) |
 | Q5.1 | Where events are recorded | New fields inside existing run events, on Android runs only |
 | Q5.2 | A checkpoint on a screen that never settled | Judge as usual, and mark the step |
 

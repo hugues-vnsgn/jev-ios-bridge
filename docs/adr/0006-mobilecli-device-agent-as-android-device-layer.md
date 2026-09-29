@@ -36,7 +36,7 @@ mobilecli's CLI adds only a host daemon. Any command starts it, it's shared per 
 - **The bridge never runs mobilecli.** So:
   - no daemon, no cloud or token lookup, and no query of other phones or paired iPhones;
   - the agent listens only on the device's local socket, which `adb forward` reaches from `127.0.0.1`.
-- **Android allows one UI-automation agent per device.** The bridge refuses a device held by a foreign agent with `DEVICE_BUSY`, and kills only its own agent, which it keeps at its own path on the device. A crashed run's leftover agent and forward are swept by the next run that takes the device lease.
+- **Android allows one UI-automation agent per device.** The bridge refuses a device held by a foreign agent with `DEVICE_BUSY`. It kills only the agent it started, which it keeps at its own path on the device, and its cleanup undoes only what its own run did. A crashed run's leftover agent, forward and log streams are swept by the next run that takes the device lease, as recorded in the lease.
 - **Stopping the agent is the fence.** Once the agent is confirmed gone, no agent command whose outcome was unknown can still take effect. The device lease can then be released, which is proof that nothing the run started can still act on the device.
 - **Android's view has its own gate.** [ADR-0004](0004-fixed-assertion-bounds-single-judgment.md)'s corpus gate covers only iOS screens. A change to the `android-full-text-v1` projection, or a new Jev model, re-runs the 10-screen check from "What Jev sees on Android" (its 31 claims, one run), and must give zero confidently wrong answers.
 
