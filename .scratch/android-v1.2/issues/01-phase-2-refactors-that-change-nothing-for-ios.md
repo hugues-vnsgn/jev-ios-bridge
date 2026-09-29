@@ -1,6 +1,7 @@
 # Phase 2: refactors that change nothing for iOS
 
-Status: ready-for-agent
+Status: closed
+Closed: Merged into agent/android-v1.2 at a62989f
 Claimed by: implementer-01
 
 Spec: [../spec.md](../spec.md). The work is [the release spec's phase 2](../../android-support/release-spec.md#phase-2-refactors-that-change-nothing-for-ios-where-android-plugs-into-the-code-items-1-to-4-domain-model-decision-h), items 1 to 6. Read that section in full. The detail below only adds acceptance criteria.
