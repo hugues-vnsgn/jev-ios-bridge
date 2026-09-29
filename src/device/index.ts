@@ -6,7 +6,7 @@ import { mkdir, open, readFile, unlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { isAbsolute, join, resolve } from 'node:path';
 import type { Action, ActionScenarioContext, DeviceDriver, DeviceMetrics, Element, PrepareScenarioContext, Snapshot, TapAliasRule } from '../contracts/index.js';
-import { bridgeRole } from '../scripted/vocabulary.js';
+import { ROLES, type Role } from '../scripted/vocabulary.js';
 
 type JsonObject = Record<string, unknown>;
 export type CliResult = { stdout: string; stderr: string; exitCode: number };
@@ -55,6 +55,13 @@ export class StaleSnapshotError extends Error {
     super(message);
     this.name = 'StaleSnapshotError';
   }
+}
+
+const roleSet: ReadonlySet<string> = new Set(ROLES);
+
+/** Translate MobileBuildMCP's role into the bridge's vocabulary. Unknown roles become `other`. */
+export function bridgeRole(vendorRole: string): Role {
+  return roleSet.has(vendorRole) ? vendorRole as Role : 'other';
 }
 
 function record(value: unknown): JsonObject {
