@@ -269,3 +269,13 @@ Reviewed `main...63b45cc`, offline only. It re-extracted both pinned Mac binarie
 | 3 | P2 | After `kill -9`, the dead run's host `adb logcat` processes survive, and the takeover sweep and check 15 missed them. | Fixed. The lease's holder record lists what the run started (its `logcat` pids, agent pid and forward port). The takeover sweeps exactly that, killing a pid only if its command line still matches. Check 6 and check 15 now look for leftover `logcat` processes. |
 
 **Disagreements:** none.
+
+### Re-review (GPT-6-Astra via Codex, 2026-09-29)
+
+Reviewed `63b45cc..0fb3725`. Verdict: **ready after fixes**. All three previous findings are resolved, and the spec and domain model agree.
+
+| # | Severity | Finding | Resolution |
+| --- | --- | --- | --- |
+| 1 | P2 | The manual cleanup rule in the device rules still said `pkill -f com.mobilenext.mobilecli.DeviceServer`, which kills by class name and so could kill a foreign agent the bridge had correctly left alone. | Fixed. The rule now cleans up by ownership: find the pid, check it's the bridge's own (open point 22) or a mobilecli agent you started yourself, kill that pid, and remove only your own forward. It says never to `pkill` by class name. |
+
+**Disagreements:** none.
