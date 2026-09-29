@@ -50,3 +50,30 @@ Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase
     to `AppIdentity` at three call sites and would need a discriminated-union reshape of `ScriptedScenario`
     itself, which is out of this Issue's scope and not required by any test or acceptance criterion.
   - `npm run check` passes (typecheck, 200 tests, build) at the branch tip.
+
+- 2026-09-29, implementer-03: review round 1 fixes.
+  - Restored the exact legacy message and path for an iOS script missing `app.bundleId`
+    ("Invalid input: expected string, received undefined" at `app.bundleId`), pinned by a new
+    `missingBundleId` golden entry.
+  - Reordered the schema's `superRefine` (app/device, then values, then steps) so an iOS script's issue
+    list is byte-identical to 1.1's again; pinned by a new `iosMultipleErrors` golden entry (a malformed
+    `app.bundleId`, a non-ASCII value, and a duplicate step id, in that order).
+  - Fixed `app.activity`'s pattern: a bare name with neither a leading dot nor an internal one (for example
+    `MainActivity`) is now rejected, since `am start` can't tell it apart from a package-relative form.
+    Pinned by `androidActivityBareName`.
+  - Pinned six more exact messages from item 1's limits: `app.intentExtras` over 20 entries, a non-ASCII or
+    over-200-character intent extra value, a malformed `app.package`, an Android typed value over 2,048
+    characters, and more than 32 typed values on an Android script.
+  - Reshaped `ScriptedScenario` into `ScriptedScenarioIos | ScriptedScenarioAndroid` (discriminated on
+    `platform`), with `IosAppIdentity`/`AndroidAppIdentity` defined once in `src/contracts/index.ts` and
+    reused by `AppIdentity`, `isIosApp`, and both scenario variants, and `Platform`'s literal union
+    collapsed into one `PLATFORMS` tuple reused by the zod schema. Fixed every call site the compiler then
+    flagged: `run.ts`'s `started` event now writes `bundleId: null` on an Android run (iOS stays
+    byte-identical; the other Android `started` fields are a later phase's addition), and `cli.ts` /
+    `prepareContext()` pass no device for an Android script, since no driver reads it yet.
+  - Dropped the tracker citations from `schema.ts`'s comments in favor of plain-language reasons.
+  - Restored `tests/service.test.ts`'s `DeviceDriver` import to its original line, put the new imports on
+    their own line, and dropped the `isIosApp` assertion that repeated what the preceding `deepEqual`
+    already proved. `tests/device.test.ts` now asserts the MobileBuildMCP driver's full refusal message
+    instead of a loose `/iOS/` regex.
+  - `npm run check` passes (typecheck, 200 tests, build) at the new branch tip.
