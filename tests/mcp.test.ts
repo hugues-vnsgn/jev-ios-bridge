@@ -47,6 +47,14 @@ test('start_scenario\'s description names both iOS and Android', { timeout: 10_0
   } finally { await session.close(); }
 });
 
+test('the MCP server starts and lists its tools with both device settings empty', { timeout: 10_000 }, async () => {
+  const session = await openMcpSession('empty-devices', { entryPoint: 'cli', env: { JEV_DEVICE_UDID: '', JEV_ANDROID_DEVICE: '' } });
+  try {
+    const tools = await session.listTools();
+    assert.deepEqual(tools.map((tool: { name: string }) => tool.name).sort(), ['cancel_run', 'get_report', 'start_scenario']);
+  } finally { await session.close(); }
+});
+
 test('an Android script reaches the Android driver, whose refusal get_report shows: ANDROID_TOOLS_UNAVAILABLE without adb', { timeout: 20_000 }, async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-mcp-android-refusal-'));
   const empty = join(root, 'empty');
