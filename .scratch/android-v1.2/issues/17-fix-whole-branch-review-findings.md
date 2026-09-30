@@ -1,6 +1,7 @@
 # Phase 4: fix whole-branch review findings
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase4 at 1962d13
 Claimed by: claude-issue-17
 Blocked by: none
 
