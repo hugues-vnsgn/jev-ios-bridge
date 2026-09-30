@@ -43,7 +43,7 @@ class ScriptRunError extends Error {
 }
 
 /** How long cleanup may take by default: longer than one device command's own deadline (35 s), so cleanup can
- *  see an in-flight command finish. `capture` uses it for its own cleanup. */
+ *  see an in-flight command finish. */
 export const DEFAULT_CLEANUP_MS = 45_000;
 
 function bounded(value: number | undefined, fallback: number, minimum: number, maximum: number): number {

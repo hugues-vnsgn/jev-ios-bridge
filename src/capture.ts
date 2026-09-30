@@ -5,6 +5,7 @@ import { ScriptedObservationError, renderAssertionState } from './scripted/obser
 import { androidAvd, androidSerial } from './scripted/schema.js';
 import { REASON_CODES } from './scripted/vocabulary.js';
 import { DEFAULT_CLEANUP_MS } from './scripted/run.js';
+// capture exits with the CLI's own codes (release spec open point 12): "passed" when it printed, "could not start" when not.
 import { EXIT } from './exit-codes.js';
 
 export interface CaptureRequest {
