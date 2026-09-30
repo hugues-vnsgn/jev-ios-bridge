@@ -46,3 +46,17 @@ Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase
   **Local choices** (none conflicts with an Answer; noted per the open points' instruction to report defaults used): `DeviceDriver.androidPreparation?()` as the prepared-fields hook (open point/item 2); `Snapshot.shownValue?`/`Snapshot.settled?` as the optional carrier for the action/step fields (item 3) — Snapshot already carries other driver-supplied, iOS-unused optional fields (`reusedFromAction`, `screenshotAgreement`, etc.), so this follows the existing pattern; `prepared` field names `deviceIdentity`, `serial`, `agentSha256`, `sweptLeftovers` (the release spec names the concepts, not the JSON keys); `report.json`'s `typedFields` key is present only when at least one replace-text step ran (omitted, not `[]`, otherwise), by analogy with how other optional report fields are omitted rather than defaulted.
 
   All gates green at the branch tip; see the implementer report for the exact command and log path.
+
+- **2026-09-30, orchestrator (review round 1):** iOS byte-identical (10 varied fake-driver runs compared at `0eedde7` and the tip); open points 5 and 11 and item 1a met. The separate golden file `tests/golden/report-json-android.json` is accepted: its sibling test compares the whole of `report-json.json` and dates from before phase 3, so the Android run can't join that file without editing frozen test code, and the settled context allows a new golden file where none fits. Eight fixes requested (tracker citations in `src`, the shown value's home, a neutral driver hook name, one way to tell the platform, duplicated `typedFields`, "screen still changing" scope, allowlist coverage, an unchecked cast).
+
+- **2026-09-30, implementer-07 (review round 1 fixes):** All eight applied, test-first:
+  1. Plain-worded the "(owner decision C)" comments in `report-json.ts` and the "Owner ruling … Issue 07" comment in `tests/scripted-run.test.ts`.
+  2. The shown value moved off `Snapshot` (which keeps `settled` only) onto a new `ActOutcome` a replace-text `act()` call may return instead of a bare `Snapshot`; every existing fake driver returning a `Snapshot` or nothing still compiles unchanged. `lastActedSnapshot()` is gone; the local snapshot variable is `settledScreen`.
+  3. `DeviceDriver.androidPreparation?()` is now the platform-neutral `preparation?()`, returning `DevicePreparation` (renamed from `AndroidPreparation`).
+  4. `run.ts` reads `script.platform` once into `const platform: Platform`, used for the rule choice, `renderAssertionState`, and `prepareContext`'s device check; `isIosApp(script.app)` (already used elsewhere in the codebase) narrows the app-identity fields the type system requires, rather than a second `ios` boolean.
+  5. `report-json.ts` exports `typedFieldsOf(events)`; `report.ts` imports and uses it instead of its own drifted copy (which had dropped the `replaceText` filter).
+  6. The prose report's "screen still changing" line now comes from every `step` event with `settled: false`, of any step kind, not only checkpoints.
+  7. Added a test proving the run log keeps `projectionRule: "android-full-text-v1"` unredacted even when a script value equals it, while that same value is redacted everywhere else (for example a shown value).
+  8. `report-json.ts`'s `intentExtras` now comes from a `stringRecord()` helper that keeps only string-valued entries, instead of casting after an object-only check.
+
+  `npm run check` green at the new tip; see the implementer report for the exact log path.
