@@ -59,3 +59,5 @@ Gates at tip 1751b3b304022b1ee371bebe99397bcd8eb74628: `npm run check` passes (t
 7. `keepActResult` (`src/scripted/run.ts`) now evaluates `isActOutcome(result)` once.
 
 Gates rerun at tip 662cbae7007cdcad4eec8bd22b4afe6d1a571fe8: `npm run check` passes (typecheck, 241 tests, build); worktree clean; no golden file changed; no line present at 819ea10 in the touched test files was touched.
+
+**2026-09-30, implementer-08, review round 2 (commit 119c065):** `androidReportFields` (`src/scripted/report-json.ts`) now calls `recordedPlatform(events)` instead of re-checking `started.data.platform` itself, so `recordedPlatform`'s doc comment ("the one place any reader decides Android vs iOS") is true again. Its inputs stay `started`/`events`, no separate `platform` parameter. Output is byte-identical, since `recordedPlatform` reads the same `started` event the function already has. Gates rerun at tip 119c0651be3cf44ab3bf994960d755bae88ae57a: `npm run check` passes (typecheck, 241 tests, build); worktree clean; no golden file changed.
