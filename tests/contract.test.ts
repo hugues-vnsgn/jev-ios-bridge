@@ -16,7 +16,7 @@ import { DeviceCliError } from '../src/device/index.js';
 import { createRunLog } from '../src/log/index.js';
 import type { ScriptedJudge } from '../src/scripted/contracts.js';
 import { REPORT_VERSION } from '../src/scripted/report-json.js';
-import { SCRIPT_VERSION, safeParseScriptedScenario } from '../src/scripted/schema.js';
+import { SCRIPT_VERSION, scriptedScenarioSchema } from '../src/scripted/schema.js';
 import { REASON_CODES, ROLES } from '../src/scripted/vocabulary.js';
 import { BridgeService } from '../src/service.js';
 
@@ -158,7 +158,7 @@ const scriptCases: Record<string, unknown> = {
 
 test('contract: accepted and rejected scripts, with exact messages', async () => {
   const results = Object.fromEntries(Object.entries(scriptCases).map(([name, input]) => {
-    const parsed = safeParseScriptedScenario(input);
+    const parsed = scriptedScenarioSchema.safeParse(input);
     return [name, parsed.success ? { accepted: true }
       : { accepted: false, issues: parsed.error.issues.map(issue => ({ path: issue.path.join('.'), message: issue.message })) }];
   }));
