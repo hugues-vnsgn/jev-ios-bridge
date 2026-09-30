@@ -30,6 +30,10 @@ protocolValues.bridgeVersion = new Set([BRIDGE_VERSION]);
 protocolValues.jevModel = protocolValues.model!;
 protocolValues.projectionRule = new Set(Object.values(PROJECTION_RULES));
 const identifierParents = new Set(['plannedSteps', 'assertions']);
+// Maps whose keys come from the script or from Jev, not the contract, so a key can carry a registered
+// value and is pseudonymized like an identifier. A new map of that kind belongs here; the "no registered
+// value survives" test in tests/scripted-run.test.ts fails for one that is missing.
+const dataKeyedMaps = new Set(['probabilities', 'values', 'intentExtras']);
 
 function createRedactor(secrets: string[]): (value: unknown) => unknown {
   const ordered = [...new Set(secrets.filter(Boolean))].sort((a, b) => b.length - a.length);
@@ -51,7 +55,7 @@ function createRedactor(secrets: string[]): (value: unknown) => unknown {
     if (input && typeof input === 'object') {
       return Object.fromEntries(Object.entries(input).map(([key, item]) => [dynamicKeys ? identifier(key) : key,
         typeof item === 'string' && /^(authorization|apiKey|api_key|password|token)$/i.test(key) ? '[REDACTED]' : walk(item, [...path, key],
-          key === 'probabilities' || key === 'values' || (key === 'assertions' && !Array.isArray(item)))]));
+          dataKeyedMaps.has(key) || (key === 'assertions' && !Array.isArray(item)))]));
     }
     return input;
   };
