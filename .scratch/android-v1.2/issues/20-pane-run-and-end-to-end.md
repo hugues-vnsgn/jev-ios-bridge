@@ -1,6 +1,7 @@
 # Phase 5: the pane, the run's app check, and the end-to-end run
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase5 at c6c3c9e
 Claimed by: claude-issue-20
 Blocked by: 18, 19
 
