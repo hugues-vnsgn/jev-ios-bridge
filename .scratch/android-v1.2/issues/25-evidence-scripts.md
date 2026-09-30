@@ -1,7 +1,7 @@
 # Phase 7: the Android evidence scripts
 
 Status: ready-for-agent
-Blocked by: phase 6 merged into `agent/android-v1.2-phase7`
+Blocked by: none (phase 6 merged in)
 Owner: the coordinator (device work)
 
 Spec: [../spec.md](../spec.md), "Phase 7". The work is [the release spec's phase 7](../../android-support/release-spec.md#phase-7-docs-version-and-changelog-assemble-the-v120-spec-guide-pages-the-answers-named-per-item) item 11, with open point 17, and the flows and expected verdicts in phase 8's table (checks 3 and 4).
