@@ -426,7 +426,7 @@ test('contract: the CLI prints the schema message for an unversioned script', { 
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
-test('contract: the CLI names the missing or malformed Android device, and the driver refusal once one is chosen', { timeout: 20_000 }, async () => {
+test('contract: the CLI names the missing or malformed Android device, and the Android driver\'s refusal once one is chosen', { timeout: 20_000 }, async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-contract-android-message-'));
   try {
     const cli = join(process.cwd(), 'src/cli.ts');
@@ -441,7 +441,7 @@ test('contract: the CLI names the missing or malformed Android device, and the d
       const path = join(root, `${randomUUID()}.json`);
       await writeFile(path, JSON.stringify(script));
       return execute(process.execPath, ['--import', tsx, cli, 'run', path], { cwd: root, env: env(extra) })
-        .then(() => assert.fail('must exit 3'), (error: { code: number; stderr: string }) => error);
+        .then(() => assert.fail('must not pass'), (error: { code: number; stdout: string; stderr: string }) => error);
     };
     const noDeviceScript = androidScript({ app: { package: 'com.hugues.test_cmp' }, steps: [checkpoint as ScriptedStep] });
     const noDevice = await run(noDeviceScript, {});
@@ -454,10 +454,13 @@ test('contract: the CLI names the missing or malformed Android device, and the d
     assert.match(invalidDevice.stderr, /AVD name/);
 
     // The script's own device.serial wins over a malformed JEV_ANDROID_DEVICE, so the pre-run check
-    // passes; the run then reaches the driver factory, which refuses every Android script for now.
-    const refused = await run(scriptCases.androidWithSerial, { JEV_ANDROID_DEVICE: 'has a space' });
-    assert.equal(refused.code, 3);
-    assert.match(refused.stderr, /Android isn't available in this build/);
+    // passes; the run then reaches the Android driver, whose tools check finds no adb anywhere it looks.
+    const empty = join(root, 'empty');
+    await mkdir(empty);
+    const refused = await run(scriptCases.androidWithSerial,
+      { JEV_ANDROID_DEVICE: 'has a space', ANDROID_HOME: empty, ANDROID_SDK_ROOT: empty, PATH: empty, HOME: empty });
+    assert.equal(refused.code, 2);
+    assert.match(refused.stdout, /ANDROID_TOOLS_UNAVAILABLE/);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 

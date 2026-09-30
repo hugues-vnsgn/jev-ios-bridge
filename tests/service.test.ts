@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, rm } from 'node:fs/promises';
+import { mkdir, mkdtemp, readdir, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { BridgeService } from '../src/service.js';
@@ -8,6 +8,7 @@ import type { DeviceDriver } from '../src/contracts/index.js';
 import { appLabel, type AppIdentity } from '../src/contracts/index.js';
 import type { ScriptedJudge } from '../src/scripted/contracts.js';
 import { createDriverFactory } from '../src/device/factory.js';
+import { androidTools } from '../src/device/android/tools.js';
 
 const screen = () => ({ deviceId: 'test', sequence: 1, capturedAt: Date.now(),
   expiresAt: Date.now() + 60_000, truncated: false,
@@ -71,16 +72,24 @@ test('an Android scenario gives its driver a package identity, never a bundle ID
   } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
 });
 
-test('start refuses an Android scenario before creating a run, through the real driver factory', async () => {
+test('an Android scenario reaches the Android driver through the real driver factory, and ends at ANDROID_TOOLS_UNAVAILABLE without adb', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-service-android-refused-'));
-  const judge: ScriptedJudge = { async judge() { return { probabilities: { shown: 1 },
-    inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } };
-  const createDriver = createDriverFactory({ mobileBuildMcp: { cwd: root, lockRoot: root } });
+  const empty = join(root, 'empty');
+  await mkdir(empty);
+  const judge: ScriptedJudge = { async judge() { return assert.fail('Jev is never asked when prepare fails'); } };
+  // The real tools check, with ANDROID_HOME, ANDROID_SDK_ROOT, PATH and the home folder all empty.
+  const tools = () => androidTools({ environment: { ANDROID_HOME: empty, ANDROID_SDK_ROOT: empty, PATH: empty }, home: empty });
+  const createDriver = createDriverFactory({ mobileBuildMcp: { cwd: root, lockRoot: root }, android: { leaseRoot: root, tools } });
   const service = new BridgeService({ baseDir: root, createDriver, createJudge: () => judge });
   try {
     const androidScript = { version: 1, platform: 'android', app: { package: 'com.example.app' },
       device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint('verify')] };
-    await assert.rejects(service.start(androidScript), /Android isn't available in this build/);
+    const start = await service.start(androidScript);
+    const status = await service.status(start.runId, 2_000);
+    assert.equal(status.state, 'finished');
+    assert.equal(status.report.verdict, 'inconclusive');
+    assert.equal(status.report.reason, 'ANDROID_TOOLS_UNAVAILABLE');
+    assert.equal((await readdir(root)).some(name => name.endsWith('.lock')), false, 'no lease taken');
   } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
 });
 
