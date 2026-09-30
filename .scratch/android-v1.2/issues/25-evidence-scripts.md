@@ -1,6 +1,7 @@
 # Phase 7: the Android evidence scripts
 
 Status: closed
+Closed: Merged into agent/android-v1.2-phase7 at 459560d
 Blocked by: none (phase 6 merged in)
 Owner: the coordinator (device work)
 
