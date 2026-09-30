@@ -18,7 +18,7 @@ The bridge runs one complete script on a dedicated emulator or phone and returns
    ```
 
    It prints one JSON line per element, as a run sees it. Exit code 3 means it couldn't capture; its stderr names the reason code (guide `08-troubleshooting.md`). Read guide `04-writing-scripts.md`, `03-identifiers.md`, and `reference/script-format.md` before your first script. Done when:
-   - the script starts with `"version": 1` and `"platform": "android"`, names `app.package`, and ends with a checkpoint;
+   - the script starts with `"version": 1` and `"platform": "android"`, names `app.package` (guide `reference/script-format.md`), and ends with a checkpoint;
    - every step has a guard of anchors that only its screen has;
    - every action's selector matches exactly one element in the capture: an identifier, or a `role` plus `label`;
    - no guard anchor or selector relies on an element marked `"selectable": false`, which never matches;

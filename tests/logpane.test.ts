@@ -3,11 +3,11 @@ import assert from 'node:assert/strict';
 import { appendFile, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { Writable } from 'node:stream';
 import { appLine, masker, osLine } from '../src/logpane/format.js';
 import { startLogStream } from '../src/logpane/stream.js';
 import { attachLogPane } from '../src/logpane/attach.js';
 import { paneWindowBlocked } from '../src/logpane/window.js';
+import { Capture } from './fixtures/capture.js';
 
 test('app lines keep the NSLog time without its prefix; error words turn red', () => {
   assert.deepEqual(appLine('2026-09-25 16:42:17.603 cmp[66994:3743334] MODALPERF === RUN START ==='),
@@ -28,11 +28,6 @@ test('script values are masked, longest first', () => {
   const mask = masker({ card: '4111 1111', short: '4111', empty: '' });
   assert.equal(mask('paid with 4111 1111 then 4111'), 'paid with [value:card] then [value:short]');
 });
-
-class Capture extends Writable {
-  text = '';
-  _write(chunk: Buffer, _encoding: string, done: () => void) { this.text += chunk.toString(); done(); }
-}
 
 test('a pane attached to a live run shows masked app and system lines, then the verdict, and closes after a pass', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-pane-'));
@@ -127,6 +122,16 @@ test('an Android pane names the logcat file and the uid filter in its header, an
     assert.match(text, /\[os\] +\[AndroidRuntime\] FATAL EXCEPTION: main/);
     assert.equal(text.split('!! crashed: IllegalStateException at MainActivity.java:59').length, 2, 'the note, once');
   } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('an Android pane without a logcat file says the device log is unavailable, never naming the iOS sources', async () => {
+  const runId = `android-no-file-${process.pid}-${Date.now()}`;
+  const text = await paneOf(runId, { app: { package: 'com.example.android' }, sources: {}, values: {} });
+  assert.deepEqual(text.split('\n').slice(0, 3), [
+    `jev-ios-bridge log pane · com.example.android · run ${runId}`,
+    'device log (logcat): unavailable',
+    'Local only: nothing here goes to Jev or the host agent. Values from the script are masked.',
+  ]);
 });
 
 test('an iOS pane\'s header is unchanged', async () => {

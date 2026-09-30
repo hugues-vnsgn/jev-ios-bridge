@@ -23,6 +23,7 @@ test('stdio server negotiates and exposes start/report/cancel without a key', { 
   try {
     const init = await request(1, 'initialize', { protocolVersion: '2025-03-26', capabilities: {}, clientInfo: { name: 'smoke', version: '1' } });
     assert.equal(init.result.serverInfo.name, 'jev-ios-bridge');
+    assert.equal(init.result.serverInfo.version, '1.2.0');
     child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' }) + '\n');
     const list = await request(2, 'tools/list');
     assert.deepEqual(list.result.tools.map((tool: { name: string }) => tool.name).sort(), ['cancel_run', 'get_report', 'start_scenario']);

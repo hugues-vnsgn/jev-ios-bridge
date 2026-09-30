@@ -430,6 +430,11 @@ test('contract: the driver translates unknown vendor roles to other and keeps kn
   assert.deepEqual(snapshot.elements.map(element => element.role), ['button', 'other']);
 });
 
+test('contract: the CLI prints the release version', { timeout: 20_000 }, async () => {
+  const { stdout } = await execute(process.execPath, ['--import', import.meta.resolve('tsx'), join(process.cwd(), 'src/cli.ts'), '--version']);
+  assert.equal(stdout, '1.2.0\n');
+});
+
 test('contract: the CLI prints the schema message for an unversioned script', { timeout: 20_000 }, async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-contract-message-'));
   try {

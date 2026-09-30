@@ -1,5 +1,5 @@
 import { setTimeout as delay } from 'node:timers/promises';
-import type { Action, ActionScenarioContext, ActOutcome, DeviceDriver, Element, LogSources, Platform, PrepareScenarioContext, RunLog, Snapshot, Verdict } from '../contracts/index.js';
+import type { Action, ActionScenarioContext, ActOutcome, AppProblem, DeviceDriver, Element, LogSources, Platform, PrepareScenarioContext, RunLog, Snapshot, Verdict } from '../contracts/index.js';
 import { isActOutcome } from '../contracts/index.js';
 import { DeviceCliError, DeviceReasonError, StaleSnapshotError } from '../device/index.js';
 import type { AssertionJudgment, ScriptedJudge, ScriptedScenario, ScriptedStep } from './contracts.js';
@@ -41,6 +41,10 @@ class ScriptRunError extends Error {
     this.name = 'ScriptRunError';
   }
 }
+
+/** How long cleanup may take by default: longer than one device command's own deadline (35 s), so cleanup can
+ *  see an in-flight command finish. */
+export const DEFAULT_CLEANUP_MS = 45_000;
 
 function bounded(value: number | undefined, fallback: number, minimum: number, maximum: number): number {
   const selected = value ?? fallback;
@@ -109,6 +113,12 @@ function checkedJudgment(judgment: AssertionJudgment, assertions: Extract<Script
   }
 }
 
+/** Why the app stopped, as the driver answers it; a driver without appProblem answers only whether the app still runs. */
+function appProblemCode(driver: DeviceDriver): AppProblem['code'] | undefined {
+  if (driver.appProblem) return driver.appProblem()?.code;
+  return driver.appRunning?.() === false ? 'APP_EXITED' : undefined;
+}
+
 /** A bridge-owned reason code, plus the device layer's own code when the bridge doesn't own it. */
 interface Failure { code: string; vendorCode?: string }
 
@@ -168,8 +178,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
   const maxSteps = bounded(limits.maxSteps, 100, 1, 100);
   const wallTimeMs = bounded(limits.wallTimeMs, 300_000, 1, 3_600_000);
   const pollIntervalMs = bounded(limits.pollIntervalMs, 250, 1, 5_000);
-  // Longer than one device command's own deadline (35 s), so cleanup can see an in-flight command finish.
-  const cleanupTimeMs = bounded(limits.cleanupTimeMs, 45_000, 1, 120_000);
+  const cleanupTimeMs = bounded(limits.cleanupTimeMs, DEFAULT_CLEANUP_MS, 1, 120_000);
   const preparedContext = prepareContext(script, platform);
   const actionContext: ActionScenarioContext = { ...preparedContext, values: script.values };
   // The driver carries its own pinned tap semantics; the run reads it rather than taking it as an option.
@@ -371,10 +380,8 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
     }
   } catch (error) {
     verdict = 'inconclusive';
-    // A step that failed because the app died or froze is reported as that, not as the symptom it caused. A
-    // driver without appProblem answers only whether the app still runs.
-    const problemCode = signal.aborted ? undefined : options.driver.appProblem
-      ? options.driver.appProblem()?.code : options.driver.appRunning?.() === false ? 'APP_EXITED' : undefined;
+    // A step that failed because the app died or froze is reported as that, not as the symptom it caused.
+    const problemCode = signal.aborted ? undefined : appProblemCode(options.driver);
     const failure: Failure = problemCode ? { code: problemCode } : failureOf(error, signal);
     reason = failure.code;
     await options.log.append('error', { stepId: activeStepId, phase, code: reason,
