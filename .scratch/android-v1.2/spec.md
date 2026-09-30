@@ -482,6 +482,85 @@ A person writing an Android script has no good way to see what the bridge will s
 - **21, `capture`:** the CLI's capture path (the `tests/contract.test.ts` style, with the driver's fakes injected), and the Android driver's capture path with the fake `adb` runner, agent client and lease root.
 - **22, skill and plugin:** the plugin build's rewrite step as a function, `plugin/plugin.json` read by a test, the MCP server start with empty device settings (`tests/mcp.test.ts`), and a docs-style check of the skill.
 
+## Phase 7: docs, version, and CHANGELOG (execution, from 2026-09-30)
+
+Status: ready-for-agent
+
+The work is [the release spec's phase 7](../android-support/release-spec.md#phase-7-docs-version-and-changelog-assemble-the-v120-spec-guide-pages-the-answers-named-per-item), items 1 to 11, plus the owner's clipboard ruling (below) and the pages Issue 22 listed. It is split into Issues 23 to 25 on the feature branch `agent/android-v1.2-phase7`, stacked on phase 6's branch, and shipped as **one PR**. The owner approves the merge.
+
+### Problem Statement
+
+Everything Android that phases 3 to 6 built is invisible to a reader. The guide still says "Simulators only". It has no page on setting up an Android device. The troubleshooting page doesn't know the new reason codes, and the reference pages don't list the Android script fields or report fields. The version still says 1.1.0, and there are no Android scripts for phase 8 to run. A person who installs 1.2.0 can't find out how to use it, and phase 8 has no candidate to check.
+
+### Solution
+
+- **The guide:** a new Android setup page and an Android quickstart section, with every affected page and reference updated for Android. The iOS instructions stay as they are.
+- **The candidate:** a 1.2.0 version with its CHANGELOG entry and draft release notes.
+- **Phase 8's scripts:** the Android evidence scripts, written against real `capture` output from the two emulators, so the candidate phase 8 checks is complete.
+
+### User Stories
+
+1. As a new Android user, I want one setup page listing what I need (`adb`, Android 12 or later, an arm64 image on Apple silicon), so that I can get ready in one read.
+2. As an Android user, I want to know how to name my device (`device.avd`, `device.serial`, `JEV_ANDROID_DEVICE`, the plugin setting), so that my scripts find it.
+3. As a Compose developer, I want to be told that without `testTagsAsResourceId` my app has no identifiers, and where to set it, so that my selectors are stable.
+4. As a Compose developer, I want to know custom tabs and toggles must expose selected or checked state, so that my claims about them aren't uncertain.
+5. As an Android user, I want to know animations off is optional and that the bridge never changes settings, so that I decide.
+6. As an Android user, I want `pm grant` for permission dialogs and the Xiaomi input setting explained, so that runs aren't blocked by them.
+7. As a user of other UI tools, I want to be told that another tool holding the device makes a run refuse with `DEVICE_BUSY`, and to close it first, so that I know what to do.
+8. As an Android user, I want to know a locked screen is refused and to set Screen lock to None on a test device, so that runs start.
+9. As a new user, I want a quickstart section that runs twin-fail on an emulator through `/test-android` and expects **failed** on the $3 total, so that I see the whole loop once.
+10. As a claim writer, I want to quote numbers exactly as printed and never claim an empty field "contains" its hint, so that Jev decides my claims.
+11. As a user whose run is inconclusive, I want every new reason code in troubleshooting, with the crash commands and how to clear a leftover agent or forward by hand, so that I can fix it.
+12. As a user, I want the limits page to state HOME, upper-case copies, real phones, English screens, Android 12+, tabs, duplicate AVDs, Apple silicon and speed, so that I know what isn't promised.
+13. As a careful user, I want data handling to cover the Android log file, password dots, intent extras, the clipboard for non-English typing, and that the bridge never runs mobilecli, so that I can judge the risk.
+14. As a script author, I want the script format, reason codes and report reference pages to list every Android field and code, so that I have one place to look.
+15. As a CLI user, I want `capture` documented where the CLI is documented, so that I can find it.
+16. As a reader of the stability page, I want to know what 1.2 added and which parts of `capture` are stable, so that I can depend on them.
+17. As a contributor, I want the architecture page to show `src/device/android/` and the shared device lease, so that I can find my way.
+18. As an upgrader, I want the CHANGELOG to say what 1.2.0 added and changed, and that iOS scripts need nothing, so that I can upgrade safely.
+19. As the owner, I want the version bumped to 1.2.0 in this phase, so that phase 8 checks the real candidate.
+20. As the owner, I want draft release notes with placeholders for phase 8's numbers, so that phase 9 only fills them in.
+21. As the owner, I want the six Android evidence scripts and the Vietnamese variant written against real captures, so that phase 8's runs test the bridge, not the scripts.
+22. As a reader, I want shipped docs to link only to files in the tarball, and anything else by its GitHub URL at `v1.2.0`, so that no link breaks.
+
+### Implementation Decisions
+
+- **Pages.**
+  - **The new setup page** is `docs/guide/12-android-setup.md` (open point 15), so no existing page number moves. Issue 22's skill already links it.
+  - **Other pages:** each of items 2 to 8 edits the page the release spec names. iOS text stays as it is, except where a sentence said iOS-only and is now false (for example "Simulators only" on the limits page).
+- **The clipboard ruling (owner, 2026-09-30):** `script-format.md` and the v1.2.0 release notes say plainly that a non-English typed value passes through the device clipboard and the keyboard may keep it, so it shouldn't be a real secret. ASCII values never touch the clipboard.
+- **Links:** docs that ship (`docs/guide/`, the root `README.md`, `CHANGELOG.md`) link inside the tarball by relative path. Anything else is linked by its GitHub URL at the `v1.2.0` tag. The tag doesn't exist until phase 9, and that is expected.
+- **Version:** `package.json` and the lockfile become 1.2.0. Any test or golden entry that reads the version follows it, as it did for 1.1.0.
+- **The evidence scripts** (open point 17):
+  - **Where:** twin-fail is `examples/diagnostic-app-android/scenario.json`. The others are `spikes/benchmarks/scenarios/android-*.json`: twin-pass, twin-ambiguous, cmp-number-input, cmp-list-swipe, settings-search, and `android-settings-search-vi.json`.
+  - **Devices:** none names a device. Each has `"version": 1` and `"platform": "android"`, and phase 8's table gives the flows and expected verdicts.
+  - **How they're written:** against `jev-ios-bridge capture` output on each emulator, under the device rules. The captures are saved beside the scripts' evidence as the record they were written from.
+- **Writing:** follow the guide's existing voice. Run `unslop` over every page, the CHANGELOG and the release notes.
+
+### Testing Decisions
+
+- **The docs tests** (`tests/docs.test.ts`) check links, page lists and the reason-code table. They extend to the new page, and Issue 22's allowance for the missing `12-android-setup.md` is removed once the page exists.
+- **The reason-code reference** must list every code in `src/scripted/vocabulary.ts`, with the final wording, as the existing docs test checks.
+- **The scripts:** every evidence script parses with `parseScriptedScenario` (a test over the files), and none names a device.
+- **The version:** the tests that print the version (`--version`, the MCP server's info) pass with 1.2.0.
+- **Devices** are used only in Issue 25, for writing the scripts. A live run of the scripts is phase 8's work.
+
+### Out of Scope
+
+- Running phase 8's checks, and filling in their numbers (the release notes keep placeholders).
+- Tagging or publishing (phase 9).
+- Any code change beyond the version bump and a docs test.
+
+### Further Notes
+
+- Issues 23 (guide pages) and 24 (CHANGELOG, version, release notes) are docs-only and can run in parallel once phases 5 and 6 are merged into this branch. Issue 25 (the evidence scripts) needs the emulators and `capture`, so the coordinator does it directly, under the device rules.
+
+### Test seams for phase 7
+
+- **23:** `tests/docs.test.ts`.
+- **24:** the version tests in `tests/contract.test.ts` and `tests/mcp.test.ts`.
+- **25:** a script-parsing test over the evidence scripts.
+
 ## Rulings during execution
 
 - **2026-09-29, phase 2 item 6 (owner):** existing tests build test data with `app: { bundleId }` (`tests/device.test.ts:10,825`) and `startLogStream({ bundleId })` (`tests/logpane.test.ts:45,70`), so renaming those inputs would break existing tests. Phase 2 renames only what no existing test touches: the iOS driver's private field, the log pane's internal `hello` message field, and `BridgeService`'s local use. Renaming `ScenarioContext.app` and `startLogStream`'s option moves to **phase 3**, which adds Android's `app.package` and reshapes the app type once, as an iOS or Android identity.
@@ -496,3 +575,4 @@ A person writing an Android script has no good way to see what the bridge will s
 - **2026-09-30, phase 5 (owner):** the phase 5 test seams are accepted as listed in "Test seams for phase 5": one new seam, the logcat stream starter injected into the Android driver.
 - **2026-09-30, phase 5 (owner):** phase 5 is split into Issues 18 to 20 on the feature branch `agent/android-v1.2-phase5`, one PR. 18 (parser and watcher) and 19 (the driver's streams, `close` step 4, the sweep) run in parallel; 20 (pane, run check, `logs`, end to end) needs both.
 - **2026-09-30, phase 6 (coordinator, owner away overnight with a standing handoff):** phase 6 is split into Issues 21 (`capture`) and 22 (skill and plugin) on `agent/android-v1.2-phase6`, stacked on phase 5's branch. 22 starts at once; 21 waits for phase 5's merge into the branch, because both change the Android driver and the CLI. Review-fix Issues take the next free numbers.
+- **2026-09-30, phase 7 (coordinator, standing overnight handoff):** phase 7 is split into Issues 23 (guide pages), 24 (CHANGELOG, version, release notes) and 25 (evidence scripts, built by the coordinator on the emulators) on `agent/android-v1.2-phase7`, stacked on phase 6's branch.
