@@ -26,6 +26,11 @@ function visible(element: Element): boolean {
   return element.state?.visible === true && usableFrame(element);
 }
 
+/** An element marked `selectable: false` (lifted button text) is shown to Jev but never matches a selector. */
+function selectable(element: Element): boolean {
+  return element.selectable !== false;
+}
+
 function matches(element: Element, selector: Selector): boolean {
   const fields = Object.entries(selector).filter(([, value]) => value !== undefined);
   if (!fields.length) throw new ScriptSelectionError('INVALID_SELECTOR');
@@ -95,7 +100,7 @@ function collapseUnidentifiedTapButtonAliases(elements: Element[]): Element[] {
 function visibleMatches(snapshot: Snapshot, selector: Selector, options: SelectionOptions): Element[] {
   if (snapshot.truncated) throw new ScriptSelectionError('SNAPSHOT_TRUNCATED');
   const matched = onePhysicalTargetPerAliasCluster(
-    snapshot.elements.filter(element => matches(element, selector) && visible(element)));
+    snapshot.elements.filter(element => matches(element, selector) && visible(element) && selectable(element)));
   return options.tapAliasRule === 'mobilebuildmcp-2.7.1'
     ? collapseUnidentifiedTapButtonAliases(matched) : matched;
 }
@@ -119,7 +124,7 @@ export function resolveActionTarget(snapshot: Snapshot, selector: Selector,
   const allMatches = snapshot.elements.filter(element => matches(element, selector));
   if (!allMatches.length) throw new ScriptSelectionError('TARGET_MISSING');
   const available = onePhysicalTargetPerAliasCluster(allMatches.filter(element =>
-    visible(element) && element.state?.enabled === true && element.actions.includes(action)));
+    visible(element) && selectable(element) && element.state?.enabled === true && element.actions.includes(action)));
   const candidates = action === 'tap' && options.tapAliasRule === 'mobilebuildmcp-2.7.1'
     ? collapseUnidentifiedTapButtonAliases(available) : available;
   if (!candidates.length) throw new ScriptSelectionError('TARGET_UNAVAILABLE');
