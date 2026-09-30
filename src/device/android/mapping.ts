@@ -1,30 +1,6 @@
 import type { Element } from '../../contracts/index.js';
 import type { Role } from '../../scripted/vocabulary.js';
-
-/**
- * One node of the device agent's `device.dump.ui` tree. mobilecli's `dump ui --format raw` has the same
- * shape without `scrollable` and `password`, so one mapping reads both.
- */
-export interface AndroidNode {
-  class?: string;
-  text?: string;
-  hint?: string;
-  'content-desc'?: string;
-  'resource-id'?: string;
-  checkable?: boolean;
-  checked?: boolean;
-  clickable?: boolean;
-  enabled?: boolean;
-  focused?: boolean;
-  selected?: boolean;
-  visible?: boolean;
-  scrollable?: boolean;
-  password?: boolean;
-  rect?: { x: number; y: number; width: number; height: number };
-  children?: AndroidNode[] | null;
-}
-
-export interface AndroidTree { hierarchy: AndroidNode[] }
+import { STATUS_BAR_ID_PREFIX, type AndroidNode, type AndroidTree } from './agent-client.js';
 
 const TEXT_FIELD_CLASS = /EditText$|AutoCompleteTextView$/;
 const SCROLL_CLASS = /(RecyclerView|ListView|ScrollView|GridView|ViewPager2?|NestedScrollView)$/;
@@ -91,7 +67,7 @@ export function mapAndroidTree(tree: AndroidTree): Element[] {
   let ref = 0;
   const visit = (node: AndroidNode, parent?: AndroidNode): void => {
     const id = node['resource-id'] || '';
-    if (id.startsWith('com.android.systemui:')) return;
+    if (id.startsWith(STATUS_BAR_ID_PREFIX)) return;
     if (parent && isRoleMarker(node, parent)) return;
     if (node.visible === false) return;
     if (!node.rect || node.rect.width <= 0 || node.rect.height <= 0) return;

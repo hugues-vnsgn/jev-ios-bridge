@@ -120,8 +120,8 @@ function failureOf(error: unknown, signal: AbortSignal): Failure {
       error instanceof ScriptedObservationError || error instanceof ScriptedJevError) return { code: error.code };
   // An Android error may carry the device layer that failed (`agent`, `adb`) as its vendorCode.
   if (error instanceof DeviceReasonError) {
-    const vendorCode = (error as { vendorCode?: unknown }).vendorCode;
-    return { code: error.code, ...(typeof vendorCode === 'string' && VENDOR_CODE.test(vendorCode) ? { vendorCode } : {}) };
+    const vendorCode = error.vendorCode;
+    return { code: error.code, ...(vendorCode !== undefined && VENDOR_CODE.test(vendorCode) ? { vendorCode } : {}) };
   }
   if (error instanceof DeviceCliError) {
     if (MOBILEBUILDMCP_PASSTHROUGH_CODES.has(error.code)) return { code: error.code };

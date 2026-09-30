@@ -1,6 +1,6 @@
 import { request } from 'node:http';
 import { DeviceReasonError } from '../index.js';
-import { OutcomeUnknownError } from './adb.js';
+import { OutcomeUnknownError } from './ledger.js';
 
 /**
  * The device agent's client: the anti-corruption layer to mobilecli's agent (see the domain model). Only
@@ -18,12 +18,41 @@ const MAX_REPLY_BYTES = 32 * 1024 * 1024;
 export interface AgentKey { keycode: string; modifiers?: string[] }
 export interface AgentSwipe { x1: number; y1: number; x2: number; y2: number; duration: number }
 
+/**
+ * One node of the device agent's `device.dump.ui` tree. mobilecli's `dump ui --format raw` has the same
+ * shape without `scrollable` and `password`, so one mapping reads both.
+ */
+export interface AndroidNode {
+  class?: string;
+  text?: string;
+  hint?: string;
+  'content-desc'?: string;
+  'resource-id'?: string;
+  checkable?: boolean;
+  checked?: boolean;
+  clickable?: boolean;
+  enabled?: boolean;
+  focused?: boolean;
+  selected?: boolean;
+  visible?: boolean;
+  scrollable?: boolean;
+  password?: boolean;
+  rect?: { x: number; y: number; width: number; height: number };
+  children?: AndroidNode[] | null;
+}
+
+/** A system bar node's resource-id prefix: the settle rule leaves it out, and the mapping drops it. */
+export const STATUS_BAR_ID_PREFIX = 'com.android.systemui:';
+
+/** What one `device.dump.ui` call returns: the settle rule compares it and the mapping reads it. */
+export interface AndroidTree { hierarchy: AndroidNode[] }
+
 /** The calls the Android driver makes, and nothing else. Every one takes the run's signal. */
 export interface DeviceAgentClient {
   /** `device.version`: the SHA-256 of the running agent's DEX file. */
   version(signal: AbortSignal): Promise<{ dexSha256: string }>;
   /** `device.dump.ui`: the raw tree, read once the app has been idle, or after `waitUntilIdleMs`. */
-  dumpUi(waitUntilIdleMs: number, signal: AbortSignal): Promise<unknown[]>;
+  dumpUi(waitUntilIdleMs: number, signal: AbortSignal): Promise<AndroidNode[]>;
   tap(point: { x: number; y: number }, signal: AbortSignal): Promise<void>;
   swipe(swipe: AgentSwipe, signal: AbortSignal): Promise<void>;
   keys(keys: AgentKey[], signal: AbortSignal): Promise<void>;
@@ -42,9 +71,11 @@ export interface DeviceAgentClient {
  * its numeric JSON-RPC code is kept.
  */
 export class DeviceAgentError extends DeviceReasonError {
-  readonly vendorCode = 'agent';
+  declare readonly vendorCode: 'agent';
+
   constructor(readonly rpcCode?: number) {
-    super('DEVICE_ERROR', rpcCode === undefined ? 'The device agent gave no usable reply' : `The device agent returned error ${String(rpcCode)}`);
+    super('DEVICE_ERROR', rpcCode === undefined ? 'The device agent gave no usable reply' : `The device agent returned error ${String(rpcCode)}`,
+      { vendorCode: 'agent' });
     this.name = 'DeviceAgentError';
   }
 }
@@ -78,7 +109,7 @@ export function deviceAgentClient(options: { port: number; timeoutMs?: number })
       const params = wholeNumbers({ waitUntilIdle: waitUntilIdleMs });
       const hierarchy = asObject(await call('device.dump.ui', params, signal, waitUntilIdleMs + timeoutMs))?.hierarchy;
       if (!Array.isArray(hierarchy)) throw new DeviceAgentError();
-      return hierarchy as unknown[];
+      return hierarchy as AndroidNode[];
     },
     async tap(point, signal) { await call('device.io.tap', wholeNumbers({ x: point.x, y: point.y }), signal); },
     async swipe(swipe, signal) {

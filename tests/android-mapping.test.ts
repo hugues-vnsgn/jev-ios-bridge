@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { Element, Snapshot } from '../src/contracts/index.js';
-import { mapAndroidTree, type AndroidNode, type AndroidTree } from '../src/device/android/mapping.js';
+import type { AndroidNode, AndroidTree } from '../src/device/android/agent-client.js';
+import { mapAndroidTree } from '../src/device/android/mapping.js';
 import { renderAssertionState } from '../src/scripted/observe.js';
 import { checkGolden } from './fixtures/golden.js';
 

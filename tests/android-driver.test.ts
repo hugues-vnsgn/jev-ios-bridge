@@ -6,14 +6,16 @@ import { join } from 'node:path';
 import { test } from 'node:test';
 import { isActOutcome, type AndroidAppIdentity, type DeviceDriver, type RunEvent, type Snapshot } from '../src/contracts/index.js';
 import { DeviceReasonError, StaleSnapshotError } from '../src/device/index.js';
-import { OutcomeUnknownError, type AdbResult, type AdbRunner } from '../src/device/android/adb.js';
-import { DeviceAgentError, type DeviceAgentClient } from '../src/device/android/agent-client.js';
+import { adbRunner, type AdbResult, type AdbRunner } from '../src/device/android/adb.js';
+import { DeviceAgentError, type AndroidNode, type DeviceAgentClient } from '../src/device/android/agent-client.js';
 import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
 import { AGENT_DEVICE_PATH, AGENT_START_COMMAND, AndroidDriver, type AndroidDriverOptions } from '../src/device/android/driver.js';
-import { mapAndroidTree, type AndroidTree } from '../src/device/android/mapping.js';
+import { OutcomeUnknownError } from '../src/device/android/ledger.js';
+import { mapAndroidTree } from '../src/device/android/mapping.js';
 import { screenHash, type Clock } from '../src/device/android/settle.js';
 import type { ScriptedJudge } from '../src/scripted/contracts.js';
 import { runScriptedScenario } from '../src/scripted/run.js';
+import { fakeSpawn } from './fixtures/adb-spawn.js';
 import { androidScript } from './fixtures/android-script.js';
 import { withRunLog } from './fixtures/run-log.js';
 
@@ -187,7 +189,7 @@ type AgentCall = { method: string; params?: unknown };
  * runs on the port's device. `device.dump.ui` answers with the next of `screens` (the last one repeats),
  * and `device.screenshot` with `jpeg-<n>`. Every other call is recorded in `calls` and does nothing.
  */
-function fakeAgents(adb: FakeAdb, options: { answersAfterPolls?: number; never?: boolean; sha256?: string; screens?: unknown[][] } = {}) {
+function fakeAgents(adb: FakeAdb, options: { answersAfterPolls?: number; never?: boolean; sha256?: string; screens?: AndroidNode[][] } = {}) {
   const versionCalls: number[] = [];
   const clients: number[] = [];
   const calls: AgentCall[] = [];
@@ -230,10 +232,30 @@ function fakeAgents(adb: FakeAdb, options: { answersAfterPolls?: number; never?:
   return { agentClient, versionCalls, clients, calls, hooks };
 }
 
+/** Fake time: a sleep moves it on at once, aborting each `timeout` signal it passes, at that signal's own time. */
 function fakeClock(): Clock & { sleeps: number[] } {
   let now = 0;
   const sleeps: number[] = [];
-  return { sleeps, now: () => now, async sleep(ms) { sleeps.push(ms); now += ms; } };
+  const timers: { at: number; controller: AbortController }[] = [];
+  return {
+    sleeps,
+    now: () => now,
+    async sleep(ms) {
+      sleeps.push(ms);
+      const until = now + ms;
+      for (const timer of timers.filter(pending => pending.at <= until).sort((one, other) => one.at - other.at)) {
+        timers.splice(timers.indexOf(timer), 1);
+        now = Math.max(now, timer.at);
+        timer.controller.abort(new Error('timed out'));
+      }
+      now = until;
+    },
+    timeout(ms) {
+      const controller = new AbortController();
+      timers.push({ at: now + ms, controller });
+      return controller.signal;
+    },
+  };
 }
 
 interface Setup {
@@ -273,7 +295,7 @@ const signal = () => new AbortController().signal;
 const reason = (code: string, vendorCode?: string) => (error: unknown) => {
   assert.ok(error instanceof DeviceReasonError, `a DeviceReasonError, not ${String(error)}`);
   assert.equal(error.code, code);
-  if (vendorCode) assert.equal((error as { vendorCode?: string }).vendorCode, vendorCode);
+  if (vendorCode) assert.equal(error.vendorCode, vendorCode);
   return true;
 };
 const lockFile = async (root: string) => {
@@ -406,6 +428,26 @@ test('an AVD name no running emulator reports is DEVICE_NOT_CONNECTED', async ()
   const adb = new FakeAdb(api31({ avd: 'Medium_Phone_API_36.1' }));
   await withDriver(adb, async ({ driver }) => {
     await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_NOT_CONNECTED'));
+  });
+});
+
+test('an AVD name no running emulator reports, with an unauthorized emulator listed, is DEVICE_UNAUTHORIZED', async () => {
+  const adb = new FakeAdb(api31({ avd: 'Medium_Phone_API_36.1' }));
+  adb.devicesText = 'List of devices attached\nemulator-5554          device product:sdk_gphone64_arm64 model:sdk_gphone64_arm64 device:emulator64_arm64 transport_id:1\n' +
+    'emulator-5556          unauthorized transport_id:2\n\n';
+  await withDriver(adb, async ({ driver, root }) => {
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_UNAUTHORIZED'));
+    assert.equal(adb.calls.some(call => call[1] === 'emulator-5556'), false, 'an unauthorized emulator\'s property is never read');
+    assert.deepEqual(await readdir(root), [], 'no lease taken');
+  });
+});
+
+test('an AVD name a running emulator reports resolves to it, even with an unauthorized emulator listed', async () => {
+  const adb = new FakeAdb(api31());
+  adb.devicesText = 'List of devices attached\nemulator-5554          device transport_id:1\nemulator-5556          unauthorized transport_id:2\n\n';
+  await withDriver(adb, async ({ driver }) => {
+    await driver.prepare(app(), signal());
+    assert.equal(driver.preparation().serial, 'emulator-5554');
   });
 });
 
@@ -556,6 +598,28 @@ test('a takeover with nothing left to sweep doesn\'t record sweptLeftovers', asy
   });
 });
 
+test('a takeover that kills an agent its dead holder never listed records sweptLeftovers', async () => {
+  // The holder crashed after starting its agent, before recording the agent's pid.
+  const adb = new FakeAdb(api31({ agents: new Map([[4675, 'own']]) }));
+  await withDriver(adb, async ({ driver, root }) => {
+    await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31' }));
+    await driver.prepare(app(), signal());
+    assert.ok(adb.shell().some(words => words.join(' ') === 'kill 4675'));
+    assert.equal(driver.preparation().sweptLeftovers, true);
+  });
+});
+
+test('a takeover that removes an agent forward its dead holder never listed records sweptLeftovers', async () => {
+  const adb = new FakeAdb(api31());
+  adb.forwards = [{ serial: 'emulator-5554', local: 'tcp:65436', remote: 'localabstract:mobilecli-server' }];
+  await withDriver(adb, async ({ driver, root }) => {
+    await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31' }));
+    await driver.prepare(app(), signal());
+    assert.ok(adb.calls.some(call => call.join(' ') === '-s emulator-5554 forward --remove tcp:65436'));
+    assert.equal(driver.preparation().sweptLeftovers, true);
+  });
+});
+
 test('another bridge-owned agent is killed by pid, and this serial\'s agent forwards removed, without sweptLeftovers', async () => {
   const adb = new FakeAdb(api31({ fixtures: 'api36', api: '36', agents: new Map([[9983, 'own']]) }));
   adb.forwards = (await readFile(join(FIXTURES, 'forward-list-two-emulators.txt'), 'utf8')).trim().split('\n')
@@ -669,25 +733,28 @@ test('an agent that never answers is DEVICE_ERROR with vendorCode agent after 5 
   }, { agents: { never: true } });
 });
 
-test('a device.version request that hangs is bounded by what is left of the 5 s', async () => {
+test('a device.version request that hangs is bounded by what is left of the 5 s, on the driver\'s clock', async () => {
   const adb = new FakeAdb(api31());
   const clock = fakeClock();
   let calls = 0;
+  let endedAt: number | undefined;
   const unused = () => { throw new Error('Not used by prepare'); };
   const agentClient = (): DeviceAgentClient => ({
     async version(abort) {
-      if (++calls === 1) { await clock.sleep(4_950); throw new DeviceAgentError(); }
-      // Hangs until its signal ends it, as a request to a stuck agent would until its own 10 s limit.
-      await new Promise((_resolve, reject) => { abort.addEventListener('abort', () => { reject(new Error('abandoned')); }, { once: true }); });
-      throw new Error('unreachable');
+      if (++calls === 1) { await clock.sleep(2_000); throw new DeviceAgentError(); }
+      // Hangs until its signal ends it, as a request to a stuck agent would until its own 10 s limit, while time runs on.
+      const ended = new Promise<never>((_resolve, reject) => {
+        abort.addEventListener('abort', () => { endedAt = clock.now(); reject(new Error('abandoned')); }, { once: true });
+      });
+      void clock.sleep(10_000);
+      return ended;
     },
     dumpUi: unused, tap: unused, swipe: unused, keys: unused, text: unused, button: unused,
     clipboardSet: unused, clipboardClear: unused, screenshot: unused,
   });
   await withDriver(adb, async ({ driver }) => {
-    const began = performance.now();
     await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_ERROR', 'agent'));
-    assert.ok(performance.now() - began < 2_000, 'the hung request ended with the 5 s, not its own 10 s limit');
+    assert.equal(endedAt, 5_000, 'the hung request ended with the 5 s, not its own 10 s limit');
   }, { clock, agentClient });
 });
 
@@ -733,17 +800,17 @@ test('preparation(), observe and act before prepare are refused, and close befor
 /* observe and act (Issue 15): the same fakes, a fake clock and a temporary screenshot folder. */
 
 const AGENT_FIXTURES = join(import.meta.dirname, 'fixtures', 'android');
-type Hierarchy = Record<string, unknown>[];
+type Hierarchy = AndroidNode[];
 const hierarchyOf = async (name: string): Promise<Hierarchy> =>
   (JSON.parse(await readFile(join(AGENT_FIXTURES, name), 'utf8')) as { hierarchy: Hierarchy }).hierarchy;
 const captureOf = async (name: string): Promise<Hierarchy> => (JSON.parse((JSON.parse(
   await readFile(join(AGENT_FIXTURES, 'captures', name), 'utf8')) as { data: { rawData: string } }).data.rawData) as { hierarchy: Hierarchy }).hierarchy;
 /** The tree with the node whose resource-id is `id` changed by `patch`. */
-function withNode(tree: Hierarchy, id: string, patch: Record<string, unknown>): Hierarchy {
+function withNode(tree: Hierarchy, id: string, patch: Partial<AndroidNode>): Hierarchy {
   const copy = structuredClone(tree);
   const visit = (nodes: Hierarchy): boolean => nodes.some(node => {
     if (node['resource-id'] === id) { Object.assign(node, patch); return true; }
-    return visit((node.children ?? []) as Hierarchy);
+    return visit(node.children ?? []);
   });
   assert.ok(visit(copy), `no node ${id}`);
   return copy;
@@ -751,7 +818,7 @@ function withNode(tree: Hierarchy, id: string, patch: Record<string, unknown>): 
 /** The tree with the node whose resource-id is `id` showing `text`. */
 const withText = (tree: Hierarchy, id: string, text: string) => withNode(tree, id, { text });
 /** The text fields tree with no resource-ids, nothing focused, and `patch` applied to the city field. */
-async function anonymousFields(patch: Record<string, unknown> = {}): Promise<Hierarchy> {
+async function anonymousFields(patch: Partial<AndroidNode> = {}): Promise<Hierarchy> {
   let tree = withNode(await hierarchyOf('text-fields.json'), 'field.password', { focused: false });
   tree = withNode(tree, 'field.city', patch);
   for (const id of ['field.notes', 'field.password', 'field.spaces', 'field.city', 'field.empty']) tree = withNode(tree, id, { 'resource-id': '' });
@@ -800,7 +867,7 @@ test('observe settles device.dump.ui, maps it, and saves one screenshot of the s
     const snapshot = await driver.observe(signal());
     assert.deepEqual(agents.calls, SETTLED);
     assert.deepEqual(clock.sleeps.slice(-1), [250]);
-    assert.deepEqual(snapshot.elements, mapAndroidTree({ hierarchy: fields as AndroidTree['hierarchy'] }));
+    assert.deepEqual(snapshot.elements, mapAndroidTree({ hierarchy: fields }));
     assert.equal(snapshot.screenHash, screenHash({ hierarchy: fields }));
     assert.equal(snapshot.deviceId, 'emulator-5554');
     assert.equal(snapshot.truncated, false);
@@ -1251,6 +1318,78 @@ test('a cancel during am start -W: the app is stopped only after the launch retu
     assert.ok(words.lastIndexOf('am force-stop com.example.android') > words.findIndex(entry => entry.startsWith('am start -W')));
     assert.deepEqual(await readdir(root), []);
   });
+});
+
+/**
+ * The production `adb` runner over a fake spawn: each child answers as `FakeAdb` does (its `onCall` may hold
+ * it), then exits with that status.
+ */
+function productionRunner(adb: FakeAdb): AdbRunner {
+  // The child runs once spawn has returned, as a real one does, so the runner is listening for an abort by then.
+  const spawned = fakeSpawn((child, args) => {
+    setImmediate(() => {
+      void adb.run([...args], new AbortController().signal).then(result => { child.exit(result.exitCode, result.stdout, result.stderr); });
+    });
+  });
+  return adbRunner({ adb: '/sdk/platform-tools/adb', environment: {}, spawn: spawned.spawn });
+}
+
+test('on the production runner, a cancel during am start -W: close waits for the launch to return, then stops the app and releases the lease', async () => {
+  const adb = new FakeAdb(api31());
+  const launch = gate();
+  const controller = new AbortController();
+  let closing: Promise<void> | undefined;
+  await withDriver(adb, async ({ driver, root }) => {
+    adb.onCall = async args => {
+      if (!args[3]?.startsWith("'am' 'start' '-W'")) return;
+      controller.abort(new Error('cancelled'));
+      closing = driver.close(signal());
+      await launch.opened;
+    };
+    const preparing = driver.prepare(app(), controller.signal);
+    await eventually(() => closing !== undefined, 'close begun');
+    await new Promise(resolveTick => setTimeout(resolveTick, 20));
+    assert.equal(adb.calls.at(-1)![3]?.startsWith("'am' 'start' '-W'"), true, 'close sends nothing while the launch runs');
+    const launched = adb.calls.length;
+    launch.open();
+    await assert.rejects(preparing, /cancelled/);
+    await closing;
+    assert.deepEqual(callsFrom(adb, launched), ["-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'"],
+      'no agent was started and no forward made, so only the app stop follows');
+    assert.deepEqual(await readdir(root), [], 'lease released');
+  }, { runner: productionRunner(adb) });
+});
+
+test('on the production runner, a cancel during the agent start: close waits for the start command, then fences the agent it started', async () => {
+  const adb = new FakeAdb(api31());
+  const start = gate();
+  const controller = new AbortController();
+  let closing: Promise<void> | undefined;
+  await withDriver(adb, async ({ driver, root }) => {
+    adb.onCall = async args => {
+      if (args[3] !== AGENT_START_COMMAND) return;
+      controller.abort(new Error('cancelled'));
+      closing = driver.close(signal());
+      await start.opened;
+    };
+    const preparing = driver.prepare(app(), controller.signal);
+    await eventually(() => closing !== undefined, 'close begun');
+    await new Promise(resolveTick => setTimeout(resolveTick, 20));
+    assert.equal(adb.calls.at(-1)![3], AGENT_START_COMMAND, 'close sends nothing while the start command runs');
+    const started = adb.calls.length;
+    start.open();
+    await assert.rejects(preparing, /cancelled/);
+    await closing;
+    assert.deepEqual(callsFrom(adb, started), [
+      "-s emulator-5554 shell 'ps' '-A' '-o' 'PID,NAME,ARGS'",
+      "-s emulator-5554 shell 'cat' '/proc/7001/environ'",
+      "-s emulator-5554 shell 'kill' '7001'",
+      "-s emulator-5554 shell 'cat' '/proc/7001/environ'",
+      "-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'",
+    ]);
+    assert.equal(adb.emulators.get('emulator-5554')!.agents!.size, 0, 'no agent left');
+    assert.deepEqual(await readdir(root), [], 'lease released');
+  }, { runner: productionRunner(adb) });
 });
 
 test('an agent request that times out is ended by the fence, and the lease is released', async () => {

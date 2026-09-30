@@ -53,12 +53,17 @@ export class DeviceCliError extends Error {
 /**
  * A bridge-owned reason code raised directly by a device driver that knows the bridge's vocabulary
  * (for example the Android driver), skipping the vendor-code translation `DeviceCliError` needs.
- * `failureOf` (`src/scripted/run.ts`) passes its code through unconditionally.
+ * `failureOf` (`src/scripted/run.ts`) passes its code through unconditionally. An Android error may name
+ * the device layer that failed (`adb`, `agent`) as its `vendorCode`; an iOS error names none.
  */
 export class DeviceReasonError extends Error {
-  constructor(readonly code: ReasonCode, message: string) {
+  /** Set only when given, so an error built without one has no such property. */
+  declare readonly vendorCode?: string;
+
+  constructor(readonly code: ReasonCode, message: string, options: { vendorCode?: string } = {}) {
     super(message);
     this.name = 'DeviceReasonError';
+    if (options.vendorCode !== undefined) this.vendorCode = options.vendorCode;
   }
 }
 

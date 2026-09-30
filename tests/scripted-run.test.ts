@@ -816,11 +816,11 @@ test('an Android run with no replace-text step gets a report.json with the app i
 });
 
 test('a DeviceReasonError carrying a vendorCode records it in the error event and in report.json', async () => {
-  class AgentError extends DeviceReasonError { readonly vendorCode = 'agent'; }
+  assert.equal('vendorCode' in new DeviceReasonError('DEVICE_ERROR', 'no vendor code'), false, 'an error built without one has none');
   await withRunLog('vendor-code-agent', async (log, root) => {
     const report = await runScriptedScenario({ runId: 'vendor-code-agent', judge: markerJudge, log,
       scenario: androidScript({ steps: [markerCheckpoint] }),
-      driver: { async prepare() { throw new AgentError('DEVICE_ERROR', 'The device agent never answered'); },
+      driver: { async prepare() { throw new DeviceReasonError('DEVICE_ERROR', 'The device agent never answered', { vendorCode: 'agent' }); },
         async observe() { return markerScreen(); }, async act() {}, async close() {} } });
     assert.equal(report.reason, 'DEVICE_ERROR');
     const events = (await readFile(join(root, 'vendor-code-agent', 'run.jsonl'), 'utf8')).trim().split('\n')
@@ -832,11 +832,10 @@ test('a DeviceReasonError carrying a vendorCode records it in the error event an
 });
 
 test('a DeviceReasonError whose vendorCode fails the pattern check records none', async () => {
-  class OddError extends DeviceReasonError { readonly vendorCode = 'has a space'; }
   const log = memoryLog();
   await runScriptedScenario({ runId: 'scripted-1', judge: markerJudge, log,
     scenario: androidScript({ steps: [markerCheckpoint] }),
-    driver: { async prepare() { throw new OddError('DEVICE_ERROR', 'odd'); },
+    driver: { async prepare() { throw new DeviceReasonError('DEVICE_ERROR', 'odd', { vendorCode: 'has a space' }); },
       async observe() { return markerScreen(); }, async act() {}, async close() {} } });
   const error = log.events.find(event => event.type === 'error');
   assert.equal(error?.data.code, 'DEVICE_ERROR');

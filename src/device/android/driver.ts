@@ -8,10 +8,11 @@ import type { Action, ActionScenarioContext, ActOutcome, AndroidAppIdentity, Dev
 import { isIosApp } from '../../contracts/index.js';
 import { DeviceReasonError, selectAndroidDeviceName, StaleSnapshotError } from '../index.js';
 import { DeviceLease, DeviceLeaseBusyError, type LeaseHolder } from '../lease.js';
-import { adbRunner, inLedger, type AdbResult, type AdbRunner } from './adb.js';
+import { adbRunner, type AdbResult, type AdbRunner } from './adb.js';
 import { deviceAgentClient, type AgentKey, type DeviceAgentClient } from './agent-client.js';
-import { mapAndroidTree, type AndroidTree } from './mapping.js';
-import { settle, type Clock, type UiTree } from './settle.js';
+import { inLedger } from './ledger.js';
+import { mapAndroidTree } from './mapping.js';
+import { settle, type Clock } from './settle.js';
 import { adbEnvironment, androidTools, type AndroidTools } from './tools.js';
 
 /** Where the bridge pushes its device agent: its own path, never mobilecli's `/data/local/tmp/mobilecli.dex`. */
@@ -24,6 +25,10 @@ export const AGENT_START_COMMAND = `CLASSPATH=${AGENT_DEVICE_PATH} nohup app_pro
 const OWN_AGENT_CLASSPATH = `CLASSPATH=${AGENT_DEVICE_PATH}`;
 /** Another tool's UI-automation program, by what its `ps` line runs (open point 22). */
 const AGENT_PATTERNS = [AGENT_CLASS, 'UiDumpServer', 'com.mobilenext.devicekit', 'uiautomator', 'io.appium.uiautomator2'];
+/** An emulator's serial prefix; only these serials have an AVD name to read. */
+const EMULATOR_SERIAL_PREFIX = 'emulator-';
+/** The property holding an emulator's AVD name, its device identity. */
+const AVD_NAME_PROPERTY = 'ro.boot.qemu.avd_name';
 const MIN_API_LEVEL = 31;
 const FORWARD_ATTEMPTS = 3;
 const AGENT_READY_MS = 5_000;
@@ -51,8 +56,10 @@ const ASCII = /^[\x00-\x7f]*$/;
  * as its `vendorCode`. Its message never quotes the device's output, which can carry screen text.
  */
 export class AndroidDeviceError extends DeviceReasonError {
-  constructor(readonly vendorCode: 'adb' | 'agent', message: string) {
-    super('DEVICE_ERROR', message);
+  declare readonly vendorCode: 'adb' | 'agent';
+
+  constructor(vendorCode: 'adb' | 'agent', message: string) {
+    super('DEVICE_ERROR', message, { vendorCode });
     this.name = 'AndroidDeviceError';
   }
 }
@@ -79,7 +86,7 @@ export interface AndroidDriverOptions {
 /** The element action each kind of action needs, as on iOS. */
 const REQUIRED_ACTION = { tap: 'tap', type: 'typeText', swipe: 'swipeWithin' } as const;
 
-const realClock: Clock = { now: () => performance.now(), sleep: ms => delay(ms) };
+const realClock: Clock = { now: () => performance.now(), sleep: ms => delay(ms), timeout: ms => AbortSignal.timeout(ms) };
 
 function freeLocalPort(): Promise<number> {
   return new Promise((resolvePort, reject) => {
@@ -151,19 +158,6 @@ function typedFieldIn(snapshot: Snapshot, field: Element): Element | undefined {
 /** What a lease holder record lists for the next run to sweep: the agent and the forward, each on its serial. */
 const ownedAgent = (serial: string, pid: number) => `agent ${serial} ${String(pid)}`;
 const ownedForward = (serial: string, port: number) => `forward ${serial} tcp:${String(port)}`;
-
-/** What a dead holder listed on this serial. Other entries (another serial, or phase 5's log streams) aren't swept here. */
-function listedLeftovers(holder: LeaseHolder | undefined, serial: string): { pids: Set<number>; forwards: Set<string> } {
-  const pids = new Set<number>();
-  const forwards = new Set<string>();
-  for (const entry of holder?.ownedProcesses ?? []) {
-    const [kind, onSerial, value] = entry.split(' ');
-    if (onSerial !== serial || value === undefined) continue;
-    if (kind === 'agent' && /^\d+$/.test(value)) pids.add(Number(value));
-    if (kind === 'forward' && /^tcp:\d+$/.test(value)) forwards.add(value);
-  }
-  return { pids, forwards };
-}
 
 /**
  * The Android device driver (release spec phase 4): drives mobilecli's device agent directly, over `adb`
@@ -303,7 +297,7 @@ export class AndroidDriver implements DeviceDriver {
     if (!this.agent || !serial) throw new Error('Driver is not prepared');
     // The agent's tree has the captures' shape (the tracer confirmed it), so the mapping reads it as is.
     const captured = await settle(async captureSignal =>
-      ({ hierarchy: await this.agentCall(agent => agent.dumpUi(DUMP_IDLE_MS, captureSignal), captureSignal) as UiTree['hierarchy'] }), this.clock, signal);
+      ({ hierarchy: await this.agentCall(agent => agent.dumpUi(DUMP_IDLE_MS, captureSignal), captureSignal) }), this.clock, signal);
     const sequence = ++this.sequence;
     const capturedAt = Date.now();
     const jpeg = await this.agentCall(agent => agent.screenshot(SCREENSHOT_MAX_SIZE, signal), signal);
@@ -315,7 +309,7 @@ export class AndroidDriver implements DeviceDriver {
       // An Android reference never expires by time: only a newer snapshot, or an action, makes it stale.
       expiresAt: Number.MAX_SAFE_INTEGER,
       sequence,
-      elements: mapAndroidTree(captured.tree as AndroidTree),
+      elements: mapAndroidTree(captured.tree),
       truncated: false,
       screenHash: captured.screenHash,
       screenshotPath,
@@ -398,7 +392,7 @@ export class AndroidDriver implements DeviceDriver {
     }
     this.serial = serial;
     try {
-      const sweptLeftovers = await this.checkAgents(serial, identity, deadHolder, signal);
+      const sweptLeftovers = await this.checkAgents(serial, identity, deadHolder !== undefined, signal);
       await this.checkDevice(serial, app.package, signal);
       await this.restart(serial, app, signal);
       await this.startAgent(serial, identity, tools, signal);
@@ -441,7 +435,8 @@ export class AndroidDriver implements DeviceDriver {
   /**
    * The device name to a serial and a device identity (item 2). A name `adb devices` lists is a serial;
    * anything else is an AVD name, matched against the running emulators' `ro.boot.qemu.avd_name`. An
-   * emulator's identity is its AVD name, a phone's its serial. Only reads: the lease isn't held yet.
+   * emulator's identity is its AVD name, a phone's its serial. An AVD name no running emulator reports is
+   * `DEVICE_UNAUTHORIZED` when an unauthorized emulator is listed. Only reads: the lease isn't held yet.
    */
   private async resolveDevice(name: string, signal: AbortSignal): Promise<{ serial: string; identity: string }> {
     const listed = listedDevices(await this.succeeded('list devices', this.adb(['devices', '-l'], signal)));
@@ -449,13 +444,20 @@ export class AndroidDriver implements DeviceDriver {
     if (state !== undefined) {
       if (state === 'unauthorized') throw new DeviceReasonError('DEVICE_UNAUTHORIZED', `Device ${name} hasn't accepted this Mac's USB-debugging key`);
       if (state !== 'device') throw new DeviceReasonError('DEVICE_NOT_CONNECTED', `Device ${name} is ${state}`);
-      const avd = name.startsWith('emulator-') ? await this.getprop(name, 'ro.boot.qemu.avd_name', signal) : '';
+      const avd = name.startsWith(EMULATOR_SERIAL_PREFIX) ? await this.getprop(name, AVD_NAME_PROPERTY, signal) : '';
       return { serial: name, identity: avd || name };
     }
     const matches: string[] = [];
+    let unauthorized: string | undefined;
     for (const [serial, serialState] of listed) {
-      if (!serial.startsWith('emulator-') || serialState !== 'device') continue;
-      if (await this.getprop(serial, 'ro.boot.qemu.avd_name', signal) === name) matches.push(serial);
+      if (!serial.startsWith(EMULATOR_SERIAL_PREFIX)) continue;
+      if (serialState === 'unauthorized') unauthorized ??= serial;
+      if (serialState !== 'device') continue;
+      if (await this.getprop(serial, AVD_NAME_PROPERTY, signal) === name) matches.push(serial);
+    }
+    // An unauthorized emulator's AVD name can't be read, so it may be the one named.
+    if (matches.length === 0 && unauthorized !== undefined) {
+      throw new DeviceReasonError('DEVICE_UNAUTHORIZED', `No running emulator is named ${name}, and ${unauthorized} hasn't accepted this Mac's USB-debugging key`);
     }
     if (matches.length === 0) throw new DeviceReasonError('DEVICE_NOT_CONNECTED', `No connected device or running emulator is named ${name}`);
     if (matches.length > 1) {
@@ -521,26 +523,26 @@ export class AndroidDriver implements DeviceDriver {
   /**
    * The agent check and sweep (item 2, open point 22). A foreign agent refuses the run, untouched. Every
    * other agent is the bridge's own and, with this run holding the lease, can't belong to a live run: it is
-   * killed by pid. With no agent left, this serial's agent forwards go too; a listed forward now pointing
-   * elsewhere isn't the dead holder's any more. True when a dead holder's listed agent or forward was swept.
+   * killed by pid. With no agent left, this serial's agent forwards go too; a forward pointing elsewhere
+   * isn't an agent's, whatever a dead holder listed. True when a takeover from a dead holder swept anything, listed
+   * or not: a holder that crashed between starting its agent and recording its pid left an unlisted one.
    */
-  private async checkAgents(serial: string, identity: string, deadHolder: LeaseHolder | undefined, signal: AbortSignal): Promise<boolean> {
+  private async checkAgents(serial: string, identity: string, takenOver: boolean, signal: AbortSignal): Promise<boolean> {
     const agents = await this.agentsOn(serial, signal);
     if (agents.some(agent => !agent.own)) {
       throw foreignAgentFound(identity);
     }
-    const listed = listedLeftovers(deadHolder, serial);
     let swept = false;
     for (const agent of agents) {
       await this.killAgent(serial, agent.pid, signal);
-      if (listed.pids.has(agent.pid)) swept = true;
+      swept = true;
     }
     for (const [local, remote] of await this.forwardsOn(serial, signal)) {
       if (remote !== AGENT_SOCKET) continue;
       await this.removeForward(serial, local, signal);
-      if (listed.forwards.has(local)) swept = true;
+      swept = true;
     }
-    return swept;
+    return swept && takenOver;
   }
 
   /**
@@ -654,16 +656,12 @@ export class AndroidDriver implements DeviceDriver {
     while (true) {
       this.mayIssue(signal);
       // Each request ends with the 5 s, not its own 10 s limit; one ended unanswered stays unknown until the fence.
-      const deadline = new AbortController();
-      const timer = setTimeout(() => { deadline.abort(new Error('The device agent start deadline passed')); },
-        Math.max(1, AGENT_READY_MS - (this.clock.now() - startedAt)));
+      const deadline = this.clock.timeout(Math.max(1, AGENT_READY_MS - (this.clock.now() - startedAt)));
       try {
-        if ((await inLedger(this.lease, 'agent', () => agent.version(AbortSignal.any([signal, deadline.signal])))).dexSha256 === sha256) return true;
+        if ((await inLedger(this.lease, 'agent', () => agent.version(AbortSignal.any([signal, deadline])))).dexSha256 === sha256) return true;
       } catch (error) {
         // Not answering yet is expected while it starts; a cancel is not.
         if (signal.aborted) throw error;
-      } finally {
-        clearTimeout(timer);
       }
       if (this.clock.now() - startedAt >= AGENT_READY_MS) return false;
       await this.clock.sleep(AGENT_POLL_MS);
