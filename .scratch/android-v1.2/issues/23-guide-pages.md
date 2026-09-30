@@ -1,6 +1,7 @@
 # Phase 7: the guide pages
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase7 at 01477df
 Claimed by: claude-issue-23
 Blocked by: none (phases 5 and 6 merged in)
 
@@ -107,3 +108,7 @@ Don't touch `CHANGELOG.md`, `package.json` or `docs/releases/`: those belong to 
 - **Spec:** nothing missing and no scope creep. It found 4 sentences the code contradicts, all fixed in `2df0314` (choice 6: stability's "messages", placeholder selectors, capture's device checks, intent-extras masking).
 
 **Gate:** `npm run check` passed, 522 of 522 tests, then the build, at `2df0314` (log: `$TMPDIR/implement-phase7-23-check.log`). No device, adb server or mobilecli was touched.
+
+### 2026-09-30, coordinator: accepted
+
+Accepted, including the edits to pages 03, 04 and 07, which had iOS-only sentences that were now false. Coordinator follow-ups after merging: the CHANGELOG links the setup page, and the README links `docs/releases/v1.2.0.md`. Check 10 confirms the quickstart's Android step 4 (setting the Android device through `/plugin`).

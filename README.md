@@ -62,7 +62,7 @@ See [limits](docs/guide/10-limits.md), and read [data handling](docs/guide/09-da
 ## Project
 
 - **Design:** [architecture](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.2.0/docs/architecture.md) and [decision records](https://github.com/hugues-vnsgn/jev-ios-bridge/tree/v1.2.0/docs/adr). The key ones are [ADR-0004, verdict rules](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.2.0/docs/adr/0004-fixed-assertion-bounds-single-judgment.md), [ADR-0005, the 1.0 contract](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.2.0/docs/adr/0005-the-1-0-stability-contract.md), and [ADR-0006, the Android device layer](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.2.0/docs/adr/0006-mobilecli-device-agent-as-android-device-layer.md).
-- **Evidence:** [benchmarks and experiments](https://github.com/hugues-vnsgn/jev-ios-bridge/tree/v1.2.0/spikes/benchmarks), and the [release notes](https://github.com/hugues-vnsgn/jev-ios-bridge/tree/v1.2.0/docs/releases), with each release's measured results.
+- **Evidence:** [benchmarks and experiments](https://github.com/hugues-vnsgn/jev-ios-bridge/tree/v1.2.0/spikes/benchmarks), and the [release notes](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.2.0/docs/releases/v1.2.0.md), with this release's measured results.
 - **Changes:** [CHANGELOG](CHANGELOG.md).
 - **Development:** `npm ci && npm run check` in a source checkout.
 - **License:** [MIT](LICENSE).
