@@ -1,6 +1,7 @@
 # Phase 4: fix whole-branch review findings
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: claude-issue-17
 Blocked by: none
 
 Spec: [../spec.md](../spec.md), "Phase 4". This fixes the whole-branch two-axis review of `agent/android-v1.2-phase4` (Issues 10 to 16 merged, reviewed `f93645a...c43b2a8`). The work is on a branch cut from the phase branch, as Issues 10 to 16 were. Read the release spec's phase 4 item 8 (`close`) and "Rules for the whole release" before starting.
