@@ -1,11 +1,10 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { chmod, mkdtemp, readdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
-import { createRequire } from 'node:module';
 import { tmpdir } from 'node:os';
-import { dirname, join } from 'node:path';
+import { join } from 'node:path';
 import { test } from 'node:test';
-import { PINNED_AGENT_SHA256, pinnedAgent } from '../src/device/android/agent-supply.js';
+import { mobilecliProgramPath, PINNED_AGENT_SHA256, pinnedAgent } from '../src/device/android/agent-supply.js';
 import { DeviceReasonError } from '../src/device/index.js';
 
 /** A minimal DEX file: the `dex\n035\0` header with a valid length field, Adler-32 checksum and SHA-1 signature. */
@@ -129,18 +128,16 @@ test('a cache folder that cannot be created is ANDROID_TOOLS_UNAVAILABLE', async
   });
 });
 
-const arch = process.arch === 'arm64' ? 'arm64' : 'amd64';
-const installedProgram = (() => {
+const installed = (() => {
   try {
-    const mobilecli = createRequire(import.meta.url).resolve('mobilecli/package.json');
-    return join(dirname(createRequire(mobilecli).resolve(`@mobilenext/mobilecli-darwin-${arch}/package.json`)), `mobilecli-darwin-${arch}`);
+    return Boolean(mobilecliProgramPath());
   } catch {
-    return undefined;
+    return false;
   }
 })();
 
 test('the installed mobilecli 1.0.14 program holds exactly one device agent, 72,660 bytes, with the pinned SHA-256', {
-  skip: installedProgram ? false : `@mobilenext/mobilecli-darwin-${arch} is not installed`,
+  skip: installed ? false : 'the Mac mobilecli program is not installed',
 }, async () => {
   await withCacheFolder(async (cacheFolder) => {
     const found = await pinnedAgent({ cacheFolder });

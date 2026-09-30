@@ -4,6 +4,7 @@ import { chmod, mkdir, mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { mock, test } from 'node:test';
+import { mobilecliProgramPath, PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
 import { androidTools, adbEnvironment, findAdb } from '../src/device/android/tools.js';
 import { DeviceReasonError } from '../src/device/index.js';
 
@@ -95,29 +96,30 @@ test('the tools check finds adb, then the agent; a missing mobilecli program is 
   });
 });
 
-const arch = process.arch === 'arm64' ? 'arm64' : 'amd64';
 const installed = (() => {
   try {
-    const mobilecli = createRequire(import.meta.url).resolve('mobilecli/package.json');
-    createRequire(mobilecli).resolve(`@mobilenext/mobilecli-darwin-${arch}/package.json`);
-    return true;
+    return Boolean(mobilecliProgramPath());
   } catch {
     return false;
   }
 })();
 
-test('the tools check reads the installed mobilecli program and never asks any spawn to execute anything', {
-  skip: installed ? false : `@mobilenext/mobilecli-darwin-${arch} is not installed`,
-}, async () => {
+test('the tools check only reads the mobilecli program: no spawn is ever asked to execute anything', async () => {
   const childProcess = createRequire(import.meta.url)('node:child_process') as Record<string, (...args: unknown[]) => unknown>;
   const spawners = ['spawn', 'spawnSync', 'exec', 'execSync', 'execFile', 'execFileSync', 'fork'] as const;
   const spies = spawners.map(name => mock.method(childProcess, name, () => { throw new Error(`${name} was called`); }));
   syncBuiltinESMExports();
   try {
     await withAdbs(['bin/adb'], async (root) => {
-      const tools = await androidTools({ environment: { PATH: join(root, 'bin') }, home: join(root, 'user'), cacheFolder: join(root, 'cache') });
+      const check = androidTools({ environment: { PATH: join(root, 'bin') }, home: join(root, 'user'), cacheFolder: join(root, 'cache') });
+      if (!installed) {
+        // CI on Linux has no Mac program: the check refuses, still without running anything.
+        await refusal(check);
+        return;
+      }
+      const tools = await check;
       assert.equal(tools.adb, join(root, 'bin/adb'));
-      assert.equal(tools.agent.sha256, '0e0865d0617bc6e4abf0a7b24a956da1ca25cfc795c30d8e32c64eb0d1f6258f');
+      assert.equal(tools.agent.sha256, PINNED_AGENT_SHA256);
       assert.deepEqual(await readdir(join(root, 'cache')), [`${tools.agent.sha256}.dex`]);
     });
   } finally {

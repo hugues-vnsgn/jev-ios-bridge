@@ -59,7 +59,7 @@ function validDexFiles(program: Buffer): Buffer[] {
 }
 
 /** The mobilecli program for this Mac, resolved from mobilecli's own location. Only ever read, never run (ADR-0006). */
-function mobilecliProgramPath(): string {
+export function mobilecliProgramPath(): string {
   const arch = process.arch === 'arm64' ? 'arm64' : 'amd64';
   const mobilecli = createRequire(import.meta.url).resolve('mobilecli/package.json');
   const platformPackage = createRequire(mobilecli).resolve(`@mobilenext/mobilecli-darwin-${arch}/package.json`);
