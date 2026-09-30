@@ -8,6 +8,9 @@ Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase
 ## What to build
 
 1. **`started`**: records the platform's projection rule (`android-full-text-v1` from Issue 05 on Android runs), and the run-log allowlist in `src/log/index.ts` accepts both rule names. On Android runs only, it also records `platform: "android"`, `package`, `activity` (or `null`) and `intentExtras` (`{}` when none). `bundleId` is `null` on Android runs.
+1a. **The run renders Jev's view for the script's platform.** `runScriptedScenario` passes the script's platform to `renderAssertionState`, so an Android run shows Jev `Current Android screen (full accessibility capture):` and the `android-full-text-v1` projection (Issue 05), and the rule recorded in `started` matches what Jev saw. An iOS run's calls stay as they are, byte for byte.
+
+   2026-09-30, orchestrator note: no Issue covered this wiring. Issue 05 built the Android branch of the renderer, and this Issue records its rule, so the wiring belongs here.
 2. **`prepared`**, on Android runs only: the device identity, the serial, the device agent's SHA-256, and `sweptLeftovers: true` after a crash takeover. The driver supplies them; add the smallest optional hook on `DeviceDriver` for it, which the iOS driver doesn't implement.
 3. **The shown value and an unsettled screen** (open point 11): the `action` event records `shownValue` and the `step` event records `settled: false` when the settle cap was hit, both through the run log's redactor as usual. The driver supplies them through an optional contract the iOS driver doesn't use.
 4. **`report.json`**, on Android runs only: `platform`, `package`, `activity`, `intentExtras`, and an optional `typedFields` array, one `{ "stepId", "shownValue" }` per replace-text step, built from the events. The `prepared` fields stay out of `report.json`.
