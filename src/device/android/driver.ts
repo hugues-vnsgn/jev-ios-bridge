@@ -101,7 +101,11 @@ export interface AndroidDriverOptions {
 /** The element action each kind of action needs, as on iOS. */
 const REQUIRED_ACTION = { tap: 'tap', type: 'typeText', swipe: 'swipeWithin' } as const;
 
-const realClock: Clock = { now: () => performance.now(), sleep: ms => delay(ms), timeout: ms => AbortSignal.timeout(ms) };
+/** The real clock. Elapsed times from `performance.now()` are fractional, and `AbortSignal.timeout` takes only a
+ *  whole number of ms, so a timeout is rounded up to at least 1 ms. */
+export const productionClock: Clock = {
+  now: () => performance.now(), sleep: ms => delay(ms), timeout: ms => AbortSignal.timeout(Math.max(1, Math.ceil(ms))),
+};
 
 function freeLocalPort(): Promise<number> {
   return new Promise((resolvePort, reject) => {
@@ -216,7 +220,7 @@ export class AndroidDriver implements DeviceDriver {
 
   constructor(private readonly options: AndroidDriverOptions = {}) {
     this.lease = new DeviceLease(options.leaseRoot ? { root: options.leaseRoot } : {});
-    this.clock = options.clock ?? realClock;
+    this.clock = options.clock ?? productionClock;
     this.runId = options.runId ?? randomUUID();
   }
 
