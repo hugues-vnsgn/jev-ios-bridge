@@ -32,3 +32,18 @@ Spec: [../spec.md](../spec.md), "Phase 3", and its Rulings. This fixes findings 
 - No device, simulator or emulator is touched.
 
 ## Comments
+
+**2026-09-30, implementer-08:** All ten findings fixed on this branch, commits 1b69609..1751b3b (tip after this comment).
+
+1. Redaction bug: `src/log/index.ts` now allows `PLATFORMS` for the `platform` field, so a typed value that collides with "android" no longer corrupts it. New collision test in `tests/scripted-run.test.ts` (red before the fix, green after) covers run.jsonl, report.json and the prose report.
+2. `recordedPlatform(events)` exported from `src/scripted/report-json.ts`, used by both `report-json.ts` and `report.ts`.
+3. `isAndroidScenario` deleted from `src/scripted/run.ts`; narrowed with `script.platform === 'android'` directly.
+4. `actOutcomeOf`/`shownValueAfter` merged into one `keepActResult(result): string | undefined` in `src/scripted/run.ts`.
+5. `selectAndroidDeviceId` (now `selectAndroidDeviceName`, see #6) raises `DeviceReasonError` for `NO_DEVICE`/`INVALID_DEVICE` instead of `DeviceCliError`; `src/cli.ts`'s pre-run catch prints it for those two codes. Android stderr/exit codes unchanged (contract tests still pass byte-for-byte).
+6. Renamed `selectAndroidDeviceId` to `selectAndroidDeviceName` in `src/device/index.ts`, `src/cli.ts`, `tests/android-device.test.ts`.
+7. Reworded the stale comments in `src/device/factory.ts:12` (describes today's refusal instead of promising future Android support) and `src/scripted/vocabulary.ts` (drops the unreachable "Android release spec" pointer, keeps ADR-0005).
+8. `src/scripted/schema.ts`: `device.serial`/`device.avd` messages now built from `androidSerial.source`/`androidAvd.source` (byte-identical to the old hand-written text, verified against `tests/golden/scripts.json`); `launchArgument`/`intentExtraValue` now built from one `printableAsciiField(message)` helper.
+9. `docs/guide/reference/script-format.md` now says the 2048-character typed-value limit counts UTF-16 code units; `tests/docs.test.ts` checks for that text. Limit itself unchanged.
+10. Added `tests/fixtures/run-log.ts` (`withRunLog`) and `tests/fixtures/android-script.ts` (`androidScript`), and used them across the phase-3 tests in `tests/scripted-run.test.ts` and `tests/contract.test.ts` that repeated the temp-folder+createRunLog+cleanup block and the minimal Android script literal. Tests that existed at 819ea10 are untouched (verified by diff).
+
+Gates at tip 1751b3b304022b1ee371bebe99397bcd8eb74628: `npm run check` passes (typecheck, 241 tests, build). No golden file changed since 4e7fba5. `git diff 819ea10 -- tests/` removes only lines already accounted for by prior Issues' rulings (logpane.test.ts, service.test.ts, golden/mcp.json, golden/vocabulary.json) plus lines this Issue's own phase-3-added tests introduced and then revised (scripted-run.test.ts, contract.test.ts, android-device.test.ts, docs.test.ts) — no line present at 819ea10 in those four files was touched.
