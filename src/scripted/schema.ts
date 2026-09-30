@@ -47,10 +47,6 @@ const assertionsSchema = z.array(assertionSchema).min(1).max(20).refine(
   assertions => new Set(assertions.map(assertion => assertion.id)).size === assertions.length,
   'Assertion IDs must be unique within a checkpoint',
 );
-// The character rule differs by platform, so it's enforced in the top-level superRefine instead of here:
-// this keeps the ASCII pattern off `values` in the exported JSON schema.
-const valuesSchema = z.record(z.string().regex(key), z.string().max(2_048))
-  .refine(values => Object.keys(values).length <= 32, 'A script may supply at most 32 typed values');
 
 const actionSchema = z.discriminatedUnion('kind', [
   z.strictObject({ kind: z.literal('tap'), selector: selectorSchema }),
@@ -74,87 +70,25 @@ const intentExtraValue = z.string().min(1).max(200)
 const intentExtrasSchema = z.record(z.string().min(1).max(200), intentExtraValue)
   .refine(extras => Object.keys(extras).length <= 20, 'A script may supply at most 20 intent extras');
 
-export const scriptedScenarioSchema = z.strictObject({
-  version: versionSchema,
-  /** The device platform this script targets. Absent, or "ios", reads the script exactly as in 1.1. */
-  platform: z.enum(PLATFORMS).optional(),
-  app: z.strictObject({
-    bundleId: z.string().regex(bundleId).optional(),
-    /** Passed to the app process at launch, for example a debug-only entry point such as -of-evidence-gallery. */
-    launchArgs: z.array(launchArgument).max(20).optional(),
-    /** The installed app's package name. Required, Android only. */
-    package: z.string().regex(androidPackage,
-      'app.package must be an Android package name: two or more dot-separated parts, each starting with a ' +
-      'letter, then letters, digits or "_"').optional(),
-    /** A specific activity to start instead of the launcher activity: relative or fully qualified. */
-    activity: z.string().min(1).max(200).regex(androidActivity,
-      'app.activity must be a relative (".DebugGalleryActivity") or fully qualified activity name').optional(),
-    /** Passed to the launch intent with `am start --es <key> <value>`. */
-    intentExtras: intentExtrasSchema.optional(),
-  }),
-  device: z.strictObject({
-    udid: z.string().regex(udid).optional(),
-    /** The adb serial exactly as `adb devices` prints it. At most one of serial or avd. */
-    serial: z.string().regex(androidSerial, 'device.serial must match ^[A-Za-z0-9._:-]{1,100}$').optional(),
-    /** An emulator's AVD name, stable across start order. At most one of serial or avd. */
-    avd: z.string().regex(androidAvd, 'device.avd must match ^[A-Za-z0-9._-]{1,100}$').optional(),
-  }).optional(),
-  preconditions: z.array(z.string().trim().min(1).max(500)).max(20).optional(),
-  values: valuesSchema,
-  steps: z.array(z.discriminatedUnion('kind', [
-    z.strictObject({ id: z.string().regex(key), kind: z.literal('action'), guard: screenGuardSchema,
-      action: actionSchema }),
-    z.strictObject({ id: z.string().regex(key), kind: z.literal('wait'), guard: screenGuardSchema,
-      until: screenGuardSchema, timeoutMs: z.number().int().min(1).max(60_000) }),
-    z.strictObject({ id: z.string().regex(key), kind: z.literal('checkpoint'), guard: screenGuardSchema,
-      assertions: assertionsSchema }),
-  ])).min(1).max(100),
-}).superRefine((scenario, context) => {
-  // Checked in the base schema's field order (app, then device, then values, then steps), so an iOS
-  // script's issues list in the same order 1.1 produced, before Android added platform-aware checks.
-  const platform = scenario.platform ?? 'ios';
-  if (platform === 'android') {
-    if (scenario.app.bundleId !== undefined) context.addIssue({ code: 'custom',
-      message: 'app.bundleId is not supported on Android; use app.package', path: ['app', 'bundleId'] });
-    if (scenario.app.launchArgs !== undefined) context.addIssue({ code: 'custom',
-      message: 'app.launchArgs is not supported on Android; use app.intentExtras', path: ['app', 'launchArgs'] });
-    if (scenario.app.package === undefined) context.addIssue({ code: 'custom',
-      message: 'app.package is required on Android', path: ['app', 'package'] });
-    if (scenario.device?.udid !== undefined) context.addIssue({ code: 'custom',
-      message: 'device.udid is not supported on Android; use device.serial or device.avd', path: ['device', 'udid'] });
-    if (scenario.device?.serial !== undefined && scenario.device?.avd !== undefined) context.addIssue({ code: 'custom',
-      message: 'A script may name at most one of device.serial or device.avd', path: ['device'] });
-  } else {
-    // Matches the message and path zod's own "required" check gave app.bundleId before it became optional
-    // in the base schema (needed so the same field can be required on iOS and forbidden on Android).
-    if (scenario.app.bundleId === undefined) context.addIssue({ code: 'invalid_type', expected: 'string',
-      input: undefined, message: 'Invalid input: expected string, received undefined', path: ['app', 'bundleId'] });
-    if (scenario.app.package !== undefined) context.addIssue({ code: 'custom',
-      message: 'app.package requires "platform": "android"', path: ['app', 'package'] });
-    if (scenario.app.activity !== undefined) context.addIssue({ code: 'custom',
-      message: 'app.activity requires "platform": "android"', path: ['app', 'activity'] });
-    if (scenario.app.intentExtras !== undefined) context.addIssue({ code: 'custom',
-      message: 'app.intentExtras requires "platform": "android"', path: ['app', 'intentExtras'] });
-    if (scenario.device?.serial !== undefined) context.addIssue({ code: 'custom',
-      message: 'device.serial requires "platform": "android"', path: ['device', 'serial'] });
-    if (scenario.device?.avd !== undefined) context.addIssue({ code: 'custom',
-      message: 'device.avd requires "platform": "android"', path: ['device', 'avd'] });
-  }
+const stepsSchema = z.array(z.discriminatedUnion('kind', [
+  z.strictObject({ id: z.string().regex(key), kind: z.literal('action'), guard: screenGuardSchema,
+    action: actionSchema }),
+  z.strictObject({ id: z.string().regex(key), kind: z.literal('wait'), guard: screenGuardSchema,
+    until: screenGuardSchema, timeoutMs: z.number().int().min(1).max(60_000) }),
+  z.strictObject({ id: z.string().regex(key), kind: z.literal('checkpoint'), guard: screenGuardSchema,
+    assertions: assertionsSchema }),
+])).min(1).max(100);
 
-  for (const [valueKey, value] of Object.entries(scenario.values)) {
-    if (platform === 'android') {
-      if (controlCharacter.test(value)) context.addIssue({ code: 'custom',
-        message: 'Typed values must not contain control characters', path: ['values', valueKey] });
-    } else if (!printableAscii.test(value)) {
-      context.addIssue({ code: 'custom', message: 'Typed values must use printable US keyboard characters',
-        path: ['values', valueKey] });
-    }
-  }
-  if (platform !== 'android' && Object.values(scenario.values).some(value => value.startsWith('-'))) {
-    context.addIssue({ code: 'custom',
-      message: 'MobileBuildMCP 2.7.1 cannot type text starting with a leading hyphen', path: ['values'] });
-  }
+type Steps = z.infer<typeof stepsSchema>;
 
+interface StepCheckContext {
+  addIssue(issue: { code: 'custom'; message: string; path: (string | number)[] }): void;
+}
+
+/** The steps checks shared by every platform: a script ends at a checkpoint, step IDs are unique, and a
+ *  replaceText step's valueKey names a supplied value. Each schema below runs its own platform-specific
+ *  checks first, so an iOS script's issue order matches 1.1's exactly (app, then values, then steps). */
+function checkSteps(scenario: { steps: Steps; values: Record<string, string> }, context: StepCheckContext): void {
   if (scenario.steps.at(-1)?.kind !== 'checkpoint') {
     context.addIssue({ code: 'custom', message: 'A script must end at an assertion checkpoint', path: ['steps'] });
   }
@@ -168,6 +102,105 @@ export const scriptedScenarioSchema = z.strictObject({
         path: ['steps', index, 'action', 'valueKey'] });
     }
   }
+}
+
+// ---------- iOS: exactly 1.1's schema (frozen at 819ea10), plus an optional "platform": "ios" ----------
+
+const iosValuesSchema = z.record(z.string().regex(key), z.string().max(2_048)
+  .regex(printableAscii, 'Typed values must use printable US keyboard characters'))
+  .refine(values => Object.keys(values).length <= 32, 'A script may supply at most 32 typed values')
+  .refine(values => Object.values(values).every(value => !value.startsWith('-')),
+    'MobileBuildMCP 2.7.1 cannot type text starting with a leading hyphen');
+
+export const iosScriptedScenarioSchema = z.strictObject({
+  version: versionSchema,
+  /** Absent, or "ios": every other value routes to this schema too, and fails on this field. */
+  platform: z.literal('ios').optional(),
+  app: z.strictObject({
+    bundleId: z.string().regex(bundleId),
+    /** Passed to the app process at launch, for example a debug-only entry point such as -of-evidence-gallery. */
+    launchArgs: z.array(launchArgument).max(20).optional(),
+  }),
+  device: z.strictObject({ udid: z.string().regex(udid).optional() }).optional(),
+  preconditions: z.array(z.string().trim().min(1).max(500)).max(20).optional(),
+  values: iosValuesSchema,
+  steps: stepsSchema,
+}).superRefine(checkSteps);
+
+// ---------- Android: its own schema, not a refinement of the iOS one ----------
+
+const androidValuesSchema = z.record(z.string().regex(key), z.string().max(2_048)
+  .refine(value => !controlCharacter.test(value), 'Typed values must not contain control characters'))
+  .refine(values => Object.keys(values).length <= 32, 'A script may supply at most 32 typed values');
+
+export const androidScriptedScenarioSchema = z.strictObject({
+  version: versionSchema,
+  platform: z.literal('android'),
+  app: z.strictObject({
+    // Declared (rather than omitted) so a script that supplies them gets a message naming the Android
+    // replacement, instead of zod's generic "unrecognized key".
+    bundleId: z.string().regex(bundleId).optional(),
+    launchArgs: z.array(launchArgument).max(20).optional(),
+    /** The installed app's package name. Required. */
+    package: z.string().regex(androidPackage,
+      'app.package must be an Android package name: two or more dot-separated parts, each starting with a ' +
+      'letter, then letters, digits or "_"').optional(),
+    /** A specific activity to start instead of the launcher activity: relative or fully qualified. */
+    activity: z.string().min(1).max(200).regex(androidActivity,
+      'app.activity must be a relative (".DebugGalleryActivity") or fully qualified activity name').optional(),
+    /** Passed to the launch intent with `am start --es <key> <value>`. */
+    intentExtras: intentExtrasSchema.optional(),
+  }),
+  device: z.strictObject({
+    // Declared for the same reason as app.bundleId above.
+    udid: z.string().regex(udid).optional(),
+    /** The adb serial exactly as `adb devices` prints it. At most one of serial or avd. */
+    serial: z.string().regex(androidSerial, 'device.serial must match ^[A-Za-z0-9._:-]{1,100}$').optional(),
+    /** An emulator's AVD name, stable across start order. At most one of serial or avd. */
+    avd: z.string().regex(androidAvd, 'device.avd must match ^[A-Za-z0-9._-]{1,100}$').optional(),
+  }).optional(),
+  preconditions: z.array(z.string().trim().min(1).max(500)).max(20).optional(),
+  values: androidValuesSchema,
+  steps: stepsSchema,
+}).superRefine((scenario, context) => {
+  if (scenario.app.bundleId !== undefined) context.addIssue({ code: 'custom',
+    message: 'app.bundleId is not supported on Android; use app.package', path: ['app', 'bundleId'] });
+  if (scenario.app.launchArgs !== undefined) context.addIssue({ code: 'custom',
+    message: 'app.launchArgs is not supported on Android; use app.intentExtras', path: ['app', 'launchArgs'] });
+  if (scenario.app.package === undefined) context.addIssue({ code: 'custom',
+    message: 'app.package is required on Android', path: ['app', 'package'] });
+  if (scenario.device?.udid !== undefined) context.addIssue({ code: 'custom',
+    message: 'device.udid is not supported on Android; use device.serial or device.avd', path: ['device', 'udid'] });
+  if (scenario.device?.serial !== undefined && scenario.device?.avd !== undefined) context.addIssue({ code: 'custom',
+    message: 'A script may name at most one of device.serial or device.avd', path: ['device'] });
+
+  checkSteps(scenario, context);
+});
+
+// ---------- Merged: structure only, to generate the MCP tool's input schema (owner decision A) ----------
+
+export const scriptedScenarioSchema = z.strictObject({
+  version: versionSchema,
+  platform: z.enum(PLATFORMS).optional(),
+  app: z.strictObject({
+    bundleId: z.string().regex(bundleId).optional(),
+    launchArgs: z.array(launchArgument).max(20).optional(),
+    package: z.string().regex(androidPackage,
+      'app.package must be an Android package name: two or more dot-separated parts, each starting with a ' +
+      'letter, then letters, digits or "_"').optional(),
+    activity: z.string().min(1).max(200).regex(androidActivity,
+      'app.activity must be a relative (".DebugGalleryActivity") or fully qualified activity name').optional(),
+    intentExtras: intentExtrasSchema.optional(),
+  }),
+  device: z.strictObject({
+    udid: z.string().regex(udid).optional(),
+    serial: z.string().regex(androidSerial, 'device.serial must match ^[A-Za-z0-9._:-]{1,100}$').optional(),
+    avd: z.string().regex(androidAvd, 'device.avd must match ^[A-Za-z0-9._-]{1,100}$').optional(),
+  }).optional(),
+  preconditions: z.array(z.string().trim().min(1).max(500)).max(20).optional(),
+  values: z.record(z.string().regex(key), z.string().max(2_048))
+    .refine(values => Object.keys(values).length <= 32, 'A script may supply at most 32 typed values'),
+  steps: stepsSchema,
 });
 
 function withoutUndefined(value: unknown): unknown {
@@ -179,6 +212,20 @@ function withoutUndefined(value: unknown): unknown {
   return value;
 }
 
+/** A script's own `platform` field decides which schema reads it; anything but exactly "android" reads as
+ *  iOS, whose schema then reports its own `platform` mismatch if the value isn't "ios" either. */
+function platformOf(input: unknown): 'ios' | 'android' {
+  return typeof input === 'object' && input !== null && 'platform' in input &&
+    (input as { platform?: unknown }).platform === 'android' ? 'android' : 'ios';
+}
+
 export function parseScriptedScenario(input: unknown): ScriptedScenario {
-  return withoutUndefined(scriptedScenarioSchema.parse(input)) as ScriptedScenario;
+  const schema = platformOf(input) === 'android' ? androidScriptedScenarioSchema : iosScriptedScenarioSchema;
+  return withoutUndefined(schema.parse(input)) as ScriptedScenario;
+}
+
+/** Parses by platform like {@link parseScriptedScenario}, without throwing. */
+export function safeParseScriptedScenario(input: unknown) {
+  return platformOf(input) === 'android' ? androidScriptedScenarioSchema.safeParse(input)
+    : iosScriptedScenarioSchema.safeParse(input);
 }

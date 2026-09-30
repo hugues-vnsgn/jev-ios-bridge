@@ -1,6 +1,6 @@
 import { setTimeout as delay } from 'node:timers/promises';
-import { isIosApp, type Action, type ActionScenarioContext, type DeviceDriver, type Element,
-  type PrepareScenarioContext, type RunLog, type Snapshot, type Verdict } from '../contracts/index.js';
+import type { Action, ActionScenarioContext, DeviceDriver, Element,
+  PrepareScenarioContext, RunLog, Snapshot, Verdict } from '../contracts/index.js';
 import { DeviceCliError, StaleSnapshotError } from '../device/index.js';
 import type { AssertionJudgment, ScriptedJudge, ScriptedScenario, ScriptedStep } from './contracts.js';
 import { SCRIPTED_JEV_MODEL, ScriptedJevError } from './jev.js';
@@ -49,12 +49,6 @@ function bounded(value: number | undefined, fallback: number, minimum: number, m
 }
 
 function prepareContext(script: ScriptedScenario): PrepareScenarioContext {
-  // Android's device (serial or AVD) isn't part of ScenarioContext yet: the only driver built today
-  // (MobileBuildMCP) refuses a non-iOS app identity before it would read a device. Choosing the Android
-  // device from this context is a later phase's job.
-  if (script.platform === 'android') {
-    return { app: script.app, ...(script.preconditions ? { preconditions: script.preconditions } : {}) };
-  }
   return { app: script.app,
     ...(script.device ? { device: script.device } : {}),
     ...(script.preconditions ? { preconditions: script.preconditions } : {}) };
@@ -217,11 +211,11 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
   });
 
   try {
-    // bundleId is null on Android runs, which it can already be; the other Android started fields
-    // (package, activity, intentExtras) are a later phase's addition.
+    // bundleId is null on Android runs, which it can already be.
+    const ios = script.platform !== 'android';
     await options.log.append('started', { mode: 'scripted',
-      bundleId: isIosApp(script.app) ? script.app.bundleId : null,
-      ...(isIosApp(script.app) && script.app.launchArgs ? { launchArgs: script.app.launchArgs } : {}),
+      bundleId: ios ? script.app.bundleId : null,
+      ...(ios && script.app.launchArgs ? { launchArgs: script.app.launchArgs } : {}),
       bridgeVersion: BRIDGE_VERSION, jevModel: SCRIPTED_JEV_MODEL, projectionRule: PROJECTION_RULE,
       plannedSteps: script.steps.map(step => ({ id: step.id, kind: step.kind })) });
     let prepareDurationMs = 0;
