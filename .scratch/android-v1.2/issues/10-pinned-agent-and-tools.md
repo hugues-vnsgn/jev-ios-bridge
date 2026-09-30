@@ -30,3 +30,49 @@ New code goes in `src/device/android/`.
 - A test asserts that no runner or spawn is ever asked to execute the mobilecli program.
 - Nothing in `src/` imports anything from mobilecli's JavaScript; the package is only a place to read the program from.
 - No existing test changes. `npm run check` passes. No device is touched.
+
+## Comments
+
+### 2026-09-30, claude-issue-10
+
+**What I built** (`9817515`, review fixes in `53d568f`):
+- `mobilecli` is now pinned at exactly `1.0.14` in `dependencies`. `package-lock.json` pins it and its platform packages at 1.0.14. No platform package is listed directly.
+- `src/device/android/agent-supply.ts` provides `pinnedAgent({ readProgram?, cacheFolder?, pinnedSha256? })`, returning `{ path, sha256 }`, along with `PINNED_AGENT_SHA256` and `mobilecliProgramPath()`.
+  - It finds `@mobilenext/mobilecli-darwin-<arch>` from mobilecli's own `package.json` and reads the program without running it.
+  - It requires exactly one DEX whose `dex\n0NN\0` header, length field, Adler-32 checksum and SHA-1 signature are all valid, then checks that DEX against the pinned SHA-256.
+  - It caches the DEX at `$TMPDIR/jev-android-agent/<sha256>.dex`, with the folder at 0700 and the file at 0600. It writes a temporary file and then renames it into place.
+  - It re-hashes the cache on every call and rewrites it when the hash doesn't match.
+  - Every failure throws `DeviceReasonError('ANDROID_TOOLS_UNAVAILABLE')`.
+- `src/device/android/tools.ts` provides three functions:
+  - `findAdb({ environment?, home? })` looks in `ANDROID_HOME`, `ANDROID_SDK_ROOT` and `PATH`, in that order.
+  - `adbEnvironment()` calls `deviceEnvironment()`, which strips the key and keeps `ANDROID_ADB_SERVER_PORT`.
+  - `androidTools(options)` is the tools check: `adb` first, then the agent. It returns `{ adb, agent }`, and Issue 14 calls it before the device lookup.
+
+**Open-point defaults used:** open point 3's full order, including the last fallback `~/Library/Android/sdk/platform-tools/adb`, because the Issue says "as the open point orders them".
+
+**Deviations and small choices:**
+- `pinnedSha256` is a test-only option, since synthetic bytes can't carry the real hash. Issue 14 shouldn't pass it through.
+- `findAdb` skips empty and relative `PATH` entries, and skips an `adb` that isn't an executable file.
+- `pinnedAgent` always reads the program, even when the cache is valid, so a missing package is always reported.
+- A cache folder owned by another user fails closed, because its chmod fails.
+
+**Tests added:**
+- `tests/android-agent-supply.test.ts` (8 tests):
+  - one valid DEX, found and cached with the right modes;
+  - none, or two;
+  - a bad Adler-32, a bad SHA-1 or a bad length field, plus broken copies next to a valid one;
+  - a wrong SHA-256;
+  - a missing program;
+  - a tampered cache, which is rewritten and reset to 0600;
+  - a cache folder that can't be created;
+  - the real installed package: one DEX of 72,660 bytes with the pinned SHA-256. This one is skipped when the Mac package is absent.
+- `tests/android-tools.test.ts` (7 tests):
+  - the `adb` lookup order;
+  - a missing `adb`, an `adb` that isn't executable, one that is a folder, and relative `PATH` entries;
+  - `adbEnvironment()`;
+  - `adb` reported before the program is read;
+  - a missing program;
+  - a spy on every `child_process` spawn function during the real tools check, asserting zero calls. It runs on Linux too, where it asserts the refusal. I checked that it fails when a spawn is added;
+  - a source scan showing that nothing in `src/` imports mobilecli's JavaScript.
+
+**Gate:** `npm run check` passed at `53d568f`: 257 of 257 tests, typecheck and build. `/code-review` against `166ddbd` found no hard violation and no missing requirement. I fixed the Linux-skipped spawn spy and the duplicated path logic in the tests. No device was touched.
