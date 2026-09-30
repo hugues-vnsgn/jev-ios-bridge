@@ -1,6 +1,7 @@
 # Phase 4: the pinned agent and the tools
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: claude-issue-10
 Blocked by: none
 
 Spec: [../spec.md](../spec.md), "Phase 4". The work is [the release spec's phase 4](../../android-support/release-spec.md#phase-4-the-android-driver-domain-model-adr-0006-mobilecli-as-a-dependency-how-android-elements-map-onto-the-bridges-elements-how-a-script-names-an-android-app-and-device-actions-across-android-versions-where-android-plugs-into-the-code-items-2-5-6-and-8) item 1, and [open point 3](../../android-support/release-spec.md#open-points-for-the-executor). Read them in full. The detail below only adds acceptance criteria.
