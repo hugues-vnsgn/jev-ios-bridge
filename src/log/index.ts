@@ -30,9 +30,10 @@ protocolValues.bridgeVersion = new Set([BRIDGE_VERSION]);
 protocolValues.jevModel = protocolValues.model!;
 protocolValues.projectionRule = new Set(Object.values(PROJECTION_RULES));
 const identifierParents = new Set(['plannedSteps', 'assertions']);
-// Maps whose keys come from the script or from Jev, not the contract, so a key can carry a registered
-// value and is pseudonymized like an identifier. A new map of that kind belongs here; the "no registered
-// value survives" test in tests/scripted-run.test.ts fails for one that is missing.
+// Maps whose keys come from the script or from Jev, not the contract, so a key can carry a typed value
+// or the API key and is pseudonymized like an identifier. A new map of that kind belongs here (`assertions`
+// is also one, but only where it is a map rather than a list, so it is checked beside this set). The
+// "no typed value or API key survives" test in tests/scripted-run.test.ts fails for a map that is missing.
 const dataKeyedMaps = new Set(['probabilities', 'values', 'intentExtras']);
 
 function createRedactor(secrets: string[]): (value: unknown) => unknown {

@@ -992,53 +992,58 @@ test('a typed value that collides with "android" never corrupts the recorded pla
   }, { values: ['and'] });
 });
 
-test('no registered value or API key survives anywhere in the run\'s written evidence, whichever script field carries it', async () => {
-  // Synthetic secrets only. Each is placed in every script field a value can reach; the scan below reads
-  // every text file the run writes, so a field the redactor forgets fails here without being named.
+test('no typed value or API key survives anywhere in the run\'s written evidence, whichever field carries it', async () => {
+  // Synthetic secrets only. Each is placed in every script field a value can reach, and on the screen;
+  // the scan below reads every text file the run writes, so a field the redactor forgets fails here
+  // without being named.
   const typed = 'synthetic-typed-7f3a';
   const apiKey = 'synthetic-api-key-9c1e';
-  const field: Element = { ref: 'name-field', role: 'text-field', identifier: 'name-field', actions: ['typeText'],
+  const fieldId = `field-${typed}`;
+  const field: Element = { ref: 'name-field', role: 'text-field', identifier: fieldId, actions: ['typeText'],
     frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } };
   const confirm = snapshot([{ ref: 'confirm', role: 'text', label: 'Confirm', actions: [],
-    frame: { x: 0, y: 40, width: 100, height: 30 }, state: { enabled: true, visible: true } }]);
+    frame: { x: 0, y: 40, width: 100, height: 30 }, state: { enabled: true, visible: true } },
+  { ref: 'greeting', role: 'text', label: `Hello ${typed}`, actions: [],
+    frame: { x: 0, y: 80, width: 100, height: 30 }, state: { enabled: true, visible: true } }]);
+  const assertionId = `shown-${typed}`;
   const scenario = androidScript({
     app: { package: 'com.example.testapp', activity: '.MainActivity',
       intentExtras: { screen: 'gallery', [typed]: 'on', [`promo-${typed}`]: 'on', note: typed, [apiKey]: 'on' } },
     values: { name: typed },
     steps: [
-      { id: 'type', kind: 'action', guard: { present: [{ identifier: 'name-field' }] },
-        action: { kind: 'replaceText', selector: { identifier: 'name-field' }, valueKey: 'name' } },
+      { id: `type-${typed}`, kind: 'action', guard: { present: [{ identifier: fieldId }] },
+        action: { kind: 'replaceText', selector: { identifier: fieldId }, valueKey: 'name' } },
       { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Confirm' }] },
-        assertions: [{ id: 'shown', claim: `Confirm is visible after typing ${typed}` }] },
+        assertions: [{ id: assertionId, claim: `Confirm is visible after typing ${typed}` }] },
     ],
   });
   const savedKey = process.env.TYPESAFE_API_KEY;
   process.env.TYPESAFE_API_KEY = apiKey;
   try {
-    await withRunLog('registered-value-leak', async (log, root) => {
-      const report = await runScriptedScenario({ runId: 'registered-value-leak', scenario, log,
+    await withRunLog('typed-value-leak', async (log, root) => {
+      const report = await runScriptedScenario({ runId: 'typed-value-leak', scenario, log,
         driver: { async prepare() {}, async observe() { return snapshot([field]); },
           async act() { return { screen: confirm, shownValue: typed }; }, async close() {} },
-        judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
-      const directory = join(root, 'registered-value-leak');
-      const written = (await readdir(directory)).filter(name => !/^screen-\d+\.(jpg|png)$/.test(name));
-      assert.deepEqual(written.sort(), ['report.json', 'run.jsonl']);
-      const texts = [...await Promise.all(written.map(name => readFile(join(directory, name), 'utf8'))),
-        renderScriptedReport(report)];
+        judge: { async judge() { return { probabilities: { [assertionId]: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
+      assert.equal(report.verdict, 'passed');
+      const directory = join(root, 'typed-value-leak');
+      const written = (await readdir(directory)).filter(name => !/^screen-\d+\.(jpg|png)$/.test(name)).sort();
+      assert.deepEqual(written, ['report.json', 'run.jsonl']);
+      const [reportText, runLog] = await Promise.all(written.map(name => readFile(join(directory, name), 'utf8')));
       for (const secret of [typed, apiKey]) {
-        assert.ok(texts.every(text => !text.includes(secret)), `${secret} survived in the written evidence`);
+        assert.ok([reportText!, runLog!, renderScriptedReport(report)].every(text => !text.includes(secret)),
+          `${secret} survived in the written evidence`);
       }
       // Ordinary extras stay readable; a colliding key becomes a stable pseudonym in both files.
-      const started = (await readFile(join(directory, 'run.jsonl'), 'utf8')).trim().split('\n')
-        .map(line => JSON.parse(line) as RunEvent).find(event => event.type === 'started')!.data;
+      const started = runLog!.trim().split('\n').map(line => JSON.parse(line) as RunEvent)
+        .find(event => event.type === 'started')!.data;
       const extras = started.intentExtras as Record<string, string>;
       assert.equal(extras.screen, 'gallery');
       assert.equal(extras.note, '[REDACTED]');
       const pseudonyms = Object.keys(extras).filter(key => key !== 'screen' && key !== 'note');
       assert.equal(pseudonyms.length, 3);
       assert.ok(pseudonyms.every(key => /^redacted_[a-f0-9]{32}$/.test(key)));
-      const reportJson = JSON.parse(await readFile(join(directory, 'report.json'), 'utf8')) as Record<string, unknown>;
-      assert.deepEqual(reportJson.intentExtras, extras);
+      assert.deepEqual((JSON.parse(reportText!) as Record<string, unknown>).intentExtras, extras);
     }, { values: Object.values(scenario.values) });
   } finally {
     if (savedKey === undefined) delete process.env.TYPESAFE_API_KEY;
