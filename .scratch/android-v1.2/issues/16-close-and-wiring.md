@@ -1,6 +1,7 @@
 # Phase 4: close, the factory wiring, and the end-to-end run
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: claude-issue-16
 Blocked by: 14, 15
 
 Spec: [../spec.md](../spec.md), "Phase 4". The work is [the release spec's phase 4](../../android-support/release-spec.md#phase-4-the-android-driver-domain-model-adr-0006-mobilecli-as-a-dependency-how-android-elements-map-onto-the-bridges-elements-how-a-script-names-an-android-app-and-device-actions-across-android-versions-where-android-plugs-into-the-code-items-2-5-6-and-8) item 8, the factory sentence at the top of phase 4, and item 9's `close` tests. Read them in full, and the domain model's device lease (decision G). The detail below only adds acceptance criteria.
