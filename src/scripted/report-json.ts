@@ -73,7 +73,7 @@ export function recordedPlatform(events: RunEvent[]): Platform {
 /** The Android-only fields, built from `started` and the `action` events; `{}` on iOS runs. */
 function androidReportFields(started: RunEvent | undefined, events: RunEvent[]):
   Pick<ReportJson, 'platform' | 'package' | 'activity' | 'intentExtras' | 'typedFields'> {
-  if (started?.data.platform !== 'android') return {};
+  if (recordedPlatform(events) !== 'android' || !started) return {};
   const typedFields = typedFieldsOf(events);
   return {
     platform: 'android',
