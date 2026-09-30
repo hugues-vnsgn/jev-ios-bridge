@@ -86,7 +86,7 @@ export interface AndroidDriverOptions {
 /** The element action each kind of action needs, as on iOS. */
 const REQUIRED_ACTION = { tap: 'tap', type: 'typeText', swipe: 'swipeWithin' } as const;
 
-const realClock: Clock = { now: () => performance.now(), sleep: ms => delay(ms) };
+const realClock: Clock = { now: () => performance.now(), sleep: ms => delay(ms), timeout: ms => AbortSignal.timeout(ms) };
 
 function freeLocalPort(): Promise<number> {
   return new Promise((resolvePort, reject) => {
@@ -656,16 +656,12 @@ export class AndroidDriver implements DeviceDriver {
     while (true) {
       this.mayIssue(signal);
       // Each request ends with the 5 s, not its own 10 s limit; one ended unanswered stays unknown until the fence.
-      const deadline = new AbortController();
-      const timer = setTimeout(() => { deadline.abort(new Error('The device agent start deadline passed')); },
-        Math.max(1, AGENT_READY_MS - (this.clock.now() - startedAt)));
+      const deadline = this.clock.timeout(Math.max(1, AGENT_READY_MS - (this.clock.now() - startedAt)));
       try {
-        if ((await inLedger(this.lease, 'agent', () => agent.version(AbortSignal.any([signal, deadline.signal])))).dexSha256 === sha256) return true;
+        if ((await inLedger(this.lease, 'agent', () => agent.version(AbortSignal.any([signal, deadline])))).dexSha256 === sha256) return true;
       } catch (error) {
         // Not answering yet is expected while it starts; a cancel is not.
         if (signal.aborted) throw error;
-      } finally {
-        clearTimeout(timer);
       }
       if (this.clock.now() - startedAt >= AGENT_READY_MS) return false;
       await this.clock.sleep(AGENT_POLL_MS);

@@ -25,7 +25,7 @@ function screen(appText: string, clock = '10:30', battery = 'Battery charging, 1
 function fakeCapture(trees: AndroidTree[], durationMs = 0) {
   let time = 0;
   const starts: number[] = [];
-  const clock: Clock = { now: () => time, sleep: async (ms) => { time += ms; } };
+  const clock: Clock = { now: () => time, sleep: async (ms) => { time += ms; }, timeout: () => new AbortController().signal };
   const capture = async (_signal: AbortSignal) => {
     starts.push(time);
     time += durationMs;
@@ -93,7 +93,7 @@ test('no capture starts at exactly 3 s', async () => {
 test('an aborted signal stops the rule before its next capture', async () => {
   const controller = new AbortController();
   let captures = 0;
-  const clock: Clock = { now: () => 0, sleep: async () => { controller.abort(new Error('cancelled')); } };
+  const clock: Clock = { now: () => 0, sleep: async () => { controller.abort(new Error('cancelled')); }, timeout: () => new AbortController().signal };
   await assert.rejects(settle(async () => { captures++; return screen('Home'); }, clock, controller.signal), /cancelled/);
   assert.equal(captures, 1);
 });

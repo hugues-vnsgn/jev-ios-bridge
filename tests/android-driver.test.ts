@@ -232,10 +232,30 @@ function fakeAgents(adb: FakeAdb, options: { answersAfterPolls?: number; never?:
   return { agentClient, versionCalls, clients, calls, hooks };
 }
 
+/** Fake time: a sleep moves it on at once, aborting each `timeout` signal it passes, at that signal's own time. */
 function fakeClock(): Clock & { sleeps: number[] } {
   let now = 0;
   const sleeps: number[] = [];
-  return { sleeps, now: () => now, async sleep(ms) { sleeps.push(ms); now += ms; } };
+  const timers: { at: number; controller: AbortController }[] = [];
+  return {
+    sleeps,
+    now: () => now,
+    async sleep(ms) {
+      sleeps.push(ms);
+      const until = now + ms;
+      for (const timer of timers.filter(pending => pending.at <= until).sort((one, other) => one.at - other.at)) {
+        timers.splice(timers.indexOf(timer), 1);
+        now = Math.max(now, timer.at);
+        timer.controller.abort(new Error('timed out'));
+      }
+      now = until;
+    },
+    timeout(ms) {
+      const controller = new AbortController();
+      timers.push({ at: now + ms, controller });
+      return controller.signal;
+    },
+  };
 }
 
 interface Setup {
@@ -713,25 +733,28 @@ test('an agent that never answers is DEVICE_ERROR with vendorCode agent after 5 
   }, { agents: { never: true } });
 });
 
-test('a device.version request that hangs is bounded by what is left of the 5 s', async () => {
+test('a device.version request that hangs is bounded by what is left of the 5 s, on the driver\'s clock', async () => {
   const adb = new FakeAdb(api31());
   const clock = fakeClock();
   let calls = 0;
+  let endedAt: number | undefined;
   const unused = () => { throw new Error('Not used by prepare'); };
   const agentClient = (): DeviceAgentClient => ({
     async version(abort) {
-      if (++calls === 1) { await clock.sleep(4_950); throw new DeviceAgentError(); }
-      // Hangs until its signal ends it, as a request to a stuck agent would until its own 10 s limit.
-      await new Promise((_resolve, reject) => { abort.addEventListener('abort', () => { reject(new Error('abandoned')); }, { once: true }); });
-      throw new Error('unreachable');
+      if (++calls === 1) { await clock.sleep(2_000); throw new DeviceAgentError(); }
+      // Hangs until its signal ends it, as a request to a stuck agent would until its own 10 s limit, while time runs on.
+      const ended = new Promise<never>((_resolve, reject) => {
+        abort.addEventListener('abort', () => { endedAt = clock.now(); reject(new Error('abandoned')); }, { once: true });
+      });
+      void clock.sleep(10_000);
+      return ended;
     },
     dumpUi: unused, tap: unused, swipe: unused, keys: unused, text: unused, button: unused,
     clipboardSet: unused, clipboardClear: unused, screenshot: unused,
   });
   await withDriver(adb, async ({ driver }) => {
-    const began = performance.now();
     await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_ERROR', 'agent'));
-    assert.ok(performance.now() - began < 2_000, 'the hung request ended with the 5 s, not its own 10 s limit');
+    assert.equal(endedAt, 5_000, 'the hung request ended with the 5 s, not its own 10 s limit');
   }, { clock, agentClient });
 });
 

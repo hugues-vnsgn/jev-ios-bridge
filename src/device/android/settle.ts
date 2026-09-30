@@ -3,10 +3,12 @@ import type { AndroidNode, AndroidTree } from './agent-client.js';
 
 /** One `device.dump.ui` call. */
 export type Capture = (signal: AbortSignal) => Promise<AndroidTree>;
-/** Injected so tests run the rule on fake time. */
+/** Injected so tests run the rule, and the driver's deadlines, on fake time. */
 export interface Clock {
   now(): number;
   sleep(ms: number): Promise<void>;
+  /** A signal that aborts once `ms` have passed on this clock. */
+  timeout(ms: number): AbortSignal;
 }
 /** The capture a step goes on with; `settled: false` marks the step "screen still changing". */
 export type SettledCapture = { tree: AndroidTree; screenHash: string; settled: boolean };
