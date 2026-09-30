@@ -13,7 +13,7 @@ What the bridge does not do, or does less well than you might expect.
 
 ## Judgment
 
-- **English screens only.** Jev is less accurate on other languages, and 1.0's assurance covers English screen text. On Android, non-English text types exactly, but the assurance is the same: English screens only.
+- **English screens only.** Jev is less accurate on other languages, and 1.0's assurance covers English screen text. On Android, non-English text types exactly, but that doesn't extend the assurance.
 - **Only what's on screen, as text.** Jev can't use screenshots, hidden state, history, or source code. See [write claims](05-writing-claims.md).
 - **Near the bounds, answers vary.** Identical requests have differed by up to 0.07. A claim close to 0.9 or 0.1 can land on either side from run to run, so write claims that aren't close. The Reminders benchmark's count claim is the example: 0.87 (inconclusive) in v0.1.0, and 0.90 (passed) in the 1.0 check.
 - **Typing can drop a keystroke.** In one Compose release check, MobileBuildMCP typed "Contan" for "Contain". Guard on the typed text in the next step, so a dropped key stops the run as inconclusive instead of failing a claim.
@@ -47,7 +47,7 @@ What the bridge does not do, or does less well than you might expect.
 - **An upper-case copy of a value isn't masked,** in the log file or the log pane, as on iOS.
 - **Custom tabs and toggles without a selected or checked state** give uncertain claims. [Android setup](12-android-setup.md#custom-tabs-and-toggles-must-expose-their-state) shows the fix.
 - **Two running emulators with the same AVD** are refused with `DEVICE_AMBIGUOUS`, when a script names that AVD.
-- **Tried only on Apple silicon.** The device agent the bridge copies out is the same, and checked, on both Mac builds of mobilecli, but Android runs have only been tried on Apple silicon Macs.
+- **Tried only on Apple silicon.** The device agent is the same in both of mobilecli's Mac builds, and the bridge checks its SHA-256 on either, but Android runs have only been tried on Apple silicon Macs.
 - **One UI tool per device.** Another tool's automation agent on the device makes the run refuse with `DEVICE_BUSY`.
 - **Speed,** measured on 1.2 (one run each, on emulators, excluding build and install):
 
@@ -60,7 +60,7 @@ What the bridge does not do, or does less well than you might expect.
   | cmp-list-swipe | _[phase 8]_ | |
   | settings-search | _[phase 8]_ | _[phase 8]_ (Vietnamese) |
 
-  Settling takes _[phase 8]_ per capture, and typing _[phase 8]_. Each capture waits for the screen to settle, which adds up to 3 seconds on a screen that keeps moving.
+  Capture and settle time: _[phase 8]_ per step. Typing: _[phase 8]_. A screen that keeps moving costs at most 3 seconds per capture, the settle cap.
 
 ## Compose Multiplatform
 

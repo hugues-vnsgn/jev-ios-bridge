@@ -1,6 +1,6 @@
 # Set up Android
 
-Since 1.2, the bridge also drives Android emulators and phones. A script opts in with `"platform": "android"`, and the rest of the guide applies to both platforms unless a page says otherwise. This page covers what's different: the tools, naming the device, and the app and device settings that decide whether a run goes smoothly.
+Since 1.2, the bridge also drives Android emulators and phones. A script opts in with `"platform": "android"`, and the rest of the guide applies to both platforms unless a page says otherwise. This page covers what's different: the tools, naming the device, and the app and device settings a run depends on.
 
 ## What you need
 

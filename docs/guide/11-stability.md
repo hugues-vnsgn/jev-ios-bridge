@@ -38,7 +38,7 @@ These stay compatible for every 1.x release:
   - its exit codes: 0 when it printed, 3 when it couldn't capture, and 130/143 for signals;
   - the named fields of its element lines: `role`, `label`, `value`, `identifier`, `placeholder`, `state`, and `selectable`.
 
-  Element lines may gain fields, so ignore ones you don't know. `--jev` prints Jev's text for the screen, which follows the pinned Android view below.
+  Element lines may gain fields, so ignore ones you don't know. `--jev` prints Jev's text for the screen, in the pinned Android observation shape (below).
 - **The `/test-android` skill,** and the plugin's optional **Android device** setting. The simulator setting is now optional too.
 
 ## Pinned dependencies

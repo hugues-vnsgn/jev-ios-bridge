@@ -30,8 +30,8 @@ These come from the project's measured judgments.
 5. **"Saved" only on the screen after saving.** On an editor, "the contact is saved" is a guess. Open the saved card, and claim what it shows.
 6. **Stay in the viewport.** Claim what's on screen now, not what's above or below it.
 7. **No history.** "The button is shown again" asks about the past; "A Bottom Sheet button is visible" doesn't.
-8. **English.** Jev is most accurate on English screen text, and 1.0's assurance covers English screens only. On Android, non-English text types exactly, but the assurance still covers English screens only.
-9. **Quote numbers exactly as the app prints them.** If the screen shows `2.500.000`, claim "The total reads 2.500.000", not `2,500,000`. Jev compares printed text, and a number in another format is a different string.
+8. **English.** Jev is most accurate on English screen text, and 1.0's assurance covers English screens only. On Android, non-English text types exactly, but that doesn't extend the assurance.
+9. **Quote numbers exactly as the app prints them.** If the screen shows `2.500.000`, claim "The total reads 2.500.000", not `2,500,000`. Jev reads the text as printed, not the number behind it.
 10. **An empty field doesn't "contain" its hint.** A field showing grey "Search settings" is empty: Jev sees that text as its `placeholder`. Claim "The search field is empty and shows the hint Search settings", never "The search field contains Search settings".
 
 ## When a claim comes back uncertain
