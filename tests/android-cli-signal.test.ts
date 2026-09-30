@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import { androidScript } from './fixtures/android-script.js';
+import { installed } from './fixtures/android-tools.js';
 
 /**
  * The CLI's SIGINT and SIGTERM handlers close the service, which calls the Android driver's own `close`
@@ -33,7 +34,11 @@ process.stdout.write(answers.find(([matches]) => matches())?.[1] ?? '');
 `;
 
 for (const [signal, exitCode] of [['SIGINT', 130], ['SIGTERM', 143]] as const) {
-  test(`${signal} closes the service, which runs the Android driver's close: the app stopped, the forward removed, the lease released`, { timeout: 30_000 }, async () => {
+  test(`${signal} closes the service, which runs the Android driver's close: the app stopped, the forward removed, the lease released`, {
+    timeout: 30_000,
+    // The run reads the device agent out of the real Mac mobilecli program, which CI on Linux doesn't install.
+    skip: installed ? false : 'the Mac mobilecli program is not installed',
+  }, async () => {
     const root = await mkdtemp(join(tmpdir(), 'jev-android-cli-signal-'));
     try {
       const sdk = join(root, 'sdk');
