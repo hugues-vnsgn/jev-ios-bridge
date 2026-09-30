@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { resolve } from 'node:path';
 import { z } from 'zod/v4';
-import type { DeviceDriver } from './contracts/index.js';
+import type { DeviceDriver, LogSources } from './contracts/index.js';
 import type { ScriptedJudge, ScriptedScenario } from './scripted/contracts.js';
 import { parseScriptedScenario } from './scripted/schema.js';
 import { createRunLog, readRunEvents, readRunReport, validateRunId } from './log/index.js';
@@ -37,7 +37,8 @@ export class BridgeService {
   readonly baseDir: string;
   constructor(private readonly options: {
     baseDir: string;
-    createDriver: (scenario: ScriptedScenario) => DeviceDriver;
+    /** Builds the run's driver, given the run's ID, which names the driver's own files (the Android app log). */
+    createDriver: (scenario: ScriptedScenario, run: { runId: string }) => DeviceDriver;
     createJudge: (scenario: ScriptedScenario) => ScriptedJudge;
     policy?: ScriptedRunLimits;
     logPane?: LogPaneOptions;
@@ -51,10 +52,10 @@ export class BridgeService {
       ...(parsedLimits.maxSteps === undefined ? {} : { maxSteps: parsedLimits.maxSteps }),
       ...(parsedLimits.wallTimeMs === undefined ? {} : { wallTimeMs: parsedLimits.wallTimeMs }),
     };
-    const driver = this.options.createDriver(scenario);
+    const runId = randomUUID();
+    const driver = this.options.createDriver(scenario, { runId });
     const judge = this.options.createJudge(scenario);
     if (this.stopping) throw new Error('Bridge is shutting down');
-    const runId = randomUUID();
     const log = await createRunLog(this.baseDir, runId, { values: Object.values(scenario.values) });
     if (this.stopping) throw new Error('Bridge is shutting down');
     this.startingWatch ??= startWatchServer(this.baseDir);
@@ -65,9 +66,10 @@ export class BridgeService {
     const pane = this.options.logPane;
     let stream: Promise<LogStream | undefined> | undefined;
     const attach = pane ? logsCommand(pane.cliPath, runId) : undefined;
-    const startPane = (logSources: { runtime?: string; os?: string }) => {
+    const startPane = (logSources: LogSources) => {
       if (!pane || !attach) return;
-      stream = startLogStream({ runId, app: scenario.app, sources: logSources, values: scenario.values })
+      stream = startLogStream({ runId, app: scenario.app, sources: logSources, values: scenario.values,
+        appProblem: () => driver.appProblem?.() })
         .then(async started => {
           const window = pane.openWindow ? await openPaneWindow(resolve(this.baseDir, runId), attach)
             : { opened: false as const, reason: 'turned off with --no-log-pane' };

@@ -4,7 +4,9 @@
  * lines it is fed, so `appRunning()` stays synchronous and tests replay lines recorded on emulators.
  */
 
-export type AppProblem = { code: 'APP_EXITED' | 'APP_NOT_RESPONDING'; note: string };
+import type { AppProblem } from '../../contracts/index.js';
+
+export type { AppProblem };
 export interface AppExitWatch {
   /** One line of `logcat -b events -v threadtime,year`. */
   feed(raw: string): void;

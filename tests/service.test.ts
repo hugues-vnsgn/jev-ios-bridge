@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdir, mkdtemp, readdir, rm } from 'node:fs/promises';
+import { mkdir, mkdtemp, readdir, rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { BridgeService } from '../src/service.js';
@@ -9,6 +9,8 @@ import { appLabel, type AppIdentity } from '../src/contracts/index.js';
 import type { ScriptedJudge } from '../src/scripted/contracts.js';
 import { createDriverFactory } from '../src/device/factory.js';
 import { androidTools } from '../src/device/android/tools.js';
+import { attachLogPane } from '../src/logpane/attach.js';
+import { Writable } from 'node:stream';
 
 const screen = () => ({ deviceId: 'test', sequence: 1, capturedAt: Date.now(),
   expiresAt: Date.now() + 60_000, truncated: false,
@@ -20,6 +22,16 @@ const checkpoint = (id: string, claim = 'Marker visible') => ({
   id, kind: 'checkpoint', guard: { present: [{ role: 'text', label: 'SCREEN_EVIDENCE_MARKER' }] },
   assertions: [{ id: 'shown', claim }],
 });
+class Capture extends Writable {
+  text = '';
+  _write(chunk: Buffer, _encoding: string, done: () => void) { this.text += chunk.toString(); done(); }
+}
+async function until(check: () => boolean): Promise<void> {
+  for (let tries = 0; !check(); tries++) {
+    if (tries > 200) assert.fail('timed out waiting');
+    await new Promise(done => setTimeout(done, 10));
+  }
+}
 const script = (steps = [checkpoint('verify')]) => ({ version: 1, app: { bundleId: 'com.example.app' },
   values: {}, steps });
 
@@ -175,4 +187,36 @@ test('createDriver builds a driver per run from that run\'s scenario, and the ru
     assert.deepEqual(built, ['com.example.pinned', 'com.example.strict']);
     assert.deepEqual(taps, ['com.example.pinned:e30']);
   } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
+});
+
+test('the driver is built with the run\'s own ID, and the pane follows its logcat file and notes its problem', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-service-run-id-'));
+  const logcat = join(root, 'app.log');
+  await writeFile(logcat, '2026-09-28 23:16:14.927 10226  9784  9784 I System.out: hello from the app\n');
+  const runIds: string[] = [];
+  let release!: () => void;
+  const held = new Promise<void>(resolveHeld => { release = resolveHeld; });
+  const notices: string[] = [];
+  const service = new BridgeService({ baseDir: root,
+    createDriver: (_scenario, run) => {
+      runIds.push(run.runId);
+      return { async prepare() {}, async observe() { await held; return { ...screen(), elements: [] }; }, async act() {}, async close() {},
+        logSources: () => ({ logcat }), appRunning: () => true, appProblem: () => ({ code: 'APP_NOT_RESPONDING', note: 'not responding' }) };
+    },
+    createJudge: () => ({ async judge() { return assert.fail('No judgment on an empty screen'); } }),
+    logPane: { cliPath: '/bridge/cli.js', openWindow: false, onNotice: (_runId, text) => { notices.push(text); } },
+  });
+  const output = new Capture();
+  try {
+    const { runId } = await service.start(script());
+    assert.deepEqual(runIds, [runId]);
+    await until(() => notices.length > 0);
+    void attachLogPane(runId, output as unknown as NodeJS.WriteStream, { keepOpen: false });
+    await until(() => output.text.includes('!! not responding'));
+    release();
+    const status = await service.status(runId, 2_000);
+    assert.deepEqual([status.report.verdict, status.report.reason], ['inconclusive', 'APP_NOT_RESPONDING']);
+    assert.match(output.text, new RegExp(`device log \\(logcat, the app's uid only\\): ${logcat.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`));
+    assert.match(output.text, /\[app\] hello from the app/);
+  } finally { release(); await service.close(); await rm(root, { recursive: true, force: true }); }
 });

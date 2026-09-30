@@ -9,7 +9,9 @@ import { DeviceReasonError, StaleSnapshotError } from '../src/device/index.js';
 import { adbRunner, type AdbResult, type AdbRunner } from '../src/device/android/adb.js';
 import { DeviceAgentError, type AndroidNode, type DeviceAgentClient } from '../src/device/android/agent-client.js';
 import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
-import { AGENT_DEVICE_PATH, AGENT_START_COMMAND, AndroidDriver, type AndroidDriverOptions, type AppExitWatch } from '../src/device/android/driver.js';
+import { AGENT_DEVICE_PATH, AGENT_START_COMMAND, AndroidDriver, type AndroidDriverOptions } from '../src/device/android/driver.js';
+import type { AppExitWatch } from '../src/device/android/exit-watch.js';
+import { createDriverFactory } from '../src/device/factory.js';
 import { OutcomeUnknownError } from '../src/device/android/ledger.js';
 import type { LogcatOutput, LogcatStarter, LogcatStream } from '../src/device/android/logcat.js';
 import { mapAndroidTree } from '../src/device/android/mapping.js';
@@ -2014,4 +2016,108 @@ test('an Android run with both streams running to close passes: prepared names t
       assert.deepEqual(await readdir(root), [], 'lease released');
     }, { agents: { screens: [fields, fields, withText(fields, 'field.empty', CITY)] }, screenshotFolder: undefined });
   }, { values: [CITY] });
+});
+
+/* Phase 5 (Issue 20): the run end to end, on the driver the factory builds: the real app watch, fed the events
+   lines recorded on the emulators (`tests/fixtures/android/logcat/`), and the log file named by the run's ID. */
+
+const LOGCAT_CAPTURES = join(import.meta.dirname, 'fixtures', 'android', 'logcat');
+const LOGPROBE = 'dev.jevbridge.logprobe';
+
+/**
+ * Run `cityScript()` for the log probe app through the driver factory. The events stream is fed the capture's
+ * lines before `lateFrom` once the first screen is read, and the rest while the city is typed; `screens` are
+ * what the agent shows. The app log gets one line holding the typed value. Resolves with what the test checks.
+ */
+async function runCaptured(capture: string, options: { pid: string; lateFrom?: number; screens: Hierarchy[] }) {
+  const recorded = (await readFile(join(LOGCAT_CAPTURES, capture, 'events.log'), 'utf8')).split('\n').filter(line => line !== '');
+  const lateFrom = options.lateFrom ?? recorded.length;
+  const adb = new FakeAdb(api31({ installed: [LOGPROBE], appPids: options.pid }));
+  const agents = fakeAgents(adb, { screens: options.screens });
+  const streams = new FakeStreams(adb);
+  const parent = await mkdtemp(join(tmpdir(), 'jev-android-end-to-end-'));
+  const leaseRoot = join(parent, 'lease');
+  const folder = join(parent, 'jev-android-logs');
+  await mkdir(leaseRoot);
+  const ports = [49526];
+  const runId = `android-${capture}`;
+  const holderAtForwardRemoval: (string[] | undefined)[] = [];
+  adb.onCall = async args => {
+    if (args[2] === 'forward' && args[3] === '--remove') holderAtForwardRemoval.push((await lockFile(leaseRoot))?.ownedProcesses);
+  };
+  const feed = (lines: string[]) => { for (const line of lines) (streams.streams[1]!.output as (raw: string) => void)(line); };
+  let dumps = 0;
+  agents.hooks.onCall = async call => {
+    if (call.method === 'device.dump.ui' && ++dumps === 1) {
+      feed(recorded.slice(0, lateFrom));
+      await writeFile(join(folder, `${runId}.log`), `2026-09-28 23:16:14.927 10226  9784  9784 I System.out: city is ${CITY}\n`);
+    }
+    if (call.method === 'device.io.text') feed(recorded.slice(lateFrom));
+  };
+  const createDriver = createDriverFactory({
+    mobileBuildMcp: { cwd: parent, lockRoot: parent, runner: async () => assert.fail('an Android script never reaches the iOS driver') },
+    android: { runner: adb.run, agentClient: agents.agentClient, clock: fakeClock(), leaseRoot, freePort: async () => ports.shift()!,
+      logcat: streams, logFolder: folder,
+      tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: AGENT_CACHE, sha256: PINNED_AGENT_SHA256 } }) },
+  });
+  const scenario = { ...cityScript(), app: { package: LOGPROBE } };
+  try {
+    return await withRunLog(runId, async (log, evidence) => {
+      const report = await runScriptedScenario({ runId, scenario, driver: createDriver(scenario, { runId }), judge: judgeAllTrue, log });
+      const events = await eventsOf(evidence, runId);
+      return {
+        report, events, folder, runId, holderAtForwardRemoval,
+        raw: await readFile(join(evidence, runId, 'run.jsonl'), 'utf8'),
+        streamsStarted: streams.streams.length,
+        streamsRunning: streams.streams.filter(stream => stream.running).length,
+        leaseFiles: await readdir(leaseRoot),
+        agentsLeft: adb.emulators.get('emulator-5554')!.agents!.size,
+        forwardsLeft: adb.forwards.length,
+      };
+    }, { values: [CITY] });
+  } finally {
+    await rm(parent, { recursive: true, force: true });
+  }
+}
+
+/** Every run, whatever its verdict: both streams stopped, the holder record emptied, and the lease released. */
+function assertCleanedUp(run: Awaited<ReturnType<typeof runCaptured>>): void {
+  assert.equal(run.streamsStarted, 2);
+  assert.equal(run.streamsRunning, 0, 'both streams stopped');
+  // The forward is close's last step, disowned once removed; then the lease, holder record and all, is released.
+  assert.deepEqual(run.holderAtForwardRemoval, [['forward emulator-5554 tcp:49526']], 'both streams and the agent already disowned');
+  assert.deepEqual(run.leaseFiles, [], 'lease released, and its holder record with it');
+  assert.equal(run.agentsLeft, 0, 'no agent left');
+  assert.equal(run.forwardsLeft, 0, 'no forward left');
+  assert.deepEqual(run.events.find(event => event.type === 'prepared')?.data.logSources, { logcat: join(run.folder, `${run.runId}.log`) });
+  assert.equal(run.raw.includes('Ha Noi'), false, 'the typed value never reaches run.jsonl');
+}
+
+test('end to end: an app that crashes partway through ends the run APP_EXITED, and cleans up', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  // probe-crash: the launch, then the crash and the process's death while the city is typed; the launcher shows.
+  const run = await runCaptured('probe-crash', { pid: '10160', lateFrom: 1, screens: [fields, fields, []] });
+  assert.deepEqual([run.report.verdict, run.report.reason], ['inconclusive', 'APP_EXITED']);
+  const error = run.events.find(event => event.type === 'error')!.data;
+  assert.deepEqual([error.stepId, error.phase, error.code], ['verify', 'observe', 'APP_EXITED']);
+  assertCleanedUp(run);
+});
+
+test('end to end: an app that freezes (probe-anr) ends the run APP_NOT_RESPONDING, and cleans up', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  const run = await runCaptured('probe-anr', { pid: '11656', lateFrom: 1, screens: [fields, fields, []] });
+  assert.deepEqual([run.report.verdict, run.report.reason], ['inconclusive', 'APP_NOT_RESPONDING']);
+  const error = run.events.find(event => event.type === 'error')!.data;
+  assert.deepEqual([error.stepId, error.phase, error.code], ['verify', 'observe', 'APP_NOT_RESPONDING']);
+  assertCleanedUp(run);
+});
+
+test('end to end: a normal run passes, its step tails hold the app log redacted, and it cleans up', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  // probe-normal: the bridge's restart force-stops the first process (9784) before pidof finds the second.
+  const run = await runCaptured('probe-normal', { pid: '10107', screens: [fields, fields, withText(fields, 'field.empty', CITY)] });
+  assert.deepEqual([run.report.verdict, run.report.reason], ['passed', 'ALL_CHECKPOINTS_PASSED']);
+  const tails = run.events.filter(event => event.type === 'step').map(event => (event.data.logTails as Record<string, string> | undefined)?.logcat);
+  assert.deepEqual(tails, [1, 2].map(() => '2026-09-28 23:16:14.927 10226  9784  9784 I System.out: city is [REDACTED]\n'));
+  assertCleanedUp(run);
 });
