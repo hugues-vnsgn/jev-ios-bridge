@@ -36,6 +36,7 @@ const DUMP_IDLE_MS = 2_000;
 const SCREENSHOT_MAX_SIZE = 800;
 /** Replace text's pause between `ctrl+a` and backspace (open point 23). */
 const CLEAR_PAUSE_MS = 200;
+/** How long a swipe's finger takes (release spec phase 4 item 6). */
 const SWIPE_MS = 1_000;
 /** `ctrl+a` and backspace as mobilecli 1.0.14 sends them (open point 23): always two separate calls. */
 const SELECT_ALL: AgentKey[] = [{ keycode: 'KEYCODE_A', modifiers: ['KEYCODE_CTRL_LEFT'] }];
@@ -121,25 +122,28 @@ function centreOf(frame: NonNullable<Element['frame']>): { x: number; y: number 
  */
 function swipeWithin(frame: NonNullable<Element['frame']>, direction: Direction): { x1: number; y1: number; x2: number; y2: number } {
   const { x, y } = centreOf(frame);
-  const along = (start: number, length: number, from: number, to: number) => [Math.round(start + length * from), Math.round(start + length * to)];
+  const along = (start: number, length: number, from: number, to: number): [number, number] =>
+    [Math.round(start + length * from), Math.round(start + length * to)];
   if (direction === 'up' || direction === 'down') {
     const [y1, y2] = direction === 'up' ? along(frame.y, frame.height, 0.9, 0.1) : along(frame.y, frame.height, 0.1, 0.9);
-    return { x1: x, y1: y1!, x2: x, y2: y2! };
+    return { x1: x, y1, x2: x, y2 };
   }
   const [x1, x2] = direction === 'left' ? along(frame.x, frame.width, 0.9, 0.1) : along(frame.x, frame.width, 0.1, 0.9);
-  return { x1: x1!, y1: y, x2: x2!, y2: y };
+  return { x1, y1: y, x2, y2: y };
 }
 
 /**
- * The typed field in the settled capture after typing: the one element with its identifier, else the one
- * focused text field, else the one text field at its frame. Undefined when none is sure.
+ * The typed field in the settled capture after typing: the one text field with its identifier, else the one
+ * focused text field, else the one text field at its frame. Undefined when none is sure: the step then
+ * records no shown value rather than another field's.
  */
 function typedFieldIn(snapshot: Snapshot, field: Element): Element | undefined {
   const only = (matches: Element[]) => matches.length === 1 ? matches[0] : undefined;
   const fields = snapshot.elements.filter(element => element.role === 'text-field');
-  if (field.identifier) return only(snapshot.elements.filter(element => element.identifier === field.identifier));
-  return only(fields.filter(element => element.state?.focused))
-    ?? only(fields.filter(element => JSON.stringify(element.frame) === JSON.stringify(field.frame)));
+  const byIdentifier = field.identifier ? only(fields.filter(element => element.identifier === field.identifier)) : undefined;
+  const sameFrame = (frame: Element['frame']) => frame !== undefined && field.frame !== undefined && frame.x === field.frame.x &&
+    frame.y === field.frame.y && frame.width === field.frame.width && frame.height === field.frame.height;
+  return byIdentifier ?? only(fields.filter(element => element.state?.focused)) ?? only(fields.filter(element => sameFrame(element.frame)));
 }
 
 /** What a lease holder record lists for the next run to sweep: the agent and the forward, each on its serial. */

@@ -733,16 +733,30 @@ const hierarchyOf = async (name: string): Promise<Hierarchy> =>
   (JSON.parse(await readFile(join(AGENT_FIXTURES, name), 'utf8')) as { hierarchy: Hierarchy }).hierarchy;
 const captureOf = async (name: string): Promise<Hierarchy> => (JSON.parse((JSON.parse(
   await readFile(join(AGENT_FIXTURES, 'captures', name), 'utf8')) as { data: { rawData: string } }).data.rawData) as { hierarchy: Hierarchy }).hierarchy;
-/** The tree with the node whose resource-id is `id` showing `text`. */
-function withText(tree: Hierarchy, id: string, text: string): Hierarchy {
+/** The tree with the node whose resource-id is `id` changed by `patch`. */
+function withNode(tree: Hierarchy, id: string, patch: Record<string, unknown>): Hierarchy {
   const copy = structuredClone(tree);
   const visit = (nodes: Hierarchy): boolean => nodes.some(node => {
-    if (node['resource-id'] === id) { node.text = text; return true; }
+    if (node['resource-id'] === id) { Object.assign(node, patch); return true; }
     return visit((node.children ?? []) as Hierarchy);
   });
   assert.ok(visit(copy), `no node ${id}`);
   return copy;
 }
+/** The tree with the node whose resource-id is `id` showing `text`. */
+const withText = (tree: Hierarchy, id: string, text: string) => withNode(tree, id, { text });
+/** The text fields tree with no resource-ids, nothing focused, and `patch` applied to the city field. */
+async function anonymousFields(patch: Record<string, unknown> = {}): Promise<Hierarchy> {
+  let tree = withNode(await hierarchyOf('text-fields.json'), 'field.password', { focused: false });
+  tree = withNode(tree, 'field.city', patch);
+  for (const id of ['field.notes', 'field.password', 'field.spaces', 'field.city', 'field.empty']) tree = withNode(tree, id, { 'resource-id': '' });
+  return tree;
+}
+const cityOf = (snapshot: Snapshot) => {
+  const city = snapshot.elements.find(element => element.label === 'City');
+  assert.ok(city);
+  return city.ref;
+};
 const snapshotOf = (elements: Snapshot['elements']): Snapshot =>
   ({ deviceId: 'emulator-5554', capturedAt: 0, expiresAt: 0, sequence: 0, elements, truncated: false });
 const refOf = (snapshot: Snapshot, identifier: string) => {
@@ -1004,5 +1018,50 @@ test('a swipe runs along the element\'s centre line from 90% to 10% of its lengt
       assert.deepEqual(agents.calls, [{ method: 'device.io.swipe', params: { ...expected[direction], duration: 1000 } }, ...SETTLED], direction);
       assert.ok(after && !isActOutcome(after));
     }
+  });
+});
+
+test('replace text with an empty value only clears the field', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  await withPrepared([fields, fields, withText(fields, 'field.city', '')], async ({ driver, agents }) => {
+    const snapshot = await driver.observe(signal());
+    agents.calls.length = 0;
+    const outcome = await driver.act({ kind: 'type', targetRef: refOf(snapshot, 'field.city'), valueKey: 'city' }, snapshot, values({ city: '' }), signal());
+    assert.deepEqual(agents.calls, [{ method: 'device.io.tap', params: { x: 540, y: 936 } }, ...CLEAR, ...SETTLED]);
+    assert.ok(outcome && isActOutcome(outcome));
+    assert.equal(outcome.shownValue, '');
+  });
+});
+
+test('a field whose identifier is gone after typing is found as the one focused text field', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  const typed = withNode(withNode(withText(fields, 'field.city', 'Hue'), 'field.password', { focused: false }),
+    'field.city', { focused: true, 'resource-id': 'field.city.editing' });
+  await withPrepared([fields, fields, typed], async ({ driver }) => {
+    const snapshot = await driver.observe(signal());
+    const outcome = await driver.act({ kind: 'type', targetRef: refOf(snapshot, 'field.city'), valueKey: 'city' }, snapshot, values({ city: 'Hue' }), signal());
+    assert.ok(outcome && isActOutcome(outcome));
+    assert.equal(outcome.shownValue, 'Hue');
+  });
+});
+
+test('a field with no identifier and no focus is found by its frame', async () => {
+  const before = await anonymousFields();
+  await withPrepared([before, before, await anonymousFields({ text: 'Hue' })], async ({ driver }) => {
+    const snapshot = await driver.observe(signal());
+    const outcome = await driver.act({ kind: 'type', targetRef: cityOf(snapshot), valueKey: 'city' }, snapshot, values({ city: 'Hue' }), signal());
+    assert.ok(outcome && isActOutcome(outcome));
+    assert.equal(outcome.shownValue, 'Hue');
+  });
+});
+
+test('when no field is surely the typed one, act returns the settled snapshot without a shown value', async () => {
+  const before = await anonymousFields();
+  const moved = await anonymousFields({ text: 'Hue', rect: { x: 21, y: 862, width: 1038, height: 294 } });
+  await withPrepared([before, before, moved], async ({ driver }) => {
+    const snapshot = await driver.observe(signal());
+    const after = await driver.act({ kind: 'type', targetRef: cityOf(snapshot), valueKey: 'city' }, snapshot, values({ city: 'Hue' }), signal());
+    assert.ok(after && !isActOutcome(after));
+    assert.equal(after.screenHash, screenHash({ hierarchy: moved }));
   });
 });
