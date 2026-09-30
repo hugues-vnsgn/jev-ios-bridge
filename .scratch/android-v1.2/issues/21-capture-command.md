@@ -1,6 +1,7 @@
 # Phase 6: the `capture` command
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase6 at 52b8944
 Claimed by: claude-issue-21
 Blocked by: none (phase 5 merged in at 169ff02)
 
@@ -127,3 +128,7 @@ Spec: [../spec.md](../spec.md), "Phase 6". The work is [the release spec's phase
   The third, that the end-to-end test drives `captureCommand` rather than `cli.ts`, is choice 1 above.
 
 **Gate:** `npm run check` passed, 512 of 512 tests, then the build, at `6d901d3` (log: `$TMPDIR/implement-phase6-21-check.log`). No device, adb server or mobilecli was touched. No iOS output or existing golden entry changed.
+
+### 2026-09-30, coordinator: accepted
+
+Accepted, including `src/capture.ts` (cli.ts runs on import, so tests call `captureCommand` directly), the extra refusal entries (additions only), and printing only after cleanup succeeds. Gate at the merge: 512/512.
