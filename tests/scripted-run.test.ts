@@ -840,7 +840,7 @@ test('an Android run\'s prepared event carries the device identity, serial, agen
   };
   const withoutSweep = await preparedDataOf({ async prepare() {}, async observe() { return markerScreen(); },
     async act() {}, async close() {},
-    androidPreparation: () => ({ deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: 'abc123' }) });
+    preparation: () => ({ deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: 'abc123' }) });
   assert.equal(withoutSweep.deviceIdentity, 'jev-actions-api31');
   assert.equal(withoutSweep.serial, 'emulator-5554');
   assert.equal(withoutSweep.agentSha256, 'abc123');
@@ -848,7 +848,7 @@ test('an Android run\'s prepared event carries the device identity, serial, agen
 
   const withSweep = await preparedDataOf({ async prepare() {}, async observe() { return markerScreen(); },
     async act() {}, async close() {},
-    androidPreparation: () => ({ deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: 'abc123',
+    preparation: () => ({ deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: 'abc123',
       sweptLeftovers: true }) });
   assert.equal(withSweep.sweptLeftovers, true);
 
@@ -862,7 +862,7 @@ test('an Android replace-text step records its driver-reported shown value, and 
     frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } }]);
   const afterType: Snapshot = { ...snapshot([{ ref: 'confirm', role: 'text', label: 'Confirm', actions: [],
     frame: { x: 0, y: 40, width: 100, height: 30 }, state: { enabled: true, visible: true } }]),
-    shownValue: 'Ann.', settled: false };
+    settled: false };
   const scenario: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.android' },
     values: { name: 'Ann' }, steps: [
       { id: 'type', kind: 'action', guard: { present: [{ identifier: 'name-field' }] },
@@ -873,7 +873,7 @@ test('an Android replace-text step records its driver-reported shown value, and 
   const log = memoryLog();
   await runScriptedScenario({ runId: 'scripted-1', scenario, log,
     driver: { async prepare() {}, async observe() { return initial; },
-      async act() { return afterType; }, async close() {} },
+      async act() { return { screen: afterType, shownValue: 'Ann.' }; }, async close() {} },
     judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
   const action = log.events.find(event => event.type === 'action' && event.data.action === 'replaceText')!.data;
   assert.equal(action.shownValue, 'Ann.');
@@ -899,7 +899,7 @@ test('an Android shown value echoing a typed value is redacted in run.jsonl, rep
     const log = await createRunLog(root, 'redacted-android', { values: Object.values(scenario.values) });
     const report = await runScriptedScenario({ runId: 'redacted-android', scenario, log,
       driver: { async prepare() {}, async observe() { return snapshot([field]); },
-        async act() { return { ...snapshot([confirm]), shownValue: 'private-value' }; }, async close() {} },
+        async act() { return { screen: snapshot([confirm]), shownValue: 'private-value' }; }, async close() {} },
       judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
     const raw = await readFile(join(root, 'redacted-android', 'run.jsonl'), 'utf8');
     assert.doesNotMatch(raw, /private-value/);
@@ -915,7 +915,7 @@ test('the prose report names the prepared device identity, serial, agent SHA-256
     frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } }]);
   const afterType: Snapshot = { ...snapshot([{ ref: 'confirm', role: 'text', label: 'Confirm', actions: [],
     frame: { x: 0, y: 40, width: 100, height: 30 }, state: { enabled: true, visible: true } }]),
-    shownValue: 'placeholder-text', settled: false };
+    settled: false };
   const scenario: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.android' },
     values: { name: 'Ann' }, steps: [
       { id: 'type', kind: 'action', guard: { present: [{ identifier: 'name-field' }] },
@@ -924,8 +924,9 @@ test('the prose report names the prepared device identity, serial, agent SHA-256
         assertions: [{ id: 'shown', claim: 'Confirm is visible' }] },
     ] };
   const report = await runScriptedScenario({ runId: 'scripted-1', scenario, log: memoryLog(),
-    driver: { async prepare() {}, async observe() { return nameField; }, async act() { return afterType; }, async close() {},
-      androidPreparation: () => ({ deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: 'abc123',
+    driver: { async prepare() {}, async observe() { return nameField; },
+      async act() { return { screen: afterType, shownValue: 'placeholder-text' }; }, async close() {},
+      preparation: () => ({ deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: 'abc123',
         sweptLeftovers: true }) },
     judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
   const rendered = renderScriptedReport(report);

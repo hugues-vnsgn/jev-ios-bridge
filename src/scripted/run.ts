@@ -1,9 +1,10 @@
 import { setTimeout as delay } from 'node:timers/promises';
-import type { Action, ActionScenarioContext, DeviceDriver, Element, PrepareScenarioContext, RunLog, Snapshot, Verdict } from '../contracts/index.js';
+import type { Action, ActionScenarioContext, ActOutcome, DeviceDriver, Element, Platform, PrepareScenarioContext, RunLog, Snapshot, Verdict } from '../contracts/index.js';
+import { isIosApp } from '../contracts/index.js';
 import { DeviceCliError, DeviceReasonError, StaleSnapshotError } from '../device/index.js';
 import type { AssertionJudgment, ScriptedJudge, ScriptedScenario, ScriptedStep } from './contracts.js';
 import { SCRIPTED_JEV_MODEL, ScriptedJevError } from './jev.js';
-import { ANDROID_PROJECTION_RULE, PROJECTION_RULE, renderAssertionState, ScriptedObservationError } from './observe.js';
+import { PROJECTION_RULES, renderAssertionState, ScriptedObservationError } from './observe.js';
 import { buildScriptedReport, type ScriptedReport } from './report.js';
 import { buildReportJson } from './report-json.js';
 import { MOBILEBUILDMCP_PASSTHROUGH_CODES } from './vocabulary.js';
@@ -47,10 +48,10 @@ function bounded(value: number | undefined, fallback: number, minimum: number, m
   return selected;
 }
 
-function prepareContext(script: ScriptedScenario): PrepareScenarioContext {
+function prepareContext(script: ScriptedScenario, platform: Platform): PrepareScenarioContext {
   // A driver's device field names an iOS simulator; an Android script's device isn't passed on.
   return { app: script.app,
-    ...(script.platform !== 'android' && script.device ? { device: script.device } : {}),
+    ...(platform === 'ios' && script.device ? { device: script.device } : {}),
     ...(script.preconditions ? { preconditions: script.preconditions } : {}) };
 }
 
@@ -154,13 +155,15 @@ async function waitUntil(step: Extract<ScriptedStep, { kind: 'wait' }>, initial:
 /** Bridge-owned execution of a fully authored action script. */
 export async function runScriptedScenario(options: ScriptedRunOptions): Promise<ScriptedReport> {
   const script = parseScriptedScenario(options.scenario);
+  // The one place the platform is read off the script; every later branch reads this, not `script.platform`.
+  const platform: Platform = script.platform ?? 'ios';
   const limits = options.limits ?? {};
   const maxSteps = bounded(limits.maxSteps, 100, 1, 100);
   const wallTimeMs = bounded(limits.wallTimeMs, 300_000, 1, 3_600_000);
   const pollIntervalMs = bounded(limits.pollIntervalMs, 250, 1, 5_000);
   // Longer than one device command's own deadline (35 s), so cleanup can see an in-flight command finish.
   const cleanupTimeMs = bounded(limits.cleanupTimeMs, 45_000, 1, 120_000);
-  const preparedContext = prepareContext(script);
+  const preparedContext = prepareContext(script, platform);
   const actionContext: ActionScenarioContext = { ...preparedContext, values: script.values };
   // The driver carries its own pinned tap semantics; the run reads it rather than taking it as an option.
   const selectionOptions: SelectionOptions = options.driver.tapAliasRule
@@ -202,10 +205,15 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
     return { snapshot, observeDurationMs };
   };
   // The settled screen the last action returned; the next step uses it instead of capturing again.
-  let settled: Snapshot | undefined;
-  // A function boundary, so a read reflects `settled`'s declared type rather than a stale narrowing
-  // from before the last `keepSettled` call.
-  const lastActedSnapshot = (): Snapshot | undefined => settled;
+  let settledScreen: Snapshot | undefined;
+  // Unwraps a replace-text `ActOutcome` to its screen, and returns the shown value it carried, if any.
+  const keepSettled = (result: Snapshot | ActOutcome | undefined | void): string | undefined => {
+    if (!result) return undefined;
+    const screen = 'screen' in result ? result.screen : result;
+    settledScreen = screen;
+    phaseTimingsMs.verifyMs += screen.verifyMs ?? 0;
+    return 'screen' in result ? result.shownValue : undefined;
+  };
   const evidenceFields = (snapshot: Snapshot) => ({
     ...(snapshot.screenshotPath ? { screenshotPath: snapshot.screenshotPath } : {}),
     ...(snapshot.logTails ? { logTails: snapshot.logTails } : {}),
@@ -217,25 +225,24 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
 
   try {
     // An Android app has no bundle ID, so an Android run records null.
-    const ios = script.platform !== 'android';
     await options.log.append('started', { mode: 'scripted',
-      bundleId: ios ? script.app.bundleId : null,
-      ...(ios && script.app.launchArgs ? { launchArgs: script.app.launchArgs } : {}),
-      ...(ios ? {} : { platform: 'android', package: script.app.package,
+      bundleId: isIosApp(script.app) ? script.app.bundleId : null,
+      ...(isIosApp(script.app) && script.app.launchArgs ? { launchArgs: script.app.launchArgs } : {}),
+      ...(isIosApp(script.app) ? {} : { platform: 'android', package: script.app.package,
         activity: script.app.activity ?? null, intentExtras: script.app.intentExtras ?? {} }),
       bridgeVersion: BRIDGE_VERSION, jevModel: SCRIPTED_JEV_MODEL,
-      projectionRule: ios ? PROJECTION_RULE : ANDROID_PROJECTION_RULE,
+      projectionRule: PROJECTION_RULES[platform],
       plannedSteps: script.steps.map(step => ({ id: step.id, kind: step.kind })) });
     let prepareDurationMs = 0;
     await timed('prepareMs', () => abortableOperation(() => options.driver.prepare(preparedContext, signal), signal),
       durationMs => { prepareDurationMs = durationMs; });
     const logSources = options.driver.logSources?.() ?? {};
-    const androidPreparation = options.driver.androidPreparation?.();
+    const preparation = options.driver.preparation?.();
     await options.log.append('prepared', { prepareDurationMs,
       ...(Object.keys(logSources).length ? { logSources } : {}),
-      ...(androidPreparation ? { deviceIdentity: androidPreparation.deviceIdentity, serial: androidPreparation.serial,
-        agentSha256: androidPreparation.agentSha256,
-        ...(androidPreparation.sweptLeftovers ? { sweptLeftovers: true } : {}) } : {}) });
+      ...(preparation ? { deviceIdentity: preparation.deviceIdentity, serial: preparation.serial,
+        agentSha256: preparation.agentSha256,
+        ...(preparation.sweptLeftovers ? { sweptLeftovers: true } : {}) } : {}) });
     try { options.onPrepared?.({ logSources }); } catch { /* the log pane never affects a run */ }
     for (const step of script.steps) {
       activeStepId = undefined;
@@ -247,13 +254,13 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
       activeStepStarted = performance.now();
       steps++;
       phase = 'observe';
-      const { snapshot, observeDurationMs } = settled ? { snapshot: settled, observeDurationMs: 0 } : await capture();
-      settled = undefined;
+      const { snapshot, observeDurationMs } = settledScreen ? { snapshot: settledScreen, observeDurationMs: 0 } : await capture();
+      settledScreen = undefined;
       let assertionObservation: string | undefined;
       let observationError: unknown;
       try {
         assertScreenGuard(snapshot, step.guard, selectionOptions);
-        if (step.kind === 'checkpoint') assertionObservation = renderAssertionState(snapshot, ios ? 'ios' : 'android');
+        if (step.kind === 'checkpoint') assertionObservation = renderAssertionState(snapshot, platform);
       } catch (error) { observationError = error; }
       await options.log.append('step', { step: steps, stepId: step.id, kind: step.kind,
         snapshotSequence: snapshot.sequence, observationSummary: summary(snapshot), observeDurationMs,
@@ -270,12 +277,8 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
         const act = async () => timed('actMs',
           () => abortableOperation(() => options.driver.act(deviceAction(step, ref), selected, actionContext, signal), signal),
           durationMs => { actDurationMs += durationMs; });
-        const keepSettled = (result: Snapshot | undefined | void) => {
-          if (!result) return;
-          settled = result;
-          phaseTimingsMs.verifyMs += result.verifyMs ?? 0;
-        };
-        try { keepSettled(await act()); }
+        let shownValue: string | undefined;
+        try { shownValue = keepSettled(await act()); }
         catch (error) {
           if (!(error instanceof StaleSnapshotError)) throw error;
           phase = 'reobserve';
@@ -289,9 +292,8 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
           ref = resolveActionTarget(fresh, step.action.selector, requiredAction(step), selectionOptions);
           selected = fresh;
           phase = 'act';
-          keepSettled(await act());
+          shownValue = keepSettled(await act());
         }
-        const shownValue = lastActedSnapshot()?.shownValue;
         await options.log.append('action', { step: steps, stepId: step.id, action: step.action.kind,
           selector: step.action.selector, resolvedRef: ref.ref, actDurationMs,
           ...(shownValue === undefined ? {} : { shownValue }),

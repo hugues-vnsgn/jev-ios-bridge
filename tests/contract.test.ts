@@ -250,10 +250,10 @@ test('contract: report.json shape for an Android run', async () => {
         frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } }] };
     const markerScreen: Snapshot = { deviceId: 'android-golden', sequence: 2, capturedAt: 0, expiresAt: 60_000, truncated: false,
       elements: [{ ref: 'marker', role: 'text', label: 'Marker', actions: [],
-        frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } }],
-      shownValue: 'placeholder-text' };
-    const driver: DeviceDriver = { async prepare() {}, async observe() { return nameField; }, async act() { return markerScreen; },
-      async close() {}, androidPreparation: () => ({ deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: 'deadbeef' }) };
+        frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } }] };
+    const driver: DeviceDriver = { async prepare() {}, async observe() { return nameField; },
+      async act() { return { screen: markerScreen, shownValue: 'placeholder-text' }; },
+      async close() {}, preparation: () => ({ deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: 'deadbeef' }) };
     const scenario = { version: 1, platform: 'android',
       app: { package: 'com.hugues.test_cmp', activity: '.DebugGalleryActivity', intentExtras: { screen: 'gallery' } },
       device: { serial: 'emulator-5554' }, values: { name: 'Ann' }, steps: [
