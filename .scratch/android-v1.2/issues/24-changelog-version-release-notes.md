@@ -1,6 +1,7 @@
 # Phase 7: CHANGELOG, version, and release notes
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: claude-issue-24
 Blocked by: none (phases 5 and 6 merged in)
 
 Spec: [../spec.md](../spec.md), "Phase 7". The work is [the release spec's phase 7](../../android-support/release-spec.md#phase-7-docs-version-and-changelog-assemble-the-v120-spec-guide-pages-the-answers-named-per-item) items 9 and 10, plus the owner's clipboard ruling for the release notes. Read the CHANGELOG's 1.1.0 and 1.0.0 entries and `docs/releases/v1.1.0.md` for shape and voice.
