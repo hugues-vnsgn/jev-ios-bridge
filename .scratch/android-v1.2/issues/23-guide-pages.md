@@ -1,6 +1,7 @@
 # Phase 7: the guide pages
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: claude-issue-23
 Blocked by: none (phases 5 and 6 merged in)
 
 Spec: [../spec.md](../spec.md), "Phase 7". The work is [the release spec's phase 7](../../android-support/release-spec.md#phase-7-docs-version-and-changelog-assemble-the-v120-spec-guide-pages-the-answers-named-per-item) items 1 to 8, plus the owner's clipboard ruling, and the pages Issue 22's comment lists. Read them in full, and read the code the pages describe; the code wins where a spec sentence and the code disagree. Say where that happened.
