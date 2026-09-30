@@ -277,6 +277,8 @@ export class FakeStreams implements LogcatStarter {
   readonly stubborn = new Set<number>();
   /** A start that fails, by its arguments. */
   fails: ((args: string[]) => boolean) | undefined;
+  /** Holds each start in flight, after its process started, until the gate opens. */
+  held: Promise<void> | undefined;
 
   constructor(private readonly adb: FakeAdb) {}
 
@@ -288,6 +290,7 @@ export class FakeStreams implements LogcatStarter {
     const exited = new Promise<void>(resolveExit => { ended = resolveExit; });
     const stream: FakeStream = { args, output, pid: this.nextPid++, running: true, end: () => { stream.running = false; ended(); } };
     this.streams.push(stream);
+    await this.held;
     return {
       pid: stream.pid,
       exited,

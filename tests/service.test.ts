@@ -10,7 +10,7 @@ import type { ScriptedJudge } from '../src/scripted/contracts.js';
 import { createDriverFactory } from '../src/device/factory.js';
 import { androidTools } from '../src/device/android/tools.js';
 import { attachLogPane } from '../src/logpane/attach.js';
-import { Writable } from 'node:stream';
+import { Capture } from './fixtures/capture.js';
 
 const screen = () => ({ deviceId: 'test', sequence: 1, capturedAt: Date.now(),
   expiresAt: Date.now() + 60_000, truncated: false,
@@ -22,10 +22,6 @@ const checkpoint = (id: string, claim = 'Marker visible') => ({
   id, kind: 'checkpoint', guard: { present: [{ role: 'text', label: 'SCREEN_EVIDENCE_MARKER' }] },
   assertions: [{ id: 'shown', claim }],
 });
-class Capture extends Writable {
-  text = '';
-  _write(chunk: Buffer, _encoding: string, done: () => void) { this.text += chunk.toString(); done(); }
-}
 async function until(check: () => boolean): Promise<void> {
   for (let tries = 0; !check(); tries++) {
     if (tries > 200) assert.fail('timed out waiting');
@@ -208,7 +204,8 @@ test('the driver is built with the run\'s own ID, and the pane follows its logca
   });
   const output = new Capture();
   try {
-    const { runId } = await service.start(script());
+    const { runId } = await service.start({ version: 1, platform: 'android', app: { package: 'com.example.app' },
+      values: {}, steps: [checkpoint('verify')] });
     assert.deepEqual(runIds, [runId]);
     await until(() => notices.length > 0);
     void attachLogPane(runId, output as unknown as NodeJS.WriteStream, { keepOpen: false });
