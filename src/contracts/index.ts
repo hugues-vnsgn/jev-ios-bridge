@@ -113,7 +113,7 @@ export interface DeviceDriver {
   /** Whether the launched app is still running; undefined when the driver can't tell. */
   appRunning?(): boolean | undefined;
   /** The app's own log files the device layer is writing for this launch, for the live log pane. */
-  logSources?(): { runtime?: string; os?: string };
+  logSources?(): { runtime?: string; os?: string; logcat?: string };
   /** Set only by a driver integration whose pinned tap semantics were verified. The run reads it. */
   readonly tapAliasRule?: TapAliasRule;
   /** What `prepare` set up on the device, for the run log's `prepared` event. Only a driver that prepares a
