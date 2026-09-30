@@ -1,11 +1,14 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, rm } from 'node:fs/promises';
+import { mkdir, mkdtemp, readdir, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import type { ScriptedScenario } from '../src/scripted/contracts.js';
 import { createDriverFactory } from '../src/device/factory.js';
-import type { CliRunner } from '../src/device/index.js';
+import { DeviceReasonError, type CliRunner } from '../src/device/index.js';
+import type { AdbRunner } from '../src/device/android/adb.js';
+import { AndroidDriver } from '../src/device/android/driver.js';
+import { androidTools } from '../src/device/android/tools.js';
 
 const udid = '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7';
 const iosScript: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [] };
@@ -43,13 +46,43 @@ test('the driver is built per scenario, never shared across the process', async 
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
-test('an Android script never reaches the iOS driver: the factory refuses it before it is built', async () => {
+test('for an Android script the factory builds the Android driver, which ends at ANDROID_TOOLS_UNAVAILABLE without adb', async () => {
   const androidScript: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
-    values: {}, steps: [] };
+    device: { serial: 'emulator-5554' }, values: {}, steps: [] };
   const root = await mkdtemp(join(tmpdir(), 'jev-device-factory-android-'));
+  const empty = join(root, 'empty');
+  await mkdir(empty);
   try {
-    const runner: CliRunner = async () => ({ stdout: '{}', stderr: '', exitCode: 0 });
-    const createDriver = createDriverFactory({ mobileBuildMcp: { cwd: root, lockRoot: root, runner } });
-    assert.throws(() => createDriver(androidScript), /Android isn't available in this build/);
+    const runner: CliRunner = async () => assert.fail('an Android script never reaches the iOS driver');
+    // The real tools check, with ANDROID_HOME, ANDROID_SDK_ROOT, PATH and the home folder all empty.
+    const tools = () => androidTools({ environment: { ANDROID_HOME: empty, ANDROID_SDK_ROOT: empty, PATH: empty }, home: empty });
+    const createDriver = createDriverFactory({ mobileBuildMcp: { cwd: root, lockRoot: root, runner }, android: { leaseRoot: root, tools } });
+    const driver = createDriver(androidScript);
+    assert.ok(driver instanceof AndroidDriver);
+    await assert.rejects(driver.prepare({ app: { package: 'com.hugues.test_cmp' } }, new AbortController().signal),
+      (error: unknown) => error instanceof DeviceReasonError && error.code === 'ANDROID_TOOLS_UNAVAILABLE');
+    await driver.close(new AbortController().signal);
+    assert.deepEqual(await readdir(root), ['empty'], 'no lease taken');
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('the Android driver gets the script\'s device, else JEV_ANDROID_DEVICE, from the factory', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-factory-android-device-'));
+  try {
+    const adbCalls: string[] = [];
+    const runner: AdbRunner = async (args) => {
+      adbCalls.push(args.join(' '));
+      return { stdout: 'List of devices attached\n\n', stderr: '', exitCode: 0 };
+    };
+    const createDriver = createDriverFactory({ mobileBuildMcp: { cwd: root, lockRoot: root },
+      android: { leaseRoot: root, runner, defaultDevice: 'Default_AVD',
+        tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: '/cache/agent.dex', sha256: 'a'.repeat(64) } }) } });
+    const script = (device?: { avd: string }): ScriptedScenario =>
+      ({ version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' }, ...(device ? { device } : {}), values: {}, steps: [] });
+    for (const [device, named] of [[{ avd: 'Script_AVD' }, 'Script_AVD'], [undefined, 'Default_AVD']] as const) {
+      await assert.rejects(createDriver(script(device)).prepare({ app: { package: 'com.hugues.test_cmp' } }, new AbortController().signal),
+        (error: unknown) => error instanceof DeviceReasonError && error.code === 'DEVICE_NOT_CONNECTED' && error.message.endsWith(`named ${named}`));
+    }
+    assert.deepEqual(adbCalls, ['devices -l', 'devices -l']);
   } finally { await rm(root, { recursive: true, force: true }); }
 });

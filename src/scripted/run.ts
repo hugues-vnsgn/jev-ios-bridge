@@ -112,14 +112,20 @@ function checkedJudgment(judgment: AssertionJudgment, assertions: Extract<Script
 /** A bridge-owned reason code, plus the device layer's own code when the bridge doesn't own it. */
 interface Failure { code: string; vendorCode?: string }
 
+const VENDOR_CODE = /^[A-Za-z0-9_.-]{1,80}$/;
+
 function failureOf(error: unknown, signal: AbortSignal): Failure {
   if (signal.aborted) return { code: signal.reason instanceof ScriptRunError ? signal.reason.code : 'CANCELLED' };
   if (error instanceof ScriptRunError || error instanceof ScriptSelectionError ||
-      error instanceof ScriptedObservationError || error instanceof ScriptedJevError ||
-      error instanceof DeviceReasonError) return { code: error.code };
+      error instanceof ScriptedObservationError || error instanceof ScriptedJevError) return { code: error.code };
+  // An Android error may carry the device layer that failed (`agent`, `adb`) as its vendorCode.
+  if (error instanceof DeviceReasonError) {
+    const vendorCode = error.vendorCode;
+    return { code: error.code, ...(vendorCode !== undefined && VENDOR_CODE.test(vendorCode) ? { vendorCode } : {}) };
+  }
   if (error instanceof DeviceCliError) {
     if (MOBILEBUILDMCP_PASSTHROUGH_CODES.has(error.code)) return { code: error.code };
-    return { code: 'DEVICE_ERROR', ...(/^[A-Za-z0-9_.-]{1,80}$/.test(error.code) ? { vendorCode: error.code } : {}) };
+    return { code: 'DEVICE_ERROR', ...(VENDOR_CODE.test(error.code) ? { vendorCode: error.code } : {}) };
   }
   return { code: 'EXECUTION_ERROR' };
 }

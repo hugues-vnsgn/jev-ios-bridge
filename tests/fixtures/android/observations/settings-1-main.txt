@@ -1,0 +1,47 @@
+Current Android screen (full accessibility capture):
+{"role":"scroll-view","identifier":"com.android.settings:id/settings_homepage_container","frame":{"x":0,"y":0,"width":1080,"height":2337},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Search Settings","identifier":"com.android.settings:id/search_action_bar","frame":{"x":42,"y":84,"width":996,"height":189},"state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"com.android.settings:id/imageView","frame":{"x":105,"y":147,"width":63,"height":63},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Search Settings","identifier":"com.android.settings:id/search_bar_title","frame":{"x":189,"y":143,"width":389,"height":71},"state":{"enabled":true,"visible":true}}
+{"role":"scroll-view","identifier":"com.android.settings:id/main_content_scrollable_container","frame":{"x":0,"y":294,"width":1080,"height":2043},"state":{"enabled":true,"visible":true}}
+{"role":"scroll-view","identifier":"com.android.settings:id/recycler_view","frame":{"x":0,"y":294,"width":1080,"height":2043},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Google","frame":{"x":0,"y":310,"width":1080,"height":192},"state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"android:id/icon","frame":{"x":84,"y":353,"width":105,"height":105},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Google","identifier":"android:id/title","frame":{"x":221,"y":352,"width":133,"height":57},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Services & preferences","identifier":"android:id/summary","frame":{"x":221,"y":409,"width":379,"height":51},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Network & internet","frame":{"x":0,"y":544,"width":1080,"height":192},"state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"android:id/icon","frame":{"x":84,"y":587,"width":105,"height":105},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Network & internet","identifier":"android:id/title","frame":{"x":221,"y":586,"width":345,"height":57},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Mobile, Wi‑Fi, hotspot","identifier":"android:id/summary","frame":{"x":221,"y":643,"width":351,"height":51},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Connected devices","frame":{"x":0,"y":741,"width":1080,"height":192},"state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"android:id/icon","frame":{"x":84,"y":784,"width":105,"height":105},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Connected devices","identifier":"android:id/title","frame":{"x":221,"y":783,"width":353,"height":57},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Bluetooth, pairing","identifier":"android:id/summary","frame":{"x":221,"y":840,"width":287,"height":51},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Apps","frame":{"x":0,"y":975,"width":1080,"height":192},"state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"android:id/icon","frame":{"x":84,"y":1018,"width":105,"height":105},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Apps","identifier":"android:id/title","frame":{"x":221,"y":1017,"width":97,"height":57},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Assistant, recent apps, default apps","identifier":"android:id/summary","frame":{"x":221,"y":1074,"width":585,"height":51},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Notifications","frame":{"x":0,"y":1172,"width":1080,"height":192},"state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"android:id/icon","frame":{"x":84,"y":1215,"width":105,"height":105},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Notifications","identifier":"android:id/title","frame":{"x":221,"y":1214,"width":239,"height":57},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Notification history, conversations","identifier":"android:id/summary","frame":{"x":221,"y":1271,"width":556,"height":51},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Sound & vibration","frame":{"x":0,"y":1369,"width":1080,"height":192},"state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"android:id/icon","frame":{"x":84,"y":1412,"width":105,"height":105},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Sound & vibration","identifier":"android:id/title","frame":{"x":221,"y":1411,"width":327,"height":57},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Volume and haptics","identifier":"android:id/summary","frame":{"x":221,"y":1468,"width":325,"height":51},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Modes","frame":{"x":0,"y":1566,"width":1080,"height":192},"state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"android:id/icon","frame":{"x":84,"y":1609,"width":105,"height":105},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Modes","identifier":"android:id/title","frame":{"x":221,"y":1608,"width":129,"height":57},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Do Not Disturb, Bedtime, Driving","identifier":"android:id/summary","frame":{"x":221,"y":1665,"width":523,"height":51},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Display & touch","frame":{"x":0,"y":1763,"width":1080,"height":192},"state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"android:id/icon","frame":{"x":84,"y":1806,"width":105,"height":105},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Display & touch","identifier":"android:id/title","frame":{"x":221,"y":1805,"width":289,"height":57},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Dark theme, font size, touch","identifier":"android:id/summary","frame":{"x":221,"y":1862,"width":454,"height":51},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Wallpaper & style","frame":{"x":0,"y":1960,"width":1080,"height":192},"state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"android:id/icon","frame":{"x":84,"y":2003,"width":105,"height":105},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Wallpaper & style","identifier":"android:id/title","frame":{"x":221,"y":2002,"width":321,"height":57},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Colors, themed icons, app grid","identifier":"android:id/summary","frame":{"x":221,"y":2059,"width":496,"height":51},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Storage","frame":{"x":0,"y":2194,"width":1080,"height":143},"state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"android:id/icon","frame":{"x":84,"y":2237,"width":105,"height":100},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Storage","identifier":"android:id/title","frame":{"x":221,"y":2236,"width":145,"height":57},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"40% used - 19.15 GB free","identifier":"android:id/summary","frame":{"x":221,"y":2293,"width":412,"height":44},"state":{"enabled":true,"visible":true}}

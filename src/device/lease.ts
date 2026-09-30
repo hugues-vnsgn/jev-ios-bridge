@@ -14,8 +14,11 @@ import { processAlive } from '../process.js';
 /** Where device leases live. Documented so a person can inspect one; the bridge clears stale ones itself. */
 export const DEFAULT_LEASE_ROOT = join(tmpdir(), 'jev-ios-bridge-device-locks');
 
-/** Who issues a device command, so a driver can fence one kind at once. Today only MobileBuildMCP does. */
-export type DeviceCommandKind = 'mobilebuildmcp';
+/**
+ * Who issues a device command, so a driver can fence one kind at once: MobileBuildMCP on iOS; on Android,
+ * `adb` and the device agent, whose unknown requests the agent's fence ends without touching `adb`'s.
+ */
+export type DeviceCommandKind = 'mobilebuildmcp' | 'adb' | 'agent';
 
 /** Who held a lease: the run, its bridge process, and what that run started that outlives a crash. */
 export interface LeaseHolder {
@@ -182,6 +185,11 @@ export class DeviceLease {
   /** The fence hook: the driver proved every command of this kind dead, so the unknown ones can't act any more. */
   fence(kind: DeviceCommandKind): void {
     for (const entry of this.commands) if (entry.kind === kind && entry.state === 'unknown') entry.state = 'fenced';
+  }
+
+  /** True when every command of this kind exited or was fenced: none in flight, none with an unknown outcome. */
+  settled(kind: DeviceCommandKind): boolean {
+    return [...this.commands].every(entry => entry.kind !== kind || entry.state === 'exited' || entry.state === 'fenced');
   }
 
   /** Record something the run started that would outlive a crash, so the next holder can sweep it. */

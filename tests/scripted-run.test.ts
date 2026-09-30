@@ -815,6 +815,33 @@ test('an Android run with no replace-text step gets a report.json with the app i
   });
 });
 
+test('a DeviceReasonError carrying a vendorCode records it in the error event and in report.json', async () => {
+  assert.equal('vendorCode' in new DeviceReasonError('DEVICE_ERROR', 'no vendor code'), false, 'an error built without one has none');
+  await withRunLog('vendor-code-agent', async (log, root) => {
+    const report = await runScriptedScenario({ runId: 'vendor-code-agent', judge: markerJudge, log,
+      scenario: androidScript({ steps: [markerCheckpoint] }),
+      driver: { async prepare() { throw new DeviceReasonError('DEVICE_ERROR', 'The device agent never answered', { vendorCode: 'agent' }); },
+        async observe() { return markerScreen(); }, async act() {}, async close() {} } });
+    assert.equal(report.reason, 'DEVICE_ERROR');
+    const events = (await readFile(join(root, 'vendor-code-agent', 'run.jsonl'), 'utf8')).trim().split('\n')
+      .map(line => JSON.parse(line) as RunEvent);
+    assert.equal(events.find(event => event.type === 'error')?.data.vendorCode, 'agent');
+    const reportJson = JSON.parse(await readFile(join(root, 'vendor-code-agent', 'report.json'), 'utf8')) as { error: { vendorCode?: string } };
+    assert.equal(reportJson.error.vendorCode, 'agent');
+  });
+});
+
+test('a DeviceReasonError whose vendorCode fails the pattern check records none', async () => {
+  const log = memoryLog();
+  await runScriptedScenario({ runId: 'scripted-1', judge: markerJudge, log,
+    scenario: androidScript({ steps: [markerCheckpoint] }),
+    driver: { async prepare() { throw new DeviceReasonError('DEVICE_ERROR', 'odd', { vendorCode: 'has a space' }); },
+      async observe() { return markerScreen(); }, async act() {}, async close() {} } });
+  const error = log.events.find(event => event.type === 'error');
+  assert.equal(error?.data.code, 'DEVICE_ERROR');
+  assert.equal('vendorCode' in (error?.data ?? {}), false);
+});
+
 test('an Android run renders Jev\'s view with the Android header and placeholder, matching the rule started records', async () => {
   const field: Element = { ref: 'field', role: 'text-field', placeholder: 'Email', identifier: 'field', actions: [],
     frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } };

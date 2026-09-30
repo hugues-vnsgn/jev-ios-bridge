@@ -53,24 +53,17 @@ export class DeviceCliError extends Error {
 /**
  * A bridge-owned reason code raised directly by a device driver that knows the bridge's vocabulary
  * (for example the Android driver), skipping the vendor-code translation `DeviceCliError` needs.
- * `failureOf` (`src/scripted/run.ts`) passes its code through unconditionally.
+ * `failureOf` (`src/scripted/run.ts`) passes its code through unconditionally. An Android error may name
+ * the device layer that failed (`adb`, `agent`) as its `vendorCode`; an iOS error names none.
  */
 export class DeviceReasonError extends Error {
-  constructor(readonly code: ReasonCode, message: string) {
+  /** Set only when given, so an error built without one has no such property. */
+  declare readonly vendorCode?: string;
+
+  constructor(readonly code: ReasonCode, message: string, options: { vendorCode?: string } = {}) {
     super(message);
     this.name = 'DeviceReasonError';
-  }
-}
-
-/**
- * The driver factory refused to build a driver at all, for a whole class of script rather than a single
- * run (for example a platform this build has no driver for). The CLI and MCP show this message, the same
- * way they show other start failures, instead of a generic one.
- */
-export class DriverUnavailableError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'DriverUnavailableError';
+    if (options.vendorCode !== undefined) this.vendorCode = options.vendorCode;
   }
 }
 

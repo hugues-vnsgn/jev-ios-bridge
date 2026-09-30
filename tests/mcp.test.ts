@@ -1,6 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
+import { mkdir, mkdtemp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { createInterface } from 'node:readline';
 import { openMcpSession } from './fixtures/mcp-session.js';
 
@@ -44,17 +47,24 @@ test('start_scenario\'s description names both iOS and Android', { timeout: 10_0
   } finally { await session.close(); }
 });
 
-test('start_scenario shows the driver refusal for an Android script instead of a generic failure', { timeout: 10_000 }, async () => {
-  const session = await openMcpSession('android-refusal', { entryPoint: 'cli', env: { TYPESAFE_API_KEY: 'contract-test-key' } });
+test('an Android script reaches the Android driver, whose refusal get_report shows: ANDROID_TOOLS_UNAVAILABLE without adb', { timeout: 20_000 }, async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-mcp-android-refusal-'));
+  const empty = join(root, 'empty');
+  await mkdir(empty);
+  const session = await openMcpSession('android-refusal', { entryPoint: 'cli', env: { TYPESAFE_API_KEY: 'contract-test-key',
+    JEV_RUNS_DIR: join(root, 'runs'), ANDROID_HOME: empty, ANDROID_SDK_ROOT: empty, PATH: empty, HOME: empty } });
   try {
     const androidScenario = { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
       device: { serial: 'emulator-5554' }, values: {},
       steps: [{ id: 'verify', kind: 'checkpoint', guard: { present: [{ role: 'text', label: 'Marker' }] },
         assertions: [{ id: 'shown', claim: 'Marker visible' }] }] };
     const start = await session.callTool('start_scenario', { scenario: androidScenario });
-    assert.equal(start.isError, true);
-    assert.match(start.content[0].text, /Android isn't available in this build/);
-  } finally { await session.close(); }
+    assert.notEqual(start.isError, true);
+    const { runId } = JSON.parse(start.content[0].text) as { runId: string };
+    const report = await session.callTool('get_report', { runId, waitMs: 10_000 });
+    assert.match(report.content[0].text, /^Status: finished/);
+    assert.match(report.content[0].text, /ANDROID_TOOLS_UNAVAILABLE/);
+  } finally { await session.close(); await rm(root, { recursive: true, force: true }); }
 });
 
 test('running MCP reports hide screen evidence and bounded waiting returns the final report', {timeout:5000}, async()=>{
