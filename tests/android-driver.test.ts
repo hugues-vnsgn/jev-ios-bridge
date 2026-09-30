@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { test } from 'node:test';
 import { isActOutcome, type AndroidAppIdentity, type Snapshot } from '../src/contracts/index.js';
 import { DeviceReasonError, StaleSnapshotError } from '../src/device/index.js';
-import type { AdbResult, AdbRunner } from '../src/device/android/adb.js';
+import { OutcomeUnknownError, type AdbResult, type AdbRunner } from '../src/device/android/adb.js';
 import { DeviceAgentError, type DeviceAgentClient } from '../src/device/android/agent-client.js';
 import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
 import { AGENT_DEVICE_PATH, AGENT_START_COMMAND, AndroidDriver, type AndroidDriverOptions } from '../src/device/android/driver.js';
@@ -715,13 +715,14 @@ test('a cancel stops prepare before its next device command', async () => {
   });
 });
 
-test('preparation(), observe and act before prepare are refused, and close is not available yet', async () => {
-  await withDriver(new FakeAdb(api31()), async ({ driver, agents }) => {
+test('preparation(), observe and act before prepare are refused, and close before prepare does nothing', async () => {
+  await withDriver(new FakeAdb(api31()), async ({ driver, agents, adb }) => {
     assert.throws(() => driver.preparation(), /not prepared/);
     await assert.rejects(driver.observe(signal()), /not prepared/);
     await assert.rejects(driver.act({ kind: 'tap', targetRef: 'e1' }, snapshotOf([]), { ...app(), values: {} }, signal()), /not prepared/);
-    await assert.rejects(driver.close(signal()), /not built yet/);
+    await driver.close(signal());
     assert.deepEqual(agents.calls, []);
+    assert.deepEqual(adb.calls, []);
   });
 });
 
@@ -981,9 +982,12 @@ test('an abandoned replace-text issues no further call once close begins', async
   await withPrepared([fields], async ({ driver, agents }) => {
     const snapshot = await driver.observe(signal());
     agents.calls.length = 0;
-    agents.hooks.onCall = async call => { if (call.method === 'device.io.keys') await driver.close(signal()).catch(() => undefined); };
+    let closing: Promise<void> | undefined;
+    // close waits for the abandoned act, so it is begun here and awaited once the act has stopped.
+    agents.hooks.onCall = call => { if (call.method === 'device.io.keys') closing ??= driver.close(signal()); };
     await assert.rejects(driver.act({ kind: 'type', targetRef: refOf(snapshot, 'field.city'), valueKey: 'city' }, snapshot,
       values({ city: 'Tiếng Việt' }), signal()), /closing/);
+    await closing;
     assert.deepEqual(agents.calls, [{ method: 'device.io.tap', params: { x: 540, y: 936 } }, CLEAR[0]]);
   });
 });
@@ -1064,4 +1068,279 @@ test('when no field is surely the typed one, act returns the settled snapshot wi
     assert.ok(after && !isActOutcome(after));
     assert.equal(after.screenHash, screenHash({ hierarchy: moved }));
   });
+});
+
+/* close (Issue 16): the same fakes; `close` undoes only what this run did, and keeps the lease until it can show nothing is left. */
+
+/** A promise the test opens by hand, to hold a fake command in flight. */
+function gate(): { opened: Promise<void>; open(): void } {
+  let open!: () => void;
+  const opened = new Promise<void>(resolveOpened => { open = resolveOpened; });
+  return { opened, open };
+}
+/** Waits, on the real clock, until `check` holds. */
+async function eventually(check: () => boolean | Promise<boolean>, what: string): Promise<void> {
+  for (let tries = 0; tries < 200; tries++) {
+    if (await check()) return;
+    await new Promise(resolveTick => setTimeout(resolveTick, 10));
+  }
+  assert.fail(`never: ${what}`);
+}
+/** A signal that aborts after `ms`, as `close`'s time limit does, on a timer that keeps the test running. */
+function expiring(ms: number): AbortSignal {
+  const controller = new AbortController();
+  setTimeout(() => { controller.abort(new Error('close\'s time limit')); }, ms);
+  return controller.signal;
+}
+const closeFailed = (code: string) => (error: unknown) => reason(code)(error);
+/** What `close` sends after a full `prepare`: the fence by pid, the app stop, then the forward's removal. */
+const CLOSE_AFTER_PREPARE = [
+  "-s emulator-5554 shell 'ps' '-A' '-o' 'PID,NAME,ARGS'",
+  "-s emulator-5554 shell 'cat' '/proc/7001/environ'",
+  "-s emulator-5554 shell 'kill' '7001'",
+  "-s emulator-5554 shell 'cat' '/proc/7001/environ'",
+  "-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'",
+  '-s emulator-5554 forward --remove tcp:49526',
+];
+const callsFrom = (adb: FakeAdb, from: number) => adb.calls.slice(from).map(call => call.join(' '));
+
+test('close fences the agent by pid, stops the app, removes the forward, then releases the lease, leaving the agent file', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  await withPrepared([fields], async ({ driver, adb, root, agents }) => {
+    await driver.observe(signal());
+    const before = adb.calls.length;
+    const agentCalls = agents.calls.length;
+    await driver.close(signal());
+    assert.deepEqual(callsFrom(adb, before), CLOSE_AFTER_PREPARE);
+    assert.equal(agents.calls.length, agentCalls, 'close sends the agent nothing');
+    assert.equal(adb.emulators.get('emulator-5554')!.agents!.size, 0, 'no agent left');
+    assert.deepEqual(adb.forwards, [], 'no forward left');
+    assert.deepEqual(await readdir(root), [], 'lease released');
+    assert.equal(adb.calls.some(call => call.join(' ').includes(`rm`) || call.join(' ').includes('pkill')), false, 'the agent file stays');
+    await driver.close(signal());
+    assert.equal(adb.calls.length, before + CLOSE_AFTER_PREPARE.length, 'a second close does nothing');
+  });
+});
+
+test('close tolerates an agent already gone, an app not running and a forward already removed', async () => {
+  await withDriver(new FakeAdb(api31()), async ({ driver, adb, root }) => {
+    await driver.prepare(app(), signal());
+    adb.emulators.get('emulator-5554')!.agents!.clear();
+    adb.forwards = [];
+    const before = adb.calls.length;
+    await driver.close(signal());
+    assert.deepEqual(callsFrom(adb, before), [
+      "-s emulator-5554 shell 'ps' '-A' '-o' 'PID,NAME,ARGS'",
+      "-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'",
+      '-s emulator-5554 forward --remove tcp:49526',
+    ]);
+    assert.deepEqual(await readdir(root), []);
+  });
+});
+
+test('a DEVICE_BUSY refusal followed by close: the foreign agent keeps running, the app isn\'t stopped, the lease is released', async () => {
+  const adb = new FakeAdb(api31({ agents: new Map([[4984, 'foreign']]) }));
+  await withDriver(adb, async ({ driver, root }) => {
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_BUSY'));
+    const before = adb.calls.length;
+    await driver.close(signal());
+    assert.deepEqual(callsFrom(adb, before), [], 'close is a no-op after a refusal before the restart');
+    assert.ok(adb.emulators.get('emulator-5554')!.agents!.has(4984));
+    assert.equal(adb.shell().some(words => words[0] === 'am' || words[0] === 'kill'), false);
+    assert.deepEqual(await readdir(root), []);
+  });
+});
+
+test('a foreign agent found after the restart: close fences only the bridge\'s own agent and stops the app it restarted', async () => {
+  const adb = new FakeAdb(api31());
+  adb.onCall = args => {
+    if (args[2] === 'forward' && args[3] !== '--remove') adb.emulators.get('emulator-5554')!.agents!.set(10252, 'foreign');
+  };
+  await withDriver(adb, async ({ driver, root }) => {
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_BUSY'));
+    adb.onCall = undefined;
+    await driver.close(signal());
+    assert.deepEqual([...adb.emulators.get('emulator-5554')!.agents!.keys()], [10252], 'the foreign agent keeps running');
+    assert.deepEqual(adb.shell().filter(words => words[0] === 'kill').map(words => words[1]), ['7001']);
+    assert.equal(adb.shell().filter(words => words.join(' ') === 'am force-stop com.example.android').length, 2);
+    assert.deepEqual(await readdir(root), []);
+  });
+});
+
+test('a cancel while the agent is starting: close waits for the start command, then fences the agent it started', async () => {
+  const adb = new FakeAdb(api31());
+  const start = gate();
+  const controller = new AbortController();
+  let closing: Promise<void> | undefined;
+  await withDriver(adb, async ({ driver, root }) => {
+    adb.onCall = async args => {
+      if (args[3] !== AGENT_START_COMMAND) return;
+      // The run is cancelled and abandons prepare, then closes while the start command is still running.
+      controller.abort(new Error('cancelled'));
+      closing = driver.close(signal());
+      await start.opened;
+    };
+    const preparing = driver.prepare(app(), controller.signal);
+    await eventually(() => closing !== undefined, 'close begun');
+    await new Promise(resolveTick => setTimeout(resolveTick, 20));
+    assert.equal(adb.calls.at(-1)![3], AGENT_START_COMMAND, 'close sends nothing while the start command runs');
+    const started = adb.calls.length;
+    start.open();
+    await assert.rejects(preparing);
+    await closing;
+    assert.deepEqual(callsFrom(adb, started), [
+      "-s emulator-5554 shell 'ps' '-A' '-o' 'PID,NAME,ARGS'",
+      "-s emulator-5554 shell 'cat' '/proc/7001/environ'",
+      "-s emulator-5554 shell 'kill' '7001'",
+      "-s emulator-5554 shell 'cat' '/proc/7001/environ'",
+      "-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'",
+    ], 'no forward was made, so none is removed');
+    assert.equal(adb.emulators.get('emulator-5554')!.agents!.size, 0, 'no agent left');
+    assert.deepEqual(await readdir(root), []);
+  });
+});
+
+test('after close begins, an abandoned prepare issues no further device command', async () => {
+  const adb = new FakeAdb(api31());
+  const stop = gate();
+  let closing: Promise<void> | undefined;
+  await withDriver(adb, async ({ driver, root }) => {
+    adb.onCall = async args => {
+      if (args[3] !== "'am' 'force-stop' 'com.example.android'" || closing) return;
+      closing = driver.close(signal());
+      await stop.opened;
+    };
+    const preparing = driver.prepare(app(), signal());
+    await eventually(() => closing !== undefined, 'close begun');
+    const stopped = adb.calls.length;
+    stop.open();
+    await assert.rejects(preparing, /closing/);
+    await closing;
+    assert.deepEqual(callsFrom(adb, stopped), ["-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'"],
+      'only close\'s own app stop follows: no launch, no push, no agent');
+    assert.deepEqual(await readdir(root), []);
+  });
+});
+
+test('a cancel during am start -W: the app is stopped only after the launch returns', async () => {
+  const adb = new FakeAdb(api31());
+  const launch = gate();
+  const controller = new AbortController();
+  let closing: Promise<void> | undefined;
+  await withDriver(adb, async ({ driver, root }) => {
+    adb.onCall = async args => {
+      if (!args[3]?.startsWith("'am' 'start' '-W'")) return;
+      controller.abort(new Error('cancelled'));
+      closing = driver.close(signal());
+      await launch.opened;
+    };
+    const preparing = driver.prepare(app(), controller.signal);
+    await eventually(() => closing !== undefined, 'close begun');
+    await new Promise(resolveTick => setTimeout(resolveTick, 20));
+    const stops = () => adb.shell().filter(words => words.join(' ') === 'am force-stop com.example.android').length;
+    assert.equal(stops(), 1, 'only the restart\'s stop while the launch runs');
+    launch.open();
+    await assert.rejects(preparing);
+    await closing;
+    const words = adb.shell().map(entry => entry.join(' '));
+    assert.equal(stops(), 2);
+    assert.ok(words.lastIndexOf('am force-stop com.example.android') > words.findIndex(entry => entry.startsWith('am start -W')));
+    assert.deepEqual(await readdir(root), []);
+  });
+});
+
+test('an agent request that times out is ended by the fence, and the lease is released', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  await withPrepared([fields], async ({ driver, agents, root }) => {
+    const snapshot = await driver.observe(signal());
+    agents.hooks.onCall = call => { if (call.method === 'device.io.tap') throw new OutcomeUnknownError('agent', 'The device agent request timed out'); };
+    await assert.rejects(driver.act({ kind: 'tap', targetRef: refOf(snapshot, 'field.city') }, snapshot, values({}), signal()), OutcomeUnknownError);
+    await driver.close(signal());
+    assert.deepEqual(await readdir(root), []);
+  });
+});
+
+test('an agent request that times out keeps the lease when the fence can\'t be confirmed', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  await withPrepared([fields], async ({ driver, agents, adb, root, clock }) => {
+    const snapshot = await driver.observe(signal());
+    agents.hooks.onCall = call => { if (call.method === 'device.io.tap') throw new OutcomeUnknownError('agent', 'The device agent request timed out'); };
+    await assert.rejects(driver.act({ kind: 'tap', targetRef: refOf(snapshot, 'field.city') }, snapshot, values({}), signal()), OutcomeUnknownError);
+    adb.emulators.get('emulator-5554')!.stubborn = [7001];
+    const before = adb.calls.length;
+    await assert.rejects(driver.close(signal()), closeFailed('DEVICE_ERROR'));
+    assert.ok(clock.now() >= 2_000);
+    assert.equal(callsFrom(adb, before).some(call => call.includes('force-stop') || call.includes('--remove')), false,
+      'nothing after an unconfirmed fence');
+    assert.equal((await readdir(root)).length, 1, 'lease kept');
+    assert.deepEqual((await lockFile(root))?.ownedProcesses, ['forward emulator-5554 tcp:49526', 'agent emulator-5554 7001']);
+  });
+});
+
+test('an adb command still running at close\'s limit keeps the lease, which is released late once it exits', async () => {
+  const adb = new FakeAdb(api31());
+  const launch = gate();
+  await withDriver(adb, async ({ driver, root }) => {
+    adb.onCall = async args => { if (args[3]?.startsWith("'am' 'start' '-W'")) await launch.opened; };
+    const preparing = driver.prepare(app(), signal());
+    await eventually(() => adb.calls.some(call => call[3]?.startsWith("'am' 'start' '-W'")), 'am start issued');
+    await assert.rejects(driver.close(expiring(20)), closeFailed('UI_ACTION_UNCONFIRMED'));
+    assert.equal((await readdir(root)).length, 1, 'lease kept');
+    launch.open();
+    await assert.rejects(preparing, /closing/);
+    await eventually(async () => (await readdir(root)).length === 0, 'the lease released late');
+    const words = adb.shell().map(entry => entry.join(' '));
+    assert.equal(words.at(-1), 'am force-stop com.example.android', 'the late close finished the cleanup');
+  });
+});
+
+test('an adb command that never exits keeps the lease', async () => {
+  const adb = new FakeAdb(api31());
+  await withDriver(adb, async ({ driver, root }) => {
+    adb.onCall = args => args[3]?.startsWith("'am' 'start' '-W'") ? new Promise<void>(() => {}) : undefined;
+    void driver.prepare(app(), signal()).catch(() => undefined);
+    await eventually(() => adb.calls.some(call => call[3]?.startsWith("'am' 'start' '-W'")), 'am start issued');
+    await assert.rejects(driver.close(expiring(20)), closeFailed('UI_ACTION_UNCONFIRMED'));
+    await new Promise(resolveTick => setTimeout(resolveTick, 50));
+    assert.equal((await readdir(root)).length, 1, 'lease kept');
+  });
+});
+
+test('an adb command killed with no exit status keeps the lease, and close sends nothing more', async () => {
+  const adb = new FakeAdb(api31());
+  const run = adb.run;
+  const runner: AdbRunner = async (args, abort) => args[3]?.startsWith("'am' 'start' '-W'")
+    ? (adb.calls.push(args), Promise.reject(new OutcomeUnknownError('adb', 'adb was killed (SIGKILL); its outcome is unknown'))) : run(args, abort);
+  await withDriver(adb, async ({ driver, root }) => {
+    await assert.rejects(driver.prepare(app(), signal()), OutcomeUnknownError);
+    const before = adb.calls.length;
+    await assert.rejects(driver.close(signal()), closeFailed('UI_ACTION_UNCONFIRMED'));
+    assert.deepEqual(callsFrom(adb, before), []);
+    assert.equal((await readdir(root)).length, 1, 'lease kept');
+  }, { runner });
+});
+
+test('a failed cleanup step keeps the lease and fails close', async () => {
+  const adb = new FakeAdb(api31());
+  const run = adb.run;
+  const runner: AdbRunner = async (args, abort) => args[2] === 'forward' && args[3] === '--remove'
+    ? (adb.calls.push(args), { stdout: '', stderr: 'adb: error: device offline\n', exitCode: 1 }) : run(args, abort);
+  await withDriver(adb, async ({ driver, root }) => {
+    await driver.prepare(app(), signal());
+    await assert.rejects(driver.close(signal()), closeFailed('DEVICE_ERROR'));
+    assert.equal((await readdir(root)).length, 1, 'lease kept');
+    assert.deepEqual((await lockFile(root))?.ownedProcesses, ['forward emulator-5554 tcp:49526'], 'the agent was fenced and disowned; the forward stays owned');
+  }, { runner });
+});
+
+test('without a screenshot folder, the driver\'s own temporary folder is removed on close', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  await withDriver(new FakeAdb(api31()), async ({ driver }) => {
+    await driver.prepare(app(), signal());
+    const { screenshotPath } = await driver.observe(signal());
+    assert.match(screenshotPath!, /jev-android-screens-/);
+    await readFile(screenshotPath!);
+    await driver.close(signal());
+    await assert.rejects(readFile(screenshotPath!), { code: 'ENOENT' });
+  }, { screenshotFolder: undefined, agents: { screens: [fields] } });
 });
