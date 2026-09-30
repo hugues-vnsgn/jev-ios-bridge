@@ -170,6 +170,23 @@ function typedFieldIn(snapshot: Snapshot, field: Element): Element | undefined {
   return byIdentifier ?? only(fields.filter(element => element.state?.focused)) ?? only(fields.filter(element => sameFrame(element.frame)));
 }
 
+/** A settled capture as the bridge's snapshot, its elements mapped, with `extras` (a screenshot, log tails) before `settled`. */
+function snapshotOf(serial: string, captured: SettledCapture, sequence: number, capturedAt: number,
+  extras: Pick<Snapshot, 'screenshotPath' | 'logTails'> = {}): Snapshot {
+  return {
+    deviceId: serial,
+    capturedAt,
+    // An Android reference never expires by time: only a newer snapshot, or an action, makes it stale.
+    expiresAt: Number.MAX_SAFE_INTEGER,
+    sequence,
+    elements: mapAndroidTree(captured.tree),
+    truncated: false,
+    screenHash: captured.screenHash,
+    ...extras,
+    ...(captured.settled ? {} : { settled: false }),
+  };
+}
+
 /** What a lease holder record lists for the next run to sweep: the agent, the forward and the logcat streams, each on its serial. */
 const ownedAgent = (serial: string, pid: number) => `agent ${serial} ${String(pid)}`;
 const ownedForward = (serial: string, port: number) => `forward ${serial} tcp:${String(port)}`;
@@ -370,19 +387,10 @@ export class AndroidDriver implements DeviceDriver {
     const jpeg = await this.agentCall(agent => agent.screenshot(SCREENSHOT_MAX_SIZE, signal), signal);
     const screenshotPath = join(await this.screenshotFolderPath(), `screen-${String(sequence)}.jpg`);
     await writeFile(screenshotPath, jpeg, { mode: 0o600 });
-    this.latest = {
-      deviceId: serial,
-      capturedAt,
-      // An Android reference never expires by time: only a newer snapshot, or an action, makes it stale.
-      expiresAt: Number.MAX_SAFE_INTEGER,
-      sequence,
-      elements: mapAndroidTree(captured.tree),
-      truncated: false,
-      screenHash: captured.screenHash,
+    this.latest = snapshotOf(serial, captured, sequence, capturedAt, {
       screenshotPath,
       ...(this.logFile !== undefined ? { logTails: { logcat: await readLogTail(this.logFile) } } : {}),
-      ...(captured.settled ? {} : { settled: false }),
-    };
+    });
     return this.latest;
   }
 
@@ -487,16 +495,7 @@ export class AndroidDriver implements DeviceDriver {
       throw error;
     }
     const captured = await this.settledCapture(signal);
-    return {
-      deviceId: serial,
-      capturedAt: Date.now(),
-      expiresAt: Number.MAX_SAFE_INTEGER,
-      sequence: ++this.sequence,
-      elements: mapAndroidTree(captured.tree),
-      truncated: false,
-      screenHash: captured.screenHash,
-      ...(captured.settled ? {} : { settled: false }),
-    };
+    return snapshotOf(serial, captured, ++this.sequence, Date.now());
   }
 
   /**

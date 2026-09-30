@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { test } from 'node:test';
 import { captureCommand, type CaptureRequest } from '../src/capture.js';
 import { DeviceReasonError } from '../src/device/index.js';
-import type { AndroidNode } from '../src/device/android/agent-client.js';
+import { DeviceAgentError, type AndroidNode } from '../src/device/android/agent-client.js';
 import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
 import { AGENT_START_COMMAND, AndroidDriver, type AndroidDriverOptions } from '../src/device/android/driver.js';
 import { mapAndroidTree } from '../src/device/android/mapping.js';
@@ -230,7 +230,7 @@ test('capture --jev prints Jev\'s text for the screen, byte for byte the fixture
       const { code, stdout, stderr } = await capture({ avd: 'jev-actions-api31', jev: true }, setup);
       assert.equal(code, 0);
       assert.equal(stderr, '');
-      assert.equal(stdout, `${await judgedText(screen)}\n`);
+      assert.equal(stdout, await judgedText(screen));
       assert.equal(touchedApp(setup.adb), false);
       assert.deepEqual(await readdir(setup.root), []);
     }, [await captureOf(screen)]);
@@ -334,6 +334,21 @@ test('a cleanup that fails exits 3 with CLEANUP_FAILED and prints no screen', as
     assert.match(printed.stderr, /^CLEANUP_FAILED: \S/);
     assert.equal(printed.stdout, '');
   }, [await captureOf('settings-2-display')]);
+});
+
+test('a capture that fails and a cleanup that keeps the lease report both, in order, with the lease kept named', async () => {
+  await withFakes(new FakeAdb(api31()), async setup => {
+    const client = setup.parts.agentClient!;
+    setup.parts.agentClient = port => ({ ...client(port), dumpUi: async () => { throw new DeviceAgentError(); } });
+    setup.adb.onCall = args => { if (args[2] === 'shell' && args[3] === "'kill' '7001'") throw new Error('adb died'); };
+    const printed = await capture({ avd: 'jev-actions-api31' }, setup);
+    assert.equal(printed.code, 3);
+    const [first, second, ...rest] = printed.stderr.split('\n');
+    assert.match(first!, /^DEVICE_ERROR: The device agent gave no usable reply$/);
+    assert.match(second!, /^CLEANUP_FAILED: Device cleanup did not finish\. .*device lease kept\.$/);
+    assert.deepEqual(rest, ['']);
+    assert.equal(printed.stdout, '');
+  });
 });
 
 test('an interrupt mid-capture closes the driver: the agent fenced, the forward removed, the lease released', async () => {

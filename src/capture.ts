@@ -29,6 +29,9 @@ export interface CaptureContext {
   signal: AbortSignal;
 }
 
+/** Thrown on once the capture's own failure was printed, so it isn't printed twice. */
+const REPORTED = Symbol('reported');
+
 /** A refusal whose code and message the bridge wrote, so both are safe to print. */
 class CaptureRefusal extends Error {
   constructor(readonly code: string, message: string) {
@@ -65,7 +68,8 @@ function elementLine(element: Element): string {
 
 function printable(snapshot: Snapshot, jev: boolean): string {
   if (!jev) return snapshot.elements.map(element => `${elementLine(element)}\n`).join('');
-  try { return `${renderAssertionState(snapshot, 'android')}\n`; }
+  // Byte for byte as a run sends it, with no newline added.
+  try { return renderAssertionState(snapshot, 'android'); }
   catch (error) {
     if (error instanceof ScriptedObservationError) throw new CaptureRefusal(error.code, REASON_CODES[error.code]);
     throw error;
@@ -89,9 +93,15 @@ function refusalOf(error: unknown): { code: string; message: string } {
  */
 export async function captureCommand(request: CaptureRequest, context: CaptureContext): Promise<number> {
   const { write, signal } = context;
+  const refuse = (error: unknown) => {
+    const { code, message } = refusalOf(error);
+    write.stderr(`${code}: ${message}\n`);
+  };
   let output: string;
   try {
     const device = namedDevice(request);
+    // Both device checks run here, before the driver's tools check, so a missing or malformed name is
+    // reported first, as `run` does; the first only words NO_DEVICE for capture's options.
     if (device === undefined && !context.defaultDevice) {
       throw new DeviceReasonError('NO_DEVICE', 'Pass --serial or --avd, or set JEV_ANDROID_DEVICE');
     }
@@ -99,16 +109,20 @@ export async function captureCommand(request: CaptureRequest, context: CaptureCo
     const driver = new AndroidDriver({ ...context.driver, device, defaultDevice: context.defaultDevice });
     try {
       output = printable(await driver.capture(signal), request.jev === true);
+    } catch (error) {
+      // The capture's own reason first; a cleanup that also fails is reported after it.
+      if (!signal.aborted) refuse(error);
+      throw REPORTED;
     } finally {
       try { await driver.close(AbortSignal.timeout(CLEANUP_MS)); }
-      catch { throw new CaptureRefusal('CLEANUP_FAILED', REASON_CODES.CLEANUP_FAILED); }
+      catch (error) {
+        // close's own message says whether the device lease was kept.
+        throw new CaptureRefusal('CLEANUP_FAILED', `${REASON_CODES.CLEANUP_FAILED}${error instanceof DeviceReasonError ? ` ${error.message}.` : ''}`);
+      }
     }
   } catch (error) {
-    // An interrupt's own exit code follows; there is nothing to report.
-    if (!signal.aborted) {
-      const { code, message } = refusalOf(error);
-      write.stderr(`${code}: ${message}\n`);
-    }
+    // An interrupt's own exit code follows; there is nothing more to report.
+    if (!signal.aborted && error !== REPORTED) refuse(error);
     return EXIT.couldNotCapture;
   }
   write.stdout(output);
