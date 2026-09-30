@@ -488,16 +488,15 @@ export class AndroidDriver implements DeviceDriver {
       await this.startAgent(serial, identity, tools, signal);
       this.prepared = { deviceIdentity: identity, serial, agentSha256: tools.agent.sha256, ...(sweptLeftovers ? { sweptLeftovers } : {}) };
     } catch (error) {
-      // A refusal before the restart leaves nothing to undo on the device: release now, as the iOS driver does.
-      if (this.restartedPackage === undefined && this.lease.releasable) await this.lease.release();
+      await this.releaseIfNothingToUndo();
       throw error;
     }
   }
 
   /**
    * `capture`'s parts, in `prepare`'s order: the tools check, the device and the lease, the agent check and
-   * sweep, the device checks (with no app to look for) and wake, then the agent. A refusal releases the lease
-   * as `prepare`'s does. Then one settled snapshot, mapped with a fresh sequence.
+   * sweep, the device checks (with no app to look for) and wake, then the agent. A refusal before the agent
+   * start releases the lease as `prepare`'s does. Then one settled snapshot, mapped with a fresh sequence.
    */
   private async captureIssued(signal: AbortSignal): Promise<Snapshot> {
     if (this.lease.held) throw new Error('Driver is already prepared');
@@ -507,11 +506,21 @@ export class AndroidDriver implements DeviceDriver {
       await this.checkDevice(serial, undefined, signal);
       await this.startAgent(serial, identity, tools, signal);
     } catch (error) {
-      if (this.lease.releasable) await this.lease.release();
+      await this.releaseIfNothingToUndo();
       throw error;
     }
     const captured = await this.settledCapture(signal);
     return snapshotOf(serial, captured, ++this.sequence, Date.now());
+  }
+
+  /**
+   * After a refusal while starting: release the lease now, as the iOS driver does, only while the device holds
+   * nothing `close` must undo, since `close` returns at once when the lease isn't held. That is before the
+   * restart for `prepare`, whose restart always comes before its agent start, and before the agent start for
+   * `capture`, which never restarts. From then on `close` releases the lease, once it has fenced and stopped.
+   */
+  private async releaseIfNothingToUndo(): Promise<void> {
+    if (this.restartedPackage === undefined && !this.agentStartIssued && this.lease.releasable) await this.lease.release();
   }
 
   /**

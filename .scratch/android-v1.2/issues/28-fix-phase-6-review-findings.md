@@ -1,6 +1,7 @@
 # Phase 6: fix the whole-branch review findings
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: claude-issue-28
 Blocked by: none
 
 Spec: [../spec.md](../spec.md), "Phase 6", and Issues 21 and 22 with their comments. A two-axis `/code-review` of phase 6 (`agent/android-v1.2-phase5...agent/android-v1.2-phase6`) found the items below. Fix each, test first, and keep every other behaviour as it is.
@@ -40,3 +41,38 @@ Spec: [../spec.md](../spec.md), "Phase 6", and Issues 21 and 22 with their comme
 - A failing test first for 1 and 2, then the fix.
 - No golden file changes, and iOS output is unchanged.
 - `npm run check` passes. No device is touched.
+
+## Comments
+
+### 2026-09-30, claude-issue-28: built
+
+**What I built:**
+1. **Capture keeps the lease for `close` once the agent start was issued.** A new driver helper, `releaseIfNothingToUndo`, releases the lease after a failed start only when `restartedPackage === undefined && !agentStartIssued`. Both `prepareIssued` and `captureIssued` call it. `close` then fences the agent and releases the lease.
+2. **An interrupt after the snapshot prints nothing.** `captureCommand` returns 3 before writing stdout when the signal was aborted, with empty stderr, the same as an interrupt mid-capture.
+3. **The skill's `app.package` note links guide `reference/script-format.md`.** I chose it over `12-android-setup.md`, which doesn't exist until phase 7.
+4. **`selectAndroidDeviceName` owns the device choice and its message.** It takes an optional `noDevice` message, which defaults to `run`'s current text, so `run`'s output is unchanged. `capture` passes its own text, "Pass --serial or --avd, or set JEV_ANDROID_DEVICE", and its separate NO_DEVICE check is gone. The check order (`--serial`/`--avd` shape, then NO_DEVICE, then the JEV_ANDROID_DEVICE shape), the stderr text and the exit codes are unchanged.
+5. **Shared constants:**
+   - `EXIT` moved from `cli.ts` to a new `src/exit-codes.ts`, with the same values. `capture` uses `EXIT.passed` and `EXIT.couldNotStart`.
+   - The cleanup limit is `DEFAULT_CLEANUP_MS`, exported from `src/scripted/run.ts`, which uses it as its default. `capture` imports it.
+6. **One release guard:** the helper from 1. It is a single condition, not a per-path mode. In `prepare`, the restart always comes before the agent start, so the added `!agentStartIssued` never changes `prepare`'s behaviour. In `capture`, `restartedPackage` is always undefined, so the condition reduces to "before the agent start".
+
+**Choices the Issue left open:**
+- For 4, I used a parameter instead of a wrapper. It keeps one function owning both the choice and the message. `capture` still calls it only as a pre-driver check, as `run` does in `cli.ts`, because the driver resolves the name itself.
+- For 5, `cli.ts` runs on import, so the exit codes needed their own module. The cleanup limit stays in `run.ts`, next to the run's other defaults.
+
+**Deviations:** none.
+
+**Tests added** (`tests/android-capture.test.ts`), each failing before its fix:
+- the capture is interrupted just after the agent start command. The lease is kept, `close` kills agent 7001, no agent or forward is left, and the lease is released;
+- the capture's `adb forward` fails on all three ports. The same assertions apply;
+- the CLI is interrupted during `close`, after the snapshot was taken. It exits 3 with empty stdout and stderr, and the cleanup still completes.
+
+No existing test changed, and no golden file changed.
+
+**Review:** `/code-review` against `d1c4a7b`:
+- **Spec:** 0 findings.
+- **Standards:** 0 hard violations and 4 judgement calls. I applied two in `ef1627e`: a comment on what capture's exit codes mean, and no caller named in `DEFAULT_CLEANUP_MS`'s doc. I left two:
+  - the `noDevice` string parameter, which finding 4 allows;
+  - importing the cleanup limit from `run.ts`, because capture is already in the same CLI bundle.
+
+**Gate:** `npm run check` passed, 522 of 522 tests, then the build, at `ef1627e` (log: `$TMPDIR/implement-phase6-28-check.log`). No device, adb server or mobilecli was touched.
