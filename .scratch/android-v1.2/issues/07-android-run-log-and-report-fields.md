@@ -21,7 +21,7 @@ Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase
 
 - iOS `report.json`, `started`, `prepared`, `action` and `step` events, the prose report for iOS runs, and `evidence-layout.json`'s `startedFields` stay byte-identical.
 - Redaction tests: `shownValue` goes through the run log's redactor like any other string, so a shown value holding one of the script's values appears as `[REDACTED]` in `run.jsonl`, and `report.json` and the prose report show only what the run log holds.
-- No existing test changes; no existing golden entry changes.
+- No test that existed before phase 3 (`819ea10`) changes, and no existing golden entry changes. Tests added earlier in phase 3 may change with the contract they pin (owner ruling, 2026-09-30).
 - `npm run check` passes.
 - No device, simulator or emulator is touched.
 
