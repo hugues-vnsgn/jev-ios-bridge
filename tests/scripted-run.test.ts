@@ -814,6 +814,33 @@ test('an Android run renders Jev\'s view with the Android header and placeholder
   assert.match(String(step.assertionObservation), /"placeholder":"Email"/);
 });
 
+test('an Android run\'s prepared event carries the device identity, serial, agent SHA-256, and a crash-takeover sweep; the iOS driver sets none of it', async () => {
+  const preparedDataOf = async (driver: DeviceDriver) => {
+    const log = memoryLog();
+    await runScriptedScenario({ runId: 'scripted-1', judge: markerJudge, log,
+      scenario: { version: 1, platform: 'android', app: { package: 'com.example.android' }, values: {}, steps: [markerCheckpoint] },
+      driver });
+    return log.events.find(event => event.type === 'prepared')!.data;
+  };
+  const withoutSweep = await preparedDataOf({ async prepare() {}, async observe() { return markerScreen(); },
+    async act() {}, async close() {},
+    androidPreparation: () => ({ deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: 'abc123' }) });
+  assert.equal(withoutSweep.deviceIdentity, 'jev-actions-api31');
+  assert.equal(withoutSweep.serial, 'emulator-5554');
+  assert.equal(withoutSweep.agentSha256, 'abc123');
+  assert.equal(withoutSweep.sweptLeftovers, undefined);
+
+  const withSweep = await preparedDataOf({ async prepare() {}, async observe() { return markerScreen(); },
+    async act() {}, async close() {},
+    androidPreparation: () => ({ deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: 'abc123',
+      sweptLeftovers: true }) });
+  assert.equal(withSweep.sweptLeftovers, true);
+
+  const ios = await preparedDataOf({ async prepare() {}, async observe() { return markerScreen(); },
+    async act() {}, async close() {} });
+  assert.deepEqual(Object.keys(ios), ['prepareDurationMs']);
+});
+
 test('the driver gets the device an iOS script names, and no device for an Android script', async () => {
   const preparedWith = async (scenario: ScriptedScenario) => {
     let prepared: unknown;
