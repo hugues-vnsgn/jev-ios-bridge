@@ -800,6 +800,20 @@ test('an Android started event defaults a missing activity to null and missing i
   assert.deepEqual(started.intentExtras, {});
 });
 
+test('an Android run with no replace-text step gets a report.json with the app identity but no typedFields key', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-android-no-typed-fields-'));
+  try {
+    const log = await createRunLog(root, 'no-typed-fields');
+    await runScriptedScenario({ runId: 'no-typed-fields', judge: markerJudge, log,
+      scenario: { version: 1, platform: 'android', app: { package: 'com.example.android' }, values: {}, steps: [markerCheckpoint] },
+      driver: { async prepare() {}, async observe() { return markerScreen(); }, async act() {}, async close() {} } });
+    const reportJson = JSON.parse(await readFile(join(root, 'no-typed-fields', 'report.json'), 'utf8')) as Record<string, unknown>;
+    assert.equal(reportJson.platform, 'android');
+    assert.equal(reportJson.package, 'com.example.android');
+    assert.equal('typedFields' in reportJson, false);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
 test('an Android run renders Jev\'s view with the Android header and placeholder, matching the rule started records', async () => {
   const field: Element = { ref: 'field', role: 'text-field', placeholder: 'Email', identifier: 'field', actions: [],
     frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } };
