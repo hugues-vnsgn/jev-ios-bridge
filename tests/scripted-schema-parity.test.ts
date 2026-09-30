@@ -1,14 +1,15 @@
 /**
- * Proves an iOS script's issue list (paths, messages, and order) didn't move when Android's fields were
- * added. Compares the live iOS schema against a frozen copy of 1.1's schema (commit 819ea10, before
- * Android) on a generated set of scripts: every single fault, and every pair and triple of 17 faults
- * (2026-09-30, owner ruling: a reviewer found 189 of 697 multi-error iOS inputs printed differently under
- * "one object schema plus a platform-aware refinement", the design this replaces).
+ * Proves an iOS script reads exactly as in 1.1: the same parsed script, or the same issues (paths,
+ * messages, order) and the same z.prettifyError text. Compares the public parse entry points against a
+ * frozen copy of 1.1's schema on a generated set of scripts: the valid script, every single fault, and
+ * every pair and triple of the faults below, each with no platform and with an explicit "platform": "ios".
  */
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { iosScriptedScenarioSchema } from '../src/scripted/schema.js';
-import { scriptedScenarioSchema as frozenSchema } from './fixtures/frozen-schema-819ea10/schema.js';
+import { z } from 'zod/v4';
+import { parseScriptedScenario, safeParseScriptedScenario, scriptedScenarioSchema } from '../src/scripted/schema.js';
+import { parseScriptedScenario as frozenParse, scriptedScenarioSchema as frozenSchema }
+  from './fixtures/frozen-schema-819ea10/schema.js';
 
 const base = {
   version: 1,
@@ -84,23 +85,45 @@ function combinationsOf(pool: string[], size: number): string[][] {
   return [...combinationsOf(tail, size - 1).map(rest => [head, ...rest]), ...combinationsOf(tail, size)];
 }
 
-function issuesOf(result: ReturnType<typeof iosScriptedScenarioSchema.safeParse>): Array<{ path: string; message: string }> {
-  return result.success ? [] : result.error.issues.map(issue => ({ path: issue.path.join('.'), message: issue.message }));
+/** What a reader of a parse result sees: the parsed script, or the issues and their printed form. */
+function outcomeOf(result: z.ZodSafeParseResult<unknown>): unknown {
+  return result.success ? { data: result.data }
+    : { issues: result.error.issues.map(issue => ({ path: issue.path.join('.'), message: issue.message })),
+      printed: z.prettifyError(result.error) };
 }
 
-const cases = [...combinationsOf(names, 1), ...combinationsOf(names, 2), ...combinationsOf(names, 3)];
+/** parseScriptedScenario's outcome: its parsed script, or the issues and printed form of what it threw. */
+function thrownOutcomeOf(parse: (input: unknown) => unknown, input: unknown): unknown {
+  try { return { data: parse(input) }; }
+  catch (error) {
+    assert.ok(error instanceof z.ZodError);
+    return outcomeOf({ success: false, error });
+  }
+}
 
-test(`an iOS script's issue list matches 1.1's, for every single fault and every pair and triple of ${names.length} faults`, () => {
+const cases = [...combinationsOf(names, 0), ...combinationsOf(names, 1), ...combinationsOf(names, 2),
+  ...combinationsOf(names, 3)];
+
+test(`an iOS script reads as in 1.1, for the valid script and every single fault, pair and triple of ${names.length} faults`, () => {
   assert.ok(cases.length > 800, `expected a thorough combination set, got ${cases.length}`);
   const mismatches: string[] = [];
   for (const combo of cases) {
     const input = apply(base, combo);
-    const frozenResult = frozenSchema.safeParse(input);
-    const liveResult = iosScriptedScenarioSchema.safeParse(input);
-    const frozenIssues = issuesOf(frozenResult as ReturnType<typeof iosScriptedScenarioSchema.safeParse>);
-    const liveIssues = issuesOf(liveResult);
-    try { assert.deepEqual(liveIssues, frozenIssues); }
-    catch { mismatches.push(combo.join(' + ')); }
+    const expected = outcomeOf(frozenSchema.safeParse(input));
+    const expectedParsed = thrownOutcomeOf(frozenParse, input);
+    for (const platform of [undefined, 'ios'] as const) {
+      const live = platform ? { ...input, platform } : input;
+      // 1.1 had no platform field, so an explicit "ios" appears only in the live parse's output.
+      const withPlatform = (outcome: unknown): unknown => platform && typeof outcome === 'object' && outcome &&
+        'data' in outcome ? { data: { ...(outcome.data as object), platform } } : outcome;
+      const label = `${combo.join(' + ') || 'valid'}${platform ? ' (platform: ios)' : ''}`;
+      try {
+        assert.deepEqual(outcomeOf(safeParseScriptedScenario(live)), withPlatform(expected));
+        assert.deepEqual(outcomeOf(scriptedScenarioSchema.safeParse(live)),
+          'data' in (expected as object) ? { data: live } : expected);
+        assert.deepEqual(thrownOutcomeOf(parseScriptedScenario, live), withPlatform(expectedParsed));
+      } catch { mismatches.push(label); }
+    }
   }
   assert.deepEqual(mismatches, []);
 });
