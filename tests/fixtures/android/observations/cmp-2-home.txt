@@ -1,0 +1,13 @@
+Current Android screen (full accessibility capture):
+{"role":"scroll-view","frame":{"x":0,"y":63,"width":1080,"height":168},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"number-input","frame":{"x":21,"y":85,"width":346,"height":126},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"number-input","frame":{"x":84,"y":121,"width":220,"height":53},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"fullscreen-modal","frame":{"x":388,"y":85,"width":402,"height":126},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"fullscreen-modal","frame":{"x":451,"y":121,"width":276,"height":53},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"modal-perf","frame":{"x":811,"y":85,"width":269,"height":126},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"modal-perf","frame":{"x":874,"y":121,"width":180,"height":53},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Modal perf harness — 1M rows","frame":{"x":32,"y":326,"width":615,"height":63},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"running…","frame":{"x":32,"y":410,"width":136,"height":63},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"running…","frame":{"x":32,"y":495,"width":276,"height":126},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"running…","frame":{"x":95,"y":531,"width":150,"height":53},"state":{"enabled":true,"visible":true}}
+{"role":"scroll-view","label":"[A: eager in modal pass1]\n  List(1M) built inside modal content\n  tap->firstCompose=762.5ms\n  tap->firstFrame=1086.3ms\n  modalCompositions=1\n  open frames=14 p50=16.6ms p95=66.6ms worst=1066.6ms >16.7ms=4 >33ms=3 >100ms=1\n  scroll frames=16 p50=16.6ms p95=66.6ms worst=83.3ms >16.7ms=4 >33ms=2 >100ms=0\n  scrollToItem(last)=38.4ms jumpSettle frames=17 p50=16.6ms p95=16.6ms worst=33.3ms >16.7ms=1 >33ms=0 >100ms=0\n  close frames=79 p50=16.6ms p95=16.6ms worst=33.3ms >16.7ms=4 >33ms=0 >100ms=0\n  heap 4MB -> 146MB\n[A: eager in modal pass2]\n  List(1M) built inside modal content\n  tap->firstCompose=715.6ms\n  tap->firstFrame=810.9ms\n  modalCompositions=1\n  open frames=28 p50=16.6ms p95=49.9ms worst=799.9ms >16.7ms=7 >33ms=3 >100ms=1\n  scroll frames=20 p50=16.6ms p95=33.3ms worst=33.3ms >16.7ms=5 >33ms=0 >100ms=0\n  scrollToItem(last)=34.1ms jumpSettle frames=18 p50=16.6ms p95=16.6ms worst=16.6ms >16.7ms=0 >33ms=0 >100ms=0\n  close frames=80 p50=16.6ms p95=16.6ms worst=33.3ms >16.7ms=3 >33ms=0 >100ms=0\n  heap 145MB -> 300MB","frame":{"x":32,"y":641,"width":1016,"height":1727},"state":{"enabled":true,"visible":true}}
