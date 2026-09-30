@@ -213,3 +213,14 @@ test('notes come from the event\'s own fields, never from the app log', () => {
   watcher.feed('2026-09-28 23:30:00.000   680  1107 I am_crash: [4242,0,dev.example,1,java.lang.IllegalArgumentException,bad token hunter2, try again,Login.kt,17,0]');
   assert.deepEqual(watcher.problem(), exited('crashed: IllegalArgumentException at Login.kt:17'));
 });
+
+test('a native crash names only a known signal; any other text is just "native crash"', () => {
+  const noteFor = (message: string) => {
+    const watcher = createExitWatch({ package: 'dev.example', startTime: BEFORE_CAPTURES, utcOffsetMinutes: UTC_OFFSET });
+    watcher.feed(`2026-09-28 23:30:00.000   680  1107 I am_crash: [680,0,dev.example,1,Native crash,${message},unknown,0,0]`);
+    return watcher.problem()?.note;
+  };
+  assert.equal(noteFor('Aborted'), 'native crash: SIGABRT');
+  assert.equal(noteFor('Bad system call'), 'native crash: SIGSYS');
+  for (const unknown of ['User defined signal 1', 'hunter2', 'SIGSEGV', 'constructor', '']) assert.equal(noteFor(unknown), 'native crash', unknown);
+});

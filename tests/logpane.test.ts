@@ -129,6 +129,16 @@ test('an Android pane names the logcat file and the uid filter in its header, an
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
+test('an Android pane without a logcat file says the device log is unavailable, never naming the iOS sources', async () => {
+  const runId = `android-no-file-${process.pid}-${Date.now()}`;
+  const text = await paneOf(runId, { app: { package: 'com.example.android' }, sources: {}, values: {} });
+  assert.deepEqual(text.split('\n').slice(0, 3), [
+    `jev-ios-bridge log pane · com.example.android · run ${runId}`,
+    'device log (logcat): unavailable',
+    'Local only: nothing here goes to Jev or the host agent. Values from the script are masked.',
+  ]);
+});
+
 test('an iOS pane\'s header is unchanged', async () => {
   const runId = `ios-header-${process.pid}-${Date.now()}`;
   const text = await paneOf(runId, { app: { bundleId: 'com.example.app' }, sources: { runtime: '/tmp/app.log' }, values: {} });

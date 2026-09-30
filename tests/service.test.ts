@@ -208,7 +208,8 @@ test('the driver is built with the run\'s own ID, and the pane follows its logca
   });
   const output = new Capture();
   try {
-    const { runId } = await service.start(script());
+    const { runId } = await service.start({ version: 1, platform: 'android', app: { package: 'com.example.app' },
+      values: {}, steps: [checkpoint('verify')] });
     assert.deepEqual(runIds, [runId]);
     await until(() => notices.length > 0);
     void attachLogPane(runId, output as unknown as NodeJS.WriteStream, { keepOpen: false });

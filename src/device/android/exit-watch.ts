@@ -137,9 +137,9 @@ function crashNote(fields: string[]): string {
   return name ? `crashed: ${name}${where}` : 'crashed';
 }
 
-/** A native crash's message is the system's `strsignal()` text, never the app's. */
+/** A native crash's message is the system's `strsignal()` text, never the app's; the note names its signal. */
 function nativeCrashNote(fields: string[]): string {
   const signal = fields[5] ?? '';
-  const name = SIGNALS[signal] ?? (/^[A-Za-z][\w ./-]{0,39}$/.test(signal) ? signal : '');
-  return name ? `native crash: ${name}` : 'native crash';
+  // Only a known text is named, so no field text ever reaches the note unmapped.
+  return Object.hasOwn(SIGNALS, signal) ? `native crash: ${SIGNALS[signal]!}` : 'native crash';
 }
