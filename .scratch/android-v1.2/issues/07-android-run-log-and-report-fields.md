@@ -1,6 +1,7 @@
 # Phase 3: Android fields in the run log and report.json
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase3 at 72b767c
 Claimed by: implementer-07
 Blocked by: 03, 05
 
@@ -73,3 +74,5 @@ Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase
   7. A one-line comment at `evidenceFields`' `settled` spread, plus a strengthened existing test (explicit `stepId` checks), pin that an unsettled screen an action returns is recorded on the *following* step's own `step` event, not the acting step's.
 
   `npm run check` green at the new tip; see the implementer report for the exact log path.
+
+**Orchestrator, 2026-09-30.** Accepted: the Android `report.json` golden lives in its own file, `tests/golden/report-json-android.json`. The test for `report-json.json` predates phase 3 and compares the whole file, so a fourth entry there would have meant editing frozen test code. The settled context allows a new golden file where no existing one fits.
