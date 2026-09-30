@@ -10,6 +10,8 @@ export interface ScriptedReport extends RunReport {
     evidenceEvent?: number;
     snapshotSequence?: number;
     screenshotPath?: string;
+    /** Android only: the judged screen never settled within the settle rule's cap ("screen still changing"). */
+    settled?: false;
   }>;
 }
 
@@ -48,6 +50,7 @@ export function buildScriptedReport(events: RunEvent[]): ScriptedReport {
       ...(observed ? { evidenceEvent: observed.sequence } : {}),
       ...(typeof observed?.data.snapshotSequence === 'number' ? { snapshotSequence: observed.data.snapshotSequence } : {}),
       ...(typeof observed?.data.screenshotPath === 'string' ? { screenshotPath: observed.data.screenshotPath } : {}),
+      ...(observed?.data.settled === false ? { settled: false as const } : {}),
     };
   });
   return {
@@ -68,6 +71,7 @@ export function renderScriptedReport(report: ScriptedReport): string {
   const lastError = report.events.findLast(event => event.type === 'error');
   const lastStep = report.events.findLast(event => event.type === 'step');
   const started = report.events.find(event => event.type === 'started')?.data;
+  const prepared = report.events.find(event => event.type === 'prepared')?.data;
   const model = typeof started?.jevModel === 'string' ? started.jevModel
     : report.events.find(event => event.type === 'judgment' && typeof event.data.model === 'string')?.data.model;
   const header = [
@@ -76,9 +80,19 @@ export function renderScriptedReport(report: ScriptedReport): string {
     `Steps: ${report.steps}; Jev input tokens: ${report.inputTokens}; duration: ${report.durationMs} ms.`,
     ...(typeof model === 'string' ? [`Jev model: ${model}` +
       (typeof started?.bridgeVersion === 'string' ? `; bridge ${started.bridgeVersion}.` : '.')] : []),
+    // Android only: prepare's device identity, serial, agent SHA-256 and any crash-takeover sweep.
+    ...(typeof prepared?.deviceIdentity === 'string' ? [`Device: ${prepared.deviceIdentity}, serial ${String(prepared.serial ?? '')}, ` +
+      `agent ${String(prepared.agentSha256 ?? '')}.` + (prepared.sweptLeftovers === true
+        ? ' Swept a crashed run\'s leftover agent and forward.' : '')] : []),
   ].join('\n');
+  // Android only: each replace-text step's shown value, from the run's `action` events.
+  const typedFields = report.events.flatMap(event => event.type === 'action' && typeof event.data.shownValue === 'string'
+    ? [{ stepId: String(event.data.stepId ?? ''), shownValue: event.data.shownValue }] : []);
+  const typedFieldsBlock = typedFields.length ? ['Typed fields:',
+    ...typedFields.map(field => `${field.stepId}: ${bounded(field.shownValue, 500)}`)].join('\n') : undefined;
   const checkpointBlock = (checkpoint: ScriptedReport['checkpoints'][number], decisive: boolean): string => [
       `Checkpoint ${checkpoint.stepId}: ${checkpoint.status}.`,
+      ...(checkpoint.settled === false ? ['Screen still changing when this checkpoint was judged.'] : []),
       ...checkpoint.assertions.map(assertion =>
         `Claim ${assertion.id}: ${bounded(assertion.claim, decisive ? 500 : 180)}; probability yes ${assertion.probability.toFixed(3)}.`),
       ...(checkpoint.evidenceEvent === undefined ? [] : [
@@ -101,6 +115,7 @@ export function renderScriptedReport(report: ScriptedReport): string {
   const earlier = report.checkpoints.slice(0, -1);
   const blocks = [
     ...(errorBlock ? [errorBlock] : []),
+    ...(typedFieldsBlock ? [typedFieldsBlock] : []),
     ...(lastCheckpoint ? [checkpointBlock(lastCheckpoint, true)] : []),
     ...earlier.map(checkpoint => checkpointBlock(checkpoint, false)),
   ];

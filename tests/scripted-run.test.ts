@@ -896,6 +896,33 @@ test('an Android shown value echoing a typed value is redacted in run.jsonl, rep
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
+test('the prose report names the prepared device identity, serial, agent SHA-256 and sweep, and each shown value plus "screen still changing", Android only', async () => {
+  const nameField = snapshot([{ ref: 'name-field', role: 'text-field', identifier: 'name-field', actions: ['typeText'],
+    frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } }]);
+  const afterType: Snapshot = { ...snapshot([{ ref: 'confirm', role: 'text', label: 'Confirm', actions: [],
+    frame: { x: 0, y: 40, width: 100, height: 30 }, state: { enabled: true, visible: true } }]),
+    shownValue: 'placeholder-text', settled: false };
+  const scenario: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.android' },
+    values: { name: 'Ann' }, steps: [
+      { id: 'type', kind: 'action', guard: { present: [{ identifier: 'name-field' }] },
+        action: { kind: 'replaceText', selector: { identifier: 'name-field' }, valueKey: 'name' } },
+      { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Confirm' }] },
+        assertions: [{ id: 'shown', claim: 'Confirm is visible' }] },
+    ] };
+  const report = await runScriptedScenario({ runId: 'scripted-1', scenario, log: memoryLog(),
+    driver: { async prepare() {}, async observe() { return nameField; }, async act() { return afterType; }, async close() {},
+      androidPreparation: () => ({ deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: 'abc123',
+        sweptLeftovers: true }) },
+    judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
+  const rendered = renderScriptedReport(report);
+  assert.match(rendered, /jev-actions-api31/);
+  assert.match(rendered, /emulator-5554/);
+  assert.match(rendered, /abc123/);
+  assert.match(rendered, /swept/i);
+  assert.match(rendered, /placeholder-text/);
+  assert.match(rendered, /screen still changing/i);
+});
+
 test('the driver gets the device an iOS script names, and no device for an Android script', async () => {
   const preparedWith = async (scenario: ScriptedScenario) => {
     let prepared: unknown;
