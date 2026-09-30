@@ -14,6 +14,9 @@ import { buildScriptedReport, renderScriptedReport } from '../src/scripted/repor
 import { readdir, readFile } from 'node:fs/promises';
 import { androidScript } from './fixtures/android-script.js';
 import { withRunLog } from './fixtures/run-log.js';
+import { z } from 'zod';
+import { androidScriptedScenarioSchema, iosScriptedScenarioSchema, parseScriptedScenario, scriptedScenarioSchema }
+  from '../src/scripted/schema.js';
 
 function snapshot(elements: Element[], truncated = false): Snapshot {
   return { deviceId: 'sim', capturedAt: Date.now(), expiresAt: Date.now() + 60_000,
@@ -992,10 +995,41 @@ test('a typed value that collides with "android" never corrupts the recorded pla
   }, { values: ['and'] });
 });
 
+/** Paths of every map whose keys the script author chooses (a JSON Schema object with an
+ *  `additionalProperties` schema), read from the iOS, Android and published script schemas rather than
+ *  from the redactor. */
+function freeKeyedScriptMaps(): string[][] {
+  const paths = new Map<string, string[]>();
+  for (const schema of [iosScriptedScenarioSchema, androidScriptedScenarioSchema, scriptedScenarioSchema]) {
+    const root = z.toJSONSchema(schema, { io: 'input' }) as { $defs?: Record<string, unknown> };
+    const walk = (node: unknown, path: string[]): void => {
+      if (!node || typeof node !== 'object') return;
+      const json = node as { $ref?: string; properties?: Record<string, unknown>; items?: unknown;
+        additionalProperties?: unknown; anyOf?: unknown[]; oneOf?: unknown[]; allOf?: unknown[] };
+      if (json.$ref?.startsWith('#/$defs/')) return walk(root.$defs?.[json.$ref.slice('#/$defs/'.length)], path);
+      if (json.additionalProperties && typeof json.additionalProperties === 'object') paths.set(path.join('.'), path);
+      for (const [name, child] of Object.entries(json.properties ?? {})) walk(child, [...path, name]);
+      if (json.items) walk(json.items, [...path, '[]']);
+      for (const child of [...json.anyOf ?? [], ...json.oneOf ?? [], ...json.allOf ?? []]) walk(child, path);
+    };
+    walk(root, []);
+  }
+  return [...paths.values()];
+}
+
+/** Every value at `path` in `value`, where a `[]` segment steps into each item of an array. */
+function valuesAt(value: unknown, path: string[]): unknown[] {
+  const [head, ...rest] = path;
+  if (head === undefined) return [value];
+  if (head === '[]') return Array.isArray(value) ? value.flatMap(item => valuesAt(item, rest)) : [];
+  return value && typeof value === 'object' ? valuesAt((value as Record<string, unknown>)[head], rest) : [];
+}
+
 test('no typed value or API key survives anywhere in the run\'s written evidence, whichever field carries it', async () => {
   // Synthetic secrets only. Each is placed in every script field a value can reach, and on the screen;
   // the scan below reads every text file the run writes, so a field the redactor forgets fails here
-  // without being named.
+  // without being named. A free-keyed map added to the script schema later fails the planting check
+  // below by path until this scenario puts a secret-bearing key in it too.
   const typed = 'synthetic-typed-7f3a';
   const apiKey = 'synthetic-api-key-9c1e';
   const fieldId = `field-${typed}`;
@@ -1009,14 +1043,21 @@ test('no typed value or API key survives anywhere in the run\'s written evidence
   const scenario = androidScript({
     app: { package: 'com.example.testapp', activity: '.MainActivity',
       intentExtras: { screen: 'gallery', [typed]: 'on', [`promo-${typed}`]: 'on', note: typed, [apiKey]: 'on' } },
-    values: { name: typed },
+    values: { [`name-${typed}`]: typed },
     steps: [
       { id: `type-${typed}`, kind: 'action', guard: { present: [{ identifier: fieldId }] },
-        action: { kind: 'replaceText', selector: { identifier: fieldId }, valueKey: 'name' } },
+        action: { kind: 'replaceText', selector: { identifier: fieldId }, valueKey: `name-${typed}` } },
       { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Confirm' }] },
         assertions: [{ id: assertionId, claim: `Confirm is visible after typing ${typed}` }] },
     ],
   });
+  parseScriptedScenario(scenario);
+  const freeKeyed = freeKeyedScriptMaps();
+  assert.ok(freeKeyed.some(path => path.join('.') === 'app.intentExtras'), 'the schema walk found no free-keyed maps');
+  for (const path of freeKeyed) {
+    const keys = valuesAt(scenario, path).flatMap(map => map && typeof map === 'object' ? Object.keys(map) : []);
+    assert.ok(keys.some(key => key.includes(typed)), `${path.join('.')} is a free-keyed script map with no secret-bearing key here`);
+  }
   const savedKey = process.env.TYPESAFE_API_KEY;
   process.env.TYPESAFE_API_KEY = apiKey;
   try {

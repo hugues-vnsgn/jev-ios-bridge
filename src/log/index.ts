@@ -33,7 +33,8 @@ const identifierParents = new Set(['plannedSteps', 'assertions']);
 // Maps whose keys come from the script or from Jev, not the contract, so a key can carry a typed value
 // or the API key and is pseudonymized like an identifier. A new map of that kind belongs here (`assertions`
 // is also one, but only where it is a map rather than a list, so it is checked beside this set). The
-// "no typed value or API key survives" test in tests/scripted-run.test.ts fails for a map that is missing.
+// "no typed value or API key survives" test in tests/scripted-run.test.ts finds every free-keyed map in the
+// script schemas and fails until it plants a secret there, then fails again if this set is missing it.
 const dataKeyedMaps = new Set(['probabilities', 'values', 'intentExtras']);
 
 function createRedactor(secrets: string[]): (value: unknown) => unknown {
