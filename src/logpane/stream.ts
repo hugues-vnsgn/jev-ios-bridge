@@ -3,14 +3,9 @@ import { closeSync, fstatSync, openSync, readSync } from 'node:fs';
 import { chmod, unlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { isIosApp, type AppIdentity } from '../contracts/index.js';
+import { appLabel, type AppIdentity } from '../contracts/index.js';
 import { processAlive } from '../process.js';
 import { appLine, masker, osLine, type PaneLine } from './format.js';
-
-/** The label shown in the pane header and window title: the bundle ID on iOS, the package on Android. */
-function appLabel(app: AppIdentity): string {
-  return isIosApp(app) ? app.bundleId : app.package;
-}
 
 /** Messages on the pane socket, one JSON object per line. */
 export type PaneMessage =

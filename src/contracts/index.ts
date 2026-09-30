@@ -25,6 +25,11 @@ export function isIosApp(app: AppIdentity): app is IosAppIdentity {
   return 'bundleId' in app;
 }
 
+/** The app's own label: its bundle ID on iOS, its package on Android. */
+export function appLabel(app: AppIdentity): string {
+  return isIosApp(app) ? app.bundleId : app.package;
+}
+
 /** Device preparation needs only launch identity and environmental prerequisites. */
 export type PrepareScenarioContext = ScenarioContext;
 
