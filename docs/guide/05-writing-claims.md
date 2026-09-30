@@ -4,7 +4,7 @@ At a checkpoint, Jev answers one yes/no question per claim: *does the visible ev
 
 ## What Jev sees
 
-Jev sees the **text** of every visible element on the screen: role, label, value, identifier, position, and state. That's all. It doesn't see the screenshot, the app's history, your source code, or earlier screens. If something isn't printed on screen or exposed through accessibility, Jev can't confirm it.
+Jev sees the **text** of every visible element on the screen: role, label, value, identifier, position, and state. On Android, an empty field's grey hint is shown to Jev as its `placeholder`. That's all. It doesn't see the screenshot, the app's history, your source code, or earlier screens. If something isn't printed on screen or exposed through accessibility, Jev can't confirm it.
 
 ## How claims become a verdict
 
@@ -30,7 +30,9 @@ These come from the project's measured judgments.
 5. **"Saved" only on the screen after saving.** On an editor, "the contact is saved" is a guess. Open the saved card, and claim what it shows.
 6. **Stay in the viewport.** Claim what's on screen now, not what's above or below it.
 7. **No history.** "The button is shown again" asks about the past; "A Bottom Sheet button is visible" doesn't.
-8. **English.** Jev is most accurate on English screen text, and 1.0's assurance covers English screens only.
+8. **English.** Jev is most accurate on English screen text, and 1.0's assurance covers English screens only. On Android, non-English text types exactly, but that doesn't extend the assurance.
+9. **Quote numbers exactly as the app prints them.** If the screen shows `2.500.000`, claim "The total reads 2.500.000", not `2,500,000`. Jev reads the text as printed, not the number behind it.
+10. **An empty field doesn't "contain" its hint.** A field showing grey "Search settings" is empty: Jev sees that text as its `placeholder`. Claim "The search field is empty and shows the hint Search settings", never "The search field contains Search settings".
 
 ## When a claim comes back uncertain
 

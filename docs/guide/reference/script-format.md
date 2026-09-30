@@ -11,7 +11,7 @@ A script is one JSON object. Unknown fields are rejected, and so are scripts wit
 | `app` | yes | object | See below. Its allowed fields depend on `platform`. |
 | `device` | no | object | See below. Its allowed fields depend on `platform`. |
 | `preconditions` | no | array of strings | Up to 20, each 1–500 characters. Describes setup you arranged. It isn't executed. |
-| `values` | yes | object: key → string | Literals to type. Up to 32; each value at most 2048 characters (UTF-16 code units, so on Android an emoji or other character outside the Basic Multilingual Plane counts as two). Keys start with a letter, then letters, digits, `_`, or `-` (up to 64 characters). Use `{}` when there's nothing to type. On iOS, values must be printable US-keyboard characters and none may start with `-`. On Android, values may be any Unicode text except control characters, and a leading `-` is allowed. |
+| `values` | yes | object: key → string | Literals to type. Up to 32; each value at most 2048 characters (UTF-16 code units, so on Android an emoji or other character outside the Basic Multilingual Plane counts as two). Keys start with a letter, then letters, digits, `_`, or `-` (up to 64 characters). Use `{}` when there's nothing to type. On iOS, values must be printable US-keyboard characters and none may start with `-`. On Android, values may be any Unicode text except control characters, and a leading `-` is allowed. See [how Android types values](#how-android-types-values). |
 | `steps` | yes | array | 1–100 steps with unique `id`s. The last one must be a `checkpoint`. |
 
 ## `app`
@@ -41,7 +41,14 @@ Android (`"platform": "android"`):
 | `serial` | no | string | Android only. The adb serial exactly as `adb devices` prints it, matching `^[A-Za-z0-9._:-]{1,100}$`. At most one of `serial` or `avd`. |
 | `avd` | no | string | Android only. An emulator's AVD name, matching `^[A-Za-z0-9._-]{1,100}$`. At most one of `serial` or `avd`. |
 
-An Android script with neither `serial` nor `avd` falls back to `JEV_ANDROID_DEVICE`, then fails with `NO_DEVICE`.
+An Android script with neither `serial` nor `avd` falls back to `JEV_ANDROID_DEVICE`, then fails with `NO_DEVICE`. [Android setup](../12-android-setup.md#name-the-device) explains which to use.
+
+## How Android types values
+
+- **ASCII values** (plain English letters, digits, and punctuation) are typed directly. They never touch the device clipboard.
+- **Any other value** (`Tiếng Việt`, `café`, an emoji) is pasted: the bridge puts it on the device clipboard, pastes it into the field, then clears the clipboard. **The keyboard may keep it anyway.** Gboard, for one, still offers the pasted text as a clipboard suggestion after the clipboard is cleared, on Android 12 and 16. So a non-English typed value can outlive the run on the device, and shouldn't be a real secret.
+
+Either way, the field is tapped first, its text is replaced, and the next capture records what the field shows (`typedFields` in [`report.json`](report-json.md)).
 
 ## Steps
 
@@ -77,7 +84,9 @@ Every step has `id` (same rules as value keys), `kind`, and `guard`.
 
 A selector needs at least one of `identifier`, `role`, or `label`. Strings are 1–500 characters and can't be blank. There are no refs, indices, or partial matches.
 
-## Example
+## Examples
+
+iOS:
 
 ```json
 {
@@ -96,6 +105,23 @@ A selector needs at least one of `identifier`, `role`, or `label`. Strings are 1
     { "id": "verify", "kind": "checkpoint",
       "guard": { "present": [{ "identifier": "search.results" }] },
       "assertions": [{ "id": "city", "claim": "The results list shows Berlin, Germany." }] }
+  ]
+}
+```
+
+Android, starting a debug activity with an intent extra, on a named emulator:
+
+```json
+{
+  "version": 1,
+  "platform": "android",
+  "app": { "package": "com.example.app", "activity": ".DebugGalleryActivity", "intentExtras": { "screen": "gallery" } },
+  "device": { "avd": "Medium_Phone_API_36.1" },
+  "values": {},
+  "steps": [
+    { "id": "verify", "kind": "checkpoint",
+      "guard": { "present": [{ "identifier": "gallery.title", "role": "text" }] },
+      "assertions": [{ "id": "title", "claim": "The screen title reads Component gallery." }] }
   ]
 }
 ```
