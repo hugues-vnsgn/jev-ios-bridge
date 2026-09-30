@@ -938,6 +938,31 @@ test('the prose report names the prepared device identity, serial, agent SHA-256
   assert.match(rendered, /screen still changing/i);
 });
 
+test('the prose report shows "screen still changing" for an unsettled action step too, not only checkpoints', async () => {
+  const buttonA: Element = { ref: 'a', role: 'button', label: 'A', actions: ['tap'],
+    frame: { x: 0, y: 0, width: 50, height: 30 }, state: { enabled: true, visible: true } };
+  const buttonB: Element = { ref: 'b', role: 'button', label: 'B', actions: ['tap'],
+    frame: { x: 0, y: 40, width: 50, height: 30 }, state: { enabled: true, visible: true } };
+  const unsettledAfterTapA: Snapshot = { ...snapshot([buttonB]), settled: false };
+  const settledAfterTapB = snapshot([buttonB]);
+  const scenario: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.android' },
+    values: {}, steps: [
+      { id: 'tapA', kind: 'action', guard: { present: [{ label: 'A' }] },
+        action: { kind: 'tap', selector: { label: 'A' } } },
+      { id: 'tapB', kind: 'action', guard: { present: [{ label: 'B' }] },
+        action: { kind: 'tap', selector: { label: 'B' } } },
+      { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'B' }] },
+        assertions: [{ id: 'shown', claim: 'B is visible' }] },
+    ] };
+  const report = await runScriptedScenario({ runId: 'scripted-1', scenario, log: memoryLog(),
+    driver: { async prepare() {}, async observe() { return snapshot([buttonA]); },
+      async act(action) { return action.targetRef === 'a' ? unsettledAfterTapA : settledAfterTapB; }, async close() {} },
+    judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
+  const rendered = renderScriptedReport(report);
+  assert.match(rendered, /screen still changing/i);
+  assert.match(rendered, /tapB/);
+});
+
 test('the driver gets the device an iOS script names, and no device for an Android script', async () => {
   const preparedWith = async (scenario: ScriptedScenario) => {
     let prepared: unknown;

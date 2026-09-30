@@ -1,4 +1,5 @@
 import type { RunEvent, RunReport, Verdict } from '../contracts/index.js';
+import { typedFieldsOf } from './report-json.js';
 
 export interface ScriptedReport extends RunReport {
   checkpoints: Array<{
@@ -10,8 +11,6 @@ export interface ScriptedReport extends RunReport {
     evidenceEvent?: number;
     snapshotSequence?: number;
     screenshotPath?: string;
-    /** Android only: the judged screen never settled within the settle rule's cap ("screen still changing"). */
-    settled?: false;
   }>;
 }
 
@@ -50,7 +49,6 @@ export function buildScriptedReport(events: RunEvent[]): ScriptedReport {
       ...(observed ? { evidenceEvent: observed.sequence } : {}),
       ...(typeof observed?.data.snapshotSequence === 'number' ? { snapshotSequence: observed.data.snapshotSequence } : {}),
       ...(typeof observed?.data.screenshotPath === 'string' ? { screenshotPath: observed.data.screenshotPath } : {}),
-      ...(observed?.data.settled === false ? { settled: false as const } : {}),
     };
   });
   return {
@@ -86,13 +84,17 @@ export function renderScriptedReport(report: ScriptedReport): string {
         ? ' Swept a crashed run\'s leftover agent and forward.' : '')] : []),
   ].join('\n');
   // Android only: each replace-text step's shown value, from the run's `action` events.
-  const typedFields = report.events.flatMap(event => event.type === 'action' && typeof event.data.shownValue === 'string'
-    ? [{ stepId: String(event.data.stepId ?? ''), shownValue: event.data.shownValue }] : []);
+  const typedFields = typedFieldsOf(report.events);
   const typedFieldsBlock = typedFields.length ? ['Typed fields:',
     ...typedFields.map(field => `${field.stepId}: ${bounded(field.shownValue, 500)}`)].join('\n') : undefined;
+  // Android only: every step whose observed screen never settled within the settle rule's cap, whatever its
+  // kind (open point 11: "the prose report shows both" the shown value and this).
+  const unsettledStepIds = [...new Set(report.events.flatMap(event => event.type === 'step' && event.data.settled === false
+    ? [String(event.data.stepId ?? '')] : []))];
+  const unsettledBlock = unsettledStepIds.length
+    ? `Screen still changing when observed, for step(s): ${unsettledStepIds.join(', ')}.` : undefined;
   const checkpointBlock = (checkpoint: ScriptedReport['checkpoints'][number], decisive: boolean): string => [
       `Checkpoint ${checkpoint.stepId}: ${checkpoint.status}.`,
-      ...(checkpoint.settled === false ? ['Screen still changing when this checkpoint was judged.'] : []),
       ...checkpoint.assertions.map(assertion =>
         `Claim ${assertion.id}: ${bounded(assertion.claim, decisive ? 500 : 180)}; probability yes ${assertion.probability.toFixed(3)}.`),
       ...(checkpoint.evidenceEvent === undefined ? [] : [
@@ -116,6 +118,7 @@ export function renderScriptedReport(report: ScriptedReport): string {
   const blocks = [
     ...(errorBlock ? [errorBlock] : []),
     ...(typedFieldsBlock ? [typedFieldsBlock] : []),
+    ...(unsettledBlock ? [unsettledBlock] : []),
     ...(lastCheckpoint ? [checkpointBlock(lastCheckpoint, true)] : []),
     ...earlier.map(checkpoint => checkpointBlock(checkpoint, false)),
   ];
