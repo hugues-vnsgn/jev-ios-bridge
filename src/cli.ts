@@ -7,7 +7,7 @@ import { serveStdio } from '@modelcontextprotocol/server/stdio';
 import { z } from 'zod/v4';
 import { BridgeService } from './service.js';
 import { createMcpServer } from './mcp/index.js';
-import { DeviceCliError, selectAndroidDeviceId, selectDeviceId } from './device/index.js';
+import { DeviceCliError, DriverUnavailableError, selectAndroidDeviceId, selectDeviceId } from './device/index.js';
 import { createDriverFactory } from './device/factory.js';
 import { createAssertionJudge } from './scripted/jev.js';
 import { renderScriptedReport } from './scripted/report.js';
@@ -149,7 +149,8 @@ async function main(): Promise<void> {
 
 main().catch((error: unknown) => {
   if (error instanceof z.ZodError) console.error(`Script is invalid:\n${z.prettifyError(error)}`);
-  else if (error instanceof StartError || (error instanceof DeviceCliError && ['NO_DEVICE', 'INVALID_DEVICE'].includes(error.code))) {
+  else if (error instanceof StartError || error instanceof DriverUnavailableError ||
+    (error instanceof DeviceCliError && ['NO_DEVICE', 'INVALID_DEVICE'].includes(error.code))) {
     console.error(error.message);
   } else console.error('Bridge could not start. Check arguments, script, and environment.');
   process.exitCode = EXIT.couldNotStart;

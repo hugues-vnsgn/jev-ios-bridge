@@ -61,6 +61,36 @@ test('start_scenario\'s description names both iOS and Android', { timeout: 10_0
   }
 });
 
+test('start_scenario shows the driver refusal for an Android script instead of a generic failure', { timeout: 10_000 }, async () => {
+  const env = { ...process.env, TYPESAFE_API_KEY: 'contract-test-key' };
+  const child = spawn(process.execPath, ['--import', 'tsx', 'src/cli.ts', 'mcp'], { env, stdio: ['pipe', 'pipe', 'pipe'] });
+  const pending = new Map<number, (value: any) => void>();
+  const lines = createInterface({ input: child.stdout });
+  lines.on('line', line => {
+    const value = JSON.parse(line);
+    pending.get(value.id)?.(value); pending.delete(value.id);
+  });
+  const request = (id: number, method: string, params: object = {}) => new Promise<any>(done => {
+    pending.set(id, done);
+    child.stdin.write(JSON.stringify({ jsonrpc: '2.0', id, method, params }) + '\n');
+  });
+  try {
+    await request(1, 'initialize', { protocolVersion: '2025-03-26', capabilities: {}, clientInfo: { name: 'smoke', version: '1' } });
+    child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' }) + '\n');
+    const androidScenario = { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+      device: { serial: 'emulator-5554' }, values: {},
+      steps: [{ id: 'verify', kind: 'checkpoint', guard: { present: [{ role: 'text', label: 'Marker' }] },
+        assertions: [{ id: 'shown', claim: 'Marker visible' }] }] };
+    const start = await request(2, 'tools/call', { name: 'start_scenario', arguments: { scenario: androidScenario } });
+    assert.equal(start.result.isError, true);
+    assert.match(start.result.content[0].text, /Android isn't available in this build/);
+  } finally {
+    child.stdin.end();
+    lines.close();
+    if (child.exitCode === null) child.kill('SIGTERM');
+  }
+});
+
 test('running MCP reports hide screen evidence and bounded waiting returns the final report', {timeout:5000}, async()=>{
   const {mkdtemp,rm}=await import('node:fs/promises');const {tmpdir}=await import('node:os');const {join}=await import('node:path');
   const root=await mkdtemp(join(tmpdir(),'jev-mcp-contract-'));

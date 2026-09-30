@@ -1,6 +1,6 @@
 import type { DeviceDriver } from '../contracts/index.js';
 import type { ScriptedScenario } from '../scripted/contracts.js';
-import { createMobileBuildMcpDriver, type MobileBuildMcpDriverOptions } from './index.js';
+import { createMobileBuildMcpDriver, DriverUnavailableError, type MobileBuildMcpDriverOptions } from './index.js';
 
 export interface DriverFactoryOptions {
   mobileBuildMcp: MobileBuildMcpDriverOptions;
@@ -13,7 +13,7 @@ export interface DriverFactoryOptions {
  */
 export function createDriverFactory(options: DriverFactoryOptions): (scenario: ScriptedScenario) => DeviceDriver {
   return (scenario) => {
-    if (scenario.platform === 'android') throw new Error("Android isn't available in this build");
+    if (scenario.platform === 'android') throw new DriverUnavailableError("Android isn't available in this build");
     return createMobileBuildMcpDriver(options.mobileBuildMcp);
   };
 }
