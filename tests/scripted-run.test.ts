@@ -774,8 +774,8 @@ test('the started event names an iOS app by bundle ID and records a null bundle 
   assert.deepEqual(ios.launchArgs, ['-of-evidence-gallery']);
   assert.deepEqual(ios.plannedSteps, [{ id: 'verify', kind: 'checkpoint' }]);
 
-  // Owner ruling, 2026-09-30: this Android half changes with the contract Issue 07 adds (platform,
-  // package, activity, intentExtras, and the Android projection rule); the iOS half above stays as it was.
+  // This Android half changes with the added contract (platform, package, activity, intentExtras, and the
+  // Android projection rule); the iOS half above stays as it was.
   const android = await startedOf({ version: 1, platform: 'android',
     app: { package: 'com.example.android', activity: '.MainActivity', intentExtras: { screen: 'gallery' } },
     values: {}, steps: [markerCheckpoint] });
@@ -907,6 +907,34 @@ test('an Android shown value echoing a typed value is redacted in run.jsonl, rep
     const reportJson = await readFile(join(root, 'redacted-android', 'report.json'), 'utf8');
     assert.doesNotMatch(reportJson, /private-value/);
     assert.doesNotMatch(renderScriptedReport(report), /private-value/);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('the run log keeps projectionRule unredacted even when a script value equals it, but redacts that value everywhere else', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-android-projection-rule-collision-'));
+  try {
+    const field: Element = { ref: 'name-field', role: 'text-field', identifier: 'name-field', actions: ['typeText'],
+      frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } };
+    const confirm: Element = { ref: 'confirm', role: 'text', label: 'Confirm', actions: [],
+      frame: { x: 0, y: 40, width: 100, height: 30 }, state: { enabled: true, visible: true } };
+    const scenario: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.android' },
+      values: { name: 'android-full-text-v1' }, steps: [
+        { id: 'type', kind: 'action', guard: { present: [{ identifier: 'name-field' }] },
+          action: { kind: 'replaceText', selector: { identifier: 'name-field' }, valueKey: 'name' } },
+        { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Confirm' }] },
+          assertions: [{ id: 'shown', claim: 'Confirm is visible' }] },
+      ] };
+    const log = await createRunLog(root, 'projection-rule-collision', { values: Object.values(scenario.values) });
+    await runScriptedScenario({ runId: 'projection-rule-collision', scenario, log,
+      driver: { async prepare() {}, async observe() { return snapshot([field]); },
+        async act() { return { screen: snapshot([confirm]), shownValue: 'android-full-text-v1' }; }, async close() {} },
+      judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
+    const events = (await readFile(join(root, 'projection-rule-collision', 'run.jsonl'), 'utf8')).trim().split('\n')
+      .map(line => JSON.parse(line) as RunEvent);
+    const started = events.find(event => event.type === 'started')!.data;
+    assert.equal(started.projectionRule, 'android-full-text-v1');
+    const action = events.find(event => event.type === 'action' && event.data.action === 'replaceText')!.data;
+    assert.equal(action.shownValue, '[REDACTED]');
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
