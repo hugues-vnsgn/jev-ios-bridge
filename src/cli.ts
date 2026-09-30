@@ -7,7 +7,7 @@ import { serveStdio } from '@modelcontextprotocol/server/stdio';
 import { z } from 'zod/v4';
 import { BridgeService } from './service.js';
 import { createMcpServer } from './mcp/index.js';
-import { DeviceCliError, DriverUnavailableError, selectAndroidDeviceId, selectDeviceId } from './device/index.js';
+import { DeviceCliError, DeviceReasonError, DriverUnavailableError, selectAndroidDeviceName, selectDeviceId } from './device/index.js';
 import { createDriverFactory } from './device/factory.js';
 import { createAssertionJudge } from './scripted/jev.js';
 import { renderScriptedReport } from './scripted/report.js';
@@ -95,7 +95,7 @@ async function main(): Promise<void> {
   if (command === 'run') {
     script = parseScriptedScenario(await readScript(argument!));
     if (!process.env.TYPESAFE_API_KEY?.trim()) throw new StartError('TYPESAFE_API_KEY is not set; load your .env with node --env-file=/path/to/.env');
-    if (script.platform === 'android') selectAndroidDeviceId(script.device, process.env.JEV_ANDROID_DEVICE);
+    if (script.platform === 'android') selectAndroidDeviceName(script.device, process.env.JEV_ANDROID_DEVICE);
     else await selectDeviceId(projectDir, script.device?.udid, process.env.JEV_DEVICE_UDID);
   }
 
@@ -150,7 +150,8 @@ async function main(): Promise<void> {
 main().catch((error: unknown) => {
   if (error instanceof z.ZodError) console.error(`Script is invalid:\n${z.prettifyError(error)}`);
   else if (error instanceof StartError || error instanceof DriverUnavailableError ||
-    (error instanceof DeviceCliError && ['NO_DEVICE', 'INVALID_DEVICE'].includes(error.code))) {
+    (error instanceof DeviceCliError && ['NO_DEVICE', 'INVALID_DEVICE'].includes(error.code)) ||
+    (error instanceof DeviceReasonError && ['NO_DEVICE', 'INVALID_DEVICE'].includes(error.code))) {
     console.error(error.message);
   } else console.error('Bridge could not start. Check arguments, script, and environment.');
   process.exitCode = EXIT.couldNotStart;
