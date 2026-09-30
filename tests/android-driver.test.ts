@@ -4,13 +4,14 @@ import { mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
-import type { AndroidAppIdentity } from '../src/contracts/index.js';
-import { DeviceReasonError } from '../src/device/index.js';
+import { isActOutcome, type AndroidAppIdentity, type Snapshot } from '../src/contracts/index.js';
+import { DeviceReasonError, StaleSnapshotError } from '../src/device/index.js';
 import type { AdbResult, AdbRunner } from '../src/device/android/adb.js';
 import { DeviceAgentError, type DeviceAgentClient } from '../src/device/android/agent-client.js';
 import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
 import { AGENT_DEVICE_PATH, AGENT_START_COMMAND, AndroidDriver, type AndroidDriverOptions } from '../src/device/android/driver.js';
-import type { Clock } from '../src/device/android/settle.js';
+import { mapAndroidTree, type AndroidTree } from '../src/device/android/mapping.js';
+import { screenHash, type Clock } from '../src/device/android/settle.js';
 
 /**
  * The Android driver's `prepare` against a fake device that answers with the `adb` outputs recorded from
@@ -174,13 +175,29 @@ class FakeAdb {
   }
 }
 
-/** A fake device agent client: `device.version` answers with the pinned SHA-256 once the bridge's own agent runs on the port's device. */
-function fakeAgents(adb: FakeAdb, options: { answersAfterPolls?: number; never?: boolean; sha256?: string } = {}) {
+/** One call the driver made to the fake agent, other than `device.version`, by the agent's method name. */
+type AgentCall = { method: string; params?: unknown };
+
+/**
+ * A fake device agent client: `device.version` answers with the pinned SHA-256 once the bridge's own agent
+ * runs on the port's device. `device.dump.ui` answers with the next of `screens` (the last one repeats),
+ * and `device.screenshot` with `jpeg-<n>`. Every other call is recorded in `calls` and does nothing.
+ */
+function fakeAgents(adb: FakeAdb, options: { answersAfterPolls?: number; never?: boolean; sha256?: string; screens?: unknown[][] } = {}) {
   const versionCalls: number[] = [];
   const clients: number[] = [];
+  const calls: AgentCall[] = [];
+  const screens = [...options.screens ?? [[]]];
+  let shots = 0;
+  /** Called before each recorded call is answered. */
+  const hooks: { onCall?: ((call: AgentCall) => void | Promise<void>) | undefined } = {};
+  const record = async (method: string, params?: unknown) => {
+    const call = { method, ...(params === undefined ? {} : { params }) };
+    calls.push(call);
+    await hooks.onCall?.(call);
+  };
   const agentClient = (port: number): DeviceAgentClient => {
     clients.push(port);
-    const unused = () => { throw new Error('Not used by prepare'); };
     return {
       async version() {
         versionCalls.push(port);
@@ -189,11 +206,24 @@ function fakeAgents(adb: FakeAdb, options: { answersAfterPolls?: number; never?:
         if (options.never || !running || versionCalls.length <= (options.answersAfterPolls ?? 0)) throw new DeviceAgentError();
         return { dexSha256: options.sha256 ?? PINNED_AGENT_SHA256 };
       },
-      dumpUi: unused, tap: unused, swipe: unused, keys: unused, text: unused, button: unused,
-      clipboardSet: unused, clipboardClear: unused, screenshot: unused,
+      async dumpUi(waitUntilIdle) {
+        await record('device.dump.ui', { waitUntilIdle });
+        return screens.length > 1 ? screens.shift()! : screens[0]!;
+      },
+      async tap(point) { await record('device.io.tap', point); },
+      async swipe(swipe) { await record('device.io.swipe', swipe); },
+      async keys(keys) { await record('device.io.keys', { keys }); },
+      async text(text) { await record('device.io.text', { text }); },
+      async button(button) { await record('device.io.button', { button }); },
+      async clipboardSet(text) { await record('device.clipboard.set', { text }); },
+      async clipboardClear() { await record('device.clipboard.clear'); },
+      async screenshot(maxSize) {
+        await record('device.screenshot', { format: 'jpeg', maxSize });
+        return Buffer.from(`jpeg-${String(++shots)}`);
+      },
     };
   };
-  return { agentClient, versionCalls, clients };
+  return { agentClient, versionCalls, clients, calls, hooks };
 }
 
 function fakeClock(): Clock & { sleeps: number[] } {
@@ -685,10 +715,353 @@ test('a cancel stops prepare before its next device command', async () => {
   });
 });
 
-test('preparation() before prepare, and observe, act and close, are not available yet', async () => {
-  await withDriver(new FakeAdb(api31()), async ({ driver }) => {
+test('preparation(), observe and act before prepare are refused, and close is not available yet', async () => {
+  await withDriver(new FakeAdb(api31()), async ({ driver, agents }) => {
     assert.throws(() => driver.preparation(), /not prepared/);
-    await assert.rejects(driver.observe(signal()), /not built yet/);
+    await assert.rejects(driver.observe(signal()), /not prepared/);
+    await assert.rejects(driver.act({ kind: 'tap', targetRef: 'e1' }, snapshotOf([]), { ...app(), values: {} }, signal()), /not prepared/);
     await assert.rejects(driver.close(signal()), /not built yet/);
+    assert.deepEqual(agents.calls, []);
+  });
+});
+
+/* observe and act (Issue 15): the same fakes, a fake clock and a temporary screenshot folder. */
+
+const AGENT_FIXTURES = join(import.meta.dirname, 'fixtures', 'android');
+type Hierarchy = Record<string, unknown>[];
+const hierarchyOf = async (name: string): Promise<Hierarchy> =>
+  (JSON.parse(await readFile(join(AGENT_FIXTURES, name), 'utf8')) as { hierarchy: Hierarchy }).hierarchy;
+const captureOf = async (name: string): Promise<Hierarchy> => (JSON.parse((JSON.parse(
+  await readFile(join(AGENT_FIXTURES, 'captures', name), 'utf8')) as { data: { rawData: string } }).data.rawData) as { hierarchy: Hierarchy }).hierarchy;
+/** The tree with the node whose resource-id is `id` changed by `patch`. */
+function withNode(tree: Hierarchy, id: string, patch: Record<string, unknown>): Hierarchy {
+  const copy = structuredClone(tree);
+  const visit = (nodes: Hierarchy): boolean => nodes.some(node => {
+    if (node['resource-id'] === id) { Object.assign(node, patch); return true; }
+    return visit((node.children ?? []) as Hierarchy);
+  });
+  assert.ok(visit(copy), `no node ${id}`);
+  return copy;
+}
+/** The tree with the node whose resource-id is `id` showing `text`. */
+const withText = (tree: Hierarchy, id: string, text: string) => withNode(tree, id, { text });
+/** The text fields tree with no resource-ids, nothing focused, and `patch` applied to the city field. */
+async function anonymousFields(patch: Record<string, unknown> = {}): Promise<Hierarchy> {
+  let tree = withNode(await hierarchyOf('text-fields.json'), 'field.password', { focused: false });
+  tree = withNode(tree, 'field.city', patch);
+  for (const id of ['field.notes', 'field.password', 'field.spaces', 'field.city', 'field.empty']) tree = withNode(tree, id, { 'resource-id': '' });
+  return tree;
+}
+const cityOf = (snapshot: Snapshot) => {
+  const city = snapshot.elements.find(element => element.label === 'City');
+  assert.ok(city);
+  return city.ref;
+};
+const snapshotOf = (elements: Snapshot['elements']): Snapshot =>
+  ({ deviceId: 'emulator-5554', capturedAt: 0, expiresAt: 0, sequence: 0, elements, truncated: false });
+const refOf = (snapshot: Snapshot, identifier: string) => {
+  const element = snapshot.elements.find(candidate => candidate.identifier === identifier);
+  assert.ok(element, `no element ${identifier}`);
+  return element.ref;
+};
+const values = (typed: Record<string, string>) => ({ ...app(), values: typed });
+const DUMP = { method: 'device.dump.ui', params: { waitUntilIdle: 2000 } };
+const SHOT = { method: 'device.screenshot', params: { format: 'jpeg', maxSize: 800 } };
+/** What each settled snapshot costs when the screen holds still: two captures, then its screenshot. */
+const SETTLED = [DUMP, DUMP, SHOT];
+const CLEAR = [
+  { method: 'device.io.keys', params: { keys: [{ keycode: 'KEYCODE_A', modifiers: ['KEYCODE_CTRL_LEFT'] }] } },
+  { method: 'device.io.keys', params: { keys: [{ keycode: 'KEYCODE_DEL' }] } },
+];
+
+interface Acting extends Setup { shots: string }
+
+/** A prepared driver whose agent shows `screens`, saving screenshots to their own temporary folder. */
+async function withPrepared(screens: Hierarchy[], fn: (setup: Acting) => Promise<void>): Promise<void> {
+  const shots = await mkdtemp(join(tmpdir(), 'jev-android-shots-'));
+  try {
+    await withDriver(new FakeAdb(api31()), async setup => {
+      await setup.driver.prepare(app(), signal());
+      await fn({ ...setup, shots });
+    }, { screenshotFolder: shots, agents: { screens } });
+  } finally {
+    await rm(shots, { recursive: true, force: true });
+  }
+}
+
+test('observe settles device.dump.ui, maps it, and saves one screenshot of the settled snapshot', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  await withPrepared([fields], async ({ driver, agents, clock, shots }) => {
+    const snapshot = await driver.observe(signal());
+    assert.deepEqual(agents.calls, SETTLED);
+    assert.deepEqual(clock.sleeps.slice(-1), [250]);
+    assert.deepEqual(snapshot.elements, mapAndroidTree({ hierarchy: fields as AndroidTree['hierarchy'] }));
+    assert.equal(snapshot.screenHash, screenHash({ hierarchy: fields }));
+    assert.equal(snapshot.deviceId, 'emulator-5554');
+    assert.equal(snapshot.truncated, false);
+    assert.equal('settled' in snapshot, false);
+    assert.equal(snapshot.screenshotPath, join(shots, 'screen-1.jpg'));
+    assert.equal(await readFile(snapshot.screenshotPath, 'utf8'), 'jpeg-1');
+  });
+});
+
+test('each observation has a fresh sequence and its own screenshot file', async () => {
+  await withPrepared([await hierarchyOf('text-fields.json')], async ({ driver, shots }) => {
+    const first = await driver.observe(signal());
+    const second = await driver.observe(signal());
+    assert.ok(second.sequence > first.sequence);
+    assert.notEqual(first.screenshotPath, second.screenshotPath);
+    assert.deepEqual((await readdir(shots)).sort(), ['screen-1.jpg', 'screen-2.jpg']);
+    assert.equal(await readFile(second.screenshotPath!, 'utf8'), 'jpeg-2');
+  });
+});
+
+test('a screen still changing at the 3 s cap gives the last capture, marked settled: false', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  const changing = Array.from({ length: 20 }, (_, index) => withText(fields, 'field.empty', String(index)));
+  await withPrepared(changing, async ({ driver, agents }) => {
+    const snapshot = await driver.observe(signal());
+    const dumps = agents.calls.filter(call => call.method === 'device.dump.ui').length;
+    assert.equal(dumps, 12);
+    assert.equal(snapshot.settled, false);
+    assert.equal(snapshot.elements.find(element => element.identifier === 'field.empty')?.value, '11');
+    assert.equal(agents.calls.filter(call => call.method === 'device.screenshot').length, 1);
+  });
+});
+
+test('a tap lands on the element\'s centre in whole numbers, and act returns the settled snapshot after it, with its screenshot', async () => {
+  const choose = await captureOf('twin-1-choose.json');
+  const added = await captureOf('twin-2-apple-added.json');
+  await withPrepared([choose, choose, added], async ({ driver, agents, shots }) => {
+    const before = await driver.observe(signal());
+    agents.calls.length = 0;
+    const after = await driver.act({ kind: 'tap', targetRef: refOf(before, 'choose.apple') }, before, values({}), signal());
+    assert.deepEqual(agents.calls, [{ method: 'device.io.tap', params: { x: 540, y: 549 } }, ...SETTLED]);
+    assert.ok(after && !isActOutcome(after));
+    assert.equal(after.screenHash, screenHash({ hierarchy: added }));
+    assert.ok(after.sequence > before.sequence);
+    assert.equal(after.screenshotPath, join(shots, 'screen-2.jpg'));
+  });
+});
+
+test('a reference from an older snapshot is refused with StaleSnapshotError, and nothing reaches the device', async () => {
+  await withPrepared([await captureOf('twin-1-choose.json')], async ({ driver, agents }) => {
+    const older = await driver.observe(signal());
+    await driver.observe(signal());
+    agents.calls.length = 0;
+    await assert.rejects(driver.act({ kind: 'tap', targetRef: refOf(older, 'choose.apple') }, older, values({}), signal()), StaleSnapshotError);
+    assert.deepEqual(agents.calls, []);
+  });
+});
+
+test('once an action is issued, the snapshot it targeted is stale, even when the settle after it fails', async () => {
+  const choose = await captureOf('twin-1-choose.json');
+  await withPrepared([choose], async ({ driver, agents }) => {
+    const snapshot = await driver.observe(signal());
+    const tap = { kind: 'tap', targetRef: refOf(snapshot, 'choose.apple') } as const;
+    agents.hooks.onCall = call => { if (call.method === 'device.dump.ui') throw new DeviceAgentError(); };
+    await assert.rejects(driver.act(tap, snapshot, values({}), signal()), reason('DEVICE_ERROR', 'agent'));
+    agents.hooks.onCall = undefined;
+    agents.calls.length = 0;
+    await assert.rejects(driver.act(tap, snapshot, values({}), signal()), StaleSnapshotError);
+    assert.deepEqual(agents.calls, []);
+  });
+});
+
+test('a reference absent from the snapshot is StaleSnapshotError', async () => {
+  await withPrepared([await captureOf('twin-1-choose.json')], async ({ driver, agents }) => {
+    const snapshot = await driver.observe(signal());
+    agents.calls.length = 0;
+    await assert.rejects(driver.act({ kind: 'tap', targetRef: 'e999' }, snapshot, values({}), signal()), StaleSnapshotError);
+    assert.deepEqual(agents.calls, []);
+  });
+});
+
+test('an action the element doesn\'t offer is UNSUPPORTED_ACTION, and a missing value MISSING_VALUE, before any device call', async () => {
+  await withPrepared([await hierarchyOf('text-fields.json')], async ({ driver, agents }) => {
+    const snapshot = await driver.observe(signal());
+    agents.calls.length = 0;
+    const field = refOf(snapshot, 'field.empty');
+    await assert.rejects(driver.act({ kind: 'swipe', targetRef: field, direction: 'up' }, snapshot, values({}), signal()), reason('UNSUPPORTED_ACTION'));
+    await assert.rejects(driver.act({ kind: 'type', targetRef: field, valueKey: 'absent' }, snapshot, values({}), signal()), reason('MISSING_VALUE'));
+    assert.deepEqual(agents.calls, []);
+  });
+});
+
+test('replace text taps the field, sends ctrl+a and backspace as two calls 0.2 s apart, then types ASCII unchanged, leading dash included', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  await withPrepared([fields, fields, withText(fields, 'field.empty', '-42.5')], async ({ driver, agents, clock }) => {
+    const snapshot = await driver.observe(signal());
+    agents.calls.length = 0;
+    const at: [string, number][] = [];
+    agents.hooks.onCall = call => { at.push([call.method, clock.now()]); };
+    await driver.act({ kind: 'type', targetRef: refOf(snapshot, 'field.empty'), valueKey: 'amount' }, snapshot, values({ amount: '-42.5' }), signal());
+    assert.deepEqual(agents.calls, [
+      { method: 'device.io.tap', params: { x: 540, y: 1099 } },
+      ...CLEAR,
+      { method: 'device.io.text', params: { text: '-42.5' } },
+      ...SETTLED,
+    ]);
+    const [first, second] = at.filter(([method]) => method === 'device.io.keys').map(([, time]) => time);
+    assert.equal(second! - first!, 200);
+  });
+});
+
+test('replace text sends Vietnamese through the clipboard: set, paste, then clear, and never device.io.text', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  await withPrepared([fields, fields, withText(fields, 'field.city', 'Tiếng Việt')], async ({ driver, agents }) => {
+    const snapshot = await driver.observe(signal());
+    agents.calls.length = 0;
+    const outcome = await driver.act({ kind: 'type', targetRef: refOf(snapshot, 'field.city'), valueKey: 'city' }, snapshot,
+      values({ city: 'Tiếng Việt' }), signal());
+    assert.deepEqual(agents.calls, [
+      { method: 'device.io.tap', params: { x: 540, y: 936 } },
+      ...CLEAR,
+      { method: 'device.clipboard.set', params: { text: 'Tiếng Việt' } },
+      { method: 'device.io.button', params: { button: 'KEYCODE_PASTE' } },
+      { method: 'device.clipboard.clear' },
+      ...SETTLED,
+    ]);
+    assert.ok(outcome && isActOutcome(outcome));
+    assert.equal(outcome.shownValue, 'Tiếng Việt');
+  });
+});
+
+test('replace text returns the settled snapshot and the field\'s shown value, keeping a trailing space', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  const typed = withText(fields, 'field.empty', 'Ha Noi ');
+  await withPrepared([fields, fields, typed], async ({ driver }) => {
+    const snapshot = await driver.observe(signal());
+    const outcome = await driver.act({ kind: 'type', targetRef: refOf(snapshot, 'field.empty'), valueKey: 'city' }, snapshot,
+      values({ city: 'Ha Noi ' }), signal());
+    assert.ok(outcome && isActOutcome(outcome));
+    assert.equal(outcome.shownValue, 'Ha Noi ');
+    assert.equal(outcome.screen.screenHash, screenHash({ hierarchy: typed }));
+    assert.equal('settled' in outcome.screen, false);
+    assert.ok(outcome.screen.screenshotPath);
+  });
+});
+
+test('a shown value that differs from the typed value doesn\'t fail the step', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  await withPrepared([fields, fields, withText(fields, 'field.empty', '(555) 123-4567')], async ({ driver }) => {
+    const snapshot = await driver.observe(signal());
+    const outcome = await driver.act({ kind: 'type', targetRef: refOf(snapshot, 'field.empty'), valueKey: 'phone' }, snapshot,
+      values({ phone: '5551234567' }), signal());
+    assert.ok(outcome && isActOutcome(outcome));
+    assert.equal(outcome.shownValue, '(555) 123-4567');
+  });
+});
+
+test('a password field\'s shown value is the mapping\'s dots, never its text', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  await withPrepared([fields, fields, withText(fields, 'field.password', 'hunter2')], async ({ driver }) => {
+    const snapshot = await driver.observe(signal());
+    const outcome = await driver.act({ kind: 'type', targetRef: refOf(snapshot, 'field.password'), valueKey: 'secret' }, snapshot,
+      values({ secret: 'hunter2' }), signal());
+    assert.ok(outcome && isActOutcome(outcome));
+    assert.equal(outcome.shownValue, '•••••••');
+  });
+});
+
+test('a replace-text still changing at the cap carries settled: false on its screen', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  const changing = Array.from({ length: 20 }, (_, index) => withText(fields, 'field.empty', `x${String(index)}`));
+  await withPrepared([fields, fields, ...changing], async ({ driver }) => {
+    const snapshot = await driver.observe(signal());
+    const outcome = await driver.act({ kind: 'type', targetRef: refOf(snapshot, 'field.empty'), valueKey: 'v' }, snapshot, values({ v: 'x' }), signal());
+    assert.ok(outcome && isActOutcome(outcome));
+    assert.equal(outcome.screen.settled, false);
+    assert.equal(outcome.shownValue, 'x11');
+  });
+});
+
+test('an abandoned replace-text issues no further call once close begins', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  await withPrepared([fields], async ({ driver, agents }) => {
+    const snapshot = await driver.observe(signal());
+    agents.calls.length = 0;
+    agents.hooks.onCall = async call => { if (call.method === 'device.io.keys') await driver.close(signal()).catch(() => undefined); };
+    await assert.rejects(driver.act({ kind: 'type', targetRef: refOf(snapshot, 'field.city'), valueKey: 'city' }, snapshot,
+      values({ city: 'Tiếng Việt' }), signal()), /closing/);
+    assert.deepEqual(agents.calls, [{ method: 'device.io.tap', params: { x: 540, y: 936 } }, CLEAR[0]]);
+  });
+});
+
+test('a cancelled replace-text stops at its next call', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  await withPrepared([fields], async ({ driver, agents }) => {
+    const snapshot = await driver.observe(signal());
+    agents.calls.length = 0;
+    const controller = new AbortController();
+    agents.hooks.onCall = call => { if (call.method === 'device.clipboard.set') controller.abort(new Error('cancelled')); };
+    await assert.rejects(driver.act({ kind: 'type', targetRef: refOf(snapshot, 'field.city'), valueKey: 'city' }, snapshot,
+      values({ city: 'Tiếng Việt' }), controller.signal), /cancelled/);
+    assert.equal(agents.calls.at(-1)?.method, 'device.clipboard.set');
+  });
+});
+
+test('a swipe runs along the element\'s centre line from 90% to 10% of its length, over 1000 ms, the finger moving in the swipe\'s direction', async () => {
+  const lists = await hierarchyOf('api36-lists-scrollable.json');
+  await withPrepared([lists], async ({ driver, agents }) => {
+    // list.lazy: x 21, y 305, 1038 × 683.
+    const expected = {
+      up: { x1: 540, y1: 920, x2: 540, y2: 373 },
+      down: { x1: 540, y1: 373, x2: 540, y2: 920 },
+      left: { x1: 955, y1: 647, x2: 125, y2: 647 },
+      right: { x1: 125, y1: 647, x2: 955, y2: 647 },
+    } as const;
+    for (const direction of ['up', 'down', 'left', 'right'] as const) {
+      const snapshot = await driver.observe(signal());
+      agents.calls.length = 0;
+      const after = await driver.act({ kind: 'swipe', targetRef: refOf(snapshot, 'list.lazy'), direction }, snapshot, values({}), signal());
+      assert.deepEqual(agents.calls, [{ method: 'device.io.swipe', params: { ...expected[direction], duration: 1000 } }, ...SETTLED], direction);
+      assert.ok(after && !isActOutcome(after));
+    }
+  });
+});
+
+test('replace text with an empty value only clears the field', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  await withPrepared([fields, fields, withText(fields, 'field.city', '')], async ({ driver, agents }) => {
+    const snapshot = await driver.observe(signal());
+    agents.calls.length = 0;
+    const outcome = await driver.act({ kind: 'type', targetRef: refOf(snapshot, 'field.city'), valueKey: 'city' }, snapshot, values({ city: '' }), signal());
+    assert.deepEqual(agents.calls, [{ method: 'device.io.tap', params: { x: 540, y: 936 } }, ...CLEAR, ...SETTLED]);
+    assert.ok(outcome && isActOutcome(outcome));
+    assert.equal(outcome.shownValue, '');
+  });
+});
+
+test('a field whose identifier is gone after typing is found as the one focused text field', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  const typed = withNode(withNode(withText(fields, 'field.city', 'Hue'), 'field.password', { focused: false }),
+    'field.city', { focused: true, 'resource-id': 'field.city.editing' });
+  await withPrepared([fields, fields, typed], async ({ driver }) => {
+    const snapshot = await driver.observe(signal());
+    const outcome = await driver.act({ kind: 'type', targetRef: refOf(snapshot, 'field.city'), valueKey: 'city' }, snapshot, values({ city: 'Hue' }), signal());
+    assert.ok(outcome && isActOutcome(outcome));
+    assert.equal(outcome.shownValue, 'Hue');
+  });
+});
+
+test('a field with no identifier and no focus is found by its frame', async () => {
+  const before = await anonymousFields();
+  await withPrepared([before, before, await anonymousFields({ text: 'Hue' })], async ({ driver }) => {
+    const snapshot = await driver.observe(signal());
+    const outcome = await driver.act({ kind: 'type', targetRef: cityOf(snapshot), valueKey: 'city' }, snapshot, values({ city: 'Hue' }), signal());
+    assert.ok(outcome && isActOutcome(outcome));
+    assert.equal(outcome.shownValue, 'Hue');
+  });
+});
+
+test('when no field is surely the typed one, act returns the settled snapshot without a shown value', async () => {
+  const before = await anonymousFields();
+  const moved = await anonymousFields({ text: 'Hue', rect: { x: 21, y: 862, width: 1038, height: 294 } });
+  await withPrepared([before, before, moved], async ({ driver }) => {
+    const snapshot = await driver.observe(signal());
+    const after = await driver.act({ kind: 'type', targetRef: cityOf(snapshot), valueKey: 'city' }, snapshot, values({ city: 'Hue' }), signal());
+    assert.ok(after && !isActOutcome(after));
+    assert.equal(after.screenHash, screenHash({ hierarchy: moved }));
   });
 });

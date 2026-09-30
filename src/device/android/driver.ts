@@ -1,12 +1,17 @@
+import { mkdtemp, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:net';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
-import type { Action, ActionScenarioContext, AndroidAppIdentity, DevicePreparation, DeviceDriver, PrepareScenarioContext, Snapshot } from '../../contracts/index.js';
+import type { Action, ActionScenarioContext, ActOutcome, AndroidAppIdentity, DevicePreparation, DeviceDriver, Direction, Element,
+  PrepareScenarioContext, Snapshot } from '../../contracts/index.js';
 import { isIosApp } from '../../contracts/index.js';
-import { DeviceReasonError, selectAndroidDeviceName } from '../index.js';
+import { DeviceReasonError, selectAndroidDeviceName, StaleSnapshotError } from '../index.js';
 import { DeviceLease, DeviceLeaseBusyError, type LeaseHolder } from '../lease.js';
 import { adbRunner, inLedger, type AdbResult, type AdbRunner } from './adb.js';
-import { deviceAgentClient, type DeviceAgentClient } from './agent-client.js';
-import type { Clock } from './settle.js';
+import { deviceAgentClient, type AgentKey, type DeviceAgentClient } from './agent-client.js';
+import { mapAndroidTree, type AndroidTree } from './mapping.js';
+import { settle, type Clock, type UiTree } from './settle.js';
 import { adbEnvironment, androidTools, type AndroidTools } from './tools.js';
 
 /** Where the bridge pushes its device agent: its own path, never mobilecli's `/data/local/tmp/mobilecli.dex`. */
@@ -25,6 +30,19 @@ const AGENT_READY_MS = 5_000;
 const AGENT_POLL_MS = 100;
 /** How long a killed agent gets to exit before the bridge gives up on it. */
 const AGENT_EXIT_MS = 2_000;
+/** How long one capture lets the app go idle before reading the tree (release spec phase 4 item 4). */
+const DUMP_IDLE_MS = 2_000;
+/** The iOS screenshot size (open point 9). */
+const SCREENSHOT_MAX_SIZE = 800;
+/** Replace text's pause between `ctrl+a` and backspace (open point 23). */
+const CLEAR_PAUSE_MS = 200;
+/** How long a swipe's finger takes (release spec phase 4 item 6). */
+const SWIPE_MS = 1_000;
+/** `ctrl+a` and backspace as mobilecli 1.0.14 sends them (open point 23): always two separate calls. */
+const SELECT_ALL: AgentKey[] = [{ keycode: 'KEYCODE_A', modifiers: ['KEYCODE_CTRL_LEFT'] }];
+const BACKSPACE: AgentKey[] = [{ keycode: 'KEYCODE_DEL' }];
+/** What `device.io.text` types: ASCII only. Anything else goes through the clipboard. */
+const ASCII = /^[\x00-\x7f]*$/;
 
 /**
  * A device layer failure the bridge has no reason code for: `DEVICE_ERROR`, naming the layer that failed
@@ -55,6 +73,9 @@ export interface AndroidDriverOptions {
   screenshotFolder?: string;
   leaseRoot?: string;
 }
+
+/** The element action each kind of action needs, as on iOS. */
+const REQUIRED_ACTION = { tap: 'tap', type: 'typeText', swipe: 'swipeWithin' } as const;
 
 const realClock: Clock = { now: () => performance.now(), sleep: ms => delay(ms) };
 
@@ -89,6 +110,41 @@ type AgentProcess = { pid: number; own: boolean };
 /** A foreign agent holds the device: `DEVICE_BUSY`, and the bridge leaves it running. */
 const foreignAgentFound = (identity: string) => new DeviceReasonError('DEVICE_BUSY',
   `Device ${identity} is in use by another tool's UI-automation agent. Stop that tool, then run again.`);
+
+/** An element's centre, in whole numbers. */
+function centreOf(frame: NonNullable<Element['frame']>): { x: number; y: number } {
+  return { x: Math.round(frame.x + frame.width / 2), y: Math.round(frame.y + frame.height / 2) };
+}
+
+/**
+ * A swipe within the element along its centre line, from 90% to 10% of its length in the swipe's direction,
+ * in whole numbers. The direction is the finger's: "up" moves the finger up, as on iOS.
+ */
+function swipeWithin(frame: NonNullable<Element['frame']>, direction: Direction): { x1: number; y1: number; x2: number; y2: number } {
+  const { x, y } = centreOf(frame);
+  const along = (start: number, length: number, from: number, to: number): [number, number] =>
+    [Math.round(start + length * from), Math.round(start + length * to)];
+  if (direction === 'up' || direction === 'down') {
+    const [y1, y2] = direction === 'up' ? along(frame.y, frame.height, 0.9, 0.1) : along(frame.y, frame.height, 0.1, 0.9);
+    return { x1: x, y1, x2: x, y2 };
+  }
+  const [x1, x2] = direction === 'left' ? along(frame.x, frame.width, 0.9, 0.1) : along(frame.x, frame.width, 0.1, 0.9);
+  return { x1, y1: y, x2, y2: y };
+}
+
+/**
+ * The typed field in the settled capture after typing: the one text field with its identifier, else the one
+ * focused text field, else the one text field at its frame. Undefined when none is sure: the step then
+ * records no shown value rather than another field's.
+ */
+function typedFieldIn(snapshot: Snapshot, field: Element): Element | undefined {
+  const only = (matches: Element[]) => matches.length === 1 ? matches[0] : undefined;
+  const fields = snapshot.elements.filter(element => element.role === 'text-field');
+  const byIdentifier = field.identifier ? only(fields.filter(element => element.identifier === field.identifier)) : undefined;
+  const sameFrame = (frame: Element['frame']) => frame !== undefined && field.frame !== undefined && frame.x === field.frame.x &&
+    frame.y === field.frame.y && frame.width === field.frame.width && frame.height === field.frame.height;
+  return byIdentifier ?? only(fields.filter(element => element.state?.focused)) ?? only(fields.filter(element => sameFrame(element.frame)));
+}
 
 /** What a lease holder record lists for the next run to sweep: the agent and the forward, each on its serial. */
 const ownedAgent = (serial: string, pid: number) => `agent ${serial} ${String(pid)}`;
@@ -126,6 +182,10 @@ export class AndroidDriver implements DeviceDriver {
   private forwardPort: number | undefined;
   private agentPids: number[] = [];
   private agent: DeviceAgentClient | undefined;
+  /** The only snapshot an action may target: the latest settled one, cleared once an action is issued. */
+  private latest: Snapshot | undefined;
+  private sequence = 0;
+  private screenshotFolder: Promise<string> | undefined;
 
   constructor(private readonly options: AndroidDriverOptions = {}) {
     this.lease = new DeviceLease(options.leaseRoot ? { root: options.leaseRoot } : {});
@@ -141,16 +201,106 @@ export class AndroidDriver implements DeviceDriver {
     return this.lease.track(() => this.prepareIssued(scenario, signal));
   }
 
-  observe(_signal: AbortSignal): Promise<Snapshot> {
-    return Promise.reject(new Error('The Android driver\'s observe is not built yet'));
+  observe(signal: AbortSignal): Promise<Snapshot> {
+    return this.lease.track(() => this.settledSnapshot(signal));
   }
 
-  act(_action: Action, _snapshot: Snapshot, _scenario: ActionScenarioContext, _signal: AbortSignal): Promise<Snapshot | undefined> {
-    return Promise.reject(new Error('The Android driver\'s act is not built yet'));
+  act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | ActOutcome> {
+    return this.lease.track(() => this.actIssued(action, snapshot, scenario, signal));
   }
 
   close(_signal: AbortSignal): Promise<void> {
+    // The stop flag is set first, so an abandoned operation issues nothing more (Issue 16 builds the rest).
+    this.closeBegun = true;
     return Promise.reject(new Error('The Android driver\'s close is not built yet'));
+  }
+
+  /**
+   * The settle rule over `device.dump.ui`, mapped to the bridge's elements with a fresh sequence, then one
+   * screenshot of it saved as `screen-N.jpg` (open point 9). It becomes the snapshot actions may target.
+   */
+  private async settledSnapshot(signal: AbortSignal): Promise<Snapshot> {
+    const serial = this.serial;
+    if (!this.agent || !serial) throw new Error('Driver is not prepared');
+    // The agent's tree has the captures' shape (the tracer confirmed it), so the mapping reads it as is.
+    const captured = await settle(async captureSignal =>
+      ({ hierarchy: await this.agentCall(agent => agent.dumpUi(DUMP_IDLE_MS, captureSignal), captureSignal) as UiTree['hierarchy'] }), this.clock, signal);
+    const sequence = ++this.sequence;
+    const capturedAt = Date.now();
+    const jpeg = await this.agentCall(agent => agent.screenshot(SCREENSHOT_MAX_SIZE, signal), signal);
+    const screenshotPath = join(await this.screenshotFolderPath(), `screen-${String(sequence)}.jpg`);
+    await writeFile(screenshotPath, jpeg, { mode: 0o600 });
+    this.latest = {
+      deviceId: serial,
+      capturedAt,
+      // An Android reference never expires by time: only a newer snapshot, or an action, makes it stale.
+      expiresAt: Number.MAX_SAFE_INTEGER,
+      sequence,
+      elements: mapAndroidTree(captured.tree as AndroidTree),
+      truncated: false,
+      screenHash: captured.screenHash,
+      screenshotPath,
+      ...(captured.settled ? {} : { settled: false }),
+    };
+    return this.latest;
+  }
+
+  private screenshotFolderPath(): Promise<string> {
+    this.screenshotFolder ??= this.options.screenshotFolder !== undefined
+      ? Promise.resolve(this.options.screenshotFolder) : mkdtemp(join(tmpdir(), 'jev-android-screens-'));
+    return this.screenshotFolder;
+  }
+
+  /**
+   * One action on an element of the latest settled snapshot (the session invariant), then the settle rule.
+   * Replace text also reports the field's shown value; a mismatch with the typed value never fails the step.
+   */
+  private async actIssued(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | ActOutcome> {
+    if (!this.agent || !this.serial) throw new Error('Driver is not prepared');
+    if (snapshot.deviceId !== this.serial) throw new Error('Snapshot belongs to a different device');
+    if (!this.latest || snapshot.sequence !== this.latest.sequence) throw new StaleSnapshotError('Target reference is from an older snapshot');
+    const target = this.latest.elements.find(element => element.ref === action.targetRef);
+    if (!target?.frame) throw new StaleSnapshotError('Target reference is absent from observation');
+    if (!target.actions.includes(REQUIRED_ACTION[action.kind])) throw new DeviceReasonError('UNSUPPORTED_ACTION', `Target does not support ${action.kind}`);
+    if (action.kind === 'type' && !Object.hasOwn(scenario.values, action.valueKey)) throw new DeviceReasonError('MISSING_VALUE', `Scenario value ${action.valueKey} is absent`);
+    // From here the screen may change: no later action may target this snapshot, whatever happens next.
+    this.latest = undefined;
+    const frame = target.frame;
+    if (action.kind === 'tap') await this.agentCall(agent => agent.tap(centreOf(frame), signal), signal);
+    else if (action.kind === 'swipe') await this.agentCall(agent => agent.swipe({ ...swipeWithin(frame, action.direction), duration: SWIPE_MS }, signal), signal);
+    else await this.replaceText(frame, scenario.values[action.valueKey]!, signal);
+    const screen = await this.settledSnapshot(signal);
+    if (action.kind !== 'type') return screen;
+    const shown = typedFieldIn(screen, target);
+    return shown ? { screen, shownValue: shown.value ?? '' } : screen;
+  }
+
+  /**
+   * Replace text (item 6): focus the field by tapping its centre (open point 10), clear it with `ctrl+a`,
+   * a 0.2 s pause and a separate backspace (open point 23), then type. ASCII goes through `device.io.text`,
+   * anything else through the clipboard and paste. Each call checks the stop flag first.
+   */
+  private async replaceText(frame: NonNullable<Element['frame']>, text: string, signal: AbortSignal): Promise<void> {
+    await this.agentCall(agent => agent.tap(centreOf(frame), signal), signal);
+    await this.agentCall(agent => agent.keys(SELECT_ALL, signal), signal);
+    await this.clock.sleep(CLEAR_PAUSE_MS);
+    await this.agentCall(agent => agent.keys(BACKSPACE, signal), signal);
+    // An empty value is the cleared field: nothing to type.
+    if (text === '') return;
+    if (ASCII.test(text)) {
+      await this.agentCall(agent => agent.text(text, signal), signal);
+      return;
+    }
+    await this.agentCall(agent => agent.clipboardSet(text, signal), signal);
+    await this.agentCall(agent => agent.button('KEYCODE_PASTE', signal), signal);
+    await this.agentCall(agent => agent.clipboardClear(signal), signal);
+  }
+
+  /** One device agent request, in the lease's ledger. No new request once `close` began or the run was cancelled. */
+  private async agentCall<T>(request: (agent: DeviceAgentClient) => Promise<T>, signal: AbortSignal): Promise<T> {
+    this.mayIssue(signal);
+    const agent = this.agent!;
+    return inLedger(this.lease, 'agent', () => request(agent));
   }
 
   private async prepareIssued(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void> {
