@@ -1,6 +1,7 @@
 # Phase 6: the `/test-android` skill and the plugin
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase6 at da8c46a
 Claimed by: claude-issue-22
 Blocked by: none
 
