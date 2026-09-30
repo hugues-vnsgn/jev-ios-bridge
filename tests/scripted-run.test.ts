@@ -113,7 +113,7 @@ test('an element marked selectable: false never matches, even when its label and
     frame: { x: 20, y: 100, width: 200, height: 60 }, state: { enabled: true, visible: true }, actions: ['tap'] };
   const onlyLifted = snapshot([lifted]);
   assert.throws(() => resolveActionTarget(onlyLifted, { role: 'button', label: 'Add Bread ($3)' }, 'tap'),
-    (error: unknown) => error instanceof ScriptSelectionError && error.code === 'TARGET_UNAVAILABLE');
+    (error: unknown) => error instanceof ScriptSelectionError && error.code === 'TARGET_MISSING');
   assert.throws(() => assertScreenGuard(onlyLifted, { present: [{ role: 'button', label: 'Add Bread ($3)' }] }),
     (error: unknown) => error instanceof ScriptSelectionError && error.code === 'GUARD_MISSING');
 
@@ -122,6 +122,13 @@ test('an element marked selectable: false never matches, even when its label and
   const both = snapshot([lifted, real]);
   assert.equal(resolveActionTarget(both, { role: 'button', label: 'Add Bread ($3)' }, 'tap').ref, 'e2');
   assert.doesNotThrow(() => assertScreenGuard(both, { present: [{ role: 'button', label: 'Add Bread ($3)' }] }));
+});
+
+test('an absent guard ignores an unselectable element: it never counts as forbidden either', () => {
+  const lifted: Element = { ref: 'e1', role: 'button', label: 'Add Bread ($3)', selectable: false,
+    frame: { x: 20, y: 100, width: 200, height: 60 }, state: { enabled: true, visible: true }, actions: ['tap'] };
+  assert.doesNotThrow(() => assertScreenGuard(snapshot([apple, lifted]),
+    { present: [{ identifier: 'choose.apple' }], absent: [{ role: 'button', label: 'Add Bread ($3)' }] }));
 });
 
 test('screen guards require unique present anchors and zero forbidden anchors', () => {

@@ -52,7 +52,8 @@ export interface Element {
   frame?: { x: number; y: number; width: number; height: number };
   state?: { enabled: boolean; visible: boolean; focused?: boolean; selected?: boolean };
   actions: string[];
-  /** Internal "can't be selected" marker (lifted button text). Never shown to Jev; honoured only by selection. */
+  /** Internal "can't be selected" marker: for example, text Android shows inside a button, which the mapping
+   *  lifts onto the button and marks unselectable. Never shown to Jev; honoured only by selection. */
   selectable?: false;
 }
 
