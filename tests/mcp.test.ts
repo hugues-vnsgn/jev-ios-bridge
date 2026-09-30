@@ -23,13 +23,37 @@ test('stdio server negotiates and exposes start/report/cancel without a key', { 
     child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' }) + '\n');
     const list = await request(2, 'tools/list');
     assert.deepEqual(list.result.tools.map((tool: { name: string }) => tool.name).sort(), ['cancel_run', 'get_report', 'start_scenario']);
-    const startTool = list.result.tools.find((tool: { name: string }) => tool.name === 'start_scenario');
-    const startSchema = startTool.inputSchema;
+    const startSchema = list.result.tools.find((tool: { name: string }) => tool.name === 'start_scenario').inputSchema;
     assert.ok(startSchema.properties.scenario);
-    assert.match(startTool.description, /an explicit iOS or Android action script/);
     const report = await request(3, 'tools/call', { name: 'get_report', arguments: { runId: 'missing' } });
     assert.equal(report.result.isError, true);
     assert.equal(report.result.structuredContent, undefined);
+  } finally {
+    child.stdin.end();
+    lines.close();
+    if (child.exitCode === null) child.kill('SIGTERM');
+  }
+});
+
+test('start_scenario\'s description names both iOS and Android', { timeout: 10_000 }, async () => {
+  const env = { ...process.env }; delete env.TYPESAFE_API_KEY;
+  const child = spawn(process.execPath, ['--import', 'tsx', 'src/cli.ts', 'mcp'], { env, stdio: ['pipe', 'pipe', 'pipe'] });
+  const pending = new Map<number, (value: any) => void>();
+  const lines = createInterface({ input: child.stdout });
+  lines.on('line', line => {
+    const value = JSON.parse(line);
+    pending.get(value.id)?.(value); pending.delete(value.id);
+  });
+  const request = (id: number, method: string, params: object = {}) => new Promise<any>(done => {
+    pending.set(id, done);
+    child.stdin.write(JSON.stringify({ jsonrpc: '2.0', id, method, params }) + '\n');
+  });
+  try {
+    await request(1, 'initialize', { protocolVersion: '2025-03-26', capabilities: {}, clientInfo: { name: 'smoke', version: '1' } });
+    child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' }) + '\n');
+    const list = await request(2, 'tools/list');
+    const startTool = list.result.tools.find((tool: { name: string }) => tool.name === 'start_scenario');
+    assert.match(startTool.description, /an explicit iOS or Android action script/);
   } finally {
     child.stdin.end();
     lines.close();
