@@ -108,6 +108,13 @@ export function logcatStarter(options: LogcatStarterOptions): LogcatStarter {
     return true;
   };
 
+  /** SIGTERM, then SIGKILL after 1 s, until `exitedWithin` confirms the exit; a pid that outlives both throws. */
+  const escalate = async (pid: number, send: (signal: NodeJS.Signals) => boolean, exitedWithin: (ms: number) => Promise<boolean>) => {
+    if (!send('SIGTERM') || await exitedWithin(STOP_GRACE_MS)) return;
+    if (!send('SIGKILL') || await exitedWithin(KILL_WAIT_MS)) return;
+    throw new Error(`logcat ${String(pid)} did not exit`);
+  };
+
   return {
     async start(args, output, signal) {
       if (signal?.aborted) throw signal.reason;
@@ -116,12 +123,12 @@ export function logcatStarter(options: LogcatStarterOptions): LogcatStarter {
       let child: LogcatChild;
       try {
         child = spawnChild(options.adb, [...args], { env: environment, shell: false, stdio: ['ignore', file?.fd ?? 'pipe', 'ignore'] });
-      } finally {
-        // The child holds its own copy of the descriptor.
+      } catch (error) {
         await file?.close();
+        throw error;
       }
-      const pid = child.pid;
-      if (pid === undefined) throw await new Promise<Error>(resolveError => { child.once('error', resolveError); });
+      // Listen before any await: a spawn failure or a quick exit is then never missed.
+      const failed = new Promise<Error>(resolveError => { child.once('error', resolveError); });
       child.on('error', () => {});
       let ended = false;
       const closed = new Promise<void>(resolveClosed => { child.once('close', () => { resolveClosed(); }); });
@@ -132,32 +139,36 @@ export function logcatStarter(options: LogcatStarterOptions): LogcatStarter {
         delivered = new Promise(resolveDelivered => { lines.once('close', resolveDelivered); });
       }
       const exited = Promise.all([closed, delivered]).then(() => { ended = true; });
+      // The child holds its own copy of the descriptor.
+      await file?.close();
+      const pid = child.pid;
+      if (pid === undefined) {
+        if (typeof output === 'string') await unlink(output).catch(() => undefined);
+        throw await failed;
+      }
       const exitedWithin = (ms: number) => Promise.race([exited.then(() => true), sleep(ms).then(() => ended)]);
       return {
         pid,
         exited,
         async stop() {
           if (ended) return;
-          child.kill('SIGTERM');
-          if (await exitedWithin(STOP_GRACE_MS)) return;
-          child.kill('SIGKILL');
-          if (await exitedWithin(KILL_WAIT_MS)) return;
-          throw new Error(`logcat ${String(pid)} did not exit`);
+          await escalate(pid, sent => child.kill(sent), exitedWithin);
         },
       };
     },
 
     async isLeftover(pid, serial) {
-      const words = (await commandLine(pid))?.split(/\s+/) ?? [];
-      if (words.length === 0 || basename(words[0]!) !== 'adb') return false;
-      const rest = words.slice(1);
-      return rest.includes('logcat') && rest.some((word, at) => word === '-s' && rest[at + 1] === serial);
+      const line = await commandLine(pid);
+      if (line === undefined) return false;
+      // This bridge's own adb path may hold a space; any other adb is its first word.
+      const words = line.split(/\s+/);
+      const rest = line.startsWith(`${options.adb} `) ? line.slice(options.adb.length + 1).split(/\s+/)
+        : basename(words[0]!) === 'adb' ? words.slice(1) : undefined;
+      return rest !== undefined && rest.includes('logcat') && rest.some((word, at) => word === '-s' && rest[at + 1] === serial);
     },
 
     async kill(pid) {
-      if (!sendSignal(pid, 'SIGTERM') || await goneWithin(pid, STOP_GRACE_MS)) return;
-      if (!sendSignal(pid, 'SIGKILL') || await goneWithin(pid, KILL_WAIT_MS)) return;
-      throw new Error(`logcat ${String(pid)} did not exit`);
+      await escalate(pid, sent => sendSignal(pid, sent), ms => goneWithin(pid, ms));
     },
   };
 }

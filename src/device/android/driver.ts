@@ -53,7 +53,7 @@ const SELECT_ALL: AgentKey[] = [{ keycode: 'KEYCODE_A', modifiers: ['KEYCODE_CTR
 const BACKSPACE: AgentKey[] = [{ keycode: 'KEYCODE_DEL' }];
 /** What `device.io.text` types: ASCII only. Anything else goes through the clipboard. */
 const ASCII = /^[\x00-\x7f]*$/;
-/** The events stream's filter (release spec phase 5 item 4): only the process events the app watch reads. */
+/** The events stream's filter (release spec phase 5 item 4): only the process events the app-exit watcher reads. */
 const EVENT_FILTER = ['am_proc_start:I', 'am_proc_died:I', 'am_crash:I', 'am_anr:I', 'am_kill:I', '*:S'];
 
 /**
@@ -630,7 +630,8 @@ export class AndroidDriver implements DeviceDriver {
       const match = OWNED_STREAM.exec(entry);
       if (!match) continue;
       if (signal.aborted) throw signal.reason;
-      const [, serial, pid] = match as unknown as [string, string, string];
+      const serial = match[1]!;
+      const pid = match[2]!;
       await this.lease.own(entry);
       if (await logcat.isLeftover(Number(pid), serial)) {
         try { await logcat.kill(Number(pid)); }
@@ -681,7 +682,7 @@ export class AndroidDriver implements DeviceDriver {
   /**
    * The two logcat streams (phase 5 item 1), before the restart and from the device's own time, so no
    * earlier line and no stale crash is read: the app's log, by its uid, to `<run ID>.log` in the private
-   * folder, and the process events, line by line into the app watch. Log files older than 3 days go first.
+   * folder, and the process events, line by line into the app-exit watcher. Log files older than 3 days go first.
    * A refused folder, a missing uid or device time, or a stream that won't start never refuses the run: that
    * stream is skipped. True when the events stream started.
    */
@@ -736,7 +737,7 @@ export class AndroidDriver implements DeviceDriver {
 
   /**
    * The device's time, as `-T` takes it, and its UTC offset in minutes, in one call: the events lines carry
-   * local time with no zone, so the app watch needs the offset to compare them with the start time.
+   * local time with no zone, so the app-exit watcher needs the offset to compare them with the start time.
    */
   private async deviceTime(serial: string, signal: AbortSignal): Promise<{ text: string; seconds: number; utcOffsetMinutes: number } | undefined> {
     const read = await this.shell(serial, ['date', '+%s.%3N %z'], signal);

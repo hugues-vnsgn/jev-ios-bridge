@@ -197,6 +197,25 @@ test('isLeftover is true only for an adb command line that still holds -s <seria
   assert.equal(await starter.isLeftover(107, 'emulator-5554'), false, 'gone');
 });
 
+test('isLeftover recognises a leftover of this bridge\'s own adb when its path holds a space', async () => {
+  const adb = '/Users/me/Android SDK/platform-tools/adb';
+  const starter = logcatStarter({ adb, environment: ENVIRONMENT, commandLine: async () => `${adb} -s emulator-5554 logcat -b events` });
+  assert.equal(await starter.isLeftover(101, 'emulator-5554'), true);
+  assert.equal(await starter.isLeftover(101, 'emulator-5556'), false);
+});
+
+test('a file stream whose adb fails to spawn leaves no file behind', async () => {
+  await withFolder(async folder => {
+    const { spawn } = fakeSpawn(() => {
+      const child = new FakeLogcat(undefined);
+      setImmediate(() => child.emit('error', Object.assign(new Error('spawn ENOENT'), { code: 'ENOENT' })));
+      return child;
+    });
+    await assert.rejects(logcatStarter({ adb: ADB, environment: ENVIRONMENT, spawn }).start(ARGS, join(folder, 'run-1.log')), /ENOENT/);
+    assert.deepEqual(await readdir(folder), []);
+  });
+});
+
 /** A fake Mac process table for `kill`: each pid dies on the signals it doesn't ignore. */
 function fakeProcesses(ignores: Record<number, NodeJS.Signals[]>) {
   const running = new Set(Object.keys(ignores).map(Number));
