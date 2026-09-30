@@ -157,3 +157,96 @@ test('every whole script shown in the guide parses', () => {
   }
   assert.ok(scripts >= 3, `expected the guide's example scripts, found ${scripts}`);
 });
+
+test('the limits page says an upper-case copy goes unmasked in the log pane and run.jsonl, and no page says a log file is masked', () => {
+  const line = guidePage('10-limits.md').split('\n').find(row => row.includes('upper-case copy'))!;
+  assert.match(line, /log pane/);
+  assert.match(line, /`run\.jsonl`/);
+  assert.doesNotMatch(line, /log file/);
+  for (const file of [...shipped, 'docs/releases/v1.2.0.md']) {
+    assert.doesNotMatch(readFileSync(file, 'utf8'), /log files? (?:is |are )?masked|masked[^.]*in the log file/i, file);
+  }
+});
+
+test('data handling names exactly the intent-extra keys whose values are masked', () => {
+  const keys = /\^\(([^)]+)\)\$\/i\.test\(key\)/.exec(readFileSync('src/log/index.ts', 'utf8'))![1]!.split('|');
+  const line = guidePage('09-data-handling.md').split('\n').find(row => row.startsWith('- **Intent extras**'))!;
+  for (const key of keys) assert.ok(line.includes(`\`${key}\``), `09-data-handling.md does not name ${key}`);
+  assert.match(line, /case/);
+  assert.match(line, /`authToken`/);
+  assert.doesNotMatch(line, /named like/);
+});
+
+test('data handling and the release notes say which device reads the bridge makes', () => {
+  for (const file of ['docs/guide/09-data-handling.md', 'docs/releases/v1.2.0.md']) {
+    const text = readFileSync(file, 'utf8');
+    assert.match(text, /`adb devices -l`/, file);
+    assert.match(text, /`ro\.boot\.qemu\.avd_name`/, file);
+    assert.doesNotMatch(text, /no look at other connected devices|doesn't read other connected devices/, file);
+  }
+});
+
+test('the architecture page names only source paths that exist', () => {
+  for (const [, path] of readFileSync('docs/architecture.md', 'utf8').matchAll(/^\| `(src\/[^`]+)`/gm)) {
+    assert.ok(existsSync(path!) || existsSync(`${path}.ts`), `docs/architecture.md names missing ${path}`);
+  }
+  assert.match(readFileSync('docs/architecture.md', 'utf8'), /^\| `src\/capture\.ts` \|/m);
+});
+
+test('the quickstart\'s Android section puts adb and emulator on the PATH', () => {
+  const android = guidePage('01-quickstart.md').split('## Android')[1]!;
+  assert.ok(android.includes('$HOME/Library/Android/sdk/platform-tools'));
+  assert.ok(android.includes('$HOME/Library/Android/sdk/emulator'));
+});
+
+test('the identifiers page says an empty field shows its hint only without a content description', () => {
+  assert.match(guidePage('03-identifiers.md'), /hint as `placeholder` only when it has no content description/);
+});
+
+test('the guide says device lease, not device lock, outside the frozen reason-code wording', () => {
+  for (const file of markdownFiles('docs/guide').filter(name => !name.endsWith('reason-codes.md'))) {
+    assert.doesNotMatch(readFileSync(file, 'utf8'), /device lock\b/i, file);
+  }
+  assert.ok(guidePage('08-troubleshooting.md').includes('](06-running.md#cancelling-and-the-device-lease)'));
+});
+
+test('the limits page\'s Android speed table names each evidence script once', () => {
+  const page = guidePage('10-limits.md');
+  const table = page.slice(page.indexOf('| Script | Android 16'));
+  const rows = [...table.slice(0, table.indexOf('\n\n')).matchAll(/^ *\| ([a-z][a-z-]*) \|/gm)].map(match => match[1]!);
+  const scripts = ['twin-fail', ...readdirSync('spikes/benchmarks/scenarios')
+    .filter(name => /^android-.+\.json$/.test(name)).map(name => name.slice('android-'.length, -'.json'.length))];
+  assert.deepEqual([...rows].sort(), scripts.sort());
+});
+
+test('the clipboard is described as the path for non-ASCII text, not non-English text', () => {
+  for (const file of [...shipped, 'docs/releases/v1.2.0.md']) {
+    for (const line of readFileSync(file, 'utf8').split('\n').filter(row => /clipboard/.test(row))) {
+      assert.doesNotMatch(line, /non-English/i, `${file}: ${line}`);
+    }
+  }
+});
+
+test('a guide page first calls a foreign agent another tool\'s UI-automation agent', () => {
+  for (const file of markdownFiles('docs/guide')) {
+    const text = readFileSync(file, 'utf8');
+    const first = text.search(/another tool's (?:UI-automation |automation )?agent|foreign agent/i);
+    if (first === -1) continue;
+    assert.ok(text.slice(first).startsWith('another tool\'s UI-automation agent (a foreign agent)')
+      || text.slice(first).startsWith('Another tool\'s UI-automation agent (a foreign agent)'), `${file} first names a foreign agent otherwise`);
+    assert.doesNotMatch(text.slice(first + 1), /another tool's (?:UI-automation |automation )?agent(?! \(a foreign agent\))/i, file);
+  }
+});
+
+test('the prepare page gives the Android device its own section', () => {
+  const page = guidePage('02-prepare-your-app.md');
+  const simulator = page.slice(page.indexOf('## A simulator of its own'));
+  assert.doesNotMatch(simulator.slice(0, simulator.indexOf('\n## ', 1) === -1 ? undefined : simulator.indexOf('\n## ', 1)), /Android/);
+  assert.match(page, /^## An Android device of its own$/m);
+});
+
+test('the release notes and the package description keep phones, marked untested', () => {
+  assert.match(readFileSync('docs/releases/v1.2.0.md', 'utf8').split('\n')[2]!, /emulator or phone \(phones untested\)/);
+  const { description } = JSON.parse(readFileSync('package.json', 'utf8')) as { description: string };
+  assert.match(description, /emulator or phone \(phones untested\)/);
+});

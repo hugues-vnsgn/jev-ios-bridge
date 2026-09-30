@@ -111,7 +111,7 @@ The Android twin of the diagnostic app runs through `/test-android`, and should 
 
 **What you need:**
 
-- A Mac. Android runs have been tried only on Apple silicon.
+- A Mac. Android runs have been tried only on Apple silicon ([limits](10-limits.md#android)).
 - Android Studio, for the SDK's `adb`, the emulator, and the JDK it bundles. The build needs JDK 17 or later.
 - An emulator with Android 12 (API 31) or later. On Apple silicon, create it from an `arm64-v8a` system image in Android Studio's Device Manager.
 - Node 24 or later, a TypeSafe key, and Claude Code.
@@ -120,7 +120,13 @@ The Android twin of the diagnostic app runs through `/test-android`, and should 
 
 **1. Install the bridge and keep your key private,** as in steps 1 and 2. Skip this if you've done it already.
 
-**2. Start the emulator,** from Device Manager or with `emulator -avd <AVD name>`. Then check that `adb` sees it:
+**2. Start the emulator.** Android Studio doesn't put `adb` or `emulator` on your `PATH`, so add both for this terminal first:
+
+```sh
+export PATH="$HOME/Library/Android/sdk/platform-tools:$HOME/Library/Android/sdk/emulator:$PATH"
+```
+
+Start the emulator from Device Manager or with `emulator -avd <AVD name>`. Then check that `adb` sees it:
 
 ```sh
 adb devices     # emulator-5554   device
