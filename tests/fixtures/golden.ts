@@ -4,12 +4,13 @@ import { dirname } from 'node:path';
 
 /**
  * Shared golden-file check for test files other than tests/contract.test.ts, which keeps its own copy of
- * this helper for the 1.x contract goldens. This one is for goldens outside that promise, for example the
- * Android renderer's frozen output: a single string, not a general JSON object, frozen per ADR-0004 (the
- * observation text is fixed) and exercising the Android view ADR-0006 sets out.
+ * this helper for the 1.x contract goldens. This one is for goldens outside that promise: it JSON-encodes
+ * `actual`, any JSON-serializable value. Today's one caller freezes the Android renderer's output, a
+ * single string, per ADR-0004 (the observation text is fixed) and exercising the Android view ADR-0006
+ * sets out.
  *
- * `path` is the golden file's full path, JSON-encoding `actual`. `UPDATE_GOLDEN=1 npm test` (re)writes it;
- * review the diff before committing.
+ * `path` is the golden file's full path. `UPDATE_GOLDEN=1 npm test` (re)writes it; review the diff before
+ * committing.
  */
 export async function checkGolden(path: string, actual: unknown): Promise<void> {
   const text = JSON.stringify(actual, null, 2) + '\n';

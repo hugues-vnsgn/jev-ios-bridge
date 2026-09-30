@@ -20,7 +20,7 @@ export class ScriptedObservationError extends Error {
 function isVisibleEvidence(element: Element, platform: Platform): boolean {
   if (element.state?.visible === false || (element.frame && (element.frame.width <= 0 || element.frame.height <= 0))) return false;
   if (/status.?bar/i.test(`${element.role} ${element.identifier ?? ''}`)) return false;
-  const placeholderText = platform === 'android' ? element.placeholder?.trim() : undefined;
+  const placeholderText = SHOWS_PLACEHOLDER[platform] ? element.placeholder?.trim() : undefined;
   return Boolean(element.label?.trim() || placeholderText || element.value?.trim() || element.identifier?.trim() ||
     element.actions.length > 0 || /^(text|statictext|title|heading|alert)$/i.test(element.role));
 }
@@ -30,9 +30,17 @@ const HEADERS: Record<Platform, string> = {
   android: 'Current Android screen (full accessibility capture):',
 };
 
+/** Whether the platform's view treats an empty field's `placeholder` as evidence, shown in place of `label`.
+ *  iOS never does, so its output stays byte-identical regardless of what a snapshot happens to carry. */
+const SHOWS_PLACEHOLDER: Record<Platform, boolean> = {
+  ios: false,
+  android: true,
+};
+
 /**
  * Full text evidence for assertion judgments; no action options, values, history or screenshots.
- * The platform picks the header; it defaults to iOS, whose output is frozen byte for byte.
+ * The platform picks the header, and whether an element's `placeholder` counts as evidence and is shown
+ * in place of `label` (`SHOWS_PLACEHOLDER`); it defaults to iOS, whose output is frozen byte for byte.
  */
 export function renderAssertionState(snapshot: Snapshot, platform: Platform = 'ios'): string {
   if (snapshot.truncated) throw new ScriptedObservationError('TRUNCATED');
@@ -40,7 +48,7 @@ export function renderAssertionState(snapshot: Snapshot, platform: Platform = 'i
   if (elements.length === 0) throw new ScriptedObservationError('EMPTY_SCREEN');
   const lines = [HEADERS[platform], ...elements.map(element => JSON.stringify({
     role: element.role,
-    ...(platform === 'android' && element.placeholder !== undefined ? { placeholder: element.placeholder } :
+    ...(SHOWS_PLACEHOLDER[platform] && element.placeholder !== undefined ? { placeholder: element.placeholder } :
       element.label !== undefined ? { label: element.label } : {}),
     ...(element.value !== undefined ? { value: element.value } : {}),
     ...(element.identifier !== undefined ? { identifier: element.identifier } : {}),

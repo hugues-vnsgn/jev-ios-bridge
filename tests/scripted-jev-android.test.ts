@@ -36,7 +36,7 @@ test('on Android, an empty field with only a placeholder shows it in place of la
   assert.doesNotMatch(android, /"label"/);
 });
 
-test('on Android, a field carrying both label and placeholder (phase 4\'s mapping keeps the label for selection) shows only the placeholder', () => {
+test('on Android, a field carrying both a label and a placeholder shows only the placeholder', () => {
   const both: Element = { ref: 'e1', role: 'text-field', label: 'Betrag eingeben', placeholder: 'Betrag eingeben',
     state: { enabled: true, visible: true }, actions: ['tap', 'typeText'] };
   const android = renderAssertionState({ ...base, elements: [both] }, 'android');

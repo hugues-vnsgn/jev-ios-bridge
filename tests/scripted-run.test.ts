@@ -125,9 +125,9 @@ test('an element marked selectable: false never matches, even when its label and
 });
 
 test('an absent guard ignores an unselectable element: it never counts as forbidden either', () => {
-  const lifted: Element = { ref: 'e1', role: 'button', label: 'Add Bread ($3)', selectable: false,
+  const unselectable: Element = { ref: 'e1', role: 'button', label: 'Add Bread ($3)', selectable: false,
     frame: { x: 20, y: 100, width: 200, height: 60 }, state: { enabled: true, visible: true }, actions: ['tap'] };
-  assert.doesNotThrow(() => assertScreenGuard(snapshot([apple, lifted]),
+  assert.doesNotThrow(() => assertScreenGuard(snapshot([apple, unselectable]),
     { present: [{ identifier: 'choose.apple' }], absent: [{ role: 'button', label: 'Add Bread ($3)' }] }));
 });
 
