@@ -1,6 +1,7 @@
 # Phase 3: the element's placeholder and selectable marker, and Jev's Android view
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase3 at 9106fac
 Claimed by: implementer-05
 Blocked by: none
 
