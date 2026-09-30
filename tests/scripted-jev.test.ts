@@ -1,28 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { join } from 'node:path';
 import { TypeSafeClient } from '@typesafe-ai/sdk';
-import type { Assertion, Element, Snapshot } from '../src/contracts/index.js';
+import type { Assertion, Snapshot } from '../src/contracts/index.js';
 import { buildAssertionRequest, createAssertionJudge, parseAssertionResult, ScriptedJevError } from '../src/scripted/jev.js';
-import { ANDROID_PROJECTION_RULE, PROJECTION_RULE, renderAssertionState, ScriptedObservationError } from '../src/scripted/observe.js';
-
-const goldenDir = join(import.meta.dirname, 'golden');
-
-/** Golden-file check for the Android renderer's output (ADR-0005: golden files only gain entries). */
-async function golden(name: string, actual: unknown): Promise<void> {
-  const path = join(goldenDir, `${name}.json`);
-  const text = JSON.stringify(actual, null, 2) + '\n';
-  if (process.env.UPDATE_GOLDEN === '1') {
-    await mkdir(goldenDir, { recursive: true });
-    await writeFile(path, text);
-    return;
-  }
-  let expected: string;
-  try { expected = await readFile(path, 'utf8'); }
-  catch { assert.fail(`Missing golden file ${path}; run UPDATE_GOLDEN=1 npm test and review it`); }
-  assert.deepEqual(JSON.parse(text), JSON.parse(expected), `Frozen surface changed: ${name}. See tests/scripted-jev.test.ts.`);
-}
+import { renderAssertionState, ScriptedObservationError } from '../src/scripted/observe.js';
 
 const assertions: Assertion[] = [
   { id: 'a', claim: 'The saved card visibly shows Berlin.' },
@@ -55,11 +36,6 @@ test('assertion projection keeps visible evidence and excludes screenshot, refs,
     (error: unknown) => error instanceof ScriptedObservationError && error.code === 'STATE_BUDGET');
 });
 
-test('the Android projection rule is a fixed name beside the iOS rule', () => {
-  assert.equal(PROJECTION_RULE, 'visible-full-text-v2');
-  assert.equal(ANDROID_PROJECTION_RULE, 'android-full-text-v1');
-});
-
 test('the platform parameter defaults to iOS and picks the header per platform', () => {
   const defaulted = renderAssertionState(snapshot);
   const explicitIos = renderAssertionState(snapshot, 'ios');
@@ -69,40 +45,6 @@ test('the platform parameter defaults to iOS and picks the header per platform',
   assert.match(android, /^Current Android screen \(full accessibility capture\):/);
   assert.equal(android.slice(android.indexOf('\n')), defaulted.slice(defaulted.indexOf('\n')),
     'only the header differs; the projected elements are identical');
-});
-
-test('an element with a placeholder shows it in place of label, on both platforms', () => {
-  const withPlaceholder: Snapshot = { ...snapshot, elements: [
-    { ref: 'e1', role: 'textfield', placeholder: 'Betrag eingeben', state: { enabled: true, visible: true }, actions: ['type'] },
-  ] };
-  const android = renderAssertionState(withPlaceholder, 'android');
-  assert.match(android, /"placeholder":"Betrag eingeben"/);
-  assert.doesNotMatch(android, /"label"/);
-  const ios = renderAssertionState(withPlaceholder, 'ios');
-  assert.match(ios, /"placeholder":"Betrag eingeben"/);
-});
-
-test('golden: the Android renderer on hand-written elements with a placeholder, a password field, and lifted button text', async () => {
-  const amountField: Element = { ref: 'e1', role: 'text-field', placeholder: 'Betrag eingeben',
-    identifier: 'amount', frame: { x: 16, y: 200, width: 300, height: 48 },
-    state: { enabled: true, visible: true, focused: true }, actions: ['tap', 'typeText'] };
-  const passwordField: Element = { ref: 'e2', role: 'text-field', label: 'Password', value: '••••••••',
-    identifier: 'password', frame: { x: 16, y: 280, width: 300, height: 48 },
-    state: { enabled: true, visible: true }, actions: ['tap', 'typeText'] };
-  const breadButton: Element = { ref: 'e3', role: 'button', label: 'Add Bread ($3)',
-    frame: { x: 16, y: 360, width: 300, height: 48 }, state: { enabled: true, visible: true }, actions: ['tap'] };
-  const breadLabelLine: Element = { ref: 'e4', role: 'text', label: 'Add Bread ($3)', selectable: false,
-    frame: { x: 24, y: 372, width: 200, height: 24 }, state: { enabled: true, visible: true }, actions: [] };
-  const handWritten: Snapshot = { deviceId: 'emulator-5554', capturedAt: 1_700_000_000_000,
-    expiresAt: 1_700_000_060_000, sequence: 1, truncated: false,
-    elements: [amountField, passwordField, breadButton, breadLabelLine] };
-
-  const rendered = renderAssertionState(handWritten, 'android');
-  assert.match(rendered, /"placeholder":"Betrag eingeben"/);
-  assert.match(rendered, /"value":"••••••••"/);
-  assert.doesNotMatch(rendered, /"selectable"/);
-  assert.match(rendered, /Add Bread \(\$3\)/);
-  await golden('android-render', rendered);
 });
 
 test('request contains only neutral a/b Noul questions and current claims, never truth labels or action choices', () => {

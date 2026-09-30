@@ -17,10 +17,11 @@ export class ScriptedObservationError extends Error {
   }
 }
 
-function isVisibleEvidence(element: Element): boolean {
+function isVisibleEvidence(element: Element, platform: Platform): boolean {
   if (element.state?.visible === false || (element.frame && (element.frame.width <= 0 || element.frame.height <= 0))) return false;
   if (/status.?bar/i.test(`${element.role} ${element.identifier ?? ''}`)) return false;
-  return Boolean(element.label?.trim() || element.placeholder?.trim() || element.value?.trim() || element.identifier?.trim() ||
+  const placeholderText = platform === 'android' ? element.placeholder?.trim() : undefined;
+  return Boolean(element.label?.trim() || placeholderText || element.value?.trim() || element.identifier?.trim() ||
     element.actions.length > 0 || /^(text|statictext|title|heading|alert)$/i.test(element.role));
 }
 
@@ -35,11 +36,11 @@ const HEADERS: Record<Platform, string> = {
  */
 export function renderAssertionState(snapshot: Snapshot, platform: Platform = 'ios'): string {
   if (snapshot.truncated) throw new ScriptedObservationError('TRUNCATED');
-  const elements = snapshot.elements.filter(isVisibleEvidence);
+  const elements = snapshot.elements.filter(element => isVisibleEvidence(element, platform));
   if (elements.length === 0) throw new ScriptedObservationError('EMPTY_SCREEN');
   const lines = [HEADERS[platform], ...elements.map(element => JSON.stringify({
     role: element.role,
-    ...(element.placeholder !== undefined ? { placeholder: element.placeholder } :
+    ...(platform === 'android' && element.placeholder !== undefined ? { placeholder: element.placeholder } :
       element.label !== undefined ? { label: element.label } : {}),
     ...(element.value !== undefined ? { value: element.value } : {}),
     ...(element.identifier !== undefined ? { identifier: element.identifier } : {}),
