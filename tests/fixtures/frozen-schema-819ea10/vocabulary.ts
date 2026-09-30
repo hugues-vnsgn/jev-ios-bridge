@@ -1,3 +1,4 @@
+/** Frozen copy of src/scripted/vocabulary.ts at commit 819ea10; see schema.ts in this folder. Never update it. */
 /**
  * Bridge-owned vocabularies frozen by ADR-0005. A MobileBuildMCP release cannot change them:
  * the driver translates vendor roles, and unknown vendor error codes become DEVICE_ERROR.
@@ -11,12 +12,8 @@ export const ROLES = [
 ] as const;
 export type Role = typeof ROLES[number];
 
-/**
- * The reason codes shipped through 1.1. Only this set of keys is frozen (see MOBILEBUILDMCP_PASSTHROUGH_CODES
- * below); their descriptions may still be reworded, as NO_DEVICE, INVALID_DEVICE and DEVICE_BUSY were
- * in 1.2, to serve both platforms without changing what each code means.
- */
-const REASON_CODES_1_1 = {
+/** Every reason a verdict or error event can carry, with the meaning the guide documents. */
+export const REASON_CODES = {
   // Outcomes
   ALL_CHECKPOINTS_PASSED: 'Every step ran and every checkpoint claim was established.',
   ASSERTION_FALSE: 'A checkpoint claim was confidently false (probability at or below 0.1).',
@@ -54,9 +51,9 @@ const REASON_CODES_1_1 = {
   NETWORK: 'The judgment request could not reach TypeSafe.',
   UNKNOWN: 'The judgment request failed for an unclassified reason.',
   // Device
-  NO_DEVICE: 'No device was configured for the script\'s platform.',
-  INVALID_DEVICE: 'The configured device does not have the shape the script\'s platform requires.',
-  DEVICE_BUSY: 'The device is in use, by another run or by another tool\'s UI-automation agent (a foreign agent).',
+  NO_DEVICE: 'No dedicated simulator UUID was configured.',
+  INVALID_DEVICE: 'The configured device is not a simulator UUID.',
+  DEVICE_BUSY: 'Another run holds the device lock.',
   DEVICE_ERROR: 'The device layer reported an error; its own code is kept as vendorCode.',
   INVALID_JSON: 'The device layer returned output that was not JSON.',
   INVALID_ENVELOPE: 'The device layer returned an unsupported result envelope.',
@@ -74,31 +71,8 @@ const REASON_CODES_1_1 = {
   INTERNAL_ERROR: 'The bridge could not complete the run; check local setup.',
   INTERRUPTED: 'The run log has no verdict: the bridge process stopped before recording one.',
 } as const satisfies Record<string, string>;
-
-/** Every reason a verdict or error event can carry, with the meaning the guide documents. */
-export const REASON_CODES = {
-  ...REASON_CODES_1_1,
-  // Android device and tooling codes, added in 1.2.
-  DEVICE_NOT_CONNECTED: 'The named serial isn\'t listed by adb or is offline, or no running emulator has the named AVD.',
-  DEVICE_AMBIGUOUS: 'More than one running emulator has the named AVD, so the bridge can\'t tell them apart.',
-  DEVICE_UNAUTHORIZED: 'The device hasn\'t accepted this Mac\'s USB-debugging key.',
-  DEVICE_NOT_BOOTED: 'The device hasn\'t finished booting.',
-  DEVICE_LOCKED: 'The device\'s screen is locked.',
-  APP_NOT_INSTALLED: 'The app\'s package isn\'t installed on the device.',
-  APP_NOT_RESPONDING: 'The app froze (Android showed "App isn\'t responding") during the run.',
-  DEVICE_UNSUPPORTED: 'The device is below Android 12 (API 31), which this bridge does not support.',
-  ANDROID_TOOLS_UNAVAILABLE: 'adb could not be found, the pinned mobilecli package is missing, or the device agent copied out of it does not match the pinned SHA-256.',
-} as const satisfies Record<string, string>;
 export type ReasonCode = keyof typeof REASON_CODES;
 
 export function isReasonCode(value: unknown): value is ReasonCode {
   return typeof value === 'string' && Object.hasOwn(REASON_CODES, value);
 }
-
-/**
- * MobileBuildMCP device-layer errors pass through only when their code is one of these: the codes
- * shipped in 1.1, frozen here rather than read off the live REASON_CODES. This keeps a later addition
- * to REASON_CODES (for example an Android-only code that happens to share a name with a MobileBuildMCP
- * code) from silently starting to pass through too. See ADR-0005.
- */
-export const MOBILEBUILDMCP_PASSTHROUGH_CODES: ReadonlySet<string> = new Set(Object.keys(REASON_CODES_1_1));

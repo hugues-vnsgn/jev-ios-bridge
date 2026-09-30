@@ -1,4 +1,4 @@
-import type { RunEvent, Verdict } from '../contracts/index.js';
+import type { Platform, RunEvent, Verdict } from '../contracts/index.js';
 import { BRIDGE_VERSION } from '../version.js';
 import { isReasonCode, type ReasonCode } from './vocabulary.js';
 
@@ -39,10 +39,50 @@ export interface ReportJson {
   finishedAt: string | null;
   checkpoints: ReportCheckpoint[];
   evidence: { log: 'run.jsonl'; screenshots: string[] };
+  /** Android runs only, mirroring `started`; a reader with no `platform` field treats the report as iOS's. */
+  platform?: 'android';
+  package?: string;
+  activity?: string | null;
+  intentExtras?: Record<string, string>;
+  /** Android runs only: one shown value per replace-text step, built from `action` events. */
+  typedFields?: Array<{ stepId: string; shownValue: string }>;
 }
 
 const text = (value: unknown): string | null => typeof value === 'string' ? value : null;
 const count = (value: unknown): number | null => typeof value === 'number' && Number.isFinite(value) ? value : null;
+
+/** Keeps only the entries of an unknown value whose value is itself a string; `{}` for anything else. */
+function stringRecord(value: unknown): Record<string, string> {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return {};
+  return Object.fromEntries(Object.entries(value).filter((entry): entry is [string, string] => typeof entry[1] === 'string'));
+}
+
+/** One shown value per replace-text step, built from the run's `action` events; `[]` when none typed. */
+export function typedFieldsOf(events: RunEvent[]): Array<{ stepId: string; shownValue: string }> {
+  return events.flatMap(event => event.type === 'action' && event.data.action === 'replaceText' &&
+    typeof event.data.shownValue === 'string'
+    ? [{ stepId: String(event.data.stepId ?? ''), shownValue: event.data.shownValue }] : []);
+}
+
+/** The run's own recorded platform (from `started`), the one place any reader decides Android vs iOS;
+ *  a run with no `started` event, or no recorded `platform`, reads as iOS. */
+export function recordedPlatform(events: RunEvent[]): Platform {
+  return events.find(event => event.type === 'started')?.data.platform === 'android' ? 'android' : 'ios';
+}
+
+/** The Android-only fields, built from `started` and the `action` events; `{}` on iOS runs. */
+function androidReportFields(started: RunEvent | undefined, events: RunEvent[]):
+  Pick<ReportJson, 'platform' | 'package' | 'activity' | 'intentExtras' | 'typedFields'> {
+  if (recordedPlatform(events) !== 'android' || !started) return {};
+  const typedFields = typedFieldsOf(events);
+  return {
+    platform: 'android',
+    package: text(started.data.package) ?? '',
+    activity: started.data.activity === null ? null : text(started.data.activity),
+    intentExtras: stringRecord(started.data.intentExtras),
+    ...(typedFields.length ? { typedFields } : {}),
+  };
+}
 
 /** Build the frozen report from recorded events. The recorded verdict is authoritative. */
 export function buildReportJson(events: RunEvent[]): ReportJson {
@@ -107,5 +147,6 @@ export function buildReportJson(events: RunEvent[]): ReportJson {
       screenshots: events.flatMap(event => event.type === 'step' && typeof event.data.screenshotPath === 'string'
         ? [event.data.screenshotPath] : []),
     },
+    ...androidReportFields(started, events),
   };
 }

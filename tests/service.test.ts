@@ -5,7 +5,9 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { BridgeService } from '../src/service.js';
 import type { DeviceDriver } from '../src/contracts/index.js';
+import { appLabel, type AppIdentity } from '../src/contracts/index.js';
 import type { ScriptedJudge } from '../src/scripted/contracts.js';
+import { createDriverFactory } from '../src/device/factory.js';
 
 const screen = () => ({ deviceId: 'test', sequence: 1, capturedAt: Date.now(),
   expiresAt: Date.now() + 60_000, truncated: false,
@@ -44,6 +46,41 @@ test('scripted start returns a recoverable run id and report reflects assertion 
     const reader = new BridgeService(options);
     assert.equal((await reader.status(start.runId)).report.verdict, 'passed');
     await reader.close();
+  } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
+});
+
+test('an Android scenario gives its driver a package identity, never a bundle ID', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-service-android-'));
+  let preparedApp: AppIdentity | undefined;
+  const driver: DeviceDriver = {
+    async prepare(scenario) { preparedApp = scenario.app; }, async observe() { return screen(); },
+    async act() { assert.fail('A checkpoint-only script must not act'); },
+    async close() {},
+  };
+  const judge: ScriptedJudge = { async judge() { return { probabilities: { shown: 1 },
+    inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } };
+  const service = new BridgeService({ baseDir: root, createDriver: () => driver, createJudge: () => judge });
+  try {
+    const androidScript = { version: 1, platform: 'android', app: { package: 'com.example.app' },
+      device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint('verify')] };
+    const start = await service.start(androidScript);
+    const status = await service.status(start.runId, 2_000);
+    assert.equal(status.state, 'finished');
+    assert.equal(status.report.verdict, 'passed');
+    assert.deepEqual(preparedApp, { package: 'com.example.app' });
+  } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
+});
+
+test('start refuses an Android scenario before creating a run, through the real driver factory', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-service-android-refused-'));
+  const judge: ScriptedJudge = { async judge() { return { probabilities: { shown: 1 },
+    inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } };
+  const createDriver = createDriverFactory({ mobileBuildMcp: { cwd: root, lockRoot: root } });
+  const service = new BridgeService({ baseDir: root, createDriver, createJudge: () => judge });
+  try {
+    const androidScript = { version: 1, platform: 'android', app: { package: 'com.example.app' },
+      device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint('verify')] };
+    await assert.rejects(service.start(androidScript), /Android isn't available in this build/);
   } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
 });
 
@@ -108,7 +145,7 @@ test('createDriver builds a driver per run from that run\'s scenario, and the ru
   const taps: string[] = [];
   const service = new BridgeService({ baseDir: root,
     createDriver: (scenario) => {
-      built.push(scenario.app.bundleId);
+      built.push(appLabel(scenario.app));
       const driver: DeviceDriver = {
         async prepare() {}, async observe() { return aliased(); },
         async act(action) { taps.push(`${scenario.app.bundleId}:${action.targetRef}`); },

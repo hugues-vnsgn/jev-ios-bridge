@@ -1,4 +1,5 @@
 import type { RunEvent, RunReport, Verdict } from '../contracts/index.js';
+import { recordedPlatform, typedFieldsOf } from './report-json.js';
 
 export interface ScriptedReport extends RunReport {
   checkpoints: Array<{
@@ -68,6 +69,9 @@ export function renderScriptedReport(report: ScriptedReport): string {
   const lastError = report.events.findLast(event => event.type === 'error');
   const lastStep = report.events.findLast(event => event.type === 'step');
   const started = report.events.find(event => event.type === 'started')?.data;
+  const prepared = report.events.find(event => event.type === 'prepared')?.data;
+  // The run's own recorded platform decides, not merely whether a driver happened to set an Android field.
+  const android = recordedPlatform(report.events) === 'android';
   const model = typeof started?.jevModel === 'string' ? started.jevModel
     : report.events.find(event => event.type === 'judgment' && typeof event.data.model === 'string')?.data.model;
   const header = [
@@ -76,7 +80,21 @@ export function renderScriptedReport(report: ScriptedReport): string {
     `Steps: ${report.steps}; Jev input tokens: ${report.inputTokens}; duration: ${report.durationMs} ms.`,
     ...(typeof model === 'string' ? [`Jev model: ${model}` +
       (typeof started?.bridgeVersion === 'string' ? `; bridge ${started.bridgeVersion}.` : '.')] : []),
+    // Android only: prepare's device identity, serial, agent SHA-256 and any crash-takeover sweep.
+    ...(android && typeof prepared?.deviceIdentity === 'string' ? [`Device: ${prepared.deviceIdentity}, serial ${String(prepared.serial ?? '')}, ` +
+      `agent ${String(prepared.agentSha256 ?? '')}.` + (prepared.sweptLeftovers === true
+        ? ' Swept a crashed run\'s leftover agent and forward.' : '')] : []),
   ].join('\n');
+  // Android only: each replace-text step's shown value, from the run's `action` events.
+  const typedFields = android ? typedFieldsOf(report.events) : [];
+  const typedFieldsBlock = typedFields.length ? ['Typed fields:',
+    ...typedFields.map(field => `${field.stepId}: ${bounded(field.shownValue, 500)}`)].join('\n') : undefined;
+  // Android only: every step whose observed screen never settled within the settle rule's cap, whatever its
+  // kind: a checkpoint judged on it is judged as usual, but this still names the step "screen still changing".
+  const unsettledStepIds = android ? [...new Set(report.events.flatMap(event => event.type === 'step' && event.data.settled === false
+    ? [String(event.data.stepId ?? '')] : []))] : [];
+  const unsettledBlock = unsettledStepIds.length
+    ? `Screen still changing when observed, for step(s): ${unsettledStepIds.join(', ')}.` : undefined;
   const checkpointBlock = (checkpoint: ScriptedReport['checkpoints'][number], decisive: boolean): string => [
       `Checkpoint ${checkpoint.stepId}: ${checkpoint.status}.`,
       ...checkpoint.assertions.map(assertion =>
@@ -101,6 +119,8 @@ export function renderScriptedReport(report: ScriptedReport): string {
   const earlier = report.checkpoints.slice(0, -1);
   const blocks = [
     ...(errorBlock ? [errorBlock] : []),
+    ...(typedFieldsBlock ? [typedFieldsBlock] : []),
+    ...(unsettledBlock ? [unsettledBlock] : []),
     ...(lastCheckpoint ? [checkpointBlock(lastCheckpoint, true)] : []),
     ...earlier.map(checkpoint => checkpointBlock(checkpoint, false)),
   ];

@@ -1,8 +1,8 @@
 import { mkdir, readFile, open, copyFile, chmod, realpath, rename, writeFile } from 'node:fs/promises';
 import { createHmac, randomBytes } from 'node:crypto';
 import { resolve, join, basename } from 'node:path';
-import type { RunEvent, RunLog } from '../contracts/index.js';
-import { PROJECTION_RULE } from '../scripted/observe.js';
+import { PLATFORMS, type RunEvent, type RunLog } from '../contracts/index.js';
+import { PROJECTION_RULES } from '../scripted/observe.js';
 import { REASON_CODES } from '../scripted/vocabulary.js';
 import { BRIDGE_VERSION } from '../version.js';
 
@@ -21,14 +21,21 @@ const protocolValues: Record<string, ReadonlySet<string>> = {
   verdict: new Set(['passed', 'failed', 'inconclusive']),
   phase: new Set(['prepare', 'observe', 'decide', 'act', 'wait', 'budget', 'reobserve', 'cleanup', 'run']),
   model: new Set(['jev-1.13.0']),
+  platform: new Set(PLATFORMS),
 };
 const errorCodes: ReadonlySet<string> = new Set(Object.keys(REASON_CODES));
 protocolValues.code = errorCodes;
 protocolValues.reason = errorCodes;
 protocolValues.bridgeVersion = new Set([BRIDGE_VERSION]);
 protocolValues.jevModel = protocolValues.model!;
-protocolValues.projectionRule = new Set([PROJECTION_RULE]);
+protocolValues.projectionRule = new Set(Object.values(PROJECTION_RULES));
 const identifierParents = new Set(['plannedSteps', 'assertions']);
+// Maps whose keys come from the script or from Jev, not the contract, so a key can carry a typed value
+// or the API key and is pseudonymized like an identifier. A new map of that kind belongs here (`assertions`
+// is also one, but only where it is a map rather than a list, so it is checked beside this set). The
+// "no typed value or API key survives" test in tests/scripted-run.test.ts finds every free-keyed map in the
+// script schemas and fails until it plants a secret there, then fails again if this set is missing it.
+const dataKeyedMaps = new Set(['probabilities', 'values', 'intentExtras']);
 
 function createRedactor(secrets: string[]): (value: unknown) => unknown {
   const ordered = [...new Set(secrets.filter(Boolean))].sort((a, b) => b.length - a.length);
@@ -50,7 +57,7 @@ function createRedactor(secrets: string[]): (value: unknown) => unknown {
     if (input && typeof input === 'object') {
       return Object.fromEntries(Object.entries(input).map(([key, item]) => [dynamicKeys ? identifier(key) : key,
         typeof item === 'string' && /^(authorization|apiKey|api_key|password|token)$/i.test(key) ? '[REDACTED]' : walk(item, [...path, key],
-          key === 'probabilities' || key === 'values' || (key === 'assertions' && !Array.isArray(item)))]));
+          dataKeyedMaps.has(key) || (key === 'assertions' && !Array.isArray(item)))]));
     }
     return input;
   };

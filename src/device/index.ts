@@ -2,8 +2,9 @@ import { execFile } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { readFile } from 'node:fs/promises';
 import { isAbsolute, join, resolve } from 'node:path';
-import type { Action, ActionScenarioContext, DeviceDriver, DeviceMetrics, Element, PrepareScenarioContext, Snapshot, TapAliasRule } from '../contracts/index.js';
-import { ROLES, type Role } from '../scripted/vocabulary.js';
+import { isIosApp, type Action, type ActionScenarioContext, type DeviceDriver, type DeviceMetrics, type Element, type PrepareScenarioContext, type Snapshot, type TapAliasRule } from '../contracts/index.js';
+import { androidAvd, androidSerial } from '../scripted/schema.js';
+import { ROLES, type ReasonCode, type Role } from '../scripted/vocabulary.js';
 import { DeviceLease, DeviceLeaseBusyError } from './lease.js';
 import { readLogTail } from './logs.js';
 
@@ -46,6 +47,30 @@ export class DeviceCliError extends Error {
   constructor(readonly code: string, message: string, readonly terminalAcknowledged = false) {
     super(message);
     this.name = 'DeviceCliError';
+  }
+}
+
+/**
+ * A bridge-owned reason code raised directly by a device driver that knows the bridge's vocabulary
+ * (for example the Android driver), skipping the vendor-code translation `DeviceCliError` needs.
+ * `failureOf` (`src/scripted/run.ts`) passes its code through unconditionally.
+ */
+export class DeviceReasonError extends Error {
+  constructor(readonly code: ReasonCode, message: string) {
+    super(message);
+    this.name = 'DeviceReasonError';
+  }
+}
+
+/**
+ * The driver factory refused to build a driver at all, for a whole class of script rather than a single
+ * run (for example a platform this build has no driver for). The CLI and MCP show this message, the same
+ * way they show other start failures, instead of a generic one.
+ */
+export class DriverUnavailableError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'DriverUnavailableError';
   }
 }
 
@@ -247,6 +272,25 @@ export async function selectDeviceId(cwd: string, scriptUdid?: string, defaultUd
   return selected.toUpperCase();
 }
 
+/**
+ * The Android device name a run will use: the script's `device.serial` or `device.avd` (already validated
+ * by the script schema), then the configured default (JEV_ANDROID_DEVICE; an empty value counts as unset).
+ * There is no config file and no "any device" fallback. A value read from the environment is checked
+ * against the serial and AVD name patterns; a value named by the script is trusted as already checked.
+ * Whether the chosen value is a serial or an AVD name is worked out later, once adb can be asked. This is
+ * a bridge-owned validation, not a MobileBuildMCP call, so a refusal raises `DeviceReasonError` directly.
+ */
+export function selectAndroidDeviceName(device: { serial?: string; avd?: string } | undefined, envValue: string | undefined): string {
+  const fromScript = device?.serial ?? device?.avd;
+  const selected = fromScript ?? (envValue ? envValue : undefined);
+  if (!selected) throw new DeviceReasonError('NO_DEVICE', 'Set device.serial or device.avd in the scenario, or JEV_ANDROID_DEVICE');
+  if (!fromScript && !androidSerial.test(selected) && !androidAvd.test(selected)) {
+    throw new DeviceReasonError('INVALID_DEVICE',
+      `JEV_ANDROID_DEVICE must be an adb serial (matching ${androidSerial}) or an AVD name (matching ${androidAvd})`);
+  }
+  return selected;
+}
+
 function sameScreen(before: Snapshot, after: Snapshot): boolean {
   if (before.screenHash && after.screenHash) return before.screenHash === after.screenHash;
   const identity = (snapshot: Snapshot) => snapshot.elements.map(({ ref: _ref, ...element }) => element);
@@ -352,6 +396,10 @@ export class MobileBuildMcpDriver implements DeviceDriver {
   private async prepareIssued(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void> {
     if (this.lease.held) throw new Error('Driver is already prepared');
     if (signal.aborted) throw signal.reason;
+    if (!isIosApp(scenario.app)) {
+      throw new Error('The MobileBuildMCP driver only runs iOS scripts; this scenario has no app.bundleId');
+    }
+    const bundleId = scenario.app.bundleId;
     const deviceId = await selectDeviceId(this.options.cwd, scenario.device?.udid, this.options.defaultUdid);
     // A crashed holder's record lists nothing to sweep on iOS: MobileBuildMCP owns its own processes.
     try { await this.lease.take(deviceId); }
@@ -363,11 +411,11 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     this.referenceExpiries = 0;
     this.nearTtlRefreshes = 0;
     this.deviceId = deviceId;
-    this.appId = scenario.app.bundleId;
+    this.appId = bundleId;
     try {
       const launchArgs = scenario.app.launchArgs ?? [];
       // Array parameters go through --json, so arguments that start with "-" aren't read as CLI flags.
-      const launched = await this.issueCommand(['simulator', 'launch-app', '--simulator-id', deviceId, '--bundle-id', scenario.app.bundleId,
+      const launched = await this.issueCommand(['simulator', 'launch-app', '--simulator-id', deviceId, '--bundle-id', bundleId,
         ...(launchArgs.length ? ['--json', JSON.stringify({ launchArgs })] : [])], signal,
         'mobilebuildmcp.output.launch-result');
       const artifacts = record(launched.artifacts);

@@ -7,7 +7,7 @@ import { serveStdio } from '@modelcontextprotocol/server/stdio';
 import { z } from 'zod/v4';
 import { BridgeService } from './service.js';
 import { createMcpServer } from './mcp/index.js';
-import { DeviceCliError, selectDeviceId } from './device/index.js';
+import { DeviceCliError, DeviceReasonError, DriverUnavailableError, selectAndroidDeviceName, selectDeviceId } from './device/index.js';
 import { createDriverFactory } from './device/factory.js';
 import { createAssertionJudge } from './scripted/jev.js';
 import { renderScriptedReport } from './scripted/report.js';
@@ -27,8 +27,9 @@ Usage:
   jev-ios-bridge logs <run-id>
   jev-ios-bridge mcp
   jev-ios-bridge --version | --help
-Set TYPESAFE_API_KEY and a dedicated simulator (JEV_DEVICE_UDID, the script's device.udid, or
-.mobilebuildmcp/config.yaml). JEV_RUNS_DIR selects the evidence directory (default ./.jev-runs).
+Set TYPESAFE_API_KEY and, for an iOS script, a dedicated simulator (JEV_DEVICE_UDID, the script's
+device.udid, or .mobilebuildmcp/config.yaml); for an Android script, a device (JEV_ANDROID_DEVICE,
+or the script's device.serial or device.avd). JEV_RUNS_DIR selects the evidence directory (default ./.jev-runs).
 JEV_PROJECT_DIR, when set, stands in for the working directory (a plugin sets it to your project).
 A run opens a live log pane of the app's own output in a new terminal window; turn it off with
 --no-log-pane or JEV_LOG_PANE=off, or choose the terminal app with JEV_LOG_PANE_APP.
@@ -36,6 +37,13 @@ Exit codes: 0 passed, 1 failed, 2 inconclusive, 3 could not start.`;
 
 /** A problem found before any run started. The message is safe to print. */
 class StartError extends Error {}
+
+/** No device was configured, or the one named doesn't have the shape the platform needs: either way, the
+ *  pre-run device check's own message (not the generic fallback) is safe to print. */
+function isDeviceSelectionError(error: unknown): error is DeviceCliError | DeviceReasonError {
+  return (error instanceof DeviceCliError || error instanceof DeviceReasonError) &&
+    ['NO_DEVICE', 'INVALID_DEVICE'].includes(error.code);
+}
 
 const exitFor = (verdict: Verdict) => EXIT[verdict];
 
@@ -94,7 +102,8 @@ async function main(): Promise<void> {
   if (command === 'run') {
     script = parseScriptedScenario(await readScript(argument!));
     if (!process.env.TYPESAFE_API_KEY?.trim()) throw new StartError('TYPESAFE_API_KEY is not set; load your .env with node --env-file=/path/to/.env');
-    await selectDeviceId(projectDir, script.device?.udid, process.env.JEV_DEVICE_UDID);
+    if (script.platform === 'android') selectAndroidDeviceName(script.device, process.env.JEV_ANDROID_DEVICE);
+    else await selectDeviceId(projectDir, script.device?.udid, process.env.JEV_DEVICE_UDID);
   }
 
   const service = new BridgeService({
@@ -147,7 +156,7 @@ async function main(): Promise<void> {
 
 main().catch((error: unknown) => {
   if (error instanceof z.ZodError) console.error(`Script is invalid:\n${z.prettifyError(error)}`);
-  else if (error instanceof StartError || (error instanceof DeviceCliError && ['NO_DEVICE', 'INVALID_DEVICE'].includes(error.code))) {
+  else if (error instanceof StartError || error instanceof DriverUnavailableError || isDeviceSelectionError(error)) {
     console.error(error.message);
   } else console.error('Bridge could not start. Check arguments, script, and environment.');
   process.exitCode = EXIT.couldNotStart;

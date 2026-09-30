@@ -42,3 +42,14 @@ test('the driver is built per scenario, never shared across the process', async 
     assert.notEqual(createDriver(iosScript), createDriver(iosScript));
   } finally { await rm(root, { recursive: true, force: true }); }
 });
+
+test('an Android script never reaches the iOS driver: the factory refuses it before it is built', async () => {
+  const androidScript: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    values: {}, steps: [] };
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-factory-android-'));
+  try {
+    const runner: CliRunner = async () => ({ stdout: '{}', stderr: '', exitCode: 0 });
+    const createDriver = createDriverFactory({ mobileBuildMcp: { cwd: root, lockRoot: root, runner } });
+    assert.throws(() => createDriver(androidScript), /Android isn't available in this build/);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});

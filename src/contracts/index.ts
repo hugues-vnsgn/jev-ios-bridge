@@ -2,12 +2,32 @@
 export type Verdict = 'passed' | 'failed' | 'inconclusive';
 export type Direction = 'up' | 'down' | 'left' | 'right';
 /** The device platform a scenario runs on. Scripts without one are iOS. */
-export type Platform = 'ios' | 'android';
+export const PLATFORMS = ['ios', 'android'] as const;
+export type Platform = typeof PLATFORMS[number];
+
+/** The app under test on iOS: a bundle ID, plus its launch options (launch arguments). */
+export interface IosAppIdentity { bundleId: string; launchArgs?: string[] }
+/** The app under test on Android: a package, plus its launch options (an activity and intent extras). */
+export interface AndroidAppIdentity { package: string; activity?: string; intentExtras?: Record<string, string> }
+
+/** The app under test, plus its launch options: a bundle ID and launch arguments on iOS, or a package,
+ *  activity and intent extras on Android. */
+export type AppIdentity = IosAppIdentity | AndroidAppIdentity;
 
 export interface ScenarioContext {
-  app: { bundleId: string; launchArgs?: string[] };
+  app: AppIdentity;
   preconditions?: string[];
   device?: { udid?: string };
+}
+
+/** Narrows an app identity to its iOS shape (a bundle ID). */
+export function isIosApp(app: AppIdentity): app is IosAppIdentity {
+  return 'bundleId' in app;
+}
+
+/** The app's own label: its bundle ID on iOS, its package on Android. */
+export function appLabel(app: AppIdentity): string {
+  return isIosApp(app) ? app.bundleId : app.package;
 }
 
 /** Device preparation needs only launch identity and environmental prerequisites. */
@@ -25,11 +45,16 @@ export interface Element {
   ref: string;
   role: string;
   label?: string;
+  /** An empty field's hint text, shown to Jev as `placeholder` in place of `label`. Only the Android driver sets it. */
+  placeholder?: string;
   value?: string;
   identifier?: string;
   frame?: { x: number; y: number; width: number; height: number };
   state?: { enabled: boolean; visible: boolean; focused?: boolean; selected?: boolean };
   actions: string[];
+  /** Internal "can't be selected" marker: for example, text Android shows inside a button, which the mapping
+   *  lifts onto the button and marks unselectable. Never shown to Jev; honoured only by selection. */
+  selectable?: false;
 }
 
 export interface Snapshot {
@@ -50,6 +75,22 @@ export interface Snapshot {
   verifyMs?: number;
   /** Measurement only: captures taken until the screenshot and capture agreed, when more than one. */
   verifyAttempts?: number;
+  /** Android only: false when the settle rule hit its cap before two captures agreed, so this is the last
+   *  capture taken rather than a confirmed settled one ("screen still changing"). Absent when settled. */
+  settled?: boolean;
+}
+
+/** What a replace-text `act` call may return instead of a bare `Snapshot`, to also report the field's
+ *  displayed value once the bridge typed into it (which may legitimately differ from the typed value).
+ *  Every other action keeps returning a bare `Snapshot`, or nothing. */
+export interface ActOutcome {
+  screen: Snapshot;
+  shownValue: string;
+}
+
+/** Distinguishes an `ActOutcome` from a bare `Snapshot`: only the former carries a `screen` property. */
+export function isActOutcome(result: Snapshot | ActOutcome): result is ActOutcome {
+  return 'screen' in result;
 }
 
 export type Action =
@@ -64,8 +105,9 @@ export type TapAliasRule = 'mobilebuildmcp-2.7.1';
 export interface DeviceDriver {
   prepare(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void>;
   observe(signal: AbortSignal): Promise<Snapshot>;
-  /** Perform the action. May return the settled screen after it, which the run then uses as its next observation. */
-  act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined | void>;
+  /** Perform the action. May return the settled screen after it, which the run then uses as its next
+   *  observation; a replace-text action may instead return an `ActOutcome` to also report the shown value. */
+  act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | ActOutcome | undefined | void>;
   close(signal: AbortSignal): Promise<void>;
   metrics?(): DeviceMetrics;
   /** Whether the launched app is still running; undefined when the driver can't tell. */
@@ -74,6 +116,18 @@ export interface DeviceDriver {
   logSources?(): { runtime?: string; os?: string };
   /** Set only by a driver integration whose pinned tap semantics were verified. The run reads it. */
   readonly tapAliasRule?: TapAliasRule;
+  /** What `prepare` set up on the device, for the run log's `prepared` event. Only a driver that prepares a
+   *  device (Android) implements this; the iOS driver doesn't. */
+  preparation?(): DevicePreparation;
+}
+
+/** What a device `prepare` did, recorded in the run log's `prepared` event. */
+export interface DevicePreparation {
+  deviceIdentity: string;
+  serial: string;
+  agentSha256: string;
+  /** True only when this run's lease took over a crashed run's and swept its leftovers. */
+  sweptLeftovers?: boolean;
 }
 
 export interface DeviceMetrics {

@@ -1,5 +1,6 @@
 import { McpServer } from '@modelcontextprotocol/server';
 import { z } from 'zod/v4';
+import { DriverUnavailableError } from '../device/index.js';
 import { scriptedScenarioSchema } from '../scripted/schema.js';
 import { BridgeService, startLimitsSchema } from '../service.js';
 import { renderScriptedReport } from '../scripted/report.js';
@@ -7,15 +8,17 @@ import { BRIDGE_VERSION } from '../version.js';
 
 const idInput = z.object({ runId: z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$/) });
 const result = (text: string) => ({ content: [{ type: 'text' as const, text }] });
-const failed = () => ({ ...result('Bridge operation failed. Check the run id and local configuration.'), isError: true });
+const failed = (message = 'Bridge operation failed. Check the run id and local configuration.') =>
+  ({ ...result(message), isError: true });
 
 export function createMcpServer(service: BridgeService): McpServer {
   const server = new McpServer({ name: 'jev-ios-bridge', version: BRIDGE_VERSION });
   server.registerTool('start_scenario', {
-    description: 'Start an explicit iOS action script with assertion checkpoints. Returns a run id, a local watch URL, and logsCommand, a terminal command that follows the app\'s own output live (a log pane window usually opens by itself). Poll get_report for completion; use cancel_run to stop. TypeSafe receives observed screen text and current assertion claims. Typed values go to device actions and may later appear in screen text; screenshots stay local.',
+    description: 'Start an explicit iOS or Android action script with assertion checkpoints. Returns a run id, a local watch URL, and logsCommand, a terminal command that follows the app\'s own output live (a log pane window usually opens by itself). Poll get_report for completion; use cancel_run to stop. TypeSafe receives observed screen text and current assertion claims. Typed values go to device actions and may later appear in screen text; screenshots stay local.',
     inputSchema: z.object({ scenario: scriptedScenarioSchema, limits: startLimitsSchema.optional() }),
   }, async ({ scenario, limits }) => {
-    try { return result(JSON.stringify(await service.start(scenario, limits))); } catch { return failed(); }
+    try { return result(JSON.stringify(await service.start(scenario, limits))); }
+    catch (error) { return failed(error instanceof DriverUnavailableError ? error.message : undefined); }
   });
   server.registerTool('get_report', {
     description: 'Wait up to waitMs (maximum 45000) for a run. Running results contain progress only; completion returns the evidence report. Cancelling this wait does not cancel the run; use cancel_run to stop it.',

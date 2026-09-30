@@ -4,6 +4,7 @@
  * `UPDATE_GOLDEN=1 npm test` and review the golden diff; renames, removals, and meaning changes need 2.0.
  */
 import assert from 'node:assert/strict';
+import { randomUUID } from 'node:crypto';
 import { execFile, spawn } from 'node:child_process';
 import { mkdtemp, readdir, readFile, rm, writeFile, mkdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -15,10 +16,13 @@ import type { DeviceDriver, RunEvent, Snapshot } from '../src/contracts/index.js
 import { DeviceCliError } from '../src/device/index.js';
 import { createRunLog } from '../src/log/index.js';
 import type { ScriptedJudge } from '../src/scripted/contracts.js';
+import type { ScriptedStep } from '../src/scripted/contracts.js';
 import { REPORT_VERSION } from '../src/scripted/report-json.js';
 import { SCRIPT_VERSION, scriptedScenarioSchema } from '../src/scripted/schema.js';
 import { REASON_CODES, ROLES } from '../src/scripted/vocabulary.js';
 import { BridgeService } from '../src/service.js';
+import { androidScript } from './fixtures/android-script.js';
+import { openMcpSession } from './fixtures/mcp-session.js';
 
 const execute = promisify(execFile);
 const goldenDir = join(import.meta.dirname, 'golden');
@@ -89,6 +93,70 @@ const scriptCases: Record<string, unknown> = {
   emptyLaunchArg: { ...validScript, app: { bundleId: 'com.example.app', launchArgs: [''] } },
   legacyGoalForm: { version: 1, goal: 'Open settings', app: validScript.app, values: {},
     assertions: [{ id: 'shown', claim: 'Settings are open.' }] },
+  androidWithSerial: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint] },
+  androidWithAvd: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    device: { avd: 'jev-actions-api31' }, values: {}, steps: [checkpoint] },
+  androidWithActivityAndIntentExtras: { version: 1, platform: 'android',
+    app: { package: 'com.hugues.test_cmp', activity: '.DebugGalleryActivity', intentExtras: { screen: 'gallery' } },
+    device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint] },
+  androidTypedValues: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    device: { serial: 'emulator-5554' }, values: { query: '-Đà Nẵng' }, steps: [checkpoint] },
+  androidRejectsBundleId: { version: 1, platform: 'android', app: { bundleId: 'com.example.app' },
+    device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint] },
+  androidRejectsLaunchArgs: { version: 1, platform: 'android',
+    app: { package: 'com.hugues.test_cmp', launchArgs: ['-of-evidence-gallery'] },
+    device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint] },
+  androidRejectsDeviceUdid: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    device: { udid: '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7' }, values: {}, steps: [checkpoint] },
+  androidMissingPackage: { version: 1, platform: 'android', app: {},
+    device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint] },
+  androidDeviceConflict: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    device: { serial: 'emulator-5554', avd: 'jev-actions-api31' }, values: {}, steps: [checkpoint] },
+  androidInvalidSerial: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    device: { serial: 'has a space' }, values: {}, steps: [checkpoint] },
+  androidInvalidAvd: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    device: { avd: 'has a space' }, values: {}, steps: [checkpoint] },
+  androidControlCharacterValue: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    device: { serial: 'emulator-5554' }, values: { query: 'a\u0007b' }, steps: [checkpoint] },
+  iosScriptUsesAndroidPackage: { ...validScript, app: { bundleId: 'com.example.app', package: 'com.hugues.test_cmp' } },
+  iosScriptUsesAndroidSerial: { ...validScript, device: { serial: 'emulator-5554' } },
+  missingBundleId: { version: 1, app: {}, values: {}, steps: [checkpoint] },
+  iosMultipleErrors: { version: 1, app: { bundleId: 'not valid!!' }, values: { query: 'Đà Nẵng' },
+    steps: [checkpoint, checkpoint] },
+  androidActivityBareName: { version: 1, platform: 'android',
+    app: { package: 'com.hugues.test_cmp', activity: 'MainActivity' },
+    device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint] },
+  androidMalformedPackage: { version: 1, platform: 'android', app: { package: 'nodots' },
+    device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint] },
+  androidTooManyIntentExtras: { version: 1, platform: 'android',
+    app: { package: 'com.hugues.test_cmp',
+      intentExtras: Object.fromEntries(Array.from({ length: 21 }, (_, index) => [`k${index}`, 'v'])) },
+    device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint] },
+  androidNonAsciiIntentExtraValue: { version: 1, platform: 'android',
+    app: { package: 'com.hugues.test_cmp', intentExtras: { screen: 'Đà Nẵng' } },
+    device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint] },
+  androidIntentExtraValueTooLong: { version: 1, platform: 'android',
+    app: { package: 'com.hugues.test_cmp', intentExtras: { screen: 'x'.repeat(201) } },
+    device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint] },
+  androidValueTooLong: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    device: { serial: 'emulator-5554' }, values: { query: 'x'.repeat(2049) }, steps: [checkpoint] },
+  androidTooManyValues: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    device: { serial: 'emulator-5554' },
+    values: Object.fromEntries(Array.from({ length: 33 }, (_, index) => [`k${index}`, 'v'])), steps: [checkpoint] },
+  // iOS scripts with several errors at once: each gives 1.1's issues, in 1.1's order.
+  // tests/scripted-schema-parity.test.ts checks this across many more combinations.
+  nonAsciiValuePlusUnknownRole: { ...validScript, values: { query: 'Đà Nẵng' },
+    steps: [{ ...checkpoint, guard: { present: [{ role: 'StaticText', label: 'Marker' }] } }] },
+  leadingHyphenPlusMissingVersion: { app: validScript.app, values: { query: '-Berlin' }, steps: [checkpoint] },
+  missingBundleIdPlusBadRole: { version: 1, app: {}, values: {},
+    steps: [{ ...checkpoint, guard: { present: [{ role: 'StaticText', label: 'Marker' }] } }] },
+  missingBundleIdPlusDuplicateStepIds: { version: 1, app: {}, values: {}, steps: [checkpoint, checkpoint] },
+  missingBundleIdPlusBadUdid: { version: 1, app: {}, device: { udid: 'not-a-udid' }, values: {}, steps: [checkpoint] },
+  missingBundleIdPlusValueTooLong: { version: 1, app: {}, values: { query: 'x'.repeat(2049) }, steps: [checkpoint] },
+  // A script whose platform is neither "ios" nor "android" routes to the iOS schema (anything but exactly
+  // "android" does), which then reports its own platform mismatch.
+  unknownPlatform: { ...validScript, platform: 'windows' },
 };
 
 test('contract: accepted and rejected scripts, with exact messages', async () => {
@@ -98,6 +166,20 @@ test('contract: accepted and rejected scripts, with exact messages', async () =>
       : { accepted: false, issues: parsed.error.issues.map(issue => ({ path: issue.path.join('.'), message: issue.message })) }];
   }));
   await golden('scripts', results);
+});
+
+test('contract: start_scenario accepts every script the scripts golden accepts, iOS and Android', { timeout: 15_000 }, async () => {
+  const accepted = Object.entries(JSON.parse(await readFile(join(goldenDir, 'scripts.json'), 'utf8')) as
+    Record<string, { accepted: boolean }>).filter(([, result]) => result.accepted).map(([name]) => name);
+  assert.ok(accepted.some(name => name.startsWith('android')) && accepted.some(name => !name.startsWith('android')));
+  const session = await openMcpSession('contract-accepts');
+  try {
+    for (const name of accepted) {
+      const result = await session.callTool('start_scenario', { scenario: scriptCases[name] });
+      assert.equal(result.isError, undefined, `${name}: ${result.content[0].text}`);
+      assert.equal(typeof JSON.parse(result.content[0].text).runId, 'string', name);
+    }
+  } finally { await session.close(); }
 });
 
 // ---------- runs, report.json, and evidence layout ----------
@@ -157,6 +239,47 @@ test('contract: report.json shape for passed, failed, and device-error runs', as
       reports[name] = stable(JSON.parse(await readFile(join(root, name, runId, 'report.json'), 'utf8')), runId);
     }
     await golden('report-json', reports);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+// An Android run's report.json carries fields no iOS run has (ADR-0005 only adds); it gets its own golden
+// file rather than a fourth entry in report-json.json, whose existing three-entry shape is frozen above.
+test('contract: report.json shape for an Android run', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-contract-report-android-'));
+  try {
+    const nameField: Snapshot = { deviceId: 'android-golden', sequence: 1, capturedAt: 0, expiresAt: 60_000, truncated: false,
+      elements: [{ ref: 'name-field', role: 'text-field', identifier: 'name-field', actions: ['typeText'],
+        frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } }] };
+    const markerScreen: Snapshot = { deviceId: 'android-golden', sequence: 2, capturedAt: 0, expiresAt: 60_000, truncated: false,
+      elements: [{ ref: 'marker', role: 'text', label: 'Marker', actions: [],
+        frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } }] };
+    const driver: DeviceDriver = { async prepare() {}, async observe() { return nameField; },
+      async act() { return { screen: markerScreen, shownValue: 'placeholder-text' }; },
+      async close() {}, preparation: () => ({ deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: 'deadbeef' }) };
+    const scenario = { version: 1, platform: 'android',
+      app: { package: 'com.hugues.test_cmp', activity: '.DebugGalleryActivity', intentExtras: { screen: 'gallery' } },
+      device: { serial: 'emulator-5554' }, values: { name: 'Ann' }, steps: [
+        { id: 'type', kind: 'action', guard: { present: [{ identifier: 'name-field' }] },
+          action: { kind: 'replaceText', selector: { identifier: 'name-field' }, valueKey: 'name' } },
+        checkpoint,
+      ] } as const;
+    const service = new BridgeService({ baseDir: root, createDriver: () => driver, createJudge: () => judge(1) });
+    let runId: string;
+    try {
+      ({ runId } = await service.start(scenario));
+      for (let attempt = 0; attempt < 200 && (await service.status(runId)).state === 'running'; attempt++) {
+        await new Promise(done => setTimeout(done, 10));
+      }
+    } finally { await service.close(); }
+    const parsed = JSON.parse(await readFile(join(root, runId, 'report.json'), 'utf8')) as Record<string, unknown>;
+    assert.equal(parsed.platform, 'android');
+    assert.equal(parsed.package, 'com.hugues.test_cmp');
+    assert.equal(parsed.activity, '.DebugGalleryActivity');
+    assert.deepEqual(parsed.intentExtras, { screen: 'gallery' });
+    assert.deepEqual(parsed.typedFields, [{ stepId: 'type', shownValue: 'placeholder-text' }]);
+    assert.equal('deviceIdentity' in parsed, false, 'the prepared fields stay out of report.json');
+    const report = stable(parsed, runId);
+    await golden('report-json-android', report);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
@@ -239,12 +362,15 @@ test('contract: CLI exit codes for every outcome and start failure', { timeout: 
     const valid = await write('valid.json', JSON.stringify(validScript));
     const unversioned = await write('unversioned.json', JSON.stringify(scriptCases.missingVersion));
     const broken = await write('broken.json', '{ not json');
+    const androidWithoutDevice = await write('android-no-device.json', JSON.stringify(
+      androidScript({ app: { package: 'com.hugues.test_cmp' }, steps: [checkpoint as ScriptedStep] })));
     const cli = join(process.cwd(), 'src/cli.ts');
     const tsx = import.meta.resolve('tsx');
     const env = (extra: Record<string, string>): NodeJS.ProcessEnv => {
       const base: NodeJS.ProcessEnv = { ...process.env, JEV_RUNS_DIR: runs };
       delete base.TYPESAFE_API_KEY;
       delete base.JEV_DEVICE_UDID;
+      delete base.JEV_ANDROID_DEVICE;
       return { ...base, ...extra };
     };
     const cases: Array<[string, string[], Record<string, string>]> = [
@@ -256,6 +382,9 @@ test('contract: CLI exit codes for every outcome and start failure', { timeout: 
       ['runWithoutKey', ['run', valid], {}],
       ['runWithoutSimulator', ['run', valid], { TYPESAFE_API_KEY: 'contract-test-key' }],
       ['runWithDeviceAlias', ['run', valid], { TYPESAFE_API_KEY: 'contract-test-key', JEV_DEVICE_UDID: 'booted' }],
+      ['runAndroidWithoutDevice', ['run', androidWithoutDevice], { TYPESAFE_API_KEY: 'contract-test-key' }],
+      ['runAndroidWithInvalidDevice', ['run', androidWithoutDevice],
+        { TYPESAFE_API_KEY: 'contract-test-key', JEV_ANDROID_DEVICE: 'has a space' }],
       ['reportPassed', ['report', 'passed'], {}],
       ['reportFailed', ['report', 'failed'], {}],
       ['reportInconclusive', ['report', 'inconclusive'], {}],
@@ -295,4 +424,45 @@ test('contract: the CLI prints the schema message for an unversioned script', { 
     assert.equal(failure.code, 3);
     assert.match(failure.stderr, /Add "version": 1 to the script/);
   } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('contract: the CLI names the missing or malformed Android device, and the driver refusal once one is chosen', { timeout: 20_000 }, async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-contract-android-message-'));
+  try {
+    const cli = join(process.cwd(), 'src/cli.ts');
+    const tsx = import.meta.resolve('tsx');
+    const env = (extra: Record<string, string>): NodeJS.ProcessEnv => {
+      const base: NodeJS.ProcessEnv = { ...process.env, TYPESAFE_API_KEY: 'contract-test-key' };
+      delete base.JEV_DEVICE_UDID;
+      delete base.JEV_ANDROID_DEVICE;
+      return { ...base, ...extra };
+    };
+    const run = async (script: unknown, extra: Record<string, string>) => {
+      const path = join(root, `${randomUUID()}.json`);
+      await writeFile(path, JSON.stringify(script));
+      return execute(process.execPath, ['--import', tsx, cli, 'run', path], { cwd: root, env: env(extra) })
+        .then(() => assert.fail('must exit 3'), (error: { code: number; stderr: string }) => error);
+    };
+    const noDeviceScript = androidScript({ app: { package: 'com.hugues.test_cmp' }, steps: [checkpoint as ScriptedStep] });
+    const noDevice = await run(noDeviceScript, {});
+    assert.equal(noDevice.code, 3);
+    assert.match(noDevice.stderr, /Set device\.serial or device\.avd in the scenario, or JEV_ANDROID_DEVICE/);
+
+    const invalidDevice = await run(noDeviceScript, { JEV_ANDROID_DEVICE: 'has a space' });
+    assert.equal(invalidDevice.code, 3);
+    assert.match(invalidDevice.stderr, /JEV_ANDROID_DEVICE must be an adb serial/);
+    assert.match(invalidDevice.stderr, /AVD name/);
+
+    // The script's own device.serial wins over a malformed JEV_ANDROID_DEVICE, so the pre-run check
+    // passes; the run then reaches the driver factory, which refuses every Android script for now.
+    const refused = await run(scriptCases.androidWithSerial, { JEV_ANDROID_DEVICE: 'has a space' });
+    assert.equal(refused.code, 3);
+    assert.match(refused.stderr, /Android isn't available in this build/);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('contract: --help names JEV_ANDROID_DEVICE', { timeout: 10_000 }, async () => {
+  const { stdout } = await execute(process.execPath,
+    ['--import', import.meta.resolve('tsx'), join(process.cwd(), 'src/cli.ts'), '--help'], { cwd: process.cwd() });
+  assert.match(stdout, /JEV_ANDROID_DEVICE/);
 });
