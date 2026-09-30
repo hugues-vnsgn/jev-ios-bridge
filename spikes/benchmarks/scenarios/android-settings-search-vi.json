@@ -5,6 +5,7 @@
     "package": "com.android.settings"
   },
   "preconditions": [
+    "Written for Android 12 (jev-actions-api31), whose Settings names the search bar \"Search settings\" and the display row \"Display\"; check 4 runs it there only.",
     "Settings on a stock emulator with Dark theme off. Nothing is installed; the bridge restarts Settings.",
     "This emulator's Settings search returns no results, so the search box is the typing check: the leaveSearch guard needs the field to show exactly the typed value.",
     "The non-English typing gate: the query is Vietnamese, typed through the clipboard, and checked by the leaveSearch guard."
@@ -21,7 +22,7 @@
           {
             "role": "button",
             "identifier": "com.android.settings:id/search_action_bar",
-            "label": "Search Settings"
+            "label": "Search settings"
           }
         ]
       },
@@ -85,7 +86,7 @@
           {
             "role": "button",
             "identifier": "com.android.settings:id/search_action_bar",
-            "label": "Search Settings"
+            "label": "Search settings"
           }
         ]
       },
@@ -93,7 +94,7 @@
         "kind": "tap",
         "selector": {
           "role": "button",
-          "label": "Display & touch"
+          "label": "Display"
         }
       }
     },
