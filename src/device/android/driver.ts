@@ -181,10 +181,15 @@ export class AndroidDriver implements DeviceDriver {
     }
   }
 
-  /** One finite `adb` command, in the lease's ledger. No new command once `close` began or the run was cancelled. */
-  private async adb(args: string[], signal: AbortSignal): Promise<AdbResult> {
+  /** Before any new device work: none once `close` began or the run was cancelled. */
+  private mayIssue(signal: AbortSignal): void {
     if (this.closeBegun) throw new Error('The driver is closing; no new device work');
     if (signal.aborted) throw signal.reason;
+  }
+
+  /** One finite `adb` command, in the lease's ledger. No new command once `close` began or the run was cancelled. */
+  private async adb(args: string[], signal: AbortSignal): Promise<AdbResult> {
+    this.mayIssue(signal);
     const runner = this.runner!;
     return inLedger(this.lease, 'adb', () => runner(args, signal));
   }
@@ -194,14 +199,14 @@ export class AndroidDriver implements DeviceDriver {
   }
 
   /** A command that must succeed; any other exit is `DEVICE_ERROR` with `vendorCode` `adb`. */
-  private async required(what: string, pending: Promise<AdbResult>): Promise<string> {
+  private async succeeded(what: string, pending: Promise<AdbResult>): Promise<string> {
     const result = await pending;
     if (result.exitCode !== 0) throw new AndroidDeviceError('adb', `adb could not ${what} (exit ${String(result.exitCode)})`);
     return result.stdout;
   }
 
   private async getprop(serial: string, name: string, signal: AbortSignal): Promise<string> {
-    return (await this.required(`read ${name}`, this.shell(serial, ['getprop', name], signal))).trim();
+    return (await this.succeeded(`read ${name}`, this.shell(serial, ['getprop', name], signal))).trim();
   }
 
   /**
@@ -210,7 +215,7 @@ export class AndroidDriver implements DeviceDriver {
    * emulator's identity is its AVD name, a phone's its serial. Only reads: the lease isn't held yet.
    */
   private async resolveDevice(name: string, signal: AbortSignal): Promise<{ serial: string; identity: string }> {
-    const listed = listedDevices(await this.required('list devices', this.adb(['devices', '-l'], signal)));
+    const listed = listedDevices(await this.succeeded('list devices', this.adb(['devices', '-l'], signal)));
     const state = listed.get(name);
     if (state !== undefined) {
       if (state === 'unauthorized') throw new DeviceReasonError('DEVICE_UNAUTHORIZED', `Device ${name} hasn't accepted this Mac's USB-debugging key`);
@@ -236,7 +241,7 @@ export class AndroidDriver implements DeviceDriver {
    * can't be read is foreign, since it can't be shown to be the bridge's. One gone meanwhile is skipped.
    */
   private async agentsOn(serial: string, signal: AbortSignal): Promise<AgentProcess[]> {
-    const listing = await this.required('list processes', this.shell(serial, ['ps', '-A', '-o', 'PID,NAME,ARGS'], signal));
+    const listing = await this.succeeded('list processes', this.shell(serial, ['ps', '-A', '-o', 'PID,NAME,ARGS'], signal));
     const agents: AgentProcess[] = [];
     for (const line of listing.split('\n').slice(1)) {
       const match = /^\s*(\d+)\s+(\S+)\s*(.*)$/.exec(line);
@@ -270,7 +275,7 @@ export class AndroidDriver implements DeviceDriver {
 
   /** This serial's forwards, as `tcp:<port>` → remote. */
   private async forwardsOn(serial: string, signal: AbortSignal): Promise<Map<string, string>> {
-    const listing = await this.required('list forwards', this.adb(['forward', '--list'], signal));
+    const listing = await this.succeeded('list forwards', this.adb(['forward', '--list'], signal));
     const forwards = new Map<string, string>();
     for (const line of listing.split('\n')) {
       const [onSerial, local, remote] = line.trim().split(' ');
@@ -287,8 +292,8 @@ export class AndroidDriver implements DeviceDriver {
   /**
    * The agent check and sweep (item 2, open point 22). A foreign agent refuses the run, untouched. Every
    * other agent is the bridge's own and, with this run holding the lease, can't belong to a live run: it is
-   * killed by pid. With no agent left, this serial's agent forwards go too. True when a dead holder's
-   * listed agent or forward was swept.
+   * killed by pid. With no agent left, this serial's agent forwards go too; a listed forward now pointing
+   * elsewhere isn't the dead holder's any more. True when a dead holder's listed agent or forward was swept.
    */
   private async checkAgents(serial: string, identity: string, deadHolder: LeaseHolder | undefined, signal: AbortSignal): Promise<boolean> {
     const agents = await this.agentsOn(serial, signal);
@@ -302,7 +307,7 @@ export class AndroidDriver implements DeviceDriver {
       if (listed.pids.has(agent.pid)) swept = true;
     }
     for (const [local, remote] of await this.forwardsOn(serial, signal)) {
-      if (remote !== AGENT_SOCKET && !listed.forwards.has(local)) continue;
+      if (remote !== AGENT_SOCKET) continue;
       await this.removeForward(serial, local, signal);
       if (listed.forwards.has(local)) swept = true;
     }
@@ -325,7 +330,7 @@ export class AndroidDriver implements DeviceDriver {
     if (!/^package:/m.test(installed.stdout)) throw new DeviceReasonError('APP_NOT_INSTALLED', `${appPackage} isn't installed on ${serial}`);
     let screen = await this.screenState(serial, signal);
     if (!screen.awake) {
-      await this.required('wake the screen', this.shell(serial, ['input', 'keyevent', 'KEYCODE_WAKEUP'], signal));
+      await this.succeeded('wake the screen', this.shell(serial, ['input', 'keyevent', 'KEYCODE_WAKEUP'], signal));
       screen = await this.screenState(serial, signal);
     }
     if (screen.keyguard) {
@@ -335,7 +340,7 @@ export class AndroidDriver implements DeviceDriver {
 
   /** Whether the screen is awake and the keyguard showing, from `dumpsys window policy`'s `KeyguardServiceDelegate`. */
   private async screenState(serial: string, signal: AbortSignal): Promise<{ awake: boolean; keyguard: boolean }> {
-    const policy = await this.required('read the screen state', this.shell(serial, ['dumpsys', 'window', 'policy'], signal));
+    const policy = await this.succeeded('read the screen state', this.shell(serial, ['dumpsys', 'window', 'policy'], signal));
     const delegate = policy.slice(policy.indexOf('KeyguardServiceDelegate'));
     const showing = /^\s*showing=(true|false)\s*$/m.exec(delegate)?.[1];
     const interactive = /^\s*interactiveState=(\S+)\s*$/m.exec(delegate)?.[1];
@@ -352,7 +357,7 @@ export class AndroidDriver implements DeviceDriver {
    */
   private async restart(serial: string, app: AndroidAppIdentity, signal: AbortSignal): Promise<void> {
     this.restarted = true;
-    await this.required('stop the app', this.shell(serial, ['am', 'force-stop', app.package], signal));
+    await this.succeeded('stop the app', this.shell(serial, ['am', 'force-stop', app.package], signal));
     const component = app.activity ? `${app.package}/${app.activity}` : await this.launcherActivity(serial, app.package, signal);
     const extras = Object.entries(app.intentExtras ?? {}).flatMap(([key, value]) => ['--es', key, value]);
     const launched = await this.shell(serial, ['am', 'start', '-W', '-n', component, ...extras], signal);
@@ -362,7 +367,7 @@ export class AndroidDriver implements DeviceDriver {
   }
 
   private async launcherActivity(serial: string, appPackage: string, signal: AbortSignal): Promise<string> {
-    const resolved = await this.required('look up the launcher activity', this.shell(serial,
+    const resolved = await this.succeeded('look up the launcher activity', this.shell(serial,
       ['cmd', 'package', 'resolve-activity', '--brief', '-a', 'android.intent.action.MAIN', '-c', 'android.intent.category.LAUNCHER', appPackage], signal));
     const component = resolved.trim().split('\n').at(-1)?.trim() ?? '';
     if (!component.startsWith(`${appPackage}/`)) {
@@ -377,8 +382,8 @@ export class AndroidDriver implements DeviceDriver {
    * pid go into the lease's holder record, so a crash takeover can sweep them.
    */
   private async startAgent(serial: string, identity: string, tools: AndroidTools, signal: AbortSignal): Promise<void> {
-    await this.required('push the device agent', this.adb(['-s', serial, 'push', tools.agent.path, AGENT_DEVICE_PATH], signal));
-    await this.required('start the device agent', this.adb(['-s', serial, 'shell', AGENT_START_COMMAND], signal));
+    await this.succeeded('push the device agent', this.adb(['-s', serial, 'push', tools.agent.path, AGENT_DEVICE_PATH], signal));
+    await this.succeeded('start the device agent', this.adb(['-s', serial, 'shell', AGENT_START_COMMAND], signal));
     const port = await this.forward(serial, signal);
     const agent = (this.options.agentClient ?? (forwarded => deviceAgentClient({ port: forwarded })))(port);
     const answered = await this.awaitAgent(agent, tools.agent.sha256, signal);
@@ -417,13 +422,18 @@ export class AndroidDriver implements DeviceDriver {
   private async awaitAgent(agent: DeviceAgentClient, sha256: string, signal: AbortSignal): Promise<boolean> {
     const startedAt = this.clock.now();
     while (true) {
-      if (this.closeBegun) throw new Error('The driver is closing; no new device work');
-      if (signal.aborted) throw signal.reason;
+      this.mayIssue(signal);
+      // Each request ends with the 5 s, not its own 10 s limit; one ended unanswered stays unknown until the fence.
+      const deadline = new AbortController();
+      const timer = setTimeout(() => { deadline.abort(new Error('The device agent start deadline passed')); },
+        Math.max(1, AGENT_READY_MS - (this.clock.now() - startedAt)));
       try {
-        if ((await inLedger(this.lease, 'agent', () => agent.version(signal))).dexSha256 === sha256) return true;
+        if ((await inLedger(this.lease, 'agent', () => agent.version(AbortSignal.any([signal, deadline.signal])))).dexSha256 === sha256) return true;
       } catch (error) {
         // Not answering yet is expected while it starts; a cancel is not.
         if (signal.aborted) throw error;
+      } finally {
+        clearTimeout(timer);
       }
       if (this.clock.now() - startedAt >= AGENT_READY_MS) return false;
       await this.clock.sleep(AGENT_POLL_MS);

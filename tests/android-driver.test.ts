@@ -499,6 +499,18 @@ test('after a crash takeover, the dead holder\'s listed agent and forward are sw
   });
 });
 
+test('a listed forward that now points somewhere else isn\'t the dead holder\'s, and is left alone', async () => {
+  const adb = new FakeAdb(api31());
+  adb.forwards = [{ serial: 'emulator-5554', local: 'tcp:65436', remote: 'tcp:8080' }];
+  await withDriver(adb, async ({ driver, root }) => {
+    await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31',
+      ownedProcesses: ['forward emulator-5554 tcp:65436'] }));
+    await driver.prepare(app(), signal());
+    assert.equal(adb.calls.some(call => call[3] === '--remove'), false);
+    assert.equal('sweptLeftovers' in driver.preparation(), false);
+  });
+});
+
 test('a takeover with nothing left to sweep doesn\'t record sweptLeftovers', async () => {
   const adb = new FakeAdb(api31());
   await withDriver(adb, async ({ driver, root }) => {
@@ -621,6 +633,28 @@ test('an agent that never answers is DEVICE_ERROR with vendorCode agent after 5 
     assert.equal(agents.versionCalls.length, 51);
     assert.deepEqual((await lockFile(root))?.ownedProcesses, ['forward emulator-5554 tcp:49526', 'agent emulator-5554 7001']);
   }, { agents: { never: true } });
+});
+
+test('a device.version request that hangs is bounded by what is left of the 5 s', async () => {
+  const adb = new FakeAdb(api31());
+  const clock = fakeClock();
+  let calls = 0;
+  const unused = () => { throw new Error('Not used by prepare'); };
+  const agentClient = (): DeviceAgentClient => ({
+    async version(abort) {
+      if (++calls === 1) { await clock.sleep(4_950); throw new DeviceAgentError(); }
+      // Hangs until its signal ends it, as a request to a stuck agent would until its own 10 s limit.
+      await new Promise((_resolve, reject) => { abort.addEventListener('abort', () => { reject(new Error('abandoned')); }, { once: true }); });
+      throw new Error('unreachable');
+    },
+    dumpUi: unused, tap: unused, swipe: unused, keys: unused, text: unused, button: unused,
+    clipboardSet: unused, clipboardClear: unused, screenshot: unused,
+  });
+  await withDriver(adb, async ({ driver }) => {
+    const began = performance.now();
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_ERROR', 'agent'));
+    assert.ok(performance.now() - began < 2_000, 'the hung request ended with the 5 s, not its own 10 s limit');
+  }, { clock, agentClient });
 });
 
 test('an agent answering with another SHA-256 is not the pinned agent', async () => {
