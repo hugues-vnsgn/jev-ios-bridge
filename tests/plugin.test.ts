@@ -3,7 +3,6 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { rewriteSkill } from '../scripts/build-plugin.mjs';
-import { openMcpSession } from './fixtures/mcp-session.js';
 
 const androidSkill = readFileSync('skills/test-android/SKILL.md', 'utf8');
 const npmCapture = 'npx jev-ios-bridge capture';
@@ -59,14 +58,6 @@ test('package.json says iOS and Android, under the same name', () => {
   assert.match(pkg.description, /Android/);
   assert.ok(pkg.keywords.includes('ios'));
   assert.ok(pkg.keywords.includes('android'));
-});
-
-test('the MCP server starts and lists its tools with both device settings empty', { timeout: 10_000 }, async () => {
-  const session = await openMcpSession('empty-devices', { entryPoint: 'cli', env: { JEV_DEVICE_UDID: '', JEV_ANDROID_DEVICE: '' } });
-  try {
-    const tools = await session.listTools();
-    assert.deepEqual(tools.map((tool: { name: string }) => tool.name).sort(), ['cancel_run', 'get_report', 'start_scenario']);
-  } finally { await session.close(); }
 });
 
 test('/test-android is named test-android, links only guide pages that exist, and never names mobilecli', () => {

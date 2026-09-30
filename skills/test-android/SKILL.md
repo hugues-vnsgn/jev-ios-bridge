@@ -5,7 +5,7 @@ description: Verify an Android app (Jetpack Compose, Compose Multiplatform, or c
 
 # Verify an Android app with jev-ios-bridge
 
-The bridge runs one complete script on a dedicated emulator and returns a recorded verdict. You author the script and submit it once; the bridge drives the device, and Jev judges the checkpoint claims. The guide ships with the bridge at `node_modules/jev-ios-bridge/docs/guide/`, and each step below names the page it relies on.
+The bridge runs one complete script on a dedicated emulator or phone and returns a recorded verdict. You author the script and submit it once; the bridge drives the device, and Jev judges the checkpoint claims. The guide ships with the bridge at `node_modules/jev-ios-bridge/docs/guide/`, and each step below names the page it relies on.
 
 ## Steps
 
@@ -20,7 +20,8 @@ The bridge runs one complete script on a dedicated emulator and returns a record
    It prints one JSON line per element, as a run sees it. Exit code 3 means it couldn't capture; its stderr names the reason code (guide `08-troubleshooting.md`). Read guide `04-writing-scripts.md`, `03-identifiers.md`, and `reference/script-format.md` before your first script. Done when:
    - the script starts with `"version": 1` and `"platform": "android"`, names `app.package`, and ends with a checkpoint;
    - every step has a guard of anchors that only its screen has;
-   - every action's selector matches exactly one element in the capture, never one marked `"selectable": false`: an identifier, or a `role` plus `label`;
+   - every action's selector matches exactly one element in the capture: an identifier, or a `role` plus `label`;
+   - no guard anchor or selector relies on an element marked `"selectable": false`, which never matches;
    - every typed literal lives in `values`.
 
    **When Compose elements have no identifiers,** tell the user to add `testTagsAsResourceId` once, on the root composable in `androidMain`, and show them where (guide `12-android-setup.md`):
@@ -29,6 +30,7 @@ The bridge runs one complete script on a dedicated emulator and returns a record
    // androidMain, MainActivity.onCreate: wrap the app's root composable.
    // import androidx.compose.ui.semantics.semantics
    // import androidx.compose.ui.semantics.testTagsAsResourceId
+   // Older Compose versions also need @OptIn(ExperimentalComposeUiApi::class).
    setContent {
        Box(Modifier.semantics { testTagsAsResourceId = true }) {
            App()
@@ -38,15 +40,16 @@ The bridge runs one complete script on a dedicated emulator and returns a record
 
    Change or rebuild the app only if the user asks you to. Until they add it, write `role` plus `label` selectors.
 
-3. **Write claims Jev can decide.** Jev sees the screen's text, not the screenshot. See it exactly as Jev will with `npx jev-ios-bridge capture --avd <name> --jev`. Follow guide `05-writing-claims.md`:
+3. **Write claims Jev can decide.** Jev sees the screen's text (roles, labels, values, identifiers), not the screenshot. See it exactly as Jev will with `npx jev-ios-bridge capture --avd <name> --jev`. Follow guide `05-writing-claims.md`:
    - one piece of printed evidence per claim ("The order total reads $5");
-   - numbers quoted exactly as the app prints them (`2.500.000`, not `2,500,000`);
-   - an empty field's grey hint is its `placeholder`, so never claim a field "contains" it;
+   - numbers quoted exactly as the app prints them (`2.500.000`, not `2,500,000`; guide `05-writing-claims.md`);
+   - an empty field's grey hint is its `placeholder`, so never claim a field "contains" it (guide `05-writing-claims.md`);
    - a password field shows dots, one per character (guide `09-data-handling.md`);
    - a custom tab or toggle needs a selected or checked state before a claim can read it; without one, claim its printed text (guide `12-android-setup.md`);
    - absence only through text the app prints ("No Results");
    - the app's own totals instead of row counts;
-   - persisted state only on the screen after saving.
+   - persisted state only on the screen after saving;
+   - printed text rather than widget meaning ("A button labelled ON is visible").
 
    Done when every claim names text you can point to in a capture.
 
