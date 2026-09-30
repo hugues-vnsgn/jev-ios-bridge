@@ -86,8 +86,8 @@ interface StepCheckContext {
 }
 
 /** The steps checks shared by every platform: a script ends at a checkpoint, step IDs are unique, and a
- *  replaceText step's valueKey names a supplied value. Each schema below runs its own platform-specific
- *  checks first, so an iOS script's issue order matches 1.1's exactly (app, then values, then steps). */
+ *  replaceText step's valueKey names a supplied value. The Android schema runs its app and device checks
+ *  before these. */
 function checkSteps(scenario: { steps: Steps; values: Record<string, string> }, context: StepCheckContext): void {
   if (scenario.steps.at(-1)?.kind !== 'checkpoint') {
     context.addIssue({ code: 'custom', message: 'A script must end at an assertion checkpoint', path: ['steps'] });
