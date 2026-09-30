@@ -1,0 +1,42 @@
+Watch: http://127.0.0.1:54069/?token=17c59a35bab9151fa7af710f6448ca81c296864b9cfd5b169a49f88676f5cf22&run=e470b284-2c42-4bad-b8ce-458a568ec4ab
+Log pane: no window (turned off with --no-log-pane). Follow the app's output with: "/Users/hugues_mini/.nvm/versions/node/v22.22.2/bin/node" "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/dist/cli.js" logs e470b284-2c42-4bad-b8ce-458a568ec4ab
+Run e470b284-2c42-4bad-b8ce-458a568ec4ab: passed
+ALL_CHECKPOINTS_PASSED
+Steps: 5; Jev input tokens: 1623; duration: 7655.38925 ms.
+Jev model: jev-1.13.0; bridge 1.2.0.
+Device: jev-actions-api31, serial emulator-5554, agent 0e0865d0617bc6e4abf0a7b24a956da1ca25cfc795c30d8e32c64eb0d1f6258f.
+Typed fields:
+typeQuery: [REDACTED]
+Checkpoint darkTheme: passed.
+Claim off: The Dark theme switch is off.; probability yes 0.970.
+Evidence: step darkTheme, run.jsonl event 11, snapshot 5.
+Observed screen excerpt:
+other Display
+button Navigate up
+scroll-view com.android.settings:id/recycler_view
+text Brightness
+button Brightness level
+text Brightness level
+text 83%
+text Lock display
+button Lock screen
+text Lock screen
+text Show all notification content
+button Screen timeout
+text Screen timeout
+text After null of inactivity
+text Appearance
+button Dark theme
+text Dark theme
+text Will never turn on automatically
+switch Dark theme 0
+button Font size
+text Font size
+text Default
+button Display size
+text Display size
+text Default
+text Color
+Full redacted assertion observation: run.jsonl event 11, data.assertionObservation.
+Screenshot: screen-11.jpg
+Full local evidence: /Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/spikes/benchmarks/results/v1.2.0/check-04/runs/e470b284-2c42-4bad-b8ce-458a568ec4ab/run.jsonl

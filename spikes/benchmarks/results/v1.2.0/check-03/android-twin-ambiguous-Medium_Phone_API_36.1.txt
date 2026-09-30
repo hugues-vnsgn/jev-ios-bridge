@@ -1,0 +1,20 @@
+Watch: http://127.0.0.1:54700/?token=b7bc5a7f9f919b43ee80701a6a081f9131c65cae60ddd1ea6d501acd371663f2&run=cc1b7ad5-6c05-4b0d-8004-cfae6d12a94b
+Log pane: no window (turned off with --no-log-pane). Follow the app's output with: "/Users/hugues_mini/.nvm/versions/node/v22.22.2/bin/node" "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/dist/cli.js" logs cc1b7ad5-6c05-4b0d-8004-cfae6d12a94b
+Run cc1b7ad5-6c05-4b0d-8004-cfae6d12a94b: inconclusive
+GUARD_AMBIGUOUS
+Steps: 1; Jev input tokens: 0; duration: 2732.4775 ms.
+Jev model: jev-1.13.0; bridge 1.2.0.
+Device: Medium_Phone_API_36.1, serial emulator-5554, agent 0e0865d0617bc6e4abf0a7b24a956da1ca25cfc795c30d8e32c64eb0d1f6258f.
+Execution problem: GUARD_AMBIGUOUS during observe
+Last observed screen:
+text Sample Shop
+text Choose two items
+text Selected: None
+button Add Apple ($2)
+text Add Apple ($2)
+button Add Bread ($3)
+text Add Bread ($3)
+button Complete order
+text Complete order
+Last screenshot: screen-3.jpg
+Full local evidence: /Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/spikes/benchmarks/results/v1.2.0/check-03/runs/cc1b7ad5-6c05-4b0d-8004-cfae6d12a94b/run.jsonl

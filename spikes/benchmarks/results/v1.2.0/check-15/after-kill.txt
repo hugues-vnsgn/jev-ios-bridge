@@ -1,0 +1,12 @@
+== after kill -9:
+logcat on Mac:
+55636 /Users/hugues_mini/Library/Android/sdk/platform-tools/adb -s emulator-5554 logcat -v threadtime,year,uid --uid=10225 -T 1790785297.937
+55639 /Users/hugues_mini/Library/Android/sdk/platform-tools/adb -s emulator-5554 logcat -b events -v threadtime,year -T 1790785297.937 am_proc_start:I am_proc_died:I am_crash:I am_anr:I am_kill:I *:S
+agent on device:
+10947
+forward:
+emulator-5554 tcp:55269 localabstract:mobilecli-server
+
+lease files:
+MEDIUM_PHONE_API_36.1.lock
+{'pid': 55577, 'token': '1a8fefac-ce9e-437d-aac2-818692ecf654', 'deviceId': 'Medium_Phone_API_36.1', 'createdAt': '2026-09-30T16:21:39.365Z', 'ownedProcesses': ['logcat emulator-5554 55636', 'logcat emulator-5554 55639', 'forward emulator-5554 tcp:55269', 'agent emulator-5554 10947']}

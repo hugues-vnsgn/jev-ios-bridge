@@ -1,0 +1,7 @@
+exit 2, wall 1790785350s-1790785350s = 0 s
+FAIL mobilecli processes: 1 > 0
+FAIL DeviceServer on emulator-5554: 11142
+FAIL forward: emulator-5554 tcp:55539 localabstract:mobilecli-server
+ok no lease file for Medium_Phone_API_36.1
+ok no adb logcat for emulator-5554 on the Mac
+cleanup exit 1

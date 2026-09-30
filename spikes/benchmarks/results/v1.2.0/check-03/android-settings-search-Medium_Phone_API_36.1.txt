@@ -1,0 +1,48 @@
+Watch: http://127.0.0.1:55041/?token=7fa737c7d541375c57fa2330c353b64673ccdb91b019d63acb0a681114bcd4b0&run=e9ae5f73-ec0e-4a5f-bde5-f6c6ebb43cf2
+Log pane: no window (turned off with --no-log-pane). Follow the app's output with: "/Users/hugues_mini/.nvm/versions/node/v22.22.2/bin/node" "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/dist/cli.js" logs e9ae5f73-ec0e-4a5f-bde5-f6c6ebb43cf2
+Run e9ae5f73-ec0e-4a5f-bde5-f6c6ebb43cf2: passed
+ALL_CHECKPOINTS_PASSED
+Steps: 5; Jev input tokens: 1930; duration: 10869.466292000001 ms.
+Jev model: jev-1.13.0; bridge 1.2.0.
+Device: Medium_Phone_API_36.1, serial emulator-5554, agent 0e0865d0617bc6e4abf0a7b24a956da1ca25cfc795c30d8e32c64eb0d1f6258f.
+Typed fields:
+typeQuery: [REDACTED]
+Checkpoint darkTheme: passed.
+Claim off: The Dark theme switch is off.; probability yes 0.970.
+Evidence: step darkTheme, run.jsonl event 11, snapshot 5.
+Observed screen excerpt:
+scroll-view com.android.settings:id/content_parent
+other Display & touch
+button Navigate up
+scroll-view com.android.settings:id/recycler_view
+text Brightness
+button Brightness level
+text Brightness level
+text 83%
+text Lock [REDACTED]
+button Lock screen
+text Lock screen
+text Show all notification content
+button Screen timeout
+text Screen timeout
+text Not set
+text Appearance
+button Dark theme
+text Dark theme
+text Will turn on when Bedtime starts
+switch Dark theme 0
+button Display size & text
+text Display size & text
+text Font size, [REDACTED] size, bold text, outline text
+button Navigation mode
+text Navigation mode
+text Gesture navigation
+button Screen saver
+text Screen saver
+text On / Clock
+text Color
+button Colors
+text Colors
+Full redacted assertion observation: run.jsonl event 11, data.assertionObservation.
+Screenshot: screen-11.jpg
+Full local evidence: /Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/spikes/benchmarks/results/v1.2.0/check-03/runs/e9ae5f73-ec0e-4a5f-bde5-f6c6ebb43cf2/run.jsonl

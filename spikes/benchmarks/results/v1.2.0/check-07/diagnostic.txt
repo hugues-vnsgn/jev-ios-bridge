@@ -1,0 +1,21 @@
+Watch: http://127.0.0.1:56984/?token=7baebad1fb04ba1978bd6b26b1e7a87adf539dd04252cdcd7fb7868cfa89f4de&run=23b7a726-52e9-4b0b-90d6-5b4bd01cd8c5
+Log pane: opened in the default terminal.
+Run 23b7a726-52e9-4b0b-90d6-5b4bd01cd8c5: failed
+ASSERTION_FALSE
+Steps: 4; Jev input tokens: 1157; duration: 9309.636458 ms.
+Jev model: jev-1.13.0; bridge 1.2.0.
+Checkpoint verify: failed.
+Claim total: The Order complete confirmation shows Total: $5.; probability yes 0.020.
+Evidence: step verify, run.jsonl event 9, snapshot 7.
+Observed screen excerpt:
+application DiagnosticApp
+other Confirmation
+button Sample Shop
+other Confirmation
+text Order complete
+text Apple: $2
+text Bread: $3
+text Total: $3
+Full redacted assertion observation: run.jsonl event 9, data.assertionObservation.
+Screenshot: screen-9.jpg
+Full local evidence: /Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/spikes/benchmarks/results/v1.2.0/check-07/runs/23b7a726-52e9-4b0b-90d6-5b4bd01cd8c5/run.jsonl

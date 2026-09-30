@@ -1,0 +1,12 @@
+{
+  "status": "ok"
+}
+daemon stop 0
+app_process / com.mobilenext.mobilecli.DeviceServer 
+== hand cleanup done
+ok mobilecli processes: 0 (baseline 0)
+ok no DeviceServer on emulator-5554
+ok no agent forward on emulator-5554
+ok no lease file for Medium_Phone_API_36.1
+ok no adb logcat for emulator-5554 on the Mac
+cleanup exit 0

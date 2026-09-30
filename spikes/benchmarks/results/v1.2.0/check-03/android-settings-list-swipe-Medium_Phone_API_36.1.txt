@@ -1,0 +1,61 @@
+Watch: http://127.0.0.1:54922/?token=81b3238c64f39928b5f697cb1e11c64ddbcdb997f4718ff8e023fce01dc70074&run=dca41109-30f3-4f8c-9275-a15fdda739f9
+Log pane: no window (turned off with --no-log-pane). Follow the app's output with: "/Users/hugues_mini/.nvm/versions/node/v22.22.2/bin/node" "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/dist/cli.js" logs dca41109-30f3-4f8c-9275-a15fdda739f9
+Run dca41109-30f3-4f8c-9275-a15fdda739f9: passed
+ALL_CHECKPOINTS_PASSED
+Steps: 2; Jev input tokens: 2726; duration: 5505.7215 ms.
+Jev model: jev-1.13.0; bridge 1.2.0.
+Device: Medium_Phone_API_36.1, serial emulator-5554, agent 0e0865d0617bc6e4abf0a7b24a956da1ca25cfc795c30d8e32c64eb0d1f6258f.
+Checkpoint laterRow: passed.
+Claim about: A row labelled About emulated device is visible.; probability yes 0.990.
+Evidence: step laterRow, run.jsonl event 5, snapshot 2.
+Observed screen excerpt:
+scroll-view com.android.settings:id/settings_homepage_container
+button Search Settings
+image com.android.settings:id/imageView
+text Search Settings
+scroll-view com.android.settings:id/main_content_scrollable_container
+scroll-view com.android.settings:id/recycler_view
+button Wallpaper & style
+button Storage
+image android:id/icon
+text Storage
+text 40% used - 19.15 GB free
+button Battery
+image android:id/icon
+text Battery
+text 100%
+button System
+image android:id/icon
+text System
+text Languages, gestures, time, backup
+button About emulated device
+image android:id/icon
+text About emulated device
+text sdk_gphone64_arm64
+button Security & privacy
+image android:id/icon
+text Security & privacy
+text App security, device lock, permissions
+button Location
+image android:id/icon
+text Location
+text On / 5 apps have access to location
+button Passwords, passkeys & accounts
+image android:id/icon
+text Passwords, passkeys & accounts
+text Suggestions for sign-in & autofill
+button Digital Wellbeing
+image android:id/icon
+text Digital Wellbeing
+text Screen time, app timers, bedtime schedules
+button Parental controls
+image android:id/icon
+text Parental controls
+text Digital ground rules & screen time limits
+button Safety & emergency
+image android:id/icon
+text Safety & emergency
+text Emergency SOS, medical info, alerts
+Full redacted assertion observation: run.jsonl event 5, data.assertionObservation.
+Screenshot: screen-5.jpg
+Full local evidence: /Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/spikes/benchmarks/results/v1.2.0/check-03/runs/dca41109-30f3-4f8c-9275-a15fdda739f9/run.jsonl

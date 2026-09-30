@@ -1,0 +1,43 @@
+Watch: http://127.0.0.1:54197/?token=ac93840064d47e88562d906aa41c5bc5a21c81119431794716e8e4eb94ec1884&run=8699b2c3-add8-49b8-bc9c-54cdd967737f
+Log pane: no window (turned off with --no-log-pane). Follow the app's output with: "/Users/hugues_mini/.nvm/versions/node/v22.22.2/bin/node" "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/dist/cli.js" logs 8699b2c3-add8-49b8-bc9c-54cdd967737f
+Run 8699b2c3-add8-49b8-bc9c-54cdd967737f: passed
+ALL_CHECKPOINTS_PASSED
+Steps: 3; Jev input tokens: 1744; duration: 4676.713000000001 ms.
+Jev model: jev-1.13.0; bridge 1.2.0.
+Device: jev-actions-api31, serial emulator-5554, agent 0e0865d0617bc6e4abf0a7b24a956da1ca25cfc795c30d8e32c64eb0d1f6258f.
+Typed fields:
+replaceDong: 3.500.000
+Checkpoint formatted: passed.
+Claim dong: The number field under vi-VN, sig=0 (đồng) shows 3.500.000.; probability yes 0.990.
+Evidence: step formatted, run.jsonl event 7, snapshot 3.
+Observed screen excerpt:
+button number-input
+text number-input
+button fullscreen-modal
+text fullscreen-modal
+button modal-perf
+text modal-perf
+text number-input on CMP
+text en-US, sig=2
+text-field 1,234.50
+text value = 1234.5
+text vi-VN, sig=0 (đồng)
+text-field 3.500.000
+text rawText='[REDACTED]' len=7 value=[REDACTED].0
+text de-DE, sig=3
+text-field 1.234,500
+text value = 1234.5
+text en-US, sig=2, unsigned
+text-field 42.00
+text value = 42.0
+text de-DE, sig=2, built-in keypad
+text-field Betrag eingeben
+button ±
+other ±
+button Xoá
+other Xoá
+button Xong
+other Xong
+Full redacted assertion observation: run.jsonl event 7, data.assertionObservation.
+Screenshot: screen-7.jpg
+Full local evidence: /Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/spikes/benchmarks/results/v1.2.0/check-04/runs/8699b2c3-add8-49b8-bc9c-54cdd967737f/run.jsonl

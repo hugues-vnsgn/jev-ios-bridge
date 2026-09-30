@@ -1,0 +1,6 @@
+== after the bridge run:
+11142 app_process                 app_process / com.mobilenext.mobilecli.DeviceServer
+emulator-5554 tcp:55539 localabstract:mobilecli-server
+
+events: ['started', 'error', 'verdict']
+"code":"DEVICE_BUSY"

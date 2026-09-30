@@ -1,0 +1,79 @@
+{
+  "suite": null,
+  "benchmarkCompleted": null,
+  "terminalSuccess": true,
+  "claudeExitCode": null,
+  "parserExitCode": null,
+  "parseErrors": null,
+  "requestedModel": null,
+  "observedModel": "claude-opus-4-7",
+  "wallClockSeconds": 109.9941,
+  "wallClockSource": "External monotonic process time around the Claude host invocation",
+  "totalHostToolCalls": 3,
+  "mcpToolCalls": 3,
+  "uiAutomationCalls": null,
+  "tokens": {
+    "uncachedInput": 8,
+    "cacheCreationInput": 33719,
+    "cacheReadInput": 86561,
+    "output": 4375,
+    "allInputProcessed": 120288
+  },
+  "byModel": [
+    {
+      "model": "claude-opus-4-7",
+      "uncachedInputTokens": 8,
+      "cacheCreationInputTokens": 33719,
+      "cacheReadInputTokens": 86561,
+      "outputTokens": 4375,
+      "estimatedCostUsd": 0.48988550000000003
+    }
+  ],
+  "estimatedCostUsd": 0.48988550000000003,
+  "costMeaning": "Claude Code client estimate at API prices, not a subscription invoice",
+  "source": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-Musbyw/claude.jsonl",
+  "startedAt": "2026-09-30T16:24:28.054Z",
+  "claudeReportedDurationSeconds": 109.451,
+  "claudeReportedDurationSource": "Claude result duration_ms; capture external process time for comparison",
+  "exitCode": 0,
+  "rawTranscriptPath": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-Musbyw/claude.jsonl",
+  "stderrPresent": false,
+  "scenarioPath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/spikes/benchmarks/scenarios/weather-scripted.json",
+  "bridgeCli": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/dist/cli.js",
+  "sourceSkill": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/skills/test-ios/SKILL.md",
+  "limits": {
+    "maxSteps": 100,
+    "wallTimeMs": 900000
+  },
+  "bridgeRunCount": 1,
+  "bridgeRun": {
+    "runId": "56987a12-f9d9-42b7-9b74-8120d4a7af88",
+    "runLogPath": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-bridge-benchmark-Musbyw/runs/56987a12-f9d9-42b7-9b74-8120d4a7af88/run.jsonl",
+    "verdict": "passed",
+    "reason": "ALL_CHECKPOINTS_PASSED",
+    "steps": 20,
+    "inputTokens": 18335,
+    "durationMs": 71491.583375,
+    "checkpointsPassed": 4,
+    "checkpointCount": 4,
+    "recordedEvents": 47,
+    "actionEvents": 16,
+    "observationEvents": 20,
+    "jevJudgmentEvents": 4,
+    "phaseTimingsMs": {
+      "prepareMs": 2249.5029170000016,
+      "observeMs": 23404.84607999999,
+      "decideMs": 1716.0415419999918,
+      "actMs": 43294.59800099996,
+      "waitMs": 0,
+      "cleanupMs": 513.8424169999926
+    },
+    "deviceMetrics": {
+      "referenceRefreshes": 0,
+      "referenceExpiries": 0,
+      "nearTtlRefreshes": 0
+    }
+  },
+  "timingScope": "Claude host and prepared-app bridge UI run; excludes app build and install",
+  "comparisonStatus": "Pending manual review of task equivalence and saved UI outcome"
+}
