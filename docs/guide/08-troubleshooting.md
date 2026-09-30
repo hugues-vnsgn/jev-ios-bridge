@@ -46,15 +46,15 @@ Going to the home screen isn't an exit, so it isn't detected.
 
 **`APP_NOT_RESPONDING`** (Android): the app froze, and Android showed "App isn't responding". Something blocked its main thread. The crash commands above show the ANR.
 
-**`DEVICE_BUSY`**: another bridge process holds the device's lease. The message names it. See [cancelling and the device lock](06-running.md#cancelling-and-the-device-lock).
+**`DEVICE_BUSY`**: another bridge process holds the device's lease. The message names it. See [cancelling and the device lease](06-running.md#cancelling-and-the-device-lease).
 
-On Android it also means that another tool's UI-automation agent holds the device: mobile-mcp, mobilecli, Appium, or `uiautomator`. Close that tool, then run again. The bridge never stops another tool's agent. If the tool has exited but its agent still runs, stop it by hand, as below.
+On Android it also means that another tool's UI-automation agent (a foreign agent) holds the device: mobile-mcp, mobilecli, Appium, or `uiautomator`. Close that tool, then run again. The bridge never stops a foreign agent. If the tool has exited but its agent still runs, stop it by hand, as below.
 
 **`NO_DEVICE` or `INVALID_DEVICE`**: for iOS, set a simulator UUID (`JEV_DEVICE_UDID`, the script's `device.udid`, or `.mobilebuildmcp/config.yaml`). Aliases like `booted` aren't accepted. For Android, set the script's `device.avd` or `device.serial`, or `JEV_ANDROID_DEVICE` ([Android setup](12-android-setup.md#name-the-device)).
 
 **`DEVICE_ERROR`**: MobileBuildMCP reported an error the bridge doesn't have its own code for. `report.json`'s `error.vendorCode` holds MobileBuildMCP's code. Common causes: the simulator isn't booted, or the app isn't installed. A shut-down simulator can make MobileBuildMCP say an installed app is missing. On Android, `vendorCode` is `adb` or `agent`, naming the part that failed. The bridge never records that part's own message, because it can carry screen text. Check that the device is still connected, then run again.
 
-**`UI_ACTION_UNCONFIRMED`**: a device command never answered, so the lock was kept to protect the device. It's released when the command answers, or when that bridge process exits.
+**`UI_ACTION_UNCONFIRMED`**: a device command never answered, so the device lease was kept to protect the device. It's released when the command answers, or when that bridge process exits.
 
 **`CLEANUP_FAILED`**: stopping the app didn't finish. Check that the simulator is still responsive. On Android, the message says whether the device lease was kept; the next run clears it once the bridge process that held it has exited.
 
@@ -88,7 +88,7 @@ After each run, the bridge stops its device agent and removes its `adb forward`.
    adb -s <serial> shell ps -A -o PID,NAME,ARGS | grep com.mobilenext.mobilecli.DeviceServer
    ```
 
-2. Check that it's the bridge's. The bridge's own agent has `CLASSPATH=/data/local/tmp/jev-ios-bridge-agent.dex`; any other is another tool's:
+2. Check that it's the bridge's. The bridge's own agent has `CLASSPATH=/data/local/tmp/jev-ios-bridge-agent.dex`; any other is a foreign agent:
 
    ```sh
    adb -s <serial> shell cat /proc/<pid>/environ | tr '\0' '\n' | grep CLASSPATH
@@ -97,7 +97,7 @@ After each run, the bridge stops its device agent and removes its `adb forward`.
 3. Stop it: `adb -s <serial> shell kill <pid>`.
 4. Find the forward: `adb forward --list` shows it as `<serial> tcp:<port> localabstract:mobilecli-server`. Another tool's forward looks the same, so remove only the one you know is the bridge's: `adb -s <serial> forward --remove tcp:<port>`.
 
-Don't use `pkill -f com.mobilenext.mobilecli.DeviceServer`: it also stops another tool's agent. A lock file for a process that has exited is cleared by the next run, so leave it.
+Don't use `pkill -f com.mobilenext.mobilecli.DeviceServer`: it also stops a foreign agent. A lock file for a process that has exited is cleared by the next run, so leave it.
 
 ## TypeSafe
 

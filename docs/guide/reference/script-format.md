@@ -46,7 +46,7 @@ An Android script with neither `serial` nor `avd` falls back to `JEV_ANDROID_DEV
 ## How Android types values
 
 - **ASCII values** (plain English letters, digits, and punctuation) are typed directly. They never touch the device clipboard.
-- **Any other value** (`Tiếng Việt`, `café`, an emoji) is pasted: the bridge puts it on the device clipboard, pastes it into the field, then clears the clipboard. **The keyboard may keep it anyway.** Gboard, for one, still offers the pasted text as a clipboard suggestion after the clipboard is cleared, on Android 12 and 16. So a non-English typed value can outlive the run on the device, and shouldn't be a real secret.
+- **Any other value** (`Tiếng Việt`, `café`, an emoji) is pasted: the bridge puts it on the device clipboard, pastes it into the field, then clears the clipboard. **The keyboard may keep it anyway.** Gboard, for one, still offers the pasted text as a clipboard suggestion after the clipboard is cleared, on Android 12 and 16. So a non-ASCII typed value can outlive the run on the device, and shouldn't be a real secret.
 
 Either way, the field is tapped first, its text is replaced, and the next capture records what the field shows (`typedFields` in [`report.json`](report-json.md)).
 

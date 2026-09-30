@@ -47,4 +47,6 @@ Keep the shortcut out of Release builds. One real example is a freight app that 
 
 One bridge run at a time uses a simulator, and the bridge enforces this with a lock file. Don't point Xcode, other agents, or other test runs at the same simulator while a run is going. Pick it with `JEV_DEVICE_UDID`, `device.udid` in the script, or `sessionDefaults.simulatorId` in `.mobilebuildmcp/config.yaml`. The script's value wins, then the environment variable, then the config file.
 
-An Android device is the same: one run at a time, and no other UI tool on it while a run is going. Pick it with `device.avd` or `device.serial` in the script, or `JEV_ANDROID_DEVICE`. See [Android setup](12-android-setup.md#name-the-device).
+## An Android device of its own
+
+One run at a time uses an Android device too, and no other UI tool should use it while a run is going. Pick it with `device.avd` or `device.serial` in the script, or `JEV_ANDROID_DEVICE`. See [Android setup](12-android-setup.md#name-the-device).

@@ -47,8 +47,8 @@ npx jev-ios-bridge capture --serial emulator-5554 --jev
 
 **What it does:**
 - It **doesn't launch or restart the app,** and leaves it as it is. Bring the screen you want up first.
-- It runs a run's device checks (all but the installed-app check, since it names no app), holds the device lease while it captures, and refuses with `DEVICE_BUSY` when another tool's agent holds the device. Afterwards it stops its device agent and removes its `adb forward`, as a run does.
-- It waits for the screen to settle before printing, as each step of a run does.
+- It runs a run's device checks (all but the installed-app check, since it names no app), holds the device lease while it captures, and refuses with `DEVICE_BUSY` when another tool's UI-automation agent (a foreign agent) holds the device. Afterwards it stops its device agent and removes its `adb forward`, as a run does.
+- It waits for the screen to [settle](12-android-setup.md#animations-off-is-optional) before printing, as each step of a run does.
 - It needs no `TYPESAFE_API_KEY`, and takes no screenshot.
 
 **Output:** one JSON object per line, one line per element, in capture order:
@@ -136,13 +136,13 @@ Codex can use the same MCP server and skills (copy each skill to `.agents/skills
 - **Terminal app:** the window opens in the app macOS uses for `.command` files (Terminal, unless you've changed it). `JEV_LOG_PANE_APP=iTerm` picks another.
 - **Turning it off:** `--no-log-pane` or `JEV_LOG_PANE=off`. It's also off over SSH, in CI, and with no desktop session. In those cases the bridge prints a `logs` command instead. Under MCP, `logsCommand` holds the same command.
 
-## Cancelling and the device lock
+## Cancelling and the device lease
 
 Cancelling stops new work, waits for any device command already sent, then stops the app. A cancelled run is inconclusive (`CANCELLED`).
 
 Only one run uses a device at a time. The device lease is a lock file, `$TMPDIR/jev-ios-bridge-device-locks/<UUID>.lock`, holding the owning bridge process's ID. On Android the file is named after the device identity in capitals (the AVD name for an emulator, the serial for a phone), and `capture` takes the same lease. On Android, the lease is released only once the bridge's device agent is confirmed stopped.
 
-- **A lock left by a process that has exited** is cleared by the next run. On Android, that run also stops the device agent, `adb forward` and `logcat` processes the crashed run left behind, and its `prepared` event records `sweptLeftovers: true`.
-- **A command that never answered:** if cleanup couldn't confirm a device command, the lock stays until that command answers. Then the bridge finishes cleanup itself.
+- **A lease left by a process that has exited** is cleared by the next run. On Android, that run also stops the device agent, `adb forward` and `logcat` processes the crashed run left behind, and its `prepared` event records `sweptLeftovers: true`.
+- **A command that never answered:** if cleanup couldn't confirm a device command, the device lease stays until that command answers. Then the bridge finishes cleanup itself.
 - **`DEVICE_BUSY`** names the process holding the lock and the lock file. If it's a bridge you don't need, stop that process (for example, restart the MCP server), and the next run clears the lock.
-- **Never delete a lock whose process is still running;** a device command may still be in flight.
+- **Never delete a lease file whose process is still running;** a device command may still be in flight.

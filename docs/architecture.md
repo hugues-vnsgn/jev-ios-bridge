@@ -42,7 +42,7 @@ The script has finite steps and global time/step budgets. It does not escalate t
 | `src/scripted/observe`, `jev` | Frozen assertion projection, pinned SDK request and response validation |
 | `src/device` | The driver factory, the shared device lease (`lease.ts`), and MobileBuildMCP commands, references and acknowledged lifecycle |
 | `src/device/android` | The Android driver: the `adb` runner, the pinned device agent's supply and client, element mapping, the settle rule, `logcat` streams and the app-exit watch |
-| `src/capture` | The Android `capture` command: one settled screen under the device lease, without launching the app |
+| `src/capture.ts` | The Android `capture` command: one settled screen under the device lease, without launching the app |
 | `src/logpane` | The live log pane and `logs`, following the app's own output on either platform |
 | `src/log`, `src/scripted/report`, `src/watch` | Private evidence, report reconstruction and human viewing |
 | `src/service`, `src/mcp`, `src/cli` | Job lifetime and public entrypoints |

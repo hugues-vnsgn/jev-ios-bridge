@@ -5,7 +5,7 @@
     "package": "org.example.project"
   },
   "preconditions": [
-    "Build ~/Codes/cmp as it is (./gradlew :androidApp:assembleDebug) and install it with adb install -r on the emulator.",
+    "Install the owner's Compose Multiplatform sample app (`cmp`, package `org.example.project`), built as it is (./gradlew :androidApp:assembleDebug), on the emulator with adb install -r.",
     "The app opens on its modal-perf tab. The captures show no identifiers (no testTagsAsResourceId), so selectors use role plus label.",
     "The only empty field (de-DE, built-in keypad) takes input only from cmp's own keypad, not the system keyboard, so typing into an empty placeholder field is covered by android-settings-search's empty search field instead."
   ],

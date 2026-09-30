@@ -65,7 +65,7 @@ Put every literal you type into `values`, and refer to it by key:
 ```
 
 - **Allowed:** printable US-keyboard characters, up to 2048 per value and 32 values per script. A value can't start with a hyphen; that's a limit of the pinned device layer.
-- **On Android,** any text except control characters, including a leading hyphen. Non-English text types exactly, through the device clipboard ([how](reference/script-format.md#how-android-types-values)).
+- **On Android,** any text except control characters, including a leading hyphen. Non-ASCII text types exactly too, through the device clipboard, and the keyboard may keep it ([data handling](09-data-handling.md#non-ascii-typing-on-android-goes-through-the-clipboard)).
 - **Masked in the evidence.** Values are masked in the run log and the log pane. They can still show up in screenshots, and in the screen text sent to Jev.
 - **Check the result in the next guard,** for example `{ "identifier": "search.field", "value": "London" }`. Keyboard state can change casing or how replace-all behaves.
 

@@ -37,18 +37,18 @@ What the bridge does not do, or does less well than you might expect.
 ## Input and devices
 
 - **Typing on iOS:** printable US-keyboard text only, and no value may start with a hyphen (a limit of the pinned MobileBuildMCP).
-- **Typing on Android:** any text except control characters. Non-ASCII text goes through the device clipboard, and the keyboard may keep it ([script format](reference/script-format.md#how-android-types-values)).
+- **Typing on Android:** any text except control characters. Non-ASCII text goes through the device clipboard, and the keyboard may keep it ([data handling](09-data-handling.md#non-ascii-typing-on-android-goes-through-the-clipboard)).
 - **One run per device at a time.**
 
 ## Android
 
 - **Android 12 (API 31) or later.** Older devices are refused with `DEVICE_UNSUPPORTED`.
 - **Going to the home screen isn't detected.** An app that's sent to the background is still running, so it isn't `APP_EXITED`. The next guard fails instead, as on iOS.
-- **An upper-case copy of a value isn't masked,** in the log file or the log pane, as on iOS.
+- **An upper-case copy of a value isn't masked** in the log pane or `run.jsonl`, as on iOS.
 - **Custom tabs and toggles without a selected or checked state** give uncertain claims. [Android setup](12-android-setup.md#custom-tabs-and-toggles-must-expose-their-state) shows the fix.
 - **Two running emulators with the same AVD** are refused with `DEVICE_AMBIGUOUS`, when a script names that AVD.
 - **Tried only on Apple silicon.** The device agent is the same in both of mobilecli's Mac builds, and the bridge checks its SHA-256 on either, but Android runs have only been tried on Apple silicon Macs.
-- **One UI tool per device.** Another tool's automation agent on the device makes the run refuse with `DEVICE_BUSY`.
+- **One UI tool per device.** Another tool's UI-automation agent (a foreign agent) on the device makes the run refuse with `DEVICE_BUSY`.
 - **Speed,** measured on 1.2 (one run each, on emulators, excluding build and install):
 
   | Script | Android 16 (`Medium_Phone_API_36.1`) | Android 12 (`jev-actions-api31`) |
@@ -57,10 +57,11 @@ What the bridge does not do, or does less well than you might expect.
   | twin-pass | _[phase 8]_ | |
   | twin-ambiguous | _[phase 8]_ | |
   | cmp-number-input | _[phase 8]_ | _[phase 8]_ |
-  | cmp-list-swipe | _[phase 8]_ | |
-  | settings-search | _[phase 8]_ | _[phase 8]_ (Vietnamese) |
+  | settings-list-swipe | _[phase 8]_ | |
+  | settings-search | _[phase 8]_ | |
+  | settings-search-vi | | _[phase 8]_ |
 
-  Capture and settle time: _[phase 8]_ per step. Typing: _[phase 8]_. A screen that keeps moving costs at most 3 seconds per capture, the settle cap.
+  Capture and settle time: _[phase 8]_ per step. Typing: _[phase 8]_. A screen that keeps moving costs at most 3 seconds per capture, the [settle](12-android-setup.md#animations-off-is-optional) cap.
 
 ## Compose Multiplatform
 
