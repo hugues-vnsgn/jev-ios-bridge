@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { lstat, mkdir, mkdtemp, readdir, readFile, rm, symlink, utimes, writeFile } from 'node:fs/promises';
+import { chmod, lstat, mkdir, mkdtemp, readdir, readFile, rm, symlink, utimes, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
@@ -292,6 +292,8 @@ class FakeStreams implements LogcatStarter {
   readonly stubborn = new Set<number>();
   /** A start that fails, by its arguments. */
   fails: ((args: string[]) => boolean) | undefined;
+  /** Holds each start in flight, after its process started, until the gate opens. */
+  held: Promise<void> | undefined;
 
   constructor(private readonly adb: FakeAdb) {}
 
@@ -303,6 +305,7 @@ class FakeStreams implements LogcatStarter {
     const exited = new Promise<void>(resolveExit => { ended = resolveExit; });
     const stream: FakeStream = { args, output, pid: this.nextPid++, running: true, end: () => { stream.running = false; ended(); } };
     this.streams.push(stream);
+    await this.held;
     return {
       pid: stream.pid,
       exited,
@@ -1734,19 +1737,20 @@ const APP_LOG = ['(logcat)', '-s', 'emulator-5554', 'logcat', '-v', 'threadtime,
 const EVENTS = ['(logcat)', '-s', 'emulator-5554', 'logcat', '-b', 'events', '-v', 'threadtime,year', '-T', '1759075200.123',
   'am_proc_start:I', 'am_proc_died:I', 'am_crash:I', 'am_anr:I', 'am_kill:I', '*:S'];
 
-test('prepare reads the uid and device time and starts both streams before the restart, then runs pidof once after am start -W', async () => {
+test('prepare reads the uid and device time and starts both streams after the restart\'s force-stop and before am start -W, then runs pidof once', async () => {
   const adb = new FakeAdb(api31());
   await withLogs(adb, async ({ driver, folder, watches, root }) => {
     await driver.prepare(app(), signal());
     const calls = adb.calls.map(call => call.join(' '));
     const from = calls.indexOf("-s emulator-5554 shell 'dumpsys' 'window' 'policy'");
+    // After the force-stop, so a crash the previous instance logged before it is stamped before the start time.
     assert.deepEqual(calls.slice(from + 1, calls.indexOf(`-s emulator-5554 push ${AGENT_CACHE} /data/local/tmp/jev-ios-bridge-agent.dex`)), [
+      "-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'",
+      "-s emulator-5554 shell 'cmd' 'package' 'resolve-activity' '--brief' '-a' 'android.intent.action.MAIN' '-c' 'android.intent.category.LAUNCHER' 'com.example.android'",
       "-s emulator-5554 shell 'pm' 'list' 'packages' '-U'",
       "-s emulator-5554 shell 'date' '+%s.%3N %z'",
       APP_LOG.join(' '),
       EVENTS.join(' '),
-      "-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'",
-      "-s emulator-5554 shell 'cmd' 'package' 'resolve-activity' '--brief' '-a' 'android.intent.action.MAIN' '-c' 'android.intent.category.LAUNCHER' 'com.example.android'",
       "-s emulator-5554 shell 'am' 'start' '-W' '-n' 'com.example.android/.MainActivity'",
       "-s emulator-5554 shell 'pidof' 'com.example.android'",
     ]);
@@ -1934,6 +1938,70 @@ test('a stream that won\'t stop fails close and keeps the lease, with the stream
     streams.stubborn.add(8002);
     await assert.rejects(driver.close(signal()), reason('DEVICE_ERROR', 'adb'));
     assert.deepEqual((await lockFile(root))?.ownedProcesses, ['logcat emulator-5554 8002', 'forward emulator-5554 tcp:49526']);
+  });
+});
+
+test('close stops every stream, even past one that won\'t stop, then fails and keeps the lease', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    await driver.prepare(app(), signal());
+    streams.stubborn.add(8001);
+    await assert.rejects(driver.close(signal()), reason('DEVICE_ERROR', 'adb'));
+    assert.ok(adb.calls.some(call => call.join(' ') === '(stop) 8002'), 'the second stream was stopped too');
+    assert.equal(streams.streams[1]!.running, false);
+    assert.deepEqual((await lockFile(root))?.ownedProcesses, ['logcat emulator-5554 8001', 'forward emulator-5554 tcp:49526']);
+  });
+});
+
+test('a stream start that resolves after close began is stopped by close, which then releases the lease', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    const starting = gate();
+    streams.held = starting.opened;
+    const prepared = driver.prepare(app(), signal());
+    await eventually(() => streams.streams.length === 1, 'the app log\'s start in flight');
+    const closed = driver.close(signal());
+    starting.open();
+    await assert.rejects(prepared);
+    await closed;
+    assert.deepEqual(streams.streams.map(stream => stream.running), [false], 'the late stream stopped, and no other started');
+    assert.deepEqual(await readdir(root), [], 'lease released');
+  });
+});
+
+test('a stream start that resolves after close\'s limit keeps the lease, and the late close stops it and releases', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    const starting = gate();
+    streams.held = starting.opened;
+    const prepared = driver.prepare(app(), signal());
+    await eventually(() => streams.streams.length === 1, 'the app log\'s start in flight');
+    await assert.rejects(driver.close(expiring(20)), closeFailed('UI_ACTION_UNCONFIRMED'));
+    assert.ok((await readdir(root)).length > 0, 'lease kept');
+    starting.open();
+    await assert.rejects(prepared);
+    await eventually(async () => (await readdir(root)).length === 0, 'the lease released late');
+    assert.equal(streams.streams[0]!.running, false);
+  });
+});
+
+test('a started stream the holder record can\'t list is stopped before prepare fails', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    const starting = gate();
+    streams.held = starting.opened;
+    const prepared = driver.prepare(app(), signal());
+    await eventually(() => streams.streams.length === 1, 'the app log\'s start in flight');
+    // The holder record can't be rewritten: the lease root refuses new files.
+    await chmod(root, 0o500);
+    try {
+      starting.open();
+      await assert.rejects(prepared);
+      assert.equal(streams.streams[0]!.running, false, 'stopped, not left unlisted');
+      assert.equal(streams.streams.length, 1, 'no other stream started');
+    } finally { await chmod(root, 0o700); }
+    await driver.close(signal());
+    assert.deepEqual(await readdir(root), [], 'lease released');
   });
 });
 
