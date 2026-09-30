@@ -28,3 +28,45 @@ Not taken (judgement calls): splitting `driver.ts`; the one-line `adbEnvironment
 - iOS scripts, messages, exit codes, the run log, `report.json`, the prose report and MCP replies stay byte-identical to `main`. Every golden entry stays byte-identical.
 - Tests that existed before phase 4 (`f93645a`) keep their assertions. Phase 4 tests may change with their contract.
 - No device is touched. `npm run check` passes.
+
+## Comments
+
+### 2026-09-30, claude-issue-17: report
+
+**Per finding:**
+
+1. **P1, a cancel during an `adb` command (`e0c4dcc`).** `adbRunner` no longer kills the child on abort. It waits for the child to exit, so the outcome is known (`exited()`), then throws the abort reason. A child that ends with no exit status for any other reason is still an `OutcomeUnknownError`; after an abort, its cause is the abort reason. `kill` is gone from `AdbChild`, so the runner can't kill a child. `close`'s own time limit and `releaseLate` are unchanged. Red first: both new driver tests failed with `UI_ACTION_UNCONFIRMED` before the fix (log below).
+2. **P3, `sweptLeftovers` (`79d9485`, `05c0154`).** It is now true when a takeover from a dead holder swept anything, listed or not. `listedLeftovers` was dead code once the flag no longer depended on the listing, so it is removed. The sweep itself was already "every bridge-owned agent on this serial, and this serial's agent forwards". `checkAgents` now takes whether this run took the lease over.
+3. **P3, an unauthorized emulator named by AVD (`7af832f`).** When no `device`-state emulator matches and an `emulator-*` serial is `unauthorized`, the run refuses with `DEVICE_UNAUTHORIZED`. It never reads that emulator's property. A running emulator that matches still wins.
+4. **P2, one error shape (`1d6250b`).** `DeviceReasonError` takes `{ vendorCode }` as an option. The property is set only when one is given, so an iOS error has no `vendorCode` property, and iOS output doesn't change. The three Android errors use the option. `failureOf` reads `error.vendorCode` without a cast. `OutcomeUnknownError` and `inLedger` moved to `src/device/android/ledger.ts`.
+5. **P2, one tree type (`26dc437`).** `AndroidNode` and `AndroidTree` now live in `agent-client.ts`. `dumpUi` returns `AndroidNode[]`, which the settle rule and the mapping both use. Both casts in `driver.ts` are gone.
+6. **P3, repeated literals (`7af832f`, `05c0154`).** One constant each: `STATUS_BAR_ID_PREFIX`, now in `agent-client.ts` with the tree type; `AVD_NAME_PROPERTY`; and `EMULATOR_SERIAL_PREFIX`.
+7. **P3, the agent-start deadline (`a51aff6`).** `Clock` gains `timeout(ms)`. For the real clock this is `AbortSignal.timeout`. `awaitAgent` uses it in place of `setTimeout`. The driver tests' fake clock fires these timeouts at their own fake time as `sleep` moves time on.
+8. **P3, the copied helper (`3e41005`).** `refusal()` and `installed` now live in `tests/fixtures/android-tools.ts`.
+
+**Deviations:**
+- The Issue's `am start -W` test says close "removes the forward". At that point `prepare` has made no forward, so the test asserts that only the app stop follows the launch, then the release.
+- The standards review suggested a driver-only clock type that extends `Clock`. I kept a single `Clock` type, as finding 5 argues for one type per concept. As a result, the two settle-test clocks carry a stub `timeout`.
+- The standards review also flagged the unchecked `hierarchy as AndroidNode[]` cast in the client. It is the only cast left, and it sits at the anti-corruption layer; the mapping already assumed this shape. I made no change.
+
+**Tests:**
+- **Added:**
+  - `tests/android-driver.test.ts`, 7 new:
+    - finding 1: a cancel during `am start -W`, and a cancel during the agent start. Both run on the production `adbRunner`, with a fake spawn whose child exits only after the abort.
+    - finding 2: two takeover tests, one for an unlisted agent and one for an unlisted forward.
+    - finding 3: two tests, one for an unauthorized emulator listed with no match, and one where a match wins.
+    - finding 7: the hung `device.version` request now ends at 5 000 ms of fake time. This test was rewritten.
+  - `tests/android-ledger.test.ts`: the `inLedger` tests, moved.
+  - Shared fixtures: `tests/fixtures/adb-spawn.ts` and `tests/fixtures/android-tools.ts`.
+- **Changed (all phase 4 tests):**
+  - Issue 11's "an abort killing the child" is now "an abort doesn't kill the child…", under the owner's ruling. The race test became "a child with no exit status after an abort is still unknown".
+  - The two `vendorCode` tests in `tests/scripted-run.test.ts` date from phase 4, not before `f93645a`. They now use the constructor option, and one also asserts that an error built without a `vendorCode` has none.
+- **Unchanged:** no test from before phase 4 changed an assertion. No golden file changed.
+
+**Gate:** `npm run check` passed, 415 of 415 tests, at `05c0154` (log: `$TMPDIR/implement-phase4-17-check.log`, which also holds the red runs). No device was touched; neither `adb` nor mobilecli was run.
+
+**`/code-review` against `819e6b8`:**
+- **Standards:** 0 hard violations and 5 judgement calls. I fixed 3: the prefix's home, `checkAgents`'s parameter, and a wall-clock wait in the runner test. I kept 2, as noted under Deviations.
+- **Spec:** 0 findings, and 2 notes:
+  - the runner no longer kills any child. Phase 5's `logcat` streams need their own stop path, which the release spec already gives them.
+  - the forward note above.
