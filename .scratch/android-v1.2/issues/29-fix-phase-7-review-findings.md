@@ -1,6 +1,7 @@
 # Phase 7: fix the whole-branch review findings
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: claude-issue-29
 Blocked by: none
 
 Spec: [../spec.md](../spec.md), "Phase 7", and Issues 23 to 25 with their comments. A two-axis review of phase 7 (`agent/android-v1.2-phase6...agent/android-v1.2-phase7`) found the items below. Docs, tests and evidence scripts only. Change no `src/` file.
