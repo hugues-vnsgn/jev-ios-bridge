@@ -1,4 +1,4 @@
-/** Frozen copy of src/scripted/contracts.ts at commit 819ea10; see schema.ts in this folder. */
+/** Frozen copy of src/scripted/contracts.ts at commit 819ea10; see schema.ts in this folder. Never update it. */
 import type { Assertion, Direction } from '../../../src/contracts/index.js';
 
 /** Stable element identity. A vendor snapshot ref is deliberately not accepted. */

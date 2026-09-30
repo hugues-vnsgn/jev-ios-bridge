@@ -1,3 +1,4 @@
+/** Frozen copy of src/scripted/vocabulary.ts at commit 819ea10; see schema.ts in this folder. Never update it. */
 /**
  * Bridge-owned vocabularies frozen by ADR-0005. A MobileBuildMCP release cannot change them:
  * the driver translates vendor roles, and unknown vendor error codes become DEVICE_ERROR.

@@ -140,9 +140,8 @@ const scriptCases: Record<string, unknown> = {
   androidTooManyValues: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
     device: { serial: 'emulator-5554' },
     values: Object.fromEntries(Array.from({ length: 33 }, (_, index) => [`k${index}`, 'v'])), steps: [checkpoint] },
-  // The owner ruling (2026-09-30): these pin the exact iOS multi-error examples a review found differed
-  // from 1.1 under "one object schema plus a platform-aware refinement" (issues lost, reordered, or a new
-  // one appearing). tests/scripted-schema-parity.test.ts checks this holds generally, not just these five.
+  // iOS scripts with several errors at once: each gives 1.1's issues, in 1.1's order.
+  // tests/scripted-schema-parity.test.ts checks this across many more combinations.
   nonAsciiValuePlusUnknownRole: { ...validScript, values: { query: 'Đà Nẵng' },
     steps: [{ ...checkpoint, guard: { present: [{ role: 'StaticText', label: 'Marker' }] } }] },
   leadingHyphenPlusMissingVersion: { app: validScript.app, values: { query: '-Berlin' }, steps: [checkpoint] },
