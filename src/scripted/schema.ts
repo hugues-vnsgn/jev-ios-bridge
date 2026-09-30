@@ -104,11 +104,35 @@ function checkSteps(scenario: { steps: Steps; values: Record<string, string> }, 
   }
 }
 
-// ---------- iOS: exactly 1.1's schema (frozen at 819ea10), plus an optional "platform": "ios" ----------
+// ---------- Fields, each defined once and shared by the schemas below ----------
 
-const iosValuesSchema = z.record(z.string().regex(key), z.string().max(2_048)
+const bundleIdField = z.string().regex(bundleId);
+/** Passed to the app process at launch, for example a debug-only entry point such as -of-evidence-gallery. */
+const launchArgsField = z.array(launchArgument).max(20);
+/** The installed app's package name. */
+const packageField = z.string().regex(androidPackage,
+  'app.package must be an Android package name: two or more dot-separated parts, each starting with a ' +
+  'letter, then letters, digits or "_"');
+/** A specific activity to start instead of the launcher activity: relative or fully qualified. */
+const activityField = z.string().min(1).max(200).regex(androidActivity,
+  'app.activity must be a relative (".DebugGalleryActivity") or fully qualified activity name');
+const udidField = z.string().regex(udid);
+/** The adb serial exactly as `adb devices` prints it. */
+const serialField = z.string().regex(androidSerial, 'device.serial must match ^[A-Za-z0-9._:-]{1,100}$');
+/** An emulator's AVD name, stable across start order. */
+const avdField = z.string().regex(androidAvd, 'device.avd must match ^[A-Za-z0-9._-]{1,100}$');
+const preconditionsField = z.array(z.string().trim().min(1).max(500)).max(20);
+
+/** Typed values by key, at most 32 of them, each value read by `value`. */
+function typedValues(value: z.ZodType<string>) {
+  return z.record(z.string().regex(key), value)
+    .refine(values => Object.keys(values).length <= 32, 'A script may supply at most 32 typed values');
+}
+
+// ---------- iOS: the 1.1 schema, plus an optional "platform": "ios" ----------
+
+const iosValuesSchema = typedValues(z.string().max(2_048)
   .regex(printableAscii, 'Typed values must use printable US keyboard characters'))
-  .refine(values => Object.keys(values).length <= 32, 'A script may supply at most 32 typed values')
   .refine(values => Object.values(values).every(value => !value.startsWith('-')),
     'MobileBuildMCP 2.7.1 cannot type text starting with a leading hyphen');
 
@@ -117,49 +141,42 @@ export const iosScriptedScenarioSchema = z.strictObject({
   /** Absent, or "ios": every other value routes to this schema too, and fails on this field. */
   platform: z.literal('ios').optional(),
   app: z.strictObject({
-    bundleId: z.string().regex(bundleId),
-    /** Passed to the app process at launch, for example a debug-only entry point such as -of-evidence-gallery. */
-    launchArgs: z.array(launchArgument).max(20).optional(),
+    bundleId: bundleIdField,
+    launchArgs: launchArgsField.optional(),
   }),
-  device: z.strictObject({ udid: z.string().regex(udid).optional() }).optional(),
-  preconditions: z.array(z.string().trim().min(1).max(500)).max(20).optional(),
+  device: z.strictObject({ udid: udidField.optional() }).optional(),
+  preconditions: preconditionsField.optional(),
   values: iosValuesSchema,
   steps: stepsSchema,
 }).superRefine(checkSteps);
 
 // ---------- Android: its own schema, not a refinement of the iOS one ----------
 
-const androidValuesSchema = z.record(z.string().regex(key), z.string().max(2_048)
-  .refine(value => !controlCharacter.test(value), 'Typed values must not contain control characters'))
-  .refine(values => Object.keys(values).length <= 32, 'A script may supply at most 32 typed values');
+const androidValuesSchema = typedValues(z.string().max(2_048)
+  .refine(value => !controlCharacter.test(value), 'Typed values must not contain control characters'));
 
 export const androidScriptedScenarioSchema = z.strictObject({
   version: versionSchema,
   platform: z.literal('android'),
   app: z.strictObject({
-    // Declared (rather than omitted) so a script that supplies them gets a message naming the Android
-    // replacement, instead of zod's generic "unrecognized key".
-    bundleId: z.string().regex(bundleId).optional(),
-    launchArgs: z.array(launchArgument).max(20).optional(),
-    /** The installed app's package name. Required. */
-    package: z.string().regex(androidPackage,
-      'app.package must be an Android package name: two or more dot-separated parts, each starting with a ' +
-      'letter, then letters, digits or "_"').optional(),
-    /** A specific activity to start instead of the launcher activity: relative or fully qualified. */
-    activity: z.string().min(1).max(200).regex(androidActivity,
-      'app.activity must be a relative (".DebugGalleryActivity") or fully qualified activity name').optional(),
+    // bundleId and launchArgs are declared (rather than omitted) so a script that supplies them gets a
+    // message naming the Android replacement, instead of zod's generic "unrecognized key".
+    bundleId: bundleIdField.optional(),
+    launchArgs: launchArgsField.optional(),
+    // Required: optional here only so a missing package gets its own message below.
+    package: packageField.optional(),
+    activity: activityField.optional(),
     /** Passed to the launch intent with `am start --es <key> <value>`. */
     intentExtras: intentExtrasSchema.optional(),
   }),
   device: z.strictObject({
     // Declared for the same reason as app.bundleId above.
-    udid: z.string().regex(udid).optional(),
-    /** The adb serial exactly as `adb devices` prints it. At most one of serial or avd. */
-    serial: z.string().regex(androidSerial, 'device.serial must match ^[A-Za-z0-9._:-]{1,100}$').optional(),
-    /** An emulator's AVD name, stable across start order. At most one of serial or avd. */
-    avd: z.string().regex(androidAvd, 'device.avd must match ^[A-Za-z0-9._-]{1,100}$').optional(),
+    udid: udidField.optional(),
+    // At most one of serial or avd.
+    serial: serialField.optional(),
+    avd: avdField.optional(),
   }).optional(),
-  preconditions: z.array(z.string().trim().min(1).max(500)).max(20).optional(),
+  preconditions: preconditionsField.optional(),
   values: androidValuesSchema,
   steps: stepsSchema,
 }).superRefine((scenario, context) => {
@@ -183,23 +200,19 @@ const scriptedScenarioStructure = z.strictObject({
   version: versionSchema,
   platform: z.enum(PLATFORMS).optional(),
   app: z.strictObject({
-    bundleId: z.string().regex(bundleId).optional(),
-    launchArgs: z.array(launchArgument).max(20).optional(),
-    package: z.string().regex(androidPackage,
-      'app.package must be an Android package name: two or more dot-separated parts, each starting with a ' +
-      'letter, then letters, digits or "_"').optional(),
-    activity: z.string().min(1).max(200).regex(androidActivity,
-      'app.activity must be a relative (".DebugGalleryActivity") or fully qualified activity name').optional(),
+    bundleId: bundleIdField.optional(),
+    launchArgs: launchArgsField.optional(),
+    package: packageField.optional(),
+    activity: activityField.optional(),
     intentExtras: intentExtrasSchema.optional(),
   }),
   device: z.strictObject({
-    udid: z.string().regex(udid).optional(),
-    serial: z.string().regex(androidSerial, 'device.serial must match ^[A-Za-z0-9._:-]{1,100}$').optional(),
-    avd: z.string().regex(androidAvd, 'device.avd must match ^[A-Za-z0-9._-]{1,100}$').optional(),
+    udid: udidField.optional(),
+    serial: serialField.optional(),
+    avd: avdField.optional(),
   }).optional(),
-  preconditions: z.array(z.string().trim().min(1).max(500)).max(20).optional(),
-  values: z.record(z.string().regex(key), z.string().max(2_048))
-    .refine(values => Object.keys(values).length <= 32, 'A script may supply at most 32 typed values'),
+  preconditions: preconditionsField.optional(),
+  values: typedValues(z.string().max(2_048)),
   steps: stepsSchema,
 });
 
