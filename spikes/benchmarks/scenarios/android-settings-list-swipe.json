@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "platform": "android",
+  "app": {
+    "package": "com.android.settings"
+  },
+  "preconditions": [
+    "Stands in for cmp-list-swipe: cmp's million-row list exists only inside a modal its harness opens and closes by itself, so it can't be swiped reliably. This swipes Settings' main RecyclerView instead."
+  ],
+  "values": {},
+  "steps": [
+    {
+      "id": "swipeList",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "button",
+            "label": "Display & touch"
+          }
+        ],
+        "absent": [
+          {
+            "role": "button",
+            "label": "About emulated device"
+          }
+        ]
+      },
+      "action": {
+        "kind": "swipe",
+        "selector": {
+          "role": "scroll-view",
+          "identifier": "com.android.settings:id/recycler_view"
+        },
+        "direction": "up"
+      }
+    },
+    {
+      "id": "laterRow",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "button",
+            "label": "Battery"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "about",
+          "claim": "A row labelled About emulated device is visible."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{"role":"button","label":"Profile picture, double tap to open Google Account","identifier":"com.android.settings:id/account_avatar","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Settings","identifier":"com.android.settings:id/homepage_title","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Search settings","identifier":"com.android.settings:id/search_action_bar","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Search settings","identifier":"com.android.settings:id/search_action_bar_title","state":{"enabled":true,"visible":true},"selectable":false}
+{"role":"scroll-view","identifier":"com.android.settings:id/main_content_scrollable_container","state":{"enabled":true,"visible":true}}
+{"role":"scroll-view","identifier":"com.android.settings:id/recycler_view","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Network & internet","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"android:id/icon","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Network & internet","identifier":"android:id/title","state":{"enabled":true,"visible":true},"selectable":false}
+{"role":"text","label":"Mobile, Wi‑Fi, hotspot","identifier":"android:id/summary","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Connected devices","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"android:id/icon","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Connected devices","identifier":"android:id/title","state":{"enabled":true,"visible":true},"selectable":false}
+{"role":"text","label":"Bluetooth, pairing","identifier":"android:id/summary","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Apps","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"android:id/icon","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Apps","identifier":"android:id/title","state":{"enabled":true,"visible":true},"selectable":false}
+{"role":"text","label":"Assistant, recent apps, default apps","identifier":"android:id/summary","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Notifications","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"android:id/icon","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Notifications","identifier":"android:id/title","state":{"enabled":true,"visible":true},"selectable":false}
+{"role":"text","label":"Notification history, conversations","identifier":"android:id/summary","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Battery","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"android:id/icon","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Battery","identifier":"android:id/title","state":{"enabled":true,"visible":true},"selectable":false}
+{"role":"text","label":"100%","identifier":"android:id/summary","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Storage","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"android:id/icon","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Storage","identifier":"android:id/title","state":{"enabled":true,"visible":true},"selectable":false}
+{"role":"text","label":"31% used - 5.53 GB free","identifier":"android:id/summary","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Sound & vibration","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"android:id/icon","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Sound & vibration","identifier":"android:id/title","state":{"enabled":true,"visible":true},"selectable":false}
+{"role":"text","label":"Volume, haptics, Do Not Disturb","identifier":"android:id/summary","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Display","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"android:id/icon","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Display","identifier":"android:id/title","state":{"enabled":true,"visible":true},"selectable":false}
+{"role":"text","label":"Dark theme, font size, brightness","identifier":"android:id/summary","state":{"enabled":true,"visible":true}}
