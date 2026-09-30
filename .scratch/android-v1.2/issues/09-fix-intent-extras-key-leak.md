@@ -1,7 +1,7 @@
 # Phase 3: intentExtras keys leak registered values
 
 Status: closed
-Closed: Fixed on agent/android-v1.2-phase3 at ebe6daf
+Closed: Fixed on agent/android-v1.2-phase3 at 28334ff, after review round 1
 Blocked by: none
 
 Spec: [../spec.md](../spec.md), "Phase 3". Found by Codex's review of `agent/android-v1.2-phase3` at 40c9e1c (Spec axis, P2; Standards axis, no findings).
@@ -22,3 +22,11 @@ Spec: [../spec.md](../spec.md), "Phase 3". Found by Codex's review of `agent/and
 **2026-09-30, owner and Claude:** Chose patch plus a whole-evidence leak test over a one-line patch. The allowlist of data-keyed maps is hand-kept, so the next map missing from it would leak the same way; a test that scans everything the run writes catches that without naming the map.
 
 **2026-09-30, Claude (commit ebe6daf):** `src/log/index.ts` names the data-keyed maps in one set, `dataKeyedMaps`, and adds `intentExtras`. The new test in `tests/scripted-run.test.ts` places two synthetic secrets (a typed value and `TYPESAFE_API_KEY`) in intent-extra keys (exact and embedded), an intent-extra value, the typed value, the driver's shown value and an assertion claim. It then scans `run.jsonl`, `report.json` and the prose report. It failed before the fix (`synthetic-typed-7f3a survived in the written evidence`) and passes after. `logTails` keys are not added: they are log-source names from the vendor, not the script. Gates at ebe6daf: `npm run check` passes (typecheck, 242 tests, build); no golden file changed.
+
+**2026-09-30, Claude, review round 1 (commit 28334ff):** Two-axis review of 40c9e1c...95e3191. Standards: 4 findings, all P3. Spec: 3 findings, all P3. No P1 or P2 on either axis. Fixed:
+- The leak test did not plant a secret in every field a value reaches. It now also plants the typed value in a step ID, an assertion ID, the action selector and on-screen text, and asserts the run passes so the checkpoint's observation is written. Temporarily removing `intentExtras` from `dataKeyedMaps` still fails it with `synthetic-typed-7f3a survived in the written evidence`.
+- The `dataKeyedMaps` comment said "registered value"; it now uses the glossary's "typed value or the API key", says why `assertions` is checked beside the set, and quotes the test name exactly.
+- The test read `run.jsonl` twice; it now reads it once.
+- This Issue was marked closed before the review ran; it now closes at 28334ff, after this round.
+
+Gates at 28334ff: `npm run check` passes (typecheck, 242 tests, build); no golden file changed.
