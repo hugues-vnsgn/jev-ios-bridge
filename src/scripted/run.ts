@@ -203,12 +203,16 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
   };
   // The settled screen the last action returned; the next step uses it instead of capturing again.
   let settled: Snapshot | undefined;
+  // A function boundary, so a read reflects `settled`'s declared type rather than a stale narrowing
+  // from before the last `keepSettled` call.
+  const lastActedSnapshot = (): Snapshot | undefined => settled;
   const evidenceFields = (snapshot: Snapshot) => ({
     ...(snapshot.screenshotPath ? { screenshotPath: snapshot.screenshotPath } : {}),
     ...(snapshot.logTails ? { logTails: snapshot.logTails } : {}),
     ...(snapshot.reusedFromAction ? { reusedCapture: true } : {}),
     ...(snapshot.screenshotAgreement === undefined ? {} : { screenshotAgreement: snapshot.screenshotAgreement }),
     ...(snapshot.verifyAttempts === undefined ? {} : { verifyAttempts: snapshot.verifyAttempts }),
+    ...(snapshot.settled === false ? { settled: false } : {}),
   });
 
   try {
@@ -287,8 +291,10 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
           phase = 'act';
           keepSettled(await act());
         }
+        const shownValue = lastActedSnapshot()?.shownValue;
         await options.log.append('action', { step: steps, stepId: step.id, action: step.action.kind,
           selector: step.action.selector, resolvedRef: ref.ref, actDurationMs,
+          ...(shownValue === undefined ? {} : { shownValue }),
           stepDurationMs: Math.max(0, performance.now() - activeStepStarted) });
         continue;
       }

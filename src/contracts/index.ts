@@ -75,6 +75,12 @@ export interface Snapshot {
   verifyMs?: number;
   /** Measurement only: captures taken until the screenshot and capture agreed, when more than one. */
   verifyAttempts?: number;
+  /** Android only: a text field's displayed value after the bridge typed into it, set on the snapshot a
+   *  replace-text action returns. It may legitimately differ from the typed value. */
+  shownValue?: string;
+  /** Android only: false when the settle rule hit its cap before two captures agreed, so this is the last
+   *  capture taken rather than a confirmed settled one ("screen still changing"). Absent when settled. */
+  settled?: boolean;
 }
 
 export type Action =

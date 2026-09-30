@@ -841,6 +841,31 @@ test('an Android run\'s prepared event carries the device identity, serial, agen
   assert.deepEqual(Object.keys(ios), ['prepareDurationMs']);
 });
 
+test('an Android replace-text step records its driver-reported shown value, and a screen that never settled marks the next step', async () => {
+  const initial = snapshot([{ ref: 'name-field', role: 'text-field', identifier: 'name-field', actions: ['typeText'],
+    frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } }]);
+  const afterType: Snapshot = { ...snapshot([{ ref: 'confirm', role: 'text', label: 'Confirm', actions: [],
+    frame: { x: 0, y: 40, width: 100, height: 30 }, state: { enabled: true, visible: true } }]),
+    shownValue: 'Ann.', settled: false };
+  const scenario: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.android' },
+    values: { name: 'Ann' }, steps: [
+      { id: 'type', kind: 'action', guard: { present: [{ identifier: 'name-field' }] },
+        action: { kind: 'replaceText', selector: { identifier: 'name-field' }, valueKey: 'name' } },
+      { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Confirm' }] },
+        assertions: [{ id: 'shown', claim: 'Confirm is visible' }] },
+    ] };
+  const log = memoryLog();
+  await runScriptedScenario({ runId: 'scripted-1', scenario, log,
+    driver: { async prepare() {}, async observe() { return initial; },
+      async act() { return afterType; }, async close() {} },
+    judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
+  const action = log.events.find(event => event.type === 'action' && event.data.action === 'replaceText')!.data;
+  assert.equal(action.shownValue, 'Ann.');
+  const steps = log.events.filter(event => event.type === 'step');
+  assert.equal(steps[0]?.data.settled, undefined);
+  assert.equal(steps[1]?.data.settled, false);
+});
+
 test('the driver gets the device an iOS script names, and no device for an Android script', async () => {
   const preparedWith = async (scenario: ScriptedScenario) => {
     let prepared: unknown;
