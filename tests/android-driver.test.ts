@@ -2084,8 +2084,9 @@ async function runCaptured(capture: string, options: { pid: string; lateFrom?: n
 function assertCleanedUp(run: Awaited<ReturnType<typeof runCaptured>>): void {
   assert.equal(run.streamsStarted, 2);
   assert.equal(run.streamsRunning, 0, 'both streams stopped');
-  assert.deepEqual(run.holderAtForwardRemoval, [['forward emulator-5554 tcp:49526']], 'no stream or agent left in the holder record');
-  assert.deepEqual(run.leaseFiles, [], 'lease released');
+  // The forward is close's last step, disowned once removed; then the lease, holder record and all, is released.
+  assert.deepEqual(run.holderAtForwardRemoval, [['forward emulator-5554 tcp:49526']], 'both streams and the agent already disowned');
+  assert.deepEqual(run.leaseFiles, [], 'lease released, and its holder record with it');
   assert.equal(run.agentsLeft, 0, 'no agent left');
   assert.equal(run.forwardsLeft, 0, 'no forward left');
   assert.deepEqual(run.events.find(event => event.type === 'prepared')?.data.logSources, { logcat: join(run.folder, `${run.runId}.log`) });
@@ -2106,6 +2107,8 @@ test('end to end: an app that freezes (probe-anr) ends the run APP_NOT_RESPONDIN
   const fields = await hierarchyOf('text-fields.json');
   const run = await runCaptured('probe-anr', { pid: '11656', lateFrom: 1, screens: [fields, fields, []] });
   assert.deepEqual([run.report.verdict, run.report.reason], ['inconclusive', 'APP_NOT_RESPONDING']);
+  const error = run.events.find(event => event.type === 'error')!.data;
+  assert.deepEqual([error.stepId, error.phase, error.code], ['verify', 'observe', 'APP_NOT_RESPONDING']);
   assertCleanedUp(run);
 });
 

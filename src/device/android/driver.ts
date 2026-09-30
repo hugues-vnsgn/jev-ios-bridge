@@ -4,7 +4,7 @@ import { createServer } from 'node:net';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
-import type { Action, ActionScenarioContext, ActOutcome, AndroidAppIdentity, AppProblem, DevicePreparation, DeviceDriver, Direction, Element,
+import type { Action, ActionScenarioContext, ActOutcome, AndroidAppIdentity, AppProblem, LogSources, DevicePreparation, DeviceDriver, Direction, Element,
   PrepareScenarioContext, Snapshot } from '../../contracts/index.js';
 import { isIosApp } from '../../contracts/index.js';
 import { DeviceReasonError, selectAndroidDeviceName, StaleSnapshotError } from '../index.js';
@@ -249,7 +249,7 @@ export class AndroidDriver implements DeviceDriver {
   }
 
   /** The app's log file, once its stream started: the pane, each step's log tails and `logs` read it. */
-  logSources(): { logcat?: string } {
+  logSources(): LogSources {
     return this.logFile !== undefined ? { logcat: this.logFile } : {};
   }
 

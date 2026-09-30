@@ -373,9 +373,9 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
     verdict = 'inconclusive';
     // A step that failed because the app died or froze is reported as that, not as the symptom it caused. A
     // driver without appProblem answers only whether the app still runs.
-    const problem = signal.aborted ? undefined : options.driver.appProblem
+    const problemCode = signal.aborted ? undefined : options.driver.appProblem
       ? options.driver.appProblem()?.code : options.driver.appRunning?.() === false ? 'APP_EXITED' : undefined;
-    const failure: Failure = problem ? { code: problem } : failureOf(error, signal);
+    const failure: Failure = problemCode ? { code: problemCode } : failureOf(error, signal);
     reason = failure.code;
     await options.log.append('error', { stepId: activeStepId, phase, code: reason,
       ...(failure.vendorCode === undefined ? {} : { vendorCode: failure.vendorCode }),

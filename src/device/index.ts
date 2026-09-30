@@ -2,7 +2,7 @@ import { execFile } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { readFile } from 'node:fs/promises';
 import { isAbsolute, join, resolve } from 'node:path';
-import { isIosApp, type Action, type ActionScenarioContext, type AppProblem, type DeviceDriver, type DeviceMetrics, type Element, type PrepareScenarioContext, type Snapshot, type TapAliasRule } from '../contracts/index.js';
+import { isIosApp, type Action, type ActionScenarioContext, type AppProblem, type LogSources, type DeviceDriver, type DeviceMetrics, type Element, type PrepareScenarioContext, type Snapshot, type TapAliasRule } from '../contracts/index.js';
 import { androidAvd, androidSerial } from '../scripted/schema.js';
 import { ROLES, type ReasonCode, type Role } from '../scripted/vocabulary.js';
 import { DeviceLease, DeviceLeaseBusyError } from './lease.js';
@@ -352,7 +352,7 @@ export class MobileBuildMcpDriver implements DeviceDriver {
       ? { code: 'APP_EXITED', note: 'The app stopped unexpectedly: its console output ended while the run was still going.' } : undefined;
   }
 
-  logSources(): { runtime?: string; os?: string } {
+  logSources(): LogSources {
     return { ...(this.logPaths.runtime ? { runtime: this.logPaths.runtime } : {}),
       ...(this.logPaths.os ? { os: this.logPaths.os } : {}) };
   }
