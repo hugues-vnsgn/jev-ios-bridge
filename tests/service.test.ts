@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { BridgeService } from '../src/service.js';
 import type { DeviceDriver } from '../src/contracts/index.js';
-import { isIosApp, type AppIdentity } from '../src/contracts/index.js';
+import type { AppIdentity } from '../src/contracts/index.js';
 import type { ScriptedJudge } from '../src/scripted/contracts.js';
 
 const screen = () => ({ deviceId: 'test', sequence: 1, capturedAt: Date.now(),
@@ -131,14 +131,13 @@ test('createDriver builds a driver per run from that run\'s scenario, and the ru
   const taps: string[] = [];
   const service = new BridgeService({ baseDir: root,
     createDriver: (scenario) => {
-      const bundleId = isIosApp(scenario.app) ? scenario.app.bundleId : scenario.app.package;
-      built.push(bundleId);
+      built.push(scenario.app.bundleId);
       const driver: DeviceDriver = {
         async prepare() {}, async observe() { return aliased(); },
-        async act(action) { taps.push(`${bundleId}:${action.targetRef}`); },
+        async act(action) { taps.push(`${scenario.app.bundleId}:${action.targetRef}`); },
         async close() {},
       };
-      return bundleId === 'com.example.pinned' ? { ...driver, tapAliasRule: 'mobilebuildmcp-2.7.1' } : driver;
+      return scenario.app.bundleId === 'com.example.pinned' ? { ...driver, tapAliasRule: 'mobilebuildmcp-2.7.1' } : driver;
     },
     createJudge: () => ({ async judge() { return { probabilities: { shown: 1 },
       inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } }),
