@@ -1,31 +1,7 @@
 import type { Element } from '../../contracts/index.js';
 import type { Role } from '../../scripted/vocabulary.js';
+import type { AndroidNode, AndroidTree } from './agent-client.js';
 import { STATUS_BAR_ID_PREFIX } from './settle.js';
-
-/**
- * One node of the device agent's `device.dump.ui` tree. mobilecli's `dump ui --format raw` has the same
- * shape without `scrollable` and `password`, so one mapping reads both.
- */
-export interface AndroidNode {
-  class?: string;
-  text?: string;
-  hint?: string;
-  'content-desc'?: string;
-  'resource-id'?: string;
-  checkable?: boolean;
-  checked?: boolean;
-  clickable?: boolean;
-  enabled?: boolean;
-  focused?: boolean;
-  selected?: boolean;
-  visible?: boolean;
-  scrollable?: boolean;
-  password?: boolean;
-  rect?: { x: number; y: number; width: number; height: number };
-  children?: AndroidNode[] | null;
-}
-
-export interface AndroidTree { hierarchy: AndroidNode[] }
 
 const TEXT_FIELD_CLASS = /EditText$|AutoCompleteTextView$/;
 const SCROLL_CLASS = /(RecyclerView|ListView|ScrollView|GridView|ViewPager2?|NestedScrollView)$/;

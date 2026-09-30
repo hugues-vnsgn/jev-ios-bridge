@@ -11,8 +11,8 @@ import { DeviceLease, DeviceLeaseBusyError, type LeaseHolder } from '../lease.js
 import { adbRunner, type AdbResult, type AdbRunner } from './adb.js';
 import { deviceAgentClient, type AgentKey, type DeviceAgentClient } from './agent-client.js';
 import { inLedger } from './ledger.js';
-import { mapAndroidTree, type AndroidTree } from './mapping.js';
-import { settle, type Clock, type UiTree } from './settle.js';
+import { mapAndroidTree } from './mapping.js';
+import { settle, type Clock } from './settle.js';
 import { adbEnvironment, androidTools, type AndroidTools } from './tools.js';
 
 /** Where the bridge pushes its device agent: its own path, never mobilecli's `/data/local/tmp/mobilecli.dex`. */
@@ -297,7 +297,7 @@ export class AndroidDriver implements DeviceDriver {
     if (!this.agent || !serial) throw new Error('Driver is not prepared');
     // The agent's tree has the captures' shape (the tracer confirmed it), so the mapping reads it as is.
     const captured = await settle(async captureSignal =>
-      ({ hierarchy: await this.agentCall(agent => agent.dumpUi(DUMP_IDLE_MS, captureSignal), captureSignal) as UiTree['hierarchy'] }), this.clock, signal);
+      ({ hierarchy: await this.agentCall(agent => agent.dumpUi(DUMP_IDLE_MS, captureSignal), captureSignal) }), this.clock, signal);
     const sequence = ++this.sequence;
     const capturedAt = Date.now();
     const jpeg = await this.agentCall(agent => agent.screenshot(SCREENSHOT_MAX_SIZE, signal), signal);
@@ -309,7 +309,7 @@ export class AndroidDriver implements DeviceDriver {
       // An Android reference never expires by time: only a newer snapshot, or an action, makes it stale.
       expiresAt: Number.MAX_SAFE_INTEGER,
       sequence,
-      elements: mapAndroidTree(captured.tree as AndroidTree),
+      elements: mapAndroidTree(captured.tree),
       truncated: false,
       screenHash: captured.screenHash,
       screenshotPath,

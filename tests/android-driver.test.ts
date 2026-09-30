@@ -7,11 +7,11 @@ import { test } from 'node:test';
 import { isActOutcome, type AndroidAppIdentity, type DeviceDriver, type RunEvent, type Snapshot } from '../src/contracts/index.js';
 import { DeviceReasonError, StaleSnapshotError } from '../src/device/index.js';
 import { adbRunner, type AdbResult, type AdbRunner } from '../src/device/android/adb.js';
-import { DeviceAgentError, type DeviceAgentClient } from '../src/device/android/agent-client.js';
+import { DeviceAgentError, type AndroidNode, type DeviceAgentClient } from '../src/device/android/agent-client.js';
 import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
 import { AGENT_DEVICE_PATH, AGENT_START_COMMAND, AndroidDriver, type AndroidDriverOptions } from '../src/device/android/driver.js';
 import { OutcomeUnknownError } from '../src/device/android/ledger.js';
-import { mapAndroidTree, type AndroidTree } from '../src/device/android/mapping.js';
+import { mapAndroidTree } from '../src/device/android/mapping.js';
 import { screenHash, type Clock } from '../src/device/android/settle.js';
 import type { ScriptedJudge } from '../src/scripted/contracts.js';
 import { runScriptedScenario } from '../src/scripted/run.js';
@@ -189,7 +189,7 @@ type AgentCall = { method: string; params?: unknown };
  * runs on the port's device. `device.dump.ui` answers with the next of `screens` (the last one repeats),
  * and `device.screenshot` with `jpeg-<n>`. Every other call is recorded in `calls` and does nothing.
  */
-function fakeAgents(adb: FakeAdb, options: { answersAfterPolls?: number; never?: boolean; sha256?: string; screens?: unknown[][] } = {}) {
+function fakeAgents(adb: FakeAdb, options: { answersAfterPolls?: number; never?: boolean; sha256?: string; screens?: AndroidNode[][] } = {}) {
   const versionCalls: number[] = [];
   const clients: number[] = [];
   const calls: AgentCall[] = [];
@@ -777,17 +777,17 @@ test('preparation(), observe and act before prepare are refused, and close befor
 /* observe and act (Issue 15): the same fakes, a fake clock and a temporary screenshot folder. */
 
 const AGENT_FIXTURES = join(import.meta.dirname, 'fixtures', 'android');
-type Hierarchy = Record<string, unknown>[];
+type Hierarchy = AndroidNode[];
 const hierarchyOf = async (name: string): Promise<Hierarchy> =>
   (JSON.parse(await readFile(join(AGENT_FIXTURES, name), 'utf8')) as { hierarchy: Hierarchy }).hierarchy;
 const captureOf = async (name: string): Promise<Hierarchy> => (JSON.parse((JSON.parse(
   await readFile(join(AGENT_FIXTURES, 'captures', name), 'utf8')) as { data: { rawData: string } }).data.rawData) as { hierarchy: Hierarchy }).hierarchy;
 /** The tree with the node whose resource-id is `id` changed by `patch`. */
-function withNode(tree: Hierarchy, id: string, patch: Record<string, unknown>): Hierarchy {
+function withNode(tree: Hierarchy, id: string, patch: Partial<AndroidNode>): Hierarchy {
   const copy = structuredClone(tree);
   const visit = (nodes: Hierarchy): boolean => nodes.some(node => {
     if (node['resource-id'] === id) { Object.assign(node, patch); return true; }
-    return visit((node.children ?? []) as Hierarchy);
+    return visit(node.children ?? []);
   });
   assert.ok(visit(copy), `no node ${id}`);
   return copy;
@@ -795,7 +795,7 @@ function withNode(tree: Hierarchy, id: string, patch: Record<string, unknown>): 
 /** The tree with the node whose resource-id is `id` showing `text`. */
 const withText = (tree: Hierarchy, id: string, text: string) => withNode(tree, id, { text });
 /** The text fields tree with no resource-ids, nothing focused, and `patch` applied to the city field. */
-async function anonymousFields(patch: Record<string, unknown> = {}): Promise<Hierarchy> {
+async function anonymousFields(patch: Partial<AndroidNode> = {}): Promise<Hierarchy> {
   let tree = withNode(await hierarchyOf('text-fields.json'), 'field.password', { focused: false });
   tree = withNode(tree, 'field.city', patch);
   for (const id of ['field.notes', 'field.password', 'field.spaces', 'field.city', 'field.empty']) tree = withNode(tree, id, { 'resource-id': '' });
@@ -844,7 +844,7 @@ test('observe settles device.dump.ui, maps it, and saves one screenshot of the s
     const snapshot = await driver.observe(signal());
     assert.deepEqual(agents.calls, SETTLED);
     assert.deepEqual(clock.sleeps.slice(-1), [250]);
-    assert.deepEqual(snapshot.elements, mapAndroidTree({ hierarchy: fields as AndroidTree['hierarchy'] }));
+    assert.deepEqual(snapshot.elements, mapAndroidTree({ hierarchy: fields }));
     assert.equal(snapshot.screenHash, screenHash({ hierarchy: fields }));
     assert.equal(snapshot.deviceId, 'emulator-5554');
     assert.equal(snapshot.truncated, false);

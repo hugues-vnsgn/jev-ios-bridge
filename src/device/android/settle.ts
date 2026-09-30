@@ -1,18 +1,15 @@
 import { createHash } from 'node:crypto';
+import type { AndroidNode, AndroidTree } from './agent-client.js';
 
-/** One node of the device agent's `device.dump.ui` tree, as the agent sends it. */
-export type AgentNode = Record<string, unknown> & { 'resource-id'?: unknown; children?: AgentNode[] | null };
-/** What one `device.dump.ui` call returns. */
-export type UiTree = { hierarchy: AgentNode[] };
 /** One `device.dump.ui` call. */
-export type Capture = (signal: AbortSignal) => Promise<UiTree>;
+export type Capture = (signal: AbortSignal) => Promise<AndroidTree>;
 /** Injected so tests run the rule on fake time. */
 export interface Clock {
   now(): number;
   sleep(ms: number): Promise<void>;
 }
 /** The capture a step goes on with; `settled: false` marks the step "screen still changing". */
-export type SettledCapture = { tree: UiTree; screenHash: string; settled: boolean };
+export type SettledCapture = { tree: AndroidTree; screenHash: string; settled: boolean };
 
 /** Measured from when the earlier capture returned to when the later one starts (release spec phase 4 item 7). */
 export const SETTLE_GAP_MS = 250;
@@ -27,12 +24,12 @@ export const STATUS_BAR_ID_PREFIX = 'com.android.systemui:';
  * their hashes are equal. It covers every field outside the status bar. A status bar node is left out with
  * everything inside it, because its icons (battery, notifications) often carry no systemui id of their own.
  */
-export function screenHash(tree: UiTree): string {
+export function screenHash(tree: AndroidTree): string {
   return createHash('sha256').update(JSON.stringify(canonicalNodes(tree.hierarchy))).digest('hex');
 }
 
-function canonicalNodes(nodes: AgentNode[] | null | undefined): unknown[] {
-  return (nodes ?? []).filter(node => !String(node['resource-id'] ?? '').startsWith(STATUS_BAR_ID_PREFIX))
+function canonicalNodes(nodes: AndroidNode[] | null | undefined): unknown[] {
+  return (nodes ?? []).filter(node => !(node['resource-id'] ?? '').startsWith(STATUS_BAR_ID_PREFIX))
     .map(({ children, ...fields }) => ({ ...sortedKeys(fields) as object, children: canonicalNodes(children) }));
 }
 
@@ -55,7 +52,7 @@ export async function settle(capture: Capture, clock: Clock, signal: AbortSignal
     const tree = await capture(signal);
     return { tree, screenHash: screenHash(tree), returnedAt: clock.now() };
   };
-  const result = ({ tree, screenHash }: { tree: UiTree; screenHash: string }, settled: boolean) => ({ tree, screenHash, settled });
+  const result = ({ tree, screenHash }: { tree: AndroidTree; screenHash: string }, settled: boolean) => ({ tree, screenHash, settled });
   let previous = await take();
   while (true) {
     const nextStart = previous.returnedAt + SETTLE_GAP_MS;

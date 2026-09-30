@@ -1,14 +1,15 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { screenHash, settle, type AgentNode, type Clock, type UiTree } from '../src/device/android/settle.js';
+import type { AndroidNode, AndroidTree } from '../src/device/android/agent-client.js';
+import { screenHash, settle, type Clock } from '../src/device/android/settle.js';
 
-function node(fields: Partial<AgentNode> & { children?: AgentNode[] | null } = {}): AgentNode {
+function node(fields: Partial<AndroidNode> & { children?: AndroidNode[] | null } = {}): AndroidNode {
   return { class: 'android.view.View', text: '', 'content-desc': '', 'resource-id': '',
     rect: { x: 0, y: 0, width: 1080, height: 100 }, children: null, ...fields };
 }
 
 /** The shape real captures have: a status bar whose icons carry no systemui id of their own, and the app's window. */
-function screen(appText: string, clock = '10:30', battery = 'Battery charging, 100 percent.'): UiTree {
+function screen(appText: string, clock = '10:30', battery = 'Battery charging, 100 percent.'): AndroidTree {
   return { hierarchy: [
     node({ class: 'android.widget.FrameLayout', children: [
       node({ 'resource-id': 'com.android.systemui:id/status_bar', children: [
@@ -21,7 +22,7 @@ function screen(appText: string, clock = '10:30', battery = 'Battery charging, 1
 }
 
 /** A fake clock and a capture call that takes `durationMs` of fake time and replays `trees` (the last one repeats). */
-function fakeCapture(trees: UiTree[], durationMs = 0) {
+function fakeCapture(trees: AndroidTree[], durationMs = 0) {
   let time = 0;
   const starts: number[] = [];
   const clock: Clock = { now: () => time, sleep: async (ms) => { time += ms; } };
@@ -114,7 +115,7 @@ test('the screen hash sees every change outside the status bar and ignores key o
   const focused = screen('Home');
   focused.hierarchy[1]!.children![0]!.focused = true;
   assert.notEqual(screenHash(focused), base);
-  const reordered: UiTree = JSON.parse(JSON.stringify(screen('Home')), (_key, value) =>
+  const reordered: AndroidTree = JSON.parse(JSON.stringify(screen('Home')), (_key, value) =>
     value && typeof value === 'object' && !Array.isArray(value) ? Object.fromEntries(Object.entries(value).reverse()) : value);
   assert.equal(screenHash(reordered), base);
   assert.match(base, /^[0-9a-f]{64}$/);
