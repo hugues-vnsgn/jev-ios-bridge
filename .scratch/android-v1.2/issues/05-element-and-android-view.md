@@ -22,3 +22,15 @@ Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase
 - No device, simulator or emulator is touched.
 
 ## Comments
+
+**implementer-05, 2026-09-30.** Built test-first on the three named seams: `renderAssertionState(snapshot, 'android')` (`tests/scripted-jev.test.ts`), a new golden `tests/golden/android-render.json` (hand-written elements: a `placeholder` field, a password field whose `value` is already dots, and a `selectable: false` lifted-button-text line), and selection in `src/scripted/select.ts` (`tests/scripted-run.test.ts`). `tests/scripted-production-parity.test.ts` passes unchanged, proving the iOS text didn't move.
+
+What was built:
+- `Element` (`src/contracts/index.ts`) gains `placeholder?: string` and `selectable?: false`.
+- `renderAssertionState` (`src/scripted/observe.ts`) shows `"placeholder": "<text>"` in place of `label` when an element has one, on both platforms (the field only exists on Android elements in practice, since only the Android driver sets it); `isVisibleEvidence` now also treats placeholder text as evidence.
+- `ANDROID_PROJECTION_RULE = 'android-full-text-v1'` is exported beside `PROJECTION_RULE` in `src/scripted/observe.ts`. Wiring it into the run-log allowlist and `started`/`report.json` is Issue 07's job (left untouched here).
+- `src/scripted/select.ts` gains a `selectable(element)` predicate, applied in `visibleMatches` (used by `assertScreenGuard`) and in `resolveActionTarget`'s eligibility filter, alongside the existing `visible`/`enabled`/action checks.
+
+Local implementation choice (not spec-mandated, not externally observable as a contract): when a `selectable: false` element is the only structural match, `resolveActionTarget` reports `TARGET_UNAVAILABLE` (matched structurally, ineligible for action) rather than `TARGET_MISSING`, mirroring the existing precedent for a match that lacks frame/state metadata. `assertScreenGuard` always reports `GUARD_MISSING` in the same case, matching existing behavior for any filtered-out match. Password fields needed no code change beyond the placeholder work: the renderer already shows `value` as-is.
+
+Gates: `npm run check` green at commit `2078122` (typecheck, 212/212 tests, build). Logs: `$TMPDIR/implement-delegate-05-typecheck.log`, `$TMPDIR/implement-delegate-05-test.log`, `$TMPDIR/implement-delegate-05-build.log`, `$TMPDIR/implement-delegate-05-check.log`.
