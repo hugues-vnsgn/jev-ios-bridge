@@ -1,6 +1,7 @@
 # Phase 5: the pane, the run's app check, and the end-to-end run
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: claude-issue-20
 Blocked by: 18, 19
 
 Spec: [../spec.md](../spec.md), "Phase 5". The work is [the release spec's phase 5](../../android-support/release-spec.md#phase-5-the-log-pane-and-app-exit-detection-log-pane-and-app-exit-detection-on-android-where-android-plugs-into-the-code-item-7) items 2 (the pane, log tails and `logs`), 3 (masking), 5 (the pane's check moves onto the driver), 6 (reason codes) and 7 (tests), plus wiring Issue 18's watcher into Issue 19's driver. Read them in full, with the spec's "Phase 5" Implementation Decisions and both earlier Issues' reports. The detail below only adds acceptance criteria.
