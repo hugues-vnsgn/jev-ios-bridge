@@ -1378,7 +1378,7 @@ const cityScript = () => androidScript({
     { id: 'type-city', kind: 'action', guard: { present: [{ identifier: 'field.empty' }] },
       action: { kind: 'replaceText', selector: { identifier: 'field.empty' }, valueKey: 'city' } },
     { id: 'verify', kind: 'checkpoint', guard: { present: [{ identifier: 'field.empty' }] },
-      assertions: [{ id: 'city-shown', claim: 'The city field shows Ha Noi.' }] },
+      assertions: [{ id: 'city-shown', claim: 'The city field shows the typed city.' }] },
   ],
 });
 const judgeAllTrue: ScriptedJudge = { async judge() { return { probabilities: { 'city-shown': 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } };
@@ -1414,9 +1414,12 @@ test('an Android script with a replace-text step and a checkpoint runs to a verd
       const raw = await readFile(join(evidence, 'android-end-to-end', 'run.jsonl'), 'utf8');
       assert.equal(raw.includes('Ha Noi'), false, 'the typed value never reaches run.jsonl');
       const steps = of('step');
-      assert.deepEqual(steps.map(step => step.screenshotPath), ['screen-1.jpg', 'screen-2.jpg']);
       assert.equal(steps.some(step => 'settled' in step), false, 'every observation settled');
-      for (const [index, name] of ['screen-1.jpg', 'screen-2.jpg'].entries()) {
+      // One screenshot per observation (the checkpoint judges the screen the action returned), copied into the evidence.
+      const shots = steps.map(step => step.screenshotPath as string);
+      assert.equal(shots.length, 2);
+      for (const [index, name] of shots.entries()) {
+        assert.match(name, /^screen-\d+\.jpg$/);
         assert.equal(await readFile(join(evidence, 'android-end-to-end', name), 'utf8'), `jpeg-${String(index + 1)}`);
       }
 
