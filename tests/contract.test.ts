@@ -165,6 +165,40 @@ test('contract: accepted and rejected scripts, with exact messages', async () =>
   await golden('scripts', results);
 });
 
+test('contract: start_scenario accepts every script the scripts golden accepts, iOS and Android', { timeout: 15_000 }, async () => {
+  const accepted = Object.entries(JSON.parse(await readFile(join(goldenDir, 'scripts.json'), 'utf8')) as
+    Record<string, { accepted: boolean }>).filter(([, result]) => result.accepted).map(([name]) => name);
+  assert.ok(accepted.some(name => name.startsWith('android')) && accepted.some(name => !name.startsWith('android')));
+  const root = await mkdtemp(join(tmpdir(), 'jev-contract-mcp-accepts-'));
+  const child = spawn(process.execPath, ['--import', 'tsx', 'tests/fixtures/mcp-server.ts', root], { stdio: ['pipe', 'pipe', 'pipe'] });
+  const pending = new Map<number, (value: any) => void>();
+  const lines = createInterface({ input: child.stdout });
+  lines.on('line', line => { const value = JSON.parse(line); pending.get(value.id)?.(value); pending.delete(value.id); });
+  const request = (id: number, method: string, params: object = {}) => new Promise<any>(done => {
+    pending.set(id, done);
+    child.stdin.write(JSON.stringify({ jsonrpc: '2.0', id, method, params }) + '\n');
+  });
+  try {
+    await request(1, 'initialize', { protocolVersion: '2025-03-26', capabilities: {}, clientInfo: { name: 'contract', version: '1' } });
+    child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' }) + '\n');
+    let id = 2;
+    for (const name of accepted) {
+      const reply = await request(id++, 'tools/call', { name: 'start_scenario', arguments: { scenario: scriptCases[name] } });
+      assert.equal(reply.result.isError, undefined, `${name}: ${reply.result.content[0].text}`);
+      assert.equal(typeof JSON.parse(reply.result.content[0].text).runId, 'string', name);
+    }
+  } finally {
+    // Let the server finish its runs and exit before deleting the folder it writes into.
+    const exited = child.exitCode !== null ? Promise.resolve() : new Promise<void>(done => child.once('exit', () => done()));
+    child.stdin.end();
+    lines.close();
+    const timer = setTimeout(() => child.kill('SIGTERM'), 5_000);
+    await exited;
+    clearTimeout(timer);
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
 // ---------- runs, report.json, and evidence layout ----------
 
 const screenshotBytes = Buffer.from('89504e470d0a1a0a', 'hex');
