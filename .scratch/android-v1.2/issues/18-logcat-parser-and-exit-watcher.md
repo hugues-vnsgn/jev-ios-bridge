@@ -1,6 +1,7 @@
 # Phase 5: the logcat line parser and the app-exit watcher
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase5 at de0b2e0
 Claimed by: claude-issue-18
 Blocked by: none
 
@@ -124,3 +125,7 @@ Issue 19 is built in parallel and owns the Android driver. Don't edit `src/devic
 **Review** (`/code-review`, fixed point `2cad0f5`):
 - **Standards:** 0 hard violations and 5 judgement calls, all fixed in `b1f5980`: the event field layouts are now documented, with a per-tag pid index; the non-null assertions and long lines are gone; the test helper no longer repeats itself.
 - **Spec:** no blocking gaps, 3 actionable findings, all fixed or recorded above. The freeze masked by an expected stop is fixed. Pid events now match by pid alone, as in the prototype. The derived package and twin pids are recorded.
+
+### 2026-09-30, coordinator: accepted
+
+The acceptance list was wrong on two runs: `twin-kill9` is "exited" (kill -9 logs the same `am_proc_died` as a normal exit) and `probe-finish` is "running" (finish() logs no process event). The prototype and the recorded data win, as the release spec requires. The crash note names the exception class and location from the `am_crash` event, never the app's own log or the exception message. Issue 20 must know that after a freeze and then the events stream ending, `running()` is undefined while `problem()` stays `APP_NOT_RESPONDING`.
