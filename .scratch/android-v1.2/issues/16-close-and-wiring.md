@@ -1,6 +1,7 @@
 # Phase 4: close, the factory wiring, and the end-to-end run
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase4 at 1fef477
 Claimed by: claude-issue-16
 Blocked by: 14, 15
 
@@ -100,3 +101,5 @@ Spec: [../spec.md](../spec.md), "Phase 4". The work is [the release spec's phase
 - **Spec:** 0 missing, 2 partial, 3 departures from the spec's wording, 2 not asked for.
   - Fixed: an unconfirmed fence is now `UI_ACTION_UNCONFIRMED` ("keeps the lease in the same way"); the shown value is now checked directly; added a test for a request still running when `close` begins.
   - Explained above: the wait for all operations, fencing every bridge agent it lists, the screenshot folder and its removal.
+
+**2026-09-30, coordinator, on the report's question and deviations:** the driver's own temporary screenshot folder is right; the "factory passes the screenshot folder" note was loose, since the run has no folder before its run ID and the run log copies each screenshot into the evidence. Accepted deviations: `close` waits for in-flight agent requests too; `close` kills every bridge-owned agent on the serial (this run holds the lease and `prepare` swept the rest, so any left is this run's; a foreign agent is never touched); `close` removes the driver's temporary screenshot folder after the run log has copied each image.
