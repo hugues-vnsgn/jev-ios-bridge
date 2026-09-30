@@ -60,3 +60,16 @@ Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase
   8. `report-json.ts`'s `intentExtras` now comes from a `stringRecord()` helper that keeps only string-valued entries, instead of casting after an object-only check.
 
   `npm run check` green at the new tip; see the implementer report for the exact log path.
+
+- **2026-09-30, orchestrator (review round 2, final):** iOS byte-identical across 16 varied runs; findings 2, 3 and 5-8 fixed. Seven more findings, all fixed test-first:
+
+- **2026-09-30, implementer-07 (review round 2 fixes):**
+  1. Plain-worded `report.ts:91`'s "(open point 11: …)" and `vocabulary.ts:82`'s "open point 3" (left on the branch by Issue 04, fixed here since it's the same rule).
+  2. `started`'s Android fields now come from one `isAndroidScenario(script, platform): script is ScriptedScenarioAndroid` type guard, narrowing `script` from the single `platform` variable, instead of three separate `isIosApp(script.app)` calls; `platform` (the variable) is written into the `started` event, not a hardcoded `'android'` literal.
+  3. The prose report's device line, typed fields and "screen still changing" now gate on the run's own recorded platform (`started.platform === 'android'`), matching `report.json`, instead of showing whenever the events happen to carry the values. New test: an iOS run whose (adversarial) driver reports `preparation()`, an `ActOutcome` and `settled: false` still gets none of that text.
+  4. A shown value is recorded only for a `replaceText` action; an `ActOutcome` returned for a tap is now ignored. New test.
+  5. `isActOutcome` (next to `ActOutcome` in `contracts/index.ts`) replaces the twice-repeated `'screen' in result` duck-typing; it's called from one `actOutcomeOf` helper, itself called from `shownValueAfter` (renamed from `keepSettled`, whose new name says what it returns).
+  6. `settledScreen` is renamed `nextSnapshot`: CONTEXT.md's "settled snapshot" means a screen that stopped changing, which this variable doesn't always hold (it can carry `settled: false`).
+  7. A one-line comment at `evidenceFields`' `settled` spread, plus a strengthened existing test (explicit `stepId` checks), pin that an unsettled screen an action returns is recorded on the *following* step's own `step` event, not the acting step's.
+
+  `npm run check` green at the new tip; see the implementer report for the exact log path.
