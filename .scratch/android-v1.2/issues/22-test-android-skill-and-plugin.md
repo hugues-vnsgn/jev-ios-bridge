@@ -1,6 +1,7 @@
 # Phase 6: the `/test-android` skill and the plugin
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: claude-issue-22
 Blocked by: none
 
 Spec: [../spec.md](../spec.md), "Phase 6". The work is [the release spec's phase 6](../../android-support/release-spec.md#phase-6-the-capture-command-the-test-android-skill-and-the-plugin-the-test-android-skill-how-a-script-names-an-android-app-and-device-default-device) items 2 to 4, with [open points 13 and 14](../../android-support/release-spec.md#open-points-for-the-executor), and the answer in [The /test-android skill](../../android-support/issues/10-the-test-android-skill.md). Read them in full. The detail below only adds acceptance criteria.
