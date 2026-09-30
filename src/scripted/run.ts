@@ -1,9 +1,10 @@
 import { setTimeout as delay } from 'node:timers/promises';
-import type { Action, ActionScenarioContext, DeviceDriver, Element, PrepareScenarioContext, RunLog, Snapshot, Verdict } from '../contracts/index.js';
+import type { Action, ActionScenarioContext, ActOutcome, DeviceDriver, Element, Platform, PrepareScenarioContext, RunLog, Snapshot, Verdict } from '../contracts/index.js';
+import { isActOutcome } from '../contracts/index.js';
 import { DeviceCliError, DeviceReasonError, StaleSnapshotError } from '../device/index.js';
-import type { AssertionJudgment, ScriptedJudge, ScriptedScenario, ScriptedStep } from './contracts.js';
+import type { AssertionJudgment, ScriptedJudge, ScriptedScenario, ScriptedScenarioAndroid, ScriptedStep } from './contracts.js';
 import { SCRIPTED_JEV_MODEL, ScriptedJevError } from './jev.js';
-import { PROJECTION_RULE, renderAssertionState, ScriptedObservationError } from './observe.js';
+import { PROJECTION_RULES, renderAssertionState, ScriptedObservationError } from './observe.js';
 import { buildScriptedReport, type ScriptedReport } from './report.js';
 import { buildReportJson } from './report-json.js';
 import { MOBILEBUILDMCP_PASSTHROUGH_CODES } from './vocabulary.js';
@@ -47,10 +48,15 @@ function bounded(value: number | undefined, fallback: number, minimum: number, m
   return selected;
 }
 
-function prepareContext(script: ScriptedScenario): PrepareScenarioContext {
+/** Narrows `script` to its Android shape from `platform`, the one place the script's platform is read. */
+function isAndroidScenario(script: ScriptedScenario, platform: Platform): script is ScriptedScenarioAndroid {
+  return platform === 'android';
+}
+
+function prepareContext(script: ScriptedScenario, platform: Platform): PrepareScenarioContext {
   // A driver's device field names an iOS simulator; an Android script's device isn't passed on.
   return { app: script.app,
-    ...(script.platform !== 'android' && script.device ? { device: script.device } : {}),
+    ...(platform === 'ios' && script.device ? { device: script.device } : {}),
     ...(script.preconditions ? { preconditions: script.preconditions } : {}) };
 }
 
@@ -154,13 +160,15 @@ async function waitUntil(step: Extract<ScriptedStep, { kind: 'wait' }>, initial:
 /** Bridge-owned execution of a fully authored action script. */
 export async function runScriptedScenario(options: ScriptedRunOptions): Promise<ScriptedReport> {
   const script = parseScriptedScenario(options.scenario);
+  // The one place the platform is read off the script; every later branch reads this, not `script.platform`.
+  const platform: Platform = script.platform ?? 'ios';
   const limits = options.limits ?? {};
   const maxSteps = bounded(limits.maxSteps, 100, 1, 100);
   const wallTimeMs = bounded(limits.wallTimeMs, 300_000, 1, 3_600_000);
   const pollIntervalMs = bounded(limits.pollIntervalMs, 250, 1, 5_000);
   // Longer than one device command's own deadline (35 s), so cleanup can see an in-flight command finish.
   const cleanupTimeMs = bounded(limits.cleanupTimeMs, 45_000, 1, 120_000);
-  const preparedContext = prepareContext(script);
+  const preparedContext = prepareContext(script, platform);
   const actionContext: ActionScenarioContext = { ...preparedContext, values: script.values };
   // The driver carries its own pinned tap semantics; the run reads it rather than taking it as an option.
   const selectionOptions: SelectionOptions = options.driver.tapAliasRule
@@ -201,30 +209,56 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
     phaseTimingsMs.verifyMs += snapshot.verifyMs ?? 0;
     return { snapshot, observeDurationMs };
   };
-  // The settled screen the last action returned; the next step uses it instead of capturing again.
-  let settled: Snapshot | undefined;
+  // The screen the last action returned, reused as the next step's observation instead of capturing again.
+  // It may itself carry `settled: false` ("screen still changing"); "settled snapshot" (CONTEXT.md) means a
+  // screen that did stop changing, so this one isn't always that.
+  let nextSnapshot: Snapshot | undefined;
+  // The screen and shown value (if any) an act() result carries, whether bare or wrapped in an ActOutcome.
+  const actOutcomeOf = (result: Snapshot | ActOutcome | undefined | void): { screen: Snapshot; shownValue?: string } | undefined => {
+    if (!result) return undefined;
+    return isActOutcome(result) ? { screen: result.screen, shownValue: result.shownValue } : { screen: result };
+  };
+  // Records the screen an act() result carries, for the next step to reuse instead of capturing again, and
+  // returns the shown value it carried, if any.
+  const shownValueAfter = (result: Snapshot | ActOutcome | undefined | void): string | undefined => {
+    const outcome = actOutcomeOf(result);
+    if (!outcome) return undefined;
+    nextSnapshot = outcome.screen;
+    phaseTimingsMs.verifyMs += outcome.screen.verifyMs ?? 0;
+    return outcome.shownValue;
+  };
   const evidenceFields = (snapshot: Snapshot) => ({
     ...(snapshot.screenshotPath ? { screenshotPath: snapshot.screenshotPath } : {}),
     ...(snapshot.logTails ? { logTails: snapshot.logTails } : {}),
     ...(snapshot.reusedFromAction ? { reusedCapture: true } : {}),
     ...(snapshot.screenshotAgreement === undefined ? {} : { screenshotAgreement: snapshot.screenshotAgreement }),
     ...(snapshot.verifyAttempts === undefined ? {} : { verifyAttempts: snapshot.verifyAttempts }),
+    // A screen an action returned unsettled is recorded here, on the step that observes it (often the next
+    // step), not on the action event of the step that acted.
+    ...(snapshot.settled === false ? { settled: false } : {}),
   });
+  const android = isAndroidScenario(script, platform);
 
   try {
     // An Android app has no bundle ID, so an Android run records null.
-    const ios = script.platform !== 'android';
     await options.log.append('started', { mode: 'scripted',
-      bundleId: ios ? script.app.bundleId : null,
-      ...(ios && script.app.launchArgs ? { launchArgs: script.app.launchArgs } : {}),
-      bridgeVersion: BRIDGE_VERSION, jevModel: SCRIPTED_JEV_MODEL, projectionRule: PROJECTION_RULE,
+      bundleId: android ? null : script.app.bundleId,
+      ...(!android && script.app.launchArgs ? { launchArgs: script.app.launchArgs } : {}),
+      ...(android ? { platform, package: script.app.package,
+        activity: script.app.activity ?? null, intentExtras: script.app.intentExtras ?? {} } : {}),
+      bridgeVersion: BRIDGE_VERSION, jevModel: SCRIPTED_JEV_MODEL,
+      projectionRule: PROJECTION_RULES[platform],
       plannedSteps: script.steps.map(step => ({ id: step.id, kind: step.kind })) });
     let prepareDurationMs = 0;
     await timed('prepareMs', () => abortableOperation(() => options.driver.prepare(preparedContext, signal), signal),
       durationMs => { prepareDurationMs = durationMs; });
     const logSources = options.driver.logSources?.() ?? {};
+    const preparation = options.driver.preparation?.();
     await options.log.append('prepared', { prepareDurationMs,
-      ...(Object.keys(logSources).length ? { logSources } : {}) });
+      ...(Object.keys(logSources).length ? { logSources } : {}),
+      ...(preparation ? { deviceIdentity: preparation.deviceIdentity, serial: preparation.serial,
+        agentSha256: preparation.agentSha256,
+        ...(preparation.sweptLeftovers ? { sweptLeftovers: true } : {}) } : {}) });
     try { options.onPrepared?.({ logSources }); } catch { /* the log pane never affects a run */ }
     for (const step of script.steps) {
       activeStepId = undefined;
@@ -236,13 +270,13 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
       activeStepStarted = performance.now();
       steps++;
       phase = 'observe';
-      const { snapshot, observeDurationMs } = settled ? { snapshot: settled, observeDurationMs: 0 } : await capture();
-      settled = undefined;
+      const { snapshot, observeDurationMs } = nextSnapshot ? { snapshot: nextSnapshot, observeDurationMs: 0 } : await capture();
+      nextSnapshot = undefined;
       let assertionObservation: string | undefined;
       let observationError: unknown;
       try {
         assertScreenGuard(snapshot, step.guard, selectionOptions);
-        if (step.kind === 'checkpoint') assertionObservation = renderAssertionState(snapshot);
+        if (step.kind === 'checkpoint') assertionObservation = renderAssertionState(snapshot, platform);
       } catch (error) { observationError = error; }
       await options.log.append('step', { step: steps, stepId: step.id, kind: step.kind,
         snapshotSequence: snapshot.sequence, observationSummary: summary(snapshot), observeDurationMs,
@@ -259,12 +293,8 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
         const act = async () => timed('actMs',
           () => abortableOperation(() => options.driver.act(deviceAction(step, ref), selected, actionContext, signal), signal),
           durationMs => { actDurationMs += durationMs; });
-        const keepSettled = (result: Snapshot | undefined | void) => {
-          if (!result) return;
-          settled = result;
-          phaseTimingsMs.verifyMs += result.verifyMs ?? 0;
-        };
-        try { keepSettled(await act()); }
+        let shownValue: string | undefined;
+        try { shownValue = shownValueAfter(await act()); }
         catch (error) {
           if (!(error instanceof StaleSnapshotError)) throw error;
           phase = 'reobserve';
@@ -278,10 +308,12 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
           ref = resolveActionTarget(fresh, step.action.selector, requiredAction(step), selectionOptions);
           selected = fresh;
           phase = 'act';
-          keepSettled(await act());
+          shownValue = shownValueAfter(await act());
         }
         await options.log.append('action', { step: steps, stepId: step.id, action: step.action.kind,
           selector: step.action.selector, resolvedRef: ref.ref, actDurationMs,
+          // Only a replace-text action has a shown value; ignore one an outcome reports for any other kind.
+          ...(shownValue === undefined || step.action.kind !== 'replaceText' ? {} : { shownValue }),
           stepDurationMs: Math.max(0, performance.now() - activeStepStarted) });
         continue;
       }

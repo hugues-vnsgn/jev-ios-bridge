@@ -75,6 +75,22 @@ export interface Snapshot {
   verifyMs?: number;
   /** Measurement only: captures taken until the screenshot and capture agreed, when more than one. */
   verifyAttempts?: number;
+  /** Android only: false when the settle rule hit its cap before two captures agreed, so this is the last
+   *  capture taken rather than a confirmed settled one ("screen still changing"). Absent when settled. */
+  settled?: boolean;
+}
+
+/** What a replace-text `act` call may return instead of a bare `Snapshot`, to also report the field's
+ *  displayed value once the bridge typed into it (which may legitimately differ from the typed value).
+ *  Every other action keeps returning a bare `Snapshot`, or nothing. */
+export interface ActOutcome {
+  screen: Snapshot;
+  shownValue: string;
+}
+
+/** Distinguishes an `ActOutcome` from a bare `Snapshot`: only the former carries a `screen` property. */
+export function isActOutcome(result: Snapshot | ActOutcome): result is ActOutcome {
+  return 'screen' in result;
 }
 
 export type Action =
@@ -89,8 +105,9 @@ export type TapAliasRule = 'mobilebuildmcp-2.7.1';
 export interface DeviceDriver {
   prepare(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void>;
   observe(signal: AbortSignal): Promise<Snapshot>;
-  /** Perform the action. May return the settled screen after it, which the run then uses as its next observation. */
-  act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined | void>;
+  /** Perform the action. May return the settled screen after it, which the run then uses as its next
+   *  observation; a replace-text action may instead return an `ActOutcome` to also report the shown value. */
+  act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | ActOutcome | undefined | void>;
   close(signal: AbortSignal): Promise<void>;
   metrics?(): DeviceMetrics;
   /** Whether the launched app is still running; undefined when the driver can't tell. */
@@ -99,6 +116,18 @@ export interface DeviceDriver {
   logSources?(): { runtime?: string; os?: string };
   /** Set only by a driver integration whose pinned tap semantics were verified. The run reads it. */
   readonly tapAliasRule?: TapAliasRule;
+  /** What `prepare` set up on the device, for the run log's `prepared` event. Only a driver that prepares a
+   *  device (Android) implements this; the iOS driver doesn't. */
+  preparation?(): DevicePreparation;
+}
+
+/** What a device `prepare` did, recorded in the run log's `prepared` event. */
+export interface DevicePreparation {
+  deviceIdentity: string;
+  serial: string;
+  agentSha256: string;
+  /** True only when this run's lease took over a crashed run's and swept its leftovers. */
+  sweptLeftovers?: boolean;
 }
 
 export interface DeviceMetrics {

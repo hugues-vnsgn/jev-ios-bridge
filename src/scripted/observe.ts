@@ -30,6 +30,12 @@ const HEADERS: Record<Platform, string> = {
   android: 'Current Android screen (full accessibility capture):',
 };
 
+/** The projection rule each platform's `started` event records, and Jev is shown under. */
+export const PROJECTION_RULES: Record<Platform, typeof PROJECTION_RULE | typeof ANDROID_PROJECTION_RULE> = {
+  ios: PROJECTION_RULE,
+  android: ANDROID_PROJECTION_RULE,
+};
+
 /** Whether the platform's view treats an empty field's `placeholder` as evidence, shown in place of `label`.
  *  iOS never does, so its output stays byte-identical regardless of what a snapshot happens to carry. */
 const SHOWS_PLACEHOLDER: Record<Platform, boolean> = {

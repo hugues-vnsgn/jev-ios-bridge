@@ -78,8 +78,7 @@ const REASON_CODES_1_1 = {
 /** Every reason a verdict or error event can carry, with the meaning the guide documents. */
 export const REASON_CODES = {
   ...REASON_CODES_1_1,
-  // Device (Android, added in 1.2; see "How a script names an Android app and device" and
-  // "open point 3" in the Android release spec)
+  // Android device and tooling codes, added in 1.2.
   DEVICE_NOT_CONNECTED: 'The named serial isn\'t listed by adb or is offline, or no running emulator has the named AVD.',
   DEVICE_AMBIGUOUS: 'More than one running emulator has the named AVD, so the bridge can\'t tell them apart.',
   DEVICE_UNAUTHORIZED: 'The device hasn\'t accepted this Mac\'s USB-debugging key.',

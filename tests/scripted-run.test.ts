@@ -11,6 +11,8 @@ import { DeviceReasonError, MobileBuildMcpDriver, type CliRunner } from '../src/
 import { assertScreenGuard, resolveActionTarget, ScriptSelectionError } from '../src/scripted/select.js';
 import { runScriptedScenario } from '../src/scripted/run.js';
 import { buildScriptedReport, renderScriptedReport } from '../src/scripted/report.js';
+import { readFile } from 'node:fs/promises';
+import { createRunLog } from '../src/log/index.js';
 
 function snapshot(elements: Element[], truncated = false): Snapshot {
   return { deviceId: 'sim', capturedAt: Date.now(), expiresAt: Date.now() + 60_000,
@@ -772,13 +774,277 @@ test('the started event names an iOS app by bundle ID and records a null bundle 
   assert.deepEqual(ios.launchArgs, ['-of-evidence-gallery']);
   assert.deepEqual(ios.plannedSteps, [{ id: 'verify', kind: 'checkpoint' }]);
 
+  // This Android half changes with the added contract (platform, package, activity, intentExtras, and the
+  // Android projection rule); the iOS half above stays as it was.
   const android = await startedOf({ version: 1, platform: 'android',
     app: { package: 'com.example.android', activity: '.MainActivity', intentExtras: { screen: 'gallery' } },
     values: {}, steps: [markerCheckpoint] });
   assert.deepEqual(Object.keys(android),
-    ['mode', 'bundleId', 'bridgeVersion', 'jevModel', 'projectionRule', 'plannedSteps']);
+    ['mode', 'bundleId', 'platform', 'package', 'activity', 'intentExtras', 'bridgeVersion', 'jevModel', 'projectionRule', 'plannedSteps']);
   assert.equal(android.bundleId, null);
-  assert.deepEqual({ ...android, bundleId: 'com.example.app' }, (({ launchArgs: _launchArgs, ...rest }) => rest)(ios));
+  assert.equal(android.platform, 'android');
+  assert.equal(android.package, 'com.example.android');
+  assert.equal(android.activity, '.MainActivity');
+  assert.deepEqual(android.intentExtras, { screen: 'gallery' });
+  assert.equal(android.projectionRule, 'android-full-text-v1');
+  assert.deepEqual(android.plannedSteps, [{ id: 'verify', kind: 'checkpoint' }]);
+});
+
+test('an Android started event defaults a missing activity to null and missing intent extras to {}', async () => {
+  const log = memoryLog();
+  await runScriptedScenario({ runId: 'scripted-1', judge: markerJudge, log,
+    scenario: { version: 1, platform: 'android', app: { package: 'com.example.android' }, values: {}, steps: [markerCheckpoint] },
+    driver: { async prepare() {}, async observe() { return markerScreen(); }, async act() {}, async close() {} } });
+  const started = log.events.find(event => event.type === 'started')!.data;
+  assert.equal(started.activity, null);
+  assert.deepEqual(started.intentExtras, {});
+});
+
+test('an Android run with no replace-text step gets a report.json with the app identity but no typedFields key', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-android-no-typed-fields-'));
+  try {
+    const log = await createRunLog(root, 'no-typed-fields');
+    await runScriptedScenario({ runId: 'no-typed-fields', judge: markerJudge, log,
+      scenario: { version: 1, platform: 'android', app: { package: 'com.example.android' }, values: {}, steps: [markerCheckpoint] },
+      driver: { async prepare() {}, async observe() { return markerScreen(); }, async act() {}, async close() {} } });
+    const reportJson = JSON.parse(await readFile(join(root, 'no-typed-fields', 'report.json'), 'utf8')) as Record<string, unknown>;
+    assert.equal(reportJson.platform, 'android');
+    assert.equal(reportJson.package, 'com.example.android');
+    assert.equal('typedFields' in reportJson, false);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('an Android run renders Jev\'s view with the Android header and placeholder, matching the rule started records', async () => {
+  const field: Element = { ref: 'field', role: 'text-field', placeholder: 'Email', identifier: 'field', actions: [],
+    frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } };
+  const androidCheckpoint: ScriptedScenario['steps'][number] = { id: 'verify', kind: 'checkpoint',
+    guard: { present: [{ identifier: 'field' }] }, assertions: [{ id: 'shown', claim: 'The field is visible' }] };
+  const log = memoryLog();
+  await runScriptedScenario({ runId: 'scripted-1', judge: markerJudge, log,
+    scenario: { version: 1, platform: 'android', app: { package: 'com.example.android' }, values: {}, steps: [androidCheckpoint] },
+    driver: { async prepare() {}, async observe() { return snapshot([field]); }, async act() {}, async close() {} } });
+  const started = log.events.find(event => event.type === 'started')!.data;
+  const step = log.events.find(event => event.type === 'step')!.data;
+  assert.equal(started.projectionRule, 'android-full-text-v1');
+  assert.match(String(step.assertionObservation), /^Current Android screen \(full accessibility capture\):/);
+  assert.match(String(step.assertionObservation), /"placeholder":"Email"/);
+});
+
+test('an Android run\'s prepared event carries the device identity, serial, agent SHA-256, and a crash-takeover sweep; the iOS driver sets none of it', async () => {
+  const preparedDataOf = async (driver: DeviceDriver) => {
+    const log = memoryLog();
+    await runScriptedScenario({ runId: 'scripted-1', judge: markerJudge, log,
+      scenario: { version: 1, platform: 'android', app: { package: 'com.example.android' }, values: {}, steps: [markerCheckpoint] },
+      driver });
+    return log.events.find(event => event.type === 'prepared')!.data;
+  };
+  const withoutSweep = await preparedDataOf({ async prepare() {}, async observe() { return markerScreen(); },
+    async act() {}, async close() {},
+    preparation: () => ({ deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: 'abc123' }) });
+  assert.equal(withoutSweep.deviceIdentity, 'jev-actions-api31');
+  assert.equal(withoutSweep.serial, 'emulator-5554');
+  assert.equal(withoutSweep.agentSha256, 'abc123');
+  assert.equal(withoutSweep.sweptLeftovers, undefined);
+
+  const withSweep = await preparedDataOf({ async prepare() {}, async observe() { return markerScreen(); },
+    async act() {}, async close() {},
+    preparation: () => ({ deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: 'abc123',
+      sweptLeftovers: true }) });
+  assert.equal(withSweep.sweptLeftovers, true);
+
+  const ios = await preparedDataOf({ async prepare() {}, async observe() { return markerScreen(); },
+    async act() {}, async close() {} });
+  assert.deepEqual(Object.keys(ios), ['prepareDurationMs']);
+});
+
+test('an Android replace-text step records its driver-reported shown value, and a screen that never settled marks the next step', async () => {
+  const initial = snapshot([{ ref: 'name-field', role: 'text-field', identifier: 'name-field', actions: ['typeText'],
+    frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } }]);
+  const afterType: Snapshot = { ...snapshot([{ ref: 'confirm', role: 'text', label: 'Confirm', actions: [],
+    frame: { x: 0, y: 40, width: 100, height: 30 }, state: { enabled: true, visible: true } }]),
+    settled: false };
+  const scenario: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.android' },
+    values: { name: 'Ann' }, steps: [
+      { id: 'type', kind: 'action', guard: { present: [{ identifier: 'name-field' }] },
+        action: { kind: 'replaceText', selector: { identifier: 'name-field' }, valueKey: 'name' } },
+      { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Confirm' }] },
+        assertions: [{ id: 'shown', claim: 'Confirm is visible' }] },
+    ] };
+  const log = memoryLog();
+  await runScriptedScenario({ runId: 'scripted-1', scenario, log,
+    driver: { async prepare() {}, async observe() { return initial; },
+      async act() { return { screen: afterType, shownValue: 'Ann.' }; }, async close() {} },
+    judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
+  const action = log.events.find(event => event.type === 'action' && event.data.action === 'replaceText')!.data;
+  assert.equal(action.shownValue, 'Ann.');
+  const steps = log.events.filter(event => event.type === 'step');
+  // The unsettled screen `act` returned for the "type" step is recorded on the following ("verify") step's
+  // own step event, the one that actually observed it, not on "type"'s.
+  assert.equal(steps[0]?.data.stepId, 'type');
+  assert.equal(steps[0]?.data.settled, undefined);
+  assert.equal(steps[1]?.data.stepId, 'verify');
+  assert.equal(steps[1]?.data.settled, false);
+});
+
+test('a tap that returns an ActOutcome records no shown value: only a replace-text step has one', async () => {
+  const button: Element = { ref: 'go', role: 'button', label: 'Go', actions: ['tap'],
+    frame: { x: 0, y: 0, width: 50, height: 30 }, state: { enabled: true, visible: true } };
+  const afterTap: Snapshot = snapshot([{ ref: 'confirm', role: 'text', label: 'Confirm', actions: [],
+    frame: { x: 0, y: 40, width: 100, height: 30 }, state: { enabled: true, visible: true } }]);
+  const scenario: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.android' },
+    values: {}, steps: [
+      { id: 'tap', kind: 'action', guard: { present: [{ label: 'Go' }] },
+        action: { kind: 'tap', selector: { label: 'Go' } } },
+      { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Confirm' }] },
+        assertions: [{ id: 'shown', claim: 'Confirm is visible' }] },
+    ] };
+  const log = memoryLog();
+  await runScriptedScenario({ runId: 'scripted-1', scenario, log,
+    driver: { async prepare() {}, async observe() { return snapshot([button]); },
+      // A tap has no shown value; a driver that reports one anyway must be ignored.
+      async act() { return { screen: afterTap, shownValue: 'ignored' }; }, async close() {} },
+    judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
+  const action = log.events.find(event => event.type === 'action' && event.data.action === 'tap')!.data;
+  assert.equal('shownValue' in action, false);
+});
+
+test('an Android shown value echoing a typed value is redacted in run.jsonl, report.json, and the prose report', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-android-shown-value-'));
+  try {
+    const field: Element = { ref: 'name-field', role: 'text-field', identifier: 'name-field', actions: ['typeText'],
+      frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } };
+    const confirm: Element = { ref: 'confirm', role: 'text', label: 'Confirm', actions: [],
+      frame: { x: 0, y: 40, width: 100, height: 30 }, state: { enabled: true, visible: true } };
+    const scenario: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.android' },
+      values: { name: 'private-value' }, steps: [
+        { id: 'type', kind: 'action', guard: { present: [{ identifier: 'name-field' }] },
+          action: { kind: 'replaceText', selector: { identifier: 'name-field' }, valueKey: 'name' } },
+        { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Confirm' }] },
+          assertions: [{ id: 'shown', claim: 'Confirm is visible' }] },
+      ] };
+    const log = await createRunLog(root, 'redacted-android', { values: Object.values(scenario.values) });
+    const report = await runScriptedScenario({ runId: 'redacted-android', scenario, log,
+      driver: { async prepare() {}, async observe() { return snapshot([field]); },
+        async act() { return { screen: snapshot([confirm]), shownValue: 'private-value' }; }, async close() {} },
+      judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
+    const raw = await readFile(join(root, 'redacted-android', 'run.jsonl'), 'utf8');
+    assert.doesNotMatch(raw, /private-value/);
+    assert.match(raw, /\[REDACTED\]/);
+    const reportJson = await readFile(join(root, 'redacted-android', 'report.json'), 'utf8');
+    assert.doesNotMatch(reportJson, /private-value/);
+    assert.doesNotMatch(renderScriptedReport(report), /private-value/);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('the run log keeps projectionRule unredacted even when a script value equals it, but redacts that value everywhere else', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-android-projection-rule-collision-'));
+  try {
+    const field: Element = { ref: 'name-field', role: 'text-field', identifier: 'name-field', actions: ['typeText'],
+      frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } };
+    const confirm: Element = { ref: 'confirm', role: 'text', label: 'Confirm', actions: [],
+      frame: { x: 0, y: 40, width: 100, height: 30 }, state: { enabled: true, visible: true } };
+    const scenario: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.android' },
+      values: { name: 'android-full-text-v1' }, steps: [
+        { id: 'type', kind: 'action', guard: { present: [{ identifier: 'name-field' }] },
+          action: { kind: 'replaceText', selector: { identifier: 'name-field' }, valueKey: 'name' } },
+        { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Confirm' }] },
+          assertions: [{ id: 'shown', claim: 'Confirm is visible' }] },
+      ] };
+    const log = await createRunLog(root, 'projection-rule-collision', { values: Object.values(scenario.values) });
+    await runScriptedScenario({ runId: 'projection-rule-collision', scenario, log,
+      driver: { async prepare() {}, async observe() { return snapshot([field]); },
+        async act() { return { screen: snapshot([confirm]), shownValue: 'android-full-text-v1' }; }, async close() {} },
+      judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
+    const events = (await readFile(join(root, 'projection-rule-collision', 'run.jsonl'), 'utf8')).trim().split('\n')
+      .map(line => JSON.parse(line) as RunEvent);
+    const started = events.find(event => event.type === 'started')!.data;
+    assert.equal(started.projectionRule, 'android-full-text-v1');
+    const action = events.find(event => event.type === 'action' && event.data.action === 'replaceText')!.data;
+    assert.equal(action.shownValue, '[REDACTED]');
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('the prose report names the prepared device identity, serial, agent SHA-256 and sweep, and each shown value plus "screen still changing", Android only', async () => {
+  const nameField = snapshot([{ ref: 'name-field', role: 'text-field', identifier: 'name-field', actions: ['typeText'],
+    frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } }]);
+  const afterType: Snapshot = { ...snapshot([{ ref: 'confirm', role: 'text', label: 'Confirm', actions: [],
+    frame: { x: 0, y: 40, width: 100, height: 30 }, state: { enabled: true, visible: true } }]),
+    settled: false };
+  const scenario: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.android' },
+    values: { name: 'Ann' }, steps: [
+      { id: 'type', kind: 'action', guard: { present: [{ identifier: 'name-field' }] },
+        action: { kind: 'replaceText', selector: { identifier: 'name-field' }, valueKey: 'name' } },
+      { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Confirm' }] },
+        assertions: [{ id: 'shown', claim: 'Confirm is visible' }] },
+    ] };
+  const report = await runScriptedScenario({ runId: 'scripted-1', scenario, log: memoryLog(),
+    driver: { async prepare() {}, async observe() { return nameField; },
+      async act() { return { screen: afterType, shownValue: 'placeholder-text' }; }, async close() {},
+      preparation: () => ({ deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: 'abc123',
+        sweptLeftovers: true }) },
+    judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
+  const rendered = renderScriptedReport(report);
+  assert.match(rendered, /jev-actions-api31/);
+  assert.match(rendered, /emulator-5554/);
+  assert.match(rendered, /abc123/);
+  assert.match(rendered, /swept/i);
+  assert.match(rendered, /placeholder-text/);
+  assert.match(rendered, /screen still changing/i);
+});
+
+test('an iOS run\'s prose report ignores a device line, typed fields and "screen still changing" even when the events happen to carry them', async () => {
+  const nameField = snapshot([{ ref: 'name-field', role: 'text-field', identifier: 'name-field', actions: ['typeText'],
+    frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } }]);
+  const afterType: Snapshot = { ...snapshot([{ ref: 'confirm', role: 'text', label: 'Confirm', actions: [],
+    frame: { x: 0, y: 40, width: 100, height: 30 }, state: { enabled: true, visible: true } }]),
+    settled: false };
+  const scenario: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' },
+    values: { name: 'Ann' }, steps: [
+      { id: 'type', kind: 'action', guard: { present: [{ identifier: 'name-field' }] },
+        action: { kind: 'replaceText', selector: { identifier: 'name-field' }, valueKey: 'name' } },
+      { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Confirm' }] },
+        assertions: [{ id: 'shown', claim: 'Confirm is visible' }] },
+    ] };
+  const report = await runScriptedScenario({ runId: 'scripted-1', scenario, log: memoryLog(),
+    // No script names this platform iOS; a driver that behaves as if it were Android must still be ignored,
+    // since the run's own recorded platform (from `started`) decides, not the events a driver happens to set.
+    driver: { async prepare() {}, async observe() { return nameField; },
+      async act() { return { screen: afterType, shownValue: 'placeholder-text' }; }, async close() {},
+      preparation: () => ({ deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: 'abc123',
+        sweptLeftovers: true }) },
+    judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
+  const rendered = renderScriptedReport(report);
+  assert.doesNotMatch(rendered, /jev-actions-api31/);
+  assert.doesNotMatch(rendered, /emulator-5554/);
+  assert.doesNotMatch(rendered, /Device:/);
+  assert.doesNotMatch(rendered, /Typed fields/);
+  assert.doesNotMatch(rendered, /screen still changing/i);
+  assert.doesNotMatch(rendered, /placeholder-text/);
+});
+
+test('the prose report shows "screen still changing" for an unsettled action step too, not only checkpoints', async () => {
+  const buttonA: Element = { ref: 'a', role: 'button', label: 'A', actions: ['tap'],
+    frame: { x: 0, y: 0, width: 50, height: 30 }, state: { enabled: true, visible: true } };
+  const buttonB: Element = { ref: 'b', role: 'button', label: 'B', actions: ['tap'],
+    frame: { x: 0, y: 40, width: 50, height: 30 }, state: { enabled: true, visible: true } };
+  const unsettledAfterTapA: Snapshot = { ...snapshot([buttonB]), settled: false };
+  const settledAfterTapB = snapshot([buttonB]);
+  const scenario: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.android' },
+    values: {}, steps: [
+      { id: 'tapA', kind: 'action', guard: { present: [{ label: 'A' }] },
+        action: { kind: 'tap', selector: { label: 'A' } } },
+      { id: 'tapB', kind: 'action', guard: { present: [{ label: 'B' }] },
+        action: { kind: 'tap', selector: { label: 'B' } } },
+      { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'B' }] },
+        assertions: [{ id: 'shown', claim: 'B is visible' }] },
+    ] };
+  const report = await runScriptedScenario({ runId: 'scripted-1', scenario, log: memoryLog(),
+    driver: { async prepare() {}, async observe() { return snapshot([buttonA]); },
+      async act(action) { return action.targetRef === 'a' ? unsettledAfterTapA : settledAfterTapB; }, async close() {} },
+    judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
+  const rendered = renderScriptedReport(report);
+  assert.match(rendered, /screen still changing/i);
+  assert.match(rendered, /tapB/);
 });
 
 test('the driver gets the device an iOS script names, and no device for an Android script', async () => {

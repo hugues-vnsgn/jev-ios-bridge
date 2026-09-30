@@ -2,7 +2,7 @@ import { mkdir, readFile, open, copyFile, chmod, realpath, rename, writeFile } f
 import { createHmac, randomBytes } from 'node:crypto';
 import { resolve, join, basename } from 'node:path';
 import type { RunEvent, RunLog } from '../contracts/index.js';
-import { PROJECTION_RULE } from '../scripted/observe.js';
+import { PROJECTION_RULES } from '../scripted/observe.js';
 import { REASON_CODES } from '../scripted/vocabulary.js';
 import { BRIDGE_VERSION } from '../version.js';
 
@@ -27,7 +27,7 @@ protocolValues.code = errorCodes;
 protocolValues.reason = errorCodes;
 protocolValues.bridgeVersion = new Set([BRIDGE_VERSION]);
 protocolValues.jevModel = protocolValues.model!;
-protocolValues.projectionRule = new Set([PROJECTION_RULE]);
+protocolValues.projectionRule = new Set(Object.values(PROJECTION_RULES));
 const identifierParents = new Set(['plannedSteps', 'assertions']);
 
 function createRedactor(secrets: string[]): (value: unknown) => unknown {
