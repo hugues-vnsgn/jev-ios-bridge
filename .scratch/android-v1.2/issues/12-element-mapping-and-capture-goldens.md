@@ -1,6 +1,7 @@
 # Phase 4: element mapping, and golden tests from the captures
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase4 at 4cd6661
 Claimed by: claude-issue-12
 Blocked by: none
 

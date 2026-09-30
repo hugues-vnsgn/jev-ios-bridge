@@ -1,6 +1,7 @@
 # Phase 4: the adb runner and the device agent's client
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase4 at 309be49
 Claimed by: claude-issue-11
 Blocked by: none
 

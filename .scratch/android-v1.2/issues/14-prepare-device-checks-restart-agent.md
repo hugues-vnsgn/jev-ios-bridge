@@ -34,9 +34,15 @@ The Android driver (`src/device/android/`), implementing `DeviceDriver`, with `p
 
 Once `close` begins (Issue 16 sets the flag), no step issues new device work: each step checks it first.
 
+**Also in this Issue** (coordinator, 2026-09-30, from Issue 11's report):
+- **`vendorCode` reaches the evidence.** `failureOf` in `src/scripted/run.ts` returns only `{ code }` for a `DeviceReasonError`, so the `vendorCode` that Issue 11's errors carry (`agent`, `adb`) never reaches `run.jsonl` or `report.json`. Pass an optional `vendorCode` through for a `DeviceReasonError` that carries one, with the same pattern check the `DeviceCliError` branch uses, and test it with `runScriptedScenario`: a driver throwing `DEVICE_ERROR` with `vendorCode` `agent` records it in the `error` event and in `report.json`. iOS errors carry none, so iOS output doesn't change.
+- **Use the merged building blocks:** `androidTools()` and `pinnedAgent()` (Issue 10; never pass its test-only `pinnedSha256`), `adbRunner()`, `inLedger()` and `deviceAgentClient()` (Issue 11), the settle rule's `Clock` type (Issue 13).
+
 ## Fixtures from real devices
 
 Record the `adb` outputs the fakes replay, once, from `jev-actions-api31` and `Medium_Phone_API_36.1`, into `tests/fixtures/android/adb/`: `devices -l`, the `getprop` values used, `ps -A -o PID,NAME,ARGS` with and without an agent, `forward --list` (including one holding two emulators' forwards), `pm path`, the launcher lookup you choose, `am start -W`, and the screen and keyguard state (off, on, locked) from the `dumpsys` command you choose. Follow the release spec's device rules exactly: the private adb server on port 5099, the `adb devices` check before each command, `-no-snapshot-save`, one emulator at a time, and shutting down what you started. Never touch port 5037 or a phone. Don't run mobilecli. Take a foreign agent's `ps` and `environ` lines from `spikes/benchmarks/results/v1.2.0/tracer/*.jsonl`.
+
+While recording, also capture one `device.dump.ui` of an empty classic `EditText` and of an empty classic password field, and check what they report as `text` (Issue 12 saw uiautomator report the hint as the text; the tracer saw the agent report `""` for the Settings search field). Save them as fixtures, and tell the coordinator if the agent reports the hint, because the mapping would then need a fix. Starting the agent to take them is allowed; kill it by pid afterwards, per the device rules.
 
 ## Acceptance
 

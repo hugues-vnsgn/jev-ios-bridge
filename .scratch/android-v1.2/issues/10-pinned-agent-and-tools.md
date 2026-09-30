@@ -1,6 +1,7 @@
 # Phase 4: the pinned agent and the tools
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase4 at 96d93c6
 Claimed by: claude-issue-10
 Blocked by: none
 
