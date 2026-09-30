@@ -155,3 +155,15 @@ Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase
     to parameter of type 'string'.` (`built.push(scenario.app.bundleId);`, where `scenario` takes its type
     from `BridgeService`'s `createDriver: (scenario: ScriptedScenario) => DeviceDriver`). No true type makes
     that read a `string` while Android scripts can reach `createDriver`. Asked the owner to choose.
+
+- 2026-09-30, implementer-03: finding 3 fixed under the owner's ruling the same day (option A).
+  - `ScriptedScenario` is now typed per platform: `ScriptedScenarioIos` has `app: IosAppIdentity` and
+    `device?: { udid? }`; `ScriptedScenarioAndroid` has `app` with `package` required and
+    `bundleId?: never`/`launchArgs?: never`, and `device?: { serial?; avd?; udid?: never }`. The `never`
+    fields mark those keys absent while keeping a platform-blind read such as `script.device?.udid`
+    compiling (`src/cli.ts`, the existing `tests/scripted-schema.test.ts` UUID test).
+  - The ruled edit: `tests/service.test.ts` line 134 is now `built.push(appLabel(scenario.app));`, with
+    `appLabel` imported on this Issue's own import line. No other existing test line changed.
+  - Red first: the Android run tests in `tests/scripted-run.test.ts` are now typed literals (no parser), and a
+    new compile-time test uses `@ts-expect-error` to reject a bundle ID, launch arguments or a UDID on an
+    Android script, and a package or serial on an iOS one.
