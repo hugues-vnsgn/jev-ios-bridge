@@ -24,6 +24,10 @@ export const AGENT_START_COMMAND = `CLASSPATH=${AGENT_DEVICE_PATH} nohup app_pro
 const OWN_AGENT_CLASSPATH = `CLASSPATH=${AGENT_DEVICE_PATH}`;
 /** Another tool's UI-automation program, by what its `ps` line runs (open point 22). */
 const AGENT_PATTERNS = [AGENT_CLASS, 'UiDumpServer', 'com.mobilenext.devicekit', 'uiautomator', 'io.appium.uiautomator2'];
+/** An emulator's serial prefix; only these serials have an AVD name to read. */
+const EMULATOR_SERIAL_PREFIX = 'emulator-';
+/** The property holding an emulator's AVD name, its device identity. */
+const AVD_NAME_PROPERTY = 'ro.boot.qemu.avd_name';
 const MIN_API_LEVEL = 31;
 const FORWARD_ATTEMPTS = 3;
 const AGENT_READY_MS = 5_000;
@@ -428,7 +432,8 @@ export class AndroidDriver implements DeviceDriver {
   /**
    * The device name to a serial and a device identity (item 2). A name `adb devices` lists is a serial;
    * anything else is an AVD name, matched against the running emulators' `ro.boot.qemu.avd_name`. An
-   * emulator's identity is its AVD name, a phone's its serial. Only reads: the lease isn't held yet.
+   * emulator's identity is its AVD name, a phone's its serial. An AVD name no running emulator reports is
+   * `DEVICE_UNAUTHORIZED` when an unauthorized emulator is listed. Only reads: the lease isn't held yet.
    */
   private async resolveDevice(name: string, signal: AbortSignal): Promise<{ serial: string; identity: string }> {
     const listed = listedDevices(await this.succeeded('list devices', this.adb(['devices', '-l'], signal)));
@@ -436,13 +441,20 @@ export class AndroidDriver implements DeviceDriver {
     if (state !== undefined) {
       if (state === 'unauthorized') throw new DeviceReasonError('DEVICE_UNAUTHORIZED', `Device ${name} hasn't accepted this Mac's USB-debugging key`);
       if (state !== 'device') throw new DeviceReasonError('DEVICE_NOT_CONNECTED', `Device ${name} is ${state}`);
-      const avd = name.startsWith('emulator-') ? await this.getprop(name, 'ro.boot.qemu.avd_name', signal) : '';
+      const avd = name.startsWith(EMULATOR_SERIAL_PREFIX) ? await this.getprop(name, AVD_NAME_PROPERTY, signal) : '';
       return { serial: name, identity: avd || name };
     }
     const matches: string[] = [];
+    let unauthorized: string | undefined;
     for (const [serial, serialState] of listed) {
-      if (!serial.startsWith('emulator-') || serialState !== 'device') continue;
-      if (await this.getprop(serial, 'ro.boot.qemu.avd_name', signal) === name) matches.push(serial);
+      if (!serial.startsWith(EMULATOR_SERIAL_PREFIX)) continue;
+      if (serialState === 'unauthorized') unauthorized ??= serial;
+      if (serialState !== 'device') continue;
+      if (await this.getprop(serial, AVD_NAME_PROPERTY, signal) === name) matches.push(serial);
+    }
+    // An unauthorized emulator's AVD name can't be read, so it may be the one named.
+    if (matches.length === 0 && unauthorized !== undefined) {
+      throw new DeviceReasonError('DEVICE_UNAUTHORIZED', `No running emulator is named ${name}, and ${unauthorized} hasn't accepted this Mac's USB-debugging key`);
     }
     if (matches.length === 0) throw new DeviceReasonError('DEVICE_NOT_CONNECTED', `No connected device or running emulator is named ${name}`);
     if (matches.length > 1) {

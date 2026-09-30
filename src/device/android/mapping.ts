@@ -1,5 +1,6 @@
 import type { Element } from '../../contracts/index.js';
 import type { Role } from '../../scripted/vocabulary.js';
+import { STATUS_BAR_ID_PREFIX } from './settle.js';
 
 /**
  * One node of the device agent's `device.dump.ui` tree. mobilecli's `dump ui --format raw` has the same
@@ -91,7 +92,7 @@ export function mapAndroidTree(tree: AndroidTree): Element[] {
   let ref = 0;
   const visit = (node: AndroidNode, parent?: AndroidNode): void => {
     const id = node['resource-id'] || '';
-    if (id.startsWith('com.android.systemui:')) return;
+    if (id.startsWith(STATUS_BAR_ID_PREFIX)) return;
     if (parent && isRoleMarker(node, parent)) return;
     if (node.visible === false) return;
     if (!node.rect || node.rect.width <= 0 || node.rect.height <= 0) return;

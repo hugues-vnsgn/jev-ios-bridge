@@ -19,7 +19,8 @@ export const SETTLE_GAP_MS = 250;
 /** Measured from the rule's start. No capture starts at or after it; one already running may return after it. */
 export const SETTLE_CAP_MS = 3_000;
 
-const STATUS_BAR_ID_PREFIX = 'com.android.systemui:';
+/** A system bar node's resource-id prefix: the settle rule leaves it out, and the mapping drops it. */
+export const STATUS_BAR_ID_PREFIX = 'com.android.systemui:';
 
 /**
  * The screen's identity, and the only comparison the settle rule makes: two captures match exactly when

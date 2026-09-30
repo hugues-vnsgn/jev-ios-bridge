@@ -410,6 +410,26 @@ test('an AVD name no running emulator reports is DEVICE_NOT_CONNECTED', async ()
   });
 });
 
+test('an AVD name no running emulator reports, with an unauthorized emulator listed, is DEVICE_UNAUTHORIZED', async () => {
+  const adb = new FakeAdb(api31({ avd: 'Medium_Phone_API_36.1' }));
+  adb.devicesText = 'List of devices attached\nemulator-5554          device product:sdk_gphone64_arm64 model:sdk_gphone64_arm64 device:emulator64_arm64 transport_id:1\n' +
+    'emulator-5556          unauthorized transport_id:2\n\n';
+  await withDriver(adb, async ({ driver, root }) => {
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_UNAUTHORIZED'));
+    assert.equal(adb.calls.some(call => call[1] === 'emulator-5556'), false, 'an unauthorized emulator\'s property is never read');
+    assert.deepEqual(await readdir(root), [], 'no lease taken');
+  });
+});
+
+test('an AVD name a running emulator reports resolves to it, even with an unauthorized emulator listed', async () => {
+  const adb = new FakeAdb(api31());
+  adb.devicesText = 'List of devices attached\nemulator-5554          device transport_id:1\nemulator-5556          unauthorized transport_id:2\n\n';
+  await withDriver(adb, async ({ driver }) => {
+    await driver.prepare(app(), signal());
+    assert.equal(driver.preparation().serial, 'emulator-5554');
+  });
+});
+
 test('two running emulators reporting the AVD name are DEVICE_AMBIGUOUS', async () => {
   const adb = new FakeAdb(api31(), api31({ serial: 'emulator-5556' }));
   await withDriver(adb, async ({ driver, root }) => {
