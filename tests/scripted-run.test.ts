@@ -6,6 +6,7 @@ import type { ScriptedJudge, ScriptedScenario } from '../src/scripted/contracts.
 import { StaleSnapshotError } from '../src/device/index.js';
 import { assertScreenGuard, resolveActionTarget, ScriptSelectionError } from '../src/scripted/select.js';
 import { runScriptedScenario } from '../src/scripted/run.js';
+import { parseScriptedScenario } from '../src/scripted/schema.js';
 import { buildScriptedReport, renderScriptedReport } from '../src/scripted/report.js';
 
 function snapshot(elements: Element[], truncated = false): Snapshot {
@@ -671,4 +672,37 @@ test('the run reads the tap alias rule from the driver, not from a run-wide opti
     judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 3, latencyMs: 1, model: 'jev-1.13.0' }; } } });
   assert.equal(withRule.verdict, 'passed');
   assert.deepEqual(taps, ['e30']);
+});
+
+const markerScreen = () => snapshot([{ ref: 'marker', role: 'text', label: 'Marker', actions: [],
+  frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } }]);
+const markerCheckpoint = { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Marker' }] },
+  assertions: [{ id: 'shown', claim: 'Marker is visible' }] };
+const markerJudge: ScriptedJudge = { async judge() {
+  return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' };
+} };
+
+test('the started event names an iOS app by bundle ID and records a null bundle ID on an Android run', async () => {
+  const startedOf = async (scenario: ScriptedScenario) => {
+    const log = memoryLog();
+    await runScriptedScenario({ runId: 'scripted-1', scenario, log, judge: markerJudge,
+      driver: { async prepare() {}, async observe() { return markerScreen(); }, async act() {}, async close() {} } });
+    return log.events.find(event => event.type === 'started')!.data;
+  };
+  const ios = await startedOf(parseScriptedScenario({ version: 1,
+    app: { bundleId: 'com.example.app', launchArgs: ['-of-evidence-gallery'] }, values: {}, steps: [markerCheckpoint] }));
+  assert.deepEqual(Object.keys(ios),
+    ['mode', 'bundleId', 'launchArgs', 'bridgeVersion', 'jevModel', 'projectionRule', 'plannedSteps']);
+  assert.equal(ios.mode, 'scripted');
+  assert.equal(ios.bundleId, 'com.example.app');
+  assert.deepEqual(ios.launchArgs, ['-of-evidence-gallery']);
+  assert.deepEqual(ios.plannedSteps, [{ id: 'verify', kind: 'checkpoint' }]);
+
+  const android = await startedOf(parseScriptedScenario({ version: 1, platform: 'android',
+    app: { package: 'com.example.android', activity: '.MainActivity', intentExtras: { screen: 'gallery' } },
+    values: {}, steps: [markerCheckpoint] }));
+  assert.deepEqual(Object.keys(android),
+    ['mode', 'bundleId', 'bridgeVersion', 'jevModel', 'projectionRule', 'plannedSteps']);
+  assert.equal(android.bundleId, null);
+  assert.deepEqual({ ...android, bundleId: 'com.example.app' }, (({ launchArgs: _launchArgs, ...rest }) => rest)(ios));
 });
