@@ -99,7 +99,6 @@ export function isReasonCode(value: unknown): value is ReasonCode {
  * MobileBuildMCP device-layer errors pass through only when their code is one of these: the codes
  * shipped in 1.1, frozen here rather than read off the live REASON_CODES. This keeps a later addition
  * to REASON_CODES (for example an Android-only code that happens to share a name with a MobileBuildMCP
- * code) from silently starting to pass through too. See ADR-0005 and "Reason codes" in the Android
- * release spec.
+ * code) from silently starting to pass through too. See ADR-0005.
  */
 export const MOBILEBUILDMCP_PASSTHROUGH_CODES: ReadonlySet<string> = new Set(Object.keys(REASON_CODES_1_1));
