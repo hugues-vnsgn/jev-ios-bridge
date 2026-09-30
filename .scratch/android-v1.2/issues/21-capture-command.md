@@ -1,6 +1,7 @@
 # Phase 6: the `capture` command
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: claude-issue-21
 Blocked by: none (phase 5 merged in at 169ff02)
 
 Spec: [../spec.md](../spec.md), "Phase 6". The work is [the release spec's phase 6](../../android-support/release-spec.md#phase-6-the-capture-command-the-test-android-skill-and-the-plugin-the-test-android-skill-how-a-script-names-an-android-app-and-device-default-device) item 1, with [open point 12](../../android-support/release-spec.md#open-points-for-the-executor). Read them in full. The detail below only adds acceptance criteria.
