@@ -2,11 +2,10 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { setTimeout as delay } from 'node:timers/promises';
 import type { DeviceDriver, Element, RunEvent, RunLog, Snapshot } from '../src/contracts/index.js';
-import type { ScriptedJudge, ScriptedScenario } from '../src/scripted/contracts.js';
+import type { ScriptedJudge, ScriptedScenario, ScriptedStep } from '../src/scripted/contracts.js';
 import { StaleSnapshotError } from '../src/device/index.js';
 import { assertScreenGuard, resolveActionTarget, ScriptSelectionError } from '../src/scripted/select.js';
 import { runScriptedScenario } from '../src/scripted/run.js';
-import { parseScriptedScenario } from '../src/scripted/schema.js';
 import { buildScriptedReport, renderScriptedReport } from '../src/scripted/report.js';
 
 function snapshot(elements: Element[], truncated = false): Snapshot {
@@ -676,7 +675,7 @@ test('the run reads the tap alias rule from the driver, not from a run-wide opti
 
 const markerScreen = () => snapshot([{ ref: 'marker', role: 'text', label: 'Marker', actions: [],
   frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } }]);
-const markerCheckpoint = { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Marker' }] },
+const markerCheckpoint: ScriptedStep = { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Marker' }] },
   assertions: [{ id: 'shown', claim: 'Marker is visible' }] };
 const markerJudge: ScriptedJudge = { async judge() {
   return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' };
@@ -689,8 +688,8 @@ test('the started event names an iOS app by bundle ID and records a null bundle 
       driver: { async prepare() {}, async observe() { return markerScreen(); }, async act() {}, async close() {} } });
     return log.events.find(event => event.type === 'started')!.data;
   };
-  const ios = await startedOf(parseScriptedScenario({ version: 1,
-    app: { bundleId: 'com.example.app', launchArgs: ['-of-evidence-gallery'] }, values: {}, steps: [markerCheckpoint] }));
+  const ios = await startedOf({ version: 1,
+    app: { bundleId: 'com.example.app', launchArgs: ['-of-evidence-gallery'] }, values: {}, steps: [markerCheckpoint] });
   assert.deepEqual(Object.keys(ios),
     ['mode', 'bundleId', 'launchArgs', 'bridgeVersion', 'jevModel', 'projectionRule', 'plannedSteps']);
   assert.equal(ios.mode, 'scripted');
@@ -698,9 +697,9 @@ test('the started event names an iOS app by bundle ID and records a null bundle 
   assert.deepEqual(ios.launchArgs, ['-of-evidence-gallery']);
   assert.deepEqual(ios.plannedSteps, [{ id: 'verify', kind: 'checkpoint' }]);
 
-  const android = await startedOf(parseScriptedScenario({ version: 1, platform: 'android',
+  const android = await startedOf({ version: 1, platform: 'android',
     app: { package: 'com.example.android', activity: '.MainActivity', intentExtras: { screen: 'gallery' } },
-    values: {}, steps: [markerCheckpoint] }));
+    values: {}, steps: [markerCheckpoint] });
   assert.deepEqual(Object.keys(android),
     ['mode', 'bundleId', 'bridgeVersion', 'jevModel', 'projectionRule', 'plannedSteps']);
   assert.equal(android.bundleId, null);
@@ -715,12 +714,33 @@ test('the driver gets the device an iOS script names, and no device for an Andro
         async act() {}, async close() {} } });
     return prepared;
   };
-  assert.deepEqual(await preparedWith(parseScriptedScenario({ version: 1, app: { bundleId: 'com.example.app' },
-    device: { udid: '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7' }, values: {}, steps: [markerCheckpoint] })),
+  assert.deepEqual(await preparedWith({ version: 1, app: { bundleId: 'com.example.app' },
+    device: { udid: '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7' }, values: {}, steps: [markerCheckpoint] }),
   { app: { bundleId: 'com.example.app' }, device: { udid: '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7' } });
   for (const device of [{ serial: 'emulator-5554' }, { avd: 'jev-actions-api31' }]) {
-    assert.deepEqual(await preparedWith(parseScriptedScenario({ version: 1, platform: 'android',
-      app: { package: 'com.example.android' }, device, values: {}, steps: [markerCheckpoint] })),
+    assert.deepEqual(await preparedWith({ version: 1, platform: 'android',
+      app: { package: 'com.example.android' }, device, values: {}, steps: [markerCheckpoint] }),
     { app: { package: 'com.example.android' } });
   }
+});
+
+test('a script is typed per platform: an iOS app and simulator, or an Android package and device', () => {
+  const scripts: ScriptedScenario[] = [
+    { version: 1, app: { bundleId: 'com.example.app', launchArgs: ['-x'] }, device: { udid: 'u' }, values: {}, steps: [] },
+    { version: 1, platform: 'android', app: { package: 'com.example.android', activity: '.Main' },
+      device: { avd: 'jev-actions-api31' }, values: {}, steps: [] },
+    // @ts-expect-error An Android script names its app by package, not bundle ID.
+    { version: 1, platform: 'android', app: { bundleId: 'com.example.app' }, values: {}, steps: [] },
+    // @ts-expect-error An Android app takes intent extras, not launch arguments.
+    { version: 1, platform: 'android', app: { package: 'com.example.android', launchArgs: ['-x'] }, values: {}, steps: [] },
+    // @ts-expect-error An Android script names its device by serial or AVD, not UDID.
+    { version: 1, platform: 'android', app: { package: 'com.example.android' }, device: { udid: 'u' }, values: {}, steps: [] },
+    // @ts-expect-error An iOS script names its app by bundle ID, not package.
+    { version: 1, app: { package: 'com.example.android' }, values: {}, steps: [] },
+    // @ts-expect-error An iOS script names its simulator by UDID, not serial.
+    { version: 1, app: { bundleId: 'com.example.app' }, device: { serial: 'emulator-5554' }, values: {}, steps: [] },
+  ];
+  const [ios, android] = scripts;
+  assert.equal(ios?.platform !== 'android' ? ios?.app.bundleId : undefined, 'com.example.app');
+  assert.equal(android?.platform === 'android' ? android.app.package : undefined, 'com.example.android');
 });

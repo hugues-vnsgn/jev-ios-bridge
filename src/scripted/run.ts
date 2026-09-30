@@ -212,7 +212,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
   });
 
   try {
-    // bundleId is null on Android runs, which it can already be.
+    // An Android app has no bundle ID, so an Android run records null.
     const ios = script.platform !== 'android';
     await options.log.append('started', { mode: 'scripted',
       bundleId: ios ? script.app.bundleId : null,
