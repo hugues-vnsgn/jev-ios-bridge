@@ -29,7 +29,6 @@ test('script values are masked, longest first', () => {
   assert.equal(mask('paid with 4111 1111 then 4111'), 'paid with [value:card] then [value:short]');
 });
 
-
 test('a pane attached to a live run shows masked app and system lines, then the verdict, and closes after a pass', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-pane-'));
   const runtime = join(root, 'app.log');

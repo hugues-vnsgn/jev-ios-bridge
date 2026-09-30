@@ -116,7 +116,7 @@ function lineEpochMs(raw: string, utcOffsetMinutes: number): number | undefined 
   const stamp = threadtimeStamp(raw);
   if (!stamp) return undefined;
   const local = Date.UTC(stamp.year, stamp.month - 1, stamp.day, stamp.hour, stamp.minute, stamp.second, stamp.millisecond);
-  const written = `${raw.slice(0, 10)}T${stamp.time}`;
+  const written = `${stamp.date}T${stamp.time}`;
   if (new Date(local).toISOString().slice(0, 23) !== written) return undefined;
   return local - utcOffsetMinutes * 60_000;
 }
