@@ -31,12 +31,12 @@ Issue 18 is built in parallel and owns `src/logpane/format.ts` and `src/device/a
 3. **`prepare`,** in the spec's order. After the device checks and wake, and before the restart:
    - clean the folder;
    - read the uid by an **exact** match on `package:<package> uid:<n>` in the full `pm list packages -U` output, never by passing the package as a filter;
-   - read the device time with `date +%s.%3N`;
+   - read the device time and its UTC offset in one call, `date +'%s.%3N %z'` (the offset is for Issue 18's watcher, whose lines carry local time with no zone);
    - start the app log with `logcat -v threadtime,year,uid --uid=<uid> -T <time>` to the file;
    - start the events stream with `logcat -b events -v threadtime,year -T <time> am_proc_start:I am_proc_died:I am_crash:I am_anr:I am_kill:I *:S`, line by line.
 
    Each stream is `lease.own('logcat <serial> <pid>')`'d as soon as it has a pid. After `am start -W`, run `pidof <package>` once. A missing uid or device time, or a stream that fails to start, doesn't refuse the run: log nothing sensitive, skip the streams, and go on.
-4. **The events sink.** The driver takes an optional `createExitWatch({ package, startTime })` in its options. Type it structurally in `driver.ts` with the `AppExitWatch` shape written in Issue 18 (`feed`, `launched`, `expectStop`, `streamEnded`, `running`, `problem`), because Issue 18's module doesn't exist on your branch yet.
+4. **The events sink.** The driver takes an optional `createExitWatch({ package, startTime, utcOffsetMinutes })` in its options. Type it structurally in `driver.ts` with the `AppExitWatch` shape written in Issue 18 (`feed`, `launched`, `expectStop`, `streamEnded`, `running`, `problem`), because Issue 18's module doesn't exist on your branch yet.
    - Feed it every events line, `launched(pid)` after `pidof`, and `streamEnded()` when the events stream exits by itself.
    - Call `expectStop()` before `close`'s force-stop.
    - The driver's `appRunning()` returns the watch's `running()`, or `undefined` with no watch.

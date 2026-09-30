@@ -36,11 +36,11 @@ Issue 19 is built in parallel and owns the Android driver. Don't edit `src/devic
      running(): boolean | undefined;   // undefined = can't tell
      problem(): AppProblem | undefined;
    }
-   export function createExitWatch(options: { package: string; startTime: number }): AppExitWatch;
+   export function createExitWatch(options: { package: string; startTime: number; utcOffsetMinutes: number }): AppExitWatch;
    ```
 
-   `startTime` is the device time in epoch seconds, with milliseconds, that the streams were started from.
-   - **Timestamps:** read each line's timestamp as device local time. Take the device's UTC offset from the line, or compare the line's local date and time against `startTime` converted with an offset the caller passes. Pick one approach and pin it with a test. The rule is that a line stamped before `startTime` is ignored. If the line format can't carry this reliably, say so in your report and ignore by `am_proc_start` order instead.
+   `startTime` is the device time in epoch seconds, with milliseconds, that the streams were started from, and `utcOffsetMinutes` is the device's UTC offset (Issue 19 reads both in one `date +'%s.%3N %z'` call).
+   - **Timestamps:** the lines carry device local time with no zone (`2026-09-28 23:22:52.533`). Convert each with `utcOffsetMinutes` and ignore any line stamped before `startTime`. A line whose time doesn't parse is ignored.
    - **Matching:** match as the prototype does:
      - `am_crash` for the pid is a crash;
      - `am_crash` for the package whose type is `Native crash` is a native crash, whatever its pid;

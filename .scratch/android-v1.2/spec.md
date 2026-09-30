@@ -258,7 +258,7 @@ When a step fails because the app crashed, was killed or quit, the run ends `APP
   3. take the lease;
   4. agent check and sweep, plus the dead holder's logcat sweep;
   5. device checks and wake;
-  6. **delete logs older than 3 days**, then **read the uid** by an exact package match in the full `pm list packages -U` output, **read the device time** with `date +%s.%3N`, and **start both streams from that time**;
+  6. **delete logs older than 3 days**, then **read the uid** by an exact package match in the full `pm list packages -U` output, **read the device time** with `date +%s.%3N`, with its UTC offset (`%z`) in the same call for the watcher, and **start both streams from that time**;
   7. force-stop and `am start -W`;
   8. **`pidof` once**, never earlier;
   9. push, start and verify the agent.
@@ -268,7 +268,7 @@ When a step fails because the app crashed, was killed or quit, the run ends `APP
   - **Both** are recorded as owned processes in the lease's holder record (`logcat <serial> <pid>`, beside phase 4's `agent …` and `forward …` entries) as soon as they start, and disowned only once confirmed stopped.
   - **Neither is a tracked command in the ledger.**
 - **The watcher.**
-  - **What it reads:** it is fed the package, the launched pid (set once `pidof` answers) and the device start time. It ignores any line stamped before the start time, which covers a stale native crash even if logcat replayed one.
+  - **What it reads:** it is fed the package, the launched pid (set once `pidof` answers), the device start time and the device's UTC offset. The events lines carry local time with no zone, so it converts each with the offset and ignores any line stamped before the start time. That covers a stale native crash even if logcat replayed one.
   - **Exits:**
     - a Java crash matches by pid;
     - a native crash matches by package plus `Native crash`;
