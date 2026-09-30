@@ -8,7 +8,8 @@ import { BRIDGE_VERSION } from '../version.js';
 
 const idInput = z.object({ runId: z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$/) });
 const result = (text: string) => ({ content: [{ type: 'text' as const, text }] });
-const failed = () => ({ ...result('Bridge operation failed. Check the run id and local configuration.'), isError: true });
+const failed = (message = 'Bridge operation failed. Check the run id and local configuration.') =>
+  ({ ...result(message), isError: true });
 
 export function createMcpServer(service: BridgeService): McpServer {
   const server = new McpServer({ name: 'jev-ios-bridge', version: BRIDGE_VERSION });
@@ -17,10 +18,7 @@ export function createMcpServer(service: BridgeService): McpServer {
     inputSchema: z.object({ scenario: scriptedScenarioSchema, limits: startLimitsSchema.optional() }),
   }, async ({ scenario, limits }) => {
     try { return result(JSON.stringify(await service.start(scenario, limits))); }
-    catch (error) {
-      if (error instanceof DriverUnavailableError) return { ...result(error.message), isError: true };
-      return failed();
-    }
+    catch (error) { return failed(error instanceof DriverUnavailableError ? error.message : undefined); }
   });
   server.registerTool('get_report', {
     description: 'Wait up to waitMs (maximum 45000) for a run. Running results contain progress only; completion returns the evidence report. Cancelling this wait does not cancel the run; use cancel_run to stop it.',
