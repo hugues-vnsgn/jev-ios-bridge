@@ -47,6 +47,17 @@ test('the platform parameter defaults to iOS and picks the header per platform',
     'only the header differs; the projected elements are identical');
 });
 
+test('an element with a placeholder shows it in place of label, on both platforms', () => {
+  const withPlaceholder: Snapshot = { ...snapshot, elements: [
+    { ref: 'e1', role: 'textfield', placeholder: 'Betrag eingeben', state: { enabled: true, visible: true }, actions: ['type'] },
+  ] };
+  const android = renderAssertionState(withPlaceholder, 'android');
+  assert.match(android, /"placeholder":"Betrag eingeben"/);
+  assert.doesNotMatch(android, /"label"/);
+  const ios = renderAssertionState(withPlaceholder, 'ios');
+  assert.match(ios, /"placeholder":"Betrag eingeben"/);
+});
+
 test('request contains only neutral a/b Noul questions and current claims, never truth labels or action choices', () => {
   const labeled = [
     { ...assertions[0]!, expected: true, rationale: 'oracle says true' },

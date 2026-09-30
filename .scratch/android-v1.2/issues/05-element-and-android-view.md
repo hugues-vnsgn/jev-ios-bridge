@@ -1,6 +1,7 @@
 # Phase 3: the element's placeholder and selectable marker, and Jev's Android view
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: implementer-05
 Blocked by: none
 
 Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase 3](../../android-support/release-spec.md#phase-3-contract-additions-how-a-script-names-an-android-app-and-device-what-jev-sees-on-android-decisions-1-to-2-actions-across-android-versions-items-2-to-4-log-pane-and-app-exit-detection-item-6-where-android-plugs-into-the-code-items-4-8-and-9) item 4, with its part of item 8, and [open point 4](../../android-support/release-spec.md#open-points-for-the-executor). Read them, and decisions 1 to 2 of [What Jev sees on Android](../../android-support/issues/04-what-jev-sees-on-android.md). The detail below only adds acceptance criteria.

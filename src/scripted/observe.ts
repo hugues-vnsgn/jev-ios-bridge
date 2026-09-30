@@ -18,7 +18,7 @@ export class ScriptedObservationError extends Error {
 function isVisibleEvidence(element: Element): boolean {
   if (element.state?.visible === false || (element.frame && (element.frame.width <= 0 || element.frame.height <= 0))) return false;
   if (/status.?bar/i.test(`${element.role} ${element.identifier ?? ''}`)) return false;
-  return Boolean(element.label?.trim() || element.value?.trim() || element.identifier?.trim() ||
+  return Boolean(element.label?.trim() || element.placeholder?.trim() || element.value?.trim() || element.identifier?.trim() ||
     element.actions.length > 0 || /^(text|statictext|title|heading|alert)$/i.test(element.role));
 }
 
@@ -37,7 +37,8 @@ export function renderAssertionState(snapshot: Snapshot, platform: Platform = 'i
   if (elements.length === 0) throw new ScriptedObservationError('EMPTY_SCREEN');
   const lines = [HEADERS[platform], ...elements.map(element => JSON.stringify({
     role: element.role,
-    ...(element.label !== undefined ? { label: element.label } : {}),
+    ...(element.placeholder !== undefined ? { placeholder: element.placeholder } :
+      element.label !== undefined ? { label: element.label } : {}),
     ...(element.value !== undefined ? { value: element.value } : {}),
     ...(element.identifier !== undefined ? { identifier: element.identifier } : {}),
     ...(element.frame ? { frame: element.frame } : {}),
