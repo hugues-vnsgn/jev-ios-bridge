@@ -1,6 +1,7 @@
 # Phase 4: prepare (device identity, the lease, agent checks, device checks, restart, the agent)
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase4 at ec10445
 Claimed by: claude-issue-14
 Blocked by: 10, 11
 
@@ -121,3 +122,8 @@ While recording, also capture one `device.dump.ui` of an empty classic `EditText
   - Kept the duck-typed `vendorCode` in `failureOf`, because adding it to the base class would touch `src/device/index.ts`.
   - Kept the fields Issues 15 and 16 will read.
 - **Spec:** 0 missing, 2 partials (the derived locked fixture; the restart flag not in the holder record) and 3 questionable. I fixed the version-poll bound and the sweep of a listed forward that now points elsewhere, and kept the forward retry at 3 attempts.
+
+**2026-09-30, coordinator, on the report's questions:**
+- **Forward retry:** 3 attempts in total is right. mobilecli 1.0.14's `forwardOnFreePort` loops `attempt < forwardAttempts` with `forwardAttempts = 3` (`devices/android_device_server.go`, read for the tracer).
+- **The restart in the holder record:** keep it in memory only, as built. The crash sweep (item 2, open point 22) acts only on the agent, the forward and the `logcat` streams, never on the app, and anything in `ownedProcesses` blocks release until it's disowned. Recorded on Issue 16.
+- **The locked-screen fixture** is derived, not recorded: asked the owner.

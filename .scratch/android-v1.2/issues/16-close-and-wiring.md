@@ -20,6 +20,11 @@ Spec: [../spec.md](../spec.md), "Phase 4". The work is [the release spec's phase
 2. **The factory** (`src/device/factory.ts`) builds the Android driver for Android scripts, and no longer refuses them. The phase 3 tests that pinned the refusal (the factory, `BridgeService`, the CLI stderr test in `tests/contract.test.ts` and the MCP test in `tests/mcp.test.ts`) change with their contract (owner ruling, 2026-09-30). Each must end at a deterministic Android error instead, not one that depends on whether the machine has `adb`: for example `ANDROID_TOOLS_UNAVAILABLE`, with `ANDROID_HOME`, `ANDROID_SDK_ROOT` and `PATH` pointed at an empty folder. Keep `DriverUnavailableError` if something still throws it; otherwise remove it and its tests.
 3. **The CLI's SIGINT and SIGTERM handlers** close the service, which calls this same `close`; check that the existing handlers already do this for Android, and add a test if none covers it.
 
+**From Issue 14 (coordinator, 2026-09-30):**
+- The Android driver takes the script's `device` and `JEV_ANDROID_DEVICE` as constructor options, because `runScriptedScenario` doesn't pass an Android script's device to `prepare`. The factory passes them in.
+- Whether this run restarted the app stays in the driver's memory, not in the lease's holder record: the crash sweep never acts on the app, and an owned entry would block release. `close`'s step 3 reads that memory.
+- A refusal before the app restart already releases the lease inside `prepare`, as the iOS driver does. `close` after such a refusal must stay a no-op that succeeds.
+
 ## Acceptance
 
 - `close` tests with the fakes:
