@@ -1,6 +1,6 @@
 # Reason codes
 
-Every verdict and error event carries one of these codes, in `reason` and `error.code` in [`report.json`](report-json.md). The list is owned by the bridge and frozen for 1.x: releases may add codes but never rename or remove one, or change its meaning. A MobileBuildMCP error whose code isn't one of the bridge's codes shipped through 1.1 becomes `DEVICE_ERROR`, and MobileBuildMCP's own code is kept in `error.vendorCode`; this keeps a later Android-only addition from silently changing an iOS error's reason.
+Every verdict and error event carries one of these codes, in `reason` and `error.code` in [`report.json`](report-json.md). The list is owned by the bridge and frozen for 1.x: releases may add codes but never rename or remove one, or change its meaning. A MobileBuildMCP error whose code isn't one of the bridge's codes shipped through 1.1 becomes `DEVICE_ERROR`, and MobileBuildMCP's own code is kept in `error.vendorCode`; this keeps a later Android-only addition from silently changing an iOS error's reason. On Android, an `adb` or device agent failure the bridge has no code for is `DEVICE_ERROR` too, with `vendorCode` `adb` or `agent`.
 
 What to do about each: [troubleshooting](../08-troubleshooting.md).
 

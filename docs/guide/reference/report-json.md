@@ -8,12 +8,12 @@ Each finished run writes `report.json` into its evidence folder. `run --json` an
 | `runId` | string | The run's ID, which is also its folder name. |
 | `bridgeVersion` | string | The bridge version that ran it. |
 | `jevModel` | string or null | The Jev model that judged it, such as `jev-1.13.0`. |
-| `projectionRule` | string or null | The shape of the screen text sent to Jev, such as `visible-full-text-v2`. |
-| `bundleId` | string or null | The app under test. |
-| `launchArgs` | array of strings | Arguments the app was launched with; empty when none. |
+| `projectionRule` | string or null | The shape of the screen text sent to Jev, such as `visible-full-text-v2` (iOS) or `android-full-text-v1` (Android). |
+| `bundleId` | string or null | The app under test on iOS. `null` on Android, which has `package` instead. |
+| `launchArgs` | array of strings | Arguments the app was launched with; empty when none, and always empty on Android. |
 | `verdict` | `passed`, `failed`, or `inconclusive` | The recorded verdict. |
 | `reason` | string | A [reason code](reason-codes.md). |
-| `error` | object or null | The last error: `code` (a reason code), `phase`, `stepId`, and `vendorCode` when MobileBuildMCP supplied its own code. |
+| `error` | object or null | The last error: `code` (a reason code), `phase`, `stepId`, and `vendorCode` when MobileBuildMCP supplied its own code, or on Android, `adb` or `agent` for the part that failed. |
 | `steps` | number | Steps executed. |
 | `plannedSteps` | number or null | Steps in the script. |
 | `checkpointsPassed` | number | Checkpoints that passed. |
@@ -23,6 +23,18 @@ Each finished run writes `report.json` into its evidence folder. `run --json` an
 | `startedAt`, `finishedAt` | ISO 8601 string (`finishedAt` may be null) | When the run started and when its verdict was recorded. |
 | `checkpoints` | array | Each judged checkpoint: `stepId`; `status`; `claims`, each with `id`, `claim`, and `probability`; `screenshot`, a file name or null; `evidenceEvent`, the `run.jsonl` sequence number of the judged observation, or null. |
 | `evidence` | object | `log` (`"run.jsonl"`) and `screenshots` (file names). |
+
+Android runs add these fields, recorded from the run's `started` and `action` events. iOS reports never have them, so a report without `platform` is an iOS run's.
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `platform` | `"android"` | Marks an Android run. |
+| `package` | string | The app under test: the script's `app.package`. |
+| `activity` | string or null | The script's `app.activity`, or `null` when the launcher activity started. |
+| `intentExtras` | object: string → string | The script's `app.intentExtras`; `{}` when none. |
+| `typedFields` | array | Only when the run typed: one `{ "stepId", "shownValue" }` per replace-text step, with the field's text as the screen showed it after typing. A password field's shown value is dots. Script values in it are masked. |
+
+The device the run used isn't in `report.json`. On Android, the `prepared` event in `run.jsonl` records it: the device identity, the serial, the device agent's SHA-256, and `sweptLeftovers: true` when the run cleared a crashed run's leftovers. The prose report names them too.
 
 A run whose process stopped before recording a verdict has no `report.json`. For such a run, `report <run-id> --json` builds one with verdict `inconclusive` and reason `INTERRUPTED`.
 
