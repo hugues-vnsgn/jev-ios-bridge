@@ -5,8 +5,8 @@
  */
 
 import type { AppProblem } from '../../contracts/index.js';
+import { threadtimeStamp } from './threadtime.js';
 
-export type { AppProblem };
 export interface AppExitWatch {
   /** One line of `logcat -b events -v threadtime,year`. */
   feed(raw: string): void;
@@ -21,24 +21,29 @@ export interface AppExitWatch {
   problem(): AppProblem | undefined;
 }
 
-/** A line's device-local time, `2026-09-28 23:22:52.533`, and an event the watcher reads, `am_kill : [0,15898,…]`. */
-const STAMP = /^(\d{4})-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)\.(\d{3})\s/;
-const EVENT = /\b(am_crash|am_anr|am_kill|am_proc_died)\s*: \[(.*)\]$/;
+/**
+ * The events the watcher reads, in the events filter's order, each with the index of its pid field (API 36):
+ * - `am_proc_died`: user, pid, process, adj, state;
+ * - `am_crash`: pid, user, process, flags, exception, message, file, line, recoverable;
+ * - `am_anr`: user, pid, process, flags, reason;
+ * - `am_kill`: user, pid, process, adj, reason, pss.
+ */
+const PID_FIELD: Record<string, number> = { am_proc_died: 1, am_crash: 0, am_anr: 1, am_kill: 1 };
+
+/**
+ * The events stream's logcat filter (release spec phase 5 item 4): `am_proc_start` and the events the
+ * watcher reads, silencing every other tag.
+ */
+export const EVENT_FILTER = ['am_proc_start', ...Object.keys(PID_FIELD)].map(tag => `${tag}:I`).concat('*:S');
+
+/** An event the watcher reads, `am_kill : [0,15898,…]`. */
+const EVENT = new RegExp(`\\b(${Object.keys(PID_FIELD).join('|')})\\s*: \\[(.*)\\]$`);
 
 /** `strsignal()` text, which a native crash's `am_crash` carries as its message, to the signal's name. */
 const SIGNALS: Record<string, string> = {
   'Segmentation fault': 'SIGSEGV', Aborted: 'SIGABRT', 'Bus error': 'SIGBUS', 'Floating point exception': 'SIGFPE',
   'Illegal instruction': 'SIGILL', 'Trace/breakpoint trap': 'SIGTRAP', 'Bad system call': 'SIGSYS',
 };
-
-/**
- * The fields of each event the watcher reads (API 36):
- * - `am_crash`: pid, user, process, flags, exception, message, file, line, recoverable;
- * - `am_anr`: user, pid, process, flags, reason;
- * - `am_kill`: user, pid, process, adj, reason, pss;
- * - `am_proc_died`: user, pid, process, adj, state.
- */
-const PID_FIELD: Record<string, number> = { am_crash: 0, am_anr: 1, am_kill: 1, am_proc_died: 1 };
 
 type Seen = { tag: string; pid: string; fields: string[]; expected: boolean };
 type Exit = { note: string; expected: boolean };
@@ -79,7 +84,7 @@ export function createExitWatch(options: { package: string; startTime: number; u
   return {
     feed(raw) {
       if (ended) return;
-      const at = deviceTime(raw, options.utcOffsetMinutes);
+      const at = lineEpochMs(raw, options.utcOffsetMinutes);
       if (at === undefined || at < startMs) return;
       const event = raw.match(EVENT);
       if (!event) return;
@@ -107,12 +112,11 @@ export function createExitWatch(options: { package: string; startTime: number; u
 }
 
 /** Epoch milliseconds of a line's local stamp, or `undefined` when it has none or it isn't a real time. */
-function deviceTime(raw: string, utcOffsetMinutes: number): number | undefined {
-  const stamp = raw.match(STAMP);
+function lineEpochMs(raw: string, utcOffsetMinutes: number): number | undefined {
+  const stamp = threadtimeStamp(raw);
   if (!stamp) return undefined;
-  const [, year, month, day, hour, minute, second, ms] = stamp.map(Number);
-  const local = Date.UTC(year!, month! - 1, day!, hour!, minute!, second!, ms!);
-  const written = `${stamp.slice(1, 4).join('-')}T${stamp.slice(4, 7).join(':')}.${stamp[7]}`;
+  const local = Date.UTC(stamp.year, stamp.month - 1, stamp.day, stamp.hour, stamp.minute, stamp.second, stamp.millisecond);
+  const written = `${stamp.date}T${stamp.time}`;
   if (new Date(local).toISOString().slice(0, 23) !== written) return undefined;
   return local - utcOffsetMinutes * 60_000;
 }
@@ -137,9 +141,9 @@ function crashNote(fields: string[]): string {
   return name ? `crashed: ${name}${where}` : 'crashed';
 }
 
-/** A native crash's message is the system's `strsignal()` text, never the app's. */
+/** A native crash's message is the system's `strsignal()` text, never the app's; the note names its signal. */
 function nativeCrashNote(fields: string[]): string {
   const signal = fields[5] ?? '';
-  const name = SIGNALS[signal] ?? (/^[A-Za-z][\w ./-]{0,39}$/.test(signal) ? signal : '');
-  return name ? `native crash: ${name}` : 'native crash';
+  // Only a known text is named, so no field text ever reaches the note unmapped.
+  return Object.hasOwn(SIGNALS, signal) ? `native crash: ${SIGNALS[signal]!}` : 'native crash';
 }

@@ -268,15 +268,17 @@ export async function selectDeviceId(cwd: string, scriptUdid?: string, defaultUd
 /**
  * The Android device name a run will use: the script's `device.serial` or `device.avd` (already validated
  * by the script schema), then the configured default (JEV_ANDROID_DEVICE; an empty value counts as unset).
+ * `noDevice` words the NO_DEVICE message for the caller's own way of naming a device (`capture`'s options).
  * There is no config file and no "any device" fallback. A value read from the environment is checked
  * against the serial and AVD name patterns; a value named by the script is trusted as already checked.
  * Whether the chosen value is a serial or an AVD name is worked out later, once adb can be asked. This is
  * a bridge-owned validation, not a MobileBuildMCP call, so a refusal raises `DeviceReasonError` directly.
  */
-export function selectAndroidDeviceName(device: { serial?: string; avd?: string } | undefined, envValue: string | undefined): string {
+export function selectAndroidDeviceName(device: { serial?: string; avd?: string } | undefined, envValue: string | undefined,
+  noDevice = 'Set device.serial or device.avd in the scenario, or JEV_ANDROID_DEVICE'): string {
   const fromScript = device?.serial ?? device?.avd;
   const selected = fromScript ?? (envValue ? envValue : undefined);
-  if (!selected) throw new DeviceReasonError('NO_DEVICE', 'Set device.serial or device.avd in the scenario, or JEV_ANDROID_DEVICE');
+  if (!selected) throw new DeviceReasonError('NO_DEVICE', noDevice);
   if (!fromScript && !androidSerial.test(selected) && !androidAvd.test(selected)) {
     throw new DeviceReasonError('INVALID_DEVICE',
       `JEV_ANDROID_DEVICE must be an adb serial (matching ${androidSerial}) or an AVD name (matching ${androidAvd})`);

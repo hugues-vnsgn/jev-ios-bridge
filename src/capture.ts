@@ -4,11 +4,9 @@ import { AndroidDriver, type AndroidDriverOptions } from './device/android/drive
 import { ScriptedObservationError, renderAssertionState } from './scripted/observe.js';
 import { androidAvd, androidSerial } from './scripted/schema.js';
 import { REASON_CODES } from './scripted/vocabulary.js';
-
-/** The capture command's exit codes (release spec open point 12): the CLI's own "passed" and "could not start". */
-const EXIT = { printed: 0, couldNotCapture: 3 } as const;
-/** How long `close` may take: the run's own cleanup limit. */
-const CLEANUP_MS = 45_000;
+import { DEFAULT_CLEANUP_MS } from './scripted/run.js';
+// capture exits with the CLI's own codes (release spec open point 12): "passed" when it printed, "could not start" when not.
+import { EXIT } from './exit-codes.js';
 
 export interface CaptureRequest {
   /** `--serial`. Wins over `--avd`. */
@@ -100,12 +98,9 @@ export async function captureCommand(request: CaptureRequest, context: CaptureCo
   let output: string;
   try {
     const device = namedDevice(request);
-    // Both device checks run here, before the driver's tools check, so a missing or malformed name is
-    // reported first, as `run` does; the first only words NO_DEVICE for capture's options.
-    if (device === undefined && !context.defaultDevice) {
-      throw new DeviceReasonError('NO_DEVICE', 'Pass --serial or --avd, or set JEV_ANDROID_DEVICE');
-    }
-    selectAndroidDeviceName(device, context.defaultDevice);
+    // The device checks run here, before the driver's tools check, so a missing or malformed name is
+    // reported first, as `run` does.
+    selectAndroidDeviceName(device, context.defaultDevice, 'Pass --serial or --avd, or set JEV_ANDROID_DEVICE');
     const driver = new AndroidDriver({ ...context.driver, device, defaultDevice: context.defaultDevice });
     try {
       output = printable(await driver.capture(signal), request.jev === true);
@@ -114,7 +109,7 @@ export async function captureCommand(request: CaptureRequest, context: CaptureCo
       if (!signal.aborted) refuse(error);
       throw REPORTED;
     } finally {
-      try { await driver.close(AbortSignal.timeout(CLEANUP_MS)); }
+      try { await driver.close(AbortSignal.timeout(DEFAULT_CLEANUP_MS)); }
       catch (error) {
         // close's own message says whether the device lease was kept.
         throw new CaptureRefusal('CLEANUP_FAILED', `${REASON_CODES.CLEANUP_FAILED}${error instanceof DeviceReasonError ? ` ${error.message}.` : ''}`);
@@ -123,8 +118,10 @@ export async function captureCommand(request: CaptureRequest, context: CaptureCo
   } catch (error) {
     // An interrupt's own exit code follows; there is nothing more to report.
     if (!signal.aborted && error !== REPORTED) refuse(error);
-    return EXIT.couldNotCapture;
+    return EXIT.couldNotStart;
   }
+  // An interrupt prints nothing, even once the screen was read.
+  if (signal.aborted) return EXIT.couldNotStart;
   write.stdout(output);
-  return EXIT.printed;
+  return EXIT.passed;
 }

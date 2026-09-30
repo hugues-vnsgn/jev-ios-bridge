@@ -184,6 +184,37 @@ test('a driver that captured can\'t capture or prepare again', async () => {
   });
 });
 
+test('capture interrupted just after the agent start keeps the lease for close, which fences the agent and releases it', async () => {
+  await withFakes(new FakeAdb(api31()), async ({ adb, root, parts }) => {
+    const interrupt = new AbortController();
+    adb.onCall = args => { if (args.join(' ') === START.join(' ')) interrupt.abort(new Error('SIGINT')); };
+    const driver = new AndroidDriver({ ...parts, device: { avd: 'jev-actions-api31' } });
+    await assert.rejects(driver.capture(interrupt.signal), /SIGINT/);
+    assert.deepEqual(await readdir(root), ['JEV-ACTIONS-API31.lock'], 'the lease is kept for close');
+    adb.onCall = undefined;
+    await driver.close(signal());
+    assert.ok(adb.shell().some(words => words.join(' ') === 'kill 7001'), 'close fenced the agent');
+    assert.equal(adb.emulators.get('emulator-5554')!.agents!.size, 0, 'no agent left');
+    assert.deepEqual(adb.forwards, []);
+    assert.deepEqual(await readdir(root), [], 'lease released');
+  });
+});
+
+test('capture whose adb forward fails keeps the lease for close, which fences the agent and releases it', async () => {
+  const adb = new FakeAdb(api31());
+  adb.busyPorts = new Set([49526, 49527, 49528]);
+  await withFakes(adb, async ({ root, parts }) => {
+    const driver = new AndroidDriver({ ...parts, device: { avd: 'jev-actions-api31' } });
+    await assert.rejects(driver.capture(signal()), /could not forward/);
+    assert.deepEqual(await readdir(root), ['JEV-ACTIONS-API31.lock'], 'the lease is kept for close');
+    await driver.close(signal());
+    assert.ok(adb.shell().some(words => words.join(' ') === 'kill 7001'), 'close fenced the agent');
+    assert.equal(adb.emulators.get('emulator-5554')!.agents!.size, 0, 'no agent left');
+    assert.deepEqual(adb.forwards, []);
+    assert.deepEqual(await readdir(root), [], 'lease released');
+  });
+});
+
 /* The CLI's capture path. */
 
 interface Printed { code: number; stdout: string; stderr: string }
@@ -362,4 +393,18 @@ test('an interrupt mid-capture closes the driver: the agent fenced, the forward 
     assert.deepEqual(setup.adb.forwards, []);
     assert.deepEqual(await readdir(setup.root), []);
   });
+});
+
+test('an interrupt once the snapshot is taken prints nothing, and still cleans up', async () => {
+  await withFakes(new FakeAdb(api31()), async setup => {
+    const interrupt = new AbortController();
+    setup.adb.onCall = args => { if (args[2] === 'forward' && args[3] === '--remove') interrupt.abort(new Error('SIGINT')); };
+    const printed = await capture({ avd: 'jev-actions-api31' }, setup, { signal: interrupt.signal });
+    assert.equal(printed.code, 3);
+    assert.equal(printed.stdout, '');
+    assert.equal(printed.stderr, '');
+    assert.equal(setup.adb.emulators.get('emulator-5554')!.agents!.size, 0);
+    assert.deepEqual(setup.adb.forwards, []);
+    assert.deepEqual(await readdir(setup.root), []);
+  }, [await captureOf('settings-2-display')]);
 });

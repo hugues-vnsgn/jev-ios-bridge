@@ -17,9 +17,7 @@ import type { LogSources, Verdict } from './contracts/index.js';
 import { BRIDGE_VERSION } from './version.js';
 import { attachLogPane } from './logpane/attach.js';
 import { readRunEvents } from './log/index.js';
-
-/** Frozen CLI exit codes (ADR-0005). Signals exit 130 (SIGINT) and 143 (SIGTERM). */
-const EXIT = { passed: 0, failed: 1, inconclusive: 2, couldNotStart: 3 } as const;
+import { EXIT } from './exit-codes.js';
 
 const USAGE = `jev-ios-bridge ${BRIDGE_VERSION}
 Usage:

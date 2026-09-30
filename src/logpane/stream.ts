@@ -3,12 +3,12 @@ import { closeSync, fstatSync, openSync, readSync } from 'node:fs';
 import { chmod, unlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { appLabel, type AppIdentity, type AppProblem, type LogSources } from '../contracts/index.js';
+import { appLabel, isIosApp, type AppIdentity, type AppProblem, type LogSources, type Platform } from '../contracts/index.js';
 import { appLine, logcatLine, masker, osLine, type PaneLine } from './format.js';
 
-/** Messages on the pane socket, one JSON object per line. */
+/** Messages on the pane socket, one JSON object per line. `hello`'s platform picks the header's source lines. */
 export type PaneMessage =
-  | { type: 'hello'; runId: string; appId: string; sources: LogSources }
+  | { type: 'hello'; runId: string; appId: string; platform: Platform; sources: LogSources }
   | ({ type: 'line' } & PaneLine)
   | { type: 'note'; text: string }
   | { type: 'end'; verdict: string; reason: string; evidencePath: string; closeAfterMs?: number };
@@ -70,7 +70,8 @@ export async function startLogStream(options: {
     }
     for (const client of clients) client.write(text);
   };
-  const hello: PaneMessage = { type: 'hello', runId: options.runId, appId: appLabel(options.app), sources: options.sources };
+  const hello: PaneMessage = { type: 'hello', runId: options.runId, appId: appLabel(options.app),
+    platform: isIosApp(options.app) ? 'ios' : 'android', sources: options.sources };
   await unlink(socketPath).catch(() => {});
   const server: Server = createServer(client => {
     clients.add(client);

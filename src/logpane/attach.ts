@@ -28,8 +28,10 @@ export function attachLogPane(runId: string, output: NodeJS.WriteStream = proces
       if (message.type === 'hello') {
         if (color) output.write(`\x1b]0;jev log · ${message.appId}\x07`);
         print(bold(`jev-ios-bridge log pane · ${message.appId} · run ${message.runId}`, color));
-        if (message.sources.logcat) {
-          print(dim(`device log (logcat, the app's uid only): ${message.sources.logcat}`, color));
+        // An Android run's header never shows the iOS source lines, even with no logcat file.
+        if (message.platform === 'android') {
+          print(dim(message.sources.logcat ? `device log (logcat, the app's uid only): ${message.sources.logcat}`
+            : 'device log (logcat): unavailable', color));
         } else {
           print(dim(`app output: ${message.sources.runtime ?? 'unavailable'}`, color));
           print(dim(`system log (subsystem ${message.appId}): ${message.sources.os ?? 'unavailable'}`, color));
