@@ -1,5 +1,5 @@
 import type { RunEvent, RunReport, Verdict } from '../contracts/index.js';
-import { typedFieldsOf } from './report-json.js';
+import { recordedPlatform, typedFieldsOf } from './report-json.js';
 
 export interface ScriptedReport extends RunReport {
   checkpoints: Array<{
@@ -71,7 +71,7 @@ export function renderScriptedReport(report: ScriptedReport): string {
   const started = report.events.find(event => event.type === 'started')?.data;
   const prepared = report.events.find(event => event.type === 'prepared')?.data;
   // The run's own recorded platform decides, not merely whether a driver happened to set an Android field.
-  const android = started?.platform === 'android';
+  const android = recordedPlatform(report.events) === 'android';
   const model = typeof started?.jevModel === 'string' ? started.jevModel
     : report.events.find(event => event.type === 'judgment' && typeof event.data.model === 'string')?.data.model;
   const header = [
