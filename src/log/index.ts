@@ -1,7 +1,7 @@
 import { mkdir, readFile, open, copyFile, chmod, realpath, rename, writeFile } from 'node:fs/promises';
 import { createHmac, randomBytes } from 'node:crypto';
 import { resolve, join, basename } from 'node:path';
-import type { RunEvent, RunLog } from '../contracts/index.js';
+import { PLATFORMS, type RunEvent, type RunLog } from '../contracts/index.js';
 import { PROJECTION_RULES } from '../scripted/observe.js';
 import { REASON_CODES } from '../scripted/vocabulary.js';
 import { BRIDGE_VERSION } from '../version.js';
@@ -21,6 +21,7 @@ const protocolValues: Record<string, ReadonlySet<string>> = {
   verdict: new Set(['passed', 'failed', 'inconclusive']),
   phase: new Set(['prepare', 'observe', 'decide', 'act', 'wait', 'budget', 'reobserve', 'cleanup', 'run']),
   model: new Set(['jev-1.13.0']),
+  platform: new Set(PLATFORMS),
 };
 const errorCodes: ReadonlySet<string> = new Set(Object.keys(REASON_CODES));
 protocolValues.code = errorCodes;

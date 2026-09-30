@@ -16,10 +16,12 @@ import type { DeviceDriver, RunEvent, Snapshot } from '../src/contracts/index.js
 import { DeviceCliError } from '../src/device/index.js';
 import { createRunLog } from '../src/log/index.js';
 import type { ScriptedJudge } from '../src/scripted/contracts.js';
+import type { ScriptedStep } from '../src/scripted/contracts.js';
 import { REPORT_VERSION } from '../src/scripted/report-json.js';
 import { SCRIPT_VERSION, scriptedScenarioSchema } from '../src/scripted/schema.js';
 import { REASON_CODES, ROLES } from '../src/scripted/vocabulary.js';
 import { BridgeService } from '../src/service.js';
+import { androidScript } from './fixtures/android-script.js';
 import { openMcpSession } from './fixtures/mcp-session.js';
 
 const execute = promisify(execFile);
@@ -441,14 +443,12 @@ test('contract: the CLI names the missing or malformed Android device, and the d
       return execute(process.execPath, ['--import', tsx, cli, 'run', path], { cwd: root, env: env(extra) })
         .then(() => assert.fail('must exit 3'), (error: { code: number; stderr: string }) => error);
     };
-    const noDevice = await run(
-      { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' }, values: {}, steps: [checkpoint] }, {});
+    const noDeviceScript = androidScript({ app: { package: 'com.hugues.test_cmp' }, steps: [checkpoint as ScriptedStep] });
+    const noDevice = await run(noDeviceScript, {});
     assert.equal(noDevice.code, 3);
     assert.match(noDevice.stderr, /Set device\.serial or device\.avd in the scenario, or JEV_ANDROID_DEVICE/);
 
-    const invalidDevice = await run(
-      { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' }, values: {}, steps: [checkpoint] },
-      { JEV_ANDROID_DEVICE: 'has a space' });
+    const invalidDevice = await run(noDeviceScript, { JEV_ANDROID_DEVICE: 'has a space' });
     assert.equal(invalidDevice.code, 3);
     assert.match(invalidDevice.stderr, /JEV_ANDROID_DEVICE must be an adb serial/);
     assert.match(invalidDevice.stderr, /AVD name/);
