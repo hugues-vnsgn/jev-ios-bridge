@@ -1,6 +1,7 @@
 # Phase 5: fix the whole-branch review findings
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: claude-issue-26
 Blocked by: none
 
 Spec: [../spec.md](../spec.md), "Phase 5", and Issues 18 to 20 with their comments. A two-axis `/code-review` of the whole phase 5 branch (`b4ede43...agent/android-v1.2-phase5`, at `6bd9db1`) found the items below. Fix each, test first, and keep every other behaviour as it is.
