@@ -3,7 +3,7 @@ import { createServer, type IncomingHttpHeaders, type IncomingMessage, type Serv
 import type { AddressInfo } from 'node:net';
 import { inspect } from 'node:util';
 import { test } from 'node:test';
-import { OutcomeUnknownError } from '../src/device/android/adb.js';
+import { OutcomeUnknownError } from '../src/device/android/ledger.js';
 import { AGENT_REQUEST_TIMEOUT_MS, DeviceAgentError, deviceAgentClient, type DeviceAgentClient } from '../src/device/android/agent-client.js';
 import { DeviceReasonError } from '../src/device/index.js';
 

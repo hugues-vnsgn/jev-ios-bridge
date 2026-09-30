@@ -8,8 +8,9 @@ import type { Action, ActionScenarioContext, ActOutcome, AndroidAppIdentity, Dev
 import { isIosApp } from '../../contracts/index.js';
 import { DeviceReasonError, selectAndroidDeviceName, StaleSnapshotError } from '../index.js';
 import { DeviceLease, DeviceLeaseBusyError, type LeaseHolder } from '../lease.js';
-import { adbRunner, inLedger, type AdbResult, type AdbRunner } from './adb.js';
+import { adbRunner, type AdbResult, type AdbRunner } from './adb.js';
 import { deviceAgentClient, type AgentKey, type DeviceAgentClient } from './agent-client.js';
+import { inLedger } from './ledger.js';
 import { mapAndroidTree, type AndroidTree } from './mapping.js';
 import { settle, type Clock, type UiTree } from './settle.js';
 import { adbEnvironment, androidTools, type AndroidTools } from './tools.js';
@@ -55,8 +56,10 @@ const ASCII = /^[\x00-\x7f]*$/;
  * as its `vendorCode`. Its message never quotes the device's output, which can carry screen text.
  */
 export class AndroidDeviceError extends DeviceReasonError {
-  constructor(readonly vendorCode: 'adb' | 'agent', message: string) {
-    super('DEVICE_ERROR', message);
+  declare readonly vendorCode: 'adb' | 'agent';
+
+  constructor(vendorCode: 'adb' | 'agent', message: string) {
+    super('DEVICE_ERROR', message, { vendorCode });
     this.name = 'AndroidDeviceError';
   }
 }

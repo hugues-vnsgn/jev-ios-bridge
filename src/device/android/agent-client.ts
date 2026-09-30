@@ -1,6 +1,6 @@
 import { request } from 'node:http';
 import { DeviceReasonError } from '../index.js';
-import { OutcomeUnknownError } from './adb.js';
+import { OutcomeUnknownError } from './ledger.js';
 
 /**
  * The device agent's client: the anti-corruption layer to mobilecli's agent (see the domain model). Only
@@ -42,9 +42,11 @@ export interface DeviceAgentClient {
  * its numeric JSON-RPC code is kept.
  */
 export class DeviceAgentError extends DeviceReasonError {
-  readonly vendorCode = 'agent';
+  declare readonly vendorCode: 'agent';
+
   constructor(readonly rpcCode?: number) {
-    super('DEVICE_ERROR', rpcCode === undefined ? 'The device agent gave no usable reply' : `The device agent returned error ${String(rpcCode)}`);
+    super('DEVICE_ERROR', rpcCode === undefined ? 'The device agent gave no usable reply' : `The device agent returned error ${String(rpcCode)}`,
+      { vendorCode: 'agent' });
     this.name = 'DeviceAgentError';
   }
 }

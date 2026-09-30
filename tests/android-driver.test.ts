@@ -6,10 +6,11 @@ import { join } from 'node:path';
 import { test } from 'node:test';
 import { isActOutcome, type AndroidAppIdentity, type DeviceDriver, type RunEvent, type Snapshot } from '../src/contracts/index.js';
 import { DeviceReasonError, StaleSnapshotError } from '../src/device/index.js';
-import { adbRunner, OutcomeUnknownError, type AdbResult, type AdbRunner } from '../src/device/android/adb.js';
+import { adbRunner, type AdbResult, type AdbRunner } from '../src/device/android/adb.js';
 import { DeviceAgentError, type DeviceAgentClient } from '../src/device/android/agent-client.js';
 import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
 import { AGENT_DEVICE_PATH, AGENT_START_COMMAND, AndroidDriver, type AndroidDriverOptions } from '../src/device/android/driver.js';
+import { OutcomeUnknownError } from '../src/device/android/ledger.js';
 import { mapAndroidTree, type AndroidTree } from '../src/device/android/mapping.js';
 import { screenHash, type Clock } from '../src/device/android/settle.js';
 import type { ScriptedJudge } from '../src/scripted/contracts.js';
@@ -274,7 +275,7 @@ const signal = () => new AbortController().signal;
 const reason = (code: string, vendorCode?: string) => (error: unknown) => {
   assert.ok(error instanceof DeviceReasonError, `a DeviceReasonError, not ${String(error)}`);
   assert.equal(error.code, code);
-  if (vendorCode) assert.equal((error as { vendorCode?: string }).vendorCode, vendorCode);
+  if (vendorCode) assert.equal(error.vendorCode, vendorCode);
   return true;
 };
 const lockFile = async (root: string) => {
