@@ -2,6 +2,39 @@
 
 jev-ios-bridge follows [semantic versioning](https://semver.org). What 1.x keeps stable: [stability](docs/guide/11-stability.md).
 
+## 1.2.0
+
+Android support. iOS scripts, messages and reports work as in 1.1.
+
+### Added
+
+- **Android apps.** A script with `"platform": "android"` names its app by `app.package`, and can add `app.activity` and `app.intentExtras` to open a known screen. It names the device with `device.avd` for an emulator or `device.serial`, or leaves that to `JEV_ANDROID_DEVICE`. You need the Android SDK's `adb` and Android 12 (API 31) or later. The guide's setup page is `docs/guide/12-android-setup.md`.
+- **Typed values on Android** may start with a hyphen and may be non-English text. Non-English text goes through the device clipboard, and the keyboard may keep it, so it shouldn't be a real secret. ASCII text never touches the clipboard.
+- **The device agent.** The bridge reads and drives an Android screen through its own copy of mobilecli's device agent, taken from the pinned `mobilecli` 1.0.14 package and checked against its SHA-256. It never runs mobilecli itself ([ADR-0006](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.2.0/docs/adr/0006-mobilecli-device-agent-as-android-device-layer.md)).
+- **One device lease for both platforms.** iOS and Android runs hold a device through the same lease, keyed by the device's identity. It lives in 1.1's lock folder, so bridges of any 1.x version keep out of each other's way. When a bridge crashed mid-run, the next run takes over its lease and first clears what it left behind: the device agent, the `adb` forward and the log streams.
+- **Another UI tool on the device** (mobile-mcp, mobilecli, Appium, `uiautomator`) makes an Android run refuse with `DEVICE_BUSY` before it touches the app. The bridge leaves that tool's agent running.
+- **Jev's view of an Android screen** is the iOS field set under its own header, recorded as the rule `android-full-text-v1`. An empty field shows its hint as `placeholder`, and a password field shows dots.
+- **The log pane on Android** shows the app's logcat, filtered to the app's uid. The `logs` command and the per-step log tails read the same file. A crash, kill or quit ends the run with `APP_EXITED`, a freeze with `APP_NOT_RESPONDING`, and the pane names the cause.
+- **`jev-ios-bridge capture`** prints the current Android screen as a run sees it: one JSON line per element, or Jev's text with `--jev`. It picks the device by `--serial`, then `--avd`, then `JEV_ANDROID_DEVICE`. It never launches or restarts the app, and needs no TypeSafe key. It exits 0 when it printed and 3 when it couldn't. Its flags, exit codes and named fields are stable; each element line may gain fields.
+- **`/test-android`,** a skill that writes and runs an Android script the way `/test-ios` does, looking at screens with `capture`. The plugin ships it as `/jev-ios-bridge:test-android`.
+- **An "Android device" plugin setting,** a serial or an AVD name, passed to the server as `JEV_ANDROID_DEVICE`. It's optional, and empty counts as unset.
+- **Reason codes:** `DEVICE_NOT_CONNECTED`, `DEVICE_AMBIGUOUS` (two running emulators share the AVD name), `DEVICE_UNAUTHORIZED`, `DEVICE_NOT_BOOTED`, `DEVICE_LOCKED`, `APP_NOT_INSTALLED`, `APP_NOT_RESPONDING`, `DEVICE_UNSUPPORTED` and `ANDROID_TOOLS_UNAVAILABLE`. See the [reason codes](docs/guide/reference/reason-codes.md). An iOS device-layer `APP_NOT_INSTALLED` still reports `DEVICE_ERROR` with that `vendorCode`, as in 1.1.
+- **Run log and report fields, on Android runs only:**
+  - `started` and `report.json`: `platform`, `package`, `activity` and `intentExtras`. `bundleId` is `null`.
+  - `prepared`: `deviceIdentity`, `serial`, `agentSha256`, `logSources.logcat`, and `sweptLeftovers: true` after a takeover.
+  - A replace-text `action` event: `shownValue`, what the field shows after typing. `report.json` lists them as `typedFields`.
+  - A `step` event: `settled: false` when the screen was still changing.
+
+### Changed
+
+- **`NO_DEVICE`, `INVALID_DEVICE` and `DEVICE_BUSY` are described for both platforms.** What each means is the same, and the iOS messages, `DEVICE_BUSY`'s "is locked by" included, are unchanged.
+- **`start_scenario`'s description and the CLI help name Android:** "an explicit iOS or Android action script", `JEV_ANDROID_DEVICE`, and `capture`.
+- **The plugin's "Simulator UDID" setting is optional,** so a plugin set up only for Android starts. The package and plugin descriptions say iOS and Android. The name stays `jev-ios-bridge` through 1.x.
+
+### Upgrading from 1.1
+
+Nothing to change for iOS scripts: they run and report as in 1.1. In the plugin, leave "Android device" empty if you only check iOS apps.
+
 ## 1.1.0
 
 ### Added
