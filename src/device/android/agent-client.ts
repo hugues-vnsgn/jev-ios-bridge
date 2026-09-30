@@ -41,6 +41,9 @@ export interface AndroidNode {
   children?: AndroidNode[] | null;
 }
 
+/** A system bar node's resource-id prefix: the settle rule leaves it out, and the mapping drops it. */
+export const STATUS_BAR_ID_PREFIX = 'com.android.systemui:';
+
 /** What one `device.dump.ui` call returns: the settle rule compares it and the mapping reads it. */
 export interface AndroidTree { hierarchy: AndroidNode[] }
 

@@ -47,7 +47,7 @@ test('an abort doesn\'t kill the child: the runner waits for it to exit, then th
   void pending.then(() => { ended = true; }, () => { ended = true; });
   const reason = new Error('cancelled');
   controller.abort(reason);
-  await new Promise(resolveTick => setTimeout(resolveTick, 10));
+  for (let turn = 0; turn < 5; turn++) await new Promise(resolveTurn => setImmediate(resolveTurn));
   assert.equal(ended, false, 'still waiting for the child');
   fake.child().exit(0, 'Status: ok\n');
   await assert.rejects(pending, (error: unknown) => error === reason);

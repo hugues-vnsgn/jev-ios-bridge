@@ -392,7 +392,7 @@ export class AndroidDriver implements DeviceDriver {
     }
     this.serial = serial;
     try {
-      const sweptLeftovers = await this.checkAgents(serial, identity, deadHolder, signal);
+      const sweptLeftovers = await this.checkAgents(serial, identity, deadHolder !== undefined, signal);
       await this.checkDevice(serial, app.package, signal);
       await this.restart(serial, app, signal);
       await this.startAgent(serial, identity, tools, signal);
@@ -524,10 +524,10 @@ export class AndroidDriver implements DeviceDriver {
    * The agent check and sweep (item 2, open point 22). A foreign agent refuses the run, untouched. Every
    * other agent is the bridge's own and, with this run holding the lease, can't belong to a live run: it is
    * killed by pid. With no agent left, this serial's agent forwards go too; a forward pointing elsewhere
-   * isn't an agent's, whatever a dead holder listed. True when a dead holder's takeover swept anything, listed
+   * isn't an agent's, whatever a dead holder listed. True when a takeover from a dead holder swept anything, listed
    * or not: a holder that crashed between starting its agent and recording its pid left an unlisted one.
    */
-  private async checkAgents(serial: string, identity: string, deadHolder: LeaseHolder | undefined, signal: AbortSignal): Promise<boolean> {
+  private async checkAgents(serial: string, identity: string, takenOver: boolean, signal: AbortSignal): Promise<boolean> {
     const agents = await this.agentsOn(serial, signal);
     if (agents.some(agent => !agent.own)) {
       throw foreignAgentFound(identity);
@@ -542,7 +542,7 @@ export class AndroidDriver implements DeviceDriver {
       await this.removeForward(serial, local, signal);
       swept = true;
     }
-    return swept && deadHolder !== undefined;
+    return swept && takenOver;
   }
 
   /**
