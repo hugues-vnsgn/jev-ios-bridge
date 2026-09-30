@@ -16,7 +16,7 @@ import { DeviceCliError } from '../src/device/index.js';
 import { createRunLog } from '../src/log/index.js';
 import type { ScriptedJudge } from '../src/scripted/contracts.js';
 import { REPORT_VERSION } from '../src/scripted/report-json.js';
-import { SCRIPT_VERSION, scriptedScenarioSchema } from '../src/scripted/schema.js';
+import { SCRIPT_VERSION, safeParseScriptedScenario } from '../src/scripted/schema.js';
 import { REASON_CODES, ROLES } from '../src/scripted/vocabulary.js';
 import { BridgeService } from '../src/service.js';
 
@@ -140,11 +140,25 @@ const scriptCases: Record<string, unknown> = {
   androidTooManyValues: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
     device: { serial: 'emulator-5554' },
     values: Object.fromEntries(Array.from({ length: 33 }, (_, index) => [`k${index}`, 'v'])), steps: [checkpoint] },
+  // The owner ruling (2026-09-30): these pin the exact iOS multi-error examples a review found differed
+  // from 1.1 under "one object schema plus a platform-aware refinement" (issues lost, reordered, or a new
+  // one appearing). tests/scripted-schema-parity.test.ts checks this holds generally, not just these five.
+  nonAsciiValuePlusUnknownRole: { ...validScript, values: { query: 'Đà Nẵng' },
+    steps: [{ ...checkpoint, guard: { present: [{ role: 'StaticText', label: 'Marker' }] } }] },
+  leadingHyphenPlusMissingVersion: { app: validScript.app, values: { query: '-Berlin' }, steps: [checkpoint] },
+  missingBundleIdPlusBadRole: { version: 1, app: {}, values: {},
+    steps: [{ ...checkpoint, guard: { present: [{ role: 'StaticText', label: 'Marker' }] } }] },
+  missingBundleIdPlusDuplicateStepIds: { version: 1, app: {}, values: {}, steps: [checkpoint, checkpoint] },
+  missingBundleIdPlusBadUdid: { version: 1, app: {}, device: { udid: 'not-a-udid' }, values: {}, steps: [checkpoint] },
+  missingBundleIdPlusValueTooLong: { version: 1, app: {}, values: { query: 'x'.repeat(2049) }, steps: [checkpoint] },
+  // A script whose platform is neither "ios" nor "android" routes to the iOS schema (anything but exactly
+  // "android" does), which then reports its own platform mismatch.
+  unknownPlatform: { ...validScript, platform: 'windows' },
 };
 
 test('contract: accepted and rejected scripts, with exact messages', async () => {
   const results = Object.fromEntries(Object.entries(scriptCases).map(([name, input]) => {
-    const parsed = scriptedScenarioSchema.safeParse(input);
+    const parsed = safeParseScriptedScenario(input);
     return [name, parsed.success ? { accepted: true }
       : { accepted: false, issues: parsed.error.issues.map(issue => ({ path: issue.path.join('.'), message: issue.message })) }];
   }));

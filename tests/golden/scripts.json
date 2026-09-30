@@ -234,8 +234,8 @@
     "accepted": false,
     "issues": [
       {
-        "path": "app.package",
-        "message": "app.package requires \"platform\": \"android\""
+        "path": "app",
+        "message": "Unrecognized key: \"package\""
       }
     ]
   },
@@ -243,8 +243,8 @@
     "accepted": false,
     "issues": [
       {
-        "path": "device.serial",
-        "message": "device.serial requires \"platform\": \"android\""
+        "path": "device",
+        "message": "Unrecognized key: \"serial\""
       }
     ]
   },
@@ -334,6 +334,89 @@
       {
         "path": "values",
         "message": "A script may supply at most 32 typed values"
+      }
+    ]
+  },
+  "nonAsciiValuePlusUnknownRole": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "values.query",
+        "message": "Typed values must use printable US keyboard characters"
+      },
+      {
+        "path": "steps.0.guard.present.0.role",
+        "message": "role must be one of: application, window, button, keyboard-key, text-field, menu, text, image, switch, slider, cell, scroll-view, list, tab, other"
+      }
+    ]
+  },
+  "leadingHyphenPlusMissingVersion": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "version",
+        "message": "Add \"version\": 1 to the script; this bridge reads script format version 1"
+      },
+      {
+        "path": "values",
+        "message": "MobileBuildMCP 2.7.1 cannot type text starting with a leading hyphen"
+      }
+    ]
+  },
+  "missingBundleIdPlusBadRole": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.bundleId",
+        "message": "Invalid input: expected string, received undefined"
+      },
+      {
+        "path": "steps.0.guard.present.0.role",
+        "message": "role must be one of: application, window, button, keyboard-key, text-field, menu, text, image, switch, slider, cell, scroll-view, list, tab, other"
+      }
+    ]
+  },
+  "missingBundleIdPlusDuplicateStepIds": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.bundleId",
+        "message": "Invalid input: expected string, received undefined"
+      }
+    ]
+  },
+  "missingBundleIdPlusBadUdid": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.bundleId",
+        "message": "Invalid input: expected string, received undefined"
+      },
+      {
+        "path": "device.udid",
+        "message": "Invalid string: must match pattern /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/"
+      }
+    ]
+  },
+  "missingBundleIdPlusValueTooLong": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.bundleId",
+        "message": "Invalid input: expected string, received undefined"
+      },
+      {
+        "path": "values.query",
+        "message": "Too big: expected string to have <=2048 characters"
+      }
+    ]
+  },
+  "unknownPlatform": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "platform",
+        "message": "Invalid input: expected \"ios\""
       }
     ]
   }
