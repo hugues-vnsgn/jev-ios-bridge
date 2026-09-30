@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { TypeSafeClient } from '@typesafe-ai/sdk';
 import type { Assertion, Snapshot } from '../src/contracts/index.js';
 import { buildAssertionRequest, createAssertionJudge, parseAssertionResult, ScriptedJevError } from '../src/scripted/jev.js';
-import { renderAssertionState, ScriptedObservationError } from '../src/scripted/observe.js';
+import { ANDROID_PROJECTION_RULE, PROJECTION_RULE, renderAssertionState, ScriptedObservationError } from '../src/scripted/observe.js';
 
 const assertions: Assertion[] = [
   { id: 'a', claim: 'The saved card visibly shows Berlin.' },
@@ -34,6 +34,11 @@ test('assertion projection keeps visible evidence and excludes screenshot, refs,
     (error: unknown) => error instanceof ScriptedObservationError && error.code === 'TRUNCATED');
   assert.throws(() => renderAssertionState({ ...snapshot, elements: [{ ref: 'e6', role: 'text', label: 'x'.repeat(25_000), actions: [] }] }),
     (error: unknown) => error instanceof ScriptedObservationError && error.code === 'STATE_BUDGET');
+});
+
+test('the Android projection rule is a fixed name beside the iOS rule', () => {
+  assert.equal(PROJECTION_RULE, 'visible-full-text-v2');
+  assert.equal(ANDROID_PROJECTION_RULE, 'android-full-text-v1');
 });
 
 test('the platform parameter defaults to iOS and picks the header per platform', () => {

@@ -7,6 +7,8 @@ export const MAX_STATE_BYTES = 24_000;
  * rejected there, because they made Jev confidently call a field with withheld content empty.
  */
 export const PROJECTION_RULE = 'visible-full-text-v2' as const;
+/** The Android counterpart to `PROJECTION_RULE`: the iOS field set, plus `placeholder` in place of `label`. */
+export const ANDROID_PROJECTION_RULE = 'android-full-text-v1' as const;
 
 export class ScriptedObservationError extends Error {
   constructor(readonly code: 'TRUNCATED' | 'EMPTY_SCREEN' | 'STATE_BUDGET') {
