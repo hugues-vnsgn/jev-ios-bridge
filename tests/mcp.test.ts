@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { createInterface } from 'node:readline';
+import { openMcpSession } from './fixtures/mcp-session.js';
 
 test('stdio server negotiates and exposes start/report/cancel without a key', { timeout: 10_000 }, async () => {
   const env = { ...process.env }; delete env.TYPESAFE_API_KEY;
@@ -66,14 +67,6 @@ test('running MCP reports hide screen evidence and bounded waiting returns the f
 });
 
 test('start_scenario rejects an invalid iOS script with the same validation text as 1.1', { timeout: 10_000 }, async () => {
-  const { mkdtemp, rm } = await import('node:fs/promises'); const { tmpdir } = await import('node:os'); const { join } = await import('node:path');
-  const root = await mkdtemp(join(tmpdir(), 'jev-mcp-ios-errors-'));
-  const child = spawn(process.execPath, ['--import', 'tsx', 'tests/fixtures/mcp-server.ts', root], { stdio: ['pipe', 'pipe', 'pipe'] });
-  const pending = new Map<number, (value: any) => void>(); const lines = createInterface({ input: child.stdout });
-  lines.on('line', line => { const value = JSON.parse(line); pending.get(value.id)?.(value); pending.delete(value.id); });
-  const request = (id: number, method: string, params: object = {}) => new Promise<any>(done => {
-    pending.set(id, done); child.stdin.write(JSON.stringify({ jsonrpc: '2.0', id, method, params }) + '\n');
-  });
   const checkpoint = { id: 'verify', kind: 'checkpoint', guard: { present: [{ role: 'text', label: 'Marker' }] },
     assertions: [{ id: 'shown', claim: 'Marker visible' }] };
   const tap = { id: 'open', kind: 'action', guard: { present: [{ role: 'text', label: 'Marker' }] },
@@ -97,18 +90,11 @@ test('start_scenario rejects an invalid iOS script with the same validation text
       '/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/, ' +
       'scenario.values.q: Typed values must use printable US keyboard characters'],
   ];
+  const session = await openMcpSession('ios-errors');
   try {
-    await request(1, 'initialize', { protocolVersion: '2025-03-26', capabilities: {}, clientInfo: { name: 'ios-errors', version: '1' } });
-    child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' }) + '\n');
-    let id = 2;
     for (const [name, scenario, expected] of cases) {
-      const reply = await request(id++, 'tools/call', { name: 'start_scenario', arguments: { scenario } });
-      assert.deepEqual(reply.result, { content: [{ type: 'text', text: prefix + expected }], isError: true }, name);
+      assert.deepEqual(await session.callTool('start_scenario', { scenario }),
+        { content: [{ type: 'text', text: prefix + expected }], isError: true }, name);
     }
-  } finally {
-    const exited = child.exitCode !== null ? Promise.resolve() : new Promise<void>(done => child.once('exit', () => done()));
-    child.stdin.end(); lines.close();
-    const timer = setTimeout(() => child.kill('SIGTERM'), 5000); await exited; clearTimeout(timer);
-    await rm(root, { recursive: true, force: true });
-  }
+  } finally { await session.close(); }
 });
