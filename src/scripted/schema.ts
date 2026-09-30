@@ -177,9 +177,9 @@ export const androidScriptedScenarioSchema = z.strictObject({
   checkSteps(scenario, context);
 });
 
-// ---------- Merged: structure only, to generate the MCP tool's input schema (owner decision A) ----------
+// ---------- Both platforms' fields in one object, used only to describe the MCP tool's input ----------
 
-export const scriptedScenarioSchema = z.strictObject({
+const scriptedScenarioStructure = z.strictObject({
   version: versionSchema,
   platform: z.enum(PLATFORMS).optional(),
   app: z.strictObject({
@@ -202,6 +202,8 @@ export const scriptedScenarioSchema = z.strictObject({
     .refine(values => Object.keys(values).length <= 32, 'A script may supply at most 32 typed values'),
   steps: stepsSchema,
 });
+
+const { $schema: _dialect, ...scriptedScenarioJsonSchema } = z.toJSONSchema(scriptedScenarioStructure, { io: 'input' });
 
 function withoutUndefined(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(withoutUndefined);
@@ -229,3 +231,13 @@ export function safeParseScriptedScenario(input: unknown) {
   return platformOf(input) === 'android' ? androidScriptedScenarioSchema.safeParse(input)
     : iosScriptedScenarioSchema.safeParse(input);
 }
+
+/**
+ * A script, validated exactly as {@link safeParseScriptedScenario} does, with the same issues at the same
+ * paths. Its JSON Schema lists both platforms' fields in one object, since a JSON Schema can't express
+ * the per-platform rules; the MCP tool publishes that and validates with this.
+ */
+export const scriptedScenarioSchema = z.unknown().superRefine((input, context) => {
+  const parsed = safeParseScriptedScenario(input);
+  if (!parsed.success) for (const issue of parsed.error.issues) context.addIssue({ ...issue });
+}).meta(scriptedScenarioJsonSchema);

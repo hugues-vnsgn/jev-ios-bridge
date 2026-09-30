@@ -64,3 +64,51 @@ test('running MCP reports hide screen evidence and bounded waiting returns the f
     await rm(root,{recursive:true,force:true});
   }
 });
+
+test('start_scenario rejects an invalid iOS script with the same validation text as 1.1', { timeout: 10_000 }, async () => {
+  const { mkdtemp, rm } = await import('node:fs/promises'); const { tmpdir } = await import('node:os'); const { join } = await import('node:path');
+  const root = await mkdtemp(join(tmpdir(), 'jev-mcp-ios-errors-'));
+  const child = spawn(process.execPath, ['--import', 'tsx', 'tests/fixtures/mcp-server.ts', root], { stdio: ['pipe', 'pipe', 'pipe'] });
+  const pending = new Map<number, (value: any) => void>(); const lines = createInterface({ input: child.stdout });
+  lines.on('line', line => { const value = JSON.parse(line); pending.get(value.id)?.(value); pending.delete(value.id); });
+  const request = (id: number, method: string, params: object = {}) => new Promise<any>(done => {
+    pending.set(id, done); child.stdin.write(JSON.stringify({ jsonrpc: '2.0', id, method, params }) + '\n');
+  });
+  const checkpoint = { id: 'verify', kind: 'checkpoint', guard: { present: [{ role: 'text', label: 'Marker' }] },
+    assertions: [{ id: 'shown', claim: 'Marker visible' }] };
+  const tap = { id: 'open', kind: 'action', guard: { present: [{ role: 'text', label: 'Marker' }] },
+    action: { kind: 'tap', selector: { role: 'text', label: 'Marker' } } };
+  const script = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [checkpoint] };
+  const prefix = 'Input validation error: Invalid arguments for tool start_scenario: ';
+  // Each expected text is what the 1.1 server (commit 819ea10) returned for the same input.
+  const cases: [string, object, string][] = [
+    ['a non-ASCII typed value', { ...script, values: { q: 'Đà Nẵng' } },
+      'scenario.values.q: Typed values must use printable US keyboard characters'],
+    ['a missing bundle ID', { ...script, app: {} },
+      'scenario.app.bundleId: Invalid input: expected string, received undefined'],
+    ['a script ending at an action', { ...script, steps: [checkpoint, tap] },
+      'scenario.steps: A script must end at an assertion checkpoint'],
+    ['duplicate step IDs', { ...script, steps: [checkpoint, checkpoint] },
+      'scenario.steps.1.id: Step IDs must be unique'],
+    ['an Android app.package on an iOS script', { ...script, app: { bundleId: 'com.example.app', package: 'com.example.android' } },
+      'scenario.app: Unrecognized key: "package"'],
+    ['a bad udid and a non-ASCII typed value', { ...script, device: { udid: 'not-a-udid' }, values: { q: 'Đà Nẵng' } },
+      'scenario.device.udid: Invalid string: must match pattern ' +
+      '/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/, ' +
+      'scenario.values.q: Typed values must use printable US keyboard characters'],
+  ];
+  try {
+    await request(1, 'initialize', { protocolVersion: '2025-03-26', capabilities: {}, clientInfo: { name: 'ios-errors', version: '1' } });
+    child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' }) + '\n');
+    let id = 2;
+    for (const [name, scenario, expected] of cases) {
+      const reply = await request(id++, 'tools/call', { name: 'start_scenario', arguments: { scenario } });
+      assert.deepEqual(reply.result, { content: [{ type: 'text', text: prefix + expected }], isError: true }, name);
+    }
+  } finally {
+    const exited = child.exitCode !== null ? Promise.resolve() : new Promise<void>(done => child.once('exit', () => done()));
+    child.stdin.end(); lines.close();
+    const timer = setTimeout(() => child.kill('SIGTERM'), 5000); await exited; clearTimeout(timer);
+    await rm(root, { recursive: true, force: true });
+  }
+});
