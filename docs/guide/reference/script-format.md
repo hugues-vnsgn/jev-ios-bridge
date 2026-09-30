@@ -11,7 +11,7 @@ A script is one JSON object. Unknown fields are rejected, and so are scripts wit
 | `app` | yes | object | See below. Its allowed fields depend on `platform`. |
 | `device` | no | object | See below. Its allowed fields depend on `platform`. |
 | `preconditions` | no | array of strings | Up to 20, each 1–500 characters. Describes setup you arranged. It isn't executed. |
-| `values` | yes | object: key → string | Literals to type. Up to 32; each value at most 2048 characters. Keys start with a letter, then letters, digits, `_`, or `-` (up to 64 characters). Use `{}` when there's nothing to type. On iOS, values must be printable US-keyboard characters and none may start with `-`. On Android, values may be any Unicode text except control characters, and a leading `-` is allowed. |
+| `values` | yes | object: key → string | Literals to type. Up to 32; each value at most 2048 characters (UTF-16 code units, so on Android an emoji or other character outside the Basic Multilingual Plane counts as two). Keys start with a letter, then letters, digits, `_`, or `-` (up to 64 characters). Use `{}` when there's nothing to type. On iOS, values must be printable US-keyboard characters and none may start with `-`. On Android, values may be any Unicode text except control characters, and a leading `-` is allowed. |
 | `steps` | yes | array | 1–100 steps with unique `id`s. The last one must be a `checkpoint`. |
 
 ## `app`

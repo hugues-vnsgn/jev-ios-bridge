@@ -43,3 +43,8 @@ test('the script-format reference documents platform and the Android app/device 
     assert.ok(page.includes(`\`${field}\``), `script-format.md does not document ${field}`);
   }
 });
+
+test('the script-format reference says the 2048-character typed-value limit counts UTF-16 code units', () => {
+  const page = readFileSync('docs/guide/reference/script-format.md', 'utf8');
+  assert.match(page, /2048 characters \(UTF-16 code units/);
+});
