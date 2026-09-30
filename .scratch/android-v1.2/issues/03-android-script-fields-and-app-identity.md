@@ -1,6 +1,7 @@
 # Phase 3: Android script fields and the app's identity
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase3 at a849609 (after an Opus takeover)
 Claimed by: implementer-03
 Blocked by: none
 
