@@ -77,3 +77,55 @@ Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase
     already proved. `tests/device.test.ts` now asserts the MobileBuildMCP driver's full refusal message
     instead of a loose `/iOS/` regex.
   - `npm run check` passes (typecheck, 200 tests, build) at the new branch tip.
+
+- 2026-09-30, implementer-03: review round 2 fixes, under the owner ruling recorded the same day on the
+  feature branch at 3d5f0b6 (release spec item 1, this Issue's item 2, and the tracker spec's Rulings):
+  scripts are now parsed by platform, not by one object schema plus a platform-aware refinement. Zod skips
+  a refinement once the base object has already failed, so that design quietly changed 1.1's issue list for
+  an iOS script with several errors; a review found 189 of 697 multi-error iOS inputs printed differently.
+  - **Correction to round 1's comment above:** it said `tests/service.test.ts` "only gained new tests, no
+    existing assertions changed." That became false partway through round 1/2: the `createDriver builds a
+    driver per run…` test (existing since 819ea10) was edited to route `scenario.app.bundleId` through
+    `isIosApp`. This round restores that test, and `tests/scripted-schema.test.ts`'s UUID-shape assertion
+    (also edited in round 2), to their exact 819ea10 text; `git diff 819ea10 -- tests/` now shows only added
+    lines in both files, plus the two sanctioned `tests/logpane.test.ts` calls elsewhere.
+  - `src/scripted/schema.ts` now has three schemas: `iosScriptedScenarioSchema` (a byte-for-byte copy of
+    the schema frozen at commit 819ea10, plus an optional literal `platform: "ios"`), `androidScriptedScenarioSchema`
+    (Android's own schema, carrying forward this Issue's existing field rules and messages), and
+    `scriptedScenarioSchema` (structurally unchanged, kept solely to generate the MCP tool's input schema;
+    its now-pointless `superRefine` was dropped, which doesn't move `tests/golden/mcp.json` — a refinement
+    was never reflected in a generated JSON Schema). `parseScriptedScenario`/`safeParseScriptedScenario`
+    read the raw input's own `platform` field to route between the two real schemas: anything but the exact
+    string `"android"` goes to iOS, whose schema then reports its own mismatch when `platform` is neither
+    absent, `"ios"`, nor `"android"` (pinned by golden `unknownPlatform`).
+  - Added `tests/scripted-schema-parity.test.ts` plus a frozen copy of `schema.ts`/`contracts.ts`/
+    `vocabulary.ts` at 819ea10 under `tests/fixtures/frozen-schema-819ea10/`. It generates every single
+    fault, and every pair and triple, of 17 ways an iOS script can be wrong (833 scripts) and asserts the
+    live iOS schema's issue list matches the frozen one exactly, for every one of them.
+  - Pinned the review's five example combinations as new `scripts.json` goldens (`nonAsciiValuePlusUnknownRole`,
+    `leadingHyphenPlusMissingVersion`, `missingBundleIdPlusBadRole`, `missingBundleIdPlusDuplicateStepIds`,
+    `missingBundleIdPlusBadUdid`, `missingBundleIdPlusValueTooLong`), verified byte-for-byte against the
+    frozen 819ea10 schema before pinning.
+  - Two existing Android goldens' messages legitimately changed, because Android fields are no longer
+    declared on the iOS schema at all (previously a platform-aware refinement caught them post-hoc with a
+    friendlier message): `iosScriptUsesAndroidPackage` and `iosScriptUsesAndroidSerial` now read
+    `"Unrecognized key: \"package\""` / `"\"serial\""` at path `app` / `device`, zod's own strict-object
+    message, instead of `"app.package requires \"platform\": \"android\""` / the `device.serial` equivalent.
+    Every other existing Android golden (rejected fields, both device-name patterns, limits, `app.activity`)
+    holds unchanged, since `androidScriptedScenarioSchema` still declares `bundleId`/`launchArgs`/`udid` as
+    optional-but-flagged fields specifically so those keep their friendly custom messages.
+  - `ScriptedScenario.app`/`device` go back to one flat field shape shared by both platform variants
+    (`bundleId: string` always, `package`/`activity`/`intentExtras` always optional; `udid`/`serial`/`avd`
+    all optional), so `script.app.bundleId` and `parsed.device?.udid` typecheck without narrowing, as they
+    did before Android existed. `src/scripted/schema.ts` is what actually enforces each platform's fields;
+    this type no longer tries to. `src/cli.ts` and `prepareContext()` (`src/scripted/run.ts`) revert to their
+    pre-Android form for the same reason; the one place that still needs the platform for a real value, not
+    just a type, is the `started` event's `bundleId` (`null` on Android runs), narrowed once into a local
+    instead of calling `isIosApp` twice in one object literal.
+  - Moved the `isIosApp(app) ? app.bundleId : app.package` pattern (previously the log pane's private
+    `appLabel`, and repeated in this round's now-reverted service.test.ts edit) into one `appLabel` export
+    beside the app identity types in `src/contracts/index.ts`, reused by the log pane.
+  - Removed the tracker citations from `src/cli.ts` and `src/scripted/run.ts` ("phase 4", "a later phase's
+    job/addition"); both spots that needed a comment now say what the code does in plain words, or need
+    none now that the platform branching they explained is gone.
+  - `npm run check` passes (typecheck, 201 tests, build) at the new branch tip.
