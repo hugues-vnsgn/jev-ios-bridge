@@ -9,7 +9,9 @@ Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase
 ## What to build
 
 1. **Script fields** (`src/scripted/schema.ts`, `src/scripted/contracts.ts`), exactly as item 1 lists: the optional top-level `platform`; for Android, `app.package` (required), `app.activity`, `app.intentExtras`, and `device.serial` or `device.avd` (at most one, with open point 20's patterns: serial `^[A-Za-z0-9._:-]{1,100}$`, AVD `^[A-Za-z0-9._-]{1,100}$`); the rejected fields (`app.bundleId`, `app.launchArgs` with a message pointing to `app.intentExtras`, `device.udid`); Android typed values under open point 2 (any Unicode text except control characters, a leading `-` allowed, the same size limits). An iOS script (no `platform`, or `"ios"`) that uses an Android field is rejected.
-2. **The schema's shape** as item 1 says: one object schema, `app.bundleId` optional in the object, the ASCII pattern off `values`, the new fields optional, and a platform-aware refinement that emits today's iOS messages at today's paths. The `mcp.json` diff is exactly the one item 1 lists (owner decision A), and nothing else in that file moves.
+2. **The schema's shape**, parsed by platform: an iOS script goes through the 1.1 schema unchanged apart from an optional `platform: "ios"`, so every iOS input, including one with several errors, gets exactly 1.1's messages, paths and order. An Android script goes through its own schema. One merged object schema exists only to generate the MCP input schema, and the `mcp.json` diff is exactly the one item 1 lists (owner decision A). Nothing else in that file moves.
+
+   2026-09-30, owner ruling: this replaces "one object schema plus a platform-aware refinement", which changed 1.1's output for iOS scripts with several errors.
 3. **The app's identity in code** (moved from phase 2 item 6): reshape `ScenarioContext.app` once, as an iOS or Android identity (bundle ID and launch arguments, or package, activity and intent extras). Existing tests that build `app: { bundleId }` keep compiling unchanged. `startLogStream` takes the app's identity (`app`) instead of `bundleId`; per the owner's ruling, the two calls in `tests/logpane.test.ts` (lines 45 and 70) change to `app: { bundleId: 'com.example.app' }`, and that's the only change to that file. `BridgeService` and the MobileBuildMCP driver read the iOS identity from the reshaped type. The script field, `run.jsonl` and `report.json` keep `bundleId`, byte for byte.
 4. **Golden entries** (item 8): accepted and rejected Android scripts in `scripts.json` with exact messages and paths, covering every rejected-field case in item 1, both device-name patterns, the serial-and-AVD conflict, and an iOS script that uses an Android field; the `mcp.json` input-schema diff.
 5. **Docs** (item 9): `docs/guide/reference/script-format.md` documents the new fields, enough for `tests/docs.test.ts`. The full docs come in phase 7.
@@ -18,7 +20,9 @@ Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase
 
 - Every existing `scripts.json` entry gives the same message at the same path. If one moves, fix the schema, not the golden file.
 - `mcp.json` changes only as item 1 describes.
-- No existing test changes except the two `tests/logpane.test.ts` calls.
+- No existing test changes except the two `tests/logpane.test.ts` calls and `tests/service.test.ts:134` (`built.push(appLabel(scenario.app))`).
+
+  2026-09-30, owner ruling: `tests/service.test.ts:134` may change, so `ScriptedScenario` can type Android scripts truthfully.
 - `npm run check` passes.
 - No device, simulator or emulator is touched.
 

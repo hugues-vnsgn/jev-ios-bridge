@@ -3,7 +3,7 @@ import { createRequire } from 'node:module';
 import { readFile } from 'node:fs/promises';
 import { isAbsolute, join, resolve } from 'node:path';
 import { isIosApp, type Action, type ActionScenarioContext, type DeviceDriver, type DeviceMetrics, type Element, type PrepareScenarioContext, type Snapshot, type TapAliasRule } from '../contracts/index.js';
-import { ROLES, type Role } from '../scripted/vocabulary.js';
+import { ROLES, type ReasonCode, type Role } from '../scripted/vocabulary.js';
 import { DeviceLease, DeviceLeaseBusyError } from './lease.js';
 import { readLogTail } from './logs.js';
 
@@ -46,6 +46,18 @@ export class DeviceCliError extends Error {
   constructor(readonly code: string, message: string, readonly terminalAcknowledged = false) {
     super(message);
     this.name = 'DeviceCliError';
+  }
+}
+
+/**
+ * A bridge-owned reason code raised directly by a device driver that knows the bridge's vocabulary
+ * (for example the Android driver), skipping the vendor-code translation `DeviceCliError` needs.
+ * `failureOf` (`src/scripted/run.ts`) passes its code through unconditionally.
+ */
+export class DeviceReasonError extends Error {
+  constructor(readonly code: ReasonCode, message: string) {
+    super(message);
+    this.name = 'DeviceReasonError';
   }
 }
 
