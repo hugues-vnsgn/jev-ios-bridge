@@ -1,6 +1,7 @@
 # Phase 3: fix whole-branch review findings
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: implementer-08
 Blocked by: none
 
 Spec: [../spec.md](../spec.md), "Phase 3", and its Rulings. This fixes findings from the whole-branch review of `agent/android-v1.2-phase3` (Issues 03 to 07 merged, tip 497c6db). The work is on the feature branch itself.
