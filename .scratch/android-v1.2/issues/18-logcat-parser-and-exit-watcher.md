@@ -1,6 +1,7 @@
 # Phase 5: the logcat line parser and the app-exit watcher
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: claude-issue-18
 Blocked by: none
 
 Spec: [../spec.md](../spec.md), "Phase 5". The work is [the release spec's phase 5](../../android-support/release-spec.md#phase-5-the-log-pane-and-app-exit-detection-log-pane-and-app-exit-detection-on-android-where-android-plugs-into-the-code-item-7) items 2 (the parser), 4 (the watcher), 6 (reason codes and notes) and 7 (tests). The measurements are in [the log pane findings](../../android-support/findings/06-log-pane.md), and the prototypes are `logcat-line.mjs` and `exit-watch.mjs` in `../../android-support/findings/06-assets/`. Read them in full. The detail below only adds acceptance criteria and fixes the watcher's shape, which Issues 19 and 20 rely on.
