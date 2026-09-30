@@ -1,6 +1,7 @@
 # Phase 5: the logcat streams in the Android driver
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase5 at c38fcef
 Claimed by: claude-issue-19
 Blocked by: none
 
@@ -141,3 +142,7 @@ Issue 18 is built in parallel and owns `src/logpane/format.ts` and `src/device/a
   - a `runScriptedScenario` run that passes, with `prepared.logSources.logcat` and a redacted step tail.
 
 **Gate:** `npm run check` passed, 453 of 453 tests, at `7b75c25`. No device was touched.
+
+### 2026-09-30, coordinator: accepted
+
+Accepted, including the `logFolder: false` test option (phase 4's exact `adb` call list stays unchanged) and the sweep order (a crashed run's streams go before the foreign-agent check). For Issue 20: the driver takes a `runId` option, and `BridgeService` creates the driver before it makes the run ID, so that order must change to pass the real one. The events stream runs with its lines dropped until Issue 20 wires in the watcher.
