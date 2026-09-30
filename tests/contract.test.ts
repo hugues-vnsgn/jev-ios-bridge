@@ -19,6 +19,7 @@ import { REPORT_VERSION } from '../src/scripted/report-json.js';
 import { SCRIPT_VERSION, scriptedScenarioSchema } from '../src/scripted/schema.js';
 import { REASON_CODES, ROLES } from '../src/scripted/vocabulary.js';
 import { BridgeService } from '../src/service.js';
+import { openMcpSession } from './fixtures/mcp-session.js';
 
 const execute = promisify(execFile);
 const goldenDir = join(import.meta.dirname, 'golden');
@@ -89,6 +90,70 @@ const scriptCases: Record<string, unknown> = {
   emptyLaunchArg: { ...validScript, app: { bundleId: 'com.example.app', launchArgs: [''] } },
   legacyGoalForm: { version: 1, goal: 'Open settings', app: validScript.app, values: {},
     assertions: [{ id: 'shown', claim: 'Settings are open.' }] },
+  androidWithSerial: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint] },
+  androidWithAvd: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    device: { avd: 'jev-actions-api31' }, values: {}, steps: [checkpoint] },
+  androidWithActivityAndIntentExtras: { version: 1, platform: 'android',
+    app: { package: 'com.hugues.test_cmp', activity: '.DebugGalleryActivity', intentExtras: { screen: 'gallery' } },
+    device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint] },
+  androidTypedValues: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    device: { serial: 'emulator-5554' }, values: { query: '-Đà Nẵng' }, steps: [checkpoint] },
+  androidRejectsBundleId: { version: 1, platform: 'android', app: { bundleId: 'com.example.app' },
+    device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint] },
+  androidRejectsLaunchArgs: { version: 1, platform: 'android',
+    app: { package: 'com.hugues.test_cmp', launchArgs: ['-of-evidence-gallery'] },
+    device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint] },
+  androidRejectsDeviceUdid: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    device: { udid: '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7' }, values: {}, steps: [checkpoint] },
+  androidMissingPackage: { version: 1, platform: 'android', app: {},
+    device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint] },
+  androidDeviceConflict: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    device: { serial: 'emulator-5554', avd: 'jev-actions-api31' }, values: {}, steps: [checkpoint] },
+  androidInvalidSerial: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    device: { serial: 'has a space' }, values: {}, steps: [checkpoint] },
+  androidInvalidAvd: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    device: { avd: 'has a space' }, values: {}, steps: [checkpoint] },
+  androidControlCharacterValue: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    device: { serial: 'emulator-5554' }, values: { query: 'a\u0007b' }, steps: [checkpoint] },
+  iosScriptUsesAndroidPackage: { ...validScript, app: { bundleId: 'com.example.app', package: 'com.hugues.test_cmp' } },
+  iosScriptUsesAndroidSerial: { ...validScript, device: { serial: 'emulator-5554' } },
+  missingBundleId: { version: 1, app: {}, values: {}, steps: [checkpoint] },
+  iosMultipleErrors: { version: 1, app: { bundleId: 'not valid!!' }, values: { query: 'Đà Nẵng' },
+    steps: [checkpoint, checkpoint] },
+  androidActivityBareName: { version: 1, platform: 'android',
+    app: { package: 'com.hugues.test_cmp', activity: 'MainActivity' },
+    device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint] },
+  androidMalformedPackage: { version: 1, platform: 'android', app: { package: 'nodots' },
+    device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint] },
+  androidTooManyIntentExtras: { version: 1, platform: 'android',
+    app: { package: 'com.hugues.test_cmp',
+      intentExtras: Object.fromEntries(Array.from({ length: 21 }, (_, index) => [`k${index}`, 'v'])) },
+    device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint] },
+  androidNonAsciiIntentExtraValue: { version: 1, platform: 'android',
+    app: { package: 'com.hugues.test_cmp', intentExtras: { screen: 'Đà Nẵng' } },
+    device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint] },
+  androidIntentExtraValueTooLong: { version: 1, platform: 'android',
+    app: { package: 'com.hugues.test_cmp', intentExtras: { screen: 'x'.repeat(201) } },
+    device: { serial: 'emulator-5554' }, values: {}, steps: [checkpoint] },
+  androidValueTooLong: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    device: { serial: 'emulator-5554' }, values: { query: 'x'.repeat(2049) }, steps: [checkpoint] },
+  androidTooManyValues: { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
+    device: { serial: 'emulator-5554' },
+    values: Object.fromEntries(Array.from({ length: 33 }, (_, index) => [`k${index}`, 'v'])), steps: [checkpoint] },
+  // iOS scripts with several errors at once: each gives 1.1's issues, in 1.1's order.
+  // tests/scripted-schema-parity.test.ts checks this across many more combinations.
+  nonAsciiValuePlusUnknownRole: { ...validScript, values: { query: 'Đà Nẵng' },
+    steps: [{ ...checkpoint, guard: { present: [{ role: 'StaticText', label: 'Marker' }] } }] },
+  leadingHyphenPlusMissingVersion: { app: validScript.app, values: { query: '-Berlin' }, steps: [checkpoint] },
+  missingBundleIdPlusBadRole: { version: 1, app: {}, values: {},
+    steps: [{ ...checkpoint, guard: { present: [{ role: 'StaticText', label: 'Marker' }] } }] },
+  missingBundleIdPlusDuplicateStepIds: { version: 1, app: {}, values: {}, steps: [checkpoint, checkpoint] },
+  missingBundleIdPlusBadUdid: { version: 1, app: {}, device: { udid: 'not-a-udid' }, values: {}, steps: [checkpoint] },
+  missingBundleIdPlusValueTooLong: { version: 1, app: {}, values: { query: 'x'.repeat(2049) }, steps: [checkpoint] },
+  // A script whose platform is neither "ios" nor "android" routes to the iOS schema (anything but exactly
+  // "android" does), which then reports its own platform mismatch.
+  unknownPlatform: { ...validScript, platform: 'windows' },
 };
 
 test('contract: accepted and rejected scripts, with exact messages', async () => {
@@ -98,6 +163,20 @@ test('contract: accepted and rejected scripts, with exact messages', async () =>
       : { accepted: false, issues: parsed.error.issues.map(issue => ({ path: issue.path.join('.'), message: issue.message })) }];
   }));
   await golden('scripts', results);
+});
+
+test('contract: start_scenario accepts every script the scripts golden accepts, iOS and Android', { timeout: 15_000 }, async () => {
+  const accepted = Object.entries(JSON.parse(await readFile(join(goldenDir, 'scripts.json'), 'utf8')) as
+    Record<string, { accepted: boolean }>).filter(([, result]) => result.accepted).map(([name]) => name);
+  assert.ok(accepted.some(name => name.startsWith('android')) && accepted.some(name => !name.startsWith('android')));
+  const session = await openMcpSession('contract-accepts');
+  try {
+    for (const name of accepted) {
+      const result = await session.callTool('start_scenario', { scenario: scriptCases[name] });
+      assert.equal(result.isError, undefined, `${name}: ${result.content[0].text}`);
+      assert.equal(typeof JSON.parse(result.content[0].text).runId, 'string', name);
+    }
+  } finally { await session.close(); }
 });
 
 // ---------- runs, report.json, and evidence layout ----------

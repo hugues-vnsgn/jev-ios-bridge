@@ -7,18 +7,41 @@ A script is one JSON object. Unknown fields are rejected, and so are scripts wit
 | Field | Required | Type | Notes |
 | --- | --- | --- | --- |
 | `version` | yes | `1` | The script format version. |
-| `app` | yes | object | See below. |
-| `device` | no | `{ "udid": "<simulator UUID>" }` | Overrides `JEV_DEVICE_UDID` and `.mobilebuildmcp/config.yaml`. Must be an 8-4-4-4-12 UUID. |
+| `platform` | no | `"ios"` or `"android"` | Which device this script targets. Absent, or `"ios"`, reads the script exactly as a 1.1 iOS script, and rejects every Android-only field below. |
+| `app` | yes | object | See below. Its allowed fields depend on `platform`. |
+| `device` | no | object | See below. Its allowed fields depend on `platform`. |
 | `preconditions` | no | array of strings | Up to 20, each 1–500 characters. Describes setup you arranged. It isn't executed. |
-| `values` | yes | object: key → string | Literals to type. Up to 32; each value at most 2048 printable US-keyboard characters, and none may start with `-`. Keys start with a letter, then letters, digits, `_`, or `-` (up to 64 characters). Use `{}` when there's nothing to type. |
+| `values` | yes | object: key → string | Literals to type. Up to 32; each value at most 2048 characters. Keys start with a letter, then letters, digits, `_`, or `-` (up to 64 characters). Use `{}` when there's nothing to type. On iOS, values must be printable US-keyboard characters and none may start with `-`. On Android, values may be any Unicode text except control characters, and a leading `-` is allowed. |
 | `steps` | yes | array | 1–100 steps with unique `id`s. The last one must be a `checkpoint`. |
 
 ## `app`
+
+iOS (no `platform`, or `"platform": "ios"`):
 
 | Field | Required | Type | Notes |
 | --- | --- | --- | --- |
 | `bundleId` | yes | string | The installed app's bundle ID. |
 | `launchArgs` | no | array of strings | Up to 20, each 1–200 printable characters. Passed to the app process at launch. |
+
+Android (`"platform": "android"`):
+
+| Field | Required | Type | Notes |
+| --- | --- | --- | --- |
+| `package` | yes | string | The installed app's package name: two or more dot-separated parts, each starting with a letter, then letters, digits, or `_` (for example `com.example.app`). |
+| `activity` | no | string | Starts a specific activity instead of the launcher activity. Relative (`.DebugGalleryActivity`) or fully qualified. |
+| `intentExtras` | no | object: string → string | Passed to the launch intent with `am start --es`. Up to 20 entries; each value 1–200 printable ASCII characters. |
+
+`app.bundleId` and `app.launchArgs` are rejected on Android; use `app.package` and `app.intentExtras` instead. `app.package`, `app.activity`, and `app.intentExtras` are rejected on iOS.
+
+## `device`
+
+| Field | Required | Type | Notes |
+| --- | --- | --- | --- |
+| `udid` | no | string | iOS only. Overrides `JEV_DEVICE_UDID` and `.mobilebuildmcp/config.yaml`. Must be an 8-4-4-4-12 UUID. Rejected on Android; use `serial` or `avd`. |
+| `serial` | no | string | Android only. The adb serial exactly as `adb devices` prints it, matching `^[A-Za-z0-9._:-]{1,100}$`. At most one of `serial` or `avd`. |
+| `avd` | no | string | Android only. An emulator's AVD name, matching `^[A-Za-z0-9._-]{1,100}$`. At most one of `serial` or `avd`. |
+
+An Android script with neither `serial` nor `avd` falls back to `JEV_ANDROID_DEVICE`, then fails with `NO_DEVICE`.
 
 ## Steps
 

@@ -724,3 +724,86 @@ test('the run reads the tap alias rule from the driver, not from a run-wide opti
   assert.equal(withRule.verdict, 'passed');
   assert.deepEqual(taps, ['e30']);
 });
+
+const markerScreen = () => snapshot([{ ref: 'marker', role: 'text', label: 'Marker', actions: [],
+  frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } }]);
+const markerCheckpoint: ScriptedScenario['steps'][number] = { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Marker' }] },
+  assertions: [{ id: 'shown', claim: 'Marker is visible' }] };
+const markerJudge: ScriptedJudge = { async judge() {
+  return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' };
+} };
+
+test('the started event names an iOS app by bundle ID and records a null bundle ID on an Android run', async () => {
+  const startedOf = async (scenario: ScriptedScenario) => {
+    const log = memoryLog();
+    await runScriptedScenario({ runId: 'scripted-1', scenario, log, judge: markerJudge,
+      driver: { async prepare() {}, async observe() { return markerScreen(); }, async act() {}, async close() {} } });
+    return log.events.find(event => event.type === 'started')!.data;
+  };
+  const ios = await startedOf({ version: 1,
+    app: { bundleId: 'com.example.app', launchArgs: ['-of-evidence-gallery'] }, values: {}, steps: [markerCheckpoint] });
+  assert.deepEqual(Object.keys(ios),
+    ['mode', 'bundleId', 'launchArgs', 'bridgeVersion', 'jevModel', 'projectionRule', 'plannedSteps']);
+  assert.equal(ios.mode, 'scripted');
+  assert.equal(ios.bundleId, 'com.example.app');
+  assert.deepEqual(ios.launchArgs, ['-of-evidence-gallery']);
+  assert.deepEqual(ios.plannedSteps, [{ id: 'verify', kind: 'checkpoint' }]);
+
+  const android = await startedOf({ version: 1, platform: 'android',
+    app: { package: 'com.example.android', activity: '.MainActivity', intentExtras: { screen: 'gallery' } },
+    values: {}, steps: [markerCheckpoint] });
+  assert.deepEqual(Object.keys(android),
+    ['mode', 'bundleId', 'bridgeVersion', 'jevModel', 'projectionRule', 'plannedSteps']);
+  assert.equal(android.bundleId, null);
+  assert.deepEqual({ ...android, bundleId: 'com.example.app' }, (({ launchArgs: _launchArgs, ...rest }) => rest)(ios));
+});
+
+test('the driver gets the device an iOS script names, and no device for an Android script', async () => {
+  const preparedWith = async (scenario: ScriptedScenario) => {
+    let prepared: unknown;
+    await runScriptedScenario({ runId: 'scripted-1', scenario, log: memoryLog(), judge: markerJudge,
+      driver: { async prepare(context) { prepared = context; }, async observe() { return markerScreen(); },
+        async act() {}, async close() {} } });
+    return prepared;
+  };
+  assert.deepEqual(await preparedWith({ version: 1, app: { bundleId: 'com.example.app' },
+    device: { udid: '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7' }, values: {}, steps: [markerCheckpoint] }),
+  { app: { bundleId: 'com.example.app' }, device: { udid: '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7' } });
+  for (const device of [{ serial: 'emulator-5554' }, { avd: 'jev-actions-api31' }]) {
+    assert.deepEqual(await preparedWith({ version: 1, platform: 'android',
+      app: { package: 'com.example.android' }, device, values: {}, steps: [markerCheckpoint] }),
+    { app: { package: 'com.example.android' } });
+  }
+});
+
+test('a script is typed per platform: an iOS app and simulator, or an Android package and device', () => {
+  type AndroidScript = Extract<ScriptedScenario, { platform: 'android' }>;
+  type IosScript = Exclude<ScriptedScenario, AndroidScript>;
+  const script: Pick<ScriptedScenario, 'version' | 'values' | 'steps'> = { version: 1, values: {}, steps: [] };
+  const scripts: ScriptedScenario[] = [
+    { ...script, app: { bundleId: 'com.example.app', launchArgs: ['-x'] }, device: { udid: 'u' } },
+    { ...script, platform: 'android', app: { package: 'com.example.android', activity: '.Main' },
+      device: { avd: 'jev-actions-api31' } },
+  ];
+  // Each case below is valid but for the one field on the line after its directive.
+  const android: AndroidScript[] = [
+    // @ts-expect-error An Android script names its app by package, not bundle ID.
+    { ...script, platform: 'android', app: { package: 'com.example.android', bundleId: 'com.example.app' } },
+    // @ts-expect-error An Android app takes intent extras, not launch arguments.
+    { ...script, platform: 'android', app: { package: 'com.example.android', launchArgs: ['-x'] } },
+    // @ts-expect-error An Android script names its device by serial or AVD, not UDID.
+    { ...script, platform: 'android', app: { package: 'com.example.android' }, device: { udid: 'u' } },
+    // @ts-expect-error An Android script needs a package.
+    { ...script, platform: 'android', app: { activity: '.Main' } },
+  ];
+  const ios: IosScript[] = [
+    // @ts-expect-error An iOS script names its app by bundle ID, not package.
+    { ...script, app: { bundleId: 'com.example.app', package: 'com.example.android' } },
+    // @ts-expect-error An iOS script names its simulator by UDID, not serial.
+    { ...script, app: { bundleId: 'com.example.app' }, device: { serial: 'emulator-5554' } },
+  ];
+  assert.equal(android.length + ios.length, 6);
+  const [iosScript, androidScript] = scripts;
+  assert.equal(iosScript?.platform !== 'android' ? iosScript?.app.bundleId : undefined, 'com.example.app');
+  assert.equal(androidScript?.platform === 'android' ? androidScript.app.package : undefined, 'com.example.android');
+});

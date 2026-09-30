@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { createInterface } from 'node:readline';
+import { openMcpSession } from './fixtures/mcp-session.js';
 
 test('stdio server negotiates and exposes start/report/cancel without a key', { timeout: 10_000 }, async () => {
   const env = { ...process.env }; delete env.TYPESAFE_API_KEY;
@@ -63,4 +64,37 @@ test('running MCP reports hide screen evidence and bounded waiting returns the f
     const timer=setTimeout(()=>child.kill('SIGTERM'),5000);await exited;clearTimeout(timer);
     await rm(root,{recursive:true,force:true});
   }
+});
+
+test('start_scenario rejects an invalid iOS script with the same validation text as 1.1', { timeout: 10_000 }, async () => {
+  const checkpoint = { id: 'verify', kind: 'checkpoint', guard: { present: [{ role: 'text', label: 'Marker' }] },
+    assertions: [{ id: 'shown', claim: 'Marker visible' }] };
+  const tap = { id: 'open', kind: 'action', guard: { present: [{ role: 'text', label: 'Marker' }] },
+    action: { kind: 'tap', selector: { role: 'text', label: 'Marker' } } };
+  const script = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [checkpoint] };
+  const prefix = 'Input validation error: Invalid arguments for tool start_scenario: ';
+  // Each expected text is what the 1.1 server (commit 819ea10) returned for the same input.
+  const cases: [string, object, string][] = [
+    ['a non-ASCII typed value', { ...script, values: { q: 'Đà Nẵng' } },
+      'scenario.values.q: Typed values must use printable US keyboard characters'],
+    ['a missing bundle ID', { ...script, app: {} },
+      'scenario.app.bundleId: Invalid input: expected string, received undefined'],
+    ['a script ending at an action', { ...script, steps: [checkpoint, tap] },
+      'scenario.steps: A script must end at an assertion checkpoint'],
+    ['duplicate step IDs', { ...script, steps: [checkpoint, checkpoint] },
+      'scenario.steps.1.id: Step IDs must be unique'],
+    ['an Android app.package on an iOS script', { ...script, app: { bundleId: 'com.example.app', package: 'com.example.android' } },
+      'scenario.app: Unrecognized key: "package"'],
+    ['a bad udid and a non-ASCII typed value', { ...script, device: { udid: 'not-a-udid' }, values: { q: 'Đà Nẵng' } },
+      'scenario.device.udid: Invalid string: must match pattern ' +
+      '/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/, ' +
+      'scenario.values.q: Typed values must use printable US keyboard characters'],
+  ];
+  const session = await openMcpSession('ios-errors');
+  try {
+    for (const [name, scenario, expected] of cases) {
+      assert.deepEqual(await session.callTool('start_scenario', { scenario }),
+        { content: [{ type: 'text', text: prefix + expected }], isError: true }, name);
+    }
+  } finally { await session.close(); }
 });

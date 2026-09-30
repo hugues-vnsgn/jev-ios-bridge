@@ -42,7 +42,7 @@ test('a pane attached to a live run shows masked app and system lines, then the 
   await writeFile(runtime, '');
   await writeFile(os, '');
   const runId = `pane-${process.pid}-${Date.now()}`;
-  const stream = await startLogStream({ runId, bundleId: 'com.example.app', sources: { runtime, os },
+  const stream = await startLogStream({ runId, app: { bundleId: 'com.example.app' }, sources: { runtime, os },
     values: { secret: 'hunter2' }, pollMs: 20 });
   try {
     const output = new Capture() as unknown as NodeJS.WriteStream;
@@ -67,7 +67,7 @@ test('the pane notes an unexpected app exit, and no live run means attach report
   const runtime = join(root, `com.example.app_2026_helperpid${exited}_ownerpid1_abc.log`);
   await writeFile(runtime, '');
   const runId = `exit-${process.pid}-${Date.now()}`;
-  const stream = await startLogStream({ runId, bundleId: 'com.example.app', sources: { runtime }, values: {}, pollMs: 20 });
+  const stream = await startLogStream({ runId, app: { bundleId: 'com.example.app' }, sources: { runtime }, values: {}, pollMs: 20 });
   try {
     const output = new Capture() as unknown as NodeJS.WriteStream;
     void attachLogPane(runId, output, { keepOpen: false });

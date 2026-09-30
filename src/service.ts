@@ -65,10 +65,9 @@ export class BridgeService {
     const pane = this.options.logPane;
     let stream: Promise<LogStream | undefined> | undefined;
     const attach = pane ? logsCommand(pane.cliPath, runId) : undefined;
-    const appId = scenario.app.bundleId;
     const startPane = (logSources: { runtime?: string; os?: string }) => {
       if (!pane || !attach) return;
-      stream = startLogStream({ runId, bundleId: appId, sources: logSources, values: scenario.values })
+      stream = startLogStream({ runId, app: scenario.app, sources: logSources, values: scenario.values })
         .then(async started => {
           const window = pane.openWindow ? await openPaneWindow(resolve(this.baseDir, runId), attach)
             : { opened: false as const, reason: 'turned off with --no-log-pane' };

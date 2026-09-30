@@ -36,3 +36,10 @@ test('the script-format reference lists exactly the bridge-owned roles', () => {
   const line = page.split('\n').find(row => row.startsWith('| `role` |'))!;
   assert.deepEqual([...line.matchAll(/`([a-z-]+)`/g)].map(match => match[1]).filter(role => role !== 'role'), [...ROLES]);
 });
+
+test('the script-format reference documents platform and the Android app/device fields', () => {
+  const page = readFileSync('docs/guide/reference/script-format.md', 'utf8');
+  for (const field of ['platform', 'package', 'activity', 'intentExtras', 'serial', 'avd']) {
+    assert.ok(page.includes(`\`${field}\``), `script-format.md does not document ${field}`);
+  }
+});

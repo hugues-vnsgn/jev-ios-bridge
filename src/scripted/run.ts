@@ -48,8 +48,9 @@ function bounded(value: number | undefined, fallback: number, minimum: number, m
 }
 
 function prepareContext(script: ScriptedScenario): PrepareScenarioContext {
+  // A driver's device field names an iOS simulator; an Android script's device isn't passed on.
   return { app: script.app,
-    ...(script.device ? { device: script.device } : {}),
+    ...(script.platform !== 'android' && script.device ? { device: script.device } : {}),
     ...(script.preconditions ? { preconditions: script.preconditions } : {}) };
 }
 
@@ -211,8 +212,11 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
   });
 
   try {
-    await options.log.append('started', { mode: 'scripted', bundleId: script.app.bundleId,
-      ...(script.app.launchArgs ? { launchArgs: script.app.launchArgs } : {}),
+    // An Android app has no bundle ID, so an Android run records null.
+    const ios = script.platform !== 'android';
+    await options.log.append('started', { mode: 'scripted',
+      bundleId: ios ? script.app.bundleId : null,
+      ...(ios && script.app.launchArgs ? { launchArgs: script.app.launchArgs } : {}),
       bridgeVersion: BRIDGE_VERSION, jevModel: SCRIPTED_JEV_MODEL, projectionRule: PROJECTION_RULE,
       plannedSteps: script.steps.map(step => ({ id: step.id, kind: step.kind })) });
     let prepareDurationMs = 0;

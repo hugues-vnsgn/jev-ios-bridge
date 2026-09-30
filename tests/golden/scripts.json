@@ -141,5 +141,283 @@
         "message": "Unrecognized keys: \"goal\", \"assertions\""
       }
     ]
+  },
+  "androidWithSerial": {
+    "accepted": true
+  },
+  "androidWithAvd": {
+    "accepted": true
+  },
+  "androidWithActivityAndIntentExtras": {
+    "accepted": true
+  },
+  "androidTypedValues": {
+    "accepted": true
+  },
+  "androidRejectsBundleId": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.bundleId",
+        "message": "app.bundleId is not supported on Android; use app.package"
+      },
+      {
+        "path": "app.package",
+        "message": "app.package is required on Android"
+      }
+    ]
+  },
+  "androidRejectsLaunchArgs": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.launchArgs",
+        "message": "app.launchArgs is not supported on Android; use app.intentExtras"
+      }
+    ]
+  },
+  "androidRejectsDeviceUdid": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "device.udid",
+        "message": "device.udid is not supported on Android; use device.serial or device.avd"
+      }
+    ]
+  },
+  "androidMissingPackage": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.package",
+        "message": "app.package is required on Android"
+      }
+    ]
+  },
+  "androidDeviceConflict": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "device",
+        "message": "A script may name at most one of device.serial or device.avd"
+      }
+    ]
+  },
+  "androidInvalidSerial": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "device.serial",
+        "message": "device.serial must match ^[A-Za-z0-9._:-]{1,100}$"
+      }
+    ]
+  },
+  "androidInvalidAvd": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "device.avd",
+        "message": "device.avd must match ^[A-Za-z0-9._-]{1,100}$"
+      }
+    ]
+  },
+  "androidControlCharacterValue": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "values.query",
+        "message": "Typed values must not contain control characters"
+      }
+    ]
+  },
+  "iosScriptUsesAndroidPackage": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app",
+        "message": "Unrecognized key: \"package\""
+      }
+    ]
+  },
+  "iosScriptUsesAndroidSerial": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "device",
+        "message": "Unrecognized key: \"serial\""
+      }
+    ]
+  },
+  "missingBundleId": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.bundleId",
+        "message": "Invalid input: expected string, received undefined"
+      }
+    ]
+  },
+  "iosMultipleErrors": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.bundleId",
+        "message": "Invalid string: must match pattern /^[A-Za-z0-9-]+(?:\\.[A-Za-z0-9-]+)+$/"
+      },
+      {
+        "path": "values.query",
+        "message": "Typed values must use printable US keyboard characters"
+      },
+      {
+        "path": "steps.1.id",
+        "message": "Step IDs must be unique"
+      }
+    ]
+  },
+  "androidActivityBareName": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.activity",
+        "message": "app.activity must be a relative (\".DebugGalleryActivity\") or fully qualified activity name"
+      }
+    ]
+  },
+  "androidMalformedPackage": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.package",
+        "message": "app.package must be an Android package name: two or more dot-separated parts, each starting with a letter, then letters, digits or \"_\""
+      }
+    ]
+  },
+  "androidTooManyIntentExtras": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.intentExtras",
+        "message": "A script may supply at most 20 intent extras"
+      }
+    ]
+  },
+  "androidNonAsciiIntentExtraValue": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.intentExtras.screen",
+        "message": "app.intentExtras values must be printable ASCII text"
+      }
+    ]
+  },
+  "androidIntentExtraValueTooLong": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.intentExtras.screen",
+        "message": "Too big: expected string to have <=200 characters"
+      }
+    ]
+  },
+  "androidValueTooLong": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "values.query",
+        "message": "Too big: expected string to have <=2048 characters"
+      }
+    ]
+  },
+  "androidTooManyValues": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "values",
+        "message": "A script may supply at most 32 typed values"
+      }
+    ]
+  },
+  "nonAsciiValuePlusUnknownRole": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "values.query",
+        "message": "Typed values must use printable US keyboard characters"
+      },
+      {
+        "path": "steps.0.guard.present.0.role",
+        "message": "role must be one of: application, window, button, keyboard-key, text-field, menu, text, image, switch, slider, cell, scroll-view, list, tab, other"
+      }
+    ]
+  },
+  "leadingHyphenPlusMissingVersion": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "version",
+        "message": "Add \"version\": 1 to the script; this bridge reads script format version 1"
+      },
+      {
+        "path": "values",
+        "message": "MobileBuildMCP 2.7.1 cannot type text starting with a leading hyphen"
+      }
+    ]
+  },
+  "missingBundleIdPlusBadRole": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.bundleId",
+        "message": "Invalid input: expected string, received undefined"
+      },
+      {
+        "path": "steps.0.guard.present.0.role",
+        "message": "role must be one of: application, window, button, keyboard-key, text-field, menu, text, image, switch, slider, cell, scroll-view, list, tab, other"
+      }
+    ]
+  },
+  "missingBundleIdPlusDuplicateStepIds": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.bundleId",
+        "message": "Invalid input: expected string, received undefined"
+      }
+    ]
+  },
+  "missingBundleIdPlusBadUdid": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.bundleId",
+        "message": "Invalid input: expected string, received undefined"
+      },
+      {
+        "path": "device.udid",
+        "message": "Invalid string: must match pattern /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/"
+      }
+    ]
+  },
+  "missingBundleIdPlusValueTooLong": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "app.bundleId",
+        "message": "Invalid input: expected string, received undefined"
+      },
+      {
+        "path": "values.query",
+        "message": "Too big: expected string to have <=2048 characters"
+      }
+    ]
+  },
+  "unknownPlatform": {
+    "accepted": false,
+    "issues": [
+      {
+        "path": "platform",
+        "message": "Invalid input: expected \"ios\""
+      }
+    ]
   }
 }

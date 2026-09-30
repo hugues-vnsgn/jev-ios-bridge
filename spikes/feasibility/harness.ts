@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { readFile, realpath } from 'node:fs/promises';
 import { dirname, isAbsolute, relative, resolve } from 'node:path';
-import type { Snapshot } from '../../src/contracts/index.js';
+import { isIosApp, type Snapshot } from '../../src/contracts/index.js';
 import type { HistoryEntry, JevJudge, Scenario } from '../legacy/contracts.js';
 import { actionOptions, buildObservation, projectActionOptions, type ObservationVariant, type OptionRule } from '../legacy/observation.js';
 import { DEFAULT_WORDING, V2_WORDING, V3_WORDING, JEV_MODEL, JevContractError, JevRequestError, type QuestionWording } from '../legacy/jev.js';
@@ -216,7 +216,8 @@ export function validateCorpus(corpus: FeasibilityCorpus): void {
     const previous = groupPartitions.get(item.scenarioGroup);
     if (previous && previous !== item.partition) fail('SCENARIO_LEAKAGE');
     groupPartitions.set(item.scenarioGroup, item.partition);
-    if (!item.scenario?.goal || !item.scenario.app?.bundleId || !isRecord(item.scenario.values) || !Array.isArray(item.scenario.assertions)) fail('SCENARIO_INVALID');
+    if (!item.scenario?.goal || !isIosApp(item.scenario.app) || !item.scenario.app.bundleId ||
+        !isRecord(item.scenario.values) || !Array.isArray(item.scenario.assertions)) fail('SCENARIO_INVALID');
     if (!Array.isArray(item.history) || !item.fullSnapshot?.elements || !item.compactSnapshot?.elements) fail('CAPTURE_INVALID');
     if (!item.labels || !Array.isArray(item.labels.acceptableActionIds) || !item.labels.acceptableActionIds.length || typeof item.labels.goalReached !== 'boolean') fail('LABEL_INVALID');
     const assertions = new Set(item.scenario.assertions.map(assertion => assertion.id));

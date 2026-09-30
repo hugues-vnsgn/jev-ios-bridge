@@ -2,12 +2,32 @@
 export type Verdict = 'passed' | 'failed' | 'inconclusive';
 export type Direction = 'up' | 'down' | 'left' | 'right';
 /** The device platform a scenario runs on. Scripts without one are iOS. */
-export type Platform = 'ios' | 'android';
+export const PLATFORMS = ['ios', 'android'] as const;
+export type Platform = typeof PLATFORMS[number];
+
+/** The app under test on iOS: a bundle ID, plus its launch options (launch arguments). */
+export interface IosAppIdentity { bundleId: string; launchArgs?: string[] }
+/** The app under test on Android: a package, plus its launch options (an activity and intent extras). */
+export interface AndroidAppIdentity { package: string; activity?: string; intentExtras?: Record<string, string> }
+
+/** The app under test, plus its launch options: a bundle ID and launch arguments on iOS, or a package,
+ *  activity and intent extras on Android. */
+export type AppIdentity = IosAppIdentity | AndroidAppIdentity;
 
 export interface ScenarioContext {
-  app: { bundleId: string; launchArgs?: string[] };
+  app: AppIdentity;
   preconditions?: string[];
   device?: { udid?: string };
+}
+
+/** Narrows an app identity to its iOS shape (a bundle ID). */
+export function isIosApp(app: AppIdentity): app is IosAppIdentity {
+  return 'bundleId' in app;
+}
+
+/** The app's own label: its bundle ID on iOS, its package on Android. */
+export function appLabel(app: AppIdentity): string {
+  return isIosApp(app) ? app.bundleId : app.package;
 }
 
 /** Device preparation needs only launch identity and environmental prerequisites. */
