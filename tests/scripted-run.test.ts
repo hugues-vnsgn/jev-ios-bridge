@@ -772,13 +772,46 @@ test('the started event names an iOS app by bundle ID and records a null bundle 
   assert.deepEqual(ios.launchArgs, ['-of-evidence-gallery']);
   assert.deepEqual(ios.plannedSteps, [{ id: 'verify', kind: 'checkpoint' }]);
 
+  // Owner ruling, 2026-09-30: this Android half changes with the contract Issue 07 adds (platform,
+  // package, activity, intentExtras, and the Android projection rule); the iOS half above stays as it was.
   const android = await startedOf({ version: 1, platform: 'android',
     app: { package: 'com.example.android', activity: '.MainActivity', intentExtras: { screen: 'gallery' } },
     values: {}, steps: [markerCheckpoint] });
   assert.deepEqual(Object.keys(android),
-    ['mode', 'bundleId', 'bridgeVersion', 'jevModel', 'projectionRule', 'plannedSteps']);
+    ['mode', 'bundleId', 'platform', 'package', 'activity', 'intentExtras', 'bridgeVersion', 'jevModel', 'projectionRule', 'plannedSteps']);
   assert.equal(android.bundleId, null);
-  assert.deepEqual({ ...android, bundleId: 'com.example.app' }, (({ launchArgs: _launchArgs, ...rest }) => rest)(ios));
+  assert.equal(android.platform, 'android');
+  assert.equal(android.package, 'com.example.android');
+  assert.equal(android.activity, '.MainActivity');
+  assert.deepEqual(android.intentExtras, { screen: 'gallery' });
+  assert.equal(android.projectionRule, 'android-full-text-v1');
+  assert.deepEqual(android.plannedSteps, [{ id: 'verify', kind: 'checkpoint' }]);
+});
+
+test('an Android started event defaults a missing activity to null and missing intent extras to {}', async () => {
+  const log = memoryLog();
+  await runScriptedScenario({ runId: 'scripted-1', judge: markerJudge, log,
+    scenario: { version: 1, platform: 'android', app: { package: 'com.example.android' }, values: {}, steps: [markerCheckpoint] },
+    driver: { async prepare() {}, async observe() { return markerScreen(); }, async act() {}, async close() {} } });
+  const started = log.events.find(event => event.type === 'started')!.data;
+  assert.equal(started.activity, null);
+  assert.deepEqual(started.intentExtras, {});
+});
+
+test('an Android run renders Jev\'s view with the Android header and placeholder, matching the rule started records', async () => {
+  const field: Element = { ref: 'field', role: 'text-field', placeholder: 'Email', identifier: 'field', actions: [],
+    frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } };
+  const androidCheckpoint: ScriptedScenario['steps'][number] = { id: 'verify', kind: 'checkpoint',
+    guard: { present: [{ identifier: 'field' }] }, assertions: [{ id: 'shown', claim: 'The field is visible' }] };
+  const log = memoryLog();
+  await runScriptedScenario({ runId: 'scripted-1', judge: markerJudge, log,
+    scenario: { version: 1, platform: 'android', app: { package: 'com.example.android' }, values: {}, steps: [androidCheckpoint] },
+    driver: { async prepare() {}, async observe() { return snapshot([field]); }, async act() {}, async close() {} } });
+  const started = log.events.find(event => event.type === 'started')!.data;
+  const step = log.events.find(event => event.type === 'step')!.data;
+  assert.equal(started.projectionRule, 'android-full-text-v1');
+  assert.match(String(step.assertionObservation), /^Current Android screen \(full accessibility capture\):/);
+  assert.match(String(step.assertionObservation), /"placeholder":"Email"/);
 });
 
 test('the driver gets the device an iOS script names, and no device for an Android script', async () => {

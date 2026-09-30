@@ -3,7 +3,7 @@ import type { Action, ActionScenarioContext, DeviceDriver, Element, PrepareScena
 import { DeviceCliError, DeviceReasonError, StaleSnapshotError } from '../device/index.js';
 import type { AssertionJudgment, ScriptedJudge, ScriptedScenario, ScriptedStep } from './contracts.js';
 import { SCRIPTED_JEV_MODEL, ScriptedJevError } from './jev.js';
-import { PROJECTION_RULE, renderAssertionState, ScriptedObservationError } from './observe.js';
+import { ANDROID_PROJECTION_RULE, PROJECTION_RULE, renderAssertionState, ScriptedObservationError } from './observe.js';
 import { buildScriptedReport, type ScriptedReport } from './report.js';
 import { buildReportJson } from './report-json.js';
 import { MOBILEBUILDMCP_PASSTHROUGH_CODES } from './vocabulary.js';
@@ -217,14 +217,21 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
     await options.log.append('started', { mode: 'scripted',
       bundleId: ios ? script.app.bundleId : null,
       ...(ios && script.app.launchArgs ? { launchArgs: script.app.launchArgs } : {}),
-      bridgeVersion: BRIDGE_VERSION, jevModel: SCRIPTED_JEV_MODEL, projectionRule: PROJECTION_RULE,
+      ...(ios ? {} : { platform: 'android', package: script.app.package,
+        activity: script.app.activity ?? null, intentExtras: script.app.intentExtras ?? {} }),
+      bridgeVersion: BRIDGE_VERSION, jevModel: SCRIPTED_JEV_MODEL,
+      projectionRule: ios ? PROJECTION_RULE : ANDROID_PROJECTION_RULE,
       plannedSteps: script.steps.map(step => ({ id: step.id, kind: step.kind })) });
     let prepareDurationMs = 0;
     await timed('prepareMs', () => abortableOperation(() => options.driver.prepare(preparedContext, signal), signal),
       durationMs => { prepareDurationMs = durationMs; });
     const logSources = options.driver.logSources?.() ?? {};
+    const androidPreparation = options.driver.androidPreparation?.();
     await options.log.append('prepared', { prepareDurationMs,
-      ...(Object.keys(logSources).length ? { logSources } : {}) });
+      ...(Object.keys(logSources).length ? { logSources } : {}),
+      ...(androidPreparation ? { deviceIdentity: androidPreparation.deviceIdentity, serial: androidPreparation.serial,
+        agentSha256: androidPreparation.agentSha256,
+        ...(androidPreparation.sweptLeftovers ? { sweptLeftovers: true } : {}) } : {}) });
     try { options.onPrepared?.({ logSources }); } catch { /* the log pane never affects a run */ }
     for (const step of script.steps) {
       activeStepId = undefined;
@@ -242,7 +249,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
       let observationError: unknown;
       try {
         assertScreenGuard(snapshot, step.guard, selectionOptions);
-        if (step.kind === 'checkpoint') assertionObservation = renderAssertionState(snapshot);
+        if (step.kind === 'checkpoint') assertionObservation = renderAssertionState(snapshot, ios ? 'ios' : 'android');
       } catch (error) { observationError = error; }
       await options.log.append('step', { step: steps, stepId: step.id, kind: step.kind,
         snapshotSequence: snapshot.sequence, observationSummary: summary(snapshot), observeDurationMs,

@@ -99,6 +99,18 @@ export interface DeviceDriver {
   logSources?(): { runtime?: string; os?: string };
   /** Set only by a driver integration whose pinned tap semantics were verified. The run reads it. */
   readonly tapAliasRule?: TapAliasRule;
+  /** Android-only: what `prepare` set up on the device, for the run log's `prepared` event. The iOS driver
+   *  doesn't implement this. */
+  androidPreparation?(): AndroidPreparation;
+}
+
+/** What an Android `prepare` did on the device, recorded in the run log's `prepared` event. */
+export interface AndroidPreparation {
+  deviceIdentity: string;
+  serial: string;
+  agentSha256: string;
+  /** True only when this run's lease took over a crashed run's and swept its leftovers. */
+  sweptLeftovers?: boolean;
 }
 
 export interface DeviceMetrics {
