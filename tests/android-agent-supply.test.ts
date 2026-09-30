@@ -4,8 +4,8 @@ import { chmod, mkdtemp, readdir, readFile, rm, stat, writeFile } from 'node:fs/
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
-import { mobilecliProgramPath, PINNED_AGENT_SHA256, pinnedAgent } from '../src/device/android/agent-supply.js';
-import { DeviceReasonError } from '../src/device/index.js';
+import { PINNED_AGENT_SHA256, pinnedAgent } from '../src/device/android/agent-supply.js';
+import { installed, refusal } from './fixtures/android-tools.js';
 
 /** A minimal DEX file: the `dex\n035\0` header with a valid length field, Adler-32 checksum and SHA-1 signature. */
 function dexFile(body: string): Buffer {
@@ -34,17 +34,6 @@ async function withCacheFolder(run: (folder: string) => Promise<void>): Promise<
   } finally {
     await rm(root, { recursive: true, force: true });
   }
-}
-
-async function refusal(promise: Promise<unknown>): Promise<DeviceReasonError> {
-  try {
-    await promise;
-  } catch (error) {
-    assert.ok(error instanceof DeviceReasonError, `expected a DeviceReasonError, got ${String(error)}`);
-    assert.equal(error.code, 'ANDROID_TOOLS_UNAVAILABLE');
-    return error;
-  }
-  assert.fail('expected ANDROID_TOOLS_UNAVAILABLE');
 }
 
 test('the one valid DEX file in the program is found and cached as <sha256>.dex, folder 0700 and file 0600', async () => {
@@ -127,14 +116,6 @@ test('a cache folder that cannot be created is ANDROID_TOOLS_UNAVAILABLE', async
     assert.match(refused.message, /cache/);
   });
 });
-
-const installed = (() => {
-  try {
-    return Boolean(mobilecliProgramPath());
-  } catch {
-    return false;
-  }
-})();
 
 test('the installed mobilecli 1.0.14 program holds exactly one device agent, 72,660 bytes, with the pinned SHA-256', {
   skip: installed ? false : 'the Mac mobilecli program is not installed',

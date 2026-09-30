@@ -4,9 +4,9 @@ import { chmod, mkdir, mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { mock, test } from 'node:test';
-import { mobilecliProgramPath, PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
+import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
 import { androidTools, adbEnvironment, findAdb } from '../src/device/android/tools.js';
-import { DeviceReasonError } from '../src/device/index.js';
+import { installed, refusal } from './fixtures/android-tools.js';
 
 /** A temporary tree with an executable `adb` at each of the given relative paths. */
 async function withAdbs(paths: string[], run: (root: string) => Promise<void>): Promise<void> {
@@ -21,17 +21,6 @@ async function withAdbs(paths: string[], run: (root: string) => Promise<void>): 
   } finally {
     await rm(root, { recursive: true, force: true });
   }
-}
-
-async function refusal(promise: Promise<unknown>): Promise<DeviceReasonError> {
-  try {
-    await promise;
-  } catch (error) {
-    assert.ok(error instanceof DeviceReasonError, `expected a DeviceReasonError, got ${String(error)}`);
-    assert.equal(error.code, 'ANDROID_TOOLS_UNAVAILABLE');
-    return error;
-  }
-  assert.fail('expected ANDROID_TOOLS_UNAVAILABLE');
 }
 
 const everywhere = ['home-sdk/platform-tools/adb', 'sdk-root/platform-tools/adb', 'bin/adb', 'user/Library/Android/sdk/platform-tools/adb'];
@@ -95,14 +84,6 @@ test('the tools check finds adb, then the agent; a missing mobilecli program is 
     assert.match(refused.message, /mobilecli/);
   });
 });
-
-const installed = (() => {
-  try {
-    return Boolean(mobilecliProgramPath());
-  } catch {
-    return false;
-  }
-})();
 
 test('the tools check only reads the mobilecli program: no spawn is ever asked to execute anything', async () => {
   const childProcess = createRequire(import.meta.url)('node:child_process') as Record<string, (...args: unknown[]) => unknown>;
