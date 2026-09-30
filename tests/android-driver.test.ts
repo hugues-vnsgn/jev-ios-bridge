@@ -4,7 +4,7 @@ import { mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
-import { isActOutcome, type AndroidAppIdentity, type Snapshot } from '../src/contracts/index.js';
+import { isActOutcome, type AndroidAppIdentity, type RunEvent, type Snapshot } from '../src/contracts/index.js';
 import { DeviceReasonError, StaleSnapshotError } from '../src/device/index.js';
 import { OutcomeUnknownError, type AdbResult, type AdbRunner } from '../src/device/android/adb.js';
 import { DeviceAgentError, type DeviceAgentClient } from '../src/device/android/agent-client.js';
@@ -12,6 +12,10 @@ import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
 import { AGENT_DEVICE_PATH, AGENT_START_COMMAND, AndroidDriver, type AndroidDriverOptions } from '../src/device/android/driver.js';
 import { mapAndroidTree, type AndroidTree } from '../src/device/android/mapping.js';
 import { screenHash, type Clock } from '../src/device/android/settle.js';
+import type { ScriptedJudge } from '../src/scripted/contracts.js';
+import { runScriptedScenario } from '../src/scripted/run.js';
+import { androidScript } from './fixtures/android-script.js';
+import { withRunLog } from './fixtures/run-log.js';
 
 /**
  * The Android driver's `prepare` against a fake device that answers with the `adb` outputs recorded from
@@ -1343,4 +1347,98 @@ test('without a screenshot folder, the driver\'s own temporary folder is removed
     await driver.close(signal());
     await assert.rejects(readFile(screenshotPath!), { code: 'ENOENT' });
   }, { screenshotFolder: undefined, agents: { screens: [fields] } });
+});
+
+/* The end-to-end run (Issue 16): runScriptedScenario with the real Android driver, the fake adb and the fake agent. */
+
+/** What `prepare` sends to an emulator named by serial, with nothing to sweep and a launcher activity to look up. */
+const PREPARE_BY_SERIAL = [
+  'devices -l',
+  "-s emulator-5554 shell 'getprop' 'ro.boot.qemu.avd_name'",
+  "-s emulator-5554 shell 'ps' '-A' '-o' 'PID,NAME,ARGS'",
+  'forward --list',
+  "-s emulator-5554 shell 'getprop' 'ro.build.version.sdk'",
+  "-s emulator-5554 shell 'getprop' 'sys.boot_completed'",
+  "-s emulator-5554 shell 'pm' 'path' 'com.example.android'",
+  "-s emulator-5554 shell 'dumpsys' 'window' 'policy'",
+  "-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'",
+  "-s emulator-5554 shell 'cmd' 'package' 'resolve-activity' '--brief' '-a' 'android.intent.action.MAIN' '-c' 'android.intent.category.LAUNCHER' 'com.example.android'",
+  "-s emulator-5554 shell 'am' 'start' '-W' '-n' 'com.example.android/.MainActivity'",
+  `-s emulator-5554 push ${AGENT_CACHE} /data/local/tmp/jev-ios-bridge-agent.dex`,
+  START.join(' '),
+  '-s emulator-5554 forward tcp:49526 localabstract:mobilecli-server',
+  "-s emulator-5554 shell 'ps' '-A' '-o' 'PID,NAME,ARGS'",
+  "-s emulator-5554 shell 'cat' '/proc/7001/environ'",
+];
+const CITY = 'Ha Noi ';
+const cityScript = () => androidScript({
+  device: { serial: 'emulator-5554' },
+  values: { city: CITY },
+  steps: [
+    { id: 'type-city', kind: 'action', guard: { present: [{ identifier: 'field.empty' }] },
+      action: { kind: 'replaceText', selector: { identifier: 'field.empty' }, valueKey: 'city' } },
+    { id: 'verify', kind: 'checkpoint', guard: { present: [{ identifier: 'field.empty' }] },
+      assertions: [{ id: 'city-shown', claim: 'The city field shows Ha Noi.' }] },
+  ],
+});
+const judgeAllTrue: ScriptedJudge = { async judge() { return { probabilities: { 'city-shown': 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } };
+const eventsOf = async (root: string, runId: string) =>
+  (await readFile(join(root, runId, 'run.jsonl'), 'utf8')).trim().split('\n').map(line => JSON.parse(line) as RunEvent);
+
+test('an Android script with a replace-text step and a checkpoint runs to a verdict with the real driver, and cleans up after itself', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  const typed = withText(fields, 'field.empty', CITY);
+  const script = cityScript();
+  await withRunLog('android-end-to-end', async (log, evidence) => {
+    await withDriver(new FakeAdb(api31()), async ({ driver, adb, agents, root }) => {
+      const report = await runScriptedScenario({ runId: 'android-end-to-end', scenario: script, driver, judge: judgeAllTrue, log });
+      assert.equal(report.verdict, 'passed');
+
+      assert.deepEqual(adb.calls.map(call => call.join(' ')), [...PREPARE_BY_SERIAL, ...CLOSE_AFTER_PREPARE]);
+      assert.deepEqual(agents.calls, [
+        ...SETTLED,
+        { method: 'device.io.tap', params: { x: 540, y: 1099 } },
+        ...CLEAR,
+        { method: 'device.io.text', params: { text: CITY } },
+        ...SETTLED,
+      ]);
+
+      const events = await eventsOf(evidence, 'android-end-to-end');
+      const of = (type: string) => events.filter(event => event.type === type).map(event => event.data);
+      assert.deepEqual(of('prepared').map(({ prepareDurationMs: _duration, ...data }) => data),
+        [{ deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: PINNED_AGENT_SHA256 }]);
+      const [action] = of('action');
+      // A trimmed shown value ("Ha Noi") would escape the mask; the one the driver kept, trailing space included, doesn't.
+      assert.equal(action?.shownValue, '[REDACTED]');
+      assert.equal(action?.action, 'replaceText');
+      const raw = await readFile(join(evidence, 'android-end-to-end', 'run.jsonl'), 'utf8');
+      assert.equal(raw.includes('Ha Noi'), false, 'the typed value never reaches run.jsonl');
+      const steps = of('step');
+      assert.deepEqual(steps.map(step => step.screenshotPath), ['screen-1.jpg', 'screen-2.jpg']);
+      assert.equal(steps.some(step => 'settled' in step), false, 'every observation settled');
+      for (const [index, name] of ['screen-1.jpg', 'screen-2.jpg'].entries()) {
+        assert.equal(await readFile(join(evidence, 'android-end-to-end', name), 'utf8'), `jpeg-${String(index + 1)}`);
+      }
+
+      assert.deepEqual(await readdir(root), [], 'lease released');
+      assert.equal(adb.emulators.get('emulator-5554')!.agents!.size, 0, 'no agent left');
+      assert.deepEqual(adb.forwards, [], 'no forward left');
+      assert.equal(adb.calls.at(-2)?.join(' '), "-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'", 'the restarted app stopped');
+    }, { device: { serial: 'emulator-5554' }, screenshotFolder: undefined, agents: { screens: [fields, fields, typed] } });
+  }, { values: [CITY] });
+});
+
+test('a run whose cleanup fails doesn\'t pass: it ends inconclusive with CLEANUP_FAILED and keeps the lease', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  const adb = new FakeAdb(api31());
+  const run = adb.run;
+  const runner: AdbRunner = async (args, abort) => args[2] === 'forward' && args[3] === '--remove'
+    ? (adb.calls.push(args), { stdout: '', stderr: 'adb: error: device offline\n', exitCode: 1 }) : run(args, abort);
+  await withRunLog('android-cleanup-failed', async (log) => {
+    await withDriver(adb, async ({ driver, root }) => {
+      const report = await runScriptedScenario({ runId: 'android-cleanup-failed', scenario: cityScript(), driver, judge: judgeAllTrue, log });
+      assert.deepEqual([report.verdict, report.reason], ['inconclusive', 'CLEANUP_FAILED']);
+      assert.equal((await readdir(root)).length, 1, 'lease kept');
+    }, { device: { serial: 'emulator-5554' }, screenshotFolder: undefined, runner, agents: { screens: [fields, fields, withText(fields, 'field.empty', CITY)] } });
+  }, { values: [CITY] });
 });
