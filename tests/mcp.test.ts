@@ -23,8 +23,10 @@ test('stdio server negotiates and exposes start/report/cancel without a key', { 
     child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' }) + '\n');
     const list = await request(2, 'tools/list');
     assert.deepEqual(list.result.tools.map((tool: { name: string }) => tool.name).sort(), ['cancel_run', 'get_report', 'start_scenario']);
-    const startSchema = list.result.tools.find((tool: { name: string }) => tool.name === 'start_scenario').inputSchema;
+    const startTool = list.result.tools.find((tool: { name: string }) => tool.name === 'start_scenario');
+    const startSchema = startTool.inputSchema;
     assert.ok(startSchema.properties.scenario);
+    assert.match(startTool.description, /an explicit iOS or Android action script/);
     const report = await request(3, 'tools/call', { name: 'get_report', arguments: { runId: 'missing' } });
     assert.equal(report.result.isError, true);
     assert.equal(report.result.structuredContent, undefined);
