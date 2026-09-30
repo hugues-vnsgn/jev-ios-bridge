@@ -557,6 +557,28 @@ test('a takeover with nothing left to sweep doesn\'t record sweptLeftovers', asy
   });
 });
 
+test('a takeover that kills an agent its dead holder never listed records sweptLeftovers', async () => {
+  // The holder crashed after starting its agent, before recording the agent's pid.
+  const adb = new FakeAdb(api31({ agents: new Map([[4675, 'own']]) }));
+  await withDriver(adb, async ({ driver, root }) => {
+    await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31' }));
+    await driver.prepare(app(), signal());
+    assert.ok(adb.shell().some(words => words.join(' ') === 'kill 4675'));
+    assert.equal(driver.preparation().sweptLeftovers, true);
+  });
+});
+
+test('a takeover that removes an agent forward its dead holder never listed records sweptLeftovers', async () => {
+  const adb = new FakeAdb(api31());
+  adb.forwards = [{ serial: 'emulator-5554', local: 'tcp:65436', remote: 'localabstract:mobilecli-server' }];
+  await withDriver(adb, async ({ driver, root }) => {
+    await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31' }));
+    await driver.prepare(app(), signal());
+    assert.ok(adb.calls.some(call => call.join(' ') === '-s emulator-5554 forward --remove tcp:65436'));
+    assert.equal(driver.preparation().sweptLeftovers, true);
+  });
+});
+
 test('another bridge-owned agent is killed by pid, and this serial\'s agent forwards removed, without sweptLeftovers', async () => {
   const adb = new FakeAdb(api31({ fixtures: 'api36', api: '36', agents: new Map([[9983, 'own']]) }));
   adb.forwards = (await readFile(join(FIXTURES, 'forward-list-two-emulators.txt'), 'utf8')).trim().split('\n')

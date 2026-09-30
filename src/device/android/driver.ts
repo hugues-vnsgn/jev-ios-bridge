@@ -152,19 +152,6 @@ function typedFieldIn(snapshot: Snapshot, field: Element): Element | undefined {
 const ownedAgent = (serial: string, pid: number) => `agent ${serial} ${String(pid)}`;
 const ownedForward = (serial: string, port: number) => `forward ${serial} tcp:${String(port)}`;
 
-/** What a dead holder listed on this serial. Other entries (another serial, or phase 5's log streams) aren't swept here. */
-function listedLeftovers(holder: LeaseHolder | undefined, serial: string): { pids: Set<number>; forwards: Set<string> } {
-  const pids = new Set<number>();
-  const forwards = new Set<string>();
-  for (const entry of holder?.ownedProcesses ?? []) {
-    const [kind, onSerial, value] = entry.split(' ');
-    if (onSerial !== serial || value === undefined) continue;
-    if (kind === 'agent' && /^\d+$/.test(value)) pids.add(Number(value));
-    if (kind === 'forward' && /^tcp:\d+$/.test(value)) forwards.add(value);
-  }
-  return { pids, forwards };
-}
-
 /**
  * The Android device driver (release spec phase 4): drives mobilecli's device agent directly, over `adb`
  * and JSON-RPC, and never runs mobilecli (ADR-0006). `prepare` takes the device lease on the device
@@ -521,26 +508,26 @@ export class AndroidDriver implements DeviceDriver {
   /**
    * The agent check and sweep (item 2, open point 22). A foreign agent refuses the run, untouched. Every
    * other agent is the bridge's own and, with this run holding the lease, can't belong to a live run: it is
-   * killed by pid. With no agent left, this serial's agent forwards go too; a listed forward now pointing
-   * elsewhere isn't the dead holder's any more. True when a dead holder's listed agent or forward was swept.
+   * killed by pid. With no agent left, this serial's agent forwards go too; a forward pointing elsewhere
+   * isn't an agent's, whatever a dead holder listed. True when a dead holder's takeover swept anything, listed
+   * or not: a holder that crashed between starting its agent and recording its pid left an unlisted one.
    */
   private async checkAgents(serial: string, identity: string, deadHolder: LeaseHolder | undefined, signal: AbortSignal): Promise<boolean> {
     const agents = await this.agentsOn(serial, signal);
     if (agents.some(agent => !agent.own)) {
       throw foreignAgentFound(identity);
     }
-    const listed = listedLeftovers(deadHolder, serial);
     let swept = false;
     for (const agent of agents) {
       await this.killAgent(serial, agent.pid, signal);
-      if (listed.pids.has(agent.pid)) swept = true;
+      swept = true;
     }
     for (const [local, remote] of await this.forwardsOn(serial, signal)) {
       if (remote !== AGENT_SOCKET) continue;
       await this.removeForward(serial, local, signal);
-      if (listed.forwards.has(local)) swept = true;
+      swept = true;
     }
-    return swept;
+    return swept && deadHolder !== undefined;
   }
 
   /**
