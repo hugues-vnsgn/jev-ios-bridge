@@ -46,3 +46,16 @@ Gates: `npm run check` green at commit `2078122` (typecheck, 212/212 tests, buil
 7. **Reworded both src comments** (`src/contracts/index.ts`'s `Element.selectable`, `src/scripted/select.ts`'s `selectable()`) to describe the marker in plain words instead of the non-glossary term "lifted button text": text Android shows inside a button, which the mapping lifts onto the button and marks unselectable.
 
 Gates: `npm run check` green at commit `5e88209` (typecheck, 215/215 tests, build), worktree clean. Log: `$TMPDIR/implement-delegate-05-check.log`.
+
+**implementer-05, review round 2, 2026-09-30.**
+
+Note for a reader of the first comment above (2026-09-30): "on both platforms" (line 30) and "`resolveActionTarget` reports `TARGET_UNAVAILABLE`" (line 34) are both stale. Round 1 made the placeholder swap Android-only (finding 2), and round 2's item below made `selectable: false` give `TARGET_MISSING` instead. Round 1's own numbered list above is current.
+
+Fixed all four round-2 findings:
+
+1. **Stale doc comment, and one flag instead of two checks.** `renderAssertionState`'s doc comment (`src/scripted/observe.ts`) now says the platform also decides whether a placeholder counts as evidence and replaces `label`. The two `platform === 'android'` checks are replaced by one `SHOWS_PLACEHOLDER: Record<Platform, boolean>` beside `HEADERS`, read by both `isVisibleEvidence` and the render mapping.
+2. **`tests/fixtures/golden.ts`'s comment now matches its `unknown` signature**: it JSON-encodes any JSON-serializable value; the Android render golden (today's one caller) happens to freeze a string.
+3. **Test wording.** Renamed the test title to "on Android, a field carrying both a label and a placeholder shows only the placeholder" (`tests/scripted-jev-android.test.ts`), and the `lifted` variable in the new absent-guard test (`tests/scripted-run.test.ts`) to `unselectable`.
+4. **This note**, above.
+
+Gates: `npm run check` green at commit `2b9dc10` (typecheck, 215/215 tests, build), worktree clean. Log: `$TMPDIR/implement-delegate-05-check.log`.
