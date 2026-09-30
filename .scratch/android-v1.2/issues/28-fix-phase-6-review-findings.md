@@ -1,6 +1,7 @@
 # Phase 6: fix the whole-branch review findings
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: claude-issue-28
 Blocked by: none
 
 Spec: [../spec.md](../spec.md), "Phase 6", and Issues 21 and 22 with their comments. A two-axis `/code-review` of phase 6 (`agent/android-v1.2-phase5...agent/android-v1.2-phase6`) found the items below. Fix each, test first, and keep every other behaviour as it is.
