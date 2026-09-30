@@ -2,7 +2,7 @@ import { setTimeout as delay } from 'node:timers/promises';
 import type { Action, ActionScenarioContext, ActOutcome, DeviceDriver, Element, Platform, PrepareScenarioContext, RunLog, Snapshot, Verdict } from '../contracts/index.js';
 import { isActOutcome } from '../contracts/index.js';
 import { DeviceCliError, DeviceReasonError, StaleSnapshotError } from '../device/index.js';
-import type { AssertionJudgment, ScriptedJudge, ScriptedScenario, ScriptedScenarioAndroid, ScriptedStep } from './contracts.js';
+import type { AssertionJudgment, ScriptedJudge, ScriptedScenario, ScriptedStep } from './contracts.js';
 import { SCRIPTED_JEV_MODEL, ScriptedJevError } from './jev.js';
 import { PROJECTION_RULES, renderAssertionState, ScriptedObservationError } from './observe.js';
 import { buildScriptedReport, type ScriptedReport } from './report.js';
@@ -46,11 +46,6 @@ function bounded(value: number | undefined, fallback: number, minimum: number, m
   const selected = value ?? fallback;
   if (!Number.isSafeInteger(selected) || selected < minimum || selected > maximum) throw new RangeError('Invalid script run limit');
   return selected;
-}
-
-/** Narrows `script` to its Android shape from `platform`, the one place the script's platform is read. */
-function isAndroidScenario(script: ScriptedScenario, platform: Platform): script is ScriptedScenarioAndroid {
-  return platform === 'android';
 }
 
 function prepareContext(script: ScriptedScenario, platform: Platform): PrepareScenarioContext {
@@ -213,19 +208,14 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
   // It may itself carry `settled: false` ("screen still changing"); "settled snapshot" (CONTEXT.md) means a
   // screen that did stop changing, so this one isn't always that.
   let nextSnapshot: Snapshot | undefined;
-  // The screen and shown value (if any) an act() result carries, whether bare or wrapped in an ActOutcome.
-  const actOutcomeOf = (result: Snapshot | ActOutcome | undefined | void): { screen: Snapshot; shownValue?: string } | undefined => {
+  // Keeps the screen an act() result carries, for the next step to reuse instead of capturing again, and
+  // returns the shown value it carried, if any (only a replace-text outcome has one).
+  const keepActResult = (result: Snapshot | ActOutcome | undefined | void): string | undefined => {
     if (!result) return undefined;
-    return isActOutcome(result) ? { screen: result.screen, shownValue: result.shownValue } : { screen: result };
-  };
-  // Records the screen an act() result carries, for the next step to reuse instead of capturing again, and
-  // returns the shown value it carried, if any.
-  const shownValueAfter = (result: Snapshot | ActOutcome | undefined | void): string | undefined => {
-    const outcome = actOutcomeOf(result);
-    if (!outcome) return undefined;
-    nextSnapshot = outcome.screen;
-    phaseTimingsMs.verifyMs += outcome.screen.verifyMs ?? 0;
-    return outcome.shownValue;
+    const screen = isActOutcome(result) ? result.screen : result;
+    nextSnapshot = screen;
+    phaseTimingsMs.verifyMs += screen.verifyMs ?? 0;
+    return isActOutcome(result) ? result.shownValue : undefined;
   };
   const evidenceFields = (snapshot: Snapshot) => ({
     ...(snapshot.screenshotPath ? { screenshotPath: snapshot.screenshotPath } : {}),
@@ -237,7 +227,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
     // step), not on the action event of the step that acted.
     ...(snapshot.settled === false ? { settled: false } : {}),
   });
-  const android = isAndroidScenario(script, platform);
+  const android = script.platform === 'android';
 
   try {
     // An Android app has no bundle ID, so an Android run records null.
@@ -294,7 +284,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
           () => abortableOperation(() => options.driver.act(deviceAction(step, ref), selected, actionContext, signal), signal),
           durationMs => { actDurationMs += durationMs; });
         let shownValue: string | undefined;
-        try { shownValue = shownValueAfter(await act()); }
+        try { shownValue = keepActResult(await act()); }
         catch (error) {
           if (!(error instanceof StaleSnapshotError)) throw error;
           phase = 'reobserve';
@@ -308,7 +298,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
           ref = resolveActionTarget(fresh, step.action.selector, requiredAction(step), selectionOptions);
           selected = fresh;
           phase = 'act';
-          shownValue = shownValueAfter(await act());
+          shownValue = keepActResult(await act());
         }
         await options.log.append('action', { step: steps, stepId: step.id, action: step.action.kind,
           selector: step.action.selector, resolvedRef: ref.ref, actDurationMs,
