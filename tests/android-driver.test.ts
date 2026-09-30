@@ -9,7 +9,7 @@ import { DeviceReasonError, StaleSnapshotError } from '../src/device/index.js';
 import { adbRunner, type AdbRunner } from '../src/device/android/adb.js';
 import { DeviceAgentError, type AndroidNode, type DeviceAgentClient } from '../src/device/android/agent-client.js';
 import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
-import { AGENT_DEVICE_PATH, AGENT_START_COMMAND, AndroidDriver, type AndroidDriverOptions } from '../src/device/android/driver.js';
+import { AGENT_DEVICE_PATH, AGENT_START_COMMAND, AndroidDriver, productionClock, type AndroidDriverOptions } from '../src/device/android/driver.js';
 import type { AppExitWatch } from '../src/device/android/exit-watch.js';
 import { createDriverFactory } from '../src/device/factory.js';
 import { OutcomeUnknownError } from '../src/device/android/ledger.js';
@@ -1824,4 +1824,11 @@ test('end to end: a normal run passes, its step tails hold the app log redacted,
   const tails = run.events.filter(event => event.type === 'step').map(event => (event.data.logTails as Record<string, string> | undefined)?.logcat);
   assert.deepEqual(tails, [1, 2].map(() => '2026-09-28 23:16:14.927 10226  9784  9784 I System.out: city is [REDACTED]\n'));
   assertCleanedUp(run);
+});
+
+test('the production clock gives AbortSignal.timeout a whole number of ms, since elapsed times from performance.now() are fractional', () => {
+  // A real run subtracts performance.now() readings (4999.997666 ms left), which AbortSignal.timeout rejects.
+  const signal = productionClock.timeout(4_999.997666);
+  assert.equal(signal.aborted, false);
+  assert.doesNotThrow(() => productionClock.timeout(0.2));
 });
