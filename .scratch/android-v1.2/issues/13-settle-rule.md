@@ -1,6 +1,7 @@
 # Phase 4: the settle rule
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase4 at e3ef028
 Claimed by: claude-issue-13
 Blocked by: none
 
