@@ -14,10 +14,11 @@ const androidPackage = /^[A-Za-z][A-Za-z0-9_]*(?:\.[A-Za-z][A-Za-z0-9_]*)+$/;
 // Relative (a leading dot, then a dotted name) or fully qualified (two or more dot-separated parts). A bare
 // name with neither a leading dot nor an internal one is ambiguous, so it's rejected.
 const androidActivity = /^(?:\.[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*|[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)+)$/;
-// device.serial is the adb serial as `adb devices` prints it (network serials carry a `:`).
-const androidSerial = /^[A-Za-z0-9._:-]{1,100}$/;
-// device.avd is an emulator's AVD name.
-const androidAvd = /^[A-Za-z0-9._-]{1,100}$/;
+// device.serial is the adb serial as `adb devices` prints it (network serials carry a `:`). Exported so
+// the CLI's device choice can check JEV_ANDROID_DEVICE against the same pattern.
+export const androidSerial = /^[A-Za-z0-9._:-]{1,100}$/;
+// device.avd is an emulator's AVD name. Exported for the same reason.
+export const androidAvd = /^[A-Za-z0-9._-]{1,100}$/;
 // Any control character (C0, DEL, and C1), banned from Android typed values.
 const controlCharacter = /[\u0000-\u001f\u007f-\u009f]/;
 

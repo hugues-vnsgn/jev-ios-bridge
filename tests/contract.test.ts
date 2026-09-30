@@ -4,6 +4,7 @@
  * `UPDATE_GOLDEN=1 npm test` and review the golden diff; renames, removals, and meaning changes need 2.0.
  */
 import assert from 'node:assert/strict';
+import { randomUUID } from 'node:crypto';
 import { execFile, spawn } from 'node:child_process';
 import { mkdtemp, readdir, readFile, rm, writeFile, mkdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -318,12 +319,15 @@ test('contract: CLI exit codes for every outcome and start failure', { timeout: 
     const valid = await write('valid.json', JSON.stringify(validScript));
     const unversioned = await write('unversioned.json', JSON.stringify(scriptCases.missingVersion));
     const broken = await write('broken.json', '{ not json');
+    const androidWithoutDevice = await write('android-no-device.json', JSON.stringify(
+      { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' }, values: {}, steps: [checkpoint] }));
     const cli = join(process.cwd(), 'src/cli.ts');
     const tsx = import.meta.resolve('tsx');
     const env = (extra: Record<string, string>): NodeJS.ProcessEnv => {
       const base: NodeJS.ProcessEnv = { ...process.env, JEV_RUNS_DIR: runs };
       delete base.TYPESAFE_API_KEY;
       delete base.JEV_DEVICE_UDID;
+      delete base.JEV_ANDROID_DEVICE;
       return { ...base, ...extra };
     };
     const cases: Array<[string, string[], Record<string, string>]> = [
@@ -335,6 +339,9 @@ test('contract: CLI exit codes for every outcome and start failure', { timeout: 
       ['runWithoutKey', ['run', valid], {}],
       ['runWithoutSimulator', ['run', valid], { TYPESAFE_API_KEY: 'contract-test-key' }],
       ['runWithDeviceAlias', ['run', valid], { TYPESAFE_API_KEY: 'contract-test-key', JEV_DEVICE_UDID: 'booted' }],
+      ['runAndroidWithoutDevice', ['run', androidWithoutDevice], { TYPESAFE_API_KEY: 'contract-test-key' }],
+      ['runAndroidWithInvalidDevice', ['run', androidWithoutDevice],
+        { TYPESAFE_API_KEY: 'contract-test-key', JEV_ANDROID_DEVICE: 'has a space' }],
       ['reportPassed', ['report', 'passed'], {}],
       ['reportFailed', ['report', 'failed'], {}],
       ['reportInconclusive', ['report', 'inconclusive'], {}],
@@ -374,4 +381,47 @@ test('contract: the CLI prints the schema message for an unversioned script', { 
     assert.equal(failure.code, 3);
     assert.match(failure.stderr, /Add "version": 1 to the script/);
   } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('contract: the CLI names the missing or malformed Android device, and the driver refusal once one is chosen', { timeout: 20_000 }, async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-contract-android-message-'));
+  try {
+    const cli = join(process.cwd(), 'src/cli.ts');
+    const tsx = import.meta.resolve('tsx');
+    const env = (extra: Record<string, string>): NodeJS.ProcessEnv => {
+      const base: NodeJS.ProcessEnv = { ...process.env, TYPESAFE_API_KEY: 'contract-test-key' };
+      delete base.JEV_DEVICE_UDID;
+      delete base.JEV_ANDROID_DEVICE;
+      return { ...base, ...extra };
+    };
+    const run = async (script: unknown, extra: Record<string, string>) => {
+      const path = join(root, `${randomUUID()}.json`);
+      await writeFile(path, JSON.stringify(script));
+      return execute(process.execPath, ['--import', tsx, cli, 'run', path], { cwd: root, env: env(extra) })
+        .then(() => assert.fail('must exit 3'), (error: { code: number; stderr: string }) => error);
+    };
+    const noDevice = await run(
+      { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' }, values: {}, steps: [checkpoint] }, {});
+    assert.equal(noDevice.code, 3);
+    assert.match(noDevice.stderr, /Set device\.serial or device\.avd in the scenario, or JEV_ANDROID_DEVICE/);
+
+    const invalidDevice = await run(
+      { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' }, values: {}, steps: [checkpoint] },
+      { JEV_ANDROID_DEVICE: 'has a space' });
+    assert.equal(invalidDevice.code, 3);
+    assert.match(invalidDevice.stderr, /JEV_ANDROID_DEVICE must be an adb serial/);
+    assert.match(invalidDevice.stderr, /AVD name/);
+
+    // The script's own device.serial wins over a malformed JEV_ANDROID_DEVICE, so the pre-run check
+    // passes; the run then reaches the driver factory, which refuses every Android script for now.
+    const refused = await run(scriptCases.androidWithSerial, { JEV_ANDROID_DEVICE: 'has a space' });
+    assert.equal(refused.code, 3);
+    assert.match(refused.stderr, /Android isn't available in this build/);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('contract: --help names JEV_ANDROID_DEVICE', { timeout: 10_000 }, async () => {
+  const { stdout } = await execute(process.execPath,
+    ['--import', import.meta.resolve('tsx'), join(process.cwd(), 'src/cli.ts'), '--help'], { cwd: process.cwd() });
+  assert.match(stdout, /JEV_ANDROID_DEVICE/);
 });

@@ -1,6 +1,7 @@
 # Phase 3: choosing the Android device, the entry points, and refusing Android until phase 4
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: implementer-06
 Blocked by: 03, 04
 
 Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase 3](../../android-support/release-spec.md#phase-3-contract-additions-how-a-script-names-an-android-app-and-device-what-jev-sees-on-android-decisions-1-to-2-actions-across-android-versions-items-2-to-4-log-pane-and-app-exit-detection-item-6-where-android-plugs-into-the-code-items-4-8-and-9) items 2, 6 and 7, with their part of item 8, and [open point 20](../../android-support/release-spec.md#open-points-for-the-executor). Read them in full. The detail below only adds acceptance criteria.
@@ -21,3 +22,15 @@ Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase
 - No device, simulator or emulator is touched.
 
 ## Comments
+
+**2026-09-30, implementer-06, review round 1 fixes:**
+
+- **The driver refusal is now visible.** The factory throws a new `DriverUnavailableError` (`src/device/index.ts`) instead of a plain `Error`. `src/cli.ts`'s catch prints its message on stderr (still exit 3), and MCP's `start_scenario` handler (`src/mcp/index.ts`) returns it in the tool's error reply instead of the generic failure text. New tests: `tests/contract.test.ts` ("the CLI names the missing or malformed Android device, and the driver refusal once one is chosen") and `tests/mcp.test.ts` ("start_scenario shows the driver refusal for an Android script instead of a generic failure").
+- **`tests/mcp.test.ts` is restored byte for byte against 505531c.** The description check moved to its own new test ("start_scenario's description names both iOS and Android"); `git diff 505531c -- tests/mcp.test.ts` shows only additions.
+- **New goldens now prove the Android path, not a coincidence.** `tests/contract.test.ts` gained a test pinning CLI stderr for: an Android script with no device; a malformed `JEV_ANDROID_DEVICE`; and an Android script naming `device.serial` with `JEV_DEVICE_UDID` unset and a malformed `JEV_ANDROID_DEVICE`, which passes the pre-check (script value wins) and ends at the driver's refusal message. The two `cases` entries and the `androidWithoutDevice` fixture already in `tests/contract.test.ts`'s CLI-exit-codes test are the golden additions release item 8 asks for; exit codes alone can't distinguish the new check from the old iOS-only one (both happened to exit 3), so this message-pinning test is what proves the wiring.
+- **CLI help is tested.** New test: "contract: --help names JEV_ANDROID_DEVICE" (it already passed, since the text was added in round 1's original pass; it just had no seam before).
+
+**2026-09-30, implementer-06, review round 2 fixes (standards, small):**
+
+- **Shared MCP session harness.** `tests/fixtures/mcp-session.ts`'s `openMcpSession` now takes an options object: `entryPoint: 'cli'` starts the real `src/cli.ts mcp` instead of the fixture server, and `env` merges overrides over `process.env`. It also gained `listTools()`. Default behaviour (the fixture server, no env overrides) is unchanged, so `tests/contract.test.ts`'s existing calls still work untouched. The two new tests in `tests/mcp.test.ts` now use the shared session instead of their own inline spawn/readline/pending-map harness; the original smoke test is untouched (still byte-identical to 505531c).
+- **`failed()` takes an optional message.** `src/mcp/index.ts`'s `failed` now accepts an optional message, defaulting to the existing generic text (every other call site is unchanged, so its default text and behaviour stay byte-identical). `start_scenario`'s catch passes `DriverUnavailableError`'s message through `failed(...)` instead of rebuilding `{ ...result(...), isError: true }` by hand.

@@ -1,7 +1,6 @@
 /**
- * A started, initialized MCP session with the fixture server (tests/fixtures/mcp-server.ts) over stdio,
- * in its own temporary run folder. Call close() in a finally block: it lets the server finish its runs and
- * exit, then deletes the folder.
+ * A started, initialized MCP session over stdio. Call close() in a finally block: it lets the server
+ * finish its runs and exit, then deletes any temporary folder this session made.
  */
 import { spawn } from 'node:child_process';
 import { mkdtemp, rm } from 'node:fs/promises';
@@ -12,13 +11,30 @@ import { createInterface } from 'node:readline';
 export interface McpSession {
   /** Calls a tool and resolves with the JSON-RPC result. */
   callTool(name: string, args: object): Promise<any>;
+  /** Lists the server's tools (name, description, inputSchema, ...), as `tools/list` returns them. */
+  listTools(): Promise<any[]>;
   close(): Promise<void>;
 }
 
-export async function openMcpSession(clientName: string): Promise<McpSession> {
-  const root = await mkdtemp(join(tmpdir(), `jev-mcp-${clientName}-`));
-  const child = spawn(process.execPath, ['--import', 'tsx', 'tests/fixtures/mcp-server.ts', root],
-    { stdio: ['pipe', 'pipe', 'pipe'] });
+export interface McpSessionOptions {
+  /**
+   * Which server to start. `'fixture'` (the default) runs tests/fixtures/mcp-server.ts in its own
+   * temporary run folder. `'cli'` runs the real `src/cli.ts mcp`, inheriting the test process's working
+   * directory, for checks that need the bridge's actual tool descriptions and driver wiring.
+   */
+  entryPoint?: 'fixture' | 'cli';
+  /** Environment overrides, merged over process.env. Only meaningful with entryPoint: 'cli'. */
+  env?: NodeJS.ProcessEnv;
+}
+
+export async function openMcpSession(clientName: string, options: McpSessionOptions = {}): Promise<McpSession> {
+  const cli = options.entryPoint === 'cli';
+  const root = cli ? undefined : await mkdtemp(join(tmpdir(), `jev-mcp-${clientName}-`));
+  const child = cli
+    ? spawn(process.execPath, ['--import', 'tsx', 'src/cli.ts', 'mcp'],
+        { env: { ...process.env, ...options.env }, stdio: ['pipe', 'pipe', 'pipe'] })
+    : spawn(process.execPath, ['--import', 'tsx', 'tests/fixtures/mcp-server.ts', root!],
+        { stdio: ['pipe', 'pipe', 'pipe'] });
   const pending = new Map<number, (value: any) => void>();
   const lines = createInterface({ input: child.stdout });
   lines.on('line', line => { const value = JSON.parse(line); pending.get(value.id)?.(value); pending.delete(value.id); });
@@ -35,7 +51,7 @@ export async function openMcpSession(clientName: string): Promise<McpSession> {
     const timer = setTimeout(() => child.kill('SIGTERM'), 5_000);
     await exited;
     clearTimeout(timer);
-    await rm(root, { recursive: true, force: true });
+    if (root) await rm(root, { recursive: true, force: true });
   };
   try {
     await request('initialize', { protocolVersion: '2025-03-26', capabilities: {}, clientInfo: { name: clientName, version: '1' } });
@@ -43,6 +59,7 @@ export async function openMcpSession(clientName: string): Promise<McpSession> {
   } catch (error) { await close(); throw error; }
   return {
     async callTool(name, args) { return (await request('tools/call', { name, arguments: args })).result; },
+    async listTools() { return (await request('tools/list', {})).result.tools; },
     close,
   };
 }
