@@ -19,7 +19,9 @@ Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase
 
 - Every existing `scripts.json` entry gives the same message at the same path. If one moves, fix the schema, not the golden file.
 - `mcp.json` changes only as item 1 describes.
-- No existing test changes except the two `tests/logpane.test.ts` calls.
+- No existing test changes except the two `tests/logpane.test.ts` calls and `tests/service.test.ts:134` (`built.push(appLabel(scenario.app))`).
+
+  2026-09-30, owner ruling: `tests/service.test.ts:134` may change, so `ScriptedScenario` can type Android scripts truthfully.
 - `npm run check` passes.
 - No device, simulator or emulator is touched.
 
