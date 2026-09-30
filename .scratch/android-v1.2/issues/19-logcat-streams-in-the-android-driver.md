@@ -1,6 +1,7 @@
 # Phase 5: the logcat streams in the Android driver
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: claude-issue-19
 Blocked by: none
 
 Spec: [../spec.md](../spec.md), "Phase 5". The work is [the release spec's phase 5](../../android-support/release-spec.md#phase-5-the-log-pane-and-app-exit-detection-log-pane-and-app-exit-detection-on-android-where-android-plugs-into-the-code-item-7) item 1 (the log stream), the stream side of item 4 (the events stream, `pidof`), step 4 of [phase 4's `close`](../../android-support/release-spec.md#phase-4-the-android-driver-domain-model-adr-0006-mobilecli-as-a-dependency-how-android-elements-map-onto-the-bridges-elements-how-a-script-names-an-android-app-and-device-actions-across-android-versions-where-android-plugs-into-the-code-items-2-5-6-and-8) (item 8), and the crash-takeover sweep of the streams (phase 2's holder record, release check 15). Read them in full, with the spec's "Phase 5" Implementation Decisions. The detail below only adds acceptance criteria.
