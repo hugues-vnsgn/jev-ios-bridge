@@ -1,6 +1,7 @@
 # Phase 3: choosing the Android device, the entry points, and refusing Android until phase 4
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase3 at d2b91a3
 Claimed by: implementer-06
 Blocked by: 03, 04
 
