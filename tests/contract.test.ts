@@ -318,12 +318,15 @@ test('contract: CLI exit codes for every outcome and start failure', { timeout: 
     const valid = await write('valid.json', JSON.stringify(validScript));
     const unversioned = await write('unversioned.json', JSON.stringify(scriptCases.missingVersion));
     const broken = await write('broken.json', '{ not json');
+    const androidWithoutDevice = await write('android-no-device.json', JSON.stringify(
+      { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' }, values: {}, steps: [checkpoint] }));
     const cli = join(process.cwd(), 'src/cli.ts');
     const tsx = import.meta.resolve('tsx');
     const env = (extra: Record<string, string>): NodeJS.ProcessEnv => {
       const base: NodeJS.ProcessEnv = { ...process.env, JEV_RUNS_DIR: runs };
       delete base.TYPESAFE_API_KEY;
       delete base.JEV_DEVICE_UDID;
+      delete base.JEV_ANDROID_DEVICE;
       return { ...base, ...extra };
     };
     const cases: Array<[string, string[], Record<string, string>]> = [
@@ -335,6 +338,9 @@ test('contract: CLI exit codes for every outcome and start failure', { timeout: 
       ['runWithoutKey', ['run', valid], {}],
       ['runWithoutSimulator', ['run', valid], { TYPESAFE_API_KEY: 'contract-test-key' }],
       ['runWithDeviceAlias', ['run', valid], { TYPESAFE_API_KEY: 'contract-test-key', JEV_DEVICE_UDID: 'booted' }],
+      ['runAndroidWithoutDevice', ['run', androidWithoutDevice], { TYPESAFE_API_KEY: 'contract-test-key' }],
+      ['runAndroidWithInvalidDevice', ['run', androidWithoutDevice],
+        { TYPESAFE_API_KEY: 'contract-test-key', JEV_ANDROID_DEVICE: 'has a space' }],
       ['reportPassed', ['report', 'passed'], {}],
       ['reportFailed', ['report', 'failed'], {}],
       ['reportInconclusive', ['report', 'inconclusive'], {}],
