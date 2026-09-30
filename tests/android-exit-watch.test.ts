@@ -12,10 +12,11 @@ const BEFORE_CAPTURES = Date.UTC(2026, 8, 28, 16, 0, 0) / 1000;
 
 function capture(run: string) {
   const meta = readFileSync(join(captures, run, 'meta.txt'), 'utf8');
+  const restart = meta.match(/^restart pid=(\d+)/m);
   return {
     package: run.startsWith('twin-') ? 'dev.jevbridge.diagnostic' : 'dev.jevbridge.logprobe',
     pid: Number(meta.match(/^(?:t0=\d+ )?pid=(\d+)/)![1]),
-    restartPid: meta.match(/^restart pid=(\d+)/m) ? Number(meta.match(/^restart pid=(\d+)/m)![1]) : undefined,
+    restartPid: restart ? Number(restart[1]) : undefined,
     events: readFileSync(join(captures, run, 'events.log'), 'utf8').split('\n').filter(line => line !== ''),
     appLog: readFileSync(join(captures, run, 'uid.log'), 'utf8').split('\n').filter(line => line !== ''),
   };
@@ -26,10 +27,11 @@ function watch(run: string, startTime = BEFORE_CAPTURES): AppExitWatch {
 }
 
 /** The run as the driver would see it: launched with the pid `pidof` found, then every events line. */
-function replay(run: string, pid = capture(run).pid): AppExitWatch {
+function replay(run: string, pid?: number): AppExitWatch {
+  const recorded = capture(run);
   const watcher = watch(run);
-  watcher.launched(pid);
-  for (const line of capture(run).events) watcher.feed(line);
+  watcher.launched(pid ?? recorded.pid);
+  for (const line of recorded.events) watcher.feed(line);
   return watcher;
 }
 
@@ -124,6 +126,21 @@ test('a crash seen before expectStop() still counts', () => {
   watcher.expectStop();
   for (const line of events.slice(crash + 1)) watcher.feed(line);
   assert.deepEqual(watcher.problem(), exited('crashed: IllegalStateException at MainActivity.java:59'));
+});
+
+test('a freeze seen before expectStop() still counts after the bridge\'s own stop', () => {
+  const watcher = replay('probe-anr');
+  watcher.expectStop();
+  watcher.feed('2026-09-28 23:19:02.000  1000   680   923 I am_kill : [0,11656,dev.jevbridge.logprobe,0,stop dev.jevbridge.logprobe due to from pid 12001,131212]');
+  assert.equal(watcher.running(), false);
+  assert.deepEqual(watcher.problem(), { code: 'APP_NOT_RESPONDING', note: 'not responding' });
+});
+
+test('an event for the launched pid matches by pid, as the prototype does, whatever process name it carries', () => {
+  const watcher = createExitWatch({ package: 'dev.jevbridge.logprobe', startTime: BEFORE_CAPTURES, utcOffsetMinutes: UTC_OFFSET });
+  watcher.launched(11064);
+  watcher.feed('2026-09-28 23:17:41.866  1000   680   721 I am_proc_died: [0,11064,dev.jevbridge.logprobe:main,0,2]');
+  assert.deepEqual(watcher.problem(), exited('exited'));
 });
 
 test('a freeze with a later exit is an exit', () => {
