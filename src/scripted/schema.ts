@@ -1,5 +1,5 @@
 import { z } from 'zod/v4';
-import { PLATFORMS } from '../contracts/index.js';
+import { PLATFORMS, type Platform } from '../contracts/index.js';
 import type { ScriptedScenario } from './contracts.js';
 import { ROLES } from './vocabulary.js';
 
@@ -233,7 +233,7 @@ function withoutUndefined(value: unknown): unknown {
 
 /** A script's own `platform` field decides which schema reads it; anything but exactly "android" reads as
  *  iOS, whose schema then reports its own `platform` mismatch if the value isn't "ios" either. */
-function platformOf(input: unknown): 'ios' | 'android' {
+function platformOf(input: unknown): Platform {
   return typeof input === 'object' && input !== null && 'platform' in input &&
     (input as { platform?: unknown }).platform === 'android' ? 'android' : 'ios';
 }

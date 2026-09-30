@@ -777,9 +777,8 @@ test('the started event names an iOS app by bundle ID and records a null bundle 
 
   // This Android half changes with the added contract (platform, package, activity, intentExtras, and the
   // Android projection rule); the iOS half above stays as it was.
-  const android = await startedOf({ version: 1, platform: 'android',
-    app: { package: 'com.example.android', activity: '.MainActivity', intentExtras: { screen: 'gallery' } },
-    values: {}, steps: [markerCheckpoint] });
+  const android = await startedOf(androidScript({
+    app: { activity: '.MainActivity', intentExtras: { screen: 'gallery' } }, steps: [markerCheckpoint] }));
   assert.deepEqual(Object.keys(android),
     ['mode', 'bundleId', 'platform', 'package', 'activity', 'intentExtras', 'bridgeVersion', 'jevModel', 'projectionRule', 'plannedSteps']);
   assert.equal(android.bundleId, null);
@@ -802,11 +801,11 @@ test('an Android started event defaults a missing activity to null and missing i
 });
 
 test('an Android run with no replace-text step gets a report.json with the app identity but no typedFields key', async () => {
-  await withRunLog('no-typed-fields', async (log, root, runId) => {
-    await runScriptedScenario({ runId, judge: markerJudge, log,
+  await withRunLog('no-typed-fields', async (log, root) => {
+    await runScriptedScenario({ runId: 'no-typed-fields', judge: markerJudge, log,
       scenario: androidScript({ steps: [markerCheckpoint] }),
       driver: { async prepare() {}, async observe() { return markerScreen(); }, async act() {}, async close() {} } });
-    const reportJson = JSON.parse(await readFile(join(root, runId, 'report.json'), 'utf8')) as Record<string, unknown>;
+    const reportJson = JSON.parse(await readFile(join(root, 'no-typed-fields', 'report.json'), 'utf8')) as Record<string, unknown>;
     assert.equal(reportJson.platform, 'android');
     assert.equal(reportJson.package, 'com.example.android');
     assert.equal('typedFields' in reportJson, false);
@@ -916,15 +915,15 @@ test('an Android shown value echoing a typed value is redacted in run.jsonl, rep
       { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Confirm' }] },
         assertions: [{ id: 'shown', claim: 'Confirm is visible' }] },
     ] });
-  await withRunLog('redacted-android', async (log, root, runId) => {
-    const report = await runScriptedScenario({ runId, scenario, log,
+  await withRunLog('redacted-android', async (log, root) => {
+    const report = await runScriptedScenario({ runId: 'redacted-android', scenario, log,
       driver: { async prepare() {}, async observe() { return snapshot([field]); },
         async act() { return { screen: snapshot([confirm]), shownValue: 'private-value' }; }, async close() {} },
       judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
-    const raw = await readFile(join(root, runId, 'run.jsonl'), 'utf8');
+    const raw = await readFile(join(root, 'redacted-android', 'run.jsonl'), 'utf8');
     assert.doesNotMatch(raw, /private-value/);
     assert.match(raw, /\[REDACTED\]/);
-    const reportJson = await readFile(join(root, runId, 'report.json'), 'utf8');
+    const reportJson = await readFile(join(root, 'redacted-android', 'report.json'), 'utf8');
     assert.doesNotMatch(reportJson, /private-value/);
     assert.doesNotMatch(renderScriptedReport(report), /private-value/);
   }, { values: Object.values(scenario.values) });
@@ -941,12 +940,12 @@ test('the run log keeps projectionRule unredacted even when a script value equal
       { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Confirm' }] },
         assertions: [{ id: 'shown', claim: 'Confirm is visible' }] },
     ] });
-  await withRunLog('projection-rule-collision', async (log, root, runId) => {
-    await runScriptedScenario({ runId, scenario, log,
+  await withRunLog('projection-rule-collision', async (log, root) => {
+    await runScriptedScenario({ runId: 'projection-rule-collision', scenario, log,
       driver: { async prepare() {}, async observe() { return snapshot([field]); },
         async act() { return { screen: snapshot([confirm]), shownValue: 'android-full-text-v1' }; }, async close() {} },
       judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
-    const events = (await readFile(join(root, runId, 'run.jsonl'), 'utf8')).trim().split('\n')
+    const events = (await readFile(join(root, 'projection-rule-collision', 'run.jsonl'), 'utf8')).trim().split('\n')
       .map(line => JSON.parse(line) as RunEvent);
     const started = events.find(event => event.type === 'started')!.data;
     assert.equal(started.projectionRule, 'android-full-text-v1');
@@ -970,17 +969,17 @@ test('a typed value that collides with "android" never corrupts the recorded pla
         assertions: [{ id: 'shown', claim: 'Confirm is visible' }] },
     ],
   });
-  await withRunLog('platform-redaction-collision', async (log, root, runId) => {
-    const report = await runScriptedScenario({ runId, scenario, log,
+  await withRunLog('platform-redaction-collision', async (log, root) => {
+    const report = await runScriptedScenario({ runId: 'platform-redaction-collision', scenario, log,
       driver: { async prepare() {}, async observe() { return snapshot([field]); },
         async act() { return { screen: afterType, shownValue: 'and' }; }, async close() {},
         preparation: () => ({ deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: 'abc123' }) },
       judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
-    const raw = await readFile(join(root, runId, 'run.jsonl'), 'utf8');
+    const raw = await readFile(join(root, 'platform-redaction-collision', 'run.jsonl'), 'utf8');
     const started = raw.trim().split('\n').map(line => JSON.parse(line) as RunEvent)
       .find(event => event.type === 'started')!.data;
     assert.equal(started.platform, 'android');
-    const reportJson = JSON.parse(await readFile(join(root, runId, 'report.json'), 'utf8')) as Record<string, unknown>;
+    const reportJson = JSON.parse(await readFile(join(root, 'platform-redaction-collision', 'report.json'), 'utf8')) as Record<string, unknown>;
     assert.equal(reportJson.platform, 'android');
     assert.equal(reportJson.package, 'com.example.testapp');
     assert.equal(reportJson.activity, '.MainActivity');

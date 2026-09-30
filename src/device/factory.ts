@@ -8,8 +8,8 @@ export interface DriverFactoryOptions {
 
 /**
  * Builds the device driver for one script. One bridge process serves scripts for every platform, so
- * the driver is chosen per script, never per process. This build has no Android driver yet, so an
- * Android script is refused here, with a clear start error, rather than ever reaching the iOS driver.
+ * the driver is chosen per script, never per process. No Android driver exists, so an Android script is
+ * refused here, with a clear start error, rather than reaching the iOS driver.
  */
 export function createDriverFactory(options: DriverFactoryOptions): (scenario: ScriptedScenario) => DeviceDriver {
   return (scenario) => {

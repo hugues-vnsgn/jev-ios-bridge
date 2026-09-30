@@ -71,9 +71,9 @@ export function recordedPlatform(events: RunEvent[]): Platform {
 }
 
 /** The Android-only fields, built from `started` and the `action` events; `{}` on iOS runs. */
-function androidReportFields(platform: Platform, started: RunEvent | undefined, events: RunEvent[]):
+function androidReportFields(started: RunEvent | undefined, events: RunEvent[]):
   Pick<ReportJson, 'platform' | 'package' | 'activity' | 'intentExtras' | 'typedFields'> {
-  if (platform !== 'android' || !started) return {};
+  if (started?.data.platform !== 'android') return {};
   const typedFields = typedFieldsOf(events);
   return {
     platform: 'android',
@@ -147,6 +147,6 @@ export function buildReportJson(events: RunEvent[]): ReportJson {
       screenshots: events.flatMap(event => event.type === 'step' && typeof event.data.screenshotPath === 'string'
         ? [event.data.screenshotPath] : []),
     },
-    ...androidReportFields(recordedPlatform(events), started, events),
+    ...androidReportFields(started, events),
   };
 }

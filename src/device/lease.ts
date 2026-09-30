@@ -14,7 +14,7 @@ import { processAlive } from '../process.js';
 /** Where device leases live. Documented so a person can inspect one; the bridge clears stale ones itself. */
 export const DEFAULT_LEASE_ROOT = join(tmpdir(), 'jev-ios-bridge-device-locks');
 
-/** Who issues a device command, so a driver can fence one kind at once. Phase 4 adds Android's kinds. */
+/** Who issues a device command, so a driver can fence one kind at once. Today only MobileBuildMCP does. */
 export type DeviceCommandKind = 'mobilebuildmcp';
 
 /** Who held a lease: the run, its bridge process, and what that run started that outlives a crash. */

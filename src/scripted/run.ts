@@ -155,7 +155,8 @@ async function waitUntil(step: Extract<ScriptedStep, { kind: 'wait' }>, initial:
 /** Bridge-owned execution of a fully authored action script. */
 export async function runScriptedScenario(options: ScriptedRunOptions): Promise<ScriptedReport> {
   const script = parseScriptedScenario(options.scenario);
-  // The one place the platform is read off the script; every later branch reads this, not `script.platform`.
+  // The one place the platform is read off the script; every later branch reads this, not `script.platform`,
+  // except the type narrowing `script.platform === 'android'` needs, which can only read the discriminant itself.
   const platform: Platform = script.platform ?? 'ios';
   const limits = options.limits ?? {};
   const maxSteps = bounded(limits.maxSteps, 100, 1, 100);
@@ -212,10 +213,11 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
   // returns the shown value it carried, if any (only a replace-text outcome has one).
   const keepActResult = (result: Snapshot | ActOutcome | undefined | void): string | undefined => {
     if (!result) return undefined;
-    const screen = isActOutcome(result) ? result.screen : result;
+    const outcome = isActOutcome(result);
+    const screen = outcome ? result.screen : result;
     nextSnapshot = screen;
     phaseTimingsMs.verifyMs += screen.verifyMs ?? 0;
-    return isActOutcome(result) ? result.shownValue : undefined;
+    return outcome ? result.shownValue : undefined;
   };
   const evidenceFields = (snapshot: Snapshot) => ({
     ...(snapshot.screenshotPath ? { screenshotPath: snapshot.screenshotPath } : {}),

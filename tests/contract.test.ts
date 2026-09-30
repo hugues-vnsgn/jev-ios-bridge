@@ -363,7 +363,7 @@ test('contract: CLI exit codes for every outcome and start failure', { timeout: 
     const unversioned = await write('unversioned.json', JSON.stringify(scriptCases.missingVersion));
     const broken = await write('broken.json', '{ not json');
     const androidWithoutDevice = await write('android-no-device.json', JSON.stringify(
-      { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' }, values: {}, steps: [checkpoint] }));
+      androidScript({ app: { package: 'com.hugues.test_cmp' }, steps: [checkpoint as ScriptedStep] })));
     const cli = join(process.cwd(), 'src/cli.ts');
     const tsx = import.meta.resolve('tsx');
     const env = (extra: Record<string, string>): NodeJS.ProcessEnv => {

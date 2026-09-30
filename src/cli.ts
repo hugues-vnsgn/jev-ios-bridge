@@ -38,6 +38,13 @@ Exit codes: 0 passed, 1 failed, 2 inconclusive, 3 could not start.`;
 /** A problem found before any run started. The message is safe to print. */
 class StartError extends Error {}
 
+/** No device was configured, or the one named doesn't have the shape the platform needs: either way, the
+ *  pre-run device check's own message (not the generic fallback) is safe to print. */
+function isDeviceSelectionError(error: unknown): error is DeviceCliError | DeviceReasonError {
+  return (error instanceof DeviceCliError || error instanceof DeviceReasonError) &&
+    ['NO_DEVICE', 'INVALID_DEVICE'].includes(error.code);
+}
+
 const exitFor = (verdict: Verdict) => EXIT[verdict];
 
 function limitValue(name: string, raw: string | undefined): number | undefined {
@@ -149,9 +156,7 @@ async function main(): Promise<void> {
 
 main().catch((error: unknown) => {
   if (error instanceof z.ZodError) console.error(`Script is invalid:\n${z.prettifyError(error)}`);
-  else if (error instanceof StartError || error instanceof DriverUnavailableError ||
-    (error instanceof DeviceCliError && ['NO_DEVICE', 'INVALID_DEVICE'].includes(error.code)) ||
-    (error instanceof DeviceReasonError && ['NO_DEVICE', 'INVALID_DEVICE'].includes(error.code))) {
+  else if (error instanceof StartError || error instanceof DriverUnavailableError || isDeviceSelectionError(error)) {
     console.error(error.message);
   } else console.error('Bridge could not start. Check arguments, script, and environment.');
   process.exitCode = EXIT.couldNotStart;
