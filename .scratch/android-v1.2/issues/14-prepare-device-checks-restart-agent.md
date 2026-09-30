@@ -51,3 +51,73 @@ While recording, also capture one `device.dump.ui` of an empty classic `EditText
 - The lease is taken before the first command that touches the device; a test pins the order.
 - No command in any test calls the mobilecli program or `pkill`.
 - `npm run check` passes. The fixtures are real outputs, named by API level.
+
+## Comments
+
+### 2026-09-30, claude-issue-14: built
+
+**What I built:**
+- `src/device/android/driver.ts`: `AndroidDriver`, with `prepare` and `preparation()`.
+  - It takes injected parts: the tools check, the `adb` runner, the agent client (by port), the clock, the free-port finder, the screenshot folder and the lease root.
+  - The order is tools → name → `devices -l` and the AVD `getprop` (reads only) → lease → agent check and sweep → API, boot, `pm path`, screen → force-stop and `am start -W` → push, start, forward, `device.version`, then find the pid.
+  - Every `adb` command and agent request runs through `inLedger`. A guard checks the `closeBegun` flag and the run's signal before each one.
+  - `observe`, `act` and `close` still throw "not built yet". The factory is unchanged, so Android is still refused.
+- `failureOf` (`src/scripted/run.ts`) now passes a `DeviceReasonError`'s `vendorCode` through, with the same pattern check the `DeviceCliError` branch uses.
+
+**Deviations, and why:**
+- **The device name comes in as constructor options** (`device`, `defaultDevice`), not through `prepare`. `prepareContext` in `run.ts` doesn't pass an Android script's `device`, and only `failureOf` may change in that file. Issue 16's per-script factory should pass `scenario.device` and `JEV_ANDROID_DEVICE`.
+- **A refusal before the restart releases the lease inside `prepare`**, as the iOS driver does, when nothing is owned. Anything later stays held for `close`.
+- **A foreign agent found after the agent answered is also `DEVICE_BUSY`.** mobilecli's agent is the same DEX, so it answers `device.version` with the pinned SHA-256 too. Only `CLASSPATH` tells the two apart.
+- **A killed agent gets 2 s to exit**, polled every 100 ms by reading its `environ`. If it doesn't exit, that's `DEVICE_ERROR`/`adb`, and its forward is kept.
+- **Each `device.version` request ends when the 5 s does** (a review fix). Otherwise one hung request could run for the client's full 10 s.
+
+**Holder record entries:** `forward <serial> tcp:<port>` is recorded before its `adb forward` runs and dropped if the port can't be bound. `agent <serial> <pid>` is recorded once the pid is found, including when the agent never answers, so `close` can fence it. The sweep reads only entries for the current serial. Whether the app was restarted stays in memory (`restarted`), not in the record, because the domain model sweeps only the agent, the forward and the log streams. Issue 16 should confirm this.
+
+**Open-point defaults used:**
+- **7:** the lease is keyed by the device identity: the AVD name for an emulator, the serial for a phone. A test shows the serial and the AVD name share one lease.
+- **8:** every device-shell word is single-quoted, with `'\''` for a quote inside.
+- **16:** after a wake, a keyguard still showing is `DEVICE_LOCKED`.
+- **22:** the patterns are the release spec's. The agent is the bridge's own only if an environment entry equals `CLASSPATH=/data/local/tmp/jev-ios-bridge-agent.dex` exactly. `BOOTCLASSPATH` and `DEX2OATBOOTCLASSPATH` contain the substring, and a test covers this. An environment that can't be read counts as foreign. Non-DeviceServer patterns (Appium, uiautomator) are foreign without reading their environment.
+- **Forward retry:** 3 attempts in total. "Up to 3 times" is ambiguous here, and the tracer does the same.
+
+**Commands chosen where the spec leaves them open:**
+- **Launcher:** `cmd package resolve-activity --brief -a android.intent.action.MAIN -c android.intent.category.LAUNCHER <package>`. The last line is the component; "No activity found" is `DEVICE_ERROR`/`adb`, with a message asking for `app.activity`.
+- **Screen and keyguard:** one `dumpsys window policy` (about 2.5 KB). `KeyguardServiceDelegate`'s `interactiveState=INTERACTIVE_STATE_AWAKE` means awake, and `showing=true` means the keyguard is showing. The format is the same on API 31 and 36.
+- **Launch success:** `am start -W` counts only if it exits 0 and prints `Status: ok`. On API 31 a missing activity exits 0 with `Error type 3`; on API 36 it exits 1.
+
+**Fixtures** (`tests/fixtures/android/adb/`, with a README listing each command and exit code):
+- Recorded from both emulators, one at a time, headless with `-no-snapshot-save`, on a private adb server (port 5099), with `devices` checked before each command.
+- Afterwards, the agents I started were killed by pid after checking `CLASSPATH`, and my forwards and pushed files were removed. Both emulators were shut down and the private server killed. Port 5037 was never touched, and mobilecli was never run.
+- **No real "locked" output exists.** Both AVDs have Screen lock set to None (`cmd lock_settings get-disabled` prints `true`), so there's no keyguard after sleep and wake. `window-policy-locked.derived.txt` is the recorded "on" output with `showing=` and `mIsShowing=` set to `true`.
+- The foreign-agent `ps`/`environ` are the recorded ones with the tracer's `agents.foreign` lines put in, as this Issue says.
+- The two-emulator `forward --list` puts the two recorded lines together, because the device rules allow one emulator at a time.
+
+**Empty-field fixtures** (`tests/fixtures/android/agent/`): on API 31, in the actions probe app, the agent reports `text: ""` for the empty classic `EditText` and for the empty classic password field; the hint is only in `hint` ("Classic plain", "Classic password"). On API 36, the Settings search field is `text: ""`, with hint "Search settings". The agent doesn't report the hint as the text, so the mapping needs no fix.
+
+**Tests:**
+- `tests/android-driver.test.ts`, 41 tests. They cover:
+  - resolving the device by serial, by AVD name, by `JEV_ANDROID_DEVICE`, and for a phone;
+  - the shared lease;
+  - every refusal code;
+  - wake and lock;
+  - a foreign agent: mobilecli's on both APIs, Appium, and the `CLASSPATH` lookalike;
+  - the sweep after a crash takeover, including a takeover with nothing to sweep and a listed forward that now points elsewhere;
+  - a bridge-owned agent that isn't listed;
+  - an agent that won't exit;
+  - the restart with tricky extras, for a relative and a fully qualified activity;
+  - a failing `am start`, and the launcher lookup;
+  - the forward retry, the version poll, an agent that never answers, a wrong SHA-256, a hung request, and a foreign agent found late;
+  - cancelling prepare;
+  - the lease-before-device-work order.
+
+  Every test checks that no command runs `pkill` or mobilecli.
+- `tests/scripted-run.test.ts`, 2 tests: `vendorCode` `agent` reaches `run.jsonl` and `report.json`, and a code that fails the pattern is dropped.
+
+**Gate:** `npm run check` passed, with 367 of 367 tests, at `69ec5c2`.
+
+**`/code-review` against `d844632`:**
+- **Standards:** 0 hard violations, about 12 judgement calls. I fixed the duplicated closing guard and renamed `required` to `succeeded`.
+  - Kept the lease's "locked by" message, because this Issue asks for it.
+  - Kept the duck-typed `vendorCode` in `failureOf`, because adding it to the base class would touch `src/device/index.ts`.
+  - Kept the fields Issues 15 and 16 will read.
+- **Spec:** 0 missing, 2 partials (the derived locked fixture; the restart flag not in the holder record) and 3 questionable. I fixed the version-poll bound and the sweep of a listed forward that now points elsewhere, and kept the forward retry at 3 attempts.
