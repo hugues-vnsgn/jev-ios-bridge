@@ -179,6 +179,215 @@ An Android device driver that runs a script end to end on an Android 12 or later
 - **15, actions:** the driver's `observe` and `act` with the same fakes, a fake clock and a temporary screenshot folder; `run.jsonl` through `withRunLog` for the trailing-space value.
 - **16, close and wiring:** the driver's `close` with the fakes; the driver factory (`tests/device-factory.test.ts`); `BridgeService`; and the end-to-end run through `runScriptedScenario`.
 
+## Phase 5: the log pane and app-exit detection (execution, from 2026-09-30)
+
+Status: ready-for-agent
+
+The work is [the release spec's phase 5](../android-support/release-spec.md#phase-5-the-log-pane-and-app-exit-detection-log-pane-and-app-exit-detection-on-android-where-android-plugs-into-the-code-item-7), items 1 to 7, plus step 4 of phase 4's `close` ("stop this run's `logcat` streams"), which the Android driver left as a marked placeholder. The measurements behind it are in [the log pane findings](../android-support/findings/06-log-pane.md), and the prototypes are `logcat-line.mjs` and `exit-watch.mjs` in `findings/06-assets/`. The release spec is the source of truth for every command, value and order below; this section only frames the work and fixes the seams. It is built on one feature branch, `agent/android-v1.2-phase5`, and shipped as **one PR**. The owner approves the merge.
+
+### Problem Statement
+
+An Android run is blind to the app. When a script author runs an Android script today, the log pane never opens, because the Android driver has no log to offer. The step's `logTails` are empty, and `jev-ios-bridge logs` has nothing to follow. When the app crashes, is killed, or freezes behind "App isn't responding", the run doesn't know. The next capture shows the launcher or the dialog, the step fails on a symptom (element not found, checkpoint false), and the author has to guess what happened. On iOS, the pane's "app stopped" check still works out the app's state itself, by reading a process ID from a MobileBuildMCP log file name. That is fragile, and it is a second, private answer to a question the driver already answers.
+
+### Solution
+
+For every Android run, the driver starts two `logcat` streams before it launches the app:
+
+- **The app's log**, filtered to the app's uid. It is written to an owner-only file, and that file feeds the live pane, the per-step log tails and the `logs` command, exactly as MobileBuildMCP's log files do on iOS.
+- **A small stream of process events**, folded into a running, exited or not-responding state that the driver answers synchronously.
+
+When a step fails because the app crashed, was killed or quit, the run ends `APP_EXITED`. When it failed because the app froze, the run ends `APP_NOT_RESPONDING`. The pane names the cause. Script values are masked in the pane and redacted in `run.jsonl`, as on iOS. `close` stops both streams and waits for them to exit, and a crash takeover sweeps a dead run's streams before the next run goes on. The pane's "app stopped" check asks the driver on both platforms, so there's one answer to "is the app still running?".
+
+### User Stories
+
+1. As a script author, I want the log pane to open for an Android run, so that I can watch the app's output while the script runs, as I do on iOS.
+2. As a script author, I want every line the app logs, from any tag, in the pane, so that I don't miss the line that explains a failure.
+3. As a script author, I want `System.out` and `System.err` lines shown as `[app]`, so that my `println` output reads like the app's console on iOS.
+4. As a script author, I want other tags shown as `[os] [Tag]`, so that I can tell structured logging from console output.
+5. As a script author, I want error, fatal and assert lines in red and verbose and debug lines dim, so that problems stand out as they do on iOS.
+6. As a script author, I want the pane to keep following the app when the bridge restarts it, so that I see the launch's first lines.
+7. As a script author, I want a Java crash's stack and a native crash's dump in the pane, so that I can see why the app died.
+8. As a script author, I want only my app's lines, never other apps' or the keyboard's, so that the pane isn't noise and other apps' data never reaches it.
+9. As a script author, I want no line logged before my run started, so that an earlier run's lines don't confuse me.
+10. As a script author, I want each script value masked as `[value:<key>]` in the pane, so that a typed secret doesn't show on screen.
+11. As a script author, I want the same values shown as `[REDACTED]` in `run.jsonl`'s log tails, so that the evidence never holds them.
+12. As a script author, I want each step's log tail to hold the app's last lines, so that the watch page and the report show what the app said at that step.
+13. As a script author, I want `jev-ios-bridge logs <run>` to follow a live Android run, so that I can attach a pane myself when no window opened.
+14. As a script author, I want `logs` on a finished Android run to name its logcat file, so that I can read the full log afterwards.
+15. As a script author, I want the pane's header to say where an Android run's log comes from, so that I know what I'm looking at.
+16. As a script author, I want a run whose app crashed to end `APP_EXITED`, not with the failed step's own symptom, so that the reason names the real problem.
+17. As a script author, I want a crash on a background thread, where the process lingers behind the "app has stopped" dialog, to count as `APP_EXITED`, so that the dialog doesn't hide the crash.
+18. As a script author, I want a native crash to count as `APP_EXITED`, so that a crash in native code is caught too.
+19. As a script author, I want a kill, a quit, or a force-stop the bridge didn't send to count as `APP_EXITED`, so that anything that ends the app mid-run is named.
+20. As a script author, I want a frozen app to end the run `APP_NOT_RESPONDING`, so that I can tell "it froze" from "it died".
+21. As a script author, I want the bridge's own force-stops, at the restart and in `close`, never to count as the app exiting, so that a clean run isn't marked as a crash.
+22. As a script author, I want an old native crash still in the device's buffer to be ignored, so that a fresh launch isn't marked exited by a crash from yesterday.
+23. As a script author, I want the pane to say what happened, for example "crashed: FATAL EXCEPTION on main", "native crash: SIGSEGV", "force-stopped by another process", "exited" or "not responding", so that I don't have to dig through the log.
+24. As a script author, I want going to HOME not to count as an exit, as on iOS, so that the rule is the same on both platforms.
+25. As a script author, I want a checkpoint verdict that was already given to stand, so that the app check only explains a step that failed, as on iOS.
+26. As a script author, I want the run to go on when the log stream fails or ends early, with the app check answering "can't tell", so that a logging problem never fails a run by itself.
+27. As a script author, I want `close` to stop both streams and wait for them to exit before the lease is released, so that no `adb … logcat` of my run outlives it.
+28. As a script author, I want the lease kept, and the run to end `CLEANUP_FAILED`, when a stream can't be confirmed stopped, as for any other cleanup step, so that cleanup is never assumed.
+29. As a script author, I want a crashed run's streams swept by the next run, once it holds the lease and before it goes on, so that a crash doesn't leave `adb logcat` processes running on my Mac.
+30. As a script author, I want that sweep to kill a process only if it is still that run's `adb … logcat`, so that a reused pid never kills an unrelated process.
+31. As a script author, I want `sweptLeftovers: true` in `prepared` when the sweep stopped a leftover stream, so that the report says a takeover happened.
+32. As a script author, I want log files older than 3 days deleted at the next Android run, so that logs don't pile up in my temp folder.
+33. As a script author, I want the log folder readable only by me (0700) and each file too (0600), so that other users on my Mac can't read my app's log.
+34. As an iOS script author, I want the pane's "app stopped" note to keep working, so that iOS runs lose nothing.
+35. As an iOS script author, I want my pane, reports, messages and golden entries unchanged, so that the 1.x contract holds.
+36. As the owner, I want the streams started with `TYPESAFE_API_KEY` stripped and the private adb server honoured, so that the key never reaches a child process.
+37. As the owner, I want the crash, freeze, kill and stale-crash behaviour tested from the lines recorded on real emulators, so that the watcher is proven against what devices really print.
+38. As the owner, I want every phase 5 test to run without the Android SDK, so that CI on Linux stays green.
+
+### Implementation Decisions
+
+- **Modules.**
+  - A pure logcat line parser sits beside the iOS `appLine` and `osLine` in the log pane's formatter, lifted from the prototype.
+  - A pure app-exit watcher in the Android device module folds `am_*` event lines into a state, lifted from the prototype, and adds the start-time filter below.
+  - The Android driver gains the two streams, the uid and device-time reads, `pidof`, the log folder, `close`'s step 4 and the takeover sweep.
+  - The log pane's stream takes the app check from its caller instead of parsing `_helperpid`.
+  - `BridgeService`, the run and the CLI's `logs` fallback pass the new source through.
+- **The new seam is a logcat stream starter** injected into the Android driver, beside the `adb` runner. It is needed because the `adb` runner only runs commands that finish.
+  - **`start`:** starts a long-running `adb` command with `adbEnvironment()`, sends its output to a file or delivers it line by line, and returns the process's pid, a way to stop it (SIGTERM, then SIGKILL after 1 s, resolving once it has exited), and its exit.
+  - **The sweep:** answers whether a pid on the Mac is still a given serial's `adb … logcat`, and kills it (same escalation).
+
+  The production starter spawns `adb` directly, with no shell. The app log's stdout goes straight to the file descriptor, so nothing is buffered in the bridge.
+- **Order inside `prepare`**, extending phase 4's:
+  1. tools check;
+  2. device name to serial and device identity;
+  3. take the lease;
+  4. agent check and sweep, plus the dead holder's logcat sweep;
+  5. device checks and wake;
+  6. **delete logs older than 3 days**, then **read the uid** by an exact package match in the full `pm list packages -U` output, **read the device time** with `date +%s.%3N`, and **start both streams from that time**;
+  7. force-stop and `am start -W`;
+  8. **`pidof` once**, never earlier;
+  9. push, start and verify the agent.
+- **The streams.**
+  - **The app log:** `adb -s <serial> logcat -v threadtime,year,uid --uid=<uid> -T <device time>`, written to `<run ID>.log` in the private log folder.
+  - **The events stream:** `adb -s <serial> logcat -b events -v threadtime,year -T <device time>` with the filter `am_proc_start:I am_proc_died:I am_crash:I am_anr:I am_kill:I *:S`, read line by line into the watcher and not written to disk.
+  - **Both** are recorded as owned processes in the lease's holder record (`logcat <serial> <pid>`, beside phase 4's `agent …` and `forward …` entries) as soon as they start, and disowned only once confirmed stopped.
+  - **Neither is a tracked command in the ledger.**
+- **The watcher.**
+  - **What it reads:** it is fed the package, the launched pid (set once `pidof` answers) and the device start time. It ignores any line stamped before the start time, which covers a stale native crash even if logcat replayed one.
+  - **Exits:**
+    - a Java crash matches by pid;
+    - a native crash matches by package plus `Native crash`;
+    - `am_kill` with a `stop …` reason is a force-stop, and any other reason is a kill;
+    - `am_proc_died` for the pid is an exit.
+  - **A freeze:** `am_anr` for the pid is "not responding". The app is still running, but a later exit still counts.
+  - **Expected stops:** the driver tells the watcher when a stop is its own (the force-stop in `close`). The restart's force-stop comes before the pid is known, so it can't match.
+  - **Can't tell:** before `pidof` answers, when `pidof` found nothing, or when the events stream ended on its own, the state is "can't tell" (`undefined`).
+- **The driver's answer, on both platforms.**
+  - `appRunning()` stays synchronous and keeps its meaning.
+  - A new optional method beside it returns the problem: `APP_EXITED` or `APP_NOT_RESPONDING`, plus a plain pane note naming the cause. It returns nothing when the app is fine or the driver can't tell.
+  - The iOS driver gets the same method from its existing helper-pid check. Its note is today's iOS note, word for word.
+  - The release spec leaves the exact interface open; the Issue fixes it.
+- **The run.**
+  - Where a step's error is replaced by `APP_EXITED` today, the run asks the driver's problem first: `APP_NOT_RESPONDING` or `APP_EXITED`. It falls back to `appRunning() === false` for a driver without the method.
+  - A cancel still wins, and a verdict already given (a false checkpoint) stands, as on iOS.
+- **The pane.**
+  - `startLogStream` takes the app check as a callback and notes the problem once, unless a stop is expected. `expectStop()` and the socket protocol are unchanged.
+  - The `hello` message's sources gain an optional `logcat`.
+  - For an Android run, the pane's header names the logcat file and the app's uid filter in place of the two iOS source lines. An iOS run's header is unchanged byte for byte.
+  - The logcat follower uses the new parser. Masking is the existing masker: `[value:<key>]`, longest first, and an upper-case copy isn't masked.
+- **Log tails and `logs`.**
+  - `logSources()` gains an optional `logcat` path, recorded in the `prepared` event as the iOS paths are.
+  - The Android driver's observations carry `logTails: { logcat: … }` from the shared tail reader, redacted in `run.jsonl` by the run log's existing rule.
+  - The CLI's `logs` fallback lists the logcat file with the iOS files.
+- **`close`**, step 4 of phase 4's order:
+  - **Stopping:** after the app stop, it stops both streams and waits for them to exit, tolerating one that already ended, then disowns each.
+  - **Failure:** a stream that can't be confirmed stopped keeps the lease, and the run ends `CLEANUP_FAILED`.
+  - **Ordering:** the watcher is told the stop is expected before `close` force-stops the app.
+  - **A failed `prepare`:** `close` runs even after one, so it stops whichever streams were started, whether or not the app was restarted.
+- **The takeover sweep:**
+  - **What it stops:** a dead holder's `logcat <serial> <pid>` entries. It kills each pid only if the Mac process is still that serial's `adb … logcat` and otherwise leaves it alone, then disowns the entry.
+  - **When:** before the device checks, so the crashed run's streams are gone once the next run has prepared (release check 15).
+  - **The record:** stopping any stream sets `sweptLeftovers: true`, as a swept agent does.
+- **The log folder:**
+  - **Where:** `jev-android-logs/` under the OS temp folder, created 0700, with files created 0600.
+  - **Checks:** a folder that exists but isn't a directory owned by this user is refused rather than used.
+  - **Clean-up:** at each Android `prepare`, files there older than 3 days by modification time are deleted, and a failure to delete never fails the run.
+- **Contracts.**
+  - `APP_EXITED` and `APP_NOT_RESPONDING` are already in the vocabulary (phase 3). No new reason code.
+  - Existing golden entries don't change. If the Issue finds a golden file that lists `prepared` or `hello` fields, the `logcat` source is added to it, and nothing else changes.
+
+### Testing Decisions
+
+- **A good test here** drives a public interface with fakes at the injected runners and the stream starter. It asserts what reaches the device and the Mac (the exact `adb` arguments, in order), what the run and pane record, and what the lease allows. It never asserts private state.
+- **The end-to-end test for the phase:** `runScriptedScenario` with the real Android driver, a fake `adb` runner, a fake agent client and a fake stream starter. It is fed lines recorded on the emulators:
+  - a crash partway through gives `APP_EXITED`, and a freeze gives `APP_NOT_RESPONDING`;
+  - a normal run passes;
+  - in all three, `close` stopped both streams, disowned them, and released the lease, with no agent, forward or app left.
+- **Wire and persistence tests** pin exactly:
+  - the two logcat commands, and the uid, time and `pidof` reads, and their order around `am start -W`;
+  - the holder record's `logcat <serial> <pid>` entries, added at start and removed at stop;
+  - the log file's and folder's modes;
+  - the 3-day clean-up;
+  - `prepared`'s `logSources.logcat`;
+  - a step's `logTails.logcat` in `run.jsonl`, with a script value redacted;
+  - the pane's masked line for the same value;
+  - the takeover sweep: only a pid whose command line is still that serial's `adb … logcat` is killed, and `sweptLeftovers: true`.
+- **Parser and watcher tests** feed the recorded lines from `findings/06-assets/captures/`, copied into `tests/fixtures/android/` so tests don't depend on `.scratch`.
+  - **The watcher:**
+    - it sorts every captured run as the prototype did;
+    - it ignores a stale native crash placed before the start time;
+    - it doesn't count the bridge's own expected stop;
+    - `probe-anr` gives `APP_NOT_RESPONDING`, the only evidence for it, since there's no live freeze run.
+  - **The parser:** every captured app-log line parses or is a divider, with the source, level and tag rules pinned.
+- **The pane:** `startLogStream` with an injected app check. The existing iOS test that plants `_helperpid` in a file name changes to the new callback, the one existing-test edit this phase allows (release spec item 7). A new test pins the Android header and the cause note. The iOS header stays byte for byte.
+- **The iOS driver:** its problem method through the existing `CliRunner` fake, with the same helper-pid cases as `appRunning`.
+- **Prior art:**
+  - `tests/android-driver.test.ts` (the Android driver with fake `adb` and agent);
+  - `tests/logpane.test.ts` (the pane over a socket);
+  - `tests/device.test.ts` (log tails);
+  - `tests/scripted-run.test.ts` (runs with fake drivers, and the leak test that scans the whole evidence);
+  - `tests/device-lease.test.ts` (owned processes).
+- **No device in `npm test`.** Live evidence (the crash run, crash takeover and cleanup gate) belongs to phase 8.
+
+### Out of Scope
+
+- The `capture` command, the `/test-android` skill and the plugin (phase 6).
+- The troubleshooting entries (`adb logcat -b crash -d`, `dumpsys activity exit-info`), the data-handling page's note on the log folder, and the rest of the docs (phase 7).
+- The live crash run in the owner's desktop session, the crash takeover run and the cleanup gate (phase 8).
+- Detecting HOME or backgrounding, on either platform.
+- Masking an upper-case copy of a value, on either platform.
+- Any phone, including the Xiaomi `2985e9c`. MIUI's logcat access is untested.
+- Changing how iOS finds its log files, or any iOS output.
+
+### Further Notes
+
+- The findings measured `cmd package list packages -U`. The release spec says `pm list packages -U`, which prints the same list. Either is fine, as long as the match is exact on the whole package name. A package name passed as a filter matches substrings.
+- Seen once and not chased: after `kill -SEGV`, the next capture took 5.1 s. The settle cap already bounds it.
+- A likely split, to be confirmed at `/to-spec` for Issues:
+  - 18: the parser and the watcher, both pure;
+  - 19: the stream starter, the driver's streams, `close` step 4 and the sweep;
+  - 20: the pane, the run's problem check on both drivers, the `logs` fallback, and the end-to-end test.
+
+  18 and 19 can run in parallel, and 20 needs both.
+
+### Settled context for phase 5 (owner, 2026-09-30)
+
+- **Carried over from phases 3 and 4:**
+  - iOS stays byte-identical, and golden files only gain entries.
+  - Tests that existed before phase 5 (`b4ede43`) keep their assertions. Tests added during phase 5 may change with their contract.
+  - The one allowed edit to an existing test is the `_helperpid` pane test, which moves to the new app-check callback.
+- **Devices:** none needed. The captures from the findings are the fixtures. If an Issue must record one more line, it follows the release spec's device rules:
+  - the private adb server on port 5099;
+  - the `adb devices` check before each command;
+  - emulators only, one at a time;
+  - `-no-snapshot-save`;
+  - shut down what you started;
+  - never port 5037, never a phone, never mobilecli.
+- The gates, the `.mcp.json` rule and the `.env` rule above still apply.
+
+### Test seams for phase 5 (owner accepted, 2026-09-30)
+
+- **The run, end to end:** `runScriptedScenario` with the real Android driver, fake `adb` runner, fake agent client and fake stream starter, fed recorded lines (`tests/android-driver.test.ts`, `tests/scripted-run.test.ts`).
+- **The one new seam:** the logcat stream starter injected into the Android driver (start, stop, and the sweep's check and kill by pid). Its production form is tested with a fake spawn, as the `adb` runner's is (`tests/fixtures/adb-spawn.ts`).
+- **Pure functions over the captures:** the logcat line parser and the app-exit watcher.
+- **The log pane:** `startLogStream` with the injected app check (`tests/logpane.test.ts`).
+- **The `logs` fallback:** through the existing CLI tests.
+
 ## Rulings during execution
 
 - **2026-09-29, phase 2 item 6 (owner):** existing tests build test data with `app: { bundleId }` (`tests/device.test.ts:10,825`) and `startLogStream({ bundleId })` (`tests/logpane.test.ts:45,70`), so renaming those inputs would break existing tests. Phase 2 renames only what no existing test touches: the iOS driver's private field, the log pane's internal `hello` message field, and `BridgeService`'s local use. Renaming `ScenarioContext.app` and `startLogStream`'s option moves to **phase 3**, which adds Android's `app.package` and reshapes the app type once, as an iOS or Android identity.
@@ -190,3 +399,4 @@ An Android device driver that runs a script end to end on an Android 12 or later
 - **2026-09-30, phase 4 item 0 (tracer):** passed 19 of 19 steps on `jev-actions-api31` and `Medium_Phone_API_36.1` (`82e5825`; `spikes/benchmarks/results/v1.2.0/tracer/`). ADR-0006 stands, and phase 4 continues from item 1.
 - **2026-09-30, phase 4 item 6 (owner):** the tracer found that Gboard keeps pasted text as a clipboard suggestion after `device.clipboard.clear`, on API 31 and 36. Build replace text as the spec says (non-ASCII through the clipboard, then `device.clipboard.clear`), with no extra code. Phase 7 says plainly, in `docs/guide/reference/script-format.md` and in the v1.2.0 release notes, that a non-English typed value passes through the device clipboard and the keyboard may keep it, so it shouldn't be a real secret. ASCII values are typed with `device.io.text` and never touch the clipboard.
 - **2026-09-30, phase 4 (owner):** phase 4 is split into Issues 10 to 16 on the feature branch `agent/android-v1.2-phase4`, one PR, with the test seams in "Test seams for phase 4". Issues 10 to 13 can run in parallel; 14 needs 10 and 11; 15 needs 12, 13 and 14; 16 needs 14 and 15. Android stays refused until Issue 16 wires the driver into the factory.
+- **2026-09-30, phase 5 (owner):** the phase 5 test seams are accepted as listed in "Test seams for phase 5": one new seam, the logcat stream starter injected into the Android driver.
