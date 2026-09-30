@@ -1,5 +1,7 @@
 /** Turning raw app and system log lines into pane lines. Pure functions, so they're easy to test. */
 
+import { threadtimeStamp } from '../device/android/threadtime.js';
+
 export type PaneSource = 'app' | 'os';
 export type PaneLevel = 'error' | 'dim' | 'normal';
 export interface PaneLine { source: PaneSource; time: string; level: PaneLevel; text: string }
@@ -39,11 +41,12 @@ export function osLine(raw: string): PaneLine | undefined {
  */
 export function logcatLine(raw: string): PaneLine | undefined {
   if (!raw.trim() || raw.startsWith('--------- beginning of')) return undefined;
-  const parsed = raw.match(/^\d{4}-\d\d-\d\d (\d\d:\d\d:\d\d\.\d{3})\s+\S+\s+\d+\s+\d+ ([VDIWEFA]) (.*?)\s*: (.*)$/);
-  if (!parsed) return undefined;
-  const [, time, level, tag, message] = parsed;
+  const stamp = threadtimeStamp(raw);
+  const parsed = stamp?.rest.match(/^\S+\s+\d+\s+\d+ ([VDIWEFA]) (.*?)\s*: (.*)$/);
+  if (!stamp || !parsed) return undefined;
+  const [, level, tag, message] = parsed;
   const fromConsole = tag === 'System.out' || tag === 'System.err';
-  return { source: fromConsole ? 'app' : 'os', time: time!, text: fromConsole ? message! : `[${tag}] ${message}`,
+  return { source: fromConsole ? 'app' : 'os', time: stamp.time, text: fromConsole ? message! : `[${tag}] ${message}`,
     level: 'EFA'.includes(level!) ? 'error' : 'VD'.includes(level!) ? 'dim' : 'normal' };
 }
 

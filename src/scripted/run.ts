@@ -1,5 +1,5 @@
 import { setTimeout as delay } from 'node:timers/promises';
-import type { Action, ActionScenarioContext, ActOutcome, DeviceDriver, Element, LogSources, Platform, PrepareScenarioContext, RunLog, Snapshot, Verdict } from '../contracts/index.js';
+import type { Action, ActionScenarioContext, ActOutcome, AppProblem, DeviceDriver, Element, LogSources, Platform, PrepareScenarioContext, RunLog, Snapshot, Verdict } from '../contracts/index.js';
 import { isActOutcome } from '../contracts/index.js';
 import { DeviceCliError, DeviceReasonError, StaleSnapshotError } from '../device/index.js';
 import type { AssertionJudgment, ScriptedJudge, ScriptedScenario, ScriptedStep } from './contracts.js';
@@ -107,6 +107,12 @@ function checkedJudgment(judgment: AssertionJudgment, assertions: Extract<Script
       throw new ScriptRunError('INVALID_JUDGMENT');
     }
   }
+}
+
+/** Why the app stopped, as the driver answers it; a driver without appProblem answers only whether the app still runs. */
+function appProblemCode(driver: DeviceDriver): AppProblem['code'] | undefined {
+  if (driver.appProblem) return driver.appProblem()?.code;
+  return driver.appRunning?.() === false ? 'APP_EXITED' : undefined;
 }
 
 /** A bridge-owned reason code, plus the device layer's own code when the bridge doesn't own it. */
@@ -371,10 +377,8 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
     }
   } catch (error) {
     verdict = 'inconclusive';
-    // A step that failed because the app died or froze is reported as that, not as the symptom it caused. A
-    // driver without appProblem answers only whether the app still runs.
-    const problemCode = signal.aborted ? undefined : options.driver.appProblem
-      ? options.driver.appProblem()?.code : options.driver.appRunning?.() === false ? 'APP_EXITED' : undefined;
+    // A step that failed because the app died or froze is reported as that, not as the symptom it caused.
+    const problemCode = signal.aborted ? undefined : appProblemCode(options.driver);
     const failure: Failure = problemCode ? { code: problemCode } : failureOf(error, signal);
     reason = failure.code;
     await options.log.append('error', { stepId: activeStepId, phase, code: reason,

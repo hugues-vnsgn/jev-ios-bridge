@@ -3,11 +3,11 @@ import assert from 'node:assert/strict';
 import { appendFile, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { Writable } from 'node:stream';
 import { appLine, masker, osLine } from '../src/logpane/format.js';
 import { startLogStream } from '../src/logpane/stream.js';
 import { attachLogPane } from '../src/logpane/attach.js';
 import { paneWindowBlocked } from '../src/logpane/window.js';
+import { Capture } from './fixtures/capture.js';
 
 test('app lines keep the NSLog time without its prefix; error words turn red', () => {
   assert.deepEqual(appLine('2026-09-25 16:42:17.603 cmp[66994:3743334] MODALPERF === RUN START ==='),
@@ -29,10 +29,6 @@ test('script values are masked, longest first', () => {
   assert.equal(mask('paid with 4111 1111 then 4111'), 'paid with [value:card] then [value:short]');
 });
 
-class Capture extends Writable {
-  text = '';
-  _write(chunk: Buffer, _encoding: string, done: () => void) { this.text += chunk.toString(); done(); }
-}
 
 test('a pane attached to a live run shows masked app and system lines, then the verdict, and closes after a pass', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-pane-'));

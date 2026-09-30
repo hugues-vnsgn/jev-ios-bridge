@@ -12,7 +12,7 @@ import { DeviceLease, DeviceLeaseBusyError, type LeaseHolder } from '../lease.js
 import { readLogTail } from '../logs.js';
 import { adbRunner, type AdbResult, type AdbRunner } from './adb.js';
 import { deviceAgentClient, type AgentKey, type DeviceAgentClient } from './agent-client.js';
-import type { AppExitWatch, createExitWatch } from './exit-watch.js';
+import { EVENT_FILTER, type AppExitWatch, type createExitWatch } from './exit-watch.js';
 import { inLedger } from './ledger.js';
 import { deleteOldLogs, LOG_FOLDER, logcatStarter, privateLogFolder, type LogcatOutput, type LogcatStarter, type LogcatStream } from './logcat.js';
 import { mapAndroidTree } from './mapping.js';
@@ -54,8 +54,6 @@ const SELECT_ALL: AgentKey[] = [{ keycode: 'KEYCODE_A', modifiers: ['KEYCODE_CTR
 const BACKSPACE: AgentKey[] = [{ keycode: 'KEYCODE_DEL' }];
 /** What `device.io.text` types: ASCII only. Anything else goes through the clipboard. */
 const ASCII = /^[\x00-\x7f]*$/;
-/** The events stream's filter (release spec phase 5 item 4): only the process events the app-exit watcher reads. */
-const EVENT_FILTER = ['am_proc_start:I', 'am_proc_died:I', 'am_crash:I', 'am_anr:I', 'am_kill:I', '*:S'];
 
 /**
  * A device layer failure the bridge has no reason code for: `DEVICE_ERROR`, naming the layer that failed
