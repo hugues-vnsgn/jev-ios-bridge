@@ -17,7 +17,7 @@ Nothing is sent for action or wait steps. Screenshots, logs, and your script's o
 
 **The TypeSafe API key** goes only to TypeSafe. The device-layer processes the bridge starts run without it, including `adb` on Android.
 
-**On Android, nothing goes anywhere else.** The bridge never runs mobilecli ([Android setup](12-android-setup.md#one-ui-tool-at-a-time)), so there's no mobilecli telemetry and no cloud call. From other connected devices it reads nothing but the device list (`adb devices -l`) and, when the device is named by its AVD, each running emulator's AVD name (`ro.boot.qemu.avd_name`). It copies only mobilecli's device agent onto the one device the run uses. The agent listens only on the device's own local socket, which the bridge reaches through an `adb forward` on your Mac.
+**On Android, nothing goes anywhere else.** The bridge never runs mobilecli ([Android setup](12-android-setup.md#one-ui-tool-at-a-time)), so there's no mobilecli telemetry and no cloud call. About other connected devices it reads only the device list (`adb devices -l`), `adb`'s list of port forwards (`adb forward --list`, keeping only the run's device), and, when the device's name isn't a listed serial, each running emulator's AVD name (`ro.boot.qemu.avd_name`). It copies only mobilecli's device agent onto the one device the run uses. The agent listens only on the device's own local socket, which the bridge reaches through an `adb forward` on your Mac.
 
 ## What stays on your Mac
 

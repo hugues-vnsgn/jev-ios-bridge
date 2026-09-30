@@ -18,19 +18,13 @@ test('phase 8 has seven Android evidence scripts', () => {
 });
 
 for (const path of EVIDENCE_SCRIPTS) {
-  test(`the evidence script ${path} parses as a version 1 Android script that names no device`, async () => {
+  test(`the evidence script ${path} parses as a version 1 Android script that names no device and no home path`, async () => {
     const script = parseScriptedScenario(JSON.parse(await readFile(join(process.cwd(), path), 'utf8')));
     assert.equal(script.platform, 'android');
     assert.equal(script.device, undefined);
+    for (const precondition of script.preconditions ?? []) assert.doesNotMatch(precondition, /~\/|\$HOME\/|\/Users\//, 'a precondition names a path in the owner\'s home');
   });
 }
-
-test('no evidence script\'s preconditions name a path in the owner\'s home', async () => {
-  for (const path of EVIDENCE_SCRIPTS) {
-    const script = parseScriptedScenario(JSON.parse(await readFile(join(process.cwd(), path), 'utf8')));
-    for (const precondition of script.preconditions ?? []) assert.doesNotMatch(precondition, /~\//, path);
-  }
-});
 
 test('the cmp script names the owner\'s sample app by package and keeps its build command', async () => {
   const script = parseScriptedScenario(JSON.parse(await readFile(join(SCENARIOS, 'android-cmp-number-input.json'), 'utf8')));

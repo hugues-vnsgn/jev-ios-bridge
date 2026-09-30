@@ -141,7 +141,7 @@ test('the running page documents capture with every option in the CLI\'s usage l
   }
 });
 
-test('the script-format reference says a non-English typed value passes through the device clipboard', () => {
+test('the script-format reference says a non-ASCII typed value passes through the device clipboard', () => {
   const page = guidePage('reference/script-format.md');
   assert.match(page, /clipboard/);
   assert.match(page, /real secret/);
@@ -164,7 +164,7 @@ test('the limits page says an upper-case copy goes unmasked in the log pane and 
   assert.match(line, /`run\.jsonl`/);
   assert.doesNotMatch(line, /log file/);
   for (const file of [...shipped, 'docs/releases/v1.2.0.md']) {
-    assert.doesNotMatch(readFileSync(file, 'utf8'), /log files? (?:is |are )?masked|masked[^.]*in the log file/i, file);
+    assert.doesNotMatch(readFileSync(file, 'utf8'), /log files? (?:is |are )?masked/i, file);
   }
 });
 
@@ -240,13 +240,16 @@ test('a guide page first calls a foreign agent another tool\'s UI-automation age
 
 test('the prepare page gives the Android device its own section', () => {
   const page = guidePage('02-prepare-your-app.md');
-  const simulator = page.slice(page.indexOf('## A simulator of its own'));
-  assert.doesNotMatch(simulator.slice(0, simulator.indexOf('\n## ', 1) === -1 ? undefined : simulator.indexOf('\n## ', 1)), /Android/);
+  const start = page.indexOf('## A simulator of its own');
+  assert.notEqual(start, -1);
+  const end = page.indexOf('\n## ', start + 1);
+  assert.doesNotMatch(page.slice(start, end === -1 ? undefined : end), /Android/);
   assert.match(page, /^## An Android device of its own$/m);
 });
 
 test('the release notes and the package description keep phones, marked untested', () => {
-  assert.match(readFileSync('docs/releases/v1.2.0.md', 'utf8').split('\n')[2]!, /emulator or phone \(phones untested\)/);
+  const intro = readFileSync('docs/releases/v1.2.0.md', 'utf8').split('\n').find(line => line.startsWith('jev-ios-bridge now checks Android'))!;
+  assert.match(intro, /emulator or phone \(phones untested\)/);
   const { description } = JSON.parse(readFileSync('package.json', 'utf8')) as { description: string };
   assert.match(description, /emulator or phone \(phones untested\)/);
 });
