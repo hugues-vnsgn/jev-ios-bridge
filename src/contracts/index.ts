@@ -88,6 +88,11 @@ export interface ActOutcome {
   shownValue: string;
 }
 
+/** Distinguishes an `ActOutcome` from a bare `Snapshot`: only the former carries a `screen` property. */
+export function isActOutcome(result: Snapshot | ActOutcome): result is ActOutcome {
+  return 'screen' in result;
+}
+
 export type Action =
   | { kind: 'tap'; targetRef: string }
   | { kind: 'type'; targetRef: string; valueKey: string }

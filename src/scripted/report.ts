@@ -70,6 +70,8 @@ export function renderScriptedReport(report: ScriptedReport): string {
   const lastStep = report.events.findLast(event => event.type === 'step');
   const started = report.events.find(event => event.type === 'started')?.data;
   const prepared = report.events.find(event => event.type === 'prepared')?.data;
+  // The run's own recorded platform decides, not merely whether a driver happened to set an Android field.
+  const android = started?.platform === 'android';
   const model = typeof started?.jevModel === 'string' ? started.jevModel
     : report.events.find(event => event.type === 'judgment' && typeof event.data.model === 'string')?.data.model;
   const header = [
@@ -79,18 +81,18 @@ export function renderScriptedReport(report: ScriptedReport): string {
     ...(typeof model === 'string' ? [`Jev model: ${model}` +
       (typeof started?.bridgeVersion === 'string' ? `; bridge ${started.bridgeVersion}.` : '.')] : []),
     // Android only: prepare's device identity, serial, agent SHA-256 and any crash-takeover sweep.
-    ...(typeof prepared?.deviceIdentity === 'string' ? [`Device: ${prepared.deviceIdentity}, serial ${String(prepared.serial ?? '')}, ` +
+    ...(android && typeof prepared?.deviceIdentity === 'string' ? [`Device: ${prepared.deviceIdentity}, serial ${String(prepared.serial ?? '')}, ` +
       `agent ${String(prepared.agentSha256 ?? '')}.` + (prepared.sweptLeftovers === true
         ? ' Swept a crashed run\'s leftover agent and forward.' : '')] : []),
   ].join('\n');
   // Android only: each replace-text step's shown value, from the run's `action` events.
-  const typedFields = typedFieldsOf(report.events);
+  const typedFields = android ? typedFieldsOf(report.events) : [];
   const typedFieldsBlock = typedFields.length ? ['Typed fields:',
     ...typedFields.map(field => `${field.stepId}: ${bounded(field.shownValue, 500)}`)].join('\n') : undefined;
   // Android only: every step whose observed screen never settled within the settle rule's cap, whatever its
-  // kind (open point 11: "the prose report shows both" the shown value and this).
-  const unsettledStepIds = [...new Set(report.events.flatMap(event => event.type === 'step' && event.data.settled === false
-    ? [String(event.data.stepId ?? '')] : []))];
+  // kind: a checkpoint judged on it is judged as usual, but this still names the step "screen still changing".
+  const unsettledStepIds = android ? [...new Set(report.events.flatMap(event => event.type === 'step' && event.data.settled === false
+    ? [String(event.data.stepId ?? '')] : []))] : [];
   const unsettledBlock = unsettledStepIds.length
     ? `Screen still changing when observed, for step(s): ${unsettledStepIds.join(', ')}.` : undefined;
   const checkpointBlock = (checkpoint: ScriptedReport['checkpoints'][number], decisive: boolean): string => [

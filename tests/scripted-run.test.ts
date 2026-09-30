@@ -878,8 +878,34 @@ test('an Android replace-text step records its driver-reported shown value, and 
   const action = log.events.find(event => event.type === 'action' && event.data.action === 'replaceText')!.data;
   assert.equal(action.shownValue, 'Ann.');
   const steps = log.events.filter(event => event.type === 'step');
+  // The unsettled screen `act` returned for the "type" step is recorded on the following ("verify") step's
+  // own step event, the one that actually observed it, not on "type"'s.
+  assert.equal(steps[0]?.data.stepId, 'type');
   assert.equal(steps[0]?.data.settled, undefined);
+  assert.equal(steps[1]?.data.stepId, 'verify');
   assert.equal(steps[1]?.data.settled, false);
+});
+
+test('a tap that returns an ActOutcome records no shown value: only a replace-text step has one', async () => {
+  const button: Element = { ref: 'go', role: 'button', label: 'Go', actions: ['tap'],
+    frame: { x: 0, y: 0, width: 50, height: 30 }, state: { enabled: true, visible: true } };
+  const afterTap: Snapshot = snapshot([{ ref: 'confirm', role: 'text', label: 'Confirm', actions: [],
+    frame: { x: 0, y: 40, width: 100, height: 30 }, state: { enabled: true, visible: true } }]);
+  const scenario: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.android' },
+    values: {}, steps: [
+      { id: 'tap', kind: 'action', guard: { present: [{ label: 'Go' }] },
+        action: { kind: 'tap', selector: { label: 'Go' } } },
+      { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Confirm' }] },
+        assertions: [{ id: 'shown', claim: 'Confirm is visible' }] },
+    ] };
+  const log = memoryLog();
+  await runScriptedScenario({ runId: 'scripted-1', scenario, log,
+    driver: { async prepare() {}, async observe() { return snapshot([button]); },
+      // A tap has no shown value; a driver that reports one anyway must be ignored.
+      async act() { return { screen: afterTap, shownValue: 'ignored' }; }, async close() {} },
+    judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
+  const action = log.events.find(event => event.type === 'action' && event.data.action === 'tap')!.data;
+  assert.equal('shownValue' in action, false);
 });
 
 test('an Android shown value echoing a typed value is redacted in run.jsonl, report.json, and the prose report', async () => {
@@ -964,6 +990,36 @@ test('the prose report names the prepared device identity, serial, agent SHA-256
   assert.match(rendered, /swept/i);
   assert.match(rendered, /placeholder-text/);
   assert.match(rendered, /screen still changing/i);
+});
+
+test('an iOS run\'s prose report ignores a device line, typed fields and "screen still changing" even when the events happen to carry them', async () => {
+  const nameField = snapshot([{ ref: 'name-field', role: 'text-field', identifier: 'name-field', actions: ['typeText'],
+    frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } }]);
+  const afterType: Snapshot = { ...snapshot([{ ref: 'confirm', role: 'text', label: 'Confirm', actions: [],
+    frame: { x: 0, y: 40, width: 100, height: 30 }, state: { enabled: true, visible: true } }]),
+    settled: false };
+  const scenario: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' },
+    values: { name: 'Ann' }, steps: [
+      { id: 'type', kind: 'action', guard: { present: [{ identifier: 'name-field' }] },
+        action: { kind: 'replaceText', selector: { identifier: 'name-field' }, valueKey: 'name' } },
+      { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Confirm' }] },
+        assertions: [{ id: 'shown', claim: 'Confirm is visible' }] },
+    ] };
+  const report = await runScriptedScenario({ runId: 'scripted-1', scenario, log: memoryLog(),
+    // No script names this platform iOS; a driver that behaves as if it were Android must still be ignored,
+    // since the run's own recorded platform (from `started`) decides, not the events a driver happens to set.
+    driver: { async prepare() {}, async observe() { return nameField; },
+      async act() { return { screen: afterType, shownValue: 'placeholder-text' }; }, async close() {},
+      preparation: () => ({ deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: 'abc123',
+        sweptLeftovers: true }) },
+    judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
+  const rendered = renderScriptedReport(report);
+  assert.doesNotMatch(rendered, /jev-actions-api31/);
+  assert.doesNotMatch(rendered, /emulator-5554/);
+  assert.doesNotMatch(rendered, /Device:/);
+  assert.doesNotMatch(rendered, /Typed fields/);
+  assert.doesNotMatch(rendered, /screen still changing/i);
+  assert.doesNotMatch(rendered, /placeholder-text/);
 });
 
 test('the prose report shows "screen still changing" for an unsettled action step too, not only checkpoints', async () => {
