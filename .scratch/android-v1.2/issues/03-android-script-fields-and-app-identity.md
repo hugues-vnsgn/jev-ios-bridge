@@ -167,3 +167,15 @@ Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase
   - Red first: the Android run tests in `tests/scripted-run.test.ts` are now typed literals (no parser), and a
     new compile-time test uses `@ts-expect-error` to reject a bundle ID, launch arguments or a UDID on an
     Android script, and a package or serial on an iOS one.
+
+- 2026-09-30, implementer-03: fix round 1 (three test-only standards findings).
+  - The two new `start_scenario` tests (`tests/mcp.test.ts`, `tests/contract.test.ts`) share one helper,
+    `tests/fixtures/mcp-session.ts` (`openMcpSession(clientName)` gives `callTool` and `close`). The two
+    older MCP tests in `tests/mcp.test.ts` and the `mcp.json` golden test are unchanged, byte for byte.
+  - The per-platform type test in `tests/scripted-run.test.ts` checks each rejected case against its own
+    platform's type (`Extract`/`Exclude` of `ScriptedScenario`). Each case is otherwise valid: the iOS package
+    case now carries a bundle ID, the Android bundle ID case a package. Removing the directives shows exactly
+    one compile error per case, on the field it names. Added a missing-package Android case.
+  - Dropped the second `import type` line from `scripted/contracts.js`: the checkpoint is typed
+    `ScriptedScenario['steps'][number]`, so the existing import line serves. Each module appears on one line
+    among the added imports.
