@@ -21,6 +21,9 @@ import { REPORT_VERSION } from '../src/scripted/report-json.js';
 import { SCRIPT_VERSION, scriptedScenarioSchema } from '../src/scripted/schema.js';
 import { REASON_CODES, ROLES } from '../src/scripted/vocabulary.js';
 import { BridgeService } from '../src/service.js';
+import { captureCommand } from '../src/capture.js';
+import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
+import { AGENT_CACHE, FakeAdb, fakeAgents, fakeClock } from './fixtures/android-device.js';
 import { androidScript } from './fixtures/android-script.js';
 import { openMcpSession } from './fixtures/mcp-session.js';
 
@@ -364,6 +367,8 @@ test('contract: CLI exit codes for every outcome and start failure', { timeout: 
     const broken = await write('broken.json', '{ not json');
     const androidWithoutDevice = await write('android-no-device.json', JSON.stringify(
       androidScript({ app: { package: 'com.hugues.test_cmp' }, steps: [checkpoint as ScriptedStep] })));
+    const empty = join(root, 'empty');
+    await mkdir(empty);
     const cli = join(process.cwd(), 'src/cli.ts');
     const tsx = import.meta.resolve('tsx');
     const env = (extra: Record<string, string>): NodeJS.ProcessEnv => {
@@ -394,6 +399,15 @@ test('contract: CLI exit codes for every outcome and start failure', { timeout: 
       ['logsRecordedRun', ['logs', 'passed'], {}],
       ['logsUnknownRun', ['logs', 'missing'], {}],
       ['noLogPaneOnReport', ['report', 'passed', '--no-log-pane'], {}],
+      ['captureWithoutDevice', ['capture'], {}],
+      ['captureWithEmptyDefaultDevice', ['capture'], { JEV_ANDROID_DEVICE: '' }],
+      ['captureWithInvalidSerial', ['capture', '--serial', 'has a space'], {}],
+      ['captureWithoutAndroidTools', ['capture', '--avd', 'jev-actions-api31'],
+        { ANDROID_HOME: empty, ANDROID_SDK_ROOT: empty, PATH: empty, HOME: empty }],
+      ['captureWithJson', ['capture', '--avd', 'jev-actions-api31', '--json'], {}],
+      ['captureWithRunLimit', ['capture', '--avd', 'jev-actions-api31', '--max-steps', '3'], {}],
+      ['captureWithNoLogPane', ['capture', '--avd', 'jev-actions-api31', '--no-log-pane'], {}],
+      ['jevOnReport', ['report', 'passed', '--jev'], {}],
     ];
     const results: Record<string, number> = {};
     for (const [name, args, extra] of cases) {
@@ -401,6 +415,8 @@ test('contract: CLI exit codes for every outcome and start failure', { timeout: 
         .then(() => 0, (error: { code?: number }) => error.code ?? -1);
       results[name] = outcome;
     }
+    // A foreign agent needs a device, so the CLI's capture path runs in-process over the fake adb and agent.
+    results.captureWithForeignAgent = await captureWithForeignAgent();
     await golden('cli-exit-codes', results);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
@@ -468,4 +484,48 @@ test('contract: --help names JEV_ANDROID_DEVICE', { timeout: 10_000 }, async () 
   const { stdout } = await execute(process.execPath,
     ['--import', import.meta.resolve('tsx'), join(process.cwd(), 'src/cli.ts'), '--help'], { cwd: process.cwd() });
   assert.match(stdout, /JEV_ANDROID_DEVICE/);
+});
+
+test('contract: --help lists capture and its options', { timeout: 10_000 }, async () => {
+  const { stdout } = await execute(process.execPath,
+    ['--import', import.meta.resolve('tsx'), join(process.cwd(), 'src/cli.ts'), '--help'], { cwd: process.cwd() });
+  assert.match(stdout, /jev-ios-bridge capture \[--serial S \| --avd A\] \[--jev\]/);
+});
+
+/** The CLI's capture path against a fake device whose foreign agent holds it: the exit code, once the refusal is checked. */
+async function captureWithForeignAgent(): Promise<number> {
+  const root = await mkdtemp(join(tmpdir(), 'jev-contract-capture-'));
+  try {
+    const adb = new FakeAdb({ serial: 'emulator-5554', avd: 'jev-actions-api31', agents: new Map([[4984, 'foreign']]) });
+    let stdout = '';
+    let stderr = '';
+    const code = await captureCommand({ avd: 'jev-actions-api31' }, { signal: new AbortController().signal,
+      driver: { runner: adb.run, agentClient: fakeAgents(adb).agentClient, clock: fakeClock(), leaseRoot: root,
+        tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: AGENT_CACHE, sha256: PINNED_AGENT_SHA256 } }) },
+      write: { stdout: text => { stdout += text; }, stderr: text => { stderr += text; } } });
+    assert.match(stderr, /^DEVICE_BUSY: /);
+    assert.equal(stdout, '');
+    assert.ok(adb.emulators.get('emulator-5554')!.agents!.has(4984), 'the foreign agent is left running');
+    return code;
+  } finally { await rm(root, { recursive: true, force: true }); }
+}
+
+test('contract: capture refusals print the reason code on stderr and need no TYPESAFE_API_KEY', { timeout: 20_000 }, async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-contract-capture-message-'));
+  try {
+    const empty = join(root, 'empty');
+    await mkdir(empty);
+    const env: NodeJS.ProcessEnv = { ...process.env, ANDROID_HOME: empty, ANDROID_SDK_ROOT: empty, PATH: empty, HOME: empty };
+    delete env.TYPESAFE_API_KEY;
+    delete env.JEV_ANDROID_DEVICE;
+    const capture = (args: string[]) => execute(process.execPath, ['--import', import.meta.resolve('tsx'), join(process.cwd(), 'src/cli.ts'),
+      'capture', ...args], { cwd: root, env }).then(() => assert.fail('must exit 3'), (error: { code: number; stdout: string; stderr: string }) => error);
+    for (const [args, code] of [[[], 'NO_DEVICE'], [['--serial', 'has a space'], 'INVALID_DEVICE'],
+      [['--avd', 'jev-actions-api31'], 'ANDROID_TOOLS_UNAVAILABLE']] as const) {
+      const refused = await capture([...args]);
+      assert.equal(refused.code, 3);
+      assert.match(refused.stderr, new RegExp(`^${code}: \\S`));
+      assert.equal(refused.stdout, '');
+    }
+  } finally { await rm(root, { recursive: true, force: true }); }
 });

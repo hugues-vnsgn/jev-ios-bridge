@@ -1,0 +1,511 @@
+{
+  "settings-2-display": [
+    {
+      "role": "scroll-view",
+      "identifier": "com.android.settings:id/content_parent",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "other",
+      "label": "Display & touch",
+      "identifier": "com.android.settings:id/collapsing_toolbar",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "button",
+      "label": "Navigate up",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "scroll-view",
+      "identifier": "com.android.settings:id/recycler_view",
+      "state": {
+        "enabled": true,
+        "visible": true,
+        "focused": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "Brightness",
+      "identifier": "android:id/title",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "button",
+      "label": "Brightness level",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "Brightness level",
+      "identifier": "android:id/title",
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "selectable": false
+    },
+    {
+      "role": "text",
+      "label": "83%",
+      "identifier": "android:id/summary",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "Lock display",
+      "identifier": "android:id/title",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "button",
+      "label": "Lock screen",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "Lock screen",
+      "identifier": "android:id/title",
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "selectable": false
+    },
+    {
+      "role": "text",
+      "label": "Show all notification content",
+      "identifier": "android:id/summary",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "button",
+      "label": "Screen timeout",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "Screen timeout",
+      "identifier": "android:id/title",
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "selectable": false
+    },
+    {
+      "role": "text",
+      "label": "Not set",
+      "identifier": "android:id/summary",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "Appearance",
+      "identifier": "android:id/title",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "button",
+      "label": "Dark theme",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "Dark theme",
+      "identifier": "android:id/title",
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "selectable": false
+    },
+    {
+      "role": "text",
+      "label": "Will turn on when Bedtime starts",
+      "identifier": "android:id/summary",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "image",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "switch",
+      "label": "Dark theme",
+      "value": "0",
+      "identifier": "com.android.settings:id/switchWidget",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "button",
+      "label": "Display size & text",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "Display size & text",
+      "identifier": "android:id/title",
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "selectable": false
+    },
+    {
+      "role": "text",
+      "label": "Font size, display size, bold text, outline text",
+      "identifier": "android:id/summary",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "button",
+      "label": "Navigation mode",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "Navigation mode",
+      "identifier": "android:id/title",
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "selectable": false
+    },
+    {
+      "role": "text",
+      "label": "Gesture navigation",
+      "identifier": "android:id/summary",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "button",
+      "label": "Screen saver",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "Screen saver",
+      "identifier": "android:id/title",
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "selectable": false
+    },
+    {
+      "role": "text",
+      "label": "On / Clock",
+      "identifier": "android:id/summary",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "Color",
+      "identifier": "android:id/title",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "button",
+      "label": "Colors",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "Colors",
+      "identifier": "android:id/title",
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "selectable": false
+    }
+  ],
+  "cmp-3-number-input": [
+    {
+      "role": "scroll-view",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "button",
+      "label": "number-input",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "number-input",
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "selectable": false
+    },
+    {
+      "role": "button",
+      "label": "fullscreen-modal",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "fullscreen-modal",
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "selectable": false
+    },
+    {
+      "role": "button",
+      "label": "modal-perf",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "modal-perf",
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "selectable": false
+    },
+    {
+      "role": "scroll-view",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "number-input on CMP",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "en-US, sig=2",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text-field",
+      "value": "1,234.50",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "value = 1234.5",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "vi-VN, sig=0 (đồng)",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text-field",
+      "value": "2.500.000",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "rawText='2500000' len=7 value=2500000.0",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "de-DE, sig=3",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text-field",
+      "value": "1.234,500",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "value = 1234.5",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "en-US, sig=2, unsigned",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text-field",
+      "value": "42.00",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "value = 42.0",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "de-DE, sig=2, built-in keypad",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text-field",
+      "label": "Betrag eingeben",
+      "placeholder": "Betrag eingeben",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "value = null",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "button",
+      "label": "Reset all",
+      "state": {
+        "enabled": true,
+        "visible": true
+      }
+    },
+    {
+      "role": "text",
+      "label": "Reset all",
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "selectable": false
+    }
+  ]
+}
