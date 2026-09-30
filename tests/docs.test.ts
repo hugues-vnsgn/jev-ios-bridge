@@ -50,6 +50,7 @@ test('the script-format reference says the 2048-character typed-value limit coun
   assert.match(page, /2048 characters \(UTF-16 code units/);
 });
 
+
 const guidePage = (name: string) => readFileSync(join('docs/guide', name), 'utf8');
 
 /** GitHub's heading anchors: lower case, punctuation dropped, spaces to hyphens. */
@@ -90,7 +91,7 @@ test('the guide index links every guide and reference page, and the Android setu
   assert.ok(guidePage('02-prepare-your-app.md').includes('](12-android-setup.md'), '02-prepare-your-app.md does not link the Android setup page');
 });
 
-test('the Android setup page covers every point of the release spec\'s phase 7 item 1', () => {
+test('the Android setup page covers tools, device naming, identifiers, control state, settings, other UI tools and screen lock', () => {
   const page = guidePage('12-android-setup.md');
   for (const point of ['`adb`', 'API 31', 'arm64', '`device.avd`', '`device.serial`', '`JEV_ANDROID_DEVICE`', 'Android device',
     'testTagsAsResourceId', 'androidMain', 'selected', 'checked', 'animation', 'pm grant', 'USB debugging (Security settings)',
@@ -100,14 +101,14 @@ test('the Android setup page covers every point of the release spec\'s phase 7 i
 });
 
 test('the reason-code reference gives each code the vocabulary\'s own wording', () => {
-  const page = readFileSync('docs/guide/reference/reason-codes.md', 'utf8');
+  const page = guidePage('reference/reason-codes.md');
   for (const [, code, meaning] of page.matchAll(/^\| `([A-Z_]+)` \| (.+) \|$/gm)) {
     assert.equal(meaning, REASON_CODES[code as keyof typeof REASON_CODES], `${code}'s meaning differs from src/scripted/vocabulary.ts`);
   }
 });
 
 test('troubleshooting covers every Android reason code, crash lookups, and clearing leftovers by hand', () => {
-  const reference = readFileSync('docs/guide/reference/reason-codes.md', 'utf8');
+  const reference = guidePage('reference/reason-codes.md');
   const android = reference.slice(reference.indexOf('## Device and app (Android)'));
   const codes = [...android.slice(0, android.indexOf('\n## ', 1)).matchAll(/^\| `([A-Z_]+)` \|/gm)].map(match => match[1]!);
   assert.ok(codes.length >= 9, `expected the Android codes, found ${codes.join(', ')}`);
@@ -120,7 +121,7 @@ test('troubleshooting covers every Android reason code, crash lookups, and clear
 });
 
 test('the report.json reference lists every field of an iOS and an Android report', () => {
-  const page = readFileSync('docs/guide/reference/report-json.md', 'utf8');
+  const page = guidePage('reference/report-json.md');
   const listed = new Set(page.split('\n').filter(row => row.startsWith('| `'))
     .flatMap(row => [...row.split(' | ')[0]!.matchAll(/`([A-Za-z]+)`/g)].map(match => match[1]!)));
   const ios = JSON.parse(readFileSync('tests/golden/report-json.json', 'utf8')) as Record<string, object>;
@@ -141,7 +142,7 @@ test('the running page documents capture with every option in the CLI\'s usage l
 });
 
 test('the script-format reference says a non-English typed value passes through the device clipboard', () => {
-  const page = readFileSync('docs/guide/reference/script-format.md', 'utf8');
+  const page = guidePage('reference/script-format.md');
   assert.match(page, /clipboard/);
   assert.match(page, /real secret/);
 });

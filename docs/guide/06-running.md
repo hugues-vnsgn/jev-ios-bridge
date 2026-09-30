@@ -47,7 +47,7 @@ npx jev-ios-bridge capture --serial emulator-5554 --jev
 
 **What it does:**
 - It **doesn't launch or restart the app,** and leaves it as it is. Bring the screen you want up first.
-- It runs the same device checks as a run, holds the device lease while it captures, and refuses with `DEVICE_BUSY` when another tool's agent holds the device. Afterwards it stops its device agent and removes its `adb forward`, as a run does.
+- It runs a run's device checks (all but the installed-app check, since it names no app), holds the device lease while it captures, and refuses with `DEVICE_BUSY` when another tool's agent holds the device. Afterwards it stops its device agent and removes its `adb forward`, as a run does.
 - It waits for the screen to settle before printing, as each step of a run does.
 - It needs no `TYPESAFE_API_KEY`, and takes no screenshot.
 
@@ -62,7 +62,7 @@ npx jev-ios-bridge capture --serial emulator-5554 --jev
 That's three lines of the diagnostic app's first screen.
 
 - `role`, then whichever of `label`, `value`, `identifier`, `placeholder` and `state` the element has. A field the element doesn't have is left out.
-- `placeholder` is an empty field's grey hint. Selectors can't match it, and [claims](05-writing-claims.md) shouldn't say a field "contains" it.
+- `placeholder` is an empty field's grey hint. A field with no other name also shows the hint as its `label`, so a `label` selector finds the field by it, but [claims](05-writing-claims.md) shouldn't say the field "contains" it.
 - `"selectable": false` marks a text that the bridge lifted into its button's label. Jev still sees it, but no guard or selector ever matches it: select the button instead.
 
 **Exit codes:**
@@ -140,7 +140,7 @@ Codex can use the same MCP server and skills (copy each skill to `.agents/skills
 
 Cancelling stops new work, waits for any device command already sent, then stops the app. A cancelled run is inconclusive (`CANCELLED`).
 
-Only one run uses a device at a time. The lock (the device lease) is a file, `$TMPDIR/jev-ios-bridge-device-locks/<UUID>.lock`, holding the owning bridge process's ID. On Android the file is named after the device identity in capitals (the AVD name for an emulator, the serial for a phone), and `capture` takes the same lease. On Android, the lease is released only once the bridge's device agent is confirmed stopped.
+Only one run uses a device at a time. The device lease is a lock file, `$TMPDIR/jev-ios-bridge-device-locks/<UUID>.lock`, holding the owning bridge process's ID. On Android the file is named after the device identity in capitals (the AVD name for an emulator, the serial for a phone), and `capture` takes the same lease. On Android, the lease is released only once the bridge's device agent is confirmed stopped.
 
 - **A lock left by a process that has exited** is cleared by the next run. On Android, that run also stops the device agent, `adb forward` and `logcat` processes the crashed run left behind, and its `prepared` event records `sweptLeftovers: true`.
 - **A command that never answered:** if cleanup couldn't confirm a device command, the lock stays until that command answers. Then the bridge finishes cleanup itself.

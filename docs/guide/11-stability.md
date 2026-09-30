@@ -27,7 +27,7 @@ These stay compatible for every 1.x release:
 
 ## What 1.2 added
 
-1.2 adds Android. Everything here is an addition: iOS scripts, reports, messages, and exit codes are unchanged, and there's nothing to change in an iOS script.
+1.2 adds Android. Everything here is an addition: iOS scripts, reports, error messages, and exit codes are unchanged, and there's nothing to change in an iOS script. Only the one-line descriptions of `NO_DEVICE`, `INVALID_DEVICE`, and `DEVICE_BUSY` were reworded to cover both platforms; their meaning is the same.
 
 - **Script fields:** `"platform": "android"`, with `app.package`, `app.activity`, `app.intentExtras`, `device.serial`, and `device.avd`. A script without `platform` is an iOS script, read exactly as 1.1 read it. [Script format](reference/script-format.md).
 - **Reason codes:** `DEVICE_NOT_CONNECTED`, `DEVICE_AMBIGUOUS`, `DEVICE_UNAUTHORIZED`, `DEVICE_NOT_BOOTED`, `DEVICE_LOCKED`, `APP_NOT_INSTALLED`, `APP_NOT_RESPONDING`, `DEVICE_UNSUPPORTED`, and `ANDROID_TOOLS_UNAVAILABLE`. They're part of the frozen list from now on. [Reason codes](reference/reason-codes.md).

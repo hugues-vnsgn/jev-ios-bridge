@@ -46,7 +46,7 @@ Going to the home screen isn't an exit, so it isn't detected.
 
 **`APP_NOT_RESPONDING`** (Android): the app froze, and Android showed "App isn't responding". Something blocked its main thread. The crash commands above show the ANR.
 
-**`DEVICE_BUSY`**: another bridge process holds the device's lock. The message names it. See [cancelling and the device lock](06-running.md#cancelling-and-the-device-lock).
+**`DEVICE_BUSY`**: another bridge process holds the device's lease. The message names it. See [cancelling and the device lock](06-running.md#cancelling-and-the-device-lock).
 
 On Android it also means that another tool's UI-automation agent holds the device: mobile-mcp, mobilecli, Appium, or `uiautomator`. Close that tool, then run again. The bridge never stops another tool's agent. If the tool has exited but its agent still runs, stop it by hand, as below.
 

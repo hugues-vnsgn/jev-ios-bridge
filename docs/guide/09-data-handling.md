@@ -24,7 +24,7 @@ Nothing is sent for action or wait steps. Screenshots, logs, and your script's o
 - **Evidence:** `.jev-runs/<run-id>/`: `report.json`, `run.jsonl`, and screenshots. It's readable only by you, and it's out of git (the evidence root gets a `.gitignore` containing `*`). It's kept until you delete it. Screenshots are **not** masked.
 - **The app's own logs:** MobileBuildMCP writes them under `~/Library/Developer/MobileBuildMCP/workspaces/<workspace>/logs/` (readable only by you) and deletes them after about three days. **Apps can log tokens or personal data.** A debug build that logs every network request will leave those requests in these files. The log pane masks only your script's values.
 - **The app's own logs on Android:** the bridge writes the app's `logcat` output (its own uid only) to `$TMPDIR/jev-android-logs/<run-id>.log`. The file is readable only by you, and the next Android run deletes log files older than 3 days. As on iOS, the file isn't masked: whatever the app logs is in it.
-- **Intent extras** (`app.intentExtras`) are recorded as written in `run.jsonl` and `report.json`, like `launchArgs`. They aren't masked (only a script value inside one is), so don't put secrets in them.
+- **Intent extras** (`app.intentExtras`) are recorded as written in `run.jsonl` and `report.json`, like `launchArgs`. They aren't masked, except for a script value inside one, or the value of a key named like `password` or `token`, so don't put secrets in them.
 - **The watch page** is served on `127.0.0.1`. Its token opens one run, only while the bridge process is alive. Anyone on your Mac with the URL can read that run's evidence during that time.
 
 ## Masking and its limits
