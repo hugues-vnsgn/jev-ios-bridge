@@ -1,6 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
+import { mkdir, mkdtemp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { createInterface } from 'node:readline';
 import { openMcpSession } from './fixtures/mcp-session.js';
 
@@ -45,7 +48,6 @@ test('start_scenario\'s description names both iOS and Android', { timeout: 10_0
 });
 
 test('an Android script reaches the Android driver, whose refusal get_report shows: ANDROID_TOOLS_UNAVAILABLE without adb', { timeout: 20_000 }, async () => {
-  const { mkdtemp, mkdir, rm } = await import('node:fs/promises'); const { tmpdir } = await import('node:os'); const { join } = await import('node:path');
   const root = await mkdtemp(join(tmpdir(), 'jev-mcp-android-refusal-'));
   const empty = join(root, 'empty');
   await mkdir(empty);

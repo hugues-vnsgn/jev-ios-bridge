@@ -178,13 +178,13 @@ export class AndroidDriver implements DeviceDriver {
   private runner: AdbRunner | undefined;
   private prepared: DevicePreparation | undefined;
   private serial: string | undefined;
-  /** Whether this run restarted the app, so `close` stops it only then. */
-  private restarted = false;
-  private appPackage: string | undefined;
+  /** The package this run restarted, so `close` stops the app only then. */
+  private restartedPackage: string | undefined;
   /** Whether this run issued the agent's start command, so `close` looks for an agent it may have started. */
   private agentStartIssued = false;
   /** Set once `close` begins: from then on no step issues new device work, except `close`'s own. */
   private closeBegun = false;
+  /** The `close` in progress, which a second `close` joins. */
   private closing: Promise<void> | undefined;
   /** The only signal that may still issue device work once `close` began: the running `close`'s own. */
   private cleanupSignal: AbortSignal | undefined;
@@ -247,10 +247,12 @@ export class AndroidDriver implements DeviceDriver {
     const serial = this.serial!;
     this.cleanupSignal = signal;
     try {
-      await this.fenceAgent(serial, signal);
-      if (this.restarted) {
-        await this.succeeded('stop the app', this.shell(serial, ['am', 'force-stop', this.appPackage!], signal));
-        this.restarted = false;
+      // An unconfirmed fence keeps the lease the same way an unknown adb command does.
+      try { await this.fenceAgent(serial, signal); }
+      catch { throw new DeviceReasonError('UI_ACTION_UNCONFIRMED', 'The bridge\'s device agent could not be confirmed stopped; device lease kept'); }
+      if (this.restartedPackage !== undefined) {
+        await this.succeeded('stop the app', this.shell(serial, ['am', 'force-stop', this.restartedPackage], signal));
+        this.restartedPackage = undefined;
       }
       // Phase 5: stop this run's logcat streams here, and wait for them to exit.
       const port = this.forwardPort;
@@ -403,7 +405,7 @@ export class AndroidDriver implements DeviceDriver {
       this.prepared = { deviceIdentity: identity, serial, agentSha256: tools.agent.sha256, ...(sweptLeftovers ? { sweptLeftovers } : {}) };
     } catch (error) {
       // A refusal before the restart leaves nothing to undo on the device: release now, as the iOS driver does.
-      if (!this.restarted && this.lease.releasable) await this.lease.release();
+      if (this.restartedPackage === undefined && this.lease.releasable) await this.lease.release();
       throw error;
     }
   }
@@ -583,8 +585,7 @@ export class AndroidDriver implements DeviceDriver {
    * output, and on API 31 still exits 0, so only `Status: ok` counts as launched.
    */
   private async restart(serial: string, app: AndroidAppIdentity, signal: AbortSignal): Promise<void> {
-    this.restarted = true;
-    this.appPackage = app.package;
+    this.restartedPackage = app.package;
     await this.succeeded('stop the app', this.shell(serial, ['am', 'force-stop', app.package], signal));
     const component = app.activity ? `${app.package}/${app.activity}` : await this.launcherActivity(serial, app.package, signal);
     const extras = Object.entries(app.intentExtras ?? {}).flatMap(([key, value]) => ['--es', key, value]);

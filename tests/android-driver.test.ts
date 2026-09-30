@@ -4,7 +4,7 @@ import { mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
-import { isActOutcome, type AndroidAppIdentity, type RunEvent, type Snapshot } from '../src/contracts/index.js';
+import { isActOutcome, type AndroidAppIdentity, type DeviceDriver, type RunEvent, type Snapshot } from '../src/contracts/index.js';
 import { DeviceReasonError, StaleSnapshotError } from '../src/device/index.js';
 import { OutcomeUnknownError, type AdbResult, type AdbRunner } from '../src/device/android/adb.js';
 import { DeviceAgentError, type DeviceAgentClient } from '../src/device/android/agent-client.js';
@@ -1264,6 +1264,30 @@ test('an agent request that times out is ended by the fence, and the lease is re
   });
 });
 
+test('close waits for an agent request still running, then its fence ends the request\'s unknown outcome', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  await withPrepared([fields], async ({ driver, agents, adb, root }) => {
+    const snapshot = await driver.observe(signal());
+    const request = gate();
+    agents.hooks.onCall = async call => {
+      if (call.method !== 'device.io.tap') return;
+      await request.opened;
+      throw new OutcomeUnknownError('agent', 'The device agent request timed out');
+    };
+    const acting = driver.act({ kind: 'tap', targetRef: refOf(snapshot, 'field.city') }, snapshot, values({}), signal());
+    await eventually(() => agents.calls.at(-1)?.method === 'device.io.tap', 'tap sent');
+    const before = adb.calls.length;
+    const closing = driver.close(signal());
+    await new Promise(resolveTick => setTimeout(resolveTick, 20));
+    assert.equal(adb.calls.length, before, 'no fence while the request runs');
+    request.open();
+    await assert.rejects(acting, OutcomeUnknownError);
+    await closing;
+    assert.deepEqual(callsFrom(adb, before), CLOSE_AFTER_PREPARE);
+    assert.deepEqual(await readdir(root), []);
+  });
+});
+
 test('an agent request that times out keeps the lease when the fence can\'t be confirmed', async () => {
   const fields = await hierarchyOf('text-fields.json');
   await withPrepared([fields], async ({ driver, agents, adb, root, clock }) => {
@@ -1272,7 +1296,7 @@ test('an agent request that times out keeps the lease when the fence can\'t be c
     await assert.rejects(driver.act({ kind: 'tap', targetRef: refOf(snapshot, 'field.city') }, snapshot, values({}), signal()), OutcomeUnknownError);
     adb.emulators.get('emulator-5554')!.stubborn = [7001];
     const before = adb.calls.length;
-    await assert.rejects(driver.close(signal()), closeFailed('DEVICE_ERROR'));
+    await assert.rejects(driver.close(signal()), closeFailed('UI_ACTION_UNCONFIRMED'));
     assert.ok(clock.now() >= 2_000);
     assert.equal(callsFrom(adb, before).some(call => call.includes('force-stop') || call.includes('--remove')), false,
       'nothing after an unconfirmed fence');
@@ -1391,8 +1415,18 @@ test('an Android script with a replace-text step and a checkpoint runs to a verd
   const script = cityScript();
   await withRunLog('android-end-to-end', async (log, evidence) => {
     await withDriver(new FakeAdb(api31()), async ({ driver, adb, agents, root }) => {
-      const report = await runScriptedScenario({ runId: 'android-end-to-end', scenario: script, driver, judge: judgeAllTrue, log });
+      // The real driver, watched only for the shown values its act returns.
+      const shownValues: unknown[] = [];
+      const watched: DeviceDriver = { prepare: (...args) => driver.prepare(...args), observe: (...args) => driver.observe(...args),
+        close: (...args) => driver.close(...args), preparation: () => driver.preparation(),
+        act: async (...args) => {
+          const outcome = await driver.act(...args);
+          if (isActOutcome(outcome)) shownValues.push(outcome.shownValue);
+          return outcome;
+        } };
+      const report = await runScriptedScenario({ runId: 'android-end-to-end', scenario: script, driver: watched, judge: judgeAllTrue, log });
       assert.equal(report.verdict, 'passed');
+      assert.deepEqual(shownValues, [CITY], 'the shown value keeps its trailing space');
 
       assert.deepEqual(adb.calls.map(call => call.join(' ')), [...PREPARE_BY_SERIAL, ...CLOSE_AFTER_PREPARE]);
       assert.deepEqual(agents.calls, [
