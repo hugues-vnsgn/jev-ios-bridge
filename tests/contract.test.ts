@@ -240,6 +240,47 @@ test('contract: report.json shape for passed, failed, and device-error runs', as
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
+// An Android run's report.json carries fields no iOS run has (ADR-0005 only adds); it gets its own golden
+// file rather than a fourth entry in report-json.json, whose existing three-entry shape is frozen above.
+test('contract: report.json shape for an Android run', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-contract-report-android-'));
+  try {
+    const nameField: Snapshot = { deviceId: 'android-golden', sequence: 1, capturedAt: 0, expiresAt: 60_000, truncated: false,
+      elements: [{ ref: 'name-field', role: 'text-field', identifier: 'name-field', actions: ['typeText'],
+        frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } }] };
+    const markerScreen: Snapshot = { deviceId: 'android-golden', sequence: 2, capturedAt: 0, expiresAt: 60_000, truncated: false,
+      elements: [{ ref: 'marker', role: 'text', label: 'Marker', actions: [],
+        frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } }],
+      shownValue: 'placeholder-text' };
+    const driver: DeviceDriver = { async prepare() {}, async observe() { return nameField; }, async act() { return markerScreen; },
+      async close() {}, androidPreparation: () => ({ deviceIdentity: 'jev-actions-api31', serial: 'emulator-5554', agentSha256: 'deadbeef' }) };
+    const scenario = { version: 1, platform: 'android',
+      app: { package: 'com.hugues.test_cmp', activity: '.DebugGalleryActivity', intentExtras: { screen: 'gallery' } },
+      device: { serial: 'emulator-5554' }, values: { name: 'Ann' }, steps: [
+        { id: 'type', kind: 'action', guard: { present: [{ identifier: 'name-field' }] },
+          action: { kind: 'replaceText', selector: { identifier: 'name-field' }, valueKey: 'name' } },
+        checkpoint,
+      ] } as const;
+    const service = new BridgeService({ baseDir: root, createDriver: () => driver, createJudge: () => judge(1) });
+    let runId: string;
+    try {
+      ({ runId } = await service.start(scenario));
+      for (let attempt = 0; attempt < 200 && (await service.status(runId)).state === 'running'; attempt++) {
+        await new Promise(done => setTimeout(done, 10));
+      }
+    } finally { await service.close(); }
+    const parsed = JSON.parse(await readFile(join(root, runId, 'report.json'), 'utf8')) as Record<string, unknown>;
+    assert.equal(parsed.platform, 'android');
+    assert.equal(parsed.package, 'com.hugues.test_cmp');
+    assert.equal(parsed.activity, '.DebugGalleryActivity');
+    assert.deepEqual(parsed.intentExtras, { screen: 'gallery' });
+    assert.deepEqual(parsed.typedFields, [{ stepId: 'type', shownValue: 'placeholder-text' }]);
+    assert.equal('deviceIdentity' in parsed, false, 'the prepared fields stay out of report.json');
+    const report = stable(parsed, runId);
+    await golden('report-json-android', report);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
 test('contract: evidence folder names, JSONL envelope, event types, and verdict event', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-contract-evidence-'));
   try {

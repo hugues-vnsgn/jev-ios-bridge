@@ -39,10 +39,35 @@ export interface ReportJson {
   finishedAt: string | null;
   checkpoints: ReportCheckpoint[];
   evidence: { log: 'run.jsonl'; screenshots: string[] };
+  /** Android runs only, mirroring `started` (owner decision C); a reader treats their absence as iOS. */
+  platform?: 'android';
+  package?: string;
+  activity?: string | null;
+  intentExtras?: Record<string, string>;
+  /** Android runs only: one shown value per replace-text step, built from `action` events. */
+  typedFields?: Array<{ stepId: string; shownValue: string }>;
 }
 
 const text = (value: unknown): string | null => typeof value === 'string' ? value : null;
 const count = (value: unknown): number | null => typeof value === 'number' && Number.isFinite(value) ? value : null;
+
+/** The Android-only fields (owner decision C), built from `started` and the `action` events; `{}` on iOS. */
+function androidReportFields(started: RunEvent | undefined, events: RunEvent[]):
+  Pick<ReportJson, 'platform' | 'package' | 'activity' | 'intentExtras' | 'typedFields'> {
+  if (started?.data.platform !== 'android') return {};
+  const intentExtras = started.data.intentExtras;
+  const typedFields = events.flatMap(event => event.type === 'action' && event.data.action === 'replaceText' &&
+    typeof event.data.shownValue === 'string'
+    ? [{ stepId: String(event.data.stepId ?? ''), shownValue: event.data.shownValue }] : []);
+  return {
+    platform: 'android',
+    package: text(started.data.package) ?? '',
+    activity: started.data.activity === null ? null : text(started.data.activity),
+    intentExtras: intentExtras && typeof intentExtras === 'object' && !Array.isArray(intentExtras)
+      ? intentExtras as Record<string, string> : {},
+    ...(typedFields.length ? { typedFields } : {}),
+  };
+}
 
 /** Build the frozen report from recorded events. The recorded verdict is authoritative. */
 export function buildReportJson(events: RunEvent[]): ReportJson {
@@ -107,5 +132,6 @@ export function buildReportJson(events: RunEvent[]): ReportJson {
       screenshots: events.flatMap(event => event.type === 'step' && typeof event.data.screenshotPath === 'string'
         ? [event.data.screenshotPath] : []),
     },
+    ...androidReportFields(started, events),
   };
 }
