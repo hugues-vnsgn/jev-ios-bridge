@@ -11,6 +11,8 @@ import { DeviceReasonError, MobileBuildMcpDriver, type CliRunner } from '../src/
 import { assertScreenGuard, resolveActionTarget, ScriptSelectionError } from '../src/scripted/select.js';
 import { runScriptedScenario } from '../src/scripted/run.js';
 import { buildScriptedReport, renderScriptedReport } from '../src/scripted/report.js';
+import { readFile } from 'node:fs/promises';
+import { createRunLog } from '../src/log/index.js';
 
 function snapshot(elements: Element[], truncated = false): Snapshot {
   return { deviceId: 'sim', capturedAt: Date.now(), expiresAt: Date.now() + 60_000,
@@ -864,6 +866,34 @@ test('an Android replace-text step records its driver-reported shown value, and 
   const steps = log.events.filter(event => event.type === 'step');
   assert.equal(steps[0]?.data.settled, undefined);
   assert.equal(steps[1]?.data.settled, false);
+});
+
+test('an Android shown value echoing a typed value is redacted in run.jsonl, report.json, and the prose report', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-android-shown-value-'));
+  try {
+    const field: Element = { ref: 'name-field', role: 'text-field', identifier: 'name-field', actions: ['typeText'],
+      frame: { x: 0, y: 0, width: 100, height: 30 }, state: { enabled: true, visible: true } };
+    const confirm: Element = { ref: 'confirm', role: 'text', label: 'Confirm', actions: [],
+      frame: { x: 0, y: 40, width: 100, height: 30 }, state: { enabled: true, visible: true } };
+    const scenario: ScriptedScenario = { version: 1, platform: 'android', app: { package: 'com.example.android' },
+      values: { name: 'private-value' }, steps: [
+        { id: 'type', kind: 'action', guard: { present: [{ identifier: 'name-field' }] },
+          action: { kind: 'replaceText', selector: { identifier: 'name-field' }, valueKey: 'name' } },
+        { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Confirm' }] },
+          assertions: [{ id: 'shown', claim: 'Confirm is visible' }] },
+      ] };
+    const log = await createRunLog(root, 'redacted-android', { values: Object.values(scenario.values) });
+    const report = await runScriptedScenario({ runId: 'redacted-android', scenario, log,
+      driver: { async prepare() {}, async observe() { return snapshot([field]); },
+        async act() { return { ...snapshot([confirm]), shownValue: 'private-value' }; }, async close() {} },
+      judge: { async judge() { return { probabilities: { shown: 0.97 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
+    const raw = await readFile(join(root, 'redacted-android', 'run.jsonl'), 'utf8');
+    assert.doesNotMatch(raw, /private-value/);
+    assert.match(raw, /\[REDACTED\]/);
+    const reportJson = await readFile(join(root, 'redacted-android', 'report.json'), 'utf8');
+    assert.doesNotMatch(reportJson, /private-value/);
+    assert.doesNotMatch(renderScriptedReport(report), /private-value/);
+  } finally { await rm(root, { recursive: true, force: true }); }
 });
 
 test('the driver gets the device an iOS script names, and no device for an Android script', async () => {
