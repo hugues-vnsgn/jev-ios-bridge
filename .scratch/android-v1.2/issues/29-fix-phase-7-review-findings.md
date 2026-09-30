@@ -1,6 +1,7 @@
 # Phase 7: fix the whole-branch review findings
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase7 at 529ae66
 Claimed by: claude-issue-29
 Blocked by: none
 
@@ -81,3 +82,7 @@ Spec: [../spec.md](../spec.md), "Phase 7", and Issues 23 to 25 with their commen
 **Review (`/code-review` against `38138be`):**
 - Standards: no hard violations. I fixed the test weaknesses (a vacuous prepare-page check, a phones check that depended on line position, a log-file regex that could misfire, a narrow home-path check, and a stale test name). I left the two separate `readdirSync` filters: each test file keeps its own.
 - Spec: nothing missing. The two statements that went beyond the code (items 3 and 6) are fixed. The `plugin.json` change and the extra evidence tests were accepted as reasonable.
+
+### 2026-09-30, coordinator: accepted
+
+Accepted. The coordinator also changed the older "lock" bullets in `06-running.md` and `08-troubleshooting.md` to "device lease". Only the lock file's name, the frozen `is locked by` message and screen-lock wording keep "lock".

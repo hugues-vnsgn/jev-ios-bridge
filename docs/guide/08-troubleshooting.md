@@ -54,7 +54,7 @@ On Android it also means that another tool's UI-automation agent (a foreign agen
 
 **`DEVICE_ERROR`**: MobileBuildMCP reported an error the bridge doesn't have its own code for. `report.json`'s `error.vendorCode` holds MobileBuildMCP's code. Common causes: the simulator isn't booted, or the app isn't installed. A shut-down simulator can make MobileBuildMCP say an installed app is missing. On Android, `vendorCode` is `adb` or `agent`, naming the part that failed. The bridge never records that part's own message, because it can carry screen text. Check that the device is still connected, then run again.
 
-**`UI_ACTION_UNCONFIRMED`**: a device command never answered, so the lock was kept to protect the device. It's released when the command answers, or when that bridge process exits.
+**`UI_ACTION_UNCONFIRMED`**: a device command never answered, so the device lease was kept to protect the device. It's released when the command answers, or when that bridge process exits.
 
 **`CLEANUP_FAILED`**: stopping the app didn't finish. Check that the simulator is still responsive. On Android, the message says whether the device lease was kept; the next run clears it once the bridge process that held it has exited.
 
