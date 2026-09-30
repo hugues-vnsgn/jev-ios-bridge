@@ -2,7 +2,7 @@ import { execFile } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { readFile } from 'node:fs/promises';
 import { isAbsolute, join, resolve } from 'node:path';
-import { isIosApp, type Action, type ActionScenarioContext, type DeviceDriver, type DeviceMetrics, type Element, type PrepareScenarioContext, type Snapshot, type TapAliasRule } from '../contracts/index.js';
+import { isIosApp, type Action, type ActionScenarioContext, type AppProblem, type DeviceDriver, type DeviceMetrics, type Element, type PrepareScenarioContext, type Snapshot, type TapAliasRule } from '../contracts/index.js';
 import { androidAvd, androidSerial } from '../scripted/schema.js';
 import { ROLES, type ReasonCode, type Role } from '../scripted/vocabulary.js';
 import { DeviceLease, DeviceLeaseBusyError } from './lease.js';
@@ -344,6 +344,12 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     if (!this.launched || !Number.isSafeInteger(pid) || pid <= 0) return undefined;
     try { process.kill(pid, 0); return true; }
     catch (error) { return (error as NodeJS.ErrnoException).code === 'EPERM'; }
+  }
+
+  /** APP_EXITED once the console helper has exited, with the note the log pane has always shown for it. */
+  appProblem(): AppProblem | undefined {
+    return this.appRunning() === false
+      ? { code: 'APP_EXITED', note: 'The app stopped unexpectedly: its console output ended while the run was still going.' } : undefined;
   }
 
   logSources(): { runtime?: string; os?: string } {

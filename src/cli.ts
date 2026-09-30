@@ -12,7 +12,7 @@ import { createDriverFactory } from './device/factory.js';
 import { createAssertionJudge } from './scripted/jev.js';
 import { renderScriptedReport } from './scripted/report.js';
 import { parseScriptedScenario } from './scripted/schema.js';
-import type { Verdict } from './contracts/index.js';
+import type { LogSources, Verdict } from './contracts/index.js';
 import { BRIDGE_VERSION } from './version.js';
 import { attachLogPane } from './logpane/attach.js';
 import { readRunEvents } from './log/index.js';
@@ -92,9 +92,9 @@ async function main(): Promise<void> {
     let events;
     try { events = await readRunEvents(runsDir(), argument!); }
     catch { throw new StartError(`No live run ${argument}, and no recorded run with that ID in ${runsDir()}`); }
-    const sources = events.find(event => event.type === 'prepared')?.data.logSources as { runtime?: string; os?: string } | undefined;
+    const sources = events.find(event => event.type === 'prepared')?.data.logSources as LogSources | undefined;
     console.log(`Run ${argument} is not running, so there is no live log to follow.` +
-      (sources ? `\nThe app's own log files (not masked): ${[sources.runtime, sources.os].filter(Boolean).join(', ')}` : ''));
+      (sources ? `\nThe app's own log files (not masked): ${[sources.runtime, sources.os, sources.logcat].filter(Boolean).join(', ')}` : ''));
     return;
   }
 

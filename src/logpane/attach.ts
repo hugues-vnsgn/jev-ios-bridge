@@ -28,8 +28,12 @@ export function attachLogPane(runId: string, output: NodeJS.WriteStream = proces
       if (message.type === 'hello') {
         if (color) output.write(`\x1b]0;jev log · ${message.appId}\x07`);
         print(bold(`jev-ios-bridge log pane · ${message.appId} · run ${message.runId}`, color));
-        print(dim(`app output: ${message.sources.runtime ?? 'unavailable'}`, color));
-        print(dim(`system log (subsystem ${message.appId}): ${message.sources.os ?? 'unavailable'}`, color));
+        if (message.sources.logcat) {
+          print(dim(`device log (logcat, the app's uid only): ${message.sources.logcat}`, color));
+        } else {
+          print(dim(`app output: ${message.sources.runtime ?? 'unavailable'}`, color));
+          print(dim(`system log (subsystem ${message.appId}): ${message.sources.os ?? 'unavailable'}`, color));
+        }
         print(dim('Local only: nothing here goes to Jev or the host agent. Values from the script are masked.\n', color));
       } else if (message.type === 'line') {
         print(renderLine(message, color));

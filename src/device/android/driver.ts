@@ -4,7 +4,7 @@ import { createServer } from 'node:net';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
-import type { Action, ActionScenarioContext, ActOutcome, AndroidAppIdentity, DevicePreparation, DeviceDriver, Direction, Element,
+import type { Action, ActionScenarioContext, ActOutcome, AndroidAppIdentity, AppProblem, DevicePreparation, DeviceDriver, Direction, Element,
   PrepareScenarioContext, Snapshot } from '../../contracts/index.js';
 import { isIosApp } from '../../contracts/index.js';
 import { DeviceReasonError, selectAndroidDeviceName, StaleSnapshotError } from '../index.js';
@@ -12,6 +12,7 @@ import { DeviceLease, DeviceLeaseBusyError, type LeaseHolder } from '../lease.js
 import { readLogTail } from '../logs.js';
 import { adbRunner, type AdbResult, type AdbRunner } from './adb.js';
 import { deviceAgentClient, type AgentKey, type DeviceAgentClient } from './agent-client.js';
+import type { AppExitWatch, createExitWatch } from './exit-watch.js';
 import { inLedger } from './ledger.js';
 import { deleteOldLogs, LOG_FOLDER, logcatStarter, privateLogFolder, type LogcatOutput, type LogcatStarter, type LogcatStream } from './logcat.js';
 import { mapAndroidTree } from './mapping.js';
@@ -92,21 +93,9 @@ export interface AndroidDriverOptions {
   logFolder?: string | false;
   /** Names the app's log file, `<run ID>.log`. Without one, the driver makes up its own. */
   runId?: string | undefined;
-  /** Folds the events stream into the app's state. Without one, `appRunning()` can't tell. */
-  createExitWatch?: ((options: { package: string; startTime: number; utcOffsetMinutes: number }) => AppExitWatch) | undefined;
-}
-
-/**
- * The app-exit watcher's shape (Issue 18's `exit-watch.ts`), typed here structurally: the events stream's
- * lines, the launched pid and the bridge's own stops, folded into whether the app still runs.
- */
-export interface AppExitWatch {
-  feed(raw: string): void;
-  launched(pid: number | undefined): void;
-  expectStop(): void;
-  streamEnded(): void;
-  running(): boolean | undefined;
-  problem(): { code: 'APP_EXITED' | 'APP_NOT_RESPONDING'; note: string } | undefined;
+  /** Folds the events stream into the app's state. Without one, `appRunning()` and `appProblem()` can't tell. The
+   *  driver factory passes `createExitWatch`. */
+  createExitWatch?: typeof createExitWatch | undefined;
 }
 
 /** The element action each kind of action needs, as on iOS. */
@@ -251,6 +240,12 @@ export class AndroidDriver implements DeviceDriver {
   /** Whether the launched app still runs, from the events stream; undefined when the driver can't tell. */
   appRunning(): boolean | undefined {
     return this.watch?.running();
+  }
+
+  /** Why the launched app stopped, from the events stream: exited or not responding; undefined when it runs,
+   *  the bridge stopped it, or the driver can't tell. */
+  appProblem(): AppProblem | undefined {
+    return this.watch?.problem();
   }
 
   /** The app's log file, once its stream started: the pane, each step's log tails and `logs` read it. */

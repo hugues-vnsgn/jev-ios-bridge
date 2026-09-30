@@ -1,5 +1,5 @@
 import { setTimeout as delay } from 'node:timers/promises';
-import type { Action, ActionScenarioContext, ActOutcome, DeviceDriver, Element, Platform, PrepareScenarioContext, RunLog, Snapshot, Verdict } from '../contracts/index.js';
+import type { Action, ActionScenarioContext, ActOutcome, DeviceDriver, Element, LogSources, Platform, PrepareScenarioContext, RunLog, Snapshot, Verdict } from '../contracts/index.js';
 import { isActOutcome } from '../contracts/index.js';
 import { DeviceCliError, DeviceReasonError, StaleSnapshotError } from '../device/index.js';
 import type { AssertionJudgment, ScriptedJudge, ScriptedScenario, ScriptedStep } from './contracts.js';
@@ -29,7 +29,7 @@ export interface ScriptedRunOptions {
   signal?: AbortSignal;
   limits?: ScriptedRunLimits;
   /** Called once the app is launched, with the log files the device layer writes for it. */
-  onPrepared?(info: { logSources: { runtime?: string; os?: string } }): void;
+  onPrepared?(info: { logSources: LogSources }): void;
   /** Called just before cleanup stops the app. */
   onCleanup?(): void;
 }
@@ -371,9 +371,11 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
     }
   } catch (error) {
     verdict = 'inconclusive';
-    // A step that failed because the app died is reported as that, not as the symptom it caused.
-    const failure = !signal.aborted && options.driver.appRunning?.() === false
-      ? { code: 'APP_EXITED' } as Failure : failureOf(error, signal);
+    // A step that failed because the app died or froze is reported as that, not as the symptom it caused. A
+    // driver without appProblem answers only whether the app still runs.
+    const problem = signal.aborted ? undefined : options.driver.appProblem
+      ? options.driver.appProblem()?.code : options.driver.appRunning?.() === false ? 'APP_EXITED' : undefined;
+    const failure: Failure = problem ? { code: problem } : failureOf(error, signal);
     reason = failure.code;
     await options.log.append('error', { stepId: activeStepId, phase, code: reason,
       ...(failure.vendorCode === undefined ? {} : { vendorCode: failure.vendorCode }),
