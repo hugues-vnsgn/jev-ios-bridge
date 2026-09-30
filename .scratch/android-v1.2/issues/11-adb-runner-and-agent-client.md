@@ -1,6 +1,7 @@
 # Phase 4: the adb runner and the device agent's client
 
-Status: ready-for-agent
+Status: claimed
+Claimed by: claude-issue-11
 Blocked by: none
 
 Spec: [../spec.md](../spec.md), "Phase 4". The work is [the release spec's phase 4](../../android-support/release-spec.md#phase-4-the-android-driver-domain-model-adr-0006-mobilecli-as-a-dependency-how-android-elements-map-onto-the-bridges-elements-how-a-script-names-an-android-app-and-device-actions-across-android-versions-where-android-plugs-into-the-code-items-2-5-6-and-8) item 4's "The client", and item 8's "Tracking". Read them in full. The detail below only adds acceptance criteria.
