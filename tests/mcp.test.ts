@@ -36,59 +36,25 @@ test('stdio server negotiates and exposes start/report/cancel without a key', { 
 });
 
 test('start_scenario\'s description names both iOS and Android', { timeout: 10_000 }, async () => {
-  const env = { ...process.env }; delete env.TYPESAFE_API_KEY;
-  const child = spawn(process.execPath, ['--import', 'tsx', 'src/cli.ts', 'mcp'], { env, stdio: ['pipe', 'pipe', 'pipe'] });
-  const pending = new Map<number, (value: any) => void>();
-  const lines = createInterface({ input: child.stdout });
-  lines.on('line', line => {
-    const value = JSON.parse(line);
-    pending.get(value.id)?.(value); pending.delete(value.id);
-  });
-  const request = (id: number, method: string, params: object = {}) => new Promise<any>(done => {
-    pending.set(id, done);
-    child.stdin.write(JSON.stringify({ jsonrpc: '2.0', id, method, params }) + '\n');
-  });
+  const session = await openMcpSession('description', { entryPoint: 'cli' });
   try {
-    await request(1, 'initialize', { protocolVersion: '2025-03-26', capabilities: {}, clientInfo: { name: 'smoke', version: '1' } });
-    child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' }) + '\n');
-    const list = await request(2, 'tools/list');
-    const startTool = list.result.tools.find((tool: { name: string }) => tool.name === 'start_scenario');
+    const tools = await session.listTools();
+    const startTool = tools.find((tool: { name: string }) => tool.name === 'start_scenario');
     assert.match(startTool.description, /an explicit iOS or Android action script/);
-  } finally {
-    child.stdin.end();
-    lines.close();
-    if (child.exitCode === null) child.kill('SIGTERM');
-  }
+  } finally { await session.close(); }
 });
 
 test('start_scenario shows the driver refusal for an Android script instead of a generic failure', { timeout: 10_000 }, async () => {
-  const env = { ...process.env, TYPESAFE_API_KEY: 'contract-test-key' };
-  const child = spawn(process.execPath, ['--import', 'tsx', 'src/cli.ts', 'mcp'], { env, stdio: ['pipe', 'pipe', 'pipe'] });
-  const pending = new Map<number, (value: any) => void>();
-  const lines = createInterface({ input: child.stdout });
-  lines.on('line', line => {
-    const value = JSON.parse(line);
-    pending.get(value.id)?.(value); pending.delete(value.id);
-  });
-  const request = (id: number, method: string, params: object = {}) => new Promise<any>(done => {
-    pending.set(id, done);
-    child.stdin.write(JSON.stringify({ jsonrpc: '2.0', id, method, params }) + '\n');
-  });
+  const session = await openMcpSession('android-refusal', { entryPoint: 'cli', env: { TYPESAFE_API_KEY: 'contract-test-key' } });
   try {
-    await request(1, 'initialize', { protocolVersion: '2025-03-26', capabilities: {}, clientInfo: { name: 'smoke', version: '1' } });
-    child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' }) + '\n');
     const androidScenario = { version: 1, platform: 'android', app: { package: 'com.hugues.test_cmp' },
       device: { serial: 'emulator-5554' }, values: {},
       steps: [{ id: 'verify', kind: 'checkpoint', guard: { present: [{ role: 'text', label: 'Marker' }] },
         assertions: [{ id: 'shown', claim: 'Marker visible' }] }] };
-    const start = await request(2, 'tools/call', { name: 'start_scenario', arguments: { scenario: androidScenario } });
-    assert.equal(start.result.isError, true);
-    assert.match(start.result.content[0].text, /Android isn't available in this build/);
-  } finally {
-    child.stdin.end();
-    lines.close();
-    if (child.exitCode === null) child.kill('SIGTERM');
-  }
+    const start = await session.callTool('start_scenario', { scenario: androidScenario });
+    assert.equal(start.isError, true);
+    assert.match(start.content[0].text, /Android isn't available in this build/);
+  } finally { await session.close(); }
 });
 
 test('running MCP reports hide screen evidence and bounded waiting returns the final report', {timeout:5000}, async()=>{
