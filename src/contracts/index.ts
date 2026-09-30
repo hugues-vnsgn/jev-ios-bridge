@@ -45,11 +45,16 @@ export interface Element {
   ref: string;
   role: string;
   label?: string;
+  /** An empty field's hint text, shown to Jev as `placeholder` in place of `label`. Only the Android driver sets it. */
+  placeholder?: string;
   value?: string;
   identifier?: string;
   frame?: { x: number; y: number; width: number; height: number };
   state?: { enabled: boolean; visible: boolean; focused?: boolean; selected?: boolean };
   actions: string[];
+  /** Internal "can't be selected" marker: for example, text Android shows inside a button, which the mapping
+   *  lifts onto the button and marks unselectable. Never shown to Jev; honoured only by selection. */
+  selectable?: false;
 }
 
 export interface Snapshot {
