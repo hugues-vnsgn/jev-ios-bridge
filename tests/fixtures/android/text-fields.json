@@ -1,0 +1,36 @@
+{
+  "hierarchy": [
+    {
+      "index": 0, "class": "android.widget.FrameLayout", "package": "dev.jevbridge.fields", "text": "", "hint": "", "content-desc": "", "resource-id": "",
+      "checkable": false, "checked": false, "clickable": false, "enabled": true, "focusable": false, "focused": false, "scrollable": false,
+      "long-clickable": false, "password": false, "selected": false, "visible": true, "rect": { "x": 0, "y": 63, "width": 1080, "height": 2337 },
+      "children": [
+        {
+          "index": 0, "class": "android.widget.EditText", "package": "dev.jevbridge.fields", "text": "First line\nSecond line", "hint": "Notes", "content-desc": "", "resource-id": "field.notes",
+          "checkable": false, "checked": false, "clickable": true, "enabled": true, "focusable": true, "focused": false, "scrollable": true,
+          "long-clickable": true, "password": false, "selected": false, "visible": true, "rect": { "x": 21, "y": 226, "width": 1038, "height": 294 }
+        },
+        {
+          "index": 1, "class": "android.widget.EditText", "package": "dev.jevbridge.fields", "text": "hunter2-secret", "hint": "Password", "content-desc": "", "resource-id": "field.password",
+          "checkable": false, "checked": false, "clickable": true, "enabled": true, "focusable": true, "focused": true, "scrollable": false,
+          "long-clickable": true, "password": true, "selected": false, "visible": true, "rect": { "x": 21, "y": 536, "width": 1038, "height": 147 }
+        },
+        {
+          "index": 2, "class": "android.widget.EditText", "package": "dev.jevbridge.fields", "text": "   ", "hint": "Name", "content-desc": "", "resource-id": "field.spaces",
+          "checkable": false, "checked": false, "clickable": true, "enabled": true, "focusable": true, "focused": false, "scrollable": false,
+          "long-clickable": true, "password": false, "selected": false, "visible": true, "rect": { "x": 21, "y": 699, "width": 1038, "height": 147 }
+        },
+        {
+          "index": 3, "class": "android.widget.EditText", "package": "dev.jevbridge.fields", "text": "Hà Nội ", "hint": "City", "content-desc": "", "resource-id": "field.city",
+          "checkable": false, "checked": false, "clickable": true, "enabled": true, "focusable": true, "focused": false, "scrollable": false,
+          "long-clickable": true, "password": false, "selected": false, "visible": true, "rect": { "x": 21, "y": 862, "width": 1038, "height": 147 }
+        },
+        {
+          "index": 4, "class": "android.widget.EditText", "package": "dev.jevbridge.fields", "text": "", "hint": "Email", "content-desc": "", "resource-id": "field.empty",
+          "checkable": false, "checked": false, "clickable": true, "enabled": true, "focusable": true, "focused": false, "scrollable": false,
+          "long-clickable": true, "password": false, "selected": false, "visible": true, "rect": { "x": 21, "y": 1025, "width": 1038, "height": 147 }
+        }
+      ]
+    }
+  ]
+}
