@@ -1,6 +1,7 @@
 # Phase 3: fix whole-branch review findings
 
-Status: claimed
+Status: closed
+Closed: Fixed on agent/android-v1.2-phase3 at ebdd88a
 Claimed by: implementer-08
 Blocked by: none
 
