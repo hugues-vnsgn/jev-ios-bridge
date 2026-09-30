@@ -47,3 +47,15 @@ Spec: [../spec.md](../spec.md), "Phase 3", and its Rulings. This fixes findings 
 10. Added `tests/fixtures/run-log.ts` (`withRunLog`) and `tests/fixtures/android-script.ts` (`androidScript`), and used them across the phase-3 tests in `tests/scripted-run.test.ts` and `tests/contract.test.ts` that repeated the temp-folder+createRunLog+cleanup block and the minimal Android script literal. Tests that existed at 819ea10 are untouched (verified by diff).
 
 Gates at tip 1751b3b304022b1ee371bebe99397bcd8eb74628: `npm run check` passes (typecheck, 241 tests, build). No golden file changed since 4e7fba5. `git diff 819ea10 -- tests/` removes only lines already accounted for by prior Issues' rulings (logpane.test.ts, service.test.ts, golden/mcp.json, golden/vocabulary.json) plus lines this Issue's own phase-3-added tests introduced and then revised (scripted-run.test.ts, contract.test.ts, android-device.test.ts, docs.test.ts) — no line present at 819ea10 in those four files was touched.
+
+**2026-09-30, implementer-08, review round 1 (commit 662cbae):** fixed the seven small points raised.
+
+1. Reworded the platform-variable comment in `src/scripted/run.ts` to allow the one narrowing read of `script.platform`.
+2. `platformOf` (`src/scripted/schema.ts`) now returns `Platform`.
+3. Replaced the per-error-class `NO_DEVICE`/`INVALID_DEVICE` check in `src/cli.ts` with one `isDeviceSelectionError` predicate; stderr and exit codes unchanged.
+4. Reworded `src/device/factory.ts:12` and `src/device/lease.ts:17` to describe what the code does today, no roadmap references.
+5. `androidReportFields` (`src/scripted/report-json.ts`) now takes only `started`; `platform` is derived from it, and the redundant `!started` guard is gone.
+6. `tests/fixtures/run-log.ts`: `withRunLog`'s callback no longer receives the redundant `runId`; call sites use the literal name. `tests/fixtures/android-script.ts`: `androidScript()` now defaults to a valid one-checkpoint script (not an empty, schema-invalid `steps: []`), and the `as ScriptedScenarioAndroid` cast is gone. Also applied `androidScript()` at `tests/contract.test.ts` (the `androidWithoutDevice` literal) and `tests/scripted-run.test.ts:780` (the `started` test's Android half).
+7. `keepActResult` (`src/scripted/run.ts`) now evaluates `isActOutcome(result)` once.
+
+Gates rerun at tip 662cbae7007cdcad4eec8bd22b4afe6d1a571fe8: `npm run check` passes (typecheck, 241 tests, build); worktree clean; no golden file changed; no line present at 819ea10 in the touched test files was touched.
