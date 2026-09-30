@@ -3,6 +3,7 @@ import { createRequire } from 'node:module';
 import { readFile } from 'node:fs/promises';
 import { isAbsolute, join, resolve } from 'node:path';
 import { isIosApp, type Action, type ActionScenarioContext, type DeviceDriver, type DeviceMetrics, type Element, type PrepareScenarioContext, type Snapshot, type TapAliasRule } from '../contracts/index.js';
+import { androidAvd, androidSerial } from '../scripted/schema.js';
 import { ROLES, type ReasonCode, type Role } from '../scripted/vocabulary.js';
 import { DeviceLease, DeviceLeaseBusyError } from './lease.js';
 import { readLogTail } from './logs.js';
@@ -257,6 +258,24 @@ export async function selectDeviceId(cwd: string, scriptUdid?: string, defaultUd
     throw new DeviceCliError('INVALID_DEVICE', 'Set a dedicated simulator UUID; device aliases are not supported');
   }
   return selected.toUpperCase();
+}
+
+/**
+ * The Android device a run will use: the script's `device.serial` or `device.avd` (already validated by
+ * the script schema), then the configured default (JEV_ANDROID_DEVICE; an empty value counts as unset).
+ * There is no config file and no "any device" fallback. A value read from the environment is checked
+ * against the serial and AVD name patterns; a value named by the script is trusted as already checked.
+ * Whether the chosen value is a serial or an AVD name is worked out later, once adb can be asked.
+ */
+export function selectAndroidDeviceId(device: { serial?: string; avd?: string } | undefined, envValue: string | undefined): string {
+  const fromScript = device?.serial ?? device?.avd;
+  const selected = fromScript ?? (envValue ? envValue : undefined);
+  if (!selected) throw new DeviceCliError('NO_DEVICE', 'Set device.serial or device.avd in the scenario, or JEV_ANDROID_DEVICE');
+  if (!fromScript && !androidSerial.test(selected) && !androidAvd.test(selected)) {
+    throw new DeviceCliError('INVALID_DEVICE',
+      `JEV_ANDROID_DEVICE must be an adb serial (matching ${androidSerial}) or an AVD name (matching ${androidAvd})`);
+  }
+  return selected;
 }
 
 function sameScreen(before: Snapshot, after: Snapshot): boolean {
