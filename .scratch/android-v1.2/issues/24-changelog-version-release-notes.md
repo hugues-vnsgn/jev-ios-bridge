@@ -1,6 +1,7 @@
 # Phase 7: CHANGELOG, version, and release notes
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase7 at 6cb3dbf
 Claimed by: claude-issue-24
 Blocked by: none (phases 5 and 6 merged in)
 
@@ -72,3 +73,7 @@ Don't touch `docs/guide/` or `README.md`: those belong to Issue 23.
   Also fixed: check 13 had no placeholder. Not added: `selectable: false` by name, because "each element line may gain fields" covers it.
 
 **Gate:** `npm run check` passed, 513 of 513 tests, then the build, at `57163a8` (log: `$TMPDIR/implement-phase7-24-check.log`). `node dist/cli.js --version` prints `1.2.0`. No golden file changed. No device, adb server or mobilecli was touched.
+
+### 2026-09-30, coordinator: accepted
+
+Accepted. After Issue 23 merges, the CHANGELOG's plain path to `docs/guide/12-android-setup.md` becomes a link (coordinator follow-up). Phase 8 fills the `<!-- phase 8: … -->` placeholders.
