@@ -1,4 +1,5 @@
 import type { Element } from '../../contracts/index.js';
+import type { Role } from '../../scripted/vocabulary.js';
 
 /**
  * One node of the device agent's `device.dump.ui` tree. mobilecli's `dump ui --format raw` has the same
@@ -50,7 +51,7 @@ const roleMarker = (node: AndroidNode): AndroidNode | undefined => childrenOf(no
  * multi-line `EditText` that reports `scrollable` keeps `typeText`; then any scrollable node is a scroll view.
  * CheckBox and RadioButton are switches: no new 1.x roles.
  */
-function roleOf(node: AndroidNode): string {
+function roleOf(node: AndroidNode): Role {
   const cls = roleMarker(node)?.class || node.class || '';
   if (TEXT_FIELD_CLASS.test(cls)) return 'text-field';
   if (node.scrollable) return 'scroll-view';
@@ -100,13 +101,15 @@ export function mapAndroidTree(tree: AndroidTree): Element[] {
     if (role === 'text-field') {
       const text = node.text ?? '';
       label = (node['content-desc'] || '').trim();
-      if (text !== '') element.value = node.password ? PASSWORD_DOT.repeat([...text].length) : text;
+      if (text !== '') element.value = node.password ? PASSWORD_DOT.repeat(text.length) : text;
       if (!label) {
-        const placeholder = (node.hint || '').trim() || liftSources(node).map(ownText)[0] || '';
+        const hint = (node.hint || '').trim();
+        const drawn = hint ? undefined : liftSources(node)[0];
+        const placeholder = hint || (drawn ? ownText(drawn) : '');
         if (placeholder) label = placeholder;
         // Jev sees an empty field's grey hint as a placeholder, never as a label or a text line inside the field.
         if (placeholder && text === '') element.placeholder = placeholder;
-        if (!node.hint) liftSources(node).slice(0, 1).forEach(child => placeholders.add(child));
+        if (drawn) placeholders.add(drawn);
       }
     } else if (!label && (node.clickable || node.checkable)) {
       const first = liftSources(node)[0];

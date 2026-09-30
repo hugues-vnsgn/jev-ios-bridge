@@ -132,3 +132,9 @@ test('refs are unique within one capture and the same when the capture is mapped
     assert.deepEqual(mapAndroidTree(captureTree(screen)).map(element => element.ref), refs, screen);
   }
 });
+
+test('a password field shows one dot per UTF-16 unit of its text, as Android draws it, so an emoji takes two', () => {
+  const tree: AndroidTree = { hierarchy: [{ class: 'android.widget.EditText', text: 'pin😀', password: true,
+    'resource-id': 'field.pin', rect: { x: 0, y: 0, width: 100, height: 50 } }] };
+  assert.equal(byIdentifier(mapAndroidTree(tree), 'field.pin').value, '•••••');
+});
