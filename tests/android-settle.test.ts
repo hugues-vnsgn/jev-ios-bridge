@@ -21,23 +21,22 @@ function screen(appText: string, clock = '10:30', battery = 'Battery charging, 1
 }
 
 /** A fake clock and a capture call that takes `durationMs` of fake time and replays `trees` (the last one repeats). */
-function device(trees: UiTree[], durationMs = 0) {
+function fakeCapture(trees: UiTree[], durationMs = 0) {
   let time = 0;
   const starts: number[] = [];
-  const sleeps: number[] = [];
-  const clock: Clock = { now: () => time, sleep: async (ms) => { sleeps.push(ms); time += ms; } };
+  const clock: Clock = { now: () => time, sleep: async (ms) => { time += ms; } };
   const capture = async (_signal: AbortSignal) => {
     starts.push(time);
     time += durationMs;
     return trees[Math.min(starts.length - 1, trees.length - 1)]!;
   };
-  return { clock, capture, starts, sleeps, now: () => time };
+  return { clock, capture, starts, now: () => time };
 }
 
 const live = () => new AbortController().signal;
 
 test('the 250 ms runs from the first capture\'s return to the second\'s start, and a matching second capture settles when it returns', async () => {
-  const fake = device([screen('Home'), screen('Home')], 600);
+  const fake = fakeCapture([screen('Home'), screen('Home')], 600);
   const result = await settle(fake.capture, fake.clock, live());
   assert.deepEqual(fake.starts, [0, 850]);
   assert.equal(fake.now(), 1450);
@@ -47,14 +46,14 @@ test('the 250 ms runs from the first capture\'s return to the second\'s start, a
 });
 
 test('nothing settles on a single capture: a second capture always follows the first', async () => {
-  const fake = device([screen('Home')]);
+  const fake = fakeCapture([screen('Home')]);
   const result = await settle(fake.capture, fake.clock, live());
   assert.deepEqual(fake.starts, [0, 250]);
   assert.equal(result.settled, true);
 });
 
 test('a change only in the status bar, including an icon with no systemui id, still settles', async () => {
-  const fake = device([screen('Home', '10:30', 'Battery 99 percent.'), screen('Home', '10:31', 'Battery 100 percent.')]);
+  const fake = fakeCapture([screen('Home', '10:30', 'Battery 99 percent.'), screen('Home', '10:31', 'Battery 100 percent.')]);
   const result = await settle(fake.capture, fake.clock, live());
   assert.deepEqual(fake.starts, [0, 250]);
   assert.equal(result.settled, true);
@@ -62,7 +61,7 @@ test('a change only in the status bar, including an icon with no systemui id, st
 });
 
 test('a screen that changes once then holds settles on the newer capture', async () => {
-  const fake = device([screen('Loading'), screen('Home'), screen('Home')], 100);
+  const fake = fakeCapture([screen('Loading'), screen('Home'), screen('Home')], 100);
   const result = await settle(fake.capture, fake.clock, live());
   assert.deepEqual(fake.starts, [0, 350, 700]);
   assert.equal(result.settled, true);
@@ -72,13 +71,22 @@ test('a screen that changes once then holds settles on the newer capture', async
 
 test('a screen that keeps changing stops at the 3 s cap, not settled, with the last capture', async () => {
   const trees = Array.from({ length: 30 }, (_, index) => screen(`Frame ${index}`));
-  const fake = device(trees, 100);
+  const fake = fakeCapture(trees, 100);
   const result = await settle(fake.capture, fake.clock, live());
   assert.equal(result.settled, false);
   assert.ok(fake.starts.every(start => start < 3000), `a capture started after the cap: ${fake.starts}`);
   assert.deepEqual(fake.starts, [0, 350, 700, 1050, 1400, 1750, 2100, 2450, 2800]);
   assert.deepEqual(result.tree, trees[fake.starts.length - 1]);
   assert.equal(result.screenHash, screenHash(trees[fake.starts.length - 1]!));
+});
+
+test('no capture starts at exactly 3 s', async () => {
+  const trees = Array.from({ length: 30 }, (_, index) => screen(`Frame ${index}`));
+  const fake = fakeCapture(trees, 125);
+  const result = await settle(fake.capture, fake.clock, live());
+  assert.deepEqual(fake.starts, [0, 375, 750, 1125, 1500, 1875, 2250, 2625]);
+  assert.equal(result.settled, false);
+  assert.deepEqual(result.tree, trees[7]);
 });
 
 test('an aborted signal stops the rule before its next capture', async () => {
@@ -92,7 +100,7 @@ test('an aborted signal stops the rule before its next capture', async () => {
 test('an already aborted signal issues no capture at all', async () => {
   const controller = new AbortController();
   controller.abort(new Error('cancelled'));
-  const fake = device([screen('Home')]);
+  const fake = fakeCapture([screen('Home')]);
   await assert.rejects(settle(fake.capture, fake.clock, controller.signal), /cancelled/);
   assert.deepEqual(fake.starts, []);
 });
