@@ -706,3 +706,21 @@ test('the started event names an iOS app by bundle ID and records a null bundle 
   assert.equal(android.bundleId, null);
   assert.deepEqual({ ...android, bundleId: 'com.example.app' }, (({ launchArgs: _launchArgs, ...rest }) => rest)(ios));
 });
+
+test('the driver gets the device an iOS script names, and no device for an Android script', async () => {
+  const preparedWith = async (scenario: ScriptedScenario) => {
+    let prepared: unknown;
+    await runScriptedScenario({ runId: 'scripted-1', scenario, log: memoryLog(), judge: markerJudge,
+      driver: { async prepare(context) { prepared = context; }, async observe() { return markerScreen(); },
+        async act() {}, async close() {} } });
+    return prepared;
+  };
+  assert.deepEqual(await preparedWith(parseScriptedScenario({ version: 1, app: { bundleId: 'com.example.app' },
+    device: { udid: '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7' }, values: {}, steps: [markerCheckpoint] })),
+  { app: { bundleId: 'com.example.app' }, device: { udid: '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7' } });
+  for (const device of [{ serial: 'emulator-5554' }, { avd: 'jev-actions-api31' }]) {
+    assert.deepEqual(await preparedWith(parseScriptedScenario({ version: 1, platform: 'android',
+      app: { package: 'com.example.android' }, device, values: {}, steps: [markerCheckpoint] })),
+    { app: { package: 'com.example.android' } });
+  }
+});

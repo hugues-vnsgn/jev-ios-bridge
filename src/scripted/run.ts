@@ -49,8 +49,9 @@ function bounded(value: number | undefined, fallback: number, minimum: number, m
 }
 
 function prepareContext(script: ScriptedScenario): PrepareScenarioContext {
+  // A driver's device field names an iOS simulator; an Android script's device isn't passed on.
   return { app: script.app,
-    ...(script.device ? { device: script.device } : {}),
+    ...(script.platform !== 'android' && script.device ? { device: script.device } : {}),
     ...(script.preconditions ? { preconditions: script.preconditions } : {}) };
 }
 
