@@ -11,7 +11,7 @@ import { OutcomeUnknownError } from './adb.js';
 /** A request's time limit; the dump's is its idle wait plus this. */
 export const AGENT_REQUEST_TIMEOUT_MS = 10_000;
 const MAX_REQUEST_BYTES = 1024 * 1024;
-/** Far above a screenshot at the iOS size; a reply this long isn't the agent's. */
+/** Far above a JPEG screenshot at 800 px; a reply this long isn't the agent's. */
 const MAX_REPLY_BYTES = 32 * 1024 * 1024;
 
 /** An Android key event, as `device.io.keys` takes it: `KEYCODE_*` names. */
@@ -51,7 +51,7 @@ export class DeviceAgentError extends DeviceReasonError {
 
 type JsonObject = Record<string, unknown>;
 
-function record(value: unknown): JsonObject | undefined {
+function asObject(value: unknown): JsonObject | undefined {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as JsonObject : undefined;
 }
 
@@ -70,13 +70,13 @@ export function deviceAgentClient(options: { port: number; timeoutMs?: number })
     send(options.port, ++lastId, method, params, signal, timeLimitMs);
   return {
     async version(signal) {
-      const dexSha256 = record(await call('device.version', {}, signal))?.dexSha256;
+      const dexSha256 = asObject(await call('device.version', {}, signal))?.dexSha256;
       if (typeof dexSha256 !== 'string') throw new DeviceAgentError();
       return { dexSha256 };
     },
     async dumpUi(waitUntilIdleMs, signal) {
       const params = wholeNumbers({ waitUntilIdle: waitUntilIdleMs });
-      const hierarchy = record(await call('device.dump.ui', params, signal, waitUntilIdleMs + timeoutMs))?.hierarchy;
+      const hierarchy = asObject(await call('device.dump.ui', params, signal, waitUntilIdleMs + timeoutMs))?.hierarchy;
       if (!Array.isArray(hierarchy)) throw new DeviceAgentError();
       return hierarchy as unknown[];
     },
@@ -92,7 +92,7 @@ export function deviceAgentClient(options: { port: number; timeoutMs?: number })
     async clipboardSet(text, signal) { await call('device.clipboard.set', { text }, signal); },
     async clipboardClear(signal) { await call('device.clipboard.clear', {}, signal); },
     async screenshot(maxSize, signal) {
-      const data = record(await call('device.screenshot', { format: 'jpeg', ...wholeNumbers({ maxSize }) }, signal))?.data;
+      const data = asObject(await call('device.screenshot', { format: 'jpeg', ...wholeNumbers({ maxSize }) }, signal))?.data;
       if (typeof data !== 'string') throw new DeviceAgentError();
       return Buffer.from(data, 'base64');
     },
@@ -141,26 +141,32 @@ function send(port: number, id: number, method: string, params: JsonObject, sign
       let received = 0;
       response.on('data', (chunk: Buffer) => {
         received += chunk.length;
+        // The agent answered, so the outcome is known, but the reply isn't one the client can use.
         if (received > MAX_REPLY_BYTES) settle(() => { reject(new DeviceAgentError()); });
         else chunks.push(chunk);
       });
       response.on('error', () => { lost('The connection to the device agent dropped during its reply; its outcome is unknown'); });
-      response.on('end', () => { settle(() => { replyOf(Buffer.concat(chunks).toString('utf8'), id, resolveResult, reject); }); });
+      response.on('end', () => {
+        settle(() => {
+          try { resolveResult(resultOf(Buffer.concat(chunks).toString('utf8'), id)); }
+          catch (error) { reject(error as Error); }
+        });
+      });
+      // A reply cut short may close without an error event; settle() ignores this once the reply ended.
+      response.on('close', () => { if (!response.complete) lost('The connection to the device agent dropped during its reply; its outcome is unknown'); });
     });
     outgoing.end(body);
   });
 }
 
-function replyOf(text: string, id: number, resolveResult: (result: unknown) => void, reject: (error: Error) => void): void {
+/** The result of the agent's reply to request `id`, or the `DeviceAgentError` it stands for. */
+function resultOf(text: string, id: number): unknown {
   let reply: JsonObject | undefined;
-  try { reply = record(JSON.parse(text)); } catch { reply = undefined; }
-  if (!reply || reply.jsonrpc !== '2.0' || reply.id !== id) { reject(new DeviceAgentError()); return; }
-  const error = record(reply.error);
-  if (error) {
-    // Only the numeric code survives: the agent's message can carry screen text.
-    reject(new DeviceAgentError(Number.isSafeInteger(error.code) ? error.code as number : undefined));
-    return;
-  }
-  if (!('result' in reply)) { reject(new DeviceAgentError()); return; }
-  resolveResult(reply.result);
+  try { reply = asObject(JSON.parse(text)); } catch { reply = undefined; }
+  if (!reply || reply.jsonrpc !== '2.0' || reply.id !== id) throw new DeviceAgentError();
+  const error = asObject(reply.error);
+  // Only the numeric code survives: the agent's message can carry screen text.
+  if (error) throw new DeviceAgentError(Number.isSafeInteger(error.code) ? error.code as number : undefined);
+  if (!('result' in reply)) throw new DeviceAgentError();
+  return reply.result;
 }
