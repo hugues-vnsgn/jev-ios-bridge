@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { test } from 'node:test';
 import { isActOutcome, type AndroidAppIdentity, type DeviceDriver, type RunEvent, type Snapshot } from '../src/contracts/index.js';
 import { DeviceReasonError, StaleSnapshotError } from '../src/device/index.js';
-import { OutcomeUnknownError, type AdbResult, type AdbRunner } from '../src/device/android/adb.js';
+import { adbRunner, OutcomeUnknownError, type AdbResult, type AdbRunner } from '../src/device/android/adb.js';
 import { DeviceAgentError, type DeviceAgentClient } from '../src/device/android/agent-client.js';
 import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
 import { AGENT_DEVICE_PATH, AGENT_START_COMMAND, AndroidDriver, type AndroidDriverOptions } from '../src/device/android/driver.js';
@@ -14,6 +14,7 @@ import { mapAndroidTree, type AndroidTree } from '../src/device/android/mapping.
 import { screenHash, type Clock } from '../src/device/android/settle.js';
 import type { ScriptedJudge } from '../src/scripted/contracts.js';
 import { runScriptedScenario } from '../src/scripted/run.js';
+import { fakeSpawn } from './fixtures/adb-spawn.js';
 import { androidScript } from './fixtures/android-script.js';
 import { withRunLog } from './fixtures/run-log.js';
 
@@ -1251,6 +1252,78 @@ test('a cancel during am start -W: the app is stopped only after the launch retu
     assert.ok(words.lastIndexOf('am force-stop com.example.android') > words.findIndex(entry => entry.startsWith('am start -W')));
     assert.deepEqual(await readdir(root), []);
   });
+});
+
+/**
+ * The production `adb` runner over a fake spawn: each child answers as `FakeAdb` does (its `onCall` may hold
+ * it), then exits with that status.
+ */
+function productionRunner(adb: FakeAdb): AdbRunner {
+  // The child runs once spawn has returned, as a real one does, so the runner is listening for an abort by then.
+  const spawned = fakeSpawn((child, args) => {
+    setImmediate(() => {
+      void adb.run([...args], new AbortController().signal).then(result => { child.exit(result.exitCode, result.stdout, result.stderr); });
+    });
+  });
+  return adbRunner({ adb: '/sdk/platform-tools/adb', environment: {}, spawn: spawned.spawn });
+}
+
+test('on the production runner, a cancel during am start -W: close waits for the launch to return, then stops the app and releases the lease', async () => {
+  const adb = new FakeAdb(api31());
+  const launch = gate();
+  const controller = new AbortController();
+  let closing: Promise<void> | undefined;
+  await withDriver(adb, async ({ driver, root }) => {
+    adb.onCall = async args => {
+      if (!args[3]?.startsWith("'am' 'start' '-W'")) return;
+      controller.abort(new Error('cancelled'));
+      closing = driver.close(signal());
+      await launch.opened;
+    };
+    const preparing = driver.prepare(app(), controller.signal);
+    await eventually(() => closing !== undefined, 'close begun');
+    await new Promise(resolveTick => setTimeout(resolveTick, 20));
+    assert.equal(adb.calls.at(-1)![3]?.startsWith("'am' 'start' '-W'"), true, 'close sends nothing while the launch runs');
+    const launched = adb.calls.length;
+    launch.open();
+    await assert.rejects(preparing, /cancelled/);
+    await closing;
+    assert.deepEqual(callsFrom(adb, launched), ["-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'"],
+      'no agent was started and no forward made, so only the app stop follows');
+    assert.deepEqual(await readdir(root), [], 'lease released');
+  }, { runner: productionRunner(adb) });
+});
+
+test('on the production runner, a cancel during the agent start: close waits for the start command, then fences the agent it started', async () => {
+  const adb = new FakeAdb(api31());
+  const start = gate();
+  const controller = new AbortController();
+  let closing: Promise<void> | undefined;
+  await withDriver(adb, async ({ driver, root }) => {
+    adb.onCall = async args => {
+      if (args[3] !== AGENT_START_COMMAND) return;
+      controller.abort(new Error('cancelled'));
+      closing = driver.close(signal());
+      await start.opened;
+    };
+    const preparing = driver.prepare(app(), controller.signal);
+    await eventually(() => closing !== undefined, 'close begun');
+    await new Promise(resolveTick => setTimeout(resolveTick, 20));
+    assert.equal(adb.calls.at(-1)![3], AGENT_START_COMMAND, 'close sends nothing while the start command runs');
+    const started = adb.calls.length;
+    start.open();
+    await assert.rejects(preparing, /cancelled/);
+    await closing;
+    assert.deepEqual(callsFrom(adb, started), [
+      "-s emulator-5554 shell 'ps' '-A' '-o' 'PID,NAME,ARGS'",
+      "-s emulator-5554 shell 'cat' '/proc/7001/environ'",
+      "-s emulator-5554 shell 'kill' '7001'",
+      "-s emulator-5554 shell 'cat' '/proc/7001/environ'",
+      "-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'",
+    ]);
+    assert.equal(adb.emulators.get('emulator-5554')!.agents!.size, 0, 'no agent left');
+    assert.deepEqual(await readdir(root), [], 'lease released');
+  }, { runner: productionRunner(adb) });
 });
 
 test('an agent request that times out is ended by the fence, and the lease is released', async () => {
