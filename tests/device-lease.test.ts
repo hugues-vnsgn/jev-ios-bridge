@@ -93,3 +93,19 @@ test('adb and agent commands in flight keep the lease until they exit, and a fen
     assert.equal(lease.held, false);
   });
 });
+
+test('settled(kind) is true only when every command of that kind exited or was fenced', async () => {
+  await withLease('settled-kind', async (lease) => {
+    assert.equal(lease.settled('adb'), true);
+    const adb = lease.command('adb');
+    lease.command('agent').unknown();
+    assert.equal(lease.settled('adb'), false, 'in flight');
+    assert.equal(lease.settled('agent'), false, 'unknown');
+    adb.unknown();
+    assert.equal(lease.settled('adb'), false, 'unknown');
+    adb.exited();
+    assert.equal(lease.settled('adb'), true, 'a late exit');
+    lease.fence('agent');
+    assert.equal(lease.settled('agent'), true, 'fenced');
+  });
+});

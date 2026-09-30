@@ -62,18 +62,6 @@ export class DeviceReasonError extends Error {
   }
 }
 
-/**
- * The driver factory refused to build a driver at all, for a whole class of script rather than a single
- * run (for example a platform this build has no driver for). The CLI and MCP show this message, the same
- * way they show other start failures, instead of a generic one.
- */
-export class DriverUnavailableError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'DriverUnavailableError';
-  }
-}
-
 export class StaleSnapshotError extends Error {
   constructor(message = 'The screen changed; observe and ask Jev again') {
     super(message);

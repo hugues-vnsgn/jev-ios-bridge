@@ -1,4 +1,4 @@
-import { mkdtemp, writeFile } from 'node:fs/promises';
+import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:net';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -36,6 +36,8 @@ const DUMP_IDLE_MS = 2_000;
 const SCREENSHOT_MAX_SIZE = 800;
 /** Replace text's pause between `ctrl+a` and backspace (open point 23). */
 const CLEAR_PAUSE_MS = 200;
+/** How long a late `close` may take once the abandoned work has settled: the run's own cleanup limit. */
+const LATE_CLOSE_MS = 45_000;
 /** How long a swipe's finger takes (release spec phase 4 item 6). */
 const SWIPE_MS = 1_000;
 /** `ctrl+a` and backspace as mobilecli 1.0.14 sends them (open point 23): always two separate calls. */
@@ -69,8 +71,8 @@ export interface AndroidDriverOptions {
   clock?: Clock;
   /** A free local port, found by binding `127.0.0.1:0`. Injectable for tests. */
   freePort?: () => Promise<number>;
-  /** Where `observe` saves `screen-N.jpg` (Issue 15). */
-  screenshotFolder?: string;
+  /** Where `observe` saves `screen-N.jpg`. Without one, the driver makes its own temporary folder and removes it on `close`. */
+  screenshotFolder?: string | undefined;
   leaseRoot?: string;
 }
 
@@ -167,7 +169,8 @@ function listedLeftovers(holder: LeaseHolder | undefined, serial: string): { pid
  * The Android device driver (release spec phase 4): drives mobilecli's device agent directly, over `adb`
  * and JSON-RPC, and never runs mobilecli (ADR-0006). `prepare` takes the device lease on the device
  * identity before touching the device, refuses when another tool's agent is running, restarts the app with
- * its launch options, and starts and checks the bridge's own agent.
+ * its launch options, and starts and checks the bridge's own agent. `close` undoes only what this run did,
+ * and keeps the lease until it can show nothing the run started can still act on the device.
  */
 export class AndroidDriver implements DeviceDriver {
   private readonly lease: DeviceLease;
@@ -175,10 +178,16 @@ export class AndroidDriver implements DeviceDriver {
   private runner: AdbRunner | undefined;
   private prepared: DevicePreparation | undefined;
   private serial: string | undefined;
-  /** Whether this run restarted the app, so `close` stops it only then. */
-  private restarted = false;
-  /** Set once `close` begins (Issue 16): from then on no step issues new device work. */
+  /** The package this run restarted, so `close` stops the app only then. */
+  private restartedPackage: string | undefined;
+  /** Whether this run issued the agent's start command, so `close` looks for an agent it may have started. */
+  private agentStartIssued = false;
+  /** Set once `close` begins: from then on no step issues new device work, except `close`'s own. */
   private closeBegun = false;
+  /** The `close` in progress, which a second `close` joins. */
+  private closing: Promise<void> | undefined;
+  /** The only signal that may still issue device work once `close` began: the running `close`'s own. */
+  private cleanupSignal: AbortSignal | undefined;
   private forwardPort: number | undefined;
   private agentPids: number[] = [];
   private agent: DeviceAgentClient | undefined;
@@ -209,10 +218,80 @@ export class AndroidDriver implements DeviceDriver {
     return this.lease.track(() => this.actIssued(action, snapshot, scenario, signal));
   }
 
-  close(_signal: AbortSignal): Promise<void> {
-    // The stop flag is set first, so an abandoned operation issues nothing more (Issue 16 builds the rest).
+  close(signal: AbortSignal): Promise<void> {
+    // The stop flag is set first, so an abandoned operation issues nothing more.
     this.closeBegun = true;
-    return Promise.reject(new Error('The Android driver\'s close is not built yet'));
+    if (this.closing) return this.closing;
+    this.closing = this.finishClose(signal).catch((error: unknown) => {
+      // Keep the lease; once the abandoned work settles, finish cleanup and release it late.
+      if (error instanceof DeviceReasonError && error.code === 'UI_ACTION_UNCONFIRMED') {
+        this.lease.releaseLate(() => this.close(AbortSignal.timeout(LATE_CLOSE_MS)));
+      }
+      throw error;
+    }).finally(() => { this.closing = undefined; });
+    return this.closing;
+  }
+
+  /**
+   * `close`'s steps, in the release spec's order (phase 4 item 8), each tolerating "not running": wait for
+   * every operation this run started, so each `adb` command it issued has exited; fence the bridge's own
+   * agent; stop the app if this run restarted it; remove this run's forward; release the lease. What each
+   * step confirms stopped is disowned as it goes. Any failure keeps the lease. The agent file stays: it's inert.
+   */
+  private async finishClose(signal: AbortSignal): Promise<void> {
+    try { await this.lease.settle(signal); }
+    catch { throw new DeviceReasonError('UI_ACTION_UNCONFIRMED', 'Cleanup ended before an issued adb command exited; device lease kept'); }
+    // Not held: the run never took the lease, or a refusal before the restart already released it.
+    if (!this.lease.held) return;
+    if (!this.lease.settled('adb')) throw new DeviceReasonError('UI_ACTION_UNCONFIRMED', 'An adb command\'s outcome is unknown; device lease kept');
+    const serial = this.serial!;
+    this.cleanupSignal = signal;
+    try {
+      // An unconfirmed fence keeps the lease the same way an unknown adb command does.
+      try { await this.fenceAgent(serial, signal); }
+      catch { throw new DeviceReasonError('UI_ACTION_UNCONFIRMED', 'The bridge\'s device agent could not be confirmed stopped; device lease kept'); }
+      if (this.restartedPackage !== undefined) {
+        await this.succeeded('stop the app', this.shell(serial, ['am', 'force-stop', this.restartedPackage], signal));
+        this.restartedPackage = undefined;
+      }
+      // Phase 5: stop this run's logcat streams here, and wait for them to exit.
+      const port = this.forwardPort;
+      if (port !== undefined) {
+        await this.removeForward(serial, `tcp:${String(port)}`, signal);
+        await this.lease.disown(ownedForward(serial, port));
+        this.forwardPort = undefined;
+      }
+      await this.lease.release();
+    } finally {
+      this.cleanupSignal = undefined;
+    }
+    this.agent = undefined;
+    this.latest = undefined;
+    // Its screenshots were copied into the run's evidence as each step was recorded.
+    if (this.options.screenshotFolder === undefined && this.screenshotFolder) {
+      await rm(await this.screenshotFolder, { recursive: true, force: true }).catch(() => undefined);
+    }
+  }
+
+  /**
+   * The fence (open point 22): kill this run's agent by its pid, after checking it's still the bridge's own,
+   * then confirm it's gone. Never `pkill` by class name. Once the start command was issued, every agent of
+   * the bridge's on the device is this run's, even one whose pid was never recorded: `prepare` swept all the
+   * others while holding the lease. A confirmed fence ends every agent request, including an unknown one.
+   */
+  private async fenceAgent(serial: string, signal: AbortSignal): Promise<void> {
+    if (this.agentStartIssued) {
+      const agents = await this.agentsOn(serial, signal);
+      for (const pid of this.agentPids) {
+        if (agents.some(agent => agent.pid === pid && !agent.own)) {
+          throw new AndroidDeviceError('adb', `The bridge's agent ${String(pid)} can no longer be shown to be its own`);
+        }
+      }
+      for (const agent of agents.filter(found => found.own)) await this.killAgent(serial, agent.pid, signal);
+    }
+    this.lease.fence('agent');
+    for (const pid of this.agentPids) await this.lease.disown(ownedAgent(serial, pid));
+    this.agentPids = [];
   }
 
   /**
@@ -326,14 +405,14 @@ export class AndroidDriver implements DeviceDriver {
       this.prepared = { deviceIdentity: identity, serial, agentSha256: tools.agent.sha256, ...(sweptLeftovers ? { sweptLeftovers } : {}) };
     } catch (error) {
       // A refusal before the restart leaves nothing to undo on the device: release now, as the iOS driver does.
-      if (!this.restarted && this.lease.releasable) await this.lease.release();
+      if (this.restartedPackage === undefined && this.lease.releasable) await this.lease.release();
       throw error;
     }
   }
 
-  /** Before any new device work: none once `close` began or the run was cancelled. */
+  /** Before any new device work: none once `close` began, except `close`'s own, or once the run was cancelled. */
   private mayIssue(signal: AbortSignal): void {
-    if (this.closeBegun) throw new Error('The driver is closing; no new device work');
+    if (this.closeBegun && signal !== this.cleanupSignal) throw new Error('The driver is closing; no new device work');
     if (signal.aborted) throw signal.reason;
   }
 
@@ -506,7 +585,7 @@ export class AndroidDriver implements DeviceDriver {
    * output, and on API 31 still exits 0, so only `Status: ok` counts as launched.
    */
   private async restart(serial: string, app: AndroidAppIdentity, signal: AbortSignal): Promise<void> {
-    this.restarted = true;
+    this.restartedPackage = app.package;
     await this.succeeded('stop the app', this.shell(serial, ['am', 'force-stop', app.package], signal));
     const component = app.activity ? `${app.package}/${app.activity}` : await this.launcherActivity(serial, app.package, signal);
     const extras = Object.entries(app.intentExtras ?? {}).flatMap(([key, value]) => ['--es', key, value]);
@@ -533,6 +612,7 @@ export class AndroidDriver implements DeviceDriver {
    */
   private async startAgent(serial: string, identity: string, tools: AndroidTools, signal: AbortSignal): Promise<void> {
     await this.succeeded('push the device agent', this.adb(['-s', serial, 'push', tools.agent.path, AGENT_DEVICE_PATH], signal));
+    this.agentStartIssued = true;
     await this.succeeded('start the device agent', this.adb(['-s', serial, 'shell', AGENT_START_COMMAND], signal));
     const port = await this.forward(serial, signal);
     const agent = (this.options.agentClient ?? (forwarded => deviceAgentClient({ port: forwarded })))(port);

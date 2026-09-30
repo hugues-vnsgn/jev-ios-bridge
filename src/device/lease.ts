@@ -187,6 +187,11 @@ export class DeviceLease {
     for (const entry of this.commands) if (entry.kind === kind && entry.state === 'unknown') entry.state = 'fenced';
   }
 
+  /** True when every command of this kind exited or was fenced: none in flight, none with an unknown outcome. */
+  settled(kind: DeviceCommandKind): boolean {
+    return [...this.commands].every(entry => entry.kind !== kind || entry.state === 'exited' || entry.state === 'fenced');
+  }
+
   /** Record something the run started that would outlive a crash, so the next holder can sweep it. */
   async own(description: string): Promise<void> {
     if (this.owned.includes(description)) return;
