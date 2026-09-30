@@ -129,3 +129,29 @@ Spec: [../spec.md](../spec.md), "Phase 3". The work is [the release spec's phase
     job/addition"); both spots that needed a comment now say what the code does in plain words, or need
     none now that the platform branching they explained is gone.
   - `npm run check` passes (typecheck, 201 tests, build) at the new branch tip.
+- 2026-09-30, implementer-03 (takeover after round 2): fixed findings 1, 2, 4 to 9 of the round-2 review;
+  finding 3 is blocked on an owner ruling (below).
+  - MCP `start_scenario` validates with `scriptedScenarioSchema`, now a routing schema: `z.unknown()` whose
+    refinement copies the issues of `safeParseScriptedScenario`, carrying the JSON Schema of an object that
+    lists both platforms' fields (`scriptedScenarioStructure`, private). An invalid iOS script over MCP gets
+    1.1's error text again; `tests/mcp.test.ts` pins six cases, each text taken from a 1.1-equivalent server
+    (the frozen 819ea10 schema behind the same tool registration). The published tool schemas stayed
+    byte-identical to `tests/golden/mcp.json`, key order included.
+  - `tests/contract.test.ts`'s import and `scriptedScenarioSchema.safeParse(input)` line are back to their
+    819ea10 text. `git diff 819ea10 -- tests/` removes only the two logpane calls and the `mcp.json` lines.
+  - New guard: every script the `scripts.json` golden accepts (3 iOS, 4 Android) is accepted by
+    `start_scenario` through a real MCP server.
+  - The parity test runs through `parseScriptedScenario`, `safeParseScriptedScenario` and the MCP
+    `scriptedScenarioSchema`, with and without an explicit `"platform": "ios"`, and compares parsed output,
+    issues and `z.prettifyError` text with 1.1; no casts.
+  - `runScriptedScenario` passes an Android script's device to the driver as nothing (Issue 06 chooses the
+    Android device). New tests pin the `started` event: iOS keys and order unchanged, Android `bundleId: null`.
+  - Each app, device and typed-value field is defined once and shared by the iOS, Android and MCP schemas.
+  - Comments: no tracker or ruling references in `src/`; every frozen fixture says it's never updated.
+  - **Blocked, finding 3.** True types (iOS `app: IosAppIdentity`, `device?: { udid? }`; Android
+    `app: AndroidAppIdentity & { bundleId?: never; launchArgs?: never }`, `device?: { serial?; avd?;
+    udid?: never }`) leave exactly one compile error, in an existing 819ea10 test:
+    `tests/service.test.ts(134,18): error TS2345: Argument of type 'string | undefined' is not assignable
+    to parameter of type 'string'.` (`built.push(scenario.app.bundleId);`, where `scenario` takes its type
+    from `BridgeService`'s `createDriver: (scenario: ScriptedScenario) => DeviceDriver`). No true type makes
+    that read a `string` while Android scripts can reach `createDriver`. Asked the owner to choose.
