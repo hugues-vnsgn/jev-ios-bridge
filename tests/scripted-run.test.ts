@@ -674,6 +674,60 @@ test('a step that fails because the app died is reported as APP_EXITED', async (
   assert.equal(report.reason, 'APP_EXITED');
 });
 
+/* Phase 5 (Issue 20): the driver's problem names the reason, APP_NOT_RESPONDING among them. */
+
+const homeScreen = () => snapshot([{ ref: 'h', role: 'button', label: 'Contacts', actions: ['tap'],
+  frame: { x: 0, y: 0, width: 60, height: 60 }, state: { enabled: true, visible: true } }]);
+const orderScript: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.shop' }, values: {}, steps: [
+  { id: 'verify', kind: 'checkpoint', guard: { present: [{ label: 'Order complete' }] },
+    assertions: [{ id: 'done', claim: 'Order complete is visible' }] }] };
+
+test('a step that fails while the driver says the app froze is reported as APP_NOT_RESPONDING, and the error event keeps its fields', async () => {
+  const log = memoryLog();
+  const report = await runScriptedScenario({ runId: 'scripted-1', log, scenario: orderScript,
+    driver: { async prepare() {}, async observe() { return homeScreen(); }, async act() {}, async close() {},
+      appRunning: () => true, appProblem: () => ({ code: 'APP_NOT_RESPONDING', note: 'not responding' }) },
+    judge: { async judge() { assert.fail('No judgment on the home screen'); } } });
+  assert.deepEqual([report.verdict, report.reason], ['inconclusive', 'APP_NOT_RESPONDING']);
+  const error = log.events.find(event => event.type === 'error')!.data;
+  assert.deepEqual(Object.keys(error).sort(), ['code', 'phase', 'stepDurationMs', 'stepId']);
+  assert.deepEqual([error.stepId, error.phase, error.code], ['verify', 'observe', 'APP_NOT_RESPONDING']);
+});
+
+test('the driver\'s problem wins over appRunning: an APP_EXITED problem names the reason, and no problem keeps the step\'s own error', async () => {
+  const run = (driver: Partial<DeviceDriver>) => runScriptedScenario({ runId: 'scripted-1', log: memoryLog(), scenario: orderScript,
+    driver: { async prepare() {}, async observe() { return homeScreen(); }, async act() {}, async close() {}, ...driver },
+    judge: { async judge() { assert.fail('No judgment on the home screen'); } } });
+  assert.equal((await run({ appProblem: () => ({ code: 'APP_EXITED', note: 'exited' }) })).reason, 'APP_EXITED');
+  // The bridge's own stop: the app isn't running, but that isn't a problem.
+  assert.equal((await run({ appRunning: () => false, appProblem: () => undefined })).reason, 'GUARD_MISSING');
+});
+
+test('a verdict already given stands when the driver then reports a problem', async () => {
+  const done = snapshot([{ ref: 'd', role: 'text', label: 'Order complete', actions: [],
+    frame: { x: 0, y: 0, width: 60, height: 60 }, state: { enabled: true, visible: true } }]);
+  const report = await runScriptedScenario({ runId: 'scripted-1', log: memoryLog(), scenario: orderScript,
+    driver: { async prepare() {}, async observe() { return done; }, async act() {}, async close() {},
+      appRunning: () => false, appProblem: () => ({ code: 'APP_EXITED', note: 'exited' }) },
+    judge: { async judge() { return { probabilities: { done: 0.02 }, inputTokens: 1, latencyMs: 1, model: 'jev-1.13.0' }; } } });
+  assert.deepEqual([report.verdict, report.reason], ['failed', 'ASSERTION_FALSE']);
+});
+
+test('a cancel wins over the driver\'s problem and over appRunning', async () => {
+  for (const driver of [{ appProblem: () => ({ code: 'APP_NOT_RESPONDING' as const, note: 'not responding' }) },
+    { appRunning: () => false }]) {
+    const abort = new AbortController();
+    const report = await runScriptedScenario({ runId: 'scripted-1', log: memoryLog(), scenario: orderScript, signal: abort.signal,
+      driver: { async prepare() {}, async observe(signal) {
+        abort.abort();
+        await new Promise((_resolve, reject) => { signal.addEventListener('abort', () => reject(signal.reason), { once: true }); });
+        return homeScreen();
+      }, async act() {}, async close() {}, ...driver },
+      judge: { async judge() { assert.fail('No judgment after cancellation'); } } });
+    assert.deepEqual([report.verdict, report.reason], ['inconclusive', 'CANCELLED']);
+  }
+});
+
 test('an Android-path error reports its own new reason code, with no vendorCode', async () => {
   const home = snapshot([{ ref: 'h', role: 'button', label: 'Contacts', actions: ['tap'],
     frame: { x: 0, y: 0, width: 60, height: 60 }, state: { enabled: true, visible: true } }]);
