@@ -62,12 +62,15 @@ const versionSchema = z.literal(SCRIPT_VERSION, { error: issue => issue.input ==
   ? 'Add "version": 1 to the script; this bridge reads script format version 1'
   : 'Unsupported script version; this bridge reads "version": 1' });
 
-const launchArgument = z.string().min(1).max(200)
-  .regex(/^[\x20-\x7e]+$/, 'Launch arguments must be printable ASCII text');
+/** A short printable-ASCII string (1 to 200 characters), the shape both `launchArgs` items and
+ *  `intentExtras` values take: intent extras are passed with `am start --es`, so they share launchArgs'
+ *  value limits. */
+function printableAsciiField(message: string) {
+  return z.string().min(1).max(200).regex(/^[\x20-\x7e]+$/, message);
+}
 
-// Intent extras are passed with `am start --es`, so they share launchArgs' value limits.
-const intentExtraValue = z.string().min(1).max(200)
-  .regex(/^[\x20-\x7e]+$/, 'app.intentExtras values must be printable ASCII text');
+const launchArgument = printableAsciiField('Launch arguments must be printable ASCII text');
+const intentExtraValue = printableAsciiField('app.intentExtras values must be printable ASCII text');
 const intentExtrasSchema = z.record(z.string().min(1).max(200), intentExtraValue)
   .refine(extras => Object.keys(extras).length <= 20, 'A script may supply at most 20 intent extras');
 
@@ -119,9 +122,9 @@ const activityField = z.string().min(1).max(200).regex(androidActivity,
   'app.activity must be a relative (".DebugGalleryActivity") or fully qualified activity name');
 const udidField = z.string().regex(udid);
 /** The adb serial exactly as `adb devices` prints it. */
-const serialField = z.string().regex(androidSerial, 'device.serial must match ^[A-Za-z0-9._:-]{1,100}$');
+const serialField = z.string().regex(androidSerial, `device.serial must match ${androidSerial.source}`);
 /** An emulator's AVD name, stable across start order. */
-const avdField = z.string().regex(androidAvd, 'device.avd must match ^[A-Za-z0-9._-]{1,100}$');
+const avdField = z.string().regex(androidAvd, `device.avd must match ${androidAvd.source}`);
 const preconditionsField = z.array(z.string().trim().min(1).max(500)).max(20);
 
 /** Typed values by key, at most 32 of them, each value read by `value`. */
