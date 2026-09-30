@@ -25,6 +25,10 @@ Spec: [../spec.md](../spec.md), "Phase 4". The work is [the release spec's phase
 - Whether this run restarted the app stays in the driver's memory, not in the lease's holder record: the crash sweep never acts on the app, and an owned entry would block release. `close`'s step 3 reads that memory.
 - A refusal before the app restart already releases the lease inside `prepare`, as the iOS driver does. `close` after such a refusal must stay a no-op that succeeds.
 
+**From Issue 15 (coordinator, 2026-09-30):**
+- `close` already sets the stop flag before it rejects (Issue 15 needed it for its "abandoned replace text" test). Keep setting it as `close`'s first step.
+- The factory passes the screenshot folder the run wants; without one, the driver makes its own temporary folder.
+
 ## Acceptance
 
 - `close` tests with the fakes:

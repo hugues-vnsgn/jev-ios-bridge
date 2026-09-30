@@ -1,6 +1,7 @@
 # Phase 4: observe and the actions (tap, replace text, swipe, screenshots)
 
-Status: claimed
+Status: closed
+Closed: Merged into agent/android-v1.2-phase4 at 598fac3
 Claimed by: claude-issue-15
 Blocked by: 12, 13, 14
 
