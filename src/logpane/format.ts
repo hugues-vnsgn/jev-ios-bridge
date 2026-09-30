@@ -32,6 +32,21 @@ export function osLine(raw: string): PaneLine | undefined {
     level: type === 'Error' || type === 'Fault' ? 'error' : type === 'Debug' || type === 'Info' ? 'dim' : 'normal' };
 }
 
+/**
+ * A line from `adb logcat -v threadtime,year,uid`: date, time, uid, pid, tid, level, tag, message.
+ * System.out and System.err are the app's console, as on iOS; every other tag shows as `[Tag] message`.
+ * Dividers (`--------- beginning of main`) are dropped.
+ */
+export function logcatLine(raw: string): PaneLine | undefined {
+  if (!raw.trim() || raw.startsWith('--------- beginning of')) return undefined;
+  const parsed = raw.match(/^\d{4}-\d\d-\d\d (\d\d:\d\d:\d\d\.\d{3})\s+\S+\s+\d+\s+\d+ ([VDIWEFA]) (.*?)\s*: (.*)$/);
+  if (!parsed) return undefined;
+  const [, time, level, tag, message] = parsed;
+  const fromConsole = tag === 'System.out' || tag === 'System.err';
+  return { source: fromConsole ? 'app' : 'os', time: time!, text: fromConsole ? message! : `[${tag}] ${message}`,
+    level: 'EFA'.includes(level!) ? 'error' : 'VD'.includes(level!) ? 'dim' : 'normal' };
+}
+
 /** Mask every supplied script value as [value:<key>], longest first, as the run log redacts them. */
 export function masker(values: Record<string, string>): (text: string) => string {
   const pairs = Object.entries(values).filter(([, value]) => value.length > 0)

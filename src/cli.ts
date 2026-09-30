@@ -6,13 +6,14 @@ import { parseArgs } from 'node:util';
 import { serveStdio } from '@modelcontextprotocol/server/stdio';
 import { z } from 'zod/v4';
 import { BridgeService } from './service.js';
+import { captureCommand } from './capture.js';
 import { createMcpServer } from './mcp/index.js';
 import { DeviceCliError, DeviceReasonError, selectAndroidDeviceName, selectDeviceId } from './device/index.js';
 import { createDriverFactory } from './device/factory.js';
 import { createAssertionJudge } from './scripted/jev.js';
 import { renderScriptedReport } from './scripted/report.js';
 import { parseScriptedScenario } from './scripted/schema.js';
-import type { Verdict } from './contracts/index.js';
+import type { LogSources, Verdict } from './contracts/index.js';
 import { BRIDGE_VERSION } from './version.js';
 import { attachLogPane } from './logpane/attach.js';
 import { readRunEvents } from './log/index.js';
@@ -25,6 +26,7 @@ Usage:
   jev-ios-bridge run <script.json> [--json] [--no-log-pane] [--max-steps N] [--timeout-ms N]
   jev-ios-bridge report <run-id> [--json]
   jev-ios-bridge logs <run-id>
+  jev-ios-bridge capture [--serial S | --avd A] [--jev]
   jev-ios-bridge mcp
   jev-ios-bridge --version | --help
 Set TYPESAFE_API_KEY and, for an iOS script, a dedicated simulator (JEV_DEVICE_UDID, the script's
@@ -33,6 +35,9 @@ or the script's device.serial or device.avd). JEV_RUNS_DIR selects the evidence 
 JEV_PROJECT_DIR, when set, stands in for the working directory (a plugin sets it to your project).
 A run opens a live log pane of the app's own output in a new terminal window; turn it off with
 --no-log-pane or JEV_LOG_PANE=off, or choose the terminal app with JEV_LOG_PANE_APP.
+capture prints the current Android screen as a run sees it, one JSON line per element, or with --jev
+as Jev's text. It never launches or restarts the app, and needs no TYPESAFE_API_KEY. It picks the device
+by --serial, then --avd, then JEV_ANDROID_DEVICE, and exits 0 when it printed, 3 when it couldn't.
 Exit codes: 0 passed, 1 failed, 2 inconclusive, 3 could not start.`;
 
 /** A problem found before any run started. The message is safe to print. */
@@ -72,29 +77,43 @@ async function main(): Promise<void> {
     parsed = parseArgs({ allowPositionals: true, options: {
       help: { type: 'boolean' }, version: { type: 'boolean' }, json: { type: 'boolean' }, 'no-log-pane': { type: 'boolean' },
       'max-steps': { type: 'string' }, 'timeout-ms': { type: 'string' },
+      serial: { type: 'string' }, avd: { type: 'string' }, jev: { type: 'boolean' },
     } });
   } catch (error) { throw new StartError(`${(error as Error).message}\n${USAGE}`); }
   const [command, argument] = parsed.positionals;
   if (parsed.values.version) { console.log(BRIDGE_VERSION); return; }
   if (parsed.values.help || !command) { console.log(USAGE); return; }
-  const expected = command === 'mcp' ? 1 : 2;
-  if (!['run', 'report', 'logs', 'mcp'].includes(command)) throw new StartError(`Unknown command: ${command}\n${USAGE}`);
+  const expected = command === 'mcp' || command === 'capture' ? 1 : 2;
+  if (!['run', 'report', 'logs', 'capture', 'mcp'].includes(command)) throw new StartError(`Unknown command: ${command}\n${USAGE}`);
   if (parsed.positionals.length !== expected) throw new StartError(`Wrong number of arguments for ${command}\n${USAGE}`);
   const limits = {
     ...(parsed.values['max-steps'] === undefined ? {} : { maxSteps: limitValue('max-steps', parsed.values['max-steps']) }),
     ...(parsed.values['timeout-ms'] === undefined ? {} : { wallTimeMs: limitValue('timeout-ms', parsed.values['timeout-ms']) }),
   };
   if (command !== 'run' && Object.keys(limits).length) throw new StartError('Run limits apply only to run');
-  if ((command === 'mcp' || command === 'logs') && parsed.values.json) throw new StartError('--json applies only to run and report');
+  if (['mcp', 'logs', 'capture'].includes(command) && parsed.values.json) throw new StartError('--json applies only to run and report');
   if (command !== 'run' && parsed.values['no-log-pane']) throw new StartError('--no-log-pane applies only to run');
+  const { serial, avd, jev } = parsed.values;
+  if (command !== 'capture' && (serial !== undefined || avd !== undefined || jev)) throw new StartError('--serial, --avd and --jev apply only to capture');
+  if (command === 'capture') {
+    const interrupted = new AbortController();
+    const captured = captureCommand({ serial, avd, jev }, { defaultDevice: process.env.JEV_ANDROID_DEVICE, signal: interrupted.signal,
+      write: { stdout: text => { process.stdout.write(text); }, stderr: text => { process.stderr.write(text); } } });
+    // As a run's handlers do: close the driver, then exit.
+    const stop = (exitCode: number) => () => { interrupted.abort(); void captured.finally(() => process.exit(exitCode)); };
+    process.once('SIGINT', stop(130));
+    process.once('SIGTERM', stop(143));
+    process.exitCode = await captured;
+    return;
+  }
   if (command === 'logs') {
     if (await attachLogPane(argument!)) return;
     let events;
     try { events = await readRunEvents(runsDir(), argument!); }
     catch { throw new StartError(`No live run ${argument}, and no recorded run with that ID in ${runsDir()}`); }
-    const sources = events.find(event => event.type === 'prepared')?.data.logSources as { runtime?: string; os?: string } | undefined;
+    const sources = events.find(event => event.type === 'prepared')?.data.logSources as LogSources | undefined;
     console.log(`Run ${argument} is not running, so there is no live log to follow.` +
-      (sources ? `\nThe app's own log files (not masked): ${[sources.runtime, sources.os].filter(Boolean).join(', ')}` : ''));
+      (sources ? `\nThe app's own log files (not masked): ${[sources.runtime, sources.os, sources.logcat].filter(Boolean).join(', ')}` : ''));
     return;
   }
 
