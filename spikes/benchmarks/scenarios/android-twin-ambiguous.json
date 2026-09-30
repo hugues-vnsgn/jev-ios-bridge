@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "platform": "android",
+  "app": {
+    "package": "dev.jevbridge.diagnostic"
+  },
+  "preconditions": [
+    "Diagnostic App (Android, dev.jevbridge.diagnostic) is installed and starts with Selected: None.",
+    "The first guard is planted to match two elements: every button on the start screen. Expected: inconclusive, GUARD_AMBIGUOUS."
+  ],
+  "values": {},
+  "steps": [
+    {
+      "id": "plantedAmbiguousGuard",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "button"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "identifier": "choose.apple"
+        }
+      }
+    },
+    {
+      "id": "verify",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "identifier": "selection.summary"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "summary",
+          "claim": "The screen shows Selected: Apple."
+        }
+      ]
+    }
+  ]
+}
