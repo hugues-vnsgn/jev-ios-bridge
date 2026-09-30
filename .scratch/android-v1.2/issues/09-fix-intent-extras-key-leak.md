@@ -1,7 +1,7 @@
 # Phase 3: intentExtras keys leak registered values
 
 Status: closed
-Closed: Fixed on agent/android-v1.2-phase3 at 28334ff, after review round 1
+Closed: Fixed on agent/android-v1.2-phase3 at f612006, after review round 2
 Blocked by: none
 
 Spec: [../spec.md](../spec.md), "Phase 3". Found by Codex's review of `agent/android-v1.2-phase3` at 40c9e1c (Spec axis, P2; Standards axis, no findings).
@@ -30,3 +30,7 @@ Spec: [../spec.md](../spec.md), "Phase 3". Found by Codex's review of `agent/and
 - This Issue was marked closed before the review ran; it now closes at 28334ff, after this round.
 
 Gates at 28334ff: `npm run check` passes (typecheck, 242 tests, build); no golden file changed.
+
+**2026-09-30, Claude, review round 2 (commit f612006):** GPT-6-Astra reviewed 40c9e1c...410070f. Standards: no findings. Spec: 1 finding, P2. Its claim was that the leak test planted secrets only in a hand-picked scenario, so a free-keyed map added to the script later would never carry a secret through it, and "catches that without naming the map" (owner decision above) was not true. Agreed; rated P3 here, since nothing leaks today, but fixed rather than reworded. String values are redacted by default and only keys are opt-in, so a new free-keyed map is the one way this leak comes back. The test now walks the JSON Schema of the iOS, Android and published script schemas, collects every object with an `additionalProperties` schema (today `app.intentExtras` and `values`), and fails by path unless the scenario plants a secret-bearing key in each. It also parses the scenario, and `values` now carries such a key. Checked by hand: adding a `z.record` to the Android `app` schema fails the test with `app.launchFlags is a free-keyed script map with no secret-bearing key here`; removing `intentExtras` from `dataKeyedMaps` fails it with `synthetic-typed-7f3a survived in the written evidence`. Maps from the device or vendor (`logTails`) are outside the script schemas and stay out of this guarantee.
+
+Gates at f612006: `npm run check` passes (typecheck, 242 tests, build); no golden file changed.
