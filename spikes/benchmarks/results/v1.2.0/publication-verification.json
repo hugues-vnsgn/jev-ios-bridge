@@ -1,0 +1,46 @@
+{
+  "release": "https://github.com/hugues-vnsgn/jev-ios-bridge/releases/tag/v1.2.0",
+  "title": "v1.2.0: Android support",
+  "tag": "v1.2.0",
+  "tagType": "lightweight, as v1.1.0",
+  "commit": "585b18b340524e4cc08eb72435afef3cfd2a958c",
+  "publishedAt": "2026-10-01T06:35:28Z",
+  "prerelease": false,
+  "assets": {
+    "tarball": {
+      "name": "jev-ios-bridge-1.2.0.tgz",
+      "sizeBytes": 121218,
+      "sha256": "c91b724d3d4395220e2de896f4dd12b6a9649806ff9ca1d17ca7b4a87d9eb692",
+      "packedFrom": "a clean checkout of 585b18b; the same bytes check 11's rerun installed"
+    },
+    "plugin": {
+      "name": "jev-ios-bridge-plugin-1.2.0.zip",
+      "sizeBytes": 174028,
+      "sha256": "7a108f16a4ee69f7c68c45e6cc3208b5256937b5500337c03786b57e0ee9497b",
+      "builtFrom": "d0bc224, kept and not rebuilt: the zip checks 9 and 10 installed. 585b18b changes no file the plugin build packs.",
+      "marketplaceEntryMatches": true
+    }
+  },
+  "checksOnTaggedCommit": {
+    "npmRunCheck": "566/566 on the release-records branch, which 585b18b merged unchanged",
+    "ci": "https://github.com/hugues-vnsgn/jev-ios-bridge/actions/runs/36825475612 (main push of 585b18b: success)"
+  },
+  "freshPublicDownload": {
+    "method": "unauthenticated curl of both asset URLs, and gh release download",
+    "sha256Matches": true,
+    "tarballInstall": "npm install into an empty project: 0 vulnerabilities; npx jev-ios-bridge --version = 1.2.0; MCP serverInfo version = 1.2.0",
+    "tarballFiles": 62
+  },
+  "pluginFromRealMarketplace": {
+    "method": "throwaway CLAUDE_CONFIG_DIR outside the repo; claude plugin marketplace add hugues-vnsgn/jev-ios-bridge; claude plugin install jev-ios-bridge@jev-ios-bridge",
+    "installedVersion": "1.2.0",
+    "mobilecli": "1.0.14, installed by the plugin's own npm ci",
+    "skills": ["test-android", "test-ios"],
+    "installMessage": "3 userConfig options not yet set (1 required) — run /plugin configure jev-ios-bridge@jev-ios-bridge in Claude Code, or pass --config KEY=VALUE.",
+    "serverStarts": "the installed copy's dist/cli.js mcp, run from an empty folder with no key, answered initialize as jev-ios-bridge 1.2.0 and listed start_scenario, get_report and cancel_run",
+    "androidOnlyWithKey": "not repeated after publication: check 9 configured the same zip for Android only, with the owner's key, and its server connected"
+  },
+  "quickstartPostTagSteps": {
+    "gitCloneBranchV1_2_0": "checks out 585b18b, with examples/diagnostic-app/scenario.json and examples/diagnostic-app-android/scenario.json"
+  }
+}
