@@ -1,6 +1,7 @@
 # v1.2.0 release checks (phase 8)
 
 - **Candidate:** the phase 8 branch at `93c6ac7`. Its `src` tree is `904c6c8b64199a27274a02aa1b38a48482610a3c`, and phase 7's final commit has the same tree.
+- **Changed since the checks (2026-10-01):** Issue 30, the fixes from PR #29's review, changed `src` (new `src` tree `c1f5d98…`). It touches only failure paths: a short wait for late crash or freeze events after a failed step, stopping the streams when cleanup fails, a stricter takeover identity check, and a masked pane note. So the live results below are from the code before Issue 30. Check 1 passes locally on the new code (562/562). Checks 5 (crash run) and 15 (crash takeover) exercise the changed paths; a rerun of each, once, would confirm them on the new code.
 - **Pre-merge deviation:** the release spec says to check the merge commit of phases 1 to 7. Those PRs (#29, #30 and #31) wait for the owner's review, so the checks ran on the branch that holds them all. The code is identical: phase 7 and its review fixes changed no `src/` file. After the merges, rerun check 1 (CI) on the merge commit.
 - **Devices:**
   - both emulators ran through the private adb server on port 5099 only, one at a time, with `-no-snapshot-save`, and were shut down afterwards;
