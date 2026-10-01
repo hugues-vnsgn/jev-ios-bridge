@@ -62,7 +62,7 @@ What the bridge does not do, or does less well than you might expect.
   | settings-search | _[phase 8]_ | |
   | settings-search-vi | | _[phase 8]_ |
 
-  Capture and settle time: _[phase 8]_ per step. Typing: _[phase 8]_. A screen that keeps moving costs at most 3 seconds per capture, the [settle](12-android-setup.md#animations-off-is-optional) cap.
+  Capture and settle time: _[phase 8]_ per step. Typing: _[phase 8]_. A screen that keeps moving costs about 3 seconds plus one more capture: after 3 seconds the [settle](12-android-setup.md#animations-off-is-optional) rule starts no new capture, and uses the last one when it returns.
 
 ## Compose Multiplatform
 

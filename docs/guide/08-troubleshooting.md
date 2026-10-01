@@ -9,7 +9,7 @@ Find the run's `reason` (in the report, or `report.json`'s `reason`) below. The 
 - A label may differ slightly (curly quotes, trailing punctuation, a space inside). Take a fresh capture ([how](03-identifiers.md#see-what-the-bridge-sees)) and copy the exact text.
 - An element scrolled out of view doesn't count: scroll first.
 - On Android, a text marked `"selectable": false` in `capture` never matches. Select its button instead.
-- **"Screen still changing"** in the report means that step's screen didn't settle within 3 seconds, so the step used the last capture it took. The capture may show a screen mid-animation. Wait for a settled element with a `wait` step, or turn animations off on the device ([Android setup](12-android-setup.md#animations-off-is-optional)).
+- **"Screen still changing"** in the report means that step's screen was still changing after 3 seconds, so the bridge started no new capture and the step used the last one it took. The capture may show a screen mid-animation. Wait for a settled element with a `wait` step, or turn animations off on the device ([Android setup](12-android-setup.md#animations-off-is-optional)).
 
 **`GUARD_AMBIGUOUS`**: a `present` selector matched more than one visible element.
 - Most often in Compose: a button's label also appears on its text child. Add `role` or use `identifier`.

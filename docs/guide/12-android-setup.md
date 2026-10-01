@@ -63,7 +63,7 @@ adb -s <serial> shell settings put global transition_animation_scale 0
 adb -s <serial> shell settings put global animator_duration_scale 0
 ```
 
-**The bridge never changes device settings.** It doesn't turn animations off, grant permissions, or keep the screen awake: those are yours to decide. Either way, every capture waits for the screen to settle: two identical captures 250 ms apart, for up to 3 seconds. A screen still moving after that is used as it is, and its step is marked "screen still changing" in the report.
+**The bridge never changes device settings.** It doesn't turn animations off, grant permissions, or keep the screen awake: those are yours to decide. Either way, every capture waits for the screen to settle: two identical captures 250 ms apart. After 3 seconds no new capture starts, and a screen still moving is used as the last capture showed it, and its step is marked "screen still changing" in the report.
 
 ## Permission dialogs: grant ahead with `pm grant`
 

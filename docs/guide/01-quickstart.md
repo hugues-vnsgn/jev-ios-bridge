@@ -134,7 +134,14 @@ adb devices     # emulator-5554   device
 
 If the emulator has a screen lock, set it to None in its Settings: the bridge refuses a locked screen.
 
-**3. Build and install the Android diagnostic app.** Get the source as in step 4, then build it with Gradle and install it with `adb`:
+**3. Build and install the Android diagnostic app.** Get the source as in step 4. Gradle needs Java and the SDK's location, and Android Studio sets neither for the terminal. If you don't already have `JAVA_HOME` and `ANDROID_HOME` set, use the Java that comes with Android Studio:
+
+```sh
+export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+```
+
+Then build it with Gradle and install it with `adb`:
 
 ```sh
 cd jev-ios-bridge-src/examples/diagnostic-app-android
