@@ -703,6 +703,21 @@ test('the driver\'s problem wins over appRunning: an APP_EXITED problem names th
   assert.equal((await run({ appRunning: () => false, appProblem: () => undefined })).reason, 'GUARD_MISSING');
 });
 
+test('a driver that can wait for late app events is asked after a failed step, and its answer names the reason', async () => {
+  const run = (driver: Partial<DeviceDriver>) => runScriptedScenario({ runId: 'scripted-1', log: memoryLog(), scenario: orderScript,
+    driver: { async prepare() {}, async observe() { return homeScreen(); }, async act() {}, async close() {}, ...driver },
+    judge: { async judge() { assert.fail('No judgment on the home screen'); } } });
+  const asked: boolean[] = [];
+  assert.equal((await run({ appProblem: () => undefined, async appProblemAfterFailure(signal) {
+    asked.push(signal.aborted);
+    return { code: 'APP_NOT_RESPONDING', note: 'not responding' };
+  } })).reason, 'APP_NOT_RESPONDING');
+  assert.deepEqual(asked, [false], 'asked once, with the run\'s live signal');
+  assert.equal((await run({ appProblem: () => undefined, async appProblemAfterFailure() { return undefined; } })).reason, 'GUARD_MISSING');
+  assert.equal((await run({ async appProblemAfterFailure() { throw new Error('device gone'); } })).reason, 'GUARD_MISSING',
+    'a failed wait never hides the step\'s own error');
+});
+
 test('a verdict already given stands when the driver then reports a problem', async () => {
   const done = snapshot([{ ref: 'd', role: 'text', label: 'Order complete', actions: [],
     frame: { x: 0, y: 0, width: 60, height: 60 }, state: { enabled: true, visible: true } }]);

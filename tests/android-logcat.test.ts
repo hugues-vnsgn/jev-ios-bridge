@@ -178,7 +178,7 @@ test('a stream that fails to spawn rejects start, and a cancelled start spawns n
   assert.equal(cancelled.spawned.length, 0);
 });
 
-test('isLeftover is true only for an adb command line that still holds -s <serial> and logcat', async () => {
+test('isLeftover is true only for an adb command line that runs -s <serial> logcat', async () => {
   const lines = new Map<number, string>([
     [101, '/sdk/platform-tools/adb -s emulator-5554 logcat -v threadtime,year,uid --uid=10226 -T 1759075200.123'],
     [102, '/sdk/platform-tools/adb -s emulator-5556 logcat -b events -v threadtime,year'],
@@ -186,6 +186,8 @@ test('isLeftover is true only for an adb command line that still holds -s <seria
     [104, '/sdk/platform-tools/adb -s emulator-5554 shell ps'],
     [105, 'adb -s emulator-5554 logcat -b events'],
     [106, '/usr/bin/vim /tmp/adb -s emulator-5554 logcat'],
+    [108, '/sdk/platform-tools/adb -s emulator-5554 push logcat /sdcard/logcat'],
+    [109, '/sdk/platform-tools/adb -s emulator-5554 shell logcat -c'],
   ]);
   const starter = logcatStarter({ adb: ADB, environment: ENVIRONMENT, commandLine: async pid => lines.get(pid) });
   assert.equal(await starter.isLeftover(101, 'emulator-5554'), true);
@@ -195,6 +197,8 @@ test('isLeftover is true only for an adb command line that still holds -s <seria
   assert.equal(await starter.isLeftover(105, 'emulator-5554'), true, 'adb found on PATH');
   assert.equal(await starter.isLeftover(106, 'emulator-5554'), false, 'adb only as an argument');
   assert.equal(await starter.isLeftover(107, 'emulator-5554'), false, 'gone');
+  assert.equal(await starter.isLeftover(108, 'emulator-5554'), false, 'logcat only as an argument of another subcommand');
+  assert.equal(await starter.isLeftover(109, 'emulator-5554'), false, 'logcat run through the device shell');
 });
 
 test('isLeftover recognises a leftover of this bridge\'s own adb when its path holds a space', async () => {
@@ -230,13 +234,19 @@ function fakeProcesses(ignores: Record<number, NodeJS.Signals[]>) {
       return true;
     },
     alive: (pid: number) => running.has(pid),
+    /** Each running pid's command line; a test may swap one to stand for a reused pid. */
+    lines: new Map<number, string>(),
+    commandLine(pid: number): Promise<string | undefined> {
+      return Promise.resolve(running.has(pid) ? this.lines.get(pid) ?? `${ADB} -s emulator-5554 logcat -b events` : undefined);
+    },
   };
 }
 
 test('kill sends SIGTERM, then SIGKILL after 1 s, and resolves once the pid is gone', async () => {
   const processes = fakeProcesses({ 201: [], 202: ['SIGTERM'] });
   const time = fakeSleep();
-  const starter = logcatStarter({ adb: ADB, environment: ENVIRONMENT, sendSignal: processes.sendSignal, alive: processes.alive, sleep: time.sleep });
+  const starter = logcatStarter({ adb: ADB, environment: ENVIRONMENT, sendSignal: processes.sendSignal, alive: processes.alive, sleep: time.sleep,
+    commandLine: pid => processes.commandLine(pid) });
   await starter.kill(201);
   await starter.kill(202);
   await starter.kill(203);
@@ -247,8 +257,24 @@ test('kill sends SIGTERM, then SIGKILL after 1 s, and resolves once the pid is g
 
 test('kill rejects when the pid outlives SIGKILL', async () => {
   const processes = fakeProcesses({ 301: ['SIGTERM', 'SIGKILL'] });
-  const starter = logcatStarter({ adb: ADB, environment: ENVIRONMENT, sendSignal: processes.sendSignal, alive: processes.alive, sleep: fakeSleep().sleep });
+  const starter = logcatStarter({ adb: ADB, environment: ENVIRONMENT, sendSignal: processes.sendSignal, alive: processes.alive, sleep: fakeSleep().sleep,
+    commandLine: pid => processes.commandLine(pid) });
   await assert.rejects(starter.kill(301), /did not exit/);
+});
+
+test('kill sends no SIGKILL when the pid names another process after the grace period', async () => {
+  const processes = fakeProcesses({ 401: ['SIGTERM'] });
+  const time = fakeSleep();
+  // The leftover exits during the grace period and its pid is reused at once by another program.
+  let slept = 0;
+  const sleep = async (ms: number) => {
+    await time.sleep(ms);
+    if ((slept += ms) >= 1_000) processes.lines.set(401, '/usr/bin/python3 server.py');
+  };
+  const starter = logcatStarter({ adb: ADB, environment: ENVIRONMENT, sendSignal: processes.sendSignal, alive: processes.alive, sleep,
+    commandLine: pid => processes.commandLine(pid) });
+  await starter.kill(401);
+  assert.deepEqual(processes.sent, ['401 SIGTERM'], 'the reused pid is left alone');
 });
 
 test('the log folder is jev-android-logs/ under the OS temp folder', () => {

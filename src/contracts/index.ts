@@ -115,6 +115,9 @@ export interface DeviceDriver {
   /** Why the launched app stopped answering, with a note for the log pane; undefined when it is fine, it stopped
    *  because the bridge stopped it, or the driver can't tell. */
   appProblem?(): AppProblem | undefined;
+  /** `appProblem`, after giving the app's events a short, bounded moment to arrive. The run asks it once, after a
+   *  step failed, so a crash or freeze reported just after the failure still names the reason. */
+  appProblemAfterFailure?(signal: AbortSignal): Promise<AppProblem | undefined>;
   /** The app's own log files the device layer is writing for this launch, for the live log pane. */
   logSources?(): LogSources;
   /** Set only by a driver integration whose pinned tap semantics were verified. The run reads it. */

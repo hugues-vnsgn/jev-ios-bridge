@@ -124,6 +124,18 @@ test('an Android pane names the logcat file and the uid filter in its header, an
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
+test('the driver\'s cause note is masked like every line', async () => {
+  const runId = `note-masked-${process.pid}-${Date.now()}`;
+  let problem: { code: 'APP_EXITED'; note: string } | undefined;
+  const text = await paneOf(runId, { app: { package: 'com.example.android' }, sources: {}, values: { secret: 'IllegalStateException' },
+    appProblem: () => problem }, async () => {
+    problem = { code: 'APP_EXITED', note: 'crashed: IllegalStateException at MainActivity.java:59' };
+    await new Promise(done => setTimeout(done, 100));
+  });
+  assert.match(text, /!! crashed: \[value:secret\] at MainActivity\.java:59/);
+  assert.doesNotMatch(text, /IllegalStateException/);
+});
+
 test('an Android pane without a logcat file says the device log is unavailable, never naming the iOS sources', async () => {
   const runId = `android-no-file-${process.pid}-${Date.now()}`;
   const text = await paneOf(runId, { app: { package: 'com.example.android' }, sources: {}, values: {} });
