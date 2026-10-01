@@ -93,7 +93,7 @@ claude plugin marketplace add hugues-vnsgn/jev-ios-bridge
 claude plugin install jev-ios-bridge@jev-ios-bridge
 ```
 
-Claude Code asks for your TypeSafe key, which it keeps in your system's secure storage, and the simulator's UUID from step 3. It also asks for an Android device, which you can leave empty for now. To change them later, open `/plugin` and manage the plugin.
+The install doesn't ask for any settings. To give the plugin your key, start Claude Code, open `/plugin`, go to **Installed**, pick `jev-ios-bridge`, and choose **Configure**. Enter your TypeSafe key, which Claude Code keeps in your system's secure storage, and the simulator's UUID from step 3. Leave the Android device empty for now. Until the key is set, the bridge's MCP server doesn't start: run `/mcp` to check that the `jev-ios-bridge` server is connected. To change a setting later, choose **Configure** again.
 
 Start Claude Code in your project, then ask:
 
@@ -152,7 +152,7 @@ cd -
 
 Its package is `dev.jevbridge.diagnostic`. As on iOS, the bridge never builds or installs the app, and restarts it at the start of each run.
 
-**4. Tell the plugin which device to use.** Install the plugin as in step 6, if you haven't. Then open `/plugin`, manage `jev-ios-bridge`, and set **Android device** to the emulator's AVD name. The simulator setting can stay empty.
+**4. Tell the plugin which device to use.** Install the plugin as in step 6, if you haven't. Then start Claude Code, open `/plugin`, go to **Installed**, pick `jev-ios-bridge`, and choose **Configure**. Set **Android device** to the emulator's AVD name, and enter your TypeSafe key if it isn't set yet. The simulator setting can stay empty. Run `/mcp` to check that the `jev-ios-bridge` server is connected.
 
 **5. Run it through `/test-android`.** Start Claude Code in your project, then ask:
 

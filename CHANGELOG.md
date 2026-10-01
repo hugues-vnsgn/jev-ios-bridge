@@ -31,6 +31,11 @@ Android support. iOS scripts, messages and reports work as in 1.1.
 - **`start_scenario`'s description and the CLI help name Android:** "an explicit iOS or Android action script", `JEV_ANDROID_DEVICE`, and `capture`.
 - **The plugin's "Simulator UDID" setting is optional,** so a plugin set up only for Android starts. The package and plugin descriptions say iOS and Android. The name stays `jev-ios-bridge` through 1.x.
 
+### Fixed
+
+- **The log pane no longer passes the Jev key to your terminal.** When the terminal app wasn't running yet, opening the pane started it with the bridge's environment, so every later window and tab had `TYPESAFE_API_KEY` and the bridge's `JEV_*` settings. The pane now opens the terminal without them. This had been so since 1.0.
+- **The plugin's setup steps.** `claude plugin install` doesn't ask for the plugin's settings, as the docs said it did. The README, quickstart and release notes now say to enter them under `/plugin` → **Installed** → `jev-ios-bridge` → **Configure**.
+
 ### Upgrading from 1.1
 
 Nothing to change for iOS scripts: they run and report as in 1.1. In the plugin, leave "Android device" empty if you only check iOS apps.

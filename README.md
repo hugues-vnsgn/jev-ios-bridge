@@ -15,7 +15,7 @@ script ─► bridge ─► MobileBuildMCP ─► iOS simulator
 
 You need a Mac, Node 24 or later, and a TypeSafe API key. For iOS you also need Xcode; for Android, the Android SDK's `adb` and a device with Android 12 or later ([Android setup](docs/guide/12-android-setup.md)).
 
-**With Claude Code,** install the plugin. It brings the MCP server and the `/jev-ios-bridge:test-ios` and `/jev-ios-bridge:test-android` skills, and asks for your TypeSafe key, your simulator, and your Android device (leave empty the one you don't use):
+**With Claude Code,** install the plugin. It brings the MCP server and the `/jev-ios-bridge:test-ios` and `/jev-ios-bridge:test-android` skills. The install doesn't ask for settings: afterwards, open `/plugin` in Claude Code, go to **Installed**, pick `jev-ios-bridge`, and choose **Configure** to enter your TypeSafe key, your simulator, and your Android device (leave empty the one you don't use). The MCP server starts once the key is set.
 
 ```sh
 claude plugin marketplace add hugues-vnsgn/jev-ios-bridge

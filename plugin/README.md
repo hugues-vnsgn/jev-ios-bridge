@@ -9,7 +9,7 @@
 ## What the plugin does on a developer's machine
 
 - **On install,** Claude Code downloads the zip, checks its SHA-256, and runs `npm ci --ignore-scripts` from the lockfile. Dependencies aren't in the zip, so MobileBuildMCP's bundled AXe binary keeps its executable bit.
-- **It asks for three values:**
+- **It has three settings,** which Claude Code doesn't ask for on a command-line install: the user enters them under `/plugin` → **Installed** → `jev-ios-bridge` → **Configure**:
   - the TypeSafe key, stored in the system's secure storage. It's required, and a missing key stops the MCP server with a message that names the setting;
   - the simulator's UDID, for iOS (`JEV_DEVICE_UDID`). Optional;
   - the Android device, a serial or an AVD name (`JEV_ANDROID_DEVICE`). Optional.
