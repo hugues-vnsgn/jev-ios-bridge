@@ -97,7 +97,7 @@ export async function startLogStream(options: {
     const found = problem();
     if (found) {
       noted = true;
-      send({ type: 'note', text: found.note });
+      send({ type: 'note', text: mask(found.note) });
     }
   };
   const timer = setInterval(tick, options.pollMs ?? 200);

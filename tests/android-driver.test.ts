@@ -9,7 +9,7 @@ import { DeviceReasonError, StaleSnapshotError } from '../src/device/index.js';
 import { adbRunner, type AdbRunner } from '../src/device/android/adb.js';
 import { DeviceAgentError, type AndroidNode, type DeviceAgentClient } from '../src/device/android/agent-client.js';
 import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
-import { AGENT_DEVICE_PATH, AGENT_START_COMMAND, AndroidDriver, productionClock, type AndroidDriverOptions } from '../src/device/android/driver.js';
+import { AGENT_DEVICE_PATH, AGENT_START_COMMAND, APP_PROBLEM_POLL_MS, APP_PROBLEM_WAIT_MS, AndroidDriver, productionClock, type AndroidDriverOptions } from '../src/device/android/driver.js';
 import type { AppExitWatch } from '../src/device/android/exit-watch.js';
 import { createDriverFactory } from '../src/device/factory.js';
 import { OutcomeUnknownError } from '../src/device/android/ledger.js';
@@ -1654,6 +1654,31 @@ test('close stops every stream, even past one that won\'t stop, then fails and k
   });
 });
 
+test('a failed app stop still stops both streams, then fails close and keeps the lease', async () => {
+  const adb = new FakeAdb(api31());
+  const run = adb.run;
+  let failStop = false;
+  const runner: AdbRunner = async (args, abort) => failStop && args.some(arg => arg.includes('force-stop'))
+    ? (adb.calls.push(args), { stdout: '', stderr: 'adb: error: device offline\n', exitCode: 1 }) : run(args, abort);
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    await driver.prepare(app(), signal());
+    failStop = true;
+    await assert.rejects(driver.close(signal()), closeFailed('DEVICE_ERROR'));
+    assert.equal(streams.streams.some(stream => stream.running), false, 'no stream left running on the Mac');
+    assert.deepEqual((await lockFile(root))?.ownedProcesses, ['forward emulator-5554 tcp:49526'], 'the streams were disowned; the lease is kept');
+  }, { runner });
+});
+
+test('an agent that won\'t be fenced still stops both streams, and the lease is kept', async () => {
+  const adb = new FakeAdb(api31({ stubborn: [7001] }));
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    await driver.prepare(app(), signal());
+    await assert.rejects(driver.close(signal()), closeFailed('UI_ACTION_UNCONFIRMED'));
+    assert.equal(streams.streams.some(stream => stream.running), false, 'no stream left running on the Mac');
+    assert.ok((await readdir(root)).length > 0, 'lease kept');
+  });
+});
+
 test('a stream start that resolves after close began is stopped by close, which then releases the lease', async () => {
   const adb = new FakeAdb(api31());
   await withLogs(adb, async ({ driver, streams, root }) => {
@@ -1798,7 +1823,9 @@ const LOGPROBE = 'dev.jevbridge.logprobe';
  * lines before `lateFrom` once the first screen is read, and the rest while the city is typed; `screens` are
  * what the agent shows. The app log gets one line holding the typed value. Resolves with what the test checks.
  */
-async function runCaptured(capture: string, options: { pid: string; lateFrom?: number; screens: Hierarchy[] }) {
+/** `late`: when the lines from `lateFrom` arrive. By default while the city is typed; `wait`: only once the run, after a
+ *  failed step, waits for the app's events; `never`: not at all. */
+async function runCaptured(capture: string, options: { pid: string; lateFrom?: number; screens: Hierarchy[]; late?: 'typing' | 'wait' | 'never' }) {
   const recorded = (await readFile(join(LOGCAT_CAPTURES, capture, 'events.log'), 'utf8')).split('\n').filter(line => line !== '');
   const lateFrom = options.lateFrom ?? recorded.length;
   const adb = new FakeAdb(api31({ installed: [LOGPROBE], appPids: options.pid }));
@@ -1821,11 +1848,23 @@ async function runCaptured(capture: string, options: { pid: string; lateFrom?: n
       feed(recorded.slice(0, lateFrom));
       await writeFile(join(folder, `${runId}.log`), `2026-09-28 23:16:14.927 10226  9784  9784 I System.out: city is ${CITY}\n`);
     }
-    if (call.method === 'device.io.text') feed(recorded.slice(lateFrom));
+    if (call.method === 'device.io.text' && (options.late ?? 'typing') === 'typing') feed(recorded.slice(lateFrom));
+  };
+  const clock = fakeClock();
+  const sleep = clock.sleep.bind(clock);
+  const waits: number[] = [];
+  let late = options.late === 'wait' ? recorded.slice(lateFrom) : [];
+  clock.sleep = async ms => {
+    if (ms === APP_PROBLEM_POLL_MS) {
+      waits.push(ms);
+      feed(late);
+      late = [];
+    }
+    await sleep(ms);
   };
   const createDriver = createDriverFactory({
     mobileBuildMcp: { cwd: parent, lockRoot: parent, runner: async () => assert.fail('an Android script never reaches the iOS driver') },
-    android: { runner: adb.run, agentClient: agents.agentClient, clock: fakeClock(), leaseRoot, freePort: async () => ports.shift()!,
+    android: { runner: adb.run, agentClient: agents.agentClient, clock, leaseRoot, freePort: async () => ports.shift()!,
       logcat: streams, logFolder: folder,
       tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: AGENT_CACHE, sha256: PINNED_AGENT_SHA256 } }) },
   });
@@ -1835,7 +1874,7 @@ async function runCaptured(capture: string, options: { pid: string; lateFrom?: n
       const report = await runScriptedScenario({ runId, scenario, driver: createDriver(scenario, { runId }), judge: judgeAllTrue, log });
       const events = await eventsOf(evidence, runId);
       return {
-        report, events, folder, runId, holderAtForwardRemoval,
+        report, events, folder, runId, holderAtForwardRemoval, waitedMs: waits.reduce((total, ms) => total + ms, 0),
         raw: await readFile(join(evidence, runId, 'run.jsonl'), 'utf8'),
         streamsStarted: streams.streams.length,
         streamsRunning: streams.streams.filter(stream => stream.running).length,
@@ -1878,6 +1917,30 @@ test('end to end: an app that freezes (probe-anr) ends the run APP_NOT_RESPONDIN
   assert.deepEqual([run.report.verdict, run.report.reason], ['inconclusive', 'APP_NOT_RESPONDING']);
   const error = run.events.find(event => event.type === 'error')!.data;
   assert.deepEqual([error.stepId, error.phase, error.code], ['verify', 'observe', 'APP_NOT_RESPONDING']);
+  assertCleanedUp(run);
+});
+
+test('end to end: a crash whose events arrive just after the step failed still ends the run APP_EXITED', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  const run = await runCaptured('probe-crash', { pid: '10160', lateFrom: 1, screens: [fields, fields, []], late: 'wait' });
+  assert.deepEqual([run.report.verdict, run.report.reason], ['inconclusive', 'APP_EXITED']);
+  assert.ok(run.waitedMs > 0 && run.waitedMs <= APP_PROBLEM_WAIT_MS, 'it waited, and stopped waiting once the crash was known');
+  assertCleanedUp(run);
+});
+
+test('end to end: a freeze whose events arrive just after the step failed still ends the run APP_NOT_RESPONDING', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  const run = await runCaptured('probe-anr', { pid: '11656', lateFrom: 1, screens: [fields, fields, []], late: 'wait' });
+  assert.deepEqual([run.report.verdict, run.report.reason], ['inconclusive', 'APP_NOT_RESPONDING']);
+  assertCleanedUp(run);
+});
+
+test('end to end: a failed step with no app event waits about 1 s, then keeps its own reason', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  // The crash's lines never arrive.
+  const run = await runCaptured('probe-crash', { pid: '10160', lateFrom: 1, screens: [fields, fields, []], late: 'never' });
+  assert.deepEqual([run.report.verdict, run.report.reason], ['inconclusive', 'GUARD_MISSING']);
+  assert.equal(run.waitedMs, APP_PROBLEM_WAIT_MS);
   assertCleanedUp(run);
 });
 

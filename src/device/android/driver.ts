@@ -45,6 +45,11 @@ const DUMP_IDLE_MS = 2_000;
 const SCREENSHOT_MAX_SIZE = 800;
 /** Replace text's pause between `ctrl+a` and backspace (open point 23). */
 const CLEAR_PAUSE_MS = 200;
+/** After a failed step, how long the run waits for the app's events, and how often it looks. A crash's events
+ *  arrive within about 0.4 s (findings/06-log-pane.md); a freeze is reported only after about 5 s, so a step
+ *  usually fails before it, and the run keeps the step's own reason. */
+export const APP_PROBLEM_WAIT_MS = 1_000;
+export const APP_PROBLEM_POLL_MS = 50;
 /** How long a late `close` may take once the abandoned work has settled: the run's own cleanup limit. */
 const LATE_CLOSE_MS = 45_000;
 /** How long a swipe's finger takes (release spec phase 4 item 6). */
@@ -279,6 +284,17 @@ export class AndroidDriver implements DeviceDriver {
     return this.watch?.problem();
   }
 
+  /** `appProblem`, waiting up to `APP_PROBLEM_WAIT_MS` for the events stream to report one; at once when the
+   *  driver can't tell. */
+  async appProblemAfterFailure(signal: AbortSignal): Promise<AppProblem | undefined> {
+    const until = this.clock.now() + APP_PROBLEM_WAIT_MS;
+    for (;;) {
+      const found = this.watch?.problem();
+      if (found || this.watch?.running() === undefined || signal.aborted || this.clock.now() >= until) return found;
+      await this.clock.sleep(APP_PROBLEM_POLL_MS);
+    }
+  }
+
   /** The app's log file, once its stream started: the pane, each step's log tails and `logs` read it. */
   logSources(): LogSources {
     return this.logFile !== undefined ? { logcat: this.logFile } : {};
@@ -314,13 +330,19 @@ export class AndroidDriver implements DeviceDriver {
     const serial = this.serial!;
     this.cleanupSignal = signal;
     try {
-      // An unconfirmed fence keeps the lease the same way an unknown adb command does.
-      try { await this.fenceAgent(serial, signal); }
-      catch { throw new DeviceReasonError('UI_ACTION_UNCONFIRMED', 'The bridge\'s device agent could not be confirmed stopped; device lease kept'); }
-      if (this.restartedPackage !== undefined) {
-        this.watch?.expectStop();
-        await this.succeeded('stop the app', this.shell(serial, ['am', 'force-stop', this.restartedPackage], signal));
-        this.restartedPackage = undefined;
+      try {
+        // An unconfirmed fence keeps the lease the same way an unknown adb command does.
+        try { await this.fenceAgent(serial, signal); }
+        catch { throw new DeviceReasonError('UI_ACTION_UNCONFIRMED', 'The bridge\'s device agent could not be confirmed stopped; device lease kept'); }
+        if (this.restartedPackage !== undefined) {
+          this.watch?.expectStop();
+          await this.succeeded('stop the app', this.shell(serial, ['am', 'force-stop', this.restartedPackage], signal));
+          this.restartedPackage = undefined;
+        }
+      } catch (error) {
+        // The lease is kept, but the streams are Mac processes that can't act on the device: stop them anyway.
+        await this.stopStreams().catch(() => undefined);
+        throw error;
       }
       // Whether or not the app was launched: the streams start before the launch.
       await this.stopStreams();
