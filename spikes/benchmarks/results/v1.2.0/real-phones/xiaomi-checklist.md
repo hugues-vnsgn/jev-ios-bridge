@@ -1,6 +1,6 @@
 # Real phone checklist: Xiaomi (release check 8)
 
-v1.2.0 was checked on emulators only. Real Android phones are untested, and the release notes and limits page say so. **This checklist hasn't been run.** Run it when a Xiaomi phone is free for these checks. It's written for the one another agent uses today, `2985e9c`, and must not be run while that agent holds it. File problems found here against 1.2.1.
+v1.2.0 was checked on emulators only. Real Android phones are untested, and the release notes and limits page say so. **This checklist hasn't been run.** Run it when a Xiaomi phone is free for these checks. It's written for the one another agent uses today, `<serial>`, and must not be run while that agent holds it. File problems found here against 1.2.1.
 
 ## Before you start
 

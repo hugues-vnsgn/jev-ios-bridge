@@ -1,5 +1,5 @@
 Watch: http://127.0.0.1:55041/?token=7fa737c7d541375c57fa2330c353b64673ccdb91b019d63acb0a681114bcd4b0&run=e9ae5f73-ec0e-4a5f-bde5-f6c6ebb43cf2
-Log pane: no window (turned off with --no-log-pane). Follow the app's output with: "/Users/hugues_mini/.nvm/versions/node/v22.22.2/bin/node" "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/dist/cli.js" logs e9ae5f73-ec0e-4a5f-bde5-f6c6ebb43cf2
+Log pane: no window (turned off with --no-log-pane). Follow the app's output with: "~/.nvm/versions/node/v22.22.2/bin/node" "~/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/dist/cli.js" logs e9ae5f73-ec0e-4a5f-bde5-f6c6ebb43cf2
 Run e9ae5f73-ec0e-4a5f-bde5-f6c6ebb43cf2: passed
 ALL_CHECKPOINTS_PASSED
 Steps: 5; Jev input tokens: 1930; duration: 10869.466292000001 ms.
@@ -45,4 +45,4 @@ button Colors
 text Colors
 Full redacted assertion observation: run.jsonl event 11, data.assertionObservation.
 Screenshot: screen-11.jpg
-Full local evidence: /Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/spikes/benchmarks/results/v1.2.0/check-03/runs/e9ae5f73-ec0e-4a5f-bde5-f6c6ebb43cf2/run.jsonl
+Full local evidence: ~/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/spikes/benchmarks/results/v1.2.0/check-03/runs/e9ae5f73-ec0e-4a5f-bde5-f6c6ebb43cf2/run.jsonl

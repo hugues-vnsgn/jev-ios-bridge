@@ -1,5 +1,5 @@
 Watch: http://127.0.0.1:53949/?token=faf7c28ed92845e3fb962b07abbe0db5bf74884614ea1fcfae54a256e19ef018&run=ddb86e3e-e992-497f-9af2-4ff23c674dcf
-Log pane: no window (turned off with --no-log-pane). Follow the app's output with: "/Users/hugues_mini/.nvm/versions/node/v22.22.2/bin/node" "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/dist/cli.js" logs ddb86e3e-e992-497f-9af2-4ff23c674dcf
+Log pane: no window (turned off with --no-log-pane). Follow the app's output with: "~/.nvm/versions/node/v22.22.2/bin/node" "~/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/dist/cli.js" logs ddb86e3e-e992-497f-9af2-4ff23c674dcf
 Run ddb86e3e-e992-497f-9af2-4ff23c674dcf: failed
 ASSERTION_FALSE
 Steps: 4; Jev input tokens: 546; duration: 5680.974292 ms.
@@ -16,4 +16,4 @@ text Bread: $3
 text Total: $3
 Full redacted assertion observation: run.jsonl event 9, data.assertionObservation.
 Screenshot: screen-9.jpg
-Full local evidence: /Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/spikes/benchmarks/results/v1.2.0/check-04/runs/ddb86e3e-e992-497f-9af2-4ff23c674dcf/run.jsonl
+Full local evidence: ~/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/spikes/benchmarks/results/v1.2.0/check-04/runs/ddb86e3e-e992-497f-9af2-4ff23c674dcf/run.jsonl

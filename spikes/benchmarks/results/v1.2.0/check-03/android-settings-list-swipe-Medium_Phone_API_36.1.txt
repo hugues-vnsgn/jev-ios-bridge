@@ -1,5 +1,5 @@
 Watch: http://127.0.0.1:54922/?token=81b3238c64f39928b5f697cb1e11c64ddbcdb997f4718ff8e023fce01dc70074&run=dca41109-30f3-4f8c-9275-a15fdda739f9
-Log pane: no window (turned off with --no-log-pane). Follow the app's output with: "/Users/hugues_mini/.nvm/versions/node/v22.22.2/bin/node" "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/dist/cli.js" logs dca41109-30f3-4f8c-9275-a15fdda739f9
+Log pane: no window (turned off with --no-log-pane). Follow the app's output with: "~/.nvm/versions/node/v22.22.2/bin/node" "~/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/dist/cli.js" logs dca41109-30f3-4f8c-9275-a15fdda739f9
 Run dca41109-30f3-4f8c-9275-a15fdda739f9: passed
 ALL_CHECKPOINTS_PASSED
 Steps: 2; Jev input tokens: 2726; duration: 5505.7215 ms.
@@ -58,4 +58,4 @@ text Safety & emergency
 text Emergency SOS, medical info, alerts
 Full redacted assertion observation: run.jsonl event 5, data.assertionObservation.
 Screenshot: screen-5.jpg
-Full local evidence: /Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/spikes/benchmarks/results/v1.2.0/check-03/runs/dca41109-30f3-4f8c-9275-a15fdda739f9/run.jsonl
+Full local evidence: ~/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/spikes/benchmarks/results/v1.2.0/check-03/runs/dca41109-30f3-4f8c-9275-a15fdda739f9/run.jsonl

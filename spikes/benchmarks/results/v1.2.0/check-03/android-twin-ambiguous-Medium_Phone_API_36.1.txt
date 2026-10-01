@@ -1,5 +1,5 @@
 Watch: http://127.0.0.1:54700/?token=b7bc5a7f9f919b43ee80701a6a081f9131c65cae60ddd1ea6d501acd371663f2&run=cc1b7ad5-6c05-4b0d-8004-cfae6d12a94b
-Log pane: no window (turned off with --no-log-pane). Follow the app's output with: "/Users/hugues_mini/.nvm/versions/node/v22.22.2/bin/node" "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/dist/cli.js" logs cc1b7ad5-6c05-4b0d-8004-cfae6d12a94b
+Log pane: no window (turned off with --no-log-pane). Follow the app's output with: "~/.nvm/versions/node/v22.22.2/bin/node" "~/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/dist/cli.js" logs cc1b7ad5-6c05-4b0d-8004-cfae6d12a94b
 Run cc1b7ad5-6c05-4b0d-8004-cfae6d12a94b: inconclusive
 GUARD_AMBIGUOUS
 Steps: 1; Jev input tokens: 0; duration: 2732.4775 ms.
@@ -17,4 +17,4 @@ text Add Bread ($3)
 button Complete order
 text Complete order
 Last screenshot: screen-3.jpg
-Full local evidence: /Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/spikes/benchmarks/results/v1.2.0/check-03/runs/cc1b7ad5-6c05-4b0d-8004-cfae6d12a94b/run.jsonl
+Full local evidence: ~/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/spikes/benchmarks/results/v1.2.0/check-03/runs/cc1b7ad5-6c05-4b0d-8004-cfae6d12a94b/run.jsonl

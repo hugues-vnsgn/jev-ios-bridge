@@ -1,5 +1,5 @@
 Watch: http://127.0.0.1:54806/?token=25920aa7bd2c8edbdd88c87ff46b7b1d59fdeca95c48499c137ea0e54792856a&run=5912e6a7-17f9-4075-9f5c-84a6edf99bc6
-Log pane: no window (turned off with --no-log-pane). Follow the app's output with: "/Users/hugues_mini/.nvm/versions/node/v22.22.2/bin/node" "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/dist/cli.js" logs 5912e6a7-17f9-4075-9f5c-84a6edf99bc6
+Log pane: no window (turned off with --no-log-pane). Follow the app's output with: "~/.nvm/versions/node/v22.22.2/bin/node" "~/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/dist/cli.js" logs 5912e6a7-17f9-4075-9f5c-84a6edf99bc6
 Run 5912e6a7-17f9-4075-9f5c-84a6edf99bc6: passed
 ALL_CHECKPOINTS_PASSED
 Steps: 3; Jev input tokens: 1708; duration: 6497.34825 ms.
@@ -39,4 +39,4 @@ button Xong
 other Xong
 Full redacted assertion observation: run.jsonl event 7, data.assertionObservation.
 Screenshot: screen-7.jpg
-Full local evidence: /Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/spikes/benchmarks/results/v1.2.0/check-03/runs/5912e6a7-17f9-4075-9f5c-84a6edf99bc6/run.jsonl
+Full local evidence: ~/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/spikes/benchmarks/results/v1.2.0/check-03/runs/5912e6a7-17f9-4075-9f5c-84a6edf99bc6/run.jsonl

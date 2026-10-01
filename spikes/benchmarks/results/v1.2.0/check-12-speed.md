@@ -16,3 +16,5 @@ From the formal check 3 (Android 16) and check 4 (Android 12) runs of candidate 
 
 - **Run** is the bridge's own duration, from the `verdict` event. Prepare covers the tools check, the device lease, the agent check, the device checks, the restart and the agent start. Each action's time includes the settle rule's two or more captures.
 - **Replace text** covers the tap to focus, `ctrl+a`, backspace and typing, then the settle. `settings-search-vi` types through the clipboard.
+
+- **Capture and settle on their own:** a step's own settled capture, with no action in it, took 0.31 to 2.22 s; the 2.22 s was the first screen after a launch. Steps after an action reuse the screen that action settled, so most cost nothing extra. A single capture inside the settle rule wasn't timed separately. The per-run numbers are in [run-excerpts.md](run-excerpts.md).
