@@ -11,4 +11,4 @@
 
 Earlier, before Issues 30 and 31, the candidate `93c6ac7` passed 540/540 locally. None skipped in any local run.
 
-**Still to do:** CI on the merge commit into `main`, after the owner merges #29 to #32.
+**On `main`:** CI passed on the merge commit `ef3daa2` (#32, the last of the four), and on `d0bc224` after PR #33's fixes, which brought the local count to 566/566.

@@ -4,15 +4,15 @@
     "name": "hugues-vnsgn",
     "url": "https://github.com/hugues-vnsgn"
   },
-  "description": "jev-ios-bridge: scripted iOS simulator checks judged by Jev",
+  "description": "jev-ios-bridge: scripted iOS simulator and Android emulator checks judged by Jev",
   "plugins": [
     {
       "name": "jev-ios-bridge",
-      "description": "Check iOS apps (SwiftUI, UIKit, Compose Multiplatform) on a simulator with scripted steps and Jev-judged screen claims",
+      "description": "Check iOS and Android apps (SwiftUI, UIKit, Jetpack Compose, Compose Multiplatform, Android Views) on a simulator, or an emulator or phone (phones untested), with scripted steps and Jev-judged screen claims",
       "source": {
         "source": "archive",
-        "url": "https://github.com/hugues-vnsgn/jev-ios-bridge/releases/download/v1.1.0/jev-ios-bridge-plugin-1.1.0.zip",
-        "sha256": "21ba7027f305d413261f3b91202f841b0c1038a6be67919cbbb7ee5bedcce8d2"
+        "url": "https://github.com/hugues-vnsgn/jev-ios-bridge/releases/download/v1.2.0/jev-ios-bridge-plugin-1.2.0.zip",
+        "sha256": "7a108f16a4ee69f7c68c45e6cc3208b5256937b5500337c03786b57e0ee9497b"
       }
     }
   ]

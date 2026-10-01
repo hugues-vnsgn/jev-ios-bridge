@@ -1,0 +1,9 @@
+Check 11 rerun on the release-records branch (main at d0bc224 plus records only), 2026-10-01, Node v22.22.2.
+npm pack: jev-ios-bridge-1.2.0.tgz, SHA-256 c91b724d3d4395220e2de896f4dd12b6a9649806ff9ca1d17ca7b4a87d9eb692
+(the release tarball is packed again from the tagged commit; its SHA-256 is in publication-verification.json)
+npm install into an empty project: found 0 vulnerabilities
+npx jev-ios-bridge --version: 1.2.0
+MCP initialize serverInfo: jev-ios-bridge 1.2.0
+skills/test-android/SKILL.md: present
+capture --avd NoSuchAvd: exit 3, stderr "DEVICE_NOT_CONNECTED: No connected device or running emulator is named NoSuchAvd"
+Note: this capture started an adb server on port 5099 without the USB guard, and it saw the owner's phone for about a minute before it was stopped. Nothing ran on the phone. Later runs start the guarded server first.
