@@ -42,6 +42,10 @@ class ScriptRunError extends Error {
   }
 }
 
+/** How long cleanup may take by default: longer than one device command's own deadline (35 s), so cleanup can
+ *  see an in-flight command finish. */
+export const DEFAULT_CLEANUP_MS = 45_000;
+
 function bounded(value: number | undefined, fallback: number, minimum: number, maximum: number): number {
   const selected = value ?? fallback;
   if (!Number.isSafeInteger(selected) || selected < minimum || selected > maximum) throw new RangeError('Invalid script run limit');
@@ -176,8 +180,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
   const maxSteps = bounded(limits.maxSteps, 100, 1, 100);
   const wallTimeMs = bounded(limits.wallTimeMs, 300_000, 1, 3_600_000);
   const pollIntervalMs = bounded(limits.pollIntervalMs, 250, 1, 5_000);
-  // Longer than one device command's own deadline (35 s), so cleanup can see an in-flight command finish.
-  const cleanupTimeMs = bounded(limits.cleanupTimeMs, 45_000, 1, 120_000);
+  const cleanupTimeMs = bounded(limits.cleanupTimeMs, DEFAULT_CLEANUP_MS, 1, 120_000);
   const preparedContext = prepareContext(script, platform);
   const actionContext: ActionScenarioContext = { ...preparedContext, values: script.values };
   // The driver carries its own pinned tap semantics; the run reads it rather than taking it as an option.

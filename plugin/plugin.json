@@ -1,11 +1,11 @@
 {
   "name": "jev-ios-bridge",
-  "description": "Check iOS apps (SwiftUI, UIKit, Compose Multiplatform) on a simulator with scripted steps and Jev-judged screen claims",
+  "description": "Check iOS and Android apps (SwiftUI, UIKit, Jetpack Compose, Compose Multiplatform, Android Views) on a simulator or emulator with scripted steps and Jev-judged screen claims",
   "author": { "name": "hugues-vnsgn", "url": "https://github.com/hugues-vnsgn" },
   "homepage": "https://github.com/hugues-vnsgn/jev-ios-bridge",
   "repository": "https://github.com/hugues-vnsgn/jev-ios-bridge",
   "license": "MIT",
-  "keywords": ["ios", "simulator", "testing", "swiftui", "compose-multiplatform", "jev"],
+  "keywords": ["ios", "android", "simulator", "emulator", "testing", "swiftui", "jetpack-compose", "compose-multiplatform", "jev"],
   "userConfig": {
     "typesafe_api_key": {
       "type": "string",
@@ -17,8 +17,14 @@
     "simulator_udid": {
       "type": "string",
       "title": "Simulator UDID",
-      "description": "UUID of a simulator that only these checks drive (xcrun simctl list devices). Aliases such as booted are refused.",
-      "required": true
+      "description": "For iOS: UUID of a simulator that only these checks drive (xcrun simctl list devices). Aliases such as booted are refused. Leave empty if you only check Android apps.",
+      "required": false
+    },
+    "android_device": {
+      "type": "string",
+      "title": "Android device",
+      "description": "For Android: the adb serial of a device, or the AVD name of an emulator, that only these checks drive. A script's device.serial or device.avd overrides it. Leave empty if you only check iOS apps.",
+      "required": false
     }
   },
   "mcpServers": {
@@ -28,6 +34,7 @@
       "env": {
         "TYPESAFE_API_KEY": "${user_config.typesafe_api_key}",
         "JEV_DEVICE_UDID": "${user_config.simulator_udid}",
+        "JEV_ANDROID_DEVICE": "${user_config.android_device}",
         "JEV_PROJECT_DIR": "${CLAUDE_PROJECT_DIR}"
       }
     }

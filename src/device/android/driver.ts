@@ -16,7 +16,7 @@ import { EVENT_FILTER, type AppExitWatch, type createExitWatch } from './exit-wa
 import { inLedger } from './ledger.js';
 import { deleteOldLogs, LOG_FOLDER, logcatStarter, privateLogFolder, type LogcatOutput, type LogcatStarter, type LogcatStream } from './logcat.js';
 import { mapAndroidTree } from './mapping.js';
-import { settle, type Clock } from './settle.js';
+import { settle, type Clock, type SettledCapture } from './settle.js';
 import { adbEnvironment, androidTools, type AndroidTools } from './tools.js';
 
 /** Where the bridge pushes its device agent: its own path, never mobilecli's `/data/local/tmp/mobilecli.dex`. */
@@ -179,6 +179,23 @@ function typedFieldIn(snapshot: Snapshot, field: Element): Element | undefined {
   return byIdentifier ?? only(fields.filter(element => element.state?.focused)) ?? only(fields.filter(element => sameFrame(element.frame)));
 }
 
+/** A settled capture as the bridge's snapshot, its elements mapped, with `extras` (a screenshot, log tails) before `settled`. */
+function snapshotOf(serial: string, captured: SettledCapture, sequence: number, capturedAt: number,
+  extras: Pick<Snapshot, 'screenshotPath' | 'logTails'> = {}): Snapshot {
+  return {
+    deviceId: serial,
+    capturedAt,
+    // An Android reference never expires by time: only a newer snapshot, or an action, makes it stale.
+    expiresAt: Number.MAX_SAFE_INTEGER,
+    sequence,
+    elements: mapAndroidTree(captured.tree),
+    truncated: false,
+    screenHash: captured.screenHash,
+    ...extras,
+    ...(captured.settled ? {} : { settled: false }),
+  };
+}
+
 /** What a lease holder record lists for the next run to sweep: the agent, the forward and the logcat streams, each on its serial. */
 const ownedAgent = (serial: string, pid: number) => `agent ${serial} ${String(pid)}`;
 const ownedForward = (serial: string, port: number) => `forward ${serial} tcp:${String(port)}`;
@@ -189,8 +206,9 @@ const OWNED_STREAM = /^logcat (\S+) (\d+)$/;
  * The Android device driver (release spec phase 4): drives mobilecli's device agent directly, over `adb`
  * and JSON-RPC, and never runs mobilecli (ADR-0006). `prepare` takes the device lease on the device
  * identity before touching the device, refuses when another tool's agent is running, restarts the app with
- * its launch options, and starts and checks the bridge's own agent. `close` undoes only what this run did,
- * and keeps the lease until it can show nothing the run started can still act on the device.
+ * its launch options, and starts and checks the bridge's own agent. `capture` does the same without the
+ * restart, for the `capture` command. `close` undoes only what this run did, and keeps the lease until it
+ * can show nothing the run started can still act on the device.
  */
 export class AndroidDriver implements DeviceDriver {
   private readonly lease: DeviceLease;
@@ -240,6 +258,15 @@ export class AndroidDriver implements DeviceDriver {
 
   observe(signal: AbortSignal): Promise<Snapshot> {
     return this.lease.track(() => this.settledSnapshot(signal));
+  }
+
+  /**
+   * The `capture` command's path (release spec phase 6 item 1): `prepare`'s parts without the restart and
+   * without the logcat streams, then one settled snapshot, with no screenshot. The app is left as it was;
+   * `close` is still the only cleanup.
+   */
+  capture(signal: AbortSignal): Promise<Snapshot> {
+    return this.lease.track(() => this.captureIssued(signal));
   }
 
   act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | ActOutcome> {
@@ -394,28 +421,23 @@ export class AndroidDriver implements DeviceDriver {
   private async settledSnapshot(signal: AbortSignal): Promise<Snapshot> {
     const serial = this.serial;
     if (!this.agent || !serial) throw new Error('Driver is not prepared');
-    // The agent's tree has the captures' shape (the tracer confirmed it), so the mapping reads it as is.
-    const captured = await settle(async captureSignal =>
-      ({ hierarchy: await this.agentCall(agent => agent.dumpUi(DUMP_IDLE_MS, captureSignal), captureSignal) }), this.clock, signal);
+    const captured = await this.settledCapture(signal);
     const sequence = ++this.sequence;
     const capturedAt = Date.now();
     const jpeg = await this.agentCall(agent => agent.screenshot(SCREENSHOT_MAX_SIZE, signal), signal);
     const screenshotPath = join(await this.screenshotFolderPath(), `screen-${String(sequence)}.jpg`);
     await writeFile(screenshotPath, jpeg, { mode: 0o600 });
-    this.latest = {
-      deviceId: serial,
-      capturedAt,
-      // An Android reference never expires by time: only a newer snapshot, or an action, makes it stale.
-      expiresAt: Number.MAX_SAFE_INTEGER,
-      sequence,
-      elements: mapAndroidTree(captured.tree),
-      truncated: false,
-      screenHash: captured.screenHash,
+    this.latest = snapshotOf(serial, captured, sequence, capturedAt, {
       screenshotPath,
       ...(this.logFile !== undefined ? { logTails: { logcat: await readLogTail(this.logFile) } } : {}),
-      ...(captured.settled ? {} : { settled: false }),
-    };
+    });
     return this.latest;
+  }
+
+  /** The settle rule over `device.dump.ui`. The agent's tree has the captures' shape (the tracer confirmed it), so the mapping reads it as is. */
+  private settledCapture(signal: AbortSignal): Promise<SettledCapture> {
+    return settle(async captureSignal =>
+      ({ hierarchy: await this.agentCall(agent => agent.dumpUi(DUMP_IDLE_MS, captureSignal), captureSignal) }), this.clock, signal);
   }
 
   private screenshotFolderPath(): Promise<string> {
@@ -480,6 +502,58 @@ export class AndroidDriver implements DeviceDriver {
     if (this.lease.held) throw new Error('Driver is already prepared');
     if (isIosApp(scenario.app)) throw new Error('The Android driver only runs Android scripts; this scenario has no app.package');
     const app = scenario.app;
+    const { tools, serial, identity, deadHolder } = await this.takeDevice(signal);
+    try {
+      const sweptLeftovers = await this.sweepLeftovers(serial, identity, deadHolder, signal);
+      await this.checkDevice(serial, app.package, signal);
+      // The streams start between the restart's force-stop and its launch, so nothing the previous instance logged is read.
+      const component = await this.stopForRestart(serial, app, signal);
+      const watched = await this.startStreams(serial, app.package, signal);
+      await this.launch(serial, component, app, signal);
+      if (watched) await this.readPid(serial, app.package, signal);
+      await this.startAgent(serial, identity, tools, signal);
+      this.prepared = { deviceIdentity: identity, serial, agentSha256: tools.agent.sha256, ...(sweptLeftovers ? { sweptLeftovers } : {}) };
+    } catch (error) {
+      await this.releaseIfNothingToUndo();
+      throw error;
+    }
+  }
+
+  /**
+   * `capture`'s parts, in `prepare`'s order: the tools check, the device and the lease, the agent check and
+   * sweep, the device checks (with no app to look for) and wake, then the agent. A refusal before the agent
+   * start releases the lease as `prepare`'s does. Then one settled snapshot, mapped with a fresh sequence.
+   */
+  private async captureIssued(signal: AbortSignal): Promise<Snapshot> {
+    if (this.lease.held) throw new Error('Driver is already prepared');
+    const { tools, serial, identity, deadHolder } = await this.takeDevice(signal);
+    try {
+      await this.sweepLeftovers(serial, identity, deadHolder, signal);
+      await this.checkDevice(serial, undefined, signal);
+      await this.startAgent(serial, identity, tools, signal);
+    } catch (error) {
+      await this.releaseIfNothingToUndo();
+      throw error;
+    }
+    const captured = await this.settledCapture(signal);
+    return snapshotOf(serial, captured, ++this.sequence, Date.now());
+  }
+
+  /**
+   * After a refusal while starting: release the lease now, as the iOS driver does, only while the device holds
+   * nothing `close` must undo, since `close` returns at once when the lease isn't held. That is before the
+   * restart for `prepare`, whose restart always comes before its agent start, and before the agent start for
+   * `capture`, which never restarts. From then on `close` releases the lease, once it has fenced and stopped.
+   */
+  private async releaseIfNothingToUndo(): Promise<void> {
+    if (this.restartedPackage === undefined && !this.agentStartIssued && this.lease.releasable) await this.lease.release();
+  }
+
+  /**
+   * The tools check, then the device name to its serial and identity, then the device lease on the identity.
+   * Returns the dead holder's record when the lease was taken over from a crashed run.
+   */
+  private async takeDevice(signal: AbortSignal): Promise<{ tools: AndroidTools; serial: string; identity: string; deadHolder: LeaseHolder | undefined }> {
     const tools = await (this.options.tools ?? androidTools)();
     this.runner = this.options.runner ?? adbRunner({ adb: tools.adb, environment: adbEnvironment() });
     this.logcat = this.options.logcat ?? logcatStarter({ adb: tools.adb, environment: adbEnvironment() });
@@ -492,24 +566,15 @@ export class AndroidDriver implements DeviceDriver {
       throw error;
     }
     this.serial = serial;
-    try {
-      // The dead holder's streams run on this Mac, so they go first, even when a foreign agent then refuses the run.
-      const sweptStreams = deadHolder !== undefined && await this.sweepStreams(deadHolder, signal);
-      const sweptAgents = await this.checkAgents(serial, identity, deadHolder !== undefined, signal);
-      const sweptLeftovers = sweptStreams || sweptAgents;
-      await this.checkDevice(serial, app.package, signal);
-      // The streams start between the restart's force-stop and its launch, so nothing the previous instance logged is read.
-      const component = await this.stopForRestart(serial, app, signal);
-      const watched = await this.startStreams(serial, app.package, signal);
-      await this.launch(serial, component, app, signal);
-      if (watched) await this.readPid(serial, app.package, signal);
-      await this.startAgent(serial, identity, tools, signal);
-      this.prepared = { deviceIdentity: identity, serial, agentSha256: tools.agent.sha256, ...(sweptLeftovers ? { sweptLeftovers } : {}) };
-    } catch (error) {
-      // A refusal before the restart leaves nothing to undo on the device: release now, as the iOS driver does.
-      if (this.restartedPackage === undefined && this.lease.releasable) await this.lease.release();
-      throw error;
-    }
+    return { tools, serial, identity, deadHolder };
+  }
+
+  /** The takeover sweep and the agent check. True when a takeover from a dead holder swept anything. */
+  private async sweepLeftovers(serial: string, identity: string, deadHolder: LeaseHolder | undefined, signal: AbortSignal): Promise<boolean> {
+    // The dead holder's streams run on this Mac, so they go first, even when a foreign agent then refuses the run.
+    const sweptStreams = deadHolder !== undefined && await this.sweepStreams(deadHolder, signal);
+    const sweptAgents = await this.checkAgents(serial, identity, deadHolder !== undefined, signal);
+    return sweptStreams || sweptAgents;
   }
 
   /** Before any new device work: none once `close` began, except `close`'s own, or once the run was cancelled. */
@@ -682,8 +747,9 @@ export class AndroidDriver implements DeviceDriver {
   /**
    * The device checks (item 2), in order: API level, boot, the app installed, then the screen. A screen that
    * is only off is woken; a keyguard still showing is `DEVICE_LOCKED` (open point 16). No setting is changed.
+   * `capture` names no app, so it skips the installed check.
    */
-  private async checkDevice(serial: string, appPackage: string, signal: AbortSignal): Promise<void> {
+  private async checkDevice(serial: string, appPackage: string | undefined, signal: AbortSignal): Promise<void> {
     const api = Number(await this.getprop(serial, 'ro.build.version.sdk', signal));
     if (!Number.isInteger(api) || api < MIN_API_LEVEL) {
       throw new DeviceReasonError('DEVICE_UNSUPPORTED', `Device ${serial} runs API ${String(api)}; the bridge needs Android 12 (API 31) or later`);
@@ -691,8 +757,10 @@ export class AndroidDriver implements DeviceDriver {
     if (await this.getprop(serial, 'sys.boot_completed', signal) !== '1') {
       throw new DeviceReasonError('DEVICE_NOT_BOOTED', `Device ${serial} hasn't finished booting`);
     }
-    const installed = await this.shell(serial, ['pm', 'path', appPackage], signal);
-    if (!/^package:/m.test(installed.stdout)) throw new DeviceReasonError('APP_NOT_INSTALLED', `${appPackage} isn't installed on ${serial}`);
+    if (appPackage !== undefined) {
+      const installed = await this.shell(serial, ['pm', 'path', appPackage], signal);
+      if (!/^package:/m.test(installed.stdout)) throw new DeviceReasonError('APP_NOT_INSTALLED', `${appPackage} isn't installed on ${serial}`);
+    }
     let screen = await this.screenState(serial, signal);
     if (!screen.awake) {
       await this.succeeded('wake the screen', this.shell(serial, ['input', 'keyevent', 'KEYCODE_WAKEUP'], signal));

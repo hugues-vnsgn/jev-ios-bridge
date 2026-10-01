@@ -388,6 +388,100 @@ When a step fails because the app crashed, was killed or quit, the run ends `APP
 - **The log pane:** `startLogStream` with the injected app check (`tests/logpane.test.ts`).
 - **The `logs` fallback:** through the existing CLI tests.
 
+## Phase 6: the `capture` command, the `/test-android` skill, and the plugin (execution, from 2026-09-30)
+
+Status: ready-for-agent
+
+The work is [the release spec's phase 6](../android-support/release-spec.md#phase-6-the-capture-command-the-test-android-skill-and-the-plugin-the-test-android-skill-how-a-script-names-an-android-app-and-device-default-device), items 1 to 4, with open points 12, 13 and 14. It is split into Issues 21 and 22 on the feature branch `agent/android-v1.2-phase6`, stacked on phase 5's branch, and shipped as **one PR** whose base is phase 5's branch until that merges. The owner approves the merge. The release spec is the source of truth; this section frames the work and fixes the seams.
+
+### Problem Statement
+
+A person writing an Android script has no good way to see what the bridge will see. They can guess identifiers from the app's source, or run mobilecli by hand. mobilecli shows raw Android classes without the bridge's roles, `scrollable`, `password`, `placeholder` or `selectable: false`, and it leaves its agent and forward behind, which blocks other tools. The agent that helps them has no `/test-android` skill, so it writes Android scripts as if they were iOS ones. The plugin still requires a simulator UDID and has no Android setting, so a user with only an Android emulator can't install it usefully.
+
+### Solution
+
+- **`jev-ios-bridge capture`:** prints the current Android screen exactly as a run would read it, as one JSON line per element, or with `--jev` as Jev's text. It never launches or restarts the app, holds the device lease while it works, refuses on a foreign agent as a run does, and leaves nothing behind.
+- **The `/test-android` skill:** walks an agent through the same seven steps as `/test-ios`, with Android details, using `capture` to see each screen.
+- **The plugin:** ships the skill, and makes the simulator optional and an Android device optional, so either platform alone works.
+
+### User Stories
+
+1. As a script author, I want `jev-ios-bridge capture --avd <name>` to print the current screen's elements, so that I can write selectors from what the bridge really sees.
+2. As a script author, I want each element as one JSON line with role, label, value, identifier, placeholder and state, so that I can read or `grep` it.
+3. As a script author, I want lifted texts marked `"selectable": false`, so that I don't write a selector that can't match.
+4. As a script author, I want `--jev` to print Jev's text for the screen, byte for byte as a run sends it, so that I can write claims Jev can decide.
+5. As a script author, I want `capture` to pick the device by `--serial`, then `--avd`, then `JEV_ANDROID_DEVICE`, so that it matches how my script picks one.
+6. As a script author, I want `capture` to leave my app on the screen it was on, so that I can capture a screen deep in a flow.
+7. As a script author, I want `capture` to wait for the screen to settle, so that it shows what a run would see.
+8. As a script author, I want `capture` to need no TypeSafe key, so that I can author scripts before I have one.
+9. As a script author, I want `capture` to refuse with the same reason codes a run uses, on stderr with exit code 3, so that I know what to fix.
+10. As a user of another UI tool, I want `capture` to refuse, and leave my agent alone, when my tool's agent is running, so that authoring never breaks my session.
+11. As the owner, I want `capture` to hold the device lease and clean up as `close` does, so that it never races a run or leaves an agent or forward behind.
+12. As a script author, I want `--help` to list `capture`, so that I can find it.
+13. As an agent using the plugin, I want a `/jev-ios-bridge:test-android` skill that follows the same seven steps as `/test-ios`, so that I author Android scripts the proven way.
+14. As an agent, I want the skill to use `capture` instead of mobilecli, so that I see roles and flags and leave nothing running.
+15. As an agent, I want the skill to tell the user to add `testTagsAsResourceId` when Compose elements have no identifiers, and to show where, so that selectors become stable, without editing the app unless asked.
+16. As an agent, I want the skill to point me to the right guide page for each Android note (package, device, activity and extras, placeholder, password dots, numbers, tabs and toggles, non-English text, real phones), so that I don't guess.
+17. As an agent, I want the skill to pass `--avd` or `--serial` to `capture` explicitly, so that it works in a shell that lacks the plugin's `JEV_ANDROID_DEVICE`.
+18. As an Android-only user, I want to install the plugin without a simulator UDID, so that it works for me.
+19. As an iOS-only user, I want to leave the Android device empty, so that nothing changes for me.
+20. As a plugin user, I want an optional "Android device" setting passed as `JEV_ANDROID_DEVICE`, so that my scripts needn't name a device.
+21. As a plugin user, I want the MCP server to start with either device setting empty, so that one platform's gap never blocks the other.
+22. As an npm user, I want the skill in the package with `npx jev-ios-bridge capture` and `node_modules` guide paths, so that it works outside the plugin.
+23. As the owner, I want the plugin build to fail loudly if a path it rewrites in the Android skill is missing, as it does for `/test-ios`, so that a stale copy never ships.
+24. As the owner, I want the descriptions and keywords in `package.json`, `plugin.json` and the marketplace entry to say iOS and Android, with names unchanged, so that people find it.
+
+### Implementation Decisions
+
+- **`capture` in the Android driver.** The driver gains a capture-only path that reuses `prepare`'s parts in order: tools check, device name to serial and identity, take the lease, agent check and sweep, device checks and wake, push, start and verify the agent. It skips the restart and the logcat streams. It then takes one settled snapshot through the same mapping. `close` then does what it always does: fences the agent and removes the forward. The app is never force-stopped, because this path never restarted it. No screenshot is taken (open point 12).
+- **The CLI.** `capture` is a new command. Its options are `--serial`, `--avd` and `--jev`. It prints to stdout and exits 0. A refusal or failure prints the reason code and a plain message on stderr and exits 3. It needs no `TYPESAFE_API_KEY`. SIGINT and SIGTERM close the driver, as a run's handlers do. Device choice reuses `selectAndroidDeviceName`, with `--serial`/`--avd` standing in for the script's device, and an empty `JEV_ANDROID_DEVICE` counts as unset.
+- **Output.** Default: one JSON object per element, in snapshot order. The fields are `role`, `label`, `value`, `identifier`, `placeholder` and the state flags the element carries, plus `"selectable": false` only on lifted texts. Absent fields are omitted, never `null`. `ref` and internal fields aren't printed. `--jev`: exactly `renderAssertionState(snapshot, 'android')`.
+- **The skill.** `skills/test-android/SKILL.md` is self-contained and mirrors `/test-ios`'s structure and length. It is written with the `writing-for-agents` skill, then `unslop`. `/test-ios` is untouched.
+- **The plugin build.** It copies the new skill with the open point 13 rewrites (`npx jev-ios-bridge capture` becomes `node "${CLAUDE_PLUGIN_ROOT}/dist/cli.js" capture`, and the guide path becomes `${CLAUDE_PLUGIN_ROOT}/docs/guide/`), throwing when either string is missing.
+- **`plugin/plugin.json`.** `simulator_udid` becomes `required: false`. A new optional `android_device` setting goes into `env` as `JEV_ANDROID_DEVICE`. The server must start with both empty.
+- **Descriptions** (open point 14): say iOS and Android in `package.json`, `plugin.json` and the marketplace entry. Names stay.
+
+### Testing Decisions
+
+- **A good test** drives the CLI or the driver's public path with the existing fakes, and asserts stdout, stderr, exit code, the `adb` and agent calls sent, and the lease left behind. It never asserts private state.
+- **The end-to-end test for `capture`:** the CLI's capture path with the Android driver over a fake `adb` runner and fake agent client replaying a real capture fixture. It asserts:
+  - the JSON lines, pinned by a new golden file;
+  - `--jev`'s text equals the Android render golden for that fixture;
+  - no `am force-stop` and no `am start`;
+  - the agent fenced, the forward removed, and the lease released.
+- **Exit codes:** 0 on success; 3 with the reason code for `NO_DEVICE`, `INVALID_DEVICE`, `ANDROID_TOOLS_UNAVAILABLE` and `DEVICE_BUSY`. These are added as new entries to `cli-exit-codes.json`, and existing entries don't change.
+- **Help:** the `--help` text gains `capture`, and the existing help test still passes.
+- **The plugin:**
+  - a test reads `plugin/plugin.json` for the optional settings and the env mapping;
+  - a test runs the build's skill rewrite on the Android skill and on a copy missing a path, which must throw;
+  - the MCP server starts with `JEV_DEVICE_UDID` and `JEV_ANDROID_DEVICE` both empty.
+- **The skill:** `tests/docs.test.ts`-style checks that every guide page the skill links exists, and that it never mentions `mobilecli`.
+- **Prior art:** `tests/contract.test.ts` (CLI goldens and help), `tests/android-driver.test.ts`, `tests/scripted-jev-android.test.ts`, `tests/mcp.test.ts`, `tests/docs.test.ts`.
+- **No device in `npm test`.** A live `capture` on each emulator is part of phase 8's evidence.
+
+### Out of Scope
+
+- `capture` for iOS.
+- Screenshots from `capture`.
+- Editing or rebuilding the user's app from the skill.
+- Guide pages, CHANGELOG and version (phase 7).
+- Installing the plugin for real (phase 8, with the owner).
+
+### Further Notes
+
+- Issue 21 (`capture`) touches the Android driver and the CLI, which phase 5 also changes, so it starts once phase 5 is merged into this branch. Issue 22 (skill and plugin) touches neither, and can start at once.
+
+### Settled context for phase 6 (owner, 2026-09-30)
+
+- The phase 3–5 settled context carries over: iOS stays byte-identical, golden files only gain entries (the help text change is allowed by release spec item 1), and tests that existed before phase 6 keep their assertions.
+- **Devices:** none in `npm test`, and the Issues need none.
+- The gates, the `.mcp.json` rule and the `.env` rule above still apply.
+
+### Test seams for phase 6
+
+- **21, `capture`:** the CLI's capture path (the `tests/contract.test.ts` style, with the driver's fakes injected), and the Android driver's capture path with the fake `adb` runner, agent client and lease root.
+- **22, skill and plugin:** the plugin build's rewrite step as a function, `plugin/plugin.json` read by a test, the MCP server start with empty device settings (`tests/mcp.test.ts`), and a docs-style check of the skill.
+
 ## Rulings during execution
 
 - **2026-09-29, phase 2 item 6 (owner):** existing tests build test data with `app: { bundleId }` (`tests/device.test.ts:10,825`) and `startLogStream({ bundleId })` (`tests/logpane.test.ts:45,70`), so renaming those inputs would break existing tests. Phase 2 renames only what no existing test touches: the iOS driver's private field, the log pane's internal `hello` message field, and `BridgeService`'s local use. Renaming `ScenarioContext.app` and `startLogStream`'s option moves to **phase 3**, which adds Android's `app.package` and reshapes the app type once, as an iOS or Android identity.
@@ -401,3 +495,4 @@ When a step fails because the app crashed, was killed or quit, the run ends `APP
 - **2026-09-30, phase 4 (owner):** phase 4 is split into Issues 10 to 16 on the feature branch `agent/android-v1.2-phase4`, one PR, with the test seams in "Test seams for phase 4". Issues 10 to 13 can run in parallel; 14 needs 10 and 11; 15 needs 12, 13 and 14; 16 needs 14 and 15. Android stays refused until Issue 16 wires the driver into the factory.
 - **2026-09-30, phase 5 (owner):** the phase 5 test seams are accepted as listed in "Test seams for phase 5": one new seam, the logcat stream starter injected into the Android driver.
 - **2026-09-30, phase 5 (owner):** phase 5 is split into Issues 18 to 20 on the feature branch `agent/android-v1.2-phase5`, one PR. 18 (parser and watcher) and 19 (the driver's streams, `close` step 4, the sweep) run in parallel; 20 (pane, run check, `logs`, end to end) needs both.
+- **2026-09-30, phase 6 (coordinator, owner away overnight with a standing handoff):** phase 6 is split into Issues 21 (`capture`) and 22 (skill and plugin) on `agent/android-v1.2-phase6`, stacked on phase 5's branch. 22 starts at once; 21 waits for phase 5's merge into the branch, because both change the Android driver and the CLI. Review-fix Issues take the next free numbers.
