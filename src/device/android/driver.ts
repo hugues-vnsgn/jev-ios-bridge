@@ -365,10 +365,14 @@ export class AndroidDriver implements DeviceDriver {
    */
   private async stopStreams(): Promise<void> {
     const unconfirmed: number[] = [];
+    let recordError: unknown;
     for (const entry of [...this.streams]) {
-      if (await this.stopStream(entry)) await this.lease.disown(entry.owned);
-      else unconfirmed.push(entry.stream.pid);
+      if (!await this.stopStream(entry)) { unconfirmed.push(entry.stream.pid); continue; }
+      // A holder record that can't be rewritten still lets the next stream be stopped; the lease is kept.
+      try { await this.lease.disown(entry.owned); }
+      catch (error) { recordError ??= error; }
     }
+    if (recordError !== undefined) throw recordError;
     if (unconfirmed.length > 0) {
       throw new AndroidDeviceError('adb', `The logcat stream${unconfirmed.length > 1 ? 's' : ''} ${unconfirmed.join(', ')} could not be confirmed stopped; device lease kept`);
     }
@@ -651,22 +655,21 @@ export class AndroidDriver implements DeviceDriver {
 
   /**
    * The takeover sweep of a dead holder's logcat streams (phase 5). `take` returns the dead holder's record
-   * but starts this run's own empty, so each `logcat <serial> <pid>` entry is owned again first: a crash
-   * mid-sweep leaves it for the next run. Its pid is killed only while the Mac process is still that
+   * but starts this run's own empty, so every `logcat <serial> <pid>` entry is owned again before the first
+   * kill: a crash or cancel mid-sweep leaves the rest for the next run. Its pid is killed only while the Mac process is still that
    * serial's `adb … logcat`, so a reused pid is left alone; then the entry is disowned. True when any
    * stream was stopped.
    */
   private async sweepStreams(holder: LeaseHolder, signal: AbortSignal): Promise<boolean> {
     const logcat = this.logcat!;
+    const entries = holder.ownedProcesses.filter(entry => OWNED_STREAM.test(entry));
+    // Every entry is owned before any kill, so a cancel mid-sweep leaves the rest listed.
+    for (const entry of entries) await this.lease.own(entry);
     let swept = false;
-    for (const entry of holder.ownedProcesses) {
-      const match = OWNED_STREAM.exec(entry);
-      if (!match) continue;
+    for (const entry of entries) {
       if (signal.aborted) throw signal.reason;
-      const serial = match[1]!;
-      const pid = match[2]!;
-      await this.lease.own(entry);
-      if (await logcat.isLeftover(Number(pid), serial)) {
+      const [, serial, pid] = OWNED_STREAM.exec(entry)!;
+      if (await logcat.isLeftover(Number(pid), serial!)) {
         try { await logcat.kill(Number(pid)); }
         catch { throw new AndroidDeviceError('adb', `A crashed run's logcat stream ${pid} did not exit`); }
         swept = true;

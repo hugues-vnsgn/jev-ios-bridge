@@ -323,7 +323,11 @@ class FakeStreams implements LogcatStarter {
     return words[0]?.endsWith('/adb') === true && words.includes('logcat') && words.some((word, at) => word === '-s' && words[at + 1] === serial);
   }
 
+  /** Runs as each kill begins. */
+  onKill: ((pid: number) => void) | undefined;
+
   async kill(pid: number): Promise<void> {
+    this.onKill?.(pid);
     this.killed.push(pid);
     this.mac.delete(pid);
   }
@@ -2060,6 +2064,36 @@ test('after a crash takeover, a dead holder\'s leftover streams are killed, a re
       ['logcat emulator-5554 8001', 'logcat emulator-5554 8002', 'forward emulator-5554 tcp:49526', 'agent emulator-5554 7001'],
       'only this run\'s own entries');
     await driver.close(signal());
+  });
+});
+
+test('a cancel during the takeover sweep keeps every leftover not yet swept in the holder record', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    streams.mac.set(5001, '/sdk/platform-tools/adb -s emulator-5554 logcat -b events');
+    streams.mac.set(5003, '/sdk/platform-tools/adb -s emulator-5554 logcat -b events');
+    await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31',
+      ownedProcesses: ['logcat emulator-5554 5001', 'logcat emulator-5554 5003'] }));
+    const abort = new AbortController();
+    streams.onKill = () => { abort.abort(new Error('cancelled')); };
+    await assert.rejects(driver.prepare(app(), abort.signal));
+    await driver.close(signal()).catch(() => undefined);
+    assert.ok(streams.mac.has(5003), 'the second leftover was never reached');
+    assert.deepEqual((await lockFile(root))?.ownedProcesses, ['logcat emulator-5554 5003'], 'so it stays listed for the next run to sweep');
+  });
+});
+
+test('close goes on stopping streams when the holder record can\'t be rewritten, and keeps the lease', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    await driver.prepare(app(), signal());
+    // The lease folder turns read-only after the app stop, so the first stream's disown fails.
+    adb.onCall = async args => { if (args.some(arg => arg.includes('force-stop'))) await chmod(root, 0o500); };
+    try {
+      await assert.rejects(driver.close(signal()));
+      assert.equal(streams.streams.some(stream => stream.running), false, 'both streams stopped');
+      assert.ok((await readdir(root)).length > 0, 'lease kept');
+    } finally { await chmod(root, 0o700); }
   });
 });
 
