@@ -36,7 +36,7 @@ export interface LogcatStarter {
   start(args: string[], output: LogcatOutput, signal?: AbortSignal): Promise<LogcatStream>;
   /** True only when the Mac process with this pid is still an `adb` command line holding `-s <serial>` and `logcat`. */
   isLeftover(pid: number, serial: string): Promise<boolean>;
-  /** SIGTERM, then SIGKILL after 1 s; resolves once the pid is gone. */
+  /** SIGTERM, then SIGKILL after 1 s unless the pid now names another process; resolves once the pid is gone. */
   kill(pid: number): Promise<void>;
 }
 
@@ -108,9 +108,11 @@ export function logcatStarter(options: LogcatStarterOptions): LogcatStarter {
     return true;
   };
 
-  /** SIGTERM, then SIGKILL after 1 s, until `exitedWithin` confirms the exit; a pid that outlives both throws. */
-  const escalate = async (pid: number, send: (signal: NodeJS.Signals) => boolean, exitedWithin: (ms: number) => Promise<boolean>) => {
+  /** SIGTERM, then SIGKILL after 1 s while `stillSame`, until `exitedWithin` confirms the exit; a pid that outlives both throws. */
+  const escalate = async (pid: number, send: (signal: NodeJS.Signals) => boolean, exitedWithin: (ms: number) => Promise<boolean>,
+    stillSame: () => Promise<boolean> = async () => true) => {
     if (!send('SIGTERM') || await exitedWithin(STOP_GRACE_MS)) return;
+    if (!await stillSame()) return;
     if (!send('SIGKILL') || await exitedWithin(KILL_WAIT_MS)) return;
     throw new Error(`logcat ${String(pid)} did not exit`);
   };
@@ -164,11 +166,15 @@ export function logcatStarter(options: LogcatStarterOptions): LogcatStarter {
       const words = line.split(/\s+/);
       const rest = line.startsWith(`${options.adb} `) ? line.slice(options.adb.length + 1).split(/\s+/)
         : basename(words[0]!) === 'adb' ? words.slice(1) : undefined;
-      return rest !== undefined && rest.includes('logcat') && rest.some((word, at) => word === '-s' && rest[at + 1] === serial);
+      // The bridge runs every stream as `adb -s <serial> logcat …`, so `logcat` must be the subcommand.
+      return rest !== undefined && rest[0] === '-s' && rest[1] === serial && rest[2] === 'logcat';
     },
 
     async kill(pid) {
-      await escalate(pid, sent => sendSignal(pid, sent), ms => goneWithin(pid, ms));
+      const line = await commandLine(pid);
+      if (line === undefined) return;
+      // Before SIGKILL, the pid must still name the same process: one that exited may have been reused.
+      await escalate(pid, sent => sendSignal(pid, sent), ms => goneWithin(pid, ms), async () => await commandLine(pid) === line);
     },
   };
 }

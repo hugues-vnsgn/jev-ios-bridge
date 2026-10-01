@@ -110,7 +110,9 @@ function checkedJudgment(judgment: AssertionJudgment, assertions: Extract<Script
 }
 
 /** Why the app stopped, as the driver answers it; a driver without appProblem answers only whether the app still runs. */
-function appProblemCode(driver: DeviceDriver): AppProblem['code'] | undefined {
+async function appProblemCode(driver: DeviceDriver, signal: AbortSignal): Promise<AppProblem['code'] | undefined> {
+  // A failed wait never hides the step's own error.
+  if (driver.appProblemAfterFailure) return (await driver.appProblemAfterFailure(signal).catch(() => undefined))?.code;
   if (driver.appProblem) return driver.appProblem()?.code;
   return driver.appRunning?.() === false ? 'APP_EXITED' : undefined;
 }
@@ -378,7 +380,7 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
   } catch (error) {
     verdict = 'inconclusive';
     // A step that failed because the app died or froze is reported as that, not as the symptom it caused.
-    const problemCode = signal.aborted ? undefined : appProblemCode(options.driver);
+    const problemCode = signal.aborted ? undefined : await appProblemCode(options.driver, signal);
     const failure: Failure = problemCode ? { code: problemCode } : failureOf(error, signal);
     reason = failure.code;
     await options.log.append('error', { stepId: activeStepId, phase, code: reason,
