@@ -44,6 +44,7 @@ What the bridge does not do, or does less well than you might expect.
 
 - **Android 12 (API 31) or later.** Older devices are refused with `DEVICE_UNSUPPORTED`.
 - **Going to the home screen isn't detected.** An app that's sent to the background is still running, so it isn't `APP_EXITED`. The next guard fails instead, as on iOS.
+- **A quick freeze may show as the step's own failure.** Android reports a frozen app only after about 5 seconds. After a failed step the bridge waits up to 1 second for the app's events, which catches a crash, but a step that fails before Android reports the freeze keeps its own reason, often `GUARD_MISSING`, instead of `APP_NOT_RESPONDING`.
 - **An upper-case copy of a value isn't masked** in the log pane or `run.jsonl`, as on iOS.
 - **Custom tabs and toggles without a selected or checked state** give uncertain claims. [Android setup](12-android-setup.md#custom-tabs-and-toggles-must-expose-their-state) shows the fix.
 - **Two running emulators with the same AVD** are refused with `DEVICE_AMBIGUOUS`, when a script names that AVD.

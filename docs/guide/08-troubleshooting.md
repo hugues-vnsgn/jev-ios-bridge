@@ -44,7 +44,7 @@ adb -s <serial> shell dumpsys activity exit-info <package>
 
 Going to the home screen isn't an exit, so it isn't detected.
 
-**`APP_NOT_RESPONDING`** (Android): the app froze, and Android showed "App isn't responding". Something blocked its main thread. The crash commands above show the ANR.
+**`APP_NOT_RESPONDING`** (Android): the app froze, and Android showed "App isn't responding". Something blocked its main thread. The crash commands above show the ANR. Android reports a freeze only after about 5 seconds, so a frozen app can also end a run with the failed step's own reason, such as `GUARD_MISSING`.
 
 **`DEVICE_BUSY`**: another bridge process holds the device's lease. The message names it. See [cancelling and the device lease](06-running.md#cancelling-and-the-device-lease).
 
