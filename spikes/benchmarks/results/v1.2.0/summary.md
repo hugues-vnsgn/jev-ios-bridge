@@ -13,11 +13,11 @@
 |---|---|---|---|---|
 | 1 | `npm run check` and CI | Blocking | **Local: pass**, 540/540 on the candidate and 554/554 on phase 7's final commit. CI passed on #29 and #30. **Pending:** CI on the merge commit. | `/tmp` gate logs; PR checks |
 | 2 | Golden tests | Blocking | **Pass** (part of 1). Existing entries changed only as the rules allow. The Android renderer emits the 10 judged texts byte for byte. `APP_NOT_RESPONDING` comes from the recorded `probe-anr` event lines. | `tests/golden/`, `tests/android-exit-watch.test.ts` |
-| 3 | Android 16 scripts, one run each | Blocking | **Pass.** twin-fail **failed** (0.02); twin-pass **passed** (0.99, 0.98); twin-ambiguous **inconclusive** (`GUARD_AMBIGUOUS`); cmp-number-input **passed** (0.99); settings-list-swipe **passed** (0.99), standing in for cmp-list-swipe; settings-search **passed** (0.97). | `check-03/` |
+| 3 | Android 16 scripts, one run each | Blocking | **Pass.** twin-fail **failed** (0.02); twin-pass **passed** (0.99, 0.98); twin-ambiguous **inconclusive** (`GUARD_AMBIGUOUS`); cmp-number-input **passed** (0.99); settings-list-swipe **passed** (0.99), standing in for cmp-list-swipe (owner accepted, 2026-10-01); settings-search **passed** (0.97). | `check-03/` |
 | 4 | Android 12 runs | Blocking | **Pass.** twin-fail **failed** (0.02); settings-search-vi **passed** (`Tiếng Việt` checked by a guard; 0.97); cmp-number-input **passed** (0.99). cmp installed on API 31. | `check-04/` |
 | 5 | Crash run | Blocking | **Pass.** `am crash` after the first action: `APP_EXITED`. The pane showed the `FATAL EXCEPTION` stack, the note "crashed: CrashedByAdbException at ActivityThread.java:2513", and "run finished: inconclusive (APP_EXITED)". It ran on this Mac's desktop session, started by the coordinator while the owner was away. | `check-05/`, `pane-*-cropped.png` |
 | 6 | Cleanup gate after every Android run | Blocking | **Pass.** It was clean after every run in checks 3, 4, 5 and 15, and after check 14's hand clean-up of mobilecli's own agent, which is left running by design. | `*.cleanup.txt`, `check-15/cleanup.txt`, `check-14/hand-cleanup.txt` |
-| 7 | iOS regression | Blocking | **Weather passed, Contacts passed, and the diagnostic app failed on the $3 total (0.02), all as expected.** **Reminders was inconclusive:** `counts` scored 0.89 against the 0.90 bound, with the other claims at 0.96 to 0.98. It is the borderline claim 1.0 accepted at 0.90 (0.87 in 0.1.0). The iOS observation text is pinned byte-identical, so this is Jev's run-to-run noise, not a bridge change. It wasn't rerun, because a rerun would be a re-roll. **Owner decision.** | `check-07/` |
+| 7 | iOS regression | Blocking | **Weather passed, Contacts passed, and the diagnostic app failed on the $3 total (0.02), all as expected.** **Reminders was inconclusive:** `counts` scored 0.89 against the 0.90 bound, with the other claims at 0.96 to 0.98. It is the borderline claim 1.0 accepted at 0.90 (0.87 in 0.1.0). The iOS observation text is pinned byte-identical, so this is Jev's run-to-run noise, not a bridge change. It wasn't rerun, because a rerun would be a re-roll. **Pass: the owner accepted it as borderline on 2026-10-01.** | `check-07/` |
 | 8 | Real phones | Blocking (docs only) | **Pass.** The release notes and limits page say phones are untested, and the Xiaomi checklist is written. It wasn't run. | `real-phones/xiaomi-checklist.md` |
 | 9 | Plugin install, Android only | Blocking | **Pending the owner:** the owner types the key into Claude Code. | |
 | 10 | Quickstart walkthrough | Blocking | **Pending the owner:** it needs the plugin from check 9. | |
@@ -30,10 +30,9 @@
 ## Found by these checks
 
 - **Issue 27:** a fractional `AbortSignal.timeout` made every live Android run fail as the agent started. It was fixed before these checks.
-- **Issue 25's deviations** wait for the owner's decision: cmp-list-swipe is replaced by settings-list-swipe, and cmp-number-input doesn't type into the empty keypad-only field.
+- **Issue 25's deviations,** accepted by the owner on 2026-10-01: cmp-list-swipe is replaced by settings-list-swipe, and cmp-number-input doesn't type into the empty keypad-only field. A stable list screen in the twin app is a v1.2.x candidate.
 
 ## For the owner
 
-1. **Reminders' borderline claim (check 7).** Accept it as borderline, as in 1.0, or rerun it once.
-2. **Checks 9 and 10.** Install the plugin with a throwaway `CLAUDE_CONFIG_DIR`, type the key yourself, set the Android device, then follow the quickstart's Android section. Afterwards, delete the throwaway folder. A secure-storage item may remain.
-3. **After merging #29 to #31:** check 1's CI on the merge commit, then phase 9.
+1. **Checks 9 and 10.** Install the plugin with a throwaway `CLAUDE_CONFIG_DIR`, type the key yourself, set the Android device, then follow the quickstart's Android section. Afterwards, delete the throwaway folder. A secure-storage item may remain.
+2. **After merging #29 to #31:** check 1's CI on the merge commit, then phase 9.
