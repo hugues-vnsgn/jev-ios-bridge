@@ -1,0 +1,19 @@
+Watch: http://127.0.0.1:53949/?token=faf7c28ed92845e3fb962b07abbe0db5bf74884614ea1fcfae54a256e19ef018&run=ddb86e3e-e992-497f-9af2-4ff23c674dcf
+Log pane: no window (turned off with --no-log-pane). Follow the app's output with: "~/.nvm/versions/node/v22.22.2/bin/node" "~/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/dist/cli.js" logs ddb86e3e-e992-497f-9af2-4ff23c674dcf
+Run ddb86e3e-e992-497f-9af2-4ff23c674dcf: failed
+ASSERTION_FALSE
+Steps: 4; Jev input tokens: 546; duration: 5680.974292 ms.
+Jev model: jev-1.13.0; bridge 1.2.0.
+Device: jev-actions-api31, serial emulator-5554, agent 0e0865d0617bc6e4abf0a7b24a956da1ca25cfc795c30d8e32c64eb0d1f6258f.
+Checkpoint verify: failed.
+Claim total: The Order complete confirmation shows Total: $5.; probability yes 0.020.
+Evidence: step verify, run.jsonl event 9, snapshot 4.
+Observed screen excerpt:
+text Confirmation
+text Order complete
+text Apple: $2
+text Bread: $3
+text Total: $3
+Full redacted assertion observation: run.jsonl event 9, data.assertionObservation.
+Screenshot: screen-9.jpg
+Full local evidence: ~/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/spikes/benchmarks/results/v1.2.0/check-04/runs/ddb86e3e-e992-497f-9af2-4ff23c674dcf/run.jsonl

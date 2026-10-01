@@ -1,0 +1,36 @@
+Watch: http://127.0.0.1:56480/?token=ac8fca34786e4df4343c4d7e6691eaa4fd2dc76ec0ad10d73100be74ce1b29b4&run=37c3e1c9-aa8d-471b-8a1f-ea1f8909d0a8
+Log pane: no window (turned off with --no-log-pane). Follow the app's output with: "~/.nvm/versions/node/v22.22.2/bin/node" "~/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/dist/cli.js" logs 37c3e1c9-aa8d-471b-8a1f-ea1f8909d0a8
+Run 37c3e1c9-aa8d-471b-8a1f-ea1f8909d0a8: passed
+ALL_CHECKPOINTS_PASSED
+Steps: 5; Jev input tokens: 1378; duration: 6926.738917 ms.
+Jev model: jev-1.13.0; bridge 1.2.0.
+Device: Medium_Phone_API_36.1, serial emulator-5554, agent 0e0865d0617bc6e4abf0a7b24a956da1ca25cfc795c30d8e32c64eb0d1f6258f. Swept a crashed run's leftover agent and forward.
+Checkpoint orderComplete: passed.
+Claim title: The screen shows the title Order complete.; probability yes 0.980.
+Evidence: step orderComplete, run.jsonl event 12, snapshot 5.
+Observed screen excerpt:
+text Confirmation
+text Order complete
+text Apple: $2
+text Bread: $3
+text Total: $3
+Full redacted assertion observation: run.jsonl event 12, data.assertionObservation.
+Screenshot: screen-12.jpg
+Checkpoint bothSelected: passed.
+Claim summary: The screen shows Selected: Apple, Bread.; probability yes 0.990.
+Evidence: step bothSelected, run.jsonl event 7, snapshot 3.
+Observed screen excerpt:
+text Sample Shop
+text Choose two items
+text Selected: Apple, Bread
+button Add Apple ($2)
+text Add Apple ($2)
+text ✓
+button Add Bread ($3)
+text Add Bread ($3)
+text ✓
+button Complete order
+text Complete order
+Full redacted assertion observation: run.jsonl event 7, data.assertionObservation.
+Screenshot: screen-7.jpg
+Full local evidence: ~/Codes/AgentTools/jev-ios-bridge/.worktrees/agent/android-v1.2-phase8/spikes/benchmarks/results/v1.2.0/check-15/runs/37c3e1c9-aa8d-471b-8a1f-ea1f8909d0a8/run.jsonl

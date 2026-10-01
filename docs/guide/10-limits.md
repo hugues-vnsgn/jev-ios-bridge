@@ -54,15 +54,15 @@ What the bridge does not do, or does less well than you might expect.
 
   | Script | Android 16 (`Medium_Phone_API_36.1`) | Android 12 (`jev-actions-api31`) |
   | --- | ---: | ---: |
-  | twin-fail | _[phase 8]_ | _[phase 8]_ |
-  | twin-pass | _[phase 8]_ | |
-  | twin-ambiguous | _[phase 8]_ | |
-  | cmp-number-input | _[phase 8]_ | _[phase 8]_ |
-  | settings-list-swipe | _[phase 8]_ | |
-  | settings-search | _[phase 8]_ | |
-  | settings-search-vi | | _[phase 8]_ |
+  | twin-fail | 9.2 s | 5.7 s |
+  | twin-pass | 6.3 s | |
+  | twin-ambiguous | 2.7 s | |
+  | cmp-number-input | 6.5 s | 4.7 s |
+  | settings-list-swipe | 5.5 s | |
+  | settings-search | 10.9 s | |
+  | settings-search-vi | | 7.7 s |
 
-  Capture and settle time: _[phase 8]_ per step. Typing: _[phase 8]_. A screen that keeps moving costs about 3 seconds plus one more capture: after 3 seconds the [settle](12-android-setup.md#animations-off-is-optional) rule starts no new capture, and uses the last one when it returns.
+  Preparing the device took 0.9 to 3.6 s. A tap or swipe, with its settle, took 0.7 to 2.3 s. Replacing a field's text took 1.1 to 2.4 s, including the clipboard path for Vietnamese. Capture and settle time weren't measured separately. A screen that keeps moving costs about 3 seconds plus one more capture: after 3 seconds the [settle](12-android-setup.md#animations-off-is-optional) rule starts no new capture, and uses the last one when it returns.
 
 ## Compose Multiplatform
 

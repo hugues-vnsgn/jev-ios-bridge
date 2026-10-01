@@ -1,0 +1,15 @@
+cli --version: 1.2.0
+package version: 1.2.0
+skill: node_modules/jev-ios-bridge/skills/test-android/SKILL.md
+files:
+.
+./CHANGELOG.md
+./dist
+./docs
+./LICENSE
+./package.json
+./README.md
+./skills
+mcp serverInfo: {'name': 'jev-ios-bridge', 'version': '1.2.0'}
+capture exit 3
+DEVICE_NOT_CONNECTED: No connected device or running emulator is named NoSuchAvd

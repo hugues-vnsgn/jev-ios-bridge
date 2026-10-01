@@ -1,0 +1,6 @@
+== foreign agent before the bridge run:
+  PID NAME                        ARGS                       
+11142 app_process                 app_process / com.mobilenext.mobilecli.DeviceServer
+11156 ps                          ps -A -o PID,NAME,ARGS
+emulator-5554 tcp:55539 localabstract:mobilecli-server
+
