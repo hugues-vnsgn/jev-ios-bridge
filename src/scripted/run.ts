@@ -1,5 +1,5 @@
 import { setTimeout as delay } from 'node:timers/promises';
-import type { Action, ActionScenarioContext, ActOutcome, DeviceDriver, Element, Platform, PrepareScenarioContext, RunLog, Snapshot, Verdict } from '../contracts/index.js';
+import type { Action, ActionScenarioContext, ActOutcome, AppProblem, DeviceDriver, Element, LogSources, Platform, PrepareScenarioContext, RunLog, Snapshot, Verdict } from '../contracts/index.js';
 import { isActOutcome } from '../contracts/index.js';
 import { DeviceCliError, DeviceReasonError, StaleSnapshotError } from '../device/index.js';
 import type { AssertionJudgment, ScriptedJudge, ScriptedScenario, ScriptedStep } from './contracts.js';
@@ -29,7 +29,7 @@ export interface ScriptedRunOptions {
   signal?: AbortSignal;
   limits?: ScriptedRunLimits;
   /** Called once the app is launched, with the log files the device layer writes for it. */
-  onPrepared?(info: { logSources: { runtime?: string; os?: string } }): void;
+  onPrepared?(info: { logSources: LogSources }): void;
   /** Called just before cleanup stops the app. */
   onCleanup?(): void;
 }
@@ -107,6 +107,14 @@ function checkedJudgment(judgment: AssertionJudgment, assertions: Extract<Script
       throw new ScriptRunError('INVALID_JUDGMENT');
     }
   }
+}
+
+/** Why the app stopped, as the driver answers it; a driver without appProblem answers only whether the app still runs. */
+async function appProblemCode(driver: DeviceDriver, signal: AbortSignal): Promise<AppProblem['code'] | undefined> {
+  // A failed wait never hides the step's own error.
+  if (driver.appProblemAfterFailure) return (await driver.appProblemAfterFailure(signal).catch(() => undefined))?.code;
+  if (driver.appProblem) return driver.appProblem()?.code;
+  return driver.appRunning?.() === false ? 'APP_EXITED' : undefined;
 }
 
 /** A bridge-owned reason code, plus the device layer's own code when the bridge doesn't own it. */
@@ -371,9 +379,9 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
     }
   } catch (error) {
     verdict = 'inconclusive';
-    // A step that failed because the app died is reported as that, not as the symptom it caused.
-    const failure = !signal.aborted && options.driver.appRunning?.() === false
-      ? { code: 'APP_EXITED' } as Failure : failureOf(error, signal);
+    // A step that failed because the app died or froze is reported as that, not as the symptom it caused.
+    const problemCode = signal.aborted ? undefined : await appProblemCode(options.driver, signal);
+    const failure: Failure = problemCode ? { code: problemCode } : failureOf(error, signal);
     reason = failure.code;
     await options.log.append('error', { stepId: activeStepId, phase, code: reason,
       ...(failure.vendorCode === undefined ? {} : { vendorCode: failure.vendorCode }),

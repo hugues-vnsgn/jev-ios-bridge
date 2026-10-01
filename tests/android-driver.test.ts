@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { chmod, lstat, mkdir, mkdtemp, readdir, readFile, rm, symlink, utimes, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
@@ -9,8 +9,11 @@ import { DeviceReasonError, StaleSnapshotError } from '../src/device/index.js';
 import { adbRunner, type AdbResult, type AdbRunner } from '../src/device/android/adb.js';
 import { DeviceAgentError, type AndroidNode, type DeviceAgentClient } from '../src/device/android/agent-client.js';
 import { PINNED_AGENT_SHA256 } from '../src/device/android/agent-supply.js';
-import { AGENT_DEVICE_PATH, AGENT_START_COMMAND, AndroidDriver, type AndroidDriverOptions } from '../src/device/android/driver.js';
+import { AGENT_DEVICE_PATH, AGENT_START_COMMAND, APP_PROBLEM_POLL_MS, APP_PROBLEM_WAIT_MS, AndroidDriver, productionClock, type AndroidDriverOptions } from '../src/device/android/driver.js';
+import type { AppExitWatch } from '../src/device/android/exit-watch.js';
+import { createDriverFactory } from '../src/device/factory.js';
 import { OutcomeUnknownError } from '../src/device/android/ledger.js';
+import type { LogcatOutput, LogcatStarter, LogcatStream } from '../src/device/android/logcat.js';
 import { mapAndroidTree } from '../src/device/android/mapping.js';
 import { screenHash, type Clock } from '../src/device/android/settle.js';
 import type { ScriptedJudge } from '../src/scripted/contracts.js';
@@ -67,6 +70,12 @@ interface FakeEmulator {
   /** Pids that ignore `kill`. */
   stubborn?: number[];
   fixtures?: Api;
+  /** What `pm list packages -U` prints; by default, each installed package with a uid from 10226. */
+  packagesText?: string;
+  /** What `date +'%s.%3N %z'` prints; by default, `1759075200.123 +0700`. */
+  deviceTime?: string;
+  /** What `pidof` prints for the app; by default, `9784`. Empty: not running. */
+  appPids?: string;
 }
 
 /** A fake `adb` that answers like the recorded emulators, records every call, and never runs anything. */
@@ -158,6 +167,14 @@ class FakeAdb {
       return {};
     }
     const installed = new Set(emulator.installed ?? ['com.example.android']);
+    if (words.join(' ') === 'pm list packages -U') {
+      return { stdout: emulator.packagesText ?? [...installed].map((name, at) => `package:${name} uid:${String(10226 + at)}\n`).join('') };
+    }
+    if (words.join(' ') === 'date +%s.%3N %z') return { stdout: `${emulator.deviceTime ?? '1759075200.123 +0700'}\n` };
+    if (words[0] === 'pidof') {
+      const pids = installed.has(words[1]!) ? emulator.appPids ?? '9784' : '';
+      return pids ? { stdout: `${pids}\n` } : { exitCode: 1 };
+    }
     if (words[0] === 'pm' && words[1] === 'path') {
       return installed.has(words[2]!) ? { stdout: `package:/data/app/~~x/${words[2]}-y/base.apk\n` } : { exitCode: 1 };
     }
@@ -258,12 +275,71 @@ function fakeClock(): Clock & { sleeps: number[] } {
   };
 }
 
+/** One stream the fake starter started: its `adb` arguments, where its output goes, and whether it still runs. */
+type FakeStream = { args: string[]; output: LogcatOutput; pid: number; running: boolean; end(): void };
+
+/**
+ * A fake logcat stream starter. Each start and stop is recorded in the fake `adb`'s calls, as
+ * `(logcat) <args>` and `(stop) <pid>`, so tests see them in order with the `adb` commands. A file
+ * stream's file is created empty. `mac` holds the Mac's processes by pid, as command lines, for the sweep.
+ */
+class FakeStreams implements LogcatStarter {
+  readonly streams: FakeStream[] = [];
+  readonly killed: number[] = [];
+  readonly mac = new Map<number, string>();
+  nextPid = 8001;
+  /** Pids whose stop can't be confirmed. */
+  readonly stubborn = new Set<number>();
+  /** A start that fails, by its arguments. */
+  fails: ((args: string[]) => boolean) | undefined;
+  /** Holds each start in flight, after its process started, until the gate opens. */
+  held: Promise<void> | undefined;
+
+  constructor(private readonly adb: FakeAdb) {}
+
+  async start(args: string[], output: LogcatOutput): Promise<LogcatStream> {
+    this.adb.calls.push(['(logcat)', ...args]);
+    if (this.fails?.(args)) throw new Error('spawn adb ENOENT');
+    if (typeof output === 'string') await writeFile(output, '', { flag: 'wx', mode: 0o600 });
+    let ended!: () => void;
+    const exited = new Promise<void>(resolveExit => { ended = resolveExit; });
+    const stream: FakeStream = { args, output, pid: this.nextPid++, running: true, end: () => { stream.running = false; ended(); } };
+    this.streams.push(stream);
+    await this.held;
+    return {
+      pid: stream.pid,
+      exited,
+      stop: async () => {
+        if (!stream.running) return;
+        this.adb.calls.push(['(stop)', String(stream.pid)]);
+        if (this.stubborn.has(stream.pid)) throw new Error(`logcat ${String(stream.pid)} did not exit`);
+        stream.end();
+      },
+    };
+  }
+
+  async isLeftover(pid: number, serial: string): Promise<boolean> {
+    const words = this.mac.get(pid)?.split(' ') ?? [];
+    return words[0]?.endsWith('/adb') === true && words.includes('logcat') && words.some((word, at) => word === '-s' && words[at + 1] === serial);
+  }
+
+  /** Runs as each kill begins. */
+  onKill: ((pid: number) => void) | undefined;
+
+  async kill(pid: number): Promise<void> {
+    this.onKill?.(pid);
+    this.killed.push(pid);
+    this.mac.delete(pid);
+  }
+}
+
 interface Setup {
   adb: FakeAdb;
   root: string;
   driver: AndroidDriver;
   agents: ReturnType<typeof fakeAgents>;
   clock: ReturnType<typeof fakeClock>;
+  streams: FakeStreams;
 }
 
 async function withDriver(adb: FakeAdb, fn: (setup: Setup) => Promise<void>,
@@ -272,11 +348,13 @@ async function withDriver(adb: FakeAdb, fn: (setup: Setup) => Promise<void>,
   const agents = fakeAgents(adb, options.agents);
   const clock = fakeClock();
   const ports = [...options.ports ?? [49526, 49527, 49528, 49529]];
+  const streams = new FakeStreams(adb);
+  // Phase 4's tests start no logcat stream (logFolder false); phase 5's tests name a log folder.
   const driver = new AndroidDriver({ device: { avd: 'jev-actions-api31' }, runner: adb.run, agentClient: agents.agentClient, clock,
-    leaseRoot: root, screenshotFolder: root, freePort: async () => ports.shift()!,
+    leaseRoot: root, screenshotFolder: root, freePort: async () => ports.shift()!, logcat: streams, logFolder: false,
     tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: AGENT_CACHE, sha256: PINNED_AGENT_SHA256 } }), ...options });
   try {
-    await fn({ adb, root, driver, agents, clock });
+    await fn({ adb, root, driver, agents, clock, streams });
   } finally {
     // No command in any test calls the mobilecli program or pkill.
     for (const call of adb.calls) {
@@ -1617,4 +1695,601 @@ test('a run whose cleanup fails doesn\'t pass: it ends inconclusive with CLEANUP
       assert.equal((await readdir(root)).length, 1, 'lease kept');
     }, { device: { serial: 'emulator-5554' }, screenshotFolder: undefined, runner, agents: { screens: [fields, fields, withText(fields, 'field.empty', CITY)] } });
   }, { values: [CITY] });
+});
+
+/* Phase 5 (Issue 19): the logcat streams, close's step 4 and the takeover sweep of a crashed run's streams. */
+
+type WatchOptions = Parameters<NonNullable<AndroidDriverOptions['createExitWatch']>>[0];
+/** A fake app watch: it records what the driver tells it, as `(watch) …` in the fake `adb`'s calls where order matters. */
+function fakeWatches(adb: FakeAdb) {
+  const made: { options: WatchOptions; lines: string[]; launched: (number | undefined)[]; ended: number; answer: boolean | undefined }[] = [];
+  const createExitWatch = (options: WatchOptions): AppExitWatch => {
+    const state = { options, lines: [] as string[], launched: [] as (number | undefined)[], ended: 0, answer: true as boolean | undefined };
+    made.push(state);
+    return {
+      feed: raw => { state.lines.push(raw); },
+      launched: pid => { state.launched.push(pid); },
+      expectStop: () => { adb.calls.push(['(watch)', 'expectStop']); },
+      streamEnded: () => { state.ended++; },
+      running: () => state.answer,
+      problem: () => undefined,
+    };
+  };
+  return { made, createExitWatch };
+}
+
+interface Logging extends Setup {
+  folder: string;
+  watches: ReturnType<typeof fakeWatches>;
+}
+
+/** The driver with a log folder in a fresh temporary folder, the run ID `run-1` and a fake app watch. */
+async function withLogs(adb: FakeAdb, fn: (setup: Logging) => Promise<void>,
+  options: Parameters<typeof withDriver>[2] = {}): Promise<void> {
+  const parent = await mkdtemp(join(tmpdir(), 'jev-android-logs-'));
+  const folder = join(parent, 'jev-android-logs');
+  const watches = fakeWatches(adb);
+  try {
+    await withDriver(adb, async setup => { await fn({ ...setup, folder, watches }); },
+      { device: { serial: 'emulator-5554' }, logFolder: folder, runId: 'run-1', createExitWatch: watches.createExitWatch, ...options });
+  } finally {
+    await rm(parent, { recursive: true, force: true });
+  }
+}
+
+const APP_LOG = ['(logcat)', '-s', 'emulator-5554', 'logcat', '-v', 'threadtime,year,uid', '--uid=10226', '-T', '1759075200.123'];
+const EVENTS = ['(logcat)', '-s', 'emulator-5554', 'logcat', '-b', 'events', '-v', 'threadtime,year', '-T', '1759075200.123',
+  'am_proc_start:I', 'am_proc_died:I', 'am_crash:I', 'am_anr:I', 'am_kill:I', '*:S'];
+
+test('prepare reads the uid and device time and starts both streams after the restart\'s force-stop and before am start -W, then runs pidof once', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, folder, watches, root }) => {
+    await driver.prepare(app(), signal());
+    const calls = adb.calls.map(call => call.join(' '));
+    const from = calls.indexOf("-s emulator-5554 shell 'dumpsys' 'window' 'policy'");
+    // After the force-stop, so a crash the previous instance logged before it is stamped before the start time.
+    assert.deepEqual(calls.slice(from + 1, calls.indexOf(`-s emulator-5554 push ${AGENT_CACHE} /data/local/tmp/jev-ios-bridge-agent.dex`)), [
+      "-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'",
+      "-s emulator-5554 shell 'cmd' 'package' 'resolve-activity' '--brief' '-a' 'android.intent.action.MAIN' '-c' 'android.intent.category.LAUNCHER' 'com.example.android'",
+      "-s emulator-5554 shell 'pm' 'list' 'packages' '-U'",
+      "-s emulator-5554 shell 'date' '+%s.%3N %z'",
+      APP_LOG.join(' '),
+      EVENTS.join(' '),
+      "-s emulator-5554 shell 'am' 'start' '-W' '-n' 'com.example.android/.MainActivity'",
+      "-s emulator-5554 shell 'pidof' 'com.example.android'",
+    ]);
+    assert.equal(calls.filter(call => call.includes("'pidof'")).length, 1, 'pidof once');
+    assert.deepEqual(watches.made.map(watch => watch.options), [{ package: 'com.example.android', startTime: 1759075200.123, utcOffsetMinutes: 420 }]);
+    assert.deepEqual(watches.made[0]!.launched, [9784]);
+    assert.deepEqual(driver.logSources(), { logcat: join(folder, 'run-1.log') });
+    assert.equal((await lstat(folder)).mode & 0o777, 0o700, 'the log folder is 0700');
+    assert.deepEqual((await lockFile(root))?.ownedProcesses,
+      ['logcat emulator-5554 8001', 'logcat emulator-5554 8002', 'forward emulator-5554 tcp:49526', 'agent emulator-5554 7001']);
+  });
+});
+
+test('a negative UTC offset reaches the app watch in minutes', async () => {
+  const adb = new FakeAdb(api31({ deviceTime: '1759075200.004 -0530' }));
+  await withLogs(adb, async ({ driver, watches }) => {
+    await driver.prepare(app(), signal());
+    assert.deepEqual(watches.made[0]!.options, { package: 'com.example.android', startTime: 1759075200.004, utcOffsetMinutes: -330 });
+  });
+});
+
+test('the uid is an exact match on the whole package: a package that prefixes another gets its own uid', async () => {
+  const packagesText = ['package:com.example.app.debug uid:10300', 'package:com.example.appx uid:10301',
+    'package:com.example.app uid:10299', 'package:com.android.settings uid:1000', ''].join('\n');
+  const adb = new FakeAdb(api31({ installed: ['com.example.app', 'com.example.app.debug'], packagesText }));
+  await withLogs(adb, async ({ driver, streams }) => {
+    await driver.prepare(app({ package: 'com.example.app' }), signal());
+    assert.ok(streams.streams[0]!.args.includes('--uid=10299'));
+    assert.equal(adb.shell().some(words => words.join(' ').startsWith('pm list packages -U com')), false, 'never passed as a filter');
+  });
+});
+
+test('a missing uid starts only the events stream: no pane source, and the run goes on', async () => {
+  const adb = new FakeAdb(api31({ packagesText: 'package:com.example.android.debug uid:10300\n' }));
+  await withLogs(adb, async ({ driver, streams, watches }) => {
+    await driver.prepare(app(), signal());
+    assert.deepEqual(streams.streams.map(stream => ['(logcat)', ...stream.args]), [EVENTS]);
+    assert.deepEqual(driver.logSources(), {});
+    assert.deepEqual(watches.made[0]!.launched, [9784]);
+  });
+});
+
+test('a device time that can\'t be read starts no stream and no pidof, and the run goes on with no pane source', async () => {
+  const adb = new FakeAdb(api31({ deviceTime: 'date: bad format' }));
+  await withLogs(adb, async ({ driver, streams }) => {
+    await driver.prepare(app(), signal());
+    assert.deepEqual(streams.streams, []);
+    assert.equal(adb.shell().some(words => words[0] === 'pidof'), false);
+    assert.deepEqual(driver.logSources(), {});
+    assert.equal(driver.appRunning(), undefined);
+    assert.ok(driver.preparation());
+  });
+});
+
+test('streams that fail to start are skipped, and the run goes on with no pane source and no app watch', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    streams.fails = () => true;
+    await driver.prepare(app(), signal());
+    assert.deepEqual(driver.logSources(), {});
+    assert.equal(driver.appRunning(), undefined);
+    assert.equal(adb.shell().some(words => words[0] === 'pidof'), false);
+    assert.equal((await lockFile(root))?.ownedProcesses?.some(entry => entry.startsWith('logcat')), false);
+  });
+});
+
+test('a log folder that is a symlink or another user\'s is refused: no stream, no uid read, and the run goes on', async () => {
+  const parent = await mkdtemp(join(tmpdir(), 'jev-android-logs-refused-'));
+  try {
+    await mkdir(join(parent, 'real'), { mode: 0o700 });
+    await symlink(join(parent, 'real'), join(parent, 'link'));
+    await writeFile(join(parent, 'file'), '');
+    for (const refused of ['link', 'file']) {
+      const adb = new FakeAdb(api31());
+      await withLogs(adb, async ({ driver, streams }) => {
+        await driver.prepare(app(), signal());
+        assert.deepEqual(streams.streams, [], refused);
+        assert.equal(adb.shell().some(words => words[0] === 'pm' && words[1] === 'list'), false, refused);
+        assert.deepEqual(driver.logSources(), {});
+        await driver.close(signal());
+      }, { logFolder: join(parent, refused) });
+    }
+    assert.deepEqual(await readdir(join(parent, 'real')), [], 'nothing written through the link');
+  } finally { await rm(parent, { recursive: true, force: true }); }
+});
+
+test('prepare deletes log files older than 3 days, and keeps newer ones', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, folder }) => {
+    await mkdir(folder, { mode: 0o700 });
+    const daysAgo = (days: number) => new Date(Date.now() - days * 24 * 60 * 60 * 1_000);
+    for (const [name, age] of [['old-run.log', daysAgo(4)], ['recent-run.log', daysAgo(1)]] as const) {
+      await writeFile(join(folder, name), '', { mode: 0o600 });
+      await utimes(join(folder, name), age, age);
+    }
+    await driver.prepare(app(), signal());
+    assert.deepEqual((await readdir(folder)).sort(), ['recent-run.log', 'run-1.log']);
+  });
+});
+
+test('appRunning is the app watch\'s answer, and undefined with no watch', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, watches }) => {
+    await driver.prepare(app(), signal());
+    assert.equal(driver.appRunning(), true);
+    watches.made[0]!.answer = false;
+    assert.equal(driver.appRunning(), false);
+    const events = streams.streams[1]!;
+    assert.equal(typeof events.output, 'function');
+    (events.output as (line: string) => void)('09-28 23:22:55.001  680  700 I am_proc_died: [0,9784,com.example.android,0,2]');
+    assert.deepEqual(watches.made[0]!.lines, ['09-28 23:22:55.001  680  700 I am_proc_died: [0,9784,com.example.android,0,2]']);
+  });
+  await withLogs(new FakeAdb(api31()), async ({ driver }) => {
+    await driver.prepare(app(), signal());
+    assert.equal(driver.appRunning(), undefined);
+  }, { createExitWatch: undefined });
+});
+
+test('an events stream that ends by itself tells the app watch; one close stops doesn\'t', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, watches }) => {
+    await driver.prepare(app(), signal());
+    streams.streams[1]!.end();
+    await eventually(() => watches.made[0]!.ended === 1, 'the watch heard the stream end');
+    await driver.close(signal());
+  });
+  const second = new FakeAdb(api31());
+  await withLogs(second, async ({ driver, watches }) => {
+    await driver.prepare(app(), signal());
+    await driver.close(signal());
+    await new Promise(resolveTurn => setImmediate(resolveTurn));
+    assert.equal(watches.made[0]!.ended, 0);
+  });
+});
+
+test('observe carries the app log\'s tail as logTails.logcat', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, folder }) => {
+    await driver.prepare(app(), signal());
+    const line = '2026-09-28 23:16:14.927 10226  9784  9784 I System.out: hello from the app\n';
+    await writeFile(join(folder, 'run-1.log'), `${'x'.repeat(5_000)}\n${line}`);
+    const snapshot = await driver.observe(signal());
+    assert.equal(snapshot.logTails?.logcat?.length, 4_096);
+    assert.ok(snapshot.logTails?.logcat?.endsWith(line));
+    await driver.close(signal());
+  }, { agents: { screens: [fields] } });
+});
+
+test('close stops both running streams after the app stop and before the forward, disowns them, and releases the lease', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    await driver.prepare(app(), signal());
+    const before = adb.calls.length;
+    await driver.close(signal());
+    assert.deepEqual(callsFrom(adb, before), [
+      ...CLOSE_AFTER_PREPARE.slice(0, 4),
+      '(watch) expectStop',
+      "-s emulator-5554 shell 'am' 'force-stop' 'com.example.android'",
+      '(stop) 8001',
+      '(stop) 8002',
+      '-s emulator-5554 forward --remove tcp:49526',
+    ]);
+    assert.equal(streams.streams.some(stream => stream.running), false, 'no stream left');
+    assert.deepEqual(await readdir(root), [], 'lease released');
+  });
+});
+
+test('close tolerates a stream that already ended', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    await driver.prepare(app(), signal());
+    streams.streams[0]!.end();
+    await driver.close(signal());
+    assert.equal(adb.calls.some(call => call.join(' ') === '(stop) 8001'), false);
+    assert.ok(adb.calls.some(call => call.join(' ') === '(stop) 8002'));
+    assert.deepEqual(await readdir(root), [], 'lease released');
+  });
+});
+
+test('a stream that won\'t stop fails close and keeps the lease, with the stream still in the holder record', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    await driver.prepare(app(), signal());
+    streams.stubborn.add(8002);
+    await assert.rejects(driver.close(signal()), reason('DEVICE_ERROR', 'adb'));
+    assert.deepEqual((await lockFile(root))?.ownedProcesses, ['logcat emulator-5554 8002', 'forward emulator-5554 tcp:49526']);
+  });
+});
+
+test('close stops every stream, even past one that won\'t stop, then fails and keeps the lease', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    await driver.prepare(app(), signal());
+    streams.stubborn.add(8001);
+    await assert.rejects(driver.close(signal()), reason('DEVICE_ERROR', 'adb'));
+    assert.ok(adb.calls.some(call => call.join(' ') === '(stop) 8002'), 'the second stream was stopped too');
+    assert.equal(streams.streams[1]!.running, false);
+    assert.deepEqual((await lockFile(root))?.ownedProcesses, ['logcat emulator-5554 8001', 'forward emulator-5554 tcp:49526']);
+  });
+});
+
+test('a failed app stop still stops both streams, then fails close and keeps the lease', async () => {
+  const adb = new FakeAdb(api31());
+  const run = adb.run;
+  let failStop = false;
+  const runner: AdbRunner = async (args, abort) => failStop && args.some(arg => arg.includes('force-stop'))
+    ? (adb.calls.push(args), { stdout: '', stderr: 'adb: error: device offline\n', exitCode: 1 }) : run(args, abort);
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    await driver.prepare(app(), signal());
+    failStop = true;
+    await assert.rejects(driver.close(signal()), closeFailed('DEVICE_ERROR'));
+    assert.equal(streams.streams.some(stream => stream.running), false, 'no stream left running on the Mac');
+    assert.deepEqual((await lockFile(root))?.ownedProcesses, ['forward emulator-5554 tcp:49526'], 'the streams were disowned; the lease is kept');
+  }, { runner });
+});
+
+test('an agent that won\'t be fenced still stops both streams, and the lease is kept', async () => {
+  const adb = new FakeAdb(api31({ stubborn: [7001] }));
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    await driver.prepare(app(), signal());
+    await assert.rejects(driver.close(signal()), closeFailed('UI_ACTION_UNCONFIRMED'));
+    assert.equal(streams.streams.some(stream => stream.running), false, 'no stream left running on the Mac');
+    assert.ok((await readdir(root)).length > 0, 'lease kept');
+  });
+});
+
+test('a stream start that resolves after close began is stopped by close, which then releases the lease', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    const starting = gate();
+    streams.held = starting.opened;
+    const prepared = driver.prepare(app(), signal());
+    await eventually(() => streams.streams.length === 1, 'the app log\'s start in flight');
+    const closed = driver.close(signal());
+    starting.open();
+    await assert.rejects(prepared);
+    await closed;
+    assert.deepEqual(streams.streams.map(stream => stream.running), [false], 'the late stream stopped, and no other started');
+    assert.deepEqual(await readdir(root), [], 'lease released');
+  });
+});
+
+test('a stream start that resolves after close\'s limit keeps the lease, and the late close stops it and releases', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    const starting = gate();
+    streams.held = starting.opened;
+    const prepared = driver.prepare(app(), signal());
+    await eventually(() => streams.streams.length === 1, 'the app log\'s start in flight');
+    await assert.rejects(driver.close(expiring(20)), closeFailed('UI_ACTION_UNCONFIRMED'));
+    assert.ok((await readdir(root)).length > 0, 'lease kept');
+    starting.open();
+    await assert.rejects(prepared);
+    await eventually(async () => (await readdir(root)).length === 0, 'the lease released late');
+    assert.equal(streams.streams[0]!.running, false);
+  });
+});
+
+test('a started stream the holder record can\'t list is stopped before prepare fails', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    const starting = gate();
+    streams.held = starting.opened;
+    const prepared = driver.prepare(app(), signal());
+    await eventually(() => streams.streams.length === 1, 'the app log\'s start in flight');
+    // The holder record can't be rewritten: the lease root refuses new files.
+    await chmod(root, 0o500);
+    try {
+      starting.open();
+      await assert.rejects(prepared);
+      assert.equal(streams.streams[0]!.running, false, 'stopped, not left unlisted');
+      assert.equal(streams.streams.length, 1, 'no other stream started');
+    } finally { await chmod(root, 0o700); }
+    await driver.close(signal());
+    assert.deepEqual(await readdir(root), [], 'lease released');
+  });
+});
+
+test('close stops the streams even when the restart failed', async () => {
+  const adb = new FakeAdb(api31());
+  const run = adb.run;
+  const runner: AdbRunner = async (args, abort) => args[3]?.startsWith("'am' 'start'")
+    ? (adb.calls.push(args), { stdout: await fixture('api31', 'am-start-W-no-activity.txt'), stderr: '', exitCode: 0 }) : run(args, abort);
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_ERROR', 'adb'));
+    await driver.close(signal());
+    assert.equal(streams.streams.length, 2);
+    assert.equal(streams.streams.some(stream => stream.running), false);
+    assert.deepEqual(await readdir(root), [], 'lease released');
+  }, { runner });
+});
+
+test('after a crash takeover, a dead holder\'s leftover streams are killed, a reused pid is left alone, and every entry is disowned', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    streams.mac.set(5001, '/sdk/platform-tools/adb -s emulator-5554 logcat -v threadtime,year,uid --uid=10226 -T 1759075100.000');
+    streams.mac.set(5002, '/usr/bin/python3 server.py');
+    streams.mac.set(5004, '/sdk/platform-tools/adb -s emulator-5556 logcat -b events');
+    await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31',
+      ownedProcesses: ['logcat emulator-5554 5001', 'logcat emulator-5554 5002', 'logcat emulator-5554 5003', 'logcat emulator-5554 5004'] }));
+    await driver.prepare(app(), signal());
+    assert.deepEqual(streams.killed, [5001]);
+    assert.deepEqual([...streams.mac.keys()], [5002, 5004], 'a reused pid and another serial\'s stream are left running');
+    assert.equal(driver.preparation().sweptLeftovers, true);
+    assert.deepEqual((await lockFile(root))?.ownedProcesses,
+      ['logcat emulator-5554 8001', 'logcat emulator-5554 8002', 'forward emulator-5554 tcp:49526', 'agent emulator-5554 7001'],
+      'only this run\'s own entries');
+    await driver.close(signal());
+  });
+});
+
+test('a cancel during the takeover sweep keeps every leftover not yet swept in the holder record', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    streams.mac.set(5001, '/sdk/platform-tools/adb -s emulator-5554 logcat -b events');
+    streams.mac.set(5003, '/sdk/platform-tools/adb -s emulator-5554 logcat -b events');
+    await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31',
+      ownedProcesses: ['logcat emulator-5554 5001', 'logcat emulator-5554 5003'] }));
+    const abort = new AbortController();
+    streams.onKill = () => { abort.abort(new Error('cancelled')); };
+    await assert.rejects(driver.prepare(app(), abort.signal));
+    await driver.close(signal()).catch(() => undefined);
+    assert.ok(streams.mac.has(5003), 'the second leftover was never reached');
+    assert.deepEqual((await lockFile(root))?.ownedProcesses, ['logcat emulator-5554 5003'], 'so it stays listed for the next run to sweep');
+  });
+});
+
+test('close goes on stopping streams when the holder record can\'t be rewritten, and keeps the lease', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    await driver.prepare(app(), signal());
+    // The lease folder turns read-only after the app stop, so the first stream's disown fails.
+    adb.onCall = async args => { if (args.some(arg => arg.includes('force-stop'))) await chmod(root, 0o500); };
+    try {
+      await assert.rejects(driver.close(signal()));
+      assert.equal(streams.streams.some(stream => stream.running), false, 'both streams stopped');
+      assert.ok((await readdir(root)).length > 0, 'lease kept');
+    } finally { await chmod(root, 0o700); }
+  });
+});
+
+test('a takeover whose dead holder\'s streams are all gone records no sweptLeftovers', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31',
+      ownedProcesses: ['logcat emulator-5554 5001'] }));
+    await driver.prepare(app(), signal());
+    assert.deepEqual(streams.killed, []);
+    assert.equal('sweptLeftovers' in driver.preparation(), false);
+    await driver.close(signal());
+  });
+});
+
+test('a leftover stream that won\'t die fails prepare and keeps the lease, with the entry still listed', async () => {
+  const adb = new FakeAdb(api31());
+  await withLogs(adb, async ({ driver, streams, root }) => {
+    streams.mac.set(5001, '/sdk/platform-tools/adb -s emulator-5554 logcat -b events');
+    streams.kill = async () => { throw new Error('logcat 5001 did not exit'); };
+    await writeFile(join(root, 'JEV-ACTIONS-API31.lock'), JSON.stringify({ pid: deadPid(), token: 'crashed', deviceId: 'jev-actions-api31',
+      ownedProcesses: ['logcat emulator-5554 5001'] }));
+    await assert.rejects(driver.prepare(app(), signal()), reason('DEVICE_ERROR', 'adb'));
+    assert.deepEqual((await lockFile(root))?.ownedProcesses, ['logcat emulator-5554 5001']);
+  });
+});
+
+test('an Android run with both streams running to close passes: prepared names the logcat file, and the step\'s tail is redacted', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  await withRunLog('android-logcat-run', async (log, evidence) => {
+    await withLogs(new FakeAdb(api31()), async ({ driver, streams, folder, root }) => {
+      // The app logs the typed value; the fake stream starter wrote nothing, so the test writes the line itself.
+      const watched: DeviceDriver = { prepare: async (...args) => {
+        await driver.prepare(...args);
+        await writeFile(join(folder, 'run-1.log'), `2026-09-28 23:16:14.927 10226  9784  9784 I System.out: city is ${CITY}\n`);
+      }, observe: (...args) => driver.observe(...args), act: (...args) => driver.act(...args), close: (...args) => driver.close(...args),
+      preparation: () => driver.preparation(), logSources: () => driver.logSources(), appRunning: () => driver.appRunning() };
+      const report = await runScriptedScenario({ runId: 'android-logcat-run', scenario: cityScript(), driver: watched, judge: judgeAllTrue, log });
+      assert.equal(report.verdict, 'passed');
+      const events = await eventsOf(evidence, 'android-logcat-run');
+      assert.deepEqual(events.find(event => event.type === 'prepared')?.data.logSources, { logcat: join(folder, 'run-1.log') });
+      const tails = events.filter(event => event.type === 'step').map(event => (event.data.logTails as Record<string, string> | undefined)?.logcat);
+      assert.ok(tails.length > 0 && tails.every(tail => tail === '2026-09-28 23:16:14.927 10226  9784  9784 I System.out: city is [REDACTED]\n'));
+      assert.equal((await readFile(join(evidence, 'android-logcat-run', 'run.jsonl'), 'utf8')).includes('Ha Noi'), false);
+      assert.equal(streams.streams.length, 2);
+      assert.equal(streams.streams.some(stream => stream.running), false, 'both streams stopped');
+      assert.deepEqual(await readdir(root), [], 'lease released');
+    }, { agents: { screens: [fields, fields, withText(fields, 'field.empty', CITY)] }, screenshotFolder: undefined });
+  }, { values: [CITY] });
+});
+
+/* Phase 5 (Issue 20): the run end to end, on the driver the factory builds: the real app watch, fed the events
+   lines recorded on the emulators (`tests/fixtures/android/logcat/`), and the log file named by the run's ID. */
+
+const LOGCAT_CAPTURES = join(import.meta.dirname, 'fixtures', 'android', 'logcat');
+const LOGPROBE = 'dev.jevbridge.logprobe';
+
+/**
+ * Run `cityScript()` for the log probe app through the driver factory. The events stream is fed the capture's
+ * lines before `lateFrom` once the first screen is read, and the rest while the city is typed; `screens` are
+ * what the agent shows. The app log gets one line holding the typed value. Resolves with what the test checks.
+ */
+/** `late`: when the lines from `lateFrom` arrive. By default while the city is typed; `wait`: only once the run, after a
+ *  failed step, waits for the app's events; `never`: not at all. */
+async function runCaptured(capture: string, options: { pid: string; lateFrom?: number; screens: Hierarchy[]; late?: 'typing' | 'wait' | 'never' }) {
+  const recorded = (await readFile(join(LOGCAT_CAPTURES, capture, 'events.log'), 'utf8')).split('\n').filter(line => line !== '');
+  const lateFrom = options.lateFrom ?? recorded.length;
+  const adb = new FakeAdb(api31({ installed: [LOGPROBE], appPids: options.pid }));
+  const agents = fakeAgents(adb, { screens: options.screens });
+  const streams = new FakeStreams(adb);
+  const parent = await mkdtemp(join(tmpdir(), 'jev-android-end-to-end-'));
+  const leaseRoot = join(parent, 'lease');
+  const folder = join(parent, 'jev-android-logs');
+  await mkdir(leaseRoot);
+  const ports = [49526];
+  const runId = `android-${capture}`;
+  const holderAtForwardRemoval: (string[] | undefined)[] = [];
+  adb.onCall = async args => {
+    if (args[2] === 'forward' && args[3] === '--remove') holderAtForwardRemoval.push((await lockFile(leaseRoot))?.ownedProcesses);
+  };
+  const feed = (lines: string[]) => { for (const line of lines) (streams.streams[1]!.output as (raw: string) => void)(line); };
+  let dumps = 0;
+  agents.hooks.onCall = async call => {
+    if (call.method === 'device.dump.ui' && ++dumps === 1) {
+      feed(recorded.slice(0, lateFrom));
+      await writeFile(join(folder, `${runId}.log`), `2026-09-28 23:16:14.927 10226  9784  9784 I System.out: city is ${CITY}\n`);
+    }
+    if (call.method === 'device.io.text' && (options.late ?? 'typing') === 'typing') feed(recorded.slice(lateFrom));
+  };
+  const clock = fakeClock();
+  const sleep = clock.sleep.bind(clock);
+  const waits: number[] = [];
+  let late = options.late === 'wait' ? recorded.slice(lateFrom) : [];
+  clock.sleep = async ms => {
+    if (ms === APP_PROBLEM_POLL_MS) {
+      waits.push(ms);
+      feed(late);
+      late = [];
+    }
+    await sleep(ms);
+  };
+  const createDriver = createDriverFactory({
+    mobileBuildMcp: { cwd: parent, lockRoot: parent, runner: async () => assert.fail('an Android script never reaches the iOS driver') },
+    android: { runner: adb.run, agentClient: agents.agentClient, clock, leaseRoot, freePort: async () => ports.shift()!,
+      logcat: streams, logFolder: folder,
+      tools: async () => ({ adb: '/sdk/platform-tools/adb', agent: { path: AGENT_CACHE, sha256: PINNED_AGENT_SHA256 } }) },
+  });
+  const scenario = { ...cityScript(), app: { package: LOGPROBE } };
+  try {
+    return await withRunLog(runId, async (log, evidence) => {
+      const report = await runScriptedScenario({ runId, scenario, driver: createDriver(scenario, { runId }), judge: judgeAllTrue, log });
+      const events = await eventsOf(evidence, runId);
+      return {
+        report, events, folder, runId, holderAtForwardRemoval, waitedMs: waits.reduce((total, ms) => total + ms, 0),
+        raw: await readFile(join(evidence, runId, 'run.jsonl'), 'utf8'),
+        streamsStarted: streams.streams.length,
+        streamsRunning: streams.streams.filter(stream => stream.running).length,
+        leaseFiles: await readdir(leaseRoot),
+        agentsLeft: adb.emulators.get('emulator-5554')!.agents!.size,
+        forwardsLeft: adb.forwards.length,
+      };
+    }, { values: [CITY] });
+  } finally {
+    await rm(parent, { recursive: true, force: true });
+  }
+}
+
+/** Every run, whatever its verdict: both streams stopped, the holder record emptied, and the lease released. */
+function assertCleanedUp(run: Awaited<ReturnType<typeof runCaptured>>): void {
+  assert.equal(run.streamsStarted, 2);
+  assert.equal(run.streamsRunning, 0, 'both streams stopped');
+  // The forward is close's last step, disowned once removed; then the lease, holder record and all, is released.
+  assert.deepEqual(run.holderAtForwardRemoval, [['forward emulator-5554 tcp:49526']], 'both streams and the agent already disowned');
+  assert.deepEqual(run.leaseFiles, [], 'lease released, and its holder record with it');
+  assert.equal(run.agentsLeft, 0, 'no agent left');
+  assert.equal(run.forwardsLeft, 0, 'no forward left');
+  assert.deepEqual(run.events.find(event => event.type === 'prepared')?.data.logSources, { logcat: join(run.folder, `${run.runId}.log`) });
+  assert.equal(run.raw.includes('Ha Noi'), false, 'the typed value never reaches run.jsonl');
+}
+
+test('end to end: an app that crashes partway through ends the run APP_EXITED, and cleans up', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  // probe-crash: the launch, then the crash and the process's death while the city is typed; the launcher shows.
+  const run = await runCaptured('probe-crash', { pid: '10160', lateFrom: 1, screens: [fields, fields, []] });
+  assert.deepEqual([run.report.verdict, run.report.reason], ['inconclusive', 'APP_EXITED']);
+  const error = run.events.find(event => event.type === 'error')!.data;
+  assert.deepEqual([error.stepId, error.phase, error.code], ['verify', 'observe', 'APP_EXITED']);
+  assertCleanedUp(run);
+});
+
+test('end to end: an app that freezes (probe-anr) ends the run APP_NOT_RESPONDING, and cleans up', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  const run = await runCaptured('probe-anr', { pid: '11656', lateFrom: 1, screens: [fields, fields, []] });
+  assert.deepEqual([run.report.verdict, run.report.reason], ['inconclusive', 'APP_NOT_RESPONDING']);
+  const error = run.events.find(event => event.type === 'error')!.data;
+  assert.deepEqual([error.stepId, error.phase, error.code], ['verify', 'observe', 'APP_NOT_RESPONDING']);
+  assertCleanedUp(run);
+});
+
+test('end to end: a crash whose events arrive just after the step failed still ends the run APP_EXITED', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  const run = await runCaptured('probe-crash', { pid: '10160', lateFrom: 1, screens: [fields, fields, []], late: 'wait' });
+  assert.deepEqual([run.report.verdict, run.report.reason], ['inconclusive', 'APP_EXITED']);
+  assert.ok(run.waitedMs > 0 && run.waitedMs <= APP_PROBLEM_WAIT_MS, 'it waited, and stopped waiting once the crash was known');
+  assertCleanedUp(run);
+});
+
+test('end to end: a freeze whose events arrive just after the step failed still ends the run APP_NOT_RESPONDING', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  const run = await runCaptured('probe-anr', { pid: '11656', lateFrom: 1, screens: [fields, fields, []], late: 'wait' });
+  assert.deepEqual([run.report.verdict, run.report.reason], ['inconclusive', 'APP_NOT_RESPONDING']);
+  assertCleanedUp(run);
+});
+
+test('end to end: a failed step with no app event waits about 1 s, then keeps its own reason', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  // The crash's lines never arrive.
+  const run = await runCaptured('probe-crash', { pid: '10160', lateFrom: 1, screens: [fields, fields, []], late: 'never' });
+  assert.deepEqual([run.report.verdict, run.report.reason], ['inconclusive', 'GUARD_MISSING']);
+  assert.equal(run.waitedMs, APP_PROBLEM_WAIT_MS);
+  assertCleanedUp(run);
+});
+
+test('end to end: a normal run passes, its step tails hold the app log redacted, and it cleans up', async () => {
+  const fields = await hierarchyOf('text-fields.json');
+  // probe-normal: the bridge's restart force-stops the first process (9784) before pidof finds the second.
+  const run = await runCaptured('probe-normal', { pid: '10107', screens: [fields, fields, withText(fields, 'field.empty', CITY)] });
+  assert.deepEqual([run.report.verdict, run.report.reason], ['passed', 'ALL_CHECKPOINTS_PASSED']);
+  const tails = run.events.filter(event => event.type === 'step').map(event => (event.data.logTails as Record<string, string> | undefined)?.logcat);
+  assert.deepEqual(tails, [1, 2].map(() => '2026-09-28 23:16:14.927 10226  9784  9784 I System.out: city is [REDACTED]\n'));
+  assertCleanedUp(run);
+});
+
+test('the production clock gives AbortSignal.timeout a whole number of ms, since elapsed times from performance.now() are fractional', () => {
+  // A real run subtracts performance.now() readings (4999.997666 ms left), which AbortSignal.timeout rejects.
+  const signal = productionClock.timeout(4_999.997666);
+  assert.equal(signal.aborted, false);
+  assert.doesNotThrow(() => productionClock.timeout(0.2));
 });

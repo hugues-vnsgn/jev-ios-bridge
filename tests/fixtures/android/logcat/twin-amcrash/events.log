@@ -1,0 +1,5 @@
+--------- beginning of events
+2026-09-28 23:22:52.533   680   736 I am_proc_start: [0,15149,10225,dev.jevbridge.diagnostic,next-top-activity,{dev.jevbridge.diagnostic/dev.jevbridge.diagnostic.MainActivity}]
+2026-09-28 23:22:52.786   680   736 I am_proc_start: [0,15169,10180,com.google.android.webview:webview_service,service,{com.google.android.webview/org.chromium.android_webview.services.VariationsSeedServer}]
+2026-09-28 23:22:54.803   680  1107 I am_crash: [15149,0,dev.jevbridge.diagnostic,547995206,android.app.RemoteServiceException$CrashedByAdbException,shell-induced crash,ActivityThread.java,2513,0]
+2026-09-28 23:22:54.841   680  1794 I am_proc_died: [0,15149,dev.jevbridge.diagnostic,0,2]

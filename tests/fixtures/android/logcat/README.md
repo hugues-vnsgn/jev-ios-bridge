@@ -1,0 +1,3 @@
+Copied on 2026-09-30 from `.scratch/android-support/findings/06-assets/captures/` (recorded 2026-09-28 on `Medium_Phone_API_36.1`, API 36, device clock at UTC+07:00), one folder per run with its name kept; see `findings/06-log-pane.md`.
+`uid.log` is the `adb logcat -v threadtime,year,uid --uid=<uid>` stream; `events.log` is the run's `events.log` (twin runs) or `lifecycle.log` (probe runs, which also carry the uid column); the capture tool's 13-digit host-ms stamp and its closing `EXIT …` line were stripped.
+`meta.txt` is the probe run's own; for twin runs it holds only `pid=`, taken from the run's `steps.json` "pid" step (package `dev.jevbridge.diagnostic`; probe runs are `dev.jevbridge.logprobe`).

@@ -886,3 +886,40 @@ test('measurement mode never leaves the run holding references from an older cap
     assert.equal(neverSettles.screenHash, 'f', 'the run gets the newest capture, the one MobileBuildMCP resolves references against');
   } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
 });
+
+test('appRunning and appProblem answer from the console helper in the runtime log\'s name: undefined before launch or without one', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-app-problem-'));
+  const { spawn, spawnSync } = await import('node:child_process');
+  const exited = spawnSync(process.execPath, ['-e', '0']).pid;
+  const alive = spawn(process.execPath, ['-e', 'setInterval(() => {}, 1000)'], { stdio: 'ignore' });
+  const launchedWith = (runtime: string | undefined) => {
+    const runner: CliRunner = async (args) => ({
+      stdout: commandEnvelope(args, args.includes('launch-app') && runtime ? { artifacts: { simulatorId: udid, runtimeLogPath: runtime } } : {}),
+      stderr: '', exitCode: 0,
+    });
+    return new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  };
+  const answers = async (runtime: string | undefined) => {
+    const driver = launchedWith(runtime);
+    const before = [driver.appRunning(), driver.appProblem()];
+    await driver.prepare(scenario, new AbortController().signal);
+    try { return { before, after: [driver.appRunning(), driver.appProblem()] }; }
+    finally { await driver.close(new AbortController().signal); }
+  };
+  try {
+    const exitedLog = join(root, `com.apple.Preferences_2026_helperpid${exited}_ownerpid1_abc.log`);
+    assert.deepEqual(await answers(exitedLog), { before: [undefined, undefined], after: [false, {
+      code: 'APP_EXITED', note: 'The app stopped unexpectedly: its console output ended while the run was still going.' }] });
+    assert.deepEqual(await answers(join(root, `com.apple.Preferences_2026_helperpid${alive.pid}_ownerpid1_abc.log`)),
+      { before: [undefined, undefined], after: [true, undefined] });
+    assert.deepEqual(await answers(join(root, 'com.apple.Preferences_2026.log')), { before: [undefined, undefined], after: [undefined, undefined] });
+    assert.deepEqual(await answers(undefined), { before: [undefined, undefined], after: [undefined, undefined] });
+    const closed = launchedWith(exitedLog);
+    await closed.prepare(scenario, new AbortController().signal);
+    await closed.close(new AbortController().signal);
+    assert.deepEqual([closed.appRunning(), closed.appProblem()], [undefined, undefined], 'nothing after close');
+  } finally {
+    alive.kill();
+    await rm(root, { recursive: true, force: true });
+  }
+});

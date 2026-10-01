@@ -3,13 +3,12 @@ import { closeSync, fstatSync, openSync, readSync } from 'node:fs';
 import { chmod, unlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { appLabel, type AppIdentity } from '../contracts/index.js';
-import { processAlive } from '../process.js';
-import { appLine, masker, osLine, type PaneLine } from './format.js';
+import { appLabel, isIosApp, type AppIdentity, type AppProblem, type LogSources, type Platform } from '../contracts/index.js';
+import { appLine, logcatLine, masker, osLine, type PaneLine } from './format.js';
 
-/** Messages on the pane socket, one JSON object per line. */
+/** Messages on the pane socket, one JSON object per line. `hello`'s platform picks the header's source lines. */
 export type PaneMessage =
-  | { type: 'hello'; runId: string; appId: string; sources: { runtime?: string; os?: string } }
+  | { type: 'hello'; runId: string; appId: string; platform: Platform; sources: LogSources }
   | ({ type: 'line' } & PaneLine)
   | { type: 'note'; text: string }
   | { type: 'end'; verdict: string; reason: string; evidencePath: string; closeAfterMs?: number };
@@ -51,12 +50,13 @@ export interface LogStream {
 const HISTORY_LIMIT = 5_000;
 
 /**
- * Follow the two log files MobileBuildMCP writes for the launched app, mask the script's values, and
- * serve the lines to panes over a Unix socket that only this user can open. Nothing is written to disk.
+ * Follow the app's log files (the two MobileBuildMCP writes on iOS, or the app's logcat file on Android), mask
+ * the script's values, and serve the lines to panes over a Unix socket that only this user can open. Nothing
+ * is written to disk. `appProblem` is the driver's answer to whether the app stopped; the pane notes it once.
  */
 export async function startLogStream(options: {
-  runId: string; app: AppIdentity; sources: { runtime?: string; os?: string }; values: Record<string, string>;
-  pollMs?: number;
+  runId: string; app: AppIdentity; sources: LogSources; values: Record<string, string>;
+  pollMs?: number; appProblem?: () => AppProblem | undefined;
 }): Promise<LogStream> {
   const socketPath = paneSocketPath(options.runId);
   const mask = masker(options.values);
@@ -70,7 +70,8 @@ export async function startLogStream(options: {
     }
     for (const client of clients) client.write(text);
   };
-  const hello: PaneMessage = { type: 'hello', runId: options.runId, appId: appLabel(options.app), sources: options.sources };
+  const hello: PaneMessage = { type: 'hello', runId: options.runId, appId: appLabel(options.app),
+    platform: isIosApp(options.app) ? 'ios' : 'android', sources: options.sources };
   await unlink(socketPath).catch(() => {});
   const server: Server = createServer(client => {
     clients.add(client);
@@ -85,16 +86,18 @@ export async function startLogStream(options: {
   const followers = [
     ...(options.sources.runtime ? [new Follower(options.sources.runtime, raw => appLine(raw))] : []),
     ...(options.sources.os ? [new Follower(options.sources.os, osLine)] : []),
+    ...(options.sources.logcat ? [new Follower(options.sources.logcat, logcatLine)] : []),
   ];
-  // The console helper's PID is in MobileBuildMCP's log file name; it exits when the app does.
-  const helper = Number(options.sources.runtime?.match(/_helperpid(\d+)_/)?.[1]);
   let stopExpected = false;
   let noted = false;
+  const problem = () => { try { return options.appProblem?.(); } catch { return undefined; } };
   const tick = () => {
     for (const follower of followers) follower.poll(line => send({ type: 'line', ...line, text: mask(line.text) }));
-    if (!stopExpected && !noted && Number.isSafeInteger(helper) && helper > 0 && !processAlive(helper)) {
+    if (stopExpected || noted) return;
+    const found = problem();
+    if (found) {
       noted = true;
-      send({ type: 'note', text: 'The app stopped unexpectedly: its console output ended while the run was still going.' });
+      send({ type: 'note', text: mask(found.note) });
     }
   };
   const timer = setInterval(tick, options.pollMs ?? 200);

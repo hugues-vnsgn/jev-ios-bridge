@@ -1,5 +1,7 @@
 /** Turning raw app and system log lines into pane lines. Pure functions, so they're easy to test. */
 
+import { threadtimeStamp } from '../device/android/threadtime.js';
+
 export type PaneSource = 'app' | 'os';
 export type PaneLevel = 'error' | 'dim' | 'normal';
 export interface PaneLine { source: PaneSource; time: string; level: PaneLevel; text: string }
@@ -30,6 +32,22 @@ export function osLine(raw: string): PaneLine | undefined {
   const [, time, type, category, message] = parsed;
   return { source: 'os', time: time!, text: `${category ? `[${category}] ` : ''}${message}`,
     level: type === 'Error' || type === 'Fault' ? 'error' : type === 'Debug' || type === 'Info' ? 'dim' : 'normal' };
+}
+
+/**
+ * A line from `adb logcat -v threadtime,year,uid`: date, time, uid, pid, tid, level, tag, message.
+ * System.out and System.err are the app's console, as on iOS; every other tag shows as `[Tag] message`.
+ * Dividers (`--------- beginning of main`) are dropped.
+ */
+export function logcatLine(raw: string): PaneLine | undefined {
+  if (!raw.trim() || raw.startsWith('--------- beginning of')) return undefined;
+  const stamp = threadtimeStamp(raw);
+  const parsed = stamp?.rest.match(/^\S+\s+\d+\s+\d+ ([VDIWEFA]) (.*?)\s*: (.*)$/);
+  if (!stamp || !parsed) return undefined;
+  const [, level, tag, message] = parsed;
+  const fromConsole = tag === 'System.out' || tag === 'System.err';
+  return { source: fromConsole ? 'app' : 'os', time: stamp.time, text: fromConsole ? message! : `[${tag}] ${message}`,
+    level: 'EFA'.includes(level!) ? 'error' : 'VD'.includes(level!) ? 'dim' : 'normal' };
 }
 
 /** Mask every supplied script value as [value:<key>], longest first, as the run log redacts them. */

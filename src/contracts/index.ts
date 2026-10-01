@@ -112,14 +112,26 @@ export interface DeviceDriver {
   metrics?(): DeviceMetrics;
   /** Whether the launched app is still running; undefined when the driver can't tell. */
   appRunning?(): boolean | undefined;
+  /** Why the launched app stopped answering, with a note for the log pane; undefined when it is fine, it stopped
+   *  because the bridge stopped it, or the driver can't tell. */
+  appProblem?(): AppProblem | undefined;
+  /** `appProblem`, after giving the app's events a short, bounded moment to arrive. The run asks it once, after a
+   *  step failed, so a crash or freeze reported just after the failure still names the reason. */
+  appProblemAfterFailure?(signal: AbortSignal): Promise<AppProblem | undefined>;
   /** The app's own log files the device layer is writing for this launch, for the live log pane. */
-  logSources?(): { runtime?: string; os?: string };
+  logSources?(): LogSources;
   /** Set only by a driver integration whose pinned tap semantics were verified. The run reads it. */
   readonly tapAliasRule?: TapAliasRule;
   /** What `prepare` set up on the device, for the run log's `prepared` event. Only a driver that prepares a
    *  device (Android) implements this; the iOS driver doesn't. */
   preparation?(): DevicePreparation;
 }
+
+/** The launched app exited (crashed, was killed or quit) or froze. The note names the cause, for the log pane. */
+export interface AppProblem { code: 'APP_EXITED' | 'APP_NOT_RESPONDING'; note: string }
+
+/** The app's own log files: MobileBuildMCP's runtime and system logs on iOS, the app's logcat file on Android. */
+export interface LogSources { runtime?: string; os?: string; logcat?: string }
 
 /** What a device `prepare` did, recorded in the run log's `prepared` event. */
 export interface DevicePreparation {

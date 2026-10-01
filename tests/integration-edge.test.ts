@@ -239,6 +239,21 @@ test('CLI report reads persisted evidence without a device or key', async () => 
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
+test('CLI logs on a finished Android run names its logcat file in the after-the-run message', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-cli-logs-'));
+  try {
+    const log = await createRunLog(root, 'finished-android');
+    await log.append('started', { mode: 'scripted', platform: 'android' });
+    await log.append('prepared', { prepareDurationMs: 1, logSources: { logcat: '/tmp/jev-android-logs/finished-android.log' } });
+    await log.append('verdict', { verdict: 'passed', reason: 'ALL_CHECKPOINTS_PASSED', steps: 1, inputTokens: 5, durationMs: 4 });
+    const env: NodeJS.ProcessEnv = { ...process.env, JEV_RUNS_DIR: root };
+    delete env.TYPESAFE_API_KEY;
+    const result = await execute(process.execPath, ['--import', 'tsx', 'src/cli.ts', 'logs', 'finished-android'], { cwd: process.cwd(), env });
+    assert.equal(result.stdout, 'Run finished-android is not running, so there is no live log to follow.\n' +
+      'The app\'s own log files (not masked): /tmp/jev-android-logs/finished-android.log\n');
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
 test('JEV_PROJECT_DIR stands in for the working directory, as a plugin-launched server needs', async () => {
   // Claude Code starts a plugin's MCP server in the plugin's own folder, not the user's project.
   const project = await mkdtemp(join(tmpdir(), 'jev-cli-project-'));

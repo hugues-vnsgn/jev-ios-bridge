@@ -1,16 +1,20 @@
+import { randomUUID } from 'node:crypto';
 import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:net';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
-import type { Action, ActionScenarioContext, ActOutcome, AndroidAppIdentity, DevicePreparation, DeviceDriver, Direction, Element,
+import type { Action, ActionScenarioContext, ActOutcome, AndroidAppIdentity, AppProblem, LogSources, DevicePreparation, DeviceDriver, Direction, Element,
   PrepareScenarioContext, Snapshot } from '../../contracts/index.js';
 import { isIosApp } from '../../contracts/index.js';
 import { DeviceReasonError, selectAndroidDeviceName, StaleSnapshotError } from '../index.js';
 import { DeviceLease, DeviceLeaseBusyError, type LeaseHolder } from '../lease.js';
+import { readLogTail } from '../logs.js';
 import { adbRunner, type AdbResult, type AdbRunner } from './adb.js';
 import { deviceAgentClient, type AgentKey, type DeviceAgentClient } from './agent-client.js';
+import { EVENT_FILTER, type AppExitWatch, type createExitWatch } from './exit-watch.js';
 import { inLedger } from './ledger.js';
+import { deleteOldLogs, LOG_FOLDER, logcatStarter, privateLogFolder, type LogcatOutput, type LogcatStarter, type LogcatStream } from './logcat.js';
 import { mapAndroidTree } from './mapping.js';
 import { settle, type Clock } from './settle.js';
 import { adbEnvironment, androidTools, type AndroidTools } from './tools.js';
@@ -41,6 +45,11 @@ const DUMP_IDLE_MS = 2_000;
 const SCREENSHOT_MAX_SIZE = 800;
 /** Replace text's pause between `ctrl+a` and backspace (open point 23). */
 const CLEAR_PAUSE_MS = 200;
+/** After a failed step, how long the run waits for the app's events, and how often it looks. A crash's events
+ *  arrive within about 0.4 s (findings/06-log-pane.md); a freeze is reported only after about 5 s, so a step
+ *  usually fails before it, and the run keeps the step's own reason. */
+export const APP_PROBLEM_WAIT_MS = 1_000;
+export const APP_PROBLEM_POLL_MS = 50;
 /** How long a late `close` may take once the abandoned work has settled: the run's own cleanup limit. */
 const LATE_CLOSE_MS = 45_000;
 /** How long a swipe's finger takes (release spec phase 4 item 6). */
@@ -81,12 +90,25 @@ export interface AndroidDriverOptions {
   /** Where `observe` saves `screen-N.jpg`. Without one, the driver makes its own temporary folder and removes it on `close`. */
   screenshotFolder?: string | undefined;
   leaseRoot?: string;
+  /** Starts the `logcat` streams. Defaults to the production starter for the `adb` the tools check found. */
+  logcat?: LogcatStarter;
+  /** The private folder for the app's log files. Defaults to `LOG_FOLDER`. False starts no stream, as a refused folder does. */
+  logFolder?: string | false;
+  /** Names the app's log file, `<run ID>.log`. Without one, the driver makes up its own. */
+  runId?: string | undefined;
+  /** Folds the events stream into the app's state. Without one, `appRunning()` and `appProblem()` can't tell. The
+   *  driver factory passes `createExitWatch`. */
+  createExitWatch?: typeof createExitWatch | undefined;
 }
 
 /** The element action each kind of action needs, as on iOS. */
 const REQUIRED_ACTION = { tap: 'tap', type: 'typeText', swipe: 'swipeWithin' } as const;
 
-const realClock: Clock = { now: () => performance.now(), sleep: ms => delay(ms), timeout: ms => AbortSignal.timeout(ms) };
+/** The real clock. Elapsed times from `performance.now()` are fractional, and `AbortSignal.timeout` takes only a
+ *  whole number of ms, so a timeout is rounded up to at least 1 ms. */
+export const productionClock: Clock = {
+  now: () => performance.now(), sleep: ms => delay(ms), timeout: ms => AbortSignal.timeout(Math.max(1, Math.ceil(ms))),
+};
 
 function freeLocalPort(): Promise<number> {
   return new Promise((resolvePort, reject) => {
@@ -115,6 +137,8 @@ function listedDevices(stdout: string): Map<string, string> {
 }
 
 type AgentProcess = { pid: number; own: boolean };
+/** One of this run's logcat streams, its holder record entry, and whether `close` is stopping it. */
+type StreamEntry = { stream: LogcatStream; owned: string; stopping: boolean };
 
 /** A foreign agent holds the device: `DEVICE_BUSY`, and the bridge leaves it running. */
 const foreignAgentFound = (identity: string) => new DeviceReasonError('DEVICE_BUSY',
@@ -155,9 +179,11 @@ function typedFieldIn(snapshot: Snapshot, field: Element): Element | undefined {
   return byIdentifier ?? only(fields.filter(element => element.state?.focused)) ?? only(fields.filter(element => sameFrame(element.frame)));
 }
 
-/** What a lease holder record lists for the next run to sweep: the agent and the forward, each on its serial. */
+/** What a lease holder record lists for the next run to sweep: the agent, the forward and the logcat streams, each on its serial. */
 const ownedAgent = (serial: string, pid: number) => `agent ${serial} ${String(pid)}`;
 const ownedForward = (serial: string, port: number) => `forward ${serial} tcp:${String(port)}`;
+const ownedStream = (serial: string, pid: number) => `logcat ${serial} ${String(pid)}`;
+const OWNED_STREAM = /^logcat (\S+) (\d+)$/;
 
 /**
  * The Android device driver (release spec phase 4): drives mobilecli's device agent directly, over `adb`
@@ -189,10 +215,18 @@ export class AndroidDriver implements DeviceDriver {
   private latest: Snapshot | undefined;
   private sequence = 0;
   private screenshotFolder: Promise<string> | undefined;
+  private readonly runId: string;
+  private logcat: LogcatStarter | undefined;
+  /** This run's logcat streams, each disowned once `close` confirms it stopped. */
+  private streams: StreamEntry[] = [];
+  /** The app's log file, once its stream started. */
+  private logFile: string | undefined;
+  private watch: AppExitWatch | undefined;
 
   constructor(private readonly options: AndroidDriverOptions = {}) {
     this.lease = new DeviceLease(options.leaseRoot ? { root: options.leaseRoot } : {});
-    this.clock = options.clock ?? realClock;
+    this.clock = options.clock ?? productionClock;
+    this.runId = options.runId ?? randomUUID();
   }
 
   preparation(): DevicePreparation {
@@ -212,6 +246,33 @@ export class AndroidDriver implements DeviceDriver {
     return this.lease.track(() => this.actIssued(action, snapshot, scenario, signal));
   }
 
+  /** Whether the launched app still runs, from the events stream; undefined when the driver can't tell. */
+  appRunning(): boolean | undefined {
+    return this.watch?.running();
+  }
+
+  /** Why the launched app stopped, from the events stream: exited or not responding; undefined when it runs,
+   *  the bridge stopped it, or the driver can't tell. */
+  appProblem(): AppProblem | undefined {
+    return this.watch?.problem();
+  }
+
+  /** `appProblem`, waiting up to `APP_PROBLEM_WAIT_MS` for the events stream to report one; at once when the
+   *  driver can't tell. */
+  async appProblemAfterFailure(signal: AbortSignal): Promise<AppProblem | undefined> {
+    const until = this.clock.now() + APP_PROBLEM_WAIT_MS;
+    for (;;) {
+      const found = this.watch?.problem();
+      if (found || this.watch?.running() === undefined || signal.aborted || this.clock.now() >= until) return found;
+      await this.clock.sleep(APP_PROBLEM_POLL_MS);
+    }
+  }
+
+  /** The app's log file, once its stream started: the pane, each step's log tails and `logs` read it. */
+  logSources(): LogSources {
+    return this.logFile !== undefined ? { logcat: this.logFile } : {};
+  }
+
   close(signal: AbortSignal): Promise<void> {
     // The stop flag is set first, so an abandoned operation issues nothing more.
     this.closeBegun = true;
@@ -229,8 +290,9 @@ export class AndroidDriver implements DeviceDriver {
   /**
    * `close`'s steps, in the release spec's order (phase 4 item 8), each tolerating "not running": wait for
    * every operation this run started, so each `adb` command it issued has exited; fence the bridge's own
-   * agent; stop the app if this run restarted it; remove this run's forward; release the lease. What each
-   * step confirms stopped is disowned as it goes. Any failure keeps the lease. The agent file stays: it's inert.
+   * agent; stop the app if this run restarted it; stop this run's logcat streams; remove this run's forward;
+   * release the lease. What each step confirms stopped is disowned as it goes. Any failure keeps the lease.
+   * The agent file stays: it's inert.
    */
   private async finishClose(signal: AbortSignal): Promise<void> {
     try { await this.lease.settle(signal); }
@@ -241,14 +303,22 @@ export class AndroidDriver implements DeviceDriver {
     const serial = this.serial!;
     this.cleanupSignal = signal;
     try {
-      // An unconfirmed fence keeps the lease the same way an unknown adb command does.
-      try { await this.fenceAgent(serial, signal); }
-      catch { throw new DeviceReasonError('UI_ACTION_UNCONFIRMED', 'The bridge\'s device agent could not be confirmed stopped; device lease kept'); }
-      if (this.restartedPackage !== undefined) {
-        await this.succeeded('stop the app', this.shell(serial, ['am', 'force-stop', this.restartedPackage], signal));
-        this.restartedPackage = undefined;
+      try {
+        // An unconfirmed fence keeps the lease the same way an unknown adb command does.
+        try { await this.fenceAgent(serial, signal); }
+        catch { throw new DeviceReasonError('UI_ACTION_UNCONFIRMED', 'The bridge\'s device agent could not be confirmed stopped; device lease kept'); }
+        if (this.restartedPackage !== undefined) {
+          this.watch?.expectStop();
+          await this.succeeded('stop the app', this.shell(serial, ['am', 'force-stop', this.restartedPackage], signal));
+          this.restartedPackage = undefined;
+        }
+      } catch (error) {
+        // The lease is kept, but the streams are Mac processes that can't act on the device: stop them anyway.
+        await this.stopStreams().catch(() => undefined);
+        throw error;
       }
-      // Phase 5: stop this run's logcat streams here, and wait for them to exit.
+      // Whether or not the app was launched: the streams start before the launch.
+      await this.stopStreams();
       const port = this.forwardPort;
       if (port !== undefined) {
         await this.removeForward(serial, `tcp:${String(port)}`, signal);
@@ -289,6 +359,35 @@ export class AndroidDriver implements DeviceDriver {
   }
 
   /**
+   * Stop this run's logcat streams (SIGTERM, then SIGKILL after 1 s) and wait for them to exit, tolerating
+   * one that already ended, then disown each. Never a tracked ledger command: stopping a local process is
+   * never an unknown device outcome. Every stream is tried; any stop that can't be confirmed keeps the lease.
+   */
+  private async stopStreams(): Promise<void> {
+    const unconfirmed: number[] = [];
+    let recordError: unknown;
+    for (const entry of [...this.streams]) {
+      if (!await this.stopStream(entry)) { unconfirmed.push(entry.stream.pid); continue; }
+      // A holder record that can't be rewritten still lets the next stream be stopped; the lease is kept.
+      try { await this.lease.disown(entry.owned); }
+      catch (error) { recordError ??= error; }
+    }
+    if (recordError !== undefined) throw recordError;
+    if (unconfirmed.length > 0) {
+      throw new AndroidDeviceError('adb', `The logcat stream${unconfirmed.length > 1 ? 's' : ''} ${unconfirmed.join(', ')} could not be confirmed stopped; device lease kept`);
+    }
+  }
+
+  /** Stop one stream and wait for it to exit; true once confirmed, when it's no longer this run's to stop. */
+  private async stopStream(entry: StreamEntry): Promise<boolean> {
+    entry.stopping = true;
+    try { await entry.stream.stop(); }
+    catch { return false; }
+    this.streams = this.streams.filter(other => other !== entry);
+    return true;
+  }
+
+  /**
    * The settle rule over `device.dump.ui`, mapped to the bridge's elements with a fresh sequence, then one
    * screenshot of it saved as `screen-N.jpg` (open point 9). It becomes the snapshot actions may target.
    */
@@ -313,6 +412,7 @@ export class AndroidDriver implements DeviceDriver {
       truncated: false,
       screenHash: captured.screenHash,
       screenshotPath,
+      ...(this.logFile !== undefined ? { logTails: { logcat: await readLogTail(this.logFile) } } : {}),
       ...(captured.settled ? {} : { settled: false }),
     };
     return this.latest;
@@ -382,6 +482,7 @@ export class AndroidDriver implements DeviceDriver {
     const app = scenario.app;
     const tools = await (this.options.tools ?? androidTools)();
     this.runner = this.options.runner ?? adbRunner({ adb: tools.adb, environment: adbEnvironment() });
+    this.logcat = this.options.logcat ?? logcatStarter({ adb: tools.adb, environment: adbEnvironment() });
     const name = selectAndroidDeviceName(this.options.device, this.options.defaultDevice);
     const { serial, identity } = await this.resolveDevice(name, signal);
     let deadHolder: LeaseHolder | undefined;
@@ -392,9 +493,16 @@ export class AndroidDriver implements DeviceDriver {
     }
     this.serial = serial;
     try {
-      const sweptLeftovers = await this.checkAgents(serial, identity, deadHolder !== undefined, signal);
+      // The dead holder's streams run on this Mac, so they go first, even when a foreign agent then refuses the run.
+      const sweptStreams = deadHolder !== undefined && await this.sweepStreams(deadHolder, signal);
+      const sweptAgents = await this.checkAgents(serial, identity, deadHolder !== undefined, signal);
+      const sweptLeftovers = sweptStreams || sweptAgents;
       await this.checkDevice(serial, app.package, signal);
-      await this.restart(serial, app, signal);
+      // The streams start between the restart's force-stop and its launch, so nothing the previous instance logged is read.
+      const component = await this.stopForRestart(serial, app, signal);
+      const watched = await this.startStreams(serial, app.package, signal);
+      await this.launch(serial, component, app, signal);
+      if (watched) await this.readPid(serial, app.package, signal);
       await this.startAgent(serial, identity, tools, signal);
       this.prepared = { deviceIdentity: identity, serial, agentSha256: tools.agent.sha256, ...(sweptLeftovers ? { sweptLeftovers } : {}) };
     } catch (error) {
@@ -546,6 +654,32 @@ export class AndroidDriver implements DeviceDriver {
   }
 
   /**
+   * The takeover sweep of a dead holder's logcat streams (phase 5). `take` returns the dead holder's record
+   * but starts this run's own empty, so every `logcat <serial> <pid>` entry is owned again before the first
+   * kill: a crash or cancel mid-sweep leaves the rest for the next run. Its pid is killed only while the Mac process is still that
+   * serial's `adb … logcat`, so a reused pid is left alone; then the entry is disowned. True when any
+   * stream was stopped.
+   */
+  private async sweepStreams(holder: LeaseHolder, signal: AbortSignal): Promise<boolean> {
+    const logcat = this.logcat!;
+    const entries = holder.ownedProcesses.filter(entry => OWNED_STREAM.test(entry));
+    // Every entry is owned before any kill, so a cancel mid-sweep leaves the rest listed.
+    for (const entry of entries) await this.lease.own(entry);
+    let swept = false;
+    for (const entry of entries) {
+      if (signal.aborted) throw signal.reason;
+      const [, serial, pid] = OWNED_STREAM.exec(entry)!;
+      if (await logcat.isLeftover(Number(pid), serial!)) {
+        try { await logcat.kill(Number(pid)); }
+        catch { throw new AndroidDeviceError('adb', `A crashed run's logcat stream ${pid} did not exit`); }
+        swept = true;
+      }
+      await this.lease.disown(entry);
+    }
+    return swept;
+  }
+
+  /**
    * The device checks (item 2), in order: API level, boot, the app installed, then the screen. A screen that
    * is only off is woken; a keyguard still showing is `DEVICE_LOCKED` (open point 16). No setting is changed.
    */
@@ -582,14 +716,101 @@ export class AndroidDriver implements DeviceDriver {
   }
 
   /**
-   * The restart (item 3): force-stop the app, then `am start -W` of `app.activity` or the launcher activity,
-   * each extra as `--es <key> <value>`. App data is never cleared. `am start` reports a failure in its
-   * output, and on API 31 still exits 0, so only `Status: ok` counts as launched.
+   * The two logcat streams (phase 5 item 1), after the restart's force-stop and before its launch, from the
+   * device's own time, so no earlier line and no stale crash is read: the app's log, by its uid, to
+   * `<run ID>.log` in the private folder, and the process events, line by line into the app-exit watcher.
+   * Log files older than 3 days go first.
+   * A refused folder, a missing uid or device time, or a stream that won't start never refuses the run: that
+   * stream is skipped. True when the events stream started.
    */
-  private async restart(serial: string, app: AndroidAppIdentity, signal: AbortSignal): Promise<void> {
+  private async startStreams(serial: string, appPackage: string, signal: AbortSignal): Promise<boolean> {
+    if (this.options.logFolder === false) return false;
+    const folder = await privateLogFolder(this.options.logFolder ?? LOG_FOLDER);
+    if (folder === undefined) return false;
+    await deleteOldLogs(folder);
+    const uid = await this.appUid(serial, appPackage, signal);
+    const time = await this.deviceTime(serial, signal);
+    if (time === undefined) return false;
+    if (uid !== undefined) {
+      const file = join(folder, `${this.runId}.log`);
+      if (await this.startStream(serial, ['logcat', '-v', 'threadtime,year,uid', `--uid=${uid}`, '-T', time.text], file, signal)) this.logFile = file;
+    }
+    const watch = this.options.createExitWatch?.({ package: appPackage, startTime: time.seconds, utcOffsetMinutes: time.utcOffsetMinutes });
+    const started = await this.startStream(serial, ['logcat', '-b', 'events', '-v', 'threadtime,year', '-T', time.text, ...EVENT_FILTER],
+      line => { watch?.feed(line); }, signal, () => { watch?.streamEnded(); });
+    if (started) this.watch = watch;
+    return started;
+  }
+
+  /** One logcat stream on the serial, in the holder record as soon as it has a pid. False when it won't start. */
+  private async startStream(serial: string, args: string[], output: LogcatOutput, signal: AbortSignal, endedByItself?: () => void): Promise<boolean> {
+    this.mayIssue(signal);
+    let stream: LogcatStream;
+    try { stream = await this.logcat!.start(['-s', serial, ...args], output, signal); }
+    catch (error) {
+      if (signal.aborted) throw error;
+      return false;
+    }
+    const entry: StreamEntry = { stream, owned: ownedStream(serial, stream.pid), stopping: false };
+    this.streams.push(entry);
+    try { await this.lease.own(entry.owned); }
+    catch (error) {
+      // Not in the holder record, so a crash takeover couldn't sweep it: stop it now. One that won't stop stays for close.
+      if (await this.stopStream(entry)) await this.lease.disown(entry.owned).catch(() => undefined);
+      throw error;
+    }
+    void stream.exited.then(() => { if (!entry.stopping) endedByItself?.(); });
+    return true;
+  }
+
+  /**
+   * The app's uid, by an exact match on its whole package name in the full `pm list packages -U` output:
+   * a package passed as a filter matches substrings. Undefined when it isn't listed with one uid.
+   */
+  private async appUid(serial: string, appPackage: string, signal: AbortSignal): Promise<string | undefined> {
+    const listed = await this.shell(serial, ['pm', 'list', 'packages', '-U'], signal);
+    if (listed.exitCode !== 0) return undefined;
+    for (const line of listed.stdout.split('\n')) {
+      const match = /^package:(\S+) uid:(\d+)$/.exec(line.trim());
+      if (match?.[1] === appPackage) return match[2];
+    }
+    return undefined;
+  }
+
+  /**
+   * The device's time, as `-T` takes it, and its UTC offset in minutes, in one call: the events lines carry
+   * local time with no zone, so the app-exit watcher needs the offset to compare them with the start time.
+   */
+  private async deviceTime(serial: string, signal: AbortSignal): Promise<{ text: string; seconds: number; utcOffsetMinutes: number } | undefined> {
+    const read = await this.shell(serial, ['date', '+%s.%3N %z'], signal);
+    const match = /^(\d+\.\d{3}) ([+-])(\d{2})(\d{2})$/.exec(read.stdout.trim());
+    if (read.exitCode !== 0 || !match) return undefined;
+    const minutes = Number(match[3]) * 60 + Number(match[4]);
+    return { text: match[1]!, seconds: Number(match[1]), utcOffsetMinutes: match[2] === '-' ? -minutes : minutes };
+  }
+
+  /** `pidof` once, after `am start -W` and never earlier: it blinks during a cold start. Anything but one pid is none known. */
+  private async readPid(serial: string, appPackage: string, signal: AbortSignal): Promise<void> {
+    const found = await this.shell(serial, ['pidof', appPackage], signal);
+    const pids = found.exitCode === 0 ? found.stdout.trim().split(/\s+/).filter(Boolean) : [];
+    this.watch?.launched(pids.length === 1 && /^\d+$/.test(pids[0]!) ? Number(pids[0]) : undefined);
+  }
+
+  /**
+   * The restart's first half (item 3): force-stop the app, then find what to launch, `app.activity` or the
+   * launcher activity. App data is never cleared.
+   */
+  private async stopForRestart(serial: string, app: AndroidAppIdentity, signal: AbortSignal): Promise<string> {
     this.restartedPackage = app.package;
     await this.succeeded('stop the app', this.shell(serial, ['am', 'force-stop', app.package], signal));
-    const component = app.activity ? `${app.package}/${app.activity}` : await this.launcherActivity(serial, app.package, signal);
+    return app.activity ? `${app.package}/${app.activity}` : this.launcherActivity(serial, app.package, signal);
+  }
+
+  /**
+   * The restart's launch (item 3): `am start -W` of the component, each extra as `--es <key> <value>`.
+   * `am start` reports a failure in its output, and on API 31 still exits 0, so only `Status: ok` counts as launched.
+   */
+  private async launch(serial: string, component: string, app: AndroidAppIdentity, signal: AbortSignal): Promise<void> {
     const extras = Object.entries(app.intentExtras ?? {}).flatMap(([key, value]) => ['--es', key, value]);
     const launched = await this.shell(serial, ['am', 'start', '-W', '-n', component, ...extras], signal);
     if (launched.exitCode !== 0 || !/^Status: ok\s*$/m.test(launched.stdout)) {
