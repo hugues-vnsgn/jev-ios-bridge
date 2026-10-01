@@ -308,7 +308,11 @@ export class FakeStreams implements LogcatStarter {
     return words[0]?.endsWith('/adb') === true && words.includes('logcat') && words.some((word, at) => word === '-s' && words[at + 1] === serial);
   }
 
+  /** Runs as each kill begins. */
+  onKill: ((pid: number) => void) | undefined;
+
   async kill(pid: number): Promise<void> {
+    this.onKill?.(pid);
     this.killed.push(pid);
     this.mac.delete(pid);
   }
