@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { appLine, masker, osLine } from '../src/logpane/format.js';
 import { startLogStream } from '../src/logpane/stream.js';
 import { attachLogPane } from '../src/logpane/attach.js';
-import { paneWindowBlocked } from '../src/logpane/window.js';
+import { openPaneWindow, paneOpenEnvironment, paneWindowBlocked } from '../src/logpane/window.js';
 import { Capture } from './fixtures/capture.js';
 
 test('app lines keep the NSLog time without its prefix; error words turn red', () => {
@@ -71,6 +71,24 @@ test('the pane notes an unexpected app exit, and no live run means attach report
     assert.match((output as unknown as Capture).text, /The app stopped unexpectedly/);
     assert.equal(await attachLogPane(`missing-${Date.now()}`, new Capture() as unknown as NodeJS.WriteStream, { keepOpen: false }), false);
   } finally { await stream.finish({ verdict: 'inconclusive', reason: 'x', evidencePath: root }); await rm(root, { recursive: true, force: true }); }
+});
+
+test('the terminal a pane window may start gets no Jev key and no bridge settings', () => {
+  const environment = paneOpenEnvironment({ HOME: '/Users/me', PATH: '/usr/bin', LANG: 'en_US.UTF-8', TYPESAFE_API_KEY: 'key-must-not-reach-terminal',
+    JEV_RUNS_DIR: '/tmp/runs', JEV_ANDROID_DEVICE: 'Pixel', JEV_DEVICE_UDID: 'ABC', JEV_PROJECT_DIR: '/p', JEV_LOG_PANE_APP: 'iTerm' });
+  assert.deepEqual(environment, { HOME: '/Users/me', PATH: '/usr/bin', LANG: 'en_US.UTF-8' });
+});
+
+test('a pane window is opened with that environment, which Terminal keeps for every new tab if the pane started it', async (t) => {
+  if (await paneWindowBlocked({})) { t.skip('no desktop session here'); return; }
+  const root = await mkdtemp(join(tmpdir(), 'jev-pane-open-'));
+  const launched: { file: string; args: string[]; env: NodeJS.ProcessEnv }[] = [];
+  try {
+    const result = await openPaneWindow(root, 'echo pane', { PATH: '/usr/bin', TYPESAFE_API_KEY: 'key-must-not-reach-terminal', JEV_RUNS_DIR: '/tmp/runs' },
+      async (file, args, env) => { launched.push({ file, args, env }); });
+    assert.deepEqual(result, { opened: true, app: 'the default terminal' });
+    assert.deepEqual(launched.map(call => [call.file, call.args, call.env]), [['open', [join(root, 'log-pane.command')], { PATH: '/usr/bin' }]]);
+  } finally { await rm(root, { recursive: true, force: true }); }
 });
 
 test('no window opens when turned off, over SSH, or in CI', async () => {
