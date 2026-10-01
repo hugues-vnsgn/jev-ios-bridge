@@ -12,7 +12,7 @@ The `reason` says which one: a code from the [reason-code list](reference/reason
 
 ## Two reports
 
-- **The prose report** (printed by `run`, and returned by MCP's `get_report`) is written for people and agents. It lists the verdict and reason, the decisive checkpoint with each claim's probability, an excerpt of the screen text, and file names for the screenshot and log event. Its wording may improve between releases.
+- **The prose report** (printed by `run`, and returned by MCP's `get_report`) is written for people and agents. It lists the verdict and reason, the decisive checkpoint with each claim's probability, an excerpt of the screen text, and file names for the screenshot and log event. On Android it also names the device and its agent, what each replace-text step left in its field, and any step whose screen was still changing. Its wording may improve between releases.
 - **`report.json`** is the stable one. It's in the run's folder, printed by `run --json` and `report --json`, and its shape is frozen for 1.x. Parse this one in tools. [Field reference](reference/report-json.md).
 
 ## The evidence folder
@@ -22,7 +22,7 @@ Every run gets `.jev-runs/<run-id>/` in the directory you ran from (or in `JEV_P
 | File | Contents |
 | --- | --- |
 | `report.json` | The frozen report. |
-| `run.jsonl` | Every event, one JSON object per line: `started`, `prepared`, `step`, `judgment`, `action`, `checkpoint`, `error`, `verdict`. |
+| `run.jsonl` | Every event, one JSON object per line: `started`, `prepared`, `step`, `judgment`, `action`, `checkpoint`, `error`, `verdict`. On Android, `prepared` names the device and the device agent's SHA-256, `action` records the field's shown value after typing, and `step` records `settled: false` for a screen still changing. |
 | `screen-N.jpg` or `.png` | The screenshot for event `N`. |
 | `log-pane.command` | The script that opened the log pane, when one opened. |
 
@@ -37,4 +37,4 @@ What else to know:
 1. Look at the **decisive checkpoint**: the claim with the low probability, and the screen excerpt beside it.
 2. Open its **screenshot** (`screen-N`) to see what a person would have seen.
 3. For an inconclusive run, the **reason** tells you where it stopped. [Troubleshooting](08-troubleshooting.md) has what to do for each.
-4. The **log pane**, or the app log files named in `run.jsonl`'s `prepared` event, show what the app itself said.
+4. The **log pane**, or the app log files named in `run.jsonl`'s `prepared` event, show what the app itself said. On Android, that's the run's `logcat` file.

@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "platform": "android",
+  "app": {
+    "package": "com.android.settings"
+  },
+  "preconditions": [
+    "Settings on a stock emulator with Dark theme off. Nothing is installed; the bridge restarts Settings.",
+    "This emulator's Settings search returns no results, so the search box is the typing check: the leaveSearch guard needs the field to show exactly the typed value."
+  ],
+  "values": {
+    "query": "display"
+  },
+  "steps": [
+    {
+      "id": "openSearch",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "button",
+            "identifier": "com.android.settings:id/search_action_bar",
+            "label": "Search Settings"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "identifier": "com.android.settings:id/search_action_bar"
+        }
+      }
+    },
+    {
+      "id": "typeQuery",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text-field",
+            "identifier": "com.google.android.settings.intelligence:id/open_search_view_edit_text"
+          }
+        ]
+      },
+      "action": {
+        "kind": "replaceText",
+        "selector": {
+          "role": "text-field",
+          "identifier": "com.google.android.settings.intelligence:id/open_search_view_edit_text"
+        },
+        "valueKey": "query"
+      }
+    },
+    {
+      "id": "leaveSearch",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text-field",
+            "identifier": "com.google.android.settings.intelligence:id/open_search_view_edit_text",
+            "value": "display"
+          },
+          {
+            "role": "button",
+            "label": "Back"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "Back"
+        }
+      }
+    },
+    {
+      "id": "openDisplay",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "button",
+            "identifier": "com.android.settings:id/search_action_bar",
+            "label": "Search Settings"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "label": "Display & touch"
+        }
+      }
+    },
+    {
+      "id": "darkTheme",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "switch",
+            "label": "Dark theme"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "off",
+          "claim": "The Dark theme switch is off."
+        }
+      ]
+    }
+  ]
+}

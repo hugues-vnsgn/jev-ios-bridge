@@ -63,11 +63,9 @@ test('package.json says iOS and Android, under the same name', () => {
 test('/test-android is named test-android, links only guide pages that exist, and never names mobilecli', () => {
   assert.match(androidSkill, /^---\nname: test-android\n/);
   assert.ok(!/mobilecli/i.test(androidSkill));
-  // Phase 7 adds the Android setup page.
-  const pending = new Set(['12-android-setup.md']);
   const pages = [...androidSkill.matchAll(/`([^`\s]+\.md)`/g)].map(match => match[1]!);
   assert.ok(pages.length >= 5, `expected guide links, found ${pages.join(', ')}`);
   for (const page of pages) {
-    assert.ok(pending.has(page) || existsSync(join('docs/guide', page)), `/test-android links missing guide page ${page}`);
+    assert.ok(existsSync(join('docs/guide', page)), `/test-android links missing guide page ${page}`);
   }
 });

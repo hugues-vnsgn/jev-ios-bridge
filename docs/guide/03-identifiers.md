@@ -9,12 +9,20 @@ The bridge finds elements through the accessibility tree, the same information V
 | `label` | The accessible name, usually the visible text. |
 | `value` | A field's text, or a control's state, such as `selected` or `1`. |
 
+On Android, an element can also carry a `placeholder` (an empty field's grey hint), and `capture` marks some texts `"selectable": false` (below).
+
 ## See what the bridge sees
 
 Capture the screen your script will be on:
 
 ```sh
 npx mobilebuildmcp ui-automation snapshot-ui --simulator-id <UUID> --verbose --output json
+```
+
+On Android, use the bridge's own `capture`, which prints one line per element as a run reads it ([details](06-running.md#capture-an-android-screen)):
+
+```sh
+npx jev-ios-bridge capture --avd <AVD name>
 ```
 
 Write selectors from what's actually there, not from what the source code suggests. A label you set in code can be merged with its children, and a tag can land on a wrapper.
@@ -36,9 +44,22 @@ Write selectors from what's actually there, not from what the source code sugges
 
 **The known crash:** on Compose Multiplatform 1.11.1, heavy polling while dialogs holding very large lists opened and closed crashed the app with `EXC_BAD_ACCESS` in `AccessibilityElement.<get-node>`. JetBrains fixed this in 1.12.1. The bridge reports such a run as `APP_EXITED`.
 
+## Jetpack Compose and Compose Multiplatform on Android
+
+- **Turn on `testTagsAsResourceId`** at the root composable. Without it, Android captures have no identifiers at all. [Android setup](12-android-setup.md#give-compose-elements-identifiers-testtagsasresourceid) shows where.
+- With it, `Modifier.testTag("checkout.complete")` becomes the identifier `checkout.complete`.
+- **A button's text is lifted into its label.** A Material button captures as a `button` labelled with its text, followed by that text marked `"selectable": false`. Jev sees both, but only the button can be matched, so a guard that selects by `label` alone matches just the button.
+- **Checkboxes, radio buttons, and switches** are all `switch`, with `value` `1` or `0`. A selected tab carries `selected` in its state. Custom controls must [expose that state](12-android-setup.md#custom-tabs-and-toggles-must-expose-their-state).
+- **A password field shows dots,** one per character, never its text.
+
+## Android Views
+
+- `android:id` becomes the identifier as its full resource ID, such as `com.example.app:id/title`. System screens (Settings) use theirs, such as `android:id/title`, which often repeats: add `role` and `label`.
+- `EditText` is a `text-field`, lists and scroll views are `scroll-view`, and a `TextView` is `text`.
+
 ## Rules for every framework
 
 - **Put the tag on the element that acts,** not on its wrapper. A tag on a `Box`, `Column`, or `UIKitView` becomes an `other` element: it works in a guard, but can't be tapped or typed into.
 - **Make tags unique per instance.** Components that tag themselves repeat the same tag everywhere they're used. A number-input library that tags every field `numberInput.field` is one example. Tag each instance yourself, or add `value` to tell repeated elements apart.
-- **You can't select emptiness.** An empty Compose text field has no `value` at all, and an empty native `UITextField` reports its placeholder as `value`. So the bridge rejects `value: ""` in selectors. Check emptiness through text your app prints, if it matters.
+- **You can't select emptiness.** An empty Compose text field has no `value` at all, and an empty native `UITextField` reports its placeholder as `value`. On Android, an empty field has no `value`. It shows its hint as `placeholder` only when it has no content description; a field with one shows that description as its `label`, and has no `placeholder`. So the bridge rejects `value: ""` in selectors. Check emptiness through text your app prints, if it matters.
 - **Dynamic text is a poor selector.** Select by identifier, and put the changing text in a claim.

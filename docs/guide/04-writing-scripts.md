@@ -2,6 +2,8 @@
 
 A script is a JSON file: the app to launch, typed values, and an ordered list of steps. It must end with a checkpoint. Full field reference: [script format](reference/script-format.md).
 
+This one is for iOS. For Android, add `"platform": "android"` and name the app by its package: `"app": { "package": "dev.jevbridge.diagnostic" }`. The steps are the same on both. A script targets one platform.
+
 ```json
 {
   "version": 1,
@@ -63,6 +65,7 @@ Put every literal you type into `values`, and refer to it by key:
 ```
 
 - **Allowed:** printable US-keyboard characters, up to 2048 per value and 32 values per script. A value can't start with a hyphen; that's a limit of the pinned device layer.
+- **On Android,** any text except control characters, including a leading hyphen. Non-ASCII text types exactly too, through the device clipboard, and the keyboard may keep it ([data handling](09-data-handling.md#non-ascii-typing-on-android-goes-through-the-clipboard)).
 - **Masked in the evidence.** Values are masked in the run log and the log pane. They can still show up in screenshots, and in the screen text sent to Jev.
 - **Check the result in the next guard,** for example `{ "identifier": "search.field", "value": "London" }`. Keyboard state can change casing or how replace-all behaves.
 
@@ -72,7 +75,7 @@ Put every literal you type into `values`, and refer to it by key:
 - **Scroll a long list:** `swipe` on the list or `scroll-view` element, repeated as needed, with guards on anchors that prove where you are.
 - **Open and close a sheet:** tap, checkpoint with the sheet's title in `present`, close, then put the title in `absent`.
 - **Keypads and keyboards:** tap each key by identifier. After replacing text, the iOS edit menu can stay open; the next step's fresh capture handles that.
-- **Launch into a known screen:** `app.launchArgs`, see [prepare your app](02-prepare-your-app.md).
+- **Launch into a known screen:** `app.launchArgs` on iOS, or `app.activity` and `app.intentExtras` on Android. See [prepare your app](02-prepare-your-app.md).
 
 ## Scripts that fail to parse
 

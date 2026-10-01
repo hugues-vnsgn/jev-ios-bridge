@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "platform": "android",
+  "app": {
+    "package": "dev.jevbridge.diagnostic"
+  },
+  "preconditions": [
+    "Diagnostic App (Android, dev.jevbridge.diagnostic) is installed and starts with Selected: None."
+  ],
+  "values": {},
+  "steps": [
+    {
+      "id": "addApple",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "identifier": "selection.summary",
+            "label": "Selected: None"
+          },
+          {
+            "role": "button",
+            "identifier": "choose.apple",
+            "label": "Add Apple ($2)"
+          },
+          {
+            "role": "button",
+            "identifier": "choose.bread",
+            "label": "Add Bread ($3)"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "identifier": "choose.apple"
+        }
+      }
+    },
+    {
+      "id": "addBread",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "identifier": "selection.summary",
+            "label": "Selected: Apple"
+          },
+          {
+            "role": "button",
+            "identifier": "choose.bread",
+            "label": "Add Bread ($3)"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "identifier": "choose.bread"
+        }
+      }
+    },
+    {
+      "id": "bothSelected",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "button",
+            "identifier": "order.complete"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "summary",
+          "claim": "The screen shows Selected: Apple, Bread."
+        }
+      ]
+    },
+    {
+      "id": "finishOrder",
+      "kind": "action",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "identifier": "selection.summary",
+            "label": "Selected: Apple, Bread"
+          },
+          {
+            "role": "button",
+            "identifier": "order.complete"
+          }
+        ]
+      },
+      "action": {
+        "kind": "tap",
+        "selector": {
+          "role": "button",
+          "identifier": "order.complete"
+        }
+      }
+    },
+    {
+      "id": "orderComplete",
+      "kind": "checkpoint",
+      "guard": {
+        "present": [
+          {
+            "role": "text",
+            "identifier": "confirmation.title"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "id": "title",
+          "claim": "The screen shows the title Order complete."
+        }
+      ]
+    }
+  ]
+}
