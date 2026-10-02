@@ -9,7 +9,9 @@
 // is done when the "step done" Noul reads yes on that observation (C4): every observation is taken after the
 // step's last action, so it is fresh. Jev's choice alone never completes a step.
 //
-// A pick that `acceptDecision` (policy.ts) sends back as NONE_FITS or LOW_CONFIDENCE starts the target search
+// A pick that `acceptDecision` (policy.ts) sends back as NONE_FITS or LOW_CONFIDENCE first gets a look again, at most
+// LATE_SCREEN_LOOKS per step: after LATE_SCREEN_WAIT_MS the screen is captured again, and if it changed by itself
+// (a launch screen, a list still loading) Jev is asked about it instead. Otherwise the miss starts the target search
 // (E9): scroll down up to SEARCH_SCROLLS times, then up, asking Jev again after each scroll that changed the
 // screen, while the screen has a scrollable element or no scroll was tried yet; its screens count toward A→B→A→B.
 // A screen without a scrollable element whose search scroll changed nothing isn't scrolled to search again in the
@@ -42,6 +44,11 @@ export const DECISIONS_PER_STEP = 8;
 export const SEARCH_SCROLLS = 3;
 /** E10: Jev picking the same action this many times in a step goes to Claude instead. */
 export const SAME_ACTION_PICKS = 3;
+/** A screen still loading (a launch screen, a list filling in) looks like a miss: before the target search, the step
+ *  waits this long and captures again, and a screen that changed by itself goes back to Jev instead of being scrolled. */
+export const LATE_SCREEN_WAIT_MS = 1_000;
+/** At most this many such looks per step, so a screen that keeps changing (a timer) can't hold a step. */
+export const LATE_SCREEN_LOOKS = 3;
 /** How many of Jev's picks a hand-back package carries. */
 export const TOP_CHOICES = 3;
 
@@ -158,6 +165,8 @@ export interface DrivenStepContext {
   act(action: Action, snapshot: Snapshot): Promise<{ actDurationMs: number }>;
   /** How the driver performed the last back or scroll. */
   actPath(): ActPath | undefined;
+  /** Waits, abortably, before looking again at a screen that may still be loading; absent, no wait. */
+  pause?(milliseconds: number): Promise<void>;
   /** The hand-back gate (a {@link Handback}), called abortably: waits for Claude's answer. */
   awaitAnswer(packet: HandbackPacket): Promise<HandbackAnswer>;
 }
@@ -291,6 +300,7 @@ export async function runDrivenStep(ctx: DrivenStepContext): Promise<DrivenStepO
   let claudeJustActed = false;
   let budgetHandedBack = false;
   let scrollTried = false;
+  let lateLooks = 0;
   // Stuck history, cleared after each of Claude's actions: Jev's picks per key, the screens since, the search.
   let picks = new Map<string, number>();
   let screens: string[] = [];
@@ -493,6 +503,18 @@ export async function runDrivenStep(ctx: DrivenStepContext): Promise<DrivenStepO
     const searchFor = accepted.kind === 'handBack' && SEARCH_REASONS.has(accepted.reason) ? accepted.reason : undefined;
     if (searchFor && writesBlocked) reason = 'NO_PREFLIGHT';
     else if (searchFor && !searched) {
+      if (lateLooks < LATE_SCREEN_LOOKS) {
+        // The miss may be a screen still loading: look again before scrolling it. A screen that changed by itself
+        // goes back to Jev; an unchanged one is searched from the capture Jev decided on.
+        lateLooks++;
+        await ctx.pause?.(LATE_SCREEN_WAIT_MS);
+        const fresh = await ctx.observe();
+        if (screenIdentity(fresh) !== screenIdentity(snapshot)) {
+          snapshot = fresh;
+          seeScreen(fresh);
+          continue;
+        }
+      }
       const found = await search(snapshot, searchFor, asked.decision);
       if (found.kind === 'done') return { kind: 'done' };
       snapshot = found.snapshot;

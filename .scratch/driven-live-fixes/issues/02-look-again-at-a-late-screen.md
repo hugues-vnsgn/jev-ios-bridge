@@ -1,6 +1,6 @@
 # Look again at a screen that is still loading before scrolling to search
 
-Status: ready-for-agent
+Status: resolved
 Type: bug
 Source: live trial 2026-10-02, both driven runs: the first `do` step's first capture was the app's launch screen ("Loading"). Jev said none of its 5 actions fit, and the bridge started the target search; its "scroll" counted as a change only because loading had finished meanwhile.
 

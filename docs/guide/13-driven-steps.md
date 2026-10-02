@@ -42,7 +42,8 @@ For each screen in the step:
 2. Jev picks one and gives two numbers: its confidence in the pick, and the probability that the step is already done.
 3. The step is done when that probability is at least 0.90.
 4. Otherwise, the bridge takes the pick only if its confidence is at least 0.80 (0.90 in a `test_write` step), and the control's label, value or identifier has none of these words: Delete, Remove, Erase, Reset, Sign out, Unsubscribe, Pay. In a step whose effect is `none`, these write words count too: Approve, Reject, Send, Submit, Confirm, Save, Publish, Post. Words match whole, in any case, so "Send message" counts and "Sender" doesn't.
-5. If Jev found nothing that fits, or wasn't confident enough, the bridge searches: it scrolls down up to 3 times, then up up to 3 times, asking again after each scroll that changed the screen. A screen with no scrollable element gets one try. If that scroll changes nothing, the bridge doesn't scroll that same screen to search again in the run; a new screen still gets its try.
+5. If Jev found nothing that fits, or wasn't confident enough, the bridge first looks again: it waits a second and captures the screen. If the screen changed by itself, such as a launch screen that finished loading or a list that filled in, Jev is asked about the new screen. A step gets at most 3 such looks.
+6. Otherwise, the bridge searches: it scrolls down up to 3 times, then up up to 3 times, asking again after each scroll that changed the screen. A screen with no scrollable element gets one try. If that scroll changes nothing, the bridge doesn't scroll that same screen to search again in the run; a new screen still gets its try.
 
 Each action the bridge performs counts toward `maxSteps`, as does the `do` step itself. After 8 Jev decisions in one step, the step goes to Claude.
 

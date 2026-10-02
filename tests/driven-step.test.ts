@@ -8,7 +8,8 @@ import type { Action, ActPath, DeviceDriver, Element, RunEvent, RunLog, Snapshot
 import type { ScriptedScenario } from '../src/scripted/contracts.js';
 import { runScriptedScenario, type ScriptedRunOptions } from '../src/scripted/run.js';
 import { parseScriptedScenario } from '../src/scripted/schema.js';
-import { DECISIONS_PER_STEP, type HandbackAnswer, type HandbackPacket } from '../src/driven/step.js';
+import { DECISIONS_PER_STEP, LATE_SCREEN_LOOKS, LATE_SCREEN_WAIT_MS, type HandbackAnswer, type HandbackPacket }
+  from '../src/driven/step.js';
 import { fakeDrivenJudge, type FakeStep } from './fixtures/driven-judge.js';
 import { REASON_CODES } from '../src/scripted/vocabulary.js';
 import { PAUSE_REASON_TEXT } from '../src/driven/vocabulary.js';
@@ -51,7 +52,9 @@ interface GraphDriver extends DeviceDriver {
  * `refsPerCapture`, each capture gives its elements new refs (`b1@<sequence>`), as iOS does.
  */
 function graphDriver(screens: Record<string, Element[]>, start: string, moves: Record<string, string> = {},
-  options: { staleOnce?: string; staleMovesTo?: string; scrollWithin?: string; refsPerCapture?: boolean } = {}): GraphDriver {
+  options: { staleOnce?: string; staleMovesTo?: string; scrollWithin?: string; refsPerCapture?: boolean;
+    /** `changesBy[screen]` is the screen it turns into by itself once captured, as a launch screen or a loading list does. */
+    changesBy?: Record<string, string> } = {}): GraphDriver {
   let current = start;
   let sequence = 0;
   let path: ActPath | undefined;
@@ -71,7 +74,11 @@ function graphDriver(screens: Record<string, Element[]>, start: string, moves: R
     current: () => current,
     goTo(screen) { current = screen; },
     async prepare() {},
-    async observe() { return shot(); },
+    async observe() {
+      const snapshot = shot();
+      current = options.changesBy?.[current] ?? current;
+      return snapshot;
+    },
     async act(action) {
       if (action.targetRef !== undefined) refsActedOn.push(action.targetRef);
       const key = actionKey(action).replace(/@\d+/g, '');
@@ -147,6 +154,8 @@ interface Run {
   checkpointProbability?: number;
   options?: Partial<ScriptedRunOptions>;
   testWritesAllowed?: boolean;
+  /** How long the bridge waits before looking again at a screen that may still be loading; these fakes need none. */
+  lateScreenWaitMs?: number;
 }
 
 async function run(input: Run) {
@@ -156,7 +165,8 @@ async function run(input: Run) {
   const report = await runScriptedScenario({ runId: 'driven', log,
     scenario: script(input.steps ?? [doStep(), checkpoint()], input.extra),
     driver: input.driver, judge: passingJudge(input.checkpointProbability),
-    driven: { judge, handback, testWritesAllowed: input.testWritesAllowed ?? false },
+    driven: { judge, handback, testWritesAllowed: input.testWritesAllowed ?? false,
+      lateScreenWaitMs: input.lateScreenWaitMs ?? 0 },
     ...input.options });
   const of = (type: RunEvent['type']) => log.events.filter(event => event.type === type).map(event => event.data);
   return { report, log, judge, handback, of };
@@ -226,6 +236,58 @@ test('the step is done only on the done Noul: a step_done pick with an uncertain
   // The uncertain step_done is a low-confidence answer: one search scroll changed nothing, then Claude tapped.
   assert.equal(handback.packets[0]!.reason, 'LOW_CONFIDENCE');
   assert.deepEqual(driver.acts, ['filled scroll:down', 'filled tap:b1']);
+});
+
+test('a launch screen that turns into the real screen by itself: no search scroll; Jev decides on the real screen', async () => {
+  const screens = {
+    splash: [text('t0', 'Loading')],
+    dashboard: [list('l1'), button('b1', 'Settings')],
+    settings: [text('t3', 'Home')],
+  };
+  const driver = graphDriver(screens, 'splash', { 'dashboard tap:b1': 'settings' }, { changesBy: { splash: 'dashboard' } });
+  const { report, of, judge, handback } = await run({ driver, judge: [
+    { choice: 'none_fits', confidence: 0.99 },
+    { choice: 'tap:b1', confidence: 0.95 },
+    { choice: 'step_done', confidence: 0.96, done: 0.97 },
+  ] });
+  assert.equal(report.verdict, 'passed');
+  assert.deepEqual(driver.acts, ['dashboard tap:b1']);
+  assert.deepEqual(of('search'), []);
+  assert.equal(handback.packets.length, 0);
+  assert.ok(JSON.stringify(judge.asked[1]!.request).includes('Settings'), 'the second decision is about the dashboard');
+});
+
+test('a screen that stays the same after the look searches exactly as before', async () => {
+  const screens = { top: [list('l1'), text('t1', 'Settings')], bottom: [list('l1'), button('b9', 'Sign in')], home: [text('t3', 'Home')] };
+  const driver = graphDriver(screens, 'top', { 'top scroll:down': 'bottom', 'bottom tap:b9': 'home' });
+  const { report, of } = await run({ driver, judge: [
+    { choice: 'none_fits', confidence: 0.9 },
+    { choice: 'tap:b9', confidence: 0.91 },
+    { choice: 'step_done', confidence: 0.95, done: 0.95 },
+  ] });
+  assert.equal(report.verdict, 'passed');
+  assert.deepEqual(driver.acts, ['top scroll:down', 'bottom tap:b9']);
+  assert.deepEqual(of('search').map(s => [s.direction, s.attempt, s.changed]), [['down', 1, true]]);
+});
+
+test('a screen that changes on every look gets at most LATE_SCREEN_LOOKS looks per step, then the search runs', async () => {
+  assert.equal(LATE_SCREEN_LOOKS, 3);
+  assert.equal(LATE_SCREEN_WAIT_MS, 1_000);
+  const screens: Record<string, Element[]> = {};
+  for (let i = 0; i <= 3; i++) screens[`s${i}`] = [list('l1'), text(`t${i}`, `Tick ${i}`)];
+  screens.home = [list('l1'), text('t9', 'Home')];
+  const driver = graphDriver(screens, 's0', {}, { changesBy: { s0: 's1', s1: 's2', s2: 's3', s3: 'home' } });
+  const { report, of, judge } = await run({ driver, judge: [
+    { choice: 'none_fits', confidence: 0.9 },
+    { choice: 'none_fits', confidence: 0.9 },
+    { choice: 'none_fits', confidence: 0.9 },
+    { choice: 'none_fits', confidence: 0.9 },
+    { choice: 'step_done', confidence: 0.95, done: 0.95 },
+  ] });
+  assert.equal(report.verdict, 'passed');
+  // s0 asked, then three looks (s1, s2, s3) each asked; the fourth miss searches.
+  assert.equal(judge.asked.length, 5);
+  assert.deepEqual(of('search').map(s => [s.direction, s.attempt]), [['down', 1]]);
 });
 
 test('target search: none_fits, two scrolls down, then Jev finds the target and acts', async () => {
