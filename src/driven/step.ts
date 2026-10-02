@@ -32,7 +32,7 @@ import type { DoStep, ScriptedStep } from '../scripted/contracts.js';
 import { ScriptedJevError } from '../scripted/jev.js';
 import { renderAssertionState, ScriptedObservationError } from '../scripted/observe.js';
 import { describeElement, isPermissionDialog } from './candidates.js';
-import { maskValues, prepareDecision, topChoices, type DrivenDecision, type PreparedDecision }
+import { maskElement, maskSnapshot, prepareDecision, topChoices, type DrivenDecision, type PreparedDecision }
   from './decide.js';
 import { acceptDecision, CONFIDENCE_FLOOR, doneVerdict, type HandBackReason } from './policy.js';
 
@@ -204,9 +204,10 @@ function targetOf(action: Action, snapshot: Snapshot): Element | undefined {
 /** The action pointed at the same element on another capture of the same screen; undefined when it isn't there.
  *  Refs can change between captures, so an element action is matched by everything but its ref. */
 function onScreen(action: Action, from: Snapshot, to: Snapshot): Action | undefined {
+  // A changed screen hands back, even for an action with no target (back, scroll).
+  if (screenIdentity(to) !== screenIdentity(from)) return undefined;
   const target = targetOf(action, from);
   if (!target) return action.targetRef === undefined ? action : undefined;
-  if (screenIdentity(to) !== screenIdentity(from)) return undefined;
   const match = to.elements.find(element => elementIdentity(element) === elementIdentity(target));
   return match ? { ...action, targetRef: match.ref } as Action : undefined;
 }
@@ -245,6 +246,15 @@ function actionFields(action: Action): Record<string, unknown> {
     case 'back': return { action: 'back' };
     case 'tapAt': return { action: 'tapAt', x: action.x, y: action.y };
   }
+}
+
+/** The action's target as reports and run logs name it, by role, label and identifier with typed values masked
+ *  (ADR-0002): its ref is only a position in one capture. Nothing for an action with no target. */
+function targetFields(action: Action, snapshot: Snapshot, values: Readonly<Record<string, string>>): Record<string, unknown> {
+  const element = targetOf(action, snapshot);
+  if (!element) return {};
+  const { role, label, identifier } = maskElement(element, values);
+  return { target: { role, ...(label ? { label } : {}), ...(identifier ? { identifier } : {}) } };
 }
 
 type Asked =
@@ -332,18 +342,14 @@ export async function runDrivenStep(ctx: DrivenStepContext): Promise<DrivenStepO
     if (action.kind === 'scroll') scrollTried = true;
     const path = action.kind === 'back' || action.kind === 'scroll' ? ctx.actPath() : undefined;
     recentActions.push(describeAction(action, snapshot));
-    await ctx.log.append('action', { ...where, ...actionFields(action), ...fields,
+    await ctx.log.append('action', { ...where, ...actionFields(action), ...targetFields(action, snapshot, ctx.values), ...fields,
       ...pathFields(path), actDurationMs });
     return ctx.observe();
   };
 
   const screenText = (snapshot: Snapshot): string => {
     try {
-      const masked = snapshot.elements.map(element => ({ ...element,
-        ...Object.fromEntries((['label', 'placeholder', 'value', 'identifier'] as const)
-          .filter(field => element[field] !== undefined)
-          .map(field => [field, maskValues(element[field]!, ctx.values)])) }));
-      return renderAssertionState({ ...snapshot, elements: masked }, ctx.platform);
+      return renderAssertionState(maskSnapshot(snapshot, ctx.values), ctx.platform);
     } catch (error) {
       if (error instanceof ScriptedObservationError) return '';
       throw error;

@@ -43,7 +43,7 @@ interface GraphDriver extends DeviceDriver {
 
 /** A device whose screens are named; `moves['screen key']` is the screen an action leads to (else it stays). */
 function graphDriver(screens: Record<string, Element[]>, start: string, moves: Record<string, string> = {},
-  options: { staleOnce?: string; scrollWithin?: string } = {}): GraphDriver {
+  options: { staleOnce?: string; staleMovesTo?: string; scrollWithin?: string } = {}): GraphDriver {
   let current = start;
   let sequence = 0;
   let path: ActPath | undefined;
@@ -61,6 +61,7 @@ function graphDriver(screens: Record<string, Element[]>, start: string, moves: R
       const key = actionKey(action);
       if (staleOnce === key) {
         staleOnce = undefined;
+        if (options.staleMovesTo) current = options.staleMovesTo;
         const { StaleSnapshotError } = await import('../src/device/index.js');
         throw new StaleSnapshotError();
       }
@@ -427,6 +428,31 @@ test('Claude\'s tapAt on a screen that went stale is never replayed: it hands ba
   assert.equal(report.reason, 'STOPPED_BY_CLAUDE');
 });
 
+test('Claude\'s back on a screen that changed while it was stale hands back SCREEN_CHANGED and does nothing', async () => {
+  const driver = graphDriver(signInScreens, 'filled', signInMoves, { staleOnce: 'back', staleMovesTo: 'login' });
+  const { handback, report } = await run({ driver, steps: [doStep({ localOnly: true }), checkpoint()], judge: [],
+    handback: [{ kind: 'back' }, { kind: 'stop' }] });
+  assert.deepEqual(driver.acts, []);
+  assert.deepEqual(handback.packets.map(p => p.reason), ['LOCAL_ONLY_STEP', 'SCREEN_CHANGED']);
+  assert.equal(report.reason, 'STOPPED_BY_CLAUDE');
+});
+
+test('Claude\'s back on a stale capture of the same screen is performed on the fresh capture', async () => {
+  const driver = graphDriver(signInScreens, 'filled', signInMoves, { staleOnce: 'back' });
+  await run({ driver, steps: [doStep({ localOnly: true }), checkpoint()], judge: [],
+    handback: [{ kind: 'back' }, { kind: 'stop' }] });
+  assert.deepEqual(driver.acts, ['filled back']);
+});
+
+test('an action event names its target by role, label and identifier, with typed values masked', async () => {
+  const screens = { s: [field('f1', 'ops@example.com'), button('b1', 'Go', { identifier: 'go.button' })] };
+  const driver = graphDriver(screens, 's');
+  const { of } = await run({ driver, steps: [doStep({ localOnly: true, values: ['user'] }), checkpoint()], judge: [],
+    handback: [{ kind: 'type', ref: 'f1', valueKey: 'user' }, { kind: 'tap', ref: 'b1' }, { kind: 'back' }, { kind: 'stop' }] });
+  assert.deepEqual(of('action').map(a => a.target), [
+    { role: 'text-field', label: '⟦value:user⟧' }, { role: 'button', label: 'Go', identifier: 'go.button' }, undefined]);
+});
+
 test('revise replaces the remaining steps; the run goes on with them', async () => {
   const driver = graphDriver(signInScreens, 'filled', signInMoves);
   const revised = homeCheckpoint();
@@ -497,14 +523,21 @@ test('the new reason codes are in the vocabulary', () => {
   }
 });
 
-test('the driven events carry no screen text and no typed value', async () => {
+test('the driven events carry no screen text beyond an action\'s own target, and no typed value', async () => {
   const driver = graphDriver(signInScreens, 'login', signInMoves);
   const { of } = await run({ driver, steps: [doStep({ values: ['user'] }), checkpoint()], judge: [
     { choice: 'type:f1:user', confidence: 0.95 }, { choice: 'none_fits', confidence: 0.9 },
   ], handback: [{ kind: 'tap', ref: 'b1' }, { kind: 'revise', steps: homeCheckpoint() }] });
-  const driven = JSON.stringify(['decision', 'search', 'handback', 'handback_answer', 'action'].map(type => of(type as RunEvent['type'])));
+  const driven = JSON.stringify(['decision', 'search', 'handback', 'handback_answer'].map(type => of(type as RunEvent['type'])));
   for (const screenText of ['Welcome', 'Email', 'Sign in', 'Filled', 'ops@example.com']) {
     assert.ok(!driven.includes(screenText), screenText);
+  }
+  // An action names its target as the step event's screen summary already does (ADR-0002), and nothing else.
+  const actions = of('action');
+  assert.deepEqual(actions.map(a => a.target), [{ role: 'text-field', label: 'Email' }, { role: 'button', label: 'Sign in' }]);
+  const untargeted = JSON.stringify(actions.map(({ target: _target, ...rest }) => rest));
+  for (const screenText of ['Welcome', 'Email', 'Sign in', 'Filled', 'ops@example.com']) {
+    assert.ok(!untargeted.includes(screenText), screenText);
   }
   assert.ok(of('search').length > 0 && of('handback').length > 0);
 });

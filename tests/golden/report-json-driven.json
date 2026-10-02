@@ -66,6 +66,10 @@
           "stepId": "signIn",
           "action": "tap",
           "ref": "b1",
+          "target": {
+            "role": "button",
+            "label": "Sign in"
+          },
           "decidedBy": "claude"
         },
         {

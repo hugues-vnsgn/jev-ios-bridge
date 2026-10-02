@@ -43,7 +43,7 @@ const passedRun = events([
     actDurationMs: 50 }, 4],
   ['handback', { ...where(1, 'signIn'), reason: 'NONE_FITS', pauseId: 'p-1' }, 5],
   ['handback_answer', { ...where(1, 'signIn'), pauseId: 'p-1', kind: 'tap' }, 17],
-  ['action', { ...where(1, 'signIn'), action: 'tap', resolvedRef: 'b1', decidedBy: 'claude', actDurationMs: 40 }, 18],
+  ['action', { ...where(1, 'signIn'), action: 'tap', resolvedRef: 'b1', target: { role: 'button', label: 'Sign in' }, decidedBy: 'claude', actDurationMs: 40 }, 18],
   ['step', { ...where(1, 'signIn'), kind: 'do', snapshotSequence: 2, observationSummary: 'text-field Email',
     observeDurationMs: 0 }, 18],
   ['decision', { ...where(1, 'signIn'), decision: 2, options: 7, choice: 'type:f1:email', confidence: 0.95, done: 0.05,
@@ -94,7 +94,7 @@ test('report.json gets a driven block for a run with do steps (golden)', async (
     decisionInputTokens: 1230,
     actions: [
       { stepId: 'signIn', action: 'scroll', direction: 'down', decidedBy: 'bridge', changed: false },
-      { stepId: 'signIn', action: 'tap', ref: 'b1', decidedBy: 'claude' },
+      { stepId: 'signIn', action: 'tap', ref: 'b1', target: { role: 'button', label: 'Sign in' }, decidedBy: 'claude' },
       { stepId: 'signIn', action: 'type', ref: 'f1', valueKey: 'email', decidedBy: 'jev', key: 'type:f1:email', confidence: 0.95 },
     ],
     doSteps: [
@@ -195,7 +195,8 @@ test('a driven run through the service writes report.json with the driven block'
     const written = JSON.parse(await readFile(join(service.baseDir, runId, 'report.json'), 'utf8')) as ReportJson;
     assert.equal(written.verdict, 'passed');
     assert.deepEqual(written.driven, { start: 'restart', preflight: null, decisions: 2, decisionInputTokens: 2,
-      actions: [{ stepId: 'signIn', action: 'tap', ref: 'b1', decidedBy: 'jev', key: 'tap:b1', confidence: 0.95 }],
+      actions: [{ stepId: 'signIn', action: 'tap', ref: 'b1', target: { role: 'button', label: 'Sign in' }, decidedBy: 'jev',
+        key: 'tap:b1', confidence: 0.95 }],
       doSteps: [{ stepId: 'signIn', completedBy: 'jev', done: 0.95 }], handbacks: [] });
   } finally { await service.close(); await rm(root, { recursive: true, force: true }); }
 });

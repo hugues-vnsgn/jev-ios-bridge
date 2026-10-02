@@ -3,7 +3,7 @@ import { createHmac, randomBytes } from 'node:crypto';
 import { resolve, join, basename } from 'node:path';
 import { PLATFORMS, type RunEvent, type RunLog } from '../contracts/index.js';
 import { PROJECTION_RULES } from '../scripted/observe.js';
-import { REASON_CODES } from '../scripted/vocabulary.js';
+import { REASON_CODES, ROLES } from '../scripted/vocabulary.js';
 import { BRIDGE_VERSION } from '../version.js';
 import { HANDBACK_ANSWER_KINDS, PAUSE_REASON_TEXT } from '../driven/vocabulary.js';
 
@@ -23,6 +23,8 @@ const protocolValues: Record<string, ReadonlySet<string>> = {
   'steps.kind': new Set(STEP_KINDS),
   action: new Set(['tap', 'replaceText', 'swipe', 'wait', 'type', 'scroll', 'back', 'tapAt']),
   'action.direction': DIRECTIONS,
+  // A driven action's target role: one of the selector roles.
+  'target.role': new Set(ROLES),
   // A driven scroll's, or a target search's, direction.
   direction: DIRECTIONS,
   decidedBy: new Set(['script', 'jev', 'claude']),

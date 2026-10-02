@@ -54,11 +54,19 @@ export interface ReportJson {
  *  search's scrolls). */
 export type DecidedBy = 'script' | 'jev' | 'claude' | 'bridge';
 
+export interface ReportActionTarget {
+  role: string;
+  label?: string;
+  identifier?: string;
+}
+
 export interface ReportDrivenAction {
   stepId: string;
   /** The action kind: tap, type, scroll, back, tapAt, swipe, replaceText, wait. A target search scroll is `scroll`. */
   action: string;
   ref?: string;
+  /** The tapped or typed element by role, label and identifier, typed values masked; the ref names it in one capture only. */
+  target?: ReportActionTarget;
   valueKey?: string;
   direction?: string;
   x?: number;
@@ -153,6 +161,15 @@ export function isDrivenRun(events: RunEvent[]): boolean {
 
 const DECIDERS: ReadonlySet<string> = new Set(['jev', 'claude']);
 
+/** A logged action target, read back field by field; nothing when it isn't one. */
+function actionTarget(value: unknown): { target?: ReportActionTarget } {
+  if (!value || typeof value !== 'object') return {};
+  const { role, label, identifier } = value as Record<string, unknown>;
+  if (typeof role !== 'string') return {};
+  return { target: { role, ...(typeof label === 'string' ? { label } : {}),
+    ...(typeof identifier === 'string' ? { identifier } : {}) } };
+}
+
 /** The step kinds by id: the planned steps, then each revision's, the later winning. */
 function stepKindsOf(events: RunEvent[]): Map<string, unknown> {
   const kinds = new Map<string, unknown>();
@@ -216,6 +233,7 @@ export function drivenReportOf(events: RunEvent[]): ReportDriven | undefined {
     const decidedBy = typeof data.decidedBy === 'string' && DECIDERS.has(data.decidedBy) ? data.decidedBy as DecidedBy : 'script';
     return [{ stepId: String(data.stepId ?? ''), action: String(data.action ?? ''),
       ...(typeof data.resolvedRef === 'string' ? { ref: data.resolvedRef } : {}),
+      ...actionTarget(data.target),
       ...(typeof data.valueKey === 'string' ? { valueKey: data.valueKey } : {}),
       ...(typeof data.direction === 'string' ? { direction: data.direction } : {}),
       ...(typeof data.x === 'number' && typeof data.y === 'number' ? { x: data.x, y: data.y } : {}),

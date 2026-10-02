@@ -153,7 +153,7 @@ In a script with `do` steps, checkpoints are masked the same way: Jev reads `⟦
 
 `report.json` and the text report gain a `driven` section for runs with `do` steps: the start mode, the preflight result, the number of Jev decisions and their input tokens, who decided each action (`script`, `jev`, `claude`, or `bridge` for the target search's scrolls), who completed each `do` step (Jev's done check or Claude's `done`), and each hand-back with its reason, Claude's answer and how long it waited ([fields](reference/report-json.md#runs-with-do-steps)). The watch page shows Jev's decisions, the searches, the hand-backs and Claude's answers as they happen, and says when a run is waiting for Claude.
 
-`run.jsonl` has these events beside the usual ones: `decision` (Jev's pick, confidence, done probability, tokens), `search` (each scroll of the target search), `handback` and `handback_answer`, and `preflight`. Each `action` event in a `do` step has `decidedBy`. Version 1 runs record none of them.
+`run.jsonl` has these events beside the usual ones: `decision` (Jev's pick, confidence, done probability, tokens), `search` (each scroll of the target search), `handback` and `handback_answer`, and `preflight`. Each `action` event in a `do` step has `decidedBy`, and a tap or type also has `target`: the element's role, label and identifier, with typed values masked. Version 1 runs record none of them.
 
 ## Limits
 
