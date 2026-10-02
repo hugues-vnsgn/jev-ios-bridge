@@ -1,0 +1,38 @@
+{
+  "id": "nnw-01",
+  "answer": {
+    "choice": "tap:e37",
+    "confidence": 0.99,
+    "probabilities": {
+      "back": 0,
+      "tap:e71": 0,
+      "tap:e47": 0,
+      "tap:e43": 0,
+      "tap:e51": 0,
+      "step_done": 0,
+      "scroll:up": 0,
+      "tap:e39": 0,
+      "tap:e41": 0,
+      "tap:e10": 0,
+      "tap:e80": 0,
+      "tap:e45": 0,
+      "tap:e37": 1,
+      "tap:e49": 0,
+      "tap:e75": 0,
+      "none_fits": 0,
+      "tap:e36": 0,
+      "scroll:down": 0
+    },
+    "done": 0.04,
+    "inputTokens": 4652,
+    "latencyMs": 283.01083300000005
+  },
+  "score": {
+    "right": true,
+    "accepted": true,
+    "wrongAccepted": false,
+    "handled": true,
+    "doneVerdict": "no",
+    "doneRight": true
+  }
+}

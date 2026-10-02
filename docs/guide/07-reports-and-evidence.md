@@ -12,7 +12,7 @@ The `reason` says which one: a code from the [reason-code list](reference/reason
 
 ## Two reports
 
-- **The prose report** (printed by `run`, and returned by MCP's `get_report`) is written for people and agents. It lists the verdict and reason, the decisive checkpoint with each claim's probability, an excerpt of the screen text, and file names for the screenshot and log event. On Android it also names the device and its agent, what each replace-text step left in its field, and any step whose screen was still changing. Its wording may improve between releases.
+- **The prose report** (printed by `run`, and returned by MCP's `get_report`) is written for people and agents. It lists the verdict and reason, the decisive checkpoint with each claim's probability, an excerpt of the screen text, and file names for the screenshot and log event. On Android it also names the device and its agent, what each replace-text step left in its field, and any step whose screen was still changing. A run with [`do` steps](13-driven-steps.md#what-the-report-shows) adds who decided each action and each hand-back to Claude. Its wording may improve between releases.
 - **`report.json`** is the stable one. It's in the run's folder, printed by `run --json` and `report --json`, and its shape is frozen for 1.x. Parse this one in tools. [Field reference](reference/report-json.md).
 
 ## The evidence folder

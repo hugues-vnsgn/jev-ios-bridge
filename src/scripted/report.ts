@@ -1,5 +1,7 @@
 import type { RunEvent, RunReport, Verdict } from '../contracts/index.js';
-import { recordedPlatform, typedFieldsOf } from './report-json.js';
+import {
+  drivenReportOf, recordedPlatform, typedFieldsOf, type ReportDoStep, type ReportDriven, type ReportDrivenAction,
+} from './report-json.js';
 
 export interface ScriptedReport extends RunReport {
   checkpoints: Array<{
@@ -29,6 +31,51 @@ function bounded(value: string, maximumBytes: number): string {
     used += size;
   }
   return prefix + notice;
+}
+
+const DECIDER_NAMES = { script: 'the script', jev: 'Jev', claude: 'Claude', bridge: 'the bridge (target search)' } as const;
+
+function preflightText(preflight: ReportDriven['preflight']): string {
+  if (!preflight) return 'preflight not run';
+  if (preflight.status === 'ok') return 'preflight ok';
+  if (preflight.status === 'missing') return 'preflight missing (no .jev/preflight.json)';
+  const cause = preflight.failure === 'cleanup' ? 'its processes could not be stopped'
+    : preflight.exitCode !== null ? `exit code ${preflight.exitCode}` : preflight.failure ?? 'unknown cause';
+  return `preflight failed (${cause})`;
+}
+
+function actionText(action: ReportDrivenAction): string {
+  const target = [
+    action.ref, action.direction, action.x !== undefined ? `at ${action.x}, ${action.y}` : undefined,
+    action.valueKey !== undefined ? `(value ${action.valueKey})` : undefined,
+  ].filter(Boolean).join(' ');
+  const jev = action.key !== undefined
+    ? ` (${action.key}${action.confidence === undefined ? '' : `, confidence ${action.confidence.toFixed(3)}`})` : '';
+  const effect = action.changed === undefined ? '' : action.changed ? ' (the screen changed)' : ' (no change)';
+  return `${action.stepId}: ${action.action}${target ? ` ${target}` : ''}${action.retry ? ' (retry)' : ''}${effect}, ` +
+    `decided by ${DECIDER_NAMES[action.decidedBy]}${jev}.`;
+}
+
+function doStepText(step: ReportDoStep, ended: boolean): string {
+  if (step.completedBy === 'jev') {
+    return `${step.stepId}: done, by Jev's done check${step.done === undefined ? '' : ` (${step.done.toFixed(3)})`}.`;
+  }
+  return step.completedBy === 'claude' ? `${step.stepId}: done, declared by Claude.`
+    : `${step.stepId}: not done${ended ? '' : ' yet'}.`;
+}
+
+/** Driven runs only: start mode, preflight, Jev's decisions, who decided each action, who completed each `do` step,
+ *  and each hand-back. */
+function drivenBlock(driven: ReportDriven, ended: boolean): string {
+  return [
+    `Driven steps: start ${driven.start}; ${preflightText(driven.preflight)}; ` +
+      `${driven.decisions} Jev decisions, ${driven.decisionInputTokens} input tokens.`,
+    ...(driven.actions.length ? ['Actions:', ...driven.actions.map(actionText)] : []),
+    ...(driven.doSteps.length ? ['Do steps:', ...driven.doSteps.map(step => doStepText(step, ended))] : []),
+    ...(driven.handbacks.length ? ['Hand-backs:', ...driven.handbacks.map(handback => `${handback.stepId}: ${handback.reason}; ` +
+      (handback.answer !== null ? `Claude answered ${handback.answer} after ${handback.waitMs} ms.`
+        : ended ? 'no answer.' : 'waiting for Claude\'s answer.'))] : []),
+  ].join('\n');
 }
 
 /** The recorded verdict is authoritative; this only presents it. */
@@ -115,12 +162,19 @@ export function renderScriptedReport(report: ScriptedReport): string {
         ? [`Last observed screen:\n${bounded(lastStep.data.observationSummary, 1_500)}`] : []),
       ...(typeof lastStep?.data.screenshotPath === 'string' ? [`Last screenshot: ${lastStep.data.screenshotPath}`] : []),
     ].join('\n') : undefined;
+  const ended = report.events.some(event => event.type === 'verdict');
+  const driven = drivenReportOf(report.events);
+  const open = driven?.handbacks.at(-1);
+  const waitingBlock = !ended && open && open.answer === null
+    ? `Waiting for Claude (needs_claude): step ${open.stepId}, ${open.reason}. Answer with resolve_step.` : undefined;
   const lastCheckpoint = report.checkpoints.at(-1);
   const earlier = report.checkpoints.slice(0, -1);
   const blocks = [
+    ...(waitingBlock ? [waitingBlock] : []),
     ...(errorBlock ? [errorBlock] : []),
     ...(typedFieldsBlock ? [typedFieldsBlock] : []),
     ...(unsettledBlock ? [unsettledBlock] : []),
+    ...(driven ? [drivenBlock(driven, ended)] : []),
     ...(lastCheckpoint ? [checkpointBlock(lastCheckpoint, true)] : []),
     ...earlier.map(checkpoint => checkpointBlock(checkpoint, false)),
   ];

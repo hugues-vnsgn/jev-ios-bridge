@@ -4,12 +4,17 @@ import { createServer } from 'node:net';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
-import type { Action, ActionScenarioContext, ActOutcome, AndroidAppIdentity, AppProblem, LogSources, DevicePreparation, DeviceDriver, Direction, Element,
-  PrepareScenarioContext, Snapshot } from '../../contracts/index.js';
+import type { Action, ActionScenarioContext, ActOutcome, ActPath, AndroidAppIdentity, AppProblem, ElementAction, LogSources, DevicePreparation, DeviceDriver,
+  Direction, Element, PrepareScenarioContext, Snapshot } from '../../contracts/index.js';
 import { isIosApp } from '../../contracts/index.js';
-import { DeviceReasonError, selectAndroidDeviceName, StaleSnapshotError } from '../index.js';
+import { DeviceReasonError, largestScrollable, screenMiddleSwipe, screenPointOf, scrollFinger, selectAndroidDeviceName, StaleSnapshotError,
+  type Size } from '../index.js';
 import { DeviceLease, DeviceLeaseBusyError, type LeaseHolder } from '../lease.js';
 import { readLogTail } from '../logs.js';
+import { resumedPackage } from '../attach.js';
+import { jpegSize } from '../image.js';
+
+export { jpegSize };
 import { adbRunner, type AdbResult, type AdbRunner } from './adb.js';
 import { deviceAgentClient, type AgentKey, type DeviceAgentClient } from './agent-client.js';
 import { EVENT_FILTER, type AppExitWatch, type createExitWatch } from './exit-watch.js';
@@ -57,6 +62,8 @@ const SWIPE_MS = 1_000;
 /** `ctrl+a` and backspace as mobilecli 1.0.14 sends them (open point 23): always two separate calls. */
 const SELECT_ALL: AgentKey[] = [{ keycode: 'KEYCODE_A', modifiers: ['KEYCODE_CTRL_LEFT'] }];
 const BACKSPACE: AgentKey[] = [{ keycode: 'KEYCODE_DEL' }];
+/** The system Back key, through the same `device.io.keys` call as `ctrl+a` and backspace. */
+const BACK: AgentKey[] = [{ keycode: 'KEYCODE_BACK' }];
 /** What `device.io.text` types: ASCII only. Anything else goes through the clipboard. */
 const ASCII = /^[\x00-\x7f]*$/;
 
@@ -144,6 +151,18 @@ type StreamEntry = { stream: LogcatStream; owned: string; stopping: boolean };
 const foreignAgentFound = (identity: string) => new DeviceReasonError('DEVICE_BUSY',
   `Device ${identity} is in use by another tool's UI-automation agent. Stop that tool, then run again.`);
 
+/** The screen's size, from the extent of the dump's top-level nodes (each window's root); undefined when none has a size. */
+function screenOf(tree: { hierarchy: { rect?: { x: number; y: number; width: number; height: number } }[] }): Size | undefined {
+  let width = 0;
+  let height = 0;
+  for (const { rect } of tree.hierarchy) {
+    if (!rect || rect.width <= 0 || rect.height <= 0) continue;
+    width = Math.max(width, rect.x + rect.width);
+    height = Math.max(height, rect.y + rect.height);
+  }
+  return width > 0 && height > 0 ? { width, height } : undefined;
+}
+
 /** An element's centre, in whole numbers. */
 function centreOf(frame: NonNullable<Element['frame']>): { x: number; y: number } {
   return { x: Math.round(frame.x + frame.width / 2), y: Math.round(frame.y + frame.height / 2) };
@@ -206,7 +225,7 @@ const OWNED_STREAM = /^logcat (\S+) (\d+)$/;
  * The Android device driver (release spec phase 4): drives mobilecli's device agent directly, over `adb`
  * and JSON-RPC, and never runs mobilecli (ADR-0006). `prepare` takes the device lease on the device
  * identity before touching the device, refuses when another tool's agent is running, restarts the app with
- * its launch options, and starts and checks the bridge's own agent. `capture` does the same without the
+ * its launch options (attaching, checks it is in front instead), and starts and checks the bridge's own agent. `capture` does the same without the
  * restart, for the `capture` command. `close` undoes only what this run did, and keeps the lease until it
  * can show nothing the run started can still act on the device.
  */
@@ -231,6 +250,11 @@ export class AndroidDriver implements DeviceDriver {
   private agent: DeviceAgentClient | undefined;
   /** The only snapshot an action may target: the latest settled one, cleared once an action is issued. */
   private latest: Snapshot | undefined;
+  /** The latest snapshot's screen size and screenshot size, for `scroll` and `tapAt`; undefined when unknown. */
+  private latestScreen: Size | undefined;
+  private latestShot: Size | undefined;
+  /** How the last `act` carried out a `back` or `scroll`. */
+  private lastActPath: ActPath | undefined;
   private sequence = 0;
   private screenshotFolder: Promise<string> | undefined;
   private readonly runId: string;
@@ -271,6 +295,10 @@ export class AndroidDriver implements DeviceDriver {
 
   act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | ActOutcome> {
     return this.lease.track(() => this.actIssued(action, snapshot, scenario, signal));
+  }
+
+  actPath(): ActPath | undefined {
+    return this.lastActPath;
   }
 
   /** Whether the launched app still runs, from the events stream; undefined when the driver can't tell. */
@@ -427,6 +455,8 @@ export class AndroidDriver implements DeviceDriver {
     const jpeg = await this.agentCall(agent => agent.screenshot(SCREENSHOT_MAX_SIZE, signal), signal);
     const screenshotPath = join(await this.screenshotFolderPath(), `screen-${String(sequence)}.jpg`);
     await writeFile(screenshotPath, jpeg, { mode: 0o600 });
+    this.latestScreen = screenOf(captured.tree);
+    this.latestShot = jpegSize(jpeg);
     this.latest = snapshotOf(serial, captured, sequence, capturedAt, {
       screenshotPath,
       ...(this.logFile !== undefined ? { logTails: { logcat: await readLogTail(this.logFile) } } : {}),
@@ -454,7 +484,13 @@ export class AndroidDriver implements DeviceDriver {
     if (!this.agent || !this.serial) throw new Error('Driver is not prepared');
     if (snapshot.deviceId !== this.serial) throw new Error('Snapshot belongs to a different device');
     if (!this.latest || snapshot.sequence !== this.latest.sequence) throw new StaleSnapshotError('Target reference is from an older snapshot');
-    const target = this.latest.elements.find(element => element.ref === action.targetRef);
+    this.lastActPath = undefined;
+    if (action.kind === 'back' || action.kind === 'scroll' || action.kind === 'tapAt') return this.actOnScreen(action, this.latest, signal);
+    return this.actOnElement(action, this.latest, scenario, signal);
+  }
+
+  private async actOnElement(action: ElementAction, latest: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | ActOutcome> {
+    const target = latest.elements.find(element => element.ref === action.targetRef);
     if (!target?.frame) throw new StaleSnapshotError('Target reference is absent from observation');
     if (!target.actions.includes(REQUIRED_ACTION[action.kind])) throw new DeviceReasonError('UNSUPPORTED_ACTION', `Target does not support ${action.kind}`);
     if (action.kind === 'type' && !Object.hasOwn(scenario.values, action.valueKey)) throw new DeviceReasonError('MISSING_VALUE', `Scenario value ${action.valueKey} is absent`);
@@ -468,6 +504,37 @@ export class AndroidDriver implements DeviceDriver {
     if (action.kind !== 'type') return screen;
     const shown = typedFieldIn(screen, target);
     return shown ? { screen, shownValue: shown.value ?? '' } : screen;
+  }
+
+  /**
+   * A driven-mode action on the latest settled snapshot as a whole, then the settle rule: `back` is the system Back
+   * key; `scroll` swipes inside the largest scrollable element, else down the screen's middle; `tapAt` taps a point
+   * on the snapshot's screenshot, scaled to the screen. A `tapAt` outside the screenshot, or one whose screenshot
+   * or screen size is unknown, is `UNSUPPORTED_ACTION` before anything reaches the device.
+   */
+  private async actOnScreen(action: Exclude<Action, ElementAction>, latest: Snapshot, signal: AbortSignal): Promise<Snapshot> {
+    const screen = this.latestScreen;
+    let perform: () => Promise<void>;
+    if (action.kind === 'back') {
+      this.lastActPath = { path: 'back-key' };
+      perform = () => this.agentCall(agent => agent.keys(BACK, signal), signal);
+    } else if (action.kind === 'scroll') {
+      const area = largestScrollable(latest.elements);
+      if (!area && !screen) throw new DeviceReasonError('UNSUPPORTED_ACTION', 'Scroll found no scrollable element and no screen size');
+      const swipe = area ? swipeWithin(area.frame, scrollFinger(action.direction)) : screenMiddleSwipe(screen!, action.direction);
+      this.lastActPath = area ? { path: 'scroll-within', targetRef: area.ref } : { path: 'screen-middle' };
+      perform = () => this.agentCall(agent => agent.swipe({ ...swipe, duration: SWIPE_MS }, signal), signal);
+    } else {
+      const shot = this.latestShot;
+      if (!shot || !screen) throw new DeviceReasonError('UNSUPPORTED_ACTION', 'tapAt needs the observation\'s screenshot and screen size');
+      const point = screenPointOf(action.x, action.y, shot, screen);
+      if (!point) throw new DeviceReasonError('UNSUPPORTED_ACTION', `tapAt is outside the ${String(shot.width)} × ${String(shot.height)} screenshot`);
+      perform = () => this.agentCall(agent => agent.tap(point, signal), signal);
+    }
+    // From here the screen may change: no later action may target this snapshot, whatever happens next.
+    this.latest = undefined;
+    await perform();
+    return this.settledSnapshot(signal);
   }
 
   /**
@@ -506,11 +573,17 @@ export class AndroidDriver implements DeviceDriver {
     try {
       const sweptLeftovers = await this.sweepLeftovers(serial, identity, deadHolder, signal);
       await this.checkDevice(serial, app.package, signal);
-      // The streams start between the restart's force-stop and its launch, so nothing the previous instance logged is read.
-      const component = await this.stopForRestart(serial, app, signal);
-      const watched = await this.startStreams(serial, app.package, signal);
-      await this.launch(serial, component, app, signal);
-      if (watched) await this.readPid(serial, app.package, signal);
+      if (scenario.start === 'attach') {
+        // Attach (Issue 11): no restart. The app must already be in front; the streams then start from now.
+        await this.checkForeground(serial, app.package, signal);
+        if (await this.startStreams(serial, app.package, signal)) await this.readPid(serial, app.package, signal);
+      } else {
+        // The streams start between the restart's force-stop and its launch, so nothing the previous instance logged is read.
+        const component = await this.stopForRestart(serial, app, signal);
+        const watched = await this.startStreams(serial, app.package, signal);
+        await this.launch(serial, component, app, signal);
+        if (watched) await this.readPid(serial, app.package, signal);
+      }
       await this.startAgent(serial, identity, tools, signal);
       this.prepared = { deviceIdentity: identity, serial, agentSha256: tools.agent.sha256, ...(sweptLeftovers ? { sweptLeftovers } : {}) };
     } catch (error) {
@@ -769,6 +842,17 @@ export class AndroidDriver implements DeviceDriver {
     if (screen.keyguard) {
       throw new DeviceReasonError('DEVICE_LOCKED', `Device ${serial}'s screen is locked. Set Screen lock to None on a test device`);
     }
+  }
+
+  /**
+   * Attach's foreground check: the resumed activity, from `dumpsys activity activities`, must be the app's. Any
+   * other app in front, or none, refuses the run before anything `close` must undo.
+   */
+  private async checkForeground(serial: string, appPackage: string, signal: AbortSignal): Promise<void> {
+    const front = resumedPackage(await this.succeeded('read the resumed activity', this.shell(serial, ['dumpsys', 'activity', 'activities'], signal)));
+    if (front === appPackage) return;
+    throw new DeviceReasonError('APP_NOT_IN_FOREGROUND', `${appPackage} isn't in front on ${serial} (${front === undefined ? 'no app is' : `${front} is`}); ` +
+      'open it on the screen to start from, or use "start": "restart"');
   }
 
   /** Whether the screen is awake and the keyguard showing, from `dumpsys window policy`'s `KeyguardServiceDelegate`. */

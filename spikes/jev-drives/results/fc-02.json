@@ -1,0 +1,39 @@
+{
+  "id": "fc-02",
+  "answer": {
+    "choice": "tap:a4",
+    "confidence": 1,
+    "probabilities": {
+      "tap:a16": 0,
+      "tap:a13": 0,
+      "tap:a7": 0,
+      "tap:a20": 0,
+      "back": 0,
+      "none_fits": 0,
+      "scroll:down": 0,
+      "step_done": 0,
+      "tap:a15": 0,
+      "tap:a21": 0,
+      "tap:a8": 0,
+      "tap:a12": 0,
+      "scroll:up": 0,
+      "tap:a4": 1,
+      "tap:a2": 0,
+      "tap:a9": 0,
+      "tap:a6": 0,
+      "tap:a14": 0,
+      "tap:a17": 0
+    },
+    "done": 0.03,
+    "inputTokens": 2596,
+    "latencyMs": 299.63658399999986
+  },
+  "score": {
+    "right": true,
+    "accepted": true,
+    "wrongAccepted": false,
+    "handled": true,
+    "doneVerdict": "no",
+    "doneRight": true
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "id": "kca-01",
+  "answer": {
+    "choice": "tap:a23",
+    "confidence": 0.97,
+    "probabilities": {
+      "tap:a3": 0,
+      "none_fits": 0.01,
+      "tap:a34": 0,
+      "tap:a23": 0.98,
+      "scroll:down": 0,
+      "tap:a5": 0,
+      "tap:a38": 0,
+      "step_done": 0.01,
+      "tap:a40": 0,
+      "tap:a7": 0,
+      "back": 0,
+      "tap:a33": 0,
+      "tap:a35": 0,
+      "tap:a39": 0,
+      "tap:a2": 0,
+      "tap:a31": 0,
+      "tap:a25": 0,
+      "scroll:up": 0,
+      "tap:a37": 0
+    },
+    "done": 0.25,
+    "inputTokens": 3228,
+    "latencyMs": 325.4470000000001
+  },
+  "score": {
+    "right": true,
+    "accepted": true,
+    "wrongAccepted": false,
+    "handled": true,
+    "doneVerdict": "uncertain",
+    "doneRight": false
+  }
+}

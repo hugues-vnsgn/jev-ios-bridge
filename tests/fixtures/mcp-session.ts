@@ -23,7 +23,9 @@ export interface McpSessionOptions {
    * directory, for checks that need the bridge's actual tool descriptions and driver wiring.
    */
   entryPoint?: 'fixture' | 'cli';
-  /** Environment overrides, merged over process.env. Only meaningful with entryPoint: 'cli'. */
+  /** With entryPoint 'fixture': another fixture server to run, relative to the repo root. */
+  fixture?: string;
+  /** Environment overrides, merged over process.env, for either server. */
   env?: NodeJS.ProcessEnv;
 }
 
@@ -33,8 +35,8 @@ export async function openMcpSession(clientName: string, options: McpSessionOpti
   const child = cli
     ? spawn(process.execPath, ['--import', 'tsx', 'src/cli.ts', 'mcp'],
         { env: { ...process.env, ...options.env }, stdio: ['pipe', 'pipe', 'pipe'] })
-    : spawn(process.execPath, ['--import', 'tsx', 'tests/fixtures/mcp-server.ts', root!],
-        { stdio: ['pipe', 'pipe', 'pipe'] });
+    : spawn(process.execPath, ['--import', 'tsx', options.fixture ?? 'tests/fixtures/mcp-server.ts', root!],
+        { env: { ...process.env, ...options.env }, stdio: ['pipe', 'pipe', 'pipe'] });
   const pending = new Map<number, (value: any) => void>();
   const lines = createInterface({ input: child.stdout });
   lines.on('line', line => { const value = JSON.parse(line); pending.get(value.id)?.(value); pending.delete(value.id); });

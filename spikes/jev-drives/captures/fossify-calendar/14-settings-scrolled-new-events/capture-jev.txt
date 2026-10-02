@@ -1,0 +1,35 @@
+Current Android screen (full accessibility capture):
+{"role":"scroll-view","identifier":"org.fossify.calendar:id/settings_coordinator","frame":{"x":0,"y":0,"width":1080,"height":2400},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Back","frame":{"x":0,"y":73,"width":147,"height":147},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Settings","frame":{"x":157,"y":110,"width":200,"height":74},"state":{"enabled":true,"visible":true}}
+{"role":"scroll-view","identifier":"org.fossify.calendar:id/settings_nested_scrollview","frame":{"x":0,"y":231,"width":1080,"height":2169},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Reminders","identifier":"org.fossify.calendar:id/settings_reminders_label","frame":{"x":42,"y":231,"width":1038,"height":76},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Customize notifications","identifier":"org.fossify.calendar:id/settings_customize_notifications_holder","frame":{"x":0,"y":307,"width":1080,"height":157},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Customize notifications","identifier":"org.fossify.calendar:id/settings_customize_notifications","frame":{"x":42,"y":360,"width":387,"height":51},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Audio stream used by reminders","identifier":"org.fossify.calendar:id/settings_reminder_audio_stream_holder","frame":{"x":0,"y":464,"width":1080,"height":186},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Audio stream used by reminders","identifier":"org.fossify.calendar:id/settings_reminder_audio_stream_label","frame":{"x":42,"y":506,"width":532,"height":51},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Notification","identifier":"org.fossify.calendar:id/settings_reminder_audio_stream","frame":{"x":42,"y":557,"width":996,"height":51},"state":{"enabled":true,"visible":true}}
+{"role":"button","identifier":"org.fossify.calendar:id/settings_vibrate_holder","frame":{"x":0,"y":650,"width":1080,"height":168},"state":{"enabled":true,"visible":true}}
+{"role":"switch","label":"Vibrate on reminder notification","value":"0","identifier":"org.fossify.calendar:id/settings_vibrate","frame":{"x":42,"y":671,"width":996,"height":126},"state":{"enabled":true,"visible":true}}
+{"role":"button","identifier":"org.fossify.calendar:id/settings_loop_reminders_holder","frame":{"x":0,"y":818,"width":1080,"height":168},"state":{"enabled":true,"visible":true}}
+{"role":"switch","label":"Loop reminders until dismissed","value":"0","identifier":"org.fossify.calendar:id/settings_loop_reminders","frame":{"x":42,"y":839,"width":996,"height":126},"state":{"enabled":true,"visible":true}}
+{"role":"button","identifier":"org.fossify.calendar:id/settings_use_same_snooze_holder","frame":{"x":0,"y":986,"width":1080,"height":168},"state":{"enabled":true,"visible":true}}
+{"role":"switch","label":"Always use same snooze time","value":"1","identifier":"org.fossify.calendar:id/settings_use_same_snooze","frame":{"x":42,"y":1007,"width":996,"height":126},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Snooze time","identifier":"org.fossify.calendar:id/settings_snooze_time_holder","frame":{"x":0,"y":1154,"width":1080,"height":186},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Snooze time","identifier":"org.fossify.calendar:id/settings_snooze_time_label","frame":{"x":42,"y":1196,"width":204,"height":51},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"10 minutes","identifier":"org.fossify.calendar:id/settings_snooze_time","frame":{"x":42,"y":1247,"width":996,"height":51},"state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/settings_reminders_divider","frame":{"x":0,"y":1340,"width":1080,"height":2},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"CalDAV","identifier":"org.fossify.calendar:id/settings_caldav_label","frame":{"x":42,"y":1342,"width":1038,"height":135},"state":{"enabled":true,"visible":true}}
+{"role":"button","identifier":"org.fossify.calendar:id/settings_caldav_sync_holder","frame":{"x":0,"y":1477,"width":1080,"height":168},"state":{"enabled":true,"visible":true}}
+{"role":"switch","label":"CalDAV sync","value":"0","identifier":"org.fossify.calendar:id/settings_caldav_sync","frame":{"x":42,"y":1498,"width":996,"height":126},"state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/settings_caldav_divider","frame":{"x":0,"y":1645,"width":1080,"height":2},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"New events","identifier":"org.fossify.calendar:id/settings_new_events_label","frame":{"x":42,"y":1647,"width":1038,"height":135},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Default start time","identifier":"org.fossify.calendar:id/settings_default_start_time_holder","frame":{"x":0,"y":1782,"width":1080,"height":186},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Default start time","identifier":"org.fossify.calendar:id/settings_default_start_time_label","frame":{"x":42,"y":1824,"width":286,"height":51},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Next full hour","identifier":"org.fossify.calendar:id/settings_default_start_time","frame":{"x":42,"y":1875,"width":996,"height":51},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Default duration","identifier":"org.fossify.calendar:id/settings_default_duration_holder","frame":{"x":0,"y":1968,"width":1080,"height":186},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Default duration","identifier":"org.fossify.calendar:id/settings_default_duration_label","frame":{"x":42,"y":2010,"width":263,"height":51},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"0 minutes","identifier":"org.fossify.calendar:id/settings_default_duration","frame":{"x":42,"y":2061,"width":996,"height":51},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Default calendar","identifier":"org.fossify.calendar:id/settings_default_calendar_holder","frame":{"x":0,"y":2154,"width":1080,"height":186},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Default calendar","identifier":"org.fossify.calendar:id/settings_default_event_type_label","frame":{"x":42,"y":2196,"width":269,"height":51},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Last used one","identifier":"org.fossify.calendar:id/settings_default_calendar","frame":{"x":42,"y":2247,"width":996,"height":51},"state":{"enabled":true,"visible":true}}

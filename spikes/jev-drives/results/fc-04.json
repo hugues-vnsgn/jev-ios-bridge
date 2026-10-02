@@ -1,0 +1,35 @@
+{
+  "id": "fc-04",
+  "answer": {
+    "choice": "tap:a12",
+    "confidence": 0.99,
+    "probabilities": {
+      "tap:a12": 0.99,
+      "tap:a8": 0,
+      "back": 0,
+      "tap:a5": 0,
+      "scroll:up": 0,
+      "scroll:down": 0,
+      "tap:a2": 0,
+      "tap:a4": 0,
+      "step_done": 0,
+      "tap:a3": 0,
+      "none_fits": 0.01,
+      "tap:a16": 0,
+      "tap:a10": 0,
+      "tap:a9": 0,
+      "tap:a6": 0
+    },
+    "done": 0.02,
+    "inputTokens": 2083,
+    "latencyMs": 277.7868329999992
+  },
+  "score": {
+    "right": true,
+    "accepted": true,
+    "wrongAccepted": false,
+    "handled": true,
+    "doneVerdict": "no",
+    "doneRight": true
+  }
+}

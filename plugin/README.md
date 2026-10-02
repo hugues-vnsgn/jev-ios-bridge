@@ -9,10 +9,11 @@
 ## What the plugin does on a developer's machine
 
 - **On install,** Claude Code downloads the zip, checks its SHA-256, and runs `npm ci --ignore-scripts` from the lockfile. Dependencies aren't in the zip, so MobileBuildMCP's bundled AXe binary keeps its executable bit.
-- **It has three settings,** which Claude Code doesn't ask for on a command-line install: the user enters them under `/plugin` → **Installed** → `jev-ios-bridge` → **Configure**:
+- **It has four settings,** which Claude Code doesn't ask for on a command-line install: the user enters them under `/plugin` → **Installed** → `jev-ios-bridge` → **Configure**:
   - the TypeSafe key, stored in the system's secure storage. It's required, and a missing key stops the MCP server with a message that names the setting;
   - the simulator's UDID, for iOS (`JEV_DEVICE_UDID`). Optional;
   - the Android device, a serial or an AVD name (`JEV_ANDROID_DEVICE`). Optional.
+  - experimental driven mode (`experimentalDriven`), off by default. Turned on, it sets `JEV_EXPERIMENTAL_DRIVEN` for the MCP server, so scripts with `do` steps can run in projects whose `.jev/config.json` has `"drivenMode": true`. Claude Code passes the setting as text, so the server takes `true` or `1` as on.
 
   The server starts with either device left empty, so a user with only iOS or only Android can use the plugin. A script's own device overrides these settings.
 - **The MCP server** runs `node dist/cli.js mcp` with `JEV_PROJECT_DIR` set to the project, so evidence lands in the project's `.jev-runs/`, not in the plugin's folder.

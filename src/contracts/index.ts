@@ -30,8 +30,14 @@ export function appLabel(app: AppIdentity): string {
   return isIosApp(app) ? app.bundleId : app.package;
 }
 
-/** Device preparation needs only launch identity and environmental prerequisites. */
-export type PrepareScenarioContext = ScenarioContext;
+/** How a run starts: relaunch the app (the default), or attach to it as it is, from the screen already showing. */
+export type StartMode = 'restart' | 'attach';
+
+/** Device preparation needs only launch identity, environmental prerequisites and the start mode. */
+export interface PrepareScenarioContext extends ScenarioContext {
+  /** Set only by a script that names one; absent, the driver restarts the app as it always has. */
+  start?: StartMode;
+}
 
 /** Actions additionally receive explicit typed values. */
 export interface ActionScenarioContext extends ScenarioContext {
@@ -96,7 +102,34 @@ export function isActOutcome(result: Snapshot | ActOutcome): result is ActOutcom
 export type Action =
   | { kind: 'tap'; targetRef: string }
   | { kind: 'type'; targetRef: string; valueKey: string }
-  | { kind: 'swipe'; targetRef: string; direction: Direction };
+  | { kind: 'swipe'; targetRef: string; direction: Direction }
+  // The driven-mode kinds target no element. They declare `targetRef?: never` so code written for the element
+  // kinds, such as a driver fake reading `action.targetRef`, still type-checks against the whole union.
+  /** Driven mode only: the platform's back navigation. */
+  | { kind: 'back'; targetRef?: never }
+  /** Driven mode only: scroll the content so what is further `down` (or `up`) comes into view. */
+  | { kind: 'scroll'; direction: 'up' | 'down'; targetRef?: never }
+  /** Driven mode only, reachable through Claude's `resolve_step`: a tap at a point on the observation's
+   *  screenshot, in the screenshot image's own pixels (it is shrunk to at most 800 px), which the driver scales to
+   *  the screen. Outside the screenshot is `UNSUPPORTED_ACTION`. Android only: MobileBuildMCP 2.7.1 has no tap at
+   *  a point, so the iOS driver refuses it with `UNSUPPORTED_ACTION`. */
+  | { kind: 'tapAt'; x: number; y: number; targetRef?: never };
+
+/** An action on one element of the observation: the only kinds a version 1 script produces. */
+export type ElementAction = Extract<Action, { targetRef: string }>;
+
+/** Which way a driver carried out the last `back` or `scroll`, for the run log to record. */
+export type ActPath =
+  /** iOS: tapped the navigation bar's back button (`targetRef`). */
+  | { path: 'back-button'; targetRef: string }
+  /** iOS: swiped in from the left edge. */
+  | { path: 'edge-swipe' }
+  /** Android: the system Back key. */
+  | { path: 'back-key' }
+  /** Swiped inside the largest scrollable element (`targetRef`). */
+  | { path: 'scroll-within'; targetRef: string }
+  /** No scrollable element: swiped in the middle of the screen (iOS: MobileBuildMCP's scroll preset). */
+  | { path: 'screen-middle' };
 
 
 /** MobileBuildMCP 2.7.1's proven tap-alias collapsing. Only the pinned integration may carry it. */
@@ -109,6 +142,8 @@ export interface DeviceDriver {
    *  observation; a replace-text action may instead return an `ActOutcome` to also report the shown value. */
   act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | ActOutcome | undefined | void>;
   close(signal: AbortSignal): Promise<void>;
+  /** Which way the last `act` carried out a `back` or `scroll`; undefined after any other action. */
+  actPath?(): ActPath | undefined;
   metrics?(): DeviceMetrics;
   /** Whether the launched app is still running; undefined when the driver can't tell. */
   appRunning?(): boolean | undefined;
@@ -125,6 +160,9 @@ export interface DeviceDriver {
   /** What `prepare` set up on the device, for the run log's `prepared` event. Only a driver that prepares a
    *  device (Android) implements this; the iOS driver doesn't. */
   preparation?(): DevicePreparation;
+  /** What `prepare` worked around without failing (the iOS simulator window not opening), for the run log's
+   *  `prepared` event. Messages are the driver's own wording, never a vendor's output. */
+  prepareWarnings?(): string[];
 }
 
 /** The launched app exited (crashed, was killed or quit) or froze. The note names the cause, for the log pane. */
@@ -157,7 +195,9 @@ export interface RunEvent {
   runId: string;
   sequence: number;
   at: string;
-  type: 'started' | 'prepared' | 'step' | 'judgment' | 'action' | 'checkpoint' | 'error' | 'verdict';
+  type: 'started' | 'prepared' | 'step' | 'judgment' | 'action' | 'checkpoint' | 'error' | 'verdict'
+    // Driven mode (`do` steps) only; a version 1 run never writes them.
+    | 'decision' | 'search' | 'handback' | 'handback_answer' | 'preflight';
   data: Record<string, unknown>;
 }
 

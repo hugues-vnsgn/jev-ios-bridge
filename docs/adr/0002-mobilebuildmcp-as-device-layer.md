@@ -2,11 +2,12 @@
 status: accepted
 date: 2026-09-21
 revised: 2026-09-25
+amended: 2026-10-02 (ADR-0007)
 ---
 
 # MobileBuildMCP is the device layer
 
-The bridge needs to boot simulators, install and launch apps, read the screen's accessibility elements, and tap, type, and swipe. The first plan was to write that ourselves over `xcrun simctl` and Meta's `idb`. We use getsentry/MobileBuildMCP instead, renamed from XcodeBuildMCP on 2026-09-23 (MIT). It already ships all of it: simulator management, build and run, a semantic UI snapshot whose elements carry references, and actions addressed by those references, through a bundled automation backend (AXe 1.8.0) that supports Xcode 26 ([research](../research/mobilebuildmcp-simulator-and-device.md)). The bridge's device driver is a thin adapter over it, and the bridge contains no simulator or UI automation code. Its own value is the loop, the Jev judgments, the policy, and the report.
+The bridge needs to boot simulators, install and launch apps, read the screen's accessibility elements, and tap, type, and swipe. The first plan was to write that ourselves over `xcrun simctl` and Meta's `idb`. We use getsentry/MobileBuildMCP instead, renamed from XcodeBuildMCP on 2026-09-23 (MIT). It already ships all of it: simulator management, build and run, a semantic UI snapshot whose elements carry references, and actions addressed by those references, through a bundled automation backend (AXe 1.8.0) that supports Xcode 26 ([research](../research/mobilebuildmcp-simulator-and-device.md)). The bridge's device driver is a thin adapter over it, and the bridge contains no simulator or UI automation code. [ADR-0007](0007-simulator-presentation-and-a-bounded-ios-point-tap-exception.md) makes two exceptions: opening the Simulator window, and Claude's iOS point tap through MobileBuildMCP's bundled AXe. Its own value is the loop, the Jev judgments, the policy, and the report.
 
 We pin `mobilebuildmcp@2.7.1`. The rename changed the package, binary, config directory (`.mobilebuildmcp/`), and environment variable prefix with no compatibility layer, while `xcodebuildmcp` stays frozen at 2.7.0 under the old names.
 
@@ -21,4 +22,4 @@ We pin `mobilebuildmcp@2.7.1`. The rename changed the package, binary, config di
 
 ## Validated integration
 
-Accepted after real scripted execution through the pinned CLI, including tap, replacement typing, capture, reference refresh, and cleanup. Production requires an already booted simulator and installed app; preparation restarts the app. Simulator provisioning remains an operator task. The bridge itself contains no direct `simctl`, AXe, or other device automation. [Device decision](../../.scratch/jev-ios-bridge/issues/12-device-driver.md) records the concrete transport and acknowledgement rules.
+Accepted after real scripted execution through the pinned CLI, including tap, replacement typing, capture, reference refresh, and cleanup. Production requires an already booted simulator and installed app; preparation restarts the app. Simulator provisioning remains an operator task. The bridge itself contains no direct `simctl`, AXe, or other device automation, except the two calls [ADR-0007](0007-simulator-presentation-and-a-bounded-ios-point-tap-exception.md) allows. [Device decision](../../.scratch/jev-ios-bridge/issues/12-device-driver.md) records the concrete transport and acknowledgement rules.

@@ -20,10 +20,33 @@ export type ScriptedStep =
       | { kind: 'replaceText'; selector: Selector; valueKey: string }
       | { kind: 'swipe'; selector: Selector; direction: Direction } }
   | { id: string; kind: 'wait'; guard: ScreenGuard; until: ScreenGuard; timeoutMs: number }
-  | { id: string; kind: 'checkpoint'; guard: ScreenGuard; assertions: Assertion[] };
+  | { id: string; kind: 'checkpoint'; guard: ScreenGuard; assertions: Assertion[] }
+  | DoStep;
+
+/** What a `do` step may do to the app's data: nothing, writes to a test environment, or something destructive. */
+export type StepEffect = 'none' | 'test_write' | 'destructive';
+
+/** A version 2 step the bridge performs itself: Jev picks each action from the screen, until `doneWhen` holds.
+ *  It has no guard. */
+export interface DoStep {
+  id: string;
+  kind: 'do';
+  intent: string;
+  doneWhen: string;
+  effect: StepEffect;
+  /** Keys into the script's `values`: the values this step may type. */
+  values?: string[];
+  /** Every decision in this step goes to Claude; none of its screens is sent to Jev. */
+  localOnly?: boolean;
+}
 
 interface ScriptedScenarioBase {
-  version: 1;
+  /** 2 only for a script with a `do` step, `goal` or `start`. */
+  version: 1 | 2;
+  /** Version 2: what the whole script is for, given to Jev as the goal; absent, a do step's intent is. */
+  goal?: string;
+  /** Version 2: restart the app (the default) or attach to it as it is. */
+  start?: 'restart' | 'attach';
   preconditions?: string[];
   values: Record<string, string>;
   steps: ScriptedStep[];
@@ -45,6 +68,15 @@ export interface ScriptedScenarioAndroid extends ScriptedScenarioBase {
 }
 
 export type ScriptedScenario = ScriptedScenarioIos | ScriptedScenarioAndroid;
+
+/** A typed value as a script writes it: the text itself, or `{ "fromEnv": NAME }`, read from the bridge's
+ *  environment when a run starts. */
+export type ScriptValue = string | { fromEnv: string };
+
+type WithScriptValues<T> = T extends unknown ? Omit<T, 'values'> & { values: Record<string, ScriptValue> } : never;
+
+/** A script as written, before its `fromEnv` values are read. A {@link ScriptedScenario} has only text. */
+export type ScriptedScenarioSource = WithScriptValues<ScriptedScenario>;
 
 export interface AssertionJudgment {
   probabilities: Record<string, number>;

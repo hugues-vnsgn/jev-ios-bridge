@@ -1,0 +1,40 @@
+{"role":"scroll-view","identifier":"org.fossify.calendar:id/event_coordinator","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Back","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Edit Event","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Save","identifier":"org.fossify.calendar:id/save","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Delete","identifier":"org.fossify.calendar:id/delete","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Duplicate event","identifier":"org.fossify.calendar:id/duplicate","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"More options","state":{"enabled":true,"visible":true}}
+{"role":"scroll-view","identifier":"org.fossify.calendar:id/event_nested_scrollview","state":{"enabled":true,"visible":true}}
+{"role":"text-field","label":"Title","value":"Dentist appointment","identifier":"org.fossify.calendar:id/event_title","state":{"enabled":true,"visible":true}}
+{"role":"text-field","label":"Location","identifier":"org.fossify.calendar:id/event_location","placeholder":"Location","state":{"enabled":true,"visible":true}}
+{"role":"button","identifier":"org.fossify.calendar:id/event_show_on_map","state":{"enabled":true,"visible":true}}
+{"role":"text-field","label":"Description","identifier":"org.fossify.calendar:id/event_description","placeholder":"Description","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/event_description_divider","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/event_time_image","state":{"enabled":true,"visible":true}}
+{"role":"button","identifier":"org.fossify.calendar:id/event_all_day_holder","state":{"enabled":true,"visible":true}}
+{"role":"switch","label":"All-day","value":"0","identifier":"org.fossify.calendar:id/event_all_day","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"October 1 (Thu)","identifier":"org.fossify.calendar:id/event_start_date","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"06:00 PM","identifier":"org.fossify.calendar:id/event_start_time","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"October 1 (Thu)","identifier":"org.fossify.calendar:id/event_end_date","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"06:00 PM","identifier":"org.fossify.calendar:id/event_end_time","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/event_date_time_divider","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/event_reminder_image","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"No reminder","identifier":"org.fossify.calendar:id/event_reminder_1","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/event_reminder_divider","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/event_repetition_image","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"No repetition","identifier":"org.fossify.calendar:id/event_repetition","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/event_repetition_divider","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/event_status_image","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Confirmed","identifier":"org.fossify.calendar:id/event_status","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/event_status_divider","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/event_calendar_image","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Local calendar","identifier":"org.fossify.calendar:id/event_calendar_holder","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Local calendar","identifier":"org.fossify.calendar:id/event_calendar_title","state":{"enabled":true,"visible":true},"selectable":false}
+{"role":"text","label":"Offline (never synced)","identifier":"org.fossify.calendar:id/event_calendar_subtitle","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/calendar_divider","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/event_color_image","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Event color","identifier":"org.fossify.calendar:id/event_color_holder","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Event color","identifier":"org.fossify.calendar:id/event_color_text","state":{"enabled":true,"visible":true},"selectable":false}
+{"role":"image","identifier":"org.fossify.calendar:id/event_color","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/event_color_divider","state":{"enabled":true,"visible":true}}

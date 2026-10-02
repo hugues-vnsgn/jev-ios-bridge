@@ -5,31 +5,44 @@ import { PLATFORMS, type RunEvent, type RunLog } from '../contracts/index.js';
 import { PROJECTION_RULES } from '../scripted/observe.js';
 import { REASON_CODES } from '../scripted/vocabulary.js';
 import { BRIDGE_VERSION } from '../version.js';
+import { HANDBACK_ANSWER_KINDS, PAUSE_REASON_TEXT } from '../driven/vocabulary.js';
 
 export function validateRunId(runId: string): string {
   if (!/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$/.test(runId)) throw new Error('Invalid run id');
   return runId;
 }
 
+const STEP_KINDS = ['action', 'wait', 'checkpoint', 'do'];
+const DIRECTIONS = new Set(['up', 'down', 'left', 'right']);
 const protocolValues: Record<string, ReadonlySet<string>> = {
   mode: new Set(['scripted']),
-  kind: new Set(['action', 'wait', 'checkpoint']),
-  'plannedSteps.kind': new Set(['action', 'wait', 'checkpoint']),
-  action: new Set(['tap', 'replaceText', 'swipe', 'wait']),
-  'action.direction': new Set(['up', 'down', 'left', 'right']),
-  status: new Set(['passed', 'failed', 'inconclusive']),
+  // A step's kind, and a hand-back answer's kind (`handback_answer`).
+  kind: new Set([...STEP_KINDS, ...HANDBACK_ANSWER_KINDS]),
+  'plannedSteps.kind': new Set(STEP_KINDS),
+  // The steps a `revise` answer put in place.
+  'steps.kind': new Set(STEP_KINDS),
+  action: new Set(['tap', 'replaceText', 'swipe', 'wait', 'type', 'scroll', 'back', 'tapAt']),
+  'action.direction': DIRECTIONS,
+  // A driven scroll's, or a target search's, direction.
+  direction: DIRECTIONS,
+  decidedBy: new Set(['script', 'jev', 'claude']),
+  actPath: new Set(['back-button', 'edge-swipe', 'back-key', 'scroll-within', 'screen-middle']),
+  // A checkpoint's status, or a `preflight` event's.
+  status: new Set(['passed', 'failed', 'inconclusive', 'ok', 'missing']),
+  failure: new Set(['exit', 'timeout', 'spawn', 'cleanup']),
   verdict: new Set(['passed', 'failed', 'inconclusive']),
-  phase: new Set(['prepare', 'observe', 'decide', 'act', 'wait', 'budget', 'reobserve', 'cleanup', 'run']),
+  phase: new Set(['prepare', 'observe', 'decide', 'act', 'wait', 'budget', 'reobserve', 'cleanup', 'run', 'handback', 'preflight']),
   model: new Set(['jev-1.13.0']),
   platform: new Set(PLATFORMS),
 };
 const errorCodes: ReadonlySet<string> = new Set(Object.keys(REASON_CODES));
 protocolValues.code = errorCodes;
-protocolValues.reason = errorCodes;
+// A verdict's or error's reason code, or a `handback` event's pause reason.
+protocolValues.reason = new Set([...errorCodes, ...Object.keys(PAUSE_REASON_TEXT)]);
 protocolValues.bridgeVersion = new Set([BRIDGE_VERSION]);
 protocolValues.jevModel = protocolValues.model!;
 protocolValues.projectionRule = new Set(Object.values(PROJECTION_RULES));
-const identifierParents = new Set(['plannedSteps', 'assertions']);
+const identifierParents = new Set(['plannedSteps', 'assertions', 'steps']);
 // Maps whose keys come from the script or from Jev, not the contract, so a key can carry a typed value
 // or the API key and is pseudonymized like an identifier. A new map of that kind belongs here (`assertions`
 // is also one, but only where it is a map rather than a list, so it is checked beside this set). The

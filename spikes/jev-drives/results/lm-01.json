@@ -1,0 +1,29 @@
+{
+  "id": "lm-01",
+  "answer": {
+    "choice": "tap:a5",
+    "confidence": 0.98,
+    "probabilities": {
+      "tap:a3": 0,
+      "tap:a8": 0,
+      "tap:a1": 0,
+      "tap:a5": 0.99,
+      "none_fits": 0.01,
+      "scroll:up": 0,
+      "scroll:down": 0,
+      "back": 0,
+      "step_done": 0
+    },
+    "done": 0.03,
+    "inputTokens": 1233,
+    "latencyMs": 275.0779169999996
+  },
+  "score": {
+    "right": true,
+    "accepted": true,
+    "wrongAccepted": false,
+    "handled": true,
+    "doneVerdict": "no",
+    "doneRight": true
+  }
+}

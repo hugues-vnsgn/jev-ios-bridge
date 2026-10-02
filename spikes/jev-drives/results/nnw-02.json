@@ -1,0 +1,28 @@
+{
+  "id": "nnw-02",
+  "answer": {
+    "choice": "none_fits",
+    "confidence": 0.72,
+    "probabilities": {
+      "tap:e150": 0.09,
+      "tap:e87": 0.03,
+      "none_fits": 0.75,
+      "tap:e151": 0.08,
+      "step_done": 0,
+      "back": 0.03,
+      "scroll:down": 0.01,
+      "scroll:up": 0.01
+    },
+    "done": 0.03,
+    "inputTokens": 6532,
+    "latencyMs": 435.52195800000004
+  },
+  "score": {
+    "right": true,
+    "accepted": false,
+    "wrongAccepted": false,
+    "handled": false,
+    "doneVerdict": "no",
+    "doneRight": true
+  }
+}

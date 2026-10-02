@@ -34,6 +34,10 @@ What the bridge does not do, or does less well than you might expect.
 - **Cost per run:** Jev costs about $0.00016 per checkpoint (3,705 input tokens on average), and $0.0001–$0.0008 per run of the benchmark and Compose scripts, at TypeSafe's published $0.042 per million input tokens (output free) as of 2026-09-26. Your host agent's cost depends on your plan and isn't included; in the benchmark harness, Claude Code cost $0.34–$0.51 per run.
 - **Writing scripts takes time,** and that time hasn't been measured. The worked examples and `/test-ios` are there to make it faster.
 
+## Driven steps
+
+`do` steps are experimental. Jev reads only the screen's text, so it can't act on canvas drawing, web views, or system sheets the accessibility tree doesn't show. `tapAt` works on Android only for now. See [driven steps](13-driven-steps.md#limits).
+
 ## Input and devices
 
 - **Typing on iOS:** printable US-keyboard text only, and no value may start with a hyphen (a limit of the pinned MobileBuildMCP).

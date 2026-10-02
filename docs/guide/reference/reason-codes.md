@@ -74,7 +74,7 @@ What to do about each: [troubleshooting](../08-troubleshooting.md).
 | `INVALID_CAPTURE` | The device layer returned no runtime snapshot. |
 | `EMPTY_CAPTURE` | The device layer returned no usable elements. |
 | `UNSUPPORTED_ACTION` | The target does not support the requested action. |
-| `MISSING_VALUE` | A typing step named a value the script did not supply. |
+| `MISSING_VALUE` | A typing step named a value the script did not supply, or a value's environment variable is not set. |
 | `UNSUPPORTED_LEADING_DASH_TEXT` | The pinned device layer cannot type text that starts with a hyphen. |
 | `UI_ACTION_UNCONFIRMED` | A device operation was never acknowledged, so the device lock was kept. |
 | `CLEANUP_FAILED` | Device cleanup did not finish. |
@@ -87,12 +87,33 @@ What to do about each: [troubleshooting](../08-troubleshooting.md).
 | `DEVICE_NOT_CONNECTED` | The named serial isn't listed by adb or is offline, or no running emulator has the named AVD. |
 | `DEVICE_AMBIGUOUS` | More than one running emulator has the named AVD, so the bridge can't tell them apart. |
 | `DEVICE_UNAUTHORIZED` | The device hasn't accepted this Mac's USB-debugging key. |
-| `DEVICE_NOT_BOOTED` | The device hasn't finished booting. |
+| `DEVICE_NOT_BOOTED` | The device hasn't finished booting, or the iOS simulator isn't booted. |
 | `DEVICE_LOCKED` | The device's screen is locked. |
 | `APP_NOT_INSTALLED` | The app's package isn't installed on the device. |
 | `APP_NOT_RESPONDING` | The app froze (Android showed "App isn't responding") during the run. |
 | `DEVICE_UNSUPPORTED` | The device is below Android 12 (API 31), which this bridge does not support. |
 | `ANDROID_TOOLS_UNAVAILABLE` | adb could not be found, the pinned mobilecli package is missing, or the device agent copied out of it does not match the pinned SHA-256. |
+
+## Driven mode (experimental)
+
+| Code | Meaning |
+| --- | --- |
+| `DRIVEN_NOT_ENABLED` | The script has a do step, but driven mode isn't turned on: it needs "drivenMode": true in .jev/config.json and JEV_EXPERIMENTAL_DRIVEN set to 1 or true. |
+| `HANDBACK_TIMEOUT` | A do step waited longer than the hand-back timeout for Claude's answer. |
+| `STOPPED_BY_CLAUDE` | Claude answered a do step's hand-back with stop. |
+| `STEP_NOT_DONE` | A do step ended without evidence that it was done: after its Jev decisions and Claude's answer, the screen still didn't show it done. |
+| `LOCAL_ONLY_CHECKPOINT` | A driven run's checkpoint was on a screen that matches a localOnlyScreens rule, so it was not sent to Jev and could not be judged. |
+
+## Start mode attach
+
+| Code | Meaning |
+| --- | --- |
+| `APP_NOT_IN_FOREGROUND` | Start mode attach: another app, or none, is in front on the Android device. |
+| `APP_NOT_RUNNING` | Start mode attach: the app isn't running on the iOS simulator. |
+
+`APP_NOT_RUNNING` isn't used for now: iOS refuses start mode attach with `UNSUPPORTED_ACTION` before the simulator is touched, because the bridge can't tell which app is in front there.
+
+A `do` step that goes back to Claude records a hand-back reason, such as `NONE_FITS` or `LOW_CONFIDENCE`. Those aren't verdict reasons; [driven steps](../13-driven-steps.md#why-a-step-was-handed-back) lists them.
 
 ## Bridge
 

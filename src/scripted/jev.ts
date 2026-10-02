@@ -71,7 +71,7 @@ export function parseAssertionResult(raw: unknown, assertions: Assertion[], late
   return { probabilities, inputTokens: inputTokens as number, latencyMs, model: SCRIPTED_JEV_MODEL };
 }
 
-function requestError(error: unknown): ScriptedJevError {
+export function requestError(error: unknown): ScriptedJevError {
   if (error instanceof APIUserAbortError) return new ScriptedJevError('ABORTED');
   if (error instanceof APITimeoutError) return new ScriptedJevError('TIMEOUT');
   if (error instanceof APIConnectionError) return new ScriptedJevError('NETWORK');

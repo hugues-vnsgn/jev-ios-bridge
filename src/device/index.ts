@@ -2,7 +2,8 @@ import { execFile } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { readFile } from 'node:fs/promises';
 import { isAbsolute, join, resolve } from 'node:path';
-import { isIosApp, type Action, type ActionScenarioContext, type AppProblem, type LogSources, type DeviceDriver, type DeviceMetrics, type Element, type PrepareScenarioContext, type Snapshot, type TapAliasRule } from '../contracts/index.js';
+import { isIosApp, type Action, type ActionScenarioContext, type ActPath, type AppProblem, type ElementAction, type LogSources, type DeviceDriver, type DeviceMetrics,
+  type Element, type PrepareScenarioContext, type Snapshot, type TapAliasRule } from '../contracts/index.js';
 import { androidAvd, androidSerial } from '../scripted/schema.js';
 import { ROLES, type ReasonCode, type Role } from '../scripted/vocabulary.js';
 import { DeviceLease, DeviceLeaseBusyError } from './lease.js';
@@ -34,6 +35,33 @@ export interface MobileBuildMcpDriverOptions {
    * matches the capture the screenshot accompanies. Costs one extra capture per observation.
    */
   verifyScreenshotAgreement?: boolean;
+  /**
+   * Bring the run's simulator window to the front during `prepare`, once the simulator is confirmed booted.
+   * Unset, no window is opened and the simulator's state is read only when the launch fails.
+   */
+  deviceWindow?: DeviceWindowOpener;
+}
+
+/** Brings a simulator's window to the front. Rejects when it couldn't; the run carries on either way. */
+export type DeviceWindowOpener = (udid: string, signal: AbortSignal) => Promise<void>;
+
+/**
+ * The command that shows one simulator: Simulator.app, opened on that device. Not device automation: it only opens
+ * an app window. It must run only on a booted simulator, because Simulator boots the device it opens on.
+ */
+export function simulatorWindowCommand(udid: string): [file: string, args: string[]] {
+  return ['open', ['-a', 'Simulator', '--args', '-CurrentDeviceUDID', udid]];
+}
+
+/** Opens the window with `open`, in the device-layer environment (no Jev key), giving up after 10 seconds. */
+const openSimulatorWindow: DeviceWindowOpener = (udid, signal) => new Promise((done, reject) => {
+  const [file, args] = simulatorWindowCommand(udid);
+  execFile(file, args, { env: deviceEnvironment(), signal, timeout: 10_000 }, error => { if (error) reject(error); else done(); });
+});
+
+/** The window opener a run uses: on by default, off with `--no-device-window` (`turnedOff`) or `JEV_DEVICE_WINDOW=off`. */
+export function deviceWindowOpener(turnedOff: boolean, environment: NodeJS.ProcessEnv = process.env): DeviceWindowOpener | undefined {
+  return turnedOff || environment.JEV_DEVICE_WINDOW === 'off' ? undefined : openSimulatorWindow;
 }
 
 const UI_ACTION_RESULT = 'mobilebuildmcp.output.ui-action-result';
@@ -286,6 +314,48 @@ export function selectAndroidDeviceName(device: { serial?: string; avd?: string 
   return selected;
 }
 
+/** A width and height: a screen's, in device points (iOS) or pixels (Android), or a screenshot image's, in its pixels. */
+export interface Size { width: number; height: number }
+
+/** The finger's direction for a scroll: to bring what is further down into view, the finger moves up. */
+export function scrollFinger(direction: 'up' | 'down'): 'up' | 'down' {
+  return direction === 'down' ? 'up' : 'down';
+}
+
+/** The largest visible element, by frame area, whose actions include scrolling (`swipeWithin`); the first listed on a tie. */
+export function largestScrollable(elements: Element[]): (Element & { frame: NonNullable<Element['frame']> }) | undefined {
+  let largest: (Element & { frame: NonNullable<Element['frame']> }) | undefined;
+  for (const element of elements) {
+    const frame = element.frame;
+    if (!frame || !element.actions.includes('swipeWithin') || element.state?.visible === false) continue;
+    if (frame.width * frame.height <= 0) continue;
+    if (!largest || frame.width * frame.height > largest.frame.width * largest.frame.height) largest = { ...element, frame };
+  }
+  return largest;
+}
+
+/**
+ * A scroll with no scrollable element: a vertical swipe down the middle of the screen, the finger going from 70%
+ * to 30% of its height to scroll down, the reverse to scroll up, in whole numbers.
+ */
+export function screenMiddleSwipe(screen: Size, direction: 'up' | 'down'): { x1: number; y1: number; x2: number; y2: number } {
+  const x = Math.round(screen.width / 2);
+  const [from, to] = direction === 'down' ? [0.7, 0.3] : [0.3, 0.7];
+  return { x1: x, y1: Math.round(screen.height * from), x2: x, y2: Math.round(screen.height * to) };
+}
+
+/**
+ * A point on a screenshot of `shot` size, in its pixels, as a whole-number point on a screen of `screen` size;
+ * undefined when it isn't a number or lies outside the screenshot.
+ */
+export function screenPointOf(x: number, y: number, shot: Size, screen: Size): { x: number; y: number } | undefined {
+  if (!Number.isFinite(x) || !Number.isFinite(y) || x < 0 || y < 0 || x >= shot.width || y >= shot.height) return undefined;
+  return {
+    x: Math.min(screen.width - 1, Math.round(x * screen.width / shot.width)),
+    y: Math.min(screen.height - 1, Math.round(y * screen.height / shot.height)),
+  };
+}
+
 function sameScreen(before: Snapshot, after: Snapshot): boolean {
   if (before.screenHash && after.screenHash) return before.screenHash === after.screenHash;
   const identity = (snapshot: Snapshot) => snapshot.elements.map(({ ref: _ref, ...element }) => element);
@@ -312,6 +382,61 @@ function rematch(target: Element, fresh: Snapshot): Element {
   return matches[0]!;
 }
 
+/** The screen's size in points: the application element's frame, else the extent of every frame; undefined without frames. */
+function screenSizeOf(snapshot: Snapshot): Size | undefined {
+  const application = snapshot.elements.find(element => element.role === 'application' && element.frame);
+  if (application?.frame && application.frame.width > 0 && application.frame.height > 0) {
+    return { width: application.frame.x + application.frame.width, height: application.frame.y + application.frame.height };
+  }
+  let width = 0;
+  let height = 0;
+  for (const { frame } of snapshot.elements) {
+    if (frame) { width = Math.max(width, frame.x + frame.width); height = Math.max(height, frame.y + frame.height); }
+  }
+  return width > 0 && height > 0 ? { width, height } : undefined;
+}
+
+/** How far down the screen the navigation bar reaches, as a share of its height: a back button's centre is above it. */
+const TOP_BAR_SHARE = 0.2;
+/** The identifier UIKit and SwiftUI give a navigation bar's back button. */
+const BACK_BUTTON_IDENTIFIER = 'BackButton';
+/** A back-like label: "Back", "Go back", "Back to …", or one starting with a back chevron. */
+const BACK_LABEL = /^(?:(?:go )?back\b|[‹<←])/i;
+
+/**
+ * The navigation bar's back button: a visible, tappable button whose centre is in the top bar, identified as
+ * `BackButton`, else with a back-like label; the leftmost when several match. Driven mode's policy reads the same
+ * button, so a `back` it accepts is checked against the control this driver taps.
+ */
+export function backButtonOf(snapshot: Snapshot): Element | undefined {
+  const screen = screenSizeOf(snapshot);
+  if (!screen) return undefined;
+  const inTopBar = snapshot.elements.filter(element => element.role === 'button' && element.actions.includes('tap') &&
+    element.state?.visible !== false && element.frame !== undefined &&
+    element.frame.y + element.frame.height / 2 <= screen.height * TOP_BAR_SHARE);
+  const leftmost = (buttons: Element[]) => buttons.sort((a, b) => a.frame!.x - b.frame!.x)[0];
+  return leftmost(inTopBar.filter(element => element.identifier === BACK_BUTTON_IDENTIFIER)) ??
+    leftmost(inTopBar.filter(element => element.label !== undefined && BACK_LABEL.test(element.label.trim())));
+}
+
+/** Whether a simulator state MobileBuildMCP listed is known and not `Booted` (`Shutdown`, `Booting`, ...). */
+function notBooted(state: string | undefined): state is string {
+  return state !== undefined && state !== 'Booted';
+}
+
+/** A simulator that isn't booted, with how to boot it. The bridge never boots one itself. */
+function notBootedError(deviceId: string, state: string): DeviceReasonError {
+  return new DeviceReasonError('DEVICE_NOT_BOOTED', `Simulator ${deviceId} is not booted (state: ${state}). ` +
+    `Boot it with \`xcrun simctl boot ${deviceId}\` or from Simulator, then run again.`);
+}
+
+/**
+ * Start mode "attach" on iOS. MobileBuildMCP 2.7.1 can't tell which app is in front, and attach must refuse unless
+ * the app under test is, so the iOS driver refuses it before any device work.
+ */
+const IOS_ATTACH_REFUSAL = 'Start mode "attach" is Android-only for now: on iOS the bridge can\'t tell whether the app is ' +
+  'the one in front. Use "start": "restart" on iOS.';
+
 export class MobileBuildMcpDriver implements DeviceDriver {
   /** This pinned integration's proven tap-alias collapsing. The run reads it from the driver. */
   readonly tapAliasRule: TapAliasRule = 'mobilebuildmcp-2.7.1';
@@ -328,6 +453,10 @@ export class MobileBuildMcpDriver implements DeviceDriver {
   private nearTtlRefreshes = 0;
   private closing: Promise<void> | undefined;
   private readonly uiCommandTimeoutMs: number;
+  /** How the last `act` carried out a `back` or `scroll`. */
+  private lastActPath: ActPath | undefined;
+  /** What the last `prepare` worked around without failing, for the run log. */
+  private warnings: string[] = [];
 
   constructor(private readonly options: MobileBuildMcpDriverOptions) {
     this.runner = options.runner ?? defaultRunner(options);
@@ -357,6 +486,14 @@ export class MobileBuildMcpDriver implements DeviceDriver {
   logSources(): LogSources {
     return { ...(this.logPaths.runtime ? { runtime: this.logPaths.runtime } : {}),
       ...(this.logPaths.os ? { os: this.logPaths.os } : {}) };
+  }
+
+  prepareWarnings(): string[] {
+    return [...this.warnings];
+  }
+
+  actPath(): ActPath | undefined {
+    return this.lastActPath;
   }
 
   metrics(): DeviceMetrics {
@@ -396,10 +533,12 @@ export class MobileBuildMcpDriver implements DeviceDriver {
 
   private async prepareIssued(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void> {
     if (this.lease.held) throw new Error('Driver is already prepared');
+    this.warnings = [];
     if (signal.aborted) throw signal.reason;
     if (!isIosApp(scenario.app)) {
       throw new Error('The MobileBuildMCP driver only runs iOS scripts; this scenario has no app.bundleId');
     }
+    if (scenario.start === 'attach') throw new DeviceReasonError('UNSUPPORTED_ACTION', IOS_ATTACH_REFUSAL);
     const bundleId = scenario.app.bundleId;
     const deviceId = await selectDeviceId(this.options.cwd, scenario.device?.udid, this.options.defaultUdid);
     // A crashed holder's record lists nothing to sweep on iOS: MobileBuildMCP owns its own processes.
@@ -413,7 +552,22 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     this.nearTtlRefreshes = 0;
     this.deviceId = deviceId;
     this.appId = bundleId;
+    // Read before the window opens (Simulator boots the device it opens on); without a window, only once a launch fails.
+    let stateRead = false;
     try {
+      if (this.options.deviceWindow) {
+        const state = await this.simulatorState(deviceId, signal);
+        stateRead = true;
+        if (notBooted(state)) throw notBootedError(deviceId, state);
+        if (state === undefined) this.warnings.push('Simulator window not opened: the simulator\'s state could not be read.');
+        else {
+          try { await this.options.deviceWindow(deviceId, signal); }
+          catch {
+            if (signal.aborted) throw signal.reason;
+            this.warnings.push('Simulator window not opened: Simulator could not be opened on the run\'s device.');
+          }
+        }
+      }
       const launchArgs = scenario.app.launchArgs ?? [];
       // Array parameters go through --json, so arguments that start with "-" aren't read as CLI flags.
       const launched = await this.issueCommand(['simulator', 'launch-app', '--simulator-id', deviceId, '--bundle-id', bundleId,
@@ -430,8 +584,36 @@ export class MobileBuildMcpDriver implements DeviceDriver {
       }
       this.launched = true;
     } catch (error) {
+      let failure = error;
+      if (!stateRead && error instanceof DeviceCliError && !signal.aborted) {
+        const state = await this.simulatorState(deviceId, signal).catch(() => undefined);
+        if (notBooted(state)) failure = notBootedError(deviceId, state);
+      }
       if (this.lease.releasable) await this.lease.release();
-      throw error;
+      throw failure;
+    }
+  }
+
+  /**
+   * The simulator's state as MobileBuildMCP lists it (`Booted`, `Shutdown`, `Booting`, ...); undefined when it can't be
+   * read or the device isn't listed. A read-only listing, so it isn't entered in the lease's command ledger.
+   */
+  private async simulatorState(deviceId: string, signal: AbortSignal): Promise<string | undefined> {
+    if (signal.aborted) throw signal.reason;
+    const command = new AbortController();
+    const stop = () => command.abort(signal.reason);
+    signal.addEventListener('abort', stop, { once: true });
+    const deadline = setTimeout(() => command.abort(new Error('Simulator list deadline reached')), this.uiCommandTimeoutMs);
+    try {
+      const data = await awaitResultOrAbort(this.call(['simulator', 'list'], command.signal), command.signal);
+      const simulators = Array.isArray(data.simulators) ? data.simulators.map(record) : [];
+      return string(simulators.find(simulator => string(simulator.simulatorId)?.toUpperCase() === deviceId)?.state);
+    } catch {
+      if (signal.aborted) throw signal.reason;
+      return undefined;
+    } finally {
+      clearTimeout(deadline);
+      signal.removeEventListener('abort', stop);
     }
   }
 
@@ -524,6 +706,57 @@ export class MobileBuildMcpDriver implements DeviceDriver {
 
   private async actIssued(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined> {
     if (!this.deviceId || snapshot.deviceId !== this.deviceId) throw new Error('Snapshot belongs to a different device');
+    this.lastActPath = undefined;
+    if (action.kind === 'back') return this.back(snapshot, scenario, signal);
+    if (action.kind === 'scroll') return this.scroll(action.direction, snapshot, scenario, signal);
+    // MobileBuildMCP 2.7.1 taps only element references, and the bridge runs no device automation of its own (ADR-0002).
+    if (action.kind === 'tapAt') throw new DeviceCliError('UNSUPPORTED_ACTION', 'MobileBuildMCP 2.7.1 has no tap at a point');
+    return this.actOnElement(action, snapshot, scenario, signal);
+  }
+
+  /**
+   * Back: tap the navigation bar's back button when the screen has one, else swipe in from the left edge with
+   * MobileBuildMCP's gesture preset, told the screen's size in points (its default is another iPhone's).
+   */
+  private async back(snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined> {
+    const button = backButtonOf(snapshot);
+    if (button) {
+      this.lastActPath = { path: 'back-button', targetRef: button.ref };
+      return this.actOnElement({ kind: 'tap', targetRef: button.ref }, snapshot, scenario, signal);
+    }
+    this.lastActPath = { path: 'edge-swipe' };
+    return this.gesture('swipe-from-left-edge', snapshot, signal);
+  }
+
+  /**
+   * One of MobileBuildMCP's gesture presets, told the screen's size in points (the size AXe, which runs the preset,
+   * takes; its default is another iPhone's), then the settled capture when reused.
+   */
+  private async gesture(preset: string, snapshot: Snapshot, signal: AbortSignal): Promise<Snapshot | undefined> {
+    const screen = screenSizeOf(snapshot);
+    const size = screen ? ['--screen-width', String(Math.round(screen.width)), '--screen-height', String(Math.round(screen.height))] : [];
+    if (signal.aborted) throw signal.reason;
+    return this.settledCapture(await this.issueCommand(['ui-automation', 'gesture', '--simulator-id', this.deviceId!,
+      '--preset', preset, ...size, ...(this.reusesActionCapture ? ['--verbose'] : [])], signal, UI_ACTION_RESULT), signal);
+  }
+
+  /**
+   * Scroll: swipe inside the largest scroll view by its reference, with MobileBuildMCP's own swipe timing; else
+   * MobileBuildMCP's `scroll-down` or `scroll-up` preset in the screen's centre, since it swipes only within an
+   * element and the bridge runs no device automation of its own (ADR-0002). The preset's stroke is AXe's, not
+   * Android's 70% to 30%.
+   */
+  private async scroll(direction: 'up' | 'down', snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined> {
+    const area = largestScrollable(snapshot.elements);
+    if (area) {
+      this.lastActPath = { path: 'scroll-within', targetRef: area.ref };
+      return this.actOnElement({ kind: 'swipe', targetRef: area.ref, direction: scrollFinger(direction) }, snapshot, scenario, signal);
+    }
+    this.lastActPath = { path: 'screen-middle' };
+    return this.gesture(direction === 'down' ? 'scroll-down' : 'scroll-up', snapshot, signal);
+  }
+
+  private async actOnElement(action: ElementAction, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined> {
     const old = snapshot.elements.find((element) => element.ref === action.targetRef);
     if (!old) throw new StaleSnapshotError('Target reference is absent from observation');
     const requiredAction = action.kind === 'type' ? 'typeText' : action.kind === 'swipe' ? 'swipeWithin' : 'tap';

@@ -111,7 +111,7 @@ A step's mark when the screen never settled within the bridge's limit, so the st
 An authored device interaction with a resolved target and explicit arguments.
 
 **Typed value**:
-A literal supplied by the scenario author for a text-entry action.
+Text supplied by the scenario author for a text-entry action: a literal, or `{ "fromEnv": NAME }`, read from the bridge's environment once when the run starts.
 
 **Shown value**:
 What a text field displays after the bridge typed a typed value into it. It may legitimately differ from the typed value.

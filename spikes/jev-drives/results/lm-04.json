@@ -1,0 +1,27 @@
+{
+  "id": "lm-04",
+  "answer": {
+    "choice": "step_done",
+    "confidence": 1,
+    "probabilities": {
+      "step_done": 1,
+      "none_fits": 0,
+      "back": 0,
+      "tap:a3": 0,
+      "scroll:up": 0,
+      "tap:a6": 0,
+      "scroll:down": 0
+    },
+    "done": 0.96,
+    "inputTokens": 1073,
+    "latencyMs": 297.3457500000004
+  },
+  "score": {
+    "right": true,
+    "accepted": true,
+    "wrongAccepted": false,
+    "handled": true,
+    "doneVerdict": "yes",
+    "doneRight": true
+  }
+}

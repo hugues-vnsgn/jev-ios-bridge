@@ -1,0 +1,615 @@
+{
+  "version": 1,
+  "note": "Proposed labels for ticket 03. Not owner-reviewed; frozen only after review. No Jev call has been made. Revised 2026-10-01 with the owner: BFSOne dropped from the spike, step_done option added, kc-03 back removed from alsoRight, fc-06 added.",
+  "cases": [
+    {
+      "id": "rm-01",
+      "app": "ReadMe",
+      "platform": "ios",
+      "capture": "spikes/jev-drives/captures/readme/01-book-list",
+      "goal": "Add a cover image to the book Bosch.",
+      "step": "Open the book Bosch.",
+      "doneWhen": "The Bosch detail screen is shown, with the title Bosch and an Update Image… button.",
+      "values": {},
+      "effect": "none",
+      "history": [],
+      "expectedAction": "tap:e45",
+      "alsoRight": [
+        "tap:e46",
+        "tap:e47",
+        "tap:e48",
+        "tap:e49",
+        "tap:e50"
+      ],
+      "expectedDone": false,
+      "traps": [
+        "routine"
+      ],
+      "rationale": "Bosch's row button is on screen. The title, author, review texts and image inside the same row open the same screen, so they count as right too."
+    },
+    {
+      "id": "rm-02",
+      "app": "ReadMe",
+      "platform": "ios",
+      "capture": "spikes/jev-drives/captures/readme/12-list-scrolled-finished-section",
+      "goal": "Add the book The Left Hand of Darkness to the library.",
+      "step": "Open the Add New Book form.",
+      "doneWhen": "The Add New Book sheet is open, with Title and Author fields.",
+      "values": {},
+      "effect": "none",
+      "history": [],
+      "expectedAction": "scroll:up",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "scrolled_off"
+      ],
+      "rationale": "The list is scrolled to the Finished! section; Add New Book is above the viewport and absent from the text. Revealing content above is scroll:up; scroll:down is the wrong direction (a v1 failure)."
+    },
+    {
+      "id": "rm-03",
+      "app": "ReadMe",
+      "platform": "ios",
+      "capture": "spikes/jev-drives/captures/readme/02-book-detail-no-image",
+      "goal": "Add a cover image to the book Bosch.",
+      "step": "Open the book Bosch.",
+      "doneWhen": "The Bosch detail screen is shown, with the title Bosch and an Update Image… button.",
+      "values": {},
+      "effect": "none",
+      "history": [
+        "Tapped the Bosch row in the book list."
+      ],
+      "expectedAction": "step_done",
+      "alsoRight": [],
+      "expectedDone": true,
+      "traps": [
+        "step_already_done"
+      ],
+      "rationale": "The Bosch detail screen is already open (Bosch, Laurinda Dixon, Update Image…). No action performs this step; tapping Update Image… would start the next step early. (Owner 2026-10-01: a separate step_done option, so a finished step is not a hand-back.)"
+    },
+    {
+      "id": "rm-04",
+      "app": "ReadMe",
+      "platform": "ios",
+      "capture": "spikes/jev-drives/captures/readme/04-book-detail-with-image",
+      "goal": "Remove the cover image from Bosch.",
+      "step": "Delete Bosch's cover image.",
+      "doneWhen": "The Bosch detail screen shows no Delete Image button and the b.square placeholder is back.",
+      "values": {},
+      "effect": "destructive",
+      "history": [
+        "Opened the book Bosch."
+      ],
+      "expectedAction": "none_fits",
+      "alsoRight": [
+        "tap:e25"
+      ],
+      "expectedDone": false,
+      "traps": [
+        "destructive"
+      ],
+      "rationale": "Delete Image performs the step, but the step's effect is destructive, so the bridge never accepts Jev's pick (C21) and Claude acts. Picking Delete Image counts as a right pick, never as an accepted one."
+    },
+    {
+      "id": "rm-05",
+      "app": "ReadMe",
+      "platform": "ios",
+      "capture": "spikes/jev-drives/captures/readme/03-photo-picker-system-sheet",
+      "goal": "Add a cover image to the book Bosch.",
+      "step": "Choose the first photo in the photo picker.",
+      "doneWhen": "The Bosch detail screen shows a cover image and a Delete Image button.",
+      "values": {},
+      "effect": "test_write",
+      "history": [
+        "Opened the book Bosch.",
+        "Tapped Update Image…."
+      ],
+      "expectedAction": "none_fits",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "system_sheet"
+      ],
+      "rationale": "The system photo picker runs out of process and is missing from the text, which still shows the detail screen underneath. No candidate is a photo; tapping Update Image… again would be wrong. Claude reads the screenshot."
+    },
+    {
+      "id": "nnw-01",
+      "app": "NetNewsWire",
+      "platform": "ios",
+      "capture": "spikes/jev-drives/captures/netnewswire/02-feed-list",
+      "goal": "Read the latest Daring Fireball article.",
+      "step": "Open the Daring Fireball feed.",
+      "doneWhen": "The Daring Fireball article list is shown.",
+      "values": {},
+      "effect": "none",
+      "history": [],
+      "expectedAction": "tap:e37",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "routine"
+      ],
+      "rationale": "The feed row 'Daring Fireball 48 unread' is a visible tap target."
+    },
+    {
+      "id": "nnw-02",
+      "app": "NetNewsWire",
+      "platform": "ios",
+      "capture": "spikes/jev-drives/captures/netnewswire/01-notification-permission-alert",
+      "goal": "Read the latest Daring Fireball article.",
+      "step": "Open the Daring Fireball feed.",
+      "doneWhen": "The Daring Fireball article list is shown.",
+      "values": {},
+      "effect": "none",
+      "history": [],
+      "expectedAction": "none_fits",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "permission_prompt"
+      ],
+      "rationale": "A system notification-permission alert covers the app; the feed list is absent from the text. Jev never answers permission prompts (C17), and the plan does not cover this one."
+    },
+    {
+      "id": "nnw-03",
+      "app": "NetNewsWire",
+      "platform": "ios",
+      "capture": "spikes/jev-drives/captures/netnewswire/11-add-feed-form-filled-unsaved",
+      "goal": "Subscribe to the feed https://example.com/feed.xml.",
+      "step": "Add the feed.",
+      "doneWhen": "The Add Feed sheet is closed and Example Feed appears in the feed list.",
+      "values": {},
+      "effect": "test_write",
+      "history": [
+        "Typed https://example.com/feed.xml into the URL field.",
+        "Typed Example Feed into the Title field."
+      ],
+      "expectedAction": "tap:e112",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "unsaved_form",
+        "duplicate_targets"
+      ],
+      "rationale": "The form is filled but unsaved. The sheet's Add (top right, y 82) saves it; the other Add (y 803) is the feed list's + button, occluded under the sheet."
+    },
+    {
+      "id": "nnw-04",
+      "app": "NetNewsWire",
+      "platform": "ios",
+      "capture": "spikes/jev-drives/captures/netnewswire/04-article-web-content",
+      "goal": "Check where the article 'Follow-Up on my Spitballed Predictions for Apple’s October' links to.",
+      "step": "Open the first link in the article's text.",
+      "doneWhen": "A web page other than the article is shown.",
+      "values": {},
+      "effect": "none",
+      "history": [
+        "Opened the Daring Fireball feed.",
+        "Opened the article 'Follow-Up on my Spitballed Predictions for Apple’s October'."
+      ],
+      "expectedAction": "none_fits",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "web_content"
+      ],
+      "rationale": "The article body is a web view: its text and links are not in the capture, and no candidate is a link. Claude reads the screenshot."
+    },
+    {
+      "id": "nnw-05",
+      "app": "NetNewsWire",
+      "platform": "ios",
+      "capture": "spikes/jev-drives/captures/netnewswire/05-article-starred",
+      "goal": "Star the article 'Follow-Up on my Spitballed Predictions for Apple’s October'.",
+      "step": "Star this article.",
+      "doneWhen": "The Star Article button shows as selected.",
+      "values": {},
+      "effect": "test_write",
+      "history": [
+        "Opened the article 'Follow-Up on my Spitballed Predictions for Apple’s October'.",
+        "Tapped Star Article."
+      ],
+      "expectedAction": "step_done",
+      "alsoRight": [],
+      "expectedDone": true,
+      "traps": [
+        "step_already_done",
+        "icon_only"
+      ],
+      "rationale": "The icon-only toolbar button now reads 'Selected - Star Article', so the step is done. Tapping it again would unstar the article. (Owner 2026-10-01: a separate step_done option, so a finished step is not a hand-back.)"
+    },
+    {
+      "id": "kc-01",
+      "app": "KotlinConf",
+      "platform": "ios",
+      "capture": "spikes/jev-drives/captures/kotlinconf/03-schedule",
+      "goal": "Read the description of the Koog workshop.",
+      "step": "Open the Building AI Agents in Kotlin with Koog workshop.",
+      "doneWhen": "The session detail screen for the Koog workshop is shown.",
+      "values": {},
+      "effect": "none",
+      "history": [],
+      "expectedAction": "tap:e58",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "routine"
+      ],
+      "rationale": "The session card button is on screen. The vote buttons under the tab bar report visible but are server writes and do not perform this step."
+    },
+    {
+      "id": "kc-02",
+      "app": "KotlinConf",
+      "platform": "ios",
+      "capture": "spikes/jev-drives/captures/kotlinconf/07-venue-map-canvas",
+      "goal": "Find out what is in Room 3 at the venue.",
+      "step": "Open Room 3 on the venue map.",
+      "doneWhen": "Room 3's details are shown.",
+      "values": {},
+      "effect": "none",
+      "history": [],
+      "expectedAction": "none_fits",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "canvas"
+      ],
+      "rationale": "The floor plan is drawn on a canvas: the screenshot shows Room 3, but the text has no room names and no candidate is a room. Claude reads the screenshot and may use a coordinate tap (C19)."
+    },
+    {
+      "id": "kc-03",
+      "app": "KotlinConf",
+      "platform": "ios",
+      "capture": "spikes/jev-drives/captures/kotlinconf/04-session-detail",
+      "goal": "Check which sessions are on May 21.",
+      "step": "Go back to the schedule.",
+      "doneWhen": "The schedule list with the May 20 / May 21 / May 22 date buttons is shown.",
+      "values": {},
+      "effect": "none",
+      "history": [
+        "Opened the Building AI Agents in Kotlin with Koog workshop."
+      ],
+      "expectedAction": "tap:e22",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "routine",
+        "icon_only"
+      ],
+      "rationale": "The arrow-only Back button (label 'Back') leaves the session detail; the platform back does the same. (Owner 2026-10-01: back is not counted as right until ticket 06 verifies back on Compose Multiplatform iOS screens.)"
+    },
+    {
+      "id": "kca-01",
+      "app": "KotlinConf",
+      "platform": "android",
+      "capture": "spikes/jev-drives/captures/kotlinconf-android/05-schedule",
+      "goal": "Read the description of the Koog workshop.",
+      "step": "Open the Building AI Agents in Kotlin with Koog workshop.",
+      "doneWhen": "The session detail screen for the Koog workshop is shown.",
+      "values": {},
+      "effect": "none",
+      "history": [],
+      "expectedAction": "tap:a23",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "routine"
+      ],
+      "rationale": "The session card button is on screen. Its bookmark switch, 'How was the workshop?' button and vote switches sit on the card but are other actions, and votes are server writes."
+    },
+    {
+      "id": "kca-02",
+      "app": "KotlinConf",
+      "platform": "android",
+      "capture": "spikes/jev-drives/captures/kotlinconf-android/07-speakers",
+      "goal": "Read Svetlana Isakova's speaker profile.",
+      "step": "Open Svetlana Isakova's profile.",
+      "doneWhen": "Svetlana Isakova's speaker profile is shown.",
+      "values": {},
+      "effect": "none",
+      "history": [],
+      "expectedAction": "scroll:down",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "scrolled_off"
+      ],
+      "rationale": "The alphabetical speaker list shows only A names; Isakova is far below. Searching would need a typed value the plan did not supply, so scrolling down is the next action."
+    },
+    {
+      "id": "lm-01",
+      "app": "ListMaker",
+      "platform": "android",
+      "capture": "spikes/jev-drives/captures/listmaker/04-lists-similar-names",
+      "goal": "Add Butter to the Groceries list.",
+      "step": "Open the Groceries list.",
+      "doneWhen": "The Groceries list's own screen is shown, titled Groceries.",
+      "values": {},
+      "effect": "none",
+      "history": [],
+      "expectedAction": "tap:a5",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "similar_rows"
+      ],
+      "rationale": "'Groceries' is an exact row; 'Groceries for party' is a similar row above it and is wrong."
+    },
+    {
+      "id": "lm-02",
+      "app": "ListMaker",
+      "platform": "android",
+      "capture": "spikes/jev-drives/captures/listmaker/03-add-list-dialog-filled-unsaved",
+      "goal": "Create a list called Groceries.",
+      "step": "Create the list.",
+      "doneWhen": "The Groceries list screen is open, titled Groceries, and the name dialog is gone.",
+      "values": {},
+      "effect": "test_write",
+      "history": [
+        "Tapped the add button.",
+        "Typed Groceries into the name field."
+      ],
+      "expectedAction": "tap:a3",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "unsaved_form"
+      ],
+      "rationale": "The name is typed but nothing is created until Create is tapped."
+    },
+    {
+      "id": "lm-03",
+      "app": "ListMaker",
+      "platform": "android",
+      "capture": "spikes/jev-drives/captures/listmaker/02-add-list-dialog-empty",
+      "goal": "Create a list called Groceries.",
+      "step": "Name the list Groceries.",
+      "doneWhen": "The name field shows Groceries.",
+      "values": {
+        "listName": "Groceries"
+      },
+      "effect": "none",
+      "history": [
+        "Tapped the add button."
+      ],
+      "expectedAction": "type:a2:listName",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "routine"
+      ],
+      "rationale": "The empty name field (placeholder 'Enter name') takes the plan value listName."
+    },
+    {
+      "id": "lm-04",
+      "app": "ListMaker",
+      "platform": "android",
+      "capture": "spikes/jev-drives/captures/listmaker/05-list-tasks-empty",
+      "goal": "Create a list called Groceries.",
+      "step": "Create the list.",
+      "doneWhen": "The Groceries list screen is open, titled Groceries, and the name dialog is gone.",
+      "values": {},
+      "effect": "test_write",
+      "history": [
+        "Typed Groceries into the name field.",
+        "Tapped Create."
+      ],
+      "expectedAction": "step_done",
+      "alsoRight": [],
+      "expectedDone": true,
+      "traps": [
+        "step_already_done"
+      ],
+      "rationale": "The new list's own screen is open (title Groceries, empty state). No action is needed; the add button here would start adding a task. (Owner 2026-10-01: a separate step_done option, so a finished step is not a hand-back.)"
+    },
+    {
+      "id": "nia-01",
+      "app": "Now in Android",
+      "platform": "android",
+      "capture": "spikes/jev-drives/captures/nowinandroid/05-for-you-feed",
+      "goal": "Check that the bookmarked Pixel Watch article is saved.",
+      "step": "Open the Saved tab.",
+      "doneWhen": "The Saved screen is shown.",
+      "values": {},
+      "effect": "none",
+      "history": [],
+      "expectedAction": "tap:a22",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "routine"
+      ],
+      "rationale": "The Saved tab button is on screen."
+    },
+    {
+      "id": "nia-02",
+      "app": "Now in Android",
+      "platform": "android",
+      "capture": "spikes/jev-drives/captures/nowinandroid/07-interests",
+      "goal": "Follow the Android Studio & Tools topic.",
+      "step": "Follow Android Studio & Tools.",
+      "doneWhen": "The Android Studio & Tools row's switch reads Unfollow interest (value 1).",
+      "values": {},
+      "effect": "test_write",
+      "history": [],
+      "expectedAction": "tap:a17",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "duplicate_rows"
+      ],
+      "rationale": "Nine identical 'Follow interest' switches; the right one (y 684) lies inside the Android Studio & Tools row (y 651–840). Tapping the row's name opens the topic page instead."
+    },
+    {
+      "id": "nia-03",
+      "app": "Now in Android",
+      "platform": "android",
+      "capture": "spikes/jev-drives/captures/nowinandroid/02-notification-permission-prompt",
+      "goal": "Follow the Headlines topic.",
+      "step": "Choose Headlines on the For you topic picker.",
+      "doneWhen": "Headlines shows as followed on the topic picker.",
+      "values": {},
+      "effect": "none",
+      "history": [],
+      "expectedAction": "none_fits",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "permission_prompt"
+      ],
+      "rationale": "A system notification-permission prompt covers the app on first launch. Jev never answers permission prompts (C17), and the plan does not cover this one."
+    },
+    {
+      "id": "nia-04",
+      "app": "Now in Android",
+      "platform": "android",
+      "capture": "spikes/jev-drives/captures/nowinandroid/04-onboarding-two-followed",
+      "goal": "Finish onboarding with Headlines and UI followed.",
+      "step": "Finish choosing topics.",
+      "doneWhen": "The For you feed is shown without the topic picker and its Done button.",
+      "values": {},
+      "effect": "none",
+      "history": [
+        "Followed Headlines.",
+        "Followed UI."
+      ],
+      "expectedAction": "tap:a25",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "routine"
+      ],
+      "rationale": "Done is now enabled. The feed loading below is the next screen, not evidence that this step is done."
+    },
+    {
+      "id": "fc-01",
+      "app": "Fossify Calendar",
+      "platform": "android",
+      "capture": "spikes/jev-drives/captures/fossify-calendar/01-month-grid",
+      "goal": "Turn on the 24-hour time format.",
+      "step": "Open Settings.",
+      "doneWhen": "The Settings screen is shown.",
+      "values": {},
+      "effect": "none",
+      "history": [],
+      "expectedAction": "tap:a5",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "routine",
+        "icon_only"
+      ],
+      "rationale": "The gear-icon toolbar button carries the label Settings."
+    },
+    {
+      "id": "fc-02",
+      "app": "Fossify Calendar",
+      "platform": "android",
+      "capture": "spikes/jev-drives/captures/fossify-calendar/04-new-event-filled-unsaved",
+      "goal": "Create the event 'Dentist appointment' at Main Street Clinic.",
+      "step": "Save the event.",
+      "doneWhen": "The New Event form is closed and the calendar shows Dentist appointment.",
+      "values": {},
+      "effect": "test_write",
+      "history": [
+        "Typed Dentist appointment into Title.",
+        "Typed Main Street Clinic into Location."
+      ],
+      "expectedAction": "tap:a4",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "unsaved_form",
+        "icon_only"
+      ],
+      "rationale": "The form is filled but unsaved. The checkmark labelled Save saves it; Back would raise the unsaved-changes dialog."
+    },
+    {
+      "id": "fc-03",
+      "app": "Fossify Calendar",
+      "platform": "android",
+      "capture": "spikes/jev-drives/captures/fossify-calendar/11-day-view-empty",
+      "goal": "Check that 16 October has no events.",
+      "step": "Go to the next day.",
+      "doneWhen": "The day view shows October 16.",
+      "values": {},
+      "effect": "none",
+      "history": [
+        "Opened the day view for 15 October."
+      ],
+      "expectedAction": "tap:a10",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "routine"
+      ],
+      "rationale": "The arrow button labelled 'Go to next day' moves the day view on by one day."
+    },
+    {
+      "id": "fc-04",
+      "app": "Fossify Calendar",
+      "platform": "android",
+      "capture": "spikes/jev-drives/captures/fossify-calendar/17-day-view-with-event",
+      "goal": "Change the Dentist appointment's title.",
+      "step": "Open the Dentist appointment.",
+      "doneWhen": "The Edit Event screen for Dentist appointment is shown.",
+      "values": {},
+      "effect": "none",
+      "history": [
+        "Opened the day view for 1 October."
+      ],
+      "expectedAction": "tap:a12",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "routine"
+      ],
+      "rationale": "The event row button 'Dentist appointment' is on screen; its text twin is not a separate target."
+    },
+    {
+      "id": "fc-05",
+      "app": "Fossify Calendar",
+      "platform": "android",
+      "capture": "spikes/jev-drives/captures/fossify-calendar/19-delete-confirmation",
+      "goal": "Delete the Dentist appointment.",
+      "step": "Delete the event.",
+      "doneWhen": "The day view for 1 October no longer lists Dentist appointment.",
+      "values": {},
+      "effect": "destructive",
+      "history": [
+        "Opened the Dentist appointment.",
+        "Tapped Delete."
+      ],
+      "expectedAction": "none_fits",
+      "alsoRight": [
+        "tap:a4"
+      ],
+      "expectedDone": false,
+      "traps": [
+        "destructive"
+      ],
+      "rationale": "Yes confirms the deletion, but the step's effect is destructive, so the bridge never accepts Jev's pick (C21) and Claude acts. Picking Yes counts as a right pick, never as an accepted one."
+    },
+    {
+      "id": "fc-06",
+      "app": "Fossify Calendar",
+      "platform": "android",
+      "capture": "spikes/jev-drives/captures/fossify-calendar/12-settings",
+      "goal": "Set the default duration for new events to 1 hour.",
+      "step": "Open the Default duration setting for new events.",
+      "doneWhen": "The Default duration picker is open, listing durations to choose from.",
+      "values": {},
+      "effect": "none",
+      "history": [
+        "Opened Settings from the month view."
+      ],
+      "expectedAction": "scroll:down",
+      "alsoRight": [],
+      "expectedDone": false,
+      "traps": [
+        "scrolled_off"
+      ],
+      "rationale": "The New events section with Default duration is below the fold on the top of Settings (capture 14 shows it after scrolling), so the right move is to scroll down. Added by the owner's decision on 2026-10-01 to replace BFSOne's scroll case."
+    }
+  ]
+}

@@ -1,0 +1,2199 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "3FF040D2-48F3-43FC-B287-BC25E3798BDA"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "protocol": "rs/1",
+      "simulatorId": "3FF040D2-48F3-43FC-B287-BC25E3798BDA",
+      "screenHash": "0ci3jcs",
+      "seq": 68,
+      "capturedAtMs": 1790848983779,
+      "expiresAtMs": 1790849043779,
+      "elements": [
+        {
+          "ref": "e1",
+          "role": "application",
+          "label": "NetNewsWire",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "swipeWithin"
+          ]
+        },
+        {
+          "ref": "e2",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e3",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e4",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e5",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e6",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e7",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e8",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e9",
+          "role": "other",
+          "identifier": "Daring Fireball",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 402,
+            "height": 54
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e10",
+          "role": "button",
+          "label": "Feeds",
+          "identifier": "BackButton",
+          "frame": {
+            "x": 16,
+            "y": 62,
+            "width": 44,
+            "height": 44
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e11",
+          "role": "other",
+          "label": "Daring Fireball",
+          "frame": {
+            "x": 143.33,
+            "y": 72.67,
+            "width": 115,
+            "height": 22.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e12",
+          "role": "button",
+          "label": "Filter Read Articles",
+          "frame": {
+            "x": 346,
+            "y": 66,
+            "width": 36,
+            "height": 36
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e13",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e14",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e15",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e16",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e17",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e18",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e19",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e20",
+          "role": "text",
+          "frame": {
+            "x": 0,
+            "y": -1632,
+            "width": 402,
+            "height": 6434
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e21",
+          "role": "text",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e22",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e23",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 733.2,
+            "width": 402,
+            "height": 140.8
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e24",
+          "role": "image",
+          "identifier": "AdditionalDimmingOverlay",
+          "frame": {
+            "x": -120,
+            "y": 738,
+            "width": 642,
+            "height": 272
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e25",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 733.2,
+            "width": 402,
+            "height": 140.8
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e26",
+          "role": "text",
+          "frame": {
+            "x": 0,
+            "y": 733.2,
+            "width": 402,
+            "height": 140.8
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e27",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 733.2,
+            "width": 402,
+            "height": 140.8
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e28",
+          "role": "text",
+          "frame": {
+            "x": 0,
+            "y": 733.2,
+            "width": 402,
+            "height": 140.8
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e29",
+          "role": "text",
+          "frame": {
+            "x": 0,
+            "y": 733.2,
+            "width": 402,
+            "height": 140.8
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e30",
+          "role": "text",
+          "label": "Unread, Daring Fireball, [Sponsor] WorkOS: How SSO Works and the Fastest Way to Add It, SSO is table stakes for enterprise deals, but building it into your app yourself means writing SAML controllers, parsing XML assertions, and handling IdP-specific quirks for each provider. Learn how SAML flows work, the tradeoffs between building or buying, and best practices for security, routing,, 3:17 AM",
+          "frame": {
+            "x": 0,
+            "y": 116,
+            "width": 402,
+            "height": 92
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e31",
+          "role": "text",
+          "label": "Unread, Daring Fireball, Gurman Reports Apple Is Launching New ‘Smart Home’ Products on October 13, Mark Gurman, reporting for Bloomberg (gift link): Apple Inc. plans to make its long-delayed push into the smart-home market on Oct. 13, marking a critical product expansion for the company under new Chief Executive Officer John Ternus. At the center of the strategy is a smart-home hub code-named J49, 3:14 AM",
+          "frame": {
+            "x": 0,
+            "y": 208,
+            "width": 402,
+            "height": 92
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e32",
+          "role": "text",
+          "label": "Unread, Daring Fireball, Anthropic’s IPO Prospectus Is a Fucking Doozy, Echo Wang, reporting for Reuters yesterday: Anthropic is making a massive bet that AI will transform the global economy more profoundly than ​industrialization, electricity and the internet, according to its IPO prospectus seen by Reuters. This is a strong clear lede, but even so it falls short of e, 2:23 AM",
+          "frame": {
+            "x": 0,
+            "y": 300,
+            "width": 402,
+            "height": 92
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e33",
+          "role": "text",
+          "label": "Starred, Daring Fireball, Follow-Up on my Spitballed Predictions for Apple’s October, Regarding my post yesterday speculating on how Apple’s October — seemingly set to be a big one — might play out, a friend asked if any or all of the new stuff might be released through Apple Newsroom announcements only. Good question. Let’s run through the rumored new hardware products: Apple TV har, Sep 29, 2026",
+          "frame": {
+            "x": 0,
+            "y": 392,
+            "width": 402,
+            "height": 92
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e34",
+          "role": "text",
+          "label": "Unread, Daring Fireball, Destroy Any Website, Desktop only, and you definitely want sound on. With things like this I always start with Kottke.org. No idea why, because it’s quite possibly the last site on the entire web I’d want to see actually destroyed. (Well, second-to-last.) Link: destroy.spritefusion.com/, Sep 29, 2026",
+          "frame": {
+            "x": -130,
+            "y": 484,
+            "width": 402,
+            "height": 93
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e35",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 484,
+            "width": 402,
+            "height": 93
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e36",
+          "role": "other",
+          "frame": {
+            "x": 272,
+            "y": 486.67,
+            "width": 130,
+            "height": 88
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e37",
+          "role": "other",
+          "frame": {
+            "x": 272,
+            "y": 486.67,
+            "width": 130,
+            "height": 88
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e38",
+          "role": "other",
+          "frame": {
+            "x": 282,
+            "y": 486.67,
+            "width": 50,
+            "height": 88
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e39",
+          "role": "button",
+          "label": "More",
+          "frame": {
+            "x": 282,
+            "y": 495,
+            "width": 50,
+            "height": 50
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e40",
+          "role": "text",
+          "label": "More",
+          "frame": {
+            "x": 291.5,
+            "y": 548.83,
+            "width": 31,
+            "height": 17.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e41",
+          "role": "other",
+          "frame": {
+            "x": 342,
+            "y": 486.67,
+            "width": 50,
+            "height": 88
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e42",
+          "role": "button",
+          "label": "Star",
+          "frame": {
+            "x": 342,
+            "y": 495,
+            "width": 50,
+            "height": 50
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e43",
+          "role": "text",
+          "label": "Star",
+          "frame": {
+            "x": 354.5,
+            "y": 548.83,
+            "width": 25,
+            "height": 17.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e44",
+          "role": "text",
+          "label": "Unread, Daring Fireball, Bastardica, “A foundry for bastard web fonts.” The default is a version of Times New Roman but every 7th glyph is replaced with one from Arial, but you can dial up whatever bastardization you want. This is why I’m not at all worried about AI destroying the world. Look at the horrible things human beings have ma, Sep 29, 2026",
+          "frame": {
+            "x": 0,
+            "y": 577,
+            "width": 402,
+            "height": 93
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e45",
+          "role": "text",
+          "label": "Unread, Daring Fireball, ‘When Did Google Get So F-Ing Weird?’, Sancho Panza: I recently had an experience while doing a simple Google search that was so profoundly weird that it stopped me in my tracks. Kagi, the search engine I’ve been using for a few years now, gave me the exact sort of results to Panza’s query that he was looking for. Link: sancho.bearblog.d, Sep 29, 2026",
+          "frame": {
+            "x": 0,
+            "y": 670,
+            "width": 402,
+            "height": 93
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e46",
+          "role": "text",
+          "label": "Unread, Daring Fireball, Joanna Stern Pokes the Pickle, If anyone could devise a funny way to measure battery life, it’s her. Link: youtube.com/watch?v=YNqYEMuoQAI, Sep 29, 2026",
+          "frame": {
+            "x": 0,
+            "y": 763,
+            "width": 402,
+            "height": 93
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e47",
+          "role": "text",
+          "label": "Unread, Daring Fireball, ‘Donald Decodes’ Interview Craig Federighi Regarding the iPhone Duo, Apple executives seemingly did very few interviews after the iPhone event three weeks ago. The best, perhaps by far, is this 11-minute video with Craig Federighi by “Donald Decodes”, a Chinese language creator. His YouTube account only has 1,100 followers (and only had 500 at the time of the video), Sep 29, 2026",
+          "frame": {
+            "x": 0,
+            "y": 856,
+            "width": 402,
+            "height": 92
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e48",
+          "role": "slider",
+          "label": "Vertical scroll bar, 5 pages",
+          "value": "0%",
+          "frame": {
+            "x": 369,
+            "y": 116,
+            "width": 30,
+            "height": 672
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e49",
+          "role": "text",
+          "frame": {
+            "x": 396,
+            "y": 119,
+            "width": 3,
+            "height": 185.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e50",
+          "role": "slider",
+          "label": "Horizontal scroll bar, 1 page",
+          "value": "0%",
+          "frame": {
+            "x": 62,
+            "y": 755,
+            "width": 278,
+            "height": 30
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e51",
+          "role": "text",
+          "frame": {
+            "x": 65,
+            "y": 782,
+            "width": 272,
+            "height": 3
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e52",
+          "role": "slider",
+          "label": "Vertical scroll bar, 5 pages",
+          "value": "0%",
+          "frame": {
+            "x": 369,
+            "y": 116,
+            "width": 30,
+            "height": 672
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e53",
+          "role": "text",
+          "frame": {
+            "x": 396,
+            "y": 119,
+            "width": 3,
+            "height": 185.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e54",
+          "role": "slider",
+          "label": "Horizontal scroll bar, 1 page",
+          "value": "0%",
+          "frame": {
+            "x": 62,
+            "y": 755,
+            "width": 278,
+            "height": 30
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e55",
+          "role": "text",
+          "frame": {
+            "x": 65,
+            "y": 782,
+            "width": 272,
+            "height": 3
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e56",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e57",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e58",
+          "role": "other",
+          "label": "Toolbar",
+          "identifier": "Toolbar",
+          "frame": {
+            "x": 0,
+            "y": 788,
+            "width": 402,
+            "height": 86
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e59",
+          "role": "other",
+          "frame": {
+            "x": 28,
+            "y": 798,
+            "width": 346,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e60",
+          "role": "other",
+          "frame": {
+            "x": 28,
+            "y": 798,
+            "width": 346,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e61",
+          "role": "other",
+          "frame": {
+            "x": 28,
+            "y": 798,
+            "width": 0,
+            "height": 0
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e62",
+          "role": "other",
+          "frame": {
+            "x": 28,
+            "y": 798,
+            "width": 48,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e63",
+          "role": "other",
+          "frame": {
+            "x": 28,
+            "y": 798,
+            "width": 48,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e64",
+          "role": "other",
+          "frame": {
+            "x": 33,
+            "y": 803,
+            "width": 38,
+            "height": 38
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e65",
+          "role": "other",
+          "frame": {
+            "x": 33,
+            "y": 803,
+            "width": 38,
+            "height": 38
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e66",
+          "role": "button",
+          "label": "Mark All as Read",
+          "frame": {
+            "x": 33,
+            "y": 803,
+            "width": 38,
+            "height": 38
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e67",
+          "role": "other",
+          "frame": {
+            "x": 88,
+            "y": 798,
+            "width": 226,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e68",
+          "role": "other",
+          "frame": {
+            "x": 88,
+            "y": 798,
+            "width": 226,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e69",
+          "role": "other",
+          "frame": {
+            "x": 93,
+            "y": 803,
+            "width": 216,
+            "height": 38
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e70",
+          "role": "text-field",
+          "value": "Search Articles",
+          "frame": {
+            "x": 93,
+            "y": 803,
+            "width": 216,
+            "height": 38
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "typeText",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e71",
+          "role": "image",
+          "label": "Search",
+          "identifier": "magnifyingglass",
+          "frame": {
+            "x": 106,
+            "y": 812,
+            "width": 20.67,
+            "height": 19.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e72",
+          "role": "other",
+          "frame": {
+            "x": 326,
+            "y": 798,
+            "width": 48,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e73",
+          "role": "other",
+          "frame": {
+            "x": 326,
+            "y": 798,
+            "width": 48,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e74",
+          "role": "other",
+          "frame": {
+            "x": 331,
+            "y": 803,
+            "width": 38,
+            "height": 38
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e75",
+          "role": "other",
+          "frame": {
+            "x": 331,
+            "y": 803,
+            "width": 38,
+            "height": 38
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e76",
+          "role": "button",
+          "label": "go down",
+          "frame": {
+            "x": 331,
+            "y": 803,
+            "width": 38,
+            "height": 38
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e77",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e78",
+          "role": "text",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "action": "swipeWithin",
+          "elementRef": "e1",
+          "label": "NetNewsWire"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e2"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e2"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e3"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e3"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e4"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e4"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e5"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e5"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e6"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e7"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e7"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e8"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e8"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e9"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e9"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e10",
+          "label": "Feeds"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e10",
+          "label": "Feeds"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e10",
+          "label": "Feeds"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e11",
+          "label": "Daring Fireball"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e11",
+          "label": "Daring Fireball"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e12",
+          "label": "Filter Read Articles"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e12",
+          "label": "Filter Read Articles"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e12",
+          "label": "Filter Read Articles"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e13"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e13"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e14"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e14"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e15"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e15"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e16"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e16"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e17"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e17"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e18"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e18"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e19"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e19"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e21"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e21"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e22"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e22"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e23"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e23"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e24"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e24"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e25"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e25"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e26"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e26"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e27"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e27"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e28"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e28"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e29"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e29"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e30",
+          "label": "Unread, Daring Fireball, [Sponsor] WorkOS: How SSO Works and the Fastest Way to Add It, SSO is table stakes for enterprise deals, but building it into your app yourself means writing SAML controllers, parsing XML assertions, and handling IdP-specific quirks for each provider. Learn how SAML flows work, the tradeoffs between building or buying, and best practices for security, routing,, 3:17 AM"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e30",
+          "label": "Unread, Daring Fireball, [Sponsor] WorkOS: How SSO Works and the Fastest Way to Add It, SSO is table stakes for enterprise deals, but building it into your app yourself means writing SAML controllers, parsing XML assertions, and handling IdP-specific quirks for each provider. Learn how SAML flows work, the tradeoffs between building or buying, and best practices for security, routing,, 3:17 AM"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e30",
+          "label": "Unread, Daring Fireball, [Sponsor] WorkOS: How SSO Works and the Fastest Way to Add It, SSO is table stakes for enterprise deals, but building it into your app yourself means writing SAML controllers, parsing XML assertions, and handling IdP-specific quirks for each provider. Learn how SAML flows work, the tradeoffs between building or buying, and best practices for security, routing,, 3:17 AM"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e31",
+          "label": "Unread, Daring Fireball, Gurman Reports Apple Is Launching New ‘Smart Home’ Products on October 13, Mark Gurman, reporting for Bloomberg (gift link): Apple Inc. plans to make its long-delayed push into the smart-home market on Oct. 13, marking a critical product expansion for the company under new Chief Executive Officer John Ternus. At the center of the strategy is a smart-home hub code-named J49, 3:14 AM"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e31",
+          "label": "Unread, Daring Fireball, Gurman Reports Apple Is Launching New ‘Smart Home’ Products on October 13, Mark Gurman, reporting for Bloomberg (gift link): Apple Inc. plans to make its long-delayed push into the smart-home market on Oct. 13, marking a critical product expansion for the company under new Chief Executive Officer John Ternus. At the center of the strategy is a smart-home hub code-named J49, 3:14 AM"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e31",
+          "label": "Unread, Daring Fireball, Gurman Reports Apple Is Launching New ‘Smart Home’ Products on October 13, Mark Gurman, reporting for Bloomberg (gift link): Apple Inc. plans to make its long-delayed push into the smart-home market on Oct. 13, marking a critical product expansion for the company under new Chief Executive Officer John Ternus. At the center of the strategy is a smart-home hub code-named J49, 3:14 AM"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e32",
+          "label": "Unread, Daring Fireball, Anthropic’s IPO Prospectus Is a Fucking Doozy, Echo Wang, reporting for Reuters yesterday: Anthropic is making a massive bet that AI will transform the global economy more profoundly than ​industrialization, electricity and the internet, according to its IPO prospectus seen by Reuters. This is a strong clear lede, but even so it falls short of e, 2:23 AM"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e32",
+          "label": "Unread, Daring Fireball, Anthropic’s IPO Prospectus Is a Fucking Doozy, Echo Wang, reporting for Reuters yesterday: Anthropic is making a massive bet that AI will transform the global economy more profoundly than ​industrialization, electricity and the internet, according to its IPO prospectus seen by Reuters. This is a strong clear lede, but even so it falls short of e, 2:23 AM"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e32",
+          "label": "Unread, Daring Fireball, Anthropic’s IPO Prospectus Is a Fucking Doozy, Echo Wang, reporting for Reuters yesterday: Anthropic is making a massive bet that AI will transform the global economy more profoundly than ​industrialization, electricity and the internet, according to its IPO prospectus seen by Reuters. This is a strong clear lede, but even so it falls short of e, 2:23 AM"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e33",
+          "label": "Starred, Daring Fireball, Follow-Up on my Spitballed Predictions for Apple’s October, Regarding my post yesterday speculating on how Apple’s October — seemingly set to be a big one — might play out, a friend asked if any or all of the new stuff might be released through Apple Newsroom announcements only. Good question. Let’s run through the rumored new hardware products: Apple TV har, Sep 29, 2026"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e33",
+          "label": "Starred, Daring Fireball, Follow-Up on my Spitballed Predictions for Apple’s October, Regarding my post yesterday speculating on how Apple’s October — seemingly set to be a big one — might play out, a friend asked if any or all of the new stuff might be released through Apple Newsroom announcements only. Good question. Let’s run through the rumored new hardware products: Apple TV har, Sep 29, 2026"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e33",
+          "label": "Starred, Daring Fireball, Follow-Up on my Spitballed Predictions for Apple’s October, Regarding my post yesterday speculating on how Apple’s October — seemingly set to be a big one — might play out, a friend asked if any or all of the new stuff might be released through Apple Newsroom announcements only. Good question. Let’s run through the rumored new hardware products: Apple TV har, Sep 29, 2026"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e34",
+          "label": "Unread, Daring Fireball, Destroy Any Website, Desktop only, and you definitely want sound on. With things like this I always start with Kottke.org. No idea why, because it’s quite possibly the last site on the entire web I’d want to see actually destroyed. (Well, second-to-last.) Link: destroy.spritefusion.com/, Sep 29, 2026"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e34",
+          "label": "Unread, Daring Fireball, Destroy Any Website, Desktop only, and you definitely want sound on. With things like this I always start with Kottke.org. No idea why, because it’s quite possibly the last site on the entire web I’d want to see actually destroyed. (Well, second-to-last.) Link: destroy.spritefusion.com/, Sep 29, 2026"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e34",
+          "label": "Unread, Daring Fireball, Destroy Any Website, Desktop only, and you definitely want sound on. With things like this I always start with Kottke.org. No idea why, because it’s quite possibly the last site on the entire web I’d want to see actually destroyed. (Well, second-to-last.) Link: destroy.spritefusion.com/, Sep 29, 2026"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e35"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e35"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e36"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e36"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e37"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e37"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e38"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e38"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e39",
+          "label": "More"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e39",
+          "label": "More"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e39",
+          "label": "More"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e40",
+          "label": "More"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e40",
+          "label": "More"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e41"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e41"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e42",
+          "label": "Star"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e42",
+          "label": "Star"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e42",
+          "label": "Star"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e43",
+          "label": "Star"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e43",
+          "label": "Star"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e44",
+          "label": "Unread, Daring Fireball, Bastardica, “A foundry for bastard web fonts.” The default is a version of Times New Roman but every 7th glyph is replaced with one from Arial, but you can dial up whatever bastardization you want. This is why I’m not at all worried about AI destroying the world. Look at the horrible things human beings have ma, Sep 29, 2026"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e44",
+          "label": "Unread, Daring Fireball, Bastardica, “A foundry for bastard web fonts.” The default is a version of Times New Roman but every 7th glyph is replaced with one from Arial, but you can dial up whatever bastardization you want. This is why I’m not at all worried about AI destroying the world. Look at the horrible things human beings have ma, Sep 29, 2026"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e44",
+          "label": "Unread, Daring Fireball, Bastardica, “A foundry for bastard web fonts.” The default is a version of Times New Roman but every 7th glyph is replaced with one from Arial, but you can dial up whatever bastardization you want. This is why I’m not at all worried about AI destroying the world. Look at the horrible things human beings have ma, Sep 29, 2026"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e45",
+          "label": "Unread, Daring Fireball, ‘When Did Google Get So F-Ing Weird?’, Sancho Panza: I recently had an experience while doing a simple Google search that was so profoundly weird that it stopped me in my tracks. Kagi, the search engine I’ve been using for a few years now, gave me the exact sort of results to Panza’s query that he was looking for. Link: sancho.bearblog.d, Sep 29, 2026"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e45",
+          "label": "Unread, Daring Fireball, ‘When Did Google Get So F-Ing Weird?’, Sancho Panza: I recently had an experience while doing a simple Google search that was so profoundly weird that it stopped me in my tracks. Kagi, the search engine I’ve been using for a few years now, gave me the exact sort of results to Panza’s query that he was looking for. Link: sancho.bearblog.d, Sep 29, 2026"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e45",
+          "label": "Unread, Daring Fireball, ‘When Did Google Get So F-Ing Weird?’, Sancho Panza: I recently had an experience while doing a simple Google search that was so profoundly weird that it stopped me in my tracks. Kagi, the search engine I’ve been using for a few years now, gave me the exact sort of results to Panza’s query that he was looking for. Link: sancho.bearblog.d, Sep 29, 2026"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e46",
+          "label": "Unread, Daring Fireball, Joanna Stern Pokes the Pickle, If anyone could devise a funny way to measure battery life, it’s her. Link: youtube.com/watch?v=YNqYEMuoQAI, Sep 29, 2026"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e46",
+          "label": "Unread, Daring Fireball, Joanna Stern Pokes the Pickle, If anyone could devise a funny way to measure battery life, it’s her. Link: youtube.com/watch?v=YNqYEMuoQAI, Sep 29, 2026"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e46",
+          "label": "Unread, Daring Fireball, Joanna Stern Pokes the Pickle, If anyone could devise a funny way to measure battery life, it’s her. Link: youtube.com/watch?v=YNqYEMuoQAI, Sep 29, 2026"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e48",
+          "label": "Vertical scroll bar, 5 pages"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e48",
+          "label": "Vertical scroll bar, 5 pages"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e49"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e49"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e50",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e50",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e51"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e51"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e52",
+          "label": "Vertical scroll bar, 5 pages"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e52",
+          "label": "Vertical scroll bar, 5 pages"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e53"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e53"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e54",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e54",
+          "label": "Horizontal scroll bar, 1 page"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e55"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e55"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e56"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e56"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e57"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e57"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e58",
+          "label": "Toolbar"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e58",
+          "label": "Toolbar"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e59"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e59"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e60"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e60"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e62"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e62"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e63"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e63"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e64"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e64"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e65"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e65"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e66",
+          "label": "Mark All as Read"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e66",
+          "label": "Mark All as Read"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e66",
+          "label": "Mark All as Read"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e67"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e67"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e68"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e68"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e69"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e69"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e70"
+        },
+        {
+          "action": "typeText",
+          "elementRef": "e70"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e70"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e70"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e71",
+          "label": "Search"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e71",
+          "label": "Search"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e72"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e72"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e73"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e73"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e74"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e74"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e75"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e75"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e76",
+          "label": "go down"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e76",
+          "label": "go down"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e76",
+          "label": "go down"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e77"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e77"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e78"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e78"
+        }
+      ]
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 3FF040D2-48F3-43FC-B287-BC25E3798BDA",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 3FF040D2-48F3-43FC-B287-BC25E3798BDA --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"3FF040D2-48F3-43FC-B287-BC25E3798BDA\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e10\"},{\"action\":\"tap\",\"elementRef\":\"e12\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 3FF040D2-48F3-43FC-B287-BC25E3798BDA --element-ref e30"
+  ]
+}

@@ -19,6 +19,7 @@ node --env-file=.env node_modules/jev-ios-bridge/dist/cli.js run checks/login.js
 **Options for `run`:**
 - `--max-steps N` (1–100, default 100) and `--timeout-ms N` (default 300 000, at most one hour) limit the whole run. They never change how claims are judged.
 - `--no-log-pane` skips the log pane window.
+- `--no-device-window` leaves the iOS simulator's window as it is ([below](#watching-a-run)).
 
 **Exit codes:**
 
@@ -84,8 +85,9 @@ Install the plugin as in the [quickstart](01-quickstart.md#6-let-claude-code-run
 | `start_scenario` | `scenario` (the script), optional `limits: {maxSteps, wallTimeMs}` | `{runId, watchUrl, logsCommand}` |
 | `get_report` | `runId`, optional `waitMs` (up to 45 000) | Progress while running; the full report when done |
 | `cancel_run` | `runId` | Stops the run and waits for cleanup |
+| `resolve_step` | `runId`, `pauseId`, `answer` | Answers a paused `do` step. Published only with [driven mode](13-driven-steps.md#hand-backs-to-claude) on |
 
-While a run is going, `get_report` shows progress only, never screen contents. Claude can't steer a run once it's started. Closing the server cancels its runs.
+While a run is going, `get_report` shows progress only, never screen contents. Claude can't steer a run once it's started. The one exception is a [driven step](13-driven-steps.md) handed back to Claude: `get_report` then returns at once with the status `needs_claude` and the paused screen, and Claude answers with `resolve_step`. Closing the server cancels its runs.
 
 ### Without the plugin
 
@@ -119,6 +121,7 @@ Codex can use the same MCP server and skills (copy each skill to `.agents/skills
 
 ## Watching a run
 
+- **Simulator window:** before an iOS app launches, the bridge brings the run's simulator window to the front (`open -a Simulator`), so you can watch the run. It never boots a simulator: a shut-down one ends the run `DEVICE_NOT_BOOTED` ([troubleshooting](08-troubleshooting.md#the-app-or-the-device)). If the window can't be opened, the run carries on and records a warning. Turn it off with `--no-device-window`, or `JEV_DEVICE_WINDOW=off` in the environment, which is how to turn it off under MCP.
 - **Watch page:** the watch URL opens a local page (on `127.0.0.1`) that shows each step, its screenshot, the judgments, and the verdict as they're recorded. Its token opens only that run, and only while the bridge process is alive.
 - **Log pane:** once the app launches, a terminal window opens with the app's own output, like Xcode's console:
   - `[app]` lines are what the app prints: `print`, `NSLog`, Kotlin `println`;

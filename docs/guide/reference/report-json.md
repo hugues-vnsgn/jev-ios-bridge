@@ -34,6 +34,21 @@ Android runs add these fields, recorded from the run's `started` and `action` ev
 | `intentExtras` | object: string → string | The script's `app.intentExtras`; `{}` when none. |
 | `typedFields` | array | Only when the run typed: one `{ "stepId", "shownValue" }` per replace-text step, with the field's text as the screen showed it after typing. A password field's shown value is dots. Script values in it are masked. |
 
+## Runs with `do` steps
+
+A run whose script has a `do` step ([driven steps](../13-driven-steps.md), experimental) adds one field. Other runs never have it.
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `driven` | object | What happened in the driven steps, with the fields below. |
+| `start` | `"restart"` or `"attach"` | The script's start mode; `restart` when it names none. |
+| `preflight` | object or null | The project preflight: `status` (`ok`, `missing` or `failed`), `exitCode` (a number or null), `failure` on a failed one (`exit`, `timeout`, `spawn`, or `cleanup` when a process it started couldn't be stopped), and `durationMs`. `null` when no `test_write` step ran it. Its output is never recorded. |
+| `decisions` | number | Jev decision calls in the run. |
+| `decisionInputTokens` | number | Input tokens those calls used. `inputTokens` counts them too. |
+| `actions` | array | Every action performed, in order: `stepId`, `action` (`tap`, `type`, `scroll`, `back`, `tapAt`, or a script step's own kind), the target or arguments it had (`ref`, `valueKey`, `direction`, `x` and `y`), and `decidedBy`: `script`, `jev`, `claude`, or `bridge` for the scrolls of the target search, which add `changed`, whether the scroll changed the screen. A Jev action adds `key`, the option Jev chose, and `confidence`. `retry: true` marks the one retry of an action that left the screen unchanged. |
+| `doSteps` | array | Every `do` step that ran, in order; a step run again after a revision is listed again. `stepId`, and `completedBy`: `jev` when Jev's done check ended it (with `done`, its step-done probability), `claude` when Claude answered `done`, or null when it ended without being done (stopped, revised, timed out, `STEP_NOT_DONE`, or still running). |
+| `handbacks` | array | Every pause for Claude, in order: `stepId`; `reason` (see [why a step was handed back](../13-driven-steps.md#why-a-step-was-handed-back)); `answer`, Claude's answer kind, or null when none came; `waitMs`, from the pause to the answer, or null; and `event`, the `run.jsonl` sequence number of the `handback` event. |
+
 The device the run used isn't in `report.json`. On Android, the `prepared` event in `run.jsonl` records it: the device identity, the serial, the device agent's SHA-256, and `sweptLeftovers: true` when the run cleared a crashed run's leftovers. The prose report names them too.
 
 A run whose process stopped before recording a verdict has no `report.json`. For such a run, `report <run-id> --json` builds one with verdict `inconclusive` and reason `INTERRUPTED`.

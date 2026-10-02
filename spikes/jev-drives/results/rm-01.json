@@ -1,0 +1,48 @@
+{
+  "id": "rm-01",
+  "answer": {
+    "choice": "tap:e45",
+    "confidence": 0.94,
+    "probabilities": {
+      "tap:e38": 0,
+      "tap:e41": 0,
+      "tap:e64": 0,
+      "none_fits": 0.01,
+      "tap:e12": 0,
+      "tap:e56": 0,
+      "tap:e58": 0,
+      "tap:e46": 0,
+      "tap:e68": 0,
+      "tap:e39": 0,
+      "tap:e59": 0,
+      "tap:e57": 0,
+      "tap:e66": 0,
+      "back": 0,
+      "tap:e67": 0,
+      "scroll:up": 0,
+      "tap:e25": 0,
+      "tap:e40": 0,
+      "tap:e55": 0,
+      "tap:e50": 0.03,
+      "tap:e37": 0,
+      "tap:e48": 0,
+      "tap:e47": 0.01,
+      "tap:e49": 0,
+      "step_done": 0,
+      "tap:e65": 0,
+      "scroll:down": 0,
+      "tap:e45": 0.95
+    },
+    "done": 0.02,
+    "inputTokens": 5007,
+    "latencyMs": 399.50925
+  },
+  "score": {
+    "right": true,
+    "accepted": true,
+    "wrongAccepted": false,
+    "handled": true,
+    "doneVerdict": "no",
+    "doneRight": true
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "nia-03",
+  "answer": {
+    "choice": "none_fits",
+    "confidence": 0.9,
+    "probabilities": {
+      "step_done": 0,
+      "tap:a7": 0.01,
+      "tap:a2": 0,
+      "scroll:down": 0,
+      "tap:a3": 0,
+      "tap:a6": 0.02,
+      "back": 0.05,
+      "scroll:up": 0.01,
+      "none_fits": 0.91
+    },
+    "done": 0.02,
+    "inputTokens": 1291,
+    "latencyMs": 256.7444999999998
+  },
+  "score": {
+    "right": true,
+    "accepted": false,
+    "wrongAccepted": false,
+    "handled": false,
+    "doneVerdict": "no",
+    "doneRight": true
+  }
+}

@@ -1,0 +1,7 @@
+{"role":"scroll-view","state":{"enabled":true,"visible":true}}
+{"role":"button","identifier":"com.android.permissioncontroller:id/grant_singleton","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Allow KotlinConf to send you notifications?","identifier":"com.android.permissioncontroller:id/grant_dialog","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"com.android.permissioncontroller:id/permission_icon","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Allow KotlinConf to send you notifications?","identifier":"com.android.permissioncontroller:id/permission_message","state":{"enabled":true,"visible":true},"selectable":false}
+{"role":"button","label":"Allow","identifier":"com.android.permissioncontroller:id/permission_allow_button","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Don’t allow","identifier":"com.android.permissioncontroller:id/permission_deny_button","state":{"enabled":true,"visible":true}}

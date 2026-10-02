@@ -1,0 +1,70 @@
+# Evaluation apps for "Jev drives" (ticket 02)
+
+Researched 2026-10-01. Sources: each candidate's GitHub repo (README, build files, source), read through `gh api` without cloning, plus this repo's `examples/`, `spikes/feasibility/corpus*/README.md`, `spikes/benchmarks/README.md` and `spikes/scripted/integration/setup-notes.md`. Nothing was built, installed or run on a device. Dates are the repo's last push or release, as `gh api` reported them that day. GitHub's repo `size` field gives the clone sizes below. It counts the packed git history, not the build footprint.
+
+## Constraints that shaped the list
+
+- **An iOS simulator runs only simulator builds.** Every iOS candidate below is open source and builds without signing for the simulator. Apple's preinstalled simulator apps (Settings, Contacts, Reminders) are the exception: they need no build, and the existing corpora already use them.
+- **Android:** each candidate is open source and either ships an official APK or builds a debug APK from source.
+- **Disk:** `df -h /` showed **85 GiB available** today (460 GiB disk, 13% used), not the ~10 GB noted earlier. Existing caches are `~/.gradle` 16 GB, `~/.konan` 9.3 GB and Xcode DerivedData 5.8 GB. Xcode is 26.4.1, and the Android SDK has an emulator and system images. Disk is no longer the binding limit. Build time and toolchain churn are: KotlinConf uses Kotlin 2.4.10, which likely needs a new Kotlin/Native toolchain under `~/.konan`.
+
+## 1. Recommended set
+
+Six apps. iOS gets the owner's app, KotlinConf, NetNewsWire and Weather. Android gets the owner's app, KotlinConf, Now in Android and Fossify Calendar. Three of them are maintained by well-known outside teams (JetBrains, Ranchero/NetNewsWire, Google). Fossify and Sentry are community and vendor projects outside this repo.
+
+| # | App | Platforms | UI framework | Expected accessibility | Login / test data | Write risk and preflight idea | Build / install | License | Source |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | **the owner's app (SM flows)** (owner's case) | iOS + Android | KMP + Compose Multiplatform 1.9.0 | Owner's app; as captured in the live test | Role accounts from the owner's app's `a private accounts file`; test DB tenant a test tenant on the **production server** | **High**: real server writes (submit, approve, reject). Preflight: a machine check that the logged-in tenant is a test tenant and the account is a test role, failing closed. Send and Approve are permitted test writes Jev may press under the stricter threshold once the preflight passes; Delete always goes to Claude (C21). Whether Reject counts as destructive is a project marking (ticket 07). | Existing the owner's app worktree flow from the live-test plan | Private | owner's repo |
+| 2 | **KotlinConf app** (JetBrains) | iOS + Android | Compose Multiplatform 1.11.1, Kotlin 2.4.10, one shared UI | **Labels only**: no `testTagsAsResourceId` or `testTag` found by code search, so Android dumps carry no resource-ids. `contentDescription` on icon buttons (e.g. back). The **venue map is a `Canvas` drawing an SVG floor plan**, so the app supplies the canvas case. | No login. Schedule comes from the backend; favourites are stored locally. Content is the current conference year, so screen text drifts. | **Medium.** Session votes and feedback go to the server, but only after the user accepts the privacy policy (`ConferenceService.vote` returns false until `isPolicySigned`), keyed by an anonymous `userId`. Debug builds hit `PRODUCTION_URL` unless developer flags differ from the platform defaults, which switches to `STAGING_URL`. **Visible preflight:** the About-app screen shows a "Staging"/"Local" label whenever the base URL isn't prod (`AboutAppScreen.kt`). Otherwise permit no vote, feedback or policy steps. A local backend is also possible (`./gradlew :backend:run`, `ANDROID_LOCAL_URL` 10.0.2.2:8080). | Android: run config `app.androidApp`. iOS: `app/iosApp/KotlinConf.xcodeproj`, scheme `KotlinConfAppScheme`; signing is only set for `iphoneos`, so a simulator build should not need a team. No GitHub release APKs (0 releases), so it must be built from source. Clone ~59 MB; the KMP iOS build is the heaviest step here. | Apache-2.0 | https://github.com/JetBrains/kotlinconf-app (last commit 2026-09-17) |
+| 3 | **NetNewsWire** (Ranchero) | iOS | **UIKit** core (feed collection view, timeline cells, split view, `UITableViewController` settings). **SwiftUI** add-feed, account and about sheets. Articles render in a **WKWebView**. | Mixed: system UIKit labels, custom timeline cells, web-content article pages (a likely "Claude must read" screen), icon-only toolbar buttons | No login. The default "On My iPhone" local account imports 10 default feeds on first launch (`Shared/Importers/DefaultFeeds.opml`, used by `iOS/AppDelegate.swift`). Fetching feeds needs network, read-only. Article content drifts. | **Low**: subscriptions, read/star state and folders are local. Server writes happen only if someone adds an iCloud/Feedly/etc. account. Preflight: the Settings accounts list shows only the local account. | README: "You can build and test NetNewsWire without a paid developer account." CI builds the `NetNewsWire-iOS` scheme for the simulator with `-xcconfig .github/ios-ci-no-signing.xcconfig` and `OTHER_SWIFT_FLAGS='-DDEBUG -DSKIP_APP_GROUP_ACCESS'` (`.github/workflows/ci.yml`). Reuse that. Clone ~67 MB. | MIT | https://github.com/Ranchero-Software/NetNewsWire (iOS 7.1.4 builds 2026-09-19; pushed 2026-09-29) |
+| 4 | **Now in Android**, `demoDebug` (Google) | Android | **Jetpack Compose** (BOM 2025.09.01) | **Good identifiers**: `NiaApp.kt` sets `semantics { testTagsAsResourceId = true }` on the root Scaffold. Icon toggles for bookmark and follow. | No login. The `demo` flavor "uses static local data" (README). `prod` needs a backend that is not public. | **None**: bookmarks, followed topics and settings are local. Preflight: the installed package is the demo variant (debug build of `demo` flavor). | `./gradlew :app:assembleDemoDebug`, then `adb install`. No current release APKs (latest 0.1.1, 2023). Clone ~141 MB; a normal Gradle Android build. | Apache-2.0 | https://github.com/android/nowinandroid (last commit 2026-09-22) |
+| 5 | **Fossify Calendar** | Android | **Android Views** (87 layout XMLs). Shared About, FAQ and License screens are Compose (Fossify Commons). | Views give **resource-ids for free**. The **month grid is a custom `View` drawn on a `Canvas`** (`views/MonthView.kt` `onDraw`), with no accessibility code found in it, so it is a second canvas case and a natural hand-to-Claude screen. Toolbar icons and the "+" FAB test icon-only handling. | No login. Events are created locally by the run or a seed step. A runtime permission dialog (notifications/calendar) is likely on first use, which tests C17 (Jev never grants permissions). | **Low**: local SQLite. CalDAV sync is opt-in and needs a device account. Preflight: no accounts on the emulator and CalDAV sync off in Settings. | Official APK on GitHub releases: `calendar-22-foss-release.apk`, 7 MB, v1.11.0, 2026-09-23. `adb install`. minSdk 26. | GPL-3.0 | https://github.com/FossifyOrg/Calendar |
+| 6 | **Weather mock** (Sentry MobileBuildMCP example), plus Apple's **Contacts / Reminders / Settings** | iOS | Weather: **SwiftUI**. Apple apps: system UIKit/SwiftUI. | Weather: **good identifiers** (14 `accessibilityIdentifier`s such as `weather.locationButton` and `weather.settingsButton`), a few icon-only buttons (xmark, trash). Apple apps: labels only, duplicate rows, forms below the fold. The corpora already found traps here: no tap action on some controls, stale occluded labels. | None. Weather uses a mock service with bundled data, so it is deterministic. Apple apps hold synthetic local records. | **None** for Weather (settings only). Apple apps write locally to the dedicated simulator. Preflight: the simulator UDID is the dedicated one, never the OPS simulator. | Weather is already vendored at `spikes/benchmarks/vendor/weather` with its build and install commands in `spikes/benchmarks/README.md`. The Apple apps are preinstalled. | MIT (Weather); Apple apps are not open source but ship in every simulator | https://github.com/getsentry/MobileBuildMCP/tree/d13ff0c707b0681769cf31da0eb42c4f94ceafff/example_projects/Weather |
+
+Keep `examples/diagnostic-app` (iOS SwiftUI) and `examples/diagnostic-app-android` (Compose on the CMP 1.11.1 artifacts, `testTagsAsResourceId` on) as smoke controls for the loop. They aren't evaluation apps: they have two screens and a planted bug.
+
+**Where the existing feasibility corpora came from.** `corpus/` used Settings, Contacts and Reminders. `corpus-v2/` used those plus Sentry's Weather mock. `corpus-v3/` used Weather 5, Contacts 8, Reminders 3 and Diagnostic App 4 for held-out cases. All three are iOS 26.4 simulator captures and contain no Android screens. Ticket 03 can reuse them as disclosed tuning data, but app #6 is the only one with prior captures.
+
+**Coverage check.**
+
+| Coverage | Apps |
+|---|---|
+| SwiftUI | Weather, NetNewsWire sheets |
+| UIKit | NetNewsWire, Apple apps |
+| Compose Multiplatform | the owner's app, KotlinConf |
+| Jetpack Compose | Now in Android |
+| Android Views | Fossify Calendar |
+| Good identifiers | Weather, Now in Android, Fossify (Views ids) |
+| Labels only | KotlinConf, Apple apps |
+| Icon-only controls | Now in Android bookmark, Weather xmark, Fossify FAB |
+| Canvas | KotlinConf map, Fossify month grid |
+| Web content | NetNewsWire article |
+
+## 2. Rejected candidates
+
+- **Firefox iOS** (MPL-2.0): clone ~1.07 GB, and the app depends on Rust application-services. The heaviest build of the lot, for no framework it alone covers.
+- **Wikipedia iOS / Android** (MIT / Apache-2.0): both are strong cross-platform alternates. iOS is UIKit/ObjC with some SwiftUI, has a Places map, and has a `Staging` scheme with a beta-cluster option in `WMF Framework/Configuration.swift`. Android ships an 84 MB `app-alpha-universal-release.apk`. Not recommended as primary for three reasons. First, **anonymous edits to production Wikipedia are possible**, so writes are unsafe unless the build is switched to the beta cluster, which takes a code change. Second, the iOS clone is ~1.46 GB. Third, live content makes labels drift. **First substitute** if the owner wants one outside app on both platforms.
+- **Ice Cubes** (AGPL-3.0, SwiftUI): has logged-out tabs (`AppView.swift`, `SidebarSections.loggedOutTabs`), so it is usable without an account. Rejected because it needs a local `.xcconfig` from a template, public Mastodon timelines change constantly (bad for frozen labels), and the last release is 2.1.3 from 2026-01-09. **Substitute** for a large real-world SwiftUI app.
+- **Tusky:** archived (last push 2025-05-23) and needs a Mastodon account.
+- **Bitwarden, Element X, Signal:** each needs a real account or phone registration, and every action writes to a server.
+- **Organic Maps:** repo ~9.9 GB, plus a C++ native build. KotlinConf and Fossify already cover canvas screens.
+- **KMP-App-Template** (Apache-2.0, CMP): only a list and a detail screen showing Met Museum data. Too small for complete flows, but a cheap extra image-grid case if wanted.
+- **Jetnews / Jetcaster, AntennaPod:** duplicates of Now in Android (Compose) and Fossify (Views).
+
+## 3. Open questions for the owner
+
+1. **Count against the gate.** C29 needs ≥ 60 accepted Jev actions per app with zero wrong ones. Six apps on two platforms means 8 app-platform cells. Should every app count for the release gate, or only the owner's app plus one or two outside apps per platform, with the rest as offline-spike breadth?
+2. **KotlinConf writes.** Option (a): keep it read-only, with no policy, vote or feedback steps. Option (b): allow votes on staging, proven by the About screen's "Staging" label.
+3. **Drifting content** (KotlinConf schedule, NetNewsWire feeds). For the offline spike, use frozen captures. For live runs, accept drift or pin it. Possible pins: a local KotlinConf backend; a NetNewsWire feed served from a local file.
+4. **Apple's built-in apps** aren't open source. Do they count as "other developers' apps" (the corpora already rely on them), or only as extra screens?
+5. Should **Wikipedia** replace NetNewsWire or Fossify, to get one outside app on both platforms? That needs a beta-cluster build to make edits safe.
+6. **Build time budget:** about how long may a first KotlinConf iOS build take (new Kotlin/Native toolchain) before we fall back to its Android build only?
+
+## Owner additions (2026-10-01)
+
+| App | Platform | Framework | Accessibility expected | Login / data | Write risk + preflight | Build | Source |
+|---|---|---|---|---|---|---|---|
+| **ListMaker** (Kodeco "Your Second Kotlin Android App" course, final) | Android | Jetpack Compose (BOM 2023.06, Material 3, Navigation) | Labels only: no `testTag`, no `testTagsAsResourceId` | None; task lists stored locally (`ListDataManager`, SharedPreferences) | Local only. Preflight: none needed beyond "app stores data on device" | Gradle 8.0 / AGP 8.0 / Kotlin 1.8.21; needs JDK 17 (Gradle 8.0 predates JDK 21 support). `applicationId com.kodeco.android`, minSdk 21, targetSdk 33 | `~/Codes/native/video-yskaa-materials-versions-3.0/final` (not a git repo; don't modify) |
+| **ReadMe** (Kodeco "Your Second SwiftUI App" course, lesson 27 final) | iOS | SwiftUI (iOS 15) | Labels only, no `accessibilityIdentifier`; icon-only `book.circle`; swipe actions, `EditButton` with delete and move rows, sheets | None; local book library | Local only. Delete rows and "Delete Image" are destructive: they go to Claude (C21). The PHPicker photo picker is system UI: a hand-back case | Xcode project, bundle `com.hugues.ReadMe`, Swift 5 | `~/Codes/native/video-yssa-materials-versions-3.0/27-delete-and-move-rows/Final/ReadMe` (not a git repo; don't modify) |
+
+These are small, typical "developer's own app" cases with poor identifiers, which is what the tool will meet most often outside well-tested apps.
