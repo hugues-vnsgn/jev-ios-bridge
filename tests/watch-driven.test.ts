@@ -79,7 +79,8 @@ test('an answered hand-back shows Claude\'s answer kind and wait, and each actio
     started(),
     ['handback', { step: 1, stepId: 'signIn', reason: 'LOCAL_ONLY_STEP', pauseId: 'p-1' }],
     ['handback_answer', { step: 1, stepId: 'signIn', pauseId: 'p-1', kind: 'tap' }],
-    ['action', { step: 1, stepId: 'signIn', action: 'tap', resolvedRef: 'b1', decidedBy: 'claude', actDurationMs: 4 }],
+    ['action', { step: 1, stepId: 'signIn', action: 'tap', resolvedRef: 'b1', target: { role: 'button', label: 'Sign in' },
+      decidedBy: 'claude', actDurationMs: 4 }],
     ['action', { step: 1, stepId: 'signIn', action: 'type', resolvedRef: 'f1', valueKey: 'email', decidedBy: 'jev',
       key: 'type:f1:email', confidence: 0.95, actDurationMs: 4 }],
     ['verdict', { verdict: 'passed', reason: 'ALL_CHECKPOINTS_PASSED', steps: 2, inputTokens: 10, durationMs: 9 }],
@@ -88,7 +89,7 @@ test('an answered hand-back shows Claude\'s answer kind and wait, and each actio
   assert.equal(page.status, 'passed: ALL_CHECKPOINTS_PASSED');
   const all = page.cards.join('\n---\n');
   assert.match(all, /Claude answered tap after \d+ s\./);
-  assert.match(all, /Step 1: tap on b1, decided by Claude\./);
+  assert.match(all, /Step 1: tap on button "Sign in" \(ref b1\), decided by Claude\./);
   assert.match(all, /Step 1: type on f1, decided by Jev \(confidence 95%\)\./);
 });
 

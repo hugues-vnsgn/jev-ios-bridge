@@ -145,6 +145,19 @@ export function isPermissionDialog(elements: readonly Element[], platform: Platf
   return elements.some(e => e.role === 'button' && e.label !== undefined && PERMISSION_BUTTONS.has(alertLabel(e.label)));
 }
 
+/** Android's app error dialogs are framework layouts whose every button has an `android:id/aerr_` id (AOSP's
+ *  app_anr_dialog.xml and app_error_dialog.xml), whatever the device's language. */
+const APP_ERROR_ID_PREFIX = 'android:id/aerr_';
+
+/**
+ * Whether the screen shows Android's app error dialog ("App isn't responding", "App keeps stopping"), for the app
+ * under test or any other. It is an unexpected system dialog, which Jev never answers (C17): "Close app" kills the app.
+ * iOS has no such dialog.
+ */
+export function isAppErrorDialog(elements: readonly Element[], platform: Platform): boolean {
+  return platform === 'android' && elements.some(({ identifier }) => identifier?.startsWith(APP_ERROR_ID_PREFIX) === true);
+}
+
 /** What a key Jev (or Claude) chose means in this set; undefined when the set never offered it. */
 export function lookupCandidate(set: CandidateSet, key: string): CandidateMeaning | undefined {
   return set.meanings.get(key);

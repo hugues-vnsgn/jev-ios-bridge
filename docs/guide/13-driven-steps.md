@@ -77,7 +77,7 @@ Claude answers with `resolve_step({ runId, pauseId, answer })`. The answer is ex
 | `{ "kind": "revise", "steps": [ ... ] }` | Replaces the rest of the script. The steps are checked like a script's and must end with a checkpoint. To retry the current step, include it. |
 | `{ "kind": "stop" }` | Ends the run `INCONCLUSIVE` with `STOPPED_BY_CLAUDE`. |
 
-After an action, Jev takes over again. An answer that doesn't fit the paused screen, such as a ref that isn't on it, is refused with the reason, and the pause stays open for a corrected one.
+Before carrying out an action, the bridge captures the screen again, since a pause can last minutes. On the same screen, the action is carried out on the new capture. If the screen changed during the pause, nothing is done, and the step pauses again with `SCREEN_CHANGED` and the new screen. After an action, Jev takes over again. An answer that doesn't fit the paused screen, such as a ref that isn't on it, is refused with the reason, and the pause stays open for a corrected one.
 
 A pause waits 5 minutes by default; set `handbackTimeoutMs` in `start_scenario`'s `limits` (1 second to 30 minutes). An unanswered pause ends the run `INCONCLUSIVE` with `HANDBACK_TIMEOUT` and releases the device. Time spent paused doesn't count toward the run's wall-time limit.
 
@@ -92,6 +92,7 @@ A pause waits 5 minutes by default; set `handbackTimeoutMs` in `start_scenario`'
 | `RISKY_ACTION` | Jev picked a control with a risky word. The bridge never takes those itself. |
 | `DESTRUCTIVE_STEP` | The step's effect is `destructive`, so Claude picks every action. Jev isn't asked about the first screen. After Claude's first action, Jev is asked about each new screen as usual, but its pick is never taken: only its done check counts, ending the step at 0.90. Otherwise the step comes back to Claude, who answers with the next action or `done`. |
 | `PERMISSION_DIALOG` | A system permission dialog is on screen, such as an iOS alert with Allow / Don't Allow or Android's permission prompt. Jev is never asked about it; Claude answers it or adjusts the plan. |
+| `APP_ERROR_DIALOG` | Android's app error dialog is on screen: an app isn't responding or keeps stopping. Jev is never asked about it, because Close app kills the app. Claude decides: Wait, or stop the run and report the freeze. |
 | `LOCAL_ONLY_STEP` | The step is `localOnly`: none of its screens goes to Jev, so Claude picks every action and ends the step with `done`. |
 | `LOCAL_ONLY_SCREEN` | An element on the screen matches a `localOnlyScreens` rule, so the screen isn't sent to Jev. |
 | `NO_PREFLIGHT` | The step is a `test_write` step and the preflight didn't pass, so Claude picks its actions. Jev doesn't scroll to search there either. |
@@ -100,7 +101,7 @@ A pause waits 5 minutes by default; set `handbackTimeoutMs` in `start_scenario`'
 | `REPEATED_ACTION` | Jev picked the same action a third time in the step. |
 | `SCREEN_LOOP` | The run went back and forth between two screens. |
 | `DECISION_BUDGET` | The step used its 8 Jev decisions. After Claude's action, Jev checks once whether the step is done; if it isn't, the run ends `STEP_NOT_DONE`. |
-| `SCREEN_CHANGED` | The screen changed before Claude's answer could be performed. Answer for the new screen. |
+| `SCREEN_CHANGED` | The screen changed before Claude's answer could be carried out, so nothing was done. Answer for the new screen. A screen that keeps changing on its own, such as a timer, pauses every time; answer `revise` or `stop` there. |
 
 These reasons appear in the package, in `run.jsonl`'s `handback` events and in the report. They aren't verdict reasons, so they're not in the [reason codes](reference/reason-codes.md).
 

@@ -31,7 +31,7 @@ import { backButtonOf, StaleSnapshotError } from '../device/index.js';
 import type { DoStep, ScriptedStep } from '../scripted/contracts.js';
 import { ScriptedJevError } from '../scripted/jev.js';
 import { renderAssertionState, ScriptedObservationError } from '../scripted/observe.js';
-import { describeElement, isPermissionDialog } from './candidates.js';
+import { describeElement, isAppErrorDialog, isPermissionDialog } from './candidates.js';
 import { maskElement, maskSnapshot, prepareDecision, topChoices, type DrivenDecision, type PreparedDecision }
   from './decide.js';
 import { acceptDecision, CONFIDENCE_FLOOR, doneVerdict, type HandBackReason } from './policy.js';
@@ -49,6 +49,8 @@ export const TOP_CHOICES = 3;
 export type PauseReason = HandBackReason
   /** C17: the screen is a system permission dialog, which Jev never answers. */
   | 'PERMISSION_DIALOG'
+  /** C17: the screen is Android's app error dialog ("isn't responding", "keeps stopping"), which Jev never answers. */
+  | 'APP_ERROR_DIALOG'
   /** The step is `localOnly`: none of its screens goes to Jev. */
   | 'LOCAL_ONLY_STEP'
   /** A test write Jev picked, with no passed preflight (E12). */
@@ -201,8 +203,8 @@ function targetOf(action: Action, snapshot: Snapshot): Element | undefined {
     : snapshot.elements.find(candidate => candidate.ref === action.targetRef);
 }
 
-/** The action pointed at the same element on another capture of the same screen; undefined when it isn't there.
- *  Refs can change between captures, so an element action is matched by everything but its ref. */
+/** The action pointed at the same element on another capture of the same screen; undefined when the screen changed
+ *  or the element isn't there. Refs can change between captures, so an element is matched by everything but its ref. */
 function onScreen(action: Action, from: Snapshot, to: Snapshot): Action | undefined {
   // A changed screen hands back, even for an action with no target (back, scroll).
   if (screenIdentity(to) !== screenIdentity(from)) return undefined;
@@ -261,6 +263,7 @@ type Asked =
   | { kind: 'unreadable' }
   | { kind: 'localOnly' }
   | { kind: 'permission' }
+  | { kind: 'appError' }
   | { kind: 'asked'; decision: DrivenDecision; prepared: PreparedDecision };
 
 /** Why Jev wasn't asked about a screen. */
@@ -268,6 +271,7 @@ function unasked(asked: Exclude<Asked, { kind: 'asked' }>): PauseReason {
   switch (asked.kind) {
     case 'localOnly': return 'LOCAL_ONLY_SCREEN';
     case 'permission': return 'PERMISSION_DIALOG';
+    case 'appError': return 'APP_ERROR_DIALOG';
     case 'unreadable': return 'UNREADABLE_SCREEN';
   }
 }
@@ -304,6 +308,7 @@ export async function runDrivenStep(ctx: DrivenStepContext): Promise<DrivenStepO
 
   const ask = async (snapshot: Snapshot): Promise<Asked> => {
     if (isPermissionDialog(snapshot.elements, ctx.platform)) return { kind: 'permission' };
+    if (isAppErrorDialog(snapshot.elements, ctx.platform)) return { kind: 'appError' };
     if (ctx.localOnlyScreen?.(snapshot)) return { kind: 'localOnly' };
     let prepared: PreparedDecision;
     try {
@@ -331,8 +336,9 @@ export async function runDrivenStep(ctx: DrivenStepContext): Promise<DrivenStepO
       done: asked.decision.done, set: asked.prepared.set, ...(backTarget ? { backTarget } : {}) });
   };
 
-  /** Performs an action and returns the screen after it; a stale snapshot returns undefined, having acted on none. */
-  const perform = async (action: Action, snapshot: Snapshot, fields: Record<string, unknown>): Promise<Snapshot | undefined> => {
+  /** Carries out an action on `snapshot` and adds it to Jev's history: every device action of the step, the target
+   *  search's scrolls included, goes through here. Undefined, having acted on nothing, when the snapshot went stale. */
+  const carryOut = async (action: Action, snapshot: Snapshot): Promise<{ actDurationMs: number; path?: ActPath } | undefined> => {
     let actDurationMs: number;
     try { ({ actDurationMs } = await ctx.act(action, snapshot)); }
     catch (error) {
@@ -340,10 +346,17 @@ export async function runDrivenStep(ctx: DrivenStepContext): Promise<DrivenStepO
       throw error;
     }
     if (action.kind === 'scroll') scrollTried = true;
-    const path = action.kind === 'back' || action.kind === 'scroll' ? ctx.actPath() : undefined;
     recentActions.push(describeAction(action, snapshot));
+    const path = action.kind === 'back' || action.kind === 'scroll' ? ctx.actPath() : undefined;
+    return { actDurationMs, ...(path ? { path } : {}) };
+  };
+
+  /** Performs an action and returns the screen after it; a stale snapshot returns undefined, having acted on none. */
+  const perform = async (action: Action, snapshot: Snapshot, fields: Record<string, unknown>): Promise<Snapshot | undefined> => {
+    const carried = await carryOut(action, snapshot);
+    if (!carried) return undefined;
     await ctx.log.append('action', { ...where, ...actionFields(action), ...targetFields(action, snapshot, ctx.values), ...fields,
-      ...pathFields(path), actDurationMs });
+      ...pathFields(carried.path), actDurationMs: carried.actDurationMs });
     return ctx.observe();
   };
 
@@ -384,17 +397,16 @@ export async function runDrivenStep(ctx: DrivenStepContext): Promise<DrivenStepO
     if (answer.kind === 'stop') return { kind: 'end', outcome: { kind: 'stopped' } };
     if (answer.kind === 'done') return { kind: 'end', outcome: { kind: 'done' } };
     if (answer.kind === 'revise') return { kind: 'end', outcome: { kind: 'revised', steps: answer.steps } };
+    // A pause can last minutes and nothing watches the screen meanwhile, and a driver can't always tell its capture
+    // went stale (Android's can't). So capture the screen again first: on the same screen the answer acts on the new
+    // capture, its element found again; on a changed one nothing is done and Claude answers for it (ADR-0007).
     const action = answerAction(answer);
-    let after = await perform(action, snapshot, { decidedBy: 'claude' });
-    if (!after) {
-      // The paused screen went stale: act on a fresh capture of the same screen, on the same element. A point on the
-      // paused screenshot can't be found again, so a stale tapAt always hands back (ADR-0007).
-      const fresh = await ctx.observe();
-      const moved = action.kind === 'tapAt' ? undefined : onScreen(action, snapshot, fresh);
-      if (!moved) return handBack('SCREEN_CHANGED', fresh);
-      after = await perform(moved, fresh, { decidedBy: 'claude' });
-      if (!after) return handBack('SCREEN_CHANGED', await ctx.observe());
-    }
+    const fresh = await ctx.observe();
+    const moved = onScreen(action, snapshot, fresh);
+    if (!moved) return handBack('SCREEN_CHANGED', fresh);
+    const after = await perform(moved, fresh, { decidedBy: 'claude' });
+    // Even the new capture went stale: the screen is still changing. A point or an element is never tried again.
+    if (!after) return handBack('SCREEN_CHANGED', await ctx.observe());
     claudeActed = true;
     claudeJustActed = true;
     resetStuck(after);
@@ -418,21 +430,14 @@ export async function runDrivenStep(ctx: DrivenStepContext): Promise<DrivenStepO
         if (flat && (scrollTried || searchMemory.unchangedFlatScreens.has(searchScreenKey(current)))) return last;
         // The budget ran out on a screen Jev was just asked about: the pause keeps that decision.
         if (decisions >= DECISIONS_PER_STEP) return { ...last, reason: 'DECISION_BUDGET' };
-        const action: Action = { kind: 'scroll', direction };
-        let actDurationMs: number;
-        try { ({ actDurationMs } = await ctx.act(action, current)); }
-        catch (error) {
-          if (error instanceof StaleSnapshotError) return last;
-          throw error;
-        }
-        scrollTried = true;
-        recentActions.push(SCROLL_LINES[direction]);
-        const path = ctx.actPath();
+        const carried = await carryOut({ kind: 'scroll', direction }, current);
+        if (!carried) return last;
+        // The search event records whether the scroll changed the screen, so it follows the capture after it.
         const after = await ctx.observe();
         const changed = screenIdentity(after) !== screenIdentity(current);
         if (flat && !changed) searchMemory.unchangedFlatScreens.add(searchScreenKey(current));
         await ctx.log.append('search', { ...where, direction, attempt, changed,
-          ...pathFields(path), actDurationMs });
+          ...pathFields(carried.path), actDurationMs: carried.actDurationMs });
         current = after;
         last = { ...last, snapshot: current };
         seeScreen(current);

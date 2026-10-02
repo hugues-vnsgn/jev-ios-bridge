@@ -48,8 +48,8 @@ const passedRun = events([
     observeDurationMs: 0 }, 18],
   ['decision', { ...where(1, 'signIn'), decision: 2, options: 7, choice: 'type:f1:email', confidence: 0.95, done: 0.05,
     inputTokens: 420, latencyMs: 280 }, 19],
-  ['action', { ...where(1, 'signIn'), action: 'type', resolvedRef: 'f1', valueKey: 'email', decidedBy: 'jev',
-    key: 'type:f1:email', confidence: 0.95, actDurationMs: 60 }, 20],
+  ['action', { ...where(1, 'signIn'), action: 'type', resolvedRef: 'f1', target: { role: 'text-field', label: 'Email' },
+    valueKey: 'email', decidedBy: 'jev', key: 'type:f1:email', confidence: 0.95, actDurationMs: 60 }, 20],
   ['step', { ...where(1, 'signIn'), kind: 'do', snapshotSequence: 3, observationSummary: 'text Home',
     observeDurationMs: 0 }, 20],
   ['decision', { ...where(1, 'signIn'), decision: 3, options: 5, choice: 'step_done', confidence: 0.97, done: 0.96,
@@ -95,7 +95,8 @@ test('report.json gets a driven block for a run with do steps (golden)', async (
     actions: [
       { stepId: 'signIn', action: 'scroll', direction: 'down', decidedBy: 'bridge', changed: false },
       { stepId: 'signIn', action: 'tap', ref: 'b1', target: { role: 'button', label: 'Sign in' }, decidedBy: 'claude' },
-      { stepId: 'signIn', action: 'type', ref: 'f1', valueKey: 'email', decidedBy: 'jev', key: 'type:f1:email', confidence: 0.95 },
+      { stepId: 'signIn', action: 'type', ref: 'f1', target: { role: 'text-field', label: 'Email' }, valueKey: 'email',
+        decidedBy: 'jev', key: 'type:f1:email', confidence: 0.95 },
     ],
     doSteps: [
       { stepId: 'signIn', completedBy: 'jev', done: 0.96 },
@@ -129,6 +130,21 @@ test('script-run action steps in a driven run read decidedBy "script"', () => {
     { stepId: 'signIn', action: 'back', decidedBy: 'jev', key: 'back', confidence: 0.9 },
     { stepId: 'signIn', action: 'back', decidedBy: 'jev', key: 'back', confidence: 0.9, retry: true },
   ]);
+  // A script's own action has no recorded target: the text names its ref, as before.
+  assert.match(renderScriptedReport(buildScriptedReport(run)), /^open: tap o1, decided by the script\.$/m);
+});
+
+test('the text report names a target by its identifier too, and by role alone when it has no label', () => {
+  const run = events([
+    started({ plannedSteps: [{ id: 'signIn', kind: 'do' }, { id: 'verify', kind: 'checkpoint' }] }),
+    ['action', { ...where(1, 'signIn'), action: 'tap', resolvedRef: 'b7', decidedBy: 'claude', actDurationMs: 3,
+      target: { role: 'button', label: 'Go', identifier: 'go.button' } }],
+    ['action', { ...where(1, 'signIn'), action: 'tap', resolvedRef: 'b8', decidedBy: 'claude', actDurationMs: 3,
+      target: { role: 'image' } }],
+  ]);
+  const text = renderScriptedReport(buildScriptedReport(run));
+  assert.match(text, /^signIn: tap button "Go" identifier "go\.button" \(ref b7\), decided by Claude\.$/m);
+  assert.match(text, /^signIn: tap image \(ref b8\), decided by Claude\.$/m);
 });
 
 test('a run without do steps gets no driven block, even with a start mode', () => {
@@ -140,8 +156,9 @@ test('a run without do steps gets no driven block, even with a start mode', () =
 test('the text report names who decided each action and each hand-back (golden)', async () => {
   const passed = renderScriptedReport(buildScriptedReport(passedRun));
   assert.match(passed, /^Driven steps: start attach; preflight failed \(exit code 1\); 3 Jev decisions, 1230 input tokens\.$/m);
-  assert.match(passed, /^signIn: tap b1, decided by Claude\.$/m);
-  assert.match(passed, /^signIn: type f1 \(value email\), decided by Jev \(type:f1:email, confidence 0\.950\)\.$/m);
+  // Each element by role and label (ADR-0002); its ref names it in one capture only.
+  assert.match(passed, /^signIn: tap button "Sign in" \(ref b1\), decided by Claude\.$/m);
+  assert.match(passed, /^signIn: type text-field "Email" \(ref f1, value email\), decided by Jev \(type:f1:email, confidence 0\.950\)\.$/m);
   assert.match(passed, /^signIn: NONE_FITS; Claude answered tap after 12000 ms\.$/m);
   assert.match(passed, /^save: LOCAL_ONLY_SCREEN; Claude answered done after 3000 ms\.$/m);
   const timedOut = renderScriptedReport(buildScriptedReport(timedOutRun));

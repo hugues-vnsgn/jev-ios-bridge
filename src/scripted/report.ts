@@ -1,6 +1,7 @@
 import type { RunEvent, RunReport, Verdict } from '../contracts/index.js';
 import {
-  drivenReportOf, recordedPlatform, typedFieldsOf, type ReportDoStep, type ReportDriven, type ReportDrivenAction,
+  drivenReportOf, recordedPlatform, typedFieldsOf, type ReportActionTarget, type ReportDoStep, type ReportDriven,
+  type ReportDrivenAction,
 } from './report-json.js';
 
 export interface ScriptedReport extends RunReport {
@@ -44,10 +45,19 @@ function preflightText(preflight: ReportDriven['preflight']): string {
   return `preflight failed (${cause})`;
 }
 
+/** An element as ADR-0002 names it in reports: role, label and identifier, never a ref alone. */
+function targetText({ role, label, identifier }: ReportActionTarget): string {
+  return [role, label !== undefined ? `"${label}"` : undefined, identifier !== undefined ? `identifier "${identifier}"` : undefined]
+    .filter(Boolean).join(' ');
+}
+
 function actionText(action: ReportDrivenAction): string {
+  // A recorded target names the element; its ref only says where it was in one capture. Script steps record none.
+  const notes = [action.target && action.ref !== undefined ? `ref ${action.ref}` : undefined,
+    action.valueKey !== undefined ? `value ${action.valueKey}` : undefined].filter(Boolean);
   const target = [
-    action.ref, action.direction, action.x !== undefined ? `at ${action.x}, ${action.y}` : undefined,
-    action.valueKey !== undefined ? `(value ${action.valueKey})` : undefined,
+    action.target ? targetText(action.target) : action.ref, action.direction,
+    action.x !== undefined ? `at ${action.x}, ${action.y}` : undefined, notes.length ? `(${notes.join(', ')})` : undefined,
   ].filter(Boolean).join(' ');
   const jev = action.key !== undefined
     ? ` (${action.key}${action.confidence === undefined ? '' : `, confidence ${action.confidence.toFixed(3)}`})` : '';

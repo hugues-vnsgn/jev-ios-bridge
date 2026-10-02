@@ -76,6 +76,10 @@
           "stepId": "signIn",
           "action": "type",
           "ref": "f1",
+          "target": {
+            "role": "text-field",
+            "label": "Email"
+          },
           "valueKey": "email",
           "decidedBy": "jev",
           "key": "type:f1:email",

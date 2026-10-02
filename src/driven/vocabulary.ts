@@ -14,6 +14,7 @@ export const PAUSE_REASON_TEXT: Readonly<Record<string, string>> = {
   RISKY_ACTION: 'Jev picked a control with a risky word (delete, remove, sign out, pay...); the bridge never takes those itself.',
   DESTRUCTIVE_STEP: 'The step is marked destructive: Claude picks its actions.',
   PERMISSION_DIALOG: 'A system permission dialog is on screen (allow notifications, paste, photos...); Jev never answers those.',
+  APP_ERROR_DIALOG: 'Android\'s app error dialog is on screen (an app isn\'t responding or keeps stopping); Jev never answers those.',
   LOCAL_ONLY_STEP: 'The step is localOnly: its screens never go to Jev, so Claude picks every action.',
   LOCAL_ONLY_SCREEN: 'The screen matches a localOnlyScreens rule, so it is not sent to Jev.',
   NO_PREFLIGHT: 'The step is a test write and the project preflight did not pass, so Claude picks its actions (Jev does not search either).',
@@ -22,5 +23,6 @@ export const PAUSE_REASON_TEXT: Readonly<Record<string, string>> = {
   REPEATED_ACTION: 'Jev picked the same action a third time in this step.',
   SCREEN_LOOP: 'The run went back and forth between two screens.',
   DECISION_BUDGET: 'The step used all its Jev decisions. After your action Jev checks once whether the step is done.',
-  SCREEN_CHANGED: 'The screen changed before your last answer could be performed; answer for this screen.',
+  SCREEN_CHANGED: 'The screen changed before your last answer could be carried out, so nothing was done; answer for '
+    + 'this screen. If it keeps changing on its own (a timer, say), answer revise or stop.',
 };

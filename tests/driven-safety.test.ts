@@ -4,12 +4,12 @@
  * and a fake hand-back, and shows the fix. No device, no TypeSafe call.
  */
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import type { Action, DeviceDriver, Element, Platform, RunEvent, RunLog, Snapshot } from '../src/contracts/index.js';
 import { backButtonOf } from '../src/device/index.js';
-import { buildCandidates, isPermissionDialog } from '../src/driven/candidates.js';
+import { buildCandidates, isAppErrorDialog, isPermissionDialog } from '../src/driven/candidates.js';
 import { acceptDecision } from '../src/driven/policy.js';
 import type { HandbackAnswer, HandbackPacket } from '../src/driven/step.js';
 import { PAUSE_REASON_TEXT } from '../src/driven/vocabulary.js';
@@ -277,4 +277,70 @@ test('#3 isPermissionDialog: iOS button labels whole and in any case; Android pe
   assert.ok(isPermissionDialog([text('t1', 'Hi', { identifier: 'com.android.permissioncontroller:id/permission_message' })],
     'android'));
   assert.ok(!isPermissionDialog([button('b1', 'Allow', { identifier: 'com.example:id/allow' })], 'android'));
+});
+
+// ---------- PR #36 review: Android's app error dialogs go to Claude (C17) ----------
+
+const CALENDAR_ANR = join(captures, 'fossify-calendar/13-anr-dialog');
+const KOTLINCONF_ANR = join(captures, 'kotlinconf-android/01-anr-on-first-launch');
+
+test('an Android "isn\'t responding" dialog goes to Claude as APP_ERROR_DIALOG without asking Jev', async () => {
+  const dialog = loadCapture(CALENDAR_ANR, 'android');
+  const close = dialog.find(e => e.identifier === 'android:id/aerr_close')!;
+  const wait = dialog.find(e => e.identifier === 'android:id/aerr_wait')!;
+  const driver = graphDriver({ dialog, home: [text('t3', 'Home')] }, 'dialog', { [`dialog tap:${wait.ref}`]: 'home' });
+  // The review's probe: asked on the dialog, Jev picks Close app, which kills the app.
+  const pickClose: FakeStep = prepared => prepared.set.meanings.has(`tap:${close.ref}`)
+    ? { choice: `tap:${close.ref}`, confidence: 0.99 } : { choice: 'step_done', confidence: 0.95, done: 0.95 };
+  const { report, judge, handback, of } = await run({ driver, platform: 'android', judge: [pickClose],
+    handback: [{ kind: 'tap', ref: wait.ref }] });
+  assert.deepEqual(handback.packets.map(p => p.reason), ['APP_ERROR_DIALOG']);
+  assert.deepEqual(driver.acts, [`dialog tap:${wait.ref}`]);
+  assert.deepEqual(of('action').map(a => a.decidedBy), ['claude']);
+  assert.equal(judge.asked.length, 1, 'Jev is asked only on the screen after the dialog');
+  assert.equal(report.verdict, 'passed');
+});
+
+test('an app error dialog reached by the target search goes to Claude without asking Jev', async () => {
+  const dialog = loadCapture(KOTLINCONF_ANR, 'android');
+  const close = dialog.find(e => e.identifier === 'android:id/aerr_close')!;
+  const driver = graphDriver({ top: [list('l1'), text('t1', 'Rows')], dialog }, 'top', { 'top scroll:down': 'dialog' });
+  const { judge, handback } = await run({ driver, platform: 'android', judge: [
+    { choice: 'none_fits', confidence: 0.9 }, { choice: `tap:${close.ref}`, confidence: 0.99 }],
+    handback: [{ kind: 'stop' }] });
+  assert.equal(judge.asked.length, 1);
+  assert.deepEqual(driver.acts, ['top scroll:down']);
+  assert.deepEqual(handback.packets.map(p => p.reason), ['APP_ERROR_DIALOG']);
+});
+
+test('isAppErrorDialog: exactly the two recorded freezes among all 82 captured screens', () => {
+  const platformOf: Record<string, Platform> = { 'fossify-calendar': 'android', 'kotlinconf-android': 'android',
+    listmaker: 'android', nowinandroid: 'android', kotlinconf: 'ios', netnewswire: 'ios', readme: 'ios' };
+  const errors = new Set([CALENDAR_ANR, KOTLINCONF_ANR]);
+  let checked = 0;
+  for (const app of readdirSync(captures, { withFileTypes: true }).filter(entry => entry.isDirectory())) {
+    const platform = platformOf[app.name];
+    assert.ok(platform, `the platform of ${app.name}`);
+    for (const screen of readdirSync(join(captures, app.name), { withFileTypes: true }).filter(entry => entry.isDirectory())) {
+      const dir = join(captures, app.name, screen.name);
+      assert.equal(isAppErrorDialog(loadCapture(dir, platform), platform), errors.has(dir), dir);
+      checked++;
+    }
+  }
+  assert.equal(checked, 82);
+});
+
+test('isAppErrorDialog: any android:id/aerr_ element on Android, the crash dialog\'s too; never on iOS', () => {
+  // The ids of AOSP's app_anr_dialog.xml and app_error_dialog.xml ("isn't responding", "keeps stopping").
+  for (const id of ['aerr_close', 'aerr_wait', 'aerr_report', 'aerr_restart', 'aerr_app_info', 'aerr_mute']) {
+    assert.ok(isAppErrorDialog([button('b1', 'Any', { identifier: `android:id/${id}` })], 'android'), id);
+  }
+  assert.ok(!isAppErrorDialog([button('b1', 'Close app', { identifier: 'com.example:id/aerr_close' })], 'android'),
+    'an app\'s own id');
+  assert.ok(!isAppErrorDialog([button('b1', 'Close app')], 'android'), 'a label alone');
+  assert.ok(!isAppErrorDialog([button('b1', 'Close app', { identifier: 'android:id/aerr_close' })], 'ios'));
+});
+
+test('APP_ERROR_DIALOG has its hand-back text', () => {
+  assert.match(PAUSE_REASON_TEXT.APP_ERROR_DIALOG ?? '', /isn't responding/);
 });

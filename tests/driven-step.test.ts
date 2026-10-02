@@ -11,6 +11,7 @@ import { parseScriptedScenario } from '../src/scripted/schema.js';
 import { DECISIONS_PER_STEP, type HandbackAnswer, type HandbackPacket } from '../src/driven/step.js';
 import { fakeDrivenJudge, type FakeStep } from './fixtures/driven-judge.js';
 import { REASON_CODES } from '../src/scripted/vocabulary.js';
+import { PAUSE_REASON_TEXT } from '../src/driven/vocabulary.js';
 
 // ---------- fakes ----------
 
@@ -38,27 +39,42 @@ function actionKey(action: Action): string {
 interface GraphDriver extends DeviceDriver {
   /** Every action performed, as `<screen> <key>`. */
   readonly acts: string[];
+  /** The ref each element action named, as the driver got it; with `refsPerCapture` it shows which capture. */
+  readonly refsActedOn: string[];
   readonly current: () => string;
+  /** Moves the device to another screen with no action, as the app or a person can while a step is paused. */
+  goTo(screen: string): void;
 }
 
-/** A device whose screens are named; `moves['screen key']` is the screen an action leads to (else it stays). */
+/**
+ * A device whose screens are named; `moves['screen key']` is the screen an action leads to (else it stays). With
+ * `refsPerCapture`, each capture gives its elements new refs (`b1@<sequence>`), as iOS does.
+ */
 function graphDriver(screens: Record<string, Element[]>, start: string, moves: Record<string, string> = {},
-  options: { staleOnce?: string; staleMovesTo?: string; scrollWithin?: string } = {}): GraphDriver {
+  options: { staleOnce?: string; staleMovesTo?: string; scrollWithin?: string; refsPerCapture?: boolean } = {}): GraphDriver {
   let current = start;
   let sequence = 0;
   let path: ActPath | undefined;
   let staleOnce = options.staleOnce;
   const acts: string[] = [];
-  const shot = (): Snapshot => ({ deviceId: 'fake', capturedAt: Date.now(), expiresAt: Date.now() + 60_000,
-    sequence: ++sequence, elements: screens[current]!, truncated: false, screenHash: current,
-    screenshotPath: `screen-${sequence}.jpg` });
+  const refsActedOn: string[] = [];
+  const shot = (): Snapshot => {
+    sequence++;
+    const elements = options.refsPerCapture
+      ? screens[current]!.map(element => ({ ...element, ref: `${element.ref}@${sequence}` })) : screens[current]!;
+    return { deviceId: 'fake', capturedAt: Date.now(), expiresAt: Date.now() + 60_000, sequence, elements,
+      truncated: false, screenHash: current, screenshotPath: `screen-${sequence}.jpg` };
+  };
   return {
     acts,
+    refsActedOn,
     current: () => current,
+    goTo(screen) { current = screen; },
     async prepare() {},
     async observe() { return shot(); },
     async act(action) {
-      const key = actionKey(action);
+      if (action.targetRef !== undefined) refsActedOn.push(action.targetRef);
+      const key = actionKey(action).replace(/@\d+/g, '');
       if (staleOnce === key) {
         staleOnce = undefined;
         if (options.staleMovesTo) current = options.staleMovesTo;
@@ -82,13 +98,16 @@ interface FakeHandback {
   readonly packets: HandbackPacket[];
 }
 
-function fakeHandback(answers: HandbackAnswer[]): FakeHandback {
+/** An answer, or a function that gives one for the pause's packet (and may change the device meanwhile). */
+type ScriptedAnswer = HandbackAnswer | ((packet: HandbackPacket) => HandbackAnswer);
+
+function fakeHandback(answers: ScriptedAnswer[]): FakeHandback {
   const packets: HandbackPacket[] = [];
   const handback = async (packet: HandbackPacket) => {
     packets.push(packet);
     const answer = answers.shift();
     if (!answer) throw new Error(`fake hand-back: no answer scripted for pause ${packets.length}`);
-    return answer;
+    return typeof answer === 'function' ? answer(packet) : answer;
   };
   return Object.assign(handback, { packets });
 }
@@ -122,7 +141,7 @@ const passingJudge = (probability = 0.97) => ({ async judge(assertions: { id: st
 interface Run {
   driver: GraphDriver;
   judge: FakeStep[];
-  handback?: HandbackAnswer[];
+  handback?: ScriptedAnswer[];
   steps?: unknown[];
   extra?: Record<string, unknown>;
   checkpointProbability?: number;
@@ -411,37 +430,45 @@ test('Claude\'s tap, type, scroll, back and tapAt answers are performed with dec
   assert.equal(report.reason, 'STOPPED_BY_CLAUDE');
 });
 
-test('Claude\'s tap on a screen that went stale is re-found on a fresh capture of the same screen', async () => {
-  const driver = graphDriver(signInScreens, 'filled', signInMoves, { staleOnce: 'tap:b1' });
-  const { report } = await run({ driver, steps: [doStep({ localOnly: true }), checkpoint()], judge: [],
-    handback: [{ kind: 'tap', ref: 'b1' }, { kind: 'revise', steps: homeCheckpoint() }] });
+test('after a pause, Claude\'s answer acts on a fresh capture of the same screen, its element found again', async () => {
+  const driver = graphDriver(signInScreens, 'filled', signInMoves, { refsPerCapture: true });
+  const { handback, report } = await run({ driver, steps: [doStep({ localOnly: true }), checkpoint()], judge: [],
+    handback: [packet => ({ kind: 'tap', ref: packet.snapshot.elements.find(e => e.label === 'Sign in')!.ref }),
+      { kind: 'revise', steps: homeCheckpoint() }] });
+  const paused = handback.packets[0]!.snapshot.sequence;
   assert.deepEqual(driver.acts, ['filled tap:b1']);
+  const [ref] = driver.refsActedOn;
+  assert.notEqual(ref, `b1@${paused}`, 'not the paused capture\'s ref');
+  assert.ok(Number(ref!.split('@')[1]) > paused, `a later capture's ref, not ${String(ref)}`);
   assert.equal(report.verdict, 'passed');
 });
 
-test('Claude\'s tapAt on a screen that went stale is never replayed: it hands back SCREEN_CHANGED', async () => {
-  const driver = graphDriver(signInScreens, 'filled', signInMoves, { staleOnce: 'tapAt:5,6' });
-  const { handback, report } = await run({ driver, steps: [doStep({ localOnly: true }), checkpoint()], judge: [],
-    handback: [{ kind: 'tapAt', x: 5, y: 6 }, { kind: 'stop' }] });
-  assert.deepEqual(driver.acts, []);
-  assert.deepEqual(handback.packets.map(p => p.reason), ['LOCAL_ONLY_STEP', 'SCREEN_CHANGED']);
-  assert.equal(report.reason, 'STOPPED_BY_CLAUDE');
+test('a screen that changed during the pause: Claude\'s answer is not performed; it hands back SCREEN_CHANGED', async () => {
+  const answers: HandbackAnswer[] = [{ kind: 'tap', ref: 'b1' }, { kind: 'type', ref: 'f1', valueKey: 'user' },
+    { kind: 'scroll', direction: 'down' }, { kind: 'back' }, { kind: 'tapAt', x: 5, y: 6 }];
+  for (const answer of answers) {
+    const driver = graphDriver(signInScreens, 'filled', signInMoves);
+    const { handback, of, report } = await run({ driver, steps: [doStep({ localOnly: true, values: ['user'] }), checkpoint()],
+      judge: [], handback: [() => { driver.goTo('login'); return answer; }, { kind: 'stop' }] });
+    assert.deepEqual(driver.acts, [], answer.kind);
+    assert.deepEqual(of('action'), [], answer.kind);
+    assert.deepEqual(handback.packets.map(p => p.reason), ['LOCAL_ONLY_STEP', 'SCREEN_CHANGED'], answer.kind);
+    assert.equal(handback.packets[1]!.snapshot.screenHash, 'login', 'the new pause shows the screen as it is now');
+    assert.match(PAUSE_REASON_TEXT.SCREEN_CHANGED ?? '', /nothing was done.*revise or stop/);
+    assert.equal(report.reason, 'STOPPED_BY_CLAUDE');
+  }
 });
 
-test('Claude\'s back on a screen that changed while it was stale hands back SCREEN_CHANGED and does nothing', async () => {
-  const driver = graphDriver(signInScreens, 'filled', signInMoves, { staleOnce: 'back', staleMovesTo: 'login' });
-  const { handback, report } = await run({ driver, steps: [doStep({ localOnly: true }), checkpoint()], judge: [],
-    handback: [{ kind: 'back' }, { kind: 'stop' }] });
-  assert.deepEqual(driver.acts, []);
-  assert.deepEqual(handback.packets.map(p => p.reason), ['LOCAL_ONLY_STEP', 'SCREEN_CHANGED']);
-  assert.equal(report.reason, 'STOPPED_BY_CLAUDE');
-});
-
-test('Claude\'s back on a stale capture of the same screen is performed on the fresh capture', async () => {
-  const driver = graphDriver(signInScreens, 'filled', signInMoves, { staleOnce: 'back' });
-  await run({ driver, steps: [doStep({ localOnly: true }), checkpoint()], judge: [],
-    handback: [{ kind: 'back' }, { kind: 'stop' }] });
-  assert.deepEqual(driver.acts, ['filled back']);
+test('a driver that finds even the fresh capture stale: Claude\'s answer hands back SCREEN_CHANGED, never retried', async () => {
+  const cases: [HandbackAnswer, string][] = [[{ kind: 'tap', ref: 'b1' }, 'tap:b1'], [{ kind: 'back' }, 'back'],
+    [{ kind: 'tapAt', x: 5, y: 6 }, 'tapAt:5,6']];
+  for (const [answer, key] of cases) {
+    const driver = graphDriver(signInScreens, 'filled', signInMoves, { staleOnce: key });
+    const { handback } = await run({ driver, steps: [doStep({ localOnly: true }), checkpoint()], judge: [],
+      handback: [answer, { kind: 'stop' }] });
+    assert.deepEqual(driver.acts, [], key);
+    assert.deepEqual(handback.packets.map(p => p.reason), ['LOCAL_ONLY_STEP', 'SCREEN_CHANGED'], key);
+  }
 });
 
 test('an action event names its target by role, label and identifier, with typed values masked', async () => {
