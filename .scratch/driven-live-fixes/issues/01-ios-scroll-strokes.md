@@ -1,6 +1,6 @@
 # iOS scroll strokes: scroll up under a fixed header, and the screen-centre fallback
 
-Status: ready-for-agent
+Status: resolved
 Type: bug
 Source: live trial 2026-10-02 (the target search scrolled down 3 times, then its scroll up reported "unchanged"); reproduced by hand with the same MobileBuildMCP calls.
 

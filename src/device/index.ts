@@ -318,6 +318,13 @@ export function selectAndroidDeviceName(device: { serial?: string; avd?: string 
 export interface Size { width: number; height: number }
 
 /** The finger's direction for a scroll: to bring what is further down into view, the finger moves up. */
+/**
+ * The driven scroll's stroke inside a scroll view, as a fraction of its height: MobileBuildMCP centres it, so 0.4 runs
+ * between 30% and 70%, Android's stroke. MobileBuildMCP's default runs from 15% to 85%, which starts a finger-down
+ * stroke on a fixed header at the top of a full-screen scroll view, and the content never moves.
+ */
+export const SCROLL_STROKE_DISTANCE = 0.4;
+
 export function scrollFinger(direction: 'up' | 'down'): 'up' | 'down' {
   return direction === 'down' ? 'up' : 'down';
 }
@@ -741,22 +748,25 @@ export class MobileBuildMcpDriver implements DeviceDriver {
   }
 
   /**
-   * Scroll: swipe inside the largest scroll view by its reference, with MobileBuildMCP's own swipe timing; else
-   * MobileBuildMCP's `scroll-down` or `scroll-up` preset in the screen's centre, since it swipes only within an
-   * element and the bridge runs no device automation of its own (ADR-0002). The preset's stroke is AXe's, not
-   * Android's 70% to 30%.
+   * Scroll: swipe inside the largest scroll view by its reference, with MobileBuildMCP's own swipe timing and a
+   * stroke of SCROLL_STROKE_DISTANCE centred in the view; else AXe's preset in the screen's centre, since MobileBuildMCP
+   * swipes only within an element and the bridge runs no device automation of its own (ADR-0002). The preset's stroke
+   * is AXe's, not Android's 70% to 30%, and its name gives the finger's direction: `scroll-up` reveals what is below.
    */
   private async scroll(direction: 'up' | 'down', snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined> {
     const area = largestScrollable(snapshot.elements);
     if (area) {
       this.lastActPath = { path: 'scroll-within', targetRef: area.ref };
-      return this.actOnElement({ kind: 'swipe', targetRef: area.ref, direction: scrollFinger(direction) }, snapshot, scenario, signal);
+      return this.actOnElement({ kind: 'swipe', targetRef: area.ref, direction: scrollFinger(direction) }, snapshot, scenario, signal,
+        SCROLL_STROKE_DISTANCE);
     }
     this.lastActPath = { path: 'screen-middle' };
-    return this.gesture(direction === 'down' ? 'scroll-down' : 'scroll-up', snapshot, signal);
+    return this.gesture(direction === 'down' ? 'scroll-up' : 'scroll-down', snapshot, signal);
   }
 
-  private async actOnElement(action: ElementAction, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined> {
+  /** `swipeDistance` is MobileBuildMCP's stroke length as a fraction of the element; absent, its default stroke. */
+  private async actOnElement(action: ElementAction, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal,
+    swipeDistance?: number): Promise<Snapshot | undefined> {
     const old = snapshot.elements.find((element) => element.ref === action.targetRef);
     if (!old) throw new StaleSnapshotError('Target reference is absent from observation');
     const requiredAction = action.kind === 'type' ? 'typeText' : action.kind === 'swipe' ? 'swipeWithin' : 'tap';
@@ -781,7 +791,8 @@ export class MobileBuildMcpDriver implements DeviceDriver {
       if (action.kind === 'type') return [...base, 'type-text', '--json', JSON.stringify({
         simulatorId: this.deviceId!, elementRef: ref, text: scenario.values[action.valueKey]!, replaceExisting: true,
       }), ...verbose];
-      return [...base, 'swipe', '--simulator-id', this.deviceId!, '--within-element-ref', ref, '--direction', action.direction, ...verbose];
+      return [...base, 'swipe', '--simulator-id', this.deviceId!, '--within-element-ref', ref, '--direction', action.direction,
+        ...(swipeDistance === undefined ? [] : ['--distance', String(swipeDistance)]), ...verbose];
     };
     if (signal.aborted) throw signal.reason;
     try {
