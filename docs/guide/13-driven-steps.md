@@ -41,7 +41,7 @@ For each screen in the step:
 1. The bridge lists the actions that screen offers: tap an element, type one of the step's values into a field, scroll up or down, go back, "the step is done", "none of these".
 2. Jev picks one and gives two numbers: its confidence in the pick, and the probability that the step is already done.
 3. The step is done when that probability is at least 0.90.
-4. Otherwise, the bridge takes the pick only if its confidence is at least 0.80 (0.90 in a `test_write` step), and the control's label, value or identifier has none of these words: Delete, Remove, Erase, Reset, Sign out, Unsubscribe, Pay.
+4. Otherwise, the bridge takes the pick only if its confidence is at least 0.80 (0.90 in a `test_write` step), and the control's label, value or identifier has none of these words: Delete, Remove, Erase, Reset, Sign out, Unsubscribe, Pay. In a step whose effect is `none`, these write words count too: Approve, Reject, Send, Submit, Confirm, Save, Publish, Post. Words match whole, in any case, so "Send message" counts and "Sender" doesn't.
 5. If Jev found nothing that fits, or wasn't confident enough, the bridge searches: it scrolls down up to 3 times, then up up to 3 times, asking again after each scroll that changed the screen. A screen with no scrollable element gets one try. If that scroll changes nothing, the bridge doesn't scroll that same screen to search again in the run; a new screen still gets its try.
 
 Each action the bridge performs counts toward `maxSteps`, as does the `do` step itself. After 8 Jev decisions in one step, the step goes to Claude.
@@ -89,7 +89,7 @@ A pause waits 5 minutes by default; set `handbackTimeoutMs` in `start_scenario`'
 | --- | --- |
 | `NONE_FITS` | Jev found no listed action that does the step, even after scrolling to search. |
 | `LOW_CONFIDENCE` | Jev wasn't confident enough in any action, even after scrolling to search. A "step is done" pick whose done probability is under 0.90 also lands here. |
-| `RISKY_ACTION` | Jev picked a control with a risky word. The bridge never takes those itself. |
+| `RISKY_ACTION` | Jev picked a control with a risky word, or a write word in a step whose effect is `none`. The bridge never takes those itself. |
 | `DESTRUCTIVE_STEP` | The step's effect is `destructive`, so Claude picks every action. Jev isn't asked about the first screen. After Claude's first action, Jev is asked about each new screen as usual, but its pick is never taken: only its done check counts, ending the step at 0.90. Otherwise the step comes back to Claude, who answers with the next action or `done`. |
 | `PERMISSION_DIALOG` | A system permission dialog is on screen, such as an iOS alert with Allow / Don't Allow or Android's permission prompt. Jev is never asked about it; Claude answers it or adjusts the plan. |
 | `APP_ERROR_DIALOG` | Android's app error dialog is on screen: an app isn't responding or keeps stopping. Jev is never asked about it, because Close app kills the app. Claude decides: Wait, or stop the run and report the freeze. |

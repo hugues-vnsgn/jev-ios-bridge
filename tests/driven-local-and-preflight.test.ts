@@ -239,7 +239,8 @@ test('a timed-out preflight is failed and test writes go to Claude', async () =>
 test('a run with no test_write step never runs the preflight', async () => {
   const dir = await project({}, { command: [node, '-e', 'process.exit(0)'] });
   try {
-    const driver = graphDriver(settings, 'form', { 'form tap:b1': 'home' });
+    // A read-only step on a control with no write word: a read-only pick of Save would go to Claude.
+    const driver = graphDriver({ ...settings, form: [text('t1', 'Settings'), button('b1', 'Home')] }, 'form', { 'form tap:b1': 'home' });
     const { report, of } = await run({ dir, driver, steps: [doStep('save'), checkpoint],
       judge: [{ choice: 'tap:b1', confidence: 0.95 }, { choice: 'step_done', confidence: 0.95, done: 0.95 }] });
     assert.equal(report.verdict, 'passed');

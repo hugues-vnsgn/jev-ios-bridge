@@ -1,6 +1,6 @@
 # A read-only step never carries out a pick of a write control
 
-Status: ready-for-agent
+Status: resolved
 Type: bug (safety)
 Source: live trial 2026-10-02: a read-only check ended on an approval screen in the approver's turn, with live Approve and Reject buttons. Neither was a risky word, so a confident Jev pick of Approve in that `effect: none` step would have been carried out, writing a final approval. It didn't happen (Jev's done check ended the step).
 
