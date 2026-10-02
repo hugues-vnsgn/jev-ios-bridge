@@ -1,0 +1,35 @@
+{
+  "id": "nia-01",
+  "answer": {
+    "choice": "tap:a22",
+    "confidence": 0.98,
+    "probabilities": {
+      "tap:a4": 0,
+      "none_fits": 0,
+      "tap:a24": 0,
+      "step_done": 0,
+      "tap:a9": 0,
+      "tap:a18": 0,
+      "scroll:up": 0,
+      "tap:a22": 1,
+      "scroll:down": 0,
+      "back": 0,
+      "tap:a14": 0,
+      "tap:a1": 0,
+      "tap:a16": 0,
+      "tap:a20": 0,
+      "tap:a7": 0
+    },
+    "done": 0.06,
+    "inputTokens": 2380,
+    "latencyMs": 277.93383300000005
+  },
+  "score": {
+    "right": true,
+    "accepted": true,
+    "wrongAccepted": false,
+    "handled": true,
+    "doneVerdict": "no",
+    "doneRight": true
+  }
+}

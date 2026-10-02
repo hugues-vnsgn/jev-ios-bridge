@@ -1,0 +1,30 @@
+{
+  "id": "rm-04",
+  "answer": {
+    "choice": "tap:e25",
+    "confidence": 1,
+    "probabilities": {
+      "scroll:up": 0,
+      "none_fits": 0,
+      "tap:e23": 0,
+      "back": 0,
+      "tap:e25": 1,
+      "step_done": 0,
+      "tap:e12": 0,
+      "scroll:down": 0,
+      "tap:e20": 0,
+      "tap:e26": 0
+    },
+    "done": 0.02,
+    "inputTokens": 2088,
+    "latencyMs": 281.125084
+  },
+  "score": {
+    "right": true,
+    "accepted": false,
+    "wrongAccepted": false,
+    "handled": false,
+    "doneVerdict": "no",
+    "doneRight": true
+  }
+}

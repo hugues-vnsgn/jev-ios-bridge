@@ -1,0 +1,34 @@
+{
+  "id": "kc-03",
+  "answer": {
+    "choice": "tap:e22",
+    "confidence": 0.93,
+    "probabilities": {
+      "tap:e38": 0,
+      "tap:e41": 0,
+      "tap:e40": 0,
+      "none_fits": 0.01,
+      "tap:e53": 0,
+      "scroll:up": 0,
+      "step_done": 0.01,
+      "tap:e39": 0,
+      "tap:e22": 0.93,
+      "tap:e49": 0,
+      "tap:e33": 0,
+      "back": 0.05,
+      "scroll:down": 0,
+      "tap:e45": 0
+    },
+    "done": 0.05,
+    "inputTokens": 3648,
+    "latencyMs": 295.08375000000024
+  },
+  "score": {
+    "right": true,
+    "accepted": true,
+    "wrongAccepted": false,
+    "handled": true,
+    "doneVerdict": "no",
+    "doneRight": true
+  }
+}

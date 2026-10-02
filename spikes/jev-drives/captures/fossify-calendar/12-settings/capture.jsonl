@@ -1,0 +1,33 @@
+{"role":"scroll-view","identifier":"org.fossify.calendar:id/settings_coordinator","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Back","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Settings","state":{"enabled":true,"visible":true}}
+{"role":"scroll-view","identifier":"org.fossify.calendar:id/settings_nested_scrollview","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Look & feel","identifier":"org.fossify.calendar:id/settings_color_customization_section_label","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Customize appearance","identifier":"org.fossify.calendar:id/settings_color_customization_holder","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Customize appearance","identifier":"org.fossify.calendar:id/settings_color_customization_label","state":{"enabled":true,"visible":true},"selectable":false}
+{"role":"button","label":"Customize widget colors","identifier":"org.fossify.calendar:id/settings_widget_color_customization_holder","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Customize widget colors","identifier":"org.fossify.calendar:id/settings_widget_color_customization_label","state":{"enabled":true,"visible":true},"selectable":false}
+{"role":"image","identifier":"org.fossify.calendar:id/settings_color_customization_divider","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"General","identifier":"org.fossify.calendar:id/settings_general_settings_label","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Language","identifier":"org.fossify.calendar:id/settings_language_holder","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Language","identifier":"org.fossify.calendar:id/settings_language_label","state":{"enabled":true,"visible":true},"selectable":false}
+{"role":"text","label":"English","identifier":"org.fossify.calendar:id/settings_language","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Manage calendars","identifier":"org.fossify.calendar:id/settings_manage_calendars_holder","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Manage calendars","identifier":"org.fossify.calendar:id/settings_manage_event_types_label","state":{"enabled":true,"visible":true},"selectable":false}
+{"role":"button","label":"Start week on","identifier":"org.fossify.calendar:id/settings_start_week_on_holder","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Start week on","identifier":"org.fossify.calendar:id/settings_start_week_on_label","state":{"enabled":true,"visible":true},"selectable":false}
+{"role":"text","label":"Sunday","identifier":"org.fossify.calendar:id/settings_start_week_on","state":{"enabled":true,"visible":true}}
+{"role":"button","identifier":"org.fossify.calendar:id/settings_hour_format_holder","state":{"enabled":true,"visible":true}}
+{"role":"switch","label":"Use 24-hour time format","value":"0","identifier":"org.fossify.calendar:id/settings_hour_format","state":{"enabled":true,"visible":true}}
+{"role":"button","identifier":"org.fossify.calendar:id/settings_highlight_weekends_holder","state":{"enabled":true,"visible":true}}
+{"role":"switch","label":"Highlight weekends on some views","value":"0","identifier":"org.fossify.calendar:id/settings_highlight_weekends","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/settings_general_settings_divider","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Reminders","identifier":"org.fossify.calendar:id/settings_reminders_label","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Customize notifications","identifier":"org.fossify.calendar:id/settings_customize_notifications_holder","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Customize notifications","identifier":"org.fossify.calendar:id/settings_customize_notifications","state":{"enabled":true,"visible":true},"selectable":false}
+{"role":"button","label":"Audio stream used by reminders","identifier":"org.fossify.calendar:id/settings_reminder_audio_stream_holder","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Audio stream used by reminders","identifier":"org.fossify.calendar:id/settings_reminder_audio_stream_label","state":{"enabled":true,"visible":true},"selectable":false}
+{"role":"text","label":"Notification","identifier":"org.fossify.calendar:id/settings_reminder_audio_stream","state":{"enabled":true,"visible":true}}
+{"role":"button","identifier":"org.fossify.calendar:id/settings_vibrate_holder","state":{"enabled":true,"visible":true}}
+{"role":"switch","label":"Vibrate on reminder notification","value":"0","identifier":"org.fossify.calendar:id/settings_vibrate","state":{"enabled":true,"visible":true}}
+{"role":"button","identifier":"org.fossify.calendar:id/settings_loop_reminders_holder","state":{"enabled":true,"visible":true}}

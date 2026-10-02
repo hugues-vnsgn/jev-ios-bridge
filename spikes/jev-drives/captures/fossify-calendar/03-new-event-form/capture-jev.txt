@@ -1,0 +1,22 @@
+Current Android screen (full accessibility capture):
+{"role":"scroll-view","identifier":"org.fossify.calendar:id/event_coordinator","frame":{"x":0,"y":0,"width":1080,"height":2400},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Back","frame":{"x":0,"y":73,"width":147,"height":147},"state":{"enabled":true,"visible":true}}
+{"role":"text","label":"New Event","frame":{"x":157,"y":110,"width":257,"height":74},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Save","identifier":"org.fossify.calendar:id/save","frame":{"x":953,"y":83,"width":127,"height":126},"state":{"enabled":true,"visible":true}}
+{"role":"scroll-view","identifier":"org.fossify.calendar:id/event_nested_scrollview","frame":{"x":0,"y":231,"width":1080,"height":2169},"state":{"enabled":true,"visible":true}}
+{"role":"text-field","placeholder":"Title","identifier":"org.fossify.calendar:id/event_title","frame":{"x":42,"y":273,"width":996,"height":116},"state":{"enabled":true,"visible":true,"focused":true}}
+{"role":"text-field","placeholder":"Location","identifier":"org.fossify.calendar:id/event_location","frame":{"x":42,"y":431,"width":880,"height":116},"state":{"enabled":true,"visible":true}}
+{"role":"button","identifier":"org.fossify.calendar:id/event_show_on_map","frame":{"x":922,"y":431,"width":116,"height":116},"state":{"enabled":true,"visible":true}}
+{"role":"text-field","placeholder":"Description","identifier":"org.fossify.calendar:id/event_description","frame":{"x":42,"y":589,"width":996,"height":116},"state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/event_description_divider","frame":{"x":0,"y":747,"width":1080,"height":2},"state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/event_time_image","frame":{"x":32,"y":781,"width":116,"height":168},"state":{"enabled":true,"visible":true}}
+{"role":"button","identifier":"org.fossify.calendar:id/event_all_day_holder","frame":{"x":159,"y":781,"width":921,"height":168},"state":{"enabled":true,"visible":true}}
+{"role":"switch","label":"All-day","value":"0","identifier":"org.fossify.calendar:id/event_all_day","frame":{"x":159,"y":802,"width":879,"height":126},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"October 1 (Thu)","identifier":"org.fossify.calendar:id/event_start_date","frame":{"x":159,"y":949,"width":357,"height":145},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"05:00 PM","identifier":"org.fossify.calendar:id/event_start_time","frame":{"x":786,"y":949,"width":273,"height":145},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"October 1 (Thu)","identifier":"org.fossify.calendar:id/event_end_date","frame":{"x":159,"y":1094,"width":357,"height":145},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"05:00 PM","identifier":"org.fossify.calendar:id/event_end_time","frame":{"x":786,"y":1094,"width":273,"height":145},"state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/event_date_time_divider","frame":{"x":0,"y":1260,"width":1080,"height":2},"state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/event_reminder_image","frame":{"x":32,"y":1283,"width":116,"height":145},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"10 minutes before","identifier":"org.fossify.calendar:id/event_reminder_1","frame":{"x":159,"y":1283,"width":921,"height":145},"state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Add another reminder","identifier":"org.fossify.calendar:id/event_reminder_2","frame":{"x":159,"y":1428,"width":921,"height":145},"state":{"enabled":true,"visible":true}}

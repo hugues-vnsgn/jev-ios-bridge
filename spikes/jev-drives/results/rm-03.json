@@ -1,0 +1,29 @@
+{
+  "id": "rm-03",
+  "answer": {
+    "choice": "step_done",
+    "confidence": 1,
+    "probabilities": {
+      "tap:e20": 0,
+      "tap:e12": 0,
+      "scroll:down": 0,
+      "step_done": 1,
+      "scroll:up": 0,
+      "back": 0,
+      "tap:e23": 0,
+      "none_fits": 0,
+      "tap:e25": 0
+    },
+    "done": 0.98,
+    "inputTokens": 2013,
+    "latencyMs": 274.355459
+  },
+  "score": {
+    "right": true,
+    "accepted": true,
+    "wrongAccepted": false,
+    "handled": true,
+    "doneVerdict": "yes",
+    "doneRight": true
+  }
+}

@@ -41,6 +41,15 @@ These stay compatible for every 1.x release:
   Element lines may gain fields, so ignore ones you don't know. `--jev` prints Jev's text for the screen, in the pinned Android observation shape (below).
 - **The `/test-android` skill,** and the plugin's optional **Android device** setting. The simulator setting is now optional too.
 
+## What 1.3 adds
+
+1.3 changes nothing above for version 1 scripts: they parse, run, log and report as in 1.2.
+
+- **Driven steps (experimental):** script version 2 with `do` steps, `goal` and `start`; the `resolve_step` MCP tool; the `.jev/config.json` and `.jev/preflight.json` project files; the `driven` field in `report.json`; and the `decision`, `search`, `handback`, `handback_answer` and `preflight` events. A `do` step runs only with driven mode turned on. All of these may change before driven mode is declared stable. [Driven steps](13-driven-steps.md).
+- **Values from the environment,** `{ "fromEnv": NAME }`, in scripts of either version. [Script format](reference/script-format.md#values-from-the-environment).
+- **The simulator window:** every iOS run, of either script version, now brings its simulator's window to the front before the app launches. The new `run` option `--no-device-window`, or `JEV_DEVICE_WINDOW=off`, turns it off. It changes no verdict, report or exit code.
+- **Reason codes:** `DRIVEN_NOT_ENABLED`, `HANDBACK_TIMEOUT`, `STOPPED_BY_CLAUDE`, `STEP_NOT_DONE`, `APP_NOT_IN_FOREGROUND`, `APP_NOT_RUNNING` and `LOCAL_ONLY_CHECKPOINT`. `DEVICE_NOT_BOOTED` now also covers a shut-down iOS simulator. [Reason codes](reference/reason-codes.md).
+
 ## Pinned dependencies
 
 - **MobileBuildMCP** stays pinned (2.7.1 in 1.0). A newer version is adopted only after the contract tests pass and the benchmark scripts keep their verdicts. It then ships as a minor release.

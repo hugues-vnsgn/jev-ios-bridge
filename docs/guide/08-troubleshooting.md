@@ -52,7 +52,17 @@ On Android it also means that another tool's UI-automation agent (a foreign agen
 
 **`NO_DEVICE` or `INVALID_DEVICE`**: for iOS, set a simulator UUID (`JEV_DEVICE_UDID`, the script's `device.udid`, or `.mobilebuildmcp/config.yaml`). Aliases like `booted` aren't accepted. For Android, set the script's `device.avd` or `device.serial`, or `JEV_ANDROID_DEVICE` ([Android setup](12-android-setup.md#name-the-device)).
 
-**`DEVICE_ERROR`**: MobileBuildMCP reported an error the bridge doesn't have its own code for. `report.json`'s `error.vendorCode` holds MobileBuildMCP's code. Common causes: the simulator isn't booted, or the app isn't installed. A shut-down simulator can make MobileBuildMCP say an installed app is missing. On Android, `vendorCode` is `adb` or `agent`, naming the part that failed. The bridge never records that part's own message, because it can carry screen text. Check that the device is still connected, then run again.
+**`DEVICE_NOT_BOOTED`** (iOS): the run's simulator is shut down, or still booting. The bridge never boots a simulator itself. Boot it, then run again:
+
+```sh
+xcrun simctl boot <UUID>
+```
+
+Or open it from Simulator (File → Open Simulator). The Android meaning is [below](#android-devices).
+
+**No simulator window during an iOS run**: the run brings its simulator's window to the front before the app launches. If it couldn't, the run carries on headless and its `prepared` event in `run.jsonl` has a `warnings` entry starting "Simulator window not opened". Open Simulator yourself to watch. The window stays closed when you turned it off ([`--no-device-window` or `JEV_DEVICE_WINDOW=off`](06-running.md#watching-a-run)).
+
+**`DEVICE_ERROR`**: MobileBuildMCP reported an error the bridge doesn't have its own code for. `report.json`'s `error.vendorCode` holds MobileBuildMCP's code. A common cause is that the app isn't installed on the simulator. On Android, `vendorCode` is `adb` or `agent`, naming the part that failed. The bridge never records that part's own message, because it can carry screen text. Check that the device is still connected, then run again.
 
 **`UI_ACTION_UNCONFIRMED`**: a device command never answered, so the device lease was kept to protect the device. It's released when the command answers, or when that bridge process exits.
 
@@ -70,7 +80,7 @@ These stop a run before the app starts, and `capture` exits 3 with them. [Androi
 
 **`DEVICE_UNAUTHORIZED`**: the device hasn't accepted this Mac's USB-debugging key. Unlock it and accept the prompt.
 
-**`DEVICE_NOT_BOOTED`**: the device hasn't finished booting. Wait, then run again.
+**`DEVICE_NOT_BOOTED`**: the device hasn't finished booting. Wait, then run again. (For an iOS simulator, see [above](#the-app-or-the-device).)
 
 **`DEVICE_LOCKED`**: the lock screen is showing. Set Screen lock to None on a test device.
 
@@ -98,6 +108,20 @@ After each run, the bridge stops its device agent and removes its `adb forward`.
 4. Find the forward: `adb forward --list` shows it as `<serial> tcp:<port> localabstract:mobilecli-server`. Another tool's forward looks the same, so remove only the one you know is the bridge's: `adb -s <serial> forward --remove tcp:<port>`.
 
 Don't use `pkill -f com.mobilenext.mobilecli.DeviceServer`: it also stops a foreign agent. A lock file for a process that has exited is cleared by the next run, so leave it.
+
+## Driven steps (experimental)
+
+**`DRIVEN_NOT_ENABLED`**: the script has a `do` step, but driven mode is off. Put `{ "drivenMode": true }` in the project's `.jev/config.json`, and set `JEV_EXPERIMENTAL_DRIVEN` to `1` or `true` (the plugin's `experimentalDriven` setting does this). See [turning it on](13-driven-steps.md#turning-it-on).
+
+**`HANDBACK_TIMEOUT`**: a `do` step went back to Claude and no answer came before the pause expired. From the terminal this always happens, because only MCP's `resolve_step` can answer. Over MCP, poll `get_report` and answer `needs_claude` sooner, or raise `handbackTimeoutMs`.
+
+**`STOPPED_BY_CLAUDE`**: Claude answered a hand-back with `stop`. The report's hand-backs say which step and why.
+
+**`STEP_NOT_DONE`**: a `do` step used its Jev decisions and Claude's answer, and the screen still didn't show its `doneWhen`. Check that `doneWhen` names text that appears once the step is done, or split the step in two.
+
+**`LOCAL_ONLY_CHECKPOINT`**: in a script with `do` steps, a checkpoint's screen matched a `localOnlyScreens` rule in `.jev/config.json`, so it wasn't sent to Jev and couldn't be judged. Move the checkpoint to a screen without the private element, or narrow the rule. See [screens that stay local](13-driven-steps.md#screens-that-stay-local).
+
+**`APP_NOT_IN_FOREGROUND`** (Android): the script says `"start": "attach"`, but the app isn't the one in front. Open the app on the screen to start from, or use `"start": "restart"`. On iOS, `attach` isn't supported for now and the run ends `UNSUPPORTED_ACTION`; use `"start": "restart"`.
 
 ## TypeSafe
 

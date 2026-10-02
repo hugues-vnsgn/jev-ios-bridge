@@ -1,0 +1,1649 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "3FF040D2-48F3-43FC-B287-BC25E3798BDA"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "protocol": "rs/1",
+      "simulatorId": "3FF040D2-48F3-43FC-B287-BC25E3798BDA",
+      "screenHash": "1hf5tl1",
+      "seq": 118,
+      "capturedAtMs": 1790849266997,
+      "expiresAtMs": 1790849326997,
+      "elements": [
+        {
+          "ref": "e1",
+          "role": "application",
+          "label": "KotlinConf",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e2",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e3",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e4",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e5",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e6",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e7",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e8",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e9",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e10",
+          "role": "scroll-view",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch",
+            "swipeWithin"
+          ]
+        },
+        {
+          "ref": "e11",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e12",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e13",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e14",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e15",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e16",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e17",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 402,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e18",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 402,
+            "height": 812
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e19",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 402,
+            "height": 812
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e20",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 48,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e21",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 402,
+            "height": 49
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e22",
+          "role": "button",
+          "label": "Back",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 48,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e23",
+          "role": "other",
+          "label": "Session",
+          "frame": {
+            "x": 171.67,
+            "y": 76.67,
+            "width": 59,
+            "height": 18.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e24",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 111,
+            "width": 402,
+            "height": 763
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e25",
+          "role": "other",
+          "label": "May 20, 09:00 – 17:00, Building AI Agents in Kotlin with Koog, Workshop, Intermediate",
+          "frame": {
+            "x": 12,
+            "y": 135,
+            "width": 378,
+            "height": 135
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch",
+            "swipeWithin"
+          ]
+        },
+        {
+          "ref": "e26",
+          "role": "text",
+          "label": "May 20, 09:00 – 17:00",
+          "frame": {
+            "x": 12,
+            "y": 137.67,
+            "width": 168,
+            "height": 18.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e27",
+          "role": "other",
+          "frame": {
+            "x": 12,
+            "y": 171,
+            "width": 378,
+            "height": 67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e28",
+          "role": "other",
+          "label": "Building AI Agents in Kotlin with Koog",
+          "frame": {
+            "x": 12,
+            "y": 171,
+            "width": 378,
+            "height": 67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e29",
+          "role": "other",
+          "frame": {
+            "x": 16,
+            "y": 236,
+            "width": 63,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e30",
+          "role": "text",
+          "label": "Workshop",
+          "frame": {
+            "x": 16,
+            "y": 252.33,
+            "width": 63,
+            "height": 15.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e31",
+          "role": "other",
+          "frame": {
+            "x": 91,
+            "y": 236,
+            "width": 79.33,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e32",
+          "role": "text",
+          "label": "Intermediate",
+          "frame": {
+            "x": 91,
+            "y": 252.33,
+            "width": 79.33,
+            "height": 15.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e33",
+          "role": "button",
+          "label": "Bookmark",
+          "frame": {
+            "x": 354,
+            "y": 123,
+            "width": 48,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e34",
+          "role": "other",
+          "frame": {
+            "x": 12,
+            "y": 294,
+            "width": 378,
+            "height": 118.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e35",
+          "role": "other",
+          "frame": {
+            "x": 126.67,
+            "y": 293.67,
+            "width": 149,
+            "height": 47.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e36",
+          "role": "text",
+          "label": "How was the workshop?",
+          "frame": {
+            "x": 126.67,
+            "y": 310,
+            "width": 149,
+            "height": 15.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e37",
+          "role": "other",
+          "frame": {
+            "x": 36,
+            "y": 341.33,
+            "width": 330,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e38",
+          "role": "button",
+          "label": "Vote negative",
+          "frame": {
+            "x": 70.67,
+            "y": 341.33,
+            "width": 64,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e39",
+          "role": "button",
+          "label": "Vote neutral",
+          "frame": {
+            "x": 169,
+            "y": 341.33,
+            "width": 64,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e40",
+          "role": "button",
+          "label": "Vote positive",
+          "frame": {
+            "x": 267.67,
+            "y": 341.33,
+            "width": 64,
+            "height": 55
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e41",
+          "role": "button",
+          "label": "Vadim Briliantov, JetBrains, Koog, Technical Lead",
+          "frame": {
+            "x": 12,
+            "y": 444.33,
+            "width": 378,
+            "height": 96
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e42",
+          "role": "other",
+          "frame": {
+            "x": 12,
+            "y": 444.33,
+            "width": 96,
+            "height": 96
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e43",
+          "role": "text",
+          "label": "Vadim Briliantov",
+          "frame": {
+            "x": 120,
+            "y": 472.33,
+            "width": 123,
+            "height": 18.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e44",
+          "role": "text",
+          "label": "JetBrains, Koog, Technical Lead",
+          "frame": {
+            "x": 120,
+            "y": 497,
+            "width": 191.67,
+            "height": 15.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e45",
+          "role": "button",
+          "label": "Simon Vergauwen, Developer Advocate at JetBrains & OSS (arrow-kt) Maintainer",
+          "frame": {
+            "x": 12,
+            "y": 564.33,
+            "width": 378,
+            "height": 96
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e46",
+          "role": "other",
+          "frame": {
+            "x": 12,
+            "y": 564.33,
+            "width": 96,
+            "height": 96
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e47",
+          "role": "text",
+          "label": "Simon Vergauwen",
+          "frame": {
+            "x": 120,
+            "y": 582.33,
+            "width": 136.67,
+            "height": 18.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e48",
+          "role": "text",
+          "label": "Developer Advocate at JetBrains & OSS (arrow-kt) Maintainer",
+          "frame": {
+            "x": 120,
+            "y": 607,
+            "width": 270,
+            "height": 35.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e49",
+          "role": "button",
+          "label": "Svetlana Isakova, Developer Advocate, JetBrains",
+          "frame": {
+            "x": 12,
+            "y": 684.33,
+            "width": 378,
+            "height": 96
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e50",
+          "role": "other",
+          "frame": {
+            "x": 12,
+            "y": 684.33,
+            "width": 96,
+            "height": 96
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e51",
+          "role": "text",
+          "label": "Svetlana Isakova",
+          "frame": {
+            "x": 120,
+            "y": 712.33,
+            "width": 125.33,
+            "height": 18.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e52",
+          "role": "text",
+          "label": "Developer Advocate, JetBrains",
+          "frame": {
+            "x": 120,
+            "y": 737,
+            "width": 186.33,
+            "height": 15.33
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e53",
+          "role": "button",
+          "label": "Andrey Bragin, Senior Software Developer, Koog @ JetBrains",
+          "frame": {
+            "x": 12,
+            "y": 804.33,
+            "width": 378,
+            "height": 69.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e54",
+          "role": "other",
+          "frame": {
+            "x": 12,
+            "y": 804.33,
+            "width": 96,
+            "height": 69.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e55",
+          "role": "text",
+          "label": "Andrey Bragin",
+          "frame": {
+            "x": 120,
+            "y": 822.33,
+            "width": 106,
+            "height": 18.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e56",
+          "role": "text",
+          "label": "Senior Software Developer, Koog @ JetBrains",
+          "frame": {
+            "x": 120,
+            "y": 847,
+            "width": 270,
+            "height": 27
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e57",
+          "role": "button",
+          "value": "Collapsed",
+          "frame": {
+            "x": 12,
+            "y": 928.33,
+            "width": 378,
+            "height": 24
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        },
+        {
+          "ref": "e58",
+          "role": "text",
+          "label": "Unlock the power of AI in Kotlin with Koog, a cutting-edge framework for creating AI agents, developed by JetBrains. Whether you’re prototyping quickly or deploying production-ready systems, this workshop will guide you through every step of the journey. During this workshop, you will learn how to: - Use a bunch of pre-defined components for a quick start - Create tools using simple syntax or more advanced, flexible patterns - Integrate third-party tools and agents via MCP and A2A protocols - Design advanced agent strategies tailored to complex, real-world problems - Use different models for different subtasks within a single agent - Add built-in history compression with multiple out-of-the-box strategies - Add checkpoints and persistency to make your agents fully recoverable and fault-tolerant - Build retrieval-augmented generation (RAG) pipelines - Set up tracing to observe your agent's behavior - And more By the end of the session, you’ll be equipped to build scalable, AI-powered solutions in Kotlin using Koog, from fast experiments to robust production systems. Note: the workshop content may be updated to reflect the latest trends in AI-powered development.",
+          "frame": {
+            "x": 12,
+            "y": 968.33,
+            "width": 378,
+            "height": 810.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": false
+          },
+          "actions": []
+        }
+      ],
+      "actions": [
+        {
+          "action": "longPress",
+          "elementRef": "e2"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e2"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e3"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e3"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e4"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e4"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e5"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e5"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e6"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e7"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e7"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e8"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e8"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e9"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e9"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e10"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e10"
+        },
+        {
+          "action": "swipeWithin",
+          "elementRef": "e10"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e11"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e11"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e12"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e12"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e13"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e13"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e14"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e14"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e15"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e15"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e16"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e16"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e17"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e17"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e18"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e18"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e19"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e19"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e20"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e20"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e21"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e21"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e22",
+          "label": "Back"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e22",
+          "label": "Back"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e22",
+          "label": "Back"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e23",
+          "label": "Session"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e23",
+          "label": "Session"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e24"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e24"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e25",
+          "label": "May 20, 09:00 – 17:00, Building AI Agents in Kotlin with Koog, Workshop, Intermediate"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e25",
+          "label": "May 20, 09:00 – 17:00, Building AI Agents in Kotlin with Koog, Workshop, Intermediate"
+        },
+        {
+          "action": "swipeWithin",
+          "elementRef": "e25",
+          "label": "May 20, 09:00 – 17:00, Building AI Agents in Kotlin with Koog, Workshop, Intermediate"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e26",
+          "label": "May 20, 09:00 – 17:00"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e26",
+          "label": "May 20, 09:00 – 17:00"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e27"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e27"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e28",
+          "label": "Building AI Agents in Kotlin with Koog"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e28",
+          "label": "Building AI Agents in Kotlin with Koog"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e29"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e29"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e30",
+          "label": "Workshop"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e30",
+          "label": "Workshop"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e31"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e31"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e32",
+          "label": "Intermediate"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e32",
+          "label": "Intermediate"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e33",
+          "label": "Bookmark"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e33",
+          "label": "Bookmark"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e33",
+          "label": "Bookmark"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e34"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e34"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e35"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e35"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e36",
+          "label": "How was the workshop?"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e36",
+          "label": "How was the workshop?"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e37"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e37"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e38",
+          "label": "Vote negative"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e38",
+          "label": "Vote negative"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e38",
+          "label": "Vote negative"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e39",
+          "label": "Vote neutral"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e39",
+          "label": "Vote neutral"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e39",
+          "label": "Vote neutral"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e40",
+          "label": "Vote positive"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e40",
+          "label": "Vote positive"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e40",
+          "label": "Vote positive"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e41",
+          "label": "Vadim Briliantov, JetBrains, Koog, Technical Lead"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e41",
+          "label": "Vadim Briliantov, JetBrains, Koog, Technical Lead"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e41",
+          "label": "Vadim Briliantov, JetBrains, Koog, Technical Lead"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e42"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e42"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e43",
+          "label": "Vadim Briliantov"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e43",
+          "label": "Vadim Briliantov"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e44",
+          "label": "JetBrains, Koog, Technical Lead"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e44",
+          "label": "JetBrains, Koog, Technical Lead"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e45",
+          "label": "Simon Vergauwen, Developer Advocate at JetBrains & OSS (arrow-kt) Maintainer"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e45",
+          "label": "Simon Vergauwen, Developer Advocate at JetBrains & OSS (arrow-kt) Maintainer"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e45",
+          "label": "Simon Vergauwen, Developer Advocate at JetBrains & OSS (arrow-kt) Maintainer"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e46"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e46"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e47",
+          "label": "Simon Vergauwen"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e47",
+          "label": "Simon Vergauwen"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e48",
+          "label": "Developer Advocate at JetBrains & OSS (arrow-kt) Maintainer"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e48",
+          "label": "Developer Advocate at JetBrains & OSS (arrow-kt) Maintainer"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e49",
+          "label": "Svetlana Isakova, Developer Advocate, JetBrains"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e49",
+          "label": "Svetlana Isakova, Developer Advocate, JetBrains"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e49",
+          "label": "Svetlana Isakova, Developer Advocate, JetBrains"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e50"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e50"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e51",
+          "label": "Svetlana Isakova"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e51",
+          "label": "Svetlana Isakova"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e52",
+          "label": "Developer Advocate, JetBrains"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e52",
+          "label": "Developer Advocate, JetBrains"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e53",
+          "label": "Andrey Bragin, Senior Software Developer, Koog @ JetBrains"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e53",
+          "label": "Andrey Bragin, Senior Software Developer, Koog @ JetBrains"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e53",
+          "label": "Andrey Bragin, Senior Software Developer, Koog @ JetBrains"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e54"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e54"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e55",
+          "label": "Andrey Bragin"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e55",
+          "label": "Andrey Bragin"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e56",
+          "label": "Senior Software Developer, Koog @ JetBrains"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e56",
+          "label": "Senior Software Developer, Koog @ JetBrains"
+        }
+      ]
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 3FF040D2-48F3-43FC-B287-BC25E3798BDA",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 3FF040D2-48F3-43FC-B287-BC25E3798BDA --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"3FF040D2-48F3-43FC-B287-BC25E3798BDA\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e33\"},{\"action\":\"tap\",\"elementRef\":\"e38\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 3FF040D2-48F3-43FC-B287-BC25E3798BDA --element-ref e41",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 3FF040D2-48F3-43FC-B287-BC25E3798BDA --within-element-ref e10 --direction up --distance 0.5"
+  ]
+}

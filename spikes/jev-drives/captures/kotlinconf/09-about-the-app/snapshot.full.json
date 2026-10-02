@@ -1,0 +1,1110 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "3FF040D2-48F3-43FC-B287-BC25E3798BDA"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "protocol": "rs/1",
+      "simulatorId": "3FF040D2-48F3-43FC-B287-BC25E3798BDA",
+      "screenHash": "1bm2qxe",
+      "seq": 142,
+      "capturedAtMs": 1790849360269,
+      "expiresAtMs": 1790849420269,
+      "elements": [
+        {
+          "ref": "e1",
+          "role": "application",
+          "label": "KotlinConf",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": []
+        },
+        {
+          "ref": "e2",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e3",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e4",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e5",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e6",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e7",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e8",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e9",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e10",
+          "role": "scroll-view",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch",
+            "swipeWithin"
+          ]
+        },
+        {
+          "ref": "e11",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e12",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e13",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e14",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e15",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e16",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e17",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 402,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e18",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 402,
+            "height": 812
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e19",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 48,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e20",
+          "role": "button",
+          "label": "Back",
+          "frame": {
+            "x": 0,
+            "y": 62,
+            "width": 48,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e21",
+          "role": "other",
+          "label": "About the app",
+          "frame": {
+            "x": 147,
+            "y": 76.67,
+            "width": 108,
+            "height": 18.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e22",
+          "role": "other",
+          "frame": {
+            "x": 12,
+            "y": 111,
+            "width": 378,
+            "height": 763
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e23",
+          "role": "text",
+          "label": "The KotlinConf application is developed by the JetBrains team using Kotlin Multiplatform for shared logic and Compose Multiplatform for UI across Android, iOS, Desktop, and Web platforms. For the source code and more technical details, visit the GitHub repository.",
+          "frame": {
+            "x": 12,
+            "y": 135,
+            "width": 378,
+            "height": 162.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e24",
+          "role": "button",
+          "label": "GitHub repository",
+          "frame": {
+            "x": 12,
+            "y": 329.67,
+            "width": 378,
+            "height": 56
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e25",
+          "role": "text",
+          "label": "GitHub repository",
+          "frame": {
+            "x": 28,
+            "y": 348.33,
+            "width": 136.33,
+            "height": 18.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e26",
+          "role": "button",
+          "label": "Rate the app",
+          "frame": {
+            "x": 12,
+            "y": 393.67,
+            "width": 378,
+            "height": 56
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e27",
+          "role": "text",
+          "label": "Rate the app",
+          "frame": {
+            "x": 28,
+            "y": 412.33,
+            "width": 96.33,
+            "height": 18.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e28",
+          "role": "button",
+          "label": "App privacy notice",
+          "frame": {
+            "x": 12,
+            "y": 457.67,
+            "width": 378,
+            "height": 56
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e29",
+          "role": "text",
+          "label": "App privacy notice",
+          "frame": {
+            "x": 28,
+            "y": 476.33,
+            "width": 141.33,
+            "height": 18.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e30",
+          "role": "button",
+          "label": "App terms of use",
+          "frame": {
+            "x": 12,
+            "y": 521.67,
+            "width": 378,
+            "height": 56
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e31",
+          "role": "text",
+          "label": "App terms of use",
+          "frame": {
+            "x": 28,
+            "y": 540.33,
+            "width": 129,
+            "height": 18.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e32",
+          "role": "button",
+          "label": "Licenses",
+          "frame": {
+            "x": 12,
+            "y": 585.67,
+            "width": 378,
+            "height": 56
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e33",
+          "role": "text",
+          "label": "Licenses",
+          "frame": {
+            "x": 28,
+            "y": 604.33,
+            "width": 67.67,
+            "height": 18.67
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e34",
+          "role": "button",
+          "label": "40.0.5 (73)",
+          "frame": {
+            "x": 153,
+            "y": 665.33,
+            "width": 96,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e35",
+          "role": "button",
+          "label": "Made with Junie",
+          "frame": {
+            "x": 122.67,
+            "y": 718.67,
+            "width": 157,
+            "height": 48
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "tap",
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e36",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e37",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        },
+        {
+          "ref": "e38",
+          "role": "other",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 402,
+            "height": 874
+          },
+          "state": {
+            "enabled": true,
+            "visible": true
+          },
+          "actions": [
+            "longPress",
+            "touch"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "action": "longPress",
+          "elementRef": "e2"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e2"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e3"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e3"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e4"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e4"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e5"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e5"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e6"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e6"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e7"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e7"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e8"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e8"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e9"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e9"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e10"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e10"
+        },
+        {
+          "action": "swipeWithin",
+          "elementRef": "e10"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e11"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e11"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e12"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e12"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e13"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e13"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e14"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e14"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e15"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e15"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e16"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e16"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e17"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e17"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e18"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e18"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e19"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e19"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e20",
+          "label": "Back"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e20",
+          "label": "Back"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e20",
+          "label": "Back"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e21",
+          "label": "About the app"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e21",
+          "label": "About the app"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e22"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e22"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e23",
+          "label": "The KotlinConf application is developed by the JetBrains team using Kotlin Multiplatform for shared logic and Compose Multiplatform for UI across Android, iOS, Desktop, and Web platforms. For the source code and more technical details, visit the GitHub repository."
+        },
+        {
+          "action": "touch",
+          "elementRef": "e23",
+          "label": "The KotlinConf application is developed by the JetBrains team using Kotlin Multiplatform for shared logic and Compose Multiplatform for UI across Android, iOS, Desktop, and Web platforms. For the source code and more technical details, visit the GitHub repository."
+        },
+        {
+          "action": "tap",
+          "elementRef": "e24",
+          "label": "GitHub repository"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e24",
+          "label": "GitHub repository"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e24",
+          "label": "GitHub repository"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e25",
+          "label": "GitHub repository"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e25",
+          "label": "GitHub repository"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e26",
+          "label": "Rate the app"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e26",
+          "label": "Rate the app"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e26",
+          "label": "Rate the app"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e27",
+          "label": "Rate the app"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e27",
+          "label": "Rate the app"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e28",
+          "label": "App privacy notice"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e28",
+          "label": "App privacy notice"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e28",
+          "label": "App privacy notice"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e29",
+          "label": "App privacy notice"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e29",
+          "label": "App privacy notice"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e30",
+          "label": "App terms of use"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e30",
+          "label": "App terms of use"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e30",
+          "label": "App terms of use"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e31",
+          "label": "App terms of use"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e31",
+          "label": "App terms of use"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e32",
+          "label": "Licenses"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e32",
+          "label": "Licenses"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e32",
+          "label": "Licenses"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e33",
+          "label": "Licenses"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e33",
+          "label": "Licenses"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e34",
+          "label": "40.0.5 (73)"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e34",
+          "label": "40.0.5 (73)"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e34",
+          "label": "40.0.5 (73)"
+        },
+        {
+          "action": "tap",
+          "elementRef": "e35",
+          "label": "Made with Junie"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e35",
+          "label": "Made with Junie"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e35",
+          "label": "Made with Junie"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e36"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e36"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e37"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e37"
+        },
+        {
+          "action": "longPress",
+          "elementRef": "e38"
+        },
+        {
+          "action": "touch",
+          "elementRef": "e38"
+        }
+      ]
+    }
+  },
+  "nextSteps": [
+    "Refresh after layout changes: mobilebuildmcp ui-automation snapshot-ui --simulator-id 3FF040D2-48F3-43FC-B287-BC25E3798BDA",
+    "Wait for UI to settle: mobilebuildmcp ui-automation wait-for-ui --simulator-id 3FF040D2-48F3-43FC-B287-BC25E3798BDA --predicate settled",
+    "Batch same-screen taps: mobilebuildmcp ui-automation batch --json '{\"simulatorId\":\"3FF040D2-48F3-43FC-B287-BC25E3798BDA\",\"steps\":[{\"action\":\"tap\",\"elementRef\":\"e24\"},{\"action\":\"tap\",\"elementRef\":\"e26\"}]}'",
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 3FF040D2-48F3-43FC-B287-BC25E3798BDA --element-ref e24",
+    "Scroll visible content: mobilebuildmcp ui-automation swipe --simulator-id 3FF040D2-48F3-43FC-B287-BC25E3798BDA --within-element-ref e10 --direction up --distance 0.5"
+  ]
+}

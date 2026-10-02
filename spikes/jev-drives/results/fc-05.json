@@ -1,0 +1,27 @@
+{
+  "id": "fc-05",
+  "answer": {
+    "choice": "tap:a4",
+    "confidence": 1,
+    "probabilities": {
+      "tap:a4": 1,
+      "step_done": 0,
+      "none_fits": 0,
+      "back": 0,
+      "tap:a3": 0,
+      "scroll:up": 0,
+      "scroll:down": 0
+    },
+    "done": 0.03,
+    "inputTokens": 959,
+    "latencyMs": 309.3546669999996
+  },
+  "score": {
+    "right": true,
+    "accepted": false,
+    "wrongAccepted": false,
+    "handled": false,
+    "doneVerdict": "no",
+    "doneRight": true
+  }
+}

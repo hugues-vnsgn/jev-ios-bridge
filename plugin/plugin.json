@@ -25,6 +25,13 @@
       "title": "Android device",
       "description": "For Android: the adb serial of a device, or the AVD name of an emulator, that only these checks drive. A script's device.serial or device.avd overrides it. Leave empty if you only check iOS apps.",
       "required": false
+    },
+    "experimentalDriven": {
+      "type": "boolean",
+      "title": "Experimental driven mode",
+      "description": "Lets scripts with \"do\" steps run: Jev picks the actions, and Claude answers when Jev isn't sure. Each project also needs \"drivenMode\": true in .jev/config.json. Screen text goes to TypeSafe at every Jev decision. Off by default.",
+      "default": false,
+      "required": false
     }
   },
   "mcpServers": {
@@ -35,7 +42,8 @@
         "TYPESAFE_API_KEY": "${user_config.typesafe_api_key}",
         "JEV_DEVICE_UDID": "${user_config.simulator_udid}",
         "JEV_ANDROID_DEVICE": "${user_config.android_device}",
-        "JEV_PROJECT_DIR": "${CLAUDE_PROJECT_DIR}"
+        "JEV_PROJECT_DIR": "${CLAUDE_PROJECT_DIR}",
+        "JEV_EXPERIMENTAL_DRIVEN": "${user_config.experimentalDriven}"
       }
     }
   }

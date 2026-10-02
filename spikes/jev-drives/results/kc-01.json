@@ -1,0 +1,41 @@
+{
+  "id": "kc-01",
+  "answer": {
+    "choice": "tap:e58",
+    "confidence": 1,
+    "probabilities": {
+      "tap:e70": 0,
+      "none_fits": 0,
+      "tap:e32": 0,
+      "tap:e30": 0,
+      "tap:e68": 0,
+      "tap:e58": 1,
+      "back": 0,
+      "scroll:down": 0,
+      "tap:e67": 0,
+      "tap:e66": 0,
+      "tap:e25": 0,
+      "scroll:up": 0,
+      "tap:e90": 0,
+      "tap:e93": 0,
+      "tap:e69": 0,
+      "tap:e23": 0,
+      "tap:e34": 0,
+      "step_done": 0,
+      "tap:e92": 0,
+      "tap:e91": 0,
+      "tap:e94": 0
+    },
+    "done": 0.09,
+    "inputTokens": 4909,
+    "latencyMs": 262.63545799999974
+  },
+  "score": {
+    "right": true,
+    "accepted": true,
+    "wrongAccepted": false,
+    "handled": true,
+    "doneVerdict": "no",
+    "doneRight": true
+  }
+}

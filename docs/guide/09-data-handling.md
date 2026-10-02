@@ -10,8 +10,10 @@
 
 Nothing is sent for action or wait steps. Screenshots, logs, and your script's other values are never sent.
 
+**To TypeSafe (Jev), at every decision in a `do` step** ([driven steps](13-driven-steps.md#what-goes-to-typesafe), experimental and off unless you turn it on): the same screen text as at a checkpoint, the step's intent and `doneWhen`, the script's `goal`, the last two actions, and the list of possible actions. Typed values are masked as `⟦value:<key>⟧` in all of it. A `localOnly` step, and a screen that matches a `localOnlyScreens` rule, is never sent. In a script with `do` steps, checkpoints follow the same rules: typed values are masked in their screen text and claims, and a checkpoint on a local-only screen isn't sent (`LOCAL_ONLY_CHECKPOINT`).
+
 **To your host agent (Claude, so Anthropic):**
-- the script you submit, including its values;
+- the script you submit, including its literal values. A value written as `{ "fromEnv": NAME }` stays in the bridge's environment: Claude sees only the variable's name ([script format](reference/script-format.md#values-from-the-environment));
 - the final report, with script values masked;
 - the watch URL, which ends up in the conversation transcript.
 
@@ -26,6 +28,8 @@ Nothing is sent for action or wait steps. Screenshots, logs, and your script's o
 - **The app's own logs on Android:** the bridge writes the app's `logcat` output (its own uid only) to `$TMPDIR/jev-android-logs/<run-id>.log`. The file is readable only by you, and the next Android run deletes log files older than 3 days. As on iOS, the file isn't masked: whatever the app logs is in it.
 - **Intent extras** (`app.intentExtras`) are recorded as written in `run.jsonl` and `report.json`, like `launchArgs`. They aren't masked, except for a script value inside one, and the value of a key named exactly `authorization`, `apiKey`, `api_key`, `password` or `token` (case doesn't matter). A key such as `authToken` is kept in clear, so don't put secrets in them.
 - **The watch page** is served on `127.0.0.1`. Its token opens one run, only while the bridge process is alive. Anyone on your Mac with the URL can read that run's evidence during that time.
+
+A value from the environment is still typed on screen. A password field shows dots, so a password never reaches TypeSafe; a username shown on screen does, at a checkpoint, like any visible text.
 
 ## Masking and its limits
 

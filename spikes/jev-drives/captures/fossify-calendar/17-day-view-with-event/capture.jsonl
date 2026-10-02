@@ -1,0 +1,17 @@
+{"role":"scroll-view","identifier":"org.fossify.calendar:id/main_coordinator","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Back","identifier":"org.fossify.calendar:id/top_toolbar_search_icon","state":{"enabled":true,"visible":true}}
+{"role":"text-field","label":"Search","identifier":"org.fossify.calendar:id/top_toolbar_search","placeholder":"Search","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Change view","identifier":"org.fossify.calendar:id/change_view","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Settings","identifier":"org.fossify.calendar:id/settings","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"More options","state":{"enabled":true,"visible":true}}
+{"role":"scroll-view","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Go to previous day","identifier":"org.fossify.calendar:id/top_left_arrow","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"October 1 (Thu)","identifier":"org.fossify.calendar:id/top_value","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Go to next day","identifier":"org.fossify.calendar:id/top_right_arrow","state":{"enabled":true,"visible":true}}
+{"role":"scroll-view","identifier":"org.fossify.calendar:id/day_events","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"Dentist appointment","identifier":"org.fossify.calendar:id/event_item_holder","state":{"enabled":true,"visible":true}}
+{"role":"image","identifier":"org.fossify.calendar:id/event_item_color_bar","state":{"enabled":true,"visible":true}}
+{"role":"text","label":"Dentist appointment","identifier":"org.fossify.calendar:id/event_item_title","state":{"enabled":true,"visible":true},"selectable":false}
+{"role":"text","label":"06:00 PM","identifier":"org.fossify.calendar:id/event_item_time","state":{"enabled":true,"visible":true}}
+{"role":"button","label":"New Event","identifier":"org.fossify.calendar:id/calendar_fab","state":{"enabled":true,"visible":true}}
+{"role":"scroll-view","identifier":"org.fossify.calendar:id/quick_calendar_filter","state":{"enabled":true,"visible":true}}

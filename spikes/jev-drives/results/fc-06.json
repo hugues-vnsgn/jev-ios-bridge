@@ -1,0 +1,40 @@
+{
+  "id": "fc-06",
+  "answer": {
+    "choice": "none_fits",
+    "confidence": 0.83,
+    "probabilities": {
+      "tap:a26": 0,
+      "tap:a17": 0,
+      "back": 0,
+      "tap:a12": 0,
+      "tap:a32": 0,
+      "tap:a6": 0,
+      "scroll:down": 0.05,
+      "tap:a8": 0,
+      "tap:a33": 0,
+      "tap:a28": 0,
+      "tap:a23": 0,
+      "tap:a20": 0,
+      "tap:a31": 0,
+      "scroll:up": 0.1,
+      "none_fits": 0.85,
+      "tap:a2": 0,
+      "tap:a22": 0,
+      "step_done": 0,
+      "tap:a15": 0,
+      "tap:a21": 0
+    },
+    "done": 0.02,
+    "inputTokens": 3412,
+    "latencyMs": 299.87141599999995
+  },
+  "score": {
+    "right": false,
+    "accepted": false,
+    "wrongAccepted": false,
+    "handled": false,
+    "doneVerdict": "no",
+    "doneRight": true
+  }
+}

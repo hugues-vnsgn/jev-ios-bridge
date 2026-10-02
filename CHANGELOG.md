@@ -2,6 +2,31 @@
 
 jev-ios-bridge follows [semantic versioning](https://semver.org). What 1.x keeps stable: [stability](docs/guide/11-stability.md).
 
+## 1.3.0 (unreleased)
+
+Driven steps, an experimental mode that's off unless you turn it on and may change in any 1.x release. Version 1 scripts parse, run, log and report as in 1.2.
+
+### Added
+
+- **Driven steps (experimental).** In a version 2 script, a `do` step names an outcome (`intent`, `doneWhen`, `effect`) instead of a selector. The bridge reads the screen, asks Jev which action performs the step, acts, and checks on a fresh capture whether it's done. When Jev isn't sure, the action looks risky, the step is destructive, or the run is stuck, the step goes back to Claude. See [driven steps](docs/guide/13-driven-steps.md).
+  - **Turning it on** takes `{ "drivenMode": true }` in the project's `.jev/config.json` and `JEV_EXPERIMENTAL_DRIVEN` set to `1` or `true`. The plugin has a new `experimentalDriven` setting that sets it.
+  - **Hand-backs.** A paused run holds the device, and `get_report` returns at once with the status `needs_claude` and the paused screen. Claude answers with the new MCP tool `resolve_step`: one action (`tap`, `type`, `scroll`, `back`, or `tapAt` on Android), `done`, `revise` or `stop`. Before carrying out an action answer, the bridge captures the screen again; if it changed during the pause, nothing is done and the step pauses again with `SCREEN_CHANGED`. A pause waits 5 minutes by default (`handbackTimeoutMs`), and time paused doesn't count toward the wall time. Only MCP can answer; the `run` command prints each pause.
+  - **System dialogs go to Claude.** Jev is never asked about a system permission dialog, or Android's app error dialog ("isn't responding", "keeps stopping"): the step pauses with `PERMISSION_DIALOG` or `APP_ERROR_DIALOG`.
+  - **Preflight.** `.jev/preflight.json` names a command that proves the app points at a test environment. Until it exits 0, Jev's actions in `test_write` steps go to Claude.
+  - **Local-only screens.** A `localOnly` step, or a screen matching a `localOnlyScreens` rule in `.jev/config.json`, is never sent to TypeSafe; its decisions go to Claude. A checkpoint on such a screen ends the run `INCONCLUSIVE` with `LOCAL_ONLY_CHECKPOINT`, and a driven script's checkpoints mask typed values as `do` steps do.
+  - **Script fields:** `"version": 2`, the `do` step, a top-level `goal`, and `start`.
+  - **Report and log.** `report.json` gains a `driven` field on runs with `do` steps: the start mode, the preflight result, Jev's decisions and tokens, who decided each action (the target search's scrolls are the bridge's), who completed each `do` step, and each hand-back. The text report and the watch page show the same, naming each tapped or typed element by role, label and identifier, and the watch page says when a run waits for Claude. `run.jsonl` gains `decision`, `search`, `handback`, `handback_answer` and `preflight` events, and `decidedBy` and `target` on a `do` step's actions.
+  - **Data.** In a `do` step, the screen's text goes to TypeSafe at every Jev decision, not only at checkpoints, with typed values masked.
+- **`"start": "attach"`** starts a version 2 script from the screen already showing, without relaunching the app. Android only for now: the app must be in front. On iOS the run ends `UNSUPPORTED_ACTION`, because the bridge can't tell which app is in front there.
+- **Values from the environment.** A value written `{ "fromEnv": "NAME" }` is read from the bridge's environment when the run starts, so a password stays out of the script. It works in scripts of either version.
+- **The simulator window.** An iOS run brings its simulator's window to the front before the app launches. Turn it off with `--no-device-window` or `JEV_DEVICE_WINDOW=off`.
+- **Reason codes:** `DRIVEN_NOT_ENABLED`, `HANDBACK_TIMEOUT`, `STOPPED_BY_CLAUDE`, `STEP_NOT_DONE`, `APP_NOT_IN_FOREGROUND`, `APP_NOT_RUNNING` and `LOCAL_ONLY_CHECKPOINT`. See the [reason codes](docs/guide/reference/reason-codes.md).
+
+### Changed
+
+- **A shut-down iOS simulator ends the run `DEVICE_NOT_BOOTED`,** with the command to boot it, instead of `DEVICE_ERROR`. The bridge still never boots a simulator itself.
+- **The watch page's title names the run's platform,** iOS or Android.
+
 ## 1.2.0
 
 Android support. iOS scripts, messages and reports work as in 1.1.
