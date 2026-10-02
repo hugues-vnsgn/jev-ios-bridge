@@ -43,9 +43,9 @@ test('both skills teach driven mode: do steps, the hand-back loop, checkpoints f
   }
 });
 
-test('the CHANGELOG has an unreleased 1.3.0 entry for driven steps', () => {
+test('the CHANGELOG has a released 1.3.0 entry for driven steps', () => {
   const changelog = read('CHANGELOG.md');
-  assert.match(changelog, /^## 1\.3\.0 \(unreleased\)$/m);
+  assert.match(changelog, /^## 1\.3\.0$/m);
   assert.ok(changelog.indexOf('## 1.3.0') < changelog.indexOf('## 1.2.0'));
   for (const text of ['resolve_step', 'experimentalDriven', 'APP_NOT_IN_FOREGROUND', 'fromEnv', 'attach']) {
     assert.ok(changelog.slice(0, changelog.indexOf('## 1.2.0')).includes(text), `the 1.3.0 entry does not mention ${text}`);

@@ -8,12 +8,13 @@ It's built for **repeatable checks**: scripts you keep in your app's repository 
 script ─► bridge ─► MobileBuildMCP ─► iOS simulator
             ├─► adb + device agent ─► Android emulator or phone
             │  at each checkpoint: screen text + claims ─► Jev ─► probabilities
+            │  in a do step (experimental): screen text + step ─► Jev ─► next action
             └─► verdict · report.json · screenshots · run.jsonl · live log pane
 ```
 
 ## Prerequisites
 
-For **v1.2.0**, you need a Mac, Node 24 or later, a TypeSafe API key, and Claude Code for the plugin setup below.
+For **v1.3.0**, you need a Mac, Node 24 or later, a TypeSafe API key, and Claude Code for the plugin setup below.
 
 - **iOS:** Xcode and an iOS simulator runtime.
 - **Android:** Android Studio, the SDK's `adb` and emulator on your `PATH`, and an Android 12 (API 31) or later device. See [Android setup](docs/guide/12-android-setup.md).
@@ -100,7 +101,7 @@ For an existing Compose Multiplatform project, follow the [existing-project step
 
 ## Token usage comparison
 
-These **historical iOS measurements from September 25, 2026** compare Claude Opus 4.7 driving MobileBuildMCP directly with Claude submitting a saved script to the original bridge. Both tasks had independently verified successful outcomes. They are single runs, not a benchmark of v1.2.0 or Android.
+These **historical iOS measurements from September 25, 2026** compare Claude Opus 4.7 driving MobileBuildMCP directly with Claude submitting a saved script to the original bridge. Both tasks had independently verified successful outcomes. They are single runs, not a benchmark of v1.3.0, Android, or driven steps.
 
 | Task | Direct Claude input | Claude input via bridge | Input reduction | Additional Jev input |
 | --- | ---: | ---: | ---: | ---: |
@@ -116,7 +117,13 @@ Claude output increased in these runs:
 | Weather | 2,644 | 4,310 |
 | Contacts | 2,143 | 2,691 |
 
-Cache histories and permission configurations differed, initial script-authoring tokens were unmetered, and bridge runs took longer. These figures do not establish total-cost savings or a break-even point. See the [full measurements and methodology](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.2.0/docs/research/scripted-benchmarks.md) for token categories, failed attempts, and evidence.
+Cache histories and permission configurations differed, initial script-authoring tokens were unmetered, and bridge runs took longer. These figures do not establish total-cost savings or a break-even point. See the [full measurements and methodology](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.0/docs/research/scripted-benchmarks.md) for token categories, failed attempts, and evidence.
+
+## Driven steps (experimental)
+
+Since v1.3.0, a script can also say what a step should achieve instead of naming each tap: a `do` step with an intent, such as "Open the book Bosch", and a `doneWhen`. Jev picks each action from the screen's text. When Jev isn't sure, the action looks risky, the step is destructive, or a system dialog is showing, the run pauses and Claude answers with one action through the MCP tool `resolve_step`. Checkpoints still decide the verdict.
+
+Driven mode is off unless you turn it on, both in the project (`{ "drivenMode": true }` in `.jev/config.json`) and in the bridge (the plugin's **Experimental driven mode** setting, or `JEV_EXPERIMENTAL_DRIVEN=1`). In this release's live checks, Jev carried out 4 of 15 actions, so expect Claude to answer often. Driven mode may change in any 1.x release. See [driven steps](docs/guide/13-driven-steps.md).
 
 ## Configuration and running
 
@@ -156,12 +163,12 @@ Before you use it, know that:
 - its judgment covers English screens;
 - it can be slower than letting Claude drive the device directly.
 
-See [limits](docs/guide/10-limits.md), and read [data handling](docs/guide/09-data-handling.md) before pointing it at an app. Screen text goes to TypeSafe at each checkpoint.
+See [limits](docs/guide/10-limits.md), and read [data handling](docs/guide/09-data-handling.md) before pointing it at an app. Screen text goes to TypeSafe at each checkpoint, and in driven steps at each of Jev's decisions too.
 
 ## Project
 
-- **Design:** [architecture](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.2.0/docs/architecture.md) and [decision records](https://github.com/hugues-vnsgn/jev-ios-bridge/tree/v1.2.0/docs/adr). The key ones are [ADR-0004, verdict rules](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.2.0/docs/adr/0004-fixed-assertion-bounds-single-judgment.md), [ADR-0005, the 1.0 contract](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.2.0/docs/adr/0005-the-1-0-stability-contract.md), and [ADR-0006, the Android device layer](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.2.0/docs/adr/0006-mobilecli-device-agent-as-android-device-layer.md).
-- **Evidence:** [benchmarks and experiments](https://github.com/hugues-vnsgn/jev-ios-bridge/tree/v1.2.0/spikes/benchmarks), and the [release notes](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.2.0/docs/releases/v1.2.0.md), with this release's measured results.
+- **Design:** [architecture](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.0/docs/architecture.md) and [decision records](https://github.com/hugues-vnsgn/jev-ios-bridge/tree/v1.3.0/docs/adr). The key ones are [ADR-0004, verdict rules](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.0/docs/adr/0004-fixed-assertion-bounds-single-judgment.md), [ADR-0005, the 1.0 contract](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.0/docs/adr/0005-the-1-0-stability-contract.md), [ADR-0006, the Android device layer](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.0/docs/adr/0006-mobilecli-device-agent-as-android-device-layer.md), and [ADR-0007, the iOS exceptions for driven steps](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.0/docs/adr/0007-simulator-presentation-and-a-bounded-ios-point-tap-exception.md).
+- **Evidence:** [benchmarks and experiments](https://github.com/hugues-vnsgn/jev-ios-bridge/tree/v1.3.0/spikes/benchmarks), and the [release notes](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.0/docs/releases/v1.3.0.md), with this release's measured results.
 - **Changes:** [CHANGELOG](CHANGELOG.md).
 - **Development:** `npm ci && npm run check` in a source checkout.
 - **License:** [MIT](LICENSE).

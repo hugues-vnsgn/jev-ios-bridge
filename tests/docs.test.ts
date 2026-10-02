@@ -70,11 +70,11 @@ test('every link into a shipped doc that names a heading finds that heading', ()
   }
 });
 
-test('shipped docs link to this repo\'s other files at the v1.2.0 tag, and each linked path exists here', () => {
+test('shipped docs link to this repo\'s other files at the v1.3.0 tag, and each linked path exists here', () => {
   for (const file of ['README.md', ...markdownFiles('docs/guide')]) {
     for (const [, tag, path] of readFileSync(file, 'utf8')
       .matchAll(/https:\/\/github\.com\/hugues-vnsgn\/jev-ios-bridge\/(?:blob|tree)\/([^/]+)\/([^)#\s]+)/g)) {
-      assert.equal(tag, 'v1.2.0', `${file} links ${path} at ${tag}`);
+      assert.equal(tag, 'v1.3.0', `${file} links ${path} at ${tag}`);
       assert.ok(existsSync(path!), `${file} links ${path}, which isn't in this checkout`);
     }
   }
@@ -163,7 +163,7 @@ test('the limits page says an upper-case copy goes unmasked in the log pane and 
   assert.match(line, /log pane/);
   assert.match(line, /`run\.jsonl`/);
   assert.doesNotMatch(line, /log file/);
-  for (const file of [...shipped, 'docs/releases/v1.2.0.md']) {
+  for (const file of [...shipped, 'docs/releases/v1.2.0.md', 'docs/releases/v1.3.0.md']) {
     assert.doesNotMatch(readFileSync(file, 'utf8'), /log files? (?:is |are )?masked/i, file);
   }
 });
@@ -220,7 +220,7 @@ test('the limits page\'s Android speed table names each evidence script once', (
 });
 
 test('the clipboard is described as the path for non-ASCII text, not non-English text', () => {
-  for (const file of [...shipped, 'docs/releases/v1.2.0.md']) {
+  for (const file of [...shipped, 'docs/releases/v1.2.0.md', 'docs/releases/v1.3.0.md']) {
     for (const line of readFileSync(file, 'utf8').split('\n').filter(row => /clipboard/.test(row))) {
       assert.doesNotMatch(line, /non-English/i, `${file}: ${line}`);
     }
