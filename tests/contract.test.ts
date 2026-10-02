@@ -432,7 +432,7 @@ test('contract: the driver translates unknown vendor roles to other and keeps kn
 
 test('contract: the CLI prints the release version', { timeout: 20_000 }, async () => {
   const { stdout } = await execute(process.execPath, ['--import', import.meta.resolve('tsx'), join(process.cwd(), 'src/cli.ts'), '--version']);
-  assert.equal(stdout, '1.3.0\n');
+  assert.equal(stdout, '1.3.1\n');
 });
 
 test('contract: the CLI prints the schema message for an unversioned script', { timeout: 20_000 }, async () => {
