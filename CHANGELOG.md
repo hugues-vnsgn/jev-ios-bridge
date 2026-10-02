@@ -2,7 +2,7 @@
 
 jev-ios-bridge follows [semantic versioning](https://semver.org). What 1.x keeps stable: [stability](docs/guide/11-stability.md).
 
-## 1.3.0 (unreleased)
+## 1.3.0
 
 Driven steps, an experimental mode that's off unless you turn it on and may change in any 1.x release. Version 1 scripts parse, run, log and report as in 1.2.
 

@@ -1,6 +1,6 @@
 # Worked example: Compose Multiplatform (a design-system gallery)
 
-These scripts check a real Compose Multiplatform 1.9.0 app: a freight company's iOS app, whose screens are all Compose inside a thin SwiftUI shell. The app isn't public, so you can't build it. The scripts are here to read, and they show the Compose-specific moves. Sources: [`compose-bfsone-*.json`](https://github.com/hugues-vnsgn/jev-ios-bridge/tree/v1.2.0/spikes/benchmarks/scenarios).
+These scripts check a real Compose Multiplatform 1.9.0 app: a freight company's iOS app, whose screens are all Compose inside a thin SwiftUI shell. The app isn't public, so you can't build it. The scripts are here to read, and they show the Compose-specific moves. Sources: [`compose-bfsone-*.json`](https://github.com/hugues-vnsgn/jev-ios-bridge/tree/v1.3.0/spikes/benchmarks/scenarios).
 
 ## A debug entry point
 
