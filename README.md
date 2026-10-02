@@ -14,7 +14,7 @@ script ─► bridge ─► MobileBuildMCP ─► iOS simulator
 
 ## Prerequisites
 
-For **v1.3.0**, you need a Mac, Node 24 or later, a TypeSafe API key, and Claude Code for the plugin setup below.
+For **v1.3.1**, you need a Mac, Node 24 or later, a TypeSafe API key, and Claude Code for the plugin setup below.
 
 - **iOS:** Xcode and an iOS simulator runtime.
 - **Android:** Android Studio, the SDK's `adb` and emulator on your `PATH`, and an Android 12 (API 31) or later device. See [Android setup](docs/guide/12-android-setup.md).
@@ -101,7 +101,7 @@ For an existing Compose Multiplatform project, follow the [existing-project step
 
 ## What a check costs
 
-**Jev is the cheap part.** TypeSafe charges $0.042 per million input tokens for `jev-1.13.0`, and output is free ([models page](https://docs.typesafe.ai/models.md), checked again on 2026-10-02; [pricing record](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.0/spikes/benchmarks/jev-pricing.json)). Jev only reads the screen's text, so a call is small:
+**Jev is the cheap part.** TypeSafe charges $0.042 per million input tokens for `jev-1.13.0`, and output is free ([models page](https://docs.typesafe.ai/models.md), checked again on 2026-10-02; [pricing record](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.1/spikes/benchmarks/jev-pricing.json)). Jev only reads the screen's text, so a call is small:
 
 | What Jev reads | Input tokens | Jev cost |
 | --- | ---: | ---: |
@@ -116,7 +116,7 @@ For an existing Compose Multiplatform project, follow the [existing-project step
 | Search a list and check the filtered result (7 actions) | $0.63 | $1.66 | $0.002 |
 | Open a record and check its header and totals (6 actions) | $0.59 | $1.10 | $0.002 |
 
-Jev made 10 of the 13 actions, with no wrong taps and no false pass, yet the driven runs cost 1.9–2.6× as much. The Jev decisions cost about $0.002 per run. The rest went to Claude: reading the guides, studying the app's source before writing a script that didn't need it, and one full turn for every status poll and every hand-back. On a flow this short, Jev doesn't replace enough of Claude's taps to win back that fixed cost. Bringing the Claude side down is open work, tracked in `.scratch/driven-live-fixes/` in this repository.
+Jev made 10 of the 13 actions, with no wrong taps and no false pass, yet the driven runs cost 1.9–2.6× as much. The Jev decisions cost about $0.002 per run. The rest went to Claude: reading the guides, studying the app's source before writing a script that didn't need it, and one full turn for every status poll and every hand-back. On a flow this short, Jev doesn't replace enough of Claude's taps to win back that fixed cost. Bringing the Claude side down is [open work](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.1/.scratch/driven-live-fixes/issues/05-driven-cost-on-short-flows.md).
 
 To keep Claude's side down today:
 
@@ -142,7 +142,7 @@ Claude output increased in these runs:
 | Weather | 2,644 | 4,310 |
 | Contacts | 2,143 | 2,691 |
 
-Cache histories and permission configurations differed, initial script-authoring tokens were unmetered, and bridge runs took longer. These figures do not establish total-cost savings or a break-even point. See the [full measurements and methodology](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.0/docs/research/scripted-benchmarks.md) for token categories, failed attempts, and evidence.
+Cache histories and permission configurations differed, initial script-authoring tokens were unmetered, and bridge runs took longer. These figures do not establish total-cost savings or a break-even point. See the [full measurements and methodology](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.1/docs/research/scripted-benchmarks.md) for token categories, failed attempts, and evidence.
 
 ## Driven steps (experimental)
 
@@ -192,8 +192,8 @@ See [limits](docs/guide/10-limits.md), and read [data handling](docs/guide/09-da
 
 ## Project
 
-- **Design:** [architecture](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.0/docs/architecture.md) and [decision records](https://github.com/hugues-vnsgn/jev-ios-bridge/tree/v1.3.0/docs/adr). The key ones are [ADR-0004, verdict rules](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.0/docs/adr/0004-fixed-assertion-bounds-single-judgment.md), [ADR-0005, the 1.0 contract](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.0/docs/adr/0005-the-1-0-stability-contract.md), [ADR-0006, the Android device layer](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.0/docs/adr/0006-mobilecli-device-agent-as-android-device-layer.md), and [ADR-0007, the iOS exceptions for driven steps](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.0/docs/adr/0007-simulator-presentation-and-a-bounded-ios-point-tap-exception.md).
-- **Evidence:** [benchmarks and experiments](https://github.com/hugues-vnsgn/jev-ios-bridge/tree/v1.3.0/spikes/benchmarks), and the [release notes](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.0/docs/releases/v1.3.0.md), with this release's measured results.
+- **Design:** [architecture](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.1/docs/architecture.md) and [decision records](https://github.com/hugues-vnsgn/jev-ios-bridge/tree/v1.3.1/docs/adr). The key ones are [ADR-0004, verdict rules](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.1/docs/adr/0004-fixed-assertion-bounds-single-judgment.md), [ADR-0005, the 1.0 contract](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.1/docs/adr/0005-the-1-0-stability-contract.md), [ADR-0006, the Android device layer](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.1/docs/adr/0006-mobilecli-device-agent-as-android-device-layer.md), and [ADR-0007, the iOS exceptions for driven steps](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.1/docs/adr/0007-simulator-presentation-and-a-bounded-ios-point-tap-exception.md).
+- **Evidence:** [benchmarks and experiments](https://github.com/hugues-vnsgn/jev-ios-bridge/tree/v1.3.1/spikes/benchmarks), and the [release notes](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.1/docs/releases/v1.3.1.md), with this release's measured results.
 - **Changes:** [CHANGELOG](CHANGELOG.md).
 - **Development:** `npm ci && npm run check` in a source checkout.
 - **License:** [MIT](LICENSE).

@@ -2,7 +2,7 @@
 
 jev-ios-bridge follows [semantic versioning](https://semver.org). What 1.x keeps stable: [stability](docs/guide/11-stability.md).
 
-## Unreleased
+## 1.3.1
 
 Fixes from the first live trial of driven mode on a real app. Version 1 scripts behave as in 1.3.0.
 
@@ -10,6 +10,7 @@ Fixes from the first live trial of driven mode on a real app. Version 1 scripts 
 
 - **iOS scrolling in driven steps.** A scroll inside a scroll view now uses a stroke centred in the view, between 30% and 70% of its height, as Android does. MobileBuildMCP's default stroke started a finger-down swipe on a fixed header at the top of a full-screen scroll view, so scrolling up never moved the list, and the target search couldn't search upward. With no scroll view, the screen-centre fallback scrolled the wrong way, because AXe's presets are named for the finger's direction; it now scrolls the way it's asked. A version 1 `swipe` step keeps MobileBuildMCP's default stroke.
 - **A screen still loading is looked at again.** When Jev finds nothing that fits, or isn't confident enough, the bridge waits a second and captures the screen again before scrolling to search. If the screen changed by itself, such as a launch screen that finished loading, Jev is asked about the new screen. A step gets at most 3 such looks. Before, a run's first decision often landed on the launch screen.
+- **A hand-back's Jev picks name elements of the paused screen.** After a search scroll that changed nothing, a hand-back could list Jev's picks by refs from an earlier capture of the same screen.
 - **A read-only step never taps a write control.** In a step whose effect is `none`, a pick on a control whose label, value or identifier has Approve, Reject, Send, Submit, Confirm, Save, Publish or Post goes to Claude as `RISKY_ACTION`. A `test_write` step is unchanged.
 
 ### Docs
