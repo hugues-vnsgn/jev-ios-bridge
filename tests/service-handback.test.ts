@@ -163,9 +163,10 @@ test('no answer in time: INCONCLUSIVE / HANDBACK_TIMEOUT, and the device is rele
   await withService([], async (service, driver) => {
     const { runId } = await service.start(script(), { handbackTimeoutMs: 1_000 });
     await pausedStatus(service, runId);
-    // A paused run answers status at once, so poll until the pause times out.
+    // A paused run answers status at once, so poll until the pause times out and the run's cleanup ends: between
+    // the two, the run reads `running`.
     let status = await service.status(runId);
-    for (let tries = 0; status.state === 'needs_claude' && tries < 100; tries++) {
+    for (let tries = 0; (status.state === 'needs_claude' || status.state === 'running') && tries < 100; tries++) {
       await new Promise(done => setTimeout(done, 50));
       status = await service.status(runId);
     }
