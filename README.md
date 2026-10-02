@@ -99,6 +99,31 @@ Claude inspects the app, writes the script, runs it, and reports **passed**, **f
 
 For an existing Compose Multiplatform project, follow the [existing-project steps](#install-in-an-existing-project) for each platform. To try the bridge with a ready-made app, use the [bundled diagnostic quickstart](docs/guide/01-quickstart.md); its planted wrong-total bug should produce a **failed** verdict.
 
+## What a check costs
+
+**Jev is the cheap part.** TypeSafe charges $0.042 per million input tokens for `jev-1.13.0`, and output is free ([models page](https://docs.typesafe.ai/models.md), checked again on 2026-10-02; [pricing record](https://github.com/hugues-vnsgn/jev-ios-bridge/blob/v1.3.0/spikes/benchmarks/jev-pricing.json)). Jev only reads the screen's text, so a call is small:
+
+| What Jev reads | Input tokens | Jev cost |
+| --- | ---: | ---: |
+| One checkpoint (screen text + claims) | about 1.5k–4k | about $0.0001 |
+| One driven decision (screen text + step + possible actions) | about 1.5k–6k | up to $0.00025 |
+| A whole driven run: 13 decisions and 2 checkpoints | 54k–58k | about $0.002 |
+
+**Claude is most of the bill.** Claude Code writes the script, polls the run, and answers hand-backs, and each of those is a turn of the host model. In the first live trial of driven mode (2026-10-02: one real app on the iOS simulator, two short read-only flows, one run each, Claude Opus 5.5, Claude Code's estimate at API prices):
+
+| Flow | Claude driving the simulator directly | Driven mode: Claude | Driven mode: Jev |
+| --- | ---: | ---: | ---: |
+| Search a list and check the filtered result (7 actions) | $0.63 | $1.66 | $0.002 |
+| Open a record and check its header and totals (6 actions) | $0.59 | $1.10 | $0.002 |
+
+Jev made 10 of the 13 actions, with no wrong taps and no false pass, yet the driven runs cost 1.9–2.6× as much. The Jev decisions cost about $0.002 per run. The rest went to Claude: reading the guides, studying the app's source before writing a script that didn't need it, and one full turn for every status poll and every hand-back. On a flow this short, Jev doesn't replace enough of Claude's taps to win back that fixed cost. Bringing the Claude side down is open work, tracked in `.scratch/driven-live-fixes/` in this repository.
+
+To keep Claude's side down today:
+
+- **Rerun saved scripts.** A script kept in your repository skips the authoring, which is most of a first run's cost.
+- **Write `do` steps from what the app should do.** They take no selectors, so Claude doesn't need to read the source or capture screens first.
+- **Write claims Jev can decide** ([writing claims](docs/guide/05-writing-claims.md)). An uncertain claim ends the run inconclusive, and a second run doubles the bill.
+
 ## Token usage comparison
 
 These **historical iOS measurements from September 25, 2026** compare Claude Opus 4.7 driving MobileBuildMCP directly with Claude submitting a saved script to the original bridge. Both tasks had independently verified successful outcomes. They are single runs, not a benchmark of v1.3.0, Android, or driven steps.
@@ -123,7 +148,7 @@ Cache histories and permission configurations differed, initial script-authoring
 
 Since v1.3.0, a script can also say what a step should achieve instead of naming each tap: a `do` step with an intent, such as "Open the book Bosch", and a `doneWhen`. Jev picks each action from the screen's text. When Jev isn't sure, the action looks risky, the step is destructive, or a system dialog is showing, the run pauses and Claude answers with one action through the MCP tool `resolve_step`. Checkpoints still decide the verdict.
 
-Driven mode is off unless you turn it on, both in the project (`{ "drivenMode": true }` in `.jev/config.json`) and in the bridge (the plugin's **Experimental driven mode** setting, or `JEV_EXPERIMENTAL_DRIVEN=1`). In this release's live checks, Jev carried out 4 of 15 actions, so expect Claude to answer often. Driven mode may change in any 1.x release. See [driven steps](docs/guide/13-driven-steps.md).
+Driven mode is off unless you turn it on, both in the project (`{ "drivenMode": true }` in `.jev/config.json`) and in the bridge (the plugin's **Experimental driven mode** setting, or `JEV_EXPERIMENTAL_DRIVEN=1`). In v1.3.0's release checks, Jev carried out 4 of 15 actions; in the first live trial on a real app, 10 of 13. Expect Claude to answer some steps, and see [what a check costs](#what-a-check-costs) before relying on driven mode to save money. Driven mode may change in any 1.x release. See [driven steps](docs/guide/13-driven-steps.md).
 
 ## Configuration and running
 

@@ -1,6 +1,6 @@
 # README: what Jev costs, and where a driven run's money goes
 
-Status: ready-for-agent
+Status: resolved
 Type: docs
 
 ## Problem

@@ -6,10 +6,10 @@ The raw evidence names the app's screens and records, so it stays local and unco
 
 | Issue | What | Status |
 |---|---|---|
-| [01](issues/01-ios-scroll-strokes.md) | iOS scroll up never moves a list under a fixed header; the screen-centre fallback scrolls the wrong way | ready-for-agent |
-| [02](issues/02-look-again-at-a-late-screen.md) | Jev's first decision lands on the launch screen; a still-loading screen starts a pointless scroll search | ready-for-agent |
-| [03](issues/03-write-verbs-in-read-only-steps.md) | A read-only (`effect: none`) step would carry out a confident pick of Approve, Send, Submit… | ready-for-agent |
-| [04](issues/04-readme-cost-of-jev.md) | README: say what Jev costs, and where a driven run's money actually goes | ready-for-agent |
+| [01](issues/01-ios-scroll-strokes.md) | iOS scroll up never moves a list under a fixed header; the screen-centre fallback scrolls the wrong way | resolved |
+| [02](issues/02-look-again-at-a-late-screen.md) | Jev's first decision lands on the launch screen; a still-loading screen starts a pointless scroll search | resolved |
+| [03](issues/03-write-verbs-in-read-only-steps.md) | A read-only (`effect: none`) step would carry out a confident pick of Approve, Send, Submit… | resolved |
+| [04](issues/04-readme-cost-of-jev.md) | README: say what Jev costs, and where a driven run's money actually goes | resolved |
 | [05](issues/05-driven-cost-on-short-flows.md) | Driven runs cost more than Claude driving directly on short flows | needs-triage |
 
 01–04 ship together as v1.3.1. 05 is a design question for the next minor version.
