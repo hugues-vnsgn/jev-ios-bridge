@@ -48,7 +48,8 @@ interface GraphDriver extends DeviceDriver {
 }
 
 /**
- * A device whose screens are named; `moves['screen key']` is the screen an action leads to (else it stays). With
+ * A device whose screens are named; `moves['screen key']` is the screen an action leads to (else it stays). Like
+ * Android's driver, it acts only on its latest capture. With
  * `refsPerCapture`, each capture gives its elements new refs (`b1@<sequence>`), as iOS does.
  */
 function graphDriver(screens: Record<string, Element[]>, start: string, moves: Record<string, string> = {},
@@ -79,7 +80,12 @@ function graphDriver(screens: Record<string, Element[]>, start: string, moves: R
       current = options.changesBy?.[current] ?? current;
       return snapshot;
     },
-    async act(action) {
+    async act(action, snapshot) {
+      // As Android's driver: only the latest capture can be acted on.
+      if (snapshot.sequence !== sequence) {
+        const { StaleSnapshotError } = await import('../src/device/index.js');
+        throw new StaleSnapshotError('Target reference is from an older snapshot');
+      }
       if (action.targetRef !== undefined) refsActedOn.push(action.targetRef);
       const key = actionKey(action).replace(/@\d+/g, '');
       if (staleOnce === key) {
@@ -268,6 +274,23 @@ test('a screen that stays the same after the look searches exactly as before', a
   assert.equal(report.verdict, 'passed');
   assert.deepEqual(driver.acts, ['top scroll:down', 'bottom tap:b9']);
   assert.deepEqual(of('search').map(s => [s.direction, s.attempt, s.changed]), [['down', 1, true]]);
+});
+
+test('after a look and a search that change nothing, the hand-back\'s picks name refs on the paused screen', async () => {
+  // Every capture renames its elements (b1@<sequence>), so the decision must follow each new capture.
+  const screens = { top: [list('l1'), button('b1', 'Settings')], home: [text('t3', 'Home')] };
+  const driver = graphDriver(screens, 'top', {}, { refsPerCapture: true });
+  const { handback } = await run({ driver,
+    judge: [{ choice: 'tap:b1@1', confidence: 0.5, probabilities: { 'tap:b1@1': 0.5, none_fits: 0.3 } }],
+    handback: [{ kind: 'stop' }] });
+  const packet = handback.packets[0]!;
+  assert.equal(packet.reason, 'LOW_CONFIDENCE');
+  const refs = new Set(packet.snapshot.elements.map(element => element.ref));
+  const picked = packet.jevDecision!.choice.replace(/^tap:/, '');
+  assert.ok(refs.has(picked), `Jev's choice ${packet.jevDecision!.choice} names an element of the paused screen`);
+  for (const { key } of packet.topChoices) {
+    if (key.startsWith('tap:')) assert.ok(refs.has(key.slice(4)), `${key} names an element of the paused screen`);
+  }
 });
 
 test('a screen that changes on every look gets at most LATE_SCREEN_LOOKS looks per step, then the search runs', async () => {

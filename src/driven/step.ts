@@ -12,7 +12,7 @@
 // A pick that `acceptDecision` (policy.ts) sends back as NONE_FITS or LOW_CONFIDENCE first gets a look again, at most
 // LATE_SCREEN_LOOKS per step: after LATE_SCREEN_WAIT_MS the screen is captured again, and if it changed by itself
 // (a launch screen, a list still loading) Jev is asked about it instead. Otherwise the miss starts the target search
-// (E9): scroll down up to SEARCH_SCROLLS times, then up, asking Jev again after each scroll that changed the
+// from that new capture, since a driver acts only on its latest one (E9): scroll down up to SEARCH_SCROLLS times, then up, asking Jev again after each scroll that changed the
 // screen, while the screen has a scrollable element or no scroll was tried yet; its screens count toward A→B→A→B.
 // A screen without a scrollable element whose search scroll changed nothing isn't scrolled to search again in the
 // run (`DrivenSearchMemory`, keyed by `searchScreenKey`); a new screen still gets its one try.
@@ -223,6 +223,21 @@ function onScreen(action: Action, from: Snapshot, to: Snapshot): Action | undefi
   return match ? { ...action, targetRef: match.ref } as Action : undefined;
 }
 
+/** Jev's decision about `from`, its keys pointed at the same elements on `to`, another capture of the same screen: refs
+ *  can change between captures. A key whose element isn't found on `to` keeps its ref. */
+function carryDecision(decision: DrivenDecision, from: Snapshot, to: Snapshot): DrivenDecision {
+  const refs = new Map<string, string>();
+  const unmatched = [...to.elements];
+  for (const element of from.elements) {
+    const index = unmatched.findIndex(candidate => elementIdentity(candidate) === elementIdentity(element));
+    if (index >= 0) refs.set(element.ref, unmatched.splice(index, 1)[0]!.ref);
+  }
+  const rekey = (key: string) => key.replace(/^(tap|type):([^:]+)/, (whole, kind: string, ref: string) =>
+    refs.has(ref) ? `${kind}:${refs.get(ref)!}` : whole);
+  return { ...decision, choice: rekey(decision.choice),
+    probabilities: Object.fromEntries(Object.entries(decision.probabilities).map(([key, probability]) => [rekey(key), probability])) };
+}
+
 /** A plain-language line for Jev's recent actions; prepareDecision masks typed values in it. */
 function describeAction(action: Action, snapshot: Snapshot): string {
   const element = targetOf(action, snapshot);
@@ -423,6 +438,21 @@ export async function runDrivenStep(ctx: DrivenStepContext): Promise<DrivenStepO
     return { kind: 'acted', snapshot: after };
   };
 
+  type Look =
+    | { kind: 'changed'; snapshot: Snapshot }
+    | { kind: 'same'; snapshot: Snapshot; decision: DrivenDecision };
+
+  /** A miss may be a screen still loading: wait, then capture it again. */
+  const lookAgain = async (shown: Snapshot, decision: DrivenDecision): Promise<Look> => {
+    lateLooks++;
+    await ctx.pause?.(LATE_SCREEN_WAIT_MS);
+    const fresh = await ctx.observe();
+    if (screenIdentity(fresh) !== screenIdentity(shown)) return { kind: 'changed', snapshot: fresh };
+    // The same screen, in a new capture. A driver acts only on its latest capture (Android refuses an older one), so
+    // the search starts from this one, with Jev's picks pointed at its refs.
+    return { kind: 'same', snapshot: fresh, decision: carryDecision(decision, shown, fresh) };
+  };
+
   type Found =
     | { kind: 'found'; snapshot: Snapshot; asked: Extract<Asked, { kind: 'asked' }> }
     | { kind: 'done' }
@@ -448,8 +478,9 @@ export async function runDrivenStep(ctx: DrivenStepContext): Promise<DrivenStepO
         if (flat && !changed) searchMemory.unchangedFlatScreens.add(searchScreenKey(current));
         await ctx.log.append('search', { ...where, direction, attempt, changed,
           ...pathFields(carried.path), actDurationMs: carried.actDurationMs });
+        // The hand-back names refs on the screen it shows: Jev's picks follow to the new capture.
+        last = { ...last, snapshot: after, ...(last.decision ? { decision: carryDecision(last.decision, current, after) } : {}) };
         current = after;
-        last = { ...last, snapshot: current };
         seeScreen(current);
         if (looping()) return { kind: 'handBack', reason: 'SCREEN_LOOP', snapshot: current };
         if (!changed) break;
@@ -503,19 +534,18 @@ export async function runDrivenStep(ctx: DrivenStepContext): Promise<DrivenStepO
     const searchFor = accepted.kind === 'handBack' && SEARCH_REASONS.has(accepted.reason) ? accepted.reason : undefined;
     if (searchFor && writesBlocked) reason = 'NO_PREFLIGHT';
     else if (searchFor && !searched) {
+      let searchDecision = asked.decision;
       if (lateLooks < LATE_SCREEN_LOOKS) {
-        // The miss may be a screen still loading: look again before scrolling it. A screen that changed by itself
-        // goes back to Jev; an unchanged one is searched from the capture Jev decided on.
-        lateLooks++;
-        await ctx.pause?.(LATE_SCREEN_WAIT_MS);
-        const fresh = await ctx.observe();
-        if (screenIdentity(fresh) !== screenIdentity(snapshot)) {
-          snapshot = fresh;
-          seeScreen(fresh);
+        // A screen that changed by itself goes back to Jev; an unchanged one is searched from the new capture.
+        const look = await lookAgain(snapshot, asked.decision);
+        snapshot = look.snapshot;
+        if (look.kind === 'changed') {
+          seeScreen(snapshot);
           continue;
         }
+        searchDecision = look.decision;
       }
-      const found = await search(snapshot, searchFor, asked.decision);
+      const found = await search(snapshot, searchFor, searchDecision);
       if (found.kind === 'done') return { kind: 'done' };
       snapshot = found.snapshot;
       if (found.kind === 'handBack') {
