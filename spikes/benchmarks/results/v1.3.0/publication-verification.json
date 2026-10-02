@@ -1,0 +1,47 @@
+{
+  "release": "https://github.com/hugues-vnsgn/jev-ios-bridge/releases/tag/v1.3.0",
+  "title": "v1.3.0: Driven steps (experimental)",
+  "tag": "v1.3.0",
+  "tagType": "lightweight, as v1.2.0",
+  "commit": "3c947ab4b4b455653d8340ca294b330d36fa69b7",
+  "publishedAt": "2026-10-02T04:28:50Z",
+  "prerelease": false,
+  "latest": true,
+  "assets": {
+    "tarball": {
+      "name": "jev-ios-bridge-1.3.0.tgz",
+      "sizeBytes": 176127,
+      "sha256": "2d24039341c82d224d15184b56f7afa172a72b447d3fbc858d14a5f18348fb46",
+      "packedFrom": "the release-records branch at d494a2c, whose tree 3c947ab merged unchanged; kept and not rebuilt"
+    },
+    "plugin": {
+      "name": "jev-ios-bridge-plugin-1.3.0.zip",
+      "sizeBytes": 238424,
+      "sha256": "6654891c31922bd6ac9dbb8a2ce7b9660eb6ee7348668830ab93d90fc3a07a04",
+      "builtFrom": "the same content, kept and not rebuilt: the zip the release checks installed",
+      "marketplaceEntryMatches": true
+    }
+  },
+  "checksOnTaggedCommit": {
+    "npmRunCheck": "920/920 on the release-records branch, which 3c947ab merged unchanged",
+    "ci": "https://github.com/hugues-vnsgn/jev-ios-bridge/actions/runs/36964713221 (main push of 3c947ab: success)"
+  },
+  "freshPublicDownload": {
+    "method": "unauthenticated curl of both asset URLs, and gh release download",
+    "sha256Matches": true,
+    "tarballInstall": "npm install into an empty project: 0 vulnerabilities; npx jev-ios-bridge --version = 1.3.0; the MCP server, run from an empty folder with no key, answered initialize as jev-ios-bridge 1.3.0 and listed start_scenario, get_report and cancel_run",
+    "tarballFiles": 73
+  },
+  "pluginFromRealMarketplace": {
+    "method": "throwaway CLAUDE_CONFIG_DIR outside the repo; claude plugin marketplace add hugues-vnsgn/jev-ios-bridge; claude plugin install jev-ios-bridge@jev-ios-bridge",
+    "installedVersion": "1.3.0",
+    "mobilecli": "1.0.14, installed by the plugin's own npm ci",
+    "mobilebuildmcp": "2.7.1, installed by the plugin's own npm ci",
+    "skills": ["test-android", "test-ios"],
+    "installMessage": "4 userConfig options not yet set (1 required) — run /plugin configure jev-ios-bridge@jev-ios-bridge in Claude Code, or pass --config KEY=VALUE.",
+    "serverStarts": "the installed copy's dist/cli.js mcp, run from an empty folder with no key, answered initialize as jev-ios-bridge 1.3.0 and listed start_scenario, get_report and cancel_run; with JEV_EXPERIMENTAL_DRIVEN=1 it also listed resolve_step"
+  },
+  "quickstartPostTagSteps": {
+    "tagHasExamples": "v1.3.0 (3c947ab) has examples/diagnostic-app/scenario.json and examples/diagnostic-app-android/scenario.json"
+  }
+}
