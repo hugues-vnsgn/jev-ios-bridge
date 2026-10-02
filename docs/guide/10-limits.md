@@ -31,7 +31,7 @@ What the bridge does not do, or does less well than you might expect.
   | Contacts | 74.8 s | 54.7 s (−27%) |
   | Reminders | 91.2 s | 55.5 s (−39%) |
 
-- **Cost per run:** Jev costs about $0.00016 per checkpoint (3,705 input tokens on average), and $0.0001–$0.0008 per run of the benchmark and Compose scripts, at TypeSafe's published $0.042 per million input tokens (output free) as of 2026-09-26. Your host agent's cost depends on your plan and isn't included; in the benchmark harness, Claude Code cost $0.34–$0.51 per run.
+- **Cost per run:** Jev costs about $0.00016 per checkpoint (3,705 input tokens on average), and $0.0001–$0.0008 per run of the benchmark and Compose scripts, at TypeSafe's published $0.042 per million input tokens (output free) as of 2026-09-26. Your host agent's cost depends on your plan and isn't included; in the benchmark harness, Claude Code cost $0.34–$0.51 per run. A driven run costs more Jev tokens (about $0.002 for 13 decisions), and in its first live trial Claude's side cost $1.10–$1.66 per short flow, against $0.59–$0.63 for Claude driving the simulator directly; see the README's [what a check costs](../../README.md#what-a-check-costs).
 - **Writing scripts takes time,** and that time hasn't been measured. The worked examples and `/test-ios` are there to make it faster.
 
 ## Driven steps

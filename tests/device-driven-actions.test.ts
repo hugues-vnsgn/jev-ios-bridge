@@ -120,29 +120,42 @@ test('with no back button in the top bar, back swipes in from the left edge with
   });
 });
 
-test('scroll swipes inside the largest scroll view, the finger moving against the scroll\'s direction', async () => {
+test('scroll swipes inside the largest scroll view with a centred stroke, the finger moving against the scroll\'s direction', async () => {
   const screen = screenOf(
     { ref: 'e2', role: 'scroll-view', frame: frame(0, 100, 440, 200) },
     { ref: 'e3', role: 'scroll-view', frame: frame(0, 320, 440, 600) },
   );
   await withDriver([screen], async fake => {
+    // --distance 0.4 keeps the stroke between 30% and 70% of the view, clear of a fixed header at its top: the
+    // default stroke starts at 15%, so a finger-down stroke began on the header and the list never moved.
     const down = await act(fake, { kind: 'scroll', direction: 'down' });
-    assert.deepEqual(down.calls, [['ui-automation', 'swipe', '--simulator-id', udid, '--within-element-ref', 'e3', '--direction', 'up', '--output', 'json']]);
+    assert.deepEqual(down.calls, [['ui-automation', 'swipe', '--simulator-id', udid, '--within-element-ref', 'e3', '--direction', 'up',
+      '--distance', '0.4', '--output', 'json']]);
     assert.deepEqual(fake.driver.actPath(), { path: 'scroll-within', targetRef: 'e3' });
     const up = await act(fake, { kind: 'scroll', direction: 'up' });
-    assert.deepEqual(up.calls, [['ui-automation', 'swipe', '--simulator-id', udid, '--within-element-ref', 'e3', '--direction', 'down', '--output', 'json']]);
+    assert.deepEqual(up.calls, [['ui-automation', 'swipe', '--simulator-id', udid, '--within-element-ref', 'e3', '--direction', 'down',
+      '--distance', '0.4', '--output', 'json']]);
   });
 });
 
-test('scroll with no scroll view uses MobileBuildMCP\'s scroll preset in the screen\'s centre, with the screen\'s size in points', async () => {
+test('a version 1 swipe keeps MobileBuildMCP\'s default stroke: no --distance', async () => {
+  const screen = screenOf({ ref: 'e3', role: 'scroll-view', frame: frame(0, 320, 440, 600) });
+  await withDriver([screen], async fake => {
+    const { calls } = await act(fake, { kind: 'swipe', targetRef: 'e3', direction: 'up' });
+    assert.deepEqual(calls, [['ui-automation', 'swipe', '--simulator-id', udid, '--within-element-ref', 'e3', '--direction', 'up', '--output', 'json']]);
+  });
+});
+
+test('scroll with no scroll view uses the AXe preset named for the finger\'s direction, in the screen\'s centre, with the screen\'s size in points', async () => {
   const screen = screenOf({ ref: 'e2', role: 'button', label: 'Done', frame: frame(16, 62, 60, 44) });
   await withDriver([screen], async fake => {
+    // AXe's presets name the finger's direction: `scroll-up` reveals content further down (measured on iOS 18.6).
     const down = await act(fake, { kind: 'scroll', direction: 'down' });
-    assert.deepEqual(down.calls, [['ui-automation', 'gesture', '--simulator-id', udid, '--preset', 'scroll-down',
+    assert.deepEqual(down.calls, [['ui-automation', 'gesture', '--simulator-id', udid, '--preset', 'scroll-up',
       '--screen-width', '440', '--screen-height', '956', '--output', 'json']]);
     assert.deepEqual(fake.driver.actPath(), { path: 'screen-middle' });
     const up = await act(fake, { kind: 'scroll', direction: 'up' });
-    assert.deepEqual(up.calls, [['ui-automation', 'gesture', '--simulator-id', udid, '--preset', 'scroll-up',
+    assert.deepEqual(up.calls, [['ui-automation', 'gesture', '--simulator-id', udid, '--preset', 'scroll-down',
       '--screen-width', '440', '--screen-height', '956', '--output', 'json']]);
   });
 });

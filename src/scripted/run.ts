@@ -42,7 +42,10 @@ export interface ScriptedRunOptions {
     testWritesAllowed?: boolean | ((signal: AbortSignal) => Promise<boolean>);
     /** Waits for the preflight's processes to be gone; cleanup closes the driver only after it resolves. */
     settle?: (signal: AbortSignal) => Promise<void>;
-    localOnlyScreen?: (snapshot: Snapshot) => boolean };
+    localOnlyScreen?: (snapshot: Snapshot) => boolean;
+    /** Overrides how long a `do` step waits before looking again at a screen that may still be loading
+     *  (LATE_SCREEN_WAIT_MS); tests on fake devices set 0. */
+    lateScreenWaitMs?: number };
 }
 
 class ScriptRunError extends Error {
@@ -359,6 +362,10 @@ export async function runScriptedScenario(options: ScriptedRunOptions): Promise<
             return { actDurationMs };
           },
           actPath: () => options.driver.actPath?.(),
+          pause: async milliseconds => {
+            const wait = driven!.lateScreenWaitMs ?? milliseconds;
+            if (wait > 0) await abortableOperation(() => delay(wait, undefined, { signal }), signal);
+          },
           awaitAnswer: async packet => {
             phase = 'handback';
             pauseWall();

@@ -3,20 +3,26 @@ import test from 'node:test';
 import type { Element } from '../src/contracts/index.js';
 import { buildCandidates } from '../src/driven/candidates.js';
 import {
-  CONFIDENCE_FLOOR, DONE_NO, DONE_YES, RISKY_WORDS, acceptDecision, doneVerdict, hasRiskyWord, isRiskyElement,
-  type AcceptInput,
+  CONFIDENCE_FLOOR, DONE_NO, DONE_YES, RISKY_WORDS, WRITE_WORDS, acceptDecision, doneVerdict, hasRiskyWord, hasWriteWord,
+  isRiskyElement, type AcceptInput,
 } from '../src/driven/policy.js';
 
 const el = (ref: string, role: string, extra: Partial<Element> = {}): Element => ({
   ref, role, frame: { x: 0, y: 0, width: 10, height: 10 }, state: { enabled: true, visible: true }, actions: ['tap'], ...extra,
 });
 const set = buildCandidates([
-  el('e1', 'button', { label: 'Save' }),
+  el('e1', 'button', { label: 'Details' }),
   el('e2', 'button', { label: 'Delete account' }),
   el('e3', 'text-field', { label: 'Name', actions: ['tap', 'typeText'] }),
   el('e4', 'button', { label: 'More', identifier: 'btn_sign_out' }),
   el('e5', 'cell', { label: 'Inbox', value: 'Remove' }),
   el('e6', 'cell', { label: 'Deleted items' }),
+  el('e7', 'button', { label: 'Approve' }),
+  el('e8', 'button', { label: 'Send message' }),
+  el('e9', 'button', { label: 'Continue', identifier: 'form.submit' }),
+  el('e10', 'cell', { label: 'Saved items' }),
+  el('e11', 'tab', { label: 'Posts' }),
+  el('e12', 'button', { label: 'Save' }),
 ], ['name']);
 const input = (extra: Partial<AcceptInput>): AcceptInput =>
   ({ effect: 'none', choice: 'tap:e1', confidence: 0.95, done: 0.5, set, ...extra });
@@ -30,7 +36,7 @@ test('the thresholds are the approved constants', () => {
 
 test('a none-effect pick is accepted at 0.80, not at 0.79', () => {
   assert.deepEqual(acceptDecision(input({ confidence: 0.8 })),
-    { kind: 'accept', key: 'tap:e1', action: { kind: 'tap', targetRef: 'e1' }, element: el('e1', 'button', { label: 'Save' }) });
+    { kind: 'accept', key: 'tap:e1', action: { kind: 'tap', targetRef: 'e1' }, element: el('e1', 'button', { label: 'Details' }) });
   assert.deepEqual(acceptDecision(input({ confidence: 0.79 })), { kind: 'handBack', reason: 'LOW_CONFIDENCE' });
 });
 
@@ -78,6 +84,31 @@ test('a confident pick on a risky-word control is never accepted', () => {
     assert.deepEqual(acceptDecision(input({ choice, confidence: 1 })), { kind: 'handBack', reason: 'RISKY_ACTION' }, choice);
   }
   assert.equal(acceptDecision(input({ choice: 'tap:e6', confidence: 1 })).kind, 'accept', '"Deleted items" is not risky');
+});
+
+test('in a read-only step, a confident pick on a write control hands back as RISKY_ACTION', () => {
+  for (const choice of ['tap:e7', 'tap:e8', 'tap:e9', 'tap:e12']) {
+    assert.deepEqual(acceptDecision(input({ choice, confidence: 1 })), { kind: 'handBack', reason: 'RISKY_ACTION' }, choice);
+  }
+  for (const choice of ['tap:e10', 'tap:e11']) {
+    assert.equal(acceptDecision(input({ choice, confidence: 1 })).kind, 'accept', `${choice} has no whole write word`);
+  }
+});
+
+test('a test_write step takes a pick on a write control at its floor', () => {
+  for (const choice of ['tap:e7', 'tap:e8', 'tap:e9', 'tap:e12']) {
+    assert.equal(acceptDecision(input({ effect: 'test_write', choice, confidence: 0.9 })).kind, 'accept', choice);
+  }
+});
+
+test('the write words are the approved list, matched as whole words like the risky words', () => {
+  assert.deepEqual(WRITE_WORDS, ['Approve', 'Reject', 'Send', 'Submit', 'Confirm', 'Save', 'Publish', 'Post']);
+  for (const text of ['Approve', 'REJECT', 'Send now', 'submitButton', 'btn_confirm', 'Save', 'Publish', 'Post']) {
+    assert.equal(hasWriteWord(text), true, text);
+  }
+  for (const text of ['Approved', 'Sender', 'Saved items', 'Posts', 'Confirmation', 'Submitted', '']) {
+    assert.equal(hasWriteWord(text), false, text);
+  }
 });
 
 test('a low-confidence risky pick hands back as LOW_CONFIDENCE, so the target search still runs', () => {
