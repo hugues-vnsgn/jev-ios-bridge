@@ -1,0 +1,323 @@
+-[BKHIDDomainServiceServer initWithDelegate:incomingServiceConnectionHandler:serverTarget:serverProtocol:clientProtocol:serviceName:queue:log:entitlement:]:
+0x00000583C   sub      sp, sp, #0xe0        
+0x000005840   stp      x28, x27, [sp, #0x80] 
+0x000005844   stp      x26, x25, [sp, #0x90] 
+0x000005848   stp      x24, x23, [sp, #0xa0] 
+0x00000584C   stp      x22, x21, [sp, #0xb0] 
+0x000005850   stp      x20, x19, [sp, #0xc0] 
+0x000005854   stp      x29, x30, [sp, #0xd0] 
+0x000005858   add      x29, sp, #0xd0       
+0x00000585C   mov      x24, x7              
+0x000005860   mov      x23, x6              
+0x000005864   mov      x28, x5              
+0x000005868   mov      x27, x4              
+0x00000586C   mov      x25, x3              
+0x000005870   mov      x21, x2              
+0x000005874   str      x1, [sp, #0x10]      
+0x000005878   mov      x22, x0              
+0x00000587C   ldp      x20, x26, [x29, #0x18] 
+0x000005880   ldr      x19, [x29, #0x10]    
+0x000005884   bl       _objc_retain_x21     
+0x000005888   bl       _objc_retain_x25     
+0x00000588C   bl       _objc_retain_x27     
+0x000005890   bl       _objc_retain_x28     
+0x000005894   bl       _objc_retain_x23     
+0x000005898   bl       _objc_retain_x24     
+0x00000589C   bl       _objc_retain_x19     
+0x0000058A0   bl       _objc_retain_x20     
+0x0000058A4   str      x26, [sp, #0x38]     
+0x0000058A8   bl       _objc_retain_x26     
+0x0000058AC   cbz      x20, 0x5b28          
+0x0000058B0   adrp     x8, 69               ; 0x4a000
+0x0000058B4   ldr      x8, [x8, #0xdd8]     
+0x0000058B8   stp      x22, x8, [x29, #-0x60] 
+0x0000058BC   adrp     x8, 69               ; 0x4a000
+0x0000058C0   ldr      x1, [x8, #0x298]     ; selector "init"
+0x0000058C4   sub      x0, x29, #0x60       
+0x0000058C8   bl       _objc_msgSendSuper2  
+0x0000058CC   mov      x26, x0              
+0x0000058D0   cbz      x0, 0x5adc           
+0x0000058D4   str      wzr, [x26, #0x58]    
+0x0000058D8   bl       _objc_retain_x21     
+0x0000058DC   ldr      x8, [x26, #0x10]     
+0x0000058E0   str      x21, [x26, #0x10]    
+0x0000058E4   bl       _objc_release_x8     
+0x0000058E8   bl       _objc_retain_x25     
+0x0000058EC   ldr      x8, [x26, #0x18]     
+0x0000058F0   str      x25, [x26, #0x18]    
+0x0000058F4   bl       _objc_release_x8     
+0x0000058F8   bl       _objc_retain_x27     
+0x0000058FC   ldr      x8, [x26, #0x28]     
+0x000005900   str      x27, [x26, #0x28]    
+0x000005904   bl       _objc_release_x8     
+0x000005908   adrp     x8, 59               ; 0x40000
+0x00000590C   ldr      x0, [x8, #0x2c8]     ; _OBJC_CLASS_$_BSAtomicSignal@got
+0x000005910   bl       _objc_alloc_init     
+0x000005914   ldr      x8, [x26, #0x60]     
+0x000005918   str      x0, [x26, #0x60]     
+0x00000591C   bl       _objc_release_x8     
+0x000005920   stp      x25, x21, [sp, #0x20] 
+0x000005924   str      x27, [sp, #0x18]     
+0x000005928   cbz      x19, 0x593c          
+0x00000592C   bl       _objc_retain_x19     
+0x000005930   ldr      x8, [x26, #0x30]     
+0x000005934   str      x19, [x26, #0x30]    
+0x000005938   b        0x595c               
+0x00000593C   adrp     x8, 59               ; 0x40000
+0x000005940   ldr      x0, [x8, #0x328]     ; _OBJC_CLASS_$_BSServiceDispatchQueue@got
+0x000005944   mov      x2, x24              
+0x000005948   bl       "_objc_msgSend$queueWithName:" 
+0x00000594C   mov      x29, x29             
+0x000005950   bl       _objc_retainAutoreleasedReturnValue 
+0x000005954   ldr      x8, [x26, #0x30]     
+0x000005958   str      x0, [x26, #0x30]     
+0x00000595C   bl       _objc_release_x8     
+0x000005960   mov      x0, x24              
+0x000005964   bl       _objc_msgSend$copy   
+0x000005968   ldr      x8, [x26, #0x48]     
+0x00000596C   str      x0, [x26, #0x48]     
+0x000005970   bl       _objc_release_x8     
+0x000005974   bl       _objc_retain_x20     
+0x000005978   ldr      x8, [x26, #0x38]     
+0x00000597C   str      x20, [x26, #0x38]    
+0x000005980   bl       _objc_release_x8     
+0x000005984   ldr      x0, [sp, #0x38]      
+0x000005988   bl       _objc_msgSend$copy   
+0x00000598C   ldr      x8, [x26, #0x40]     
+0x000005990   str      x0, [x26, #0x40]     
+0x000005994   bl       _objc_release_x8     
+0x000005998   adrp     x21, 59              ; 0x40000
+0x00000599C   ldr      x0, [x21, #0x2f8]    ; _OBJC_CLASS_$_BSObjCProtocol@got
+0x0000059A0   str      x28, [sp, #0x10]     
+0x0000059A4   mov      x2, x28              
+0x0000059A8   bl       "_objc_msgSend$protocolForProtocol:" 
+0x0000059AC   mov      x29, x29             
+0x0000059B0   bl       _objc_retainAutoreleasedReturnValue 
+0x0000059B4   mov      x27, x0              
+0x0000059B8   ldr      x0, [x21, #0x2f8]    
+0x0000059BC   str      x23, [sp, #0x30]     
+0x0000059C0   mov      x2, x23              
+0x0000059C4   bl       "_objc_msgSend$protocolForProtocol:" 
+0x0000059C8   mov      x29, x29             
+0x0000059CC   bl       _objc_retainAutoreleasedReturnValue 
+0x0000059D0   mov      x28, x0              
+0x0000059D4   adrp     x8, 59               ; 0x40000
+0x0000059D8   ldr      x0, [x8, #0x308]     ; _OBJC_CLASS_$_BSMutableServiceInterface@got
+0x0000059DC   mov      x2, x24              
+0x0000059E0   bl       "_objc_msgSend$interfaceWithIdentifier:" 
+0x0000059E4   mov      x29, x29             
+0x0000059E8   bl       _objc_retainAutoreleasedReturnValue 
+0x0000059EC   mov      x22, x0              
+0x0000059F0   mov      x2, x27              
+0x0000059F4   bl       "_objc_msgSend$setServer:" 
+0x0000059F8   mov      x0, x22              
+0x0000059FC   mov      x2, x28              
+0x000005A00   bl       "_objc_msgSend$setClient:" 
+0x000005A04   bl       _objc_retain_x22     
+0x000005A08   ldr      x8, [x26, #0x20]     
+0x000005A0C   str      x22, [x26, #0x20]    
+0x000005A10   bl       _objc_release_x8     
+0x000005A14   adrp     x8, 59               ; 0x40000
+0x000005A18   ldr      x0, [x8, #0x320]     ; _OBJC_CLASS_$_BSServiceConnectionListenerConfiguration@got
+0x000005A1C   adrp     x8, 59               ; 0x40000
+0x000005A20   ldr      x8, [x8, #0x1a0]     ; _BKSHIDServiceConnectionBSServiceDomainName@got
+0x000005A24   ldr      x2, [x8]             
+0x000005A28   mov      x3, x24              
+0x000005A2C   bl       "_objc_msgSend$configurationWithDomain:service:" 
+0x000005A30   mov      x29, x29             
+0x000005A34   bl       _objc_retainAutoreleasedReturnValue 
+0x000005A38   mov      x23, x0              
+0x000005A3C   add      x0, sp, #0x68        
+0x000005A40   mov      x1, x26              
+0x000005A44   bl       _objc_initWeak       
+0x000005A48   adrp     x8, 59               ; 0x40000
+0x000005A4C   ldr      x8, [x8, #0x690]     ; __NSConcreteStackBlock@got
+0x000005A50   adrp     x9, 59               ; 0x40000
+0x000005A54   ldr      x25, [x9, #0x318]    ; _OBJC_CLASS_$_BSServiceConnectionListener@got
+0x000005A58   str      x8, [sp, #0x40]      
+0x000005A5C   adrp     x8, 40               ; 0x2d000
+0x000005A60   ldr      d0, [x8, #0xe20]     
+0x000005A64   adrp     x8, 1                ; 0x6000
+0x000005A68   add      x8, x8, #0x3c4       ; ___155-[BKHIDDomainServiceServer initWithDelegate:incomingServiceConnectionHandler:serverTarget:serverProtocol:clientProtocol:serviceName:queue:log:entitlement:]_block_invoke
+0x000005A6C   str      d0, [sp, #0x48]      
+0x000005A70   adrp     x9, 59               ; 0x40000
+0x000005A74   add      x9, x9, #0xb58       
+0x000005A78   stp      x8, x9, [sp, #0x50]  
+0x000005A7C   add      x21, sp, #0x40       
+0x000005A80   add      x0, x21, #0x20       
+0x000005A84   add      x1, sp, #0x68        
+0x000005A88   bl       _objc_copyWeak       
+0x000005A8C   add      x3, sp, #0x40        
+0x000005A90   mov      x0, x25              
+0x000005A94   mov      x2, x23              
+0x000005A98   bl       "_objc_msgSend$listenerWithConfiguration:handler:" 
+0x000005A9C   mov      x29, x29             
+0x000005AA0   bl       _objc_retainAutoreleasedReturnValue 
+0x000005AA4   ldr      x8, [x26, #0x8]      
+0x000005AA8   str      x0, [x26, #0x8]      
+0x000005AAC   bl       _objc_release_x8     
+0x000005AB0   add      x0, x21, #0x20       
+0x000005AB4   bl       _objc_destroyWeak    
+0x000005AB8   add      x0, sp, #0x68        
+0x000005ABC   bl       _objc_destroyWeak    
+0x000005AC0   bl       _objc_release_x23    
+0x000005AC4   bl       _objc_release_x22    
+0x000005AC8   bl       _objc_release_x28    
+0x000005ACC   bl       _objc_release_x27    
+0x000005AD0   ldp      x25, x21, [sp, #0x20] 
+0x000005AD4   ldp      x28, x27, [sp, #0x10] 
+0x000005AD8   ldr      x23, [sp, #0x30]     
+0x000005ADC   ldr      x8, [sp, #0x38]      
+0x000005AE0   bl       _objc_release_x8     
+0x000005AE4   bl       _objc_release_x20    
+0x000005AE8   bl       _objc_release_x19    
+0x000005AEC   bl       _objc_release_x24    
+0x000005AF0   bl       _objc_release_x23    
+0x000005AF4   bl       _objc_release_x28    
+0x000005AF8   bl       _objc_release_x27    
+0x000005AFC   bl       _objc_release_x25    
+0x000005B00   bl       _objc_release_x21    
+0x000005B04   mov      x0, x26              
+0x000005B08   ldp      x29, x30, [sp, #0xd0] 
+0x000005B0C   ldp      x20, x19, [sp, #0xc0] 
+0x000005B10   ldp      x22, x21, [sp, #0xb0] 
+0x000005B14   ldp      x24, x23, [sp, #0xa0] 
+0x000005B18   ldp      x26, x25, [sp, #0x90] 
+0x000005B1C   ldp      x28, x27, [sp, #0x80] 
+0x000005B20   add      sp, sp, #0xe0        
+0x000005B24   ret                           
+0x000005B28   adrp     x8, 59               ; 0x40000
+0x000005B2C   ldr      x0, [x8, #0x480]     ; _OBJC_CLASS_$_NSAssertionHandler@got
+0x000005B30   bl       _objc_msgSend$currentHandler 
+0x000005B34   mov      x29, x29             
+0x000005B38   bl       _objc_retainAutoreleasedReturnValue 
+0x000005B3C   str      x23, [sp, #0x30]     
+0x000005B40   mov      x23, x0              
+0x000005B44   adrp     x8, 61               ; 0x42000
+0x000005B48   add      x8, x8, #0xc8        ; @"logCategory"
+0x000005B4C   str      x8, [sp]             
+0x000005B50   adrp     x4, 61               ; 0x42000
+0x000005B54   add      x4, x4, #0x88        ; @"BKHIDDomainServiceServer.m"
+0x000005B58   adrp     x6, 61               ; 0x42000
+0x000005B5C   add      x6, x6, #0xa8        ; @"Invalid parameter not satisfying: %@"
+0x000005B60   ldr      x2, [sp, #0x10]      
+0x000005B64   mov      x3, x22              
+0x000005B68   mov      w5, #0x48            
+0x000005B6C   bl       "_objc_msgSend$handleFailureInMethod:object:file:lineNumber:description:" 
+0x000005B70   bl       _objc_release_x23    
+0x000005B74   ldr      x23, [sp, #0x30]     
+0x000005B78   b        0x58b0               
+0x000005B7C   mov      x19, x0              
+0x000005B80   add      x0, x21, #0x20       
+0x000005B84   bl       _objc_destroyWeak    
+0x000005B88   add      x0, sp, #0x68        
+0x000005B8C   bl       _objc_destroyWeak    
+0x000005B90   mov      x0, x19              
+0x000005B94   bl       __Unwind_Resume      
+-[BKHIDDomainServiceServer acceptIncomingServiceConnection:]:
+0x000005FE0   sub      sp, sp, #0x90        
+0x000005FE4   stp      x24, x23, [sp, #0x50] 
+0x000005FE8   stp      x22, x21, [sp, #0x60] 
+0x000005FEC   stp      x20, x19, [sp, #0x70] 
+0x000005FF0   stp      x29, x30, [sp, #0x80] 
+0x000005FF4   add      x29, sp, #0x80       
+0x000005FF8   mov      x19, x2              
+0x000005FFC   mov      x21, x0              
+0x000006000   adrp     x8, 58               ; 0x40000
+0x000006004   ldr      x8, [x8, #0x6a8]     ; ___stack_chk_guard@got
+0x000006008   ldr      x8, [x8]             
+0x00000600C   stur     x8, [x29, #-0x38]    
+0x000006010   bl       _objc_retain_x19     
+0x000006014   mov      x0, x19              
+0x000006018   bl       _objc_msgSend$connection 
+0x00000601C   mov      x29, x29             
+0x000006020   bl       _objc_retainAutoreleasedReturnValue 
+0x000006024   mov      x20, x0              
+0x000006028   bl       _objc_msgSend$remoteToken 
+0x00000602C   mov      x29, x29             
+0x000006030   bl       _objc_retainAutoreleasedReturnValue 
+0x000006034   mov      x23, x0              
+0x000006038   bl       _objc_msgSend$pid    
+0x00000603C   mov      x22, x0              
+0x000006040   bl       _objc_release_x23    
+0x000006044   add      x0, x21, #0x58       
+0x000006048   bl       _os_unfair_lock_lock 
+0x00000604C   ldr      x0, [x21, #0x50]     
+0x000006050   cbnz     x0, 0x6070           
+0x000006054   adrp     x8, 58               ; 0x40000
+0x000006058   ldr      x0, [x8, #0x2f0]     ; _OBJC_CLASS_$_BSMutableIntegerMap@got
+0x00000605C   bl       _objc_alloc_init     
+0x000006060   ldr      x8, [x21, #0x50]     
+0x000006064   str      x0, [x21, #0x50]     
+0x000006068   bl       _objc_release_x8     
+0x00000606C   ldr      x0, [x21, #0x50]     
+0x000006070   sxtw     x3, w22              
+0x000006074   mov      x2, x20              
+0x000006078   bl       "_objc_msgSend$setObject:forKey:" 
+0x00000607C   add      x0, x21, #0x58       
+0x000006080   bl       _os_unfair_lock_unlock 
+0x000006084   ldr      x0, [x21, #0x10]     
+0x000006088   adrp     x8, 67               ; 0x49000
+0x00000608C   ldr      x1, [x8, #0xfa0]     ; selector "connectionWillBegin:"
+0x000006090   bl       _objc_opt_respondsToSelector 
+0x000006094   tbz      w0, #0x0, 0x60e8     
+0x000006098   adrp     x8, 58               ; 0x40000
+0x00000609C   ldr      x8, [x8, #0x690]     ; __NSConcreteStackBlock@got
+0x0000060A0   ldr      x22, [x21, #0x30]    
+0x0000060A4   str      x8, [sp]             
+0x0000060A8   adrp     x8, 39               ; 0x2d000
+0x0000060AC   ldr      d0, [x8, #0xe20]     
+0x0000060B0   adrp     x8, 0                ; 0x6000
+0x0000060B4   add      x8, x8, #0x304       ; ___60-[BKHIDDomainServiceServer acceptIncomingServiceConnection:]_block_invoke
+0x0000060B8   str      d0, [sp, #0x8]       
+0x0000060BC   adrp     x9, 60               ; 0x42000
+0x0000060C0   add      x9, x9, #0x68        
+0x0000060C4   stp      x8, x9, [sp, #0x10]  
+0x0000060C8   str      x21, [sp, #0x20]     
+0x0000060CC   bl       _objc_retain_x20     
+0x0000060D0   str      x20, [sp, #0x28]     
+0x0000060D4   mov      x2, sp               
+0x0000060D8   mov      x0, x22              
+0x0000060DC   bl       "_objc_msgSend$performAsyncAndWait:" 
+0x0000060E0   ldr      x8, [sp, #0x28]      
+0x0000060E4   bl       _objc_release_x8     
+0x0000060E8   ldr      x22, [x21, #0x38]    
+0x0000060EC   mov      x0, x22              
+0x0000060F0   mov      w1, #0x2             
+0x0000060F4   bl       _os_log_type_enabled 
+0x0000060F8   cbnz     w0, 0x613c           
+0x0000060FC   mov      x0, x20              
+0x000006100   bl       _objc_msgSend$activate 
+0x000006104   bl       _objc_release_x20    
+0x000006108   bl       _objc_release_x19    
+0x00000610C   ldur     x8, [x29, #-0x38]    
+0x000006110   adrp     x9, 58               ; 0x40000
+0x000006114   ldr      x9, [x9, #0x6a8]     ; ___stack_chk_guard@got
+0x000006118   ldr      x9, [x9]             
+0x00000611C   cmp      x9, x8               
+0x000006120   b.ne     0x6184               
+0x000006124   ldp      x29, x30, [sp, #0x80] 
+0x000006128   ldp      x20, x19, [sp, #0x70] 
+0x00000612C   ldp      x22, x21, [sp, #0x60] 
+0x000006130   ldp      x24, x23, [sp, #0x50] 
+0x000006134   add      sp, sp, #0x90        
+0x000006138   ret                           
+0x00000613C   ldr      x8, [x21, #0x48]     
+0x000006140   adrp     x9, 39               ; 0x2d000
+0x000006144   ldr      d0, [x9, #0xe28]     
+0x000006148   str      s0, [sp, #0x30]      
+0x00000614C   stur     x8, [sp, #0x34]      
+0x000006150   mov      w8, #0x842           
+0x000006154   strh     w8, [sp, #0x3c]      
+0x000006158   stur     x19, [sp, #0x3e]     
+0x00000615C   adrp     x0, -6               ; 0x0
+0x000006160   add      x0, x0, #0x0         
+0x000006164   adrp     x3, 42               ; 0x30000
+0x000006168   add      x3, x3, #0xfd0       
+0x00000616C   add      x4, sp, #0x30        
+0x000006170   mov      x1, x22              
+0x000006174   mov      w2, #0x2             
+0x000006178   mov      w5, #0x16            
+0x00000617C   bl       __os_log_debug_impl  
+0x000006180   b        0x60fc               
+0x000006184   bl       ___stack_chk_fail    
