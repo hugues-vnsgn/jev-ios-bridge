@@ -18,6 +18,16 @@ finished record. Sequences increase by one; request IDs and schema agree.
 All records contain `inputCalls: 0`. A finished record includes
 `localMethodsReturned`, `localReferencesReleased`, `nativeSettlement:
 "unconfirmed"`, and coverage limits for ancestry/lifetime/association independence.
+Started details are exactly {runnerPID: integer > 1, plan: metadata|reference-study}.
+Finished details repeat runnerPID/plan and contain appElementQueries (integer >=0),
+localMethodsReturned (boolean), localReferencesReleased (boolean), nativeSettlement
+(constant unconfirmed), and coverage {originalAncestry: unestablished,
+referenceLifetime: unestablished, independentAssociations: unestablished}.
+appElementQueries counts explicitly invoked private native query selectors;
+inputCalls counts this diagnostic's input selectors. Neither is a global census
+of XCTest internals. Metadata cleanup requires finished outcome observed, both
+local booleans true and appElementQueries zero, in addition to class completion,
+xcodebuild success and positive runner PID absence.
 Unknown record kinds/operations, duplicates, missing completion, contradictory
 limits and oversized output refuse normal cleanup. Maximum total native JSON
 stream is 1 MiB; maximum string is 1,024 UTF-8 bytes; maximum parent walk 32 edges.
@@ -47,7 +57,15 @@ a complete original root. Record each method's returned value/source separately.
 
 The owned fixture is a minimal UIKit app with an ordinary button at
 (40,140,240,60), a same-looking replacement hook, generation/PID telemetry and
-tap counters. The existing owned fixture's Documents/recreate.request hook may
+tap counters. Documents/result.txt contains UTF-8 JSON exactly
+{pid: integer > 1, generation: integer >= 0, ordinary: integer >= 0}.
+Host setup launches the newly installed fixture and confirms generation 0 and
+ordinary 0 before testing. Once the UI-test runner starts, testReferenceStudy
+activates that existing fixture through public XCUIApplication under the same
+allowance. It confirms the same PID, unchanged generation and zero ordinary
+counter before point acquisition. This setup call is recorded separately as
+operation fixture-recreation/details {setup: activate, bundleId:
+dev.jev.research.native-owner-fixture}; it does not request recreation. The existing owned fixture's Documents/recreate.request hook may
 be adapted. Native emits operation fixture-recreation/kind observation,
 outcome observed/details {"request":"recreate"} once. The host then writes that
 owned file exactly once. Native waits a bounded interval for generation change

@@ -3,17 +3,176 @@
   "title": "Native owner study record",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema", "requestId", "sequence", "kind", "operation", "outcome", "elapsedMs", "inputCalls", "details"],
+  "required": [
+    "schema",
+    "requestId",
+    "sequence",
+    "kind",
+    "operation",
+    "outcome",
+    "elapsedMs",
+    "inputCalls",
+    "details"
+  ],
   "properties": {
-    "schema": {"const": "jev.native-owner/1"},
-    "requestId": {"type": "string", "minLength": 1, "maxLength": 128},
-    "sequence": {"type": "integer", "minimum": 0},
-    "kind": {"enum": ["started", "observation", "finished"]},
-    "operation": {"enum": ["metadata", "point", "validity", "snapshot", "parent", "fixture-recreation"]},
-    "outcome": {"enum": ["observed", "unavailable", "failed"]},
-    "elapsedMs": {"type": "number", "minimum": 0},
-    "inputCalls": {"const": 0},
-    "details": {"type": "object"}
+    "schema": {
+      "const": "jev.native-owner/1"
+    },
+    "requestId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "kind": {
+      "enum": [
+        "started",
+        "observation",
+        "finished"
+      ]
+    },
+    "operation": {
+      "enum": [
+        "metadata",
+        "point",
+        "validity",
+        "snapshot",
+        "parent",
+        "fixture-recreation"
+      ]
+    },
+    "outcome": {
+      "enum": [
+        "observed",
+        "unavailable",
+        "failed"
+      ]
+    },
+    "elapsedMs": {
+      "type": "number",
+      "minimum": 0
+    },
+    "inputCalls": {
+      "const": 0
+    },
+    "details": {
+      "type": "object"
+    }
   },
-  "$comment": "Stream invariants, details and byte limits are specified in .scratch/native-owner-implementation/spec.md. Labels correlate local retained objects only; records never certify native identity, complete ancestry, lifetime scope or settlement."
+  "$comment": "Stream invariants, details and byte limits are specified in .scratch/native-owner-implementation/spec.md. Labels correlate local retained objects only; records never certify native identity, complete ancestry, lifetime scope or settlement.",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "started"
+          }
+        },
+        "required": [
+          "kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "details": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "runnerPID",
+              "plan"
+            ],
+            "properties": {
+              "runnerPID": {
+                "type": "integer",
+                "minimum": 2
+              },
+              "plan": {
+                "enum": [
+                  "metadata",
+                  "reference-study"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "finished"
+          }
+        },
+        "required": [
+          "kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "details": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "runnerPID",
+              "plan",
+              "appElementQueries",
+              "localMethodsReturned",
+              "localReferencesReleased",
+              "nativeSettlement",
+              "coverage"
+            ],
+            "properties": {
+              "runnerPID": {
+                "type": "integer",
+                "minimum": 2
+              },
+              "plan": {
+                "enum": [
+                  "metadata",
+                  "reference-study"
+                ]
+              },
+              "appElementQueries": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "localMethodsReturned": {
+                "type": "boolean"
+              },
+              "localReferencesReleased": {
+                "type": "boolean"
+              },
+              "nativeSettlement": {
+                "const": "unconfirmed"
+              },
+              "coverage": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "originalAncestry",
+                  "referenceLifetime",
+                  "independentAssociations"
+                ],
+                "properties": {
+                  "originalAncestry": {
+                    "const": "unestablished"
+                  },
+                  "referenceLifetime": {
+                    "const": "unestablished"
+                  },
+                  "independentAssociations": {
+                    "const": "unestablished"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
 }
