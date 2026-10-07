@@ -9,6 +9,17 @@ sys.path.insert(0, str(REPOSITORY / 'spikes/native-owner/host'))
 from study import Configuration, Dependencies, ProcessTools, _Study, _Refusal, _Expired, RUNNER, FIXTURE, UDID
 
 
+def filesystem_observation(path):
+    try:
+        info = path.lstat()
+        return {'path':str(path), 'present':True, 'mode':info.st_mode,
+                'device':info.st_dev, 'inode':info.st_ino}
+    except FileNotFoundError:
+        return {'path':str(path), 'present':False, 'error':'ENOENT'}
+    except OSError as error:
+        return {'path':str(path), 'present':None, 'errno':error.errno}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--evidence-directory', type=Path, required=True)
@@ -41,6 +52,7 @@ def main():
         study.save('container-observations.json', {
             'registeredHistoricalPath':str(app), 'pathExists':app.exists(),
             'pathIsSymlink':app.is_symlink(),
+            'filesystem':[filesystem_observation(path) for path in (app, app.parent, app.parent.parent)],
             'beforeListing':{'returncode':before[0], 'stdout':before[1], 'stderr':before[2]},
             'listappsReturncode':apps[0],
             'afterListing':{'returncode':after[0], 'stdout':after[1], 'stderr':after[2]},
