@@ -84,6 +84,28 @@ new runner after normal completion and positive exit. An app-element study
 retains its fixture and device when native settlement remains unconfirmed,
 even after local calls returned. The receipt names retained resources.
 
+Protocol acceptance and process accounting are independent facts. A stream
+refusal stops admission immediately; observation of an already-owned child's
+return code and process group continues within the original allowance. A later
+exit receipt preserves the original refusal and supplies no native-work fence.
+
+The host and reconciliation share a private device guard compatible with the
+existing Bridge lease namespace. Its unknown-owner claim survives frontend
+loss. Each caller holds it before tool work through restoration, checks its
+provenance before mutation, and releases only its matching claim after that
+caller's work is positively settled. Retained reference studies keep the guard.
+This excludes cooperating consumers in the default namespace, with no claim
+about external tools or custom lease roots.
+
+The separate metadata-resource reconciliation Interface recognizes one pinned
+historical encoding defect. Reviewed metadata source, immutable receipts, exact
+installation provenance and fresh liveness checks govern this exception. A
+one-use claim remains durable after any uncertain cleanup. This workflow can
+dispose of that zero-app-query metadata setup while preserving its invalid
+result and unknown historical exit code. It supplies no reference-study cleanup
+or production owner capability. Its contract is
+`.scratch/native-owner-recovery/spec.md`.
+
 The shared protocol is `spikes/native-owner/protocol.schema.json`. A request ID
 correlates records only. A local reference label names an object held by this
 runner, never a backend-issued identity or validity scope. Fixture generation
@@ -128,7 +150,7 @@ and translation, with acquisition interval and expiry. The study's fixed point
 supplies none of that production authority.
 
 Ownership, context, bounded acquisition and checked input are separately proven
-facets. The production 0–10,000 ms remaining allowance and epoch deadline span
+facets. The production 0 to 10,000 ms remaining allowance and epoch deadline span
 processes without renewal; encoding/readiness precede final qualification and
 the identical event follows the final admission check. Retain callbacks,
 references, descendants and coalesced ownership until applicable settlement.

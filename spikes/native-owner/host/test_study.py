@@ -137,7 +137,8 @@ def configuration(root, seconds=90):
     (source/"native/project.yml").write_text("name: NativeOwnerStudy")
     (source/"native/Study.m").write_text("// synthetic source")
     (source/"fixture/Fixture.swift").write_text("// synthetic fixture")
-    return Configuration(root/"derived",root/"evidence",source,admission_seconds=seconds)
+    return Configuration(root/"derived",root/"evidence",source,admission_seconds=seconds,
+                         lease_root=root/"leases")
 
 class NoTools:
     def start(self, *args, **kwargs):
@@ -645,6 +646,249 @@ class Streams(unittest.TestCase):
 
 
 class Processes(unittest.TestCase):
+    def test_bad_numeric_flags_preserve_delayed_exit_without_cleanup(self):
+        class DelayedExit(Child):
+            def poll(self):
+                self.stop_seen = (config.evidence_directory/"stop-admission").exists()
+                return 0 if clock.now() >= 0.03 else None
+            def has_live_owned_group(self): return self.poll() is None
+            @property
+            def streams_closed(self): return not self.chunks and self.poll() is not None
+        class DelayedTools(Tools):
+            def start(self,argv,env,cwd):
+                child=super().start(argv,env,cwd)
+                if argv[0]=="xcodebuild":
+                    self.child=DelayedExit(child.chunks[0][1])
+                    return self.child
+                return child
+        with tempfile.TemporaryDirectory() as root:
+            config=configuration(root); clock=Clock(); tools=DelayedTools(clock,config)
+            def numeric_flags(rows):
+                rows[-1]["details"]["localMethodsReturned"]=1
+                rows[-1]["details"]["localReferencesReleased"]=1
+                return rows
+            tools.mutate=numeric_flags
+            result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
+            self.assertGreaterEqual(clock.now(),0.03)
+            self.assertEqual((result.status,result.reason),("retained","RECORD_SCHEMA"))
+            self.assertTrue(tools.child.stop_seen)
+            self.assertEqual([row["sequence"] for row in result.records],[0,1])
+            entry=json.loads((config.evidence_directory/"ownership.json").read_text())["commands"][-1]
+            self.assertEqual(entry["parentReturncode"],0)
+            self.assertEqual(entry["returncode"],0)
+            self.assertEqual(entry["state"],"exited")
+            self.assertEqual(entry["streamRefusal"],"RECORD_SCHEMA")
+            self.assertEqual(entry["processObservation"],{
+                "outcome":"completed","reason":"PROCESS_COMPLETED",
+                "ownedGroupAbsent":True,"streamsClosed":True})
+            receipt=json.loads((config.evidence_directory/f"command-{entry['index']:03d}.json").read_text())
+            self.assertEqual(receipt["parentReturncode"],0)
+            self.assertIn('"localMethodsReturned": 1',receipt["stdout"])
+            self.assertFalse(any("uninstall" in argv for argv in tools.commands))
+            self.assertEqual(sum(argv[0]=="xcodebuild" for argv in tools.commands),1)
+
+    def test_record_refusal_survives_descendant_deadline_with_parent_exit_receipt(self):
+        class Descendant(Child):
+            def poll(self): return 65 if clock.now() >= 0.01 else None
+            def has_live_owned_group(self): return True
+            @property
+            def streams_closed(self): return False
+        class DescendantTools(Tools):
+            def start(self,argv,env,cwd):
+                child=super().start(argv,env,cwd)
+                return Descendant(child.chunks[0][1]) if argv[0]=="xcodebuild" else child
+        with tempfile.TemporaryDirectory() as root:
+            config=configuration(root,0.05); clock=Clock(); tools=DescendantTools(clock,config)
+            tools.mutate=lambda rows:[rows[0],{**rows[1],"unknown":True},rows[2]]
+            result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
+            self.assertEqual((result.status,result.reason),("retained","RECORD_SCHEMA"))
+            self.assertAlmostEqual(clock.now(),0.05)
+            entry=json.loads((config.evidence_directory/"ownership.json").read_text())["commands"][-1]
+            self.assertEqual(entry["state"],"retained")
+            self.assertEqual(entry["parentReturncode"],65)
+            self.assertNotIn("returncode",entry)
+            self.assertEqual(entry["processObservation"],{
+                "outcome":"pending","reason":"ADMISSION_EXPIRED",
+                "ownedGroupAbsent":False,"streamsClosed":None})
+            receipt_path=config.evidence_directory/f"command-{entry['index']:03d}.json"
+            self.assertTrue(receipt_path.exists(),"Observed parent exit must survive incomplete group supervision")
+            receipt=json.loads(receipt_path.read_text())
+            self.assertEqual(receipt["parentReturncode"],65)
+            self.assertEqual(receipt["processObservation"]["reason"],"ADMISSION_EXPIRED")
+            self.assertTrue(any(row.get("pid")==23456 for row in result.retained_resources))
+            self.assertFalse(any("uninstall" in argv for argv in tools.commands))
+
+    def test_record_refusal_keeps_its_reason_when_process_inspection_is_uncertain(self):
+        class Uncertain(Child):
+            def poll(self): return False if mode=="boolean-exit" else 0
+            def has_live_owned_group(self):
+                if mode=="group-error": raise OSError("inspection failed")
+                return None if mode=="group-unknown" else False
+            @property
+            def streams_closed(self):
+                if mode=="stream-error": raise OSError("stream inspection failed")
+                return None if mode=="stream-unknown" else True
+        class UncertainTools(Tools):
+            def start(self,argv,env,cwd):
+                child=super().start(argv,env,cwd)
+                return Uncertain(child.chunks[0][1]) if argv[0]=="xcodebuild" else child
+        for mode in ("group-error","group-unknown","stream-error","stream-unknown","boolean-exit"):
+            with self.subTest(mode=mode),tempfile.TemporaryDirectory() as root:
+                config=configuration(root); clock=Clock(); tools=UncertainTools(clock,config)
+                tools.mutate=lambda rows:[rows[0],{**rows[1],"unknown":True},rows[2]]
+                result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
+                self.assertEqual((result.status,result.reason),("retained","RECORD_SCHEMA"))
+                entry=json.loads((config.evidence_directory/"ownership.json").read_text())["commands"][-1]
+                self.assertEqual(entry["state"],"retained")
+                self.assertNotIn("returncode",entry)
+                if mode!="boolean-exit": self.assertEqual(entry["parentReturncode"],0)
+                self.assertEqual(entry["processObservation"]["outcome"],"pending")
+                expected="LOCAL_STATE_UNCONFIRMED" if mode.endswith("error") else "PROCESS_ADAPTER_INVALID"
+                self.assertEqual(entry["processObservation"]["reason"],expected)
+                receipt=config.evidence_directory/f"command-{entry['index']:03d}.json"
+                self.assertTrue(receipt.exists())
+                self.assertFalse(any("uninstall" in argv for argv in tools.commands))
+
+    def test_rejected_record_and_nonzero_exit_are_separate_facts(self):
+        with tempfile.TemporaryDirectory() as root:
+            config=configuration(root); clock=Clock(); tools=Tools(clock,config)
+            tools.test_code=65
+            tools.mutate=lambda rows:[rows[0],{**rows[1],"unknown":True},rows[2]]
+            result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
+            self.assertEqual((result.status,result.reason),("retained","RECORD_SCHEMA"))
+            entry=json.loads((config.evidence_directory/"ownership.json").read_text())["commands"][-1]
+            self.assertEqual((entry["parentReturncode"],entry["returncode"]),(65,65))
+            self.assertEqual(entry["processObservation"]["outcome"],"completed")
+            self.assertFalse(any("uninstall" in argv for argv in tools.commands))
+
+    def test_non_stream_inspection_error_preserves_its_established_reason(self):
+        class GroupError(Child):
+            def has_live_owned_group(self): raise OSError("inspection failed")
+        class InventoryTools(Tools):
+            def start(self,argv,env,cwd):
+                child=super().start(argv,env,cwd)
+                return GroupError(child.chunks[0][1])
+        with tempfile.TemporaryDirectory() as root:
+            config=configuration(root); clock=Clock(); tools=InventoryTools(clock,config)
+            result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
+            self.assertEqual((result.status,result.reason),("retained","LOCAL_STATE_UNCONFIRMED"))
+            receipt=json.loads((config.evidence_directory/"command-001.json").read_text())
+            self.assertEqual(receipt["parentReturncode"],0)
+            self.assertEqual(receipt["processObservation"]["reason"],"LOCAL_STATE_UNCONFIRMED")
+            self.assertNotIn("streamRefusal",receipt)
+            self.assertEqual(len(tools.commands),1)
+
+    def test_rejection_stops_later_recreation_in_the_same_or_subsequent_chunk(self):
+        class Chunks(Child):
+            def read_available(self):
+                if not self.chunks: return []
+                result,self.chunks=self.chunks[:1],self.chunks[1:]
+                return result
+            def poll(self):
+                if self.read_started:
+                    self.stop_seen=(config.evidence_directory/"stop-admission").exists()
+                return 0 if not self.chunks else None
+            def has_live_owned_group(self): return bool(self.chunks)
+        class ChunkTools(Tools):
+            def start(self,argv,env,cwd):
+                child=super().start(argv,env,cwd)
+                if argv[0]=="xcodebuild":
+                    rows=records(self.environment["JEV_NATIVE_OWNER_REQUEST_ID"],"reference-study")
+                    first=[rows[0],{**rows[1],"unknown":True}]
+                    if failure=="callback":
+                        first[-1]={**rows[1],"operation":"fixture-recreation","details":{"request":"recreate"}}
+                    later={**rows[1],"sequence":2,"elapsedMs":2,"operation":"fixture-recreation","details":{"request":"recreate"}}
+                    head=("\n".join(PREFIX+json.dumps(row) for row in first)+"\n").encode()
+                    tail=(PREFIX+json.dumps(later)+"\n").encode()
+                    self.child=Chunks()
+                    self.child.chunks=[("stdout",head+tail)] if same_chunk else [("stdout",head),("stdout",tail)]
+                    self.child.read_started=True
+                    return self.child
+                if argv[2:3]==["get_app_container"] and argv[-1]=="data":
+                    self.container_reads+=1
+                    if failure=="callback" and self.container_reads==2:
+                        return Child((str(config.source_root/"foreign-container")+"\n").encode())
+                return child
+        for failure,same_chunk in (("validation",True),("validation",False),("callback",False)):
+            with self.subTest(failure=failure,same_chunk=same_chunk),tempfile.TemporaryDirectory() as root:
+                config=configuration(root); clock=Clock(); tools=ChunkTools(clock,config); tools.container_reads=0
+                result=run_study("reference-study",config,Dependencies(tools,clock.now,clock.sleep))
+                expected="RECORD_SCHEMA" if failure=="validation" else "FIXTURE_CONTAINER_CHANGED"
+                self.assertEqual((result.status,result.reason),("retained",expected))
+                self.assertTrue(tools.child.stop_seen)
+                self.assertEqual(tools.container_reads,1 if failure=="validation" else 2)
+                self.assertFalse((config.source_root/"fixture-data/Documents/recreate.request").exists())
+                self.assertNotIn(2,[row["sequence"] for row in result.records])
+                native_entry=next(row for row in json.loads((config.evidence_directory/"ownership.json").read_text())["commands"] if row["argv"][0]=="xcodebuild")
+                self.assertEqual(native_entry["streamRefusal"],expected)
+                self.assertEqual(native_entry["returncode"],0)
+
+    def test_refusal_retains_first_reason_on_later_output_or_adapter_failure(self):
+        class BrokenOutput(Child):
+            def read_available(self):
+                self.reads+=1
+                if self.reads==1: return super().read_available()
+                if mode=="adapter-exception": raise RuntimeError("Adapter unavailable")
+                if mode=="limit": return [("stdout",b"x"*8388608)]
+                if mode=="invalid-channel": return [("foreign",b"x")]
+                if mode=="invalid-type": return [("stdout","x")]
+                return [("stdout",b"\xff")]
+            def poll(self): return 0 if self.reads==2 else None
+            def has_live_owned_group(self): return self.reads!=2
+            @property
+            def streams_closed(self): return self.reads==2
+        class BrokenTools(Tools):
+            def start(self,argv,env,cwd):
+                child=super().start(argv,env,cwd)
+                if argv[0]=="xcodebuild":
+                    self.child=BrokenOutput(child.chunks[0][1]); self.child.reads=0
+                    return self.child
+                return child
+        for mode,reason in (("adapter-exception","PROCESS_ADAPTER_UNCONFIRMED"),
+                            ("limit","PROCESS_OUTPUT_LIMIT"),("invalid-channel","PROCESS_ADAPTER_INVALID"),
+                            ("invalid-type","PROCESS_ADAPTER_INVALID"),("invalid-utf8","PROCESS_OUTPUT_ENCODING")):
+            with self.subTest(mode=mode),tempfile.TemporaryDirectory() as root:
+                config=configuration(root); clock=Clock(); tools=BrokenTools(clock,config)
+                tools.mutate=lambda rows:[rows[0],{**rows[1],"unknown":True},rows[2]]
+                result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
+                self.assertEqual((result.status,result.reason),("retained","RECORD_SCHEMA"))
+                entry=json.loads((config.evidence_directory/"ownership.json").read_text())["commands"][-1]
+                self.assertEqual(entry["state"],"retained")
+                self.assertEqual(entry["processObservation"]["reason"],reason)
+                receipt=json.loads((config.evidence_directory/f"command-{entry['index']:03d}.json").read_text())
+                if mode=="invalid-utf8": self.assertEqual(receipt["outputEncoding"],"unconfirmed")
+                else: self.assertLessEqual(len(receipt["stdout"].encode()),8388608)
+                self.assertEqual([row["sequence"] for row in result.records],[0])
+
+    def test_real_bad_record_child_exits_naturally_and_has_an_independent_receipt(self):
+        real=ProcessTools()
+        class RealBadTools(Tools):
+            def start(self,argv,env,cwd):
+                child=super().start(argv,env,cwd)
+                if argv[0]!="xcodebuild": return child
+                rows=records(self.environment["JEV_NATIVE_OWNER_REQUEST_ID"])
+                rows[-1]["details"]["localMethodsReturned"]=1
+                output="\n".join(PREFIX+json.dumps(row) for row in rows)+"\nJEV_NATIVE_OWNER_CLASS_COMPLETED"
+                script="import sys,time; print("+repr(output)+",flush=True); time.sleep(0.08); sys.exit(65)"
+                self.child=real.start([sys.executable,"-c",script],env,cwd)
+                return self.child
+        with tempfile.TemporaryDirectory() as root:
+            config=configuration(root,2); tools=RealBadTools(Clock(),config)
+            result=run_study("metadata",config,Dependencies(tools))
+            try:
+                self.assertEqual((result.status,result.reason),("retained","RECORD_SCHEMA"))
+                self.assertEqual(tools.child.poll(),65)
+                entry=json.loads((config.evidence_directory/"ownership.json").read_text())["commands"][-1]
+                self.assertEqual((entry["parentReturncode"],entry["returncode"]),(65,65))
+                self.assertEqual(entry["processObservation"]["outcome"],"completed")
+                self.assertTrue((config.evidence_directory/f"command-{entry['index']:03d}.json").exists())
+                self.assertEqual(sum(argv[0]=="xcodebuild" for argv in tools.commands),1)
+                self.assertFalse(any("uninstall" in argv for argv in tools.commands))
+                self.assertTrue((config.evidence_directory/"stop-admission").exists())
+            finally:
+                tools.child.process.wait(timeout=2)  # Natural exit, including the old-implementation red replay.
+                for handle in tools.child.files.values(): handle.close()
+
     def test_real_child_timeout_leaves_it_owned_alive_and_unreplayed(self):
         real=ProcessTools()
         class RealChildTools(Tools):

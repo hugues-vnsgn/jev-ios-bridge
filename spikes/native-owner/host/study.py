@@ -10,6 +10,7 @@ import subprocess
 import tempfile
 import time
 import uuid
+from device_guard import DeviceGuard, DeviceGuardError
 
 UDID = "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
 NAME = "jev-ios-bridge"
@@ -33,6 +34,7 @@ class Configuration:
     source_root: Path
     admission_seconds: float = 90.0
     device_id: str = UDID
+    lease_root: Path | None = None
 
 @dataclass(frozen=True)
 class Dependencies:
@@ -313,7 +315,10 @@ class _Study:
         self.fixture_documents = None
         self.fixture_pid = None
         self.recreation_written = False
+        self.record_refusal = None
         self.initial = None
+        self.guard = None
+        self.guard_error = None
         self.env = {key: os.environ[key] for key in
                     ("PATH", "HOME", "TMPDIR", "LANG", "LC_ALL", "DEVELOPER_DIR", "TOOLCHAINS")
                     if key in os.environ}
@@ -330,15 +335,64 @@ class _Study:
     def ledger(self):
         self.save("ownership.json", {"requestId":self.request, "plan":self.plan,
                   "deviceId":UDID, "commands":self.commands, "resources":self.resources,
+                  "deviceGuard":self.guard_facts(),
                   "nativeSettlement":"unconfirmed"})
 
+    def guard_facts(self):
+        if self.guard is None:
+            return None
+        return {"kind":"device-guard", **self.guard.provenance,
+                "created":self.guard.created, "released":self.guard.released,
+                "uncertainty":self.guard_error}
+
+    def acquire_guard(self):
+        self.admit()
+        self.guard = DeviceGuard(self.config.lease_root, UDID, self.request, self.output)
+        self.ledger()  # Proposed ownership is durable before exclusive acquisition.
+        try:
+            self.guard.take()
+        except DeviceGuardError as error:
+            self.guard_error = error.reason
+            raise _Refusal(error.reason) from None
+        finally:
+            self.ledger()
+
+    def check_guard(self):
+        if self.guard is None:
+            raise _Refusal("DEVICE_GUARD_NOT_HELD")
+        try:
+            self.guard.check()
+        except DeviceGuardError as error:
+            self.guard_error = error.reason
+            self.ledger()
+            raise _Refusal(error.reason) from None
+
+    def release_guard(self):
+        if self.guard is None or not self.guard.created or self.guard.released:
+            return
+        if any(entry["state"] != "exited" for entry in self.commands):
+            raise _Refusal("DEVICE_GUARD_WORK_PENDING")
+        try:
+            self.guard.release()
+        except DeviceGuardError as error:
+            self.guard_error = error.reason
+            raise _Refusal(error.reason) from None
+        finally:
+            self.ledger()
+
     def admit(self):
+        if self.record_refusal is not None:
+            raise _Refusal(self.record_refusal)
+        self.observe_deadline()
+
+    def observe_deadline(self):
         if self.dep.now() >= self.deadline:
             self.stop_file.touch(mode=0o600, exist_ok=True)
             raise _Expired("ADMISSION_EXPIRED")
 
     def command(self, argv, stream=None):
         self.admit()
+        self.check_guard()
         entry = {"index":len(self.commands)+1, "argv":argv, "state":"spawn-pending"}
         self.commands.append(entry)
         self.ledger()  # Ownership is durable before the Adapter may start anything.
@@ -359,47 +413,87 @@ class _Study:
         self.ledger()
         captured = {"stdout":bytearray(), "stderr":bytearray()}
         count = 0
+        observation = {"outcome":"pending", "reason":"PROCESS_RUNNING",
+                       "ownedGroupAbsent":None, "streamsClosed":None}
+        entry["processObservation"] = observation
+        process_failure = None
+
+        def capture(name, chunk):
+            nonlocal count
+            if name not in captured or not isinstance(chunk, bytes):
+                raise _Refusal("PROCESS_ADAPTER_INVALID")
+            count += len(chunk)
+            if count > MAX_LOG:
+                raise _Refusal("PROCESS_OUTPUT_LIMIT")
+            captured[name].extend(chunk)
+            if stream and self.record_refusal is None:
+                try:
+                    stream.feed(name, chunk)
+                except (_Refusal, OSError, ValueError, TypeError, KeyError) as error:
+                    self.record_refusal = str(error) if isinstance(error, _Refusal) else "LOCAL_STATE_UNCONFIRMED"
+                    entry["streamRefusal"] = self.record_refusal
+                    self.stop_file.touch(mode=0o600, exist_ok=True)
+                    self.ledger()
+
         try:
             while True:
+                self.observe_deadline()
                 for name, chunk in child.read_available():
-                    if name not in captured or not isinstance(chunk, bytes):
-                        raise _Refusal("PROCESS_ADAPTER_INVALID")
-                    count += len(chunk)
-                    if count > MAX_LOG:
-                        raise _Refusal("PROCESS_OUTPUT_LIMIT")
-                    captured[name].extend(chunk)
-                    if stream:
-                        stream.feed(name, chunk)
+                    capture(name, chunk)
+                self.observe_deadline()
                 code = child.poll()
+                if code is not None and type(code) is not int:
+                    raise _Refusal("PROCESS_ADAPTER_INVALID")
                 if code is not None and "parentReturncode" not in entry:
                     entry.update(parentReturncode=code, state="parent-exited-owned-work-pending")
                     self.ledger()
-                if code is not None and not child.has_live_owned_group() and child.streams_closed:
+                live_group = child.has_live_owned_group()
+                if type(live_group) is not bool:
+                    raise _Refusal("PROCESS_ADAPTER_INVALID")
+                observation["ownedGroupAbsent"] = not live_group
+                if code is not None and observation["ownedGroupAbsent"]:
+                    closed_streams = child.streams_closed
+                    if type(closed_streams) is not bool:
+                        raise _Refusal("PROCESS_ADAPTER_INVALID")
+                    observation["streamsClosed"] = closed_streams
+                if code is not None and observation["ownedGroupAbsent"] and observation["streamsClosed"]:
                     # Drain once more after exit; children with inherited pipes cannot
                     # turn their parent's exit into native settlement.
                     for name, chunk in child.read_available():
-                        count += len(chunk)
-                        if count > MAX_LOG:
-                            raise _Refusal("PROCESS_OUTPUT_LIMIT")
-                        captured[name].extend(chunk)
-                        if stream:
-                            stream.feed(name, chunk)
+                        capture(name, chunk)
                     entry.update(state="exited", returncode=code)
+                    observation.update(outcome="completed", reason="PROCESS_COMPLETED")
                     self.ledger()
                     break
-                self.admit()
+                observation["reason"] = "PROCESS_RUNNING" if code is None else "OWNED_PROCESS_WORK_PENDING"
+                self.ledger()
+                self.observe_deadline()
                 self.dep.sleep(min(0.01, max(0, self.deadline-self.dep.now())))
-        except _Refusal:
+        except Exception as error:
+            if not isinstance(error, _Refusal):
+                reason = "LOCAL_STATE_UNCONFIRMED" if isinstance(error, (OSError, ValueError, TypeError, KeyError)) else "PROCESS_ADAPTER_UNCONFIRMED"
+                error = _Refusal(reason)
             entry["state"] = "retained"
-            self.ledger()
-            raise
+            observation.update(outcome="pending", reason=str(error))
+            process_failure = error
+        receipt = dict(entry)
         try:
             stdout, stderr = (captured[name].decode("utf-8", errors="strict")
                               for name in ("stdout", "stderr"))
+            receipt.update(stdout=stdout, stderr=stderr)
         except UnicodeError:
-            raise _Refusal("PROCESS_OUTPUT_ENCODING") from None
-        self.save(f"command-{entry['index']:03d}.json",
-                  {**entry, "stdout":stdout, "stderr":stderr})
+            entry["outputEncoding"] = "unconfirmed"
+            if process_failure is None:
+                process_failure = _Refusal("PROCESS_OUTPUT_ENCODING")
+                entry["state"] = "retained"
+                observation.update(outcome="pending", reason=str(process_failure))
+            receipt.update(entry)
+        self.ledger()
+        self.save(f"command-{entry['index']:03d}.json", receipt)
+        if self.record_refusal is not None:
+            raise _Refusal(self.record_refusal)
+        if process_failure is not None:
+            raise process_failure
         self.admit()
         return code, stdout, stderr
 
@@ -693,6 +787,7 @@ class _Study:
             if Path(path).resolve() != self.fixture_container or self.fixture_documents.is_symlink():
                 raise _Refusal("FIXTURE_CONTAINER_CHANGED")
             self.admit()
+            self.check_guard()
             with (self.fixture_documents/"recreate.request").open("xb") as handle:
                 handle.write(b"owned no-input recreation\n")
             self.recreation_written = True
@@ -703,8 +798,16 @@ class _Study:
         if self.booted and not self.app_owned and not self.native_started:
             self.checked(self.sim("shutdown", UDID))
             self.booted = False
+            final, _ = self.inventory()
+            self.save("preparation-final-inventory.json", final)
+            if self.inventory_states(self.initial) != self.inventory_states(final):
+                raise _Refusal("PREPARATION_RESTORE_UNCONFIRMED")
             self.resources.clear()
             self.ledger()
+
+    @staticmethod
+    def inventory_states(inventory):
+        return {device["udid"]:device["state"] for devices in inventory["devices"].values() for device in devices}
 
     def execute(self):
         self.artifacts()
@@ -755,18 +858,23 @@ class _Study:
             self.booted = False
         final, _ = self.inventory()
         self.save("final-inventory.json", final)
-        def states(inventory):
-            return {device["udid"]:device["state"] for devices in inventory["devices"].values() for device in devices}
-        if states(self.initial) != states(final):
+        if self.inventory_states(self.initial) != self.inventory_states(final):
             raise _Refusal("DEVICE_STATES_CHANGED")
         self.resources.clear()
         self.ledger()
         return self.result("completed", "METADATA_COMPLETED")
 
     def result(self, status, reason):
+        if status != "retained":
+            try:
+                self.release_guard()
+            except (_Refusal, OSError):
+                status, reason = "retained", "DEVICE_GUARD_UNCERTAIN"
         if status == "retained":
             self.stop_file.touch(mode=0o600, exist_ok=True)
         retained = tuple(self.resources) + tuple(entry for entry in self.commands if entry["state"] != "exited")
+        if self.guard is not None and self.guard.created and not self.guard.released:
+            retained += (self.guard_facts(),)
         result = StudyResult(status, reason, self.request, str(self.output), tuple(self.records),
                              retained if status == "retained" else ())
         self.save("result.json", asdict(result))
@@ -788,9 +896,10 @@ def run_study(plan, configuration, dependencies):
         return StudyResult("refused", "EVIDENCE_CREATE_FAILED")
     study = _Study(plan, configuration, dependencies)
     try:
+        study.acquire_guard()
         return study.execute()
     except (_Refusal, OSError, ValueError, TypeError, KeyError) as error:
-        reason = str(error) if isinstance(error, _Refusal) else "LOCAL_STATE_UNCONFIRMED"
+        reason = study.record_refusal or (str(error) if isinstance(error, _Refusal) else "LOCAL_STATE_UNCONFIRMED")
         pending = any(entry["state"] != "exited" for entry in study.commands)
         if not pending and not study.app_owned and not isinstance(error, _Expired):
             try:
