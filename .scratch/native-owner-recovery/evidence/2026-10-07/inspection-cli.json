@@ -1,0 +1,20 @@
+{
+  "status": "retained",
+  "reason": "METADATA_RECONCILIATION_READY",
+  "request_id": "e9846dbc-e5fe-4b2d-bfab-a305da8fdf24",
+  "evidence_directory": "/private/tmp/jev-native-owner-reconciliation-inspection-20261007",
+  "records": [],
+  "retained_resources": [
+    {
+      "kind": "device",
+      "deviceId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+      "initialState": "Shutdown",
+      "state": "retained-Booted"
+    },
+    {
+      "kind": "runner-installation",
+      "bundleId": "dev.jev.research.native-owner-study.xctrunner",
+      "state": "retained-installed"
+    }
+  ]
+}

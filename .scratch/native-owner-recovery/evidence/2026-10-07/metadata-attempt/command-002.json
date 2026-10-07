@@ -1,0 +1,26 @@
+{
+  "index": 2,
+  "argv": [
+    "xcrun",
+    "simctl",
+    "boot",
+    "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+  ],
+  "state": "exited",
+  "pid": 73551,
+  "ownedProcessGroup": 73551,
+  "captureFiles": {
+    "stdout": "/private/tmp/jev-native-owner-metadata-fixed-20261007/process-output/002-stdout.log",
+    "stderr": "/private/tmp/jev-native-owner-metadata-fixed-20261007/process-output/002-stderr.log"
+  },
+  "processObservation": {
+    "outcome": "completed",
+    "reason": "PROCESS_COMPLETED",
+    "ownedGroupAbsent": true,
+    "streamsClosed": true
+  },
+  "parentReturncode": 0,
+  "returncode": 0,
+  "stdout": "",
+  "stderr": ""
+}

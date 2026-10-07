@@ -106,6 +106,14 @@ result and unknown historical exit code. It supplies no reference-study cleanup
 or production owner capability. Its contract is
 `.scratch/native-owner-recovery/spec.md`.
 
+Live recovery observed canonical absence and restored Shutdown. After a later
+boot, container lookup and the installed-app listing returned the old runner
+path, while the app and UUID directory were absent. The ordinary host refused
+before native execution and restored its setup. This leaves fixed metadata and
+reference validation incomplete; a provider registration/lifecycle contract is
+the next research gate. Receipts and the bounded diagnostic are recorded in
+`.scratch/native-owner-recovery/evidence/2026-10-07/report.md`.
+
 The shared protocol is `spikes/native-owner/protocol.schema.json`. A request ID
 correlates records only. A local reference label names an object held by this
 runner, never a backend-issued identity or validity scope. Fixture generation

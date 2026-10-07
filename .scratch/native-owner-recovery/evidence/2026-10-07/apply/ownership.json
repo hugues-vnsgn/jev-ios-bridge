@@ -1,0 +1,461 @@
+{
+  "requestId": "5b0d33e1-9a06-4003-b5eb-b029d6b0663f",
+  "plan": "metadata-reconciliation",
+  "deviceId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+  "commands": [
+    {
+      "index": 1,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "list",
+        "devices",
+        "--json"
+      ],
+      "state": "exited",
+      "pid": 67562,
+      "ownedProcessGroup": 67562,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/001-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/001-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 2,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "get_app_container",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "dev.jev.research.native-owner-fixture",
+        "app"
+      ],
+      "state": "exited",
+      "pid": 67591,
+      "ownedProcessGroup": 67591,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/002-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/002-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 2,
+      "returncode": 2
+    },
+    {
+      "index": 3,
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "13915",
+        "-o",
+        "pid=",
+        "-o",
+        "comm="
+      ],
+      "state": "exited",
+      "pid": 67600,
+      "ownedProcessGroup": 67600,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/003-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/003-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 1,
+      "returncode": 1
+    },
+    {
+      "index": 4,
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "15195",
+        "-o",
+        "pid=",
+        "-o",
+        "comm="
+      ],
+      "state": "exited",
+      "pid": 67601,
+      "ownedProcessGroup": 67601,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/004-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/004-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 1,
+      "returncode": 1
+    },
+    {
+      "index": 5,
+      "argv": [
+        "/bin/ps",
+        "-axo",
+        "pid=,pgid=,comm="
+      ],
+      "state": "exited",
+      "pid": 67602,
+      "ownedProcessGroup": 67602,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/005-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/005-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 6,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "get_app_container",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "dev.jev.research.native-owner-study.xctrunner",
+        "app"
+      ],
+      "state": "exited",
+      "pid": 67603,
+      "ownedProcessGroup": 67603,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/006-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/006-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 7,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "list",
+        "devices",
+        "--json"
+      ],
+      "state": "exited",
+      "pid": 67612,
+      "ownedProcessGroup": 67612,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/007-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/007-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 8,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "get_app_container",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "dev.jev.research.native-owner-fixture",
+        "app"
+      ],
+      "state": "exited",
+      "pid": 67621,
+      "ownedProcessGroup": 67621,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/008-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/008-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 2,
+      "returncode": 2
+    },
+    {
+      "index": 9,
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "13915",
+        "-o",
+        "pid=",
+        "-o",
+        "comm="
+      ],
+      "state": "exited",
+      "pid": 67651,
+      "ownedProcessGroup": 67651,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/009-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/009-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 1,
+      "returncode": 1
+    },
+    {
+      "index": 10,
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "15195",
+        "-o",
+        "pid=",
+        "-o",
+        "comm="
+      ],
+      "state": "exited",
+      "pid": 67652,
+      "ownedProcessGroup": 67652,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/010-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/010-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 1,
+      "returncode": 1
+    },
+    {
+      "index": 11,
+      "argv": [
+        "/bin/ps",
+        "-axo",
+        "pid=,pgid=,comm="
+      ],
+      "state": "exited",
+      "pid": 67653,
+      "ownedProcessGroup": 67653,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/011-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/011-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 12,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "get_app_container",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "dev.jev.research.native-owner-study.xctrunner",
+        "app"
+      ],
+      "state": "exited",
+      "pid": 67654,
+      "ownedProcessGroup": 67654,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/012-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/012-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 13,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "uninstall",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "dev.jev.research.native-owner-study.xctrunner"
+      ],
+      "state": "exited",
+      "pid": 67778,
+      "ownedProcessGroup": 67778,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/013-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/013-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 14,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "get_app_container",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "dev.jev.research.native-owner-study.xctrunner",
+        "app"
+      ],
+      "state": "exited",
+      "pid": 68005,
+      "ownedProcessGroup": 68005,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/014-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/014-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 2,
+      "returncode": 2
+    },
+    {
+      "index": 15,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "get_app_container",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "dev.jev.research.native-owner-fixture",
+        "app"
+      ],
+      "state": "exited",
+      "pid": 68035,
+      "ownedProcessGroup": 68035,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/015-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/015-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 2,
+      "returncode": 2
+    },
+    {
+      "index": 16,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "shutdown",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+      ],
+      "state": "exited",
+      "pid": 68055,
+      "ownedProcessGroup": 68055,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/016-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/016-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 17,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "list",
+        "devices",
+        "--json"
+      ],
+      "state": "exited",
+      "pid": 68383,
+      "ownedProcessGroup": 68383,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/017-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/017-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    }
+  ],
+  "resources": [],
+  "deviceGuard": {
+    "kind": "device-guard",
+    "path": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-ios-bridge-device-locks/0E42FDE2-5E09-42D3-9876-9EF0037FCBE7.lock",
+    "record": {
+      "schema": "jev.native-owner.device-guard/1",
+      "pid": null,
+      "hostPID": 67414,
+      "token": "6185c4eb-eb66-46d1-addf-affac272cf65",
+      "deviceId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+      "runId": "5b0d33e1-9a06-4003-b5eb-b029d6b0663f",
+      "createdAt": "2026-10-07T07:27:48.449455+00:00",
+      "evidenceDirectory": "/private/tmp/jev-native-owner-reconciliation-apply-20261007",
+      "kind": "native-owner-research"
+    },
+    "created": true,
+    "released": true,
+    "uncertainty": null
+  },
+  "nativeSettlement": "unconfirmed"
+}

@@ -1,0 +1,26 @@
+{
+  "index": 9,
+  "argv": [
+    "xcrun",
+    "simctl",
+    "shutdown",
+    "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+  ],
+  "state": "exited",
+  "pid": 60461,
+  "ownedProcessGroup": 60461,
+  "captureFiles": {
+    "stdout": "/private/tmp/jev-native-owner-startup-container-probe-20261007/process-output/009-stdout.log",
+    "stderr": "/private/tmp/jev-native-owner-startup-container-probe-20261007/process-output/009-stderr.log"
+  },
+  "processObservation": {
+    "outcome": "completed",
+    "reason": "PROCESS_COMPLETED",
+    "ownedGroupAbsent": true,
+    "streamsClosed": true
+  },
+  "parentReturncode": 0,
+  "returncode": 0,
+  "stdout": "",
+  "stderr": ""
+}

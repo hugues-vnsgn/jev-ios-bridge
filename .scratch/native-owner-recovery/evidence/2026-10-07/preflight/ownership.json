@@ -1,0 +1,108 @@
+{
+  "requestId": "0c439525-a167-436a-b392-bf8b35acb14f",
+  "plan": "metadata",
+  "deviceId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+  "commands": [
+    {
+      "index": 1,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "list",
+        "devices",
+        "--json"
+      ],
+      "state": "exited",
+      "pid": 939,
+      "ownedProcessGroup": 939,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-recovery-preflight-20261007/process-output/001-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-recovery-preflight-20261007/process-output/001-stderr.log"
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 2,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "get_app_container",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "dev.jev.research.native-owner-study.xctrunner",
+        "app"
+      ],
+      "state": "exited",
+      "pid": 948,
+      "ownedProcessGroup": 948,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-recovery-preflight-20261007/process-output/002-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-recovery-preflight-20261007/process-output/002-stderr.log"
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 3,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "get_app_container",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "dev.jev.research.native-owner-fixture",
+        "app"
+      ],
+      "state": "exited",
+      "pid": 980,
+      "ownedProcessGroup": 980,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-recovery-preflight-20261007/process-output/003-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-recovery-preflight-20261007/process-output/003-stderr.log"
+      },
+      "parentReturncode": 2,
+      "returncode": 2
+    },
+    {
+      "index": 4,
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "13915,15195",
+        "-o",
+        "pid=",
+        "-o",
+        "pgid=",
+        "-o",
+        "comm="
+      ],
+      "state": "exited",
+      "pid": 989,
+      "ownedProcessGroup": 989,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-recovery-preflight-20261007/process-output/004-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-recovery-preflight-20261007/process-output/004-stderr.log"
+      },
+      "parentReturncode": 1,
+      "returncode": 1
+    },
+    {
+      "index": 5,
+      "argv": [
+        "/bin/ps",
+        "-axo",
+        "pid=,pgid=,comm="
+      ],
+      "state": "exited",
+      "pid": 990,
+      "ownedProcessGroup": 990,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-recovery-preflight-20261007/process-output/005-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-recovery-preflight-20261007/process-output/005-stderr.log"
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    }
+  ],
+  "resources": [],
+  "nativeSettlement": "unconfirmed"
+}

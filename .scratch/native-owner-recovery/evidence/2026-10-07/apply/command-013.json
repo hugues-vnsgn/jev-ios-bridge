@@ -1,0 +1,27 @@
+{
+  "index": 13,
+  "argv": [
+    "xcrun",
+    "simctl",
+    "uninstall",
+    "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "dev.jev.research.native-owner-study.xctrunner"
+  ],
+  "state": "exited",
+  "pid": 67778,
+  "ownedProcessGroup": 67778,
+  "captureFiles": {
+    "stdout": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/013-stdout.log",
+    "stderr": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/013-stderr.log"
+  },
+  "processObservation": {
+    "outcome": "completed",
+    "reason": "PROCESS_COMPLETED",
+    "ownedGroupAbsent": true,
+    "streamsClosed": true
+  },
+  "parentReturncode": 0,
+  "returncode": 0,
+  "stdout": "",
+  "stderr": ""
+}
