@@ -19,6 +19,7 @@ def main():
                            REPOSITORY / 'spikes/native-owner', admission_seconds=90)
     study = _Study('startup-container-inspection', config,
                    Dependencies(ProcessTools(output / 'process-output')))
+    restoration_started = False
     try:
         study.acquire_guard()
         study.initial, state = study.inventory()
@@ -46,13 +47,16 @@ def main():
             'fixtureLookup':{'returncode':fixture[0], 'stdout':fixture[1], 'stderr':fixture[2]},
             'nativeQueries':0, 'inputCalls':0, 'cleanupDispatches':0,
             'meaning':'provider observations only; no absence or native settlement capability'})
+        restoration_started = True
         study.restore_pre_native()
         study.resources.clear(); study.ledger()
         result = study.result('completed', 'READONLY_CONTAINER_LOOKUP_INSPECTED')
     except (_Refusal, OSError, ValueError, TypeError, KeyError) as error:
         reason = str(error) if isinstance(error, _Refusal) else 'PROBE_LOCAL_STATE_UNCONFIRMED'
         pending = any(entry['state'] != 'exited' for entry in study.commands)
-        if not pending and not isinstance(error, _Expired):
+        if restoration_started:
+            result = study.result('retained', 'PROBE_RESTORE_UNCONFIRMED')
+        elif not pending and not isinstance(error, _Expired):
             try:
                 study.restore_pre_native()
                 study.resources.clear(); study.ledger()
