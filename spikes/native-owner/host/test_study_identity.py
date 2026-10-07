@@ -52,15 +52,16 @@ class BoundStudies(unittest.TestCase):
                 self.assertTrue((config.evidence_directory / "stop-admission").is_file())
 
     def test_unbound_nested_fixture_input_refuses_before_any_simulator_command(self):
-        with tempfile.TemporaryDirectory() as root:
-            config = configuration(root)
-            nested = config.source_root / "fixture/Nested/Dependency.m"
-            nested.parent.mkdir()
-            nested.write_text("// unbound nested build input")
-            clock = Clock(); tools = Tools(clock, config)
-            result = run_study("metadata", config, Dependencies(tools, clock.now, clock.sleep))
-            self.assertEqual(result.status,"refused")
-            self.assertEqual(tools.commands,[])
+        for name in ("Dependency.m", "README.md"):
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as root:
+                config = configuration(root)
+                nested = config.source_root / "fixture/Nested" / name
+                nested.parent.mkdir()
+                nested.write_text("unbound nested build input")
+                clock = Clock(); tools = Tools(clock, config)
+                result = run_study("metadata", config, Dependencies(tools, clock.now, clock.sleep))
+                self.assertEqual(result.status,"refused")
+                self.assertEqual(tools.commands,[])
 
     def test_changed_fixture_identity_cannot_receive_a_recreation_write(self):
         with tempfile.TemporaryDirectory() as root:

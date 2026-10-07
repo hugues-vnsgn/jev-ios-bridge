@@ -74,7 +74,7 @@ def source_inventory(root, hash_file=sha):
             regular_path(path)
             if not path.is_dir() and not path.is_file():
                 raise ValueError("unsupported source entry")
-            if not path.is_file() or path.name in {"README.md", ".gitignore"}:
+            if not path.is_file() or relative in {Path("README.md"), Path(".gitignore")}:
                 continue
             if (directory == "fixture" or path.suffix in suffixes) and not (
                     directory == "host" and path.name.startswith("test_")):

@@ -58,5 +58,6 @@ The receipt covers the builder, shared declaration and binding code, host code,
 protocol, recursive native inputs and fixture sources/resources, explicit plist,
 all generated-project files, all product files and the original `.xctestrun`.
 Generated projects and bytecode caches are excluded from source inventories;
-projects have their own inventory. Host test code and README files are not build
-inputs. The fixture target explicitly excludes its README and ignore file.
+projects have their own inventory. Host test code and documentation are not build
+inputs. The fixture target excludes its root README and ignore file; nested
+fixture resources stay bound.

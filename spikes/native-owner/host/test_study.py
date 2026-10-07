@@ -34,7 +34,7 @@ def bind(config, plan="metadata"):
                                ("fixture", {".m", ".swift"}), ("host", {".py"})):
         inputs.extend(path for path in (root/directory).rglob("*") if path.is_file() and (directory == "fixture" or path.suffix in suffixes)
                       and not any(part == "__pycache__" or part.endswith((".xcodeproj", ".xcworkspace")) for part in path.relative_to(root/directory).parts)
-                      and path.name not in {"README.md", ".gitignore"}
+                      and path.relative_to(root/directory) not in {Path("README.md"), Path(".gitignore")}
                       and not (directory == "host" and path.name.startswith("test_")))
     products = config.derived_data/"Build/Products"
     test_plan = next(products.glob("*.xctestrun"))
