@@ -159,6 +159,17 @@ class Tools:
 
 
 class Reconciliation(unittest.TestCase):
+    def test_unregistered_nested_manifest_refuses_before_device_work(self):
+        with tempfile.TemporaryDirectory() as root:
+            fixture = CaseFixture(root)
+            path = fixture.archive / "nested/manifest.json"
+            path.parent.mkdir()
+            path.write_bytes(b'{"unregistered":true}\n')
+            result, tools = self.run_case(fixture, apply=True)
+            self.assertEqual((result.status, result.reason), ("retained", "ARCHIVE_FILES_CHANGED"))
+            self.assertEqual(tools.commands, [])
+            self.assertTrue(tools.installed)
+
     def run_case(self, fixture, tools=None, apply=False, name="inspection", seconds=90):
         clock=Clock(); tools=tools or Tools(fixture)
         with patch.object(reconcile,"_case_data",return_value=(fixture.case,fixture.archive)):

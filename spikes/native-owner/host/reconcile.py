@@ -136,7 +136,7 @@ class _Reconciliation:
         actual=set()
         for path in self.archive.rglob("*"):
             _safe(path)
-            if path.is_file() and path.name!="manifest.json": actual.add(str(path.relative_to(self.archive)))
+            if path.is_file() and path != self.archive/"manifest.json": actual.add(str(path.relative_to(self.archive)))
             elif not path.is_file() and not path.is_dir(): raise _Refusal("ARCHIVE_FILES_CHANGED")
         if actual!=set(manifest["files"]) or set(manifest["compressedRawSHA256"])-actual:
             raise _Refusal("ARCHIVE_FILES_CHANGED")
