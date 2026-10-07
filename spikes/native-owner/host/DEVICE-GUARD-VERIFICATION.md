@@ -24,7 +24,11 @@ and symlinks.
 
 `created` becomes true immediately after O_EXCL creates the file, including
 partial-write or sync failures; it stays true after release. `released` becomes
-true only after verified removal and directory sync. Checks require the original
+true immediately after successful matching-claim unlink. Fallible synchronization
+and ownership checks occur before unlink, so their failure keeps the claim.
+Deletion durability is not promised: a crash may restore a busy claim. A later
+directory-descriptor close error does not undo known removal or report false
+retention. Checks require the original
 directory/file identities, regular single-link mode-600 owned file and exact
 record bytes. A missing/replaced/symlinked/modified claim, inspection failure or
 I/O uncertainty permanently prevents that guard from releasing. Reads are bounded
@@ -61,6 +65,15 @@ Green gate: `python3 -W error -m unittest discover -s spikes/native-owner/host
 The committed test defaults to its own checkout's `node_modules`, as in CI after
 `npm ci`. Log: `/tmp/jev-native-owner-device-guard-all-green.log`.
 Python compile and `git diff --check` also pass.
+
+The release correction has independent behavioral red evidence in
+`/tmp/jev-native-owner-device-guard-release-red.log`: a directory sync failure
+after unlink let the actual Bridge acquire despite `released=False`, and a later
+directory close failure misreported known removal as uncertainty. The two new
+regressions pass after moving sync/checks before unlink and setting `released`
+immediately on successful unlink. They verify blocked Bridge acquisition on
+pre-removal sync failure, and truthful release after a post-removal close error.
+Correction green log: `/tmp/jev-native-owner-device-guard-release-green.log`.
 
 These tests operate no simulator and issue no process signals. Exclusion applies
 to consumers sharing the Bridge namespace. Noncooperating external tools, custom

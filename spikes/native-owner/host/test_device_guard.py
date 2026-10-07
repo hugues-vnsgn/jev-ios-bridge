@@ -216,6 +216,45 @@ class DeviceExclusion(unittest.TestCase):
             self.assertEqual(path.read_bytes(), before)
             self.assertFalse(guard.released)
 
+    def test_release_directory_sync_failure_keeps_claim_and_blocks_bridge(self):
+        with tempfile.TemporaryDirectory() as directory:
+            guard = DeviceGuard(Path(directory) / "leases", DEVICE, "release-sync-fails",
+                                Path(directory) / "evidence")
+            path = Path(guard.take()["path"])
+            before = path.read_bytes()
+            sync = os.fsync
+            def fail_directory_sync(descriptor):
+                if stat.S_ISDIR(os.fstat(descriptor).st_mode):
+                    raise OSError("directory sync failed")
+                sync(descriptor)
+            with patch("device_guard.os.fsync", side_effect=fail_directory_sync):
+                with self.assertRaises(DeviceGuardError) as refused:
+                    guard.release()
+            self.assertEqual(refused.exception.reason, "DEVICE_GUARD_UNCERTAIN")
+            self.assertTrue(bridge_take(path.parent)["busy"])
+            self.assertEqual(path.read_bytes(), before)
+            self.assertTrue(guard.created)
+            self.assertFalse(guard.released)
+
+    def test_release_reports_known_removal_despite_later_directory_close_error(self):
+        with tempfile.TemporaryDirectory() as directory:
+            guard = DeviceGuard(Path(directory) / "leases", DEVICE, "release-close-fails",
+                                Path(directory) / "evidence")
+            claim = guard.take()
+            path = Path(claim["path"])
+            close = os.close
+            def fail_after_removal(descriptor):
+                directory_handle = stat.S_ISDIR(os.fstat(descriptor).st_mode)
+                close(descriptor)
+                if directory_handle and not path.exists():
+                    raise OSError("directory close failed after removal")
+            with patch("device_guard.os.close", side_effect=fail_after_removal):
+                self.assertEqual(guard.release(), claim)
+            self.assertTrue(guard.created)
+            self.assertTrue(guard.released)
+            self.assertFalse(path.exists())
+            self.assertFalse(bridge_take(path.parent)["busy"])
+
     def test_competing_frontends_have_one_owner_and_both_exit_naturally(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / "leases"

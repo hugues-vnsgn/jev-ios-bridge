@@ -2,7 +2,7 @@
 
 Callers persist ``provenance`` before take and examine ``created`` on failure.
 Only settled, restored work may call release; this Module cannot establish native
-settlement. Any write/inspection uncertainty latches and forbids later release.
+settlement. Before removal, write/inspection uncertainty forbids later release.
 Claims intentionally survive frontend exit, with an unknown ``pid`` and a truthful
 ``hostPID``. Noncooperating tools and different lease roots are outside this guard.
 """
@@ -63,7 +63,7 @@ class DeviceGuard:
     """One-use take/check/release; ``root=None`` selects the Bridge namespace.
 
     ``created`` means O_EXCL created a claim, even if its write later failed.
-    ``released`` means matching-claim removal and directory sync completed.
+    ``released`` means successful matching-claim unlink, without deletion durability.
     ``provenance`` is a defensive copy, also written as an immutable intent before
     acquisition. The intent alone does not prove that acquisition succeeded.
     """
@@ -189,10 +189,12 @@ class DeviceGuard:
         self._require_owned()
         try:
             with _directory(self._root) as directory:
+                os.fsync(directory)
                 self._verify(directory)
                 os.unlink(self._name, dir_fd=directory)
-                os.fsync(directory)
-            self._released = True
-            return self.provenance
+                self._released = True
         except OSError as error:
-            self._refuse_uncertain(error)
+            if not self.released:
+                self._refuse_uncertain(error)
+            # A later descriptor-close error cannot undo observed claim removal.
+        return self.provenance
