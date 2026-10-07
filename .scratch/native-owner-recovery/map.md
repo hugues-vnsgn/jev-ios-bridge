@@ -15,6 +15,8 @@ Code landed in [PR 48](https://github.com/hugues-vnsgn/jev-ios-bridge/pull/48). 
 - [03](issues/03-device-exclusion.md): the shared unknown-owner claim survives frontend exit and releases only after settled restoration.
 - [Live evidence](evidence/2026-10-07/report.md): container lookup and installed-app listing agree on an old URL whose app and UUID directory are absent. Provider persistence cause remains unconfirmed.
 
+- [04](issues/04-startup-registration-authority.md): choose two declared, separately bound study identities under the unchanged startup gate; [implementation](../native-study-identities/map.md) is supervisor-owned. No documented repair barrier was found.
+
 ## Route
 
 <!-- route:start -->
@@ -31,8 +33,7 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03 resolved
-    class T04 frontier
+    class T01,T02,T03,T04 resolved
 ```
 <!-- route:end -->
 

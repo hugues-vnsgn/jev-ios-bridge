@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+  <key>CFBundleIdentifier</key><string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+  <key>CFBundleExecutable</key><string>$(EXECUTABLE_NAME)</string>
+  <key>CFBundleName</key><string>$(PRODUCT_NAME)</string>
+  <key>CFBundlePackageType</key><string>BNDL</string>
+  <key>CFBundleVersion</key><string>1</string>
+  <key>CFBundleShortVersionString</key><string>1.0</string>
+  <key>JevNativeOwnerPlan</key><string>$(JEV_NATIVE_OWNER_PLAN)</string>
+  <key>JevNativeOwnerPluginBundleIdentifier</key><string>$(JEV_NATIVE_OWNER_PLUGIN_BUNDLE_ID)</string>
+  <key>JevNativeOwnerRunnerBundleIdentifier</key><string>$(JEV_NATIVE_OWNER_RUNNER_BUNDLE_ID)</string>
+  <key>JevNativeOwnerFixtureBundleIdentifier</key><string>$(JEV_NATIVE_OWNER_FIXTURE_BUNDLE_ID)</string>
+</dict></plist>

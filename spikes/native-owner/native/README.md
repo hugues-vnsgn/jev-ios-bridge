@@ -4,6 +4,11 @@
 library, setup hooks, swizzling or global timeout changes. Both test methods
 require the explicit environment described in the shared study specification.
 Do not launch them independently against an arbitrary device.
+The builder selects a fixed profile from the shared declaration and expands
+`StudyInfo.plist` with its expected IDs. Entry checks the actual main/plugin
+bundle IDs and compiled plan before acquiring `XCUIDevice`. The observation
+stream emits identity immediately after `started`, before the native getter.
+Fixture activation uses the plist-bound ID; telemetry must report that same ID.
 
 `ObservationStudy.run` owns original objects, serial private-selector reads and
 record accounting. Every invocation checks its exact Objective-C ABI and admission
@@ -34,16 +39,25 @@ tests establish local policy only. They run without booting or operating a simul
 cd spikes/native-owner/native
 xcodegen generate --spec project.yml
 xcodebuild test -project NativeOwnerStudy.xcodeproj -scheme NativeOwnerPolicyTests \
-  -destination 'platform=macOS' -derivedDataPath /tmp/native-owner-policy
+  -destination 'platform=macOS' -derivedDataPath /private/tmp/native-owner-policy
 ```
 
 Build both real iOS targets without device execution, with fresh paths and source/
 product binding receipts:
 
 ```sh
-python3 build.py --derived-data /tmp/native-owner-build \
-  --receipts /tmp/native-owner-build-receipts
+python3 build.py --plan metadata --derived-data /private/tmp/native-owner-metadata-build \
+  --receipts /private/tmp/native-owner-metadata-build-receipts
+python3 build.py --plan reference-study --derived-data /private/tmp/native-owner-reference-build \
+  --receipts /private/tmp/native-owner-reference-build-receipts
 ```
 
 Generated projects and build logs are ignored; builds and receipts stay outside
 Git. A successful generic build is compilation, not a native study result.
+The receipt covers the builder, shared declaration and binding code, host code,
+protocol, recursive native inputs and fixture sources/resources, explicit plist,
+all generated-project files, all product files and the original `.xctestrun`.
+Generated projects and bytecode caches are excluded from source inventories;
+projects have their own inventory. Host test code and documentation are not build
+inputs. The fixture target excludes its root README and ignore file; nested
+fixture resources stay bound.

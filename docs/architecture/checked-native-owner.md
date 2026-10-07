@@ -111,8 +111,19 @@ boot, container lookup and the installed-app listing returned the old runner
 path, while the app and UUID directory were absent. The ordinary host refused
 before native execution and restored its setup. This leaves fixed metadata and
 reference validation incomplete; a provider registration/lifecycle contract is
-the next research gate. Receipts and the bounded diagnostic are recorded in
+unestablished. Receipts and the bounded diagnostic are recorded in
 `.scratch/native-owner-recovery/evidence/2026-10-07/report.md`.
+
+The next research setup uses two fixed app identity profiles selected by the
+existing metadata/reference plans, on that same device. A builder receipt binds
+source, profile settings, actual products and the test plan; the host verifies
+it before contacting Simulator. Runtime bundle identities and fixture telemetry
+must agree before further native observations. Each profile independently needs
+canonical startup absence. This avoids requiring reference research to reuse
+the namespace metadata just cleaned up. Refusal permits no fallback or automatic
+identity rotation. Historical reconciliation and its diagnostic keep their
+original identities, immutable evidence and consumed case. The frozen contract
+is `.scratch/native-study-identities/spec.md`; no owner guarantee is established.
 
 The shared protocol is `spikes/native-owner/protocol.schema.json`. A request ID
 correlates records only. A local reference label names an object held by this

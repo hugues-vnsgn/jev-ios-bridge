@@ -9,7 +9,8 @@ The study Module has this Interface:
 ```python
 from study import Configuration, Dependencies, ProcessTools, run_study
 
-configuration = Configuration(derived_data, fresh_evidence_directory, source_root)
+configuration = Configuration(derived_data, fresh_evidence_directory, source_root,
+                              build_binding=builder_receipt)
 result = run_study("metadata", configuration,
                    Dependencies(ProcessTools(fresh_evidence_directory / "process-output")))
 ```
@@ -23,9 +24,12 @@ and at most 300. Device identity is fixed to simulator
 Build both owned targets without running a device:
 
 ```sh
-python3 spikes/native-owner/native/build.py \
-  --derived-data /tmp/native-owner-build \
-  --receipts /tmp/native-owner-build-receipts
+python3 spikes/native-owner/native/build.py --plan metadata \
+  --derived-data /private/tmp/native-owner-metadata-build \
+  --receipts /private/tmp/native-owner-metadata-build-receipts
+python3 spikes/native-owner/native/build.py --plan reference-study \
+  --derived-data /private/tmp/native-owner-reference-build \
+  --receipts /private/tmp/native-owner-reference-build-receipts
 ```
 
 Both build paths must be fresh. The native builder generates its project,
@@ -37,8 +41,9 @@ Run the metadata study explicitly on the owned simulator:
 ```sh
 python3 spikes/native-owner/host/run.py \
   --plan metadata \
-  --derived-data /tmp/native-owner-build \
-  --evidence-directory /tmp/native-owner-metadata \
+  --derived-data /private/tmp/native-owner-metadata-build \
+  --build-binding /private/tmp/native-owner-metadata-build-receipts/binding.json \
+  --evidence-directory /private/tmp/native-owner-metadata \
   --admission-seconds 90
 ```
 
@@ -47,10 +52,19 @@ For the bounded original-reference/recreation observations:
 ```sh
 python3 spikes/native-owner/host/run.py \
   --plan reference-study \
-  --derived-data /tmp/native-owner-build \
-  --evidence-directory /tmp/native-owner-reference \
+  --derived-data /private/tmp/native-owner-reference-build \
+  --build-binding /private/tmp/native-owner-reference-build-receipts/binding.json \
+  --evidence-directory /private/tmp/native-owner-reference \
   --admission-seconds 90
 ```
+
+Each plan selects one fixed profile in [study-identities.json](study-identities.json).
+The two plans have separate runner, plugin and fixture bundle identities. There
+is no bundle-ID flag, alternate-profile retry or allocator. The builder records
+actual bundle IDs and all source, generated-project, product and original-plan
+hashes. Before a simulator command, the host requires that receipt to match the
+requested profile and current bytes. Missing, changed, extra or symlinked inputs
+refuse admission. The receipt is research provenance, not a production certificate.
 
 Run one study at a time. The host checks the exact inventory and positive app
 absence before installation. Before contacting a simulator, it binds the test
@@ -58,7 +72,7 @@ host, plugin, bundle identifiers and every dependent product to the verified
 build. Extra targets, foreign app paths, launch arguments and runtime injections
 are refused. The metadata plan excludes the unused fixture dependency.
 Reference studies launch the newly installed owned fixture,
-confirm its initial PID/generation/zero tap count, and pass the verified data
+confirm its actual bundle identity, initial PID/generation/zero tap count, and pass the verified data
 container through a derived `.xctestrun`. A native recreation request causes one
 programmatic `Documents/recreate.request` write; setup activation is separate.
 It never uses a touch, UID re-query, shared-daemon reset or another simulator.
@@ -88,6 +102,10 @@ native app-element queries, both local completion flags, normal test-class
 completion, successful `xcodebuild`, and positive absence of the exact runner
 PID. It removes only the newly installed runner and verifies final app absence
 and initial device states. PID inspection uncertainty retains ownership.
+Immediately after `started`, native emits its actual runner/plugin identities
+and build-bound fixture identity. Exact agreement is required before further
+observations or recreation. Both telemetry readers check the fixture identity;
+the host rechecks its initial telemetry before the single recreation write.
 
 A reference study **always retains** the device, fixture and runner resources
 while native settlement is unconfirmed, even when local calls returned and
@@ -110,7 +128,7 @@ Inspect the registered case without changing the simulator:
 ```sh
 python3 spikes/native-owner/host/reconcile.py \
   --retained-directory /private/tmp/jev-native-owner-metadata-integrated-20261007 \
-  --evidence-directory /tmp/native-owner-reconciliation-inspection
+  --evidence-directory /private/tmp/native-owner-reconciliation-inspection
 ```
 
 Apply uses a different fresh evidence directory and the explicit `--apply`
@@ -126,8 +144,12 @@ and never cleans up a reference study. The contract and live sequence are in
 The [2026-10-07 live report](../../.scratch/native-owner-recovery/evidence/2026-10-07/report.md)
 records successful one-use recovery, followed by a metadata refusal after boot:
 container lookup and installed-app listing returned the deleted runner's old
-path. The diagnostic restored Shutdown. Fixed native metadata validation and
-the reference study remain gated on trustworthy startup absence.
+path. The diagnostic restored Shutdown. The two successor profiles permit
+independent startup observations without changing that old registration. Each
+still requires its own canonical absence replies; a refusal stops the study.
+The historical cleanup claim remains consumed, and the old diagnostic and
+reconciliation continue to address only their original IDs. No old archive or
+executed-script binding is rewritten by the successor implementation.
 
 Evidence includes source/product/test-plan hashes, exact commands and process
 groups, local observations, fixture readiness, recreation writes and retained

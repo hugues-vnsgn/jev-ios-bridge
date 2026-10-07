@@ -297,9 +297,11 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
 - (NSDictionary *)fixture {
   if (![self admit:@"fixture-recreation"]) return nil;
   NSDictionary *value = self.readFixture();
-  if (![value isKindOfClass:NSDictionary.class] || value.count != 3
+  if (![value isKindOfClass:NSDictionary.class] || value.count != 4
       || !IntegerAtLeast(value[@"pid"], 2) || !IntegerAtLeast(value[@"generation"], 0)
-      || !IntegerAtLeast(value[@"ordinary"], 0) || [value[@"ordinary"] longLongValue] != 0) {
+      || !IntegerAtLeast(value[@"ordinary"], 0) || [value[@"ordinary"] longLongValue] != 0
+      || ![value[@"bundleIdentifier"] isKindOfClass:NSString.class]
+      || ![value[@"bundleIdentifier"] isEqual:self.configuration[@"studyIdentity"][@"fixture"]]) {
     [self record:@"observation" operation:@"fixture-recreation" outcome:@"failed"
          details:@{@"reason": @"invalid-fixture-telemetry"}];
     return nil;
@@ -324,7 +326,7 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
          details:@{@"reason": @"activation-failed"}]; return;
   }
   [self record:@"observation" operation:@"fixture-recreation" outcome:@"observed"
-       details:@{@"setup": @"activate", @"bundleId": @"dev.jev.research.native-owner-fixture"}];
+       details:@{@"setup": @"activate", @"bundleId": self.configuration[@"studyIdentity"][@"fixture"]}];
   NSDictionary *baseline = [self fixture];
   if (!baseline || ![baseline isEqualToDictionary:beforeActivation]) {
     [self record:@"observation" operation:@"fixture-recreation" outcome:@"failed"
@@ -338,6 +340,11 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
   [self validity:original client:client phase:@"before-replacement"];
   [self parents:original client:client];
   if (![self admit:@"fixture-recreation"]) return;
+  NSDictionary *beforeRequest = [self fixture];
+  if (!beforeRequest || ![beforeRequest isEqualToDictionary:baseline]) {
+    [self record:@"observation" operation:@"fixture-recreation" outcome:@"failed"
+         details:@{@"reason": @"fixture-changed-before-recreation"}]; return;
+  }
   [self record:@"observation" operation:@"fixture-recreation" outcome:@"observed"
        details:@{@"request": @"recreate"}];
   NSTimeInterval waitStarted = self.clock();
@@ -371,9 +378,25 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
   NSString *plan = self.configuration[@"plan"];
   NSUInteger pid = NSProcessInfo.processInfo.processIdentifier;
   [self record:@"started" operation:@"metadata" outcome:@"observed" details:@{@"plan": plan, @"runnerPID": @(pid)}];
+  NSDictionary *identity = self.configuration[@"studyIdentity"];
+  NSDictionary *expected = self.configuration[@"expectedStudyIdentity"];
+  BOOL identityValid = [identity isKindOfClass:NSDictionary.class]
+    && [expected isKindOfClass:NSDictionary.class] && [identity isEqualToDictionary:expected]
+    && [identity[@"plan"] isEqual:plan]
+    && [[NSSet setWithArray:identity.allKeys] isEqualToSet:[NSSet setWithArray:@[@"plan",@"plugin",@"runner",@"fixture"]]];
+  if (identityValid) {
+    for (id value in identity.allValues)
+      identityValid = identityValid && [value isKindOfClass:NSString.class] && [value length] > 0
+        && [value lengthOfBytesUsingEncoding:NSUTF8StringEncoding] <= StringLimit;
+  }
+  if (identityValid)
+    [self record:@"observation" operation:@"metadata" outcome:@"observed" details:@{@"studyIdentity":identity}];
+  else
+    [self record:@"observation" operation:@"metadata" outcome:@"failed" details:@{@"reason":@"study-identity-mismatch"}];
   @autoreleasepool {
     BOOL failed = NO;
-    id client = [self getter:self.device name:@"accessibilityInterface" operation:@"metadata" failed:&failed];
+    id client = identityValid ? [self getter:self.device name:@"accessibilityInterface" operation:@"metadata" failed:&failed] : nil;
+    if (!identityValid) failed = YES;
     if (!failed && client == nil) {
       [self record:@"observation" operation:@"metadata" outcome:@"unavailable" details:@{@"reason": @"nil-interface"}];
     } else if (!failed) {

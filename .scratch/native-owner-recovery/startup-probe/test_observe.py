@@ -22,6 +22,28 @@ spec.loader.exec_module(probe)
 
 
 class Restoration(unittest.TestCase):
+    def test_successor_profiles_do_not_change_the_historical_diagnostic(self):
+        with tempfile.TemporaryDirectory() as raw:
+            root = Path(raw).resolve(); output = root/'evidence'
+            case = root/'.scratch/native-owner-recovery/approved-case.json'
+            case.parent.mkdir(parents=True)
+            case.write_text(json.dumps({'installedRunnerAppPath':str(root/'missing.app')}))
+            config = SimpleNamespace(evidence_directory=output,source_root=root/'spikes/native-owner')
+            tools = Tools(Clock(),config)
+            def isolated_study(plan,configuration,dependencies):
+                return _Study(plan,replace(configuration,lease_root=root/'leases'),dependencies)
+            stdout = io.StringIO()
+            with patch.object(probe,'REPOSITORY',root), patch.object(probe,'ProcessTools',lambda path:tools), patch.object(probe,'_Study',isolated_study), patch.object(sys,'argv',['observe.py','--evidence-directory',str(output)]), redirect_stdout(stdout):
+                code = probe.main()
+            self.assertEqual((code,json.loads(stdout.getvalue())['status']),(0,'completed'))
+            self.assertIn(['xcrun','simctl','get_app_container',UDID,
+                          'dev.jev.research.native-owner-study.xctrunner','app'],tools.commands)
+            self.assertIn(['xcrun','simctl','get_app_container',UDID,
+                          'dev.jev.research.native-owner-fixture','app'],tools.commands)
+            self.assertFalse(any('20261007-' in item for command in tools.commands for item in command))
+            self.assertFalse(any('uninstall' in command or 'install' in command for command in tools.commands))
+            self.assertFalse((root/'leases'/(UDID+'.lock')).exists())
+
     def test_failure_after_shutdown_preserves_resources_and_guard(self):
         for failure in ('state', 'identity'):
             with self.subTest(failure=failure), tempfile.TemporaryDirectory() as raw:

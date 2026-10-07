@@ -15,7 +15,8 @@
 }
 - (void)writeTelemetry {
   NSDictionary *record = @{@"pid": @(NSProcessInfo.processInfo.processIdentifier),
-    @"generation": @(self.generation), @"ordinary": @(self.ordinaryTaps)};
+    @"generation": @(self.generation), @"ordinary": @(self.ordinaryTaps),
+    @"bundleIdentifier": NSBundle.mainBundle.bundleIdentifier ?: @""};
   NSData *data = [NSJSONSerialization dataWithJSONObject:record options:0 error:nil];
   [data writeToURL:[[self documents] URLByAppendingPathComponent:@"result.txt"]
           options:NSDataWritingAtomic error:nil];

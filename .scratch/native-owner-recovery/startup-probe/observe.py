@@ -6,8 +6,10 @@ import sys
 
 REPOSITORY = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(REPOSITORY / 'spikes/native-owner/host'))
-from study import Configuration, Dependencies, ProcessTools, _Study, _Refusal, _Expired, RUNNER, FIXTURE, UDID
-
+from study import Configuration, Dependencies, ProcessTools, _Study, _Refusal, _Expired, UDID
+# This diagnostic remains bound to the historical registration, not successor profiles.
+RUNNER = "dev.jev.research.native-owner-study.xctrunner"
+FIXTURE = "dev.jev.research.native-owner-fixture"
 
 def filesystem_observation(path):
     try:
