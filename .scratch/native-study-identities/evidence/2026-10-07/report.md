@@ -44,7 +44,7 @@ The study issued no uninstall or shutdown and wrote `stop-admission`. It retains
 
 ## Preserved history and remaining work
 
-The approved case, both historical archive manifests and consumed one-use claim match the [pre-study baseline](verification/jev-native-study-prior-evidence-baseline-20261007.json). The original invalid metadata record remains invalid; its historical exit code remains unknown. The old deleted-app registration was not changed. These successor observations accept none of the 23 production requirements.
+The approved case, both historical archive manifests and consumed one-use claim match the [pre-study baseline](verification/jev-native-study-prior-evidence-baseline-20261007.json). The original invalid metadata record remains invalid; its historical exit code remains unknown. No command addressed the historical app identities; their current registration state was not rechecked. These successor observations accept none of the 23 production requirements.
 
 The remaining native facts are complete containment, original-reference validity across all required lifecycle changes, started-work completion, exact tap receipt and contact release. Both studies sent zero input. The failed point operation supplies no evidence for containment or lifetime. Production implementation follows only when its actual prerequisites are established.
 
