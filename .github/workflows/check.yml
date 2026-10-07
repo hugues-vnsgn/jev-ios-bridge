@@ -17,4 +17,6 @@ jobs:
       - run: npm run check
       - name: Native observation host regressions
         run: python3 -W error::ResourceWarning -m unittest discover -s spikes/native-owner/host -p 'test_*.py' -v
+      - name: Startup container diagnostic regression
+        run: python3 -W error::ResourceWarning .scratch/native-owner-recovery/startup-probe/test_observe.py -v
       - run: npm pack --dry-run

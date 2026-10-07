@@ -1,0 +1,22 @@
+{
+  "index": 3,
+  "argv": [
+    "xcrun",
+    "simctl",
+    "get_app_container",
+    "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "dev.jev.research.native-owner-fixture",
+    "app"
+  ],
+  "state": "exited",
+  "pid": 980,
+  "ownedProcessGroup": 980,
+  "captureFiles": {
+    "stdout": "/private/tmp/jev-native-owner-recovery-preflight-20261007/process-output/003-stdout.log",
+    "stderr": "/private/tmp/jev-native-owner-recovery-preflight-20261007/process-output/003-stderr.log"
+  },
+  "parentReturncode": 2,
+  "returncode": 2,
+  "stdout": "",
+  "stderr": "An error was encountered processing the command (domain=NSPOSIXErrorDomain, code=2):\nThe operation couldn\u2019t be completed. No such file or directory\nNo such file or directory\n"
+}

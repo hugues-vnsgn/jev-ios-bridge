@@ -1,0 +1,28 @@
+{
+  "index": 14,
+  "argv": [
+    "xcrun",
+    "simctl",
+    "get_app_container",
+    "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "dev.jev.research.native-owner-study.xctrunner",
+    "app"
+  ],
+  "state": "exited",
+  "pid": 68005,
+  "ownedProcessGroup": 68005,
+  "captureFiles": {
+    "stdout": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/014-stdout.log",
+    "stderr": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/014-stderr.log"
+  },
+  "processObservation": {
+    "outcome": "completed",
+    "reason": "PROCESS_COMPLETED",
+    "ownedGroupAbsent": true,
+    "streamsClosed": true
+  },
+  "parentReturncode": 2,
+  "returncode": 2,
+  "stdout": "",
+  "stderr": "An error was encountered processing the command (domain=NSPOSIXErrorDomain, code=2):\nThe operation couldn\u2019t be completed. No such file or directory\nNo such file or directory\n"
+}

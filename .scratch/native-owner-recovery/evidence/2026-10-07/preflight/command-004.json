@@ -1,0 +1,25 @@
+{
+  "index": 4,
+  "argv": [
+    "/bin/ps",
+    "-p",
+    "13915,15195",
+    "-o",
+    "pid=",
+    "-o",
+    "pgid=",
+    "-o",
+    "comm="
+  ],
+  "state": "exited",
+  "pid": 989,
+  "ownedProcessGroup": 989,
+  "captureFiles": {
+    "stdout": "/private/tmp/jev-native-owner-recovery-preflight-20261007/process-output/004-stdout.log",
+    "stderr": "/private/tmp/jev-native-owner-recovery-preflight-20261007/process-output/004-stderr.log"
+  },
+  "parentReturncode": 1,
+  "returncode": 1,
+  "stdout": "",
+  "stderr": ""
+}

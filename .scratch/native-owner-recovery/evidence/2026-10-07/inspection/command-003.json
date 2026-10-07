@@ -1,0 +1,29 @@
+{
+  "index": 3,
+  "argv": [
+    "/bin/ps",
+    "-p",
+    "13915",
+    "-o",
+    "pid=",
+    "-o",
+    "comm="
+  ],
+  "state": "exited",
+  "pid": 64600,
+  "ownedProcessGroup": 64600,
+  "captureFiles": {
+    "stdout": "/private/tmp/jev-native-owner-reconciliation-inspection-20261007/process-output/003-stdout.log",
+    "stderr": "/private/tmp/jev-native-owner-reconciliation-inspection-20261007/process-output/003-stderr.log"
+  },
+  "processObservation": {
+    "outcome": "completed",
+    "reason": "PROCESS_COMPLETED",
+    "ownedGroupAbsent": true,
+    "streamsClosed": true
+  },
+  "parentReturncode": 1,
+  "returncode": 1,
+  "stdout": "",
+  "stderr": ""
+}

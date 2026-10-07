@@ -123,6 +123,12 @@ unknown historical `xcodebuild` exit code. It establishes no native settlement
 and never cleans up a reference study. The contract and live sequence are in
 [the recovery spec](../../.scratch/native-owner-recovery/spec.md).
 
+The [2026-10-07 live report](../../.scratch/native-owner-recovery/evidence/2026-10-07/report.md)
+records successful one-use recovery, followed by a metadata refusal after boot:
+container lookup and installed-app listing returned the deleted runner's old
+path. The diagnostic restored Shutdown. Fixed native metadata validation and
+the reference study remain gated on trustworthy startup absence.
+
 Evidence includes source/product/test-plan hashes, exact commands and process
 groups, local observations, fixture readiness, recreation writes and retained
 resources. Raw observations remain in these local files. Schema and coverage

@@ -1,0 +1,44 @@
+{
+  "registeredHistoricalPath": "/Users/hugues_mini/Library/Developer/CoreSimulator/Devices/0E42FDE2-5E09-42D3-9876-9EF0037FCBE7/data/Containers/Bundle/Application/377FB024-136D-4407-9929-66C7CA0AF0C4/NativeOwnerStudy-Runner.app",
+  "pathExists": false,
+  "pathIsSymlink": false,
+  "filesystem": [
+    {
+      "path": "/Users/hugues_mini/Library/Developer/CoreSimulator/Devices/0E42FDE2-5E09-42D3-9876-9EF0037FCBE7/data/Containers/Bundle/Application/377FB024-136D-4407-9929-66C7CA0AF0C4/NativeOwnerStudy-Runner.app",
+      "present": false,
+      "error": "ENOENT"
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Developer/CoreSimulator/Devices/0E42FDE2-5E09-42D3-9876-9EF0037FCBE7/data/Containers/Bundle/Application/377FB024-136D-4407-9929-66C7CA0AF0C4",
+      "present": false,
+      "error": "ENOENT"
+    },
+    {
+      "path": "/Users/hugues_mini/Library/Developer/CoreSimulator/Devices/0E42FDE2-5E09-42D3-9876-9EF0037FCBE7/data/Containers/Bundle/Application",
+      "present": true,
+      "mode": 16877,
+      "device": 16777230,
+      "inode": 104404996
+    }
+  ],
+  "beforeListing": {
+    "returncode": 0,
+    "stdout": "/Users/hugues_mini/Library/Developer/CoreSimulator/Devices/0E42FDE2-5E09-42D3-9876-9EF0037FCBE7/data/Containers/Bundle/Application/377FB024-136D-4407-9929-66C7CA0AF0C4/NativeOwnerStudy-Runner.app\n",
+    "stderr": ""
+  },
+  "listappsReturncode": 0,
+  "afterListing": {
+    "returncode": 0,
+    "stdout": "/Users/hugues_mini/Library/Developer/CoreSimulator/Devices/0E42FDE2-5E09-42D3-9876-9EF0037FCBE7/data/Containers/Bundle/Application/377FB024-136D-4407-9929-66C7CA0AF0C4/NativeOwnerStudy-Runner.app\n",
+    "stderr": ""
+  },
+  "fixtureLookup": {
+    "returncode": 2,
+    "stdout": "",
+    "stderr": "An error was encountered processing the command (domain=NSPOSIXErrorDomain, code=2):\nThe operation couldn\u2019t be completed. No such file or directory\nNo such file or directory\n"
+  },
+  "nativeQueries": 0,
+  "inputCalls": 0,
+  "cleanupDispatches": 0,
+  "meaning": "provider observations only; no absence or native settlement capability"
+}

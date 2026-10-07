@@ -1,0 +1,28 @@
+{
+  "index": 6,
+  "argv": [
+    "xcrun",
+    "simctl",
+    "get_app_container",
+    "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "dev.jev.research.native-owner-study.xctrunner",
+    "app"
+  ],
+  "state": "exited",
+  "pid": 67603,
+  "ownedProcessGroup": 67603,
+  "captureFiles": {
+    "stdout": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/006-stdout.log",
+    "stderr": "/private/tmp/jev-native-owner-reconciliation-apply-20261007/process-output/006-stderr.log"
+  },
+  "processObservation": {
+    "outcome": "completed",
+    "reason": "PROCESS_COMPLETED",
+    "ownedGroupAbsent": true,
+    "streamsClosed": true
+  },
+  "parentReturncode": 0,
+  "returncode": 0,
+  "stdout": "/Users/hugues_mini/Library/Developer/CoreSimulator/Devices/0E42FDE2-5E09-42D3-9876-9EF0037FCBE7/data/Containers/Bundle/Application/377FB024-136D-4407-9929-66C7CA0AF0C4/NativeOwnerStudy-Runner.app\n",
+  "stderr": ""
+}
