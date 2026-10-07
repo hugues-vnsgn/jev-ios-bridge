@@ -1,0 +1,63 @@
+{
+  "runtime": "iOS 26.4",
+  "build": "23E254a",
+  "architecture": "arm64",
+  "runtime_root_during_inspection": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-static-ios264-rnsr7llt/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot",
+  "inspection_tools": [
+    "nm -arch arm64",
+    "otool -arch arm64 -tvV",
+    "dyld_info -objc",
+    "dyld_info -disassemble",
+    "strings"
+  ],
+  "files": [
+    {
+      "runtime_relative_path": "usr/libexec/testmanagerd",
+      "size_bytes": 1220688,
+      "sha256": "b3ce1abf3f887333435b7024b29c440ab247057228b55c95d953afcec494da44",
+      "uuid": "A9ACDC77-0401-383C-9E9E-1C8EA6C7E057"
+    },
+    {
+      "runtime_relative_path": "usr/libexec/backboardd",
+      "size_bytes": 1242720,
+      "sha256": "f0dd6f1ce66dfe101da11e999fb528a1dd971043eec50216ba35f74eed579aed",
+      "uuid": "A536548B-3EC4-3A7C-BC68-96DE379B90C7"
+    },
+    {
+      "runtime_relative_path": "Developer/Library/PrivateFrameworks/XCTAutomationSupport.framework/XCTAutomationSupport",
+      "size_bytes": 724960,
+      "sha256": "8cc8a476b48fd8619496a87352e1151672341977b96c3309682fa9a556437ea8",
+      "uuid": "E9D818E7-48BB-305D-A414-482DBF0980BD"
+    },
+    {
+      "runtime_relative_path": "System/Library/PrivateFrameworks/Recap.framework/Recap",
+      "size_bytes": 567776,
+      "sha256": "ccb9abc33ecc978b53f216a19b29c3b7551816b792be0c386def7a7a78fa5c99",
+      "uuid": "BBF0DEDB-D5E8-3CA7-94F4-E5F72144A561"
+    },
+    {
+      "runtime_relative_path": "System/Library/PrivateFrameworks/HID.framework/HID",
+      "size_bytes": 250624,
+      "sha256": "258bbfa7f99adc96cd91bd08f6193da6a548fecb11ea3f9b6b8cf1b866638bf3",
+      "uuid": "CED12228-722C-3298-8B55-60268CE4E4F2"
+    },
+    {
+      "runtime_relative_path": "System/Library/Frameworks/IOKit.framework/IOKit",
+      "size_bytes": 1143968,
+      "sha256": "5dbf5e0862abaca00e1e73b1246c2bb69ae0b0bb979f690fb0858686fa816c99",
+      "uuid": "5D2EB44C-B19F-33B2-80E2-49E58992F4C5"
+    },
+    {
+      "runtime_relative_path": "System/Library/PrivateFrameworks/BackBoardServices.framework/BackBoardServices",
+      "size_bytes": 1660640,
+      "sha256": "4b93b2ed646028ae47b2b10e20cc7a372ee76b012c55d583a67f4373f33dad67",
+      "uuid": "8445DBF0-37A5-3495-AC16-A170AA8D1E30"
+    },
+    {
+      "runtime_relative_path": "System/Library/PrivateFrameworks/AXRuntime.framework/AXRuntime",
+      "size_bytes": 884448,
+      "sha256": "fb9f921e607f6b2be6d243110fc365aa6411497f3651dd7420864c4eab2fa866",
+      "uuid": "473BBBD4-3FAB-3B1A-A160-081117EE71A3"
+    }
+  ]
+}

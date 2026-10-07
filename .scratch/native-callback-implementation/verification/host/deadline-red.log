@@ -1,0 +1,15 @@
+test_delayed_startup_receives_the_original_absolute_deadline (test_study.Refusals.test_delayed_startup_receives_the_original_absolute_deadline) ... FAIL
+
+======================================================================
+FAIL: test_delayed_startup_receives_the_original_absolute_deadline (test_study.Refusals.test_delayed_startup_receives_the_original_absolute_deadline)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 383, in test_delayed_startup_receives_the_original_absolute_deadline
+    self.assertEqual(tools.environment.get("JEV_NATIVE_OWNER_ADMISSION_DEADLINE"), "190")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != '190'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.042s
+
+FAILED (failures=1)

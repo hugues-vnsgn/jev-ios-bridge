@@ -1,0 +1,22 @@
+[
+  {
+    "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_time.h",
+    "sha256": "a3dceadf2c95133018af363187829ca072d85a93d69f9682a2e4fb993902f28d",
+    "clockDefinition": [
+      "_CLOCK_MONOTONIC_RAW __CLOCK_AVAILABILITY = 4,",
+      "#define CLOCK_MONOTONIC_RAW _CLOCK_MONOTONIC_RAW",
+      "_CLOCK_MONOTONIC_RAW_APPROX __CLOCK_AVAILABILITY = 5,",
+      "#define CLOCK_MONOTONIC_RAW_APPROX _CLOCK_MONOTONIC_RAW_APPROX"
+    ]
+  },
+  {
+    "path": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/_time.h",
+    "sha256": "a3dceadf2c95133018af363187829ca072d85a93d69f9682a2e4fb993902f28d",
+    "clockDefinition": [
+      "_CLOCK_MONOTONIC_RAW __CLOCK_AVAILABILITY = 4,",
+      "#define CLOCK_MONOTONIC_RAW _CLOCK_MONOTONIC_RAW",
+      "_CLOCK_MONOTONIC_RAW_APPROX __CLOCK_AVAILABILITY = 5,",
+      "#define CLOCK_MONOTONIC_RAW_APPROX _CLOCK_MONOTONIC_RAW_APPROX"
+    ]
+  }
+]

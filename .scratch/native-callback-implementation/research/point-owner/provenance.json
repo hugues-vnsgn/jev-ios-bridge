@@ -1,0 +1,14 @@
+{
+  "binary": "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-static-ios264-rnsr7llt/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/testmanagerd",
+  "sha256": "b3ce1abf3f887333435b7024b29c440ab247057228b55c95d953afcec494da44",
+  "command": [
+    "xcrun",
+    "llvm-objdump",
+    "--macho",
+    "--arch=arm64",
+    "--disassemble",
+    "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-static-ios264-rnsr7llt/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/testmanagerd"
+  ],
+  "runtime": "iOS 26.4 / 23E254a",
+  "scope": "Static offline image; not loaded runtime evidence"
+}

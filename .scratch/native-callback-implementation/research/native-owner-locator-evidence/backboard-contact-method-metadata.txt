@@ -1,0 +1,54 @@
+        ivarLayout     0x1000aecda
+        layout map     0x06 
+        name           0x1000af220 BKTouchDeliveryObservationManager
+        baseMethods    0x1000acde8
+            entsize 12 (relative)
+            count   28
+            name    0x5efe8 (0x10010bdd8)
+            types   0x232f1 (0x1000d00e5) @16@0:8
+            imp     0xfff6ee88 (0x10001bc80)
+        reserved       0x0
+        ivarLayout     0x100000000 __mh_execute_header
+        name           0x1000af220 BKTouchDeliveryObservationManager
+        baseMethods    0x1000a7fe0
+            entsize 12 (relative)
+            count   1
+            name    0x656a8 (0x10010d690)
+            types   0x280f9 (0x1000d00e5) @16@0:8
+            imp     0xfff74f9c (0x10001cf8c)
+            offset    0x10010f134 64
+            name      0x1000bee2d _touchDeliveryObservationManager
+            type      0x1000d33da @"BKTouchDeliveryObservationManager"
+            alignment 3
+            size      8
+            offset    0x10010f138 72
+            name      0x1000beeef _touchLifecycleObservers
+            type      0x1000d0f61 @"NSMutableArray"
+            alignment 3
+    0x1000c0f2e cancelTouchesOnAllDisplays
+    0x1000c0f49 cancelTouchesOnDisplay:
+    0x1000c0f7c cancelTouchesWithIdentifiers:
+    0x1000c0f9a canceledStyle
+    0x1000c0fca centerAtPoint:
+    0x1000c103b claimsToConformToUsagePage:usage:
+    0x1000c1063 classForCoder
+    0x1000c1071 classesRequiredToDecode
+    0x1000c1089 clear
+    0x1000c48ef observeMouseScrollPhaseDidChange:
+    0x1000c4911 observeMouseTouchCountDidChange:
+    0x1000c4932 observeTouchEventDeliveryDidOccur:response:
+    0x1000c495e observeValueForKeyPath:ofObject:change:context:
+    0x1000b84be observerService
+    0x1000c498e openAlternateSystemApp:options:withResult:andExitBlock:
+    0x1000b6a88 options
+    0x1000c49f7 orderedContext
+    0x1000c4a06 orderedSetWithArray:
+    0x1000c9125 touchDidDetach:destinations:
+    0x1000c9142 touchDidFinishProcessingTouchCollection
+    0x1000c916a touchDidHIDCancel:
+    0x1000c917d touchDidSoftCancel:
+    0x1000c9191 touchDidTransfer:destination:
+    0x1000c91af touchEventServer
+    0x1000b6fc7 touchIdentifier
+    0x1000c91c0 touchIdentifiers
+    0x1000b89fe touchPadManager

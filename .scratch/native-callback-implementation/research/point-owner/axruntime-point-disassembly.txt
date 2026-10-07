@@ -1,0 +1,974 @@
+__AXUIElementCopyElementAtPositionWithParams:
+    5308:	ed 33 b7 6d	stp	d13, d12, [sp, #-0x90]!
+    530c:	eb 2b 01 6d	stp	d11, d10, [sp, #0x10]
+    5310:	e9 23 02 6d	stp	d9, d8, [sp, #0x20]
+    5314:	fc 6f 03 a9	stp	x28, x27, [sp, #0x30]
+    5318:	fa 67 04 a9	stp	x26, x25, [sp, #0x40]
+    531c:	f8 5f 05 a9	stp	x24, x23, [sp, #0x50]
+    5320:	f6 57 06 a9	stp	x22, x21, [sp, #0x60]
+    5324:	f4 4f 07 a9	stp	x20, x19, [sp, #0x70]
+    5328:	fd 7b 08 a9	stp	x29, x30, [sp, #0x80]
+    532c:	fd 03 02 91	add	x29, sp, #0x80
+    5330:	ff c3 18 d1	sub	sp, sp, #0x630
+    5334:	f5 03 00 aa	mov	x21, x0
+    5338:	e8 02 00 f0	adrp	x8, 95 ; 0x64000
+    533c:	08 3d 45 f9	ldr	x8, [x8, #0xa78] ; literal pool symbol address: ___stack_chk_guard
+    5340:	08 01 40 f9	ldr	x8, [x8]
+    5344:	a8 83 16 f8	stur	x8, [x29, #-0x98]
+    5348:	e4 4f 01 b9	str	w4, [sp, #0x14c]
+    534c:	ff 43 01 b9	str	wzr, [sp, #0x140]
+    5350:	ff 3f 01 b9	str	wzr, [sp, #0x13c]
+    5354:	ff ff 12 a9	stp	xzr, xzr, [sp, #0x128]
+    5358:	00 4e 8c 12	mov	w0, #-0x6271
+    535c:	75 27 00 b4	cbz	x21, 0x5848
+    5360:	fc 03 01 aa	mov	x28, x1
+    5364:	21 27 00 b4	cbz	x1, 0x5848
+    5368:	f6 03 06 aa	mov	x22, x6
+    536c:	f3 03 05 aa	mov	x19, x5
+    5370:	f4 03 04 aa	mov	x20, x4
+    5374:	f9 03 03 aa	mov	x25, x3
+    5378:	f8 03 02 aa	mov	x24, x2
+    537c:	28 1c a1 4e	mov.16b	v8, v1
+    5380:	09 1c a0 4e	mov.16b	v9, v0
+    5384:	ff 4b 01 b9	str	wzr, [sp, #0x148]
+    5388:	ff 1f 05 39	strb	wzr, [sp, #0x147]
+    538c:	00 e4 00 6f	movi.2d	v0, #0000000000000000
+    5390:	e0 83 10 ad	stp	q0, q0, [sp, #0x210]
+    5394:	e0 83 11 ad	stp	q0, q0, [sp, #0x230]
+    5398:	e0 83 12 ad	stp	q0, q0, [sp, #0x250]
+    539c:	e0 83 13 ad	stp	q0, q0, [sp, #0x270]
+    53a0:	e0 83 14 ad	stp	q0, q0, [sp, #0x290]
+    53a4:	e0 83 15 ad	stp	q0, q0, [sp, #0x2b0]
+    53a8:	e0 83 16 ad	stp	q0, q0, [sp, #0x2d0]
+    53ac:	e0 83 17 ad	stp	q0, q0, [sp, #0x2f0]
+    53b0:	e0 83 18 ad	stp	q0, q0, [sp, #0x310]
+    53b4:	e0 83 19 ad	stp	q0, q0, [sp, #0x330]
+    53b8:	e0 83 1a ad	stp	q0, q0, [sp, #0x350]
+    53bc:	e0 83 1b ad	stp	q0, q0, [sp, #0x370]
+    53c0:	e0 83 1c ad	stp	q0, q0, [sp, #0x390]
+    53c4:	e0 83 1d ad	stp	q0, q0, [sp, #0x3b0]
+    53c8:	e0 83 1e ad	stp	q0, q0, [sp, #0x3d0]
+    53cc:	e0 83 1f ad	stp	q0, q0, [sp, #0x3f0]
+    53d0:	ff 27 01 b9	str	wzr, [sp, #0x124]
+    53d4:	ff 7f 11 a9	stp	xzr, xzr, [sp, #0x110]
+    53d8:	31 0b 00 94	bl	_AXRequestingClient
+    53dc:	f7 03 00 aa	mov	x23, x0
+    53e0:	9f 03 00 f9	str	xzr, [x28]
+    53e4:	e1 1f 05 91	add	x1, sp, #0x147
+    53e8:	e2 43 04 91	add	x2, sp, #0x110
+    53ec:	e3 93 04 91	add	x3, sp, #0x124
+    53f0:	e0 03 15 aa	mov	x0, x21
+    53f4:	b0 2d 00 94	bl	__AXUIElementValidate
+    53f8:	e0 5f 00 b9	str	w0, [sp, #0x5c]
+    53fc:	79 02 00 35	cbnz	w25, 0x5448
+    5400:	e8 1f 45 39	ldrb	w8, [sp, #0x147]
+    5404:	28 02 00 34	cbz	w8, 0x5448
+    5408:	e1 33 05 91	add	x1, sp, #0x14c
+    540c:	e0 03 15 aa	mov	x0, x21
+    5410:	20 1d a9 4e	mov.16b	v0, v9
+    5414:	01 1d a8 4e	mov.16b	v1, v8
+    5418:	e2 03 13 aa	mov	x2, x19
+    541c:	94 fd ff 97	bl	_copyApplicationAtPosition
+    5420:	c0 19 00 b4	cbz	x0, 0x5758
+    5424:	f4 03 00 aa	mov	x20, x0
+    5428:	e1 1f 05 91	add	x1, sp, #0x147
+    542c:	e2 43 04 91	add	x2, sp, #0x110
+    5430:	e3 93 04 91	add	x3, sp, #0x124
+    5434:	a0 2d 00 94	bl	__AXUIElementValidate
+    5438:	f5 03 00 aa	mov	x21, x0
+    543c:	e0 03 14 aa	mov	x0, x20
+    5440:	74 07 01 94	bl	0x47210 ; symbol stub for: _CFRelease
+    5444:	40 00 00 14	b	0x5544
+    5448:	d4 07 00 35	cbnz	w20, 0x5540
+    544c:	6a 17 00 94	bl	_AXProcessCanContactSystemWideServer
+    5450:	80 07 00 34	cbz	w0, 0x5540
+    5454:	f6 e3 0a 29	stp	w22, w24, [sp, #0x54]
+    5458:	76 ae 8c 52	mov	w22, #0x6573
+    545c:	36 00 a0 72	movk	w22, #0x1, lsl #16
+    5460:	20 c1 22 1e	fcvt	d0, s9
+    5464:	01 c1 22 1e	fcvt	d1, s8
+    5468:	e0 07 10 6d	stp	d0, d1, [sp, #0x100]
+    546c:	e1 03 04 91	add	x1, sp, #0x100
+    5470:	20 00 80 52	mov	w0, #0x1
+    5474:	3b 29 00 94	bl	_AXValueCreate
+    5478:	f4 03 00 aa	mov	x20, x0
+    547c:	e0 03 01 f9	str	x0, [sp, #0x200]
+    5480:	fa 02 00 f0	adrp	x26, 95 ; 0x64000
+    5484:	40 0b 44 f9	ldr	x0, [x26, #0x810] ; literal pool symbol address: _OBJC_CLASS_$_NSNumber
+    5488:	e2 03 13 aa	mov	x2, x19
+    548c:	55 71 01 94	bl	"_objc_msgSend$numberWithUnsignedInt:"
+    5490:	fd 03 1d aa	mov	x29, x29
+    5494:	c6 09 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5498:	f5 03 00 aa	mov	x21, x0
+    549c:	e0 07 01 f9	str	x0, [sp, #0x208]
+    54a0:	e8 02 00 f0	adrp	x8, 95 ; 0x64000
+    54a4:	00 71 42 f9	ldr	x0, [x8, #0x4e0] ; literal pool symbol address: _OBJC_CLASS_$_NSArray
+    54a8:	e2 03 08 91	add	x2, sp, #0x200
+    54ac:	43 00 80 52	mov	w3, #0x2
+    54b0:	2c 68 01 94	bl	"_objc_msgSend$arrayWithObjects:count:"
+    54b4:	fd 03 1d aa	mov	x29, x29
+    54b8:	bd 09 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    54bc:	f8 03 00 aa	mov	x24, x0
+    54c0:	97 09 01 94	bl	0x47b1c ; symbol stub for: _objc_release_x21
+    54c4:	ff 7f 00 f9	str	xzr, [sp, #0xf8]
+    54c8:	68 03 00 f0	adrp	x8, 111 ; 0x74000
+    54cc:	02 1d 45 f9	ldr	x2, [x8, #0xa38]
+    54d0:	00 00 80 52	mov	w0, #0x0
+    54d4:	01 00 80 d2	mov	x1, #0x0
+    54d8:	4e 2d 00 94	bl	__AXUIElementCreateInternal
+    54dc:	f9 03 00 aa	mov	x25, x0
+    54e0:	e3 e3 03 91	add	x3, sp, #0xf8
+    54e4:	61 ae 8c 52	mov	w1, #0x6573
+    54e8:	21 00 a0 72	movk	w1, #0x1, lsl #16
+    54ec:	e2 03 18 aa	mov	x2, x24
+    54f0:	43 f7 ff 97	bl	_AXUIElementCopyParameterizedAttributeValue
+    54f4:	f5 03 00 aa	mov	x21, x0
+    54f8:	74 00 00 b4	cbz	x20, 0x5504
+    54fc:	e0 03 14 aa	mov	x0, x20
+    5500:	44 07 01 94	bl	0x47210 ; symbol stub for: _CFRelease
+    5504:	1b 00 80 52	mov	w27, #0x0
+    5508:	e0 7f 40 f9	ldr	x0, [sp, #0xf8]
+    550c:	15 14 00 35	cbnz	w21, 0x578c
+    5510:	e0 13 00 b4	cbz	x0, 0x578c
+    5514:	12 07 01 94	bl	0x4715c ; symbol stub for: _CFGetTypeID
+    5518:	f4 03 00 aa	mov	x20, x0
+    551c:	37 07 01 94	bl	0x471f8 ; symbol stub for: _CFNumberGetTypeID
+    5520:	9f 02 00 eb	cmp	x20, x0
+    5524:	f5 5f 40 b9	ldr	w21, [sp, #0x5c]
+    5528:	c1 23 00 54	b.ne	0x59a0
+    552c:	e0 7f 40 f9	ldr	x0, [sp, #0xf8]
+    5530:	c4 78 01 94	bl	_objc_msgSend$unsignedIntValue
+    5534:	fb 03 00 aa	mov	x27, x0
+    5538:	e0 4f 01 b9	str	w0, [sp, #0x14c]
+    553c:	1a 01 00 14	b	0x59a4
+    5540:	f5 5f 40 b9	ldr	w21, [sp, #0x5c]
+    5544:	f9 4f 41 b9	ldr	w25, [sp, #0x14c]
+    5548:	2a c1 22 1e	fcvt	d10, s9
+    554c:	0b c1 22 1e	fcvt	d11, s8
+    5550:	f8 5b 00 b9	str	w24, [sp, #0x58]
+    5554:	fb 03 17 aa	mov	x27, x23
+    5558:	39 01 00 34	cbz	w25, 0x557c
+    555c:	40 1d aa 4e	mov.16b	v0, v10
+    5560:	61 1d ab 4e	mov.16b	v1, v11
+    5564:	e0 03 19 aa	mov	x0, x25
+    5568:	e1 03 13 aa	mov	x1, x19
+    556c:	b3 fe ff 97	bl	_AXConvertPointToHostedCoordinates
+    5570:	0c 1c a0 4e	mov.16b	v12, v0
+    5574:	2d 1c a1 4e	mov.16b	v13, v1
+    5578:	03 00 00 14	b	0x5584
+    557c:	4c 1d aa 4e	mov.16b	v12, v10
+    5580:	6d 1d ab 4e	mov.16b	v13, v11
+    5584:	fa 63 51 a9	ldp	x26, x24, [sp, #0x110]
+    5588:	f3 1f 45 39	ldrb	w19, [sp, #0x147]
+    558c:	e0 08 01 94	bl	0x4790c ; symbol stub for: _getpid
+    5590:	bf 02 00 6b	cmp	w21, w0
+    5594:	61 00 00 54	b.ne	0x55a0
+    5598:	28 00 80 52	mov	w8, #0x1
+    559c:	09 00 00 14	b	0x55c0
+    55a0:	08 00 80 52	mov	w8, #0x0
+    55a4:	f5 00 00 35	cbnz	w21, 0x55c0
+    55a8:	d3 00 00 34	cbz	w19, 0x55c0
+    55ac:	88 03 00 90	adrp	x8, 112 ; 0x75000
+    55b0:	08 21 23 91	add	x8, x8, #0x8c8
+    55b4:	08 01 40 b9	ldr	w8, [x8]
+    55b8:	1f 00 08 6b	cmp	w0, w8
+    55bc:	e8 17 9f 1a	cset	w8, eq
+    55c0:	c8 02 08 2a	orr	w8, w22, w8
+    55c4:	e8 0b 00 34	cbz	w8, 0x5740
+    55c8:	31 06 01 94	bl	0x46e8c ; symbol stub for: _AXLogHitTest
+    55cc:	fd 03 1d aa	mov	x29, x29
+    55d0:	77 09 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    55d4:	f4 03 00 aa	mov	x20, x0
+    55d8:	41 00 80 52	mov	w1, #0x2
+    55dc:	b9 09 01 94	bl	0x47cc0 ; symbol stub for: _os_log_type_enabled
+    55e0:	60 19 00 35	cbnz	w0, 0x590c
+    55e4:	4b 09 01 94	bl	0x47b10 ; symbol stub for: _objc_release_x20
+    55e8:	13 07 01 94	bl	0x47234 ; symbol stub for: _CFRunLoopGetCurrent
+    55ec:	f4 03 00 aa	mov	x20, x0
+    55f0:	14 07 01 94	bl	0x47240 ; symbol stub for: _CFRunLoopGetMain
+    55f4:	9f 02 00 eb	cmp	x20, x0
+    55f8:	61 11 00 54	b.ne	0x5824
+    55fc:	8c 41 62 1e	fcvt	s12, d12
+    5600:	ad 41 62 1e	fcvt	s13, d13
+    5604:	88 03 00 90	adrp	x8, 112 ; 0x75000
+    5608:	08 41 43 b9	ldr	w8, [x8, #0x340]
+    560c:	e9 00 80 52	mov	w9, #0x7
+    5610:	1f 01 00 71	cmp	w8, #0x0
+    5614:	34 01 88 1a	csel	w20, w9, w8, eq
+    5618:	88 03 00 90	adrp	x8, 112 ; 0x75000
+    561c:	08 05 42 f9	ldr	x8, [x8, #0x408]
+    5620:	1f 05 00 b1	cmn	x8, #0x1
+    5624:	01 55 00 54	b.ne	0x60c4
+    5628:	88 03 00 90	adrp	x8, 112 ; 0x75000
+    562c:	08 91 0f 91	add	x8, x8, #0x3e4
+    5630:	00 05 40 ad	ldp	q0, q1, [x8]
+    5634:	e0 87 0e ad	stp	q0, q1, [sp, #0x1d0]
+    5638:	e8 43 07 91	add	x8, sp, #0x1d0
+    563c:	e8 13 00 f9	str	x8, [sp, #0x20]
+    5640:	e8 23 05 91	add	x8, sp, #0x148
+    5644:	e9 f3 04 91	add	x9, sp, #0x13c
+    5648:	e9 23 01 a9	stp	x9, x8, [sp, #0x10]
+    564c:	e8 43 08 91	add	x8, sp, #0x210
+    5650:	e9 a3 04 91	add	x9, sp, #0x128
+    5654:	e7 03 05 91	add	x7, sp, #0x140
+    5658:	e9 23 00 a9	stp	x9, x8, [sp]
+    565c:	00 00 80 52	mov	w0, #0x0
+    5660:	f7 03 15 aa	mov	x23, x21
+    5664:	e1 03 15 aa	mov	x1, x21
+    5668:	e2 03 1a aa	mov	x2, x26
+    566c:	e3 03 18 aa	mov	x3, x24
+    5670:	80 1d ac 4e	mov.16b	v0, v12
+    5674:	a1 1d ad 4e	mov.16b	v1, v13
+    5678:	fa 5b 40 b9	ldr	w26, [sp, #0x58]
+    567c:	e4 03 1a aa	mov	x4, x26
+    5680:	e5 03 19 aa	mov	x5, x25
+    5684:	e6 03 14 aa	mov	x6, x20
+    5688:	4c 13 00 94	bl	__AXXMIGCopyElementAtPosition
+    568c:	f5 03 00 aa	mov	x21, x0
+    5690:	b5 0c 00 35	cbnz	w21, 0x5824
+    5694:	e8 4b 41 b9	ldr	w8, [sp, #0x148]
+    5698:	a8 0c 00 35	cbnz	w8, 0x582c
+    569c:	e1 8b 52 a9	ldp	x1, x2, [sp, #0x128]
+    56a0:	e0 43 41 b9	ldr	w0, [sp, #0x140]
+    56a4:	db 2c 00 94	bl	__AXUIElementCreateInternal
+    56a8:	80 03 00 f9	str	x0, [x28]
+    56ac:	60 48 00 b4	cbz	x0, 0x5fb8
+    56b0:	ff 03 01 b9	str	wzr, [sp, #0x100]
+    56b4:	e1 03 04 91	add	x1, sp, #0x100
+    56b8:	d9 02 00 94	bl	_AXUIElementGetPid
+    56bc:	f3 03 41 b9	ldr	w19, [sp, #0x100]
+    56c0:	93 00 f8 36	tbz	w19, #0x1f, 0x56d0
+    56c4:	92 08 01 94	bl	0x4790c ; symbol stub for: _getpid
+    56c8:	1f 00 13 2b	cmn	w0, w19
+    56cc:	81 31 00 54	b.ne	0x5cfc
+    56d0:	7f 02 17 6b	cmp	w19, w23
+    56d4:	a0 1c 00 54	b.eq	0x5a68
+    56d8:	93 1c 00 34	cbz	w19, 0x5a68
+    56dc:	c6 16 00 94	bl	_AXProcessCanContactSystemWideServer
+    56e0:	36 46 00 35	cbnz	w22, 0x5fa4
+    56e4:	00 46 00 34	cbz	w0, 0x5fa4
+    56e8:	80 03 40 f9	ldr	x0, [x28]
+    56ec:	e4 02 00 94	bl	_AXUICreateApplicationElementForElement
+    56f0:	f4 03 00 aa	mov	x20, x0
+    56f4:	80 03 40 f9	ldr	x0, [x28]
+    56f8:	18 f1 ff 97	bl	__UIAXElementForAXUIElementRef
+    56fc:	fd 03 1d aa	mov	x29, x29
+    5700:	2b 09 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5704:	f5 03 00 aa	mov	x21, x0
+    5708:	c9 ed 00 94	bl	_AXRemoteElementFromObject
+    570c:	fd 03 1d aa	mov	x29, x29
+    5710:	27 09 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5714:	f6 03 00 aa	mov	x22, x0
+    5718:	01 09 01 94	bl	0x47b1c ; symbol stub for: _objc_release_x21
+    571c:	b6 31 00 b4	cbz	x22, 0x5d50
+    5720:	e0 03 16 aa	mov	x0, x22
+    5724:	a7 6f 01 94	bl	_objc_msgSend$machPort
+    5728:	11 f3 ff 97	bl	__AXUIElementSetMachPortForNextMessage
+    572c:	e0 03 16 aa	mov	x0, x22
+    5730:	84 6a 01 94	bl	_objc_msgSend$deniesDirectAppConnection
+    5734:	40 3e 00 36	tbz	w0, #0x0, 0x5efc
+    5738:	13 00 80 52	mov	w19, #0x0
+    573c:	f4 01 00 14	b	0x5f0c
+    5740:	88 03 00 90	adrp	x8, 112 ; 0x75000
+    5744:	14 45 43 b9	ldr	w20, [x8, #0x344]
+    5748:	14 01 00 34	cbz	w20, 0x5768
+    574c:	f7 03 15 aa	mov	x23, x21
+    5750:	1f 45 03 b9	str	wzr, [x8, #0x344]
+    5754:	16 00 00 14	b	0x57ac
+    5758:	e0 03 17 aa	mov	x0, x23
+    575c:	56 0a 00 94	bl	__AXSetRequestingClient
+    5760:	e0 4d 8c 12	mov	w0, #-0x6270
+    5764:	39 00 00 14	b	0x5848
+    5768:	e8 1f 45 39	ldrb	w8, [sp, #0x147]
+    576c:	48 01 00 34	cbz	w8, 0x5794
+    5770:	88 03 00 90	adrp	x8, 112 ; 0x75000
+    5774:	08 0d 42 f9	ldr	x8, [x8, #0x418]
+    5778:	1f 05 00 b1	cmn	x8, #0x1
+    577c:	81 4a 00 54	b.ne	0x60cc
+    5780:	88 03 00 90	adrp	x8, 112 ; 0x75000
+    5784:	01 09 42 f9	ldr	x1, [x8, #0x410]
+    5788:	04 00 00 14	b	0x5798
+    578c:	f5 5f 40 b9	ldr	w21, [sp, #0x5c]
+    5790:	86 00 00 14	b	0x59a8
+    5794:	01 00 80 d2	mov	x1, #0x0
+    5798:	f7 03 15 aa	mov	x23, x21
+    579c:	e0 03 15 aa	mov	x0, x21
+    57a0:	60 f4 ff 97	bl	__AXGetPortFromCache
+    57a4:	f4 03 00 aa	mov	x20, x0
+    57a8:	20 07 00 34	cbz	w0, 0x588c
+    57ac:	f5 27 41 b9	ldr	w21, [sp, #0x124]
+    57b0:	8c 41 62 1e	fcvt	s12, d12
+    57b4:	ad 41 62 1e	fcvt	s13, d13
+    57b8:	90 f2 ff 97	bl	__AXDetermineRequestingClient
+    57bc:	e7 03 00 aa	mov	x7, x0
+    57c0:	e8 23 05 91	add	x8, sp, #0x148
+    57c4:	e8 13 00 f9	str	x8, [sp, #0x20]
+    57c8:	e8 f3 04 91	add	x8, sp, #0x13c
+    57cc:	e9 43 08 91	add	x9, sp, #0x210
+    57d0:	e9 23 01 a9	stp	x9, x8, [sp, #0x10]
+    57d4:	e8 a3 04 91	add	x8, sp, #0x128
+    57d8:	e9 03 05 91	add	x9, sp, #0x140
+    57dc:	e9 23 00 a9	stp	x9, x8, [sp]
+    57e0:	e0 03 14 aa	mov	x0, x20
+    57e4:	e1 03 15 aa	mov	x1, x21
+    57e8:	e2 03 17 aa	mov	x2, x23
+    57ec:	e3 03 1a aa	mov	x3, x26
+    57f0:	e4 03 18 aa	mov	x4, x24
+    57f4:	80 1d ac 4e	mov.16b	v0, v12
+    57f8:	a1 1d ad 4e	mov.16b	v1, v13
+    57fc:	fa 5b 40 b9	ldr	w26, [sp, #0x58]
+    5800:	e5 03 1a aa	mov	x5, x26
+    5804:	e6 03 19 aa	mov	x6, x25
+    5808:	89 f2 00 94	bl	__AXMIGCopyElementAtPosition
+    580c:	f5 03 00 aa	mov	x21, x0
+    5810:	e0 4b 41 b9	ldr	w0, [sp, #0x148]
+    5814:	2b 0a 00 94	bl	__AXUIElementSetLastGlobalError
+    5818:	e0 03 14 aa	mov	x0, x20
+    581c:	4a f2 ff 97	bl	__AXReleasePortFromCache
+    5820:	b5 f3 ff 34	cbz	w21, 0x5694
+    5824:	68 4e 8c 12	mov	w8, #-0x6274
+    5828:	e8 4b 01 b9	str	w8, [sp, #0x148]
+    582c:	80 03 40 f9	ldr	x0, [x28]
+    5830:	60 00 00 b4	cbz	x0, 0x583c
+    5834:	77 06 01 94	bl	0x47210 ; symbol stub for: _CFRelease
+    5838:	9f 03 00 f9	str	xzr, [x28]
+    583c:	e0 03 1b aa	mov	x0, x27
+    5840:	1d 0a 00 94	bl	__AXSetRequestingClient
+    5844:	e0 4b 41 b9	ldr	w0, [sp, #0x148]
+    5848:	a8 83 56 f8	ldur	x8, [x29, #-0x98]
+    584c:	e9 02 00 f0	adrp	x9, 95 ; 0x64000
+    5850:	29 3d 45 f9	ldr	x9, [x9, #0xa78] ; literal pool symbol address: ___stack_chk_guard
+    5854:	29 01 40 f9	ldr	x9, [x9]
+    5858:	3f 01 08 eb	cmp	x9, x8
+    585c:	c1 43 00 54	b.ne	0x60d4
+    5860:	ff c3 18 91	add	sp, sp, #0x630
+    5864:	fd 7b 48 a9	ldp	x29, x30, [sp, #0x80]
+    5868:	f4 4f 47 a9	ldp	x20, x19, [sp, #0x70]
+    586c:	f6 57 46 a9	ldp	x22, x21, [sp, #0x60]
+    5870:	f8 5f 45 a9	ldp	x24, x23, [sp, #0x50]
+    5874:	fa 67 44 a9	ldp	x26, x25, [sp, #0x40]
+    5878:	fc 6f 43 a9	ldp	x28, x27, [sp, #0x30]
+    587c:	e9 23 42 6d	ldp	d9, d8, [sp, #0x20]
+    5880:	eb 2b 41 6d	ldp	d11, d10, [sp, #0x10]
+    5884:	ed 33 c9 6c	ldp	d13, d12, [sp], #0x90
+    5888:	c0 03 5f d6	ret
+    588c:	9e 05 01 94	bl	0x46f04 ; symbol stub for: _AXRuntimeLogPID
+    5890:	fd 03 1d aa	mov	x29, x29
+    5894:	c6 08 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5898:	f4 03 00 aa	mov	x20, x0
+    589c:	21 00 80 52	mov	w1, #0x1
+    58a0:	08 09 01 94	bl	0x47cc0 ; symbol stub for: _os_log_type_enabled
+    58a4:	e0 02 00 34	cbz	w0, 0x5900
+    58a8:	e8 02 00 f0	adrp	x8, 95 ; 0x64000
+    58ac:	00 09 44 f9	ldr	x0, [x8, #0x810] ; literal pool symbol address: _OBJC_CLASS_$_NSNumber
+    58b0:	e2 03 17 aa	mov	x2, x23
+    58b4:	23 70 01 94	bl	"_objc_msgSend$numberWithInt:"
+    58b8:	fd 03 1d aa	mov	x29, x29
+    58bc:	bc 08 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    58c0:	f5 03 00 aa	mov	x21, x0
+    58c4:	28 02 00 d0	adrp	x8, 70 ; 0x4b000
+    58c8:	00 11 42 fd	ldr	d0, [x8, #0x420]
+    58cc:	e0 d3 01 bd	str	s0, [sp, #0x1d0]
+    58d0:	e8 43 07 91	add	x8, sp, #0x1d0
+    58d4:	00 41 00 f8	stur	x0, [x8, #0x4]
+    58d8:	c0 ff ff f0	adrp	x0, -5 ; 0x0
+    58dc:	00 00 00 91	add	x0, x0, #0x0
+    58e0:	63 02 00 90	adrp	x3, 76 ; 0x51000
+    58e4:	63 d8 27 91	add	x3, x3, #0x9f6 ; literal pool for: "Unable to CopyElement, no port for %@"
+    58e8:	e4 43 07 91	add	x4, sp, #0x1d0
+    58ec:	e1 03 14 aa	mov	x1, x20
+    58f0:	22 00 80 52	mov	w2, #0x1
+    58f4:	85 01 80 52	mov	w5, #0xc
+    58f8:	a2 07 01 94	bl	0x47780 ; symbol stub for: __os_log_impl
+    58fc:	88 08 01 94	bl	0x47b1c ; symbol stub for: _objc_release_x21
+    5900:	84 08 01 94	bl	0x47b10 ; symbol stub for: _objc_release_x20
+    5904:	c8 4f 8c 12	mov	w8, #-0x627f
+    5908:	c8 ff ff 17	b	0x5828
+    590c:	80 1d ac 4e	mov.16b	v0, v12
+    5910:	a1 1d ad 4e	mov.16b	v1, v13
+    5914:	3e 07 01 94	bl	0x4760c ; symbol stub for: _NSStringFromPoint
+    5918:	fd 03 1d aa	mov	x29, x29
+    591c:	a4 08 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5920:	f7 03 15 aa	mov	x23, x21
+    5924:	f5 03 00 aa	mov	x21, x0
+    5928:	e8 02 00 f0	adrp	x8, 95 ; 0x64000
+    592c:	00 09 44 f9	ldr	x0, [x8, #0x810] ; literal pool symbol address: _OBJC_CLASS_$_NSNumber
+    5930:	e2 03 19 aa	mov	x2, x25
+    5934:	2b 70 01 94	bl	"_objc_msgSend$numberWithUnsignedInt:"
+    5938:	fd 03 1d aa	mov	x29, x29
+    593c:	9c 08 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5940:	f3 03 16 aa	mov	x19, x22
+    5944:	f6 03 00 aa	mov	x22, x0
+    5948:	28 02 00 d0	adrp	x8, 70 ; 0x4b000
+    594c:	00 25 42 fd	ldr	d0, [x8, #0x448]
+    5950:	e0 d3 01 bd	str	s0, [sp, #0x1d0]
+    5954:	e9 43 07 91	add	x9, sp, #0x1d0
+    5958:	35 41 00 f8	stur	x21, [x9, #0x4]
+    595c:	08 08 81 52	mov	w8, #0x840
+    5960:	e8 bb 03 79	strh	w8, [sp, #0x1dc]
+    5964:	20 e1 00 f8	stur	x0, [x9, #0xe]
+    5968:	c0 ff ff f0	adrp	x0, -5 ; 0x0
+    596c:	00 00 00 91	add	x0, x0, #0x0
+    5970:	63 02 00 90	adrp	x3, 76 ; 0x51000
+    5974:	63 00 27 91	add	x3, x3, #0x9c0 ; literal pool for: "Calling from same app for point: %@ and contextId: %@"
+    5978:	e4 43 07 91	add	x4, sp, #0x1d0
+    597c:	e1 03 14 aa	mov	x1, x20
+    5980:	42 00 80 52	mov	w2, #0x2
+    5984:	c5 02 80 52	mov	w5, #0x16
+    5988:	75 07 01 94	bl	0x4775c ; symbol stub for: __os_log_debug_impl
+    598c:	67 08 01 94	bl	0x47b28 ; symbol stub for: _objc_release_x22
+    5990:	f6 03 13 aa	mov	x22, x19
+    5994:	62 08 01 94	bl	0x47b1c ; symbol stub for: _objc_release_x21
+    5998:	f5 03 17 aa	mov	x21, x23
+    599c:	12 ff ff 17	b	0x55e4
+    59a0:	1b 00 80 52	mov	w27, #0x0
+    59a4:	e0 7f 40 f9	ldr	x0, [sp, #0xf8]
+    59a8:	60 00 00 b4	cbz	x0, 0x59b4
+    59ac:	19 06 01 94	bl	0x47210 ; symbol stub for: _CFRelease
+    59b0:	ff 7f 00 f9	str	xzr, [sp, #0xf8]
+    59b4:	e8 57 40 b9	ldr	w8, [sp, #0x54]
+    59b8:	a8 37 00 34	cbz	w8, 0x60ac
+    59bc:	08 03 00 b0	adrp	x8, 97 ; 0x66000
+    59c0:	08 61 30 91	add	x8, x8, #0xc18 ; Objc cfstring ref: @"contextId"
+    59c4:	e8 fb 00 f9	str	x8, [sp, #0x1f0]
+    59c8:	40 0b 44 f9	ldr	x0, [x26, #0x810]
+    59cc:	e2 03 1b aa	mov	x2, x27
+    59d0:	04 70 01 94	bl	"_objc_msgSend$numberWithUnsignedInt:"
+    59d4:	fd 03 1d aa	mov	x29, x29
+    59d8:	75 08 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    59dc:	f4 03 00 aa	mov	x20, x0
+    59e0:	e0 ff 00 f9	str	x0, [sp, #0x1f8]
+    59e4:	e8 02 00 f0	adrp	x8, 95 ; 0x64000
+    59e8:	00 7d 42 f9	ldr	x0, [x8, #0x4f8] ; literal pool symbol address: _OBJC_CLASS_$_NSDictionary
+    59ec:	e2 e3 07 91	add	x2, sp, #0x1f8
+    59f0:	e3 c3 07 91	add	x3, sp, #0x1f0
+    59f4:	24 00 80 52	mov	w4, #0x1
+    59f8:	02 6a 01 94	bl	"_objc_msgSend$dictionaryWithObjects:forKeys:count:"
+    59fc:	fd 03 1d aa	mov	x29, x29
+    5a00:	6b 08 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5a04:	fa 03 00 aa	mov	x26, x0
+    5a08:	42 08 01 94	bl	0x47b10 ; symbol stub for: _objc_release_x20
+    5a0c:	c1 06 00 91	add	x1, x22, #0x1
+    5a10:	e3 e3 03 91	add	x3, sp, #0xf8
+    5a14:	e0 03 19 aa	mov	x0, x25
+    5a18:	e2 03 1a aa	mov	x2, x26
+    5a1c:	f8 f5 ff 97	bl	_AXUIElementCopyParameterizedAttributeValue
+    5a20:	e8 03 00 aa	mov	x8, x0
+    5a24:	16 00 80 d2	mov	x22, #0x0
+    5a28:	e0 7f 40 f9	ldr	x0, [sp, #0xf8]
+    5a2c:	c8 31 00 35	cbnz	w8, 0x6064
+    5a30:	a0 31 00 b4	cbz	x0, 0x6064
+    5a34:	ca 05 01 94	bl	0x4715c ; symbol stub for: _CFGetTypeID
+    5a38:	f4 03 00 aa	mov	x20, x0
+    5a3c:	ef 05 01 94	bl	0x471f8 ; symbol stub for: _CFNumberGetTypeID
+    5a40:	9f 02 00 eb	cmp	x20, x0
+    5a44:	e1 00 00 54	b.ne	0x5a60
+    5a48:	e0 7f 40 f9	ldr	x0, [sp, #0xf8]
+    5a4c:	7d 77 01 94	bl	_objc_msgSend$unsignedIntValue
+    5a50:	f4 03 00 aa	mov	x20, x0
+    5a54:	ae 07 01 94	bl	0x4790c ; symbol stub for: _getpid
+    5a58:	9f 02 00 6b	cmp	w20, w0
+    5a5c:	21 01 00 54	b.ne	0x5a80
+    5a60:	16 00 80 d2	mov	x22, #0x0
+    5a64:	7f 01 00 14	b	0x6060
+    5a68:	f3 29 00 35	cbnz	w19, 0x5fa4
+    5a6c:	80 03 40 f9	ldr	x0, [x28]
+    5a70:	40 2a 00 b4	cbz	x0, 0x5fb8
+    5a74:	e7 05 01 94	bl	0x47210 ; symbol stub for: _CFRelease
+    5a78:	9f 03 00 f9	str	xzr, [x28]
+    5a7c:	4f 01 00 14	b	0x5fb8
+    5a80:	fa 17 00 f9	str	x26, [sp, #0x28]
+    5a84:	f3 47 00 b9	str	w19, [sp, #0x44]
+    5a88:	19 05 01 94	bl	0x46eec ; symbol stub for: _AXRuntimeLogCommon
+    5a8c:	fd 03 1d aa	mov	x29, x29
+    5a90:	47 08 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5a94:	f4 03 00 aa	mov	x20, x0
+    5a98:	21 00 80 52	mov	w1, #0x1
+    5a9c:	89 08 01 94	bl	0x47cc0 ; symbol stub for: _os_log_type_enabled
+    5aa0:	c0 04 00 34	cbz	w0, 0x5b38
+    5aa4:	f3 7f 40 f9	ldr	x19, [sp, #0xf8]
+    5aa8:	f6 02 00 f0	adrp	x22, 95 ; 0x64000
+    5aac:	c0 0a 44 f9	ldr	x0, [x22, #0x810] ; literal pool symbol address: _OBJC_CLASS_$_NSNumber
+    5ab0:	e2 03 1b aa	mov	x2, x27
+    5ab4:	cb 6f 01 94	bl	"_objc_msgSend$numberWithUnsignedInt:"
+    5ab8:	fd 03 1d aa	mov	x29, x29
+    5abc:	3c 08 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5ac0:	f5 03 00 aa	mov	x21, x0
+    5ac4:	d6 0a 44 f9	ldr	x22, [x22, #0x810]
+    5ac8:	91 07 01 94	bl	0x4790c ; symbol stub for: _getpid
+    5acc:	e2 03 00 aa	mov	x2, x0
+    5ad0:	e0 03 16 aa	mov	x0, x22
+    5ad4:	9b 6f 01 94	bl	"_objc_msgSend$numberWithInt:"
+    5ad8:	fd 03 1d aa	mov	x29, x29
+    5adc:	34 08 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5ae0:	f6 03 00 aa	mov	x22, x0
+    5ae4:	28 02 00 d0	adrp	x8, 70 ; 0x4b000
+    5ae8:	00 2d 42 fd	ldr	d0, [x8, #0x458]
+    5aec:	e0 d3 01 bd	str	s0, [sp, #0x1d0]
+    5af0:	e9 43 07 91	add	x9, sp, #0x1d0
+    5af4:	33 41 00 f8	stur	x19, [x9, #0x4]
+    5af8:	08 08 81 52	mov	w8, #0x840
+    5afc:	e8 bb 03 79	strh	w8, [sp, #0x1dc]
+    5b00:	35 e1 00 f8	stur	x21, [x9, #0xe]
+    5b04:	e8 cf 03 79	strh	w8, [sp, #0x1e6]
+    5b08:	e0 f7 00 f9	str	x0, [sp, #0x1e8]
+    5b0c:	c0 ff ff f0	adrp	x0, -5 ; 0x0
+    5b10:	00 00 00 91	add	x0, x0, #0x0
+    5b14:	63 02 00 90	adrp	x3, 76 ; 0x51000
+    5b18:	63 cc 1f 91	add	x3, x3, #0x7f3 ; literal pool for: "the pid{%@} for this context id{%@} is not the same for the hit testing app{%@}, so we shouldn't use it here. this hit test needs to forward through to the remote view"
+    5b1c:	e4 43 07 91	add	x4, sp, #0x1d0
+    5b20:	e1 03 14 aa	mov	x1, x20
+    5b24:	22 00 80 52	mov	w2, #0x1
+    5b28:	05 04 80 52	mov	w5, #0x20
+    5b2c:	15 07 01 94	bl	0x47780 ; symbol stub for: __os_log_impl
+    5b30:	fe 07 01 94	bl	0x47b28 ; symbol stub for: _objc_release_x22
+    5b34:	fa 07 01 94	bl	0x47b1c ; symbol stub for: _objc_release_x21
+    5b38:	f9 63 03 a9	stp	x25, x24, [sp, #0x30]
+    5b3c:	f7 53 00 b9	str	w23, [sp, #0x50]
+    5b40:	fc 27 00 f9	str	x28, [sp, #0x48]
+    5b44:	f3 07 01 94	bl	0x47b10 ; symbol stub for: _objc_release_x20
+    5b48:	f3 02 00 f0	adrp	x19, 95 ; 0x64000
+    5b4c:	60 36 40 f9	ldr	x0, [x19, #0x68] ; literal pool symbol address: _OBJC_CLASS_$_AXRemoteElement
+    5b50:	9c 71 01 94	bl	_objc_msgSend$registeredRemoteElements
+    5b54:	fd 03 1d aa	mov	x29, x29
+    5b58:	15 08 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5b5c:	f4 03 00 aa	mov	x20, x0
+    5b60:	e2 02 00 f0	adrp	x2, 95 ; 0x64000
+    5b64:	42 60 38 91	add	x2, x2, #0xe18
+    5b68:	b6 6a 01 94	bl	"_objc_msgSend$enumerateObjectsUsingBlock:"
+    5b6c:	e9 07 01 94	bl	0x47b10 ; symbol stub for: _objc_release_x20
+    5b70:	60 36 40 f9	ldr	x0, [x19, #0x68]
+    5b74:	e8 02 00 f0	adrp	x8, 95 ; 0x64000
+    5b78:	08 29 45 f9	ldr	x8, [x8, #0xa50] ; literal pool symbol address: __NSConcreteStackBlock
+    5b7c:	e8 67 00 f9	str	x8, [sp, #0xc8]
+    5b80:	28 02 00 d0	adrp	x8, 70 ; 0x4b000
+    5b84:	00 15 42 fd	ldr	d0, [x8, #0x428]
+    5b88:	08 00 00 b0	adrp	x8, 1 ; 0x6000
+    5b8c:	08 c1 06 91	add	x8, x8, #0x1b0
+    5b90:	e9 02 00 f0	adrp	x9, 95 ; 0x64000
+    5b94:	29 e1 38 91	add	x9, x9, #0xe38
+    5b98:	e0 6b 00 fd	str	d0, [sp, #0xd0]
+    5b9c:	e8 a7 0d a9	stp	x8, x9, [sp, #0xd8]
+    5ba0:	fb f3 00 b9	str	w27, [sp, #0xf0]
+    5ba4:	e8 7f 40 f9	ldr	x8, [sp, #0xf8]
+    5ba8:	e8 77 00 f9	str	x8, [sp, #0xe8]
+    5bac:	e2 23 03 91	add	x2, sp, #0xc8
+    5bb0:	9c 71 01 94	bl	"_objc_msgSend$remoteElementsForBlock:"
+    5bb4:	fd 03 1d aa	mov	x29, x29
+    5bb8:	fd 07 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5bbc:	00 e4 00 6f	movi.2d	v0, #0000000000000000
+    5bc0:	e0 03 04 ad	stp	q0, q0, [sp, #0x80]
+    5bc4:	e0 03 05 ad	stp	q0, q0, [sp, #0xa0]
+    5bc8:	e2 03 02 91	add	x2, sp, #0x80
+    5bcc:	e3 43 05 91	add	x3, sp, #0x150
+    5bd0:	e0 3f 00 f9	str	x0, [sp, #0x78]
+    5bd4:	04 02 80 52	mov	w4, #0x10
+    5bd8:	ea 68 01 94	bl	"_objc_msgSend$countByEnumeratingWithState:objects:count:"
+    5bdc:	e0 0b 00 b4	cbz	x0, 0x5d58
+    5be0:	fa 03 00 aa	mov	x26, x0
+    5be4:	16 00 80 d2	mov	x22, #0x0
+    5be8:	e8 4b 40 f9	ldr	x8, [sp, #0x90]
+    5bec:	13 01 40 f9	ldr	x19, [x8]
+    5bf0:	19 03 00 b0	adrp	x25, 97 ; 0x66000
+    5bf4:	39 63 31 91	add	x25, x25, #0xc58 ; Objc cfstring ref: @"_accessibilityWindow"
+    5bf8:	28 02 00 d0	adrp	x8, 70 ; 0x4b000
+    5bfc:	00 25 42 fd	ldr	d0, [x8, #0x448]
+    5c00:	e0 1b 80 3d	str	q0, [sp, #0x60]
+    5c04:	d4 ff ff f0	adrp	x20, -5 ; 0x0
+    5c08:	94 02 00 91	add	x20, x20, #0x0
+    5c0c:	75 02 00 90	adrp	x21, 76 ; 0x51000
+    5c10:	b5 8e 22 91	add	x21, x21, #0x8a3 ; literal pool for: "matched on %@ with window: %@"
+    5c14:	1b 00 80 d2	mov	x27, #0x0
+    5c18:	e8 4b 40 f9	ldr	x8, [sp, #0x90]
+    5c1c:	08 01 40 f9	ldr	x8, [x8]
+    5c20:	1f 01 13 eb	cmp	x8, x19
+    5c24:	60 00 00 54	b.eq	0x5c30
+    5c28:	e0 3f 40 f9	ldr	x0, [sp, #0x78]
+    5c2c:	8f 07 01 94	bl	0x47a68 ; symbol stub for: _objc_enumerationMutation
+    5c30:	e8 47 40 f9	ldr	x8, [sp, #0x88]
+    5c34:	1c 79 7b f8	ldr	x28, [x8, x27, lsl #3]
+    5c38:	e0 03 1c aa	mov	x0, x28
+    5c3c:	11 65 01 94	bl	_objc_msgSend$accessibilityContainer
+    5c40:	fd 03 1d aa	mov	x29, x29
+    5c44:	da 07 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5c48:	f8 03 00 aa	mov	x24, x0
+    5c4c:	e2 03 19 aa	mov	x2, x25
+    5c50:	6c 77 01 94	bl	"_objc_msgSend$valueForKey:"
+    5c54:	fd 03 1d aa	mov	x29, x29
+    5c58:	d5 07 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5c5c:	f7 03 00 aa	mov	x23, x0
+    5c60:	b8 07 01 94	bl	0x47b40 ; symbol stub for: _objc_release_x24
+    5c64:	a2 04 01 94	bl	0x46eec ; symbol stub for: _AXRuntimeLogCommon
+    5c68:	fd 03 1d aa	mov	x29, x29
+    5c6c:	d0 07 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5c70:	f8 03 00 aa	mov	x24, x0
+    5c74:	21 00 80 52	mov	w1, #0x1
+    5c78:	12 08 01 94	bl	0x47cc0 ; symbol stub for: _os_log_type_enabled
+    5c7c:	e0 01 00 34	cbz	w0, 0x5cb8
+    5c80:	e0 1b c0 3d	ldr	q0, [sp, #0x60]
+    5c84:	e0 d3 01 bd	str	s0, [sp, #0x1d0]
+    5c88:	e8 43 07 91	add	x8, sp, #0x1d0
+    5c8c:	1c 41 00 f8	stur	x28, [x8, #0x4]
+    5c90:	09 08 81 52	mov	w9, #0x840
+    5c94:	e9 bb 03 79	strh	w9, [sp, #0x1dc]
+    5c98:	17 e1 00 f8	stur	x23, [x8, #0xe]
+    5c9c:	e4 43 07 91	add	x4, sp, #0x1d0
+    5ca0:	e0 03 14 aa	mov	x0, x20
+    5ca4:	e1 03 18 aa	mov	x1, x24
+    5ca8:	22 00 80 52	mov	w2, #0x1
+    5cac:	e3 03 15 aa	mov	x3, x21
+    5cb0:	c5 02 80 52	mov	w5, #0x16
+    5cb4:	b3 06 01 94	bl	0x47780 ; symbol stub for: __os_log_impl
+    5cb8:	a2 07 01 94	bl	0x47b40 ; symbol stub for: _objc_release_x24
+    5cbc:	96 00 00 b5	cbnz	x22, 0x5ccc
+    5cc0:	77 00 00 b4	cbz	x23, 0x5ccc
+    5cc4:	de 07 01 94	bl	0x47c3c ; symbol stub for: _objc_retain_x28
+    5cc8:	f6 03 1c aa	mov	x22, x28
+    5ccc:	9a 07 01 94	bl	0x47b34 ; symbol stub for: _objc_release_x23
+    5cd0:	7b 07 00 91	add	x27, x27, #0x1
+    5cd4:	5f 03 1b eb	cmp	x26, x27
+    5cd8:	01 fa ff 54	b.ne	0x5c18
+    5cdc:	e2 03 02 91	add	x2, sp, #0x80
+    5ce0:	e3 43 05 91	add	x3, sp, #0x150
+    5ce4:	e0 3f 40 f9	ldr	x0, [sp, #0x78]
+    5ce8:	04 02 80 52	mov	w4, #0x10
+    5cec:	a5 68 01 94	bl	"_objc_msgSend$countByEnumeratingWithState:objects:count:"
+    5cf0:	fa 03 00 aa	mov	x26, x0
+    5cf4:	00 f9 ff b5	cbnz	x0, 0x5c14
+    5cf8:	19 00 00 14	b	0x5d5c
+    5cfc:	f4 03 13 4b	neg	w20, w19
+    5d00:	80 03 40 f9	ldr	x0, [x28]
+    5d04:	d5 0a 00 94	bl	__AXUIElementIDForElement
+    5d08:	e2 03 00 aa	mov	x2, x0
+    5d0c:	e3 03 01 aa	mov	x3, x1
+    5d10:	e0 03 14 aa	mov	x0, x20
+    5d14:	e1 03 02 aa	mov	x1, x2
+    5d18:	e2 03 03 aa	mov	x2, x3
+    5d1c:	db 0a 00 94	bl	__AXUIElementCreateWithPIDAndID
+    5d20:	f4 03 00 aa	mov	x20, x0
+    5d24:	f3 02 00 f0	adrp	x19, 95 ; 0x64000
+    5d28:	60 42 40 f9	ldr	x0, [x19, #0x80] ; literal pool symbol address: _OBJC_CLASS_$_AXUIMLElement
+    5d2c:	e2 03 14 aa	mov	x2, x20
+    5d30:	e4 66 01 94	bl	"_objc_msgSend$cachedElementForParent:"
+    5d34:	fd 03 1d aa	mov	x29, x29
+    5d38:	9d 07 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5d3c:	f5 03 00 aa	mov	x21, x0
+    5d40:	00 0c 00 b4	cbz	x0, 0x5ec0
+    5d44:	a9 07 01 94	bl	0x47be8 ; symbol stub for: _objc_retain_x21
+    5d48:	f6 03 15 aa	mov	x22, x21
+    5d4c:	62 00 00 14	b	0x5ed4
+    5d50:	33 00 80 52	mov	w19, #0x1
+    5d54:	6e 00 00 14	b	0x5f0c
+    5d58:	16 00 80 d2	mov	x22, #0x0
+    5d5c:	80 03 00 90	adrp	x0, 112 ; 0x75000
+    5d60:	00 20 0d 91	add	x0, x0, #0x348
+    5d64:	4d 07 01 94	bl	0x47a98 ; symbol stub for: _objc_loadWeakRetained
+    5d68:	f4 03 00 aa	mov	x20, x0
+    5d6c:	69 07 01 94	bl	0x47b10 ; symbol stub for: _objc_release_x20
+    5d70:	e0 03 14 aa	mov	x0, x20
+    5d74:	2e ec 00 94	bl	_AXRemoteElementFromObject
+    5d78:	fd 03 1d aa	mov	x29, x29
+    5d7c:	8c 07 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5d80:	fb 03 00 aa	mov	x27, x0
+    5d84:	e0 3f 40 f9	ldr	x0, [sp, #0x78]
+    5d88:	76 68 01 94	bl	_objc_msgSend$count
+    5d8c:	a0 11 00 b5	cbnz	x0, 0x5fc0
+    5d90:	fc 27 40 f9	ldr	x28, [sp, #0x48]
+    5d94:	f7 53 40 b9	ldr	w23, [sp, #0x50]
+    5d98:	f5 5f 40 b9	ldr	w21, [sp, #0x5c]
+    5d9c:	f3 47 40 b9	ldr	w19, [sp, #0x44]
+    5da0:	fa 17 40 f9	ldr	x26, [sp, #0x28]
+    5da4:	9b 11 00 b4	cbz	x27, 0x5fd4
+    5da8:	e0 03 1b aa	mov	x0, x27
+    5dac:	b5 64 01 94	bl	_objc_msgSend$accessibilityContainer
+    5db0:	fd 03 1d aa	mov	x29, x29
+    5db4:	7e 07 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5db8:	f4 03 00 aa	mov	x20, x0
+    5dbc:	02 03 00 b0	adrp	x2, 97 ; 0x66000
+    5dc0:	42 60 31 91	add	x2, x2, #0xc58 ; Objc cfstring ref: @"_accessibilityWindow"
+    5dc4:	0f 77 01 94	bl	"_objc_msgSend$valueForKey:"
+    5dc8:	fd 03 1d aa	mov	x29, x29
+    5dcc:	78 07 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5dd0:	f9 03 00 aa	mov	x25, x0
+    5dd4:	4f 07 01 94	bl	0x47b10 ; symbol stub for: _objc_release_x20
+    5dd8:	e0 03 1b aa	mov	x0, x27
+    5ddc:	a9 67 01 94	bl	_objc_msgSend$containerAccessibilityFrame
+    5de0:	e4 17 50 6d	ldp	d4, d5, [sp, #0x100]
+    5de4:	b0 05 01 94	bl	0x474a4 ; symbol stub for: _CGRectContainsPoint
+    5de8:	14 00 80 52	mov	w20, #0x0
+    5dec:	80 01 00 34	cbz	w0, 0x5e1c
+    5df0:	79 01 00 b4	cbz	x25, 0x5e1c
+    5df4:	02 03 00 b0	adrp	x2, 97 ; 0x66000
+    5df8:	42 e0 31 91	add	x2, x2, #0xc78 ; Objc cfstring ref: @"isHidden"
+    5dfc:	e0 03 19 aa	mov	x0, x25
+    5e00:	00 77 01 94	bl	"_objc_msgSend$valueForKey:"
+    5e04:	fd 03 1d aa	mov	x29, x29
+    5e08:	69 07 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5e0c:	f5 03 00 aa	mov	x21, x0
+    5e10:	7c 66 01 94	bl	_objc_msgSend$boolValue
+    5e14:	14 00 00 52	eor	w20, w0, #0x1
+    5e18:	41 07 01 94	bl	0x47b1c ; symbol stub for: _objc_release_x21
+    5e1c:	34 04 01 94	bl	0x46eec ; symbol stub for: _AXRuntimeLogCommon
+    5e20:	fd 03 1d aa	mov	x29, x29
+    5e24:	62 07 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5e28:	f5 03 00 aa	mov	x21, x0
+    5e2c:	21 00 80 52	mov	w1, #0x1
+    5e30:	a4 07 01 94	bl	0x47cc0 ; symbol stub for: _os_log_type_enabled
+    5e34:	60 03 00 34	cbz	w0, 0x5ea0
+    5e38:	e8 02 00 f0	adrp	x8, 95 ; 0x64000
+    5e3c:	00 09 44 f9	ldr	x0, [x8, #0x810] ; literal pool symbol address: _OBJC_CLASS_$_NSNumber
+    5e40:	e2 03 14 aa	mov	x2, x20
+    5e44:	a7 6e 01 94	bl	"_objc_msgSend$numberWithBool:"
+    5e48:	fd 03 1d aa	mov	x29, x29
+    5e4c:	58 07 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5e50:	f7 03 00 aa	mov	x23, x0
+    5e54:	28 02 00 d0	adrp	x8, 70 ; 0x4b000
+    5e58:	00 25 42 fd	ldr	d0, [x8, #0x448]
+    5e5c:	e0 d3 01 bd	str	s0, [sp, #0x1d0]
+    5e60:	e9 43 07 91	add	x9, sp, #0x1d0
+    5e64:	20 41 00 f8	stur	x0, [x9, #0x4]
+    5e68:	08 08 81 52	mov	w8, #0x840
+    5e6c:	e8 bb 03 79	strh	w8, [sp, #0x1dc]
+    5e70:	3b e1 00 f8	stur	x27, [x9, #0xe]
+    5e74:	c0 ff ff f0	adrp	x0, -5 ; 0x0
+    5e78:	00 00 00 91	add	x0, x0, #0x0
+    5e7c:	63 02 00 90	adrp	x3, 76 ; 0x51000
+    5e80:	63 04 23 91	add	x3, x3, #0x8c1 ; literal pool for: "Did not find matching remote element (multi-level remote hosting in play) - checking starting element: %@ %@"
+    5e84:	e4 43 07 91	add	x4, sp, #0x1d0
+    5e88:	e1 03 15 aa	mov	x1, x21
+    5e8c:	22 00 80 52	mov	w2, #0x1
+    5e90:	c5 02 80 52	mov	w5, #0x16
+    5e94:	3b 06 01 94	bl	0x47780 ; symbol stub for: __os_log_impl
+    5e98:	27 07 01 94	bl	0x47b34 ; symbol stub for: _objc_release_x23
+    5e9c:	f7 53 40 b9	ldr	w23, [sp, #0x50]
+    5ea0:	1f 07 01 94	bl	0x47b1c ; symbol stub for: _objc_release_x21
+    5ea4:	94 00 00 34	cbz	w20, 0x5eb4
+    5ea8:	62 07 01 94	bl	0x47c30 ; symbol stub for: _objc_retain_x27
+    5eac:	1f 07 01 94	bl	0x47b28 ; symbol stub for: _objc_release_x22
+    5eb0:	f6 03 1b aa	mov	x22, x27
+    5eb4:	f5 5f 40 b9	ldr	w21, [sp, #0x5c]
+    5eb8:	25 07 01 94	bl	0x47b4c ; symbol stub for: _objc_release_x25
+    5ebc:	46 00 00 14	b	0x5fd4
+    5ec0:	60 42 40 f9	ldr	x0, [x19, #0x80]
+    5ec4:	cb 06 01 94	bl	0x479f0 ; symbol stub for: _objc_alloc
+    5ec8:	e2 03 14 aa	mov	x2, x20
+    5ecc:	0d 6c 01 94	bl	"_objc_msgSend$initWithParentElement:"
+    5ed0:	f6 03 00 aa	mov	x22, x0
+    5ed4:	80 03 40 f9	ldr	x0, [x28]
+    5ed8:	60 00 00 b4	cbz	x0, 0x5ee4
+    5edc:	cd 04 01 94	bl	0x47210 ; symbol stub for: _CFRelease
+    5ee0:	9f 03 00 f9	str	xzr, [x28]
+    5ee4:	e0 03 16 aa	mov	x0, x22
+    5ee8:	40 1d aa 4e	mov.16b	v0, v10
+    5eec:	61 1d ab 4e	mov.16b	v1, v11
+    5ef0:	04 68 01 94	bl	"_objc_msgSend$copyElementAtPosition:"
+    5ef4:	80 03 00 f9	str	x0, [x28]
+    5ef8:	26 00 00 14	b	0x5f90
+    5efc:	e0 03 16 aa	mov	x0, x22
+    5f00:	d8 70 01 94	bl	_objc_msgSend$remotePid
+    5f04:	1f 00 00 71	cmp	w0, #0x0
+    5f08:	f3 07 9f 1a	cset	w19, ne
+    5f0c:	ff eb 00 f9	str	xzr, [sp, #0x1d0]
+    5f10:	e8 02 00 f0	adrp	x8, 95 ; 0x64000
+    5f14:	00 3d 40 f9	ldr	x0, [x8, #0x78] ; literal pool symbol address: _OBJC_CLASS_$_AXUIElement
+    5f18:	82 03 40 f9	ldr	x2, [x28]
+    5f1c:	f9 75 01 94	bl	"_objc_msgSend$uiElementWithAXElement:"
+    5f20:	fd 03 1d aa	mov	x29, x29
+    5f24:	22 07 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5f28:	f5 03 00 aa	mov	x21, x0
+    5f2c:	a2 fc 80 52	mov	w2, #0x7e5
+    5f30:	64 6e 01 94	bl	"_objc_msgSend$numberWithAXAttribute:"
+    5f34:	fd 03 1d aa	mov	x29, x29
+    5f38:	1d 07 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5f3c:	f8 03 00 aa	mov	x24, x0
+    5f40:	40 76 01 94	bl	_objc_msgSend$unsignedIntValue
+    5f44:	f7 03 00 aa	mov	x23, x0
+    5f48:	fe 06 01 94	bl	0x47b40 ; symbol stub for: _objc_release_x24
+    5f4c:	33 02 00 34	cbz	w19, 0x5f90
+    5f50:	80 03 40 f9	ldr	x0, [x28]
+    5f54:	e1 43 07 91	add	x1, sp, #0x1d0
+    5f58:	20 1d a9 4e	mov.16b	v0, v9
+    5f5c:	01 1d a8 4e	mov.16b	v1, v8
+    5f60:	e2 03 1a aa	mov	x2, x26
+    5f64:	03 00 80 52	mov	w3, #0x0
+    5f68:	e4 03 17 aa	mov	x4, x23
+    5f6c:	05 00 80 52	mov	w5, #0x0
+    5f70:	06 00 80 52	mov	w6, #0x0
+    5f74:	e5 fc ff 97	bl	__AXUIElementCopyElementAtPositionWithParams
+    5f78:	e0 4b 01 b9	str	w0, [sp, #0x148]
+    5f7c:	a0 00 00 35	cbnz	w0, 0x5f90
+    5f80:	80 03 40 f9	ldr	x0, [x28]
+    5f84:	a3 04 01 94	bl	0x47210 ; symbol stub for: _CFRelease
+    5f88:	e8 eb 40 f9	ldr	x8, [sp, #0x1d0]
+    5f8c:	88 03 00 f9	str	x8, [x28]
+    5f90:	74 00 00 b4	cbz	x20, 0x5f9c
+    5f94:	e0 03 14 aa	mov	x0, x20
+    5f98:	9e 04 01 94	bl	0x47210 ; symbol stub for: _CFRelease
+    5f9c:	e0 06 01 94	bl	0x47b1c ; symbol stub for: _objc_release_x21
+    5fa0:	e2 06 01 94	bl	0x47b28 ; symbol stub for: _objc_release_x22
+    5fa4:	88 03 40 f9	ldr	x8, [x28]
+    5fa8:	88 00 00 b4	cbz	x8, 0x5fb8
+    5fac:	e8 4b 41 b9	ldr	w8, [sp, #0x148]
+    5fb0:	e8 c3 ff 35	cbnz	w8, 0x582c
+    5fb4:	22 fe ff 17	b	0x583c
+    5fb8:	e8 4d 8c 12	mov	w8, #-0x6270
+    5fbc:	1b fe ff 17	b	0x5828
+    5fc0:	fc 27 40 f9	ldr	x28, [sp, #0x48]
+    5fc4:	f7 53 40 b9	ldr	w23, [sp, #0x50]
+    5fc8:	f5 5f 40 b9	ldr	w21, [sp, #0x5c]
+    5fcc:	f3 47 40 b9	ldr	w19, [sp, #0x44]
+    5fd0:	fa 17 40 f9	ldr	x26, [sp, #0x28]
+    5fd4:	f9 63 43 a9	ldp	x25, x24, [sp, #0x30]
+    5fd8:	b6 03 00 b4	cbz	x22, 0x604c
+    5fdc:	06 07 01 94	bl	0x47bf4 ; symbol stub for: _objc_retain_x22
+    5fe0:	c3 03 01 94	bl	0x46eec ; symbol stub for: _AXRuntimeLogCommon
+    5fe4:	fd 03 1d aa	mov	x29, x29
+    5fe8:	f1 06 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    5fec:	f4 03 00 aa	mov	x20, x0
+    5ff0:	21 00 80 52	mov	w1, #0x1
+    5ff4:	33 07 01 94	bl	0x47cc0 ; symbol stub for: _os_log_type_enabled
+    5ff8:	60 02 00 34	cbz	w0, 0x6044
+    5ffc:	e8 4f 41 b9	ldr	w8, [sp, #0x14c]
+    6000:	29 02 00 b0	adrp	x9, 69 ; 0x4b000
+    6004:	20 25 42 fd	ldr	d0, [x9, #0x448]
+    6008:	e0 d3 01 bd	str	s0, [sp, #0x1d0]
+    600c:	ea 43 07 91	add	x10, sp, #0x1d0
+    6010:	56 41 00 f8	stur	x22, [x10, #0x4]
+    6014:	09 80 80 52	mov	w9, #0x400
+    6018:	e9 bb 03 79	strh	w9, [sp, #0x1dc]
+    601c:	48 e1 00 b8	stur	w8, [x10, #0xe]
+    6020:	c0 ff ff d0	adrp	x0, -6 ; 0x0
+    6024:	00 00 00 91	add	x0, x0, #0x0
+    6028:	43 02 00 f0	adrp	x3, 75 ; 0x51000
+    602c:	63 b8 24 91	add	x3, x3, #0x92e ; literal pool for: "The mismatched pid was found to be a remote element: %@, so leaving contextId unchanged so let's reset to use contextId of the hosting window: %u"
+    6030:	e4 43 07 91	add	x4, sp, #0x1d0
+    6034:	e1 03 14 aa	mov	x1, x20
+    6038:	22 00 80 52	mov	w2, #0x1
+    603c:	45 02 80 52	mov	w5, #0x12
+    6040:	d0 05 01 94	bl	0x47780 ; symbol stub for: __os_log_impl
+    6044:	b3 06 01 94	bl	0x47b10 ; symbol stub for: _objc_release_x20
+    6048:	02 00 00 14	b	0x6050
+    604c:	ff 4f 01 b9	str	wzr, [sp, #0x14c]
+    6050:	c5 06 01 94	bl	0x47b64 ; symbol stub for: _objc_release_x27
+    6054:	b5 06 01 94	bl	0x47b28 ; symbol stub for: _objc_release_x22
+    6058:	e8 3f 40 f9	ldr	x8, [sp, #0x78]
+    605c:	c8 06 01 94	bl	0x47b7c ; symbol stub for: _objc_release_x8
+    6060:	e0 7f 40 f9	ldr	x0, [sp, #0xf8]
+    6064:	60 00 00 b4	cbz	x0, 0x6070
+    6068:	6a 04 01 94	bl	0x47210 ; symbol stub for: _CFRelease
+    606c:	ff 7f 00 f9	str	xzr, [sp, #0xf8]
+    6070:	d6 01 00 b4	cbz	x22, 0x60a8
+    6074:	e0 03 16 aa	mov	x0, x22
+    6078:	4d ef ff 97	bl	__AXCreateAXUIElementWithElement
+    607c:	80 03 00 f9	str	x0, [x28]
+    6080:	79 00 00 b4	cbz	x25, 0x608c
+    6084:	e0 03 19 aa	mov	x0, x25
+    6088:	62 04 01 94	bl	0x47210 ; symbol stub for: _CFRelease
+    608c:	e0 03 17 aa	mov	x0, x23
+    6090:	09 08 00 94	bl	__AXSetRequestingClient
+    6094:	b1 06 01 94	bl	0x47b58 ; symbol stub for: _objc_release_x26
+    6098:	a4 06 01 94	bl	0x47b28 ; symbol stub for: _objc_release_x22
+    609c:	a9 06 01 94	bl	0x47b40 ; symbol stub for: _objc_release_x24
+    60a0:	00 00 80 52	mov	w0, #0x0
+    60a4:	e9 fd ff 17	b	0x5848
+    60a8:	ac 06 01 94	bl	0x47b58 ; symbol stub for: _objc_release_x26
+    60ac:	79 00 00 b4	cbz	x25, 0x60b8
+    60b0:	e0 03 19 aa	mov	x0, x25
+    60b4:	57 04 01 94	bl	0x47210 ; symbol stub for: _CFRelease
+    60b8:	a2 06 01 94	bl	0x47b40 ; symbol stub for: _objc_release_x24
+    60bc:	f6 e3 4a 29	ldp	w22, w24, [sp, #0x54]
+    60c0:	21 fd ff 17	b	0x5544
+    60c4:	6f f8 00 94	bl	_AXUIElementCopyAttributeValueRecursive.cold.2
+    60c8:	58 fd ff 17	b	0x5628
+    60cc:	68 f8 00 94	bl	_AXUIElementCopyAttributeValueRecursive.cold.1
+    60d0:	ac fd ff 17	b	0x5780
+    60d4:	9f 05 01 94	bl	0x47750 ; symbol stub for: ___stack_chk_fail
+____AXUIElementCopyElementAtPositionWithParams_block_invoke:
+    60ec:	ff 43 01 d1	sub	sp, sp, #0x50
+    60f0:	f6 57 02 a9	stp	x22, x21, [sp, #0x20]
+    60f4:	f4 4f 03 a9	stp	x20, x19, [sp, #0x30]
+    60f8:	fd 7b 04 a9	stp	x29, x30, [sp, #0x40]
+    60fc:	fd 03 01 91	add	x29, sp, #0x40
+    6100:	f5 03 02 aa	mov	x21, x2
+    6104:	f3 03 01 aa	mov	x19, x1
+    6108:	e8 02 00 d0	adrp	x8, 94 ; 0x64000
+    610c:	08 3d 45 f9	ldr	x8, [x8, #0xa78] ; literal pool symbol address: ___stack_chk_guard
+    6110:	08 01 40 f9	ldr	x8, [x8]
+    6114:	e8 0f 00 f9	str	x8, [sp, #0x18]
+    6118:	ab 06 01 94	bl	0x47bc4 ; symbol stub for: _objc_retain_x19
+    611c:	74 03 01 94	bl	0x46eec ; symbol stub for: _AXRuntimeLogCommon
+    6120:	fd 03 1d aa	mov	x29, x29
+    6124:	a2 06 01 94	bl	0x47bac ; symbol stub for: _objc_retainAutoreleasedReturnValue
+    6128:	f4 03 00 aa	mov	x20, x0
+    612c:	21 00 80 52	mov	w1, #0x1
+    6130:	e4 06 01 94	bl	0x47cc0 ; symbol stub for: _os_log_type_enabled
+    6134:	20 02 00 34	cbz	w0, 0x6178
+    6138:	28 02 00 b0	adrp	x8, 69 ; 0x4b000
+    613c:	00 31 42 fd	ldr	d0, [x8, #0x460]
+    6140:	e0 03 00 bd	str	s0, [sp]
+    6144:	f5 07 00 b9	str	w21, [sp, #0x4]
+    6148:	08 08 81 52	mov	w8, #0x840
+    614c:	e8 13 00 79	strh	w8, [sp, #0x8]
+    6150:	f3 a3 00 f8	stur	x19, [sp, #0xa]
+    6154:	c0 ff ff d0	adrp	x0, -6 ; 0x0
+    6158:	00 00 00 91	add	x0, x0, #0x0
+    615c:	43 02 00 f0	adrp	x3, 75 ; 0x51000
+    6160:	63 6c 22 91	add	x3, x3, #0x89b ; literal pool for: "\t%d: %@"
+    6164:	e4 03 00 91	mov	x4, sp
+    6168:	e1 03 14 aa	mov	x1, x20
+    616c:	22 00 80 52	mov	w2, #0x1
+    6170:	45 02 80 52	mov	w5, #0x12
+    6174:	83 05 01 94	bl	0x47780 ; symbol stub for: __os_log_impl
+    6178:	66 06 01 94	bl	0x47b10 ; symbol stub for: _objc_release_x20
+    617c:	62 06 01 94	bl	0x47b04 ; symbol stub for: _objc_release_x19
+    6180:	e8 0f 40 f9	ldr	x8, [sp, #0x18]
+    6184:	e9 02 00 d0	adrp	x9, 94 ; 0x64000
+    6188:	29 3d 45 f9	ldr	x9, [x9, #0xa78] ; literal pool symbol address: ___stack_chk_guard
+    618c:	29 01 40 f9	ldr	x9, [x9]
+    6190:	3f 01 08 eb	cmp	x9, x8
+    6194:	c1 00 00 54	b.ne	0x61ac
+    6198:	fd 7b 44 a9	ldp	x29, x30, [sp, #0x40]
+    619c:	f4 4f 43 a9	ldp	x20, x19, [sp, #0x30]
+    61a0:	f6 57 42 a9	ldp	x22, x21, [sp, #0x20]
+    61a4:	ff 43 01 91	add	sp, sp, #0x50
+    61a8:	c0 03 5f d6	ret
+    61ac:	69 05 01 94	bl	0x47750 ; symbol stub for: ___stack_chk_fail
+____AXUIElementCopyElementAtPositionWithParams_block_invoke.17:
+    61b0:	f6 57 bd a9	stp	x22, x21, [sp, #-0x30]!
+    61b4:	f4 4f 01 a9	stp	x20, x19, [sp, #0x10]
+    61b8:	fd 7b 02 a9	stp	x29, x30, [sp, #0x20]
+    61bc:	fd 83 00 91	add	x29, sp, #0x20
+    61c0:	f3 03 01 aa	mov	x19, x1
+    61c4:	f4 03 00 aa	mov	x20, x0
+    61c8:	7f 06 01 94	bl	0x47bc4 ; symbol stub for: _objc_retain_x19
+    61cc:	e0 03 13 aa	mov	x0, x19
+    61d0:	d4 66 01 94	bl	_objc_msgSend$contextId
+    61d4:	88 2a 40 b9	ldr	w8, [x20, #0x28]
+    61d8:	1f 00 08 6b	cmp	w0, w8
+    61dc:	21 01 00 54	b.ne	0x6200
+    61e0:	e0 03 13 aa	mov	x0, x19
+    61e4:	1f 70 01 94	bl	_objc_msgSend$remotePid
+    61e8:	f5 03 00 aa	mov	x21, x0
+    61ec:	80 12 40 f9	ldr	x0, [x20, #0x20]
+    61f0:	94 75 01 94	bl	_objc_msgSend$unsignedIntValue
+    61f4:	bf 02 00 6b	cmp	w21, w0
+    61f8:	f4 17 9f 1a	cset	w20, eq
+    61fc:	02 00 00 14	b	0x6204
+    6200:	14 00 80 52	mov	w20, #0x0
+    6204:	40 06 01 94	bl	0x47b04 ; symbol stub for: _objc_release_x19
+    6208:	e0 03 14 aa	mov	x0, x20
+    620c:	fd 7b 42 a9	ldp	x29, x30, [sp, #0x20]
+    6210:	f4 4f 41 a9	ldp	x20, x19, [sp, #0x10]
+    6214:	f6 57 c3 a8	ldp	x22, x21, [sp], #0x30
+    6218:	c0 03 5f d6	ret
+_AXUIElementCopyElementAtPositionWithParams:
+    62d4:	48 00 80 52	mov	w8, #0x2
+    62d8:	5f 00 00 71	cmp	w2, #0x0
+    62dc:	e2 03 88 1a	csel	w2, wzr, w8, eq
+    62e0:	03 00 80 52	mov	w3, #0x0
+    62e4:	04 00 80 52	mov	w4, #0x0
+    62e8:	05 00 80 52	mov	w5, #0x0
+    62ec:	06 00 80 52	mov	w6, #0x0
+    62f0:	06 fc ff 17	b	__AXUIElementCopyElementAtPositionWithParams
+__AXUIElementCopyElementAtPositionWithParams.cold.2:
+__AXUIElementCopyElementAtPositionWithParams.cold.1:

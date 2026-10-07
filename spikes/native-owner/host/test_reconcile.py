@@ -302,7 +302,7 @@ class Reconciliation(unittest.TestCase):
                 self.assertNotEqual(result.status,"completed"); self.assertEqual(tools.commands,[])
 
     def test_reference_foreign_extra_query_or_wrong_wire_defect_cannot_use_exception(self):
-        for scenario in ("reference","query","input","false","boolean","float","operation","settlement","coverage","request","resources"):
+        for scenario in ("reference","query","input","false","boolean","float","operation","settlement","coverage","request","resources","callback-summary"):
             with self.subTest(scenario=scenario),tempfile.TemporaryDirectory() as root:
                 f=CaseFixture(root)
                 if scenario=="reference":
@@ -310,6 +310,7 @@ class Reconciliation(unittest.TestCase):
                 elif scenario=="resources":
                     path=f.original/"ownership.json"; value=json.loads(path.read_text()); value["resources"].append({"kind":"foreign"}); write_json(path,value)
                 else:
+                    if scenario=="callback-summary": f.rows[-1]["details"]["pointCallbacks"]={"started":0}
                     if scenario=="query": f.rows[-1]["details"]["appElementQueries"]=1
                     if scenario=="input": f.rows[-1]["inputCalls"]=1
                     if scenario=="false": f.rows[-1]["details"]["localMethodsReturned"]=0
@@ -323,6 +324,8 @@ class Reconciliation(unittest.TestCase):
                 f.seal()
                 result,tools=self.run_case(f,apply=True)
                 self.assertNotEqual(result.status,"completed"); self.assertEqual(tools.commands,[])
+                if scenario=="callback-summary":
+                    self.assertEqual(result.reason,"HISTORICAL_WIRE_DEFECT_MISMATCH")
 
     def test_missing_or_wrong_class_and_success_order_refuse_before_any_tool(self):
         for scenario in ("missing-class","duplicate-class","class-before-finish","missing-success","success-before-class","truncated","extra-record"):

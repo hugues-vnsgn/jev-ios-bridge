@@ -1,0 +1,33 @@
+00000001000222e0 t -[XCTDRemoteAutomationSession _XCTD_synthesizeEvent:implicitConfirmationInterval:]
+0000000100030c28 t -[XCTestSession _XCT_synthesizeEvent:completion:]
+0000000100030d50 t -[XCTestSession _XCT_synthesizeEvent:implicitConfirmationInterval:completion:]
+00000001000136b4 t -[XCTouchGesturePerformer _executeEventWithDescription:implicitConfirmationInterval:block:]
+0000000100013364 t -[XCTouchGesturePerformer _executeEventWithDescription:implicitConfirmationInterval:confirmationNotification:block:]
+00000001000102f0 t -[XCTouchGesturePerformer _synthesizeMouseEvent:implicitConfirmationInterval:completion:]
+0000000100010d58 t -[XCTouchGesturePerformer _synthesizeTouchEvent:implicitConfirmationInterval:completion:]
+0000000100010010 t -[XCTouchGesturePerformer synthesizeEvent:completionHandler:]
+0000000100010018 t -[XCTouchGesturePerformer synthesizeEvent:implicitConfirmationInterval:completion:]
+                 U _XCTProtectedResourceContactsIdentifier
+00000001000134c8 t ___116-[XCTouchGesturePerformer _executeEventWithDescription:implicitConfirmationInterval:confirmationNotification:block:]_block_invoke
+0000000100013584 t ___116-[XCTouchGesturePerformer _executeEventWithDescription:implicitConfirmationInterval:confirmationNotification:block:]_block_invoke.123
+00000001000150e4 t ___116-[XCTouchGesturePerformer _executeEventWithDescription:implicitConfirmationInterval:confirmationNotification:block:]_block_invoke.123.cold.1
+0000000100022454 t ___82-[XCTDRemoteAutomationSession _XCTD_synthesizeEvent:implicitConfirmationInterval:]_block_invoke
+000000010001021c t ___83-[XCTouchGesturePerformer synthesizeEvent:implicitConfirmationInterval:completion:]_block_invoke
+00000001000103ec t ___89-[XCTouchGesturePerformer _synthesizeMouseEvent:implicitConfirmationInterval:completion:]_block_invoke
+0000000100010508 t ___89-[XCTouchGesturePerformer _synthesizeMouseEvent:implicitConfirmationInterval:completion:]_block_invoke_2
+0000000100010638 t ___89-[XCTouchGesturePerformer _synthesizeMouseEvent:implicitConfirmationInterval:completion:]_block_invoke_3
+0000000100010e54 t ___89-[XCTouchGesturePerformer _synthesizeTouchEvent:implicitConfirmationInterval:completion:]_block_invoke
+00000001000119f0 t ___89-[XCTouchGesturePerformer _synthesizeTouchEvent:implicitConfirmationInterval:completion:]_block_invoke.101
+0000000100010f70 t ___89-[XCTouchGesturePerformer _synthesizeTouchEvent:implicitConfirmationInterval:completion:]_block_invoke_2
+0000000100011aa0 t ___89-[XCTouchGesturePerformer _synthesizeTouchEvent:implicitConfirmationInterval:completion:]_block_invoke_2.102
+00000001000119cc t ___89-[XCTouchGesturePerformer _synthesizeTouchEvent:implicitConfirmationInterval:completion:]_block_invoke_5
+0000000100013780 t ___91-[XCTouchGesturePerformer _executeEventWithDescription:implicitConfirmationInterval:block:]_block_invoke
+0000000100015134 t ___91-[XCTouchGesturePerformer _executeEventWithDescription:implicitConfirmationInterval:block:]_block_invoke.cold.1
+                 U _kTCCServiceContactsFull
+                 U _kTCCServiceContactsLimited
+0000000100059fa0 s _objc_msgSend$_executeEventWithDescription:implicitConfirmationInterval:block:
+0000000100059fc0 s _objc_msgSend$_executeEventWithDescription:implicitConfirmationInterval:confirmationNotification:block:
+000000010005a6c0 s _objc_msgSend$_synthesizeMouseEvent:implicitConfirmationInterval:completion:
+000000010005a6e0 s _objc_msgSend$_synthesizeTouchEvent:implicitConfirmationInterval:completion:
+00000001000608e0 s _objc_msgSend$synthesizeEvent:completionHandler:
+0000000100060900 s _objc_msgSend$synthesizeEvent:implicitConfirmationInterval:completion:

@@ -7,6 +7,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// Results are raw observations. No result certifies native settlement.
 @interface ObservationStudy : NSObject
 - (instancetype)initWithDevice:(id)device
+                 pointSession:(id (^)(void))pointSession
+               pointProvenance:(nullable NSDictionary * (^)(id, id))pointProvenance
                  configuration:(NSDictionary *)configuration
                          clock:(NSTimeInterval (^)(void))clock
                           stop:(BOOL (^)(void))stop

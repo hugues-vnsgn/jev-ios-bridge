@@ -1,0 +1,119 @@
+_IOHIDVirtualServiceClientDispatchEvent:
+0000000000038d98	sub	sp, sp, #0x50
+0000000000038d9c	stp	x24, x23, [sp, #0x10]
+0000000000038da0	stp	x22, x21, [sp, #0x20]
+0000000000038da4	stp	x20, x19, [sp, #0x30]
+0000000000038da8	stp	x29, x30, [sp, #0x40]
+0000000000038dac	add	x29, sp, #0x40
+0000000000038db0	mov	x19, x1
+0000000000038db4	mov	x20, x0
+0000000000038db8	str	xzr, [sp]
+0000000000038dbc	bl	__IOHIDVirtuaServiceClientGetEventSystemClient
+0000000000038dc0	mov	x21, x0
+0000000000038dc4	mov	x0, x20
+0000000000038dc8	bl	_IOHIDServiceClientGetRegistryID
+0000000000038dcc	mov	x2, sp
+0000000000038dd0	mov	w1, #0x4
+0000000000038dd4	bl	0x8bf50 ; symbol stub for: _CFNumberGetValue
+0000000000038dd8	ldr	x1, [sp]
+0000000000038ddc	mov	x0, x19
+0000000000038de0	bl	_IOHIDEventSetSenderID
+0000000000038de4	adrp	x8, 108 ; 0xa4000
+0000000000038de8	ldr	x8, [x8, #0x6a0] ; literal pool symbol address: _kCFAllocatorDefault
+0000000000038dec	ldr	x22, [x8]
+0000000000038df0	mov	x0, x22
+0000000000038df4	mov	x1, x19
+0000000000038df8	bl	_IOHIDEventCreateDataInternal
+0000000000038dfc	mov	x20, x0
+0000000000038e00	mov	x0, x22
+0000000000038e04	mov	x1, x20
+0000000000038e08	bl	__IOHIDCreateBinaryData
+0000000000038e0c	mov	x19, x0
+0000000000038e10	cbz	x0, 0x38ecc
+0000000000038e14	add	x0, x21, #0x18
+0000000000038e18	mov	w1, #0x0
+0000000000038e1c	bl	0x8cd9c ; symbol stub for: _os_unfair_recursive_lock_lock_with_options
+0000000000038e20	ldr	w22, [x21, #0x20]
+0000000000038e24	ldr	x23, [sp]
+0000000000038e28	mov	x0, x19
+0000000000038e2c	bl	0x8bd28 ; symbol stub for: _CFDataGetBytePtr
+0000000000038e30	mov	x24, x0
+0000000000038e34	mov	x0, x19
+0000000000038e38	bl	0x8bd40 ; symbol stub for: _CFDataGetLength
+0000000000038e3c	mov	x3, x0
+0000000000038e40	mov	x0, x22
+0000000000038e44	mov	x1, x23
+0000000000038e48	mov	x2, x24
+0000000000038e4c	bl	_io_hideventsystem_dispatch_event_for_virtual_service
+0000000000038e50	mov	x22, x0
+0000000000038e54	add	x0, x21, #0x18
+0000000000038e58	bl	0x8cda8 ; symbol stub for: _os_unfair_recursive_lock_unlock
+0000000000038e5c	cbz	w22, 0x38e84
+0000000000038e60	mov	w0, #0xd
+0000000000038e64	bl	__IOHIDLogCategory
+0000000000038e68	mov	x21, x0
+0000000000038e6c	mov	w1, #0x10
+0000000000038e70	bl	0x8cd3c ; symbol stub for: _os_log_type_enabled
+0000000000038e74	cbnz	w0, 0x38ebc
+0000000000038e78	mov	w21, #0x0
+0000000000038e7c	cbnz	x20, 0x38e8c
+0000000000038e80	b	0x38e94
+0000000000038e84	mov	w21, #0x1
+0000000000038e88	cbz	x20, 0x38e94
+0000000000038e8c	mov	x0, x20
+0000000000038e90	bl	0x8c058 ; symbol stub for: _CFRelease
+0000000000038e94	cbz	x19, 0x38ea0
+0000000000038e98	mov	x0, x19
+0000000000038e9c	bl	0x8c058 ; symbol stub for: _CFRelease
+0000000000038ea0	mov	x0, x21
+0000000000038ea4	ldp	x29, x30, [sp, #0x40]
+0000000000038ea8	ldp	x20, x19, [sp, #0x30]
+0000000000038eac	ldp	x22, x21, [sp, #0x20]
+0000000000038eb0	ldp	x24, x23, [sp, #0x10]
+0000000000038eb4	add	sp, sp, #0x50
+0000000000038eb8	ret
+0000000000038ebc	mov	x0, x22
+0000000000038ec0	mov	x1, x21
+0000000000038ec4	bl	_IOHIDVirtualServiceClientDispatchEvent.cold.1
+0000000000038ec8	b	0x38e78
+0000000000038ecc	add	x0, sp, #0xf
+0000000000038ed0	bl	_IOHIDVirtualServiceClientDispatchEvent.cold.2
+0000000000038ed4	ldrb	w21, [sp, #0xf]
+0000000000038ed8	cbnz	x20, 0x38e8c
+0000000000038edc	b	0x38e94
+_IOHIDVirtualServiceClientDispatchEvent.cold.1:
+000000000008229c	sub	sp, sp, #0x20
+00000000000822a0	stp	x29, x30, [sp, #0x10]
+00000000000822a4	add	x29, sp, #0x10
+00000000000822a8	bl	_OUTLINED_FUNCTION_7
+00000000000822ac	str	x8, [sp, #0x8]
+00000000000822b0	adrp	x8, 11 ; 0x8d000
+00000000000822b4	ldr	d0, [x8, #0x8a8]
+00000000000822b8	str	s0, [sp]
+00000000000822bc	str	w0, [sp, #0x4]
+00000000000822c0	bl	_OUTLINED_FUNCTION_9
+00000000000822c4	adrp	x3, 14 ; 0x90000
+00000000000822c8	add	x3, x3, #0xa6b ; literal pool for: "io_hideventsystem_dispatch_event_for_virtual_service:%x"
+00000000000822cc	mov	x4, sp
+00000000000822d0	bl	_OUTLINED_FUNCTION_1
+00000000000822d4	ldr	x8, [sp, #0x8]
+00000000000822d8	bl	_OUTLINED_FUNCTION_3
+00000000000822dc	b.ne	0x822e8
+00000000000822e0	ldp	x29, x30, [sp, #0x10]
+00000000000822e4	b	_OUTLINED_FUNCTION_7
+00000000000822e8	bl	0x8c550 ; symbol stub for: ___stack_chk_fail
+_IOHIDVirtualServiceClientDispatchEvent.cold.2:
+00000000000822ec	sub	sp, sp, #0x30
+00000000000822f0	stp	x20, x19, [sp, #0x10]
+00000000000822f4	stp	x29, x30, [sp, #0x20]
+00000000000822f8	add	x29, sp, #0x20
+00000000000822fc	bl	_OUTLINED_FUNCTION_19
+0000000000082300	bl	_OUTLINED_FUNCTION_1
+0000000000082304	cbz	w0, 0x82318
+0000000000082308	bl	_OUTLINED_FUNCTION_13
+000000000008230c	adrp	x3, 14 ; 0x90000
+0000000000082310	add	x3, x3, #0xa51 ; literal pool for: "Unable to serialize event"
+0000000000082314	bl	_OUTLINED_FUNCTION_9
+0000000000082318	strb	wzr, [x19]
+000000000008231c	ldp	x29, x30, [sp, #0x20]
+0000000000082320	b	_OUTLINED_FUNCTION_14

@@ -1,0 +1,282 @@
+-[HIDVirtualEventService setCancelHandler:]:
+00000000000010e8	sub	sp, sp, #0x30
+00000000000010ec	stp	x20, x19, [sp, #0x10]
+00000000000010f0	stp	x29, x30, [sp, #0x20]
+00000000000010f4	add	x29, sp, #0x20
+00000000000010f8	mov	x19, x2
+00000000000010fc	mov	x20, x0
+0000000000001100	bl	0xa2a4 ; symbol stub for: _objc_retain_x19
+0000000000001104	mov	x0, x20
+0000000000001108	bl	_objc_msgSend$client
+000000000000110c	mov	x29, x29
+0000000000001110	bl	0xa28c ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000001114	str	x0, [sp, #0x8]
+0000000000001118	mov	x2, x19
+000000000000111c	bl	"_objc_msgSend$setCancelHandler:"
+0000000000001120	bl	0xa1fc ; symbol stub for: _objc_release_x19
+0000000000001124	ldr	x0, [sp, #0x8]
+0000000000001128	ldp	x29, x30, [sp, #0x20]
+000000000000112c	ldp	x20, x19, [sp, #0x10]
+0000000000001130	add	sp, sp, #0x30
+0000000000001134	b	0xa1e4 ; symbol stub for: _objc_release
+-[HIDVirtualEventService activate]:
+0000000000001198	sub	sp, sp, #0xc0
+000000000000119c	stp	x22, x21, [sp, #0x90]
+00000000000011a0	stp	x20, x19, [sp, #0xa0]
+00000000000011a4	stp	x29, x30, [sp, #0xb0]
+00000000000011a8	add	x29, sp, #0xb0
+00000000000011ac	adrp	x8, 19 ; 0x14000
+00000000000011b0	ldr	x8, [x8, #0x6f8] ; literal pool symbol address: ___stack_chk_guard
+00000000000011b4	ldr	x8, [x8]
+00000000000011b8	stur	x8, [x29, #-0x28]
+00000000000011bc	add	x8, x0, #0x8
+00000000000011c0	mov	w9, #0x1
+00000000000011c4	ldsetal	w9, w2, [x8]
+00000000000011c8	cbnz	w2, 0x1344
+00000000000011cc	mov	x19, x0
+00000000000011d0	bl	_objc_msgSend$client
+00000000000011d4	mov	x29, x29
+00000000000011d8	bl	0xa28c ; symbol stub for: _objc_retainAutoreleasedReturnValue
+00000000000011dc	mov	x20, x0
+00000000000011e0	bl	_objc_msgSend$activate
+00000000000011e4	bl	0xa208 ; symbol stub for: _objc_release_x20
+00000000000011e8	adrp	x8, 0 ; 0x1000
+00000000000011ec	add	x8, x8, #0x37c
+00000000000011f0	mov	w9, #0x2
+00000000000011f4	adrp	x10, 0 ; 0x1000
+00000000000011f8	add	x10, x10, #0x3fc
+00000000000011fc	adrp	x11, 0 ; 0x1000
+0000000000001200	add	x11, x11, #0x470
+0000000000001204	stp	x9, x8, [sp, #0x38]
+0000000000001208	adrp	x8, 0 ; 0x1000
+000000000000120c	add	x8, x8, #0x4e4
+0000000000001210	adrp	x9, 0 ; 0x1000
+0000000000001214	add	x9, x9, #0x5f4
+0000000000001218	stp	x10, x11, [sp, #0x48]
+000000000000121c	stp	x8, x9, [sp, #0x58]
+0000000000001220	adrp	x8, 0 ; 0x1000
+0000000000001224	add	x8, x8, #0x66c
+0000000000001228	str	x8, [sp, #0x68]
+000000000000122c	mov	x0, x19
+0000000000001230	bl	_objc_msgSend$client
+0000000000001234	mov	x29, x29
+0000000000001238	bl	0xa28c ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000000000123c	mov	x20, x0
+0000000000001240	bl	_objc_msgSend$client
+0000000000001244	add	x2, sp, #0x38
+0000000000001248	mov	x1, #0x0
+000000000000124c	mov	x3, x19
+0000000000001250	mov	x4, #0x0
+0000000000001254	bl	0x9fa4 ; symbol stub for: _IOHIDVirtualServiceClientCreateWithCallbacks
+0000000000001258	mov	x21, x0
+000000000000125c	mov	x0, x19
+0000000000001260	mov	x2, x21
+0000000000001264	bl	"_objc_msgSend$setServiceClient:"
+0000000000001268	bl	0xa214 ; symbol stub for: _objc_release_x21
+000000000000126c	bl	0xa208 ; symbol stub for: _objc_release_x20
+0000000000001270	add	x0, sp, #0x30
+0000000000001274	mov	x1, x19
+0000000000001278	bl	0xa1a8 ; symbol stub for: _objc_initWeak
+000000000000127c	adrp	x8, 19 ; 0x14000
+0000000000001280	ldr	x8, [x8, #0x6e0] ; literal pool symbol address: __NSConcreteStackBlock
+0000000000001284	str	x8, [sp, #0x8]
+0000000000001288	adrp	x8, 11 ; 0xc000
+000000000000128c	ldr	d0, [x8, #0x48]
+0000000000001290	adrp	x8, 0 ; 0x1000
+0000000000001294	add	x8, x8, #0x6d8
+0000000000001298	str	d0, [sp, #0x10]
+000000000000129c	adrp	x9, 19 ; 0x14000
+00000000000012a0	add	x9, x9, #0xbf8
+00000000000012a4	stp	x8, x9, [sp, #0x18]
+00000000000012a8	add	x21, sp, #0x8
+00000000000012ac	add	x0, x21, #0x20
+00000000000012b0	add	x1, sp, #0x30
+00000000000012b4	bl	0xa178 ; symbol stub for: _objc_copyWeak
+00000000000012b8	add	x0, sp, #0x8
+00000000000012bc	bl	0xa298 ; symbol stub for: _objc_retainBlock
+00000000000012c0	mov	x20, x0
+00000000000012c4	mov	x0, x19
+00000000000012c8	bl	_objc_msgSend$serviceClient
+00000000000012cc	mov	x29, x29
+00000000000012d0	bl	0xa28c ; symbol stub for: _objc_retainAutoreleasedReturnValue
+00000000000012d4	cmp	x0, #0x0
+00000000000012d8	cset	w22, eq
+00000000000012dc	bl	0xa1e4 ; symbol stub for: _objc_release
+00000000000012e0	cbz	w22, 0x1304
+00000000000012e4	mov	x0, x19
+00000000000012e8	bl	_objc_msgSend$queue
+00000000000012ec	mov	x29, x29
+00000000000012f0	bl	0xa28c ; symbol stub for: _objc_retainAutoreleasedReturnValue
+00000000000012f4	mov	x19, x0
+00000000000012f8	mov	x1, x20
+00000000000012fc	bl	0xa118 ; symbol stub for: _dispatch_async
+0000000000001300	bl	0xa1fc ; symbol stub for: _objc_release_x19
+0000000000001304	bl	0xa208 ; symbol stub for: _objc_release_x20
+0000000000001308	add	x0, x21, #0x20
+000000000000130c	bl	0xa184 ; symbol stub for: _objc_destroyWeak
+0000000000001310	add	x0, sp, #0x30
+0000000000001314	bl	0xa184 ; symbol stub for: _objc_destroyWeak
+0000000000001318	ldur	x8, [x29, #-0x28]
+000000000000131c	adrp	x9, 19 ; 0x14000
+0000000000001320	ldr	x9, [x9, #0x6f8] ; literal pool symbol address: ___stack_chk_guard
+0000000000001324	ldr	x9, [x9]
+0000000000001328	cmp	x9, x8
+000000000000132c	b.ne	0x1354
+0000000000001330	ldp	x29, x30, [sp, #0xb0]
+0000000000001334	ldp	x20, x19, [sp, #0xa0]
+0000000000001338	ldp	x22, x21, [sp, #0x90]
+000000000000133c	add	sp, sp, #0xc0
+0000000000001340	ret
+0000000000001344	add	x0, sp, #0x30
+0000000000001348	add	x1, sp, #0x38
+000000000000134c	bl	"-[HIDVirtualEventService activate].cold.1"
+0000000000001350	brk	#0x1
+0000000000001354	bl	0xa0d0 ; symbol stub for: ___stack_chk_fail
+0000000000001358	mov	x19, x0
+000000000000135c	add	x0, x21, #0x20
+0000000000001360	bl	0xa184 ; symbol stub for: _objc_destroyWeak
+0000000000001364	add	x0, sp, #0x30
+0000000000001368	bl	0xa184 ; symbol stub for: _objc_destroyWeak
+000000000000136c	b	0x1374
+0000000000001370	mov	x19, x0
+0000000000001374	mov	x0, x19
+0000000000001378	bl	0xa0c4 ; symbol stub for: __Unwind_Resume
+___34-[HIDVirtualEventService activate]_block_invoke:
+00000000000016d8	sub	sp, sp, #0x30
+00000000000016dc	stp	x20, x19, [sp, #0x10]
+00000000000016e0	stp	x29, x30, [sp, #0x20]
+00000000000016e4	add	x29, sp, #0x20
+00000000000016e8	add	x0, x0, #0x20
+00000000000016ec	bl	0xa1b4 ; symbol stub for: _objc_loadWeakRetained
+00000000000016f0	cbz	x0, 0x1720
+00000000000016f4	str	x0, [sp, #0x8]
+00000000000016f8	bl	_objc_msgSend$delegate
+00000000000016fc	mov	x29, x29
+0000000000001700	bl	0xa28c ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000001704	mov	x19, x0
+0000000000001708	mov	w2, #0xb
+000000000000170c	mov	x3, #0x0
+0000000000001710	ldr	x4, [sp, #0x8]
+0000000000001714	bl	"_objc_msgSend$notification:withProperty:forService:"
+0000000000001718	bl	0xa1fc ; symbol stub for: _objc_release_x19
+000000000000171c	ldr	x0, [sp, #0x8]
+0000000000001720	ldp	x29, x30, [sp, #0x20]
+0000000000001724	ldp	x20, x19, [sp, #0x10]
+0000000000001728	add	sp, sp, #0x30
+000000000000172c	b	0xa1e4 ; symbol stub for: _objc_release
+-[HIDVirtualEventService cancel]:
+0000000000001730	sub	sp, sp, #0x80
+0000000000001734	stp	x29, x30, [sp, #0x70]
+0000000000001738	add	x29, sp, #0x70
+000000000000173c	adrp	x8, 19 ; 0x14000
+0000000000001740	ldr	x8, [x8, #0x6f8] ; literal pool symbol address: ___stack_chk_guard
+0000000000001744	ldr	x8, [x8]
+0000000000001748	stur	x8, [x29, #-0x8]
+000000000000174c	add	x8, x0, #0x8
+0000000000001750	mov	w9, #0x2
+0000000000001754	ldsetal	w9, w2, [x8]
+0000000000001758	cmp	w2, #0x1
+000000000000175c	b.ne	0x179c
+0000000000001760	bl	_objc_msgSend$client
+0000000000001764	mov	x29, x29
+0000000000001768	bl	0xa28c ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000000000176c	str	x0, [sp, #0x8]
+0000000000001770	bl	_objc_msgSend$cancel
+0000000000001774	ldur	x8, [x29, #-0x8]
+0000000000001778	adrp	x9, 19 ; 0x14000
+000000000000177c	ldr	x9, [x9, #0x6f8] ; literal pool symbol address: ___stack_chk_guard
+0000000000001780	ldr	x9, [x9]
+0000000000001784	cmp	x9, x8
+0000000000001788	b.ne	0x17a8
+000000000000178c	ldr	x0, [sp, #0x8]
+0000000000001790	ldp	x29, x30, [sp, #0x70]
+0000000000001794	add	sp, sp, #0x80
+0000000000001798	b	0xa1e4 ; symbol stub for: _objc_release
+000000000000179c	add	x0, sp, #0x10
+00000000000017a0	add	x1, sp, #0x18
+00000000000017a4	bl	"-[HIDVirtualEventService cancel].cold.1"
+00000000000017a8	bl	0xa0d0 ; symbol stub for: ___stack_chk_fail
+-[HIDVirtualEventService dispatchEvent:]:
+0000000000001828	stp	x22, x21, [sp, #-0x30]!
+000000000000182c	stp	x20, x19, [sp, #0x10]
+0000000000001830	stp	x29, x30, [sp, #0x20]
+0000000000001834	add	x29, sp, #0x20
+0000000000001838	mov	x19, x2
+000000000000183c	mov	x20, x0
+0000000000001840	bl	0xa2a4 ; symbol stub for: _objc_retain_x19
+0000000000001844	mov	x0, x20
+0000000000001848	bl	_objc_msgSend$serviceClient
+000000000000184c	mov	x29, x29
+0000000000001850	bl	0xa28c ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000001854	mov	x21, x0
+0000000000001858	bl	0xa214 ; symbol stub for: _objc_release_x21
+000000000000185c	cbz	x21, 0x188c
+0000000000001860	mov	x0, x20
+0000000000001864	bl	_objc_msgSend$serviceClient
+0000000000001868	mov	x29, x29
+000000000000186c	bl	0xa28c ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000001870	mov	x21, x0
+0000000000001874	mov	x1, x19
+0000000000001878	bl	0x9fb0 ; symbol stub for: _IOHIDVirtualServiceClientDispatchEvent
+000000000000187c	cmp	w0, #0x0
+0000000000001880	cset	w20, ne
+0000000000001884	bl	0xa214 ; symbol stub for: _objc_release_x21
+0000000000001888	b	0x1890
+000000000000188c	mov	w20, #0x0
+0000000000001890	bl	0xa1fc ; symbol stub for: _objc_release_x19
+0000000000001894	mov	x0, x20
+0000000000001898	ldp	x29, x30, [sp, #0x20]
+000000000000189c	ldp	x20, x19, [sp, #0x10]
+00000000000018a0	ldp	x22, x21, [sp], #0x30
+00000000000018a4	ret
+-[HIDVirtualEventService activate].cold.1:
+0000000000008d20	sub	sp, sp, #0x50
+0000000000008d24	stp	x22, x21, [sp, #0x20]
+0000000000008d28	stp	x20, x19, [sp, #0x30]
+0000000000008d2c	stp	x29, x30, [sp, #0x40]
+0000000000008d30	add	x29, sp, #0x40
+0000000000008d34	mov	x19, x2
+0000000000008d38	mov	x20, x1
+0000000000008d3c	mov	x21, x0
+0000000000008d40	adrp	x8, 12 ; 0x14000
+0000000000008d44	ldr	x8, [x8, #0x6f8] ; literal pool symbol address: ___stack_chk_guard
+0000000000008d48	ldr	x8, [x8]
+0000000000008d4c	str	x8, [sp, #0x18]
+0000000000008d50	bl	_OUTLINED_FUNCTION_0
+0000000000008d54	cmp	w0, #0x0
+0000000000008d58	mov	w8, #0x2
+0000000000008d5c	cinc	w0, w8, ne
+0000000000008d60	mov	x1, x30
+0000000000008d64	bl	_OUTLINED_FUNCTION_2
+0000000000008d68	mov	x30, x1
+0000000000008d6c	adrp	x7, 5 ; 0xd000
+0000000000008d70	add	x7, x7, #0xd78 ; literal pool for: "assertion failure: Invalid dispatch state: %d"
+0000000000008d74	bl	_OUTLINED_FUNCTION_1
+0000000000008d78	mov	x1, x0
+0000000000008d7c	ldr	x0, [x21]
+0000000000008d80	bl	0xa0e8 ; symbol stub for: __os_crash_msg
+0000000000008d84	brk	#0x1
+0000000000008d88	bl	0xa0c4 ; symbol stub for: __Unwind_Resume
+-[HIDVirtualEventService cancel].cold.1:
+0000000000008d8c	sub	sp, sp, #0x50
+0000000000008d90	stp	x22, x21, [sp, #0x20]
+0000000000008d94	stp	x20, x19, [sp, #0x30]
+0000000000008d98	stp	x29, x30, [sp, #0x40]
+0000000000008d9c	add	x29, sp, #0x40
+0000000000008da0	mov	x19, x2
+0000000000008da4	mov	x20, x1
+0000000000008da8	mov	x21, x0
+0000000000008dac	bl	_OUTLINED_FUNCTION_0
+0000000000008db0	cmp	w0, #0x0
+0000000000008db4	mov	w8, #0x2
+0000000000008db8	cinc	w0, w8, ne
+0000000000008dbc	mov	x1, x30
+0000000000008dc0	bl	_OUTLINED_FUNCTION_2
+0000000000008dc4	mov	x30, x1
+0000000000008dc8	adrp	x7, 5 ; 0xd000
+0000000000008dcc	add	x7, x7, #0xd78 ; literal pool for: "assertion failure: Invalid dispatch state: %d"
+0000000000008dd0	bl	_OUTLINED_FUNCTION_1
+0000000000008dd4	mov	x1, x0
+0000000000008dd8	ldr	x0, [x21]
+0000000000008ddc	bl	0xa0e8 ; symbol stub for: __os_crash_msg
+0000000000008de0	brk	#0x1

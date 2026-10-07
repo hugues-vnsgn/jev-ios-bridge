@@ -1,0 +1,979 @@
++[RCPInlinePlayer playEventStream:options:completion:]:
+0000000000006144	sub	sp, sp, #0x50
+0000000000006148	stp	x24, x23, [sp, #0x10]
+000000000000614c	stp	x22, x21, [sp, #0x20]
+0000000000006150	stp	x20, x19, [sp, #0x30]
+0000000000006154	stp	x29, x30, [sp, #0x40]
+0000000000006158	add	x29, sp, #0x40
+000000000000615c	mov	x19, x4
+0000000000006160	mov	x20, x3
+0000000000006164	mov	x21, x2
+0000000000006168	adrp	x23, 50 ; 0x38000
+000000000000616c	ldr	x22, [x23, #0x68] ; literal pool symbol address: _OBJC_CLASS_$_RCPInlinePlayer
+0000000000006170	bl	0x20fe0 ; symbol stub for: _objc_retain_x19
+0000000000006174	bl	0x20ff8 ; symbol stub for: _objc_retain_x20
+0000000000006178	bl	0x21004 ; symbol stub for: _objc_retain_x21
+000000000000617c	mov	x0, x22
+0000000000006180	bl	_objc_msgSend$sharedInstance
+0000000000006184	mov	x29, x29
+0000000000006188	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000000000618c	mov	x22, x0
+0000000000006190	mov	x2, x21
+0000000000006194	mov	x3, #0x0
+0000000000006198	bl	"_objc_msgSend$prewarmForEventStream:completion:"
+000000000000619c	bl	0x20f38 ; symbol stub for: _objc_release_x22
+00000000000061a0	ldr	x0, [x23, #0x68]
+00000000000061a4	bl	_objc_msgSend$sharedInstance
+00000000000061a8	mov	x29, x29
+00000000000061ac	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+00000000000061b0	mov	x22, x0
+00000000000061b4	mov	x2, x21
+00000000000061b8	mov	x3, x20
+00000000000061bc	mov	x4, x19
+00000000000061c0	bl	"_objc_msgSend$playEventStream:options:completion:"
+00000000000061c4	bl	0x20f14 ; symbol stub for: _objc_release_x19
+00000000000061c8	bl	0x20f20 ; symbol stub for: _objc_release_x20
+00000000000061cc	bl	0x20f2c ; symbol stub for: _objc_release_x21
+00000000000061d0	bl	0x20f38 ; symbol stub for: _objc_release_x22
+00000000000061d4	ldr	x0, [x23, #0x68]
+00000000000061d8	bl	_objc_msgSend$sharedInstance
+00000000000061dc	mov	x29, x29
+00000000000061e0	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+00000000000061e4	str	x0, [sp, #0x8]
+00000000000061e8	bl	_objc_msgSend$tearDown
+00000000000061ec	ldr	x0, [sp, #0x8]
+00000000000061f0	ldp	x29, x30, [sp, #0x40]
+00000000000061f4	ldp	x20, x19, [sp, #0x30]
+00000000000061f8	ldp	x22, x21, [sp, #0x20]
+00000000000061fc	ldp	x24, x23, [sp, #0x10]
+0000000000006200	add	sp, sp, #0x50
+0000000000006204	b	0x20efc ; symbol stub for: _objc_release
++[RCPInlinePlayer playEventActions:options:completion:]:
+0000000000006208	sub	sp, sp, #0x40
+000000000000620c	stp	x22, x21, [sp, #0x10]
+0000000000006210	stp	x20, x19, [sp, #0x20]
+0000000000006214	stp	x29, x30, [sp, #0x30]
+0000000000006218	add	x29, sp, #0x30
+000000000000621c	mov	x20, x4
+0000000000006220	mov	x19, x3
+0000000000006224	mov	x21, x2
+0000000000006228	adrp	x8, 50 ; 0x38000
+000000000000622c	ldr	x22, [x8, #0xc8] ; literal pool symbol address: _OBJC_CLASS_$_RCPSyntheticEventStream
+0000000000006230	bl	0x20ff8 ; symbol stub for: _objc_retain_x20
+0000000000006234	bl	0x20fe0 ; symbol stub for: _objc_retain_x19
+0000000000006238	mov	x0, x22
+000000000000623c	mov	x2, x21
+0000000000006240	bl	"_objc_msgSend$eventStreamWithEventActions:"
+0000000000006244	mov	x29, x29
+0000000000006248	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000000000624c	str	x0, [sp, #0x8]
+0000000000006250	adrp	x22, 50 ; 0x38000
+0000000000006254	ldr	x0, [x22, #0x68] ; literal pool symbol address: _OBJC_CLASS_$_RCPInlinePlayer
+0000000000006258	bl	_objc_msgSend$sharedInstance
+000000000000625c	mov	x29, x29
+0000000000006260	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000006264	mov	x21, x0
+0000000000006268	ldr	x2, [sp, #0x8]
+000000000000626c	mov	x3, #0x0
+0000000000006270	bl	"_objc_msgSend$prewarmForEventStream:completion:"
+0000000000006274	bl	0x20f2c ; symbol stub for: _objc_release_x21
+0000000000006278	ldr	x0, [x22, #0x68]
+000000000000627c	bl	_objc_msgSend$sharedInstance
+0000000000006280	mov	x29, x29
+0000000000006284	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000006288	mov	x21, x0
+000000000000628c	ldr	x2, [sp, #0x8]
+0000000000006290	mov	x3, x19
+0000000000006294	mov	x4, x20
+0000000000006298	bl	"_objc_msgSend$playEventStream:options:completion:"
+000000000000629c	bl	0x20f20 ; symbol stub for: _objc_release_x20
+00000000000062a0	bl	0x20f14 ; symbol stub for: _objc_release_x19
+00000000000062a4	bl	0x20f2c ; symbol stub for: _objc_release_x21
+00000000000062a8	ldr	x0, [x22, #0x68]
+00000000000062ac	bl	_objc_msgSend$sharedInstance
+00000000000062b0	mov	x29, x29
+00000000000062b4	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+00000000000062b8	mov	x19, x0
+00000000000062bc	bl	_objc_msgSend$tearDown
+00000000000062c0	bl	0x20f14 ; symbol stub for: _objc_release_x19
+00000000000062c4	ldr	x0, [sp, #0x8]
+00000000000062c8	ldp	x29, x30, [sp, #0x30]
+00000000000062cc	ldp	x20, x19, [sp, #0x20]
+00000000000062d0	ldp	x22, x21, [sp, #0x10]
+00000000000062d4	add	sp, sp, #0x40
+00000000000062d8	b	0x20efc ; symbol stub for: _objc_release
+-[RCPInlinePlayer init]:
+00000000000062f8	sub	sp, sp, #0x40
+00000000000062fc	stp	x22, x21, [sp, #0x10]
+0000000000006300	stp	x20, x19, [sp, #0x20]
+0000000000006304	stp	x29, x30, [sp, #0x30]
+0000000000006308	add	x29, sp, #0x30
+000000000000630c	adrp	x8, 60 ; 0x42000
+0000000000006310	ldr	x8, [x8, #0x3e0] ; Objc class ref: bad class ref
+0000000000006314	stp	x0, x8, [sp]
+0000000000006318	adrp	x8, 58 ; 0x40000
+000000000000631c	ldr	x1, [x8, #0xe98]
+0000000000006320	mov	x0, sp
+0000000000006324	bl	0x20ec0 ; Objc message: _objc_msgSendSuper2
+0000000000006328	mov	x19, x0
+000000000000632c	cbz	x0, 0x6394
+0000000000006330	mov	w8, #0x1
+0000000000006334	strb	w8, [x19, #0x8]
+0000000000006338	adrp	x8, 50 ; 0x38000
+000000000000633c	ldr	x0, [x8, #0x90] ; literal pool symbol address: _OBJC_CLASS_$_RCPPlayer
+0000000000006340	bl	0x20e54 ; symbol stub for: _objc_alloc_init
+0000000000006344	ldr	x8, [x19, #0x10]
+0000000000006348	str	x0, [x19, #0x10]
+000000000000634c	bl	0x20f8c ; symbol stub for: _objc_release_x8
+0000000000006350	mov	x0, #0x0
+0000000000006354	mov	w1, #0x21
+0000000000006358	mov	w2, #0x0
+000000000000635c	bl	0x20d4c ; symbol stub for: _dispatch_queue_attr_make_with_qos_class
+0000000000006360	mov	x29, x29
+0000000000006364	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000006368	mov	x20, x0
+000000000000636c	adrp	x0, 30 ; 0x24000
+0000000000006370	add	x0, x0, #0xb10 ; literal pool for: "com.apple.recap.inline-replay"
+0000000000006374	mov	x1, x20
+0000000000006378	bl	0x20d58 ; symbol stub for: _dispatch_queue_create
+000000000000637c	mov	x21, x0
+0000000000006380	bl	0x20f20 ; symbol stub for: _objc_release_x20
+0000000000006384	mov	x0, x19
+0000000000006388	mov	x2, x21
+000000000000638c	bl	"_objc_msgSend$setReplayQueue:"
+0000000000006390	bl	0x20f2c ; symbol stub for: _objc_release_x21
+0000000000006394	mov	x0, x19
+0000000000006398	ldp	x29, x30, [sp, #0x30]
+000000000000639c	ldp	x20, x19, [sp, #0x20]
+00000000000063a0	ldp	x22, x21, [sp, #0x10]
+00000000000063a4	add	sp, sp, #0x40
+00000000000063a8	ret
+-[RCPInlinePlayer playEventActions:options:completion:]:
+0000000000006700	sub	sp, sp, #0x50
+0000000000006704	stp	x24, x23, [sp, #0x10]
+0000000000006708	stp	x22, x21, [sp, #0x20]
+000000000000670c	stp	x20, x19, [sp, #0x30]
+0000000000006710	stp	x29, x30, [sp, #0x40]
+0000000000006714	add	x29, sp, #0x40
+0000000000006718	mov	x19, x4
+000000000000671c	mov	x20, x3
+0000000000006720	mov	x21, x2
+0000000000006724	mov	x22, x0
+0000000000006728	adrp	x8, 50 ; 0x38000
+000000000000672c	ldr	x23, [x8, #0xc8] ; literal pool symbol address: _OBJC_CLASS_$_RCPSyntheticEventStream
+0000000000006730	bl	0x20fe0 ; symbol stub for: _objc_retain_x19
+0000000000006734	bl	0x20ff8 ; symbol stub for: _objc_retain_x20
+0000000000006738	mov	x0, x23
+000000000000673c	mov	x2, x21
+0000000000006740	bl	"_objc_msgSend$eventStreamWithEventActions:"
+0000000000006744	mov	x29, x29
+0000000000006748	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000000000674c	mov	x2, x0
+0000000000006750	str	x0, [sp, #0x8]
+0000000000006754	mov	x0, x22
+0000000000006758	mov	x3, x20
+000000000000675c	mov	x4, x19
+0000000000006760	bl	"_objc_msgSend$playEventStream:options:completion:"
+0000000000006764	bl	0x20f14 ; symbol stub for: _objc_release_x19
+0000000000006768	bl	0x20f20 ; symbol stub for: _objc_release_x20
+000000000000676c	ldr	x0, [sp, #0x8]
+0000000000006770	ldp	x29, x30, [sp, #0x40]
+0000000000006774	ldp	x20, x19, [sp, #0x30]
+0000000000006778	ldp	x22, x21, [sp, #0x20]
+000000000000677c	ldp	x24, x23, [sp, #0x10]
+0000000000006780	add	sp, sp, #0x50
+0000000000006784	b	0x20efc ; symbol stub for: _objc_release
+-[RCPInlinePlayer playEventStream:options:completion:]:
+0000000000006788	sub	sp, sp, #0x80
+000000000000678c	stp	x24, x23, [sp, #0x40]
+0000000000006790	stp	x22, x21, [sp, #0x50]
+0000000000006794	stp	x20, x19, [sp, #0x60]
+0000000000006798	stp	x29, x30, [sp, #0x70]
+000000000000679c	add	x29, sp, #0x70
+00000000000067a0	mov	x20, x4
+00000000000067a4	mov	x21, x3
+00000000000067a8	mov	x19, x2
+00000000000067ac	mov	x22, x0
+00000000000067b0	bl	0x20fe0 ; symbol stub for: _objc_retain_x19
+00000000000067b4	bl	0x21004 ; symbol stub for: _objc_retain_x21
+00000000000067b8	bl	0x20ff8 ; symbol stub for: _objc_retain_x20
+00000000000067bc	mov	x0, x22
+00000000000067c0	bl	_objc_msgSend$_doInitialDelayIfNeeded
+00000000000067c4	cbnz	x21, 0x67d8
+00000000000067c8	adrp	x8, 50 ; 0x38000
+00000000000067cc	ldr	x0, [x8, #0xa0] ; literal pool symbol address: _OBJC_CLASS_$_RCPPlayerPlaybackOptions
+00000000000067d0	bl	0x20ee4 ; symbol stub for: _objc_opt_new
+00000000000067d4	mov	x21, x0
+00000000000067d8	mov	x0, x22
+00000000000067dc	bl	_objc_msgSend$replayQueue
+00000000000067e0	mov	x29, x29
+00000000000067e4	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+00000000000067e8	mov	x23, x0
+00000000000067ec	adrp	x8, 50 ; 0x38000
+00000000000067f0	ldr	x8, [x8, #0x770] ; literal pool symbol address: __NSConcreteStackBlock
+00000000000067f4	str	x8, [sp]
+00000000000067f8	adrp	x8, 30 ; 0x24000
+00000000000067fc	ldr	d0, [x8, #0x430]
+0000000000006800	str	d0, [sp, #0x8]
+0000000000006804	adrp	x8, 0 ; 0x6000
+0000000000006808	add	x8, x8, #0x878
+000000000000680c	adrp	x9, 50 ; 0x38000
+0000000000006810	add	x9, x9, #0xbd0
+0000000000006814	stp	x8, x9, [sp, #0x10]
+0000000000006818	stp	x22, x19, [sp, #0x20]
+000000000000681c	stp	x21, x20, [sp, #0x30]
+0000000000006820	bl	0x20ff8 ; symbol stub for: _objc_retain_x20
+0000000000006824	bl	0x21004 ; symbol stub for: _objc_retain_x21
+0000000000006828	bl	0x20fe0 ; symbol stub for: _objc_retain_x19
+000000000000682c	mov	x1, sp
+0000000000006830	mov	x0, x23
+0000000000006834	bl	0x20cec ; symbol stub for: _dispatch_async
+0000000000006838	bl	0x20f44 ; symbol stub for: _objc_release_x23
+000000000000683c	ldr	x8, [sp, #0x38]
+0000000000006840	bl	0x20f8c ; symbol stub for: _objc_release_x8
+0000000000006844	ldr	x8, [sp, #0x30]
+0000000000006848	bl	0x20f8c ; symbol stub for: _objc_release_x8
+000000000000684c	ldr	x8, [sp, #0x28]
+0000000000006850	bl	0x20f8c ; symbol stub for: _objc_release_x8
+0000000000006854	bl	0x20f20 ; symbol stub for: _objc_release_x20
+0000000000006858	bl	0x20f2c ; symbol stub for: _objc_release_x21
+000000000000685c	bl	0x20f14 ; symbol stub for: _objc_release_x19
+0000000000006860	ldp	x29, x30, [sp, #0x70]
+0000000000006864	ldp	x20, x19, [sp, #0x60]
+0000000000006868	ldp	x22, x21, [sp, #0x50]
+000000000000686c	ldp	x24, x23, [sp, #0x40]
+0000000000006870	add	sp, sp, #0x80
+0000000000006874	ret
+___54-[RCPInlinePlayer playEventStream:options:completion:]_block_invoke:
+0000000000006878	sub	sp, sp, #0x90
+000000000000687c	stp	x22, x21, [sp, #0x60]
+0000000000006880	stp	x20, x19, [sp, #0x70]
+0000000000006884	stp	x29, x30, [sp, #0x80]
+0000000000006888	add	x29, sp, #0x80
+000000000000688c	mov	x19, x0
+0000000000006890	ldr	x0, [x0, #0x20]
+0000000000006894	bl	_objc_msgSend$underlyingPlayer
+0000000000006898	mov	x29, x29
+000000000000689c	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+00000000000068a0	mov	x20, x0
+00000000000068a4	ldp	x2, x3, [x19, #0x28]
+00000000000068a8	bl	"_objc_msgSend$playEventStream:withOptions:"
+00000000000068ac	bl	0x20f20 ; symbol stub for: _objc_release_x20
+00000000000068b0	ldr	x8, [x19, #0x38]
+00000000000068b4	cbz	x8, 0x69b4
+00000000000068b8	ldr	x0, [x19, #0x20]
+00000000000068bc	bl	_objc_msgSend$ignoresCompletionDelay
+00000000000068c0	cbz	w0, 0x6930
+00000000000068c4	ldr	x0, [x19, #0x20]
+00000000000068c8	bl	_objc_msgSend$replayQueue
+00000000000068cc	mov	x29, x29
+00000000000068d0	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+00000000000068d4	mov	x20, x0
+00000000000068d8	adrp	x8, 50 ; 0x38000
+00000000000068dc	ldr	x8, [x8, #0x770] ; literal pool symbol address: __NSConcreteStackBlock
+00000000000068e0	str	x8, [sp, #0x30]
+00000000000068e4	adrp	x8, 30 ; 0x24000
+00000000000068e8	ldr	d0, [x8, #0x430]
+00000000000068ec	adrp	x8, 0 ; 0x6000
+00000000000068f0	add	x8, x8, #0x9c8
+00000000000068f4	adrp	x9, 50 ; 0x38000
+00000000000068f8	add	x9, x9, #0xba8
+00000000000068fc	str	d0, [sp, #0x38]
+0000000000006900	stp	x8, x9, [sp, #0x40]
+0000000000006904	ldr	x8, [x19, #0x20]
+0000000000006908	str	x8, [sp, #0x50]
+000000000000690c	ldr	x19, [x19, #0x38]
+0000000000006910	bl	0x20fe0 ; symbol stub for: _objc_retain_x19
+0000000000006914	str	x19, [sp, #0x58]
+0000000000006918	add	x1, sp, #0x30
+000000000000691c	mov	x0, x20
+0000000000006920	bl	0x20cec ; symbol stub for: _dispatch_async
+0000000000006924	bl	0x20f20 ; symbol stub for: _objc_release_x20
+0000000000006928	ldr	x8, [sp, #0x58]
+000000000000692c	b	0x69b0
+0000000000006930	mov	x0, #0x0
+0000000000006934	mov	w1, #0xc200
+0000000000006938	movk	w1, #0xbeb, lsl #16
+000000000000693c	bl	0x20db8 ; symbol stub for: _dispatch_time
+0000000000006940	mov	x20, x0
+0000000000006944	ldr	x0, [x19, #0x20]
+0000000000006948	bl	_objc_msgSend$replayQueue
+000000000000694c	mov	x29, x29
+0000000000006950	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000006954	mov	x21, x0
+0000000000006958	adrp	x8, 50 ; 0x38000
+000000000000695c	ldr	x8, [x8, #0x770] ; literal pool symbol address: __NSConcreteStackBlock
+0000000000006960	str	x8, [sp]
+0000000000006964	adrp	x8, 30 ; 0x24000
+0000000000006968	ldr	d0, [x8, #0x430]
+000000000000696c	adrp	x8, 0 ; 0x6000
+0000000000006970	add	x8, x8, #0xa14
+0000000000006974	adrp	x9, 50 ; 0x38000
+0000000000006978	add	x9, x9, #0xba8
+000000000000697c	str	d0, [sp, #0x8]
+0000000000006980	stp	x8, x9, [sp, #0x10]
+0000000000006984	ldr	x8, [x19, #0x20]
+0000000000006988	str	x8, [sp, #0x20]
+000000000000698c	ldr	x19, [x19, #0x38]
+0000000000006990	bl	0x20fe0 ; symbol stub for: _objc_retain_x19
+0000000000006994	str	x19, [sp, #0x28]
+0000000000006998	mov	x2, sp
+000000000000699c	mov	x0, x20
+00000000000069a0	mov	x1, x21
+00000000000069a4	bl	0x20ce0 ; symbol stub for: _dispatch_after
+00000000000069a8	bl	0x20f2c ; symbol stub for: _objc_release_x21
+00000000000069ac	ldr	x8, [sp, #0x28]
+00000000000069b0	bl	0x20f8c ; symbol stub for: _objc_release_x8
+00000000000069b4	ldp	x29, x30, [sp, #0x80]
+00000000000069b8	ldp	x20, x19, [sp, #0x70]
+00000000000069bc	ldp	x22, x21, [sp, #0x60]
+00000000000069c0	add	sp, sp, #0x90
+00000000000069c4	ret
+___54-[RCPInlinePlayer playEventStream:options:completion:]_block_invoke_2:
+00000000000069c8	sub	sp, sp, #0x30
+00000000000069cc	stp	x20, x19, [sp, #0x10]
+00000000000069d0	stp	x29, x30, [sp, #0x20]
+00000000000069d4	add	x29, sp, #0x20
+00000000000069d8	adrp	x8, 58 ; 0x40000
+00000000000069dc	ldr	x19, [x8, #0x698]
+00000000000069e0	ldp	x20, x0, [x0, #0x20]
+00000000000069e4	bl	0x20fc8 ; symbol stub for: _objc_retainBlock
+00000000000069e8	mov	x3, x0
+00000000000069ec	str	x0, [sp, #0x8]
+00000000000069f0	mov	x0, x20
+00000000000069f4	mov	x2, x19
+00000000000069f8	mov	w4, #0x0
+00000000000069fc	bl	"_objc_msgSend$performSelectorOnMainThread:withObject:waitUntilDone:"
+0000000000006a00	ldr	x0, [sp, #0x8]
+0000000000006a04	ldp	x29, x30, [sp, #0x20]
+0000000000006a08	ldp	x20, x19, [sp, #0x10]
+0000000000006a0c	add	sp, sp, #0x30
+0000000000006a10	b	0x20efc ; symbol stub for: _objc_release
+___54-[RCPInlinePlayer playEventStream:options:completion:]_block_invoke_3:
+0000000000006a14	sub	sp, sp, #0x30
+0000000000006a18	stp	x20, x19, [sp, #0x10]
+0000000000006a1c	stp	x29, x30, [sp, #0x20]
+0000000000006a20	add	x29, sp, #0x20
+0000000000006a24	adrp	x8, 58 ; 0x40000
+0000000000006a28	ldr	x19, [x8, #0x698]
+0000000000006a2c	ldp	x20, x0, [x0, #0x20]
+0000000000006a30	bl	0x20fc8 ; symbol stub for: _objc_retainBlock
+0000000000006a34	mov	x3, x0
+0000000000006a38	str	x0, [sp, #0x8]
+0000000000006a3c	mov	x0, x20
+0000000000006a40	mov	x2, x19
+0000000000006a44	mov	w4, #0x0
+0000000000006a48	bl	"_objc_msgSend$performSelectorOnMainThread:withObject:waitUntilDone:"
+0000000000006a4c	ldr	x0, [sp, #0x8]
+0000000000006a50	ldp	x29, x30, [sp, #0x20]
+0000000000006a54	ldp	x20, x19, [sp, #0x10]
+0000000000006a58	add	sp, sp, #0x30
+0000000000006a5c	b	0x20efc ; symbol stub for: _objc_release
+-[RCPInlinePlayer ignoresCompletionDelay]:
+0000000000006a84	ldrb	w0, [x0, #0x9]
+0000000000006a88	ret
++[RCPPlayer playEventStream:withOptions:]:
+0000000000006cf0	sub	sp, sp, #0x50
+0000000000006cf4	stp	x22, x21, [sp, #0x20]
+0000000000006cf8	stp	x20, x19, [sp, #0x30]
+0000000000006cfc	stp	x29, x30, [sp, #0x40]
+0000000000006d00	add	x29, sp, #0x40
+0000000000006d04	mov	x21, x3
+0000000000006d08	mov	x20, x2
+0000000000006d0c	mov	x19, x0
+0000000000006d10	bl	0x21004 ; symbol stub for: _objc_retain_x21
+0000000000006d14	bl	0x20ff8 ; symbol stub for: _objc_retain_x20
+0000000000006d18	bl	_RCPLogPlayback
+0000000000006d1c	mov	x29, x29
+0000000000006d20	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000006d24	mov	x22, x0
+0000000000006d28	bl	0x210c4 ; symbol stub for: _os_signpost_enabled
+0000000000006d2c	cbz	w0, 0x6d64
+0000000000006d30	strh	wzr, [sp, #0x10]
+0000000000006d34	adrp	x0, -6 ; 0x0
+0000000000006d38	add	x0, x0, #0x0
+0000000000006d3c	adrp	x4, 32 ; 0x26000
+0000000000006d40	add	x4, x4, #0x34c ; literal pool for: "RecapPlayEventStream"
+0000000000006d44	adrp	x5, 32 ; 0x26000
+0000000000006d48	add	x5, x5, #0x34b ; literal pool for: ""
+0000000000006d4c	add	x6, sp, #0x10
+0000000000006d50	mov	x1, x22
+0000000000006d54	mov	w2, #0x1
+0000000000006d58	mov	w3, #0x1f5
+0000000000006d5c	mov	w7, #0x2
+0000000000006d60	bl	0x20cb0 ; symbol stub for: __os_signpost_emit_with_name_impl
+0000000000006d64	bl	0x20f38 ; symbol stub for: _objc_release_x22
+0000000000006d68	mov	x0, x19
+0000000000006d6c	bl	_objc_msgSend$sharedPlayer
+0000000000006d70	mov	x29, x29
+0000000000006d74	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000006d78	mov	x22, x0
+0000000000006d7c	mov	x2, x20
+0000000000006d80	mov	x3, #0x0
+0000000000006d84	bl	"_objc_msgSend$prewarmForEventStream:withError:"
+0000000000006d88	bl	0x20f38 ; symbol stub for: _objc_release_x22
+0000000000006d8c	mov	x0, x19
+0000000000006d90	bl	_objc_msgSend$sharedPlayer
+0000000000006d94	mov	x29, x29
+0000000000006d98	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000006d9c	mov	x22, x0
+0000000000006da0	mov	x2, x20
+0000000000006da4	mov	x3, x21
+0000000000006da8	bl	"_objc_msgSend$playEventStream:withOptions:"
+0000000000006dac	bl	0x20f2c ; symbol stub for: _objc_release_x21
+0000000000006db0	bl	0x20f20 ; symbol stub for: _objc_release_x20
+0000000000006db4	bl	0x20f38 ; symbol stub for: _objc_release_x22
+0000000000006db8	mov	x0, x19
+0000000000006dbc	bl	_objc_msgSend$sharedPlayer
+0000000000006dc0	mov	x29, x29
+0000000000006dc4	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000006dc8	mov	x19, x0
+0000000000006dcc	bl	_objc_msgSend$tearDown
+0000000000006dd0	bl	0x20f14 ; symbol stub for: _objc_release_x19
+0000000000006dd4	bl	_RCPLogPlayback
+0000000000006dd8	mov	x29, x29
+0000000000006ddc	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000006de0	mov	x19, x0
+0000000000006de4	bl	0x210c4 ; symbol stub for: _os_signpost_enabled
+0000000000006de8	cbz	w0, 0x6e20
+0000000000006dec	strh	wzr, [sp]
+0000000000006df0	adrp	x0, -6 ; 0x0
+0000000000006df4	add	x0, x0, #0x0
+0000000000006df8	adrp	x4, 32 ; 0x26000
+0000000000006dfc	add	x4, x4, #0x34c ; literal pool for: "RecapPlayEventStream"
+0000000000006e00	adrp	x5, 32 ; 0x26000
+0000000000006e04	add	x5, x5, #0x34b ; literal pool for: ""
+0000000000006e08	mov	x6, sp
+0000000000006e0c	mov	x1, x19
+0000000000006e10	mov	w2, #0x1
+0000000000006e14	mov	w3, #0x1f5
+0000000000006e18	mov	w7, #0x2
+0000000000006e1c	bl	0x20cb0 ; symbol stub for: __os_signpost_emit_with_name_impl
+0000000000006e20	bl	0x20f14 ; symbol stub for: _objc_release_x19
+0000000000006e24	ldp	x29, x30, [sp, #0x40]
+0000000000006e28	ldp	x20, x19, [sp, #0x30]
+0000000000006e2c	ldp	x22, x21, [sp, #0x20]
+0000000000006e30	add	sp, sp, #0x50
+0000000000006e34	ret
+-[RCPPlayer playEventStream:withOptions:]:
+0000000000007150	stp	d13, d12, [sp, #-0x90]!
+0000000000007154	stp	d11, d10, [sp, #0x10]
+0000000000007158	stp	d9, d8, [sp, #0x20]
+000000000000715c	stp	x28, x27, [sp, #0x30]
+0000000000007160	stp	x26, x25, [sp, #0x40]
+0000000000007164	stp	x24, x23, [sp, #0x50]
+0000000000007168	stp	x22, x21, [sp, #0x60]
+000000000000716c	stp	x20, x19, [sp, #0x70]
+0000000000007170	stp	x29, x30, [sp, #0x80]
+0000000000007174	add	x29, sp, #0x80
+0000000000007178	sub	sp, sp, #0x260
+000000000000717c	mov	x20, x3
+0000000000007180	mov	x23, x2
+0000000000007184	mov	x27, x0
+0000000000007188	adrp	x8, 49 ; 0x38000
+000000000000718c	ldr	x8, [x8, #0x798] ; literal pool symbol address: ___stack_chk_guard
+0000000000007190	ldr	x8, [x8]
+0000000000007194	stur	x8, [x29, #-0x98]
+0000000000007198	bl	0x2101c ; symbol stub for: _objc_retain_x23
+000000000000719c	bl	0x20ff8 ; symbol stub for: _objc_retain_x20
+00000000000071a0	mov	x0, x27
+00000000000071a4	bl	_objc_msgSend$environment
+00000000000071a8	mov	x29, x29
+00000000000071ac	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+00000000000071b0	mov	x21, x0
+00000000000071b4	mov	x0, x20
+00000000000071b8	bl	_objc_msgSend$playbackSpeedFactor
+00000000000071bc	mov.16b	v8, v0
+00000000000071c0	mov	x0, x23
+00000000000071c4	bl	_objc_msgSend$environment
+00000000000071c8	mov	x29, x29
+00000000000071cc	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+00000000000071d0	mov	x19, x0
+00000000000071d4	mov	x0, x21
+00000000000071d8	mov	x2, x19
+00000000000071dc	bl	"_objc_msgSend$speedFactorToAdjustRecordingEnvironment:"
+00000000000071e0	fmul	d0, d8, d0
+00000000000071e4	mov	x0, x20
+00000000000071e8	bl	"_objc_msgSend$setPlaybackSpeedFactor:"
+00000000000071ec	bl	0x20f14 ; symbol stub for: _objc_release_x19
+00000000000071f0	bl	0x20ff8 ; symbol stub for: _objc_retain_x20
+00000000000071f4	ldr	x8, [x27, #0x18]
+00000000000071f8	str	x20, [x27, #0x18]
+00000000000071fc	bl	0x20f8c ; symbol stub for: _objc_release_x8
+0000000000007200	mov	x0, x21
+0000000000007204	bl	_objc_msgSend$isSimulator
+0000000000007208	str	x21, [sp]
+000000000000720c	cbz	w0, 0x7238
+0000000000007210	mov	x0, x23
+0000000000007214	bl	0x20ecc ; symbol stub for: _objc_opt_class
+0000000000007218	mov	x19, x0
+000000000000721c	adrp	x8, 49 ; 0x38000
+0000000000007220	ldr	x0, [x8, #0x50] ; literal pool symbol address: _OBJC_CLASS_$_RCPEventStreamRecorder
+0000000000007224	bl	0x20ecc ; symbol stub for: _objc_opt_class
+0000000000007228	mov	x2, x0
+000000000000722c	mov	x0, x19
+0000000000007230	bl	"_objc_msgSend$isSubclassOfClass:"
+0000000000007234	tbz	w0, #0x0, 0x7240
+0000000000007238	strb	wzr, [x27, #0x8]
+000000000000723c	b	0x728c
+0000000000007240	mov	x0, x23
+0000000000007244	bl	_objc_msgSend$environment
+0000000000007248	mov	x29, x29
+000000000000724c	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000007250	mov	x19, x0
+0000000000007254	bl	_objc_msgSend$isSimulator
+0000000000007258	cbz	w0, 0x7280
+000000000000725c	mov	x0, x23
+0000000000007260	bl	_objc_msgSend$environment
+0000000000007264	mov	x29, x29
+0000000000007268	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000000000726c	cmp	x0, x21
+0000000000007270	cset	w8, eq
+0000000000007274	strb	w8, [x27, #0x8]
+0000000000007278	bl	0x20efc ; symbol stub for: _objc_release
+000000000000727c	b	0x7288
+0000000000007280	mov	w8, #0x1
+0000000000007284	strb	w8, [x27, #0x8]
+0000000000007288	bl	0x20f14 ; symbol stub for: _objc_release_x19
+000000000000728c	str	xzr, [sp, #0x108]
+0000000000007290	add	x0, sp, #0x108
+0000000000007294	bl	0x20e24 ; symbol stub for: _mach_timebase_info
+0000000000007298	ldr	w21, [sp, #0x108]
+000000000000729c	ldr	w22, [sp, #0x10c]
+00000000000072a0	mov	x0, x20
+00000000000072a4	bl	_objc_msgSend$playbackSpeedFactor
+00000000000072a8	mov.16b	v8, v0
+00000000000072ac	str	x23, [sp, #0x8]
+00000000000072b0	mov	x0, x23
+00000000000072b4	bl	_objc_msgSend$events
+00000000000072b8	mov	x29, x29
+00000000000072bc	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+00000000000072c0	str	x0, [sp, #0x38]
+00000000000072c4	bl	0x20e0c ; symbol stub for: _mach_absolute_time
+00000000000072c8	mov	x24, x0
+00000000000072cc	mov	x0, x20
+00000000000072d0	bl	_objc_msgSend$minDelayBetweenSends
+00000000000072d4	mov.16b	v9, v0
+00000000000072d8	movi.2d	v0, #0000000000000000
+00000000000072dc	stp	q0, q0, [sp, #0xe0]
+00000000000072e0	str	q0, [sp, #0xd0]
+00000000000072e4	cbz	x20, 0x72f4
+00000000000072e8	add	x8, sp, #0xd0
+00000000000072ec	mov	x0, x20
+00000000000072f0	bl	_objc_msgSend$transform
+00000000000072f4	str	x20, [sp, #0x28]
+00000000000072f8	ldr	x0, [x27, #0x18]
+00000000000072fc	bl	_objc_msgSend$linkEventDeliveryToDisplayRefreshRate
+0000000000007300	cbz	w0, 0x734c
+0000000000007304	adrp	x8, 49 ; 0x38000
+0000000000007308	ldr	x0, [x8, #0x98] ; literal pool symbol address: _OBJC_CLASS_$_RCPPlayerDisplayLinkWaiter
+000000000000730c	bl	_objc_msgSend$wait
+0000000000007310	ldr	x0, [sp, #0x38]
+0000000000007314	bl	_objc_msgSend$firstObject
+0000000000007318	mov	x29, x29
+000000000000731c	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000007320	mov	x19, x0
+0000000000007324	ldp	q0, q1, [sp, #0xd0]
+0000000000007328	stp	q0, q1, [x29, #-0xd0]
+000000000000732c	ldr	q0, [sp, #0xf0]
+0000000000007330	stur	q0, [x29, #-0xb0]
+0000000000007334	sub	x4, x29, #0xd0
+0000000000007338	mov	x0, x27
+000000000000733c	mov	x2, x19
+0000000000007340	mov	x3, #0x0
+0000000000007344	bl	"_objc_msgSend$_sendEvent:machTimeOffset:transform:"
+0000000000007348	bl	0x20f14 ; symbol stub for: _objc_release_x19
+000000000000734c	movi.2d	v0, #0000000000000000
+0000000000007350	stp	q0, q0, [sp, #0xb0]
+0000000000007354	stp	q0, q0, [sp, #0x90]
+0000000000007358	ldr	x19, [sp, #0x38]
+000000000000735c	bl	0x20fe0 ; symbol stub for: _objc_retain_x19
+0000000000007360	add	x2, sp, #0x90
+0000000000007364	add	x3, sp, #0x190
+0000000000007368	mov	x0, x19
+000000000000736c	mov	w4, #0x10
+0000000000007370	bl	"_objc_msgSend$countByEnumeratingWithState:objects:count:"
+0000000000007374	str	x0, [sp, #0x30]
+0000000000007378	cbz	x0, 0x76a8
+000000000000737c	mov	x26, #0x0
+0000000000007380	adrp	x8, 29 ; 0x24000
+0000000000007384	ldr	d0, [x8, #0x480]
+0000000000007388	udiv	w8, w21, w22
+000000000000738c	fmov	d1, #1.00000000
+0000000000007390	fmul	d0, d9, d0
+0000000000007394	ucvtf	d10, w8
+0000000000007398	fdiv	d11, d1, d8
+000000000000739c	fcvtzu	x25, d0
+00000000000073a0	ldr	x8, [sp, #0xa0]
+00000000000073a4	ldr	x8, [x8]
+00000000000073a8	str	x8, [sp, #0x20]
+00000000000073ac	adrp	x8, 29 ; 0x24000
+00000000000073b0	ldr	d12, [x8, #0x488]
+00000000000073b4	adrp	x8, 29 ; 0x24000
+00000000000073b8	ldr	d0, [x8, #0x490]
+00000000000073bc	str	q0, [sp, #0x10]
+00000000000073c0	mov	x22, #0x0
+00000000000073c4	mov	x20, x27
+00000000000073c8	ldr	x8, [sp, #0xa0]
+00000000000073cc	ldr	x8, [x8]
+00000000000073d0	ldr	x9, [sp, #0x20]
+00000000000073d4	cmp	x8, x9
+00000000000073d8	b.eq	0x73e4
+00000000000073dc	ldr	x0, [sp, #0x38]
+00000000000073e0	bl	0x20e90 ; symbol stub for: _objc_enumerationMutation
+00000000000073e4	ldr	x8, [sp, #0x98]
+00000000000073e8	ldr	x21, [x8, x22, lsl #3]
+00000000000073ec	movi.2d	v0, #0000000000000000
+00000000000073f0	stp	q0, q0, [sp, #0x50]
+00000000000073f4	stp	q0, q0, [sp, #0x70]
+00000000000073f8	mov	x0, x21
+00000000000073fc	bl	_objc_msgSend$preActions
+0000000000007400	mov	x29, x29
+0000000000007404	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000007408	mov	x19, x0
+000000000000740c	add	x2, sp, #0x50
+0000000000007410	add	x3, sp, #0x110
+0000000000007414	mov	w4, #0x10
+0000000000007418	bl	"_objc_msgSend$countByEnumeratingWithState:objects:count:"
+000000000000741c	cbz	x0, 0x7484
+0000000000007420	mov	x28, x0
+0000000000007424	ldr	x8, [sp, #0x60]
+0000000000007428	ldr	x27, [x8]
+000000000000742c	mov	x23, #0x0
+0000000000007430	ldr	x8, [sp, #0x60]
+0000000000007434	ldr	x8, [x8]
+0000000000007438	cmp	x8, x27
+000000000000743c	b.eq	0x7448
+0000000000007440	mov	x0, x19
+0000000000007444	bl	0x20e90 ; symbol stub for: _objc_enumerationMutation
+0000000000007448	ldr	x8, [sp, #0x58]
+000000000000744c	ldr	x0, [x8, x23, lsl #3]
+0000000000007450	bl	_objc_msgSend$play
+0000000000007454	bl	0x20e0c ; symbol stub for: _mach_absolute_time
+0000000000007458	add	x23, x23, #0x1
+000000000000745c	cmp	x28, x23
+0000000000007460	b.ne	0x7430
+0000000000007464	mov	x24, x0
+0000000000007468	add	x2, sp, #0x50
+000000000000746c	add	x3, sp, #0x110
+0000000000007470	mov	x0, x19
+0000000000007474	mov	w4, #0x10
+0000000000007478	bl	"_objc_msgSend$countByEnumeratingWithState:objects:count:"
+000000000000747c	mov	x28, x0
+0000000000007480	cbnz	x0, 0x742c
+0000000000007484	bl	0x20f14 ; symbol stub for: _objc_release_x19
+0000000000007488	ldr	x0, [sp, #0x38]
+000000000000748c	bl	_objc_msgSend$firstObject
+0000000000007490	mov	x29, x29
+0000000000007494	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000007498	mov	x19, x0
+000000000000749c	ldr	x27, [sp, #0x28]
+00000000000074a0	mov	x0, x27
+00000000000074a4	mov	x2, x19
+00000000000074a8	bl	"_objc_msgSend$timestampForEventReplay:"
+00000000000074ac	ucvtf	d0, x0
+00000000000074b0	fmul	d0, d11, d0
+00000000000074b4	fcvtzu	x23, d0
+00000000000074b8	bl	0x20f14 ; symbol stub for: _objc_release_x19
+00000000000074bc	sub	x19, x24, x23
+00000000000074c0	mov	x0, x27
+00000000000074c4	mov	x2, x21
+00000000000074c8	bl	"_objc_msgSend$timestampForEventReplay:"
+00000000000074cc	ucvtf	d0, x0
+00000000000074d0	fmul	d0, d11, d0
+00000000000074d4	fcvtzu	x8, d0
+00000000000074d8	add	x28, x19, x8
+00000000000074dc	ucvtf	d0, x28
+00000000000074e0	fmadd	d0, d0, d10, d12
+00000000000074e4	fcvtzu	x23, d0
+00000000000074e8	bl	0x20e0c ; symbol stub for: _mach_absolute_time
+00000000000074ec	ucvtf	d0, x0
+00000000000074f0	fmul	d0, d10, d0
+00000000000074f4	fcvtzu	x8, d0
+00000000000074f8	add	x9, x8, x25
+00000000000074fc	cmp	x9, x23
+0000000000007500	csel	x9, x9, x23, hi
+0000000000007504	cmp	x25, #0x0
+0000000000007508	csel	x9, x23, x9, eq
+000000000000750c	subs	x23, x9, x8
+0000000000007510	b.ls	0x75bc
+0000000000007514	lsr	x8, x23, #9
+0000000000007518	mov	x9, #0x5a53
+000000000000751c	movk	x9, #0xa09b, lsl #16
+0000000000007520	movk	x9, #0xb82f, lsl #32
+0000000000007524	movk	x9, #0x44, lsl #48
+0000000000007528	umulh	x8, x8, x9
+000000000000752c	lsr	x8, x8, #11
+0000000000007530	mov	x9, #-0xca00
+0000000000007534	movk	x9, #0xc465, lsl #16
+0000000000007538	madd	x9, x8, x9, x23
+000000000000753c	stp	x8, x9, [sp, #0x40]
+0000000000007540	add	x0, sp, #0x40
+0000000000007544	mov	x1, #0x0
+0000000000007548	bl	0x20e3c ; symbol stub for: _nanosleep
+000000000000754c	bl	_RCPLogPlayback
+0000000000007550	mov	x29, x29
+0000000000007554	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000007558	mov	x27, x0
+000000000000755c	mov	w1, #0x1
+0000000000007560	bl	0x210b8 ; symbol stub for: _os_log_type_enabled
+0000000000007564	cbz	w0, 0x75b8
+0000000000007568	ucvtf	d0, x23
+000000000000756c	fdiv	d0, d0, d10
+0000000000007570	fcvtzu	x0, d0
+0000000000007574	bl	_RCPTimeIntervalFromMachTimestamp
+0000000000007578	ldr	q1, [sp, #0x10]
+000000000000757c	stur	s1, [x29, #-0xd0]
+0000000000007580	sub	x8, x29, #0xd0
+0000000000007584	stur	x26, [x8, #0x4]
+0000000000007588	mov	w9, #0x800
+000000000000758c	sturh	w9, [x29, #-0xc4]
+0000000000007590	stur	d0, [x8, #0xe]
+0000000000007594	sub	x4, x29, #0xd0
+0000000000007598	adrp	x0, -7 ; 0x0
+000000000000759c	add	x0, x0, #0x0
+00000000000075a0	mov	x1, x27
+00000000000075a4	mov	w2, #0x1
+00000000000075a8	adrp	x3, 31 ; 0x26000
+00000000000075ac	add	x3, x3, #0x361 ; literal pool for: " - %4ld delayed by %0.9fs -\n"
+00000000000075b0	mov	w5, #0x16
+00000000000075b4	bl	0x20ca4 ; symbol stub for: __os_log_impl
+00000000000075b8	bl	0x20f74 ; symbol stub for: _objc_release_x27
+00000000000075bc	bl	0x20e0c ; symbol stub for: _mach_absolute_time
+00000000000075c0	bl	_RCPTimeIntervalFromMachTimestamp
+00000000000075c4	mov.16b	v8, v0
+00000000000075c8	mov	x0, x28
+00000000000075cc	bl	_RCPTimeIntervalFromMachTimestamp
+00000000000075d0	mov.16b	v9, v0
+00000000000075d4	bl	_RCPLogPlayback
+00000000000075d8	mov	x29, x29
+00000000000075dc	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+00000000000075e0	mov	x27, x0
+00000000000075e4	mov	w1, #0x2
+00000000000075e8	bl	0x210b8 ; symbol stub for: _os_log_type_enabled
+00000000000075ec	cbnz	w0, 0x7644
+00000000000075f0	bl	0x20f74 ; symbol stub for: _objc_release_x27
+00000000000075f4	mov	x27, x20
+00000000000075f8	ldr	x0, [x20, #0x18]
+00000000000075fc	bl	_objc_msgSend$linkEventDeliveryToDisplayRefreshRate
+0000000000007600	cbz	w0, 0x7608
+0000000000007604	cbz	x26, 0x762c
+0000000000007608	ldp	q0, q1, [sp, #0xd0]
+000000000000760c	stp	q0, q1, [x29, #-0xd0]
+0000000000007610	ldr	q0, [sp, #0xf0]
+0000000000007614	stur	q0, [x29, #-0xb0]
+0000000000007618	sub	x4, x29, #0xd0
+000000000000761c	mov	x0, x27
+0000000000007620	mov	x2, x21
+0000000000007624	mov	x3, x19
+0000000000007628	bl	"_objc_msgSend$_sendEvent:machTimeOffset:transform:"
+000000000000762c	add	x26, x26, #0x1
+0000000000007630	add	x22, x22, #0x1
+0000000000007634	ldr	x8, [sp, #0x30]
+0000000000007638	cmp	x22, x8
+000000000000763c	b.ne	0x73c4
+0000000000007640	b	0x768c
+0000000000007644	fsub	d0, d8, d9
+0000000000007648	ldr	q1, [sp, #0x10]
+000000000000764c	stur	s1, [x29, #-0xd0]
+0000000000007650	sub	x8, x29, #0xd0
+0000000000007654	stur	x26, [x8, #0x4]
+0000000000007658	mov	w9, #0x800
+000000000000765c	sturh	w9, [x29, #-0xc4]
+0000000000007660	stur	d0, [x8, #0xe]
+0000000000007664	sub	x4, x29, #0xd0
+0000000000007668	adrp	x0, -7 ; 0x0
+000000000000766c	add	x0, x0, #0x0
+0000000000007670	mov	x1, x27
+0000000000007674	mov	w2, #0x2
+0000000000007678	adrp	x3, 31 ; 0x26000
+000000000000767c	add	x3, x3, #0x37e ; literal pool for: "  - %4ld delivery - difference %0.9fs -\n"
+0000000000007680	mov	w5, #0x16
+0000000000007684	bl	0x20c8c ; symbol stub for: __os_log_debug_impl
+0000000000007688	b	0x75f0
+000000000000768c	add	x2, sp, #0x90
+0000000000007690	add	x3, sp, #0x190
+0000000000007694	ldr	x0, [sp, #0x38]
+0000000000007698	mov	w4, #0x10
+000000000000769c	bl	"_objc_msgSend$countByEnumeratingWithState:objects:count:"
+00000000000076a0	str	x0, [sp, #0x30]
+00000000000076a4	cbnz	x0, 0x73c0
+00000000000076a8	ldr	x20, [sp, #0x38]
+00000000000076ac	bl	0x20f20 ; symbol stub for: _objc_release_x20
+00000000000076b0	mov	x0, x27
+00000000000076b4	bl	_objc_msgSend$analyticsEventSender
+00000000000076b8	mov	x29, x29
+00000000000076bc	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+00000000000076c0	mov	x19, x0
+00000000000076c4	mov	w2, #0x1
+00000000000076c8	bl	"_objc_msgSend$sendEvent:"
+00000000000076cc	bl	0x20f14 ; symbol stub for: _objc_release_x19
+00000000000076d0	bl	0x20f20 ; symbol stub for: _objc_release_x20
+00000000000076d4	ldr	x8, [sp]
+00000000000076d8	bl	0x20f8c ; symbol stub for: _objc_release_x8
+00000000000076dc	ldr	x8, [sp, #0x28]
+00000000000076e0	bl	0x20f8c ; symbol stub for: _objc_release_x8
+00000000000076e4	ldr	x8, [sp, #0x8]
+00000000000076e8	bl	0x20f8c ; symbol stub for: _objc_release_x8
+00000000000076ec	ldur	x8, [x29, #-0x98]
+00000000000076f0	adrp	x9, 49 ; 0x38000
+00000000000076f4	ldr	x9, [x9, #0x798] ; literal pool symbol address: ___stack_chk_guard
+00000000000076f8	ldr	x9, [x9]
+00000000000076fc	cmp	x9, x8
+0000000000007700	b.ne	0x7730
+0000000000007704	add	sp, sp, #0x260
+0000000000007708	ldp	x29, x30, [sp, #0x80]
+000000000000770c	ldp	x20, x19, [sp, #0x70]
+0000000000007710	ldp	x22, x21, [sp, #0x60]
+0000000000007714	ldp	x24, x23, [sp, #0x50]
+0000000000007718	ldp	x26, x25, [sp, #0x40]
+000000000000771c	ldp	x28, x27, [sp, #0x30]
+0000000000007720	ldp	d9, d8, [sp, #0x20]
+0000000000007724	ldp	d11, d10, [sp, #0x10]
+0000000000007728	ldp	d13, d12, [sp], #0x90
+000000000000772c	ret
+0000000000007730	bl	0x20c74 ; symbol stub for: ___stack_chk_fail
+-[RCPPlayer _sendEvent:machTimeOffset:transform:]:
+000000000000773c	sub	sp, sp, #0x70
+0000000000007740	stp	x24, x23, [sp, #0x30]
+0000000000007744	stp	x22, x21, [sp, #0x40]
+0000000000007748	stp	x20, x19, [sp, #0x50]
+000000000000774c	stp	x29, x30, [sp, #0x60]
+0000000000007750	add	x29, sp, #0x60
+0000000000007754	mov	x19, x4
+0000000000007758	mov	x20, x3
+000000000000775c	mov	x21, x2
+0000000000007760	mov	x22, x0
+0000000000007764	ldr	x23, [x0, #0x20]
+0000000000007768	bl	0x21004 ; symbol stub for: _objc_retain_x21
+000000000000776c	mov	x0, x21
+0000000000007770	bl	_objc_msgSend$senderProperties
+0000000000007774	mov	x29, x29
+0000000000007778	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000000000777c	mov	x24, x0
+0000000000007780	mov	x0, x23
+0000000000007784	mov	x2, x24
+0000000000007788	bl	"_objc_msgSend$deliveryServiceForSenderProperties:"
+000000000000778c	mov	x29, x29
+0000000000007790	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000007794	mov	x23, x0
+0000000000007798	ldp	q0, q1, [x19]
+000000000000779c	stp	q0, q1, [sp]
+00000000000077a0	ldr	q0, [x19, #0x20]
+00000000000077a4	str	q0, [sp, #0x20]
+00000000000077a8	mov	x5, sp
+00000000000077ac	mov	x0, x22
+00000000000077b0	mov	x2, x21
+00000000000077b4	mov	x3, x23
+00000000000077b8	mov	x4, x20
+00000000000077bc	bl	"_objc_msgSend$_sendEvent:withService:machTimeOffset:transform:"
+00000000000077c0	bl	0x20f2c ; symbol stub for: _objc_release_x21
+00000000000077c4	bl	0x20f44 ; symbol stub for: _objc_release_x23
+00000000000077c8	bl	0x20f50 ; symbol stub for: _objc_release_x24
+00000000000077cc	ldp	x29, x30, [sp, #0x60]
+00000000000077d0	ldp	x20, x19, [sp, #0x50]
+00000000000077d4	ldp	x22, x21, [sp, #0x40]
+00000000000077d8	ldp	x24, x23, [sp, #0x30]
+00000000000077dc	add	sp, sp, #0x70
+00000000000077e0	ret
+-[RCPPlayer _sendEvent:withService:machTimeOffset:transform:]:
+0000000000007958	sub	sp, sp, #0x70
+000000000000795c	stp	x24, x23, [sp, #0x30]
+0000000000007960	stp	x22, x21, [sp, #0x40]
+0000000000007964	stp	x20, x19, [sp, #0x50]
+0000000000007968	stp	x29, x30, [sp, #0x60]
+000000000000796c	add	x29, sp, #0x60
+0000000000007970	mov	x20, x5
+0000000000007974	mov	x22, x4
+0000000000007978	mov	x19, x3
+000000000000797c	mov	x23, x2
+0000000000007980	mov	x21, x0
+0000000000007984	bl	0x20fe0 ; symbol stub for: _objc_retain_x19
+0000000000007988	ldp	q0, q1, [x20]
+000000000000798c	stp	q0, q1, [sp]
+0000000000007990	ldr	q0, [x20, #0x20]
+0000000000007994	str	q0, [sp, #0x20]
+0000000000007998	mov	x4, sp
+000000000000799c	mov	x0, x21
+00000000000079a0	mov	x2, x23
+00000000000079a4	mov	x3, x22
+00000000000079a8	bl	"_objc_msgSend$_cloneAndTransformHIDEvent:machTimeOffset:transform:"
+00000000000079ac	mov	x20, x0
+00000000000079b0	ldr	x0, [x21, #0x18]
+00000000000079b4	bl	_objc_msgSend$customizeHIDEvent
+00000000000079b8	mov	x29, x29
+00000000000079bc	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+00000000000079c0	mov	x22, x0
+00000000000079c4	bl	0x20f38 ; symbol stub for: _objc_release_x22
+00000000000079c8	cbz	x22, 0x79f0
+00000000000079cc	ldr	x0, [x21, #0x18]
+00000000000079d0	bl	_objc_msgSend$customizeHIDEvent
+00000000000079d4	mov	x29, x29
+00000000000079d8	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+00000000000079dc	mov	x21, x0
+00000000000079e0	ldr	x8, [x0, #0x10]
+00000000000079e4	mov	x1, x20
+00000000000079e8	blr	x8
+00000000000079ec	bl	0x20f2c ; symbol stub for: _objc_release_x21
+00000000000079f0	cbz	x20, 0x7a28
+00000000000079f4	bl	_RCPLogPlayback
+00000000000079f8	mov	x29, x29
+00000000000079fc	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000007a00	mov	x21, x0
+0000000000007a04	mov	w1, #0x2
+0000000000007a08	bl	0x210b8 ; symbol stub for: _os_log_type_enabled
+0000000000007a0c	cbnz	w0, 0x7a44
+0000000000007a10	bl	0x20f2c ; symbol stub for: _objc_release_x21
+0000000000007a14	mov	x0, x19
+0000000000007a18	mov	x2, x20
+0000000000007a1c	bl	"_objc_msgSend$postHIDEvent:"
+0000000000007a20	mov	x0, x20
+0000000000007a24	bl	0x207b8 ; symbol stub for: _CFRelease
+0000000000007a28	bl	0x20f14 ; symbol stub for: _objc_release_x19
+0000000000007a2c	ldp	x29, x30, [sp, #0x60]
+0000000000007a30	ldp	x20, x19, [sp, #0x50]
+0000000000007a34	ldp	x22, x21, [sp, #0x40]
+0000000000007a38	ldp	x24, x23, [sp, #0x30]
+0000000000007a3c	add	sp, sp, #0x70
+0000000000007a40	ret
+0000000000007a44	mov	x0, x20
+0000000000007a48	mov	x1, x21
+0000000000007a4c	bl	"-[RCPPlayer _sendEvent:withService:machTimeOffset:transform:].cold.1"
+0000000000007a50	b	0x7a10
+-[RCPPlayer _sendEvent:withService:machTimeOffset:transform:].cold.1:
+000000000001fe88	sub	sp, sp, #0x40
+000000000001fe8c	stp	x20, x19, [sp, #0x20]
+000000000001fe90	stp	x29, x30, [sp, #0x30]
+000000000001fe94	add	x29, sp, #0x30
+000000000001fe98	mov	x19, x1
+000000000001fe9c	adrp	x8, 25 ; 0x38000
+000000000001fea0	ldr	x8, [x8, #0x798] ; literal pool symbol address: ___stack_chk_guard
+000000000001fea4	ldr	x8, [x8]
+000000000001fea8	str	x8, [sp, #0x18]
+000000000001feac	bl	0x207a0 ; symbol stub for: _CFCopyDescription
+000000000001feb0	mov	x20, x0
+000000000001feb4	adrp	x8, 5 ; 0x24000
+000000000001feb8	ldr	d0, [x8, #0x470]
+000000000001febc	str	s0, [sp]
+000000000001fec0	stur	x0, [sp, #0x4]
+000000000001fec4	adrp	x0, -31 ; 0x0
+000000000001fec8	add	x0, x0, #0x0
+000000000001fecc	adrp	x3, 7 ; 0x26000
+000000000001fed0	add	x3, x3, #0x3a7 ; literal pool for: "send event %{public}@"
+000000000001fed4	mov	x4, sp
+000000000001fed8	mov	x1, x19
+000000000001fedc	mov	w2, #0x2
+000000000001fee0	mov	w5, #0xc
+000000000001fee4	bl	0x20c8c ; symbol stub for: __os_log_debug_impl
+000000000001fee8	bl	0x20f20 ; symbol stub for: _objc_release_x20
+000000000001feec	ldr	x8, [sp, #0x18]
+000000000001fef0	adrp	x9, 25 ; 0x38000
+000000000001fef4	ldr	x9, [x9, #0x798] ; literal pool symbol address: ___stack_chk_guard
+000000000001fef8	ldr	x9, [x9]
+000000000001fefc	cmp	x9, x8
+000000000001ff00	b.ne	0x1ff14
+000000000001ff04	ldp	x29, x30, [sp, #0x30]
+000000000001ff08	ldp	x20, x19, [sp, #0x20]
+000000000001ff0c	add	sp, sp, #0x40
+000000000001ff10	ret
+000000000001ff14	bl	0x20c74 ; symbol stub for: ___stack_chk_fail

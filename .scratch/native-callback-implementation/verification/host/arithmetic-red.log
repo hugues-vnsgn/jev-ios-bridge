@@ -1,0 +1,58 @@
+test_contradictory_callback_accounting_retains_reference_resources (test_study.Streams.test_contradictory_callback_accounting_retains_reference_resources) ... 
+  test_contradictory_callback_accounting_retains_reference_resources (test_study.Streams.test_contradictory_callback_accounting_retains_reference_resources) (change={'started': 3}) ... FAIL
+  test_contradictory_callback_accounting_retains_reference_resources (test_study.Streams.test_contradictory_callback_accounting_retains_reference_resources) (change={'sendReturned': 2}) ... FAIL
+  test_contradictory_callback_accounting_retains_reference_resources (test_study.Streams.test_contradictory_callback_accounting_retains_reference_resources) (change={'replyReceived': 2}) ... FAIL
+  test_contradictory_callback_accounting_retains_reference_resources (test_study.Streams.test_contradictory_callback_accounting_retains_reference_resources) (change={'pending': 1}) ... FAIL
+
+======================================================================
+FAIL: test_contradictory_callback_accounting_retains_reference_resources (test_study.Streams.test_contradictory_callback_accounting_retains_reference_resources) (change={'started': 3})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 573, in test_contradictory_callback_accounting_retains_reference_resources
+    self.assertEqual(result.reason, "CALLBACK_ACCOUNTING_INVALID")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NATIVE_SETTLEMENT_UNCONFIRMED' != 'CALLBACK_ACCOUNTING_INVALID'
+- NATIVE_SETTLEMENT_UNCONFIRMED
++ CALLBACK_ACCOUNTING_INVALID
+
+
+======================================================================
+FAIL: test_contradictory_callback_accounting_retains_reference_resources (test_study.Streams.test_contradictory_callback_accounting_retains_reference_resources) (change={'sendReturned': 2})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 573, in test_contradictory_callback_accounting_retains_reference_resources
+    self.assertEqual(result.reason, "CALLBACK_ACCOUNTING_INVALID")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NATIVE_SETTLEMENT_UNCONFIRMED' != 'CALLBACK_ACCOUNTING_INVALID'
+- NATIVE_SETTLEMENT_UNCONFIRMED
++ CALLBACK_ACCOUNTING_INVALID
+
+
+======================================================================
+FAIL: test_contradictory_callback_accounting_retains_reference_resources (test_study.Streams.test_contradictory_callback_accounting_retains_reference_resources) (change={'replyReceived': 2})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 573, in test_contradictory_callback_accounting_retains_reference_resources
+    self.assertEqual(result.reason, "CALLBACK_ACCOUNTING_INVALID")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NATIVE_SETTLEMENT_UNCONFIRMED' != 'CALLBACK_ACCOUNTING_INVALID'
+- NATIVE_SETTLEMENT_UNCONFIRMED
++ CALLBACK_ACCOUNTING_INVALID
+
+
+======================================================================
+FAIL: test_contradictory_callback_accounting_retains_reference_resources (test_study.Streams.test_contradictory_callback_accounting_retains_reference_resources) (change={'pending': 1})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 573, in test_contradictory_callback_accounting_retains_reference_resources
+    self.assertEqual(result.reason, "CALLBACK_ACCOUNTING_INVALID")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NATIVE_SETTLEMENT_UNCONFIRMED' != 'CALLBACK_ACCOUNTING_INVALID'
+- NATIVE_SETTLEMENT_UNCONFIRMED
++ CALLBACK_ACCOUNTING_INVALID
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.133s
+
+FAILED (failures=4)

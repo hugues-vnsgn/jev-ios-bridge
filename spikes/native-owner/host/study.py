@@ -39,10 +39,15 @@ class Configuration:
     lease_root: Path | None = None
     build_binding: Path | None = None
 
+def admission_clock():
+    """Shared host/simulator clock; never use process-relative restarted seconds."""
+    return time.clock_gettime(time.CLOCK_MONOTONIC_RAW)
+
+
 @dataclass(frozen=True)
 class Dependencies:
     tools: object
-    now: object = time.monotonic
+    now: object = admission_clock
     sleep: object = time.sleep
 
 @dataclass(frozen=True)
@@ -272,6 +277,10 @@ class _Stream:
         if self.plan == "metadata" and record["operation"] != "metadata":
             raise _Refusal("METADATA_ADMITTED_QUERY")
         details = record["details"]
+        if self.plan == "metadata" and details.get("source") == "requestElementAtPoint:reply:":
+            raise _Refusal("METADATA_ADMITTED_QUERY")
+        if "nativeSettled" in details and details["nativeSettled"] is not False:
+            raise _Refusal("CONTRADICTORY_SETTLEMENT")
         if record["kind"] in ("started", "finished"):
             if details["plan"] != self.plan:
                 raise _Refusal("RECORD_PLAN")
@@ -291,6 +300,21 @@ class _Stream:
             self.parent_edges += 1
             if self.parent_edges > 32:
                 raise _Refusal("PARENT_EDGE_LIMIT")
+        if record["kind"] == "finished":
+            callbacks = details["pointCallbacks"]
+            if self.plan == "metadata" and any(callbacks[name] != 0 for name in
+                    ("started", "sendReturned", "replyReceived", "pending", "late", "duplicate", "retainedObjects")):
+                raise _Refusal("METADATA_ADMITTED_QUERY")
+            if callbacks["retainedObjects"] and details["localReferencesReleased"]:
+                raise _Refusal("CALLBACK_REFERENCES_UNCONFIRMED")
+            started, replies = callbacks["started"], callbacks["replyReceived"]
+            if (started > 2 or started > details["appElementQueries"]
+                    or callbacks["sendReturned"] > started or replies > started
+                    or callbacks["pending"] != started - replies
+                    or callbacks["retainedObjects"] > 2 * started
+                    or (not replies and any(callbacks[name] for name in ("late", "duplicate", "retainedObjects")))
+                    or (callbacks["sendReturned"] < started and details["localMethodsReturned"])):
+                raise _Refusal("CALLBACK_ACCOUNTING_INVALID")
         self.finished = record["kind"] == "finished"
         self.records.append(record)
         self.on_record(record)
@@ -772,7 +796,7 @@ class _Study:
         environment = {
             "JEV_NATIVE_OWNER_REQUEST_ID":self.request,
             "JEV_NATIVE_OWNER_PLAN":self.plan,
-            "JEV_NATIVE_OWNER_ADMISSION_SECONDS":str(self.deadline-self.dep.now()),
+            "JEV_NATIVE_OWNER_ADMISSION_DEADLINE":str(self.deadline),
             "JEV_NATIVE_OWNER_STOP_FILE":str(self.stop_file),
         }
         if self.fixture_documents:

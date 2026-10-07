@@ -1,0 +1,8 @@
+{
+  "commit": "71bbe350ab79eef58113991d817ccc6165061a64",
+  "url": "https://raw.githubusercontent.com/apple-oss-distributions/Libc/71bbe350ab79eef58113991d817ccc6165061a64/gen/clock_gettime.c",
+  "sha256": "55ee62841451d0d936fee72658b9c0452d5571c6039789e794e42751e2050f15",
+  "finding": "CLOCK_MONOTONIC_RAW uses mach_continuous_time and the system timebase conversion.",
+  "simulatorArchitecture": "https://developer.apple.com/videos/play/wwdc2019/418/",
+  "architectureFinding": "Simulator uses iOS userspace on the macOS kernel."
+}

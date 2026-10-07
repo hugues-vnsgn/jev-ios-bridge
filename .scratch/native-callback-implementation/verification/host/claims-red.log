@@ -1,0 +1,45 @@
+test_point_send_disguised_as_metadata_and_claimed_native_settlement_refuse (test_study.Streams.test_point_send_disguised_as_metadata_and_claimed_native_settlement_refuse) ... 
+  test_point_send_disguised_as_metadata_and_claimed_native_settlement_refuse (test_study.Streams.test_point_send_disguised_as_metadata_and_claimed_native_settlement_refuse) (details={'source': 'requestElementAtPoint:reply:'}) ... FAIL
+  test_point_send_disguised_as_metadata_and_claimed_native_settlement_refuse (test_study.Streams.test_point_send_disguised_as_metadata_and_claimed_native_settlement_refuse) (details={'nativeSettled': True}) ... FAIL
+  test_point_send_disguised_as_metadata_and_claimed_native_settlement_refuse (test_study.Streams.test_point_send_disguised_as_metadata_and_claimed_native_settlement_refuse) (details={'nativeSettled': 0}) ... FAIL
+
+======================================================================
+FAIL: test_point_send_disguised_as_metadata_and_claimed_native_settlement_refuse (test_study.Streams.test_point_send_disguised_as_metadata_and_claimed_native_settlement_refuse) (details={'source': 'requestElementAtPoint:reply:'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 664, in test_point_send_disguised_as_metadata_and_claimed_native_settlement_refuse
+    self.assertEqual(result.reason, reason)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'METADATA_COMPLETED' != 'METADATA_ADMITTED_QUERY'
+- METADATA_COMPLETED
++ METADATA_ADMITTED_QUERY
+
+
+======================================================================
+FAIL: test_point_send_disguised_as_metadata_and_claimed_native_settlement_refuse (test_study.Streams.test_point_send_disguised_as_metadata_and_claimed_native_settlement_refuse) (details={'nativeSettled': True})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 664, in test_point_send_disguised_as_metadata_and_claimed_native_settlement_refuse
+    self.assertEqual(result.reason, reason)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'METADATA_COMPLETED' != 'CONTRADICTORY_SETTLEMENT'
+- METADATA_COMPLETED
++ CONTRADICTORY_SETTLEMENT
+
+
+======================================================================
+FAIL: test_point_send_disguised_as_metadata_and_claimed_native_settlement_refuse (test_study.Streams.test_point_send_disguised_as_metadata_and_claimed_native_settlement_refuse) (details={'nativeSettled': 0})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 664, in test_point_send_disguised_as_metadata_and_claimed_native_settlement_refuse
+    self.assertEqual(result.reason, reason)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'METADATA_COMPLETED' != 'CONTRADICTORY_SETTLEMENT'
+- METADATA_COMPLETED
++ CONTRADICTORY_SETTLEMENT
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.110s
+
+FAILED (failures=3)

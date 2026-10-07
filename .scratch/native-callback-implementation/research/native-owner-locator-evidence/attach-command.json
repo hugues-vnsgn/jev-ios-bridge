@@ -1,0 +1,14 @@
+{
+  "command": [
+    "hdiutil",
+    "attach",
+    "-readonly",
+    "-nobrowse",
+    "-noautoopen",
+    "-mountpoint",
+    "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-static-ios264-rnsr7llt",
+    "-plist",
+    "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg"
+  ],
+  "exit_code": 0
+}

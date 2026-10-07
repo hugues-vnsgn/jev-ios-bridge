@@ -1,0 +1,189 @@
+-[RCPEventDeliveryServicePool deliveryServiceForSenderProperties:]:
+00000000000058cc	sub	sp, sp, #0x50
+00000000000058d0	stp	x22, x21, [sp, #0x20]
+00000000000058d4	stp	x20, x19, [sp, #0x30]
+00000000000058d8	stp	x29, x30, [sp, #0x40]
+00000000000058dc	add	x29, sp, #0x40
+00000000000058e0	mov	x19, x2
+00000000000058e4	mov	x20, x0
+00000000000058e8	bl	0x20fe0 ; symbol stub for: _objc_retain_x19
+00000000000058ec	mov	x0, x20
+00000000000058f0	bl	_objc_msgSend$shouldIgnoreSenderProperties
+00000000000058f4	cbz	x19, 0x5918
+00000000000058f8	cbnz	w0, 0x5918
+00000000000058fc	mov	x0, x20
+0000000000005900	mov	x2, x19
+0000000000005904	bl	"_objc_msgSend$_findServiceForSenderProperties:"
+0000000000005908	mov	x29, x29
+000000000000590c	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000005910	mov	x20, x0
+0000000000005914	b	0x59dc
+0000000000005918	bl	_RCPLogPlayback
+000000000000591c	mov	x29, x29
+0000000000005920	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000005924	mov	x21, x0
+0000000000005928	mov	w1, #0x0
+000000000000592c	bl	0x210b8 ; symbol stub for: _os_log_type_enabled
+0000000000005930	cbz	w0, 0x595c
+0000000000005934	strh	wzr, [sp, #0x10]
+0000000000005938	adrp	x0, -5 ; 0x0
+000000000000593c	add	x0, x0, #0x0
+0000000000005940	adrp	x3, 33 ; 0x26000
+0000000000005944	add	x3, x3, #0x29b ; literal pool for: "properties were nil, or ignoring properties set. Falling back to a platform specific default sender."
+0000000000005948	add	x4, sp, #0x10
+000000000000594c	mov	x1, x21
+0000000000005950	mov	w2, #0x0
+0000000000005954	mov	w5, #0x2
+0000000000005958	bl	0x20ca4 ; symbol stub for: __os_log_impl
+000000000000595c	bl	0x20f2c ; symbol stub for: _objc_release_x21
+0000000000005960	bl	_RCPLogPlayback
+0000000000005964	mov	x29, x29
+0000000000005968	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000000000596c	mov	x21, x0
+0000000000005970	mov	w1, #0x0
+0000000000005974	bl	0x210b8 ; symbol stub for: _os_log_type_enabled
+0000000000005978	cbz	w0, 0x59a4
+000000000000597c	strh	wzr, [sp]
+0000000000005980	adrp	x0, -5 ; 0x0
+0000000000005984	add	x0, x0, #0x0
+0000000000005988	adrp	x3, 33 ; 0x26000
+000000000000598c	add	x3, x3, #0x300 ; literal pool for: "defaulting to touch screen digitizer sender"
+0000000000005990	mov	x4, sp
+0000000000005994	mov	x1, x21
+0000000000005998	mov	w2, #0x0
+000000000000599c	mov	w5, #0x2
+00000000000059a0	bl	0x20ca4 ; symbol stub for: __os_log_impl
+00000000000059a4	bl	0x20f2c ; symbol stub for: _objc_release_x21
+00000000000059a8	adrp	x8, 51 ; 0x38000
+00000000000059ac	ldr	x0, [x8, #0x40] ; literal pool symbol address: _OBJC_CLASS_$_RCPEventSenderProperties
+00000000000059b0	bl	_objc_msgSend$touchScreenDigitizerSender
+00000000000059b4	mov	x29, x29
+00000000000059b8	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+00000000000059bc	mov	x21, x0
+00000000000059c0	mov	x0, x20
+00000000000059c4	mov	x2, x21
+00000000000059c8	bl	"_objc_msgSend$_findServiceForSenderProperties:"
+00000000000059cc	mov	x29, x29
+00000000000059d0	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+00000000000059d4	mov	x20, x0
+00000000000059d8	bl	0x20f2c ; symbol stub for: _objc_release_x21
+00000000000059dc	mov	x0, x20
+00000000000059e0	bl	_objc_msgSend$isRunning
+00000000000059e4	tbnz	w0, #0x0, 0x59f4
+00000000000059e8	mov	x0, x20
+00000000000059ec	mov	x2, #0x0
+00000000000059f0	bl	"_objc_msgSend$startWithError:"
+00000000000059f4	bl	0x20f14 ; symbol stub for: _objc_release_x19
+00000000000059f8	mov	x0, x20
+00000000000059fc	ldp	x29, x30, [sp, #0x40]
+0000000000005a00	ldp	x20, x19, [sp, #0x30]
+0000000000005a04	ldp	x22, x21, [sp, #0x20]
+0000000000005a08	add	sp, sp, #0x50
+0000000000005a0c	b	0x20e6c ; symbol stub for: _objc_autoreleaseReturnValue
+-[RCPVirtualHIDService postHIDEvent:]:
+00000000000083c0	sub	sp, sp, #0x50
+00000000000083c4	stp	x22, x21, [sp, #0x20]
+00000000000083c8	stp	x20, x19, [sp, #0x30]
+00000000000083cc	stp	x29, x30, [sp, #0x40]
+00000000000083d0	add	x29, sp, #0x40
+00000000000083d4	mov	x19, x2
+00000000000083d8	mov	x20, x0
+00000000000083dc	adrp	x8, 48 ; 0x38000
+00000000000083e0	ldr	x8, [x8, #0x798] ; literal pool symbol address: ___stack_chk_guard
+00000000000083e4	ldr	x8, [x8]
+00000000000083e8	str	x8, [sp, #0x18]
+00000000000083ec	ldrb	w8, [x0, #0x21]
+00000000000083f0	tbnz	w8, #0x0, 0x84a4
+00000000000083f4	mov	x0, x19
+00000000000083f8	bl	0x20b18 ; symbol stub for: _IOHIDEventGetType
+00000000000083fc	cmp	w0, #0x11
+0000000000008400	b.ne	0x84a4
+0000000000008404	bl	_RCPLogPlayback
+0000000000008408	mov	x29, x29
+000000000000840c	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000008410	mov	x21, x0
+0000000000008414	mov	w1, #0x0
+0000000000008418	bl	0x210b8 ; symbol stub for: _os_log_type_enabled
+000000000000841c	cbz	w0, 0x8454
+0000000000008420	adrp	x8, 28 ; 0x24000
+0000000000008424	ldr	d0, [x8, #0x470]
+0000000000008428	str	s0, [sp]
+000000000000842c	stur	x20, [sp, #0x4]
+0000000000008430	adrp	x0, -8 ; 0x0
+0000000000008434	add	x0, x0, #0x0
+0000000000008438	adrp	x3, 30 ; 0x26000
+000000000000843c	add	x3, x3, #0x46d ; literal pool for: "waiting for ready: (%{public}@)"
+0000000000008440	mov	x4, sp
+0000000000008444	mov	x1, x21
+0000000000008448	mov	w2, #0x0
+000000000000844c	mov	w5, #0xc
+0000000000008450	bl	0x20ca4 ; symbol stub for: __os_log_impl
+0000000000008454	bl	0x20f2c ; symbol stub for: _objc_release_x21
+0000000000008458	ldr	x21, [x20, #0x18]
+000000000000845c	mov	x1, #0xf200
+0000000000008460	movk	x1, #0x2a05, lsl #16
+0000000000008464	movk	x1, #0x1, lsl #32
+0000000000008468	mov	x0, #0x0
+000000000000846c	bl	0x20db8 ; symbol stub for: _dispatch_time
+0000000000008470	mov	x1, x0
+0000000000008474	mov	x0, x21
+0000000000008478	bl	0x20d28 ; symbol stub for: _dispatch_group_wait
+000000000000847c	ldrb	w8, [x20, #0x21]
+0000000000008480	tbnz	w8, #0x0, 0x84a4
+0000000000008484	bl	_RCPLogPlayback
+0000000000008488	mov	x29, x29
+000000000000848c	bl	0x20fbc ; symbol stub for: _objc_retainAutoreleasedReturnValue
+0000000000008490	mov	x21, x0
+0000000000008494	mov	w1, #0x10
+0000000000008498	bl	0x210b8 ; symbol stub for: _os_log_type_enabled
+000000000000849c	cbnz	w0, 0x84dc
+00000000000084a0	bl	0x20f2c ; symbol stub for: _objc_release_x21
+00000000000084a4	ldr	x0, [x20, #0x28]
+00000000000084a8	mov	x2, x19
+00000000000084ac	bl	"_objc_msgSend$dispatchEvent:"
+00000000000084b0	ldr	x8, [sp, #0x18]
+00000000000084b4	adrp	x9, 48 ; 0x38000
+00000000000084b8	ldr	x9, [x9, #0x798] ; literal pool symbol address: ___stack_chk_guard
+00000000000084bc	ldr	x9, [x9]
+00000000000084c0	cmp	x9, x8
+00000000000084c4	b.ne	0x84ec
+00000000000084c8	ldp	x29, x30, [sp, #0x40]
+00000000000084cc	ldp	x20, x19, [sp, #0x30]
+00000000000084d0	ldp	x22, x21, [sp, #0x20]
+00000000000084d4	add	sp, sp, #0x50
+00000000000084d8	ret
+00000000000084dc	mov	x0, x20
+00000000000084e0	mov	x1, x21
+00000000000084e4	bl	"-[RCPVirtualHIDService postHIDEvent:].cold.1"
+00000000000084e8	b	0x84a0
+00000000000084ec	bl	0x20c74 ; symbol stub for: ___stack_chk_fail
+-[RCPVirtualHIDService postHIDEvent:].cold.1:
+000000000001ff2c	sub	sp, sp, #0x30
+000000000001ff30	stp	x29, x30, [sp, #0x20]
+000000000001ff34	add	x29, sp, #0x20
+000000000001ff38	adrp	x8, 25 ; 0x38000
+000000000001ff3c	ldr	x8, [x8, #0x798] ; literal pool symbol address: ___stack_chk_guard
+000000000001ff40	ldr	x8, [x8]
+000000000001ff44	stur	x8, [x29, #-0x8]
+000000000001ff48	adrp	x8, 5 ; 0x24000
+000000000001ff4c	ldr	d0, [x8, #0x470]
+000000000001ff50	str	s0, [sp]
+000000000001ff54	stur	x0, [sp, #0x4]
+000000000001ff58	adrp	x0, -31 ; 0x0
+000000000001ff5c	add	x0, x0, #0x0
+000000000001ff60	adrp	x3, 7 ; 0x26000
+000000000001ff64	add	x3, x3, #0x48d ; literal pool for: "*** did not get ready notification: (%{public}@)"
+000000000001ff68	mov	x4, sp
+000000000001ff6c	mov	w2, #0x10
+000000000001ff70	mov	w5, #0xc
+000000000001ff74	bl	0x20c98 ; symbol stub for: __os_log_error_impl
+000000000001ff78	ldur	x8, [x29, #-0x8]
+000000000001ff7c	adrp	x9, 25 ; 0x38000
+000000000001ff80	ldr	x9, [x9, #0x798] ; literal pool symbol address: ___stack_chk_guard
+000000000001ff84	ldr	x9, [x9]
+000000000001ff88	cmp	x9, x8
+000000000001ff8c	b.ne	0x1ff9c
+000000000001ff90	ldp	x29, x30, [sp, #0x20]
+000000000001ff94	add	sp, sp, #0x30
+000000000001ff98	ret
+000000000001ff9c	bl	0x20c74 ; symbol stub for: ___stack_chk_fail

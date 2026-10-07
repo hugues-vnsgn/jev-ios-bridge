@@ -1,0 +1,112 @@
+Format Description: UDIF read-only compressed (lzfse)
+Class Name: CUDIFDiskImage
+Checksum Type: CRC32
+Size Information:
+	CUDIFEncoding-bytes-total: 8484038660
+	Total Empty Bytes: 232079360
+	Sector Count: 35270723
+	Total Bytes: 18058610176
+	CUDIFEncoding-bytes-wasted: 0
+	Total Non-Empty Bytes: 17826530816
+	Compressed Ratio: 0.47592202563525415
+	CUDIFEncoding-bytes-in-use: 8484038660
+	Compressed Bytes: 8484038660
+Checksum Value: $EEFEDEAF
+Segments:
+	0: /System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg
+Partition Information:
+	3:
+		Name: Apple_APFS
+		Partition Number: 3
+		Checksum Type: CRC32
+		Checksum Value: $75ED5C9D
+	1:
+		Name: Primary GPT Header
+		Partition Number: 1
+		Checksum Type: CRC32
+		Checksum Value: $FC9801D4
+	4:
+		Name: Backup GPT Table
+		Partition Number: 4
+		Checksum Type: CRC32
+		Checksum Value: $2088282E
+	2:
+		Name: Primary GPT Table
+		Partition Number: 2
+		Checksum Type: CRC32
+		Checksum Value: $2088282E
+	0:
+		Name: MBR
+		Partition Number: 0
+		Checksum Type: CRC32
+		Checksum Value: $C10F412A
+	5:
+		Name: Backup GPT Header
+		Partition Number: 5
+		Checksum Type: CRC32
+		Checksum Value: $75B7D8FB
+Format: ULFO
+Backing Store Information:
+	URL: file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg
+	Name: 094-99015-001.dmg
+	Class Name: CUDIFEncoding
+	Backing Store Information:
+		URL: file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg
+		Name: 094-99015-001.dmg
+		Class Name: CBSDBackingStore
+partitions:
+	partition-scheme: GUID
+	block-size: 512
+	partitions:
+		0:
+			partition-name: Protective Master Boot Record
+			partition-start: 0
+			partition-synthesized: true
+			partition-length: 1
+			partition-hint: MBR
+		1:
+			partition-name: GPT Header
+			partition-start: 1
+			partition-synthesized: true
+			partition-length: 1
+			partition-hint: Primary GPT Header
+		2:
+			partition-name: GPT Partition Data
+			partition-start: 2
+			partition-synthesized: true
+			partition-length: 32
+			partition-hint: Primary GPT Table
+		3:
+			partition-UUID: 3C3D258D-E1BB-4F4B-9FE2-01F3DD220750
+			partition-name: Untitled 1
+			partition-hint-UUID: 7C3457EF-0000-11AA-AA11-00306543ECAC
+			partition-start: 34
+			partition-number: 1
+			partition-length: 35270656
+			partition-hint: Apple_APFS
+			partition-filesystems:
+				APFS: Untitled
+		4:
+			partition-name: GPT Partition Data
+			partition-start: 35270690
+			partition-synthesized: true
+			partition-length: 32
+			partition-hint: Backup GPT Table
+		5:
+			partition-name: GPT Header
+			partition-start: 35270722
+			partition-synthesized: true
+			partition-length: 1
+			partition-hint: Backup GPT Header
+	burnable: false
+udif-ordered-chunks: true
+Properties:
+	Encrypted: false
+	Kernel Compatible: true
+	Checksummed: true
+	Software License Agreement: false
+	Partitioned: false
+	Compressed: true
+Resize limits (per hdiutil resize -limits):
+35270656	35270656	35270656
+hdiutil: WARNING: 'hdiutil imageinfo ...' is deprecated. Please use 'diskutil image info ...' instead.

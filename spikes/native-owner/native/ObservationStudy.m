@@ -1,5 +1,7 @@
 #import "ObservationStudy.h"
 #import "RecordEncoding.h"
+#import "PointRequest.h"
+#import "NativeProvenance.h"
 
 static const NSUInteger StringLimit = 1024;
 static const NSUInteger StreamLimit = 1024 * 1024;
@@ -20,6 +22,11 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
 
 @interface ObservationStudy ()
 @property id device;
+@property(copy) id (^pointSession)(void);
+@property(copy) NSDictionary *(^pointProvenance)(id, id);
+@property NSMutableArray<PointRequest *> *pointRequests;
+@property BOOL pointAdmissionClosed;
+@property id pointLock;
 @property NSDictionary *configuration;
 @property(copy) NSTimeInterval (^clock)(void);
 @property(copy) BOOL (^stop)(void);
@@ -39,12 +46,15 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
 @end
 
 @implementation ObservationStudy
-- (instancetype)initWithDevice:(id)device configuration:(NSDictionary *)configuration
+- (instancetype)initWithDevice:(id)device pointSession:(id (^)(void))pointSession
+               pointProvenance:(NSDictionary * (^)(id, id))pointProvenance configuration:(NSDictionary *)configuration
                          clock:(NSTimeInterval (^)(void))clock stop:(BOOL (^)(void))stop
                    readFixture:(NSDictionary * (^)(void))readFixture
                activateFixture:(BOOL (^)(void))activateFixture
                           wait:(void (^)(NSTimeInterval))wait emit:(void (^)(NSDictionary *))emit {
   if ((self = [super init])) {
+    _pointSession = [pointSession copy]; _pointProvenance = [pointProvenance copy];
+    _pointRequests = [NSMutableArray array]; _pointLock = [NSObject new];
     _device = device; _configuration = [configuration copy]; _clock = [clock copy];
     _stop = [stop copy]; _readFixture = [readFixture copy];
     _activateFixture = [activateFixture copy]; _wait = [wait copy]; _emit = [emit copy];
@@ -84,10 +94,18 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
 }
 
 - (BOOL)admit:(NSString *)operation {
-  if (self.outputStopped) return NO;
-  if (self.stop() || self.clock() - self.started >= [self.configuration[@"allowance"] doubleValue]) {
+  if (self.outputStopped || self.pointAdmissionClosed) return NO;
+  for (PointRequest *request in self.pointRequests) {
+    if ([request.snapshot[@"duplicate"] unsignedIntegerValue]) {
+      self.pointAdmissionClosed = YES;
+      [self record:@"observation" operation:operation outcome:@"failed" details:@{@"reason":@"duplicate-callback"}];
+      return NO;
+    }
+  }
+  BOOL stopped = self.stop();
+  if (stopped || !isfinite([self.configuration[@"deadline"] doubleValue]) || !isfinite(self.clock()) || self.clock() >= [self.configuration[@"deadline"] doubleValue]) {
     [self record:@"observation" operation:operation outcome:@"failed"
-         details:@{@"reason": @"admission-stopped"}];
+         details:@{@"reason": stopped ? @"stop" : @"deadline"}];
     return NO;
   }
   return YES;
@@ -154,7 +172,7 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
   } @catch (NSException *exception) {
     // A throw is not a returned native method. Do not claim normal local accounting.
     [self record:@"observation" operation:operation outcome:@"failed"
-         details:@{@"source": name, @"reason": @"native-exception"}];
+         details:BoundedExceptionProvenance(exception)];
     return nil;
   }
 }
@@ -171,30 +189,82 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
   return [NSString stringWithFormat:@"local-%lu", (unsigned long)index];
 }
 
+- (NSDictionary *)pointSummary {
+  @synchronized(self.pointLock) {
+  NSMutableDictionary *result = [@{@"started":@(self.pointRequests.count), @"sendReturned":@0,
+    @"replyReceived":@0,@"pending":@0,@"late":@0,@"duplicate":@0,@"retainedObjects":@0,
+    @"observationClosed":@YES,@"nativeSettled":@NO} mutableCopy];
+  for (PointRequest *request in self.pointRequests) {
+    NSDictionary *state = request.snapshot;
+    for (NSString *key in @[@"sendReturned",@"replyReceived",@"pending",@"late",@"duplicate",@"retainedObjects"])
+      result[key] = @([result[key] unsignedIntegerValue] + [state[key] unsignedIntegerValue]);
+  }
+  return result;
+  }
+}
 - (id)point:(id)client phase:(NSString *)phase {
-  NSError *__autoreleasing error = nil;
-  NSError *__autoreleasing *errorPointer = &error;
-  BOOL failed = NO;
-  id item = [self invoke:client selector:@"accessibilityElementForElementAtPoint:error:"
-    operation:@"point" returnType:@encode(id) length:sizeof(id)
-    arguments:@[@(@encode(CGPoint)), @(@encode(NSError *__autoreleasing *))]
-    configure:^(NSInvocation *invocation) {
-      CGPoint point = CGPointMake(160, 170);
-      NSError *__autoreleasing *argumentError = errorPointer;
-      [invocation setArgument:&point atIndex:2]; [invocation setArgument:&argumentError atIndex:3];
-    } query:YES failed:&failed];
-  if (failed) return nil;
-  if (item == nil || error != nil) {
-    [self record:@"observation" operation:@"point" outcome:@"failed"
-         details:@{@"phase": phase, @"source": @"accessibilityElementForElementAtPoint:error:",
-                   @"replyPresent": WireBoolean(item != nil), @"errorPresent": WireBoolean(error != nil),
-                   @"reason": error ? @"native-error" : @"nil-reply"}];
+  if (![self admit:@"point"] || self.pointRequests.count >= 2) return nil;
+  NSString *source = @"requestElementAtPoint:reply:";
+  PointRequest *request = nil;
+  @try {
+    self.startedCalls++;
+    id session = self.pointSession();
+    self.returnedCalls++;
+    NSDictionary *metadata = [self metadata:session selector:source];
+    NSMethodSignature *signature = [session methodSignatureForSelector:NSSelectorFromString(source)];
+    BOOL valid = [metadata[@"available"] boolValue] && signature.numberOfArguments == 4
+      && strcmp(signature.methodReturnType, @encode(void)) == 0 && signature.methodReturnLength == 0
+      && strcmp([signature getArgumentTypeAtIndex:0], @encode(id)) == 0
+      && strcmp([signature getArgumentTypeAtIndex:1], @encode(SEL)) == 0
+      && strcmp([signature getArgumentTypeAtIndex:2], @encode(CGPoint)) == 0
+      && strcmp([signature getArgumentTypeAtIndex:3], "@?") == 0;
+    if (!valid) {
+      [self record:@"observation" operation:@"point" outcome:@"unavailable" details:@{@"source":source,@"reason":@"unsupported-abi"}];
+      return nil;
+    }
+    NSDictionary *provenance = self.pointProvenance(session, client);
+    if (!provenance) {
+      [self record:@"observation" operation:@"point" outcome:@"unavailable" details:@{@"source":source,@"reason":@"missing-provenance"}];
+      return nil;
+    }
+    [self record:@"observation" operation:@"point" outcome:@"observed"
+      details:@{@"source":source,@"phase":phase,@"method":metadata,@"loadedImages":provenance}];
+    request = [[PointRequest alloc] initWithLock:self.pointLock clock:self.clock deadline:[self.configuration[@"deadline"] doubleValue] stop:self.stop];
+    void (^reply)(id, NSError *) = ^(id element, NSError *error) { [request receive:element error:error]; };
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+    invocation.target = session; invocation.selector = NSSelectorFromString(source);
+    CGPoint point = CGPointMake(160,170);
+    [invocation setArgument:&point atIndex:2]; [invocation setArgument:&reply atIndex:3];
+    if (![self admit:@"point"]) return nil;
+    [self.pointRequests addObject:request];
+    self.startedCalls++; self.queryCalls++;
+    [invocation invoke];
+    self.returnedCalls++; [request markReturned];
+    while (![request.snapshot[@"replyReceived"] boolValue] && !self.stop()
+           && self.clock() < [self.configuration[@"deadline"] doubleValue]) {
+      self.wait(MIN(0.01, MAX(0, [self.configuration[@"deadline"] doubleValue] - self.clock())));
+    }
+    id item = nil;
+    NSDictionary *state = [request snapshotWithElement:&item];
+    NSString *reason = nil;
+    if (self.stop()) reason = @"stop";
+    else if (self.clock() >= [self.configuration[@"deadline"] doubleValue]) reason = @"deadline";
+    else if ([state[@"duplicate"] unsignedIntegerValue]) reason = @"duplicate-callback";
+    else if ([state[@"errorPresent"] boolValue]) reason = @"native-error";
+    else if (!item) reason = @"nil-reply";
+    if (reason) item = nil;
+    NSMutableDictionary *details = [@{@"phase":phase,@"source":source,
+      @"replyReceived":[state[@"replyReceived"] boolValue] ? @YES : @NO,
+      @"replyPresent":state[@"replyPresent"],@"errorPresent":state[@"errorPresent"],@"nativeSettled":@NO} mutableCopy];
+    if (reason) { self.pointAdmissionClosed = YES; [request abandon]; details[@"reason"] = reason; }
+    else { details[@"reference"] = [self label:item]; details[@"referenceScope"] = @"local-object-only"; }
+    [self record:@"observation" operation:@"point" outcome:reason ? @"failed" : @"observed" details:details];
+    return item;
+  } @catch (NSException *exception) {
+    self.pointAdmissionClosed = YES; [request abandon];
+    [self record:@"observation" operation:@"point" outcome:@"failed" details:BoundedExceptionProvenance(exception)];
     return nil;
   }
-  [self record:@"observation" operation:@"point" outcome:@"observed"
-       details:@{@"phase": phase, @"source": @"accessibilityElementForElementAtPoint:error:",
-                 @"reference": [self label:item], @"referenceScope": @"local-object-only"}];
-  return item;
 }
 
 - (void)validity:(id)item client:(id)client phase:(NSString *)phase {
@@ -411,10 +481,12 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
     }
     [self.references removeAllObjects];
   }
+  NSDictionary *callbackSummary = [self pointSummary];
   [self record:@"finished" operation:@"metadata" outcome:self.failed ? @"failed" : @"observed"
        details:@{@"plan": plan, @"runnerPID": @(pid), @"appElementQueries": @(self.queryCalls),
                  @"localMethodsReturned": WireBoolean(self.startedCalls == self.returnedCalls),
-                 @"localReferencesReleased": WireBoolean(self.references.count == 0),
+                 @"localReferencesReleased": WireBoolean(self.references.count == 0 && [callbackSummary[@"retainedObjects"] unsignedIntegerValue] == 0),
+                 @"pointCallbacks": callbackSummary,
                  @"nativeSettlement": @"unconfirmed",
                  @"coverage": @{@"originalAncestry": @"unestablished", @"referenceLifetime": @"unestablished",
                                 @"independentAssociations": @"unestablished"}}];

@@ -1,0 +1,124 @@
+000000000000603c t +[RCPInlinePlayer playCommandString:options:completion:]
+0000000000006208 t +[RCPInlinePlayer playEventActions:options:completion:]
+0000000000006144 t +[RCPInlinePlayer playEventStream:options:completion:]
+00000000000062dc t +[RCPInlinePlayer setIgnoresCompletionDelay:]
+0000000000006cf0 t +[RCPPlayer playEventStream:withOptions:]
+0000000000006c88 t +[RCPPlayer sharedPlayer]
+000000000001fe74 t +[RCPPlayer sharedPlayer].cold.1
+0000000000006e38 t +[RCPPlayer tearDown]
+0000000000007b50 t +[RCPPlayerDisplayLinkWaiter wait]
+0000000000006a84 t -[RCPInlinePlayer ignoresCompletionDelay]
+0000000000006644 t -[RCPInlinePlayer playCommandString:options:completion:]
+0000000000006700 t -[RCPInlinePlayer playEventActions:options:completion:]
+0000000000006788 t -[RCPInlinePlayer playEventStream:options:completion:]
+00000000000063ac t -[RCPInlinePlayer prewarmForEventStream:completion:]
+0000000000006a8c t -[RCPInlinePlayer setIgnoresCompletionDelay:]
+000000000000e56c t -[RCPMovie writeToURL:completion:]
+0000000000007b08 t -[RCPPlayer .cxx_destruct]
+00000000000077e4 t -[RCPPlayer _adjustTimestampForHIDEventAndChildren:now:machTimeOffset:]
+00000000000078ac t -[RCPPlayer _cloneAndTransformHIDEvent:machTimeOffset:transform:]
+000000000000773c t -[RCPPlayer _sendEvent:machTimeOffset:transform:]
+0000000000007958 t -[RCPPlayer _sendEvent:withService:machTimeOffset:transform:]
+000000000001fe88 t -[RCPPlayer _sendEvent:withService:machTimeOffset:transform:].cold.1
+0000000000007b00 t -[RCPPlayer analyticsEventSender]
+0000000000007acc t -[RCPPlayer deliveryServicePool]
+0000000000007a54 t -[RCPPlayer environment]
+0000000000006eec t -[RCPPlayer initWithDeliveryServicePool:environment:analyticsEventSender:]
+0000000000006e68 t -[RCPPlayer init]
+0000000000007150 t -[RCPPlayer playEventStream:withOptions:]
+0000000000007a88 t -[RCPPlayer playbackOptions]
+0000000000006f94 t -[RCPPlayer prewarmForEventStream:withError:]
+0000000000007ad4 t -[RCPPlayer setDeliveryServicePool:]
+0000000000007a5c t -[RCPPlayer setEnvironment:]
+0000000000007a90 t -[RCPPlayer setPlaybackOptions:]
+0000000000007ac4 t -[RCPPlayer setStompSenderForSimulatorPlayback:]
+0000000000007abc t -[RCPPlayer stompSenderForSimulatorPlayback]
+0000000000007734 t -[RCPPlayer tearDown]
+0000000000007c28 t -[RCPPlayerDisplayLinkWaiter _stop:]
+0000000000007b78 t -[RCPPlayerDisplayLinkWaiter _wait]
+0000000000006c7c t -[RCPPlayerPlaybackOptions .cxx_destruct]
+0000000000006c5c t -[RCPPlayerPlaybackOptions customizeHIDEvent]
+0000000000006bf4 t -[RCPPlayerPlaybackOptions firstEventFrameDelay]
+0000000000006c24 t -[RCPPlayerPlaybackOptions ignoreSenderProperties]
+0000000000006b2c t -[RCPPlayerPlaybackOptions init]
+0000000000006c6c t -[RCPPlayerPlaybackOptions linkEventDeliveryToDisplayRefreshRate]
+0000000000006be4 t -[RCPPlayerPlaybackOptions minDelayBetweenSends]
+0000000000006bd4 t -[RCPPlayerPlaybackOptions playbackSpeedFactor]
+0000000000006c64 t -[RCPPlayerPlaybackOptions setCustomizeHIDEvent:]
+0000000000006bfc t -[RCPPlayerPlaybackOptions setFirstEventFrameDelay:]
+0000000000006c2c t -[RCPPlayerPlaybackOptions setIgnoreSenderProperties:]
+0000000000006c74 t -[RCPPlayerPlaybackOptions setLinkEventDeliveryToDisplayRefreshRate:]
+0000000000006bec t -[RCPPlayerPlaybackOptions setMinDelayBetweenSends:]
+0000000000006bdc t -[RCPPlayerPlaybackOptions setPlaybackSpeedFactor:]
+0000000000006c48 t -[RCPPlayerPlaybackOptions setTransform:]
+0000000000006c1c t -[RCPPlayerPlaybackOptions setUseHIDEventTimestampsForDelivery:]
+0000000000006c0c t -[RCPPlayerPlaybackOptions setUseVirtualHIDServices:]
+0000000000006bbc t -[RCPPlayerPlaybackOptions timestampForEventReplay:]
+0000000000006c34 t -[RCPPlayerPlaybackOptions transform]
+0000000000006c14 t -[RCPPlayerPlaybackOptions useHIDEventTimestampsForDelivery]
+0000000000006c04 t -[RCPPlayerPlaybackOptions useVirtualHIDServices]
+000000000001bd48 t -[RCPSyntheticEventStream touchSensitiveButtonReleaseHoldWithPage:withUsage:withTouch:withNormalizedPositionY:withNormalizedPositionDeltaY:]
+000000000000dc28 t -[_RCPEventDigitizerStreamState countOfContactsChangeAmount]
+000000000000dc08 t -[_RCPEventDigitizerStreamState countOfContactsTouchingDidChange]
+000000000000dc18 t -[_RCPEventDigitizerStreamState countOfContactsTouching]
+000000000000dc20 t -[_RCPEventDigitizerStreamState setCountOfContactsTouching:]
+000000000000dc10 t -[_RCPEventDigitizerStreamState setCountOfContactsTouchingDidChange:]
+0000000000044838 S _OBJC_CLASS_$_RCPPlayer
+00000000000448b0 S _OBJC_CLASS_$_RCPPlayerDisplayLinkWaiter
+00000000000447e8 S _OBJC_CLASS_$_RCPPlayerPlaybackOptions
+0000000000044154 s _OBJC_IVAR_$_RCPInlinePlayer._ignoresCompletionDelay
+0000000000044194 s _OBJC_IVAR_$_RCPPlayer._analyticsEventSender
+0000000000044190 s _OBJC_IVAR_$_RCPPlayer._deliveryServicePool
+0000000000044188 s _OBJC_IVAR_$_RCPPlayer._environment
+000000000004418c s _OBJC_IVAR_$_RCPPlayer._playbackOptions
+0000000000044184 s _OBJC_IVAR_$_RCPPlayer._stompSenderForSimulatorPlayback
+000000000004417c s _OBJC_IVAR_$_RCPPlayerPlaybackOptions._customizeHIDEvent
+0000000000044178 s _OBJC_IVAR_$_RCPPlayerPlaybackOptions._firstEventFrameDelay
+0000000000044168 s _OBJC_IVAR_$_RCPPlayerPlaybackOptions._ignoreSenderProperties
+000000000004416c s _OBJC_IVAR_$_RCPPlayerPlaybackOptions._linkEventDeliveryToDisplayRefreshRate
+0000000000044174 s _OBJC_IVAR_$_RCPPlayerPlaybackOptions._minDelayBetweenSends
+0000000000044170 s _OBJC_IVAR_$_RCPPlayerPlaybackOptions._playbackSpeedFactor
+0000000000044180 s _OBJC_IVAR_$_RCPPlayerPlaybackOptions._transform
+0000000000044164 s _OBJC_IVAR_$_RCPPlayerPlaybackOptions._useHIDEventTimestampsForDelivery
+0000000000044160 s _OBJC_IVAR_$_RCPPlayerPlaybackOptions._useVirtualHIDServices
+0000000000044238 s _OBJC_IVAR_$__RCPEventDigitizerStreamState._countOfContactsChangeAmount
+0000000000044234 s _OBJC_IVAR_$__RCPEventDigitizerStreamState._countOfContactsTouching
+000000000004422c s _OBJC_IVAR_$__RCPEventDigitizerStreamState._countOfContactsTouchingDidChange
+0000000000044860 S _OBJC_METACLASS_$_RCPPlayer
+0000000000044888 S _OBJC_METACLASS_$_RCPPlayerDisplayLinkWaiter
+0000000000044810 S _OBJC_METACLASS_$_RCPPlayerPlaybackOptions
+00000000000213b0 s __OBJC_$_CLASS_METHODS_RCPPlayer
+00000000000213e0 s __OBJC_$_CLASS_METHODS_RCPPlayerDisplayLinkWaiter
+0000000000022568 s __OBJC_$_INSTANCE_METHODS_RCPPlayer
+0000000000022658 s __OBJC_$_INSTANCE_METHODS_RCPPlayerDisplayLinkWaiter
+0000000000022678 s __OBJC_$_INSTANCE_METHODS_RCPPlayerPlaybackOptions
+000000000003d5c0 s __OBJC_$_INSTANCE_VARIABLES_RCPPlayer
+000000000003d370 s __OBJC_$_INSTANCE_VARIABLES_RCPPlayerPlaybackOptions
+000000000003d668 s __OBJC_$_PROP_LIST_RCPPlayer
+000000000003d498 s __OBJC_$_PROP_LIST_RCPPlayerPlaybackOptions
+000000000003d6c0 s __OBJC_CLASS_RO_$_RCPPlayer
+000000000003d750 s __OBJC_CLASS_RO_$_RCPPlayerDisplayLinkWaiter
+000000000003d530 s __OBJC_CLASS_RO_$_RCPPlayerPlaybackOptions
+000000000003d578 s __OBJC_METACLASS_RO_$_RCPPlayer
+000000000003d708 s __OBJC_METACLASS_RO_$_RCPPlayerDisplayLinkWaiter
+000000000003d328 s __OBJC_METACLASS_RO_$_RCPPlayerPlaybackOptions
+0000000000008b8c T __RCPEventHIDDigitizerEventCountOfTouchingContacts
+0000000000006cc8 t ___25+[RCPPlayer sharedPlayer]_block_invoke
+000000000000ed54 t ___34-[RCPMovie writeToURL:completion:]_block_invoke
+000000000000f090 t ___34-[RCPMovie writeToURL:completion:]_block_invoke_2
+0000000000006468 t ___52-[RCPInlinePlayer prewarmForEventStream:completion:]_block_invoke
+0000000000006530 t ___52-[RCPInlinePlayer prewarmForEventStream:completion:]_block_invoke_2
+0000000000006878 t ___54-[RCPInlinePlayer playEventStream:options:completion:]_block_invoke
+00000000000069c8 t ___54-[RCPInlinePlayer playEventStream:options:completion:]_block_invoke_2
+0000000000006a14 t ___54-[RCPInlinePlayer playEventStream:options:completion:]_block_invoke_3
+0000000000008c48 t ____RCPEventHIDDigitizerEventCountOfTouchingContacts_block_invoke
+0000000000045a40 b ___ignoresCompletionDelay
+0000000000031940 s _objc_msgSend$cancel
+00000000000326e0 s _objc_msgSend$finishWritingWithCompletionHandler:
+00000000000329e0 s _objc_msgSend$ignoresCompletionDelay
+0000000000033920 s _objc_msgSend$playEventStream:options:completion:
+0000000000033ce0 s _objc_msgSend$prewarmForEventStream:completion:
+0000000000034280 s _objc_msgSend$seekToTime:toleranceBefore:toleranceAfter:completionHandler:
+0000000000034500 s _objc_msgSend$setCancelHandler:
+00000000000348a0 s _objc_msgSend$setIgnoresCompletionDelay:
+0000000000035b60 s _objc_msgSend$touchSensitiveButtonReleaseHoldWithPage:withUsage:withTouch:withNormalizedPositionY:withNormalizedPositionDeltaY:

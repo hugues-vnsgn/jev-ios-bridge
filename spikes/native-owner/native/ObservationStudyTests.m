@@ -2,6 +2,8 @@
 #import <objc/runtime.h>
 #import "ObservationStudy.h"
 #import "RecordEncoding.h"
+#import "PointRequest.h"
+#import "NativeProvenance.h"
 
 @interface WrongGetterDevice : NSObject
 @end
@@ -12,6 +14,8 @@
 @interface FakeDevice : NSObject
 @property id client;
 @property NSUInteger getterCalls;
+@property NSUInteger sessionCalls;
+@property BOOL missingProvenance;
 @end
 @implementation FakeDevice
 - (id)accessibilityInterface { self.getterCalls += 1; return self.client; }
@@ -43,12 +47,17 @@
 @property BOOL nilPoint;
 @property BOOL alwaysValid;
 @property BOOL pointError;
+@property NSUInteger callbackCalls;
+@property NSUInteger directPointCalls;
+@property NSString *callbackMode;
+@property(copy) void (^savedReply)(id, NSError *);
 @property BOOL snapshotError;
 @property BOOL nilSnapshot;
 @property BOOL malformedSnapshot;
 @property Class reportedClass;
 @end
 @implementation FakeClient
++ (id)sharedSession { return [self new]; }
 - (instancetype)init {
   if ((self = [super init])) {
     _validityArguments = [NSMutableArray array];
@@ -62,10 +71,22 @@
 }
 - (Class)class { return self.reportedClass ?: super.class; }
 - (id)accessibilityElementForElementAtPoint:(CGPoint)point error:(NSError *__autoreleasing *)error {
-  self.pointCalls += 1;
-  if (self.pointError) *error = [NSError errorWithDomain:@"test" code:1 userInfo:nil];
-  if (self.nilPoint) return nil;
-  return self.points[MIN(self.pointCalls - 1, self.points.count - 1)];
+  self.directPointCalls++; XCTFail(@"Direct iOS point stub must not be invoked"); return nil;
+}
+- (void)requestElementAtPoint:(CGPoint)point reply:(void (^)(id, NSError *))reply {
+  self.pointCalls++; self.callbackCalls++;
+  if (([self.callbackMode isEqual:@"pending"] || [self.callbackMode isEqual:@"late-during-finish"])) { self.savedReply = reply; return; }
+  if ([self.callbackMode isEqual:@"duplicate"]) { reply(self.points[0], nil); reply(self.points[1], nil); return; }
+  if ([self.callbackMode isEqual:@"throw-after-inline"]) { reply(self.points[0], nil); [NSException raise:@"AfterReply" format:@"controlled"]; }
+  if ([self.callbackMode isEqual:@"background"]) {
+    dispatch_semaphore_t done = dispatch_semaphore_create(0);
+    id element = self.points[MIN(self.pointCalls - 1, self.points.count - 1)];
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0), ^{ reply(element, nil); dispatch_semaphore_signal(done); });
+    XCTAssertEqual(dispatch_semaphore_wait(done, dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC)), 0l);
+    return;
+  }
+  reply(self.nilPoint ? nil : self.points[MIN(self.pointCalls - 1, self.points.count - 1)],
+        self.pointError ? [NSError errorWithDomain:@"test" code:1 userInfo:nil] : nil);
 }
 - (BOOL)isValidElement:(id)element {
   [self.validityArguments addObject:element];
@@ -83,7 +104,7 @@
 @property NSUInteger pointCalls;
 @end
 @implementation WrongPointClient
-- (NSInteger)accessibilityElementForElementAtPoint:(CGPoint)point error:(NSError *__autoreleasing *)error {
+- (NSInteger)requestElementAtPoint:(CGPoint)point reply:(void (^)(id, NSError *))reply {
   self.pointCalls += 1; return 1;
 }
 @end
@@ -98,8 +119,8 @@
 @interface ThrowingPointClient : FakeClient
 @end
 @implementation ThrowingPointClient
-- (id)accessibilityElementForElementAtPoint:(CGPoint)point error:(NSError *__autoreleasing *)error {
-  self.pointCalls += 1; [NSException raise:@"double-exception" format:@"controlled failure"]; return nil;
+- (void)requestElementAtPoint:(CGPoint)point reply:(void (^)(id, NSError *))reply {
+  self.pointCalls += 1; [NSException raise:@"double-exception" format:@"controlled failure"];
 }
 @end
 
@@ -110,7 +131,7 @@
 @implementation PreparingPointClient
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
   NSMethodSignature *signature = [super methodSignatureForSelector:selector];
-  if (selector == NSSelectorFromString(@"accessibilityElementForElementAtPoint:error:")) {
+  if (selector == NSSelectorFromString(@"requestElementAtPoint:reply:")) {
     self.pointSignatures += 1;
     // First inspection is metadata; the second prepares the actual point invocation.
     if (self.pointSignatures == 2) self.duringPreparation();
@@ -128,7 +149,7 @@
     @"plugin":reference ? @"dev.jev.research.native-owner-20261007-reference" : @"dev.jev.research.native-owner-20261007-metadata",
     @"runner":reference ? @"dev.jev.research.native-owner-20261007-reference.xctrunner" : @"dev.jev.research.native-owner-20261007-metadata.xctrunner",
     @"fixture":reference ? @"dev.jev.research.native-owner-20261007-reference-fixture" : @"dev.jev.research.native-owner-20261007-metadata-fixture"};
-  return @{@"requestId":request,@"plan":plan,@"allowance":@10,
+  return @{@"requestId":request,@"plan":plan,@"deadline":@20,
            @"studyIdentity":identity,@"expectedStudyIdentity":identity};
 }
 - (void)testStudyIdentityPrecedesGetterAndMismatchPreventsAcquisition {
@@ -140,7 +161,7 @@
       actual[@"runner"] = @"dev.foreign.runner"; configuration[@"studyIdentity"] = actual;
     }
     NSMutableArray *records = [NSMutableArray array];
-    ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device configuration:configuration
+    ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device pointSession:^{ ((FakeDevice *)device).sessionCalls++; return [(FakeDevice *)device client]; } pointProvenance:^NSDictionary *(id session, id client) { return ((FakeDevice *)device).missingProvenance ? nil : @{@"test":@YES}; } configuration:configuration
       clock:^{ return 10.0; } stop:^{ return NO; } readFixture:^{ return (NSDictionary *)nil; }
       activateFixture:^{ XCTFail(@"Metadata must not activate"); return NO; }
       wait:^(NSTimeInterval seconds) { XCTFail(@"Metadata must not wait"); }
@@ -166,7 +187,7 @@
     NSMutableArray *records = [NSMutableArray array];
     __block BOOL activated = NO, recreated = NO;
     __block NSUInteger reads = 0, activations = 0;
-    ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device
+    ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device pointSession:^{ ((FakeDevice *)device).sessionCalls++; return [(FakeDevice *)device client]; } pointProvenance:^NSDictionary *(id session, id client) { return ((FakeDevice *)device).missingProvenance ? nil : @{@"test":@YES}; }
       configuration:[self configurationForPlan:@"reference-study" requestId:@"fixture-agreement"]
       clock:^{ return 10.0; } stop:^{ return NO; }
       readFixture:^{
@@ -207,7 +228,7 @@
   NSMutableArray *records = [NSMutableArray array];
   __block NSTimeInterval now = 10;
   __block BOOL recreate = NO;
-  ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device
+  ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device pointSession:^{ ((FakeDevice *)device).sessionCalls++; return [(FakeDevice *)device client]; } pointProvenance:^NSDictionary *(id session, id client) { return ((FakeDevice *)device).missingProvenance ? nil : @{@"test":@YES}; }
     configuration:[self configurationForPlan:plan requestId:@"policy-test"]
     clock:^{ return now; } stop:stop
     readFixture:^{ return @{@"pid": @42, @"generation": recreate ? @1 : @0, @"ordinary": @0, @"bundleIdentifier": @"dev.jev.research.native-owner-20261007-reference-fixture"}; }
@@ -216,6 +237,9 @@
     emit:^(NSDictionary *record) {
       [records addObject:record];
       if ([record[@"details"][@"request"] isEqual:@"recreate"]) recreate = YES;
+      FakeClient *client = [device isKindOfClass:FakeDevice.class] ? [(FakeDevice *)device client] : nil;
+      if ([client isKindOfClass:FakeClient.class] && [client.callbackMode isEqual:@"late-during-finish"] && [record[@"details"][@"reason"] isEqual:@"deadline"])
+        client.savedReply([NSObject new], nil);
     }];
   [study run];
   XCTAssertEqualObjects(records.firstObject[@"kind"], @"started");
@@ -384,6 +408,189 @@
   NSArray *snapshots = [self operation:@"snapshot" records:[self runClient:client]];
   XCTAssertEqualObjects(snapshots.firstObject[@"details"][@"route"], @"direct-after-nil-wrapper");
 }
+
+
+
+- (void)testMissingProvenanceRefusesPointSend {
+  FakeClient *client = [FakeClient new]; FakeDevice *device = [FakeDevice new];
+  device.client = client; device.missingProvenance = YES;
+  NSArray *records = [self runDevice:device plan:@"reference-study" stop:^{ return NO; }];
+  XCTAssertEqual(client.pointCalls, 0u);
+  XCTAssertTrue([self hasReason:@"missing-provenance" records:records]);
+}
+- (void)testMetadataDoesNotAcquirePointSession {
+  FakeDevice *device = [FakeDevice new]; device.client = [FakeClient new];
+  NSArray *records = [self runDevice:device plan:@"metadata" stop:^{ return NO; }];
+  XCTAssertEqual(device.sessionCalls, 0u);
+  XCTAssertEqualObjects(records.lastObject[@"details"][@"pointCallbacks"][@"started"], @0);
+}
+- (void)testExpiredAndNonfiniteDeadlinesRefuseGetter {
+  for (NSNumber *deadline in @[@10, @(NAN), @(INFINITY)]) {
+    FakeDevice *device = [FakeDevice new]; device.client = [FakeClient new];
+    NSMutableDictionary *config = [[self configurationForPlan:@"metadata" requestId:@"deadline"] mutableCopy];
+    config[@"deadline"] = deadline;
+    NSMutableArray *records = [NSMutableArray array];
+    ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device
+      pointSession:^{ XCTFail(@"Deadline must refuse session"); return (id)nil; }
+      pointProvenance:^NSDictionary *(id session, id client) { return nil; }
+      configuration:config clock:^{ return 10.0; } stop:^{ return NO; }
+      readFixture:^{ return (NSDictionary *)nil; } activateFixture:^{ return NO; }
+      wait:^(NSTimeInterval seconds) { XCTFail(@"No wait"); }
+      emit:^(NSDictionary *record) { [records addObject:record]; }];
+    [study run];
+    XCTAssertEqual(device.getterCalls, 0u);
+    XCTAssertTrue([self hasReason:@"deadline" records:records]);
+  }
+}
+- (void)testLateReplyBeforeFinalSnapshotIsCountedButNotConsumed {
+  FakeClient *client = [FakeClient new]; client.callbackMode = @"late-during-finish";
+  NSArray *records = [self runClient:client];
+  NSDictionary *summary = records.lastObject[@"details"][@"pointCallbacks"];
+  XCTAssertEqualObjects(summary[@"late"], @1); XCTAssertEqualObjects(summary[@"replyReceived"], @1);
+  XCTAssertEqualObjects(summary[@"pending"], @0); XCTAssertEqualObjects(summary[@"retainedObjects"], @1);
+  XCTAssertEqual(client.pointCalls, 1u); XCTAssertEqual(client.validityArguments.count, 0u);
+  XCTAssertEqualObjects(records.lastObject[@"details"][@"localReferencesReleased"], @NO);
+}
+- (void)testConcurrentDuplicateIsCountedWithoutReplacingAcceptedObject {
+  PointRequest *request = [[PointRequest alloc] initWithLock:[NSObject new] clock:^{ return 10.0; } deadline:20 stop:^{ return NO; }];
+  dispatch_group_t group = dispatch_group_create();
+  for (NSUInteger i = 0; i < 2; i++) dispatch_group_async(group, dispatch_get_global_queue(QOS_CLASS_DEFAULT,0), ^{
+    [request receive:[NSObject new] error:nil];
+  });
+  XCTAssertEqual(dispatch_group_wait(group, dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC)), 0l);
+  XCTAssertEqualObjects(request.snapshot[@"replyReceived"], @1);
+  XCTAssertEqualObjects(request.snapshot[@"duplicate"], @1);
+  XCTAssertEqualObjects(request.snapshot[@"retainedObjects"], @1);
+  XCTAssertNil(request.usableElement);
+}
+
+- (void)testThrowAfterInlineReplyDoesNotClaimMethodReturnOrContinue {
+  FakeClient *client = [FakeClient new]; client.callbackMode = @"throw-after-inline";
+  NSArray *records = [self runClient:client];
+  NSDictionary *final = records.lastObject[@"details"];
+  XCTAssertEqual(client.pointCalls, 1u); XCTAssertEqual(client.validityArguments.count, 0u);
+  XCTAssertEqualObjects(final[@"pointCallbacks"][@"replyReceived"], @1);
+  XCTAssertEqualObjects(final[@"pointCallbacks"][@"sendReturned"], @0);
+  XCTAssertEqualObjects(final[@"localMethodsReturned"], @NO);
+  XCTAssertEqualObjects(final[@"localReferencesReleased"], @NO);
+  XCTAssertTrue([self hasReason:@"native-exception" records:records]);
+}
+- (void)testStopWithPendingReplyEndsWaitingAndRefusesFurtherReads {
+  FakeClient *client = [FakeClient new]; client.callbackMode = @"pending";
+  FakeDevice *device = [FakeDevice new]; device.client = client;
+  NSArray *records = [self runDevice:device plan:@"reference-study" stop:^{ return (BOOL)(client.pointCalls > 0); }];
+  XCTAssertEqual(client.pointCalls, 1u); XCTAssertEqual(client.validityArguments.count, 0u);
+  XCTAssertTrue([self hasReason:@"stop" records:records]);
+  XCTAssertEqualObjects(records.lastObject[@"details"][@"pointCallbacks"][@"pending"], @1);
+}
+- (void)testBackgroundCallbackObjectsReachExistingStudyReads {
+  FakeClient *client = [FakeClient new]; client.callbackMode = @"background";
+  NSArray *records = [self runClient:client];
+  XCTAssertEqual(client.pointCalls, 2u); XCTAssertEqual(client.validityArguments.count, 3u);
+  XCTAssertTrue(client.validityArguments.firstObject == client.points.firstObject);
+  XCTAssertEqualObjects(records.lastObject[@"details"][@"pointCallbacks"][@"replyReceived"], @2);
+}
+- (void)testLoadedProvenanceUsesRuntimeImages {
+  FakeClient *client = [FakeClient new];
+  NSDictionary *provenance = LoadedPointProvenance(client, client);
+  XCTAssertNotNil(provenance);
+  XCTAssertEqualObjects(provenance[@"sessionGetter"][@"selector"], @"sharedSession");
+  XCTAssertTrue([provenance[@"sessionGetter"][@"encoding"] hasPrefix:@"@"]);
+  for (NSString *key in @[@"wrapper",@"session",@"accessibility"]) {
+    XCTAssertEqual([provenance[key][@"uuid"] length], 36u);
+    XCTAssertTrue([provenance[key][@"image"] length] > 0);
+  }
+  XCTAssertNil(LoadedPointProvenance([NSObject new], client));
+}
+
+- (void)testPendingAndDuplicateCallbacksRetainOwnershipWithoutAnotherSend {
+  for (NSString *mode in @[@"pending",@"duplicate"]) {
+    FakeClient *client = [FakeClient new]; client.callbackMode = mode;
+    NSArray *records = [self runClient:client];
+    NSDictionary *summary = records.lastObject[@"details"][@"pointCallbacks"];
+    XCTAssertEqual(client.pointCalls, 1u);
+    XCTAssertEqual(client.validityArguments.count, 0u);
+    XCTAssertEqualObjects(summary[@"started"], @1);
+    XCTAssertEqualObjects(summary[@"nativeSettled"], @NO);
+    if ([mode isEqual:@"pending"]) {
+      XCTAssertEqualObjects(summary[@"pending"], @1);
+      XCTAssertTrue([self hasReason:@"deadline" records:records]);
+      NSUInteger recordCount = records.count;
+      client.savedReply([NSObject new], nil);
+      XCTAssertEqual(records.count, recordCount); // Final stream cannot acquire a late record.
+    } else {
+      XCTAssertEqualObjects(summary[@"duplicate"], @1);
+      XCTAssertTrue([self hasReason:@"duplicate-callback" records:records]);
+    }
+  }
+}
+- (void)testRequestRetainsOriginalAndLatePayloadsWithoutReplacingFirst {
+  __block NSTimeInterval now = 10;
+  PointRequest *request = [[PointRequest alloc] initWithLock:[NSObject new] clock:^{ return now; } deadline:20 stop:^{ return NO; }];
+  __weak id original;
+  @autoreleasepool { id item = [NSObject new]; original = item; [request receive:item error:nil]; }
+  XCTAssertNotNil(original);
+  XCTAssertTrue(request.usableElement == original);
+  [request abandon]; now = 21;
+  [request receive:[NSObject new] error:nil];
+  [request receive:[NSObject new] error:nil];
+  XCTAssertNil(request.usableElement);
+  XCTAssertEqualObjects(request.snapshot[@"late"], @2);
+  XCTAssertEqualObjects(request.snapshot[@"duplicate"], @2);
+  XCTAssertEqualObjects(request.snapshot[@"retainedObjects"], @2);
+}
+- (void)testAtomicReplyObservationKeepsItsObjectWhenDuplicateArrivesLater {
+  PointRequest *request = [[PointRequest alloc] initWithLock:[NSObject new] clock:^{ return 10.0; } deadline:20 stop:^{ return NO; }];
+  id original = [NSObject new]; [request receive:original error:nil];
+  id observed = nil;
+  NSDictionary *snapshot = [request snapshotWithElement:&observed];
+  [request receive:[NSObject new] error:nil];
+  XCTAssertTrue(observed == original);
+  XCTAssertEqualObjects(snapshot[@"duplicate"], @0);
+  XCTAssertNil(request.usableElement);
+  XCTAssertEqualObjects(request.snapshot[@"duplicate"], @1);
+}
+- (void)testBackgroundReplyIsSynchronizedAndRetainsActualObject {
+  PointRequest *request = [[PointRequest alloc] initWithLock:[NSObject new] clock:^{ return 10.0; } deadline:20 stop:^{ return NO; }];
+  id element = [NSObject new];
+  XCTestExpectation *done = [self expectationWithDescription:@"background reply"];
+  dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0), ^{
+    [request receive:element error:nil]; [done fulfill];
+  });
+  [self waitForExpectations:@[done] timeout:2];
+  XCTAssertTrue(request.usableElement == element);
+  XCTAssertEqualObjects(request.snapshot[@"replyReceived"], @1);
+}
+- (void)testExceptionProvenanceIsBoundedAndReportsRealName {
+  NSDictionary *details;
+  @try { [NSException raise:@"ControlledCallbackException" format:@"controlled"]; }
+  @catch (NSException *exception) { details = BoundedExceptionProvenance(exception); }
+  XCTAssertEqualObjects(details[@"exceptionName"], @"ControlledCallbackException");
+  XCTAssertEqualObjects(details[@"exceptionReason"], @"controlled");
+  XCTAssertLessThanOrEqual([details[@"frames"] count], 16u);
+  NSException *oversized = [NSException exceptionWithName:@"bounded" reason:[@"x" stringByPaddingToLength:1025 withString:@"x" startingAtIndex:0] userInfo:nil];
+  NSDictionary *limited = BoundedExceptionProvenance(oversized);
+  XCTAssertEqualObjects(limited[@"reasonBytes"], @1025);
+  XCTAssertNil(limited[@"exceptionReason"]);
+}
+- (void)testNativeEncodedCallbackFixtures {
+  for (NSString *mode in @[@"ordinary",@"pending"]) {
+    FakeClient *client = [FakeClient new]; client.callbackMode = mode;
+    NSArray *records = [self runClient:client];
+    for (NSDictionary *record in records) {
+      NSData *data = EncodeNativeRecord(record, 1024 * 1024, nil);
+      XCTAssertNotNil(data);
+      printf("JEV_CALLBACK_FIXTURE %s %s\n", mode.UTF8String, [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding].UTF8String);
+    }
+  }
+}
+
+- (void)testReferenceStudyUsesCallbackAndNeverDirectPointStub {
+  FakeClient *client = [FakeClient new];
+  [self runClient:client];
+  XCTAssertEqual(client.callbackCalls, 2u);
+  XCTAssertEqual(client.directPointCalls, 0u);
+}
 - (void)testRetainedObjectValidatedAfterReplacementWithoutRepair {
   FakeClient *client = [FakeClient new]; NSArray *records = [self runClient:client];
   XCTAssertEqual(client.validityArguments.count, 3u);
@@ -394,7 +601,7 @@
   NSArray *validity = [self operation:@"validity" records:records];
   XCTAssertEqualObjects(validity[1][@"details"][@"value"], @NO);
   XCTAssertEqualObjects(validity[2][@"details"][@"value"], @YES);
-  XCTAssertEqualObjects(records.lastObject[@"details"][@"localReferencesReleased"], @YES);
+  XCTAssertEqualObjects(records.lastObject[@"details"][@"localReferencesReleased"], @NO);
 }
 - (void)testRepeatedLocalParentStopsAtCycle {
   FakeClient *client = [FakeClient new];
@@ -434,7 +641,7 @@
 - (void)testStopBeforeAcquisitionStartsNoNativeMethod {
   FakeClient *client = [FakeClient new]; FakeDevice *device = [FakeDevice new]; device.client = client;
   NSArray *records = [self runDevice:device plan:@"reference-study" stop:^{ return YES; }];
-  XCTAssertTrue([self hasReason:@"admission-stopped" records:records]);
+  XCTAssertTrue([self hasReason:@"stop" records:records]);
   XCTAssertEqual(client.pointCalls, 0u);
   XCTAssertEqualObjects(records.lastObject[@"details"][@"appElementQueries"], @0);
 }
@@ -478,7 +685,7 @@
 - (void)testCancellationAfterRecreationRequestPreventsFurtherReads {
   FakeClient *client = [FakeClient new]; FakeDevice *device = [FakeDevice new]; device.client = client;
   NSMutableArray *records = [NSMutableArray array]; __block BOOL stopped = NO;
-  ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device
+  ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device pointSession:^{ ((FakeDevice *)device).sessionCalls++; return [(FakeDevice *)device client]; } pointProvenance:^NSDictionary *(id session, id client) { return ((FakeDevice *)device).missingProvenance ? nil : @{@"test":@YES}; }
     configuration:[self configurationForPlan:@"reference-study" requestId:@"cancel-test"]
     clock:^{ return 10.0; } stop:^{ return stopped; }
     readFixture:^{ return @{@"pid": @42, @"generation": @0, @"ordinary": @0, @"bundleIdentifier": @"dev.jev.research.native-owner-20261007-reference-fixture"}; }
@@ -488,7 +695,7 @@
     }];
   [study run];
   XCTAssertEqual(client.pointCalls, 1u); XCTAssertEqual(client.validityArguments.count, 1u);
-  XCTAssertTrue([self hasReason:@"admission-stopped" records:records]);
+  XCTAssertTrue([self hasReason:@"stop" records:records]);
 }
 - (void)testWrongParentGetterABIIsNotInvoked {
   FakeClient *client = [FakeClient new]; WrongParentSnapshot *snapshot = [WrongParentSnapshot new];
@@ -517,7 +724,7 @@
     __block NSTimeInterval now = 10;
     __block BOOL stopped = NO;
     __block NSUInteger activations = 0;
-    ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device
+    ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device pointSession:^{ ((FakeDevice *)device).sessionCalls++; return [(FakeDevice *)device client]; } pointProvenance:^NSDictionary *(id session, id client) { return ((FakeDevice *)device).missingProvenance ? nil : @{@"test":@YES}; }
       configuration:[self configurationForPlan:@"reference-study" requestId:@"activation-admission"]
       clock:^{ return now; } stop:^{ return stopped; }
       readFixture:^{ return @{@"pid": @42, @"generation": @0, @"ordinary": @0, @"bundleIdentifier": @"dev.jev.research.native-owner-20261007-reference-fixture"}; }
@@ -533,7 +740,7 @@
     XCTAssertEqual(activations, 0u, @"No activation after %@ during emission", expire.boolValue ? @"expiry" : @"stop");
     XCTAssertEqual(client.pointCalls, 0u);
     XCTAssertEqualObjects(records.lastObject[@"details"][@"appElementQueries"], @0);
-    XCTAssertTrue([self hasReason:@"admission-stopped" records:records]);
+    XCTAssertTrue([self hasReason:expire.boolValue ? @"deadline" : @"stop" records:records]);
   }
 }
 - (void)testExpiryOrStopDuringSignaturePreparationStartsNoNativeQuery {
@@ -544,7 +751,7 @@
     __block NSTimeInterval now = 10;
     __block BOOL stopped = NO;
     client.duringPreparation = ^{ if (expire.boolValue) now = 20; else stopped = YES; };
-    ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device
+    ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device pointSession:^{ ((FakeDevice *)device).sessionCalls++; return [(FakeDevice *)device client]; } pointProvenance:^NSDictionary *(id session, id client) { return ((FakeDevice *)device).missingProvenance ? nil : @{@"test":@YES}; }
       configuration:[self configurationForPlan:@"reference-study" requestId:@"query-admission"]
       clock:^{ return now; } stop:^{ return stopped; }
       readFixture:^{ return @{@"pid": @42, @"generation": @0, @"ordinary": @0, @"bundleIdentifier": @"dev.jev.research.native-owner-20261007-reference-fixture"}; }
@@ -556,7 +763,7 @@
     XCTAssertEqual(client.validityArguments.count, 0u);
     XCTAssertEqualObjects(records.lastObject[@"details"][@"appElementQueries"], @0);
     XCTAssertEqualObjects(records.lastObject[@"details"][@"localMethodsReturned"], @YES);
-    XCTAssertTrue([self hasReason:@"admission-stopped" records:records]);
+    XCTAssertTrue([self hasReason:expire.boolValue ? @"deadline" : @"stop" records:records]);
   }
 }
 @end

@@ -1,0 +1,18 @@
+test_point_sends_cannot_exceed_reported_app_queries (test_study.Streams.test_point_sends_cannot_exceed_reported_app_queries) ... FAIL
+
+======================================================================
+FAIL: test_point_sends_cannot_exceed_reported_app_queries (test_study.Streams.test_point_sends_cannot_exceed_reported_app_queries)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 610, in test_point_sends_cannot_exceed_reported_app_queries
+    self.assertEqual(result.reason, "CALLBACK_ACCOUNTING_INVALID")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NATIVE_SETTLEMENT_UNCONFIRMED' != 'CALLBACK_ACCOUNTING_INVALID'
+- NATIVE_SETTLEMENT_UNCONFIRMED
++ CALLBACK_ACCOUNTING_INVALID
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.040s
+
+FAILED (failures=1)

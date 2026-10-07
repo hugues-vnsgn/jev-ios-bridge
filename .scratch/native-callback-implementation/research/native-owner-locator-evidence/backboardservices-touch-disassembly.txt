@@ -1,0 +1,998 @@
+-[BKSTouchDeliveryObservationService _connectToTouchDeliveryService]:
+0x000049668   sub      sp, sp, #0x90        
+0x00004966C   stp      x24, x23, [sp, #0x50] 
+0x000049670   stp      x22, x21, [sp, #0x60] 
+0x000049674   stp      x20, x19, [sp, #0x70] 
+0x000049678   stp      x29, x30, [sp, #0x80] 
+0x00004967C   add      x29, sp, #0x80       
+0x000049680   mov      x21, x1              
+0x000049684   mov      x20, x0              
+0x000049688   adrp     x8, 103              ; 0xb0000
+0x00004968C   ldr      x8, [x8, #0xa68]     ; ___stack_chk_guard@got
+0x000049690   ldr      x8, [x8]             
+0x000049694   stur     x8, [x29, #-0x38]    
+0x000049698   adrp     x8, 103              ; 0xb0000
+0x00004969C   ldr      x0, [x8, #0x248]     ; _OBJC_CLASS_$_BKSHIDServiceConnectionFactory@got
+0x0000496A0   bl       "+[BKSHIDServiceConnectionFactory sharedInstance]" 
+0x0000496A4   mov      x29, x29             
+0x0000496A8   bl       _objc_retainAutoreleasedReturnValue 
+0x0000496AC   mov      x22, x0              
+0x0000496B0   adrp     x2, 112              ; 0xb9000
+0x0000496B4   add      x2, x2, #0x6b0       ; @"BKTouchDeliveryObservation"
+0x0000496B8   bl       "_objc_msgSend$clientConnectionForServiceWithName:" 
+0x0000496BC   mov      x29, x29             
+0x0000496C0   bl       _objc_retainAutoreleasedReturnValue 
+0x0000496C4   mov      x19, x0              
+0x0000496C8   bl       _objc_release_x22    
+0x0000496CC   cbz      x19, 0x497c0         
+0x0000496D0   bl       _objc_retain_x19     
+0x0000496D4   ldr      x8, [x20, #0x20]     
+0x0000496D8   str      x19, [x20, #0x20]    
+0x0000496DC   bl       _objc_release_x8     
+0x0000496E0   adrp     x8, 103              ; 0xb0000
+0x0000496E4   ldr      x8, [x8, #0xa40]     ; __NSConcreteStackBlock@got
+0x0000496E8   ldr      x0, [x20, #0x20]     
+0x0000496EC   str      x8, [sp, #0x8]       
+0x0000496F0   adrp     x8, 61               ; 0x86000
+0x0000496F4   ldr      d0, [x8, #0x3c0]     
+0x0000496F8   adrp     x8, 1                ; 0x4a000
+0x0000496FC   add      x8, x8, #0x388       ; ___68-[BKSTouchDeliveryObservationService _connectToTouchDeliveryService]_block_invoke
+0x000049700   str      d0, [sp, #0x10]      
+0x000049704   adrp     x9, 106              ; 0xb3000
+0x000049708   add      x9, x9, #0x560       
+0x00004970C   stp      x8, x9, [sp, #0x18]  
+0x000049710   str      x20, [sp, #0x28]     
+0x000049714   add      x2, sp, #0x8         
+0x000049718   bl       "_objc_msgSend$configure:" 
+0x00004971C   bl       _BKLogTouchDeliveryObserver 
+0x000049720   mov      x29, x29             
+0x000049724   bl       _objc_retainAutoreleasedReturnValue 
+0x000049728   mov      x22, x0              
+0x00004972C   mov      w1, #0x2             
+0x000049730   bl       _os_log_type_enabled 
+0x000049734   cbnz     w0, 0x49814          
+0x000049738   bl       _objc_release_x22    
+0x00004973C   mov      x0, x19              
+0x000049740   bl       _objc_msgSend$activate 
+0x000049744   bl       _BKLogTouchDeliveryObserver 
+0x000049748   mov      x29, x29             
+0x00004974C   bl       _objc_retainAutoreleasedReturnValue 
+0x000049750   mov      x22, x0              
+0x000049754   mov      w1, #0x2             
+0x000049758   bl       _os_log_type_enabled 
+0x00004975C   cbnz     w0, 0x49840          
+0x000049760   bl       _objc_release_x22    
+0x000049764   mov      x0, x19              
+0x000049768   bl       _objc_msgSend$remoteTarget 
+0x00004976C   mov      x29, x29             
+0x000049770   bl       _objc_retainAutoreleasedReturnValue 
+0x000049774   mov      x22, x0              
+0x000049778   bl       _objc_release_x22    
+0x00004977C   cbnz     x22, 0x497e0         
+0x000049780   adrp     x8, 103              ; 0xb0000
+0x000049784   ldr      x0, [x8, #0x6a8]     ; _OBJC_CLASS_$_NSAssertionHandler@got
+0x000049788   bl       _objc_msgSend$currentHandler 
+0x00004978C   mov      x29, x29             
+0x000049790   bl       _objc_retainAutoreleasedReturnValue 
+0x000049794   mov      x22, x0              
+0x000049798   adrp     x4, 112              ; 0xb9000
+0x00004979C   add      x4, x4, #0x710       ; @"BKSTouchDeliveryObservationService.m"
+0x0000497A0   adrp     x6, 106              ; 0xb3000
+0x0000497A4   add      x6, x6, #0xbd0       ; @"we must have a remote target"
+0x0000497A8   mov      x2, x21              
+0x0000497AC   mov      x3, x20              
+0x0000497B0   mov      w5, #0xf6            
+0x0000497B4   bl       "_objc_msgSend$handleFailureInMethod:object:file:lineNumber:description:" 
+0x0000497B8   bl       _objc_release_x22    
+0x0000497BC   b        0x497e0              
+0x0000497C0   bl       _BKLogTouchDeliveryObserver 
+0x0000497C4   mov      x29, x29             
+0x0000497C8   bl       _objc_retainAutoreleasedReturnValue 
+0x0000497CC   mov      x20, x0              
+0x0000497D0   mov      w1, #0x10            
+0x0000497D4   bl       _os_log_type_enabled 
+0x0000497D8   cbnz     w0, 0x49890          
+0x0000497DC   bl       _objc_release_x20    
+0x0000497E0   bl       _objc_release_x19    
+0x0000497E4   ldur     x8, [x29, #-0x38]    
+0x0000497E8   adrp     x9, 103              ; 0xb0000
+0x0000497EC   ldr      x9, [x9, #0xa68]     ; ___stack_chk_guard@got
+0x0000497F0   ldr      x9, [x9]             
+0x0000497F4   cmp      x9, x8               
+0x0000497F8   b.ne     0x498bc              
+0x0000497FC   ldp      x29, x30, [sp, #0x80] 
+0x000049800   ldp      x20, x19, [sp, #0x70] 
+0x000049804   ldp      x22, x21, [sp, #0x60] 
+0x000049808   ldp      x24, x23, [sp, #0x50] 
+0x00004980C   add      sp, sp, #0x90        
+0x000049810   ret                           
+0x000049814   strh     wzr, [sp, #0x30]     
+0x000049818   adrp     x0, -73              ; 0x0
+0x00004981C   add      x0, x0, #0x0         
+0x000049820   adrp     x3, 73               ; 0x92000
+0x000049824   add      x3, x3, #0x389       
+0x000049828   add      x4, sp, #0x30        
+0x00004982C   mov      x1, x22              
+0x000049830   mov      w2, #0x2             
+0x000049834   mov      w5, #0x2             
+0x000049838   bl       __os_log_debug_impl  
+0x00004983C   b        0x49738              
+0x000049840   mov      x0, x19              
+0x000049844   bl       _objc_msgSend$remoteTarget 
+0x000049848   mov      x29, x29             
+0x00004984C   bl       _objc_retainAutoreleasedReturnValue 
+0x000049850   mov      x23, x0              
+0x000049854   adrp     x8, 61               ; 0x86000
+0x000049858   ldr      d0, [x8, #0x3d0]     
+0x00004985C   str      s0, [sp, #0x30]      
+0x000049860   stur     x0, [sp, #0x34]      
+0x000049864   adrp     x0, -73              ; 0x0
+0x000049868   add      x0, x0, #0x0         
+0x00004986C   adrp     x3, 72               ; 0x91000
+0x000049870   add      x3, x3, #0xf82       
+0x000049874   add      x4, sp, #0x30        
+0x000049878   mov      x1, x22              
+0x00004987C   mov      w2, #0x2             
+0x000049880   mov      w5, #0xc             
+0x000049884   bl       __os_log_debug_impl  
+0x000049888   bl       _objc_release_x23    
+0x00004988C   b        0x49760              
+0x000049890   strh     wzr, [sp, #0x30]     
+0x000049894   adrp     x0, -73              ; 0x0
+0x000049898   add      x0, x0, #0x0         
+0x00004989C   adrp     x3, 72               ; 0x91000
+0x0000498A0   add      x3, x3, #0xf34       
+0x0000498A4   add      x4, sp, #0x30        
+0x0000498A8   mov      x1, x20              
+0x0000498AC   mov      w2, #0x10            
+0x0000498B0   mov      w5, #0x2             
+0x0000498B4   bl       __os_log_error_impl  
+0x0000498B8   b        0x497dc              
+0x0000498BC   bl       ___stack_chk_fail    
+-[BKSTouchDeliveryObservationService observeTouchEventDeliveryDidOccur:response:]:
+0x0000498C0   sub      sp, sp, #0x120       
+0x0000498C4   stp      x28, x27, [sp, #0xd0] 
+0x0000498C8   stp      x24, x23, [sp, #0xe0] 
+0x0000498CC   stp      x22, x21, [sp, #0xf0] 
+0x0000498D0   stp      x20, x19, [sp, #0x100] 
+0x0000498D4   stp      x29, x30, [sp, #0x110] 
+0x0000498D8   add      x29, sp, #0x110      
+0x0000498DC   mov      x20, x3              
+0x0000498E0   mov      x19, x2              
+0x0000498E4   mov      x21, x0              
+0x0000498E8   adrp     x8, 103              ; 0xb0000
+0x0000498EC   ldr      x8, [x8, #0xa68]     ; ___stack_chk_guard@got
+0x0000498F0   ldr      x8, [x8]             
+0x0000498F4   stur     x8, [x29, #-0x48]    
+0x0000498F8   bl       _objc_retain_x19     
+0x0000498FC   bl       _objc_retain_x20     
+0x000049900   movi.2d  v0, #0000000000000000 
+0x000049904   stp      q0, q0, [sp]         
+0x000049908   stp      q0, q0, [sp, #0x20]  
+0x00004990C   mov      x2, sp               
+0x000049910   add      x3, sp, #0x48        
+0x000049914   mov      x0, x19              
+0x000049918   mov      w4, #0x10            
+0x00004991C   bl       "_objc_msgSend$countByEnumeratingWithState:objects:count:" 
+0x000049920   cbz      x0, 0x49984          
+0x000049924   mov      x22, x0              
+0x000049928   ldr      x8, [sp, #0x10]      
+0x00004992C   ldr      x23, [x8]            
+0x000049930   mov      x24, #0x0            
+0x000049934   ldr      x8, [sp, #0x10]      
+0x000049938   ldr      x8, [x8]             
+0x00004993C   cmp      x8, x23              
+0x000049940   b.eq     0x4994c              
+0x000049944   mov      x0, x19              
+0x000049948   bl       _objc_enumerationMutation 
+0x00004994C   ldr      x8, [sp, #0x8]       
+0x000049950   ldr      x2, [x8, x24, lsl #3] 
+0x000049954   mov      x0, x21              
+0x000049958   bl       "_objc_msgSend$_processTouchEventDeliveryUpdate:" 
+0x00004995C   add      x24, x24, #0x1       
+0x000049960   cmp      x22, x24             
+0x000049964   b.ne     0x49934              
+0x000049968   mov      x2, sp               
+0x00004996C   add      x3, sp, #0x48        
+0x000049970   mov      x0, x19              
+0x000049974   mov      w4, #0x10            
+0x000049978   bl       "_objc_msgSend$countByEnumeratingWithState:objects:count:" 
+0x00004997C   mov      x22, x0              
+0x000049980   cbnz     x0, 0x49930          
+0x000049984   ldr      x8, [x20, #0x10]     
+0x000049988   mov      x0, x20              
+0x00004998C   mov      x1, #0x0             
+0x000049990   blr      x8                   
+0x000049994   bl       _objc_release_x20    
+0x000049998   bl       _objc_release_x19    
+0x00004999C   ldur     x8, [x29, #-0x48]    
+0x0000499A0   adrp     x9, 103              ; 0xb0000
+0x0000499A4   ldr      x9, [x9, #0xa68]     ; ___stack_chk_guard@got
+0x0000499A8   ldr      x9, [x9]             
+0x0000499AC   cmp      x9, x8               
+0x0000499B0   b.ne     0x499d0              
+0x0000499B4   ldp      x29, x30, [sp, #0x110] 
+0x0000499B8   ldp      x20, x19, [sp, #0x100] 
+0x0000499BC   ldp      x22, x21, [sp, #0xf0] 
+0x0000499C0   ldp      x24, x23, [sp, #0xe0] 
+0x0000499C4   ldp      x28, x27, [sp, #0xd0] 
+0x0000499C8   add      sp, sp, #0x120       
+0x0000499CC   ret                           
+0x0000499D0   bl       ___stack_chk_fail    
+-[BKSTouchDeliveryObservationService _processTouchEventDeliveryUpdate:]:
+0x0000499D4   sub      sp, sp, #0xc0        
+0x0000499D8   stp      x26, x25, [sp, #0x70] 
+0x0000499DC   stp      x24, x23, [sp, #0x80] 
+0x0000499E0   stp      x22, x21, [sp, #0x90] 
+0x0000499E4   stp      x20, x19, [sp, #0xa0] 
+0x0000499E8   stp      x29, x30, [sp, #0xb0] 
+0x0000499EC   add      x29, sp, #0xb0       
+0x0000499F0   mov      x19, x2              
+0x0000499F4   mov      x20, x1              
+0x0000499F8   mov      x21, x0              
+0x0000499FC   adrp     x8, 103              ; 0xb0000
+0x000049A00   ldr      x8, [x8, #0xa68]     ; ___stack_chk_guard@got
+0x000049A04   ldr      x8, [x8]             
+0x000049A08   stur     x8, [x29, #-0x48]    
+0x000049A0C   bl       _objc_retain_x19     
+0x000049A10   bl       _BKLogTouchDeliveryObserver 
+0x000049A14   mov      x29, x29             
+0x000049A18   bl       _objc_retainAutoreleasedReturnValue 
+0x000049A1C   mov      x22, x0              
+0x000049A20   mov      w1, #0x2             
+0x000049A24   bl       _os_log_type_enabled 
+0x000049A28   cbnz     w0, 0x49b28          
+0x000049A2C   bl       _objc_release_x22    
+0x000049A30   mov      x0, x19              
+0x000049A34   bl       _objc_msgSend$touchIdentifier 
+0x000049A38   mov      x22, x0              
+0x000049A3C   mov      x0, x19              
+0x000049A40   bl       _objc_msgSend$pid    
+0x000049A44   mov      x23, x0              
+0x000049A48   mov      x0, x19              
+0x000049A4C   bl       _objc_msgSend$isDetached 
+0x000049A50   mov      x24, x0              
+0x000049A54   mov      x0, x19              
+0x000049A58   bl       _objc_msgSend$contextID 
+0x000049A5C   mov      x25, x0              
+0x000049A60   mov      x0, x19              
+0x000049A64   bl       _objc_msgSend$type   
+0x000049A68   cbz      x0, 0x49ad0          
+0x000049A6C   adrp     x8, 103              ; 0xb0000
+0x000049A70   ldr      x8, [x8, #0xa40]     ; __NSConcreteStackBlock@got
+0x000049A74   ldr      x26, [x21, #0x8]     
+0x000049A78   str      x8, [sp]             
+0x000049A7C   adrp     x8, 61               ; 0x86000
+0x000049A80   ldr      d0, [x8, #0x3c0]     
+0x000049A84   adrp     x8, 0                ; 0x49000
+0x000049A88   add      x8, x8, #0xcd8       ; ___71-[BKSTouchDeliveryObservationService _processTouchEventDeliveryUpdate:]_block_invoke
+0x000049A8C   str      d0, [sp, #0x8]       
+0x000049A90   adrp     x9, 105              ; 0xb2000
+0x000049A94   add      x9, x9, #0xb40       
+0x000049A98   stp      x8, x9, [sp, #0x10]  
+0x000049A9C   str      x21, [sp, #0x20]     
+0x000049AA0   stp      x0, x20, [sp, #0x30] 
+0x000049AA4   strb     w24, [sp, #0x4c]     
+0x000049AA8   stp      w22, w25, [sp, #0x40] 
+0x000049AAC   str      w23, [sp, #0x48]     
+0x000049AB0   bl       _objc_retain_x19     
+0x000049AB4   str      x19, [sp, #0x28]     
+0x000049AB8   mov      x1, sp               
+0x000049ABC   mov      x0, x26              
+0x000049AC0   bl       _dispatch_async      
+0x000049AC4   ldr      x8, [sp, #0x28]      
+0x000049AC8   bl       _objc_release_x8     
+0x000049ACC   b        0x49af0              
+0x000049AD0   bl       _BKLogTouchDeliveryObserver 
+0x000049AD4   mov      x29, x29             
+0x000049AD8   bl       _objc_retainAutoreleasedReturnValue 
+0x000049ADC   mov      x20, x0              
+0x000049AE0   mov      w1, #0x10            
+0x000049AE4   bl       _os_log_type_enabled 
+0x000049AE8   cbnz     w0, 0x49b60          
+0x000049AEC   bl       _objc_release_x20    
+0x000049AF0   bl       _objc_release_x19    
+0x000049AF4   ldur     x8, [x29, #-0x48]    
+0x000049AF8   adrp     x9, 103              ; 0xb0000
+0x000049AFC   ldr      x9, [x9, #0xa68]     ; ___stack_chk_guard@got
+0x000049B00   ldr      x9, [x9]             
+0x000049B04   cmp      x9, x8               
+0x000049B08   b.ne     0x49b98              
+0x000049B0C   ldp      x29, x30, [sp, #0xb0] 
+0x000049B10   ldp      x20, x19, [sp, #0xa0] 
+0x000049B14   ldp      x22, x21, [sp, #0x90] 
+0x000049B18   ldp      x24, x23, [sp, #0x80] 
+0x000049B1C   ldp      x26, x25, [sp, #0x70] 
+0x000049B20   add      sp, sp, #0xc0        
+0x000049B24   ret                           
+0x000049B28   adrp     x8, 61               ; 0x86000
+0x000049B2C   ldr      d0, [x8, #0x3d0]     
+0x000049B30   str      s0, [sp, #0x50]      
+0x000049B34   stur     x19, [sp, #0x54]     
+0x000049B38   adrp     x0, -73              ; 0x0
+0x000049B3C   add      x0, x0, #0x0         
+0x000049B40   adrp     x3, 74               ; 0x93000
+0x000049B44   add      x3, x3, #0x899       
+0x000049B48   add      x4, sp, #0x50        
+0x000049B4C   mov      x1, x22              
+0x000049B50   mov      w2, #0x2             
+0x000049B54   mov      w5, #0xc             
+0x000049B58   bl       __os_log_debug_impl  
+0x000049B5C   b        0x49a2c              
+0x000049B60   adrp     x8, 61               ; 0x86000
+0x000049B64   ldr      d0, [x8, #0x3d0]     
+0x000049B68   str      s0, [sp, #0x50]      
+0x000049B6C   stur     x19, [sp, #0x54]     
+0x000049B70   adrp     x0, -73              ; 0x0
+0x000049B74   add      x0, x0, #0x0         
+0x000049B78   adrp     x3, 74               ; 0x93000
+0x000049B7C   add      x3, x3, #0x8c8       
+0x000049B80   add      x4, sp, #0x50        
+0x000049B84   mov      x1, x20              
+0x000049B88   mov      w2, #0x10            
+0x000049B8C   mov      w5, #0xc             
+0x000049B90   bl       __os_log_error_impl  
+0x000049B94   b        0x49aec              
+0x000049B98   bl       ___stack_chk_fail    
+___71-[BKSTouchDeliveryObservationService _processTouchEventDeliveryUpdate:]_block_invoke:
+0x000049CD8   stp      x28, x27, [sp, #-0x60]! 
+0x000049CDC   stp      x26, x25, [sp, #0x10] 
+0x000049CE0   stp      x24, x23, [sp, #0x20] 
+0x000049CE4   stp      x22, x21, [sp, #0x30] 
+0x000049CE8   stp      x20, x19, [sp, #0x40] 
+0x000049CEC   stp      x29, x30, [sp, #0x50] 
+0x000049CF0   add      x29, sp, #0x50       
+0x000049CF4   sub      sp, sp, #0x270       
+0x000049CF8   mov      x19, x0              
+0x000049CFC   adrp     x8, 103              ; 0xb0000
+0x000049D00   ldr      x8, [x8, #0xa68]     ; ___stack_chk_guard@got
+0x000049D04   ldr      x8, [x8]             
+0x000049D08   stur     x8, [x29, #-0x68]    
+0x000049D0C   add      x8, sp, #0x110       
+0x000049D10   stp      xzr, x8, [sp, #0x110] 
+0x000049D14   adrp     x9, 61               ; 0x86000
+0x000049D18   ldr      d0, [x9, #0x410]     
+0x000049D1C   adrp     x9, 1                ; 0x4a000
+0x000049D20   add      x9, x9, #0x2f4       ; ___Block_byref_object_copy_.9190
+0x000049D24   adrp     x10, 1               ; 0x4a000
+0x000049D28   add      x10, x10, #0x304     ; ___Block_byref_object_dispose_.9191
+0x000049D2C   str      d0, [sp, #0x120]     
+0x000049D30   stp      x9, x10, [sp, #0x128] 
+0x000049D34   str      xzr, [sp, #0x138]    
+0x000049D38   add      x11, sp, #0xe0       
+0x000049D3C   stp      xzr, x11, [sp, #0xe0] 
+0x000049D40   str      d0, [sp, #0xf0]      
+0x000049D44   stp      x9, x10, [sp, #0xf8] 
+0x000049D48   str      xzr, [sp, #0x108]    
+0x000049D4C   ldr      x9, [x0, #0x20]      
+0x000049D50   ldr      x0, [x9, #0x10]      
+0x000049D54   adrp     x10, 103             ; 0xb0000
+0x000049D58   ldr      x10, [x10, #0xa40]   ; __NSConcreteStackBlock@got
+0x000049D5C   str      x10, [sp, #0xa0]     
+0x000049D60   adrp     x10, 61              ; 0x86000
+0x000049D64   ldr      d0, [x10, #0x3c0]    
+0x000049D68   str      d0, [sp, #0xa8]      
+0x000049D6C   adrp     x10, 1               ; 0x4a000
+0x000049D70   add      x10, x10, #0x30c     ; ___71-[BKSTouchDeliveryObservationService _processTouchEventDeliveryUpdate:]_block_invoke.79
+0x000049D74   adrp     x12, 105             ; 0xb2000
+0x000049D78   add      x12, x12, #0xb18     
+0x000049D7C   stp      x10, x12, [sp, #0xb0] 
+0x000049D80   ldr      w10, [x19, #0x40]    
+0x000049D84   str      w10, [sp, #0xd8]     
+0x000049D88   stp      x9, x8, [sp, #0xc0]  
+0x000049D8C   str      x11, [sp, #0xd0]     
+0x000049D90   add      x1, sp, #0xa0        
+0x000049D94   bl       _dispatch_sync       
+0x000049D98   movi.2d  v0, #0000000000000000 
+0x000049D9C   stp      q0, q0, [sp, #0x80]  
+0x000049DA0   stp      q0, q0, [sp, #0x60]  
+0x000049DA4   ldr      x8, [sp, #0x118]     
+0x000049DA8   ldr      x0, [x8, #0x28]      
+0x000049DAC   bl       _objc_msgSend$objectEnumerator 
+0x000049DB0   mov      x29, x29             
+0x000049DB4   bl       _objc_retainAutoreleasedReturnValue 
+0x000049DB8   mov      x20, x0              
+0x000049DBC   add      x2, sp, #0x60        
+0x000049DC0   sub      x3, x29, #0xe8       
+0x000049DC4   mov      w4, #0x10            
+0x000049DC8   bl       "_objc_msgSend$countByEnumeratingWithState:objects:count:" 
+0x000049DCC   mov      x21, x0              
+0x000049DD0   cbz      x0, 0x49fc8          
+0x000049DD4   ldr      x8, [sp, #0x70]      
+0x000049DD8   ldr      x24, [x8]            
+0x000049DDC   adrp     x23, 109             ; 0xb6000
+0x000049DE0   add      x23, x23, #0xbd0     ; @"Invalid parameter not satisfying: %@"
+0x000049DE4   adrp     x8, 61               ; 0x86000
+0x000049DE8   ldr      d0, [x8, #0x450]     
+0x000049DEC   str      q0, [sp, #0x10]      
+0x000049DF0   mov      x22, #0x0            
+0x000049DF4   adrp     x8, 134              ; 0xcf000
+0x000049DF8   ldr      x27, [x8, #0x688]    ; selector "touchDetachedForIdentifier:context:pid:"
+0x000049DFC   adrp     x8, 134              ; 0xcf000
+0x000049E00   ldr      x28, [x8, #0x6a0]    ; selector "touchUpOccuredForIdentifier:detached:context:pid:"
+0x000049E04   ldr      x8, [sp, #0x70]      
+0x000049E08   ldr      x8, [x8]             
+0x000049E0C   cmp      x8, x24              
+0x000049E10   b.eq     0x49e1c              
+0x000049E14   mov      x0, x20              
+0x000049E18   bl       _objc_enumerationMutation 
+0x000049E1C   ldr      x8, [x19, #0x30]     
+0x000049E20   cbz      x8, 0x49ec8          
+0x000049E24   ldr      x9, [sp, #0x68]      
+0x000049E28   ldr      x25, [x9, x22, lsl #3] 
+0x000049E2C   cmp      x8, #0x1             
+0x000049E30   b.eq     0x49e80              
+0x000049E34   cmp      x8, #0x2             
+0x000049E38   b.ne     0x49f0c              
+0x000049E3C   mov      x0, x25              
+0x000049E40   mov      x1, x27              
+0x000049E44   bl       _objc_opt_respondsToSelector 
+0x000049E48   tbz      w0, #0x0, 0x49f0c    
+0x000049E4C   bl       _BKLogTouchDeliveryObserver 
+0x000049E50   mov      x29, x29             
+0x000049E54   bl       _objc_retainAutoreleasedReturnValue 
+0x000049E58   mov      x26, x0              
+0x000049E5C   mov      w1, #0x2             
+0x000049E60   bl       _os_log_type_enabled 
+0x000049E64   cbnz     w0, 0x49f64          
+0x000049E68   bl       _objc_release_x26    
+0x000049E6C   ldp      w2, w3, [x19, #0x40] 
+0x000049E70   ldr      w4, [x19, #0x48]     
+0x000049E74   mov      x0, x25              
+0x000049E78   bl       "_objc_msgSend$touchDetachedForIdentifier:context:pid:" 
+0x000049E7C   b        0x49f0c              
+0x000049E80   mov      x0, x25              
+0x000049E84   mov      x1, x28              
+0x000049E88   bl       _objc_opt_respondsToSelector 
+0x000049E8C   tbz      w0, #0x0, 0x49f0c    
+0x000049E90   bl       _BKLogTouchDeliveryObserver 
+0x000049E94   mov      x29, x29             
+0x000049E98   bl       _objc_retainAutoreleasedReturnValue 
+0x000049E9C   mov      x26, x0              
+0x000049EA0   mov      w1, #0x2             
+0x000049EA4   bl       _os_log_type_enabled 
+0x000049EA8   cbnz     w0, 0x49f1c          
+0x000049EAC   bl       _objc_release_x26    
+0x000049EB0   ldrb     w3, [x19, #0x4c]     
+0x000049EB4   ldp      w2, w4, [x19, #0x40] 
+0x000049EB8   ldr      w5, [x19, #0x48]     
+0x000049EBC   mov      x0, x25              
+0x000049EC0   bl       "_objc_msgSend$touchUpOccuredForIdentifier:detached:context:pid:" 
+0x000049EC4   b        0x49f0c              
+0x000049EC8   adrp     x8, 103              ; 0xb0000
+0x000049ECC   ldr      x0, [x8, #0x6a8]     ; _OBJC_CLASS_$_NSAssertionHandler@got
+0x000049ED0   bl       _objc_msgSend$currentHandler 
+0x000049ED4   mov      x29, x29             
+0x000049ED8   bl       _objc_retainAutoreleasedReturnValue 
+0x000049EDC   mov      x25, x0              
+0x000049EE0   ldr      x2, [x19, #0x38]     
+0x000049EE4   ldr      x3, [x19, #0x20]     
+0x000049EE8   adrp     x8, 112              ; 0xb9000
+0x000049EEC   add      x8, x8, #0x730       ; @"NO"
+0x000049EF0   str      x8, [sp]             
+0x000049EF4   adrp     x4, 112              ; 0xb9000
+0x000049EF8   add      x4, x4, #0x710       ; @"BKSTouchDeliveryObservationService.m"
+0x000049EFC   mov      w5, #0x125           
+0x000049F00   mov      x6, x23              
+0x000049F04   bl       "_objc_msgSend$handleFailureInMethod:object:file:lineNumber:description:" 
+0x000049F08   bl       _objc_release_x25    
+0x000049F0C   add      x22, x22, #0x1       
+0x000049F10   cmp      x21, x22             
+0x000049F14   b.ne     0x49e04              
+0x000049F18   b        0x49fac              
+0x000049F1C   ldr      w8, [x19, #0x40]     
+0x000049F20   ldr      q0, [sp, #0x10]      
+0x000049F24   stur     s0, [x29, #-0x100]   
+0x000049F28   stur     w8, [x29, #-0xfc]    
+0x000049F2C   mov      w8, #0x842           
+0x000049F30   sturh    w8, [x29, #-0xf8]    
+0x000049F34   sub      x8, x29, #0x100      
+0x000049F38   stur     x25, [x8, #0xa]      
+0x000049F3C   sub      x4, x29, #0x100      
+0x000049F40   adrp     x0, -73              ; 0x0
+0x000049F44   add      x0, x0, #0x0         
+0x000049F48   mov      x1, x26              
+0x000049F4C   mov      w2, #0x2             
+0x000049F50   adrp     x3, 74               ; 0x93000
+0x000049F54   add      x3, x3, #0x8ef       
+0x000049F58   mov      w5, #0x12            
+0x000049F5C   bl       __os_log_debug_impl  
+0x000049F60   b        0x49eac              
+0x000049F64   ldr      w8, [x19, #0x40]     
+0x000049F68   ldr      q0, [sp, #0x10]      
+0x000049F6C   stur     s0, [x29, #-0x100]   
+0x000049F70   stur     w8, [x29, #-0xfc]    
+0x000049F74   mov      w8, #0x842           
+0x000049F78   sturh    w8, [x29, #-0xf8]    
+0x000049F7C   sub      x8, x29, #0x100      
+0x000049F80   stur     x25, [x8, #0xa]      
+0x000049F84   sub      x4, x29, #0x100      
+0x000049F88   adrp     x0, -73              ; 0x0
+0x000049F8C   add      x0, x0, #0x0         
+0x000049F90   mov      x1, x26              
+0x000049F94   mov      w2, #0x2             
+0x000049F98   adrp     x3, 74               ; 0x93000
+0x000049F9C   add      x3, x3, #0x913       
+0x000049FA0   mov      w5, #0x12            
+0x000049FA4   bl       __os_log_debug_impl  
+0x000049FA8   b        0x49e68              
+0x000049FAC   add      x2, sp, #0x60        
+0x000049FB0   sub      x3, x29, #0xe8       
+0x000049FB4   mov      x0, x20              
+0x000049FB8   mov      w4, #0x10            
+0x000049FBC   bl       "_objc_msgSend$countByEnumeratingWithState:objects:count:" 
+0x000049FC0   mov      x21, x0              
+0x000049FC4   cbnz     x0, 0x49df0          
+0x000049FC8   bl       _objc_release_x20    
+0x000049FCC   ldr      x8, [sp, #0xe8]      
+0x000049FD0   ldr      x0, [x8, #0x28]      
+0x000049FD4   bl       _objc_msgSend$count  
+0x000049FD8   cbz      x0, 0x4a248          
+0x000049FDC   ldr      x8, [x19, #0x28]     
+0x000049FE0   str      x8, [sp, #0x8]       
+0x000049FE4   bl       _objc_retain_x8      
+0x000049FE8   ldr      w8, [x19, #0x40]     
+0x000049FEC   cbz      w8, 0x4a014          
+0x000049FF0   ldr      x0, [x19, #0x28]     
+0x000049FF4   bl       _objc_msgSend$copy   
+0x000049FF8   mov      x20, x0              
+0x000049FFC   ldr      x8, [sp, #0x8]       
+0x00004A000   bl       _objc_release_x8     
+0x00004A004   mov      x0, x20              
+0x00004A008   mov      w2, #0x0             
+0x00004A00C   bl       "_objc_msgSend$setTouchIdentifier:" 
+0x00004A010   str      x20, [sp, #0x8]      
+0x00004A014   movi.2d  v0, #0000000000000000 
+0x00004A018   stp      q0, q0, [sp, #0x40]  
+0x00004A01C   stp      q0, q0, [sp, #0x20]  
+0x00004A020   ldr      x8, [sp, #0xe8]      
+0x00004A024   ldr      x0, [x8, #0x28]      
+0x00004A028   bl       _objc_msgSend$objectEnumerator 
+0x00004A02C   mov      x29, x29             
+0x00004A030   bl       _objc_retainAutoreleasedReturnValue 
+0x00004A034   mov      x20, x0              
+0x00004A038   add      x2, sp, #0x20        
+0x00004A03C   add      x3, sp, #0x140       
+0x00004A040   mov      w4, #0x10            
+0x00004A044   bl       "_objc_msgSend$countByEnumeratingWithState:objects:count:" 
+0x00004A048   mov      x21, x0              
+0x00004A04C   cbz      x0, 0x4a23c          
+0x00004A050   ldr      x8, [sp, #0x30]      
+0x00004A054   ldr      x22, [x8]            
+0x00004A058   adrp     x23, 108             ; 0xb6000
+0x00004A05C   add      x23, x23, #0xbd0     ; @"Invalid parameter not satisfying: %@"
+0x00004A060   adrp     x8, 60               ; 0x86000
+0x00004A064   ldr      d0, [x8, #0x3d0]     
+0x00004A068   str      q0, [sp, #0x10]      
+0x00004A06C   mov      x24, #0x0            
+0x00004A070   adrp     x8, 133              ; 0xcf000
+0x00004A074   ldr      x27, [x8, #0x688]    ; selector "touchDetachedForIdentifier:context:pid:"
+0x00004A078   adrp     x8, 133              ; 0xcf000
+0x00004A07C   ldr      x28, [x8, #0x6a0]    ; selector "touchUpOccuredForIdentifier:detached:context:pid:"
+0x00004A080   ldr      x8, [sp, #0x30]      
+0x00004A084   ldr      x8, [x8]             
+0x00004A088   cmp      x8, x22              
+0x00004A08C   b.eq     0x4a098              
+0x00004A090   mov      x0, x20              
+0x00004A094   bl       _objc_enumerationMutation 
+0x00004A098   ldr      x8, [sp, #0x28]      
+0x00004A09C   ldr      x25, [x8, x24, lsl #3] 
+0x00004A0A0   ldr      x8, [sp, #0x118]     
+0x00004A0A4   ldr      x0, [x8, #0x28]      
+0x00004A0A8   mov      x2, x25              
+0x00004A0AC   bl       "_objc_msgSend$containsObject:" 
+0x00004A0B0   tbz      w0, #0x0, 0x4a0c4    
+0x00004A0B4   add      x24, x24, #0x1       
+0x00004A0B8   cmp      x21, x24             
+0x00004A0BC   b.ne     0x4a080              
+0x00004A0C0   b        0x4a220              
+0x00004A0C4   ldr      x8, [x19, #0x30]     
+0x00004A0C8   cbz      x8, 0x4a168          
+0x00004A0CC   cmp      x8, #0x1             
+0x00004A0D0   b.eq     0x4a120              
+0x00004A0D4   cmp      x8, #0x2             
+0x00004A0D8   b.ne     0x4a0b4              
+0x00004A0DC   mov      x0, x25              
+0x00004A0E0   mov      x1, x27              
+0x00004A0E4   bl       _objc_opt_respondsToSelector 
+0x00004A0E8   tbz      w0, #0x0, 0x4a0b4    
+0x00004A0EC   bl       _BKLogTouchDeliveryObserver 
+0x00004A0F0   mov      x29, x29             
+0x00004A0F4   bl       _objc_retainAutoreleasedReturnValue 
+0x00004A0F8   mov      x26, x0              
+0x00004A0FC   mov      w1, #0x2             
+0x00004A100   bl       _os_log_type_enabled 
+0x00004A104   cbnz     w0, 0x4a1e8          
+0x00004A108   bl       _objc_release_x26    
+0x00004A10C   ldp      w3, w4, [x19, #0x44] 
+0x00004A110   mov      x0, x25              
+0x00004A114   mov      w2, #0x0             
+0x00004A118   bl       "_objc_msgSend$touchDetachedForIdentifier:context:pid:" 
+0x00004A11C   b        0x4a0b4              
+0x00004A120   mov      x0, x25              
+0x00004A124   mov      x1, x28              
+0x00004A128   bl       _objc_opt_respondsToSelector 
+0x00004A12C   tbz      w0, #0x0, 0x4a0b4    
+0x00004A130   bl       _BKLogTouchDeliveryObserver 
+0x00004A134   mov      x29, x29             
+0x00004A138   bl       _objc_retainAutoreleasedReturnValue 
+0x00004A13C   mov      x26, x0              
+0x00004A140   mov      w1, #0x2             
+0x00004A144   bl       _os_log_type_enabled 
+0x00004A148   cbnz     w0, 0x4a1b0          
+0x00004A14C   bl       _objc_release_x26    
+0x00004A150   ldrb     w3, [x19, #0x4c]     
+0x00004A154   ldp      w4, w5, [x19, #0x44] 
+0x00004A158   mov      x0, x25              
+0x00004A15C   mov      w2, #0x0             
+0x00004A160   bl       "_objc_msgSend$touchUpOccuredForIdentifier:detached:context:pid:" 
+0x00004A164   b        0x4a0b4              
+0x00004A168   adrp     x8, 102              ; 0xb0000
+0x00004A16C   ldr      x0, [x8, #0x6a8]     ; _OBJC_CLASS_$_NSAssertionHandler@got
+0x00004A170   bl       _objc_msgSend$currentHandler 
+0x00004A174   mov      x29, x29             
+0x00004A178   bl       _objc_retainAutoreleasedReturnValue 
+0x00004A17C   mov      x25, x0              
+0x00004A180   ldr      x2, [x19, #0x38]     
+0x00004A184   ldr      x3, [x19, #0x20]     
+0x00004A188   adrp     x8, 111              ; 0xb9000
+0x00004A18C   add      x8, x8, #0x730       ; @"NO"
+0x00004A190   str      x8, [sp]             
+0x00004A194   adrp     x4, 111              ; 0xb9000
+0x00004A198   add      x4, x4, #0x710       ; @"BKSTouchDeliveryObservationService.m"
+0x00004A19C   mov      w5, #0x144           
+0x00004A1A0   mov      x6, x23              
+0x00004A1A4   bl       "_objc_msgSend$handleFailureInMethod:object:file:lineNumber:description:" 
+0x00004A1A8   bl       _objc_release_x25    
+0x00004A1AC   b        0x4a0b4              
+0x00004A1B0   ldr      q0, [sp, #0x10]      
+0x00004A1B4   stur     s0, [x29, #-0x100]   
+0x00004A1B8   sub      x8, x29, #0x100      
+0x00004A1BC   stur     x25, [x8, #0x4]      
+0x00004A1C0   sub      x4, x29, #0x100      
+0x00004A1C4   adrp     x0, -74              ; 0x0
+0x00004A1C8   add      x0, x0, #0x0         
+0x00004A1CC   mov      x1, x26              
+0x00004A1D0   mov      w2, #0x2             
+0x00004A1D4   adrp     x3, 73               ; 0x93000
+0x00004A1D8   add      x3, x3, #0x937       
+0x00004A1DC   mov      w5, #0xc             
+0x00004A1E0   bl       __os_log_debug_impl  
+0x00004A1E4   b        0x4a14c              
+0x00004A1E8   ldr      q0, [sp, #0x10]      
+0x00004A1EC   stur     s0, [x29, #-0x100]   
+0x00004A1F0   sub      x8, x29, #0x100      
+0x00004A1F4   stur     x25, [x8, #0x4]      
+0x00004A1F8   sub      x4, x29, #0x100      
+0x00004A1FC   adrp     x0, -74              ; 0x0
+0x00004A200   add      x0, x0, #0x0         
+0x00004A204   mov      x1, x26              
+0x00004A208   mov      w2, #0x2             
+0x00004A20C   adrp     x3, 73               ; 0x93000
+0x00004A210   add      x3, x3, #0x950       
+0x00004A214   mov      w5, #0xc             
+0x00004A218   bl       __os_log_debug_impl  
+0x00004A21C   b        0x4a108              
+0x00004A220   add      x2, sp, #0x20        
+0x00004A224   add      x3, sp, #0x140       
+0x00004A228   mov      x0, x20              
+0x00004A22C   mov      w4, #0x10            
+0x00004A230   bl       "_objc_msgSend$countByEnumeratingWithState:objects:count:" 
+0x00004A234   mov      x21, x0              
+0x00004A238   cbnz     x0, 0x4a06c          
+0x00004A23C   bl       _objc_release_x20    
+0x00004A240   ldr      x8, [sp, #0x8]       
+0x00004A244   bl       _objc_release_x8     
+0x00004A248   add      x0, sp, #0xe0        
+0x00004A24C   mov      w1, #0x8             
+0x00004A250   bl       __Block_object_dispose 
+0x00004A254   ldr      x8, [sp, #0x108]     
+0x00004A258   bl       _objc_release_x8     
+0x00004A25C   add      x0, sp, #0x110       
+0x00004A260   mov      w1, #0x8             
+0x00004A264   bl       __Block_object_dispose 
+0x00004A268   ldr      x8, [sp, #0x138]     
+0x00004A26C   bl       _objc_release_x8     
+0x00004A270   ldur     x8, [x29, #-0x68]    
+0x00004A274   adrp     x9, 102              ; 0xb0000
+0x00004A278   ldr      x9, [x9, #0xa68]     ; ___stack_chk_guard@got
+0x00004A27C   ldr      x9, [x9]             
+0x00004A280   cmp      x9, x8               
+0x00004A284   b.ne     0x4a2a8              
+0x00004A288   add      sp, sp, #0x270       
+0x00004A28C   ldp      x29, x30, [sp, #0x50] 
+0x00004A290   ldp      x20, x19, [sp, #0x40] 
+0x00004A294   ldp      x22, x21, [sp, #0x30] 
+0x00004A298   ldp      x24, x23, [sp, #0x20] 
+0x00004A29C   ldp      x26, x25, [sp, #0x10] 
+0x00004A2A0   ldp      x28, x27, [sp], #0x60 
+0x00004A2A4   ret                           
+0x00004A2A8   bl       ___stack_chk_fail    
+0x00004A2AC   b        0x4a2d0              
+0x00004A2B0   b        0x4a2d0              
+0x00004A2B4   b        0x4a2d0              
+0x00004A2B8   b        0x4a2d0              
+0x00004A2BC   b        0x4a2d0              
+0x00004A2C0   b        0x4a2d0              
+0x00004A2C4   mov      x19, x0              
+0x00004A2C8   b        0x4a2ec              
+0x00004A2CC   b        0x4a2d0              
+0x00004A2D0   mov      x19, x0              
+0x00004A2D4   add      x0, sp, #0xe0        
+0x00004A2D8   mov      w1, #0x8             
+0x00004A2DC   bl       __Block_object_dispose 
+0x00004A2E0   add      x0, sp, #0x110       
+0x00004A2E4   mov      w1, #0x8             
+0x00004A2E8   bl       __Block_object_dispose 
+0x00004A2EC   mov      x0, x19              
+0x00004A2F0   bl       __Unwind_Resume      
+___71-[BKSTouchDeliveryObservationService _processTouchEventDeliveryUpdate:]_block_invoke.79:
+0x00004A30C   stp      x20, x19, [sp, #-0x20]! 
+0x00004A310   stp      x29, x30, [sp, #0x10] 
+0x00004A314   add      x29, sp, #0x10       
+0x00004A318   mov      x19, x0              
+0x00004A31C   ldr      w2, [x0, #0x38]      
+0x00004A320   cbz      w2, 0x4a360          
+0x00004A324   ldr      x0, [x19, #0x20]     
+0x00004A328   bl       "_objc_msgSend$_queue_observersForTouchIdentifier:" 
+0x00004A32C   mov      x29, x29             
+0x00004A330   bl       _objc_retainAutoreleasedReturnValue 
+0x00004A334   mov      x20, x0              
+0x00004A338   bl       _objc_msgSend$copy   
+0x00004A33C   ldr      x8, [x19, #0x28]     
+0x00004A340   ldr      x8, [x8, #0x8]       
+0x00004A344   ldr      x9, [x8, #0x28]      
+0x00004A348   str      x0, [x8, #0x28]      
+0x00004A34C   bl       _objc_release_x9     
+0x00004A350   bl       _objc_release_x20    
+0x00004A354   ldr      x0, [x19, #0x20]     
+0x00004A358   ldr      w2, [x19, #0x38]     
+0x00004A35C   bl       "_objc_msgSend$_queue_removeObserversForTouchIdentifier:" 
+0x00004A360   ldr      x8, [x19, #0x20]     
+0x00004A364   ldr      x0, [x8, #0x38]      
+0x00004A368   bl       _objc_msgSend$copy   
+0x00004A36C   ldr      x8, [x19, #0x30]     
+0x00004A370   ldr      x8, [x8, #0x8]       
+0x00004A374   ldr      x1, [x8, #0x28]      
+0x00004A378   str      x0, [x8, #0x28]      
+0x00004A37C   ldp      x29, x30, [sp, #0x10] 
+0x00004A380   ldp      x20, x19, [sp], #0x20 
+0x00004A384   b        _objc_release_x1     
+___68-[BKSTouchDeliveryObservationService _connectToTouchDeliveryService]_block_invoke:
+0x00004A388   sub      sp, sp, #0x80        
+0x00004A38C   stp      x24, x23, [sp, #0x40] 
+0x00004A390   stp      x22, x21, [sp, #0x50] 
+0x00004A394   stp      x20, x19, [sp, #0x60] 
+0x00004A398   stp      x29, x30, [sp, #0x70] 
+0x00004A39C   add      x29, sp, #0x70       
+0x00004A3A0   mov      x19, x1              
+0x00004A3A4   mov      x20, x0              
+0x00004A3A8   bl       _objc_retain_x19     
+0x00004A3AC   bl       _BKLogTouchDeliveryObserver 
+0x00004A3B0   mov      x29, x29             
+0x00004A3B4   bl       _objc_retainAutoreleasedReturnValue 
+0x00004A3B8   mov      x21, x0              
+0x00004A3BC   mov      w1, #0x2             
+0x00004A3C0   bl       _os_log_type_enabled 
+0x00004A3C4   cbnz     w0, 0x4a4dc          
+0x00004A3C8   bl       _objc_release_x21    
+0x00004A3CC   adrp     x22, 102             ; 0xb0000
+0x00004A3D0   ldr      x0, [x22, #0x630]    ; _OBJC_CLASS_$_BSObjCProtocol@got
+0x00004A3D4   adrp     x8, 134              ; 0xd0000
+0x00004A3D8   ldr      x2, [x8, #0x810]     ; __OBJC_PROTOCOL_REFERENCE_$_BKSTouchDeliveryObserving_IPC
+0x00004A3DC   bl       "_objc_msgSend$protocolForProtocol:" 
+0x00004A3E0   mov      x29, x29             
+0x00004A3E4   bl       _objc_retainAutoreleasedReturnValue 
+0x00004A3E8   mov      x21, x0              
+0x00004A3EC   ldr      x0, [x22, #0x630]    
+0x00004A3F0   adrp     x8, 134              ; 0xd0000
+0x00004A3F4   ldr      x2, [x8, #0x818]     ; __OBJC_PROTOCOL_REFERENCE_$_BKSTouchDeliveryObservationService_IPC
+0x00004A3F8   bl       "_objc_msgSend$protocolForProtocol:" 
+0x00004A3FC   mov      x29, x29             
+0x00004A400   bl       _objc_retainAutoreleasedReturnValue 
+0x00004A404   mov      x22, x0              
+0x00004A408   adrp     x8, 102              ; 0xb0000
+0x00004A40C   ldr      x0, [x8, #0x4e8]     ; _OBJC_CLASS_$_BSMutableServiceInterface@got
+0x00004A410   adrp     x2, 111              ; 0xb9000
+0x00004A414   add      x2, x2, #0x6b0       ; @"BKTouchDeliveryObservation"
+0x00004A418   bl       "_objc_msgSend$interfaceWithIdentifier:" 
+0x00004A41C   mov      x29, x29             
+0x00004A420   bl       _objc_retainAutoreleasedReturnValue 
+0x00004A424   mov      x23, x0              
+0x00004A428   mov      x2, x22              
+0x00004A42C   bl       "_objc_msgSend$setServer:" 
+0x00004A430   mov      x0, x23              
+0x00004A434   mov      x2, x21              
+0x00004A438   bl       "_objc_msgSend$setClient:" 
+0x00004A43C   mov      x0, x19              
+0x00004A440   mov      x2, x23              
+0x00004A444   bl       "_objc_msgSend$setInterface:" 
+0x00004A448   ldr      x2, [x20, #0x20]     
+0x00004A44C   mov      x0, x19              
+0x00004A450   bl       "_objc_msgSend$setInterfaceTarget:" 
+0x00004A454   ldr      x8, [x20, #0x20]     
+0x00004A458   ldr      x2, [x8, #0x18]      
+0x00004A45C   mov      x0, x19              
+0x00004A460   bl       "_objc_msgSend$setQueue:" 
+0x00004A464   adrp     x8, 102              ; 0xb0000
+0x00004A468   ldr      x8, [x8, #0xa40]     ; __NSConcreteStackBlock@got
+0x00004A46C   str      x8, [sp, #0x8]       
+0x00004A470   adrp     x8, 60               ; 0x86000
+0x00004A474   ldr      d0, [x8, #0x3c0]     
+0x00004A478   str      d0, [sp, #0x10]      
+0x00004A47C   adrp     x8, 0                ; 0x4a000
+0x00004A480   add      x8, x8, #0x508       ; ___68-[BKSTouchDeliveryObservationService _connectToTouchDeliveryService]_block_invoke.69
+0x00004A484   adrp     x9, 104              ; 0xb2000
+0x00004A488   add      x9, x9, #0xda0       
+0x00004A48C   stp      x8, x9, [sp, #0x18]  
+0x00004A490   ldr      x8, [x20, #0x20]     
+0x00004A494   str      x8, [sp, #0x28]      
+0x00004A498   add      x2, sp, #0x8         
+0x00004A49C   mov      x0, x19              
+0x00004A4A0   bl       "_objc_msgSend$setInterruptionHandler:" 
+0x00004A4A4   adrp     x2, 104              ; 0xb2000
+0x00004A4A8   add      x2, x2, #0xaf0       ; ___block_literal_global.72.9213
+0x00004A4AC   mov      x0, x19              
+0x00004A4B0   bl       "_objc_msgSend$setInvalidationHandler:" 
+0x00004A4B4   bl       _objc_release_x19    
+0x00004A4B8   bl       _objc_release_x23    
+0x00004A4BC   bl       _objc_release_x22    
+0x00004A4C0   bl       _objc_release_x21    
+0x00004A4C4   ldp      x29, x30, [sp, #0x70] 
+0x00004A4C8   ldp      x20, x19, [sp, #0x60] 
+0x00004A4CC   ldp      x22, x21, [sp, #0x50] 
+0x00004A4D0   ldp      x24, x23, [sp, #0x40] 
+0x00004A4D4   add      sp, sp, #0x80        
+0x00004A4D8   ret                           
+0x00004A4DC   strh     wzr, [sp, #0x30]     
+0x00004A4E0   adrp     x0, -74              ; 0x0
+0x00004A4E4   add      x0, x0, #0x0         
+0x00004A4E8   adrp     x3, 72               ; 0x92000
+0x00004A4EC   add      x3, x3, #0x345       
+0x00004A4F0   add      x4, sp, #0x30        
+0x00004A4F4   mov      x1, x21              
+0x00004A4F8   mov      w2, #0x2             
+0x00004A4FC   mov      w5, #0x2             
+0x00004A500   bl       __os_log_debug_impl  
+0x00004A504   b        0x4a3c8              
+___68-[BKSTouchDeliveryObservationService _connectToTouchDeliveryService]_block_invoke.69:
+0x00004A508   sub      sp, sp, #0x60        
+0x00004A50C   stp      x20, x19, [sp, #0x40] 
+0x00004A510   stp      x29, x30, [sp, #0x50] 
+0x00004A514   add      x29, sp, #0x50       
+0x00004A518   mov      x19, x0              
+0x00004A51C   bl       _BKLogTouchDeliveryObserver 
+0x00004A520   mov      x29, x29             
+0x00004A524   bl       _objc_retainAutoreleasedReturnValue 
+0x00004A528   mov      x20, x0              
+0x00004A52C   mov      w1, #0x10            
+0x00004A530   bl       _os_log_type_enabled 
+0x00004A534   cbnz     w0, 0x4a58c          
+0x00004A538   bl       _objc_release_x20    
+0x00004A53C   ldr      x8, [x19, #0x20]     
+0x00004A540   adrp     x9, 102              ; 0xb0000
+0x00004A544   ldr      x9, [x9, #0xa40]     ; __NSConcreteStackBlock@got
+0x00004A548   ldr      x0, [x8, #0x10]      
+0x00004A54C   str      x9, [sp, #0x8]       
+0x00004A550   adrp     x9, 60               ; 0x86000
+0x00004A554   ldr      d0, [x9, #0x3c0]     
+0x00004A558   adrp     x9, 0                ; 0x4a000
+0x00004A55C   add      x9, x9, #0x61c       ; ___68-[BKSTouchDeliveryObservationService _connectToTouchDeliveryService]_block_invoke.70
+0x00004A560   str      d0, [sp, #0x10]      
+0x00004A564   adrp     x10, 105             ; 0xb3000
+0x00004A568   add      x10, x10, #0x1c0     
+0x00004A56C   stp      x9, x10, [sp, #0x18] 
+0x00004A570   str      x8, [sp, #0x28]      
+0x00004A574   add      x1, sp, #0x8         
+0x00004A578   bl       _dispatch_async      
+0x00004A57C   ldp      x29, x30, [sp, #0x50] 
+0x00004A580   ldp      x20, x19, [sp, #0x40] 
+0x00004A584   add      sp, sp, #0x60        
+0x00004A588   ret                           
+0x00004A58C   sturh    wzr, [x29, #-0x20]   
+0x00004A590   adrp     x0, -74              ; 0x0
+0x00004A594   add      x0, x0, #0x0         
+0x00004A598   adrp     x3, 73               ; 0x93000
+0x00004A59C   add      x3, x3, #0x842       
+0x00004A5A0   sub      x4, x29, #0x20       
+0x00004A5A4   mov      x1, x20              
+0x00004A5A8   mov      w2, #0x10            
+0x00004A5AC   mov      w5, #0x2             
+0x00004A5B0   bl       __os_log_error_impl  
+0x00004A5B4   b        0x4a538              
+___68-[BKSTouchDeliveryObservationService _connectToTouchDeliveryService]_block_invoke_3:
+0x00004A5B8   sub      sp, sp, #0x30        
+0x00004A5BC   stp      x20, x19, [sp, #0x10] 
+0x00004A5C0   stp      x29, x30, [sp, #0x20] 
+0x00004A5C4   add      x29, sp, #0x20       
+0x00004A5C8   bl       _objc_retain_x1      
+0x00004A5CC   bl       _BKLogTouchDeliveryObserver 
+0x00004A5D0   mov      x29, x29             
+0x00004A5D4   bl       _objc_retainAutoreleasedReturnValue 
+0x00004A5D8   mov      x19, x0              
+0x00004A5DC   mov      w1, #0x10            
+0x00004A5E0   bl       _os_log_type_enabled 
+0x00004A5E4   cbz      w0, 0x4a610          
+0x00004A5E8   strh     wzr, [sp]            
+0x00004A5EC   adrp     x0, -74              ; 0x0
+0x00004A5F0   add      x0, x0, #0x0         
+0x00004A5F4   adrp     x3, 73               ; 0x93000
+0x00004A5F8   add      x3, x3, #0x872       
+0x00004A5FC   mov      x4, sp               
+0x00004A600   mov      x1, x19              
+0x00004A604   mov      w2, #0x10            
+0x00004A608   mov      w5, #0x2             
+0x00004A60C   bl       __os_log_error_impl  
+0x00004A610   bl       _objc_release_x19    
+0x00004A614   mov      w0, #0x0             
+0x00004A618   bl       _exit                
+___68-[BKSTouchDeliveryObservationService _connectToTouchDeliveryService]_block_invoke.70:
+0x00004A61C   sub      sp, sp, #0x50        
+0x00004A620   stp      x20, x19, [sp, #0x30] 
+0x00004A624   stp      x29, x30, [sp, #0x40] 
+0x00004A628   add      x29, sp, #0x40       
+0x00004A62C   mov      x19, x0              
+0x00004A630   ldr      x8, [x0, #0x20]      
+0x00004A634   adrp     x9, 102              ; 0xb0000
+0x00004A638   ldr      x9, [x9, #0xa40]     ; __NSConcreteStackBlock@got
+0x00004A63C   ldr      x0, [x8, #0x28]      
+0x00004A640   str      x9, [sp, #0x8]       
+0x00004A644   adrp     x9, 60               ; 0x86000
+0x00004A648   ldr      d0, [x9, #0x3c0]     
+0x00004A64C   adrp     x9, 0                ; 0x4a000
+0x00004A650   add      x9, x9, #0x6b8       ; ___68-[BKSTouchDeliveryObservationService _connectToTouchDeliveryService]_block_invoke_2
+0x00004A654   str      d0, [sp, #0x10]      
+0x00004A658   adrp     x10, 104             ; 0xb2000
+0x00004A65C   add      x10, x10, #0xad0     
+0x00004A660   stp      x9, x10, [sp, #0x18] 
+0x00004A664   str      x8, [sp, #0x28]      
+0x00004A668   add      x2, sp, #0x8         
+0x00004A66C   bl       "_objc_msgSend$enumerateKeysWithBlock:" 
+0x00004A670   ldr      x8, [x19, #0x20]     
+0x00004A674   ldr      x0, [x8, #0x38]      
+0x00004A678   bl       _objc_msgSend$count  
+0x00004A67C   cbz      x0, 0x4a6a8          
+0x00004A680   ldr      x8, [x19, #0x20]     
+0x00004A684   ldr      x0, [x8, #0x20]      
+0x00004A688   bl       _objc_msgSend$remoteTarget 
+0x00004A68C   mov      x29, x29             
+0x00004A690   bl       _objc_retainAutoreleasedReturnValue 
+0x00004A694   mov      x19, x0              
+0x00004A698   adrp     x2, 102              ; 0xb0000
+0x00004A69C   ldr      x2, [x2, #0xe08]     ; ___kCFBooleanTrue@got
+0x00004A6A0   bl       "_objc_msgSend$setObservesAllTouches:" 
+0x00004A6A4   bl       _objc_release_x19    
+0x00004A6A8   ldp      x29, x30, [sp, #0x40] 
+0x00004A6AC   ldp      x20, x19, [sp, #0x30] 
+0x00004A6B0   add      sp, sp, #0x50        
+0x00004A6B4   ret                           
+___68-[BKSTouchDeliveryObservationService _connectToTouchDeliveryService]_block_invoke_2:
+0x00004A6B8   sub      sp, sp, #0x30        
+0x00004A6BC   stp      x20, x19, [sp, #0x10] 
+0x00004A6C0   stp      x29, x30, [sp, #0x20] 
+0x00004A6C4   add      x29, sp, #0x20       
+0x00004A6C8   mov      x19, x1              
+0x00004A6CC   ldr      x8, [x0, #0x20]      
+0x00004A6D0   ldr      x0, [x8, #0x20]      
+0x00004A6D4   bl       _objc_msgSend$remoteTarget 
+0x00004A6D8   mov      x29, x29             
+0x00004A6DC   bl       _objc_retainAutoreleasedReturnValue 
+0x00004A6E0   str      x0, [sp, #0x8]       
+0x00004A6E4   adrp     x8, 102              ; 0xb0000
+0x00004A6E8   ldr      x0, [x8, #0x6e8]     ; _OBJC_CLASS_$_NSNumber@got
+0x00004A6EC   mov      x2, x19              
+0x00004A6F0   bl       "_objc_msgSend$numberWithUnsignedInt:" 
+0x00004A6F4   mov      x29, x29             
+0x00004A6F8   bl       _objc_retainAutoreleasedReturnValue 
+0x00004A6FC   mov      x19, x0              
+0x00004A700   adrp     x2, 102              ; 0xb0000
+0x00004A704   ldr      x2, [x2, #0xe08]     ; ___kCFBooleanTrue@got
+0x00004A708   ldr      x0, [sp, #0x8]       
+0x00004A70C   mov      x3, x19              
+0x00004A710   bl       "_objc_msgSend$setObservesTouch:withIdentifier:" 
+0x00004A714   bl       _objc_release_x19    
+0x00004A718   ldr      x0, [sp, #0x8]       
+0x00004A71C   ldp      x29, x30, [sp, #0x20] 
+0x00004A720   ldp      x20, x19, [sp, #0x10] 
+0x00004A724   add      sp, sp, #0x30        
+0x00004A728   b        _objc_release        

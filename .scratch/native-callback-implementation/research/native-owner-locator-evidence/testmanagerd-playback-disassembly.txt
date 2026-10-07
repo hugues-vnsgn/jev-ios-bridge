@@ -1,0 +1,725 @@
+-[XCAXManager_iOS handleUserTestingNotification:]:
+000000010000b400	sub	sp, sp, #0xf0
+000000010000b404	stp	d9, d8, [sp, #0xa0]
+000000010000b408	stp	x24, x23, [sp, #0xb0]
+000000010000b40c	stp	x22, x21, [sp, #0xc0]
+000000010000b410	stp	x20, x19, [sp, #0xd0]
+000000010000b414	stp	x29, x30, [sp, #0xe0]
+000000010000b418	add	x29, sp, #0xe0
+000000010000b41c	mov	x19, x2
+000000010000b420	mov	x21, x0
+000000010000b424	bl	0x100059308 ; symbol stub for: _objc_retain_x19
+000000010000b428	adrp	x2, 138 ; 0x100095000
+000000010000b42c	add	x2, x2, #0xcf8 ; Objc cfstring ref: @"bad cfstring ref"
+000000010000b430	mov	x0, x19
+000000010000b434	bl	"_objc_msgSend$objectForKeyedSubscript:"
+000000010000b438	mov	x29, x29
+000000010000b43c	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000b440	mov	x20, x0
+000000010000b444	cbz	x0, 0x10000b54c
+000000010000b448	add	x24, sp, #0x70
+000000010000b44c	stp	xzr, x24, [sp, #0x70]
+000000010000b450	adrp	x8, 91 ; 0x100066000
+000000010000b454	ldr	d0, [x8, #0x5c8]
+000000010000b458	adrp	x8, -1 ; 0x10000a000
+000000010000b45c	add	x8, x8, #0xa68
+000000010000b460	str	d0, [sp, #0x80]
+000000010000b464	adrp	x9, -1 ; 0x10000a000
+000000010000b468	add	x9, x9, #0xa78
+000000010000b46c	stp	x8, x9, [sp, #0x88]
+000000010000b470	str	xzr, [sp, #0x98]
+000000010000b474	mov	x0, x21
+000000010000b478	bl	_objc_msgSend$queue
+000000010000b47c	mov	x29, x29
+000000010000b480	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000b484	mov	x22, x0
+000000010000b488	adrp	x23, 133 ; 0x100090000
+000000010000b48c	ldr	x23, [x23, #0xbd8] ; literal pool symbol address: __NSConcreteStackBlock
+000000010000b490	str	x23, [sp, #0x38]
+000000010000b494	adrp	x8, 91 ; 0x100066000
+000000010000b498	ldr	d8, [x8, #0x5a0]
+000000010000b49c	str	d8, [sp, #0x40]
+000000010000b4a0	adrp	x8, 0 ; 0x10000b000
+000000010000b4a4	add	x8, x8, #0x5d0
+000000010000b4a8	adrp	x9, 134 ; 0x100091000
+000000010000b4ac	add	x9, x9, #0xb20
+000000010000b4b0	stp	x8, x9, [sp, #0x48]
+000000010000b4b4	str	x24, [sp, #0x68]
+000000010000b4b8	str	x21, [sp, #0x58]
+000000010000b4bc	bl	0x100059320 ; symbol stub for: _objc_retain_x20
+000000010000b4c0	str	x20, [sp, #0x60]
+000000010000b4c4	add	x1, sp, #0x38
+000000010000b4c8	mov	x0, x22
+000000010000b4cc	bl	0x100059050 ; symbol stub for: _dispatch_sync
+000000010000b4d0	bl	0x100059260 ; symbol stub for: _objc_release_x22
+000000010000b4d4	mov	x0, x21
+000000010000b4d8	bl	_objc_msgSend$calloutQueue
+000000010000b4dc	mov	x29, x29
+000000010000b4e0	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000b4e4	mov	x21, x0
+000000010000b4e8	str	x23, [sp, #0x8]
+000000010000b4ec	str	d8, [sp, #0x10]
+000000010000b4f0	adrp	x8, 0 ; 0x10000b000
+000000010000b4f4	add	x8, x8, #0x664
+000000010000b4f8	adrp	x9, 134 ; 0x100091000
+000000010000b4fc	add	x9, x9, #0x9e0
+000000010000b500	stp	x8, x9, [sp, #0x18]
+000000010000b504	add	x8, sp, #0x70
+000000010000b508	str	x8, [sp, #0x30]
+000000010000b50c	bl	0x100059308 ; symbol stub for: _objc_retain_x19
+000000010000b510	str	x19, [sp, #0x28]
+000000010000b514	add	x1, sp, #0x8
+000000010000b518	mov	x0, x21
+000000010000b51c	bl	0x100058f84 ; symbol stub for: _dispatch_async
+000000010000b520	bl	0x100059254 ; symbol stub for: _objc_release_x21
+000000010000b524	ldr	x8, [sp, #0x28]
+000000010000b528	bl	0x1000592b4 ; symbol stub for: _objc_release_x8
+000000010000b52c	ldr	x8, [sp, #0x60]
+000000010000b530	bl	0x1000592b4 ; symbol stub for: _objc_release_x8
+000000010000b534	add	x0, sp, #0x70
+000000010000b538	mov	w1, #0x8
+000000010000b53c	bl	0x100058de0 ; symbol stub for: __Block_object_dispose
+000000010000b540	ldr	x8, [sp, #0x98]
+000000010000b544	bl	0x1000592b4 ; symbol stub for: _objc_release_x8
+000000010000b548	b	0x10000b594
+000000010000b54c	bl	_XCTDDefaultLog
+000000010000b550	mov	x29, x29
+000000010000b554	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000b558	mov	x21, x0
+000000010000b55c	mov	w1, #0x0
+000000010000b560	bl	0x100059428 ; symbol stub for: _os_log_type_enabled
+000000010000b564	cbz	w0, 0x10000b590
+000000010000b568	strh	wzr, [sp, #0x70]
+000000010000b56c	adrp	x0, -11 ; 0x100000000
+000000010000b570	add	x0, x0, #0x0
+000000010000b574	adrp	x3, 98 ; 0x10006d000
+000000010000b578	add	x3, x3, #0x1fa ; literal pool for: "Event is nil, nothing to handle."
+000000010000b57c	add	x4, sp, #0x70
+000000010000b580	mov	x1, x21
+000000010000b584	mov	w2, #0x0
+000000010000b588	mov	w5, #0x2
+000000010000b58c	bl	0x100058e7c ; symbol stub for: __os_log_impl
+000000010000b590	bl	0x100059254 ; symbol stub for: _objc_release_x21
+000000010000b594	bl	0x100059248 ; symbol stub for: _objc_release_x20
+000000010000b598	bl	0x10005923c ; symbol stub for: _objc_release_x19
+000000010000b59c	ldp	x29, x30, [sp, #0xe0]
+000000010000b5a0	ldp	x20, x19, [sp, #0xd0]
+000000010000b5a4	ldp	x22, x21, [sp, #0xc0]
+000000010000b5a8	ldp	x24, x23, [sp, #0xb0]
+000000010000b5ac	ldp	d9, d8, [sp, #0xa0]
+000000010000b5b0	add	sp, sp, #0xf0
+000000010000b5b4	ret
+000000010000b5b8	mov	x19, x0
+000000010000b5bc	add	x0, sp, #0x70
+000000010000b5c0	mov	w1, #0x8
+000000010000b5c4	bl	0x100058de0 ; symbol stub for: __Block_object_dispose
+000000010000b5c8	mov	x0, x19
+000000010000b5cc	bl	0x100058e1c ; symbol stub for: __Unwind_Resume
+___49-[XCAXManager_iOS handleUserTestingNotification:]_block_invoke:
+000000010000b5d0	sub	sp, sp, #0x40
+000000010000b5d4	stp	x22, x21, [sp, #0x10]
+000000010000b5d8	stp	x20, x19, [sp, #0x20]
+000000010000b5dc	stp	x29, x30, [sp, #0x30]
+000000010000b5e0	add	x29, sp, #0x30
+000000010000b5e4	mov	x19, x0
+000000010000b5e8	ldr	x0, [x0, #0x20]
+000000010000b5ec	bl	_objc_msgSend$userTestingNotificationHandlers
+000000010000b5f0	mov	x29, x29
+000000010000b5f4	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000b5f8	mov	x20, x0
+000000010000b5fc	ldr	x2, [x19, #0x28]
+000000010000b600	bl	"_objc_msgSend$objectForKeyedSubscript:"
+000000010000b604	mov	x29, x29
+000000010000b608	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000b60c	mov	x21, x0
+000000010000b610	bl	_objc_msgSend$copy
+000000010000b614	ldr	x8, [x19, #0x30]
+000000010000b618	ldr	x8, [x8, #0x8]
+000000010000b61c	ldr	x9, [x8, #0x28]
+000000010000b620	str	x0, [x8, #0x28]
+000000010000b624	bl	0x1000592c0 ; symbol stub for: _objc_release_x9
+000000010000b628	bl	0x100059254 ; symbol stub for: _objc_release_x21
+000000010000b62c	bl	0x100059248 ; symbol stub for: _objc_release_x20
+000000010000b630	ldr	x0, [x19, #0x20]
+000000010000b634	bl	_objc_msgSend$userTestingNotificationHandlers
+000000010000b638	mov	x29, x29
+000000010000b63c	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000b640	str	x0, [sp, #0x8]
+000000010000b644	ldr	x2, [x19, #0x28]
+000000010000b648	bl	"_objc_msgSend$removeObjectForKey:"
+000000010000b64c	ldr	x0, [sp, #0x8]
+000000010000b650	ldp	x29, x30, [sp, #0x30]
+000000010000b654	ldp	x20, x19, [sp, #0x20]
+000000010000b658	ldp	x22, x21, [sp, #0x10]
+000000010000b65c	add	sp, sp, #0x40
+000000010000b660	b	0x100059224 ; symbol stub for: _objc_release
+___49-[XCAXManager_iOS handleUserTestingNotification:]_block_invoke_2:
+000000010000b664	sub	sp, sp, #0x110
+000000010000b668	stp	x24, x23, [sp, #0xd0]
+000000010000b66c	stp	x22, x21, [sp, #0xe0]
+000000010000b670	stp	x20, x19, [sp, #0xf0]
+000000010000b674	stp	x29, x30, [sp, #0x100]
+000000010000b678	add	x29, sp, #0x100
+000000010000b67c	mov	x19, x0
+000000010000b680	adrp	x8, 133 ; 0x100090000
+000000010000b684	ldr	x8, [x8, #0xbf8] ; literal pool symbol address: ___stack_chk_guard
+000000010000b688	ldr	x8, [x8]
+000000010000b68c	stur	x8, [x29, #-0x38]
+000000010000b690	movi.2d	v0, #0000000000000000
+000000010000b694	stp	q0, q0, [sp]
+000000010000b698	stp	q0, q0, [sp, #0x20]
+000000010000b69c	ldr	x8, [x0, #0x28]
+000000010000b6a0	ldr	x8, [x8, #0x8]
+000000010000b6a4	ldr	x20, [x8, #0x28]
+000000010000b6a8	bl	0x100059320 ; symbol stub for: _objc_retain_x20
+000000010000b6ac	mov	x2, sp
+000000010000b6b0	add	x3, sp, #0x48
+000000010000b6b4	mov	x0, x20
+000000010000b6b8	mov	w4, #0x10
+000000010000b6bc	bl	"_objc_msgSend$countByEnumeratingWithState:objects:count:"
+000000010000b6c0	cbz	x0, 0x10000b728
+000000010000b6c4	mov	x21, x0
+000000010000b6c8	ldr	x8, [sp, #0x10]
+000000010000b6cc	ldr	x22, [x8]
+000000010000b6d0	mov	x23, #0x0
+000000010000b6d4	ldr	x8, [sp, #0x10]
+000000010000b6d8	ldr	x8, [x8]
+000000010000b6dc	cmp	x8, x22
+000000010000b6e0	b.eq	0x10000b6ec
+000000010000b6e4	mov	x0, x20
+000000010000b6e8	bl	0x100059194 ; symbol stub for: _objc_enumerationMutation
+000000010000b6ec	ldr	x8, [sp, #0x8]
+000000010000b6f0	ldr	x0, [x8, x23, lsl #3]
+000000010000b6f4	ldr	x1, [x19, #0x20]
+000000010000b6f8	ldr	x8, [x0, #0x10]
+000000010000b6fc	blr	x8
+000000010000b700	add	x23, x23, #0x1
+000000010000b704	cmp	x21, x23
+000000010000b708	b.ne	0x10000b6d4
+000000010000b70c	mov	x2, sp
+000000010000b710	add	x3, sp, #0x48
+000000010000b714	mov	x0, x20
+000000010000b718	mov	w4, #0x10
+000000010000b71c	bl	"_objc_msgSend$countByEnumeratingWithState:objects:count:"
+000000010000b720	mov	x21, x0
+000000010000b724	cbnz	x0, 0x10000b6d0
+000000010000b728	bl	0x100059248 ; symbol stub for: _objc_release_x20
+000000010000b72c	ldur	x8, [x29, #-0x38]
+000000010000b730	adrp	x9, 133 ; 0x100090000
+000000010000b734	ldr	x9, [x9, #0xbf8] ; literal pool symbol address: ___stack_chk_guard
+000000010000b738	ldr	x9, [x9]
+000000010000b73c	cmp	x9, x8
+000000010000b740	b.ne	0x10000b75c
+000000010000b744	ldp	x29, x30, [sp, #0x100]
+000000010000b748	ldp	x20, x19, [sp, #0xf0]
+000000010000b74c	ldp	x22, x21, [sp, #0xe0]
+000000010000b750	ldp	x24, x23, [sp, #0xd0]
+000000010000b754	add	sp, sp, #0x110
+000000010000b758	ret
+000000010000b75c	bl	0x100058e40 ; symbol stub for: ___stack_chk_fail
+-[XCAXManager_iOS notifyOnNextOccurrenceOfUserTestingEvent:handler:]:
+000000010000b760	sub	sp, sp, #0x90
+000000010000b764	stp	x22, x21, [sp, #0x60]
+000000010000b768	stp	x20, x19, [sp, #0x70]
+000000010000b76c	stp	x29, x30, [sp, #0x80]
+000000010000b770	add	x29, sp, #0x80
+000000010000b774	mov	x20, x3
+000000010000b778	mov	x19, x2
+000000010000b77c	mov	x21, x0
+000000010000b780	adrp	x8, 133 ; 0x100090000
+000000010000b784	ldr	x8, [x8, #0xbf8] ; literal pool symbol address: ___stack_chk_guard
+000000010000b788	ldr	x8, [x8]
+000000010000b78c	stur	x8, [x29, #-0x28]
+000000010000b790	bl	0x100059308 ; symbol stub for: _objc_retain_x19
+000000010000b794	bl	0x100059320 ; symbol stub for: _objc_retain_x20
+000000010000b798	bl	_XCTDDefaultLog
+000000010000b79c	mov	x29, x29
+000000010000b7a0	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000b7a4	mov	x22, x0
+000000010000b7a8	mov	w1, #0x0
+000000010000b7ac	bl	0x100059428 ; symbol stub for: _os_log_type_enabled
+000000010000b7b0	cbz	w0, 0x10000b7e8
+000000010000b7b4	adrp	x8, 91 ; 0x100066000
+000000010000b7b8	ldr	d0, [x8, #0x568]
+000000010000b7bc	str	s0, [sp, #0x40]
+000000010000b7c0	stur	x19, [sp, #0x44]
+000000010000b7c4	adrp	x0, -11 ; 0x100000000
+000000010000b7c8	add	x0, x0, #0x0
+000000010000b7cc	adrp	x3, 98 ; 0x10006d000
+000000010000b7d0	add	x3, x3, #0x21b ; literal pool for: "Registering for user testing event %{public}@"
+000000010000b7d4	add	x4, sp, #0x40
+000000010000b7d8	mov	x1, x22
+000000010000b7dc	mov	w2, #0x0
+000000010000b7e0	mov	w5, #0xc
+000000010000b7e4	bl	0x100058e7c ; symbol stub for: __os_log_impl
+000000010000b7e8	bl	0x100059260 ; symbol stub for: _objc_release_x22
+000000010000b7ec	mov	x0, x21
+000000010000b7f0	bl	_objc_msgSend$queue
+000000010000b7f4	mov	x29, x29
+000000010000b7f8	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000b7fc	mov	x22, x0
+000000010000b800	adrp	x8, 133 ; 0x100090000
+000000010000b804	ldr	x8, [x8, #0xbd8] ; literal pool symbol address: __NSConcreteStackBlock
+000000010000b808	str	x8, [sp, #0x8]
+000000010000b80c	adrp	x8, 91 ; 0x100066000
+000000010000b810	ldr	d0, [x8, #0x5a0]
+000000010000b814	adrp	x8, 0 ; 0x10000b000
+000000010000b818	add	x8, x8, #0x894
+000000010000b81c	adrp	x9, 134 ; 0x100091000
+000000010000b820	add	x9, x9, #0xb48
+000000010000b824	str	d0, [sp, #0x10]
+000000010000b828	stp	x8, x9, [sp, #0x18]
+000000010000b82c	stp	x21, x19, [sp, #0x28]
+000000010000b830	str	x20, [sp, #0x38]
+000000010000b834	bl	0x100059320 ; symbol stub for: _objc_retain_x20
+000000010000b838	bl	0x100059308 ; symbol stub for: _objc_retain_x19
+000000010000b83c	add	x1, sp, #0x8
+000000010000b840	mov	x0, x22
+000000010000b844	bl	0x100059050 ; symbol stub for: _dispatch_sync
+000000010000b848	bl	0x100059260 ; symbol stub for: _objc_release_x22
+000000010000b84c	ldr	x8, [sp, #0x38]
+000000010000b850	bl	0x1000592b4 ; symbol stub for: _objc_release_x8
+000000010000b854	ldr	x8, [sp, #0x30]
+000000010000b858	bl	0x1000592b4 ; symbol stub for: _objc_release_x8
+000000010000b85c	bl	0x100059248 ; symbol stub for: _objc_release_x20
+000000010000b860	bl	0x10005923c ; symbol stub for: _objc_release_x19
+000000010000b864	ldur	x8, [x29, #-0x28]
+000000010000b868	adrp	x9, 133 ; 0x100090000
+000000010000b86c	ldr	x9, [x9, #0xbf8] ; literal pool symbol address: ___stack_chk_guard
+000000010000b870	ldr	x9, [x9]
+000000010000b874	cmp	x9, x8
+000000010000b878	b.ne	0x10000b890
+000000010000b87c	ldp	x29, x30, [sp, #0x80]
+000000010000b880	ldp	x20, x19, [sp, #0x70]
+000000010000b884	ldp	x22, x21, [sp, #0x60]
+000000010000b888	add	sp, sp, #0x90
+000000010000b88c	ret
+000000010000b890	bl	0x100058e40 ; symbol stub for: ___stack_chk_fail
+___68-[XCAXManager_iOS notifyOnNextOccurrenceOfUserTestingEvent:handler:]_block_invoke:
+000000010000b894	sub	sp, sp, #0x30
+000000010000b898	stp	x20, x19, [sp, #0x10]
+000000010000b89c	stp	x29, x30, [sp, #0x20]
+000000010000b8a0	add	x29, sp, #0x20
+000000010000b8a4	mov	x19, x0
+000000010000b8a8	ldr	x0, [x0, #0x20]
+000000010000b8ac	bl	_objc_msgSend$userTestingNotificationHandlers
+000000010000b8b0	mov	x29, x29
+000000010000b8b4	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000b8b8	mov	x20, x0
+000000010000b8bc	ldr	x2, [x19, #0x28]
+000000010000b8c0	bl	"_objc_msgSend$objectForKeyedSubscript:"
+000000010000b8c4	mov	x29, x29
+000000010000b8c8	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000b8cc	str	x0, [sp, #0x8]
+000000010000b8d0	bl	0x100059248 ; symbol stub for: _objc_release_x20
+000000010000b8d4	ldr	x0, [sp, #0x8]
+000000010000b8d8	cbnz	x0, 0x10000b910
+000000010000b8dc	adrp	x8, 133 ; 0x100090000
+000000010000b8e0	ldr	x0, [x8, #0xf08] ; literal pool symbol address: _OBJC_CLASS_$_NSMutableArray
+000000010000b8e4	bl	0x100059200 ; symbol stub for: _objc_opt_new
+000000010000b8e8	str	x0, [sp, #0x8]
+000000010000b8ec	ldr	x0, [x19, #0x20]
+000000010000b8f0	bl	_objc_msgSend$userTestingNotificationHandlers
+000000010000b8f4	mov	x29, x29
+000000010000b8f8	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000b8fc	mov	x20, x0
+000000010000b900	ldr	x3, [x19, #0x28]
+000000010000b904	ldr	x2, [sp, #0x8]
+000000010000b908	bl	"_objc_msgSend$setObject:forKeyedSubscript:"
+000000010000b90c	bl	0x100059248 ; symbol stub for: _objc_release_x20
+000000010000b910	ldr	x0, [x19, #0x30]
+000000010000b914	bl	0x1000592f0 ; symbol stub for: _objc_retainBlock
+000000010000b918	mov	x19, x0
+000000010000b91c	ldr	x0, [sp, #0x8]
+000000010000b920	mov	x2, x19
+000000010000b924	bl	"_objc_msgSend$addObject:"
+000000010000b928	bl	0x10005923c ; symbol stub for: _objc_release_x19
+000000010000b92c	ldr	x0, [sp, #0x8]
+000000010000b930	ldp	x29, x30, [sp, #0x20]
+000000010000b934	ldp	x20, x19, [sp, #0x10]
+000000010000b938	add	sp, sp, #0x30
+000000010000b93c	b	0x100059224 ; symbol stub for: _objc_release
++[XCTouchGesturePerformer senderForEventRecord:]:
+000000010000f5e8	sub	sp, sp, #0xa0
+000000010000f5ec	stp	x24, x23, [sp, #0x60]
+000000010000f5f0	stp	x22, x21, [sp, #0x70]
+000000010000f5f4	stp	x20, x19, [sp, #0x80]
+000000010000f5f8	stp	x29, x30, [sp, #0x90]
+000000010000f5fc	add	x29, sp, #0x90
+000000010000f600	mov	x19, x2
+000000010000f604	bl	0x100059308 ; symbol stub for: _objc_retain_x19
+000000010000f608	add	x8, sp, #0x30
+000000010000f60c	stp	xzr, x8, [sp, #0x30]
+000000010000f610	adrp	x8, 87 ; 0x100066000
+000000010000f614	ldr	d0, [x8, #0x5c8]
+000000010000f618	adrp	x8, 0 ; 0x10000f000
+000000010000f61c	add	x8, x8, #0x52c
+000000010000f620	str	d0, [sp, #0x40]
+000000010000f624	adrp	x9, 0 ; 0x10000f000
+000000010000f628	add	x9, x9, #0x53c
+000000010000f62c	stp	x8, x9, [sp, #0x48]
+000000010000f630	str	xzr, [sp, #0x58]
+000000010000f634	mov	x0, x19
+000000010000f638	bl	_objc_msgSend$displayID
+000000010000f63c	mov	x20, x0
+000000010000f640	adrp	x23, 129 ; 0x100090000
+000000010000f644	cbnz	w20, 0x10000f668
+000000010000f648	ldr	x0, [x23, #0x5c8]
+000000010000f64c	bl	_objc_msgSend$mainDisplay
+000000010000f650	mov	x29, x29
+000000010000f654	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000f658	mov	x21, x0
+000000010000f65c	bl	_objc_msgSend$displayId
+000000010000f660	mov	x20, x0
+000000010000f664	bl	0x100059254 ; symbol stub for: _objc_release_x21
+000000010000f668	ldr	x0, [x23, #0x5c8]
+000000010000f66c	bl	_objc_msgSend$mainDisplay
+000000010000f670	mov	x29, x29
+000000010000f674	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000f678	mov	x21, x0
+000000010000f67c	bl	_objc_msgSend$displayId
+000000010000f680	mov	x22, x0
+000000010000f684	bl	0x100059254 ; symbol stub for: _objc_release_x21
+000000010000f688	cmp	w20, w22
+000000010000f68c	b.eq	0x10000f6e8
+000000010000f690	ldr	x0, [x23, #0x5c8]
+000000010000f694	bl	_objc_msgSend$displays
+000000010000f698	mov	x29, x29
+000000010000f69c	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000f6a0	mov	x21, x0
+000000010000f6a4	adrp	x8, 129 ; 0x100090000
+000000010000f6a8	ldr	x8, [x8, #0xbd8] ; literal pool symbol address: __NSConcreteStackBlock
+000000010000f6ac	str	x8, [sp]
+000000010000f6b0	adrp	x8, 87 ; 0x100066000
+000000010000f6b4	ldr	d0, [x8, #0x5a0]
+000000010000f6b8	adrp	x8, 0 ; 0x10000f000
+000000010000f6bc	add	x8, x8, #0x770
+000000010000f6c0	adrp	x9, 130 ; 0x100091000
+000000010000f6c4	add	x9, x9, #0xd88
+000000010000f6c8	str	d0, [sp, #0x8]
+000000010000f6cc	stp	x8, x9, [sp, #0x10]
+000000010000f6d0	str	w20, [sp, #0x28]
+000000010000f6d4	add	x8, sp, #0x30
+000000010000f6d8	str	x8, [sp, #0x20]
+000000010000f6dc	mov	x2, sp
+000000010000f6e0	bl	"_objc_msgSend$enumerateObjectsUsingBlock:"
+000000010000f6e4	bl	0x100059254 ; symbol stub for: _objc_release_x21
+000000010000f6e8	ldr	x8, [sp, #0x38]
+000000010000f6ec	ldr	x20, [x8, #0x28]
+000000010000f6f0	cbnz	x20, 0x10000f720
+000000010000f6f4	adrp	x8, 129 ; 0x100090000
+000000010000f6f8	ldr	x0, [x8, #0x1c8] ; literal pool symbol address: _OBJC_CLASS_$_RCPEventSenderProperties
+000000010000f6fc	bl	_objc_msgSend$touchScreenDigitizerSender
+000000010000f700	mov	x29, x29
+000000010000f704	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000f708	ldr	x8, [sp, #0x38]
+000000010000f70c	ldr	x9, [x8, #0x28]
+000000010000f710	str	x0, [x8, #0x28]
+000000010000f714	bl	0x1000592c0 ; symbol stub for: _objc_release_x9
+000000010000f718	ldr	x8, [sp, #0x38]
+000000010000f71c	ldr	x20, [x8, #0x28]
+000000010000f720	bl	0x100059320 ; symbol stub for: _objc_retain_x20
+000000010000f724	add	x0, sp, #0x30
+000000010000f728	mov	w1, #0x8
+000000010000f72c	bl	0x100058de0 ; symbol stub for: __Block_object_dispose
+000000010000f730	ldr	x8, [sp, #0x58]
+000000010000f734	bl	0x1000592b4 ; symbol stub for: _objc_release_x8
+000000010000f738	bl	0x10005923c ; symbol stub for: _objc_release_x19
+000000010000f73c	mov	x0, x20
+000000010000f740	ldp	x29, x30, [sp, #0x90]
+000000010000f744	ldp	x20, x19, [sp, #0x80]
+000000010000f748	ldp	x22, x21, [sp, #0x70]
+000000010000f74c	ldp	x24, x23, [sp, #0x60]
+000000010000f750	add	sp, sp, #0xa0
+000000010000f754	b	0x100059164 ; symbol stub for: _objc_autoreleaseReturnValue
+000000010000f758	mov	x19, x0
+000000010000f75c	add	x0, sp, #0x30
+000000010000f760	mov	w1, #0x8
+000000010000f764	bl	0x100058de0 ; symbol stub for: __Block_object_dispose
+000000010000f768	mov	x0, x19
+000000010000f76c	bl	0x100058e1c ; symbol stub for: __Unwind_Resume
+___48+[XCTouchGesturePerformer senderForEventRecord:]_block_invoke:
+000000010000f770	sub	sp, sp, #0x40
+000000010000f774	stp	x22, x21, [sp, #0x10]
+000000010000f778	stp	x20, x19, [sp, #0x20]
+000000010000f77c	stp	x29, x30, [sp, #0x30]
+000000010000f780	add	x29, sp, #0x30
+000000010000f784	mov	x19, x3
+000000010000f788	str	x1, [sp, #0x8]
+000000010000f78c	mov	x20, x0
+000000010000f790	mov	x0, x1
+000000010000f794	bl	0x1000592cc ; symbol stub for: _objc_retain
+000000010000f798	ldr	w21, [x20, #0x28]
+000000010000f79c	ldr	x0, [sp, #0x8]
+000000010000f7a0	bl	_objc_msgSend$displayId
+000000010000f7a4	cmp	w21, w0
+000000010000f7a8	b.ne	0x10000f7fc
+000000010000f7ac	adrp	x8, 129 ; 0x100090000
+000000010000f7b0	ldr	x21, [x8, #0x1c8] ; literal pool symbol address: _OBJC_CLASS_$_RCPEventSenderProperties
+000000010000f7b4	ldr	x0, [sp, #0x8]
+000000010000f7b8	bl	_objc_msgSend$uniqueId
+000000010000f7bc	mov	x29, x29
+000000010000f7c0	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000f7c4	mov	x22, x0
+000000010000f7c8	mov	x0, x21
+000000010000f7cc	mov	x2, x22
+000000010000f7d0	bl	"_objc_msgSend$touchScreenDigitizerSenderForDisplayUUID:"
+000000010000f7d4	mov	x29, x29
+000000010000f7d8	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000f7dc	ldr	x8, [x20, #0x20]
+000000010000f7e0	ldr	x8, [x8, #0x8]
+000000010000f7e4	ldr	x9, [x8, #0x28]
+000000010000f7e8	str	x0, [x8, #0x28]
+000000010000f7ec	bl	0x1000592c0 ; symbol stub for: _objc_release_x9
+000000010000f7f0	bl	0x100059260 ; symbol stub for: _objc_release_x22
+000000010000f7f4	mov	w8, #0x1
+000000010000f7f8	strb	w8, [x19]
+000000010000f7fc	ldr	x0, [sp, #0x8]
+000000010000f800	ldp	x29, x30, [sp, #0x30]
+000000010000f804	ldp	x20, x19, [sp, #0x20]
+000000010000f808	ldp	x22, x21, [sp, #0x10]
+000000010000f80c	add	sp, sp, #0x40
+000000010000f810	b	0x100059224 ; symbol stub for: _objc_release
+-[XCTouchGesturePerformer initWithUserTestingNotificationProvider:eventPlayer:]:
+000000010000f814	sub	sp, sp, #0x50
+000000010000f818	stp	x24, x23, [sp, #0x10]
+000000010000f81c	stp	x22, x21, [sp, #0x20]
+000000010000f820	stp	x20, x19, [sp, #0x30]
+000000010000f824	stp	x29, x30, [sp, #0x40]
+000000010000f828	add	x29, sp, #0x40
+000000010000f82c	mov	x20, x3
+000000010000f830	mov	x19, x2
+000000010000f834	mov	x21, x0
+000000010000f838	bl	0x100059308 ; symbol stub for: _objc_retain_x19
+000000010000f83c	adrp	x8, 137 ; 0x100098000
+000000010000f840	ldr	x8, [x8, #0x500] ; Objc class ref: bad class ref
+000000010000f844	stp	x21, x8, [sp]
+000000010000f848	adrp	x8, 149 ; 0x1000a4000
+000000010000f84c	ldr	x1, [x8, #0xbd0]
+000000010000f850	mov	x0, sp
+000000010000f854	bl	0x1000591dc ; Objc message: _objc_msgSendSuper2
+000000010000f858	mov	x21, x0
+000000010000f85c	ldr	x22, [x0, #0x30]
+000000010000f860	str	x19, [x0, #0x30]
+000000010000f864	bl	0x100059308 ; symbol stub for: _objc_retain_x19
+000000010000f868	bl	0x100059260 ; symbol stub for: _objc_release_x22
+000000010000f86c	mov	x0, #0x0
+000000010000f870	mov	w1, #0x1
+000000010000f874	bl	0x100058fa8 ; symbol stub for: _dispatch_queue_attr_make_with_autorelease_frequency
+000000010000f878	mov	x29, x29
+000000010000f87c	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000f880	mov	x22, x0
+000000010000f884	mov	w1, #0x19
+000000010000f888	mov	w2, #0x0
+000000010000f88c	bl	0x100058fc0 ; symbol stub for: _dispatch_queue_attr_make_with_qos_class
+000000010000f890	mov	x29, x29
+000000010000f894	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000f898	mov	x23, x0
+000000010000f89c	bl	0x100059260 ; symbol stub for: _objc_release_x22
+000000010000f8a0	adrp	x0, 90 ; 0x100069000
+000000010000f8a4	add	x0, x0, #0x6bd ; literal pool for: "com.apple.dt.xctest.perform-gesture"
+000000010000f8a8	mov	x1, x23
+000000010000f8ac	bl	0x100058fcc ; symbol stub for: _dispatch_queue_create
+000000010000f8b0	ldr	x8, [x21, #0x8]
+000000010000f8b4	str	x0, [x21, #0x8]
+000000010000f8b8	bl	0x1000592b4 ; symbol stub for: _objc_release_x8
+000000010000f8bc	mov	x0, #0x0
+000000010000f8c0	bl	0x100058cb4 ; symbol stub for: _IOHIDEventSystemClientCreate
+000000010000f8c4	str	x0, [x21, #0x10]
+000000010000f8c8	str	xzr, [x21, #0x20]
+000000010000f8cc	bl	0x100059320 ; symbol stub for: _objc_retain_x20
+000000010000f8d0	ldr	x8, [x21, #0x28]
+000000010000f8d4	str	x20, [x21, #0x28]
+000000010000f8d8	bl	0x1000592b4 ; symbol stub for: _objc_release_x8
+000000010000f8dc	bl	0x10005923c ; symbol stub for: _objc_release_x19
+000000010000f8e0	bl	0x10005926c ; symbol stub for: _objc_release_x23
+000000010000f8e4	mov	x0, x21
+000000010000f8e8	ldp	x29, x30, [sp, #0x40]
+000000010000f8ec	ldp	x20, x19, [sp, #0x30]
+000000010000f8f0	ldp	x22, x21, [sp, #0x20]
+000000010000f8f4	ldp	x24, x23, [sp, #0x10]
+000000010000f8f8	add	sp, sp, #0x50
+000000010000f8fc	ret
+-[XCTouchGesturePerformer initWithUserTestingNotificationProvider:]:
+000000010000f900	stp	x22, x21, [sp, #-0x30]!
+000000010000f904	stp	x20, x19, [sp, #0x10]
+000000010000f908	stp	x29, x30, [sp, #0x20]
+000000010000f90c	add	x29, sp, #0x20
+000000010000f910	mov	x19, x2
+000000010000f914	mov	x20, x0
+000000010000f918	adrp	x8, 129 ; 0x100090000
+000000010000f91c	ldr	x21, [x8, #0x1e0] ; literal pool symbol address: _OBJC_CLASS_$_RCPInlinePlayer
+000000010000f920	bl	0x100059308 ; symbol stub for: _objc_retain_x19
+000000010000f924	mov	x0, x21
+000000010000f928	bl	0x1000591e8 ; symbol stub for: _objc_opt_class
+000000010000f92c	mov	x3, x0
+000000010000f930	mov	x0, x20
+000000010000f934	mov	x2, x19
+000000010000f938	bl	"_objc_msgSend$initWithUserTestingNotificationProvider:eventPlayer:"
+000000010000f93c	mov	x20, x0
+000000010000f940	bl	0x10005923c ; symbol stub for: _objc_release_x19
+000000010000f944	mov	x0, x20
+000000010000f948	ldp	x29, x30, [sp, #0x20]
+000000010000f94c	ldp	x20, x19, [sp, #0x10]
+000000010000f950	ldp	x22, x21, [sp], #0x30
+000000010000f954	ret
+-[XCTouchGesturePerformer _performEventActions:options:withSender:completion:]:
+000000010000fc34	sub	sp, sp, #0xa0
+000000010000fc38	stp	x24, x23, [sp, #0x60]
+000000010000fc3c	stp	x22, x21, [sp, #0x70]
+000000010000fc40	stp	x20, x19, [sp, #0x80]
+000000010000fc44	stp	x29, x30, [sp, #0x90]
+000000010000fc48	add	x29, sp, #0x90
+000000010000fc4c	mov	x21, x5
+000000010000fc50	mov	x19, x4
+000000010000fc54	mov	x22, x3
+000000010000fc58	mov	x20, x2
+000000010000fc5c	mov	x23, x0
+000000010000fc60	bl	0x100059320 ; symbol stub for: _objc_retain_x20
+000000010000fc64	bl	0x100059308 ; symbol stub for: _objc_retain_x19
+000000010000fc68	bl	0x10005932c ; symbol stub for: _objc_retain_x21
+000000010000fc6c	bl	0x100059338 ; symbol stub for: _objc_retain_x22
+000000010000fc70	mov	x0, x23
+000000010000fc74	bl	_objc_msgSend$eventPlayer
+000000010000fc78	mov	x24, x0
+000000010000fc7c	adrp	x8, 129 ; 0x100090000
+000000010000fc80	ldr	x8, [x8, #0xbd8] ; literal pool symbol address: __NSConcreteStackBlock
+000000010000fc84	str	x8, [sp, #0x28]
+000000010000fc88	adrp	x9, 87 ; 0x100066000
+000000010000fc8c	ldr	d0, [x9, #0x5a0]
+000000010000fc90	str	d0, [sp, #0x30]
+000000010000fc94	adrp	x9, 0 ; 0x10000f000
+000000010000fc98	add	x9, x9, #0xd30
+000000010000fc9c	adrp	x10, 130 ; 0x100091000
+000000010000fca0	add	x10, x10, #0xdd8
+000000010000fca4	stp	x9, x10, [sp, #0x38]
+000000010000fca8	stp	x19, x23, [sp, #0x48]
+000000010000fcac	str	x20, [sp, #0x58]
+000000010000fcb0	str	x8, [sp]
+000000010000fcb4	adrp	x8, 0 ; 0x10000f000
+000000010000fcb8	add	x8, x8, #0xe2c
+000000010000fcbc	str	d0, [sp, #0x8]
+000000010000fcc0	adrp	x9, 130 ; 0x100091000
+000000010000fcc4	add	x9, x9, #0xe00
+000000010000fcc8	stp	x8, x9, [sp, #0x10]
+000000010000fccc	str	x21, [sp, #0x20]
+000000010000fcd0	bl	0x10005932c ; symbol stub for: _objc_retain_x21
+000000010000fcd4	bl	0x100059320 ; symbol stub for: _objc_retain_x20
+000000010000fcd8	bl	0x100059308 ; symbol stub for: _objc_retain_x19
+000000010000fcdc	add	x2, sp, #0x28
+000000010000fce0	mov	x4, sp
+000000010000fce4	mov	x0, x24
+000000010000fce8	mov	x3, x22
+000000010000fcec	bl	"_objc_msgSend$playEventActions:options:completion:"
+000000010000fcf0	bl	0x100059260 ; symbol stub for: _objc_release_x22
+000000010000fcf4	ldr	x8, [sp, #0x20]
+000000010000fcf8	bl	0x1000592b4 ; symbol stub for: _objc_release_x8
+000000010000fcfc	ldr	x8, [sp, #0x58]
+000000010000fd00	bl	0x1000592b4 ; symbol stub for: _objc_release_x8
+000000010000fd04	ldr	x8, [sp, #0x48]
+000000010000fd08	bl	0x1000592b4 ; symbol stub for: _objc_release_x8
+000000010000fd0c	bl	0x100059254 ; symbol stub for: _objc_release_x21
+000000010000fd10	bl	0x100059248 ; symbol stub for: _objc_release_x20
+000000010000fd14	bl	0x10005923c ; symbol stub for: _objc_release_x19
+000000010000fd18	ldp	x29, x30, [sp, #0x90]
+000000010000fd1c	ldp	x20, x19, [sp, #0x80]
+000000010000fd20	ldp	x22, x21, [sp, #0x70]
+000000010000fd24	ldp	x24, x23, [sp, #0x60]
+000000010000fd28	add	sp, sp, #0xa0
+000000010000fd2c	ret
+___78-[XCTouchGesturePerformer _performEventActions:options:withSender:completion:]_block_invoke:
+000000010000fd30	sub	sp, sp, #0x70
+000000010000fd34	stp	x22, x21, [sp, #0x40]
+000000010000fd38	stp	x20, x19, [sp, #0x50]
+000000010000fd3c	stp	x29, x30, [sp, #0x60]
+000000010000fd40	add	x29, sp, #0x60
+000000010000fd44	mov	x19, x1
+000000010000fd48	mov	x20, x0
+000000010000fd4c	bl	0x100059308 ; symbol stub for: _objc_retain_x19
+000000010000fd50	bl	_XCTDDefaultLog
+000000010000fd54	mov	x29, x29
+000000010000fd58	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000fd5c	mov	x21, x0
+000000010000fd60	mov	w1, #0x0
+000000010000fd64	bl	0x100059428 ; symbol stub for: _os_log_type_enabled
+000000010000fd68	cbz	w0, 0x10000fd94
+000000010000fd6c	strh	wzr, [sp, #0x30]
+000000010000fd70	adrp	x0, -15 ; 0x100000000
+000000010000fd74	add	x0, x0, #0x0
+000000010000fd78	adrp	x3, 94 ; 0x10006d000
+000000010000fd7c	add	x3, x3, #0xb87 ; literal pool for: "Recap event action playback initiated"
+000000010000fd80	add	x4, sp, #0x30
+000000010000fd84	mov	x1, x21
+000000010000fd88	mov	w2, #0x0
+000000010000fd8c	mov	w5, #0x2
+000000010000fd90	bl	0x100058e7c ; symbol stub for: __os_log_impl
+000000010000fd94	bl	0x100059254 ; symbol stub for: _objc_release_x21
+000000010000fd98	ldr	x2, [x20, #0x20]
+000000010000fd9c	cbz	x2, 0x10000fda8
+000000010000fda0	mov	x0, x19
+000000010000fda4	bl	"_objc_msgSend$setSenderProperties:"
+000000010000fda8	ldr	x0, [x20, #0x28]
+000000010000fdac	mov	x2, x19
+000000010000fdb0	bl	"_objc_msgSend$_beginButtonPressForCurrentModifierFlagsWithComposer:"
+000000010000fdb4	adrp	x8, 129 ; 0x100090000
+000000010000fdb8	ldr	x8, [x8, #0xbd8] ; literal pool symbol address: __NSConcreteStackBlock
+000000010000fdbc	ldr	x20, [x20, #0x30]
+000000010000fdc0	str	x8, [sp, #0x8]
+000000010000fdc4	adrp	x8, 87 ; 0x100066000
+000000010000fdc8	ldr	d0, [x8, #0x5a0]
+000000010000fdcc	adrp	x8, 0 ; 0x10000f000
+000000010000fdd0	add	x8, x8, #0xe18
+000000010000fdd4	str	d0, [sp, #0x10]
+000000010000fdd8	adrp	x9, 130 ; 0x100091000
+000000010000fddc	add	x9, x9, #0xdb0
+000000010000fde0	stp	x8, x9, [sp, #0x18]
+000000010000fde4	str	x19, [sp, #0x28]
+000000010000fde8	bl	0x100059308 ; symbol stub for: _objc_retain_x19
+000000010000fdec	add	x2, sp, #0x8
+000000010000fdf0	mov	x0, x20
+000000010000fdf4	bl	"_objc_msgSend$enumerateObjectsUsingBlock:"
+000000010000fdf8	ldr	x8, [sp, #0x28]
+000000010000fdfc	bl	0x1000592b4 ; symbol stub for: _objc_release_x8
+000000010000fe00	bl	0x10005923c ; symbol stub for: _objc_release_x19
+000000010000fe04	ldp	x29, x30, [sp, #0x60]
+000000010000fe08	ldp	x20, x19, [sp, #0x50]
+000000010000fe0c	ldp	x22, x21, [sp, #0x40]
+000000010000fe10	add	sp, sp, #0x70
+000000010000fe14	ret
+___78-[XCTouchGesturePerformer _performEventActions:options:withSender:completion:]_block_invoke.73:
+000000010000fe18	mov	x8, x1
+000000010000fe1c	ldr	x1, [x0, #0x20]
+000000010000fe20	ldr	x2, [x8, #0x10]
+000000010000fe24	mov	x0, x8
+000000010000fe28	br	x2
+___78-[XCTouchGesturePerformer _performEventActions:options:withSender:completion:]_block_invoke_2:
+000000010000fe2c	sub	sp, sp, #0x30
+000000010000fe30	stp	x20, x19, [sp, #0x10]
+000000010000fe34	stp	x29, x30, [sp, #0x20]
+000000010000fe38	add	x29, sp, #0x20
+000000010000fe3c	mov	x19, x0
+000000010000fe40	bl	_XCTDDefaultLog
+000000010000fe44	mov	x29, x29
+000000010000fe48	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+000000010000fe4c	mov	x20, x0
+000000010000fe50	mov	w1, #0x0
+000000010000fe54	bl	0x100059428 ; symbol stub for: _os_log_type_enabled
+000000010000fe58	cbz	w0, 0x10000fe84
+000000010000fe5c	strh	wzr, [sp]
+000000010000fe60	adrp	x0, -15 ; 0x100000000
+000000010000fe64	add	x0, x0, #0x0
+000000010000fe68	adrp	x3, 94 ; 0x10006d000
+000000010000fe6c	add	x3, x3, #0xbad ; literal pool for: "Recap event action playback completed"
+000000010000fe70	mov	x4, sp
+000000010000fe74	mov	x1, x20
+000000010000fe78	mov	w2, #0x0
+000000010000fe7c	mov	w5, #0x2
+000000010000fe80	bl	0x100058e7c ; symbol stub for: __os_log_impl
+000000010000fe84	bl	0x100059248 ; symbol stub for: _objc_release_x20
+000000010000fe88	ldr	x0, [x19, #0x20]
+000000010000fe8c	ldr	x8, [x0, #0x10]
+000000010000fe90	blr	x8
+000000010000fe94	ldp	x29, x30, [sp, #0x20]
+000000010000fe98	ldp	x20, x19, [sp, #0x10]
+000000010000fe9c	add	sp, sp, #0x30
+000000010000fea0	ret

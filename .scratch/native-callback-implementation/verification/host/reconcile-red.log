@@ -1,0 +1,22 @@
+test_exact_case_inspection_is_ready_without_mutation (test_reconcile.Reconciliation.test_exact_case_inspection_is_ready_without_mutation) ... FAIL
+
+======================================================================
+FAIL: test_exact_case_inspection_is_ready_without_mutation (test_reconcile.Reconciliation.test_exact_case_inspection_is_ready_without_mutation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_reconcile.py", line 199, in test_exact_case_inspection_is_ready_without_mutation
+    self.assertEqual((result.status,result.reason),("retained","METADATA_RECONCILIATION_READY"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: ('retained', 'RECORD_SCHEMA') != ('retained', 'METADATA_RECONCILIATION_READY')
+
+First differing element 1:
+'RECORD_SCHEMA'
+'METADATA_RECONCILIATION_READY'
+
+- ('retained', 'RECORD_SCHEMA')
++ ('retained', 'METADATA_RECONCILIATION_READY')
+
+----------------------------------------------------------------------
+Ran 1 test in 0.022s
+
+FAILED (failures=1)

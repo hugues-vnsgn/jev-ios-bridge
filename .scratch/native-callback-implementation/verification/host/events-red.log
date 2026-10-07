@@ -1,0 +1,71 @@
+test_impossible_callback_events_and_send_return_claims_are_rejected (test_study.Streams.test_impossible_callback_events_and_send_return_claims_are_rejected) ... 
+  test_impossible_callback_events_and_send_return_claims_are_rejected (test_study.Streams.test_impossible_callback_events_and_send_return_claims_are_rejected) (field='late') ... FAIL
+  test_impossible_callback_events_and_send_return_claims_are_rejected (test_study.Streams.test_impossible_callback_events_and_send_return_claims_are_rejected) (field='duplicate') ... FAIL
+  test_impossible_callback_events_and_send_return_claims_are_rejected (test_study.Streams.test_impossible_callback_events_and_send_return_claims_are_rejected) (field='retainedObjects') ... FAIL
+  test_impossible_callback_events_and_send_return_claims_are_rejected (test_study.Streams.test_impossible_callback_events_and_send_return_claims_are_rejected) (field='sendReturned') ... FAIL
+test_impossible_callback_events_and_send_return_claims_are_rejected (test_study.Streams.test_impossible_callback_events_and_send_return_claims_are_rejected) ... FAIL
+
+======================================================================
+FAIL: test_impossible_callback_events_and_send_return_claims_are_rejected (test_study.Streams.test_impossible_callback_events_and_send_return_claims_are_rejected) (field='late')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 606, in test_impossible_callback_events_and_send_return_claims_are_rejected
+    self.assertEqual(result.reason, "CALLBACK_ACCOUNTING_INVALID")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NATIVE_SETTLEMENT_UNCONFIRMED' != 'CALLBACK_ACCOUNTING_INVALID'
+- NATIVE_SETTLEMENT_UNCONFIRMED
++ CALLBACK_ACCOUNTING_INVALID
+
+
+======================================================================
+FAIL: test_impossible_callback_events_and_send_return_claims_are_rejected (test_study.Streams.test_impossible_callback_events_and_send_return_claims_are_rejected) (field='duplicate')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 606, in test_impossible_callback_events_and_send_return_claims_are_rejected
+    self.assertEqual(result.reason, "CALLBACK_ACCOUNTING_INVALID")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NATIVE_SETTLEMENT_UNCONFIRMED' != 'CALLBACK_ACCOUNTING_INVALID'
+- NATIVE_SETTLEMENT_UNCONFIRMED
++ CALLBACK_ACCOUNTING_INVALID
+
+
+======================================================================
+FAIL: test_impossible_callback_events_and_send_return_claims_are_rejected (test_study.Streams.test_impossible_callback_events_and_send_return_claims_are_rejected) (field='retainedObjects')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 606, in test_impossible_callback_events_and_send_return_claims_are_rejected
+    self.assertEqual(result.reason, "CALLBACK_ACCOUNTING_INVALID")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NATIVE_SETTLEMENT_UNCONFIRMED' != 'CALLBACK_ACCOUNTING_INVALID'
+- NATIVE_SETTLEMENT_UNCONFIRMED
++ CALLBACK_ACCOUNTING_INVALID
+
+
+======================================================================
+FAIL: test_impossible_callback_events_and_send_return_claims_are_rejected (test_study.Streams.test_impossible_callback_events_and_send_return_claims_are_rejected) (field='sendReturned')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 606, in test_impossible_callback_events_and_send_return_claims_are_rejected
+    self.assertEqual(result.reason, "CALLBACK_ACCOUNTING_INVALID")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NATIVE_SETTLEMENT_UNCONFIRMED' != 'CALLBACK_ACCOUNTING_INVALID'
+- NATIVE_SETTLEMENT_UNCONFIRMED
++ CALLBACK_ACCOUNTING_INVALID
+
+
+======================================================================
+FAIL: test_impossible_callback_events_and_send_return_claims_are_rejected (test_study.Streams.test_impossible_callback_events_and_send_return_claims_are_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 612, in test_impossible_callback_events_and_send_return_claims_are_rejected
+    self.assertEqual(result.reason, "CALLBACK_ACCOUNTING_INVALID")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NATIVE_SETTLEMENT_UNCONFIRMED' != 'CALLBACK_ACCOUNTING_INVALID'
+- NATIVE_SETTLEMENT_UNCONFIRMED
++ CALLBACK_ACCOUNTING_INVALID
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.198s
+
+FAILED (failures=5)

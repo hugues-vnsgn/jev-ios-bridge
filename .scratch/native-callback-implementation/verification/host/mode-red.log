@@ -1,0 +1,110 @@
+test_metadata_rejects_each_callback_count_and_reference_release_conflict (test_study.Streams.test_metadata_rejects_each_callback_count_and_reference_release_conflict) ... 
+  test_metadata_rejects_each_callback_count_and_reference_release_conflict (test_study.Streams.test_metadata_rejects_each_callback_count_and_reference_release_conflict) (field='started') ... FAIL
+  test_metadata_rejects_each_callback_count_and_reference_release_conflict (test_study.Streams.test_metadata_rejects_each_callback_count_and_reference_release_conflict) (field='sendReturned') ... FAIL
+  test_metadata_rejects_each_callback_count_and_reference_release_conflict (test_study.Streams.test_metadata_rejects_each_callback_count_and_reference_release_conflict) (field='replyReceived') ... FAIL
+  test_metadata_rejects_each_callback_count_and_reference_release_conflict (test_study.Streams.test_metadata_rejects_each_callback_count_and_reference_release_conflict) (field='pending') ... FAIL
+  test_metadata_rejects_each_callback_count_and_reference_release_conflict (test_study.Streams.test_metadata_rejects_each_callback_count_and_reference_release_conflict) (field='late') ... FAIL
+  test_metadata_rejects_each_callback_count_and_reference_release_conflict (test_study.Streams.test_metadata_rejects_each_callback_count_and_reference_release_conflict) (field='duplicate') ... FAIL
+  test_metadata_rejects_each_callback_count_and_reference_release_conflict (test_study.Streams.test_metadata_rejects_each_callback_count_and_reference_release_conflict) (field='retainedObjects') ... FAIL
+test_metadata_rejects_each_callback_count_and_reference_release_conflict (test_study.Streams.test_metadata_rejects_each_callback_count_and_reference_release_conflict) ... FAIL
+
+======================================================================
+FAIL: test_metadata_rejects_each_callback_count_and_reference_release_conflict (test_study.Streams.test_metadata_rejects_each_callback_count_and_reference_release_conflict) (field='started')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 587, in test_metadata_rejects_each_callback_count_and_reference_release_conflict
+    self.assertEqual(result.reason, "METADATA_ADMITTED_QUERY")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'METADATA_COMPLETED' != 'METADATA_ADMITTED_QUERY'
+- METADATA_COMPLETED
++ METADATA_ADMITTED_QUERY
+
+
+======================================================================
+FAIL: test_metadata_rejects_each_callback_count_and_reference_release_conflict (test_study.Streams.test_metadata_rejects_each_callback_count_and_reference_release_conflict) (field='sendReturned')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 587, in test_metadata_rejects_each_callback_count_and_reference_release_conflict
+    self.assertEqual(result.reason, "METADATA_ADMITTED_QUERY")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'METADATA_COMPLETED' != 'METADATA_ADMITTED_QUERY'
+- METADATA_COMPLETED
++ METADATA_ADMITTED_QUERY
+
+
+======================================================================
+FAIL: test_metadata_rejects_each_callback_count_and_reference_release_conflict (test_study.Streams.test_metadata_rejects_each_callback_count_and_reference_release_conflict) (field='replyReceived')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 587, in test_metadata_rejects_each_callback_count_and_reference_release_conflict
+    self.assertEqual(result.reason, "METADATA_ADMITTED_QUERY")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'METADATA_COMPLETED' != 'METADATA_ADMITTED_QUERY'
+- METADATA_COMPLETED
++ METADATA_ADMITTED_QUERY
+
+
+======================================================================
+FAIL: test_metadata_rejects_each_callback_count_and_reference_release_conflict (test_study.Streams.test_metadata_rejects_each_callback_count_and_reference_release_conflict) (field='pending')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 587, in test_metadata_rejects_each_callback_count_and_reference_release_conflict
+    self.assertEqual(result.reason, "METADATA_ADMITTED_QUERY")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'METADATA_COMPLETED' != 'METADATA_ADMITTED_QUERY'
+- METADATA_COMPLETED
++ METADATA_ADMITTED_QUERY
+
+
+======================================================================
+FAIL: test_metadata_rejects_each_callback_count_and_reference_release_conflict (test_study.Streams.test_metadata_rejects_each_callback_count_and_reference_release_conflict) (field='late')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 587, in test_metadata_rejects_each_callback_count_and_reference_release_conflict
+    self.assertEqual(result.reason, "METADATA_ADMITTED_QUERY")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'METADATA_COMPLETED' != 'METADATA_ADMITTED_QUERY'
+- METADATA_COMPLETED
++ METADATA_ADMITTED_QUERY
+
+
+======================================================================
+FAIL: test_metadata_rejects_each_callback_count_and_reference_release_conflict (test_study.Streams.test_metadata_rejects_each_callback_count_and_reference_release_conflict) (field='duplicate')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 587, in test_metadata_rejects_each_callback_count_and_reference_release_conflict
+    self.assertEqual(result.reason, "METADATA_ADMITTED_QUERY")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'METADATA_COMPLETED' != 'METADATA_ADMITTED_QUERY'
+- METADATA_COMPLETED
++ METADATA_ADMITTED_QUERY
+
+
+======================================================================
+FAIL: test_metadata_rejects_each_callback_count_and_reference_release_conflict (test_study.Streams.test_metadata_rejects_each_callback_count_and_reference_release_conflict) (field='retainedObjects')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 587, in test_metadata_rejects_each_callback_count_and_reference_release_conflict
+    self.assertEqual(result.reason, "METADATA_ADMITTED_QUERY")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'METADATA_COMPLETED' != 'METADATA_ADMITTED_QUERY'
+- METADATA_COMPLETED
++ METADATA_ADMITTED_QUERY
+
+
+======================================================================
+FAIL: test_metadata_rejects_each_callback_count_and_reference_release_conflict (test_study.Streams.test_metadata_rejects_each_callback_count_and_reference_release_conflict)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 594, in test_metadata_rejects_each_callback_count_and_reference_release_conflict
+    self.assertEqual(result.reason, "CALLBACK_REFERENCES_UNCONFIRMED")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NATIVE_SETTLEMENT_UNCONFIRMED' != 'CALLBACK_REFERENCES_UNCONFIRMED'
+- NATIVE_SETTLEMENT_UNCONFIRMED
++ CALLBACK_REFERENCES_UNCONFIRMED
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.305s
+
+FAILED (failures=8)

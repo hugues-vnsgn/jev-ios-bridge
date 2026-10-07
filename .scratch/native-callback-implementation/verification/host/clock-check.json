@@ -1,0 +1,9 @@
+{
+  "pythonClockID": 4,
+  "nativeOutput": "4 3164.2913303330001",
+  "pythonBefore": 3163.97845725,
+  "pythonAfter": 3164.291874875,
+  "nativeWithinPythonBounds": true,
+  "scope": "Owned macOS host child, not a simulator run",
+  "source": "#include <stdio.h>\n#include <time.h>\nint main(void) { struct timespec t; if(clock_gettime(CLOCK_MONOTONIC_RAW,&t))return 1; printf(\"%d %.17g\\n\",CLOCK_MONOTONIC_RAW,t.tv_sec+t.tv_nsec/1e9); }\n"
+}

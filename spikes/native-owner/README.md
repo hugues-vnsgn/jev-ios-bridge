@@ -86,8 +86,10 @@ in that namespace; external tools and custom lease roots require separate
 coordination.
 
 The CLI exits 0 for metadata completion, 2 for refusal before owned native work,
-and 3 for retained ownership. A single monotonic allowance covers preparation
-and testing. Expiry writes `stop-admission`, stops new host work and returns
+and 3 for retained ownership. One absolute `CLOCK_MONOTONIC_RAW` deadline covers preparation
+and testing, including runner startup. The host passes it in
+`JEV_NATIVE_OWNER_ADMISSION_DEADLINE`; the simulator does not restart an allowance.
+This clock is shared only within the same Mac, not with a physical device. Expiry writes `stop-admission`, stops new host work and returns
 retained ownership without a terminating signal or replay. An already-started
 native call may continue. Retained subprocess output uses files, so frontend
 exit does not close a pipe and signal the child.
@@ -98,7 +100,8 @@ Observed process exit is recorded independently of record acceptance. Neither
 fact alone permits metadata cleanup.
 
 Metadata cleanup requires the schema-valid complete stream, zero explicit
-native app-element queries, both local completion flags, normal test-class
+native app-element queries, a required zero-count `pointCallbacks` summary,
+both local completion flags, normal test-class
 completion, successful `xcodebuild`, and positive absence of the exact runner
 PID. It removes only the newly installed runner and verifies final app absence
 and initial device states. PID inspection uncertainty retains ownership.
@@ -109,7 +112,10 @@ the host rechecks its initial telemetry before the single recreation write.
 
 A reference study **always retains** the device, fixture and runner resources
 while native settlement is unconfirmed, even when local calls returned and
-references were released. Runner absence is not an accessibility fence. Read
+references were released. Callback summaries record send returns, received,
+pending, late and duplicate replies, plus retained objects. Their final snapshot
+closes observation, not native work; later callbacks may update retained state
+but emit no records after `finished`. Runner absence is not an accessibility fence. Read
 `result.json` and `ownership.json` before any manual follow-up; the host provides
 no automatic force-cleanup or resume command.
 

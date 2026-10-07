@@ -1,0 +1,18 @@
+test_missing_callback_summary_cannot_authorize_metadata_cleanup (test_study.Streams.test_missing_callback_summary_cannot_authorize_metadata_cleanup) ... FAIL
+
+======================================================================
+FAIL: test_missing_callback_summary_cannot_authorize_metadata_cleanup (test_study.Streams.test_missing_callback_summary_cannot_authorize_metadata_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-host/spikes/native-owner/host/test_study.py", line 557, in test_missing_callback_summary_cannot_authorize_metadata_cleanup
+    self.assertEqual(result.status, "retained")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'completed' != 'retained'
+- completed
++ retained
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.037s
+
+FAILED (failures=1)

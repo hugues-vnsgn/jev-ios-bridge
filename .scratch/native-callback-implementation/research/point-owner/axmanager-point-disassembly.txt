@@ -1,0 +1,149 @@
+-[XCAXManager_iOS attributesForElement:attributes:error:]:
+100009c60:	f8 5f bc a9	stp	x24, x23, [sp, #-0x40]!
+100009c64:	f6 57 01 a9	stp	x22, x21, [sp, #0x10]
+100009c68:	f4 4f 02 a9	stp	x20, x19, [sp, #0x20]
+100009c6c:	fd 7b 03 a9	stp	x29, x30, [sp, #0x30]
+100009c70:	fd c3 00 91	add	x29, sp, #0x30
+100009c74:	f3 03 04 aa	mov	x19, x4
+100009c78:	f4 03 03 aa	mov	x20, x3
+100009c7c:	f5 03 02 aa	mov	x21, x2
+100009c80:	f6 03 00 aa	mov	x22, x0
+100009c84:	a7 3d 01 94	bl	0x100059320 ; symbol stub for: _objc_retain_x20
+100009c88:	a9 3d 01 94	bl	0x10005932c ; symbol stub for: _objc_retain_x21
+100009c8c:	e0 03 16 aa	mov	x0, x22
+100009c90:	1c 43 01 94	bl	_objc_msgSend$accessibilitySystem
+100009c94:	fd 03 1d aa	mov	x29, x29
+100009c98:	93 3d 01 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+100009c9c:	f6 03 00 aa	mov	x22, x0
+100009ca0:	f0 42 01 94	bl	_objc_msgSend$accessibilityFramework
+100009ca4:	fd 03 1d aa	mov	x29, x29
+100009ca8:	8f 3d 01 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+100009cac:	f7 03 00 aa	mov	x23, x0
+100009cb0:	e2 03 15 aa	mov	x2, x21
+100009cb4:	e3 03 14 aa	mov	x3, x20
+100009cb8:	e4 03 13 aa	mov	x4, x19
+100009cbc:	59 44 01 94	bl	"_objc_msgSend$attributesForElement:attributes:error:"
+100009cc0:	fd 03 1d aa	mov	x29, x29
+100009cc4:	88 3d 01 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+100009cc8:	f3 03 00 aa	mov	x19, x0
+100009ccc:	5f 3d 01 94	bl	0x100059248 ; symbol stub for: _objc_release_x20
+100009cd0:	61 3d 01 94	bl	0x100059254 ; symbol stub for: _objc_release_x21
+100009cd4:	66 3d 01 94	bl	0x10005926c ; symbol stub for: _objc_release_x23
+100009cd8:	62 3d 01 94	bl	0x100059260 ; symbol stub for: _objc_release_x22
+100009cdc:	e0 03 13 aa	mov	x0, x19
+100009ce0:	fd 7b 43 a9	ldp	x29, x30, [sp, #0x30]
+100009ce4:	f4 4f 42 a9	ldp	x20, x19, [sp, #0x20]
+100009ce8:	f6 57 41 a9	ldp	x22, x21, [sp, #0x10]
+100009cec:	f8 5f c4 a8	ldp	x24, x23, [sp], #0x40
+100009cf0:	1d 3d 01 14	b	0x100059164 ; symbol stub for: _objc_autoreleaseReturnValue
+-[XCAXManager_iOS elementAtPoint:error:]:
+10000a760:	ff 43 02 d1	sub	sp, sp, #0x90
+10000a764:	e9 23 05 6d	stp	d9, d8, [sp, #0x50]
+10000a768:	f6 57 06 a9	stp	x22, x21, [sp, #0x60]
+10000a76c:	f4 4f 07 a9	stp	x20, x19, [sp, #0x70]
+10000a770:	fd 7b 08 a9	stp	x29, x30, [sp, #0x80]
+10000a774:	fd 03 02 91	add	x29, sp, #0x80
+10000a778:	f3 03 02 aa	mov	x19, x2
+10000a77c:	28 1c a1 4e	mov.16b	v8, v1
+10000a780:	09 1c a0 4e	mov.16b	v9, v0
+10000a784:	f4 03 00 aa	mov	x20, x0
+10000a788:	28 04 00 d0	adrp	x8, 134 ; 0x100090000
+10000a78c:	08 fd 45 f9	ldr	x8, [x8, #0xbf8] ; literal pool symbol address: ___stack_chk_guard
+10000a790:	08 01 40 f9	ldr	x8, [x8]
+10000a794:	a8 83 1c f8	stur	x8, [x29, #-0x38]
+10000a798:	c2 3f 01 94	bl	_objc_msgSend$_synchronized_systemWideElement
+10000a79c:	f5 03 00 aa	mov	x21, x0
+10000a7a0:	e0 03 14 aa	mov	x0, x20
+10000a7a4:	57 40 01 94	bl	_objc_msgSend$accessibilitySystem
+10000a7a8:	fd 03 1d aa	mov	x29, x29
+10000a7ac:	ce 3a 01 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+10000a7b0:	f4 03 00 aa	mov	x20, x0
+10000a7b4:	2b 40 01 94	bl	_objc_msgSend$accessibilityFramework
+10000a7b8:	fd 03 1d aa	mov	x29, x29
+10000a7bc:	ca 3a 01 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+10000a7c0:	f6 03 00 aa	mov	x22, x0
+10000a7c4:	e2 03 15 aa	mov	x2, x21
+10000a7c8:	16 52 01 94	bl	"_objc_msgSend$setAXRequestingClientWithElement:"
+10000a7cc:	a5 3a 01 94	bl	0x100059260 ; symbol stub for: _objc_release_x22
+10000a7d0:	9e 3a 01 94	bl	0x100059248 ; symbol stub for: _objc_release_x20
+10000a7d4:	ff 0f 00 f9	str	xzr, [sp, #0x18]
+10000a7d8:	20 41 62 1e	fcvt	s0, d9
+10000a7dc:	01 41 62 1e	fcvt	s1, d8
+10000a7e0:	e1 63 00 91	add	x1, sp, #0x18
+10000a7e4:	e0 03 15 aa	mov	x0, x21
+10000a7e8:	22 00 80 52	mov	w2, #0x1
+10000a7ec:	bd 38 01 94	bl	0x100058ae0 ; symbol stub for: _AXUIElementCopyElementAtPositionWithParams
+10000a7f0:	a0 02 00 34	cbz	w0, 0x10000a844
+10000a7f4:	f3 06 00 b4	cbz	x19, 0x10000a8d0
+10000a7f8:	28 04 00 d0	adrp	x8, 134 ; 0x100090000
+10000a7fc:	14 6d 44 f9	ldr	x20, [x8, #0x8d8] ; literal pool symbol address: _OBJC_CLASS_$_NSError
+10000a800:	69 39 01 94	bl	0x100058da4 ; symbol stub for: _XCTStringFromAXError
+10000a804:	fd 03 1d aa	mov	x29, x29
+10000a808:	b7 3a 01 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+10000a80c:	f5 03 00 aa	mov	x21, x0
+10000a810:	e0 0b 00 f9	str	x0, [sp, #0x10]
+10000a814:	e9 23 00 6d	stp	d9, d8, [sp]
+10000a818:	43 04 00 f0	adrp	x3, 139 ; 0x100095000
+10000a81c:	63 60 32 91	add	x3, x3, #0xc98 ; Objc cfstring ref: @"No AXElement found at {%.0f %.0f}: %@"
+10000a820:	e0 03 14 aa	mov	x0, x20
+10000a824:	62 01 80 52	mov	w2, #0xb
+10000a828:	d6 3f 01 94	bl	"_objc_msgSend$_xctd_error:description:"
+10000a82c:	fd 03 1d aa	mov	x29, x29
+10000a830:	ad 3a 01 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+10000a834:	43 3a 01 94	bl	0x100059140 ; symbol stub for: _objc_autorelease
+10000a838:	14 00 80 d2	mov	x20, #0x0
+10000a83c:	60 02 00 f9	str	x0, [x19]
+10000a840:	22 00 00 14	b	0x10000a8c8
+10000a844:	28 04 00 d0	adrp	x8, 134 ; 0x100090000
+10000a848:	00 8d 41 f9	ldr	x0, [x8, #0x318] ; literal pool symbol address: _OBJC_CLASS_$_XCAccessibilityElement
+10000a84c:	e2 0f 40 f9	ldr	x2, [sp, #0x18]
+10000a850:	14 46 01 94	bl	"_objc_msgSend$elementWithAXUIElement:"
+10000a854:	fd 03 1d aa	mov	x29, x29
+10000a858:	a3 3a 01 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+10000a85c:	f4 03 00 aa	mov	x20, x0
+10000a860:	ef c4 00 94	bl	_XCTDDefaultLog
+10000a864:	fd 03 1d aa	mov	x29, x29
+10000a868:	9f 3a 01 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+10000a86c:	f5 03 00 aa	mov	x21, x0
+10000a870:	01 00 80 52	mov	w1, #0x0
+10000a874:	ed 3a 01 94	bl	0x100059428 ; symbol stub for: _os_log_type_enabled
+10000a878:	80 02 00 34	cbz	w0, 0x10000a8c8
+10000a87c:	e8 02 00 90	adrp	x8, 92 ; 0x100066000
+10000a880:	00 e1 42 fd	ldr	d0, [x8, #0x5c0]
+10000a884:	e0 23 00 bd	str	s0, [sp, #0x20]
+10000a888:	e9 43 02 fc	stur	d9, [sp, #0x24]
+10000a88c:	08 00 81 52	mov	w8, #0x800
+10000a890:	e8 5b 00 79	strh	w8, [sp, #0x2c]
+10000a894:	e8 e3 02 fc	stur	d8, [sp, #0x2e]
+10000a898:	48 08 81 52	mov	w8, #0x842
+10000a89c:	e8 6f 00 79	strh	w8, [sp, #0x36]
+10000a8a0:	f4 1f 00 f9	str	x20, [sp, #0x38]
+10000a8a4:	a0 ff ff d0	adrp	x0, -10 ; 0x100000000
+10000a8a8:	00 00 00 91	add	x0, x0, #0x0
+10000a8ac:	03 03 00 f0	adrp	x3, 99 ; 0x10006d000
+10000a8b0:	63 30 04 91	add	x3, x3, #0x10c ; literal pool for: "Looking up element at point {%.0f, %.0f}, found %{public}@"
+10000a8b4:	e4 83 00 91	add	x4, sp, #0x20
+10000a8b8:	e1 03 15 aa	mov	x1, x21
+10000a8bc:	02 00 80 52	mov	w2, #0x0
+10000a8c0:	05 04 80 52	mov	w5, #0x20
+10000a8c4:	6e 39 01 94	bl	0x100058e7c ; symbol stub for: __os_log_impl
+10000a8c8:	63 3a 01 94	bl	0x100059254 ; symbol stub for: _objc_release_x21
+10000a8cc:	02 00 00 14	b	0x10000a8d4
+10000a8d0:	14 00 80 d2	mov	x20, #0x0
+10000a8d4:	e0 0f 40 f9	ldr	x0, [sp, #0x18]
+10000a8d8:	40 00 00 b4	cbz	x0, 0x10000a8e0
+10000a8dc:	a2 38 01 94	bl	0x100058b64 ; symbol stub for: _CFRelease
+10000a8e0:	a8 83 5c f8	ldur	x8, [x29, #-0x38]
+10000a8e4:	29 04 00 d0	adrp	x9, 134 ; 0x100090000
+10000a8e8:	29 fd 45 f9	ldr	x9, [x9, #0xbf8] ; literal pool symbol address: ___stack_chk_guard
+10000a8ec:	29 01 40 f9	ldr	x9, [x9]
+10000a8f0:	3f 01 08 eb	cmp	x9, x8
+10000a8f4:	01 01 00 54	b.ne	0x10000a914
+10000a8f8:	e0 03 14 aa	mov	x0, x20
+10000a8fc:	fd 7b 48 a9	ldp	x29, x30, [sp, #0x80]
+10000a900:	f4 4f 47 a9	ldp	x20, x19, [sp, #0x70]
+10000a904:	f6 57 46 a9	ldp	x22, x21, [sp, #0x60]
+10000a908:	e9 23 45 6d	ldp	d9, d8, [sp, #0x50]
+10000a90c:	ff 43 02 91	add	sp, sp, #0x90
+10000a910:	15 3a 01 14	b	0x100059164 ; symbol stub for: _objc_autoreleaseReturnValue
+10000a914:	4b 39 01 94	bl	0x100058e40 ; symbol stub for: ___stack_chk_fail

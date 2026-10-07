@@ -1,0 +1,40 @@
+[
+  {
+    "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/native-callback-implementation/verification/native/ordinary.jsonl",
+    "sha256": "4dd8ddbc120bee0084ebf0fca82fd09ebf6f7a542d4f37d1c9ef86dbbeb8426a",
+    "records": 18,
+    "summary": {
+      "late": 0,
+      "pending": 0,
+      "retainedObjects": 2,
+      "sendReturned": 2,
+      "replyReceived": 2,
+      "observationClosed": true,
+      "nativeSettled": false,
+      "duplicate": 0,
+      "started": 2
+    },
+    "parserAcceptedWithSyntheticHarnessFraming": true,
+    "withoutClassMarker": "CLASS_COMPLETION_MISSING",
+    "nativeProcessExitOrSettlementProven": false
+  },
+  {
+    "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/native-callback-implementation/verification/native/pending.jsonl",
+    "sha256": "ff9cc42c0c88d03af7a46d9a557675983391ae02bd2d829d5687fbe937f06d62",
+    "records": 9,
+    "summary": {
+      "late": 0,
+      "pending": 1,
+      "retainedObjects": 0,
+      "sendReturned": 1,
+      "replyReceived": 0,
+      "observationClosed": true,
+      "nativeSettled": false,
+      "duplicate": 0,
+      "started": 1
+    },
+    "parserAcceptedWithSyntheticHarnessFraming": true,
+    "withoutClassMarker": "CLASS_COMPLETION_MISSING",
+    "nativeProcessExitOrSettlementProven": false
+  }
+]

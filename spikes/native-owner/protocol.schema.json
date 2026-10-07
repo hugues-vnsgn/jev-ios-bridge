@@ -123,7 +123,8 @@
               "localMethodsReturned",
               "localReferencesReleased",
               "nativeSettlement",
-              "coverage"
+              "coverage",
+              "pointCallbacks"
             ],
             "properties": {
               "runnerPID": {
@@ -166,6 +167,57 @@
                   },
                   "independentAssociations": {
                     "const": "unestablished"
+                  }
+                }
+              },
+              "pointCallbacks": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "started",
+                  "sendReturned",
+                  "replyReceived",
+                  "pending",
+                  "late",
+                  "duplicate",
+                  "retainedObjects",
+                  "observationClosed",
+                  "nativeSettled"
+                ],
+                "properties": {
+                  "started": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "sendReturned": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "replyReceived": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "pending": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "late": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "duplicate": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "retainedObjects": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "observationClosed": {
+                    "const": true
+                  },
+                  "nativeSettled": {
+                    "const": false
                   }
                 }
               }

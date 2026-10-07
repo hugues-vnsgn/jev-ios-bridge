@@ -1,0 +1,50 @@
+BKSTouchDeliveryObservationService_IPC
+BKSTouchDeliveryObserving_IPC
+BKTouchDeliveryObservationManager
+BKTouchDeliveryGenericGestureFocusObserver
+BKTouchDeliveryStatisticsLoggingObserver
+BKSTouchDeliveryPolicyServerInterface
+BKTouchDeliveryPolicyServer
+T@"BKTouchDeliveryPolicyServer",&,N,V_touchDeliveryPolicyServer
+T@"BKSTouchDeliveryPolicy",&,S_queue_setPolicy:,V_policy
+_didRespondToTouchDelivery
+_queue_resetTouchAuthenticationInitialSampleEvent
+_queue_sendCancelEventForTouchPad:
+_queue_touchWasHardCanceled:
+_queue_touchWasSoftCanceled:
+_touchDeliveryObservationManager
+_touchDeliveryPolicyServer
+cancelAndSuppressTouchesOnDisplay:reason:
+cancelTouchesOnAllDisplays
+cancelTouchesOnDisplay:
+cancelTouchesOnMainDisplay
+cancelTouchesWithIdentifiers:
+initWithHIDService:eventProcessor:displayInfo:dispatcher:touchDeliveryObserver:statisticsObserver:deliveryPolicyServer:eventSystemInteface:
+matchSharingTouchesPolicy:orCancelTouchesPolicy:orCombinedPolicy:
+observeTouchEventDeliveryDidOccur:response:
+setTouchDeliveryPolicyServer:
+shouldCancelTouchesDeliveredToContextId:withInitialTouchTimestamp:
+touchDeliveryPolicyServer
+touchDidHIDCancel:
+touchDidSoftCancel:
+_BKHIDXXCancelTouchesWithIdentifiers
+com.apple.backboard.BKTouchDeliveryObservationManager
+v32@?0q8@"BKSTouchDeliveryUpdate"16^B24
+touch-suppression-cancel-array
+BKTouchDeliveryStatisticsLoggingObserver.m
+com.apple.backboardd.TouchDeliveryPolicyServer
+@16@?0@"BKSTouchDeliveryPolicy"8
+Vv32@0:8@"NSArray<__BKSTouchDeliveryUpdate__>"16@?<v@?@"NSError">24
+@"BKTouchDeliveryPolicyServer"
+@"BKTouchDeliveryGenericGestureFocusObserver"
+@"BKTouchDeliveryObservationManager"
+v24@0:8@"BKSTouchDeliveryPolicy"16
+@"BKSTouchDeliveryPolicy"
+touchpad: Cancel (%{public}@)
+too many touch identifiers passed to CancelTouchesWithIdentifiers (%d)
+cancel touches with identifiers: %{public}@
+resetTouchAuthenticationInitialSampleEventMasks:%{public}@
+Cancel all touches %llX - display:%{public}@ causedByTouchStream:%{public}@
+cancel clients due to system gesture stealing the touches
+-------> synthetic touch cancel due to client change to contextID: 0x%x
+<key>BKTouchDeliveryObservation</key>

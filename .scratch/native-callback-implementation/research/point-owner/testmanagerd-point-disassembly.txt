@@ -1,0 +1,250 @@
+-[XCTDRemoteAutomationSession _XCTD_fetchAttributes:forElement:]:
+10002187c:	ff 43 01 d1	sub	sp, sp, #0x50
+100021880:	f8 5f 01 a9	stp	x24, x23, [sp, #0x10]
+100021884:	f6 57 02 a9	stp	x22, x21, [sp, #0x20]
+100021888:	f4 4f 03 a9	stp	x20, x19, [sp, #0x30]
+10002188c:	fd 7b 04 a9	stp	x29, x30, [sp, #0x40]
+100021890:	fd 03 01 91	add	x29, sp, #0x40
+100021894:	f3 03 03 aa	mov	x19, x3
+100021898:	f4 03 02 aa	mov	x20, x2
+10002189c:	f5 03 00 aa	mov	x21, x0
+1000218a0:	68 03 00 f0	adrp	x8, 111 ; 0x100090000
+1000218a4:	16 19 40 f9	ldr	x22, [x8, #0x30] ; literal pool symbol address: _OBJC_CLASS_$_DTXRemoteInvocationReceipt
+1000218a8:	98 de 00 94	bl	0x100059308 ; symbol stub for: _objc_retain_x19
+1000218ac:	9d de 00 94	bl	0x100059320 ; symbol stub for: _objc_retain_x20
+1000218b0:	e0 03 16 aa	mov	x0, x22
+1000218b4:	20 de 00 94	bl	0x100059134 ; symbol stub for: _objc_alloc_init
+1000218b8:	f6 03 00 aa	mov	x22, x0
+1000218bc:	e0 03 15 aa	mov	x0, x21
+1000218c0:	a8 e5 00 94	bl	_objc_msgSend$automationServices
+1000218c4:	fd 03 1d aa	mov	x29, x29
+1000218c8:	87 de 00 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+1000218cc:	f5 03 00 aa	mov	x21, x0
+1000218d0:	bc e5 00 94	bl	_objc_msgSend$axManager
+1000218d4:	fd 03 1d aa	mov	x29, x29
+1000218d8:	83 de 00 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+1000218dc:	f7 03 00 aa	mov	x23, x0
+1000218e0:	ff 07 00 f9	str	xzr, [sp, #0x8]
+1000218e4:	e4 23 00 91	add	x4, sp, #0x8
+1000218e8:	e2 03 13 aa	mov	x2, x19
+1000218ec:	e3 03 14 aa	mov	x3, x20
+1000218f0:	4c e5 00 94	bl	"_objc_msgSend$attributesForElement:attributes:error:"
+1000218f4:	fd 03 1d aa	mov	x29, x29
+1000218f8:	7b de 00 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+1000218fc:	f8 03 00 aa	mov	x24, x0
+100021900:	4f de 00 94	bl	0x10005923c ; symbol stub for: _objc_release_x19
+100021904:	51 de 00 94	bl	0x100059248 ; symbol stub for: _objc_release_x20
+100021908:	f3 07 40 f9	ldr	x19, [sp, #0x8]
+10002190c:	7f de 00 94	bl	0x100059308 ; symbol stub for: _objc_retain_x19
+100021910:	57 de 00 94	bl	0x10005926c ; symbol stub for: _objc_release_x23
+100021914:	50 de 00 94	bl	0x100059254 ; symbol stub for: _objc_release_x21
+100021918:	e0 03 16 aa	mov	x0, x22
+10002191c:	e2 03 18 aa	mov	x2, x24
+100021920:	e3 03 13 aa	mov	x3, x19
+100021924:	df ee 00 94	bl	"_objc_msgSend$invokeCompletionWithReturnValue:error:"
+100021928:	45 de 00 94	bl	0x10005923c ; symbol stub for: _objc_release_x19
+10002192c:	53 de 00 94	bl	0x100059278 ; symbol stub for: _objc_release_x24
+100021930:	e0 03 16 aa	mov	x0, x22
+100021934:	fd 7b 44 a9	ldp	x29, x30, [sp, #0x40]
+100021938:	f4 4f 43 a9	ldp	x20, x19, [sp, #0x30]
+10002193c:	f6 57 42 a9	ldp	x22, x21, [sp, #0x20]
+100021940:	f8 5f 41 a9	ldp	x24, x23, [sp, #0x10]
+100021944:	ff 43 01 91	add	sp, sp, #0x50
+100021948:	07 de 00 14	b	0x100059164 ; symbol stub for: _objc_autoreleaseReturnValue
+-[XCTDRemoteAutomationSession _XCTD_requestElementAtPoint:]:
+100021b60:	ff 83 01 d1	sub	sp, sp, #0x60
+100021b64:	f8 5f 02 a9	stp	x24, x23, [sp, #0x20]
+100021b68:	f6 57 03 a9	stp	x22, x21, [sp, #0x30]
+100021b6c:	f4 4f 04 a9	stp	x20, x19, [sp, #0x40]
+100021b70:	fd 7b 05 a9	stp	x29, x30, [sp, #0x50]
+100021b74:	fd 43 01 91	add	x29, sp, #0x50
+100021b78:	f3 03 02 aa	mov	x19, x2
+100021b7c:	f5 03 00 aa	mov	x21, x0
+100021b80:	e2 dd 00 94	bl	0x100059308 ; symbol stub for: _objc_retain_x19
+100021b84:	68 03 00 f0	adrp	x8, 111 ; 0x100090000
+100021b88:	00 19 40 f9	ldr	x0, [x8, #0x30] ; literal pool symbol address: _OBJC_CLASS_$_DTXRemoteInvocationReceipt
+100021b8c:	6a dd 00 94	bl	0x100059134 ; symbol stub for: _objc_alloc_init
+100021b90:	f4 03 00 aa	mov	x20, x0
+100021b94:	ff 7f 01 a9	stp	xzr, xzr, [sp, #0x10]
+100021b98:	e1 43 00 91	add	x1, sp, #0x10
+100021b9c:	e0 03 13 aa	mov	x0, x19
+100021ba0:	1e dc 00 94	bl	0x100058c18 ; symbol stub for: _CGPointMakeWithDictionaryRepresentation
+100021ba4:	60 03 00 36	tbz	w0, #0x0, 0x100021c10
+100021ba8:	e0 03 15 aa	mov	x0, x21
+100021bac:	ed e4 00 94	bl	_objc_msgSend$automationServices
+100021bb0:	fd 03 1d aa	mov	x29, x29
+100021bb4:	cc dd 00 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+100021bb8:	f6 03 00 aa	mov	x22, x0
+100021bbc:	01 e5 00 94	bl	_objc_msgSend$axManager
+100021bc0:	fd 03 1d aa	mov	x29, x29
+100021bc4:	c8 dd 00 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+100021bc8:	f7 03 00 aa	mov	x23, x0
+100021bcc:	ff 07 00 f9	str	xzr, [sp, #0x8]
+100021bd0:	e0 07 41 6d	ldp	d0, d1, [sp, #0x10]
+100021bd4:	e2 23 00 91	add	x2, sp, #0x8
+100021bd8:	1a e9 00 94	bl	"_objc_msgSend$elementAtPoint:error:"
+100021bdc:	fd 03 1d aa	mov	x29, x29
+100021be0:	c1 dd 00 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+100021be4:	f8 03 00 aa	mov	x24, x0
+100021be8:	f5 07 40 f9	ldr	x21, [sp, #0x8]
+100021bec:	d0 dd 00 94	bl	0x10005932c ; symbol stub for: _objc_retain_x21
+100021bf0:	9f dd 00 94	bl	0x10005926c ; symbol stub for: _objc_release_x23
+100021bf4:	9b dd 00 94	bl	0x100059260 ; symbol stub for: _objc_release_x22
+100021bf8:	e0 03 14 aa	mov	x0, x20
+100021bfc:	e2 03 18 aa	mov	x2, x24
+100021c00:	e3 03 15 aa	mov	x3, x21
+100021c04:	27 ee 00 94	bl	"_objc_msgSend$invokeCompletionWithReturnValue:error:"
+100021c08:	9c dd 00 94	bl	0x100059278 ; symbol stub for: _objc_release_x24
+100021c0c:	0f 00 00 14	b	0x100021c48
+100021c10:	68 03 00 f0	adrp	x8, 111 ; 0x100090000
+100021c14:	00 6d 44 f9	ldr	x0, [x8, #0x8d8] ; literal pool symbol address: _OBJC_CLASS_$_NSError
+100021c18:	f3 03 00 f9	str	x19, [sp]
+100021c1c:	a3 03 00 b0	adrp	x3, 117 ; 0x100096000
+100021c20:	63 60 34 91	add	x3, x3, #0xd18 ; Objc cfstring ref: @"Input to elementAtPoint is not a validly encoded point: %@"
+100021c24:	c2 04 80 52	mov	w2, #0x26
+100021c28:	d6 e2 00 94	bl	"_objc_msgSend$_xctd_error:description:"
+100021c2c:	fd 03 1d aa	mov	x29, x29
+100021c30:	ad dd 00 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+100021c34:	f5 03 00 aa	mov	x21, x0
+100021c38:	e0 03 14 aa	mov	x0, x20
+100021c3c:	02 00 80 d2	mov	x2, #0x0
+100021c40:	e3 03 15 aa	mov	x3, x21
+100021c44:	17 ee 00 94	bl	"_objc_msgSend$invokeCompletionWithReturnValue:error:"
+100021c48:	83 dd 00 94	bl	0x100059254 ; symbol stub for: _objc_release_x21
+100021c4c:	7c dd 00 94	bl	0x10005923c ; symbol stub for: _objc_release_x19
+100021c50:	e0 03 14 aa	mov	x0, x20
+100021c54:	fd 7b 45 a9	ldp	x29, x30, [sp, #0x50]
+100021c58:	f4 4f 44 a9	ldp	x20, x19, [sp, #0x40]
+100021c5c:	f6 57 43 a9	ldp	x22, x21, [sp, #0x30]
+100021c60:	f8 5f 42 a9	ldp	x24, x23, [sp, #0x20]
+100021c64:	ff 83 01 91	add	sp, sp, #0x60
+100021c68:	3f dd 00 14	b	0x100059164 ; symbol stub for: _objc_autoreleaseReturnValue
+-[XCTestSession _XCT_fetchAttributes:forElement:reply:]:
+10002f28c:	ff 83 01 d1	sub	sp, sp, #0x60
+10002f290:	fa 67 01 a9	stp	x26, x25, [sp, #0x10]
+10002f294:	f8 5f 02 a9	stp	x24, x23, [sp, #0x20]
+10002f298:	f6 57 03 a9	stp	x22, x21, [sp, #0x30]
+10002f29c:	f4 4f 04 a9	stp	x20, x19, [sp, #0x40]
+10002f2a0:	fd 7b 05 a9	stp	x29, x30, [sp, #0x50]
+10002f2a4:	fd 43 01 91	add	x29, sp, #0x50
+10002f2a8:	f5 03 04 aa	mov	x21, x4
+10002f2ac:	f4 03 03 aa	mov	x20, x3
+10002f2b0:	f3 03 02 aa	mov	x19, x2
+10002f2b4:	f7 03 00 aa	mov	x23, x0
+10002f2b8:	14 a8 00 94	bl	0x100059308 ; symbol stub for: _objc_retain_x19
+10002f2bc:	19 a8 00 94	bl	0x100059320 ; symbol stub for: _objc_retain_x20
+10002f2c0:	1b a8 00 94	bl	0x10005932c ; symbol stub for: _objc_retain_x21
+10002f2c4:	ff 07 00 f9	str	xzr, [sp, #0x8]
+10002f2c8:	e2 23 00 91	add	x2, sp, #0x8
+10002f2cc:	e0 03 17 aa	mov	x0, x23
+10002f2d0:	ec b3 00 94	bl	"_objc_msgSend$ensureUITestingIsReadyWithError:"
+10002f2d4:	f8 03 00 aa	mov	x24, x0
+10002f2d8:	f6 07 40 f9	ldr	x22, [sp, #0x8]
+10002f2dc:	17 a8 00 94	bl	0x100059338 ; symbol stub for: _objc_retain_x22
+10002f2e0:	f8 03 00 36	tbz	w24, #0x0, 0x10002f35c
+10002f2e4:	e0 03 17 aa	mov	x0, x23
+10002f2e8:	1e af 00 94	bl	_objc_msgSend$automationServices
+10002f2ec:	fd 03 1d aa	mov	x29, x29
+10002f2f0:	fd a7 00 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+10002f2f4:	f7 03 00 aa	mov	x23, x0
+10002f2f8:	32 af 00 94	bl	_objc_msgSend$axManager
+10002f2fc:	fd 03 1d aa	mov	x29, x29
+10002f300:	f9 a7 00 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+10002f304:	f8 03 00 aa	mov	x24, x0
+10002f308:	f6 03 00 f9	str	x22, [sp]
+10002f30c:	e4 03 00 91	mov	x4, sp
+10002f310:	e2 03 14 aa	mov	x2, x20
+10002f314:	e3 03 13 aa	mov	x3, x19
+10002f318:	c2 ae 00 94	bl	"_objc_msgSend$attributesForElement:attributes:error:"
+10002f31c:	fd 03 1d aa	mov	x29, x29
+10002f320:	f1 a7 00 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+10002f324:	f9 03 00 aa	mov	x25, x0
+10002f328:	fa 03 40 f9	ldr	x26, [sp]
+10002f32c:	0f a8 00 94	bl	0x100059368 ; symbol stub for: _objc_retain_x26
+10002f330:	cc a7 00 94	bl	0x100059260 ; symbol stub for: _objc_release_x22
+10002f334:	d1 a7 00 94	bl	0x100059278 ; symbol stub for: _objc_release_x24
+10002f338:	cd a7 00 94	bl	0x10005926c ; symbol stub for: _objc_release_x23
+10002f33c:	a8 0a 40 f9	ldr	x8, [x21, #0x10]
+10002f340:	e0 03 15 aa	mov	x0, x21
+10002f344:	e1 03 19 aa	mov	x1, x25
+10002f348:	e2 03 1a aa	mov	x2, x26
+10002f34c:	00 01 3f d6	blr	x8
+10002f350:	cd a7 00 94	bl	0x100059284 ; symbol stub for: _objc_release_x25
+10002f354:	f6 03 1a aa	mov	x22, x26
+10002f358:	06 00 00 14	b	0x10002f370
+10002f35c:	a8 0a 40 f9	ldr	x8, [x21, #0x10]
+10002f360:	e0 03 15 aa	mov	x0, x21
+10002f364:	01 00 80 d2	mov	x1, #0x0
+10002f368:	e2 03 16 aa	mov	x2, x22
+10002f36c:	00 01 3f d6	blr	x8
+10002f370:	bc a7 00 94	bl	0x100059260 ; symbol stub for: _objc_release_x22
+10002f374:	b8 a7 00 94	bl	0x100059254 ; symbol stub for: _objc_release_x21
+10002f378:	b4 a7 00 94	bl	0x100059248 ; symbol stub for: _objc_release_x20
+10002f37c:	b0 a7 00 94	bl	0x10005923c ; symbol stub for: _objc_release_x19
+10002f380:	fd 7b 45 a9	ldp	x29, x30, [sp, #0x50]
+10002f384:	f4 4f 44 a9	ldp	x20, x19, [sp, #0x40]
+10002f388:	f6 57 43 a9	ldp	x22, x21, [sp, #0x30]
+10002f38c:	f8 5f 42 a9	ldp	x24, x23, [sp, #0x20]
+10002f390:	fa 67 41 a9	ldp	x26, x25, [sp, #0x10]
+10002f394:	ff 83 01 91	add	sp, sp, #0x60
+10002f398:	c0 03 5f d6	ret
+-[XCTestSession _XCT_requestElementAtPoint:reply:]:
+10002f6d4:	ff 83 01 d1	sub	sp, sp, #0x60
+10002f6d8:	e9 23 01 6d	stp	d9, d8, [sp, #0x10]
+10002f6dc:	f8 5f 02 a9	stp	x24, x23, [sp, #0x20]
+10002f6e0:	f6 57 03 a9	stp	x22, x21, [sp, #0x30]
+10002f6e4:	f4 4f 04 a9	stp	x20, x19, [sp, #0x40]
+10002f6e8:	fd 7b 05 a9	stp	x29, x30, [sp, #0x50]
+10002f6ec:	fd 43 01 91	add	x29, sp, #0x50
+10002f6f0:	f3 03 02 aa	mov	x19, x2
+10002f6f4:	28 1c a1 4e	mov.16b	v8, v1
+10002f6f8:	09 1c a0 4e	mov.16b	v9, v0
+10002f6fc:	f5 03 00 aa	mov	x21, x0
+10002f700:	02 a7 00 94	bl	0x100059308 ; symbol stub for: _objc_retain_x19
+10002f704:	ff 07 00 f9	str	xzr, [sp, #0x8]
+10002f708:	e2 23 00 91	add	x2, sp, #0x8
+10002f70c:	e0 03 15 aa	mov	x0, x21
+10002f710:	dc b2 00 94	bl	"_objc_msgSend$ensureUITestingIsReadyWithError:"
+10002f714:	f6 03 00 aa	mov	x22, x0
+10002f718:	f4 07 40 f9	ldr	x20, [sp, #0x8]
+10002f71c:	01 a7 00 94	bl	0x100059320 ; symbol stub for: _objc_retain_x20
+10002f720:	56 03 00 36	tbz	w22, #0x0, 0x10002f788
+10002f724:	e0 03 15 aa	mov	x0, x21
+10002f728:	26 ae 00 94	bl	_objc_msgSend$axManager
+10002f72c:	fd 03 1d aa	mov	x29, x29
+10002f730:	ed a6 00 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+10002f734:	f5 03 00 aa	mov	x21, x0
+10002f738:	f4 03 00 f9	str	x20, [sp]
+10002f73c:	e2 03 00 91	mov	x2, sp
+10002f740:	20 1d a9 4e	mov.16b	v0, v9
+10002f744:	01 1d a8 4e	mov.16b	v1, v8
+10002f748:	3e b2 00 94	bl	"_objc_msgSend$elementAtPoint:error:"
+10002f74c:	fd 03 1d aa	mov	x29, x29
+10002f750:	e5 a6 00 94	bl	0x1000592e4 ; symbol stub for: _objc_retainAutoreleasedReturnValue
+10002f754:	f6 03 00 aa	mov	x22, x0
+10002f758:	f7 03 40 f9	ldr	x23, [sp]
+10002f75c:	fa a6 00 94	bl	0x100059344 ; symbol stub for: _objc_retain_x23
+10002f760:	ba a6 00 94	bl	0x100059248 ; symbol stub for: _objc_release_x20
+10002f764:	bc a6 00 94	bl	0x100059254 ; symbol stub for: _objc_release_x21
+10002f768:	68 0a 40 f9	ldr	x8, [x19, #0x10]
+10002f76c:	e0 03 13 aa	mov	x0, x19
+10002f770:	e1 03 16 aa	mov	x1, x22
+10002f774:	e2 03 17 aa	mov	x2, x23
+10002f778:	00 01 3f d6	blr	x8
+10002f77c:	b9 a6 00 94	bl	0x100059260 ; symbol stub for: _objc_release_x22
+10002f780:	f4 03 17 aa	mov	x20, x23
+10002f784:	06 00 00 14	b	0x10002f79c
+10002f788:	68 0a 40 f9	ldr	x8, [x19, #0x10]
+10002f78c:	e0 03 13 aa	mov	x0, x19
+10002f790:	01 00 80 d2	mov	x1, #0x0
+10002f794:	e2 03 14 aa	mov	x2, x20
+10002f798:	00 01 3f d6	blr	x8
+10002f79c:	ab a6 00 94	bl	0x100059248 ; symbol stub for: _objc_release_x20
+10002f7a0:	a7 a6 00 94	bl	0x10005923c ; symbol stub for: _objc_release_x19
+10002f7a4:	fd 7b 45 a9	ldp	x29, x30, [sp, #0x50]
+10002f7a8:	f4 4f 44 a9	ldp	x20, x19, [sp, #0x40]
+10002f7ac:	f6 57 43 a9	ldp	x22, x21, [sp, #0x30]
+10002f7b0:	f8 5f 42 a9	ldp	x24, x23, [sp, #0x20]
+10002f7b4:	e9 23 41 6d	ldp	d9, d8, [sp, #0x10]
+10002f7b8:	ff 83 01 91	add	sp, sp, #0x60
+10002f7bc:	c0 03 5f d6	ret
