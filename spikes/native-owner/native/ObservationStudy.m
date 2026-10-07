@@ -131,6 +131,8 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
   }
   NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
   invocation.target = object; invocation.selector = selector; configure(invocation);
+  // Signature inspection and preparation can outlive the initial admission check.
+  if (![self admit:operation]) return nil;
   self.startedCalls += 1;
   if (query) self.queryCalls += 1;
   @try {
@@ -309,6 +311,8 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
   [self record:@"observation" operation:@"fixture-recreation" outcome:@"observed"
        details:@{@"phase": @"before-activation", @"fixturePID": beforeActivation[@"pid"],
                  @"generation": beforeActivation[@"generation"], @"ordinary": beforeActivation[@"ordinary"]}];
+  // Record delivery can block; recheck before the public setup call starts.
+  if (![self admit:@"fixture-recreation"]) return;
   if (!self.activateFixture()) {
     [self record:@"observation" operation:@"fixture-recreation" outcome:@"failed"
          details:@{@"reason": @"activation-failed"}]; return;

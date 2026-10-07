@@ -8,6 +8,8 @@ Do not launch them independently against an arbitrary device.
 `ObservationStudy.run` owns original objects, serial private-selector reads and
 record accounting. Every invocation checks its exact Objective-C ABI and admission
 before starting. The four-method metadata inspection invokes no app-element query.
+Admission is checked again after signature preparation and record delivery,
+immediately before invocation or fixture activation; denied calls are not counted.
 Reference study uses public fixture activation, the original point object at
 (160,170), direct snapshot getters, and the file hook for replacement. Local object
 labels describe this runner's retained objects; they are not native identities.

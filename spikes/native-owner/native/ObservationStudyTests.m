@@ -96,6 +96,22 @@
 }
 @end
 
+@interface PreparingPointClient : FakeClient
+@property NSUInteger pointSignatures;
+@property(copy) void (^duringPreparation)(void);
+@end
+@implementation PreparingPointClient
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
+  NSMethodSignature *signature = [super methodSignatureForSelector:selector];
+  if (selector == NSSelectorFromString(@"accessibilityElementForElementAtPoint:error:")) {
+    self.pointSignatures += 1;
+    // First inspection is metadata; the second prepares the actual point invocation.
+    if (self.pointSignatures == 2) self.duringPreparation();
+  }
+  return signature;
+}
+@end
+
 @interface ObservationStudyTests : XCTestCase
 @end
 @implementation ObservationStudyTests
@@ -321,5 +337,54 @@
   XCTAssertTrue([self hasReason:@"native-exception" records:records]);
   XCTAssertEqualObjects(records.lastObject[@"details"][@"localMethodsReturned"], @NO);
   XCTAssertEqualObjects(records.lastObject[@"outcome"], @"failed");
+}
+- (void)testExpiryOrStopDuringPreActivationEmissionStartsNoActivation {
+  for (NSNumber *expire in @[@YES, @NO]) {
+    FakeClient *client = [FakeClient new]; FakeDevice *device = [FakeDevice new]; device.client = client;
+    NSMutableArray *records = [NSMutableArray array];
+    __block NSTimeInterval now = 10;
+    __block BOOL stopped = NO;
+    __block NSUInteger activations = 0;
+    ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device
+      configuration:@{@"requestId": @"activation-admission", @"plan": @"reference-study", @"allowance": @10}
+      clock:^{ return now; } stop:^{ return stopped; }
+      readFixture:^{ return @{@"pid": @42, @"generation": @0, @"ordinary": @0}; }
+      activateFixture:^{ activations += 1; return YES; }
+      wait:^(NSTimeInterval seconds) { now += seconds; }
+      emit:^(NSDictionary *record) {
+        [records addObject:record];
+        if ([record[@"details"][@"phase"] isEqual:@"before-activation"]) {
+          if (expire.boolValue) now = 20; else stopped = YES;
+        }
+      }];
+    [study run];
+    XCTAssertEqual(activations, 0u, @"No activation after %@ during emission", expire.boolValue ? @"expiry" : @"stop");
+    XCTAssertEqual(client.pointCalls, 0u);
+    XCTAssertEqualObjects(records.lastObject[@"details"][@"appElementQueries"], @0);
+    XCTAssertTrue([self hasReason:@"admission-stopped" records:records]);
+  }
+}
+- (void)testExpiryOrStopDuringSignaturePreparationStartsNoNativeQuery {
+  for (NSNumber *expire in @[@YES, @NO]) {
+    PreparingPointClient *client = [PreparingPointClient new];
+    FakeDevice *device = [FakeDevice new]; device.client = client;
+    NSMutableArray *records = [NSMutableArray array];
+    __block NSTimeInterval now = 10;
+    __block BOOL stopped = NO;
+    client.duringPreparation = ^{ if (expire.boolValue) now = 20; else stopped = YES; };
+    ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device
+      configuration:@{@"requestId": @"query-admission", @"plan": @"reference-study", @"allowance": @10}
+      clock:^{ return now; } stop:^{ return stopped; }
+      readFixture:^{ return @{@"pid": @42, @"generation": @0, @"ordinary": @0}; }
+      activateFixture:^{ return YES; } wait:^(NSTimeInterval seconds) { now += seconds; }
+      emit:^(NSDictionary *record) { [records addObject:record]; }];
+    [study run];
+    XCTAssertEqual(client.pointSignatures, 2u);
+    XCTAssertEqual(client.pointCalls, 0u, @"No point invocation after %@ during preparation", expire.boolValue ? @"expiry" : @"stop");
+    XCTAssertEqual(client.validityArguments.count, 0u);
+    XCTAssertEqualObjects(records.lastObject[@"details"][@"appElementQueries"], @0);
+    XCTAssertEqualObjects(records.lastObject[@"details"][@"localMethodsReturned"], @YES);
+    XCTAssertTrue([self hasReason:@"admission-stopped" records:records]);
+  }
 }
 @end
