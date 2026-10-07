@@ -25,7 +25,7 @@ python3 -W error::ResourceWarning -m unittest discover \
   -s spikes/native-owner/host -p 'test_*.py' -v
 ```
 
-All 89 host tests pass in `/tmp/jev-native-owner-recovery-host-green.log`, including
+All 91 host tests pass in `/tmp/jev-native-owner-recovery-host-green.log`, including
 the real TypeScript lease consumer and harmless children that exit naturally.
 `npm run check` passes 929 tests, typechecking and the package build; its log is
 `/tmp/jev-native-owner-recovery-package-check.log`. Python compile and whitespace
@@ -36,6 +36,13 @@ Independent Spec review found that archive inventory excluded any file named
 in `/tmp/jev-native-owner-recovery-archive-red.log` reached cleanup before the fix.
 Inventory now excludes only the root manifest and refuses the extra file before
 any device command.
+
+Independent Spec review also exposed false retention after a post-unlink sync
+failure. The helper now synchronizes and verifies before unlink, then records
+successful removal immediately. Sync failure leaves the claim held; a later
+directory-close failure cannot undo observed removal. Two guard regressions
+cover this distinction, including the actual Bridge consumer. Claim deletion
+durability is not promised; crash reappearance would conservatively keep it busy.
 
 The original metadata failure, lost historical exit code and archive remain
 unchanged. These changes accept none of the 23 production capability requirements.
