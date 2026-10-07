@@ -1,0 +1,51 @@
+✔ one attempt verifies a fresh visible outcome (1.10725ms)
+✔ cleanup failure cannot publish completed outcome (0.205584ms)
+✔ already satisfied sends nothing (0.092125ms)
+✔ raw duplicate identifiers refuse even when frames overlap (0.100625ms)
+✔ lost acknowledgement never polls or retries and quarantines (0.14075ms)
+✔ unchanged screen times out with one submission (15.416667ms)
+✔ prepare failure quarantines before any observation (0.203209ms)
+✔ evidence write failure after input is inconclusive (0.138375ms)
+✔ ambiguous postcondition after action is inconclusive (0.106416ms)
+✔ nonfinite capture validity refuses before input (0.07975ms)
+✔ observation transport failure is uncertain without input (0.061917ms)
+✔ real driver single submission suppresses expired-reference retry and near-TTL refresh (2.916375ms)
+✔ cancellation after submission does not finish or observe again (0.280875ms)
+✔ late acknowledgement after deadline cannot enable observation or completion (47.763375ms)
+✔ journal claim refusal prevents prepare and observation (0.231833ms)
+✔ initial evidence persistence failure quarantines without input (0.104125ms)
+✔ result evidence is persisted after finish and before journal completion (0.175417ms)
+✔ result evidence failure quarantines before any successful journal terminal (0.08525ms)
+✖ cancelled attempt still persists inconclusive result before quarantine (1.346625ms)
+✔ journal intent includes scenario and observation limits (0.118584ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 19
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 200.694042
+
+✖ failing tests:
+
+test at tests/observed-tap.test.ts:1:8131
+✖ cancelled attempt still persists inconclusive result before quarantine (1.346625ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   'inconclusive'
+  - ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/observed-tap.test.ts:105:52)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ 'inconclusive' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,88 @@
+✔ one attempt verifies a fresh visible outcome (0.9885ms)
+✔ cleanup failure cannot publish completed outcome (0.194041ms)
+✔ already satisfied sends nothing (0.079333ms)
+✔ raw duplicate identifiers refuse even when frames overlap (0.089583ms)
+✔ lost acknowledgement never polls or retries and quarantines (0.120209ms)
+✔ unchanged screen times out with one submission (15.819875ms)
+✔ prepare failure quarantines before any observation (0.184125ms)
+✔ evidence write failure after input is inconclusive (0.150042ms)
+✔ ambiguous postcondition after action is inconclusive (0.103667ms)
+✔ nonfinite capture validity refuses before input (0.077ms)
+✔ observation transport failure is uncertain without input (0.062375ms)
+✔ real driver single submission suppresses expired-reference retry and near-TTL refresh (2.593208ms)
+✔ cancellation after submission does not finish or observe again (0.241709ms)
+✔ late acknowledgement after deadline cannot enable observation or completion (48.804958ms)
+✔ journal claim refusal prevents prepare and observation (0.235ms)
+✖ initial evidence persistence failure quarantines without input (1.35225ms)
+✖ result evidence is persisted after finish and before journal completion (0.393583ms)
+✖ result evidence failure quarantines before any successful journal terminal (0.146916ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 15
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 194.790042
+
+✖ failing tests:
+
+test at tests/observed-tap.test.ts:1:6894
+✖ initial evidence persistence failure quarantines without input (1.35225ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'refused'
+  - 'inconclusive'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/observed-tap.test.ts:89:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'refused',
+    expected: 'inconclusive',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-tap.test.ts:1:7242
+✖ result evidence is persisted after finish and before journal completion (0.393583ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      'finish',
+  -   'evidence',
+      'complete'
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/observed-tap.test.ts:95:56)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'finish', 'complete' ],
+    expected: [ 'finish', 'evidence', 'complete' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-tap.test.ts:1:7807
+✖ result evidence failure quarantines before any successful journal terminal (0.146916ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'outcome_observed'
+  - 'inconclusive'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/observed-tap.test.ts:99:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'outcome_observed',
+    expected: 'inconclusive',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

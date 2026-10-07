@@ -1,0 +1,41 @@
+✔ durable intent survives frontend loss and permanently blocks a successor (51.843958ms)
+✔ completion is immutable, replay is refused, and a different action may proceed (95.323042ms)
+✔ concurrent submissions never both receive admission (52.118834ms)
+✔ uncertain outcomes retain quarantine across restart and do not affect a different device (134.997167ms)
+✔ unwritable journal shape and unencodable intent cannot authorize an action (3.211833ms)
+✔ an abruptly exited real frontend cannot cause action replay (100.248583ms)
+✔ journal creates private device directories and private durable records (30.956084ms)
+✔ failed durable completion leaves quarantine rather than admitting a successor (42.630458ms)
+✔ experiment rejects implicit device, empty guards and unknown options (2.332ms)
+✔ runnable experiment writes actual snapshots and never prepares a repeated attempt (82.091209ms)
+✔ lost tap acknowledgement survives a new runner and blocks new action IDs on the device (112.685ms)
+✔ initial-screenshot persistence failure quarantines the real journal (86.378042ms)
+✔ final-result persistence failure quarantines the real journal (53.663084ms)
+✔ one attempt verifies a fresh visible outcome (1.131708ms)
+✔ cleanup failure cannot publish completed outcome (0.207083ms)
+✔ already satisfied sends nothing (0.109791ms)
+✔ raw duplicate identifiers refuse even when frames overlap (0.093458ms)
+✔ lost acknowledgement never polls or retries and quarantines (0.141916ms)
+✔ unchanged screen times out with one submission (14.9445ms)
+✔ prepare failure quarantines before any observation (0.157083ms)
+✔ evidence write failure after input is inconclusive (0.135958ms)
+✔ ambiguous postcondition after action is inconclusive (0.090042ms)
+✔ nonfinite capture validity refuses before input (0.067875ms)
+✔ observation transport failure is uncertain without input (0.056875ms)
+✔ real driver single submission suppresses expired-reference retry and near-TTL refresh (11.966167ms)
+✔ cancellation after submission does not finish or observe again (0.340583ms)
+✔ late acknowledgement after deadline cannot enable observation or completion (48.578583ms)
+✔ journal claim refusal prevents prepare and observation (0.285167ms)
+✔ initial evidence persistence failure quarantines without input (0.140791ms)
+✔ result evidence is persisted after finish and before journal completion (0.159667ms)
+✔ result evidence failure quarantines before any successful journal terminal (0.100166ms)
+✔ cancelled attempt still persists inconclusive result before quarantine (0.141875ms)
+✔ journal intent includes scenario and observation limits (0.116459ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 601.736583

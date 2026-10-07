@@ -764,9 +764,18 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     return this.gesture(direction === 'down' ? 'scroll-up' : 'scroll-down', snapshot, signal);
   }
 
+  /** Experimental one-submission tap; never refreshes or retries a rejected reference. */
+  tapOnce(ref: string, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined> {
+    return this.lease.track(() => {
+      if (!this.deviceId || snapshot.deviceId !== this.deviceId) throw new Error('Snapshot belongs to a different device');
+      if (Date.now() >= snapshot.expiresAt) throw new StaleSnapshotError();
+      return this.actOnElement({ kind: 'tap', targetRef: ref }, snapshot, scenario, signal, undefined, true);
+    });
+  }
+
   /** `swipeDistance` is MobileBuildMCP's stroke length as a fraction of the element; absent, its default stroke. */
   private async actOnElement(action: ElementAction, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal,
-    swipeDistance?: number): Promise<Snapshot | undefined> {
+    swipeDistance?: number, singleSubmission = false): Promise<Snapshot | undefined> {
     const old = snapshot.elements.find((element) => element.ref === action.targetRef);
     if (!old) throw new StaleSnapshotError('Target reference is absent from observation');
     const requiredAction = action.kind === 'type' ? 'typeText' : action.kind === 'swipe' ? 'swipeWithin' : 'tap';
@@ -777,7 +786,7 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     }
 
     let selected = old;
-    if (Date.now() >= snapshot.expiresAt - 5_000) {
+    if (!singleSubmission && Date.now() >= snapshot.expiresAt - 5_000) {
       const fresh = await this.observe(signal);
       this.referenceRefreshes++;
       this.nearTtlRefreshes++;
@@ -798,7 +807,7 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     try {
       return await this.settledCapture(await this.issueCommand(perform(selected.ref), signal, UI_ACTION_RESULT), signal);
     } catch (error) {
-      if (signal.aborted || !(error instanceof DeviceCliError) || !['SNAPSHOT_EXPIRED', 'ELEMENT_REF_NOT_FOUND'].includes(error.code)) throw error;
+      if (singleSubmission || signal.aborted || !(error instanceof DeviceCliError) || !['SNAPSHOT_EXPIRED', 'ELEMENT_REF_NOT_FOUND'].includes(error.code)) throw error;
       if (error.code === 'SNAPSHOT_EXPIRED') this.referenceExpiries++;
       const fresh = await this.observe(signal);
       this.referenceRefreshes++;

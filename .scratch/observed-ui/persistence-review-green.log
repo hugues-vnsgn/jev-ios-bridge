@@ -1,0 +1,13 @@
+✔ experiment rejects implicit device, empty guards and unknown options (2.183333ms)
+✔ runnable experiment writes actual snapshots and never prepares a repeated attempt (41.614584ms)
+✔ lost tap acknowledgement survives a new runner and blocks new action IDs on the device (46.708666ms)
+✔ initial-screenshot persistence failure quarantines the real journal (45.955958ms)
+✔ final-result persistence failure quarantines the real journal (51.846791ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 370.766708
