@@ -20,7 +20,7 @@ def build(plan, derived, receipts):
     before = binding.source_inventory(ROOT.parent)
     receipts.mkdir(parents=True, mode=0o700, exist_ok=False)
     environment = {key:os.environ[key] for key in
-                   ("PATH", "HOME", "TMPDIR", "LANG", "LC_ALL", "DEVELOPER_DIR", "TOOLCHAINS")
+                   ("PATH", "HOME", "USER", "LOGNAME", "TMPDIR", "LANG", "LC_ALL", "DEVELOPER_DIR", "TOOLCHAINS")
                    if key in os.environ}
     project_command = ["xcodegen", "generate", "--spec", "project.yml"]
     command = binding.build_command(derived, plan, identity)

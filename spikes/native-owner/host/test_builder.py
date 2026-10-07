@@ -9,7 +9,7 @@ import unittest
 
 
 class Builder(unittest.TestCase):
-    def setup_build(self, root, fault=None):
+    def setup_build(self, root, fault=None, require_user=False):
         source = root / "source"
         actual = Path(__file__).resolve().parent.parent
         shutil.copytree(actual, source, ignore=shutil.ignore_patterns("__pycache__", "*.xcodeproj"))
@@ -18,6 +18,10 @@ class Builder(unittest.TestCase):
 import json, os, pathlib, plistlib, sys
 name = pathlib.Path(sys.argv[0]).name
 args = sys.argv[1:]
+if name == "xcodegen" and REQUIRE_USER and not os.environ.get("USER"):
+    raise SystemExit("XcodeGen requires the current username")
+if REQUIRE_USER and any(key in os.environ for key in ("TYPESAFE_API_KEY","JEV_NATIVE_OWNER_PLUGIN_BUNDLE_ID")):
+    raise SystemExit("Builder inherited an unsupported variable")
 with open(TRACE_PATH,"a") as log: log.write(json.dumps([name,*args])+"\\n")
 if name == "git": print("a"*40)
 elif name == "xcodegen":
@@ -45,10 +49,11 @@ else:
     (products/"NativeOwnerStudy.xctestrun").write_bytes(plistlib.dumps({"NativeOwnerStudy":{
       "BlueprintName":"NativeOwnerStudy","TestHostBundleIdentifier":runner_id}}))
     if FAULT == "source-change": pathlib.Path("ObservationStudy.m").write_text("changed during build")
-'''.replace("EXECUTABLE", sys.executable).replace("TRACE_PATH",repr(str(root/"commands.jsonl"))).replace("FAULT",repr(fault))
+'''.replace("EXECUTABLE", sys.executable).replace("TRACE_PATH",repr(str(root/"commands.jsonl"))).replace("FAULT",repr(fault)).replace("REQUIRE_USER",repr(require_user))
         for name in ("xcodegen", "xcodebuild", "git"):
             path = commands / name; path.write_text(script); path.chmod(0o700)
         return source, {"PATH":str(commands)+":/usr/bin:/bin", "HOME":str(root),
+                        "USER":"native-study-test-user", "LOGNAME":"native-study-test-user",
                         "COMMAND_TRACE":str(root/"commands.jsonl")}
 
     def test_reference_cli_build_records_actual_identities_and_every_product(self):
@@ -79,6 +84,17 @@ else:
                     env=env,capture_output=True,text=True,timeout=10)
                 self.assertNotEqual(result.returncode,0)
                 self.assertFalse((root/"receipts/binding.json").exists())
+
+    def test_required_current_username_reaches_xcodegen_without_open_environment_inheritance(self):
+        with tempfile.TemporaryDirectory() as raw:
+            root = Path(raw).resolve(); source,env = self.setup_build(root,require_user=True)
+            env.update({"TYPESAFE_API_KEY":"synthetic-only-canary",
+                        "JEV_NATIVE_OWNER_PLUGIN_BUNDLE_ID":"dev.foreign.plugin"})
+            result = subprocess.run([sys.executable,str(source/"native/build.py"),"--plan","metadata",
+                "--derived-data",str(root/"derived"),"--receipts",str(root/"receipts")],
+                env=env,capture_output=True,text=True,timeout=10)
+            self.assertEqual(result.returncode,0,result.stderr)
+            self.assertTrue((root/"receipts/binding.json").is_file())
 
 
 if __name__ == "__main__": unittest.main()
