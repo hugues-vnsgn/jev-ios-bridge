@@ -1,0 +1,61 @@
+{
+  "archivePath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/upstream-checked-ui-spec/.scratch/checked-ui-wayfinding/research/provider-access-search/sources/wda-277112a4f9bd0088ea9377ef4b88b750231c1f4a.tar.gz",
+  "archiveSHA256": "52dd2a367769f4d44cbfdd940db4e7b0abed52f72deee030ae9631c1f4f83109",
+  "revision": "277112a4f9bd0088ea9377ef4b88b750231c1f4a",
+  "sourceFilesSearched": 507,
+  "suffixes": [
+    ".c",
+    ".cpp",
+    ".h",
+    ".m",
+    ".mm",
+    ".swift"
+  ],
+  "matches": {
+    "accessibilityElementForElementAtPoint": [
+      {
+        "path": "PrivateHeaders/XCTest/XCAXClient_iOS.h",
+        "line": 86,
+        "text": "- (id)accessibilityElementForElementAtPoint:(CGPoint)point error:(id *)error;"
+      },
+      {
+        "path": "PrivateHeaders/XCTest/XCUIAccessibilityInterface-Protocol.h",
+        "line": 52,
+        "text": "- (id)accessibilityElementForElementAtPoint:(CGPoint)point error:(id *)error;"
+      }
+    ],
+    "hitTestElement:": [
+      {
+        "path": "PrivateHeaders/XCTest/XCAXClient_iOS.h",
+        "line": 56,
+        "text": "- (id)hitTestElement:(id)element withPoint:(CGPoint)point error:(id *)error;"
+      },
+      {
+        "path": "PrivateHeaders/XCTest/XCUIAccessibilityInterface-Protocol.h",
+        "line": 31,
+        "text": "- (id)hitTestElement:(id)element withPoint:(CGPoint)point error:(id *)error;"
+      }
+    ],
+    "_XCT_requestElementAtPoint": [
+      {
+        "path": "PrivateHeaders/XCTest/XCTMessagingRole_CapabilityExchange-Protocol.h",
+        "line": 30,
+        "text": "- (void)_XCT_requestElementAtPoint:(CGPoint)point reply:(id /* block */)reply;"
+      },
+      {
+        "path": "WebDriverAgentLib/Utilities/FBActiveAppDetectionPoint.m",
+        "line": 71,
+        "text": "[proxy _XCT_requestElementAtPoint:point"
+      }
+    ]
+  },
+  "capturedFiles": [
+    "WebDriverAgentLib/Utilities/FBActiveAppDetectionPoint.m",
+    "WebDriverAgentLib/Utilities/FBXCTestDaemonsProxy.m",
+    "WebDriverAgentLib/Utilities/FBXCAXClientProxy.m",
+    "PrivateHeaders/XCTest/XCTMessagingChannel_RunnerToDaemon-Protocol.h",
+    "PrivateHeaders/XCTest/XCAXClient_iOS.h",
+    "WebDriverAgentLib/Routing/FBXCElementSnapshot.h",
+    "PrivateHeaders/XCTest/XCTMessagingRole_CapabilityExchange-Protocol.h"
+  ]
+}

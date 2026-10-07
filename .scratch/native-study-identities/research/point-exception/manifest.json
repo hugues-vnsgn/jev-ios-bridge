@@ -1,0 +1,41 @@
+{
+  "algorithm": "SHA-256",
+  "files": {
+    "build-correspondence.json": "e937078e14b459b218ca1b1985ef9057280d9a1a14c8db6d4b1103fb701d5adf",
+    "commands.json": "be5eee2738f3418116d3faf2bfc3a3a322c4e556181b0e580bde9231777558e3",
+    "framework-fixups.log.gz": "360468e85fb91621c2a32bf019d8be97509b4d04f34a5dad90d270e3e440da24",
+    "framework-fixups.log.stderr.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "independent-verification.json": "8b77caf438ad4c8d9537055c7fc20f851debb39e6da11e73c87cea1e9c92f0e4",
+    "origins.json": "f9b01f5e706a8ffa0e5eed1ad77ef544d0605848a46568dc4cc42270e246bb56",
+    "plugin-linked-libraries.log.gz": "81e20236ef9fa9419b1e775103b265f82f1d2976e5adbc4213cc88b1dbc6113a",
+    "plugin-linked-libraries.log.stderr.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "plugin-load-commands.log.gz": "4482c4cd8c31587213dab35e7b3b0005ca664595285b1a81fdd6f63dbb5a5931",
+    "plugin-load-commands.log.stderr.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "point-method-disassembly.log.gz": "3c68ccf9e52e2acefe6ab659ae3ba3588711b1d77df3ed87c7b2991ddaca0162",
+    "point-method-strings.json": "312ce9d18887c8c277871042993968ae5083941db689119402bfc89dd35b7790",
+    "report.md": "c82a08893b988910ce260a542ffa78606dbac842594ace8e013e227c4eef437a",
+    "saved-xcresult-action.json.gz": "b9c18086a37775219293e1c1af5a303c8ade1e7dd2cb84a80ccc286cf4c997c0",
+    "saved-xcresult-action.json.stderr.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "source-receipts-manifest.json": "bdf8d5c33ae9f53f0494c6edf4f34f489ddf9193538089d1dd965ce3a267955e",
+    "wda/LICENSE": "d9910c6ba5e4c29ae415ee3ce875c9e18a60d8bc4d7fe2c2d104db2a718b1bb4",
+    "wda/PrivateHeaders/XCTest/XCAXClient_iOS.h": "1997dee928f681e06279b4202b56bd0b40f6ac69cd0f877469d2a65073be103b",
+    "wda/PrivateHeaders/XCTest/XCTMessagingChannel_RunnerToDaemon-Protocol.h": "b76e417898dd959e3175424277a69993f842c150f0cb5d4782daf8afdb0aeb70",
+    "wda/PrivateHeaders/XCTest/XCTMessagingRole_CapabilityExchange-Protocol.h": "9bd51e1cec2bcbf7aba2c9fb6c560a8cda1645754c536ab48a3d9d0affcd889f",
+    "wda/WebDriverAgentLib/Routing/FBXCElementSnapshot.h": "c3e62bceaf36ba0f50181498f96cfc72f47e93bf97b6fb276cbc6d40b7b52a8a",
+    "wda/WebDriverAgentLib/Utilities/FBActiveAppDetectionPoint.m": "dccb22862b9e8ed77a1dae9a4e580cedb55b8bec351ecb162eb0506a46b4ebe8",
+    "wda/WebDriverAgentLib/Utilities/FBXCAXClientProxy.m": "cdf8234f10c216679e2a0fcc8b4c57a71610676e3a79db99000413f2fad1c2cb",
+    "wda/WebDriverAgentLib/Utilities/FBXCTestDaemonsProxy.m": "b1614812873759bd63f6df6aaecd36d8e556bd7a28890f5680d60b8689ed58f6",
+    "wda-search.json": "5735fe5917aca332ceca7aac47509579f5003cc5c67f3b4efabd77c5bdfc829d"
+  },
+  "compressedRawSHA256": {
+    "framework-fixups.log.gz": "48b008b606ae3d0a5be8c6d66fc1f793220ef8528f066310ca34559bb12dfac6",
+    "framework-fixups.log.stderr.gz": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "plugin-linked-libraries.log.gz": "f53a09f53e056e4607f3f34d8a2fb91bd689546cf2a866d5d840c7e152c6b1e8",
+    "plugin-linked-libraries.log.stderr.gz": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "plugin-load-commands.log.gz": "49b54ef71dd7d9c4771990bf00e4771d1e5ebfeefcec49ae10796690bcbd02d2",
+    "plugin-load-commands.log.stderr.gz": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "point-method-disassembly.log.gz": "04fd7f09255491341e0262a8da03d4d5590f724ce1fdc7a672963518f0f8b046",
+    "saved-xcresult-action.json.gz": "3bb797abd76a3add1ef3d9e815f8e8cd9b9368cf44c33c2c7ff2cebf6787f7f5",
+    "saved-xcresult-action.json.stderr.gz": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

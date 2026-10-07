@@ -21,6 +21,11 @@ canonical absence gate and consumed case. No automatic identity rotation.
   the intended fixture but its first point lookup threw; it retains ownership.
   [Recorded evidence](evidence/2026-10-07/report.md).
 
+- [Diagnose the native point exception](issues/02-diagnose-point-exception.md):
+  the inspected SDK method is a macOS-only assertion stub. Pinned WDA's iOS
+  callback interface is the next source-backed lead; pending-reply ownership and
+  native settlement are unproved. [Source diagnosis](research/point-exception/report.md).
+
 ## Route
 
 <!-- route:start -->
@@ -33,8 +38,7 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01 resolved
-    class T02 claimed
+    class T01,T02 resolved
 ```
 <!-- route:end -->
 
@@ -43,11 +47,11 @@ flowchart LR
 Applicable native ancestry, reference lifetime and input consumption/contact
 release contracts. Observations do not accept any of the 23 production tickets.
 
-The [immediate investigation](issues/02-diagnose-point-exception.md) is the failed native point lookup and its caller
-requirements, using saved evidence and provider sources. The supervisor owns
-that diagnosis. Exception details were not captured; no cause is yet proven.
+The supervisor owns the next callback-contract/design investigation around
+`_XCT_requestElementAtPoint:reply:`. The direct selector is ruled out for the
+inspected framework; its exact caught runtime exception remains unrecorded.
 The reference device/apps/guard remain retained, so no further device work is
-admitted by this effort.
+admitted by this effort. A native completion/stopping contract is still needed.
 
 ## Out of scope
 
