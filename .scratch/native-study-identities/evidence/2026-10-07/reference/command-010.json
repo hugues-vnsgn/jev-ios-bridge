@@ -1,0 +1,27 @@
+{
+  "index": 10,
+  "argv": [
+    "xcrun",
+    "simctl",
+    "launch",
+    "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "dev.jev.research.native-owner-20261007-reference-fixture"
+  ],
+  "state": "exited",
+  "pid": 2991,
+  "ownedProcessGroup": 2991,
+  "captureFiles": {
+    "stdout": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/010-stdout.log",
+    "stderr": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/010-stderr.log"
+  },
+  "processObservation": {
+    "outcome": "completed",
+    "reason": "PROCESS_COMPLETED",
+    "ownedGroupAbsent": true,
+    "streamsClosed": true
+  },
+  "parentReturncode": 0,
+  "returncode": 0,
+  "stdout": "dev.jev.research.native-owner-20261007-reference-fixture: 3044\n",
+  "stderr": ""
+}

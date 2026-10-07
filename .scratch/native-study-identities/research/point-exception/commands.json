@@ -1,0 +1,76 @@
+[
+  {
+    "argv": [
+      "otool",
+      "-arch",
+      "arm64",
+      "-tvV",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCUIAutomation.framework/XCUIAutomation"
+    ],
+    "returncode": 0,
+    "stdout": "framework-disassembly.log",
+    "stderr": "framework-disassembly.log.stderr"
+  },
+  {
+    "argv": [
+      "nm",
+      "-arch",
+      "arm64",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCUIAutomation.framework/XCUIAutomation"
+    ],
+    "returncode": 0,
+    "stdout": "framework-symbols.log",
+    "stderr": "framework-symbols.log.stderr"
+  },
+  {
+    "argv": [
+      "xcrun",
+      "dyld_info",
+      "-fixups",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCUIAutomation.framework/XCUIAutomation"
+    ],
+    "returncode": 0,
+    "stdout": "framework-fixups.log",
+    "stderr": "framework-fixups.log.stderr"
+  },
+  {
+    "argv": [
+      "otool",
+      "-arch",
+      "arm64",
+      "-L",
+      "/private/tmp/jev-native-reference-profile-20261007-build/Build/Products/Debug-iphonesimulator/NativeOwnerStudy-Runner.app/PlugIns/NativeOwnerStudy.xctest/NativeOwnerStudy"
+    ],
+    "returncode": 0,
+    "stdout": "plugin-linked-libraries.log",
+    "stderr": "plugin-linked-libraries.log.stderr"
+  },
+  {
+    "argv": [
+      "otool",
+      "-arch",
+      "arm64",
+      "-l",
+      "/private/tmp/jev-native-reference-profile-20261007-build/Build/Products/Debug-iphonesimulator/NativeOwnerStudy-Runner.app/PlugIns/NativeOwnerStudy.xctest/NativeOwnerStudy"
+    ],
+    "returncode": 0,
+    "stdout": "plugin-load-commands.log",
+    "stderr": "plugin-load-commands.log.stderr"
+  },
+  {
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "log",
+      "--path",
+      "/private/tmp/jev-native-reference-profile-20261007-study/result.xcresult",
+      "--type",
+      "action",
+      "--compact"
+    ],
+    "returncode": 0,
+    "stdout": "saved-xcresult-action.json",
+    "stderr": "saved-xcresult-action.json.stderr"
+  }
+]

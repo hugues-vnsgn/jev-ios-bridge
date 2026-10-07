@@ -1,0 +1,20 @@
+{
+  "sourceCommit": "f045d66ed2d10962b7c06839c0ad22fc884bfcb6",
+  "recordedXcodeVersion": "Xcode 27.0\nBuild version 27A266a",
+  "xctestrunSHA256": "f1069e1358f57a0664c58640ade5d18348c1abef9f8d33e9c632a7a3509aa3e1",
+  "loadedImageUUIDRecorded": false,
+  "limitation": "Static installed framework and build/test search paths correspond; no loaded image UUID or exception name/reason/stack in captured study. No live image inspected.",
+  "xctestrun": {
+    "TestBundlePath": "/private/tmp/jev-native-reference-profile-20261007-build/Build/Products/Debug-iphonesimulator/NativeOwnerStudy-Runner.app/PlugIns/NativeOwnerStudy.xctest",
+    "TestHostPath": "/private/tmp/jev-native-reference-profile-20261007-build/Build/Products/Debug-iphonesimulator/NativeOwnerStudy-Runner.app"
+  },
+  "testFrameworkSearchPath": "/private/tmp/jev-native-reference-profile-20261007-build/Build/Products/Debug-iphonesimulator:__PLATFORMS__/iPhoneSimulator.platform/Developer/Library/Frameworks",
+  "pluginSHA256": "f842db2b36308c90a2b30afc043460a339d17f3ead9ce614d0e2a6168e524979",
+  "pluginSHA256MatchesBuildBinding": true,
+  "boundPluginEntries": [
+    {
+      "path": "Debug-iphonesimulator/NativeOwnerStudy-Runner.app/PlugIns/NativeOwnerStudy.xctest/NativeOwnerStudy",
+      "sha256": "f842db2b36308c90a2b30afc043460a339d17f3ead9ce614d0e2a6168e524979"
+    }
+  ]
+}

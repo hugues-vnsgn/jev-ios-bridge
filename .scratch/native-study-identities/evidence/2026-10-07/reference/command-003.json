@@ -1,0 +1,27 @@
+{
+  "index": 3,
+  "argv": [
+    "xcrun",
+    "simctl",
+    "bootstatus",
+    "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "-b"
+  ],
+  "state": "exited",
+  "pid": 99166,
+  "ownedProcessGroup": 99166,
+  "captureFiles": {
+    "stdout": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/003-stdout.log",
+    "stderr": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/003-stderr.log"
+  },
+  "processObservation": {
+    "outcome": "completed",
+    "reason": "PROCESS_COMPLETED",
+    "ownedGroupAbsent": true,
+    "streamsClosed": true
+  },
+  "parentReturncode": 0,
+  "returncode": 0,
+  "stdout": "Monitoring boot status for jev-ios-bridge (0E42FDE2-5E09-42D3-9876-9EF0037FCBE7).\n[2026-10-07 09:06:37 +0000] Status=2, isTerminal=NO, Elapsed=00:01.\n\tWaiting on Data Migration\n\t\tReason:(null)\n\t\tMigration Elapsed:00:00 seconds\n\n[2026-10-07 09:06:37 +0000] Status=4, isTerminal=NO, Elapsed=00:02.\n\tWaiting on System App\n\n[2026-10-07 09:06:38 +0000] Status=4, isTerminal=NO, Elapsed=00:03.\n\tWaiting on System App\n\n[2026-10-07 09:06:40 +0000] Status=4, isTerminal=NO, Elapsed=00:04.\n\tWaiting on System App\n\n[2026-10-07 09:06:40 +0000] Status=4, isTerminal=NO, Elapsed=00:05.\n\tWaiting on System App\n\n[2026-10-07 09:06:42 +0000] Status=4, isTerminal=NO, Elapsed=00:06.\n\tWaiting on System App\n\n[2026-10-07 09:06:43 +0000] Status=4, isTerminal=NO, Elapsed=00:07.\n\tWaiting on System App\n\n[2026-10-07 09:06:44 +0000] Status=4294967295, isTerminal=YES, Elapsed=00:08.\n\tFinished\n\n",
+  "stderr": ""
+}

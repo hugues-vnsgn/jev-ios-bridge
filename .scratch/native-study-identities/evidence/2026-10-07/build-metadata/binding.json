@@ -1,0 +1,86 @@
+{
+  "schema": "jev.native-owner-build/1",
+  "plan": "metadata",
+  "identity": {
+    "plugin": "dev.jev.research.native-owner-20261007-metadata",
+    "runner": "dev.jev.research.native-owner-20261007-metadata.xctrunner",
+    "fixture": "dev.jev.research.native-owner-20261007-metadata-fixture"
+  },
+  "sourceRoot": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.worktrees/feat/native-study-startup-plan/spikes/native-owner",
+  "derivedData": "/private/tmp/jev-native-metadata-profile-20261007-build-b2",
+  "sourceCommit": "1b32ff2b891aead75580311f8df1dbe0ec01dc8d",
+  "sourceSHA256": {
+    "binding.py": "bc4228062bdca8dd0bef960b86ca0c7acdf1a0b9c5416f487d669e28a18cbfec",
+    "fixture/Fixture.m": "d0483df140c034890aa2b9978ff6f83da5d1077d8db471e559f51d0867f0293f",
+    "host/device_guard.py": "890e883fc7c7d320608c592e4ecac82c9413145076f01d69f800daa1d29b8f2d",
+    "host/reconcile.py": "b226e9b2c30da0ee421a91a7c19f37f84464e5677a2688f7a197b360a2a2ec79",
+    "host/run.py": "f51a23450b20339c05a5e157a50d60d3535f8da99c0743e0dcecb27153beb71f",
+    "host/study.py": "9ad8fa2390793fa254ef6ac8845a5f0f66f072ad2acb0230af0bd839f894f3b0",
+    "native/NativeOwnerStudy.m": "f6e638c18f627b4c564a73dd71be6a65c92d61e0a42ff5439b65ffeaad1cfe92",
+    "native/ObservationStudy.h": "6a8cc0eac8cae0bd5919a2a2e84d9bd2002fb326b57e865c47b92838342505a2",
+    "native/ObservationStudy.m": "54c4cf5271be222f19cdf1630e2ec67d5adfc4cf4051ad48a90b36d2c3d31990",
+    "native/ObservationStudyTests.m": "e47b6f67689b84ec93d3b61fcd18f64d37a49067ef878474b6b71429482b8e71",
+    "native/RecordEncoding.h": "a86449022c726579356ca1b306ad5b44a8420f0bf073878e960a19046605211e",
+    "native/RecordEncoding.m": "831f9ff1e500832f83f03be431aa11c6a71202fa4f0883c3df9a77d9acb91c8a",
+    "native/StudyInfo.plist": "eeb2430a4656608af61959b68ed4494c561abd27336620171e37bbb0652f7e65",
+    "native/build.py": "831461b243c9314d33f1edffa377b5a7fe8792c93b26b894eb3b2f4631c0fc01",
+    "native/project.yml": "2ea35b697ee89af4fa66ae7bbfd0a25cdbd6b02461dff3e374e24d285d957566",
+    "protocol.schema.json": "d0bf4b46fedd5914949fd4ef859e5cda44a1ffc8b67e2d0d5a009a2f8d8bc127",
+    "study-identities.json": "b5ba7c4d48c53741e0c741aab16c5e372f6a90664580c030e11f60bca1c0a7fb"
+  },
+  "xcodeVersion": "Xcode 27.0\nBuild version 27A266a",
+  "projectCommand": [
+    "xcodegen",
+    "generate",
+    "--spec",
+    "project.yml"
+  ],
+  "generatedProjectSHA256": {
+    "project.pbxproj": "b554a27746627318f705847553f4d3994b16b2378de346e56a7f1bd4e1e0c8c5",
+    "project.xcworkspace/contents.xcworkspacedata": "7f3b00b5c3fdb45242d7b87e1e5c4e25d1fa8129a16c94295ecc4e8ea2235c5f",
+    "xcshareddata/xcschemes/NativeOwnerPolicyTests.xcscheme": "7e44a1ebc0842285dada1eb599b0a6047abdd0e26d0a94bf0bbc605ade127950",
+    "xcshareddata/xcschemes/NativeOwnerStudy.xcscheme": "f43501e58f5d97f1308e32024b080401fe087b2aeebdbfc2d74b152889379fa7"
+  },
+  "buildCommand": [
+    "xcodebuild",
+    "build-for-testing",
+    "-project",
+    "NativeOwnerStudy.xcodeproj",
+    "-scheme",
+    "NativeOwnerStudy",
+    "-destination",
+    "generic/platform=iOS Simulator",
+    "-derivedDataPath",
+    "/private/tmp/jev-native-metadata-profile-20261007-build-b2",
+    "JEV_NATIVE_OWNER_PLAN=metadata",
+    "JEV_NATIVE_OWNER_PLUGIN_BUNDLE_ID=dev.jev.research.native-owner-20261007-metadata",
+    "JEV_NATIVE_OWNER_RUNNER_BUNDLE_ID=dev.jev.research.native-owner-20261007-metadata.xctrunner",
+    "JEV_NATIVE_OWNER_FIXTURE_BUNDLE_ID=dev.jev.research.native-owner-20261007-metadata-fixture"
+  ],
+  "buildSettings": {
+    "JEV_NATIVE_OWNER_PLAN": "metadata",
+    "JEV_NATIVE_OWNER_PLUGIN_BUNDLE_ID": "dev.jev.research.native-owner-20261007-metadata",
+    "JEV_NATIVE_OWNER_RUNNER_BUNDLE_ID": "dev.jev.research.native-owner-20261007-metadata.xctrunner",
+    "JEV_NATIVE_OWNER_FIXTURE_BUNDLE_ID": "dev.jev.research.native-owner-20261007-metadata-fixture"
+  },
+  "bundles": {
+    "NativeOwnerStudy-Runner.app": "dev.jev.research.native-owner-20261007-metadata.xctrunner",
+    "NativeOwnerFixture.app": "dev.jev.research.native-owner-20261007-metadata-fixture",
+    "NativeOwnerStudy.xctest": "dev.jev.research.native-owner-20261007-metadata"
+  },
+  "xctestrun": "/private/tmp/jev-native-metadata-profile-20261007-build-b2/Build/Products/NativeOwnerStudy_iphonesimulator27.0-arm64-x86_64.xctestrun",
+  "xctestrunSHA256": "ac9d4c18f440ba3e6b2261143bd618eff56a57a66aa64fa213e10978c147c25d",
+  "productSHA256": {
+    "Debug-iphonesimulator/NativeOwnerFixture.app/Info.plist": "c995f0f5f20f85e4ea36fa68e89e58d901b16ebdcd7fe179fc0b226fcbc48540",
+    "Debug-iphonesimulator/NativeOwnerFixture.app/NativeOwnerFixture": "e7de48521521309454bb29c15538e8d52e2b256276a4b22d6985de601753062a",
+    "Debug-iphonesimulator/NativeOwnerFixture.app/NativeOwnerFixture.debug.dylib": "85085e8223e3fd389156702c6ca589971265554f929a28d9dd43d406656c2abb",
+    "Debug-iphonesimulator/NativeOwnerFixture.app/PkgInfo": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0",
+    "Debug-iphonesimulator/NativeOwnerFixture.app/__preview.dylib": "89aafa7bec7ccbc6bc7095c778c5727b5b4b91316fc0431237cd2a982c97401c",
+    "Debug-iphonesimulator/NativeOwnerStudy-Runner.app/Info.plist": "ca104d873984b5d32ea0cd362f8586654f82553aaf1b830e9d0dfbdf663619d9",
+    "Debug-iphonesimulator/NativeOwnerStudy-Runner.app/NativeOwnerStudy-Runner": "28fcfad44cbcdd2d5843919131a11f1b18d81b4c9709cc92523184926f2ded28",
+    "Debug-iphonesimulator/NativeOwnerStudy-Runner.app/PkgInfo": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0",
+    "Debug-iphonesimulator/NativeOwnerStudy-Runner.app/PlugIns/NativeOwnerStudy.xctest/Info.plist": "9e839cc3c8af3808919df7e29584026a31f94e801fb09b98e1cc72b684512f54",
+    "Debug-iphonesimulator/NativeOwnerStudy-Runner.app/PlugIns/NativeOwnerStudy.xctest/NativeOwnerStudy": "48e3eac7f8a39aab61ac4537b603dd0ab626d525942f1f3719757a0d9d4476fb"
+  },
+  "deviceExecution": false
+}

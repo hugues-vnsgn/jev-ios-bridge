@@ -1,0 +1,28 @@
+{
+  "index": 9,
+  "argv": [
+    "xcrun",
+    "simctl",
+    "get_app_container",
+    "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "dev.jev.research.native-owner-20261007-reference-fixture",
+    "data"
+  ],
+  "state": "exited",
+  "pid": 2969,
+  "ownedProcessGroup": 2969,
+  "captureFiles": {
+    "stdout": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/009-stdout.log",
+    "stderr": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/009-stderr.log"
+  },
+  "processObservation": {
+    "outcome": "completed",
+    "reason": "PROCESS_COMPLETED",
+    "ownedGroupAbsent": true,
+    "streamsClosed": true
+  },
+  "parentReturncode": 0,
+  "returncode": 0,
+  "stdout": "/Users/hugues_mini/Library/Developer/CoreSimulator/Devices/0E42FDE2-5E09-42D3-9876-9EF0037FCBE7/data/Containers/Data/Application/B04690A9-07BC-4521-B233-D1567571F949\n",
+  "stderr": ""
+}

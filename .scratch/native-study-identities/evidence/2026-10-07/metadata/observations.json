@@ -1,0 +1,132 @@
+[
+  {
+    "schema": "jev.native-owner/1",
+    "inputCalls": 0,
+    "sequence": 0,
+    "operation": "metadata",
+    "details": {
+      "plan": "metadata",
+      "runnerPID": 92204
+    },
+    "outcome": "observed",
+    "kind": "started",
+    "requestId": "3472f13c-1700-4651-afd3-ca3205bd5ba2",
+    "elapsedMs": 0.0029166658350732177
+  },
+  {
+    "schema": "jev.native-owner/1",
+    "inputCalls": 0,
+    "sequence": 1,
+    "operation": "metadata",
+    "details": {
+      "studyIdentity": {
+        "runner": "dev.jev.research.native-owner-20261007-metadata.xctrunner",
+        "fixture": "dev.jev.research.native-owner-20261007-metadata-fixture",
+        "plan": "metadata",
+        "plugin": "dev.jev.research.native-owner-20261007-metadata"
+      }
+    },
+    "outcome": "observed",
+    "kind": "observation",
+    "requestId": "3472f13c-1700-4651-afd3-ca3205bd5ba2",
+    "elapsedMs": 0.05758333281846717
+  },
+  {
+    "schema": "jev.native-owner/1",
+    "inputCalls": 0,
+    "sequence": 2,
+    "operation": "metadata",
+    "details": {
+      "methods": [
+        {
+          "arguments": [
+            "@",
+            ":",
+            "{CGPoint=dd}",
+            "^@"
+          ],
+          "returnType": "@",
+          "selector": "accessibilityElementForElementAtPoint:error:",
+          "available": true,
+          "returnLength": 8
+        },
+        {
+          "arguments": [
+            "@",
+            ":",
+            "@"
+          ],
+          "returnType": "B",
+          "selector": "isValidElement:",
+          "available": true,
+          "returnLength": 1
+        },
+        {
+          "arguments": [
+            "@",
+            ":",
+            "@",
+            "@",
+            "@",
+            "^@"
+          ],
+          "returnType": "@",
+          "selector": "requestSnapshotForElement:attributes:parameters:error:",
+          "available": true,
+          "returnLength": 8
+        },
+        {
+          "arguments": [
+            "@",
+            ":",
+            "@",
+            "@",
+            "^@"
+          ],
+          "returnType": "@",
+          "selector": "attributesForElement:attributes:error:",
+          "available": true,
+          "returnLength": 8
+        }
+      ],
+      "interfaceClass": "XCAXClient_iOS",
+      "getter": {
+        "arguments": [
+          "@",
+          ":"
+        ],
+        "returnType": "@",
+        "selector": "accessibilityInterface",
+        "available": true,
+        "returnLength": 8
+      }
+    },
+    "outcome": "observed",
+    "kind": "observation",
+    "requestId": "3472f13c-1700-4651-afd3-ca3205bd5ba2",
+    "elapsedMs": 0.1639166657696478
+  },
+  {
+    "schema": "jev.native-owner/1",
+    "inputCalls": 0,
+    "sequence": 3,
+    "operation": "metadata",
+    "details": {
+      "appElementQueries": 0,
+      "localMethodsReturned": true,
+      "localReferencesReleased": true,
+      "plan": "metadata",
+      "runnerPID": 92204,
+      "coverage": {
+        "independentAssociations": "unestablished",
+        "originalAncestry": "unestablished",
+        "referenceLifetime": "unestablished"
+      },
+      "nativeSettlement": "unconfirmed"
+    },
+    "outcome": "observed",
+    "kind": "finished",
+    "requestId": "3472f13c-1700-4651-afd3-ca3205bd5ba2",
+    "elapsedMs": 0.2037083322647959
+  }
+]

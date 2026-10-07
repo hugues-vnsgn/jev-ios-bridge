@@ -109,12 +109,12 @@ or production owner capability. Its contract is
 Live recovery observed canonical absence and restored Shutdown. After a later
 boot, container lookup and the installed-app listing returned the old runner
 path, while the app and UUID directory were absent. The ordinary host refused
-before native execution and restored its setup. This leaves fixed metadata and
-reference validation incomplete; a provider registration/lifecycle contract is
+before native execution and restored its setup. At that point fixed metadata and
+reference validation were incomplete; a provider registration/lifecycle contract is
 unestablished. Receipts and the bounded diagnostic are recorded in
 `.scratch/native-owner-recovery/evidence/2026-10-07/report.md`.
 
-The next research setup uses two fixed app identity profiles selected by the
+The successor research setup uses two fixed app identity profiles selected by the
 existing metadata/reference plans, on that same device. A builder receipt binds
 source, profile settings, actual products and the test plan; the host verifies
 it before contacting Simulator. Runtime bundle identities and fixture telemetry
@@ -124,6 +124,21 @@ the namespace metadata just cleaned up. Refusal permits no fallback or automatic
 identity rotation. Historical reconciliation and its diagnostic keep their
 original identities, immutable evidence and consumed case. The frozen contract
 is `.scratch/native-study-identities/spec.md`; no owner guarantee is established.
+
+Both profiles built and passed their build/runtime identity gates. Metadata
+completed its zero-query observations and strict cleanup. Reference activated
+the intended fixture but its first direct point call threw; no reference, parent
+or replacement observation followed, and device/apps/guard remain retained.
+The [live report](../../.scratch/native-study-identities/evidence/2026-10-07/report.md)
+keeps successful process exit separate from this native failure.
+
+Static inspection found the installed `XCAXClient_iOS` point method is a
+macOS-only assertion stub. The loaded-image UUID and exact exception were not
+captured, so that finding does not certify the exact runtime throw. Pinned WDA
+uses `testRunnerProxy` → `_XCT_requestElementAtPoint:reply:` for iOS. The
+[source diagnosis](../../.scratch/native-study-identities/research/point-exception/report.md)
+records that alternative and its callback ownership gap. A bounded wait is not
+settlement; no replacement Interface or new device admission is established.
 
 The shared protocol is `spikes/native-owner/protocol.schema.json`. A request ID
 correlates records only. A local reference label names an object held by this

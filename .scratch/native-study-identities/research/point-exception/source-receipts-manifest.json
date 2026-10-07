@@ -1,0 +1,61 @@
+{
+  "binaryPath": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCUIAutomation.framework/XCUIAutomation",
+  "snapshot": "XCUIAutomation.snapshot",
+  "binaryBytes": 3598688,
+  "binarySHA256": "7a5f92eaf8028768ea58c32b1417bc94bf8fefb4900e17c752a31b1492cdd8d7",
+  "arm64UUID": "6C9998E3-2351-34D3-BAAB-B523F500A26A",
+  "pointMethodAddressRange": [
+    "0x77b0",
+    "0x7824"
+  ],
+  "versions": {
+    "xcodeInfo": {
+      "DTSDKName": "macosx27.0.internal",
+      "DTSDKBuild": "26A384",
+      "CFBundleShortVersionString": "27.0",
+      "DTXcodeBuild": "27A266",
+      "CFBundleVersion": "25183.107.5",
+      "DTXcode": "2700"
+    },
+    "xcodeVersion": {
+      "CFBundleShortVersionString": "27.0",
+      "CFBundleVersion": "25183.107.5",
+      "ProductBuildVersion": "27A266a"
+    },
+    "frameworkInfo": {
+      "DTXcode": "2700",
+      "DTSDKName": "iphonesimulator27.0.internal",
+      "DTSDKBuild": "24A395",
+      "CFBundleVersion": "25228",
+      "CFBundleShortVersionString": "16.0",
+      "DTXcodeBuild": "27A252a"
+    }
+  },
+  "files": {
+    "XCUIAutomation.snapshot": "7a5f92eaf8028768ea58c32b1417bc94bf8fefb4900e17c752a31b1492cdd8d7",
+    "build-correspondence.json": "e937078e14b459b218ca1b1985ef9057280d9a1a14c8db6d4b1103fb701d5adf",
+    "commands.json": "be5eee2738f3418116d3faf2bfc3a3a322c4e556181b0e580bde9231777558e3",
+    "framework-disassembly.log": "3dfceb97789437e5db7a0db536102f3399976b89523dbbe99103cd9a70177b71",
+    "framework-disassembly.log.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "framework-fixups.log": "48b008b606ae3d0a5be8c6d66fc1f793220ef8528f066310ca34559bb12dfac6",
+    "framework-fixups.log.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "framework-symbols.log": "69693e80d033c1096b40b1902cdb5a237c003ff7d5acba2e07fc740f26302a3e",
+    "framework-symbols.log.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "plugin-linked-libraries.log": "f53a09f53e056e4607f3f34d8a2fb91bd689546cf2a866d5d840c7e152c6b1e8",
+    "plugin-linked-libraries.log.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "plugin-load-commands.log": "49b54ef71dd7d9c4771990bf00e4771d1e5ebfeefcec49ae10796690bcbd02d2",
+    "plugin-load-commands.log.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "point-method-disassembly.log": "04fd7f09255491341e0262a8da03d4d5590f724ce1fdc7a672963518f0f8b046",
+    "point-method-strings.json": "312ce9d18887c8c277871042993968ae5083941db689119402bfc89dd35b7790",
+    "saved-xcresult-action.json": "3bb797abd76a3add1ef3d9e815f8e8cd9b9368cf44c33c2c7ff2cebf6787f7f5",
+    "saved-xcresult-action.json.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "wda/PrivateHeaders/XCTest/XCAXClient_iOS.h": "1997dee928f681e06279b4202b56bd0b40f6ac69cd0f877469d2a65073be103b",
+    "wda/PrivateHeaders/XCTest/XCTMessagingChannel_RunnerToDaemon-Protocol.h": "b76e417898dd959e3175424277a69993f842c150f0cb5d4782daf8afdb0aeb70",
+    "wda/PrivateHeaders/XCTest/XCTMessagingRole_CapabilityExchange-Protocol.h": "9bd51e1cec2bcbf7aba2c9fb6c560a8cda1645754c536ab48a3d9d0affcd889f",
+    "wda/WebDriverAgentLib/Routing/FBXCElementSnapshot.h": "c3e62bceaf36ba0f50181498f96cfc72f47e93bf97b6fb276cbc6d40b7b52a8a",
+    "wda/WebDriverAgentLib/Utilities/FBActiveAppDetectionPoint.m": "dccb22862b9e8ed77a1dae9a4e580cedb55b8bec351ecb162eb0506a46b4ebe8",
+    "wda/WebDriverAgentLib/Utilities/FBXCAXClientProxy.m": "cdf8234f10c216679e2a0fcc8b4c57a71610676e3a79db99000413f2fad1c2cb",
+    "wda/WebDriverAgentLib/Utilities/FBXCTestDaemonsProxy.m": "b1614812873759bd63f6df6aaecd36d8e556bd7a28890f5680d60b8689ed58f6",
+    "wda-search.json": "5735fe5917aca332ceca7aac47509579f5003cc5c67f3b4efabd77c5bdfc829d"
+  }
+}
