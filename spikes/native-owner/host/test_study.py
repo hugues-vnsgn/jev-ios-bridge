@@ -11,6 +11,7 @@ from study import Configuration, Dependencies, ProcessTools, run_study, UDID, NA
 
 RUNNER = "dev.jev.research.native-owner-study.xctrunner"
 FIXTURE = "dev.jev.research.native-owner-fixture"
+PLUGIN = "dev.jev.research.native-owner-study"
 PREFIX = "JEV_NATIVE_OWNER_V1 "
 
 class Clock:
@@ -70,7 +71,9 @@ class Tools:
         if argv[0] == "xcodebuild":
             self.installed.add(RUNNER)
             plan = plistlib.loads(Path(argv[argv.index("-xctestrun")+1]).read_bytes())
-            environment = plan["NativeOwnerStudy"]["EnvironmentVariables"]
+            target = (plan["TestConfigurations"][0]["TestTargets"][0]
+                      if "TestConfigurations" in plan else plan["NativeOwnerStudy"])
+            environment = target["EnvironmentVariables"]
             self.environment = environment
             if self.test_child is not None: return self.test_child
             output = self.mutate(records(environment["JEV_NATIVE_OWNER_REQUEST_ID"],
@@ -116,8 +119,18 @@ def configuration(root, seconds=90):
         app.mkdir(parents=True)
         (app/"Info.plist").write_bytes(plistlib.dumps({"CFBundleIdentifier":bundle}))
         (app/"executable").write_bytes(b"owned build fixture")
+    plugin=products/"Debug-iphonesimulator/NativeOwnerStudy-Runner.app/PlugIns/NativeOwnerStudy.xctest"
+    plugin.mkdir(parents=True)
+    (plugin/"Info.plist").write_bytes(plistlib.dumps({"CFBundleIdentifier":PLUGIN}))
     (products/"NativeOwnerStudy.xctestrun").write_bytes(plistlib.dumps({"NativeOwnerStudy":{
-        "TestBundlePath":"__TESTROOT__/Debug-iphonesimulator/NativeOwnerStudy-Runner.app/PlugIns/NativeOwnerStudy.xctest"}}))
+        "BlueprintName":"NativeOwnerStudy", "IsUITestBundle":True,
+        "IsXCTRunnerHostedTestBundle":True,"UseUITargetAppProvidedByTests":True,
+        "TestHostBundleIdentifier":RUNNER,
+        "TestHostPath":"__TESTROOT__/Debug-iphonesimulator/NativeOwnerStudy-Runner.app",
+        "TestBundlePath":"__TESTHOST__/PlugIns/NativeOwnerStudy.xctest",
+        "DependentProductPaths":["__TESTROOT__/Debug-iphonesimulator/NativeOwnerFixture.app",
+            "__TESTROOT__/Debug-iphonesimulator/NativeOwnerStudy-Runner.app",
+            "__TESTROOT__/Debug-iphonesimulator/NativeOwnerStudy-Runner.app/PlugIns/NativeOwnerStudy.xctest"]}}))
     source=root/"source"
     (source/"native").mkdir(parents=True)
     (source/"fixture").mkdir()
@@ -360,6 +373,100 @@ class Refusals(unittest.TestCase):
             derived=plistlib.loads((config.evidence_directory/"owned.xctestrun").read_bytes())
             self.assertTrue(derived["NativeOwnerStudy"]["TestBundlePath"].startswith(str(plan_path.parent.resolve())))
             self.assertNotIn(b"synthetic-only-canary",(config.evidence_directory/"owned.xctestrun").read_bytes())
+
+
+class BuildOwnership(unittest.TestCase):
+    def test_verified_build_directory_may_contain_double_underscores(self):
+        with tempfile.TemporaryDirectory() as root:
+            config=configuration(Path(root)/"owned__build")
+            clock=Clock(); tools=Tools(clock,config)
+            result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
+            self.assertEqual(result.status,"completed")
+            self.assertEqual(result.reason,"METADATA_COMPLETED")
+
+    def test_same_named_plan_cannot_launch_foreign_or_stale_artifacts(self):
+        changes={
+            "foreign-host":("TestHostPath","/tmp/Foreign-Runner.app"),
+            "foreign-host-id":("TestHostBundleIdentifier","dev.foreign.runner"),
+            "foreign-plugin":("TestBundlePath","/tmp/Foreign.xctest"),
+            "foreign-plugin-id":("TestBundleIdentifier","dev.foreign.test"),
+            "foreign-dependency":("DependentProductPaths",["/tmp/Foreign.app"]),
+            "foreign-ui-path":("UITargetAppPath","/tmp/Foreign.app"),
+            "foreign-ui-id":("UITargetAppBundleIdentifier","dev.foreign.app"),
+            "missing-host-id":("TestHostBundleIdentifier",None),
+            "unknown-startup-field":("AdditionalStartupTargets",["/tmp/Foreign.app"]),
+        }
+        for name,(field,value) in changes.items():
+            with self.subTest(name=name),tempfile.TemporaryDirectory() as root:
+                config=configuration(root); clock=Clock(); tools=Tools(clock,config)
+                path=config.derived_data/"Build/Products/NativeOwnerStudy.xctestrun"
+                plan=plistlib.loads(path.read_bytes())
+                if value is None: plan["NativeOwnerStudy"].pop(field)
+                else: plan["NativeOwnerStudy"][field]=value
+                path.write_bytes(plistlib.dumps(plan))
+                result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
+                self.assertEqual(result.status,"refused")
+                self.assertEqual(tools.commands,[],"artifact ownership must be checked before any simulator setup")
+
+    def test_foreign_plugin_bundle_and_extra_startup_targets_are_refused(self):
+        for mode in ("plugin-id","extra-legacy-target","extra-modern-target","extra-configuration"):
+            with self.subTest(mode=mode),tempfile.TemporaryDirectory() as root:
+                config=configuration(root); clock=Clock(); tools=Tools(clock,config)
+                path=config.derived_data/"Build/Products/NativeOwnerStudy.xctestrun"
+                plan=plistlib.loads(path.read_bytes())
+                if mode=="plugin-id":
+                    plugin=config.derived_data/"Build/Products/Debug-iphonesimulator/NativeOwnerStudy-Runner.app/PlugIns/NativeOwnerStudy.xctest/Info.plist"
+                    plugin.write_bytes(plistlib.dumps({"CFBundleIdentifier":"dev.foreign.test"}))
+                elif mode=="extra-legacy-target": plan["ForeignStartup"]={"TestHostPath":"/tmp/Foreign.app"}
+                else:
+                    targets=[plan["NativeOwnerStudy"]]
+                    if mode=="extra-modern-target": targets.append({"BlueprintName":"Foreign","TestHostPath":"/tmp/Foreign.app"})
+                    plan={"TestConfigurations":[{"TestTargets":targets}]}
+                    if mode=="extra-configuration": plan["TestConfigurations"].append({"TestTargets":[targets[0]]})
+                path.write_bytes(plistlib.dumps(plan))
+                result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
+                self.assertEqual(result.status,"refused")
+                self.assertEqual(tools.commands,[])
+
+    def test_metadata_derived_plan_contains_only_verified_runner_and_plugin(self):
+        with tempfile.TemporaryDirectory() as root:
+            config=configuration(root); clock=Clock(); tools=Tools(clock,config)
+            result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
+            self.assertEqual(result.status,"completed")
+            target=plistlib.loads((config.evidence_directory/"owned.xctestrun").read_bytes())["NativeOwnerStudy"]
+            runner=(config.derived_data/"Build/Products/Debug-iphonesimulator/NativeOwnerStudy-Runner.app").resolve()
+            plugin=runner/"PlugIns/NativeOwnerStudy.xctest"
+            self.assertEqual(target["TestHostPath"],str(runner))
+            self.assertEqual(target["TestBundlePath"],str(plugin))
+            self.assertEqual(set(target["DependentProductPaths"]),{str(runner),str(plugin)})
+            self.assertFalse(any(key.startswith("UITargetApp") for key in target))
+
+    def test_single_modern_configuration_uses_the_same_verified_products(self):
+        with tempfile.TemporaryDirectory() as root:
+            config=configuration(root); clock=Clock(); tools=Tools(clock,config)
+            path=config.derived_data/"Build/Products/NativeOwnerStudy.xctestrun"
+            target=plistlib.loads(path.read_bytes())["NativeOwnerStudy"]
+            path.write_bytes(plistlib.dumps({"TestConfigurations":[{"Name":"owned","TestTargets":[target]}]}))
+            result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
+            self.assertEqual(result.status,"completed")
+            derived=plistlib.loads((config.evidence_directory/"owned.xctestrun").read_bytes())
+            self.assertEqual(len(derived["TestConfigurations"]),1)
+            self.assertEqual(len(derived["TestConfigurations"][0]["TestTargets"]),1)
+
+    def test_foreign_runtime_library_and_launch_arguments_are_refused_before_tools(self):
+        for field,value in (("TestingEnvironmentVariables",{"DYLD_INSERT_LIBRARIES":"/tmp/foreign.dylib"}),
+                            ("TestingEnvironmentVariables",{"DYLD_FRAMEWORK_PATH":"/tmp/Foreign.framework"}),
+                            ("UITargetAppEnvironmentVariables",{"DYLD_LIBRARY_PATH":"/tmp/foreign"}),
+                            ("CommandLineArguments",["--foreign"]),
+                            ("UITargetAppCommandLineArguments",["--foreign"])):
+            with self.subTest(field=field,value=value),tempfile.TemporaryDirectory() as root:
+                config=configuration(root); clock=Clock(); tools=Tools(clock,config)
+                path=config.derived_data/"Build/Products/NativeOwnerStudy.xctestrun"
+                plan=plistlib.loads(path.read_bytes()); plan["NativeOwnerStudy"][field]=value
+                path.write_bytes(plistlib.dumps(plan))
+                result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
+                self.assertEqual(result.status,"refused")
+                self.assertEqual(tools.commands,[])
 
 
 class Streams(unittest.TestCase):

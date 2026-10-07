@@ -53,7 +53,11 @@ python3 spikes/native-owner/host/run.py \
 ```
 
 Run one study at a time. The host checks the exact inventory and positive app
-absence before installation. It launches only the newly installed owned fixture,
+absence before installation. Before contacting a simulator, it binds the test
+host, plugin, bundle identifiers and every dependent product to the verified
+build. Extra targets, foreign app paths, launch arguments and runtime injections
+are refused. The metadata plan excludes the unused fixture dependency.
+Reference studies launch the newly installed owned fixture,
 confirms its initial PID/generation/zero tap count, and passes the verified data
 container through a derived `.xctestrun`. A native recreation request causes one
 programmatic `Documents/recreate.request` write; setup activation is separate.

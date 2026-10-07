@@ -7,7 +7,8 @@ python3 -W error::ResourceWarning -m unittest discover \
   -s spikes/native-owner/host -p 'test_*.py' -v
 ```
 
-Observed final output: `Ran 27 tests in 5.400s`, `OK`, exit 0. Subcases cover
+Observed final output after the build-ownership correction: `Ran 33 tests`,
+`OK`, exit 0. Subcases cover
 inventory identity/state, exact app absence, product/source provenance, fresh
 evidence, one admission allowance, pre-spawn ownership, complete schema/sequence,
 malformed or contradictory records, 1,024 UTF-8 bytes and 1 MiB boundaries,
@@ -31,6 +32,24 @@ Meaningful red observations preceded their fixes:
 | Measured canonical three-line ENOENT | `refused != completed` | Exact independent stderr oracle, including U+2019; green |
 | Actual Objective-C fixture | `refused != completed` | Accept fixture source in its own directory without a Swift requirement; green |
 | Class completion before finished | `completed != retained` | Require final record before class completion; green |
+| Foreign test-plan products or targets | Initial 14 failing subcases; final five-test suite against `a030f21` reports 19 failures | Verify host/plugin paths and identifiers, dependencies and startup fields before simulator work; green |
+| Verified path containing `__` | `refused != completed` | Compare resolved product paths without treating ordinary underscores as placeholders; green |
+
+Six build-ownership tests exercise the public Interface. They reject foreign
+host/plugin paths and IDs, altered plugin bundle identity, dependent products,
+UI app startup fields, extra legacy/modern targets, injected runtime libraries
+and launch arguments. Positive cases include the single modern configuration
+and the inspected legacy layout. The derived metadata plan contains only the
+verified runner/plugin dependencies and no UI fixture startup fields.
+
+An inspection-only Adapter also accepted the actual generic build at
+`/tmp/jev-native-owner-study-final-build`, including its SDK runtime paths. It
+captured the first inventory argv and deliberately threw without executing any
+command. This checks plan compatibility; it does not constitute a device run.
+
+The old-implementation replay is recorded at
+`/tmp/jev-native-owner-host-build-ownership-red.log`; the full corrected suite is
+recorded at `/tmp/jev-native-owner-host-build-ownership-green.log`.
 
 Also passed: `python3 -m compileall -q spikes/native-owner/host`, CLI `--help`,
 and `git diff --cached --check`. A test-only expectation initially failed on

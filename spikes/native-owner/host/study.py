@@ -16,6 +16,7 @@ NAME = "jev-ios-bridge"
 RUNTIME = "com.apple.CoreSimulator.SimRuntime.iOS-26-4"
 RUNNER = "dev.jev.research.native-owner-study.xctrunner"
 FIXTURE = "dev.jev.research.native-owner-fixture"
+PLUGIN = "dev.jev.research.native-owner-study"
 PREFIX = b"JEV_NATIVE_OWNER_V1 "
 CLASS_COMPLETED = b"JEV_NATIVE_OWNER_CLASS_COMPLETED"
 ABSENT = ("An error was encountered processing the command (domain=NSPOSIXErrorDomain, code=2):\n"
@@ -470,6 +471,12 @@ class _Study:
                     raise _Refusal("BUILD_SYMLINK_UNCONFIRMED")
                 if file.is_file():
                     manifest.append({"path":str(file), "sha256":self.hash_file(file)})
+        self.plugin = self.apps[RUNNER]/"PlugIns/NativeOwnerStudy.xctest"
+        if not self.plugin.is_dir() or self.plugin.is_symlink():
+            raise _Refusal("BUILD_PLUGIN_MISSING")
+        plugin_info = plistlib.loads((self.plugin/"Info.plist").read_bytes())
+        if type(plugin_info) is not dict or plugin_info.get("CFBundleIdentifier") != PLUGIN:
+            raise _Refusal("BUILD_PLUGIN_BUNDLE_MISMATCH")
         source_files = []
         for directory in ("native", "fixture"):
             source_files.extend(file for file in (self.config.source_root/directory).rglob("*")
@@ -486,22 +493,117 @@ class _Study:
         protocol = Path(__file__).parent.parent/"protocol.schema.json"
         manifest.append({"path":str(protocol.resolve()), "sha256":self.hash_file(protocol)})
         self.save("build-manifest.json", manifest)
+        self.read_plan()  # All startup ownership guards precede simulator setup.
 
-    def derive_plan(self):
+    def product_path(self, value):
+        if type(value) is not str or not value or "\n" in value:
+            raise _Refusal("TEST_PLAN_PRODUCT_INVALID")
+        value = value.replace("__TESTROOT__", str(self.test_plan.parent))
+        value = value.replace("__TESTHOST__", str(self.apps[RUNNER]))
+        if not Path(value).is_absolute():
+            raise _Refusal("TEST_PLAN_PRODUCT_INVALID")
+        return Path(value).resolve()
+
+    def read_plan(self):
         try:
             value = plistlib.loads(self.test_plan.read_bytes())
         except (ValueError, plistlib.InvalidFileException):
             raise _Refusal("TEST_PLAN_INVALID") from None
-        targets = []
+        if type(value) is not dict:
+            raise _Refusal("TEST_PLAN_INVALID")
         if "TestConfigurations" in value:
-            for configuration in value["TestConfigurations"]:
-                for target in configuration.get("TestTargets", []):
-                    if target.get("BlueprintName") == "NativeOwnerStudy":
-                        targets.append(target)
-        elif type(value.get("NativeOwnerStudy")) is dict:
-            targets.append(value["NativeOwnerStudy"])
-        if len(targets) != 1:
+            if set(value)-{"TestConfigurations","__xctestrun_metadata__"}:
+                raise _Refusal("TEST_PLAN_EXTRA_TARGET")
+            configurations=value["TestConfigurations"]
+            if type(configurations) is not list or len(configurations)!=1 or type(configurations[0]) is not dict:
+                raise _Refusal("TEST_PLAN_TARGET_AMBIGUOUS")
+            configuration=configurations[0]
+            if set(configuration)-{"Name","ID","IsEnabled","TestTargets"}:
+                raise _Refusal("TEST_PLAN_CONFIGURATION_UNSUPPORTED")
+            if "IsEnabled" in configuration and configuration["IsEnabled"] is not True:
+                raise _Refusal("TEST_PLAN_CONFIGURATION_DISABLED")
+            targets=configuration.get("TestTargets")
+            if type(targets) is not list or len(targets)!=1:
+                raise _Refusal("TEST_PLAN_TARGET_AMBIGUOUS")
+            target=targets[0]
+        else:
+            if set(value)-{"NativeOwnerStudy","__xctestrun_metadata__"}:
+                raise _Refusal("TEST_PLAN_EXTRA_TARGET")
+            target=value.get("NativeOwnerStudy")
+        if type(target) is not dict or target.get("BlueprintName")!="NativeOwnerStudy":
             raise _Refusal("TEST_PLAN_TARGET_AMBIGUOUS")
+        # This is the inspected standalone build format, not a general xctestrun
+        # runner. Unknown startup fields cannot inherit this study's provenance.
+        fields={"BlueprintName","BlueprintProviderName","BlueprintProviderRelativePath",
+            "BundleIdentifiersForCrashReportEmphasis","CommandLineArguments",
+            "DefaultTestExecutionTimeAllowance","DependentProductPaths","DiagnosticCollectionPolicy",
+            "EnvironmentVariables","IsMemoryTaggingAddressSanitizerEnabled","IsUITestBundle",
+            "IsXCTRunnerHostedTestBundle","PreferredScreenCaptureFormat","ProcessNamesForCrashReportCollection",
+            "ProductModuleName","RunOrder","SystemAttachmentLifetime","TestBundlePath","TestBundleIdentifier",
+            "TestHostBundleIdentifier","TestHostPath","TestLanguage","TestRegion","TestTimeoutsEnabled",
+            "TestingEnvironmentVariables","ToolchainsSettingValue","UITargetAppCommandLineArguments",
+            "UITargetAppEnvironmentVariables","UITargetAppPerformanceAntipatternCheckerEnabled",
+            "UseUITargetAppProvidedByTests","UserAttachmentLifetime","UITargetAppPath","UITargetAppBundleIdentifier"}
+        if set(target)-fields:
+            raise _Refusal("TEST_PLAN_FIELDS_UNSUPPORTED")
+        if (target.get("TestHostBundleIdentifier")!=RUNNER or
+            target.get("IsUITestBundle") is not True or
+            target.get("IsXCTRunnerHostedTestBundle") is not True or
+            target.get("UseUITargetAppProvidedByTests") is not True or
+            target.get("TestBundleIdentifier",PLUGIN)!=PLUGIN):
+            raise _Refusal("TEST_PLAN_BUNDLE_MISMATCH")
+        runner,plugin,fixture=self.apps[RUNNER].resolve(),self.plugin.resolve(),self.apps[FIXTURE].resolve()
+        if self.product_path(target.get("TestHostPath"))!=runner or self.product_path(target.get("TestBundlePath"))!=plugin:
+            raise _Refusal("TEST_PLAN_PRODUCT_MISMATCH")
+        dependencies=target.get("DependentProductPaths")
+        if type(dependencies) is not list:
+            raise _Refusal("TEST_PLAN_DEPENDENCIES_INVALID")
+        resolved=[self.product_path(path) for path in dependencies]
+        if (len(resolved)!=len(set(resolved)) or not {runner,plugin}.issubset(resolved) or
+            set(resolved)-{runner,plugin,fixture} or
+            (self.plan=="reference-study" and fixture not in resolved)):
+            raise _Refusal("TEST_PLAN_DEPENDENCIES_INVALID")
+        if "UITargetAppPath" in target and self.product_path(target["UITargetAppPath"])!=fixture:
+            raise _Refusal("TEST_PLAN_UI_TARGET_MISMATCH")
+        if "UITargetAppBundleIdentifier" in target and target["UITargetAppBundleIdentifier"]!=FIXTURE:
+            raise _Refusal("TEST_PLAN_UI_TARGET_MISMATCH")
+        for field in ("CommandLineArguments","UITargetAppCommandLineArguments"):
+            if target.get(field,[])!=[]:
+                raise _Refusal("TEST_PLAN_ARGUMENTS_UNSUPPORTED")
+        products=str(self.apps[RUNNER].parent)
+        templates={"DYLD_FRAMEWORK_PATH":products+":__PLATFORMS__/iPhoneSimulator.platform/Developer/Library/Frameworks",
+            "DYLD_LIBRARY_PATH":products+":__PLATFORMS__/iPhoneSimulator.platform/Developer/usr/lib",
+            "XCODE_SCHEME_NAME":"NativeOwnerStudy","__XCODE_BUILT_PRODUCTS_DIR_PATHS":products,
+            "__XPC_DYLD_FRAMEWORK_PATH":products,"__XPC_DYLD_LIBRARY_PATH":products}
+        for field in ("TestingEnvironmentVariables","UITargetAppEnvironmentVariables"):
+            environment=target.get(field,{})
+            if type(environment) is not dict:
+                raise _Refusal("TEST_PLAN_ENVIRONMENT_INVALID")
+            for name,item in environment.items():
+                expanded=item.replace("__TESTROOT__",str(self.test_plan.parent)) if type(item) is str else None
+                expected=templates.get(name)
+                if field=="UITargetAppEnvironmentVariables" and name=="APP_DISTRIBUTOR_ID_OVERRIDE":
+                    expected="com.apple.AppStore"
+                if name in ("DYLD_FRAMEWORK_PATH","DYLD_LIBRARY_PATH") and expanded==products:
+                    continue
+                if expected is None or expanded!=expected:
+                    raise _Refusal("TEST_PLAN_ENVIRONMENT_UNSUPPORTED")
+        if type(target.get("EnvironmentVariables",{})) is not dict:
+            raise _Refusal("TEST_PLAN_ENVIRONMENT_INVALID")
+        target["TestHostPath"]=str(runner)
+        target["TestBundlePath"]=str(plugin)
+        target["DependentProductPaths"]=[str(path) for path in resolved
+                                         if self.plan!="metadata" or path!=fixture]
+        if self.plan=="metadata":
+            for field in list(target):
+                if field.startswith("UITargetApp"):
+                    del target[field]
+        elif "UITargetAppPath" in target:
+            target["UITargetAppPath"]=str(fixture)
+        self.plan_document,self.plan_target=value,target
+
+    def derive_plan(self):
+        value,target=self.plan_document,self.plan_target
         self.admit()
         environment = {
             "JEV_NATIVE_OWNER_REQUEST_ID":self.request,
@@ -511,17 +613,15 @@ class _Study:
         }
         if self.fixture_documents:
             environment["JEV_NATIVE_OWNER_FIXTURE_DOCUMENTS"] = str(self.fixture_documents)
-        target = targets[0]
-        allowed = ("DYLD_FRAMEWORK_PATH", "DYLD_LIBRARY_PATH", "LLVM_PROFILE_FILE",
-                   "XCInjectBundleInto", "XCTestBundlePath", "XCTestConfigurationFilePath")
         existing = target.get("EnvironmentVariables", {})
         if type(existing) is not dict:
             raise _Refusal("TEST_PLAN_ENVIRONMENT_INVALID")
-        target["EnvironmentVariables"] = {key:item for key,item in existing.items() if key in allowed}
-        target["EnvironmentVariables"].update(environment)
+        # Native invocation uses only the explicit study environment. Test-plan
+        # runtime/library settings were checked separately against the build.
+        target["EnvironmentVariables"] = environment
         def rewrite(item):
             if isinstance(item, str):
-                return item.replace("__TESTROOT__", str(self.test_plan.parent))
+                return item.replace("__TESTROOT__", str(self.test_plan.parent)).replace("__TESTHOST__",str(self.apps[RUNNER]))
             if isinstance(item, dict):
                 return {key:rewrite(child) for key,child in item.items()}
             if isinstance(item, list):
