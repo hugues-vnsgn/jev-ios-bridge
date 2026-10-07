@@ -27,6 +27,12 @@
 @implementation DirectSnapshotWithNilWrapper
 - (id)_rootElementSnapshot { return nil; }
 @end
+@interface WrappedSnapshot : NSObject
+@property FakeSnapshot *root;
+@end
+@implementation WrappedSnapshot
+- (id)_rootElementSnapshot { return self.root; }
+@end
 
 @interface FakeClient : NSObject
 @property NSArray *points;
@@ -158,6 +164,90 @@
   return [records indexOfObjectPassingTest:^BOOL(NSDictionary *record, NSUInteger index, BOOL *stop) {
     return [record[@"details"][@"reason"] isEqual:reason];
   }] != NSNotFound;
+}
+- (void)assertWireBooleanTypes:(id)value found:(NSMutableSet *)found {
+  NSSet *booleanFields = [NSSet setWithArray:@[@"available", @"replyPresent", @"errorPresent",
+    @"sameLocalObject", @"invoked", @"parentPresent", @"value",
+    @"localMethodsReturned", @"localReferencesReleased"]];
+  if ([value isKindOfClass:NSDictionary.class]) {
+    for (NSString *key in value) {
+      id item = value[key];
+      if ([booleanFields containsObject:key]) {
+        XCTAssertTrue([item isKindOfClass:NSNumber.class], @"%@ must be a JSON boolean", key);
+        if ([item isKindOfClass:NSNumber.class])
+          XCTAssertEqual(CFGetTypeID((__bridge CFTypeRef)item), CFBooleanGetTypeID(), @"%@ must not be a numeric 0/1", key);
+        [found addObject:key];
+      }
+      [self assertWireBooleanTypes:item found:found];
+    }
+  } else if ([value isKindOfClass:NSArray.class]) {
+    for (id item in value) [self assertWireBooleanTypes:item found:found];
+  }
+}
+- (NSArray *)wireRecords:(NSArray *)records found:(NSMutableSet *)found {
+  NSMutableArray *decoded = [NSMutableArray array];
+  for (NSDictionary *record in records) {
+    NSData *encoded = EncodeNativeRecord(record, 1024 * 1024, nil);
+    XCTAssertNotNil(encoded);
+    // The iOS emitter uses this Foundation serializer directly.
+    NSData *emitted = [NSJSONSerialization dataWithJSONObject:record options:0 error:nil];
+    XCTAssertEqualObjects(encoded, emitted);
+    NSDictionary *wire = [NSJSONSerialization JSONObjectWithData:emitted options:0 error:nil];
+    XCTAssertNotNil(wire);
+    [self assertWireBooleanTypes:record found:found];
+    [self assertWireBooleanTypes:wire found:found];
+    if (wire) [decoded addObject:wire];
+  }
+  return decoded;
+}
+- (void)testCompletionUsesBooleanJSONTokensAndNumericCounters {
+  for (NSNumber *normalReturn in @[@YES, @NO]) {
+    FakeDevice *device = [FakeDevice new];
+    device.client = normalReturn.boolValue ? [FakeClient new] : [ThrowingPointClient new];
+    NSArray *records = [self runDevice:device plan:normalReturn.boolValue ? @"metadata" : @"reference-study"
+                                stop:^{ return NO; }];
+    NSMutableSet *found = [NSMutableSet set];
+    NSDictionary *finished = [self wireRecords:records found:found].lastObject;
+    XCTAssertEqualObjects(finished[@"details"][@"localMethodsReturned"], normalReturn);
+    XCTAssertEqualObjects(finished[@"details"][@"localReferencesReleased"], @YES);
+    NSString *json = [[NSString alloc] initWithData:EncodeNativeRecord(records.lastObject, 2048, nil)
+                                         encoding:NSUTF8StringEncoding];
+    XCTAssertTrue([json containsString:normalReturn.boolValue ? @"\"localMethodsReturned\":true" : @"\"localMethodsReturned\":false"]);
+    XCTAssertTrue([json containsString:@"\"localReferencesReleased\":true"]);
+    for (NSNumber *counter in @[finished[@"inputCalls"], finished[@"sequence"],
+                                finished[@"details"][@"runnerPID"], finished[@"details"][@"appElementQueries"]])
+      XCTAssertNotEqual(CFGetTypeID((__bridge CFTypeRef)counter), CFBooleanGetTypeID());
+    XCTAssertTrue([found containsObject:@"localMethodsReturned"]);
+    XCTAssertTrue([found containsObject:@"localReferencesReleased"]);
+  }
+}
+- (void)testObservationBooleanFieldsKeepTheirTypesThroughRealJSONSerialization {
+  NSMutableSet *found = [NSMutableSet set];
+  for (NSString *scenario in @[@"ordinary", @"nil-point", @"point-error", @"nil-snapshot",
+                               @"snapshot-error", @"nil-wrapper", @"wrapped", @"distinct-element", @"parent"]) {
+    FakeClient *client = [FakeClient new];
+    FakeSnapshot *snapshot = [client.snapshots objectForKey:client.points[0]];
+    if ([scenario isEqual:@"nil-point"]) client.nilPoint = YES;
+    if ([scenario isEqual:@"point-error"]) client.pointError = YES;
+    if ([scenario isEqual:@"nil-snapshot"]) client.nilSnapshot = YES;
+    if ([scenario isEqual:@"snapshot-error"]) client.snapshotError = YES;
+    if ([scenario isEqual:@"nil-wrapper"]) {
+      DirectSnapshotWithNilWrapper *direct = [DirectSnapshotWithNilWrapper new];
+      direct.accessibilityElement = client.points[0];
+      [client.snapshots setObject:direct forKey:client.points[0]];
+    }
+    if ([scenario isEqual:@"wrapped"]) {
+      WrappedSnapshot *wrapper = [WrappedSnapshot new]; wrapper.root = snapshot;
+      [client.snapshots setObject:wrapper forKey:client.points[0]];
+    }
+    if ([scenario isEqual:@"distinct-element"]) snapshot.accessibilityElement = [NSObject new];
+    if ([scenario isEqual:@"parent"]) snapshot.parentAccessibilityElement = client.points[0];
+    [self wireRecords:[self runClient:client] found:found];
+  }
+  [self wireRecords:[self runClient:[WrongPointClient new]] found:found];
+  XCTAssertEqualObjects(found, ([NSSet setWithArray:@[@"available", @"replyPresent", @"errorPresent",
+    @"sameLocalObject", @"invoked", @"parentPresent", @"value",
+    @"localMethodsReturned", @"localReferencesReleased"]]));
 }
 - (void)testIncompatibleGetterEmitsUnavailableAndFinishesWithoutQueries {
   NSArray *records = [self runDevice:[WrongGetterDevice new] plan:@"metadata" stop:^{ return NO; }];
