@@ -178,7 +178,9 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
   if (failed) return nil;
   if (item == nil || error != nil) {
     [self record:@"observation" operation:@"point" outcome:@"failed"
-         details:@{@"phase": phase, @"reason": error ? @"native-error" : @"nil-reply"}];
+         details:@{@"phase": phase, @"source": @"accessibilityElementForElementAtPoint:error:",
+                   @"replyPresent": @(item != nil), @"errorPresent": @(error != nil),
+                   @"reason": error ? @"native-error" : @"nil-reply"}];
     return nil;
   }
   [self record:@"observation" operation:@"point" outcome:@"observed"
@@ -217,21 +219,25 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
   if (failed) return nil;
   if (result == nil || error != nil) {
     [self record:@"observation" operation:@"snapshot" outcome:@"failed"
-         details:@{@"reference": [self label:item], @"reason": error ? @"native-error" : @"nil-reply"}];
+         details:@{@"reference": [self label:item], @"source": @"requestSnapshotForElement:attributes:parameters:error:",
+                   @"replyPresent": @(result != nil), @"errorPresent": @(error != nil),
+                   @"reason": error ? @"native-error" : @"nil-reply"}];
     return nil;
   }
   NSString *route = @"direct-snapshot";
+  BOOL rootGetterInvoked = NO, rootGetterNonNil = NO;
   if ([result respondsToSelector:NSSelectorFromString(@"_rootElementSnapshot")]) {
-    id direct = result;
+    id direct = result; rootGetterInvoked = YES;
     id root = [self getter:result name:@"_rootElementSnapshot" operation:@"snapshot" failed:&failed];
     if (failed) return nil;
+    rootGetterNonNil = root != nil;
     if (root != nil) { result = root; route = @"wrapped-root"; }
     else if ([direct respondsToSelector:NSSelectorFromString(@"accessibilityElement")]
       && [direct respondsToSelector:NSSelectorFromString(@"parentAccessibilityElement")]) {
       result = direct; route = @"direct-after-nil-wrapper";
     } else {
       [self record:@"observation" operation:@"snapshot" outcome:@"failed"
-           details:@{@"reason": @"nil-root-snapshot"}];
+           details:@{@"source": @"_rootElementSnapshot", @"reason": @"nil-root-snapshot"}];
       return nil;
     }
   }
@@ -239,13 +245,16 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
   if (failed) return nil;
   if (nativeElement == nil) {
     [self record:@"observation" operation:@"snapshot" outcome:@"failed"
-         details:@{@"reason": @"nil-native-element"}];
+         details:@{@"source": @"accessibilityElement", @"reason": @"nil-native-element"}];
     return nil;
   }
   [self record:@"observation" operation:@"snapshot" outcome:@"observed"
        details:@{@"source": @"requestSnapshotForElement:attributes:parameters:error:",
                  @"requestedReference": [self label:item], @"returnedReference": [self label:nativeElement],
-                 @"sameLocalObject": @(nativeElement == item), @"route": route, @"snapshotClass": NSStringFromClass([result class])}];
+                 @"sameLocalObject": @(nativeElement == item), @"route": route,
+                 @"elementGetter": @{@"source": @"accessibilityElement", @"reference": [self label:nativeElement]},
+                 @"rootGetter": @{@"source": @"_rootElementSnapshot", @"invoked": @(rootGetterInvoked),
+                                  @"replyPresent": @(rootGetterNonNil)}, @"snapshotClass": NSStringFromClass([result class])}];
   return result;
 }
 
