@@ -8,4 +8,3 @@ frozen record schema. Test meaningful native-response failures and limits throug
 the observation Interface; build the actual study and fixture. No live device
 execution, input or WDA setup. Commit local work; supervisor integrates, reviews
 and lands. Raw observations do not accept IDB 01 or establish native settlement.
-

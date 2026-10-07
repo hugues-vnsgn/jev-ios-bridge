@@ -8,4 +8,3 @@ The schema/native environment contract is frozen. Test refusals, bounded parsing
 deadline retention, true child-process ownership and metadata-only cleanup at
 run_study. Commit local work; supervisor reviews and lands. This ticket does not
 accept a checked-UI production capability.
-

@@ -119,4 +119,3 @@ commands/results, red evidence and limitations. Supervisor integrates, runs the
 live study serially, reviews Standards and Spec independently, fixes findings,
 and pushes/lands PRs in the owned bridge repository. No Apple outreach or upstream
 release is implied. Landing the study does not mark any production ticket done.
-

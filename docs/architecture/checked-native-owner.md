@@ -88,7 +88,7 @@ The shared protocol is `spikes/native-owner/protocol.schema.json`. A request ID
 correlates records only. A local reference label names an object held by this
 runner, never a backend-issued identity or validity scope. Fixture generation
 confirms fixture recreation only. Two references from this client do not establish
-independent associations. A observed snapshot parent does not establish complete
+independent associations. An observed snapshot parent does not establish complete
 original containment. No input selector is admitted.
 
 ## Dependency and Seam placement
@@ -131,4 +131,3 @@ All 23 remaining production tickets retain their requirements: 10 IDB, 5 AXe,
 positive capability still needs applicable native ancestry, validity and owned
 work evidence. Input requires its own native consumer/contact contracts. The
 dependency graph and supported IDB/vendor release gates continue to apply.
-
