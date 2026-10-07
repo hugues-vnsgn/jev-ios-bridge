@@ -96,5 +96,20 @@ else:
             self.assertEqual(result.returncode,0,result.stderr)
             self.assertTrue((root/"receipts/binding.json").is_file())
 
+    def test_cli_rejects_symlinked_output_parent_before_any_build_command(self):
+        for field in ("derived", "receipts"):
+            with self.subTest(field=field), tempfile.TemporaryDirectory() as raw:
+                root = Path(raw).resolve(); source,env = self.setup_build(root)
+                outside = root/"outside"; outside.mkdir()
+                link = root/"output-link"; link.symlink_to(outside,target_is_directory=True)
+                derived = link/"derived" if field == "derived" else root/"derived"
+                receipts = link/"receipts" if field == "receipts" else root/"receipts"
+                result = subprocess.run([sys.executable,str(source/"native/build.py"),"--plan","metadata",
+                    "--derived-data",str(derived),"--receipts",str(receipts)],
+                    env=env,capture_output=True,text=True,timeout=10)
+                self.assertNotEqual(result.returncode,0)
+                self.assertFalse((root/"commands.jsonl").exists())
+                self.assertEqual(list(outside.iterdir()),[])
+
 
 if __name__ == "__main__": unittest.main()

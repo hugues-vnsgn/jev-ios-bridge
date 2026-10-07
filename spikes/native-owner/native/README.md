@@ -39,17 +39,17 @@ tests establish local policy only. They run without booting or operating a simul
 cd spikes/native-owner/native
 xcodegen generate --spec project.yml
 xcodebuild test -project NativeOwnerStudy.xcodeproj -scheme NativeOwnerPolicyTests \
-  -destination 'platform=macOS' -derivedDataPath /tmp/native-owner-policy
+  -destination 'platform=macOS' -derivedDataPath /private/tmp/native-owner-policy
 ```
 
 Build both real iOS targets without device execution, with fresh paths and source/
 product binding receipts:
 
 ```sh
-python3 build.py --plan metadata --derived-data /tmp/native-owner-metadata-build \
-  --receipts /tmp/native-owner-metadata-build-receipts
-python3 build.py --plan reference-study --derived-data /tmp/native-owner-reference-build \
-  --receipts /tmp/native-owner-reference-build-receipts
+python3 build.py --plan metadata --derived-data /private/tmp/native-owner-metadata-build \
+  --receipts /private/tmp/native-owner-metadata-build-receipts
+python3 build.py --plan reference-study --derived-data /private/tmp/native-owner-reference-build \
+  --receipts /private/tmp/native-owner-reference-build-receipts
 ```
 
 Generated projects and build logs are ignored; builds and receipts stay outside

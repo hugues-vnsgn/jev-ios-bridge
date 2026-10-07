@@ -77,4 +77,4 @@ if __name__ == "__main__":
     parser.add_argument("--derived-data", type=Path, required=True)
     parser.add_argument("--receipts", type=Path, required=True)
     arguments = parser.parse_args()
-    build(arguments.plan, arguments.derived_data.resolve(), arguments.receipts.resolve())
+    build(arguments.plan, arguments.derived_data.absolute(), arguments.receipts.absolute())

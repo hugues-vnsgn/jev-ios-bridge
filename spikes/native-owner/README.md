@@ -25,11 +25,11 @@ Build both owned targets without running a device:
 
 ```sh
 python3 spikes/native-owner/native/build.py --plan metadata \
-  --derived-data /tmp/native-owner-metadata-build \
-  --receipts /tmp/native-owner-metadata-build-receipts
+  --derived-data /private/tmp/native-owner-metadata-build \
+  --receipts /private/tmp/native-owner-metadata-build-receipts
 python3 spikes/native-owner/native/build.py --plan reference-study \
-  --derived-data /tmp/native-owner-reference-build \
-  --receipts /tmp/native-owner-reference-build-receipts
+  --derived-data /private/tmp/native-owner-reference-build \
+  --receipts /private/tmp/native-owner-reference-build-receipts
 ```
 
 Both build paths must be fresh. The native builder generates its project,
@@ -41,9 +41,9 @@ Run the metadata study explicitly on the owned simulator:
 ```sh
 python3 spikes/native-owner/host/run.py \
   --plan metadata \
-  --derived-data /tmp/native-owner-metadata-build \
-  --build-binding /tmp/native-owner-metadata-build-receipts/binding.json \
-  --evidence-directory /tmp/native-owner-metadata \
+  --derived-data /private/tmp/native-owner-metadata-build \
+  --build-binding /private/tmp/native-owner-metadata-build-receipts/binding.json \
+  --evidence-directory /private/tmp/native-owner-metadata \
   --admission-seconds 90
 ```
 
@@ -52,9 +52,9 @@ For the bounded original-reference/recreation observations:
 ```sh
 python3 spikes/native-owner/host/run.py \
   --plan reference-study \
-  --derived-data /tmp/native-owner-reference-build \
-  --build-binding /tmp/native-owner-reference-build-receipts/binding.json \
-  --evidence-directory /tmp/native-owner-reference \
+  --derived-data /private/tmp/native-owner-reference-build \
+  --build-binding /private/tmp/native-owner-reference-build-receipts/binding.json \
+  --evidence-directory /private/tmp/native-owner-reference \
   --admission-seconds 90
 ```
 
@@ -128,7 +128,7 @@ Inspect the registered case without changing the simulator:
 ```sh
 python3 spikes/native-owner/host/reconcile.py \
   --retained-directory /private/tmp/jev-native-owner-metadata-integrated-20261007 \
-  --evidence-directory /tmp/native-owner-reconciliation-inspection
+  --evidence-directory /private/tmp/native-owner-reconciliation-inspection
 ```
 
 Apply uses a different fresh evidence directory and the explicit `--apply`

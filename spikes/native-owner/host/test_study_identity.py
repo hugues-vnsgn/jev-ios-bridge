@@ -1,16 +1,40 @@
 """Successor admission through the ordinary study Interface; no device is contacted."""
 from dataclasses import replace
+from contextlib import redirect_stdout
+import importlib.util
+import io
 import json
 from pathlib import Path
 import plistlib
 import tempfile
+import sys
 import unittest
+from unittest.mock import patch
 
 from study import Dependencies, run_study
 from test_study import Clock, Tools, configuration, bind
 
 
 class BoundStudies(unittest.TestCase):
+    def test_actual_cli_refuses_a_symlinked_binding_or_build_before_any_device_command(self):
+        for field in ("binding", "derived"):
+            with self.subTest(field=field), tempfile.TemporaryDirectory() as raw:
+                root = Path(raw).resolve(); config = configuration(root)
+                link = root/"input-link"
+                link.symlink_to(config.build_binding if field == "binding" else config.derived_data)
+                cli_spec = importlib.util.spec_from_file_location("study_identity_cli",config.source_root/"host/run.py")
+                cli = importlib.util.module_from_spec(cli_spec); cli_spec.loader.exec_module(cli)
+                clock = Clock(); tools = Tools(clock,config); stdout = io.StringIO()
+                with patch.object(cli,"ProcessTools",lambda path:tools), patch.object(sys,"argv",[
+                        "run.py","--plan","metadata","--derived-data",str(link if field == "derived" else config.derived_data),
+                        "--build-binding",str(link if field == "binding" else config.build_binding),
+                        "--evidence-directory",str(config.evidence_directory)]), \
+                        patch.dict("os.environ",{"TMPDIR":str(root/"cli-temp")}), redirect_stdout(stdout):
+                    code = cli.main()
+                result = json.loads(stdout.getvalue())
+                self.assertEqual((code,result["status"]),(2,"refused"))
+                self.assertEqual(tools.commands,[])
+
     def test_missing_binding_refuses_before_any_simulator_command(self):
         with tempfile.TemporaryDirectory() as root:
             config = replace(configuration(root), build_binding=None)
