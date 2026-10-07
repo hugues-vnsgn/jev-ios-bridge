@@ -1,6 +1,6 @@
 # Independently bound study identities
 
-Implementation head: `d85a6ac55556669679552e5978289cc4f2b0162a`, 2026-10-07.
+Implementation head: `2c93a8584d1128abc0529ea178af3a3acf03227b`, 2026-10-07.
 The native runtime and policy-test sources are byte-identical to tested head
 `1997e3d281ad5839f33362f56275d0082cf4cb48`. This document adds no runtime input.
 
@@ -15,10 +15,10 @@ The historical reconciliation and startup diagnostic keep their original IDs.
 
 | Check | Result | Exact local log |
 | --- | --- | --- |
-| Full host regressions at `d85a6ac` | 104 tests passed | `/private/tmp/jev-native-identities-d85a6ac-host.log` |
-| Historical diagnostic caller at `d85a6ac` | 2 tests passed; restoration test has two cases | `/private/tmp/jev-native-identities-d85a6ac-probe.log` |
+| Full host regressions at `2c93a85` | 107 tests passed | `/private/tmp/jev-native-identities-2c93a85-host.log` |
+| Historical diagnostic caller at `2c93a85` | 2 tests passed; restoration test has two cases | `/private/tmp/jev-native-identities-2c93a85-probe.log` |
 | Full macOS native policy suite at `1997e3d` | 27 tests passed, natural XCTest exit | `/private/tmp/jev-native-identities-1997e3d-native-policy.log` |
-| Builder and host CLI help | Passed | `/private/tmp/jev-native-identities-d85a6ac-builder-help.log`, `/private/tmp/jev-native-identities-d85a6ac-host-help.log` |
+| Builder and host CLI help | Passed | `/private/tmp/jev-native-identities-2c93a85-builder-help.log`, `/private/tmp/jev-native-identities-2c93a85-host-help.log` |
 | Python compilation and diff whitespace | Passed | Commands below |
 
 ```sh
@@ -54,6 +54,14 @@ Each prefix below has `-red.log` and `-green.log` receipts in `/private/tmp/`:
 | `jev-native-identities-native-policy` | Missing identity observation and a mismatched runner still acquired the native getter: one test, four assertion failures. |
 | `jev-native-identities-recreation-identity` | Changed fixture identity still received a recreation write. |
 | `jev-native-identities-nested-resource` | A nested fixture README resource escaped source binding. |
+| `jev-native-identities-builder-user` | XcodeGen could not receive the current username from the restricted builder environment. |
+| `jev-native-identities-cli-binding-symlink` | The actual host CLI resolved away a binding symlink and completed instead of refusing. |
+
+The builder preserves USER and LOGNAME explicitly for XcodeGen. Its CLI tests
+require USER while rejecting inherited secret/profile-override variables. Both
+CLIs preserve lexical build/binding/output paths so symlink checks see the
+caller's actual path. The builder refuses a symlinked output parent before any
+external build command.
 
 These checks establish local policy and compilation of the macOS policy target.
 Generic iOS builds and live metadata/reference execution belong to the
