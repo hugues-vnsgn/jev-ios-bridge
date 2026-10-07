@@ -79,8 +79,14 @@ class _Reconciliation:
         self.claim_path = None
         self.claim = None
         self.initial_states = None
+        self.apply = False
 
     def result(self, status, reason):
+        if not self.apply and all(entry["state"] == "exited" for entry in self.study.commands):
+            try:
+                self.study.release_guard()
+            except (_Refusal, OSError):
+                status, reason = "retained", "DEVICE_GUARD_UNCERTAIN"
         return self.study.result(status, reason)
 
     def read(self, path, limit=MAX_JSON):
@@ -361,9 +367,14 @@ class _Reconciliation:
         self.study.ledger()
 
     def execute(self, apply):
+        self.apply = apply
         self.provenance()
         self.study.own({"kind":"device","deviceId":UDID,"initialState":"Shutdown","state":"retained-Booted"})
         self.study.own({"kind":"runner-installation","bundleId":RUNNER,"state":"retained-installed"})
+        claim_path = self.original.parent/("."+self.original.name+".metadata-reconciliation-claim.json")
+        if apply and os.path.lexists(claim_path):
+            raise _Refusal("RECONCILIATION_ALREADY_CLAIMED")
+        self.study.acquire_guard()
         if apply: self.claim_once()
         self.gates()
         if not apply: return self.result("retained","METADATA_RECONCILIATION_READY")
@@ -413,7 +424,7 @@ def reconcile_metadata(retained_directory, configuration, dependencies, apply=Fa
         if study.claim:
             try: study.update_claim("retained")
             except (_Refusal,OSError): pass  # Never overwrite a changed owner or force-reclaim.
-        return study.result("refused" if reason=="RECONCILIATION_ALREADY_CLAIMED" else "retained",reason)
+        return study.result("refused" if reason in ("RECONCILIATION_ALREADY_CLAIMED","DEVICE_GUARD_BUSY") else "retained",reason)
 
 
 def main():

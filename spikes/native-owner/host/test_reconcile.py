@@ -134,7 +134,8 @@ class CaseFixture:
         self.case["archiveManifestSHA256"]=digest((self.archive/"manifest.json").read_bytes())
         self.case["buildBindingSHA256"]=digest((self.archive/"native-live-build-binding.json").read_bytes())
     def config(self, name="inspection", seconds=90):
-        return Configuration(self.root/"unused-build",self.root/name,self.root,seconds)
+        return Configuration(self.root/"unused-build",self.root/name,self.root,seconds,
+                             lease_root=self.root/"leases")
 
 
 class Tools:
@@ -500,7 +501,7 @@ reconcile._case_data=lambda:(case,root/'archive')
 clock=Clock(); tools=Tools(fixture)
 end=time.monotonic()+5
 while not (root/'go').exists() and time.monotonic()<end: time.sleep(.005)
-config=Configuration(root/'unused-build',root/sys.argv[2],root)
+config=Configuration(root/'unused-build',root/sys.argv[2],root,lease_root=root/'leases')
 result=reconcile.reconcile_metadata(root/'original',config,Dependencies(tools,clock.now,clock.sleep),True)
 print(json.dumps({'status':result.status,'reason':result.reason,'uninstalls':sum('uninstall' in argv for argv in tools.commands)}))
 '''
@@ -512,7 +513,8 @@ print(json.dumps({'status':result.status,'reason':result.reason,'uninstalls':sum
                 stdout,stderr=child.communicate(timeout=10)
                 self.assertEqual(child.returncode,0,stderr)
                 outputs.append(json.loads(stdout))
-            self.assertEqual(sorted(item["reason"] for item in outputs),["METADATA_RESOURCES_RECONCILED","RECONCILIATION_ALREADY_CLAIMED"])
+            self.assertEqual(sum(item["reason"] == "METADATA_RESOURCES_RECONCILED" for item in outputs),1)
+            self.assertTrue(all(item["reason"] in ("METADATA_RESOURCES_RECONCILED","RECONCILIATION_ALREADY_CLAIMED","DEVICE_GUARD_BUSY") for item in outputs))
             self.assertEqual(sum(item["uninstalls"] for item in outputs),1)
 
 

@@ -137,7 +137,8 @@ def configuration(root, seconds=90):
     (source/"native/project.yml").write_text("name: NativeOwnerStudy")
     (source/"native/Study.m").write_text("// synthetic source")
     (source/"fixture/Fixture.swift").write_text("// synthetic fixture")
-    return Configuration(root/"derived",root/"evidence",source,admission_seconds=seconds)
+    return Configuration(root/"derived",root/"evidence",source,admission_seconds=seconds,
+                         lease_root=root/"leases")
 
 class NoTools:
     def start(self, *args, **kwargs):

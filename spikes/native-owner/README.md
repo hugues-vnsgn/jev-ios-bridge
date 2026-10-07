@@ -4,7 +4,7 @@ This standalone study records what XCTest's native accessibility Interface
 returns. It never sends input, enables a production capability, or accepts any
 of the 23 pending checked-UI production tickets.
 
-The host Module has one Interface:
+The study Module has this Interface:
 
 ```python
 from study import Configuration, Dependencies, ProcessTools, run_study
@@ -58,10 +58,18 @@ host, plugin, bundle identifiers and every dependent product to the verified
 build. Extra targets, foreign app paths, launch arguments and runtime injections
 are refused. The metadata plan excludes the unused fixture dependency.
 Reference studies launch the newly installed owned fixture,
-confirms its initial PID/generation/zero tap count, and passes the verified data
+confirm its initial PID/generation/zero tap count, and pass the verified data
 container through a derived `.xctestrun`. A native recreation request causes one
 programmatic `Documents/recreate.request` write; setup activation is separate.
 It never uses a touch, UID re-query, shared-daemon reset or another simulator.
+
+Both study and reconciliation hold the Bridge's device lease in the default
+temporary-directory namespace. The research claim records an unknown native
+owner (`pid: null`) and the actual host PID separately. It remains busy after
+frontend exit. Settled metadata cleanup releases the claim; retained work keeps
+it. Existing claims are never taken over. This excludes cooperating Bridge runs
+in that namespace; external tools and custom lease roots require separate
+coordination.
 
 The CLI exits 0 for metadata completion, 2 for refusal before owned native work,
 and 3 for retained ownership. A single monotonic allowance covers preparation
@@ -70,6 +78,11 @@ retained ownership without a terminating signal or replay. An already-started
 native call may continue. Retained subprocess output uses files, so frontend
 exit does not close a pipe and signal the child.
 
+A rejected record stops native admission immediately. The host preserves that
+refusal while monitoring the existing child/group under the original deadline.
+Observed process exit is recorded independently of record acceptance. Neither
+fact alone permits metadata cleanup.
+
 Metadata cleanup requires the schema-valid complete stream, zero explicit
 native app-element queries, both local completion flags, normal test-class
 completion, successful `xcodebuild`, and positive absence of the exact runner
@@ -77,10 +90,38 @@ PID. It removes only the newly installed runner and verifies final app absence
 and initial device states. PID inspection uncertainty retains ownership.
 
 A reference study **always retains** the device, fixture and runner resources
-while native settlement is unconfirmed—even when local calls returned and
+while native settlement is unconfirmed, even when local calls returned and
 references were released. Runner absence is not an accessibility fence. Read
 `result.json` and `ownership.json` before any manual follow-up; the host provides
 no automatic force-cleanup or resume command.
+
+Metadata-resource reconciliation is a separate Module for the single archived
+numeric-completion-flags failure registered in
+[approved-case.json](../../.scratch/native-owner-recovery/approved-case.json).
+Its Interface is `reconcile_metadata(retained_directory, configuration,
+dependencies, apply=False)`. Inspection is the default; apply requires the
+registered original receipts, pinned native build/source, exact installed app
+path and five file hashes, positive fixture absence, and fresh process/group/
+runner absence. A stable one-use claim prevents repeated cleanup. Any uncertain
+gate keeps ownership retained.
+
+Inspect the registered case without changing the simulator:
+
+```sh
+python3 spikes/native-owner/host/reconcile.py \
+  --retained-directory /private/tmp/jev-native-owner-metadata-integrated-20261007 \
+  --evidence-directory /tmp/native-owner-reconciliation-inspection
+```
+
+Apply uses a different fresh evidence directory and the explicit `--apply`
+flag. It consumes the case's permanent one-use claim before tool work, so an
+uncertain attempt cannot be replayed.
+
+This source-bound exception can remove only that metadata-only runner and
+restore its owned device setup. It preserves the original invalid result and
+unknown historical `xcodebuild` exit code. It establishes no native settlement
+and never cleans up a reference study. The contract and live sequence are in
+[the recovery spec](../../.scratch/native-owner-recovery/spec.md).
 
 Evidence includes source/product/test-plan hashes, exact commands and process
 groups, local observations, fixture readiness, recreation writes and retained

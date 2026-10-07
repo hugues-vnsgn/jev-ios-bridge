@@ -10,6 +10,7 @@ import subprocess
 import tempfile
 import time
 import uuid
+from device_guard import DeviceGuard, DeviceGuardError
 
 UDID = "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
 NAME = "jev-ios-bridge"
@@ -33,6 +34,7 @@ class Configuration:
     source_root: Path
     admission_seconds: float = 90.0
     device_id: str = UDID
+    lease_root: Path | None = None
 
 @dataclass(frozen=True)
 class Dependencies:
@@ -315,6 +317,8 @@ class _Study:
         self.recreation_written = False
         self.record_refusal = None
         self.initial = None
+        self.guard = None
+        self.guard_error = None
         self.env = {key: os.environ[key] for key in
                     ("PATH", "HOME", "TMPDIR", "LANG", "LC_ALL", "DEVELOPER_DIR", "TOOLCHAINS")
                     if key in os.environ}
@@ -331,7 +335,50 @@ class _Study:
     def ledger(self):
         self.save("ownership.json", {"requestId":self.request, "plan":self.plan,
                   "deviceId":UDID, "commands":self.commands, "resources":self.resources,
+                  "deviceGuard":self.guard_facts(),
                   "nativeSettlement":"unconfirmed"})
+
+    def guard_facts(self):
+        if self.guard is None:
+            return None
+        return {"kind":"device-guard", **self.guard.provenance,
+                "created":self.guard.created, "released":self.guard.released,
+                "uncertainty":self.guard_error}
+
+    def acquire_guard(self):
+        self.admit()
+        self.guard = DeviceGuard(self.config.lease_root, UDID, self.request, self.output)
+        self.ledger()  # Proposed ownership is durable before exclusive acquisition.
+        try:
+            self.guard.take()
+        except DeviceGuardError as error:
+            self.guard_error = error.reason
+            raise _Refusal(error.reason) from None
+        finally:
+            self.ledger()
+
+    def check_guard(self):
+        if self.guard is None:
+            raise _Refusal("DEVICE_GUARD_NOT_HELD")
+        try:
+            self.guard.check()
+        except DeviceGuardError as error:
+            self.guard_error = error.reason
+            self.ledger()
+            raise _Refusal(error.reason) from None
+
+    def release_guard(self):
+        if self.guard is None or not self.guard.created or self.guard.released:
+            return
+        if any(entry["state"] != "exited" for entry in self.commands):
+            raise _Refusal("DEVICE_GUARD_WORK_PENDING")
+        try:
+            self.guard.release()
+        except DeviceGuardError as error:
+            self.guard_error = error.reason
+            raise _Refusal(error.reason) from None
+        finally:
+            self.ledger()
 
     def admit(self):
         if self.record_refusal is not None:
@@ -345,6 +392,7 @@ class _Study:
 
     def command(self, argv, stream=None):
         self.admit()
+        self.check_guard()
         entry = {"index":len(self.commands)+1, "argv":argv, "state":"spawn-pending"}
         self.commands.append(entry)
         self.ledger()  # Ownership is durable before the Adapter may start anything.
@@ -739,6 +787,7 @@ class _Study:
             if Path(path).resolve() != self.fixture_container or self.fixture_documents.is_symlink():
                 raise _Refusal("FIXTURE_CONTAINER_CHANGED")
             self.admit()
+            self.check_guard()
             with (self.fixture_documents/"recreate.request").open("xb") as handle:
                 handle.write(b"owned no-input recreation\n")
             self.recreation_written = True
@@ -749,8 +798,16 @@ class _Study:
         if self.booted and not self.app_owned and not self.native_started:
             self.checked(self.sim("shutdown", UDID))
             self.booted = False
+            final, _ = self.inventory()
+            self.save("preparation-final-inventory.json", final)
+            if self.inventory_states(self.initial) != self.inventory_states(final):
+                raise _Refusal("PREPARATION_RESTORE_UNCONFIRMED")
             self.resources.clear()
             self.ledger()
+
+    @staticmethod
+    def inventory_states(inventory):
+        return {device["udid"]:device["state"] for devices in inventory["devices"].values() for device in devices}
 
     def execute(self):
         self.artifacts()
@@ -801,18 +858,23 @@ class _Study:
             self.booted = False
         final, _ = self.inventory()
         self.save("final-inventory.json", final)
-        def states(inventory):
-            return {device["udid"]:device["state"] for devices in inventory["devices"].values() for device in devices}
-        if states(self.initial) != states(final):
+        if self.inventory_states(self.initial) != self.inventory_states(final):
             raise _Refusal("DEVICE_STATES_CHANGED")
         self.resources.clear()
         self.ledger()
         return self.result("completed", "METADATA_COMPLETED")
 
     def result(self, status, reason):
+        if status != "retained":
+            try:
+                self.release_guard()
+            except (_Refusal, OSError):
+                status, reason = "retained", "DEVICE_GUARD_UNCERTAIN"
         if status == "retained":
             self.stop_file.touch(mode=0o600, exist_ok=True)
         retained = tuple(self.resources) + tuple(entry for entry in self.commands if entry["state"] != "exited")
+        if self.guard is not None and self.guard.created and not self.guard.released:
+            retained += (self.guard_facts(),)
         result = StudyResult(status, reason, self.request, str(self.output), tuple(self.records),
                              retained if status == "retained" else ())
         self.save("result.json", asdict(result))
@@ -834,6 +896,7 @@ def run_study(plan, configuration, dependencies):
         return StudyResult("refused", "EVIDENCE_CREATE_FAILED")
     study = _Study(plan, configuration, dependencies)
     try:
+        study.acquire_guard()
         return study.execute()
     except (_Refusal, OSError, ValueError, TypeError, KeyError) as error:
         reason = study.record_refusal or (str(error) if isinstance(error, _Refusal) else "LOCAL_STATE_UNCONFIRMED")
