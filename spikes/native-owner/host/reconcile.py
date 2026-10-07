@@ -11,8 +11,12 @@ import plistlib
 import uuid
 
 from study import (Configuration, Dependencies, ProcessTools, StudyResult, _Study,
-                   _Refusal, _Stream, _decode, UDID, RUNNER,
-                   FIXTURE, PLUGIN, PREFIX, CLASS_COMPLETED, MAX_JSON, MAX_LOG)
+                   _Refusal, _Stream, _decode, UDID, PREFIX, CLASS_COMPLETED, MAX_JSON, MAX_LOG)
+# The one-use exception recognizes only this archived case's original identities.
+RUNNER = "dev.jev.research.native-owner-study.xctrunner"
+FIXTURE = "dev.jev.research.native-owner-fixture"
+PLUGIN = "dev.jev.research.native-owner-study"
+
 
 _CASE_SHA256 = "50dfe89a32023bb40dad21a2e40c11e4e41f2842bc098c45fcfd1e6e5978418a"
 _NATIVE_REVISION = "223d733a049485dd7a83b937dd0ae9e68135dc07"

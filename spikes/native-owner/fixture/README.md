@@ -6,7 +6,9 @@ This newly authored Objective-C UIKit fixture adapts the behavior of the owned
 The ordinary button has identical frame/title/identifier after replacement.
 
 `Documents/result.txt` is atomic UTF-8 JSON with exactly `pid`, `generation` and
-`ordinary` integer fields. A successfully consumed `Documents/recreate.request`
+`ordinary` integer fields, plus `bundleIdentifier` from the app's actual main
+bundle. Both study readers require that identifier to match the selected build
+profile. A successfully consumed `Documents/recreate.request`
 replaces the button and increments generation, without input. Actual ordinary
 button activation increments its separate `ordinary` counter. The app opens no
 network connection. Fixture telemetry establishes its own state only; it cannot

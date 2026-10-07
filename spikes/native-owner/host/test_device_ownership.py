@@ -7,15 +7,15 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
-from study import Dependencies, UDID, RUNNER, run_study
-from test_study import Clock, Tools, configuration
+from study import Dependencies, UDID, run_study
+from test_study import Clock, Tools, configuration, RUNNER
 import reconcile
 from test_reconcile import CaseFixture, Tools as RecoveryTools, Child as RecoveryChild
 
 
-def isolated_configuration(root):
+def isolated_configuration(root, plan="metadata"):
     # This duck-typed configuration also exercises the pre-guard implementation.
-    config = configuration(root)
+    config = configuration(root,plan=plan)
     return SimpleNamespace(**{**vars(config), "lease_root":Path(root) / "leases"})
 
 
@@ -56,7 +56,7 @@ class DeviceOwnership(unittest.TestCase):
 
     def test_reference_retains_guard_and_blocks_a_later_study(self):
         with tempfile.TemporaryDirectory() as root:
-            config = isolated_configuration(root)
+            config = isolated_configuration(root,plan="reference-study")
             clock = Clock(); tools = Tools(clock, config)
             result = run_study("reference-study", config, Dependencies(tools, clock.now, clock.sleep))
             self.assertEqual(result.reason, "NATIVE_SETTLEMENT_UNCONFIRMED")
@@ -145,7 +145,7 @@ class DeviceOwnership(unittest.TestCase):
     def test_uncertain_recovery_apply_keeps_device_guard_and_one_use_claim(self):
         with tempfile.TemporaryDirectory() as root:
             fixture = CaseFixture(root); config = fixture.config(); tools = RecoveryTools(fixture); clock = Clock()
-            tools.overrides[("xcrun", "simctl", "uninstall", UDID, RUNNER)] = lambda: RecoveryChild(1)
+            tools.overrides[("xcrun", "simctl", "uninstall", UDID, "dev.jev.research.native-owner-study.xctrunner")] = lambda: RecoveryChild(1)
             with patch.object(reconcile, "_case_data", return_value=(fixture.case, fixture.archive)):
                 result = reconcile.reconcile_metadata(fixture.original, config, Dependencies(tools, clock.now, clock.sleep), True)
             self.assertEqual(result.status, "retained")

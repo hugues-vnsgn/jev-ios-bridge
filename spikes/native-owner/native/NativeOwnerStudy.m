@@ -17,18 +17,34 @@
   NSString *stopFile = environment[@"JEV_NATIVE_OWNER_STOP_FILE"];
   NSString *documents = environment[@"JEV_NATIVE_OWNER_FIXTURE_DOCUMENTS"];
   NSString *allowanceString = environment[@"JEV_NATIVE_OWNER_ADMISSION_SECONDS"];
+  NSBundle *pluginBundle = [NSBundle bundleForClass:self.class];
+  NSDictionary *info = pluginBundle.infoDictionary;
+  NSString *fixtureID = info[@"JevNativeOwnerFixtureBundleIdentifier"];
+  NSDictionary *expectedIdentity = @{
+    @"plan":info[@"JevNativeOwnerPlan"] ?: @"",
+    @"plugin":info[@"JevNativeOwnerPluginBundleIdentifier"] ?: @"",
+    @"runner":info[@"JevNativeOwnerRunnerBundleIdentifier"] ?: @"",
+    @"fixture":fixtureID ?: @""};
+  NSDictionary *actualIdentity = @{@"plan":plan ?: @"",
+    @"plugin":pluginBundle.bundleIdentifier ?: @"",
+    @"runner":NSBundle.mainBundle.bundleIdentifier ?: @"", @"fixture":fixtureID ?: @""};
+  BOOL validIdentity = [actualIdentity isEqualToDictionary:expectedIdentity];
+  for (id value in expectedIdentity.allValues)
+    validIdentity = validIdentity && [value isKindOfClass:NSString.class] && [value length] > 0
+      && [value lengthOfBytesUsingEncoding:NSUTF8StringEncoding] <= 1024;
   double allowance = 0;
   NSScanner *scanner = [NSScanner scannerWithString:allowanceString ?: @""];
   BOOL validAllowance = [scanner scanDouble:&allowance] && scanner.isAtEnd
     && isfinite(allowance) && allowance > 0;
   BOOL valid = [requestID isKindOfClass:NSString.class] && requestID.length > 0 && requestID.length <= 128
     && [plan isEqualToString:expectedPlan] && stopFile.isAbsolutePath && validAllowance
-    && (![plan isEqualToString:@"reference-study"] || documents.isAbsolutePath);
+    && (![plan isEqualToString:@"reference-study"] || documents.isAbsolutePath) && validIdentity;
   XCTAssertTrue(valid, @"Missing or incompatible explicit study environment");
   if (!valid) return; // The host retains ownership when it receives no complete stream.
   ObservationStudy *study = [[ObservationStudy alloc]
     initWithDevice:XCUIDevice.sharedDevice
-    configuration:@{@"requestId": requestID, @"plan": plan, @"allowance": @(allowance)}
+    configuration:@{@"requestId": requestID, @"plan": plan, @"allowance": @(allowance),
+                    @"studyIdentity":actualIdentity, @"expectedStudyIdentity":expectedIdentity}
     clock:^{ return NSProcessInfo.processInfo.systemUptime; }
     stop:^{ return [NSFileManager.defaultManager fileExistsAtPath:stopFile]; }
     readFixture:^NSDictionary *{
@@ -43,7 +59,7 @@
     }
     activateFixture:^{
       @try {
-        XCUIApplication *fixture = [[XCUIApplication alloc] initWithBundleIdentifier:@"dev.jev.research.native-owner-fixture"];
+        XCUIApplication *fixture = [[XCUIApplication alloc] initWithBundleIdentifier:fixtureID];
         [fixture activate];
         return YES;
       } @catch (NSException *exception) { return NO; }

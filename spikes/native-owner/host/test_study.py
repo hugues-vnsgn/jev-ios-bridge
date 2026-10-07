@@ -5,14 +5,64 @@ import plistlib
 import os
 import sys
 import time
+import hashlib
+import shutil
 from unittest.mock import patch
 from pathlib import Path
 from study import Configuration, Dependencies, ProcessTools, run_study, UDID, NAME, RUNTIME, MAX_JSON
 
-RUNNER = "dev.jev.research.native-owner-study.xctrunner"
-FIXTURE = "dev.jev.research.native-owner-fixture"
-PLUGIN = "dev.jev.research.native-owner-study"
+RUNNER = "dev.jev.research.native-owner-20261007-metadata.xctrunner"
+FIXTURE = "dev.jev.research.native-owner-20261007-metadata-fixture"
+PLUGIN = "dev.jev.research.native-owner-20261007-metadata"
+REFERENCE_RUNNER = "dev.jev.research.native-owner-20261007-reference.xctrunner"
+REFERENCE_FIXTURE = "dev.jev.research.native-owner-20261007-reference-fixture"
+REFERENCE_PLUGIN = "dev.jev.research.native-owner-20261007-reference"
 PREFIX = "JEV_NATIVE_OWNER_V1 "
+
+
+def identity(plan):
+    return ({"plugin": REFERENCE_PLUGIN, "runner": REFERENCE_RUNNER, "fixture": REFERENCE_FIXTURE}
+            if plan == "reference-study" else {"plugin": PLUGIN, "runner": RUNNER, "fixture": FIXTURE})
+
+
+def bind(config, plan="metadata"):
+    """An independently constructed builder-format receipt over real fixture files."""
+    def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
+    root = config.source_root
+    inputs = [root/"study-identities.json", root/"binding.py", root/"protocol.schema.json"]
+    for directory, suffixes in (("native", {".m", ".h", ".py", ".yml", ".plist"}),
+                               ("fixture", {".m", ".swift"}), ("host", {".py"})):
+        inputs.extend(path for path in (root/directory).rglob("*") if path.is_file() and (directory == "fixture" or path.suffix in suffixes)
+                      and not any(part == "__pycache__" or part.endswith((".xcodeproj", ".xcworkspace")) for part in path.relative_to(root/directory).parts)
+                      and path.name not in {"README.md", ".gitignore"}
+                      and not (directory == "host" and path.name.startswith("test_")))
+    products = config.derived_data/"Build/Products"
+    test_plan = next(products.glob("*.xctestrun"))
+    selected = identity(plan)
+    settings = {"JEV_NATIVE_OWNER_PLAN": plan,
+                "JEV_NATIVE_OWNER_PLUGIN_BUNDLE_ID": selected["plugin"],
+                "JEV_NATIVE_OWNER_RUNNER_BUNDLE_ID": selected["runner"],
+                "JEV_NATIVE_OWNER_FIXTURE_BUNDLE_ID": selected["fixture"]}
+    command = ["xcodebuild", "build-for-testing", "-project", "NativeOwnerStudy.xcodeproj",
+               "-scheme", "NativeOwnerStudy", "-destination", "generic/platform=iOS Simulator",
+               "-derivedDataPath", str(config.derived_data),
+               *[key+"="+value for key,value in settings.items()]]
+    receipt = {"schema": "jev.native-owner-build/1", "plan": plan, "identity": selected,
+               "sourceRoot": str(root), "derivedData": str(config.derived_data),
+               "sourceCommit": "a"*40, "sourceSHA256": {str(p.relative_to(root)):sha(p) for p in sorted(inputs)},
+               "xcodeVersion": "Xcode synthetic\nBuild version synthetic", "buildSettings": settings,
+               "projectCommand": ["xcodegen", "generate", "--spec", "project.yml"],
+               "generatedProjectSHA256": {str(p.relative_to(root/"native/NativeOwnerStudy.xcodeproj")):sha(p)
+                     for p in sorted((root/"native/NativeOwnerStudy.xcodeproj").rglob("*")) if p.is_file()},
+               "buildCommand": command,
+               "bundles": {"NativeOwnerStudy-Runner.app":selected["runner"],
+                           "NativeOwnerStudy.xctest":selected["plugin"], "NativeOwnerFixture.app":selected["fixture"]},
+               "xctestrun":str(test_plan), "xctestrunSHA256":sha(test_plan),
+               "productSHA256":{str(p.relative_to(products)):sha(p) for p in sorted(products.rglob("*"))
+                                if p.is_file() and p != test_plan}, "deviceExecution":False}
+    config.build_binding.write_text(json.dumps(receipt, indent=2)+"\n")
+    return receipt
+
 
 class Clock:
     def __init__(self): self.value = 0.0
@@ -39,8 +89,9 @@ def records(request, plan="metadata"):
                 "outcome":"observed", "elapsedMs":sequence, "inputCalls":0,
                 "details":details}
     return [record(0, "started", {"plan":plan, "runnerPID":22222}),
-            record(1, "observation", {"getterABIMatches":True}),
-            record(2, "finished", {"plan":plan, "runnerPID":22222,
+            record(1, "observation", {"studyIdentity":{"plan":plan, **identity(plan)}}),
+            record(2, "observation", {"getterABIMatches":True}),
+            record(3, "finished", {"plan":plan, "runnerPID":22222,
                 "appElementQueries":0 if plan == "metadata" else 3,
                 "localMethodsReturned":True, "localReferencesReleased":True,
                 "nativeSettlement":"unconfirmed", "coverage":{
@@ -51,6 +102,7 @@ def records(request, plan="metadata"):
 class Tools:
     def __init__(self, clock, configuration):
         self.clock, self.configuration = clock, configuration
+        self.selected = identity(json.loads(configuration.build_binding.read_text())["plan"]) if getattr(configuration,"build_binding",None) else identity("metadata")
         self.commands = []
         self.installed = set()
         self.state = "Shutdown"
@@ -60,7 +112,7 @@ class Tools:
         self.test_code = 0
         self.inventory_change = lambda device: device
         self.absence_code = 2
-        self.telemetry = {"pid":33333,"generation":0,"ordinary":0}
+        self.telemetry = {"pid":33333,"generation":0,"ordinary":0,"bundleIdentifier":self.selected["fixture"]}
         self.fixture_path_override = None
         self.started_ledgers = []
         self.test_child = None
@@ -69,7 +121,7 @@ class Tools:
         self.started_ledgers.append(json.loads((self.configuration.evidence_directory/"ownership.json").read_text()))
         if argv[0] == "/bin/ps": return self.ps
         if argv[0] == "xcodebuild":
-            self.installed.add(RUNNER)
+            self.installed.add(self.selected["runner"])
             plan = plistlib.loads(Path(argv[argv.index("-xctestrun")+1]).read_bytes())
             target = (plan["TestConfigurations"][0]["TestTargets"][0]
                       if "TestConfigurations" in plan else plan["NativeOwnerStudy"])
@@ -105,40 +157,48 @@ class Tools:
             else:
                 (container/"Info.plist").write_bytes(plistlib.dumps({"CFBundleIdentifier":bundle}))
             return Child((str(container)+"\n").encode())
-        elif verb == "install": self.installed.add(FIXTURE)
-        elif verb == "launch": return Child(f"{FIXTURE}: 33333\n".encode())
+        elif verb == "install": self.installed.add(self.selected["fixture"])
+        elif verb == "launch": return Child(f"{self.selected['fixture']}: 33333\n".encode())
         elif verb == "uninstall": self.installed.remove(argv[4])
         return Child()
 
-def configuration(root, seconds=90):
-    root = Path(root)
+def configuration(root, seconds=90, plan="metadata"):
+    root = Path(root).resolve()
+    selected = identity(plan)
     products = root/"derived/Build/Products"
     products.mkdir(parents=True)
-    for product,bundle in [("NativeOwnerStudy-Runner.app",RUNNER),("NativeOwnerFixture.app",FIXTURE)]:
+    for product,bundle in [("NativeOwnerStudy-Runner.app",selected["runner"]),("NativeOwnerFixture.app",selected["fixture"])]:
         app=products/"Debug-iphonesimulator"/product
         app.mkdir(parents=True)
         (app/"Info.plist").write_bytes(plistlib.dumps({"CFBundleIdentifier":bundle}))
         (app/"executable").write_bytes(b"owned build fixture")
     plugin=products/"Debug-iphonesimulator/NativeOwnerStudy-Runner.app/PlugIns/NativeOwnerStudy.xctest"
     plugin.mkdir(parents=True)
-    (plugin/"Info.plist").write_bytes(plistlib.dumps({"CFBundleIdentifier":PLUGIN}))
+    (plugin/"Info.plist").write_bytes(plistlib.dumps({"CFBundleIdentifier":selected["plugin"], "JevNativeOwnerPlan":plan,
+        "JevNativeOwnerPluginBundleIdentifier":selected["plugin"],
+        "JevNativeOwnerRunnerBundleIdentifier":selected["runner"],
+        "JevNativeOwnerFixtureBundleIdentifier":selected["fixture"]}))
     (products/"NativeOwnerStudy.xctestrun").write_bytes(plistlib.dumps({"NativeOwnerStudy":{
         "BlueprintName":"NativeOwnerStudy", "IsUITestBundle":True,
         "IsXCTRunnerHostedTestBundle":True,"UseUITargetAppProvidedByTests":True,
-        "TestHostBundleIdentifier":RUNNER,
+        "TestHostBundleIdentifier":selected["runner"],
         "TestHostPath":"__TESTROOT__/Debug-iphonesimulator/NativeOwnerStudy-Runner.app",
         "TestBundlePath":"__TESTHOST__/PlugIns/NativeOwnerStudy.xctest",
         "DependentProductPaths":["__TESTROOT__/Debug-iphonesimulator/NativeOwnerFixture.app",
             "__TESTROOT__/Debug-iphonesimulator/NativeOwnerStudy-Runner.app",
             "__TESTROOT__/Debug-iphonesimulator/NativeOwnerStudy-Runner.app/PlugIns/NativeOwnerStudy.xctest"]}}))
     source=root/"source"
-    (source/"native").mkdir(parents=True)
-    (source/"fixture").mkdir()
-    (source/"native/project.yml").write_text("name: NativeOwnerStudy")
-    (source/"native/Study.m").write_text("// synthetic source")
-    (source/"fixture/Fixture.swift").write_text("// synthetic fixture")
-    return Configuration(root/"derived",root/"evidence",source,admission_seconds=seconds,
-                         lease_root=root/"leases")
+    actual=Path(__file__).resolve().parent.parent
+    shutil.copytree(actual,source,ignore=shutil.ignore_patterns("__pycache__", "*.xcodeproj", "test_*.py", "*.md"))
+    (source/"native/Study.m").write_text("// additional synthetic source")
+    (source/"fixture/Fixture.swift").write_text("// additional synthetic fixture")
+    project=source/"native/NativeOwnerStudy.xcodeproj"
+    project.mkdir()
+    (project/"project.pbxproj").write_text("// generated synthetic project")
+    config=Configuration(root/"derived",root/"evidence",source,admission_seconds=seconds,
+                         lease_root=root/"leases",build_binding=root/"binding.json")
+    bind(config,plan)
+    return config
 
 class NoTools:
     def start(self, *args, **kwargs):
@@ -170,6 +230,7 @@ class Admission(unittest.TestCase):
         with tempfile.TemporaryDirectory() as root:
             config=configuration(root)
             (config.source_root/"fixture/Fixture.swift").rename(config.source_root/"fixture/Fixture.m")
+            bind(config)
             clock=Clock(); tools=Tools(clock,config)
             result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
             self.assertEqual(result.status,"completed")
@@ -178,15 +239,15 @@ class Admission(unittest.TestCase):
 
     def test_reference_study_retains_new_fixture_device_and_runner_despite_normal_exit(self):
         with tempfile.TemporaryDirectory() as root:
-            config=configuration(root); clock=Clock(); tools=Tools(clock,config)
+            config=configuration(root,plan="reference-study"); clock=Clock(); tools=Tools(clock,config)
             result=run_study("reference-study",config,Dependencies(tools,clock.now,clock.sleep))
             self.assertEqual(result.status,"retained")
             self.assertEqual(result.reason,"NATIVE_SETTLEMENT_UNCONFIRMED")
-            self.assertEqual(tools.installed,{RUNNER,FIXTURE})
+            self.assertEqual(tools.installed,{REFERENCE_RUNNER,REFERENCE_FIXTURE})
             self.assertEqual(tools.state,"Booted")
             self.assertFalse(any("uninstall" in argv for argv in tools.commands))
-            self.assertIn(["xcrun","simctl","launch",UDID,FIXTURE],tools.commands)
-            self.assertTrue(any(row.get("bundleId")==FIXTURE for row in result.retained_resources))
+            self.assertIn(["xcrun","simctl","launch",UDID,REFERENCE_FIXTURE],tools.commands)
+            self.assertTrue(any(row.get("bundleId")==REFERENCE_FIXTURE for row in result.retained_resources))
 
     def test_fixture_documents_need_not_exist_until_the_owned_app_launches(self):
         class LaunchCreatesDocuments(Tools):
@@ -203,7 +264,7 @@ class Admission(unittest.TestCase):
                     (documents/"result.txt").write_text(json.dumps(self.telemetry))
                 return result
         with tempfile.TemporaryDirectory() as root:
-            config=configuration(root); clock=Clock(); tools=LaunchCreatesDocuments(clock,config)
+            config=configuration(root,plan="reference-study"); clock=Clock(); tools=LaunchCreatesDocuments(clock,config)
             result=run_study("reference-study",config,Dependencies(tools,clock.now,clock.sleep))
             self.assertEqual(result.reason,"NATIVE_SETTLEMENT_UNCONFIRMED")
 
@@ -228,7 +289,7 @@ class Admission(unittest.TestCase):
 class Refusals(unittest.TestCase):
     def exercise(self, change, plan="metadata", seconds=90):
         with tempfile.TemporaryDirectory() as root:
-            config=configuration(root,seconds); clock=Clock(); tools=Tools(clock,config)
+            config=configuration(root,seconds,plan=plan if plan in ("metadata","reference-study") else "metadata"); clock=Clock(); tools=Tools(clock,config)
             change(config,clock,tools)
             result=run_study(plan,config,Dependencies(tools,clock.now,clock.sleep))
             return result, tools
@@ -337,7 +398,7 @@ class Refusals(unittest.TestCase):
                 self.assertEqual(result.status,"retained")
                 self.assertEqual(result.reason,"FIXTURE_READINESS_UNCONFIRMED")
                 self.assertFalse(any(argv[0]=="xcodebuild" for argv in tools.commands))
-                self.assertIn(FIXTURE,tools.installed)
+                self.assertIn(REFERENCE_FIXTURE,tools.installed)
 
     def test_metadata_retains_on_pid_present_reused_or_inspection_error(self):
         for child in (Child(b"22222 /foreign/process\n"),Child(b"22222 NativeOwnerStudy-Runner\n"),
@@ -361,6 +422,7 @@ class Refusals(unittest.TestCase):
             plan["NativeOwnerStudy"]["EnvironmentVariables"]={"TYPESAFE_API_KEY":"synthetic-only-canary",
                                                                "DYLD_FRAMEWORK_PATH":"__TESTROOT__/Debug-iphonesimulator"}
             plan_path.write_bytes(plistlib.dumps(plan))
+            bind(config)
             clock=Clock(); tools=CaptureEnvironment(clock,config)
             with patch("study.os.environ",{"PATH":"/usr/bin:/bin","TYPESAFE_API_KEY":"synthetic-only-canary"}):
                 result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
@@ -448,6 +510,7 @@ class BuildOwnership(unittest.TestCase):
             path=config.derived_data/"Build/Products/NativeOwnerStudy.xctestrun"
             target=plistlib.loads(path.read_bytes())["NativeOwnerStudy"]
             path.write_bytes(plistlib.dumps({"TestConfigurations":[{"Name":"owned","TestTargets":[target]}]}))
+            bind(config)
             result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
             self.assertEqual(result.status,"completed")
             derived=plistlib.loads((config.evidence_directory/"owned.xctestrun").read_bytes())
@@ -478,24 +541,24 @@ class Streams(unittest.TestCase):
             "duplicate":lambda rows:[rows[0],rows[0],*rows[1:]],
             "missing-finish":lambda rows:rows[:-1],
             "missing-start":lambda rows:rows[1:],
-            "unknown-kind":lambda rows:[rows[0],{**rows[1],"kind":"complete"},rows[2]],
-            "unknown-operation":lambda rows:[rows[0],{**rows[1],"operation":"tap"},rows[2]],
+            "unknown-kind":lambda rows:[rows[0],{**rows[2],"kind":"complete"},rows[3]],
+            "unknown-operation":lambda rows:[rows[0],{**rows[2],"operation":"tap"},rows[3]],
             "input":lambda rows:[{**r,"inputCalls":1} for r in rows],
             "bool-input":lambda rows:[{**r,"inputCalls":False} for r in rows],
             "bool-sequence":lambda rows:[{**rows[0],"sequence":False},*rows[1:]],
-            "negative-time":lambda rows:[rows[0],{**rows[1],"elapsedMs":-1},rows[2]],
-            "reversed-time":lambda rows:[rows[0],{**rows[1],"elapsedMs":3},rows[2]],
-            "nan":lambda rows:[rows[0],{**rows[1],"elapsedMs":float("nan")},rows[2]],
-            "extra-field":lambda rows:[rows[0],{**rows[1],"extra":1},rows[2]],
-            "missing-required":lambda rows:[rows[0],{k:v for k,v in rows[1].items() if k!="inputCalls"},rows[2]],
-            "bad-details":lambda rows:[rows[0],{**rows[1],"details":[]},rows[2]],
-            "bad-plan":lambda rows:[rows[0],rows[1],{**rows[2],"details":{**rows[2]["details"],"plan":"reference-study"}}],
-            "changed-pid":lambda rows:[rows[0],rows[1],{**rows[2],"details":{**rows[2]["details"],"runnerPID":22223}}],
-            "missing-query-count":lambda rows:[rows[0],rows[1],{**rows[2],"details":{k:v for k,v in rows[2]["details"].items() if k!="appElementQueries"}}],
-            "claimed-settlement":lambda rows:[rows[0],rows[1],{**rows[2],"details":{**rows[2]["details"],"nativeSettlement":"settled"}}],
-            "claimed-coverage":lambda rows:[rows[0],{**rows[1],"details":{"ancestryComplete":True}},rows[2]],
-            "claimed-association":lambda rows:[rows[0],rows[1],{**rows[2],"details":{**rows[2]["details"],"coverage":{"originalAncestry":"established","referenceLifetime":"unestablished","independentAssociations":"unestablished"}}}],
-            "new-record-after-finish":lambda rows:[*rows,{**rows[1],"sequence":3}],
+            "negative-time":lambda rows:[rows[0],{**rows[2],"elapsedMs":-1},rows[3]],
+            "reversed-time":lambda rows:[rows[0],{**rows[2],"elapsedMs":3},rows[3]],
+            "nan":lambda rows:[rows[0],{**rows[2],"elapsedMs":float("nan")},rows[3]],
+            "extra-field":lambda rows:[rows[0],{**rows[2],"extra":1},rows[3]],
+            "missing-required":lambda rows:[rows[0],{k:v for k,v in rows[2].items() if k!="inputCalls"},rows[3]],
+            "bad-details":lambda rows:[rows[0],{**rows[2],"details":[]},rows[3]],
+            "bad-plan":lambda rows:[rows[0],rows[2],{**rows[3],"details":{**rows[3]["details"],"plan":"reference-study"}}],
+            "changed-pid":lambda rows:[rows[0],rows[2],{**rows[3],"details":{**rows[3]["details"],"runnerPID":22223}}],
+            "missing-query-count":lambda rows:[rows[0],rows[2],{**rows[3],"details":{k:v for k,v in rows[3]["details"].items() if k!="appElementQueries"}}],
+            "claimed-settlement":lambda rows:[rows[0],rows[2],{**rows[3],"details":{**rows[3]["details"],"nativeSettlement":"settled"}}],
+            "claimed-coverage":lambda rows:[rows[0],{**rows[2],"details":{"ancestryComplete":True}},rows[3]],
+            "claimed-association":lambda rows:[rows[0],rows[2],{**rows[3],"details":{**rows[3]["details"],"coverage":{"originalAncestry":"established","referenceLifetime":"unestablished","independentAssociations":"unestablished"}}}],
+            "new-record-after-finish":lambda rows:[*rows,{**rows[2],"sequence":3}],
         }
         for name,change in changes.items():
             with self.subTest(name=name):
@@ -525,18 +588,18 @@ class Streams(unittest.TestCase):
         for value,status in (("é"*512,"completed"),("é"*512+"x","retained")):
             with self.subTest(bytes=len(value.encode())):
                 def mutate(rows):
-                    rows[1]["details"]={"raw":value}
+                    rows[2]["details"]={"raw":value}
                     return rows
                 result,_=self.exercise(lambda c,k,t:setattr(t,"mutate",mutate))
                 self.assertEqual(result.status,status)
 
     def test_total_json_stream_limit_is_enforced_across_individually_valid_records(self):
         def oversized(rows):
-            result=[rows[0]]
-            for sequence in range(1,1300):
-                result.append({**rows[1],"sequence":sequence,"elapsedMs":sequence,
+            result=list(rows[:2])
+            for sequence in range(2,1301):
+                result.append({**rows[2],"sequence":sequence,"elapsedMs":sequence,
                                "details":{"bounded":"x"*1024}})
-            result.append({**rows[-1],"sequence":1300,"elapsedMs":1300})
+            result.append({**rows[-1],"sequence":1301,"elapsedMs":1301})
             return result
         result,tools=self.exercise(lambda c,k,t:setattr(t,"mutate",oversized))
         self.assertEqual(result.reason,"RECORD_STREAM_LIMIT")
@@ -545,11 +608,11 @@ class Streams(unittest.TestCase):
     def test_exact_one_mib_json_stream_passes_and_one_more_byte_retains(self):
         def at_limit(rows,extra):
             for count in range(1000,1024):
-                rows[1]["details"]={"chunks":["x"*1024]*count,"padding":""}
+                rows[2]["details"]={"chunks":["x"*1024]*count,"padding":""}
                 wire=sum(len(json.dumps(row).encode())+1 for row in rows)
                 remaining=1048576-wire
                 if 0<=remaining<1024:
-                    rows[1]["details"]["padding"]="x"*(remaining+extra)
+                    rows[2]["details"]["padding"]="x"*(remaining+extra)
                     self.assertEqual(sum(len(json.dumps(row).encode())+1 for row in rows),1048576+extra)
                     return rows
             raise AssertionError("test wire boundary could not be constructed")
@@ -582,26 +645,26 @@ class Streams(unittest.TestCase):
         for count in (32,33):
             with self.subTest(count=count):
                 def parents(rows):
-                    result=[rows[0]]
+                    result=list(rows[:2])
                     for i in range(1,count+1):
-                        result.append({**rows[1],"sequence":i,"elapsedMs":i,"operation":"parent",
+                        result.append({**rows[2],"sequence":i+1,"elapsedMs":i+1,"operation":"parent",
                                        "details":{"edge":i,"parentPresent":True}})
-                    result.append({**rows[1],"sequence":count+1,"elapsedMs":count+1,
+                    result.append({**rows[2],"sequence":count+2,"elapsedMs":count+2,
                                    "operation":"parent","outcome":"failed","details":{"edges":32,"reason":"parent-limit"}})
-                    result.append({**rows[-1],"sequence":count+2,"elapsedMs":count+2})
+                    result.append({**rows[-1],"sequence":count+3,"elapsedMs":count+3})
                     return result
                 result,_=self.exercise(lambda c,k,t:setattr(t,"mutate",parents),"reference-study")
                 self.assertEqual(result.reason,"NATIVE_SETTLEMENT_UNCONFIRMED" if count==32 else "PARENT_EDGE_LIMIT")
 
     def test_programmatic_recreation_is_one_owned_write_and_setup_activation_is_not_a_request(self):
         with tempfile.TemporaryDirectory() as root:
-            config=configuration(root); clock=Clock(); tools=Tools(clock,config)
+            config=configuration(root,plan="reference-study"); clock=Clock(); tools=Tools(clock,config)
             def mutate(rows):
-                activation={**rows[1],"operation":"fixture-recreation",
-                    "details":{"setup":"activate","bundleId":FIXTURE}}
-                recreation={**rows[1],"sequence":2,"elapsedMs":2,"operation":"fixture-recreation",
+                activation={**rows[2],"operation":"fixture-recreation",
+                    "details":{"setup":"activate","bundleId":REFERENCE_FIXTURE}}
+                recreation={**rows[2],"sequence":2,"elapsedMs":2,"operation":"fixture-recreation",
                     "details":{"request":"recreate"}}
-                return [rows[0],activation,recreation,{**rows[2],"sequence":3,"elapsedMs":3}]
+                return [*rows[:2],{**activation,"sequence":2,"elapsedMs":2},{**recreation,"sequence":3,"elapsedMs":3},{**rows[3],"sequence":4,"elapsedMs":4}]
             tools.mutate=mutate
             result=run_study("reference-study",config,Dependencies(tools,clock.now,clock.sleep))
             self.assertEqual(result.reason,"NATIVE_SETTLEMENT_UNCONFIRMED")
@@ -616,11 +679,11 @@ class Streams(unittest.TestCase):
 
     def test_duplicate_recreation_does_not_overwrite_or_dispatch_input(self):
         with tempfile.TemporaryDirectory() as root:
-            config=configuration(root); clock=Clock(); tools=Tools(clock,config)
+            config=configuration(root,plan="reference-study"); clock=Clock(); tools=Tools(clock,config)
             def mutate(rows):
-                first={**rows[1],"operation":"fixture-recreation","details":{"request":"recreate"}}
+                first={**rows[2],"operation":"fixture-recreation","details":{"request":"recreate"}}
                 second={**first,"sequence":2,"elapsedMs":2}
-                return [rows[0],first,second,{**rows[2],"sequence":3,"elapsedMs":3}]
+                return [*rows[:2],{**first,"sequence":2,"elapsedMs":2},{**second,"sequence":3,"elapsedMs":3},{**rows[3],"sequence":4,"elapsedMs":4}]
             tools.mutate=mutate
             result=run_study("reference-study",config,Dependencies(tools,clock.now,clock.sleep))
             self.assertEqual(result.reason,"FIXTURE_RECREATION_DUPLICATE")
@@ -672,7 +735,7 @@ class Processes(unittest.TestCase):
             self.assertGreaterEqual(clock.now(),0.03)
             self.assertEqual((result.status,result.reason),("retained","RECORD_SCHEMA"))
             self.assertTrue(tools.child.stop_seen)
-            self.assertEqual([row["sequence"] for row in result.records],[0,1])
+            self.assertEqual([row["sequence"] for row in result.records],[0,1,2])
             entry=json.loads((config.evidence_directory/"ownership.json").read_text())["commands"][-1]
             self.assertEqual(entry["parentReturncode"],0)
             self.assertEqual(entry["returncode"],0)
@@ -699,7 +762,7 @@ class Processes(unittest.TestCase):
                 return Descendant(child.chunks[0][1]) if argv[0]=="xcodebuild" else child
         with tempfile.TemporaryDirectory() as root:
             config=configuration(root,0.05); clock=Clock(); tools=DescendantTools(clock,config)
-            tools.mutate=lambda rows:[rows[0],{**rows[1],"unknown":True},rows[2]]
+            tools.mutate=lambda rows:[rows[0],{**rows[2],"unknown":True},rows[3]]
             result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
             self.assertEqual((result.status,result.reason),("retained","RECORD_SCHEMA"))
             self.assertAlmostEqual(clock.now(),0.05)
@@ -735,7 +798,7 @@ class Processes(unittest.TestCase):
         for mode in ("group-error","group-unknown","stream-error","stream-unknown","boolean-exit"):
             with self.subTest(mode=mode),tempfile.TemporaryDirectory() as root:
                 config=configuration(root); clock=Clock(); tools=UncertainTools(clock,config)
-                tools.mutate=lambda rows:[rows[0],{**rows[1],"unknown":True},rows[2]]
+                tools.mutate=lambda rows:[rows[0],{**rows[2],"unknown":True},rows[3]]
                 result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
                 self.assertEqual((result.status,result.reason),("retained","RECORD_SCHEMA"))
                 entry=json.loads((config.evidence_directory/"ownership.json").read_text())["commands"][-1]
@@ -753,7 +816,7 @@ class Processes(unittest.TestCase):
         with tempfile.TemporaryDirectory() as root:
             config=configuration(root); clock=Clock(); tools=Tools(clock,config)
             tools.test_code=65
-            tools.mutate=lambda rows:[rows[0],{**rows[1],"unknown":True},rows[2]]
+            tools.mutate=lambda rows:[rows[0],{**rows[2],"unknown":True},rows[3]]
             result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
             self.assertEqual((result.status,result.reason),("retained","RECORD_SCHEMA"))
             entry=json.loads((config.evidence_directory/"ownership.json").read_text())["commands"][-1]
@@ -794,10 +857,10 @@ class Processes(unittest.TestCase):
                 child=super().start(argv,env,cwd)
                 if argv[0]=="xcodebuild":
                     rows=records(self.environment["JEV_NATIVE_OWNER_REQUEST_ID"],"reference-study")
-                    first=[rows[0],{**rows[1],"unknown":True}]
+                    first=[*rows[:2],{**rows[2],"unknown":True}]
                     if failure=="callback":
-                        first[-1]={**rows[1],"operation":"fixture-recreation","details":{"request":"recreate"}}
-                    later={**rows[1],"sequence":2,"elapsedMs":2,"operation":"fixture-recreation","details":{"request":"recreate"}}
+                        first[-1]={**rows[2],"operation":"fixture-recreation","details":{"request":"recreate"}}
+                    later={**rows[2],"sequence":3,"elapsedMs":3,"operation":"fixture-recreation","details":{"request":"recreate"}}
                     head=("\n".join(PREFIX+json.dumps(row) for row in first)+"\n").encode()
                     tail=(PREFIX+json.dumps(later)+"\n").encode()
                     self.child=Chunks()
@@ -811,14 +874,14 @@ class Processes(unittest.TestCase):
                 return child
         for failure,same_chunk in (("validation",True),("validation",False),("callback",False)):
             with self.subTest(failure=failure,same_chunk=same_chunk),tempfile.TemporaryDirectory() as root:
-                config=configuration(root); clock=Clock(); tools=ChunkTools(clock,config); tools.container_reads=0
+                config=configuration(root,plan="reference-study"); clock=Clock(); tools=ChunkTools(clock,config); tools.container_reads=0
                 result=run_study("reference-study",config,Dependencies(tools,clock.now,clock.sleep))
                 expected="RECORD_SCHEMA" if failure=="validation" else "FIXTURE_CONTAINER_CHANGED"
                 self.assertEqual((result.status,result.reason),("retained",expected))
                 self.assertTrue(tools.child.stop_seen)
                 self.assertEqual(tools.container_reads,1 if failure=="validation" else 2)
                 self.assertFalse((config.source_root/"fixture-data/Documents/recreate.request").exists())
-                self.assertNotIn(2,[row["sequence"] for row in result.records])
+                self.assertNotIn(3,[row["sequence"] for row in result.records])
                 native_entry=next(row for row in json.loads((config.evidence_directory/"ownership.json").read_text())["commands"] if row["argv"][0]=="xcodebuild")
                 self.assertEqual(native_entry["streamRefusal"],expected)
                 self.assertEqual(native_entry["returncode"],0)
@@ -849,7 +912,7 @@ class Processes(unittest.TestCase):
                             ("invalid-type","PROCESS_ADAPTER_INVALID"),("invalid-utf8","PROCESS_OUTPUT_ENCODING")):
             with self.subTest(mode=mode),tempfile.TemporaryDirectory() as root:
                 config=configuration(root); clock=Clock(); tools=BrokenTools(clock,config)
-                tools.mutate=lambda rows:[rows[0],{**rows[1],"unknown":True},rows[2]]
+                tools.mutate=lambda rows:[rows[0],{**rows[2],"unknown":True},rows[3]]
                 result=run_study("metadata",config,Dependencies(tools,clock.now,clock.sleep))
                 self.assertEqual((result.status,result.reason),("retained","RECORD_SCHEMA"))
                 entry=json.loads((config.evidence_directory/"ownership.json").read_text())["commands"][-1]
@@ -894,7 +957,7 @@ class Processes(unittest.TestCase):
         class RealChildTools(Tools):
             def start(self,argv,env,cwd):
                 if argv[0]!="xcodebuild": return super().start(argv,env,cwd)
-                self.commands.append(argv); self.installed.add(RUNNER)
+                self.commands.append(argv); self.installed.add(self.selected["runner"])
                 test_plan=plistlib.loads(Path(argv[argv.index("-xctestrun")+1]).read_bytes())
                 request=test_plan["NativeOwnerStudy"]["EnvironmentVariables"]["JEV_NATIVE_OWNER_REQUEST_ID"]
                 row=records(request)[0]
@@ -921,7 +984,7 @@ class Processes(unittest.TestCase):
         class GrandchildTools(Tools):
             def start(self,argv,env,cwd):
                 if argv[0]!="xcodebuild": return super().start(argv,env,cwd)
-                self.commands.append(argv); self.installed.add(RUNNER)
+                self.commands.append(argv); self.installed.add(self.selected["runner"])
                 test_plan=plistlib.loads(Path(argv[argv.index("-xctestrun")+1]).read_bytes())
                 request=test_plan["NativeOwnerStudy"]["EnvironmentVariables"]["JEV_NATIVE_OWNER_REQUEST_ID"]
                 lines=[PREFIX+json.dumps(row) for row in records(request)]

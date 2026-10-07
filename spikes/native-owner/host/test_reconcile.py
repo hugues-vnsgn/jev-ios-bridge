@@ -12,7 +12,11 @@ from pathlib import Path
 from unittest.mock import patch
 
 import reconcile
-from study import ABSENT, Configuration, Dependencies, FIXTURE, NAME, PLUGIN, PREFIX, RUNTIME, RUNNER, UDID
+from study import ABSENT, Configuration, Dependencies, NAME, PREFIX, RUNTIME, UDID
+RUNNER = "dev.jev.research.native-owner-study.xctrunner"
+FIXTURE = "dev.jev.research.native-owner-fixture"
+PLUGIN = "dev.jev.research.native-owner-study"
+
 
 
 def digest(data):

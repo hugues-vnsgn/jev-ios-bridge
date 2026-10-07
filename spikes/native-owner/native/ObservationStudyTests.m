@@ -11,9 +11,10 @@
 
 @interface FakeDevice : NSObject
 @property id client;
+@property NSUInteger getterCalls;
 @end
 @implementation FakeDevice
-- (id)accessibilityInterface { return self.client; }
+- (id)accessibilityInterface { self.getterCalls += 1; return self.client; }
 @end
 
 @interface FakeSnapshot : NSObject
@@ -121,14 +122,95 @@
 @interface ObservationStudyTests : XCTestCase
 @end
 @implementation ObservationStudyTests
+- (NSDictionary *)configurationForPlan:(NSString *)plan requestId:(NSString *)request {
+  BOOL reference = [plan isEqualToString:@"reference-study"];
+  NSDictionary *identity = @{@"plan":plan,
+    @"plugin":reference ? @"dev.jev.research.native-owner-20261007-reference" : @"dev.jev.research.native-owner-20261007-metadata",
+    @"runner":reference ? @"dev.jev.research.native-owner-20261007-reference.xctrunner" : @"dev.jev.research.native-owner-20261007-metadata.xctrunner",
+    @"fixture":reference ? @"dev.jev.research.native-owner-20261007-reference-fixture" : @"dev.jev.research.native-owner-20261007-metadata-fixture"};
+  return @{@"requestId":request,@"plan":plan,@"allowance":@10,
+           @"studyIdentity":identity,@"expectedStudyIdentity":identity};
+}
+- (void)testStudyIdentityPrecedesGetterAndMismatchPreventsAcquisition {
+  for (NSNumber *mismatch in @[@NO,@YES]) {
+    FakeDevice *device = [FakeDevice new]; device.client = [FakeClient new];
+    NSMutableDictionary *configuration = [[self configurationForPlan:@"metadata" requestId:@"identity-test"] mutableCopy];
+    if (mismatch.boolValue) {
+      NSMutableDictionary *actual = [configuration[@"studyIdentity"] mutableCopy];
+      actual[@"runner"] = @"dev.foreign.runner"; configuration[@"studyIdentity"] = actual;
+    }
+    NSMutableArray *records = [NSMutableArray array];
+    ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device configuration:configuration
+      clock:^{ return 10.0; } stop:^{ return NO; } readFixture:^{ return (NSDictionary *)nil; }
+      activateFixture:^{ XCTFail(@"Metadata must not activate"); return NO; }
+      wait:^(NSTimeInterval seconds) { XCTFail(@"Metadata must not wait"); }
+      emit:^(NSDictionary *record) {
+        if (record[@"details"][@"studyIdentity"]) XCTAssertEqual(device.getterCalls,0u);
+        [records addObject:record];
+      }];
+    [study run];
+    if (mismatch.boolValue) {
+      XCTAssertEqual(device.getterCalls,0u);
+      XCTAssertTrue([self hasReason:@"study-identity-mismatch" records:records]);
+      XCTAssertEqualObjects(records.lastObject[@"outcome"],@"failed");
+    } else {
+      XCTAssertEqualObjects(records[1][@"details"][@"studyIdentity"],configuration[@"studyIdentity"]);
+      XCTAssertEqualObjects(records[1][@"sequence"],@1);
+      XCTAssertEqual(device.getterCalls,1u);
+    }
+  }
+}
+- (void)testFixtureIdentityAndPIDRemainRequiredThroughActivationAndRecreation {
+  for (NSString *mode in @[@"wrong-bundle",@"missing-bundle",@"activation-pid",@"recreation-bundle",@"replacement-pid"]) {
+    FakeDevice *device = [FakeDevice new]; FakeClient *client = [FakeClient new]; device.client = client;
+    NSMutableArray *records = [NSMutableArray array];
+    __block BOOL activated = NO, recreated = NO;
+    __block NSUInteger reads = 0, activations = 0;
+    ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device
+      configuration:[self configurationForPlan:@"reference-study" requestId:@"fixture-agreement"]
+      clock:^{ return 10.0; } stop:^{ return NO; }
+      readFixture:^{
+        reads += 1;
+        NSMutableDictionary *telemetry = [@{@"pid":@42,@"generation":recreated ? @1 : @0,@"ordinary":@0,
+          @"bundleIdentifier":@"dev.jev.research.native-owner-20261007-reference-fixture"} mutableCopy];
+        if ([mode isEqual:@"wrong-bundle"] || ([mode isEqual:@"recreation-bundle"] && reads == 3))
+          telemetry[@"bundleIdentifier"] = @"dev.foreign.fixture";
+        if ([mode isEqual:@"missing-bundle"]) [telemetry removeObjectForKey:@"bundleIdentifier"];
+        if (([mode isEqual:@"activation-pid"] && activated) || ([mode isEqual:@"replacement-pid"] && recreated))
+          telemetry[@"pid"] = @43;
+        return telemetry;
+      }
+      activateFixture:^{ activations += 1; activated = YES; return YES; }
+      wait:^(NSTimeInterval seconds) { XCTFail(@"Every test supplies an immediate reply"); }
+      emit:^(NSDictionary *record) {
+        [records addObject:record];
+        if ([record[@"details"][@"request"] isEqual:@"recreate"]) recreated = YES;
+      }];
+    [study run];
+    XCTAssertEqualObjects(records.lastObject[@"outcome"],@"failed");
+    if ([mode isEqual:@"wrong-bundle"] || [mode isEqual:@"missing-bundle"]) {
+      XCTAssertEqual(activations,0u); XCTAssertEqual(client.pointCalls,0u);
+      XCTAssertTrue([self hasReason:@"invalid-fixture-telemetry" records:records]);
+    } else if ([mode isEqual:@"activation-pid"]) {
+      XCTAssertEqual(activations,1u); XCTAssertEqual(client.pointCalls,0u);
+      XCTAssertTrue([self hasReason:@"fixture-changed-during-activation" records:records]);
+    } else {
+      XCTAssertEqual(client.pointCalls,1u);
+      if ([mode isEqual:@"recreation-bundle"]) {
+        XCTAssertFalse(recreated);
+        XCTAssertTrue([self hasReason:@"invalid-fixture-telemetry" records:records]);
+      } else XCTAssertTrue([self hasReason:@"fixture-pid-changed" records:records]);
+    }
+  }
+}
 - (NSArray *)runDevice:(id)device plan:(NSString *)plan stop:(BOOL (^)(void))stop {
   NSMutableArray *records = [NSMutableArray array];
   __block NSTimeInterval now = 10;
   __block BOOL recreate = NO;
   ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device
-    configuration:@{@"requestId": @"policy-test", @"plan": plan, @"allowance": @10}
+    configuration:[self configurationForPlan:plan requestId:@"policy-test"]
     clock:^{ return now; } stop:stop
-    readFixture:^{ return @{@"pid": @42, @"generation": recreate ? @1 : @0, @"ordinary": @0}; }
+    readFixture:^{ return @{@"pid": @42, @"generation": recreate ? @1 : @0, @"ordinary": @0, @"bundleIdentifier": @"dev.jev.research.native-owner-20261007-reference-fixture"}; }
     activateFixture:^{ return YES; }
     wait:^(NSTimeInterval seconds) { now += seconds; }
     emit:^(NSDictionary *record) {
@@ -251,9 +333,9 @@
 }
 - (void)testIncompatibleGetterEmitsUnavailableAndFinishesWithoutQueries {
   NSArray *records = [self runDevice:[WrongGetterDevice new] plan:@"metadata" stop:^{ return NO; }];
-  XCTAssertEqual(records.count, 3u);
-  if (records.count != 3) return;
-  XCTAssertEqualObjects(records[1][@"outcome"], @"unavailable");
+  XCTAssertEqual(records.count, 4u);
+  if (records.count != 4) return;
+  XCTAssertEqualObjects(records[2][@"outcome"], @"unavailable");
   XCTAssertEqualObjects(records.lastObject[@"details"][@"appElementQueries"], @0);
 }
 - (void)testMetadataDoesNotAcquireFixtureElements {
@@ -397,9 +479,9 @@
   FakeClient *client = [FakeClient new]; FakeDevice *device = [FakeDevice new]; device.client = client;
   NSMutableArray *records = [NSMutableArray array]; __block BOOL stopped = NO;
   ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device
-    configuration:@{@"requestId": @"cancel-test", @"plan": @"reference-study", @"allowance": @10}
+    configuration:[self configurationForPlan:@"reference-study" requestId:@"cancel-test"]
     clock:^{ return 10.0; } stop:^{ return stopped; }
-    readFixture:^{ return @{@"pid": @42, @"generation": @0, @"ordinary": @0}; }
+    readFixture:^{ return @{@"pid": @42, @"generation": @0, @"ordinary": @0, @"bundleIdentifier": @"dev.jev.research.native-owner-20261007-reference-fixture"}; }
     activateFixture:^{ return YES; } wait:^(NSTimeInterval seconds) { XCTFail(@"No wait after stopped admission"); }
     emit:^(NSDictionary *record) {
       [records addObject:record]; if ([record[@"details"][@"request"] isEqual:@"recreate"]) stopped = YES;
@@ -436,9 +518,9 @@
     __block BOOL stopped = NO;
     __block NSUInteger activations = 0;
     ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device
-      configuration:@{@"requestId": @"activation-admission", @"plan": @"reference-study", @"allowance": @10}
+      configuration:[self configurationForPlan:@"reference-study" requestId:@"activation-admission"]
       clock:^{ return now; } stop:^{ return stopped; }
-      readFixture:^{ return @{@"pid": @42, @"generation": @0, @"ordinary": @0}; }
+      readFixture:^{ return @{@"pid": @42, @"generation": @0, @"ordinary": @0, @"bundleIdentifier": @"dev.jev.research.native-owner-20261007-reference-fixture"}; }
       activateFixture:^{ activations += 1; return YES; }
       wait:^(NSTimeInterval seconds) { now += seconds; }
       emit:^(NSDictionary *record) {
@@ -463,9 +545,9 @@
     __block BOOL stopped = NO;
     client.duringPreparation = ^{ if (expire.boolValue) now = 20; else stopped = YES; };
     ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device
-      configuration:@{@"requestId": @"query-admission", @"plan": @"reference-study", @"allowance": @10}
+      configuration:[self configurationForPlan:@"reference-study" requestId:@"query-admission"]
       clock:^{ return now; } stop:^{ return stopped; }
-      readFixture:^{ return @{@"pid": @42, @"generation": @0, @"ordinary": @0}; }
+      readFixture:^{ return @{@"pid": @42, @"generation": @0, @"ordinary": @0, @"bundleIdentifier": @"dev.jev.research.native-owner-20261007-reference-fixture"}; }
       activateFixture:^{ return YES; } wait:^(NSTimeInterval seconds) { now += seconds; }
       emit:^(NSDictionary *record) { [records addObject:record]; }];
     [study run];

@@ -11,10 +11,12 @@ def main():
     parser.add_argument("--plan",choices=("metadata","reference-study"),default="metadata")
     parser.add_argument("--derived-data",type=Path,required=True)
     parser.add_argument("--evidence-directory",type=Path,required=True)
+    parser.add_argument("--build-binding",type=Path)
     parser.add_argument("--admission-seconds",type=float,default=90)
     args=parser.parse_args()
     configuration=Configuration(args.derived_data.resolve(),args.evidence_directory.resolve(),
-                                Path(__file__).resolve().parent.parent,args.admission_seconds)
+                                Path(__file__).resolve().parent.parent,args.admission_seconds,
+                                build_binding=args.build_binding.resolve() if args.build_binding else None)
     tools=ProcessTools(configuration.evidence_directory/"process-output")
     result=run_study(args.plan,configuration,Dependencies(tools))
     # Raw native observations stay in local evidence, never normal CLI output.

@@ -14,9 +14,12 @@ targets:
     platform: iOS
     sources:
       - path: ../fixture
+        excludes:
+          - README.md
+          - .gitignore
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: dev.jev.research.native-owner-fixture
+        PRODUCT_BUNDLE_IDENTIFIER: $(JEV_NATIVE_OWNER_FIXTURE_BUNDLE_ID)
         TARGETED_DEVICE_FAMILY: "1,2"
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
   NativeOwnerStudy:
@@ -33,7 +36,9 @@ targets:
       - sdk: XCUIAutomation.framework
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: dev.jev.research.native-owner-study
+        PRODUCT_BUNDLE_IDENTIFIER: $(JEV_NATIVE_OWNER_PLUGIN_BUNDLE_ID)
+        GENERATE_INFOPLIST_FILE: NO
+        INFOPLIST_FILE: StudyInfo.plist
         TARGETED_DEVICE_FAMILY: "1,2"
         TEST_TARGET_NAME: ""
   NativeOwnerPolicyTests:

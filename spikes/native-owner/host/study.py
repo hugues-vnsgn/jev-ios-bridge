@@ -10,14 +10,16 @@ import subprocess
 import tempfile
 import time
 import uuid
+import re
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+import binding
 from device_guard import DeviceGuard, DeviceGuardError
 
 UDID = "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
 NAME = "jev-ios-bridge"
 RUNTIME = "com.apple.CoreSimulator.SimRuntime.iOS-26-4"
-RUNNER = "dev.jev.research.native-owner-study.xctrunner"
-FIXTURE = "dev.jev.research.native-owner-fixture"
-PLUGIN = "dev.jev.research.native-owner-study"
 PREFIX = b"JEV_NATIVE_OWNER_V1 "
 CLASS_COMPLETED = b"JEV_NATIVE_OWNER_CLASS_COMPLETED"
 ABSENT = ("An error was encountered processing the command (domain=NSPOSIXErrorDomain, code=2):\n"
@@ -35,6 +37,7 @@ class Configuration:
     admission_seconds: float = 90.0
     device_id: str = UDID
     lease_root: Path | None = None
+    build_binding: Path | None = None
 
 @dataclass(frozen=True)
 class Dependencies:
@@ -317,6 +320,9 @@ class _Study:
         self.recreation_written = False
         self.record_refusal = None
         self.initial = None
+        self.identity = None
+        self.identity_observed = False
+        self.binding_digest = None
         self.guard = None
         self.guard_error = None
         self.env = {key: os.environ[key] for key in
@@ -335,7 +341,8 @@ class _Study:
     def ledger(self):
         self.save("ownership.json", {"requestId":self.request, "plan":self.plan,
                   "deviceId":UDID, "commands":self.commands, "resources":self.resources,
-                  "deviceGuard":self.guard_facts(),
+                  "deviceGuard":self.guard_facts(), "studyIdentity":self.identity,
+                  "buildBindingSHA256":self.binding_digest,
                   "nativeSettlement":"unconfirmed"})
 
     def guard_facts(self):
@@ -534,6 +541,9 @@ class _Study:
             raise _Refusal("APP_ABSENCE_UNCONFIRMED")
 
     def hash_file(self, path):
+        binding.regular_path(path)
+        if not path.is_file():
+            raise _Refusal("BUILD_FILE_UNCONFIRMED")
         digest = hashlib.sha256()
         with path.open("rb") as handle:
             while chunk := handle.read(65536):
@@ -541,15 +551,81 @@ class _Study:
                 digest.update(chunk)
         return digest.hexdigest()
 
+    def verify_binding(self):
+        fields = {"schema", "plan", "identity", "sourceRoot", "derivedData", "sourceCommit",
+                  "sourceSHA256", "xcodeVersion", "buildSettings", "projectCommand",
+                  "generatedProjectSHA256", "buildCommand", "bundles", "xctestrun",
+                  "xctestrunSHA256", "productSHA256", "deviceExecution"}
+        try:
+            root = binding.regular_path(self.config.source_root)
+            derived = binding.regular_path(self.config.derived_data)
+            path = binding.regular_path(self.config.build_binding)
+            if not path.is_file() or path.stat().st_size > MAX_JSON:
+                raise _Refusal("BUILD_BINDING_INVALID")
+            data = path.read_bytes()
+            value = _decode(data)
+            if type(value) is not dict or set(value) != fields:
+                raise _Refusal("BUILD_BINDING_FIELDS_UNSUPPORTED")
+            self.identity = binding.profile(root, self.plan)
+            if (value["schema"] != "jev.native-owner-build/1" or value["plan"] != self.plan
+                    or value["identity"] != self.identity or value["sourceRoot"] != str(root)
+                    or value["derivedData"] != str(derived) or value["deviceExecution"] is not False
+                    or type(value["sourceCommit"]) is not str
+                    or re.fullmatch(r"[0-9a-f]{40}", value["sourceCommit"]) is None
+                    or type(value["xcodeVersion"]) is not str or not value["xcodeVersion"]
+                    or len(value["xcodeVersion"]) > MAX_STRING):
+                raise _Refusal("BUILD_BINDING_IDENTITY_MISMATCH")
+            if (value["buildSettings"] != binding.settings(self.plan,self.identity)
+                    or value["buildCommand"] != binding.build_command(derived,self.plan,self.identity)
+                    or value["projectCommand"] != ["xcodegen","generate","--spec","project.yml"]
+                    or value["bundles"] != {"NativeOwnerStudy-Runner.app":self.identity["runner"],
+                        "NativeOwnerStudy.xctest":self.identity["plugin"],
+                        "NativeOwnerFixture.app":self.identity["fixture"]}):
+                raise _Refusal("BUILD_BINDING_SETTINGS_MISMATCH")
+            self.bound_sources = binding.source_inventory(root,self.hash_file)
+            if value["sourceSHA256"] != self.bound_sources:
+                raise _Refusal("BUILD_BINDING_SOURCE_CHANGED")
+            current = Path(__file__).resolve().parent.parent
+            running = ["binding.py", "protocol.schema.json", "study-identities.json",
+                       *["host/"+p.name for p in (current/"host").glob("*.py") if not p.name.startswith("test_")]]
+            if any(self.bound_sources.get(name) != self.hash_file(current/name) for name in running):
+                raise _Refusal("BUILD_BINDING_HOST_SOURCE_CHANGED")
+            generated = binding.file_inventory(root/"native/NativeOwnerStudy.xcodeproj",self.hash_file)
+            if not generated or value["generatedProjectSHA256"] != generated:
+                raise _Refusal("BUILD_BINDING_PROJECT_CHANGED")
+            products = derived/"Build/Products"
+            plans = list(products.glob("*.xctestrun"))
+            if len(plans) != 1:
+                raise _Refusal("BUILD_ARTIFACTS_AMBIGUOUS")
+            test_plan = binding.regular_path(plans[0])
+            if value["xctestrun"] != str(test_plan) or value["xctestrunSHA256"] != self.hash_file(test_plan):
+                raise _Refusal("BUILD_BINDING_PLAN_CHANGED")
+            if value["productSHA256"] != binding.file_inventory(products,self.hash_file,exclude=(test_plan,)):
+                raise _Refusal("BUILD_BINDING_PRODUCTS_CHANGED")
+        except (ValueError, OSError, RuntimeError) as error:
+            raise _Refusal("BUILD_BINDING_INVALID") from None
+        self.binding_digest = hashlib.sha256(data).hexdigest()
+        target = self.output/"verified-build-binding.json"
+        with target.open("xb") as handle:
+            os.chmod(target,0o600)
+            handle.write(data)
+        self.save("build-binding.json", {"path":str(path), "sha256":self.binding_digest,
+                  "plan":self.plan, "identity":self.identity,
+                  "meaning":"research source/product provenance, not a production certificate"})
+        self.ledger()
+
     def artifacts(self):
-        products = self.config.derived_data.resolve()/"Build/Products"
+        if self.config.build_binding is None:
+            raise _Refusal("BUILD_BINDING_MISSING")
+        self.verify_binding()
+        products = self.config.derived_data/"Build/Products"
         plans = list(products.glob("*.xctestrun"))
         if len(plans) != 1 or plans[0].is_symlink():
             raise _Refusal("BUILD_ARTIFACTS_AMBIGUOUS")
         self.test_plan = plans[0]
         self.apps = {}
         manifest = []
-        for product, bundle in (("NativeOwnerStudy-Runner.app", RUNNER), ("NativeOwnerFixture.app", FIXTURE)):
+        for product, bundle in (("NativeOwnerStudy-Runner.app", self.identity["runner"]), ("NativeOwnerFixture.app", self.identity["fixture"])):
             app = products/"Debug-iphonesimulator"/product
             if not app.is_dir() or app.is_symlink():
                 raise _Refusal("BUILD_ARTIFACTS_MISSING")
@@ -557,7 +633,7 @@ class _Study:
                 info = plistlib.loads((app/"Info.plist").read_bytes())
             except (ValueError, plistlib.InvalidFileException):
                 raise _Refusal("BUILD_PLIST_INVALID") from None
-            if info.get("CFBundleIdentifier") != bundle:
+            if type(info) is not dict or info.get("CFBundleIdentifier") != bundle:
                 raise _Refusal("BUILD_BUNDLE_MISMATCH")
             self.apps[bundle] = app
             for file in sorted(app.rglob("*")):
@@ -565,27 +641,21 @@ class _Study:
                     raise _Refusal("BUILD_SYMLINK_UNCONFIRMED")
                 if file.is_file():
                     manifest.append({"path":str(file), "sha256":self.hash_file(file)})
-        self.plugin = self.apps[RUNNER]/"PlugIns/NativeOwnerStudy.xctest"
+        self.plugin = self.apps[self.identity["runner"]]/"PlugIns/NativeOwnerStudy.xctest"
         if not self.plugin.is_dir() or self.plugin.is_symlink():
             raise _Refusal("BUILD_PLUGIN_MISSING")
         plugin_info = plistlib.loads((self.plugin/"Info.plist").read_bytes())
-        if type(plugin_info) is not dict or plugin_info.get("CFBundleIdentifier") != PLUGIN:
+        if type(plugin_info) is not dict or plugin_info.get("CFBundleIdentifier") != self.identity["plugin"]:
             raise _Refusal("BUILD_PLUGIN_BUNDLE_MISMATCH")
-        source_files = []
-        for directory in ("native", "fixture"):
-            source_files.extend(file for file in (self.config.source_root/directory).rglob("*")
-                                if file.is_file() and file.suffix in (".m", ".h", ".swift", ".yml"))
-        if (not any(file.parent == self.config.source_root/"native" and file.suffix == ".m" for file in source_files) or
-            not any(file.parent == self.config.source_root/"fixture" and file.suffix in (".m", ".swift") for file in source_files) or
-            not (self.config.source_root/"native/project.yml").is_file()):
-            raise _Refusal("BUILD_SOURCE_MISSING")
-        for file in sorted(source_files):
-            if file.is_symlink():
-                raise _Refusal("BUILD_SOURCE_SYMLINK")
-            manifest.append({"path":str(file.resolve()), "sha256":self.hash_file(file)})
+        if any(plugin_info.get(key) != expected for key,expected in {
+                "JevNativeOwnerPlan":self.plan,
+                "JevNativeOwnerPluginBundleIdentifier":self.identity["plugin"],
+                "JevNativeOwnerRunnerBundleIdentifier":self.identity["runner"],
+                "JevNativeOwnerFixtureBundleIdentifier":self.identity["fixture"]}.items()):
+            raise _Refusal("BUILD_PLUGIN_PROFILE_MISMATCH")
+        manifest.extend({"path":str(self.config.source_root/path), "sha256":digest}
+                        for path,digest in self.bound_sources.items())
         manifest.append({"path":str(self.test_plan), "sha256":self.hash_file(self.test_plan)})
-        protocol = Path(__file__).parent.parent/"protocol.schema.json"
-        manifest.append({"path":str(protocol.resolve()), "sha256":self.hash_file(protocol)})
         self.save("build-manifest.json", manifest)
         self.read_plan()  # All startup ownership guards precede simulator setup.
 
@@ -593,7 +663,7 @@ class _Study:
         if type(value) is not str or not value or "\n" in value:
             raise _Refusal("TEST_PLAN_PRODUCT_INVALID")
         value = value.replace("__TESTROOT__", str(self.test_plan.parent))
-        value = value.replace("__TESTHOST__", str(self.apps[RUNNER]))
+        value = value.replace("__TESTHOST__", str(self.apps[self.identity["runner"]]))
         if not Path(value).is_absolute():
             raise _Refusal("TEST_PLAN_PRODUCT_INVALID")
         return Path(value).resolve()
@@ -640,13 +710,13 @@ class _Study:
             "UseUITargetAppProvidedByTests","UserAttachmentLifetime","UITargetAppPath","UITargetAppBundleIdentifier"}
         if set(target)-fields:
             raise _Refusal("TEST_PLAN_FIELDS_UNSUPPORTED")
-        if (target.get("TestHostBundleIdentifier")!=RUNNER or
+        if (target.get("TestHostBundleIdentifier")!=self.identity["runner"] or
             target.get("IsUITestBundle") is not True or
             target.get("IsXCTRunnerHostedTestBundle") is not True or
             target.get("UseUITargetAppProvidedByTests") is not True or
-            target.get("TestBundleIdentifier",PLUGIN)!=PLUGIN):
+            target.get("TestBundleIdentifier",self.identity["plugin"])!=self.identity["plugin"]):
             raise _Refusal("TEST_PLAN_BUNDLE_MISMATCH")
-        runner,plugin,fixture=self.apps[RUNNER].resolve(),self.plugin.resolve(),self.apps[FIXTURE].resolve()
+        runner,plugin,fixture=self.apps[self.identity["runner"]].resolve(),self.plugin.resolve(),self.apps[self.identity["fixture"]].resolve()
         if self.product_path(target.get("TestHostPath"))!=runner or self.product_path(target.get("TestBundlePath"))!=plugin:
             raise _Refusal("TEST_PLAN_PRODUCT_MISMATCH")
         dependencies=target.get("DependentProductPaths")
@@ -659,12 +729,12 @@ class _Study:
             raise _Refusal("TEST_PLAN_DEPENDENCIES_INVALID")
         if "UITargetAppPath" in target and self.product_path(target["UITargetAppPath"])!=fixture:
             raise _Refusal("TEST_PLAN_UI_TARGET_MISMATCH")
-        if "UITargetAppBundleIdentifier" in target and target["UITargetAppBundleIdentifier"]!=FIXTURE:
+        if "UITargetAppBundleIdentifier" in target and target["UITargetAppBundleIdentifier"]!=self.identity["fixture"]:
             raise _Refusal("TEST_PLAN_UI_TARGET_MISMATCH")
         for field in ("CommandLineArguments","UITargetAppCommandLineArguments"):
             if target.get(field,[])!=[]:
                 raise _Refusal("TEST_PLAN_ARGUMENTS_UNSUPPORTED")
-        products=str(self.apps[RUNNER].parent)
+        products=str(self.apps[self.identity["runner"]].parent)
         templates={"DYLD_FRAMEWORK_PATH":products+":__PLATFORMS__/iPhoneSimulator.platform/Developer/Library/Frameworks",
             "DYLD_LIBRARY_PATH":products+":__PLATFORMS__/iPhoneSimulator.platform/Developer/usr/lib",
             "XCODE_SCHEME_NAME":"NativeOwnerStudy","__XCODE_BUILT_PRODUCTS_DIR_PATHS":products,
@@ -715,7 +785,7 @@ class _Study:
         target["EnvironmentVariables"] = environment
         def rewrite(item):
             if isinstance(item, str):
-                return item.replace("__TESTROOT__", str(self.test_plan.parent)).replace("__TESTHOST__",str(self.apps[RUNNER]))
+                return item.replace("__TESTROOT__", str(self.test_plan.parent)).replace("__TESTHOST__",str(self.apps[self.identity["runner"]]))
             if isinstance(item, dict):
                 return {key:rewrite(child) for key,child in item.items()}
             if isinstance(item, list):
@@ -733,19 +803,31 @@ class _Study:
         self.resources.append(resource)
         self.ledger()
 
+    def fixture_telemetry(self):
+        path = self.fixture_documents/"result.txt"
+        if self.fixture_documents.is_symlink() or path.is_symlink() or not path.is_file() or path.stat().st_size > MAX_STRING:
+            raise _Refusal("FIXTURE_TELEMETRY_INVALID")
+        telemetry = _decode(path.read_bytes())
+        if (type(telemetry) is not dict or set(telemetry) != {"pid", "generation", "ordinary", "bundleIdentifier"} or
+                any(type(telemetry[name]) is not int for name in ("pid", "generation", "ordinary")) or
+                telemetry != {"pid":self.fixture_pid, "generation":0, "ordinary":0,
+                              "bundleIdentifier":self.identity["fixture"]}):
+            raise _Refusal("FIXTURE_READINESS_UNCONFIRMED")
+        return telemetry
+
     def fixture_ready(self):
-        self.own({"kind":"fixture", "bundleId":FIXTURE, "state":"installation-pending"})
+        self.own({"kind":"fixture", "bundleId":self.identity["fixture"], "state":"installation-pending"})
         self.app_owned = True
-        self.checked(self.sim("install", UDID, str(self.apps[FIXTURE])))
-        self.checked(self.sim("get_app_container", UDID, FIXTURE, "app"))
-        container_text = self.checked(self.sim("get_app_container", UDID, FIXTURE, "data")).strip()
+        self.checked(self.sim("install", UDID, str(self.apps[self.identity["fixture"]])))
+        self.checked(self.sim("get_app_container", UDID, self.identity["fixture"], "app"))
+        container_text = self.checked(self.sim("get_app_container", UDID, self.identity["fixture"], "data")).strip()
         container = Path(container_text)
         if not container.is_absolute() or "\n" in container_text or not container.is_dir() or container.is_symlink():
             raise _Refusal("FIXTURE_CONTAINER_UNCONFIRMED")
         self.fixture_container = container.resolve()
         self.fixture_documents = self.fixture_container/"Documents"
-        text = self.checked(self.sim("launch", UDID, FIXTURE))
-        prefix = FIXTURE + ": "
+        text = self.checked(self.sim("launch", UDID, self.identity["fixture"]))
+        prefix = self.identity["fixture"] + ": "
         if not text.startswith(prefix) or not text[len(prefix):].strip().isdigit():
             raise _Refusal("FIXTURE_LAUNCH_UNCONFIRMED")
         self.fixture_pid = int(text[len(prefix):].strip())
@@ -759,23 +841,29 @@ class _Study:
                 raise _Refusal("FIXTURE_DOCUMENTS_UNCONFIRMED")
             path = self.fixture_documents/"result.txt"
             if path.exists():
-                if path.is_symlink() or path.stat().st_size > MAX_STRING:
-                    raise _Refusal("FIXTURE_TELEMETRY_INVALID")
-                telemetry = _decode(path.read_bytes())
-                if (type(telemetry) is not dict or set(telemetry) != {"pid", "generation", "ordinary"} or
-                    any(type(value) is not int for value in telemetry.values()) or
-                    telemetry != {"pid":self.fixture_pid, "generation":0, "ordinary":0}):
-                    raise _Refusal("FIXTURE_READINESS_UNCONFIRMED")
+                telemetry = self.fixture_telemetry()
                 self.save("fixture-ready.json", telemetry)
                 break
             self.dep.sleep(min(0.01, max(0, self.deadline-self.dep.now())))
 
     def on_record(self, record):
         self.admit()
+        if record["kind"] != "started":
+            details = record["details"]
+            if record["sequence"] == 1:
+                if (record["kind"] != "observation" or record["operation"] != "metadata"
+                        or record["outcome"] != "observed" or details != {
+                            "studyIdentity":{"plan":self.plan, **self.identity}}):
+                    raise _Refusal("STUDY_IDENTITY_UNCONFIRMED")
+                self.identity_observed = True
+            elif not self.identity_observed or "studyIdentity" in details:
+                raise _Refusal("STUDY_IDENTITY_ORDER")
+            if details.get("setup") == "activate" and details.get("bundleId") != self.identity["fixture"]:
+                raise _Refusal("FIXTURE_ACTIVATION_IDENTITY_MISMATCH")
         self.records.append(record)
         self.save("observations.json", self.records)
         if record["kind"] == "started":
-            self.own({"kind":"runner", "bundleId":RUNNER, "pid":record["details"]["runnerPID"],
+            self.own({"kind":"runner", "bundleId":self.identity["runner"], "pid":record["details"]["runnerPID"],
                       "state":"native-started"})
         if (record["operation"] == "fixture-recreation" and record["kind"] == "observation" and
                 record["outcome"] == "observed" and record["details"].get("request") == "recreate"):
@@ -783,9 +871,10 @@ class _Study:
                 raise _Refusal("FIXTURE_RECREATION_DUPLICATE")
             self.admit()
             # Reconfirm this exact owned fixture's container before its only write.
-            path = self.checked(self.sim("get_app_container", UDID, FIXTURE, "data")).strip()
+            path = self.checked(self.sim("get_app_container", UDID, self.identity["fixture"], "data")).strip()
             if Path(path).resolve() != self.fixture_container or self.fixture_documents.is_symlink():
                 raise _Refusal("FIXTURE_CONTAINER_CHANGED")
+            self.fixture_telemetry()
             self.admit()
             self.check_guard()
             with (self.fixture_documents/"recreate.request").open("xb") as handle:
@@ -820,14 +909,14 @@ class _Study:
             self.checked(self.sim("bootstatus", UDID, "-b"))
         if self.inventory()[1] != "Booted":
             raise _Refusal("DEVICE_NOT_BOOTED")
-        self.absence(RUNNER)
-        self.absence(FIXTURE)
+        self.absence(self.identity["runner"])
+        self.absence(self.identity["fixture"])
         if self.plan == "reference-study":
             self.fixture_ready()
         derived = self.derive_plan()
         method = "testMetadataOnly" if self.plan == "metadata" else "testReferenceStudy"
         stream = _Stream(self.request, self.plan, self.on_record)
-        self.own({"kind":"runner-installation", "bundleId":RUNNER, "state":"testing-pending"})
+        self.own({"kind":"runner-installation", "bundleId":self.identity["runner"], "state":"testing-pending"})
         self.app_owned = True
         self.native_started = True  # Publication/launch may race failure or deadline.
         code, _, _ = self.command(["xcodebuild", "test-without-building", "-xctestrun", str(derived),
@@ -850,9 +939,9 @@ class _Study:
             raise _Refusal("RUNNER_EXIT_UNCONFIRMED")
         self.save("runner-exit.json", {"pid":runner_pid, "positiveAbsence":True,
                   "meaning":"process absence, never an accessibility fence"})
-        self.checked(self.sim("get_app_container", UDID, RUNNER, "app"))
-        self.checked(self.sim("uninstall", UDID, RUNNER))
-        self.absence(RUNNER)
+        self.checked(self.sim("get_app_container", UDID, self.identity["runner"], "app"))
+        self.checked(self.sim("uninstall", UDID, self.identity["runner"]))
+        self.absence(self.identity["runner"])
         if self.booted:
             self.checked(self.sim("shutdown", UDID))
             self.booted = False
