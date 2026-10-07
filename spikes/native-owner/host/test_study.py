@@ -198,7 +198,7 @@ def configuration(root, seconds=90, plan="metadata"):
     project.mkdir()
     (project/"project.pbxproj").write_text("// generated synthetic project")
     config=Configuration(root/"derived",root/"evidence",source,admission_seconds=seconds,
-                         lease_root=root/"leases",build_binding=root/"binding.json")
+                         lease_root=root/"leases",build_binding=root/"binding.json", ownership_root=root/"persistent-claims")
     bind(config,plan)
     return config
 
@@ -786,13 +786,53 @@ class Streams(unittest.TestCase):
                     result=list(rows[:2])
                     for i in range(1,count+1):
                         result.append({**rows[2],"sequence":i+1,"elapsedMs":i+1,"operation":"parent",
-                                       "details":{"edge":i,"parentPresent":True}})
+                                       "details":{"edge":i,"parentPresent":True,"source":"parentAccessibilityElement",
+                                           "reference":f"local-{i}","parent":f"local-{i+1}",
+                                           "originalContainment":"unestablished"}})
                     result.append({**rows[2],"sequence":count+2,"elapsedMs":count+2,
                                    "operation":"parent","outcome":"failed","details":{"edges":32,"reason":"parent-limit"}})
                     result.append({**rows[-1],"sequence":count+3,"elapsedMs":count+3})
                     return result
                 result,_=self.exercise(lambda c,k,t:setattr(t,"mutate",parents),"reference-study")
                 self.assertEqual(result.reason,"NATIVE_SETTLEMENT_UNCONFIRMED" if count==32 else "PARENT_EDGE_LIMIT")
+
+    def test_parent_phase_metadata_does_not_consume_edge_allowance(self):
+        for count in (32, 33):
+            with self.subTest(count=count):
+                def parents(rows):
+                    result = list(rows[:2])
+                    for edge in range(1, count+1):
+                        for details in (
+                            {"phase":"comparison-method", "source":"isEqual:", "provenance":{"image":"fixture"}},
+                            {"phase":"native-comparison", "purpose":"independent-root", "source":"isEqual:",
+                             "reference":f"local-{edge}", "otherReference":"root", "nativeEqual":False,
+                             "sameLocalObject":False, "associationScope":"unestablished"},
+                            {"phase":"edge", "source":"parentAccessibilityElement", "reference":f"local-{edge}",
+                             "parentPresent":True,"parent":f"local-{edge+1}","edge":edge,
+                             "originalContainment":"unestablished"}):
+                            result.append({**rows[2], "sequence":len(result), "elapsedMs":len(result),
+                                "operation":"parent", "details":details})
+                    result.append({**rows[-1], "sequence":len(result), "elapsedMs":len(result)})
+                    return result
+                result, _ = self.exercise(lambda c,k,t:setattr(t,"mutate",parents), "reference-study")
+                self.assertEqual(result.reason, "NATIVE_SETTLEMENT_UNCONFIRMED" if count==32 else "PARENT_EDGE_LIMIT")
+
+    def test_parent_phase_cannot_disguise_an_edge_or_unknown_record(self):
+        cases = [
+            {"phase":"unknown"}, {"phase":None}, {"phase":"edge", "edge":True},
+            {"edge":1,"parentPresent":True},
+            {"phase":"comparison-method", "source":"isEqual:", "provenance":{} ,"edge":33},
+            {"phase":"termination", "reason":"native-root-equal", "edges":0},
+            {"phase":"native-comparison", "purpose":"cycle", "source":"isEqual:",
+             "reference":"a","otherReference":"b","nativeEqual":1,"sameLocalObject":False,
+             "associationScope":"unestablished"}]
+        for details in cases:
+            with self.subTest(details=details):
+                def malformed(rows):
+                    rows[2].update(operation="parent", details=details)
+                    return rows
+                result, _ = self.exercise(lambda c,k,t:setattr(t,"mutate",malformed), "reference-study")
+                self.assertEqual(result.reason, "PARENT_RECORD_INVALID")
 
     def test_programmatic_recreation_is_one_owned_write_and_setup_activation_is_not_a_request(self):
         with tempfile.TemporaryDirectory() as root:

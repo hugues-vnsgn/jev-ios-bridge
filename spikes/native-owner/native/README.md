@@ -18,9 +18,30 @@ reference run in that process. Metadata never resolves the point session. Every 
 before starting. The four-method metadata inspection invokes no app-element query.
 Admission is checked again after signature preparation and record delivery,
 immediately before invocation or fixture activation; denied calls are not counted.
-Reference study uses public fixture activation, the actual callback point object at
-(160,170), direct snapshot getters, and the file hook for replacement. Local object
-labels describe this runner's retained objects; they are not native identities.
+Reference study uses public fixture activation and the actual callback point object
+at (160,170). For each validity phase it requests exactly the exported
+`XC_kAXXCAttributeIsValid` key through `attributesForElement:attributes:error:`.
+It records dictionary/key presence, bounded scalar type/value and NSError
+domain/code. A nonnil dictionary never becomes a validity Boolean. Error userInfo
+and unrequested attributes are excluded.
+
+Parent traversal acquires a separate application element through
+`XCAccessibilityElement.elementWithProcessIdentifier:` using verified fixture
+telemetry. It compares retained objects using the native `isEqual:` method and
+records the checked method's loaded UUID and encoding. PID-based construction is
+only an observation input; it supplies no app-instance or association authority.
+Native equality supplements pointer-cycle detection. The walk records its exact
+termination, including an independently equal root, a missing parent before that
+root, native-reference cycle or 32-edge limit. Even a root match leaves complete
+ancestry and association scope unestablished. An equal root at exactly 32 edges
+requires no 33rd parent read.
+
+`ReferenceAccess` resolves only the fixed attribute symbol/root class and their
+method provenance. Missing symbol, image provenance or ABI prevents the related
+call. String/error-domain evidence is bounded to 1,024 UTF-8 bytes; unsupported
+values and extra dictionary entries produce explicit failures. The existing
+fixture replacement hook is unchanged. Local labels correlate retained objects
+only; they are not native identities.
 
 Method return, reply receipt, retained callback payloads and unknown native
 settlement are reported separately. A synchronized bounded request owner retains

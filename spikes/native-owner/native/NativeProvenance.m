@@ -8,7 +8,7 @@ NSTimeInterval NativeAdmissionClock(void) {
   struct timespec value;
   return clock_gettime(CLOCK_MONOTONIC_RAW, &value) == 0 ? value.tv_sec + value.tv_nsec / 1e9 : NAN;
 }
-static NSDictionary *ImageForAddress(const void *address) {
+NSDictionary *LoadedAddressProvenance(const void *address) {
   Dl_info info;
   if (!address || !dladdr(address, &info) || !info.dli_fbase) return nil;
   const struct mach_header_64 *header = info.dli_fbase;
@@ -29,10 +29,10 @@ static NSDictionary *ImageForAddress(const void *address) {
 }
 NSDictionary *LoadedPointProvenance(id session, id client) {
   Method method = class_getInstanceMethod(object_getClass(session), NSSelectorFromString(@"requestElementAtPoint:reply:"));
-  NSDictionary *wrapper = ImageForAddress(method ? (const void *)method_getImplementation(method) : NULL);
-  NSDictionary *sessionImage = ImageForAddress((__bridge const void *)object_getClass(session));
-  Method validity = class_getInstanceMethod(object_getClass(client), NSSelectorFromString(@"isValidElement:"));
-  NSDictionary *ax = ImageForAddress(validity ? (const void *)method_getImplementation(validity) : NULL);
+  NSDictionary *wrapper = LoadedAddressProvenance(method ? (const void *)method_getImplementation(method) : NULL);
+  NSDictionary *sessionImage = LoadedAddressProvenance((__bridge const void *)object_getClass(session));
+  Method validity = class_getInstanceMethod(object_getClass(client), NSSelectorFromString(@"attributesForElement:attributes:error:"));
+  NSDictionary *ax = LoadedAddressProvenance(validity ? (const void *)method_getImplementation(validity) : NULL);
   Method getter = class_getClassMethod(object_getClass(session), NSSelectorFromString(@"sharedSession"));
   const char *types = getter ? method_getTypeEncoding(getter) : NULL;
   if (!types || strnlen(types, 1025) > 1024) return nil;
@@ -50,10 +50,18 @@ NSDictionary *BoundedExceptionProvenance(NSException *exception) {
   NSArray *addresses = exception.callStackReturnAddresses;
   NSMutableArray *frames = [NSMutableArray array];
   for (NSNumber *address in [addresses subarrayWithRange:NSMakeRange(0, MIN(addresses.count, 16))]) {
-    NSDictionary *image = ImageForAddress((const void *)address.unsignedLongLongValue);
+    NSDictionary *image = LoadedAddressProvenance((const void *)address.unsignedLongLongValue);
     [frames addObject:image ?: @{@"unavailable":@YES}];
   }
   result[@"frames"] = frames;
   if (addresses.count > 16) { result[@"provenanceLimit"] = @YES; result[@"frameCount"] = @(addresses.count); }
   return result;
+}
+
+NSDictionary *LoadedMethodProvenance(id target, SEL selector) {
+  Method method = class_getInstanceMethod(object_getClass(target), selector);
+  const char *encoding = method ? method_getTypeEncoding(method) : NULL;
+  if (!encoding || strnlen(encoding,1025) > 1024) return nil;
+  NSDictionary *image = LoadedAddressProvenance((const void *)method_getImplementation(method));
+  return image ? @{@"selector":NSStringFromSelector(selector),@"encoding":@(encoding),@"loadedImage":image} : nil;
 }

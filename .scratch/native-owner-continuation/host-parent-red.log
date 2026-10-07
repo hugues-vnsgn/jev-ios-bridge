@@ -1,0 +1,111 @@
+test_parent_phase_cannot_disguise_an_edge_or_unknown_record (test_study.Streams.test_parent_phase_cannot_disguise_an_edge_or_unknown_record) ... 
+  test_parent_phase_cannot_disguise_an_edge_or_unknown_record (test_study.Streams.test_parent_phase_cannot_disguise_an_edge_or_unknown_record) (details={'phase': 'unknown'}) ... FAIL
+  test_parent_phase_cannot_disguise_an_edge_or_unknown_record (test_study.Streams.test_parent_phase_cannot_disguise_an_edge_or_unknown_record) (details={'phase': None}) ... FAIL
+  test_parent_phase_cannot_disguise_an_edge_or_unknown_record (test_study.Streams.test_parent_phase_cannot_disguise_an_edge_or_unknown_record) (details={'phase': 'edge', 'edge': True}) ... FAIL
+  test_parent_phase_cannot_disguise_an_edge_or_unknown_record (test_study.Streams.test_parent_phase_cannot_disguise_an_edge_or_unknown_record) (details={'edge': 1, 'parentPresent': True}) ... FAIL
+  test_parent_phase_cannot_disguise_an_edge_or_unknown_record (test_study.Streams.test_parent_phase_cannot_disguise_an_edge_or_unknown_record) (details={'phase': 'comparison-method', 'source': 'isEqual:', 'provenance': {}, 'edge': 33}) ... FAIL
+  test_parent_phase_cannot_disguise_an_edge_or_unknown_record (test_study.Streams.test_parent_phase_cannot_disguise_an_edge_or_unknown_record) (details={'phase': 'termination', 'reason': 'native-root-equal', 'edges': 0}) ... FAIL
+  test_parent_phase_cannot_disguise_an_edge_or_unknown_record (test_study.Streams.test_parent_phase_cannot_disguise_an_edge_or_unknown_record) (details={'phase': 'native-comparison', 'purpose': 'cycle', 'source': 'isEqual:', 'reference': 'a', 'otherReference': 'b', 'nativeEqual': 1, 'sameLocalObject': False, 'associationScope': 'unestablished'}) ... FAIL
+test_parent_phase_metadata_does_not_consume_edge_allowance (test_study.Streams.test_parent_phase_metadata_does_not_consume_edge_allowance) ... 
+  test_parent_phase_metadata_does_not_consume_edge_allowance (test_study.Streams.test_parent_phase_metadata_does_not_consume_edge_allowance) (count=32) ... FAIL
+
+======================================================================
+FAIL: test_parent_phase_cannot_disguise_an_edge_or_unknown_record (test_study.Streams.test_parent_phase_cannot_disguise_an_edge_or_unknown_record) (details={'phase': 'unknown'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/spikes/native-owner/host/test_study.py", line 835, in test_parent_phase_cannot_disguise_an_edge_or_unknown_record
+    self.assertEqual(result.reason, "PARENT_RECORD_INVALID")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NATIVE_SETTLEMENT_UNCONFIRMED' != 'PARENT_RECORD_INVALID'
+- NATIVE_SETTLEMENT_UNCONFIRMED
++ PARENT_RECORD_INVALID
+
+
+======================================================================
+FAIL: test_parent_phase_cannot_disguise_an_edge_or_unknown_record (test_study.Streams.test_parent_phase_cannot_disguise_an_edge_or_unknown_record) (details={'phase': None})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/spikes/native-owner/host/test_study.py", line 835, in test_parent_phase_cannot_disguise_an_edge_or_unknown_record
+    self.assertEqual(result.reason, "PARENT_RECORD_INVALID")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NATIVE_SETTLEMENT_UNCONFIRMED' != 'PARENT_RECORD_INVALID'
+- NATIVE_SETTLEMENT_UNCONFIRMED
++ PARENT_RECORD_INVALID
+
+
+======================================================================
+FAIL: test_parent_phase_cannot_disguise_an_edge_or_unknown_record (test_study.Streams.test_parent_phase_cannot_disguise_an_edge_or_unknown_record) (details={'phase': 'edge', 'edge': True})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/spikes/native-owner/host/test_study.py", line 835, in test_parent_phase_cannot_disguise_an_edge_or_unknown_record
+    self.assertEqual(result.reason, "PARENT_RECORD_INVALID")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NATIVE_SETTLEMENT_UNCONFIRMED' != 'PARENT_RECORD_INVALID'
+- NATIVE_SETTLEMENT_UNCONFIRMED
++ PARENT_RECORD_INVALID
+
+
+======================================================================
+FAIL: test_parent_phase_cannot_disguise_an_edge_or_unknown_record (test_study.Streams.test_parent_phase_cannot_disguise_an_edge_or_unknown_record) (details={'edge': 1, 'parentPresent': True})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/spikes/native-owner/host/test_study.py", line 835, in test_parent_phase_cannot_disguise_an_edge_or_unknown_record
+    self.assertEqual(result.reason, "PARENT_RECORD_INVALID")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NATIVE_SETTLEMENT_UNCONFIRMED' != 'PARENT_RECORD_INVALID'
+- NATIVE_SETTLEMENT_UNCONFIRMED
++ PARENT_RECORD_INVALID
+
+
+======================================================================
+FAIL: test_parent_phase_cannot_disguise_an_edge_or_unknown_record (test_study.Streams.test_parent_phase_cannot_disguise_an_edge_or_unknown_record) (details={'phase': 'comparison-method', 'source': 'isEqual:', 'provenance': {}, 'edge': 33})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/spikes/native-owner/host/test_study.py", line 835, in test_parent_phase_cannot_disguise_an_edge_or_unknown_record
+    self.assertEqual(result.reason, "PARENT_RECORD_INVALID")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NATIVE_SETTLEMENT_UNCONFIRMED' != 'PARENT_RECORD_INVALID'
+- NATIVE_SETTLEMENT_UNCONFIRMED
++ PARENT_RECORD_INVALID
+
+
+======================================================================
+FAIL: test_parent_phase_cannot_disguise_an_edge_or_unknown_record (test_study.Streams.test_parent_phase_cannot_disguise_an_edge_or_unknown_record) (details={'phase': 'termination', 'reason': 'native-root-equal', 'edges': 0})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/spikes/native-owner/host/test_study.py", line 835, in test_parent_phase_cannot_disguise_an_edge_or_unknown_record
+    self.assertEqual(result.reason, "PARENT_RECORD_INVALID")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NATIVE_SETTLEMENT_UNCONFIRMED' != 'PARENT_RECORD_INVALID'
+- NATIVE_SETTLEMENT_UNCONFIRMED
++ PARENT_RECORD_INVALID
+
+
+======================================================================
+FAIL: test_parent_phase_cannot_disguise_an_edge_or_unknown_record (test_study.Streams.test_parent_phase_cannot_disguise_an_edge_or_unknown_record) (details={'phase': 'native-comparison', 'purpose': 'cycle', 'source': 'isEqual:', 'reference': 'a', 'otherReference': 'b', 'nativeEqual': 1, 'sameLocalObject': False, 'associationScope': 'unestablished'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/spikes/native-owner/host/test_study.py", line 835, in test_parent_phase_cannot_disguise_an_edge_or_unknown_record
+    self.assertEqual(result.reason, "PARENT_RECORD_INVALID")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NATIVE_SETTLEMENT_UNCONFIRMED' != 'PARENT_RECORD_INVALID'
+- NATIVE_SETTLEMENT_UNCONFIRMED
++ PARENT_RECORD_INVALID
+
+
+======================================================================
+FAIL: test_parent_phase_metadata_does_not_consume_edge_allowance (test_study.Streams.test_parent_phase_metadata_does_not_consume_edge_allowance) (count=32)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/spikes/native-owner/host/test_study.py", line 818, in test_parent_phase_metadata_does_not_consume_edge_allowance
+    self.assertEqual(result.reason, "NATIVE_SETTLEMENT_UNCONFIRMED" if count==32 else "PARENT_EDGE_LIMIT")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'PARENT_EDGE_LIMIT' != 'NATIVE_SETTLEMENT_UNCONFIRMED'
+- PARENT_EDGE_LIMIT
++ NATIVE_SETTLEMENT_UNCONFIRMED
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.383s
+
+FAILED (failures=8)

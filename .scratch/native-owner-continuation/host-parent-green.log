@@ -1,0 +1,11 @@
+test_a_parent_exit_with_an_owned_descendant_does_not_authorize_cleanup (test_study.Admission.test_a_parent_exit_with_an_owned_descendant_does_not_authorize_cleanup) ... ok
+test_real_parent_exit_leaves_live_owned_grandchild_and_pipe (test_study.Processes.test_real_parent_exit_leaves_live_owned_grandchild_and_pipe) ... ok
+test_record_refusal_survives_descendant_deadline_with_parent_exit_receipt (test_study.Processes.test_record_refusal_survives_descendant_deadline_with_parent_exit_receipt) ... ok
+test_parent_limit_32_observed_edges_then_failure_is_honest (test_study.Streams.test_parent_limit_32_observed_edges_then_failure_is_honest) ... ok
+test_parent_phase_cannot_disguise_an_edge_or_unknown_record (test_study.Streams.test_parent_phase_cannot_disguise_an_edge_or_unknown_record) ... ok
+test_parent_phase_metadata_does_not_consume_edge_allowance (test_study.Streams.test_parent_phase_metadata_does_not_consume_edge_allowance) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.588s
+
+OK

@@ -67,10 +67,15 @@ Module earns Depth: deleting it would distribute this work across every study
 and caller. Tests and the CLI cross this same Seam.
 
 The native Implementation uses the source-backed XCTest session callback for point acquisition, retains its original returned object, and calls
-`isValidElement:` on that object before and after programmatic same-looking
-replacement. Fresh acquisition is separate. It observes available snapshot
+`attributesForElement:attributes:error:` on that object before and after
+programmatic same-looking replacement. It requests the exported validity
+attribute and preserves its bounded scalar value, missing-key and error results;
+a nonnil reply alone is not reported as valid. Fresh acquisition is separate. It observes available snapshot
 parents directly, bounded to 32 edges, without rebuilding parents from a capture
-or replacing old references through a UID query. Strings are bounded to 1,024
+or replacing old references through a UID query. A separate native app-root
+factory and native equality comparisons record root relation and walk
+termination. PID-based root construction and an equality reply do not certify
+complete ancestry or reference lifetime. Strings are bounded to 1,024
 UTF-8 bytes and the record stream to 1 MiB; exceeded limits stay explicit.
 
 Admission stops on expiry before another native read or fixture transition.
@@ -86,8 +91,12 @@ refusal stops admission immediately; observation of an already-owned child's
 return code and process group continues within the original allowance. A later
 exit receipt preserves the original refusal and supplies no native-work fence.
 
-The host and reconciliation share a private device guard compatible with the
-existing Bridge lease namespace. Its unknown-owner claim survives frontend
+The host and reconciliation acquire a persistent research claim before a private
+device guard compatible with the existing Bridge lease namespace. The persistent
+claim lives under the macOS user Application Support directory, so loss of the
+temporary guard or evidence does not admit another cooperating study. Both
+claims are checked before tool work; settled cleanup releases the temporary
+guard first. Existing Bridge consumers still check only their temporary guard. Its unknown-owner claim survives frontend
 loss. Each caller holds it before tool work through restoration, checks its
 provenance before mutation, and releases only its matching claim after that
 caller's work is positively settled. Retained reference studies keep the guard.
@@ -125,7 +134,8 @@ is `.scratch/native-study-identities/spec.md`; no owner guarantee is established
 Both profiles built and passed their build/runtime identity gates. Metadata
 completed its zero-query observations and strict cleanup. Reference activated
 the intended fixture but its first direct point call threw; no reference, parent
-or replacement observation followed, and device/apps/guard remain retained.
+or replacement observation followed, and its receipt retained the device, apps
+and guard.
 The [live report](../../.scratch/native-study-identities/evidence/2026-10-07/report.md)
 keeps successful process exit separate from this native failure.
 
@@ -135,6 +145,12 @@ captured, so that finding does not certify the exact runtime throw. Pinned WDA
 uses `testRunnerProxy` → `_XCT_requestElementAtPoint:reply:` for iOS. The
 [source diagnosis](../../.scratch/native-study-identities/research/point-exception/report.md)
 records that alternative and its callback ownership gap. The callback diagnostic now checks the session wrapper ABI and records actually loaded image UUIDs before sending. Its deterministic macOS tests exercise the real observation module through controlled callbacks. They establish local ownership behavior, not native settlement or a live result. No new device admission follows from this implementation.
+
+The continuation found the historical temporary guard and original temporary
+receipts absent. Their archived evidence remains, and absence does not establish
+native settlement. The persistent-claim repair applies prospectively; it does
+not adopt that historical ownership or permit cleanup. The continuation plan
+and verification are in `.scratch/native-owner-continuation/`.
 
 The shared protocol is `spikes/native-owner/protocol.schema.json`. A request ID
 correlates records only. A local reference label names an object held by this

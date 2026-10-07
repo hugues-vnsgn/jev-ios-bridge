@@ -77,13 +77,22 @@ container through a derived `.xctestrun`. A native recreation request causes one
 programmatic `Documents/recreate.request` write; setup activation is separate.
 It never uses a touch, UID re-query, shared-daemon reset or another simulator.
 
-Both study and reconciliation hold the Bridge's device lease in the default
-temporary-directory namespace. The research claim records an unknown native
-owner (`pid: null`) and the actual host PID separately. It remains busy after
-frontend exit. Settled metadata cleanup releases the claim; retained work keeps
-it. Existing claims are never taken over. This excludes cooperating Bridge runs
-in that namespace; external tools and custom lease roots require separate
-coordination.
+Both study and reconciliation first acquire a persistent research claim under
+`~/Library/Application Support/jev-ios-bridge/native-owner/claims`, then hold the
+Bridge's device lease in the default temporary-directory namespace. Both record
+an unknown native owner (`pid: null`) and the actual host PID separately. Both
+are checked before device work. Settled metadata cleanup releases the temporary
+claim first, then the persistent claim; retained work keeps both. Existing claims
+are never taken over. `Configuration.ownership_root` isolates the persistent
+store for controlled callers and tests; the CLI always uses the default.
+
+The persistent claim prevents a new study after its temporary claim or receipts
+are lost. It does not establish native settlement, adopt an older retained study,
+or authorize cleanup. The historical reference study predates this mechanism and
+still requires separate reviewed ownership accounting before live admission.
+Bridge consumers know only the temporary lease; deleting it does not make them
+consult this research store. External tools, custom roots, and manual deletion
+of both stores remain outside this exclusion guarantee.
 
 The CLI exits 0 for metadata completion, 2 for refusal before owned native work,
 and 3 for retained ownership. One absolute `CLOCK_MONOTONIC_RAW` deadline covers preparation

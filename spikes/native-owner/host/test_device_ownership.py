@@ -16,11 +16,15 @@ from test_reconcile import CaseFixture, Tools as RecoveryTools, Child as Recover
 def isolated_configuration(root, plan="metadata"):
     # This duck-typed configuration also exercises the pre-guard implementation.
     config = configuration(root,plan=plan)
-    return SimpleNamespace(**{**vars(config), "lease_root":Path(root) / "leases"})
+    return SimpleNamespace(**{**vars(config), "lease_root":Path(root) / "leases", "ownership_root":Path(root) / "persistent-claims"})
 
 
 def lease_path(config):
     return config.lease_root / (UDID + ".lock")
+
+
+def persistent_path(config):
+    return config.ownership_root / (UDID + ".lock")
 
 
 class DeviceOwnership(unittest.TestCase):
@@ -36,6 +40,7 @@ class DeviceOwnership(unittest.TestCase):
             self.assertEqual((result.status, result.reason), ("refused", "DEVICE_GUARD_BUSY"))
             self.assertEqual(tools.commands, [])
             self.assertEqual(path.read_bytes(), foreign)
+            self.assertFalse(persistent_path(config).exists())
 
     def test_metadata_holds_guard_through_restoration_then_releases(self):
         with tempfile.TemporaryDirectory() as root:
@@ -43,7 +48,9 @@ class DeviceOwnership(unittest.TestCase):
             clock = Clock()
             class CheckedTools(Tools):
                 def start(inner, argv, env, cwd):
+                    persistent = json.loads(persistent_path(config).read_bytes())
                     record = json.loads(lease_path(config).read_bytes())
+                    self.assertEqual(persistent["runId"], record["runId"])
                     self.assertIsNone(record["pid"])
                     self.assertEqual(record["hostPID"], os.getpid())
                     self.assertEqual(record["deviceId"], UDID)
@@ -53,6 +60,7 @@ class DeviceOwnership(unittest.TestCase):
             self.assertEqual(result.reason, "METADATA_COMPLETED")
             self.assertEqual(tools.state, "Shutdown")
             self.assertFalse(lease_path(config).exists())
+            self.assertFalse(persistent_path(config).exists())
 
     def test_reference_retains_guard_and_blocks_a_later_study(self):
         with tempfile.TemporaryDirectory() as root:
@@ -68,6 +76,107 @@ class DeviceOwnership(unittest.TestCase):
             self.assertEqual(later_tools.commands, [])
             self.assertEqual(lease_path(config).read_bytes(), retained)
             self.assertTrue(any(item.get("kind") == "device-guard" for item in result.retained_resources))
+
+    def test_retained_study_survives_loss_of_temporary_guard_and_evidence(self):
+        import shutil
+        for plan in ("metadata", "reference-study"):
+            with self.subTest(plan=plan), tempfile.TemporaryDirectory() as root:
+                config = isolated_configuration(root, plan="reference-study")
+                clock = Clock(); tools = Tools(clock, config)
+                first = run_study("reference-study", config, Dependencies(tools, clock.now, clock.sleep))
+                self.assertEqual(first.reason, "NATIVE_SETTLEMENT_UNCONFIRMED")
+                lease_path(config).unlink()
+                shutil.rmtree(config.evidence_directory)
+                fresh = isolated_configuration(Path(root)/"successor", plan=plan)
+                later = SimpleNamespace(**{**vars(fresh), "lease_root":config.lease_root,
+                    "ownership_root":config.ownership_root})
+                adapter = Tools(clock, later)
+                result = run_study(plan, later, Dependencies(adapter, clock.now, clock.sleep))
+                self.assertEqual(adapter.commands, [])
+                self.assertEqual((result.status, result.reason), ("refused", "DEVICE_GUARD_BUSY"))
+
+    def test_existing_malformed_persistent_claim_refuses_without_overwrite(self):
+        with tempfile.TemporaryDirectory() as root:
+            config = isolated_configuration(root)
+            path = persistent_path(config); path.parent.mkdir()
+            path.write_bytes(b"incomplete retained claim")
+            clock = Clock(); tools = Tools(clock, config)
+            result = run_study("metadata", config, Dependencies(tools, clock.now, clock.sleep))
+            self.assertEqual((result.status, result.reason), ("refused", "DEVICE_GUARD_BUSY"))
+            self.assertEqual(tools.commands, [])
+            self.assertEqual(path.read_bytes(), b"incomplete retained claim")
+            self.assertFalse(lease_path(config).exists())
+
+    def test_lost_or_replaced_persistent_claim_stops_active_caller(self):
+        for replacement in (None, b"another owner's claim"):
+            with self.subTest(replacement=replacement), tempfile.TemporaryDirectory() as root:
+                config = isolated_configuration(root); clock = Clock()
+                class ChangedTools(Tools):
+                    def start(inner, argv, env, cwd):
+                        child = super().start(argv, env, cwd)
+                        if len(inner.commands) == 1:
+                            if replacement is None:
+                                persistent_path(config).unlink()
+                            else:
+                                persistent_path(config).write_bytes(replacement)
+                        return child
+                tools = ChangedTools(clock, config)
+                result = run_study("metadata", config, Dependencies(tools, clock.now, clock.sleep))
+                self.assertEqual(result.status, "retained")
+                self.assertEqual(len(tools.commands), 1)
+                self.assertTrue(lease_path(config).exists())
+                if replacement is not None:
+                    self.assertEqual(persistent_path(config).read_bytes(), replacement)
+
+    def test_partial_persistent_claim_write_retains_uncertainty_before_tools(self):
+        import device_guard
+        with tempfile.TemporaryDirectory() as root:
+            config = isolated_configuration(root); clock = Clock(); tools = Tools(clock, config)
+            original = device_guard._write_all
+            count = 0
+            def write(descriptor, content):
+                nonlocal count
+                count += 1
+                if count == 2:  # Persistent claim, after durable intent.
+                    os.write(descriptor, content[:8])
+                    raise OSError("injected partial claim write")
+                return original(descriptor, content)
+            with patch.object(device_guard, "_write_all", side_effect=write):
+                result = run_study("metadata", config, Dependencies(tools, clock.now, clock.sleep))
+            self.assertEqual(result.status, "retained")
+            self.assertEqual(tools.commands, [])
+            self.assertTrue(persistent_path(config).exists())
+            self.assertFalse(lease_path(config).exists())
+            self.assertTrue(any(row.get("kind") == "persistent-device-guard" and
+                row["uncertainty"] == "DEVICE_GUARD_UNCERTAIN" for row in result.retained_resources))
+
+    def test_failed_temporary_release_preserves_persistent_authority(self):
+        with tempfile.TemporaryDirectory() as root:
+            config = isolated_configuration(root); clock = Clock(); tools = Tools(clock, config)
+            with patch("device_guard.os.unlink", side_effect=OSError("injected unlink failure")):
+                result = run_study("metadata", config, Dependencies(tools, clock.now, clock.sleep))
+            self.assertEqual((result.status, result.reason), ("retained", "DEVICE_GUARD_UNCERTAIN"))
+            self.assertTrue(lease_path(config).exists())
+            self.assertTrue(persistent_path(config).exists())
+
+    def test_failed_persistent_release_keeps_persistent_claim_after_temporary_release(self):
+        import device_guard
+        with tempfile.TemporaryDirectory() as root:
+            config = isolated_configuration(root); clock = Clock(); tools = Tools(clock, config)
+            unlink = os.unlink
+            count = 0
+            def remove(*args, **kwargs):
+                nonlocal count
+                count += 1
+                if count == 2:
+                    raise OSError("injected persistent unlink failure")
+                return unlink(*args, **kwargs)
+            with patch.object(device_guard.os, "unlink", side_effect=remove):
+                result = run_study("metadata", config, Dependencies(tools, clock.now, clock.sleep))
+            self.assertEqual((result.status, result.reason), ("retained", "DEVICE_GUARD_UNCERTAIN"))
+            self.assertFalse(lease_path(config).exists())
+            self.assertTrue(persistent_path(config).exists())
+            self.assertTrue(any(row.get("kind") == "persistent-device-guard" for row in result.retained_resources))
 
     def test_replaced_claim_prevents_uninstall_and_is_never_deleted(self):
         with tempfile.TemporaryDirectory() as root:

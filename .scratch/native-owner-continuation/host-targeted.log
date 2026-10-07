@@ -1,0 +1,22 @@
+test_existing_claim_refuses_before_any_device_tool (test_device_ownership.DeviceOwnership.test_existing_claim_refuses_before_any_device_tool) ... ok
+test_existing_malformed_persistent_claim_refuses_without_overwrite (test_device_ownership.DeviceOwnership.test_existing_malformed_persistent_claim_refuses_without_overwrite) ... ok
+test_failed_persistent_release_keeps_persistent_claim_after_temporary_release (test_device_ownership.DeviceOwnership.test_failed_persistent_release_keeps_persistent_claim_after_temporary_release) ... ok
+test_failed_temporary_release_preserves_persistent_authority (test_device_ownership.DeviceOwnership.test_failed_temporary_release_preserves_persistent_authority) ... ok
+test_lost_or_replaced_persistent_claim_stops_active_caller (test_device_ownership.DeviceOwnership.test_lost_or_replaced_persistent_claim_stops_active_caller) ... ok
+test_metadata_holds_guard_through_restoration_then_releases (test_device_ownership.DeviceOwnership.test_metadata_holds_guard_through_restoration_then_releases) ... ok
+test_partial_persistent_claim_write_retains_uncertainty_before_tools (test_device_ownership.DeviceOwnership.test_partial_persistent_claim_write_retains_uncertainty_before_tools) ... ok
+test_recovery_apply_holds_guard_through_shutdown_and_releases_on_success (test_device_ownership.DeviceOwnership.test_recovery_apply_holds_guard_through_shutdown_and_releases_on_success) ... ok
+test_recovery_busy_claim_refuses_before_any_device_tool (test_device_ownership.DeviceOwnership.test_recovery_busy_claim_refuses_before_any_device_tool) ... ok
+test_recovery_inspection_holds_then_releases_its_guard (test_device_ownership.DeviceOwnership.test_recovery_inspection_holds_then_releases_its_guard) ... ok
+test_reference_retains_guard_and_blocks_a_later_study (test_device_ownership.DeviceOwnership.test_reference_retains_guard_and_blocks_a_later_study) ... ok
+test_replaced_claim_prevents_uninstall_and_is_never_deleted (test_device_ownership.DeviceOwnership.test_replaced_claim_prevents_uninstall_and_is_never_deleted) ... ok
+test_retained_study_survives_loss_of_temporary_guard_and_evidence (test_device_ownership.DeviceOwnership.test_retained_study_survives_loss_of_temporary_guard_and_evidence) ... ok
+test_settled_pre_native_refusal_releases_only_its_claim (test_device_ownership.DeviceOwnership.test_settled_pre_native_refusal_releases_only_its_claim) ... ok
+test_uncertain_pre_native_restoration_keeps_guard (test_device_ownership.DeviceOwnership.test_uncertain_pre_native_restoration_keeps_guard) ... ok
+test_uncertain_recovery_apply_keeps_device_guard_and_one_use_claim (test_device_ownership.DeviceOwnership.test_uncertain_recovery_apply_keeps_device_guard_and_one_use_claim) ... ok
+test_unsettled_inspection_keeps_guard (test_device_ownership.DeviceOwnership.test_unsettled_inspection_keeps_guard) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.709s
+
+OK

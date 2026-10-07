@@ -1,0 +1,22 @@
+[
+  {
+    "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/native-owner-continuation/native-evidence/root32.jsonl",
+    "sha256": "4f2dbbd0c665d8779287a4ec50c4dd02250e09806d6160482cd0a204ff5a0fac",
+    "records": 1144,
+    "edges": 32,
+    "termination": "native-root-equal",
+    "parserAcceptedWithSyntheticHarnessFraming": true,
+    "withoutClassMarker": "CLASS_COMPLETION_MISSING",
+    "nativeProcessExitOrSettlementProven": false
+  },
+  {
+    "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/native-owner-continuation/native-evidence/over32.jsonl",
+    "sha256": "9d0fd5e052a9722293f071618d5f573440468cf8bfcf5805ce0fb61b2f7dab23",
+    "records": 1208,
+    "edges": 32,
+    "termination": "parent-limit",
+    "parserAcceptedWithSyntheticHarnessFraming": true,
+    "withoutClassMarker": "CLASS_COMPLETION_MISSING",
+    "nativeProcessExitOrSettlementProven": false
+  }
+]

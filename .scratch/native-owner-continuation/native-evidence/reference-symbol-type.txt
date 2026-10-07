@@ -1,0 +1,15 @@
+Static string-pointer proof; no runtime invocation. Exported variable -> CFConstantString object -> bounded constant bytes.
+
+$ xcrun nm -arch arm64 /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTAutomationSupport.framework/XCTAutomationSupport
+000000000006dfd8 D _XC_kAXXCAttributeIsValid
+
+$ xcrun dyld_info -arch arm64 -fixups /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTAutomationSupport.framework/XCTAutomationSupport
+        __DATA_CONST    __cfstring       0x0005C9B8           bind  CoreFoundation/___CFConstantStringClassReference
+        __DATA_CONST    __cfstring       0x0005C9C8         rebase  0x00041F83
+        __DATA          __data           0x0006DFD8         rebase  0x0005C9B8
+
+$ xcrun llvm-objdump --macho --arch=arm64 --full-contents --section=__cstring /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTAutomationSupport.framework/XCTAutomationSupport
+ 41f70 75746549 7352656d 6f746545 6c656d65  uteIsRemoteEleme
+ 41f80 6e740058 435f6b41 58584341 74747269  nt.XC_kAXXCAttri
+ 41f90 62757465 49735661 6c696400 58435f6b  buteIsValid.XC_k
+ 41fa0 41585843 41747472 69627574 65566973  AXXCAttributeVis

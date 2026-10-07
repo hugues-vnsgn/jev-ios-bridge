@@ -139,7 +139,7 @@ class CaseFixture:
         self.case["buildBindingSHA256"]=digest((self.archive/"native-live-build-binding.json").read_bytes())
     def config(self, name="inspection", seconds=90):
         return Configuration(self.root/"unused-build",self.root/name,self.root,seconds,
-                             lease_root=self.root/"leases")
+                             lease_root=self.root/"leases", ownership_root=self.root/"persistent-claims")
 
 
 class Tools:
@@ -519,7 +519,7 @@ reconcile._case_data=lambda:(case,root/'archive')
 clock=Clock(); tools=Tools(fixture)
 end=time.monotonic()+5
 while not (root/'go').exists() and time.monotonic()<end: time.sleep(.005)
-config=Configuration(root/'unused-build',root/sys.argv[2],root,lease_root=root/'leases')
+config=Configuration(root/'unused-build',root/sys.argv[2],root,lease_root=root/'leases',ownership_root=root/'persistent-claims')
 result=reconcile.reconcile_metadata(root/'original',config,Dependencies(tools,clock.now,clock.sleep),True)
 print(json.dumps({'status':result.status,'reason':result.reason,'uninstalls':sum('uninstall' in argv for argv in tools.commands)}))
 '''

@@ -22,6 +22,7 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
 
 @interface ObservationStudy ()
 @property id device;
+@property ReferenceAccess *referenceAccess;
 @property(copy) id (^pointSession)(void);
 @property(copy) NSDictionary *(^pointProvenance)(id, id);
 @property NSMutableArray<PointRequest *> *pointRequests;
@@ -47,7 +48,7 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
 
 @implementation ObservationStudy
 - (instancetype)initWithDevice:(id)device pointSession:(id (^)(void))pointSession
-               pointProvenance:(NSDictionary * (^)(id, id))pointProvenance configuration:(NSDictionary *)configuration
+               pointProvenance:(NSDictionary * (^)(id, id))pointProvenance referenceAccess:(ReferenceAccess *)referenceAccess configuration:(NSDictionary *)configuration
                          clock:(NSTimeInterval (^)(void))clock stop:(BOOL (^)(void))stop
                    readFixture:(NSDictionary * (^)(void))readFixture
                activateFixture:(BOOL (^)(void))activateFixture
@@ -55,7 +56,7 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
   if ((self = [super init])) {
     _pointSession = [pointSession copy]; _pointProvenance = [pointProvenance copy];
     _pointRequests = [NSMutableArray array]; _pointLock = [NSObject new];
-    _device = device; _configuration = [configuration copy]; _clock = [clock copy];
+    _referenceAccess = referenceAccess; _device = device; _configuration = [configuration copy]; _clock = [clock copy];
     _stop = [stop copy]; _readFixture = [readFixture copy];
     _activateFixture = [activateFixture copy]; _wait = [wait copy]; _emit = [emit copy];
     _references = [NSMutableArray array];
@@ -155,6 +156,7 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
   }
   NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
   invocation.target = object; invocation.selector = selector; configure(invocation);
+  [invocation retainArguments];
   // Signature inspection and preparation can outlive the initial admission check.
   if (![self admit:operation]) return nil;
   self.startedCalls += 1;
@@ -268,14 +270,62 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
 }
 
 - (void)validity:(id)item client:(id)client phase:(NSString *)phase {
-  BOOL failed = NO;
-  id result = [self invoke:client selector:@"isValidElement:" operation:@"validity"
-    returnType:@encode(BOOL) length:sizeof(BOOL) arguments:@[@(@encode(id))]
-    configure:^(NSInvocation *invocation) { id argument = item; [invocation setArgument:&argument atIndex:2]; }
-    query:YES failed:&failed];
-  if (!failed) [self record:@"observation" operation:@"validity" outcome:@"observed"
-    details:@{@"phase": phase, @"reference": [self label:item], @"source": @"isValidElement:",
-              @"value": result, @"lifetimeScope": @"unestablished"}];
+  if (![self admit:@"validity"]) return;
+  @try {
+    NSString *key = self.referenceAccess.validityAttribute;
+    if (![key isKindOfClass:NSString.class] || key.length == 0 || [key lengthOfBytesUsingEncoding:NSUTF8StringEncoding] > StringLimit) {
+      [self record:@"observation" operation:@"validity" outcome:@"unavailable" details:@{@"reason":@"missing-validity-symbol"}]; return;
+    }
+    NSDictionary *provenance = [self.referenceAccess validityProvenanceForClient:client];
+    if (!provenance) {
+      [self record:@"observation" operation:@"validity" outcome:@"unavailable" details:@{@"reason":@"missing-provenance"}]; return;
+    }
+    NSString *source = @"attributesForElement:attributes:error:";
+    [self record:@"observation" operation:@"validity" outcome:@"observed"
+      details:@{@"phase":phase,@"source":source,@"provenance":provenance,@"attributeSymbol":@"XC_kAXXCAttributeIsValid"}];
+    NSError *__autoreleasing error = nil;
+    NSError *__autoreleasing *errorPointer = &error;
+    BOOL failed = NO;
+    NSArray *requestedAttributes = @[key];
+    id result = [self invoke:client selector:source operation:@"validity" returnType:@encode(id) length:sizeof(id)
+      arguments:@[@(@encode(id)),@(@encode(id)),@(@encode(NSError *__autoreleasing *))]
+      configure:^(NSInvocation *invocation) {
+        id element = item, attributes = requestedAttributes; NSError *__autoreleasing *argumentError = errorPointer;
+        [invocation setArgument:&element atIndex:2]; [invocation setArgument:&attributes atIndex:3];
+        [invocation setArgument:&argumentError atIndex:4];
+      } query:YES failed:&failed];
+    if (failed) return;
+    BOOL dictionary = [result isKindOfClass:NSDictionary.class];
+    BOOL bounded = dictionary && [result count] <= 1;
+    id value = dictionary ? result[key] : nil;
+    NSMutableDictionary *details = [@{@"phase":phase,@"reference":[self label:item],@"source":source,
+      @"attributeSymbol":@"XC_kAXXCAttributeIsValid",@"attributeKey":key,
+      @"dictionaryPresent":WireBoolean(dictionary),@"keyPresent":WireBoolean(value != nil),
+      @"errorPresent":WireBoolean(error != nil),@"lifetimeScope":@"unestablished"} mutableCopy];
+    NSString *reason = nil;
+    if (error) {
+      if ([error.domain lengthOfBytesUsingEncoding:NSUTF8StringEncoding] > StringLimit) reason = @"error-domain-limit";
+      else { details[@"errorDomain"] = error.domain; details[@"errorCode"] = @(error.code); reason = @"native-error"; }
+    }
+    if (!reason && !dictionary) reason = result ? @"invalid-attribute-reply" : @"nil-reply";
+    if (!reason && !bounded) reason = @"attribute-reply-limit";
+    if (!reason && !value) reason = @"missing-attribute";
+    NSString *valueReason = nil;
+    if (value) {
+      if ([value isKindOfClass:NSNumber.class] && isfinite([value doubleValue])) {
+        details[@"valueKind"] = CFGetTypeID((__bridge CFTypeRef)value) == CFBooleanGetTypeID() ? @"boolean" : @"number";
+        details[@"value"] = value;
+      } else if ([value isKindOfClass:NSString.class]) {
+        if ([value lengthOfBytesUsingEncoding:NSUTF8StringEncoding] > StringLimit) valueReason = @"attribute-string-limit";
+        else { details[@"valueKind"] = @"string"; details[@"value"] = value; }
+      } else valueReason = @"invalid-attribute-value";
+    }
+    if (valueReason) { details[@"valueReason"] = valueReason; if (!reason) reason = valueReason; }
+    if (reason) details[@"reason"] = reason;
+    [self record:@"observation" operation:@"validity" outcome:reason ? @"failed" : @"observed" details:details];
+  } @catch (NSException *exception) {
+    [self record:@"observation" operation:@"validity" outcome:@"failed" details:BoundedExceptionProvenance(exception)];
+  }
 }
 
 - (id)snapshot:(id)item client:(id)client {
@@ -336,30 +386,96 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
   return result;
 }
 
-- (void)parents:(id)original client:(id)client {
+- (void)endParents:(NSString *)reason edges:(NSUInteger)edges {
+  [self record:@"observation" operation:@"parent"
+    outcome:[reason isEqual:@"native-root-equal"] ? @"observed" : @"failed"
+    details:@{@"phase":@"termination",@"reason":reason,@"edges":@(edges),
+      @"originalContainment":@"unestablished",@"rootScope":@"pid-factory-observation-only"}];
+}
+- (id)applicationRootForPID:(NSNumber *)pid {
+  if (![self admit:@"parent"]) return nil;
+  if (!IntegerAtLeast(pid,2) || pid.longLongValue > INT_MAX) {
+    [self record:@"observation" operation:@"parent" outcome:@"failed" details:@{@"reason":@"invalid-root-pid"}]; return nil;
+  }
+  @try {
+    id factory = self.referenceAccess.rootFactory;
+    NSDictionary *provenance = self.referenceAccess.rootFactoryProvenance;
+    if (!factory || !provenance) {
+      [self record:@"observation" operation:@"parent" outcome:@"unavailable" details:@{@"reason":@"missing-root-provenance"}]; return nil;
+    }
+    NSString *source = @"elementWithProcessIdentifier:";
+    [self record:@"observation" operation:@"parent" outcome:@"observed"
+      details:@{@"phase":@"root-factory",@"source":source,@"provenance":provenance}];
+    BOOL failed = NO;
+    id root = [self invoke:factory selector:source operation:@"parent" returnType:@encode(id) length:sizeof(id)
+      arguments:@[@(@encode(int))] configure:^(NSInvocation *invocation) {
+        int argument = pid.intValue; [invocation setArgument:&argument atIndex:2];
+      } query:YES failed:&failed];
+    if (failed) return nil;
+    NSMutableDictionary *details = [@{@"phase":@"independent-root",@"source":source,
+      @"expectedFixturePID":pid,@"rootPresent":WireBoolean(root != nil),
+      @"rootScope":@"pid-factory-observation-only"} mutableCopy];
+    if (root) details[@"rootReference"] = [self label:root];
+    else details[@"reason"] = @"nil-application-root";
+    [self record:@"observation" operation:@"parent" outcome:root ? @"observed" : @"failed" details:details];
+    return root;
+  } @catch (NSException *exception) {
+    [self record:@"observation" operation:@"parent" outcome:@"failed" details:BoundedExceptionProvenance(exception)]; return nil;
+  }
+}
+- (NSNumber *)compare:(id)item with:(id)other purpose:(NSString *)purpose {
+  if (![self admit:@"parent"]) return nil;
+  @try {
+    NSDictionary *provenance = [self.referenceAccess equalityProvenanceForElement:item];
+    if (!provenance) {
+      [self record:@"observation" operation:@"parent" outcome:@"unavailable" details:@{@"reason":@"missing-equality-provenance"}]; return nil;
+    }
+    [self record:@"observation" operation:@"parent" outcome:@"observed"
+      details:@{@"phase":@"comparison-method",@"source":@"isEqual:",@"provenance":provenance}];
+    BOOL failed = NO;
+    NSNumber *equal = [self invoke:item selector:@"isEqual:" operation:@"parent" returnType:@encode(BOOL)
+      length:sizeof(BOOL) arguments:@[@(@encode(id))] configure:^(NSInvocation *invocation) {
+        id argument = other; [invocation setArgument:&argument atIndex:2];
+      } query:YES failed:&failed];
+    if (failed) return nil;
+    [self record:@"observation" operation:@"parent" outcome:@"observed"
+      details:@{@"phase":@"native-comparison",@"purpose":purpose,@"source":@"isEqual:",
+        @"reference":[self label:item],@"otherReference":[self label:other],@"nativeEqual":equal,
+        @"sameLocalObject":WireBoolean(item == other),@"associationScope":@"unestablished"}];
+    return equal;
+  } @catch (NSException *exception) {
+    [self record:@"observation" operation:@"parent" outcome:@"failed" details:BoundedExceptionProvenance(exception)]; return nil;
+  }
+}
+- (void)parents:(id)original client:(id)client fixturePID:(NSNumber *)pid {
+  id root = [self applicationRootForPID:pid];
+  if (!root) { [self endParents:@"root-unavailable" edges:0]; return; }
   NSMutableArray *seen = [NSMutableArray array];
   id item = original;
   for (NSUInteger edges = 0; item != nil; edges++) {
-    if (edges == ParentLimit) {
-      [self record:@"observation" operation:@"parent" outcome:@"failed"
-           details:@{@"reason": @"parent-limit", @"edges": @(edges)}];
-      return;
-    }
+    NSNumber *atRoot = [self compare:item with:root purpose:@"independent-root"];
+    if (!atRoot) { [self endParents:@"native-equality-unavailable" edges:edges]; return; }
+    if (atRoot.boolValue) { [self endParents:@"native-root-equal" edges:edges]; return; }
     if ([seen indexOfObjectIdenticalTo:item] != NSNotFound) {
-      [self record:@"observation" operation:@"parent" outcome:@"failed"
-           details:@{@"reason": @"local-object-cycle", @"reference": [self label:item]}];
-      return;
+      [self endParents:@"local-object-cycle" edges:edges]; return;
     }
+    for (id prior in seen) {
+      NSNumber *repeated = [self compare:item with:prior purpose:@"cycle"];
+      if (!repeated) { [self endParents:@"native-equality-unavailable" edges:edges]; return; }
+      if (repeated.boolValue) { [self endParents:@"native-reference-cycle" edges:edges]; return; }
+    }
+    if (edges == ParentLimit) { [self endParents:@"parent-limit" edges:edges]; return; }
     [seen addObject:item];
     id snapshot = [self snapshot:item client:client];
-    if (snapshot == nil) return;
+    if (!snapshot) { [self endParents:@"snapshot-unavailable" edges:edges]; return; }
     BOOL failed = NO;
     id parent = [self getter:snapshot name:@"parentAccessibilityElement" operation:@"parent" failed:&failed];
-    if (failed) return;
+    if (failed) { [self endParents:@"parent-unavailable" edges:edges]; return; }
     [self record:@"observation" operation:@"parent" outcome:@"observed"
-         details:@{@"source": @"parentAccessibilityElement", @"reference": [self label:item],
-                   @"parentPresent": WireBoolean(parent != nil), @"parent": parent ? [self label:parent] : NSNull.null,
-                   @"edge": @(edges + 1), @"originalContainment": @"unestablished"}];
+      details:@{@"phase":@"edge",@"source":@"parentAccessibilityElement",@"reference":[self label:item],
+        @"parentPresent":WireBoolean(parent != nil),@"parent":parent ? [self label:parent] : NSNull.null,
+        @"edge":@(edges + 1),@"originalContainment":@"unestablished"}];
+    if (!parent) { [self endParents:@"nil-parent-before-root" edges:edges]; return; }
     item = parent;
   }
 }
@@ -408,7 +524,7 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
   id original = [self point:client phase:@"original"];
   if (original == nil) return;
   [self validity:original client:client phase:@"before-replacement"];
-  [self parents:original client:client];
+  [self parents:original client:client fixturePID:baseline[@"pid"]];
   if (![self admit:@"fixture-recreation"]) return;
   NSDictionary *beforeRequest = [self fixture];
   if (!beforeRequest || ![beforeRequest isEqualToDictionary:baseline]) {

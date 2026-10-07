@@ -62,6 +62,7 @@ static id PointSession(void) {
     initWithDevice:XCUIDevice.sharedDevice
     pointSession:^{ return PointSession(); }
     pointProvenance:^NSDictionary *(id session, id client) { return LoadedPointProvenance(session, client); }
+    referenceAccess:[ReferenceAccess new]
     configuration:@{@"requestId": requestID, @"plan": plan, @"deadline": @(deadline),
                     @"studyIdentity":actualIdentity, @"expectedStudyIdentity":expectedIdentity}
     clock:^{ return NativeAdmissionClock(); }

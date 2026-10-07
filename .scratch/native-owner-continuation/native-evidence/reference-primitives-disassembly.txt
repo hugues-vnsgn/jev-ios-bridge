@@ -1,0 +1,81 @@
++[XCAccessibilityElement elementWithProcessIdentifier:]:
+   15610:	f4 4f be a9	stp	x20, x19, [sp, #-0x20]!
+   15614:	fd 7b 01 a9	stp	x29, x30, [sp, #0x10]
+   15618:	fd 43 00 91	add	x29, sp, #0x10
+   1561c:	f4 03 00 aa	mov	x20, x0
+   15620:	e0 03 02 aa	mov	x0, x2
+   15624:	0c 7b 00 94	bl	0x34254 ; symbol stub for: __AXUIElementCreateAppElementWithPid
+   15628:	80 01 00 b4	cbz	x0, 0x15658
+   1562c:	f3 03 00 aa	mov	x19, x0
+   15630:	e0 03 14 aa	mov	x0, x20
+   15634:	7d 7b 00 94	bl	0x34428 ; symbol stub for: _objc_alloc
+   15638:	e2 03 13 aa	mov	x2, x19
+   1563c:	23 00 80 52	mov	w3, #0x1
+   15640:	44 00 80 52	mov	w4, #0x2
+   15644:	67 86 00 94	bl	"_objc_msgSend$initWithAXUIElement:elementType:originPlatform:"
+   15648:	f4 03 00 aa	mov	x20, x0
+   1564c:	e0 03 13 aa	mov	x0, x19
+   15650:	6e 7a 00 94	bl	0x34008 ; symbol stub for: _CFRelease
+   15654:	02 00 00 14	b	0x1565c
+   15658:	14 00 80 d2	mov	x20, #0x0
+   1565c:	e0 03 14 aa	mov	x0, x20
+   15660:	fd 7b 41 a9	ldp	x29, x30, [sp, #0x10]
+   15664:	f4 4f c2 a8	ldp	x20, x19, [sp], #0x20
+   15668:	82 7b 00 14	b	0x34470 ; symbol stub for: _objc_autoreleaseReturnValue
+-[XCAccessibilityElement isEqual:]:
+   15848:	f6 57 bd a9	stp	x22, x21, [sp, #-0x30]!
+   1584c:	f4 4f 01 a9	stp	x20, x19, [sp, #0x10]
+   15850:	fd 7b 02 a9	stp	x29, x30, [sp, #0x20]
+   15854:	fd 83 00 91	add	x29, sp, #0x20
+   15858:	f5 03 00 aa	mov	x21, x0
+   1585c:	7d 7b 00 94	bl	0x34650 ; symbol stub for: _objc_retain_x2
+   15860:	f3 03 00 aa	mov	x19, x0
+   15864:	bf 02 00 eb	cmp	x21, x0
+   15868:	80 04 00 54	b.eq	0x158f8
+   1586c:	a8 02 00 f0	adrp	x8, 87 ; 0x6c000
+   15870:	00 25 40 f9	ldr	x0, [x8, #0x48] ; Objc class ref: XCAccessibilityElement
+   15874:	29 7b 00 94	bl	0x34518 ; symbol stub for: _objc_opt_class
+   15878:	e1 03 00 aa	mov	x1, x0
+   1587c:	e0 03 13 aa	mov	x0, x19
+   15880:	29 7b 00 94	bl	0x34524 ; symbol stub for: _objc_opt_isKindOfClass
+   15884:	e0 03 00 36	tbz	w0, #0x0, 0x15900
+   15888:	6f 7b 00 94	bl	0x34644 ; symbol stub for: _objc_retain_x19
+   1588c:	f4 03 00 aa	mov	x20, x0
+   15890:	a8 0a 40 b9	ldr	w8, [x21, #0x8]
+   15894:	09 08 40 b9	ldr	w9, [x0, #0x8]
+   15898:	1f 01 09 6b	cmp	w8, w9
+   1589c:	61 03 00 54	b.ne	0x15908
+   158a0:	a8 12 40 f9	ldr	x8, [x21, #0x20]
+   158a4:	89 12 40 f9	ldr	x9, [x20, #0x20]
+   158a8:	1f 01 09 eb	cmp	x8, x9
+   158ac:	e1 02 00 54	b.ne	0x15908
+   158b0:	a8 1a 40 f9	ldr	x8, [x21, #0x30]
+   158b4:	89 1a 40 f9	ldr	x9, [x20, #0x30]
+   158b8:	1f 01 09 eb	cmp	x8, x9
+   158bc:	61 02 00 54	b.ne	0x15908
+   158c0:	a8 1e 40 f9	ldr	x8, [x21, #0x38]
+   158c4:	89 1e 40 f9	ldr	x9, [x20, #0x38]
+   158c8:	1f 01 09 eb	cmp	x8, x9
+   158cc:	e1 01 00 54	b.ne	0x15908
+   158d0:	a0 16 40 f9	ldr	x0, [x21, #0x28]
+   158d4:	82 16 40 f9	ldr	x2, [x20, #0x28]
+   158d8:	08 00 02 aa	orr	x8, x0, x2
+   158dc:	1f 01 00 f1	cmp	x8, #0x0
+   158e0:	f5 17 9f 1a	cset	w21, eq
+   158e4:	40 01 00 b4	cbz	x0, 0x1590c
+   158e8:	22 01 00 b4	cbz	x2, 0x1590c
+   158ec:	f5 87 00 94	bl	"_objc_msgSend$isEqual:"
+   158f0:	f5 03 00 aa	mov	x21, x0
+   158f4:	06 00 00 14	b	0x1590c
+   158f8:	35 00 80 52	mov	w21, #0x1
+   158fc:	05 00 00 14	b	0x15910
+   15900:	15 00 80 52	mov	w21, #0x0
+   15904:	03 00 00 14	b	0x15910
+   15908:	15 00 80 52	mov	w21, #0x0
+   1590c:	1b 7b 00 94	bl	0x34578 ; symbol stub for: _objc_release_x20
+   15910:	17 7b 00 94	bl	0x3456c ; symbol stub for: _objc_release_x19
+   15914:	e0 03 15 aa	mov	x0, x21
+   15918:	fd 7b 42 a9	ldp	x29, x30, [sp, #0x20]
+   1591c:	f4 4f 41 a9	ldp	x20, x19, [sp, #0x10]
+   15920:	f6 57 c3 a8	ldp	x22, x21, [sp], #0x30
+   15924:	c0 03 5f d6	ret

@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import "ReferenceAccess.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -9,6 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithDevice:(id)device
                  pointSession:(id (^)(void))pointSession
                pointProvenance:(nullable NSDictionary * (^)(id, id))pointProvenance
+                 referenceAccess:(ReferenceAccess *)referenceAccess
                  configuration:(NSDictionary *)configuration
                          clock:(NSTimeInterval (^)(void))clock
                           stop:(BOOL (^)(void))stop

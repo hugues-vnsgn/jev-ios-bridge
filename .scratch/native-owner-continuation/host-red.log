@@ -1,0 +1,38 @@
+test_retained_study_survives_loss_of_temporary_guard_and_evidence (test_device_ownership.DeviceOwnership.test_retained_study_survives_loss_of_temporary_guard_and_evidence) ... 
+  test_retained_study_survives_loss_of_temporary_guard_and_evidence (test_device_ownership.DeviceOwnership.test_retained_study_survives_loss_of_temporary_guard_and_evidence) (plan='metadata') ... FAIL
+  test_retained_study_survives_loss_of_temporary_guard_and_evidence (test_device_ownership.DeviceOwnership.test_retained_study_survives_loss_of_temporary_guard_and_evidence) (plan='reference-study') ... FAIL
+
+======================================================================
+FAIL: test_retained_study_survives_loss_of_temporary_guard_and_evidence (test_device_ownership.DeviceOwnership.test_retained_study_survives_loss_of_temporary_guard_and_evidence) (plan='metadata')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/spikes/native-owner/host/test_device_ownership.py", line 87, in test_retained_study_survives_loss_of_temporary_guard_and_evidence
+    self.assertEqual(adapter.commands, [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [['xcrun', 'simctl', 'list', 'devices', '-[1624 chars]on']] != []
+
+First list contains 13 additional elements.
+First extra element 0:
+['xcrun', 'simctl', 'list', 'devices', '--json']
+
+Diff is 1875 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_retained_study_survives_loss_of_temporary_guard_and_evidence (test_device_ownership.DeviceOwnership.test_retained_study_survives_loss_of_temporary_guard_and_evidence) (plan='reference-study')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/spikes/native-owner/host/test_device_ownership.py", line 87, in test_retained_study_survives_loss_of_temporary_guard_and_evidence
+    self.assertEqual(adapter.commands, [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [['xcrun', 'simctl', 'list', 'devices', '-[1665 chars]lt']] != []
+
+First list contains 11 additional elements.
+First extra element 0:
+['xcrun', 'simctl', 'list', 'devices', '--json']
+
+Diff is 1926 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.164s
+
+FAILED (failures=2)

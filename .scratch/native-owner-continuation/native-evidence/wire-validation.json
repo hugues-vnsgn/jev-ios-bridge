@@ -1,0 +1,40 @@
+[
+  {
+    "path": ".scratch/native-owner-continuation/native-evidence/ordinary.jsonl",
+    "sha256": "5451ea942193fe636d38864969ddf6a0daa8e3c197fe0a67ef0ecd881e5eda40",
+    "records": 28,
+    "summary": {
+      "late": 0,
+      "pending": 0,
+      "retainedObjects": 2,
+      "sendReturned": 2,
+      "replyReceived": 2,
+      "observationClosed": true,
+      "nativeSettled": false,
+      "duplicate": 0,
+      "started": 2
+    },
+    "parserAcceptedWithSyntheticHarnessFraming": true,
+    "withoutClassMarker": "CLASS_COMPLETION_MISSING",
+    "nativeProcessExitOrSettlementProven": false
+  },
+  {
+    "path": ".scratch/native-owner-continuation/native-evidence/pending.jsonl",
+    "sha256": "854e207253beb363aaa965a6e87e0276c76c316771a91b5d0c0fb33341931773",
+    "records": 9,
+    "summary": {
+      "late": 0,
+      "pending": 1,
+      "retainedObjects": 0,
+      "sendReturned": 1,
+      "replyReceived": 0,
+      "observationClosed": true,
+      "nativeSettled": false,
+      "duplicate": 0,
+      "started": 1
+    },
+    "parserAcceptedWithSyntheticHarnessFraming": true,
+    "withoutClassMarker": "CLASS_COMPLETION_MISSING",
+    "nativeProcessExitOrSettlementProven": false
+  }
+]

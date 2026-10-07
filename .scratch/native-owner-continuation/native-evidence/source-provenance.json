@@ -1,0 +1,17 @@
+{
+  "path": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTAutomationSupport.framework/XCTAutomationSupport",
+  "sha256": "ca1acd92e81257f890aa7b01558d0cc437238f0ba86e9d3716fda15450a0aa73",
+  "command": [
+    "xcrun",
+    "llvm-objdump",
+    "--macho",
+    "--arch=arm64",
+    "--disassemble",
+    "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTAutomationSupport.framework/XCTAutomationSupport"
+  ],
+  "methodSelections": [
+    "+[XCAccessibilityElement elementWithProcessIdentifier:]",
+    "-[XCAccessibilityElement isEqual:]"
+  ],
+  "uuid": "UUID: 287A4032-A050-3A45-9DB6-704FA3CE7CD6 (x86_64) /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTAutomationSupport.framework/XCTAutomationSupport\nUUID: 2AFDDABB-38F9-38F3-B805-AC3B60BDF165 (arm64) /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTAutomationSupport.framework/XCTAutomationSupport"
+}

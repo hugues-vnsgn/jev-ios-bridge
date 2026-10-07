@@ -55,11 +55,22 @@
 @property BOOL nilSnapshot;
 @property BOOL malformedSnapshot;
 @property Class reportedClass;
+@property id applicationRoot;
+@property NSUInteger rootCalls;
+@property int requestedRootPID;
+@property id attributeReplyOverride;
+@property NSError *attributeErrorOverride;
+@property BOOL nilAttributeReply;
+@property BOOL missingValiditySymbol;
+@property BOOL missingValidityProvenance;
+@property BOOL missingRootProvenance;
+@property BOOL missingEqualityProvenance;
 @end
 @implementation FakeClient
 + (id)sharedSession { return [self new]; }
 - (instancetype)init {
   if ((self = [super init])) {
+    _applicationRoot = [NSObject new];
     _validityArguments = [NSMutableArray array];
     _snapshots = [NSMapTable mapTableWithKeyOptions:NSPointerFunctionsStrongMemory | NSPointerFunctionsObjectPointerPersonality
                                      valueOptions:NSPointerFunctionsStrongMemory];
@@ -70,6 +81,7 @@
   return self;
 }
 - (Class)class { return self.reportedClass ?: super.class; }
+- (id)elementWithProcessIdentifier:(int)pid { self.rootCalls++; self.requestedRootPID = pid; return self.applicationRoot; }
 - (id)accessibilityElementForElementAtPoint:(CGPoint)point error:(NSError *__autoreleasing *)error {
   self.directPointCalls++; XCTFail(@"Direct iOS point stub must not be invoked"); return nil;
 }
@@ -88,15 +100,50 @@
   reply(self.nilPoint ? nil : self.points[MIN(self.pointCalls - 1, self.points.count - 1)],
         self.pointError ? [NSError errorWithDomain:@"test" code:1 userInfo:nil] : nil);
 }
-- (BOOL)isValidElement:(id)element {
+- (BOOL)isValidElement:(id)element { XCTFail(@"Boolean wrapper must not supply raw validity evidence"); return YES; }
+- (id)attributesForElement:(id)element attributes:(id)attributes error:(NSError *__autoreleasing *)error {
+  XCTAssertEqualObjects(attributes, (@[@"valid"]));
   [self.validityArguments addObject:element];
-  return self.alwaysValid || self.validityArguments.count == 1 || element == self.points.lastObject;
+  if (self.attributeErrorOverride) *error = self.attributeErrorOverride;
+  if (self.nilAttributeReply) return nil;
+  if (self.attributeReplyOverride) return self.attributeReplyOverride;
+  BOOL value = self.alwaysValid || self.validityArguments.count == 1 || element == self.points.lastObject;
+  return @{@"valid":value ? @YES : @NO};
 }
 - (id)requestSnapshotForElement:(id)element attributes:(id)attributes parameters:(id)parameters error:(NSError *__autoreleasing *)error {
   if (self.snapshotError) *error = [NSError errorWithDomain:@"test" code:2 userInfo:nil];
   if (self.nilSnapshot) return nil;
   if (self.malformedSnapshot) return @"not-a-snapshot";
   return [self.snapshots objectForKey:element];
+}
+@end
+
+@interface NativeReferenceDouble : NSObject
+@property NSString *nativeToken;
+@property int pid;
+@end
+@implementation NativeReferenceDouble
+- (BOOL)isEqual:(id)other { return [other isKindOfClass:NativeReferenceDouble.class] && self.pid == [other pid] && [self.nativeToken isEqual:[other nativeToken]]; }
+- (NSUInteger)hash { return self.nativeToken.hash; }
+@end
+
+@interface FalseAttributeClient : FakeClient
+@end
+@implementation FalseAttributeClient
+- (BOOL)isValidElement:(id)element { return YES; }
+- (id)attributesForElement:(id)element attributes:(id)attributes error:(NSError *__autoreleasing *)error { return @{@"valid":@NO}; }
+@end
+
+@interface WrongReferenceABIClient : FakeClient
+@property BOOL wrongRoot;
+@end
+@implementation WrongReferenceABIClient
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
+  if (!self.wrongRoot && selector == NSSelectorFromString(@"attributesForElement:attributes:error:"))
+    return [NSMethodSignature signatureWithObjCTypes:"q40@0:8@16@24^@32"];
+  if (self.wrongRoot && selector == NSSelectorFromString(@"elementWithProcessIdentifier:"))
+    return [NSMethodSignature signatureWithObjCTypes:"q20@0:8i16"];
+  return [super methodSignatureForSelector:selector];
 }
 @end
 
@@ -140,6 +187,18 @@
 }
 @end
 
+@interface FakeReferenceAccess : ReferenceAccess
+@property id factory;
+@end
+@implementation FakeReferenceAccess
++ (instancetype)accessWithFactory:(id)factory { FakeReferenceAccess *value = [self new]; value.factory = factory; return value; }
+- (NSString *)validityAttribute { return [(FakeClient *)self.factory missingValiditySymbol] ? nil : @"valid"; }
+- (id)rootFactory { return self.factory; }
+- (NSDictionary *)validityProvenanceForClient:(id)client { return [(FakeClient *)self.factory missingValidityProvenance] ? nil : @{@"test":@YES}; }
+- (NSDictionary *)rootFactoryProvenance { return [(FakeClient *)self.factory missingRootProvenance] ? nil : @{@"test":@YES}; }
+- (NSDictionary *)equalityProvenanceForElement:(id)element { return [(FakeClient *)self.factory missingEqualityProvenance] ? nil : @{@"test":@YES}; }
+@end
+
 @interface ObservationStudyTests : XCTestCase
 @end
 @implementation ObservationStudyTests
@@ -161,7 +220,7 @@
       actual[@"runner"] = @"dev.foreign.runner"; configuration[@"studyIdentity"] = actual;
     }
     NSMutableArray *records = [NSMutableArray array];
-    ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device pointSession:^{ ((FakeDevice *)device).sessionCalls++; return [(FakeDevice *)device client]; } pointProvenance:^NSDictionary *(id session, id client) { return ((FakeDevice *)device).missingProvenance ? nil : @{@"test":@YES}; } configuration:configuration
+    ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device pointSession:^{ ((FakeDevice *)device).sessionCalls++; return [(FakeDevice *)device client]; } pointProvenance:^NSDictionary *(id session, id client) { return ((FakeDevice *)device).missingProvenance ? nil : @{@"test":@YES}; } referenceAccess:[FakeReferenceAccess accessWithFactory:([device isKindOfClass:FakeDevice.class] ? [(FakeDevice *)device client] : nil)] configuration:configuration
       clock:^{ return 10.0; } stop:^{ return NO; } readFixture:^{ return (NSDictionary *)nil; }
       activateFixture:^{ XCTFail(@"Metadata must not activate"); return NO; }
       wait:^(NSTimeInterval seconds) { XCTFail(@"Metadata must not wait"); }
@@ -188,7 +247,7 @@
     __block BOOL activated = NO, recreated = NO;
     __block NSUInteger reads = 0, activations = 0;
     ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device pointSession:^{ ((FakeDevice *)device).sessionCalls++; return [(FakeDevice *)device client]; } pointProvenance:^NSDictionary *(id session, id client) { return ((FakeDevice *)device).missingProvenance ? nil : @{@"test":@YES}; }
-      configuration:[self configurationForPlan:@"reference-study" requestId:@"fixture-agreement"]
+      referenceAccess:[FakeReferenceAccess accessWithFactory:([device isKindOfClass:FakeDevice.class] ? [(FakeDevice *)device client] : nil)] configuration:[self configurationForPlan:@"reference-study" requestId:@"fixture-agreement"]
       clock:^{ return 10.0; } stop:^{ return NO; }
       readFixture:^{
         reads += 1;
@@ -229,7 +288,7 @@
   __block NSTimeInterval now = 10;
   __block BOOL recreate = NO;
   ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device pointSession:^{ ((FakeDevice *)device).sessionCalls++; return [(FakeDevice *)device client]; } pointProvenance:^NSDictionary *(id session, id client) { return ((FakeDevice *)device).missingProvenance ? nil : @{@"test":@YES}; }
-    configuration:[self configurationForPlan:plan requestId:@"policy-test"]
+    referenceAccess:[FakeReferenceAccess accessWithFactory:([device isKindOfClass:FakeDevice.class] ? [(FakeDevice *)device client] : nil)] configuration:[self configurationForPlan:plan requestId:@"policy-test"]
     clock:^{ return now; } stop:stop
     readFixture:^{ return @{@"pid": @42, @"generation": recreate ? @1 : @0, @"ordinary": @0, @"bundleIdentifier": @"dev.jev.research.native-owner-20261007-reference-fixture"}; }
     activateFixture:^{ return YES; }
@@ -263,7 +322,12 @@
 }
 - (NSArray *)operation:(NSString *)operation records:(NSArray *)records {
   return [records filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSDictionary *record, NSDictionary *bindings) {
-    return [record[@"operation"] isEqual:operation] && [record[@"kind"] isEqual:@"observation"];
+    return [record[@"operation"] isEqual:operation] && [record[@"kind"] isEqual:@"observation"] && !record[@"details"][@"provenance"];
+  }]];
+}
+- (NSArray *)parentPhase:(NSString *)phase records:(NSArray *)records {
+  return [records filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSDictionary *record, NSDictionary *bindings) {
+    return [record[@"operation"] isEqual:@"parent"] && [record[@"details"][@"phase"] isEqual:phase];
   }]];
 }
 - (BOOL)hasReason:(NSString *)reason records:(NSArray *)records {
@@ -399,7 +463,8 @@
   FakeClient *client = [FakeClient new]; client.malformedSnapshot = YES;
   NSArray *records = [self runClient:client];
   XCTAssertTrue([self hasReason:@"unsupported-abi" records:records]);
-  XCTAssertEqual([self operation:@"parent" records:records].count, 0u);
+  XCTAssertEqual([self parentPhase:@"edge" records:records].count, 0u);
+  XCTAssertTrue([self hasReason:@"snapshot-unavailable" records:records]);
 }
 - (void)testNilWrapperPreservesValidDirectSnapshot {
   FakeClient *client = [FakeClient new];
@@ -433,7 +498,7 @@
     ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device
       pointSession:^{ XCTFail(@"Deadline must refuse session"); return (id)nil; }
       pointProvenance:^NSDictionary *(id session, id client) { return nil; }
-      configuration:config clock:^{ return 10.0; } stop:^{ return NO; }
+      referenceAccess:[FakeReferenceAccess accessWithFactory:([device isKindOfClass:FakeDevice.class] ? [(FakeDevice *)device client] : nil)] configuration:config clock:^{ return 10.0; } stop:^{ return NO; }
       readFixture:^{ return (NSDictionary *)nil; } activateFixture:^{ return NO; }
       wait:^(NSTimeInterval seconds) { XCTFail(@"No wait"); }
       emit:^(NSDictionary *record) { [records addObject:record]; }];
@@ -573,9 +638,29 @@
   XCTAssertEqualObjects(limited[@"reasonBytes"], @1025);
   XCTAssertNil(limited[@"exceptionReason"]);
 }
+- (void)testNativeEncodedParentBoundaryFixtures {
+  for (NSString *mode in @[@"root32",@"over32"]) {
+    FakeClient *client = [FakeClient new]; id item = client.points[0];
+    NSUInteger length = [mode isEqual:@"root32"] ? 32 : 33;
+    for (NSUInteger i = 0; i < length; i++) {
+      id parent = [mode isEqual:@"root32"] && i == 31 ? client.applicationRoot : [NSObject new];
+      FakeSnapshot *snapshot = [FakeSnapshot new]; snapshot.accessibilityElement = item; snapshot.parentAccessibilityElement = parent;
+      [client.snapshots setObject:snapshot forKey:item]; item = parent;
+    }
+    NSArray *records = [self runClient:client];
+    XCTAssertEqual([self parentPhase:@"edge" records:records].count,32u);
+    XCTAssertTrue([self hasReason:[mode isEqual:@"root32"] ? @"native-root-equal" : @"parent-limit" records:records]);
+    for (NSDictionary *record in records) {
+      NSData *data = EncodeNativeRecord(record,1024 * 1024,nil);
+      XCTAssertNotNil(data);
+      printf("JEV_REFERENCE_FIXTURE %s %s\n",mode.UTF8String,[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding].UTF8String);
+    }
+  }
+}
 - (void)testNativeEncodedCallbackFixtures {
   for (NSString *mode in @[@"ordinary",@"pending"]) {
     FakeClient *client = [FakeClient new]; client.callbackMode = mode;
+    ((FakeSnapshot *)[client.snapshots objectForKey:client.points[0]]).parentAccessibilityElement = client.applicationRoot;
     NSArray *records = [self runClient:client];
     for (NSDictionary *record in records) {
       NSData *data = EncodeNativeRecord(record, 1024 * 1024, nil);
@@ -585,6 +670,142 @@
   }
 }
 
+- (void)testReferenceMethodABIMismatchPreventsInvocation {
+  for (NSNumber *root in @[@YES,@NO]) {
+    WrongReferenceABIClient *client = [WrongReferenceABIClient new]; client.wrongRoot = root.boolValue;
+    NSArray *records = [self runClient:client];
+    XCTAssertTrue([self hasReason:@"unsupported-abi" records:records]);
+    if (root.boolValue) XCTAssertEqual(client.rootCalls,0u);
+    else XCTAssertEqual(client.validityArguments.count,0u);
+  }
+}
+- (void)testReferenceMethodProvenanceContainsLoadedUUIDAndExactEncoding {
+  FakeClient *client = [FakeClient new];
+  for (NSString *selector in @[@"attributesForElement:attributes:error:",@"elementWithProcessIdentifier:",@"isEqual:"]) {
+    NSDictionary *provenance = LoadedMethodProvenance(client,NSSelectorFromString(selector));
+    XCTAssertEqualObjects(provenance[@"selector"], selector);
+    XCTAssertEqual([provenance[@"loadedImage"][@"uuid"] length],36u);
+    XCTAssertTrue([provenance[@"encoding"] length] > 0);
+  }
+  XCTAssertNil(LoadedMethodProvenance(client,NSSelectorFromString(@"notAnAvailableNativeMethod")));
+}
+- (void)testRefusedValidityPreservesRequestedFalseAndKeyPresence {
+  for (NSNumber *withError in @[@YES,@NO]) {
+    FakeClient *client = [FakeClient new];
+    client.attributeReplyOverride = withError.boolValue ? @{@"valid":@NO} : @{@"valid":@NO,@"extra":@1};
+    if (withError.boolValue) client.attributeErrorOverride = [NSError errorWithDomain:@"bounded-error" code:9 userInfo:nil];
+    NSDictionary *record = [self operation:@"validity" records:[self runClient:client]].firstObject;
+    XCTAssertEqualObjects(record[@"outcome"], @"failed");
+    XCTAssertEqualObjects(record[@"details"][@"keyPresent"], @YES);
+    XCTAssertEqualObjects(record[@"details"][@"value"], @NO);
+    XCTAssertEqualObjects(record[@"details"][@"valueKind"], @"boolean");
+    XCTAssertEqualObjects(record[@"details"][@"reason"], withError.boolValue ? @"native-error" : @"attribute-reply-limit");
+  }
+}
+- (void)testRawValidityRefusesMissingMalformedAndNonfiniteValues {
+  NSArray *replies = @[@{}, @{@"valid":@YES,@"extra":@1}, @{@"valid":@[]}, @{@"valid":@(NAN)}, @42];
+  NSArray *reasons = @[@"missing-attribute",@"attribute-reply-limit",@"invalid-attribute-value",@"invalid-attribute-value",@"invalid-attribute-reply"];
+  for (NSUInteger i = 0; i < replies.count; i++) {
+    FakeClient *client = [FakeClient new]; client.attributeReplyOverride = replies[i];
+    XCTAssertTrue([self hasReason:reasons[i] records:[self runClient:client]]);
+  }
+  FakeClient *nilClient = [FakeClient new]; nilClient.nilAttributeReply = YES;
+  XCTAssertTrue([self hasReason:@"nil-reply" records:[self runClient:nilClient]]);
+}
+- (void)testRawValidityStringAndErrorDomainExactBounds {
+  for (NSNumber *length in @[@1024,@1025]) {
+    NSString *text = [@"x" stringByPaddingToLength:length.unsignedIntegerValue withString:@"x" startingAtIndex:0];
+    FakeClient *client = [FakeClient new]; client.attributeReplyOverride = @{@"valid":text};
+    NSArray *records = [self runClient:client];
+    NSDictionary *reply = [self operation:@"validity" records:records].firstObject[@"details"];
+    if (length.unsignedIntegerValue == 1024) { XCTAssertEqualObjects(reply[@"value"], text); XCTAssertEqualObjects(reply[@"valueKind"], @"string"); }
+    else { XCTAssertNil(reply[@"value"]); XCTAssertTrue([self hasReason:@"attribute-string-limit" records:records]); }
+    client = [FakeClient new]; client.attributeErrorOverride = [NSError errorWithDomain:text code:17 userInfo:@{@"secret":@"must-not-be-logged"}];
+    records = [self runClient:client]; reply = [self operation:@"validity" records:records].firstObject[@"details"];
+    XCTAssertEqualObjects(reply[@"errorPresent"], @YES);
+    if (length.unsignedIntegerValue == 1024) { XCTAssertEqualObjects(reply[@"errorDomain"], text); XCTAssertEqualObjects(reply[@"errorCode"], @17); }
+    else { XCTAssertNil(reply[@"errorDomain"]); XCTAssertTrue([self hasReason:@"error-domain-limit" records:records]); }
+    NSString *json = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:records options:0 error:nil] encoding:NSUTF8StringEncoding];
+    XCTAssertFalse([json containsString:@"must-not-be-logged"]);
+  }
+}
+- (void)testMissingValiditySymbolOrProvenancePreventsAttributeRequest {
+  for (NSNumber *symbol in @[@YES,@NO]) {
+    FakeClient *client = [FakeClient new]; client.missingValiditySymbol = symbol.boolValue; client.missingValidityProvenance = !symbol.boolValue;
+    NSArray *records = [self runClient:client];
+    XCTAssertEqual(client.validityArguments.count,0u);
+    XCTAssertTrue([self hasReason:symbol.boolValue ? @"missing-validity-symbol" : @"missing-provenance" records:records]);
+  }
+}
+- (void)testIndependentRootUsesNativeComparisonNotPIDOrLocalPointer {
+  for (NSNumber *equal in @[@YES,@NO]) {
+    FakeClient *client = [FakeClient new];
+    NativeReferenceDouble *root = [NativeReferenceDouble new]; root.pid = 42; root.nativeToken = @"root";
+    NativeReferenceDouble *candidate = [NativeReferenceDouble new]; candidate.pid = 42; candidate.nativeToken = equal.boolValue ? @"root" : @"different";
+    client.applicationRoot = root;
+    ((FakeSnapshot *)[client.snapshots objectForKey:client.points[0]]).parentAccessibilityElement = candidate;
+    FakeSnapshot *snapshot = [FakeSnapshot new]; snapshot.accessibilityElement = candidate;
+    [client.snapshots setObject:snapshot forKey:candidate];
+    NSArray *records = [self runClient:client];
+    XCTAssertEqual(client.rootCalls,1u); XCTAssertEqual(client.requestedRootPID,42);
+    XCTAssertTrue([self hasReason:equal.boolValue ? @"native-root-equal" : @"nil-parent-before-root" records:records]);
+    XCTAssertFalse(root == candidate);
+    XCTAssertEqualObjects(records.lastObject[@"details"][@"coverage"][@"originalAncestry"], @"unestablished");
+  }
+}
+- (void)testFreshWrapperNativeCycleIsDetectedBeforeAnotherSnapshot {
+  FakeClient *client = [FakeClient new];
+  NativeReferenceDouble *original = [NativeReferenceDouble new]; original.pid = 42; original.nativeToken = @"same-native";
+  NativeReferenceDouble *freshWrapper = [NativeReferenceDouble new]; freshWrapper.pid = 42; freshWrapper.nativeToken = @"same-native";
+  client.points = @[original,[NSObject new]];
+  FakeSnapshot *snapshot = [FakeSnapshot new]; snapshot.accessibilityElement = original; snapshot.parentAccessibilityElement = freshWrapper;
+  [client.snapshots setObject:snapshot forKey:original];
+  NSArray *records = [self runClient:client];
+  XCTAssertTrue([self hasReason:@"native-reference-cycle" records:records]);
+  XCTAssertEqual([self parentPhase:@"edge" records:records].count,1u);
+  XCTAssertFalse(original == freshWrapper);
+}
+- (void)testRootExactlyAt32EdgesIsObservedWithout33rdParentRead {
+  FakeClient *client = [FakeClient new]; id item = client.points[0];
+  for (NSUInteger i = 0; i < 32; i++) {
+    id parent = i == 31 ? client.applicationRoot : [NSObject new];
+    FakeSnapshot *snapshot = [FakeSnapshot new]; snapshot.accessibilityElement = item; snapshot.parentAccessibilityElement = parent;
+    [client.snapshots setObject:snapshot forKey:item]; item = parent;
+  }
+  NSArray *records = [self runClient:client];
+  XCTAssertEqual([self parentPhase:@"edge" records:records].count,32u);
+  NSDictionary *end = [self parentPhase:@"termination" records:records].firstObject[@"details"];
+  XCTAssertEqualObjects(end[@"reason"], @"native-root-equal"); XCTAssertEqualObjects(end[@"edges"],@32);
+}
+- (void)testMissingRootAndEqualityProvenanceRefuseTheirCalls {
+  for (NSString *mode in @[@"nil",@"root-provenance",@"equality-provenance"]) {
+    FakeClient *client = [FakeClient new];
+    if ([mode isEqual:@"nil"]) client.applicationRoot = nil;
+    client.missingRootProvenance = [mode isEqual:@"root-provenance"];
+    client.missingEqualityProvenance = [mode isEqual:@"equality-provenance"];
+    NSArray *records = [self runClient:client];
+    XCTAssertEqual(client.rootCalls, client.missingRootProvenance ? 0u : 1u);
+    XCTAssertEqual([self parentPhase:@"edge" records:records].count,0u);
+    XCTAssertTrue([self hasReason:client.missingEqualityProvenance ? @"native-equality-unavailable" : @"root-unavailable" records:records]);
+  }
+}
+
+- (void)testNilParentRequiresIndependentRootObservationAndExplicitTermination {
+  FakeClient *client = [FakeClient new];
+  NSArray *records = [self runClient:client];
+  XCTAssertEqual(client.rootCalls, 1u);
+  XCTAssertEqual(client.requestedRootPID, 42);
+  XCTAssertTrue([self hasReason:@"nil-parent-before-root" records:records]);
+  XCTAssertEqualObjects(records.lastObject[@"details"][@"coverage"][@"originalAncestry"], @"unestablished");
+}
+- (void)testValidityPreservesFalseAttributeInsteadOfDictionaryPresence {
+  FakeClient *client = [FalseAttributeClient new];
+  NSArray *records = [self runClient:client];
+  NSArray *validity = [self operation:@"validity" records:records];
+  XCTAssertEqualObjects(validity[0][@"details"][@"value"], @NO);
+  XCTAssertEqualObjects(validity[0][@"details"][@"source"], @"attributesForElement:attributes:error:");
+  XCTAssertEqualObjects(validity[0][@"details"][@"keyPresent"], @YES);
+}
 - (void)testReferenceStudyUsesCallbackAndNeverDirectPointStub {
   FakeClient *client = [FakeClient new];
   [self runClient:client];
@@ -609,8 +830,9 @@
   snapshot.parentAccessibilityElement = client.points[0];
   NSArray *records = [self runClient:client];
   XCTAssertTrue([self hasReason:@"local-object-cycle" records:records]);
-  NSArray *parents = [self operation:@"parent" records:records];
-  XCTAssertEqual(parents.count, 2u); // one observed edge, one explicit failed cycle
+  NSArray *parents = [self parentPhase:@"edge" records:records];
+  XCTAssertEqual(parents.count, 1u);
+  XCTAssertEqual([self parentPhase:@"termination" records:records].count, 1u);
 }
 - (void)testParentWalkAllows32EdgesAndRefusesThe33rd {
   FakeClient *client = [FakeClient new]; id item = client.points[0];
@@ -620,11 +842,13 @@
     [client.snapshots setObject:snapshot forKey:item]; item = parent;
   }
   NSArray *records = [self runClient:client];
-  NSArray *parents = [self operation:@"parent" records:records];
-  XCTAssertEqual(parents.count, 33u);
+  NSArray *parents = [self parentPhase:@"edge" records:records];
+  NSArray *termination = [self parentPhase:@"termination" records:records];
+  XCTAssertEqual(parents.count, 32u);
+  XCTAssertEqual(termination.count, 1u);
   XCTAssertEqualObjects(parents[31][@"details"][@"edge"], @32);
-  XCTAssertEqualObjects(parents[32][@"details"][@"reason"], @"parent-limit");
-  XCTAssertEqualObjects(parents[32][@"details"][@"edges"], @32);
+  XCTAssertEqualObjects(termination[0][@"details"][@"reason"], @"parent-limit");
+  XCTAssertEqualObjects(termination[0][@"details"][@"edges"], @32);
 }
 - (void)testExact1024ByteStringAcceptedAndOneOverRefused {
   for (NSUInteger length = 1024; length <= 1025; length++) {
@@ -676,6 +900,7 @@
 }
 - (void)testSurprisingOldValidityIsRecordedWithoutInventingLifetimeGuarantee {
   FakeClient *client = [FakeClient new]; client.alwaysValid = YES;
+  ((FakeSnapshot *)[client.snapshots objectForKey:client.points[0]]).parentAccessibilityElement = client.applicationRoot;
   NSArray *records = [self runClient:client];
   NSArray *validity = [self operation:@"validity" records:records];
   XCTAssertEqualObjects(validity[1][@"details"][@"value"], @YES);
@@ -686,7 +911,7 @@
   FakeClient *client = [FakeClient new]; FakeDevice *device = [FakeDevice new]; device.client = client;
   NSMutableArray *records = [NSMutableArray array]; __block BOOL stopped = NO;
   ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device pointSession:^{ ((FakeDevice *)device).sessionCalls++; return [(FakeDevice *)device client]; } pointProvenance:^NSDictionary *(id session, id client) { return ((FakeDevice *)device).missingProvenance ? nil : @{@"test":@YES}; }
-    configuration:[self configurationForPlan:@"reference-study" requestId:@"cancel-test"]
+    referenceAccess:[FakeReferenceAccess accessWithFactory:([device isKindOfClass:FakeDevice.class] ? [(FakeDevice *)device client] : nil)] configuration:[self configurationForPlan:@"reference-study" requestId:@"cancel-test"]
     clock:^{ return 10.0; } stop:^{ return stopped; }
     readFixture:^{ return @{@"pid": @42, @"generation": @0, @"ordinary": @0, @"bundleIdentifier": @"dev.jev.research.native-owner-20261007-reference-fixture"}; }
     activateFixture:^{ return YES; } wait:^(NSTimeInterval seconds) { XCTFail(@"No wait after stopped admission"); }
@@ -709,7 +934,8 @@
   FakeSnapshot *snapshot = [client.snapshots objectForKey:client.points[0]]; snapshot.accessibilityElement = nil;
   NSArray *records = [self runClient:client];
   XCTAssertTrue([self hasReason:@"nil-native-element" records:records]);
-  XCTAssertEqual([self operation:@"parent" records:records].count, 0u);
+  XCTAssertEqual([self parentPhase:@"edge" records:records].count, 0u);
+  XCTAssertTrue([self hasReason:@"snapshot-unavailable" records:records]);
 }
 - (void)testThrownNativeCallDoesNotCertifyLocalMethodReturn {
   ThrowingPointClient *client = [ThrowingPointClient new]; NSArray *records = [self runClient:client];
@@ -725,7 +951,7 @@
     __block BOOL stopped = NO;
     __block NSUInteger activations = 0;
     ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device pointSession:^{ ((FakeDevice *)device).sessionCalls++; return [(FakeDevice *)device client]; } pointProvenance:^NSDictionary *(id session, id client) { return ((FakeDevice *)device).missingProvenance ? nil : @{@"test":@YES}; }
-      configuration:[self configurationForPlan:@"reference-study" requestId:@"activation-admission"]
+      referenceAccess:[FakeReferenceAccess accessWithFactory:([device isKindOfClass:FakeDevice.class] ? [(FakeDevice *)device client] : nil)] configuration:[self configurationForPlan:@"reference-study" requestId:@"activation-admission"]
       clock:^{ return now; } stop:^{ return stopped; }
       readFixture:^{ return @{@"pid": @42, @"generation": @0, @"ordinary": @0, @"bundleIdentifier": @"dev.jev.research.native-owner-20261007-reference-fixture"}; }
       activateFixture:^{ activations += 1; return YES; }
@@ -752,7 +978,7 @@
     __block BOOL stopped = NO;
     client.duringPreparation = ^{ if (expire.boolValue) now = 20; else stopped = YES; };
     ObservationStudy *study = [[ObservationStudy alloc] initWithDevice:device pointSession:^{ ((FakeDevice *)device).sessionCalls++; return [(FakeDevice *)device client]; } pointProvenance:^NSDictionary *(id session, id client) { return ((FakeDevice *)device).missingProvenance ? nil : @{@"test":@YES}; }
-      configuration:[self configurationForPlan:@"reference-study" requestId:@"query-admission"]
+      referenceAccess:[FakeReferenceAccess accessWithFactory:([device isKindOfClass:FakeDevice.class] ? [(FakeDevice *)device client] : nil)] configuration:[self configurationForPlan:@"reference-study" requestId:@"query-admission"]
       clock:^{ return now; } stop:^{ return stopped; }
       readFixture:^{ return @{@"pid": @42, @"generation": @0, @"ordinary": @0, @"bundleIdentifier": @"dev.jev.research.native-owner-20261007-reference-fixture"}; }
       activateFixture:^{ return YES; } wait:^(NSTimeInterval seconds) { now += seconds; }
