@@ -1,0 +1,20 @@
+{
+  "index": 2,
+  "argv": [
+    "xcrun",
+    "simctl",
+    "boot",
+    "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+  ],
+  "state": "exited",
+  "pid": 13147,
+  "ownedProcessGroup": 13147,
+  "captureFiles": {
+    "stdout": "/private/tmp/jev-native-owner-metadata-integrated-20261007/process-output/002-stdout.log",
+    "stderr": "/private/tmp/jev-native-owner-metadata-integrated-20261007/process-output/002-stderr.log"
+  },
+  "parentReturncode": 0,
+  "returncode": 0,
+  "stdout": "",
+  "stderr": ""
+}

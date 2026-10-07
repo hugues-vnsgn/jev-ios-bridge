@@ -1,0 +1,30 @@
+{
+  "purpose": "read-only post-return inspection; ownership ledger is not rewritten and no cleanup is performed",
+  "pids": {
+    "argv": [
+      "/bin/ps",
+      "-p",
+      "13915,15195",
+      "-o",
+      "pid=",
+      "-o",
+      "pgid=",
+      "-o",
+      "comm="
+    ],
+    "returncode": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "ownedGroup": {
+    "argv": [
+      "/bin/ps",
+      "-axo",
+      "pid=,pgid=,comm="
+    ],
+    "returncode": 0,
+    "matchingLines": [],
+    "stderr": ""
+  },
+  "nativeSettlement": "unconfirmed"
+}

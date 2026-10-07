@@ -1,0 +1,34 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test-without-building -xctestrun /private/tmp/jev-native-owner-metadata-integrated-20261007/owned.xctestrun -destination id=0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 -parallel-testing-enabled NO -maximum-concurrent-test-simulator-destinations 1 "-only-testing:NativeOwnerStudy/NativeOwnerStudy/testMetadataOnly" -resultBundlePath /private/tmp/jev-native-owner-metadata-integrated-20261007/result.xcresult
+
+Writing result bundle at path:
+	/private/tmp/jev-native-owner-metadata-integrated-20261007/result.xcresult
+
+objc[15195]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x1046e4310) and /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x107670398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-10-07 12:04:39.554.
+Test Suite 'NativeOwnerStudy.xctest' started at 2026-10-07 12:04:39.555.
+Test Suite 'NativeOwnerStudy' started at 2026-10-07 12:04:39.555.
+Test Case '-[NativeOwnerStudy testMetadataOnly]' started.
+    t =     0.00s Start Test at 2026-10-07 12:04:39.556
+    t =     0.34s Set Up
+JEV_NATIVE_OWNER_V1 {"schema":"jev.native-owner\/1","inputCalls":0,"sequence":0,"operation":"metadata","details":{"plan":"metadata","runnerPID":15195},"outcome":"observed","kind":"started","requestId":"5f1164bb-f0a4-44c7-b5d9-88c39b3c1a56","elapsedMs":0.002333334123250097}
+JEV_NATIVE_OWNER_V1 {"schema":"jev.native-owner\/1","inputCalls":0,"sequence":1,"operation":"metadata","details":{"methods":[{"arguments":["@",":","{CGPoint=dd}","^@"],"returnType":"@","selector":"accessibilityElementForElementAtPoint:error:","available":true,"returnLength":8},{"arguments":["@",":","@"],"returnType":"B","selector":"isValidElement:","available":true,"returnLength":1},{"arguments":["@",":","@","@","@","^@"],"returnType":"@","selector":"requestSnapshotForElement:attributes:parameters:error:","available":true,"returnLength":8},{"arguments":["@",":","@","@","^@"],"returnType":"@","selector":"attributesForElement:attributes:error:","available":true,"returnLength":8}],"interfaceClass":"XCAXClient_iOS","getter":{"arguments":["@",":"],"returnType":"@","selector":"accessibilityInterface","available":true,"returnLength":8}},"outcome":"observed","kind":"observation","requestId":"5f1164bb-f0a4-44c7-b5d9-88c39b3c1a56","elapsedMs":0.10237500100629404}
+JEV_NATIVE_OWNER_V1 {"schema":"jev.native-owner\/1","inputCalls":0,"sequence":2,"operation":"metadata","details":{"appElementQueries":0,"localMethodsReturned":1,"localReferencesReleased":1,"plan":"metadata","runnerPID":15195,"coverage":{"independentAssociations":"unestablished","originalAncestry":"unestablished","referenceLifetime":"unestablished"},"nativeSettlement":"unconfirmed"},"outcome":"observed","kind":"finished","requestId":"5f1164bb-f0a4-44c7-b5d9-88c39b3c1a56","elapsedMs":0.13929166743764654}
+    t =     0.34s Tear Down
+Test Case '-[NativeOwnerStudy testMetadataOnly]' passed (1.062 seconds).
+    t =      nans Suite Tear Down
+JEV_NATIVE_OWNER_CLASS_COMPLETED
+Test Suite 'NativeOwnerStudy' passed at 2026-10-07 12:04:40.618.
+	 Executed 1 test, with 0 failures (0 unexpected) in 1.062 (1.063) seconds
+Test Suite 'NativeOwnerStudy.xctest' passed at 2026-10-07 12:04:40.618.
+	 Executed 1 test, with 0 failures (0 unexpected) in 1.062 (1.064) seconds
+Test Suite 'Selected tests' passed at 2026-10-07 12:04:40.619.
+	 Executed 1 test, with 0 failures (0 unexpected) in 1.062 (1.065) seconds
+
+Test session results, code coverage, and logs:
+	/tmp/jev-native-owner-metadata-integrated-20261007/result.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started
