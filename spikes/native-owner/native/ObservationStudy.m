@@ -5,6 +5,12 @@ static const NSUInteger StringLimit = 1024;
 static const NSUInteger StreamLimit = 1024 * 1024;
 static const NSUInteger ParentLimit = 32;
 
+// C comparisons have integer type. Boxing them directly produces JSON 0/1.
+// Explicit literals keep every protocol boolean a CFBoolean on both targets.
+static NSNumber *WireBoolean(BOOL value) {
+  return value ? @YES : @NO;
+}
+
 static BOOL IntegerAtLeast(id value, long long minimum) {
   return [value isKindOfClass:NSNumber.class]
     && CFGetTypeID((__bridge CFTypeRef)value) != CFBooleanGetTypeID()
@@ -140,7 +146,7 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
     self.returnedCalls += 1;
     *failed = NO;
     if (strcmp(returnType, @encode(BOOL)) == 0) {
-      BOOL result = NO; [invocation getReturnValue:&result]; return @(result);
+      BOOL result = NO; [invocation getReturnValue:&result]; return WireBoolean(result);
     }
     __unsafe_unretained id result = nil;
     [invocation getReturnValue:&result];
@@ -181,7 +187,7 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
   if (item == nil || error != nil) {
     [self record:@"observation" operation:@"point" outcome:@"failed"
          details:@{@"phase": phase, @"source": @"accessibilityElementForElementAtPoint:error:",
-                   @"replyPresent": @(item != nil), @"errorPresent": @(error != nil),
+                   @"replyPresent": WireBoolean(item != nil), @"errorPresent": WireBoolean(error != nil),
                    @"reason": error ? @"native-error" : @"nil-reply"}];
     return nil;
   }
@@ -222,7 +228,7 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
   if (result == nil || error != nil) {
     [self record:@"observation" operation:@"snapshot" outcome:@"failed"
          details:@{@"reference": [self label:item], @"source": @"requestSnapshotForElement:attributes:parameters:error:",
-                   @"replyPresent": @(result != nil), @"errorPresent": @(error != nil),
+                   @"replyPresent": WireBoolean(result != nil), @"errorPresent": WireBoolean(error != nil),
                    @"reason": error ? @"native-error" : @"nil-reply"}];
     return nil;
   }
@@ -253,10 +259,10 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
   [self record:@"observation" operation:@"snapshot" outcome:@"observed"
        details:@{@"source": @"requestSnapshotForElement:attributes:parameters:error:",
                  @"requestedReference": [self label:item], @"returnedReference": [self label:nativeElement],
-                 @"sameLocalObject": @(nativeElement == item), @"route": route,
+                 @"sameLocalObject": WireBoolean(nativeElement == item), @"route": route,
                  @"elementGetter": @{@"source": @"accessibilityElement", @"reference": [self label:nativeElement]},
-                 @"rootGetter": @{@"source": @"_rootElementSnapshot", @"invoked": @(rootGetterInvoked),
-                                  @"replyPresent": @(rootGetterNonNil)}, @"snapshotClass": NSStringFromClass([result class])}];
+                 @"rootGetter": @{@"source": @"_rootElementSnapshot", @"invoked": WireBoolean(rootGetterInvoked),
+                                  @"replyPresent": WireBoolean(rootGetterNonNil)}, @"snapshotClass": NSStringFromClass([result class])}];
   return result;
 }
 
@@ -282,7 +288,7 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
     if (failed) return;
     [self record:@"observation" operation:@"parent" outcome:@"observed"
          details:@{@"source": @"parentAccessibilityElement", @"reference": [self label:item],
-                   @"parentPresent": @(parent != nil), @"parent": parent ? [self label:parent] : NSNull.null,
+                   @"parentPresent": WireBoolean(parent != nil), @"parent": parent ? [self label:parent] : NSNull.null,
                    @"edge": @(edges + 1), @"originalContainment": @"unestablished"}];
     item = parent;
   }
@@ -384,8 +390,8 @@ static BOOL IntegerAtLeast(id value, long long minimum) {
   }
   [self record:@"finished" operation:@"metadata" outcome:self.failed ? @"failed" : @"observed"
        details:@{@"plan": plan, @"runnerPID": @(pid), @"appElementQueries": @(self.queryCalls),
-                 @"localMethodsReturned": @(self.startedCalls == self.returnedCalls),
-                 @"localReferencesReleased": @(self.references.count == 0),
+                 @"localMethodsReturned": WireBoolean(self.startedCalls == self.returnedCalls),
+                 @"localReferencesReleased": WireBoolean(self.references.count == 0),
                  @"nativeSettlement": @"unconfirmed",
                  @"coverage": @{@"originalAncestry": @"unestablished", @"referenceLifetime": @"unestablished",
                                 @"independentAssociations": @"unestablished"}}];
