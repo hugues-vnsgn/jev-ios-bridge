@@ -1,0 +1,954 @@
+[
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/build-binding.json",
+    "archive": "metadata/build-binding.json",
+    "sourceSHA256": "ffe55d4df7055b4d77e268d60640923fd888af4b57a9923670b7f59432e63093",
+    "sourceBytes": 514,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/build-manifest.json",
+    "archive": "metadata/build-manifest.json",
+    "sourceSHA256": "53bbe39fa021d51a0fbf04f9561e48591686453ded2600cf1523f48fdaa528e4",
+    "sourceBytes": 6785,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/command-001.json",
+    "archive": "metadata/command-001.json",
+    "sourceSHA256": "1dd6a1c0c52c663fd5365c07d1af20d55cc54c3232303aa54aa4024c3a179c7f",
+    "sourceBytes": 15191,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/command-002.json",
+    "archive": "metadata/command-002.json",
+    "sourceSHA256": "2aa4f4a41aa452a75a4526e9aa1235bf8f7e72069a18a3c5a2520bd494377990",
+    "sourceBytes": 639,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/command-003.json",
+    "archive": "metadata/command-003.json",
+    "sourceSHA256": "883b3de761ee793d86f460ec23defed64e738796e8cb381b4fdf09094b293cf7",
+    "sourceBytes": 1275,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/command-004.json",
+    "archive": "metadata/command-004.json",
+    "sourceSHA256": "bbe1f7952371c03b530bd90f1c8fc050b29aafdc7c40bef8c2d035ed6c8a7ce4",
+    "sourceBytes": 15189,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/command-005.json",
+    "archive": "metadata/command-005.json",
+    "sourceSHA256": "d50832e637fb657e119fd27aeb924cc516bd867d48b3168d85947de68d626485",
+    "sourceBytes": 910,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/command-006.json",
+    "archive": "metadata/command-006.json",
+    "sourceSHA256": "e41313b8eb2f4402c6f1d62f6a537e72c73c62154ec064b7fa37b78aa82596ca",
+    "sourceBytes": 908,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/command-007.json",
+    "archive": "metadata/command-007.json",
+    "sourceSHA256": "576b61df8cc56365928ee160666c26f35164f0bbc52c6daf9c27690bc3eb7f20",
+    "sourceBytes": 6375,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/command-008.json",
+    "archive": "metadata/command-008.json",
+    "sourceSHA256": "6fa4b98a60a132b17954bb16b08d54eb5cb3e724a3a7d4b87d622b65ebb02f50",
+    "sourceBytes": 639,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/command-009.json",
+    "archive": "metadata/command-009.json",
+    "sourceSHA256": "84de43e4efea22052c504d98ba3aae0a1d8014aeb093de903540af3e1f9afd7f",
+    "sourceBytes": 925,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/command-010.json",
+    "archive": "metadata/command-010.json",
+    "sourceSHA256": "371dca17e0662cd2ed85ee4683f634079e1c12d7b2588abbf4e75261f5d9b6d4",
+    "sourceBytes": 710,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/command-011.json",
+    "archive": "metadata/command-011.json",
+    "sourceSHA256": "92c049e9ee2231b89971b100cd6346d3c2ee19663b0f58b5275db1cfceef39e1",
+    "sourceBytes": 911,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/command-012.json",
+    "archive": "metadata/command-012.json",
+    "sourceSHA256": "f577d77be163beacee86cede3f93ac4fc89e3b5235b1bc74b1a85a05ee12c69c",
+    "sourceBytes": 644,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/command-013.json",
+    "archive": "metadata/command-013.json",
+    "sourceSHA256": "e252f69ab4c11c9a76ba01d1a31a156f5ec43a2dae46d69df8e3992d68c6b550",
+    "sourceBytes": 15192,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/derived-plan.json",
+    "archive": "metadata/derived-plan.json",
+    "sourceSHA256": "ff0888d1980644d83533806667141b8a1df193bf353f6224e9e193549dea3310",
+    "sourceBytes": 478,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/device-guard-intent.json",
+    "archive": "metadata/device-guard-intent.json",
+    "sourceSHA256": "9ec24b1ed8b242760a9411e5574618ca3523cfa9413062b1b12b0e64a9699b6f",
+    "sourceBytes": 528,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/final-inventory.json",
+    "archive": "metadata/final-inventory.json",
+    "sourceSHA256": "8eccb153749bfaaacc5a503798216098acdcf819be97897c2e80c7af6bcd5787",
+    "sourceBytes": 12753,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/initial-inventory.json",
+    "archive": "metadata/initial-inventory.json",
+    "sourceSHA256": "de2e4e67d5a8685c14c1703c7674411dc708bee23507b0c9728ecfca6617cacd",
+    "sourceBytes": 12753,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/observations.json",
+    "archive": "metadata/observations.json",
+    "sourceSHA256": "ca7a61c0562a7d0a6561fe75198c56e2a6828736298a89863efcb5c8509889a1",
+    "sourceBytes": 3280,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/owned.xctestrun",
+    "archive": "metadata/owned.xctestrun.gz",
+    "sourceSHA256": "c9fec060853f3073dae6c01cfffb091d1c2f5122e88f301336c31b4773abe216",
+    "sourceBytes": 4327,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/ownership.json",
+    "archive": "metadata/ownership.json",
+    "sourceSHA256": "1a5f471affdccadb71cdd219ffae7b46d156c992482e8560bac1141997a21b4f",
+    "sourceBytes": 11324,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/001-stderr.log",
+    "archive": "metadata/process-output/001-stderr.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/001-stdout.log",
+    "archive": "metadata/process-output/001-stdout.log.gz",
+    "sourceSHA256": "2e8f1afac33293397bfb8b7a85077e5cb1f06d5692c5aa5857191be064db2fc0",
+    "sourceBytes": 13279,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/002-stderr.log",
+    "archive": "metadata/process-output/002-stderr.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/002-stdout.log",
+    "archive": "metadata/process-output/002-stdout.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/003-stderr.log",
+    "archive": "metadata/process-output/003-stderr.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/003-stdout.log",
+    "archive": "metadata/process-output/003-stdout.log.gz",
+    "sourceSHA256": "985867df2ee0b07eef0a488d9080e79e8045ca9535ab1064b1e3b25392cc46ee",
+    "sourceBytes": 593,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/004-stderr.log",
+    "archive": "metadata/process-output/004-stderr.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/004-stdout.log",
+    "archive": "metadata/process-output/004-stdout.log.gz",
+    "sourceSHA256": "a104f407c4c8f1daa67b53366811163e2d87e4ef4821fda43ff6ffab2f40ac61",
+    "sourceBytes": 13277,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/005-stderr.log",
+    "archive": "metadata/process-output/005-stderr.log.gz",
+    "sourceSHA256": "eff64c578677a922269a71122a28c8c3b6bd9bdfa33f2ee67bf4aef68a42d1db",
+    "sourceBytes": 176,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/005-stdout.log",
+    "archive": "metadata/process-output/005-stdout.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/006-stderr.log",
+    "archive": "metadata/process-output/006-stderr.log.gz",
+    "sourceSHA256": "eff64c578677a922269a71122a28c8c3b6bd9bdfa33f2ee67bf4aef68a42d1db",
+    "sourceBytes": 176,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/006-stdout.log",
+    "archive": "metadata/process-output/006-stdout.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/007-stderr.log",
+    "archive": "metadata/process-output/007-stderr.log.gz",
+    "sourceSHA256": "b21232fb9f1f4ebbbdb664ad668ae6133eabfba042b96cf60335c666818bb784",
+    "sourceBytes": 368,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/007-stdout.log",
+    "archive": "metadata/process-output/007-stdout.log.gz",
+    "sourceSHA256": "c229ef716357487c39dfe8a12f50514b8466505ffdb087c1fe8bc1fdb6cba178",
+    "sourceBytes": 4624,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/008-stderr.log",
+    "archive": "metadata/process-output/008-stderr.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/008-stdout.log",
+    "archive": "metadata/process-output/008-stdout.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/009-stderr.log",
+    "archive": "metadata/process-output/009-stderr.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/009-stdout.log",
+    "archive": "metadata/process-output/009-stdout.log.gz",
+    "sourceSHA256": "b126bc4178887fe984d792e35b18b34d7d62cf9f3eb751a0ef92f4dfce150f48",
+    "sourceBytes": 196,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/010-stderr.log",
+    "archive": "metadata/process-output/010-stderr.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/010-stdout.log",
+    "archive": "metadata/process-output/010-stdout.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/011-stderr.log",
+    "archive": "metadata/process-output/011-stderr.log.gz",
+    "sourceSHA256": "eff64c578677a922269a71122a28c8c3b6bd9bdfa33f2ee67bf4aef68a42d1db",
+    "sourceBytes": 176,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/011-stdout.log",
+    "archive": "metadata/process-output/011-stdout.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/012-stderr.log",
+    "archive": "metadata/process-output/012-stderr.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/012-stdout.log",
+    "archive": "metadata/process-output/012-stdout.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/013-stderr.log",
+    "archive": "metadata/process-output/013-stderr.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/013-stdout.log",
+    "archive": "metadata/process-output/013-stdout.log.gz",
+    "sourceSHA256": "9649784eefc4c49ff07bb3d65fdc4a9b994bd3782d334833474929f31f68433b",
+    "sourceBytes": 13279,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/result.json",
+    "archive": "metadata/result.json",
+    "sourceSHA256": "957075aced14eace62a8b27863d343eb7dce97ed5b998e054b9120401bb745e6",
+    "sourceBytes": 3785,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/runner-exit.json",
+    "archive": "metadata/runner-exit.json",
+    "sourceSHA256": "1b64568b50e806afbaa36125a90469f92d7e21c3e88746cbad94f9b44c9a8f7c",
+    "sourceBytes": 108,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study/verified-build-binding.json",
+    "archive": "metadata/verified-build-binding.json",
+    "sourceSHA256": "994463cb88b69f96a81de99ad7f67b421253754c0c82996abc6526d930185d31",
+    "sourceBytes": 5882,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-build-receipts-b2/binding.json",
+    "archive": "build-metadata/binding.json",
+    "sourceSHA256": "994463cb88b69f96a81de99ad7f67b421253754c0c82996abc6526d930185d31",
+    "sourceBytes": 5882,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-build-receipts-b2/build.log",
+    "archive": "build-metadata/build.log.gz",
+    "sourceSHA256": "fe84762986f12ce8d8f5bd548d38da8088513808c321f5d4d85a7cdb1eb6fb8c",
+    "sourceBytes": 165488,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-build-receipts-b2/project.log",
+    "archive": "build-metadata/project.log.gz",
+    "sourceSHA256": "a2965da73ee4d7f83136a84d3c9a6d6188b2efdf5b9bfa739d646018199d8855",
+    "sourceBytes": 252,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-build-receipts/binding.json",
+    "archive": "build-reference/binding.json",
+    "sourceSHA256": "be2352c67519e200a7d92fdd8c2f8f87e205d5ab6ce06c99de587cfa9da90444",
+    "sourceBytes": 5909,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-build-receipts/build.log",
+    "archive": "build-reference/build.log.gz",
+    "sourceSHA256": "a2db318e2f00f24664c5df39cb5175fcb6b492d86678ae46305b8a5efe4ad6fd",
+    "sourceBytes": 164384,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-build-receipts/project.log",
+    "archive": "build-reference/project.log.gz",
+    "sourceSHA256": "a2965da73ee4d7f83136a84d3c9a6d6188b2efdf5b9bfa739d646018199d8855",
+    "sourceBytes": 252,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-build-receipts/project.log",
+    "archive": "build-metadata-failed/project.log.gz",
+    "sourceSHA256": "83e72d267291d32a699df7d38854e057562d7a751218a2ddd057fda494c229f2",
+    "sourceBytes": 90,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-profile-build-verification-20261007.json",
+    "archive": "verification/jev-native-profile-build-verification-20261007.json",
+    "sourceSHA256": "3765dd736f5621de239437644e9e9adab13114d7a25e2d81cb4ffa9a9c4d1dc0",
+    "sourceBytes": 586,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-study-prior-evidence-baseline-20261007.json",
+    "archive": "verification/jev-native-study-prior-evidence-baseline-20261007.json",
+    "sourceSHA256": "dc3ee811ec4b949f4832bee2e7944b6950542ae2f91344fd972c644e422b4d4f",
+    "sourceBytes": 983,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study-verification.json",
+    "archive": "verification/jev-native-metadata-profile-20261007-study-verification.json",
+    "sourceSHA256": "3426d68d7f18990b637ddbf023f80d7019a7840bf24c08ee2e1ff063bf2c7e3f",
+    "sourceBytes": 573,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-build-cli.log",
+    "archive": "cli/jev-native-metadata-profile-20261007-build-cli.log.gz",
+    "sourceSHA256": "08af02bd7fe439fd8b91c09bcb98c60d64a71a7a41ab61be1bf8fe631525752d",
+    "sourceBytes": 1169,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-build-cli-b2.log",
+    "archive": "cli/jev-native-metadata-profile-20261007-build-cli-b2.log.gz",
+    "sourceSHA256": "116e58f9fa57b1ad2fbf2d9eb9424a7548ea468e552c73db5991bcf791aa12e6",
+    "sourceBytes": 343,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-build-cli.log",
+    "archive": "cli/jev-native-reference-profile-20261007-build-cli.log.gz",
+    "sourceSHA256": "c5c92769011b3b53f9b0abcacb416085cd22ef7befc51dc5ac7bb3efac4fb2f0",
+    "sourceBytes": 344,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-metadata-profile-20261007-study-cli.log",
+    "archive": "cli/jev-native-metadata-profile-20261007-study-cli.log.gz",
+    "sourceSHA256": "bd560ded94a9a46243dea3c9999c65305a807346abdddb91b1e12b97d5f69505",
+    "sourceBytes": 226,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-missing-binding-red.log",
+    "archive": "verification/jev-native-identities-missing-binding-red.log.gz",
+    "sourceSHA256": "3aa2d97ab4536645c138d3e04034f015fb11618474c825d307efa3c18790331e",
+    "sourceBytes": 1245,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-missing-binding-green.log",
+    "archive": "verification/jev-native-identities-missing-binding-green.log.gz",
+    "sourceSHA256": "ed8cb8ff3114664793a44cc7c6fd71ecb11394042190a22620b203ddf487d868",
+    "sourceBytes": 255,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-profile-red.log",
+    "archive": "verification/jev-native-identities-profile-red.log.gz",
+    "sourceSHA256": "e339c75ee2f4147bc327bcac77a04e4c1a332ee0d296759bc2412716b2dfa6e3",
+    "sourceBytes": 1487,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-profile-green.log",
+    "archive": "verification/jev-native-identities-profile-green.log.gz",
+    "sourceSHA256": "6f562ff001bd6324e9bb4a7cd05a415d72b5cb976d2514ce2f543528e3f69bc9",
+    "sourceBytes": 448,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-runtime-red.log",
+    "archive": "verification/jev-native-identities-runtime-red.log.gz",
+    "sourceSHA256": "f1017bbd237b82f366ec5d92e18c97da2f66305b51b1bbade6ff432e297918ed",
+    "sourceBytes": 2529,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-runtime-green.log",
+    "archive": "verification/jev-native-identities-runtime-green.log.gz",
+    "sourceSHA256": "4825d5d7da12e523f7ab6dd7cb652640dab3bfe86dfb58b1d946cbcdf486b8b9",
+    "sourceBytes": 618,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-builder-red.log",
+    "archive": "verification/jev-native-identities-builder-red.log.gz",
+    "sourceSHA256": "bf9564de398ac5974c25272c23246df680ed35bcd6cdda553a382491cdcaeabf",
+    "sourceBytes": 1123,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-builder-green.log",
+    "archive": "verification/jev-native-identities-builder-green.log.gz",
+    "sourceSHA256": "df87cd27bc66dc5f30726cfe276ce372431940d88d6a268d0c3008af338f6e25",
+    "sourceBytes": 265,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-nested-input-red.log",
+    "archive": "verification/jev-native-identities-nested-input-red.log.gz",
+    "sourceSHA256": "09e3304b83bd542c1ab78037e9e7b3da61103c5b8057a60a54efd3b4b5ed0e23",
+    "sourceBytes": 1570,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-nested-input-green.log",
+    "archive": "verification/jev-native-identities-nested-input-green.log.gz",
+    "sourceSHA256": "c58453f63aac429350e7a4fd8f0f13bc39ab3b65807e80e06116cbd1fa4f3e48",
+    "sourceBytes": 802,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-native-policy-red.log",
+    "archive": "verification/jev-native-identities-native-policy-red.log.gz",
+    "sourceSHA256": "4bec91d674f178a96657e35f9a48ac73a3247ee10220c1c8f1cbb3e43541146c",
+    "sourceBytes": 64735,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-native-policy-green.log",
+    "archive": "verification/jev-native-identities-native-policy-green.log.gz",
+    "sourceSHA256": "25898178bc0c5950a6825064c75699f6281ca80fc3a2a08f682ccbbd13d80bc0",
+    "sourceBytes": 63263,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-recreation-identity-red.log",
+    "archive": "verification/jev-native-identities-recreation-identity-red.log.gz",
+    "sourceSHA256": "56aa96754c1bcd0c132fed9e42637604777792d310f69b05dd108b2c3e2c0e0c",
+    "sourceBytes": 2072,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-recreation-identity-green.log",
+    "archive": "verification/jev-native-identities-recreation-identity-green.log.gz",
+    "sourceSHA256": "e111329409ff9398d5d4dc06197c8eada72c6babd76300b363f5f62a564e92f9",
+    "sourceBytes": 972,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-nested-resource-red.log",
+    "archive": "verification/jev-native-identities-nested-resource-red.log.gz",
+    "sourceSHA256": "9902eb5d9b92002baebe44f77193beaec02ee9d50b1f7b55bc6b0431793f75a6",
+    "sourceBytes": 3017,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-nested-resource-green.log",
+    "archive": "verification/jev-native-identities-nested-resource-green.log.gz",
+    "sourceSHA256": "ff2fac6779327effbe6775cadc4f8fd811216c3df30d551ad9fc09841bca48c3",
+    "sourceBytes": 2027,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-builder-user-red.log",
+    "archive": "verification/jev-native-identities-builder-user-red.log.gz",
+    "sourceSHA256": "f95fe5ac8990c0549963475801a4942966cc5844ec854041280a387685b3ae55",
+    "sourceBytes": 2165,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-builder-user-green.log",
+    "archive": "verification/jev-native-identities-builder-user-green.log.gz",
+    "sourceSHA256": "c4ea71d1032e494eeb23e992c7dc17cbe111d13172a9b47a8bc67082bf94db9a",
+    "sourceBytes": 644,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-cli-binding-symlink-red.log",
+    "archive": "verification/jev-native-identities-cli-binding-symlink-red.log.gz",
+    "sourceSHA256": "8578d402e3646a85194c15abda006e7d7935488058230f4e18df0bf2c28a88c0",
+    "sourceBytes": 1143,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-cli-binding-symlink-green.log",
+    "archive": "verification/jev-native-identities-cli-binding-symlink-green.log.gz",
+    "sourceSHA256": "595757d0db21fe73f797e350a38c1438a484ef590e83b3fbf086c79e668cab12",
+    "sourceBytes": 988,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-2c93a85-host.log",
+    "archive": "verification/jev-native-identities-2c93a85-host.log.gz",
+    "sourceSHA256": "f4a3ce5db55ab5d33717414aef5cfcff64fdf92d8a4b590b0885314d383c58e3",
+    "sourceBytes": 18218,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-2c93a85-probe.log",
+    "archive": "verification/jev-native-identities-2c93a85-probe.log.gz",
+    "sourceSHA256": "6f2f2537c2561de5a421ee71760421d43a448c0bc29467d0a84a9a21e1b5f106",
+    "sourceBytes": 402,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-identities-1997e3d-native-policy.log",
+    "archive": "verification/jev-native-identities-1997e3d-native-policy.log.gz",
+    "sourceSHA256": "f7ad97dd0196e18f03dfcc3429ae1ade47a7ae8958305fc74bbf370ce52ce30c",
+    "sourceBytes": 9653,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/build-binding.json",
+    "archive": "reference/build-binding.json",
+    "sourceSHA256": "4fbae8bbdba855a1ad5f03b345eb436a15f7feeac1c4cd12ce3efd734405347e",
+    "sourceBytes": 522,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/build-manifest.json",
+    "archive": "reference/build-manifest.json",
+    "sourceSHA256": "5af7321465169dcdd66f7aa3dfe2cfa591d3c9a129535b8708eb106ebc7e1a43",
+    "sourceBytes": 6763,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/command-001.json",
+    "archive": "reference/command-001.json",
+    "sourceSHA256": "ec735464b5ea99c12647f91e78e1f0a63ca6d55e7005c994079d34007af7aa0a",
+    "sourceBytes": 15193,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/command-002.json",
+    "archive": "reference/command-002.json",
+    "sourceSHA256": "2e6e8eefd699368e5b4434330cdce98808fe102306b9e377fa30e5c883123a65",
+    "sourceBytes": 641,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/command-003.json",
+    "archive": "reference/command-003.json",
+    "sourceSHA256": "44cf43106fbd39dff7dada2079bfb4fa1f3d17159382264bb9f3461897a16c71",
+    "sourceBytes": 1565,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/command-004.json",
+    "archive": "reference/command-004.json",
+    "sourceSHA256": "2351a33970205e77ef708a8ce2a3bcf3fc37126ca207703ccb93f7ce4d94a59a",
+    "sourceBytes": 15191,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/command-005.json",
+    "archive": "reference/command-005.json",
+    "sourceSHA256": "1b59ea17ffd4774fa4a9f2222f95f2d818a50268f4786ab1a69e80b86f6c8100",
+    "sourceBytes": 913,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/command-006.json",
+    "archive": "reference/command-006.json",
+    "sourceSHA256": "78bdecbf9c6c4b995237d8bf9b9777dcc3450f55f155554ce4da3c8e6a6507a8",
+    "sourceBytes": 911,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/command-007.json",
+    "archive": "reference/command-007.json",
+    "sourceSHA256": "014da51c0831df74accdea1fca922d59e61051166bb6dc058d92f4472c735720",
+    "sourceBytes": 768,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/command-008.json",
+    "archive": "reference/command-008.json",
+    "sourceSHA256": "3e2b088674ece346b31d0db9ee092d07c9d0a1da63b3370c94608b5fb78ec939",
+    "sourceBytes": 919,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/command-009.json",
+    "archive": "reference/command-009.json",
+    "sourceSHA256": "dc323bc2741474cdf883a8e6f82d8cefa49a97f630c771fc472ae915ee3573f6",
+    "sourceBytes": 895,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/command-010.json",
+    "archive": "reference/command-010.json",
+    "sourceSHA256": "fed1a17bcdcf936c396650734e907e3f264dce18f25ecb305233165c814e292b",
+    "sourceBytes": 770,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/command-011.json",
+    "archive": "reference/command-011.json",
+    "sourceSHA256": "ab67e607cb37cfd9b7c4f282edb2612e16d8e194e10515b7fac02052c2dc352f",
+    "sourceBytes": 8138,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/derived-plan.json",
+    "archive": "reference/derived-plan.json",
+    "sourceSHA256": "85e31bd29b0e0af2a92b2f4561ac890c70b9777a794ed0065c9b261a6227eb06",
+    "sourceBytes": 708,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/device-guard-intent.json",
+    "archive": "reference/device-guard-intent.json",
+    "sourceSHA256": "fad92dbeb83ea60d9a8dd7d1c3daa4230d50999572c00e57d4f27f47984ae051",
+    "sourceBytes": 529,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/fixture-ready.json",
+    "archive": "reference/fixture-ready.json",
+    "sourceSHA256": "4a5ae8c4220cbcbef10e148690be0a3df641fe3dd147a1ab8361c85855893310",
+    "sourceBytes": 136,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/initial-inventory.json",
+    "archive": "reference/initial-inventory.json",
+    "sourceSHA256": "690351b1c2017b403d4adde26b7b407b2a081bb73c5a9b176f5ae97cfe9bc993",
+    "sourceBytes": 12753,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/observations.json",
+    "archive": "reference/observations.json",
+    "sourceSHA256": "93e49ea247edfdc89ede7e1e6ffdd72fce67b25885d9624a5258db33c24fecf1",
+    "sourceBytes": 4879,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/owned.xctestrun",
+    "archive": "reference/owned.xctestrun.gz",
+    "sourceSHA256": "f1069e1358f57a0664c58640ade5d18348c1abef9f8d33e9c632a7a3509aa3e1",
+    "sourceBytes": 5804,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/ownership.json",
+    "archive": "reference/ownership.json",
+    "sourceSHA256": "158a4737fdf5a700dd2ca7baed642e87c21e0b93765bf027b16d957d2ee4caaa",
+    "sourceBytes": 10881,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/001-stderr.log",
+    "archive": "reference/process-output/001-stderr.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/001-stdout.log",
+    "archive": "reference/process-output/001-stdout.log.gz",
+    "sourceSHA256": "33ae9666d7435353d738228e39c9d2e9242910034783cfd8e61c854bdb29321e",
+    "sourceBytes": 13279,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/002-stderr.log",
+    "archive": "reference/process-output/002-stderr.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/002-stdout.log",
+    "archive": "reference/process-output/002-stdout.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/003-stderr.log",
+    "archive": "reference/process-output/003-stderr.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/003-stdout.log",
+    "archive": "reference/process-output/003-stdout.log.gz",
+    "sourceSHA256": "503b0fb62decb8de484fce3a32308492af1676a1a1a8062ee8f69749797cda1a",
+    "sourceBytes": 869,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/004-stderr.log",
+    "archive": "reference/process-output/004-stderr.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/004-stdout.log",
+    "archive": "reference/process-output/004-stdout.log.gz",
+    "sourceSHA256": "5121632818e1bba8c497ef1a2c7c1225a4ac71711bbc8629fd2229676d16f733",
+    "sourceBytes": 13277,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/005-stderr.log",
+    "archive": "reference/process-output/005-stderr.log.gz",
+    "sourceSHA256": "eff64c578677a922269a71122a28c8c3b6bd9bdfa33f2ee67bf4aef68a42d1db",
+    "sourceBytes": 176,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/005-stdout.log",
+    "archive": "reference/process-output/005-stdout.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/006-stderr.log",
+    "archive": "reference/process-output/006-stderr.log.gz",
+    "sourceSHA256": "eff64c578677a922269a71122a28c8c3b6bd9bdfa33f2ee67bf4aef68a42d1db",
+    "sourceBytes": 176,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/006-stdout.log",
+    "archive": "reference/process-output/006-stdout.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/007-stderr.log",
+    "archive": "reference/process-output/007-stderr.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/007-stdout.log",
+    "archive": "reference/process-output/007-stdout.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/008-stderr.log",
+    "archive": "reference/process-output/008-stderr.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/008-stdout.log",
+    "archive": "reference/process-output/008-stdout.log.gz",
+    "sourceSHA256": "9f8334ff9066fd10627acf8d9392c074218b79798a70e6c47a57674bae18eb84",
+    "sourceBytes": 191,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/009-stderr.log",
+    "archive": "reference/process-output/009-stderr.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/009-stdout.log",
+    "archive": "reference/process-output/009-stdout.log.gz",
+    "sourceSHA256": "66752268c5c5419bf0d2b5d1c09853c825651ba4ec968b5060e3647652d3d08e",
+    "sourceBytes": 166,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/010-stderr.log",
+    "archive": "reference/process-output/010-stderr.log.gz",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/010-stdout.log",
+    "archive": "reference/process-output/010-stdout.log.gz",
+    "sourceSHA256": "e0f096554db65917312c121dc2339577f3e9cd89f62871ed358a49e6c45537b2",
+    "sourceBytes": 63,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/011-stderr.log",
+    "archive": "reference/process-output/011-stderr.log.gz",
+    "sourceSHA256": "bbce3fed8eee86fb185236c4459a8a18379cee41f2de4c708fdac3c07b1d9c8b",
+    "sourceBytes": 362,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/011-stdout.log",
+    "archive": "reference/process-output/011-stdout.log.gz",
+    "sourceSHA256": "1add9b11a56cd65354f5af0ee89e39dfd33f002bf735a052be6790643f8ba6f9",
+    "sourceBytes": 6229,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/result.json",
+    "archive": "reference/result.json",
+    "sourceSHA256": "66e57a1fd3283d86a119b4369dc2faa92d50fa198a7483430a2d7a0efcea6078",
+    "sourceBytes": 7069,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/stop-admission",
+    "archive": "reference/stop-admission",
+    "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceBytes": 0,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study/verified-build-binding.json",
+    "archive": "reference/verified-build-binding.json",
+    "sourceSHA256": "be2352c67519e200a7d92fdd8c2f8f87e205d5ab6ce06c99de587cfa9da90444",
+    "sourceBytes": 5909,
+    "compressed": false
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study-cli.log",
+    "archive": "cli/jev-native-reference-profile-20261007-study-cli.log.gz",
+    "sourceSHA256": "6cb24a9f31056094289c04c28a633d3e87280fad32f4b1b388f5e68fbb3f7fc7",
+    "sourceBytes": 1791,
+    "compressed": true
+  },
+  {
+    "source": "/private/tmp/jev-native-reference-profile-20261007-study-verification.json",
+    "archive": "verification/jev-native-reference-profile-20261007-study-verification.json",
+    "sourceSHA256": "d23f1db84ba7c3dc176ba6a0ed386f8c2a2f5e9896ada30a6084a3f49c186216",
+    "sourceBytes": 2433,
+    "compressed": false
+  },
+  {
+    "source": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-ios-bridge-device-locks/0E42FDE2-5E09-42D3-9876-9EF0037FCBE7.lock",
+    "archive": "reference/device-guard-retained.json",
+    "sourceSHA256": "3cb33271d9e212b1d64f12f46f38b1668c7cbad4562ecdfc433a17fed02c79a2",
+    "sourceBytes": 372,
+    "compressed": false
+  }
+]

@@ -1,0 +1,343 @@
+{
+  "requestId": "3ccf501b-f50f-419d-a805-d5948bfdb20d",
+  "plan": "reference-study",
+  "deviceId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+  "commands": [
+    {
+      "index": 1,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "list",
+        "devices",
+        "--json"
+      ],
+      "state": "exited",
+      "pid": 98956,
+      "ownedProcessGroup": 98956,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/001-stdout.log",
+        "stderr": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/001-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 2,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "boot",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+      ],
+      "state": "exited",
+      "pid": 98966,
+      "ownedProcessGroup": 98966,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/002-stdout.log",
+        "stderr": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/002-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 3,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "bootstatus",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "-b"
+      ],
+      "state": "exited",
+      "pid": 99166,
+      "ownedProcessGroup": 99166,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/003-stdout.log",
+        "stderr": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/003-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 4,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "list",
+        "devices",
+        "--json"
+      ],
+      "state": "exited",
+      "pid": 99696,
+      "ownedProcessGroup": 99696,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/004-stdout.log",
+        "stderr": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/004-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 5,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "get_app_container",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "dev.jev.research.native-owner-20261007-reference.xctrunner",
+        "app"
+      ],
+      "state": "exited",
+      "pid": 99709,
+      "ownedProcessGroup": 99709,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/005-stdout.log",
+        "stderr": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/005-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 2,
+      "returncode": 2
+    },
+    {
+      "index": 6,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "get_app_container",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "dev.jev.research.native-owner-20261007-reference-fixture",
+        "app"
+      ],
+      "state": "exited",
+      "pid": 99731,
+      "ownedProcessGroup": 99731,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/006-stdout.log",
+        "stderr": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/006-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 2,
+      "returncode": 2
+    },
+    {
+      "index": 7,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "install",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "/private/tmp/jev-native-reference-profile-20261007-build/Build/Products/Debug-iphonesimulator/NativeOwnerFixture.app"
+      ],
+      "state": "exited",
+      "pid": 99868,
+      "ownedProcessGroup": 99868,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/007-stdout.log",
+        "stderr": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/007-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 8,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "get_app_container",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "dev.jev.research.native-owner-20261007-reference-fixture",
+        "app"
+      ],
+      "state": "exited",
+      "pid": 2898,
+      "ownedProcessGroup": 2898,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/008-stdout.log",
+        "stderr": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/008-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 9,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "get_app_container",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "dev.jev.research.native-owner-20261007-reference-fixture",
+        "data"
+      ],
+      "state": "exited",
+      "pid": 2969,
+      "ownedProcessGroup": 2969,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/009-stdout.log",
+        "stderr": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/009-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 10,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "launch",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "dev.jev.research.native-owner-20261007-reference-fixture"
+      ],
+      "state": "exited",
+      "pid": 2991,
+      "ownedProcessGroup": 2991,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/010-stdout.log",
+        "stderr": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/010-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 11,
+      "argv": [
+        "xcodebuild",
+        "test-without-building",
+        "-xctestrun",
+        "/private/tmp/jev-native-reference-profile-20261007-study/owned.xctestrun",
+        "-destination",
+        "id=0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "-parallel-testing-enabled",
+        "NO",
+        "-maximum-concurrent-test-simulator-destinations",
+        "1",
+        "-only-testing:NativeOwnerStudy/NativeOwnerStudy/testReferenceStudy",
+        "-resultBundlePath",
+        "/private/tmp/jev-native-reference-profile-20261007-study/result.xcresult"
+      ],
+      "state": "exited",
+      "pid": 3087,
+      "ownedProcessGroup": 3087,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/011-stdout.log",
+        "stderr": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/011-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    }
+  ],
+  "resources": [
+    {
+      "kind": "device",
+      "deviceId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+      "initialState": "Shutdown"
+    },
+    {
+      "kind": "fixture",
+      "bundleId": "dev.jev.research.native-owner-20261007-reference-fixture",
+      "state": "launched",
+      "pid": 3044,
+      "dataContainer": "/Users/hugues_mini/Library/Developer/CoreSimulator/Devices/0E42FDE2-5E09-42D3-9876-9EF0037FCBE7/data/Containers/Data/Application/B04690A9-07BC-4521-B233-D1567571F949"
+    },
+    {
+      "kind": "runner-installation",
+      "bundleId": "dev.jev.research.native-owner-20261007-reference.xctrunner",
+      "state": "testing-pending"
+    },
+    {
+      "kind": "runner",
+      "bundleId": "dev.jev.research.native-owner-20261007-reference.xctrunner",
+      "pid": 3748,
+      "state": "native-started"
+    }
+  ],
+  "deviceGuard": {
+    "kind": "device-guard",
+    "path": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-ios-bridge-device-locks/0E42FDE2-5E09-42D3-9876-9EF0037FCBE7.lock",
+    "record": {
+      "schema": "jev.native-owner.device-guard/1",
+      "pid": null,
+      "hostPID": 98927,
+      "token": "e35d56ce-fd36-4391-bb5c-b389588a9692",
+      "deviceId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+      "runId": "3ccf501b-f50f-419d-a805-d5948bfdb20d",
+      "createdAt": "2026-10-07T09:06:35.055474+00:00",
+      "evidenceDirectory": "/private/tmp/jev-native-reference-profile-20261007-study",
+      "kind": "native-owner-research"
+    },
+    "created": true,
+    "released": false,
+    "uncertainty": null
+  },
+  "studyIdentity": {
+    "plugin": "dev.jev.research.native-owner-20261007-reference",
+    "runner": "dev.jev.research.native-owner-20261007-reference.xctrunner",
+    "fixture": "dev.jev.research.native-owner-20261007-reference-fixture"
+  },
+  "buildBindingSHA256": "be2352c67519e200a7d92fdd8c2f8f87e205d5ab6ce06c99de587cfa9da90444",
+  "nativeSettlement": "unconfirmed"
+}

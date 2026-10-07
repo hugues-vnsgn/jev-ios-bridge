@@ -1,0 +1,26 @@
+{
+  "index": 12,
+  "argv": [
+    "xcrun",
+    "simctl",
+    "shutdown",
+    "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+  ],
+  "state": "exited",
+  "pid": 92639,
+  "ownedProcessGroup": 92639,
+  "captureFiles": {
+    "stdout": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/012-stdout.log",
+    "stderr": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/012-stderr.log"
+  },
+  "processObservation": {
+    "outcome": "completed",
+    "reason": "PROCESS_COMPLETED",
+    "ownedGroupAbsent": true,
+    "streamsClosed": true
+  },
+  "parentReturncode": 0,
+  "returncode": 0,
+  "stdout": "",
+  "stderr": ""
+}

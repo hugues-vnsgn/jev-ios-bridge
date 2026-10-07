@@ -1,0 +1,370 @@
+{
+  "requestId": "3472f13c-1700-4651-afd3-ca3205bd5ba2",
+  "plan": "metadata",
+  "deviceId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+  "commands": [
+    {
+      "index": 1,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "list",
+        "devices",
+        "--json"
+      ],
+      "state": "exited",
+      "pid": 89821,
+      "ownedProcessGroup": 89821,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/001-stdout.log",
+        "stderr": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/001-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 2,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "boot",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+      ],
+      "state": "exited",
+      "pid": 89846,
+      "ownedProcessGroup": 89846,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/002-stdout.log",
+        "stderr": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/002-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 3,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "bootstatus",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "-b"
+      ],
+      "state": "exited",
+      "pid": 89933,
+      "ownedProcessGroup": 89933,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/003-stdout.log",
+        "stderr": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/003-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 4,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "list",
+        "devices",
+        "--json"
+      ],
+      "state": "exited",
+      "pid": 90378,
+      "ownedProcessGroup": 90378,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/004-stdout.log",
+        "stderr": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/004-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 5,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "get_app_container",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "dev.jev.research.native-owner-20261007-metadata.xctrunner",
+        "app"
+      ],
+      "state": "exited",
+      "pid": 90393,
+      "ownedProcessGroup": 90393,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/005-stdout.log",
+        "stderr": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/005-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 2,
+      "returncode": 2
+    },
+    {
+      "index": 6,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "get_app_container",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "dev.jev.research.native-owner-20261007-metadata-fixture",
+        "app"
+      ],
+      "state": "exited",
+      "pid": 90464,
+      "ownedProcessGroup": 90464,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/006-stdout.log",
+        "stderr": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/006-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 2,
+      "returncode": 2
+    },
+    {
+      "index": 7,
+      "argv": [
+        "xcodebuild",
+        "test-without-building",
+        "-xctestrun",
+        "/private/tmp/jev-native-metadata-profile-20261007-study/owned.xctestrun",
+        "-destination",
+        "id=0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "-parallel-testing-enabled",
+        "NO",
+        "-maximum-concurrent-test-simulator-destinations",
+        "1",
+        "-only-testing:NativeOwnerStudy/NativeOwnerStudy/testMetadataOnly",
+        "-resultBundlePath",
+        "/private/tmp/jev-native-metadata-profile-20261007-study/result.xcresult"
+      ],
+      "state": "exited",
+      "pid": 90522,
+      "ownedProcessGroup": 90522,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/007-stdout.log",
+        "stderr": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/007-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 8,
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "92204",
+        "-o",
+        "pid=",
+        "-o",
+        "comm="
+      ],
+      "state": "exited",
+      "pid": 92465,
+      "ownedProcessGroup": 92465,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/008-stdout.log",
+        "stderr": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/008-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 1,
+      "returncode": 1
+    },
+    {
+      "index": 9,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "get_app_container",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "dev.jev.research.native-owner-20261007-metadata.xctrunner",
+        "app"
+      ],
+      "state": "exited",
+      "pid": 92467,
+      "ownedProcessGroup": 92467,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/009-stdout.log",
+        "stderr": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/009-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 10,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "uninstall",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "dev.jev.research.native-owner-20261007-metadata.xctrunner"
+      ],
+      "state": "exited",
+      "pid": 92496,
+      "ownedProcessGroup": 92496,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/010-stdout.log",
+        "stderr": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/010-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 11,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "get_app_container",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "dev.jev.research.native-owner-20261007-metadata.xctrunner",
+        "app"
+      ],
+      "state": "exited",
+      "pid": 92506,
+      "ownedProcessGroup": 92506,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/011-stdout.log",
+        "stderr": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/011-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 2,
+      "returncode": 2
+    },
+    {
+      "index": 12,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "shutdown",
+        "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7"
+      ],
+      "state": "exited",
+      "pid": 92639,
+      "ownedProcessGroup": 92639,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/012-stdout.log",
+        "stderr": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/012-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    },
+    {
+      "index": 13,
+      "argv": [
+        "xcrun",
+        "simctl",
+        "list",
+        "devices",
+        "--json"
+      ],
+      "state": "exited",
+      "pid": 92840,
+      "ownedProcessGroup": 92840,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/013-stdout.log",
+        "stderr": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/013-stderr.log"
+      },
+      "processObservation": {
+        "outcome": "completed",
+        "reason": "PROCESS_COMPLETED",
+        "ownedGroupAbsent": true,
+        "streamsClosed": true
+      },
+      "parentReturncode": 0,
+      "returncode": 0
+    }
+  ],
+  "resources": [],
+  "deviceGuard": {
+    "kind": "device-guard",
+    "path": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-ios-bridge-device-locks/0E42FDE2-5E09-42D3-9876-9EF0037FCBE7.lock",
+    "record": {
+      "schema": "jev.native-owner.device-guard/1",
+      "pid": null,
+      "hostPID": 89792,
+      "token": "841b4d4f-9f85-4c8a-839c-ccec5b13b3fb",
+      "deviceId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+      "runId": "3472f13c-1700-4651-afd3-ca3205bd5ba2",
+      "createdAt": "2026-10-07T09:05:12.612115+00:00",
+      "evidenceDirectory": "/private/tmp/jev-native-metadata-profile-20261007-study",
+      "kind": "native-owner-research"
+    },
+    "created": true,
+    "released": true,
+    "uncertainty": null
+  },
+  "studyIdentity": {
+    "plugin": "dev.jev.research.native-owner-20261007-metadata",
+    "runner": "dev.jev.research.native-owner-20261007-metadata.xctrunner",
+    "fixture": "dev.jev.research.native-owner-20261007-metadata-fixture"
+  },
+  "buildBindingSHA256": "994463cb88b69f96a81de99ad7f67b421253754c0c82996abc6526d930185d31",
+  "nativeSettlement": "unconfirmed"
+}

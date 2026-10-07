@@ -1,0 +1,241 @@
+{
+  "status": "retained",
+  "reason": "NATIVE_SETTLEMENT_UNCONFIRMED",
+  "request_id": "3ccf501b-f50f-419d-a805-d5948bfdb20d",
+  "evidence_directory": "/private/tmp/jev-native-reference-profile-20261007-study",
+  "records": [
+    {
+      "schema": "jev.native-owner/1",
+      "inputCalls": 0,
+      "sequence": 0,
+      "operation": "metadata",
+      "details": {
+        "plan": "reference-study",
+        "runnerPID": 3748
+      },
+      "outcome": "observed",
+      "kind": "started",
+      "requestId": "3ccf501b-f50f-419d-a805-d5948bfdb20d",
+      "elapsedMs": 0.003625002136686817
+    },
+    {
+      "schema": "jev.native-owner/1",
+      "inputCalls": 0,
+      "sequence": 1,
+      "operation": "metadata",
+      "details": {
+        "studyIdentity": {
+          "runner": "dev.jev.research.native-owner-20261007-reference.xctrunner",
+          "fixture": "dev.jev.research.native-owner-20261007-reference-fixture",
+          "plan": "reference-study",
+          "plugin": "dev.jev.research.native-owner-20261007-reference"
+        }
+      },
+      "outcome": "observed",
+      "kind": "observation",
+      "requestId": "3ccf501b-f50f-419d-a805-d5948bfdb20d",
+      "elapsedMs": 0.06220833529368974
+    },
+    {
+      "schema": "jev.native-owner/1",
+      "inputCalls": 0,
+      "sequence": 2,
+      "operation": "metadata",
+      "details": {
+        "methods": [
+          {
+            "arguments": [
+              "@",
+              ":",
+              "{CGPoint=dd}",
+              "^@"
+            ],
+            "returnType": "@",
+            "selector": "accessibilityElementForElementAtPoint:error:",
+            "available": true,
+            "returnLength": 8
+          },
+          {
+            "arguments": [
+              "@",
+              ":",
+              "@"
+            ],
+            "returnType": "B",
+            "selector": "isValidElement:",
+            "available": true,
+            "returnLength": 1
+          },
+          {
+            "arguments": [
+              "@",
+              ":",
+              "@",
+              "@",
+              "@",
+              "^@"
+            ],
+            "returnType": "@",
+            "selector": "requestSnapshotForElement:attributes:parameters:error:",
+            "available": true,
+            "returnLength": 8
+          },
+          {
+            "arguments": [
+              "@",
+              ":",
+              "@",
+              "@",
+              "^@"
+            ],
+            "returnType": "@",
+            "selector": "attributesForElement:attributes:error:",
+            "available": true,
+            "returnLength": 8
+          }
+        ],
+        "interfaceClass": "XCAXClient_iOS",
+        "getter": {
+          "arguments": [
+            "@",
+            ":"
+          ],
+          "returnType": "@",
+          "selector": "accessibilityInterface",
+          "available": true,
+          "returnLength": 8
+        }
+      },
+      "outcome": "observed",
+      "kind": "observation",
+      "requestId": "3ccf501b-f50f-419d-a805-d5948bfdb20d",
+      "elapsedMs": 0.16391666940762661
+    },
+    {
+      "schema": "jev.native-owner/1",
+      "inputCalls": 0,
+      "sequence": 3,
+      "operation": "fixture-recreation",
+      "details": {
+        "phase": "before-activation",
+        "fixturePID": 3044,
+        "generation": 0,
+        "ordinary": 0
+      },
+      "outcome": "observed",
+      "kind": "observation",
+      "requestId": "3ccf501b-f50f-419d-a805-d5948bfdb20d",
+      "elapsedMs": 0.34245833376189694
+    },
+    {
+      "schema": "jev.native-owner/1",
+      "inputCalls": 0,
+      "sequence": 4,
+      "operation": "fixture-recreation",
+      "details": {
+        "setup": "activate",
+        "bundleId": "dev.jev.research.native-owner-20261007-reference-fixture"
+      },
+      "outcome": "observed",
+      "kind": "observation",
+      "requestId": "3ccf501b-f50f-419d-a805-d5948bfdb20d",
+      "elapsedMs": 108.72345833558938
+    },
+    {
+      "schema": "jev.native-owner/1",
+      "inputCalls": 0,
+      "sequence": 5,
+      "operation": "fixture-recreation",
+      "details": {
+        "phase": "after-activation",
+        "fixturePID": 3044,
+        "generation": 0,
+        "ordinary": 0
+      },
+      "outcome": "observed",
+      "kind": "observation",
+      "requestId": "3ccf501b-f50f-419d-a805-d5948bfdb20d",
+      "elapsedMs": 108.96016666811192
+    },
+    {
+      "schema": "jev.native-owner/1",
+      "inputCalls": 0,
+      "sequence": 6,
+      "operation": "point",
+      "details": {
+        "reason": "native-exception",
+        "source": "accessibilityElementForElementAtPoint:error:"
+      },
+      "outcome": "failed",
+      "kind": "observation",
+      "requestId": "3ccf501b-f50f-419d-a805-d5948bfdb20d",
+      "elapsedMs": 110.71983333386015
+    },
+    {
+      "schema": "jev.native-owner/1",
+      "inputCalls": 0,
+      "sequence": 7,
+      "operation": "metadata",
+      "details": {
+        "appElementQueries": 1,
+        "localMethodsReturned": false,
+        "localReferencesReleased": true,
+        "plan": "reference-study",
+        "runnerPID": 3748,
+        "coverage": {
+          "independentAssociations": "unestablished",
+          "originalAncestry": "unestablished",
+          "referenceLifetime": "unestablished"
+        },
+        "nativeSettlement": "unconfirmed"
+      },
+      "outcome": "failed",
+      "kind": "finished",
+      "requestId": "3ccf501b-f50f-419d-a805-d5948bfdb20d",
+      "elapsedMs": 110.81404166907305
+    }
+  ],
+  "retained_resources": [
+    {
+      "kind": "device",
+      "deviceId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+      "initialState": "Shutdown"
+    },
+    {
+      "kind": "fixture",
+      "bundleId": "dev.jev.research.native-owner-20261007-reference-fixture",
+      "state": "launched",
+      "pid": 3044,
+      "dataContainer": "/Users/hugues_mini/Library/Developer/CoreSimulator/Devices/0E42FDE2-5E09-42D3-9876-9EF0037FCBE7/data/Containers/Data/Application/B04690A9-07BC-4521-B233-D1567571F949"
+    },
+    {
+      "kind": "runner-installation",
+      "bundleId": "dev.jev.research.native-owner-20261007-reference.xctrunner",
+      "state": "testing-pending"
+    },
+    {
+      "kind": "runner",
+      "bundleId": "dev.jev.research.native-owner-20261007-reference.xctrunner",
+      "pid": 3748,
+      "state": "native-started"
+    },
+    {
+      "kind": "device-guard",
+      "path": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-ios-bridge-device-locks/0E42FDE2-5E09-42D3-9876-9EF0037FCBE7.lock",
+      "record": {
+        "schema": "jev.native-owner.device-guard/1",
+        "pid": null,
+        "hostPID": 98927,
+        "token": "e35d56ce-fd36-4391-bb5c-b389588a9692",
+        "deviceId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "runId": "3ccf501b-f50f-419d-a805-d5948bfdb20d",
+        "createdAt": "2026-10-07T09:06:35.055474+00:00",
+        "evidenceDirectory": "/private/tmp/jev-native-reference-profile-20261007-study",
+        "kind": "native-owner-research"
+      },
+      "created": true,
+      "released": false,
+      "uncertainty": null
+    }
+  ]
+}

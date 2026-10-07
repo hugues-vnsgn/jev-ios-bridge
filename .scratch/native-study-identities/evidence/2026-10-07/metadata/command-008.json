@@ -1,0 +1,29 @@
+{
+  "index": 8,
+  "argv": [
+    "/bin/ps",
+    "-p",
+    "92204",
+    "-o",
+    "pid=",
+    "-o",
+    "comm="
+  ],
+  "state": "exited",
+  "pid": 92465,
+  "ownedProcessGroup": 92465,
+  "captureFiles": {
+    "stdout": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/008-stdout.log",
+    "stderr": "/private/tmp/jev-native-metadata-profile-20261007-study/process-output/008-stderr.log"
+  },
+  "processObservation": {
+    "outcome": "completed",
+    "reason": "PROCESS_COMPLETED",
+    "ownedGroupAbsent": true,
+    "streamsClosed": true
+  },
+  "parentReturncode": 1,
+  "returncode": 1,
+  "stdout": "",
+  "stderr": ""
+}

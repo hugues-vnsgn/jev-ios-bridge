@@ -1,0 +1,27 @@
+{
+  "index": 7,
+  "argv": [
+    "xcrun",
+    "simctl",
+    "install",
+    "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+    "/private/tmp/jev-native-reference-profile-20261007-build/Build/Products/Debug-iphonesimulator/NativeOwnerFixture.app"
+  ],
+  "state": "exited",
+  "pid": 99868,
+  "ownedProcessGroup": 99868,
+  "captureFiles": {
+    "stdout": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/007-stdout.log",
+    "stderr": "/private/tmp/jev-native-reference-profile-20261007-study/process-output/007-stderr.log"
+  },
+  "processObservation": {
+    "outcome": "completed",
+    "reason": "PROCESS_COMPLETED",
+    "ownedGroupAbsent": true,
+    "streamsClosed": true
+  },
+  "parentReturncode": 0,
+  "returncode": 0,
+  "stdout": "",
+  "stderr": ""
+}
