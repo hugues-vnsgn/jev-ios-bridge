@@ -1,0 +1,47 @@
+{
+  "sourceCommit": "07874551ff5015837b5400cd6c2a4aa03c6d92ad",
+  "sourceSHA256": {
+    "fixture/Fixture.m": "946ae30cb737640b1565a9bb14df347e1cbbcc00aec511d78fd3bd9f8c2b3c53",
+    "native/NativeOwnerStudy.m": "7594b102b5d5f2aa1e0d56e3199b72bfabe72c446c66eea05b38341bb76a4a2b",
+    "native/ObservationStudy.h": "6a8cc0eac8cae0bd5919a2a2e84d9bd2002fb326b57e865c47b92838342505a2",
+    "native/ObservationStudy.m": "7a3f2e5b1ae3a8f84db28b98f39ac8edf6e14c9f94b656aace3ce9ec9e75addf",
+    "native/ObservationStudyTests.m": "a1548d57edc71e71e031340abca29ad99ca103c4909efd9287362f08dcf49953",
+    "native/RecordEncoding.h": "a86449022c726579356ca1b306ad5b44a8420f0bf073878e960a19046605211e",
+    "native/RecordEncoding.m": "831f9ff1e500832f83f03be431aa11c6a71202fa4f0883c3df9a77d9acb91c8a",
+    "native/project.yml": "ed10924cd9752e00b8249fe0c5d3b30f18f9087f78a6f49ed92d7c2f36b2e6bf"
+  },
+  "xcodeVersion": "Xcode 27.0\nBuild version 27A266a",
+  "projectSHA256": "a841aadbc024e0c0842a8c810a43070c39aeb74f03ef040103c89c3c3ed05d2b",
+  "buildCommand": [
+    "xcodebuild",
+    "build-for-testing",
+    "-project",
+    "NativeOwnerStudy.xcodeproj",
+    "-scheme",
+    "NativeOwnerStudy",
+    "-destination",
+    "generic/platform=iOS Simulator",
+    "-derivedDataPath",
+    "/private/tmp/jev-native-owner-study-wire-fix-build"
+  ],
+  "bundles": {
+    "NativeOwnerStudy-Runner.app": "dev.jev.research.native-owner-study.xctrunner",
+    "NativeOwnerFixture.app": "dev.jev.research.native-owner-fixture"
+  },
+  "xctestrun": "/private/tmp/jev-native-owner-study-wire-fix-build/Build/Products/NativeOwnerStudy_iphonesimulator27.0-arm64-x86_64.xctestrun",
+  "xctestrunSHA256": "0a8f61019f9dfd5969a6992b87a5233e90fc8818eb1d749ea704596c07761767",
+  "productSHA256": {
+    "NativeOwnerStudy-Runner.app/Info.plist": "de4c9cd33d2211e65b500cf18649ed3d37869039293f555cd48db044f6e772fe",
+    "NativeOwnerStudy-Runner.app/NativeOwnerStudy-Runner": "28fcfad44cbcdd2d5843919131a11f1b18d81b4c9709cc92523184926f2ded28",
+    "NativeOwnerStudy-Runner.app/PkgInfo": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0",
+    "NativeOwnerStudy-Runner.app/PlugIns/NativeOwnerStudy.xctest/Info.plist": "9cd7015f901ac4ae187f1d9b30384189a54a1e330ce6b47fdda49786da9eb5b2",
+    "NativeOwnerStudy-Runner.app/PlugIns/NativeOwnerStudy.xctest/NativeOwnerStudy": "a7ba1f0dcd9346b4dcd95754bc4dfa277ce1e46e8c210a4e2355f6014e81563a",
+    "NativeOwnerFixture.app/Info.plist": "352fb1d45f5eac7a6052d13d70b2d89c464696b2809ad7a8ed57cfd19e54ccdc",
+    "NativeOwnerFixture.app/NativeOwnerFixture": "e7de48521521309454bb29c15538e8d52e2b256276a4b22d6985de601753062a",
+    "NativeOwnerFixture.app/NativeOwnerFixture.debug.dylib": "e2e583fde702b1befec21bd1a5805b88f29496648f121e1e524eb37aa78593a4",
+    "NativeOwnerFixture.app/PkgInfo": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0",
+    "NativeOwnerFixture.app/README.md": "c7d8b928f8bbc6f6183e0b56ea1134a54214746527799f21a51ed96be95b2653",
+    "NativeOwnerFixture.app/__preview.dylib": "89aafa7bec7ccbc6bc7095c778c5727b5b4b91316fc0431237cd2a982c97401c"
+  },
+  "deviceExecution": false
+}

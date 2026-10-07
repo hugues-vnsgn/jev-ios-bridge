@@ -1,0 +1,140 @@
+{
+  "status": "retained",
+  "reason": "RECORD_SCHEMA",
+  "request_id": "5f1164bb-f0a4-44c7-b5d9-88c39b3c1a56",
+  "evidence_directory": "/private/tmp/jev-native-owner-metadata-integrated-20261007",
+  "records": [
+    {
+      "schema": "jev.native-owner/1",
+      "inputCalls": 0,
+      "sequence": 0,
+      "operation": "metadata",
+      "details": {
+        "plan": "metadata",
+        "runnerPID": 15195
+      },
+      "outcome": "observed",
+      "kind": "started",
+      "requestId": "5f1164bb-f0a4-44c7-b5d9-88c39b3c1a56",
+      "elapsedMs": 0.002333334123250097
+    },
+    {
+      "schema": "jev.native-owner/1",
+      "inputCalls": 0,
+      "sequence": 1,
+      "operation": "metadata",
+      "details": {
+        "methods": [
+          {
+            "arguments": [
+              "@",
+              ":",
+              "{CGPoint=dd}",
+              "^@"
+            ],
+            "returnType": "@",
+            "selector": "accessibilityElementForElementAtPoint:error:",
+            "available": true,
+            "returnLength": 8
+          },
+          {
+            "arguments": [
+              "@",
+              ":",
+              "@"
+            ],
+            "returnType": "B",
+            "selector": "isValidElement:",
+            "available": true,
+            "returnLength": 1
+          },
+          {
+            "arguments": [
+              "@",
+              ":",
+              "@",
+              "@",
+              "@",
+              "^@"
+            ],
+            "returnType": "@",
+            "selector": "requestSnapshotForElement:attributes:parameters:error:",
+            "available": true,
+            "returnLength": 8
+          },
+          {
+            "arguments": [
+              "@",
+              ":",
+              "@",
+              "@",
+              "^@"
+            ],
+            "returnType": "@",
+            "selector": "attributesForElement:attributes:error:",
+            "available": true,
+            "returnLength": 8
+          }
+        ],
+        "interfaceClass": "XCAXClient_iOS",
+        "getter": {
+          "arguments": [
+            "@",
+            ":"
+          ],
+          "returnType": "@",
+          "selector": "accessibilityInterface",
+          "available": true,
+          "returnLength": 8
+        }
+      },
+      "outcome": "observed",
+      "kind": "observation",
+      "requestId": "5f1164bb-f0a4-44c7-b5d9-88c39b3c1a56",
+      "elapsedMs": 0.10237500100629404
+    }
+  ],
+  "retained_resources": [
+    {
+      "kind": "device",
+      "deviceId": "0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+      "initialState": "Shutdown"
+    },
+    {
+      "kind": "runner-installation",
+      "bundleId": "dev.jev.research.native-owner-study.xctrunner",
+      "state": "testing-pending"
+    },
+    {
+      "kind": "runner",
+      "bundleId": "dev.jev.research.native-owner-study.xctrunner",
+      "pid": 15195,
+      "state": "native-started"
+    },
+    {
+      "index": 7,
+      "argv": [
+        "xcodebuild",
+        "test-without-building",
+        "-xctestrun",
+        "/private/tmp/jev-native-owner-metadata-integrated-20261007/owned.xctestrun",
+        "-destination",
+        "id=0E42FDE2-5E09-42D3-9876-9EF0037FCBE7",
+        "-parallel-testing-enabled",
+        "NO",
+        "-maximum-concurrent-test-simulator-destinations",
+        "1",
+        "-only-testing:NativeOwnerStudy/NativeOwnerStudy/testMetadataOnly",
+        "-resultBundlePath",
+        "/private/tmp/jev-native-owner-metadata-integrated-20261007/result.xcresult"
+      ],
+      "state": "retained",
+      "pid": 13915,
+      "ownedProcessGroup": 13915,
+      "captureFiles": {
+        "stdout": "/private/tmp/jev-native-owner-metadata-integrated-20261007/process-output/007-stdout.log",
+        "stderr": "/private/tmp/jev-native-owner-metadata-integrated-20261007/process-output/007-stderr.log"
+      }
+    }
+  ]
+}

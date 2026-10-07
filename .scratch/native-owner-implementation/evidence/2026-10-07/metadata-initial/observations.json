@@ -1,0 +1,91 @@
+[
+  {
+    "schema": "jev.native-owner/1",
+    "inputCalls": 0,
+    "sequence": 0,
+    "operation": "metadata",
+    "details": {
+      "plan": "metadata",
+      "runnerPID": 15195
+    },
+    "outcome": "observed",
+    "kind": "started",
+    "requestId": "5f1164bb-f0a4-44c7-b5d9-88c39b3c1a56",
+    "elapsedMs": 0.002333334123250097
+  },
+  {
+    "schema": "jev.native-owner/1",
+    "inputCalls": 0,
+    "sequence": 1,
+    "operation": "metadata",
+    "details": {
+      "methods": [
+        {
+          "arguments": [
+            "@",
+            ":",
+            "{CGPoint=dd}",
+            "^@"
+          ],
+          "returnType": "@",
+          "selector": "accessibilityElementForElementAtPoint:error:",
+          "available": true,
+          "returnLength": 8
+        },
+        {
+          "arguments": [
+            "@",
+            ":",
+            "@"
+          ],
+          "returnType": "B",
+          "selector": "isValidElement:",
+          "available": true,
+          "returnLength": 1
+        },
+        {
+          "arguments": [
+            "@",
+            ":",
+            "@",
+            "@",
+            "@",
+            "^@"
+          ],
+          "returnType": "@",
+          "selector": "requestSnapshotForElement:attributes:parameters:error:",
+          "available": true,
+          "returnLength": 8
+        },
+        {
+          "arguments": [
+            "@",
+            ":",
+            "@",
+            "@",
+            "^@"
+          ],
+          "returnType": "@",
+          "selector": "attributesForElement:attributes:error:",
+          "available": true,
+          "returnLength": 8
+        }
+      ],
+      "interfaceClass": "XCAXClient_iOS",
+      "getter": {
+        "arguments": [
+          "@",
+          ":"
+        ],
+        "returnType": "@",
+        "selector": "accessibilityInterface",
+        "available": true,
+        "returnLength": 8
+      }
+    },
+    "outcome": "observed",
+    "kind": "observation",
+    "requestId": "5f1164bb-f0a4-44c7-b5d9-88c39b3c1a56",
+    "elapsedMs": 0.10237500100629404
+  }
+]

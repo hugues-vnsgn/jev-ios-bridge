@@ -120,6 +120,27 @@ release, and preserve unconfirmed outcomes without replay. `close()` stops
 admission and retains the Device lease until settlement or an applicable fence.
 These are conditional Interface requirements, not implemented promises.
 
+That future Interface also preserves the existing tickets' context and delivery
+requirements. Native facts must corroborate the app root and carry compatible
+capture references, device boot/runtime, association and app-instance validity.
+Coordinates require authoritative display/orientation, viewport, units, scale
+and translation, with acquisition interval and expiry. The study's fixed point
+supplies none of that production authority.
+
+Ownership, context, bounded acquisition and checked input are separately proven
+facets. The production 0–10,000 ms remaining allowance and epoch deadline span
+processes without renewal; encoding/readiness precede final qualification and
+the identical event follows the final admission check. Retain callbacks,
+references, descendants and coalesced ownership until applicable settlement.
+MobileBuildMCP must preserve protected plans, atomic one-use consumption and
+operation tombstones after frontend loss, including its specified capacity
+limits and usable status/cancel operations at capacity.
+
+Public-consumer compilation, redaction/legacy checks, independent physical
+recipient/release evidence, supported releases and Bridge benchmark/contract
+gates remain distinct. Plain-tap support does not imply safe type-focus or
+automatic navigation. Each supported action facet needs its own proof.
+
 ## Parallel delivery and production gates
 
 The native target/fixture and host runner can be implemented in separate
