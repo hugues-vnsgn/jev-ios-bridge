@@ -17,8 +17,8 @@ WDA iOS path → testRunnerProxy → _XCT_requestElementAtPoint:reply: → callb
 The arm64 method body at `0x77b0–0x7824` saves self/selector, obtains
 `NSAssertionHandler.currentHandler`, and calls
 `handleFailureInMethod:object:file:lineNumber:description:`. Its arguments name
-`XCAXClient_iOS.m:1055` and the message “%s is only supported in the local macOS
-AX interface”. If that handler returns, the method returns nil. It never reads
+`XCAXClient_iOS.m:1055` and the message "%s is only supported in the local macOS
+AX interface". If that handler returns, the method returns nil. It never reads
 the point or error-pointer argument and has no accessibility-request dispatch.
 
 The [bounded disassembly](point-method-disassembly.log.gz),
@@ -58,7 +58,7 @@ two private declarations. No call to it was found in those files. The
 [search receipt](wda-search.json) preserves the scope and exact matches.
 
 WDA's actual point path is
-[FBActiveAppDetectionPoint.m:50–81](https://github.com/appium/WebDriverAgent/blob/277112a4f9bd0088ea9377ef4b88b750231c1f4a/WebDriverAgentLib/Utilities/FBActiveAppDetectionPoint.m#L50).
+[FBActiveAppDetectionPoint.m:50-81](https://github.com/appium/WebDriverAgent/blob/277112a4f9bd0088ea9377ef4b88b750231c1f4a/WebDriverAgentLib/Utilities/FBActiveAppDetectionPoint.m#L50).
 It obtains `testRunnerProxy`, sends `_XCT_requestElementAtPoint:reply:`, and
 receives `(id element, NSError *error)`. The exact captured file has SHA-256
 `dccb22862b9e8ed77a1dae9a4e580cedb55b8bec351ecb162eb0506a46b4ebe8`.
