@@ -118,6 +118,45 @@ symlinks/extra files, deadline, partial mutation, original byte preservation and
 one-use claim including a real competing process. Never contact a simulator in
 worker tests. Doubles establish policy only.
 
+## Device-wide exclusion
+
+Both `run_study` and reconciliation must hold one device-wide guard before any
+external device tool and through final restoration. Use the existing Bridge
+lease namespace from `src/device/lease.ts`: Node's temporary directory plus
+`jev-ios-bridge-device-locks/<UPPERCASE-UDID>.lock`. Default Python resolution
+must address that same namespace. An optional `Configuration.lease_root` is a
+test/local-data Seam; live execution uses the default. No production file changes.
+
+Claim with exclusive creation and mode 600. Refuse every preexisting lease,
+including malformed, foreign and stale records; research never takes over or
+deletes one. Write `pid: null` to represent an owner whose native settlement is
+unestablished, and record the actual `hostPID` separately with token, deviceId,
+runId, createdAt and evidence path. `src/process.ts` treats an unknown PID as
+alive, so existing Bridge consumers keep this claim busy after frontend loss.
+This is intentional unknown-owner accounting, not a fabricated living PID.
+
+Persist pending guard ownership before acquisition; keep its token/provenance in
+the evidence. Verify the exact token/record before release or device mutation;
+replacement, missing/symlinked lease or write/inspection uncertainty retains
+ownership. Only this owner's matching claim may be removed.
+
+Normal metadata releases after verified cleanup/restoration; normal pre-native
+refusal releases only after its work/restoration is positively complete. Any
+retained study keeps the guard, including reference-study success with native
+settlement unknown. Reconciliation inspection releases after all of its own
+read-only subprocesses settle; it does not adopt or repair the historical run.
+Apply holds through all cleanup and final checks, then releases on success;
+any uncertain apply retains the guard and one-use case claim.
+
+Tests use real temporary filesystem claims and competing harmless processes.
+Demonstrate that the actual TypeScript `DeviceLease.take` refuses the research
+unknown-owner record, including after the claiming host exits. Tests of normal
+study/reconciliation must use isolated lease roots and prove the guard is held
+during tool calls, other calls refuse before device work, retained resources
+retain the guard, and success/refusal releases only the matching settled claim.
+Document that noncooperating external tools or custom Bridge lease namespaces
+are outside this exclusion mechanism. Supervisor operates the device serially.
+
 ## 3. Joined execution and evidence
 
 Supervisor independently reviews both changes before live cleanup. Confirm the
@@ -142,5 +181,7 @@ fix actionable findings, pass package CI, and merge using matched PR heads.
 - Ticket 02 owns new `host/reconcile.py`, `host/test_reconcile.py`, its CLI and
   `host/RECONCILIATION-VERIFICATION.md`. Read the frozen case/spec; do not edit
   ticket 01's files. Root integrates shared helper needs sequentially.
+- Ticket 03 owns new `host/device_guard.py`, `host/test_device_guard.py` and
+  `host/DEVICE-GUARD-VERIFICATION.md`. Root wires both callers sequentially.
 - Supervisor owns spec/case/tickets, README/architecture updates, live operations,
   artifacts and PRs. No worker operates a device, kills a process or publishes.
