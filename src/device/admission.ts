@@ -1,3 +1,4 @@
+import type { AllocationReservationInput, ReserveAllocationResult, AllocationRecord, AllocationOwner, AllocationReservation, AllocationCommit, AllocationReason, PreparationClaim, ActionBinding, ConsumeAllocationResult, ActionRecordView, ActionEvidence } from './admission-allocation.js';
 import { randomUUID } from 'node:crypto';
 import { userInfo } from 'node:os';
 import { join } from 'node:path';
@@ -8,10 +9,10 @@ export type AttemptIdentity = { kind: 'observed' | 'legacy' | 'preparation'; id:
 export type OwnerProcess = { pid: number; incarnation: string };
 export type OwnerIdentity = { device: string; attempt: AttemptIdentity; token: string; generation: number; process: OwnerProcess };
 export type TerminalCandidate = { outcome: 'observed' | 'completed' | 'refused' | 'inconclusive'; disposition: 'available' | 'quarantined'; payload: unknown; evidenceRefs: string[] };
-export type AttemptView = { identity: AttemptIdentity; device: string; digest: string; intent: unknown; owner: OwnerIdentity; state: 'active' | 'terminal'; cancellationRequested: boolean; terminal: TerminalCandidate | null };
+export type AttemptView = { identity: AttemptIdentity; device: string; digest: string; intent: unknown; owner: OwnerIdentity; state: 'active' | 'parked' | 'terminal'; cancellationRequested: boolean; terminal: TerminalCandidate | null };
 export type DeviceView = { device: string; state: 'active' | 'available' | 'quarantined'; generation: number; owner: OwnerIdentity | null; reason: string | null };
 export type AdmissionRequest = { device: string; attempt: AttemptIdentity; digest: string; intent: unknown; signal?: AbortSignal };
-export type AdmissionResult = { kind: 'acquired'; claim: AdmissionClaim } | { kind: 'retrieved'; attempt: AttemptView } | { kind: 'refused'; reason: 'DEVICE_BUSY' | 'DEVICE_QUARANTINED' | 'ACTION_ID_CONFLICT' | 'CANCELLED' };
+export type AdmissionResult = { kind: 'acquired'; claim: AdmissionClaim } | { kind: 'retrieved'; attempt: AttemptView } | { kind: 'refused'; reason: 'DEVICE_BUSY' | 'DEVICE_QUARANTINED' | 'ACTION_ID_CONFLICT' | 'CANCELLED' | 'HOST_CREATION_UNRESOLVED'; blockingAllocationId?: string };
 export type Finalization = { authority: 'committed'; attempt: AttemptView } | { authority: 'unconfirmed'; reason: 'FINALIZATION_UNCONFIRMED' };
 export type AdmissionFault = 'beforeCommit' | 'afterCommit';
 export type AdmissionDependencies = { now?: () => number; process?: OwnerProcess; ownerLiveness?: (owner: OwnerProcess) => 'alive' | 'dead' | 'unknown'; fault?: (point: AdmissionFault, operation: string) => void };
@@ -66,6 +67,27 @@ export class Admission {
     }
     return { kind: 'acquired', claim };
   }
+  reserveAllocation(input: AllocationReservationInput): ReserveAllocationResult {
+    const result = this.store.reserveAllocation(input, this.dependencies.process ?? { pid: process.pid, incarnation });
+    if (result.kind !== 'reserved') return result;
+    return { kind: 'reserved', reservation: new OwnedReservation(this.store, result.allocation) };
+  }
+  readAllocation(id: string): AllocationRecord | undefined { return this.store.readAllocation(canonicalDevice(id)); }
+  readAllocationForAction(actionId: string): AllocationRecord | undefined { return this.store.readAllocationForAction(actionId); }
+  consumeAllocation(binding: ActionBinding): ConsumeAllocationResult {
+    const result = this.store.consumeAllocation({ ...binding, allocationId: canonicalDevice(binding.allocationId) }, this.dependencies.process ?? { pid: process.pid, incarnation });
+    if (result.kind !== 'consumed') return result;
+    return { kind: 'consumed', claim: new OwnedClaim(this.store, result.owner), allocation: result.allocation };
+  }
+  listActiveAllocations(): AllocationRecord[] { return this.store.listActiveAllocations(); }
+  readAction(actionId: string): ActionRecordView | undefined { return this.store.readAction(actionId); }
+  recordActionExport(actionId: string, result: { status: 'complete'; terminal: string } | { status: 'failed' }): AllocationRecord { return this.store.recordActionExport(actionId, result); }
+  cancelAllocation(id: string) { return this.store.changeAllocation(canonicalDevice(id), 'cancel'); }
+  retireAllocation(id: string) { return this.store.changeAllocation(canonicalDevice(id), 'retire'); }
+  quarantineAbandonedAllocation(expected: AllocationOwner): boolean {
+    const liveness = this.dependencies.ownerLiveness?.(expected.process) ?? processLiveness(expected.process);
+    return liveness === 'dead' ? this.store.quarantineAbandonedAllocation(expected) : false;
+  }
   inspect(device: string): DeviceView | undefined { return this.store.inspect(canonicalDevice(device)); }
   readAttempt(identity: AttemptIdentity): AttemptView | undefined { validateAttempt(identity); return this.store.readAttempt(identity); }
   cancel(identity: AttemptIdentity): AttemptView | undefined { validateAttempt(identity); return this.store.cancel(identity); }
@@ -93,17 +115,33 @@ class OwnedClaim implements AdmissionClaim {
   private attached = false;
   private closers: (() => void)[] = [];
   readonly identity: OwnerIdentity;
-  constructor(private readonly store: AdmissionSqlite, identity: OwnerIdentity) {
+  constructor(private readonly store: AdmissionSqlite, identity: OwnerIdentity, private readonly parentClosed: () => boolean = () => false) {
     this.identity = Object.freeze({ ...identity, attempt: Object.freeze({ ...identity.attempt }), process: Object.freeze({ ...identity.process }) });
   }
   onClose(callback: () => void): void { this.closers.push(callback); }
   private close(): void { this.closed = true; for (const callback of this.closers.splice(0)) callback(); }
   bindDriver(backend: 'real' | 'fake' = 'real'): AdmittedSession {
-    if (this.closed || this.attached) throw new AdmissionError('DISPATCH_CLOSED', 'Claim is closed or already attached');
+    if (this.closed || this.parentClosed() || this.attached) throw new AdmissionError('DISPATCH_CLOSED', 'Claim is closed or already attached');
     this.store.attach(this.identity, backend);
     this.attached = true;
-    return new OwnedSession(this.store, this.identity, () => this.closed);
+    return new OwnedSession(this.store, this.identity, () => this.closed || this.parentClosed());
   }
+  park(readinessEvidence: string[], evidenceRefs: string[] = []): AllocationCommit {
+    this.close();
+    try { return { authority: 'committed', allocation: this.store.parkAllocation(this.identity, readinessEvidence, evidenceRefs) }; }
+    catch (error) { if (!(error instanceof AdmissionError) || error.code === 'STATE_UNAVAILABLE') return { authority: 'unconfirmed', reason: 'STATE_UNAVAILABLE' }; throw error; }
+  }
+  recordObservation(refs: string[]): AllocationRecord {
+    if (this.closed || this.parentClosed()) throw new AdmissionError('DISPATCH_CLOSED', 'Claim is closed');
+    try { return this.store.recordObservation(this.identity, refs); }
+    catch (error) { this.close(); throw error; }
+  }
+  recordActionReceipt(flags: Pick<ActionEvidence, 'actionAttempted' | 'actionAcknowledged'>): AllocationRecord {
+    if (this.closed || this.parentClosed()) throw new AdmissionError('DISPATCH_CLOSED', 'Claim is closed');
+    try { return this.store.recordActionReceipt(this.identity, flags); }
+    catch (error) { this.close(); throw error; }
+  }
+  beginFinalization(): AllocationRecord { this.close(); return this.store.beginActionFinalization(this.identity); }
   cancel(): AttemptView | undefined {
     // Cancellation remains authoritative for this handle even if its write fails.
     this.cancellationRequested = true;
@@ -141,5 +179,41 @@ class OwnedSession implements AdmittedSession {
       try { this.store.settle(this.owner, command, true); return value; }
       catch (error) { this.revoked = true; throw error; }
     }, error => { this.revoked = true; this.store.settle(this.owner, command, false); throw error; });
+  }
+}
+
+class OwnedReservation implements AllocationReservation {
+  readonly identity: AllocationOwner;
+  readonly snapshot: AllocationRecord;
+  private closed = false;
+  constructor(private readonly store: AdmissionSqlite, snapshot: AllocationRecord) {
+    this.snapshot = structuredClone(snapshot); this.identity = Object.freeze({ ...snapshot.owner, process: Object.freeze({ ...snapshot.owner.process }) });
+  }
+  stage(artifact: import('../observed/artifact.js').StagedArtifact): AllocationRecord {
+    if (this.closed) throw new AdmissionError('DISPATCH_CLOSED', 'Reservation is closed');
+    return this.store.stageAllocation(this.identity, artifact);
+  }
+  async create(effect: () => Promise<import('../observed/create-source.js').CreationResult>): Promise<import('../observed/create-source.js').CreationResult> {
+    if (this.closed) throw new AdmissionError('DISPATCH_CLOSED', 'Reservation is closed');
+    try {
+      this.store.startCreation(this.identity);
+      let receipt: import('../observed/create-source.js').CreationResult;
+      try { receipt = await effect(); } catch { receipt = { status: 'unknown', reason: 'CREATE_UNCONFIRMED' }; }
+      return this.store.recordCreation(this.identity, receipt);
+    } catch (error) {
+      if (!(error instanceof AdmissionError) || error.code === 'STATE_UNAVAILABLE') this.closed = true;
+      throw error;
+    }
+  }
+  admit(): { kind: 'admitted'; claim: PreparationClaim } | import('./admission-allocation.js').AllocationRefusal {
+    if (this.closed) throw new AdmissionError('DISPATCH_CLOSED', 'Reservation is closed');
+    const result = this.store.admitAllocation(this.identity);
+    if (result.kind !== 'admitted') return result;
+    return { kind: 'admitted', claim: new OwnedClaim(this.store, result.owner, () => this.closed) };
+  }
+  fail(reason: AllocationReason, evidenceRefs: string[] = []): AllocationCommit {
+    this.closed = true;
+    try { return { authority: 'committed', allocation: this.store.failAllocation(this.identity, reason, evidenceRefs) }; }
+    catch (error) { if (!(error instanceof AdmissionError) || error.code === 'STATE_UNAVAILABLE') return { authority: 'unconfirmed', reason: 'STATE_UNAVAILABLE' }; throw error; }
   }
 }

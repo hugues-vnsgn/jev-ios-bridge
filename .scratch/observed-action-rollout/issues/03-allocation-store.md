@@ -2,6 +2,8 @@
 
 Type: task
 Status: ready-for-agent
+Execution: implemented-awaiting-review
+Claimed by: allocation-store implementer
 Mode: AFK
 Blocked by: 02
 Owner: Allocation-store implementer
@@ -43,3 +45,15 @@ Read-only ticket05 preparation confirms the planned capability handoff: allocati
 The existing generic dispatch can carry a driver-private acknowledged-result envelope; no additional generic release or settlement override is requested. The driver will authorize observed touch as `tap` to enforce the single-input guard and use a distinct internal kind for ordinary multi-step legacy actions. Ticket05 will receive the actual integrated exported types before implementation.
 
 Root also assigns the narrow durable action progress/evidence/export projection methods required by tickets06/07 to this store owner. Preserve nullable attempt/acknowledgment flags and counts across restart, distinguish active/finalizing from authoritative terminal state, and record export status separately from the immutable committed outcome. Expose typed methods, not raw transactions or generic release authority. This is part of the accepted shared-store contract and requires no new public schema.
+
+### Implementation grounding — 2026-10-08
+
+Base `dc31c577a30b2aca0c8638f03420fd05b611dce7`, isolated `feat/observed-allocation-store`. The accepted seams are Admission and its module-owned allocation/preparation/action capabilities with real SQLite, fake effects, and independent subprocesses. Matrix: H03 identity/read invariance and parked transfer; H04 capacity/bytes/source/exclusion/creation receipts; H05 cancellation/TTL ordering; H06 commit/crash/stale-owner behavior; H07 unavailable storage and evidence projections. Existing 01/02 suites cover admission and immutable migration history. Public adapters/live behavior remain downstream. Cook uses the reviewed plan and explicit autonomous dispatch; Root supplies independent review, and the unavailable Simplify skill is not substituted with extra ownership.
+
+### Implementation and host verification — 2026-10-08
+
+Implemented the six-file owned store slice from base `dc31c577a30b2aca0c8638f03420fd05b611dce7`. Status remains `ready-for-agent`; independent Standards/Spec review belongs to Root. The shared store now owns immutable reservation/content/source/budget bindings, unknown-creation fencing and receipts, exclusion/eligibility, parked generation transfer, cancellation/TTL/retirement, explicit abandoned-owner recovery and joint terminal disposition. Durable action observations, nullable flags, finalizing state, read-only active-owner discovery and export metadata are available through typed methods without downstream SQL.
+
+Verification: 134/134 core, migration and allocation tests pass on Node 26.8.1 and exact Node 24.0.0, zero skipped; typecheck and build pass. Sixteen real SIGKILL transaction milestones, independent reservation/start/cancel/TTL races, and preparation process exit before consumption are covered. Changed-file coverage: allocation types 100% lines/branches; SQLite 97.46% lines, 89.74% branches; admission 98.63% lines, 89.68% branches. Red/green repairs cover duplicate preparation admission, terminal flag consistency, local revocation after failed persistence, and park deadline enforcement. Raw logs and the complete interface/matrix report are at the worktree's `.scratch/observed-integration/acceptance/host/allocation-store/` (intentionally untracked per Root).
+
+No live operations, real migration, production store, credentials, protected claims or app sources were accessed. Full installed/public/live gates remain downstream. Schema 2 rejects older initialized schemas rather than upgrading them automatically. Simplify was unavailable and did not run. Root retains shared plan/journal updates and integration authority.
