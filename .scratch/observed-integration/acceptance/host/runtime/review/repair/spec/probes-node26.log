@@ -1,0 +1,14 @@
+{"case":"host-guard-evidence","blockingAllocationId":"828EF56A-4FEB-4085-8F26-D5215B264CE6","result":{"version":1,"kind":"observed-operation-error","code":"HOST_CREATION_UNRESOLVED","message":"Prepared allocation cannot be consumed","acceptance":"no","acceptanceKind":"action","actionId":"one","allocationId":"6A794997-ABA5-40C5-BCED-AB5B67B26C01","blockingAllocationId":"828EF56A-4FEB-4085-8F26-D5215B264CE6","evidenceDirectory":"/isolated/blocker-evidence"}}
+✔ host creation refusal exposes persisted blocking allocation evidence (426.147417ms)
+{"case":"cancel-read-failure","calls":["snapshot-ui"],"outcome":null,"reason":"FINALIZATION_UNCONFIRMED","cancellationRequested":false}
+✔ local cancel fences continuation even when initial authoritative read fails (463.513083ms)
+{"case":"separate-finalization-budget","observedMs":71,"closedMs":754,"outcome":"already_satisfied","reason":null}
+✔ settled close within finalization budget does not consume action observation budget (1034.867292ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1693.188959

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "/tmp/jev-runtime-spec-review-5rTBCH/probes.test.ts",
+    "/tmp/jev-runtime-spec-review-5rTBCH/host-guard.test.ts"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime",
+  "nodeVersion": "v24.0.0",
+  "exit": 0,
+  "umask": "0022"
+}
