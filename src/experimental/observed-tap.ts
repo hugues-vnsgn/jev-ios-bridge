@@ -1,46 +1,32 @@
 import { setTimeout as delay } from 'node:timers/promises';
-import type { ActionScenarioContext, Snapshot } from '../contracts/index.js';
+import type { Snapshot, Element } from '../contracts/index.js';
 import type { ScreenGuard, Selector } from '../scripted/contracts.js';
-import { resolveActionTarget } from '../scripted/select.js';
+import { Admission } from '../device/admission.js';
+import type { ObservedClaim } from '../device/admission-allocation.js';
+import { DeviceCliError, StaleSnapshotError, type ObservedActionDriver } from '../device/index.js';
+import { observedReason, observedActionDigest, canonicalJson, ObservedOperationError, type ObservedActionRequest, type ObservedOutcome, type ObservedReason } from '../observed/schema.js';
 
 export interface ObservedTapResult {
-  status: 'outcome_observed' | 'already_satisfied' | 'refused' | 'inconclusive';
-  reason?: string;
-  actionAttempted: boolean;
-  actionAcknowledged: boolean;
-  observations: number;
+  status: ObservedOutcome; reason: ObservedReason | null;
+  actionAttempted: boolean | null; actionAcknowledged: boolean | null; observations: number;
 }
 export interface ObservedTapOptions {
-  deviceId: string;
-  actionId: string;
-  selector: Selector;
-  before: ScreenGuard;
-  after: ScreenGuard;
-  scenario: ActionScenarioContext;
-  timeoutMs: number;
-  pollIntervalMs?: number;
-  signal?: AbortSignal;
-  prepare?: (signal: AbortSignal) => Promise<void>;
-  finish?: (signal: AbortSignal) => Promise<void>;
-  onObservation?: (snapshot: Snapshot, index: number) => Promise<void>;
-  /** Provisional evidence only: completion can still fail; journal terminal is authoritative. */
-  onResult?: (result: ObservedTapResult) => Promise<void>;
-  driver: {
-    observe(signal: AbortSignal): Promise<Snapshot>;
-    tapOnce(ref: string, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<unknown>;
-  };
-  journal: { begin(input: {deviceId: string; actionId: string; intent: unknown}): Promise<{
-    complete(result: unknown): Promise<void>; uncertain(reason: string): Promise<void>;
-  }> };
+  request: ObservedActionRequest; claim: ObservedClaim; admission: Admission; driver: ObservedActionDriver;
+  signal: AbortSignal; onObservation(snapshot: Snapshot, index: number): Promise<void>;
 }
-function matches(snapshot: Snapshot, selector: Selector) {
-  const entries = Object.entries(selector);
-  if (!entries.length || entries.some(([key,value]) => !['identifier','role','label','value'].includes(key) || typeof value !== 'string')) throw new Error('INVALID_SELECTOR');
-  return snapshot.elements.filter(element => entries.every(([key,value]) => element[key as keyof Selector] === value)
+export async function boundedObserved<T>(operation: () => Promise<T>, signal: AbortSignal): Promise<T> {
+  signal.throwIfAborted();
+  return new Promise<T>((resolve, reject) => {
+    const abort = () => reject(signal.reason); signal.addEventListener('abort', abort, { once: true });
+    Promise.resolve().then(() => { signal.throwIfAborted(); return operation(); }).then(resolve, reject)
+      .finally(() => signal.removeEventListener('abort', abort));
+  });
+}
+function matches(snapshot: Snapshot, selector: Selector): Element[] {
+  return snapshot.elements.filter(element => Object.entries(selector).every(([name, value]) => element[name as keyof Selector] === value)
     && element.state?.visible === true && element.frame && element.frame.width > 0 && element.frame.height > 0);
 }
 function guard(snapshot: Snapshot, condition: ScreenGuard): boolean {
-  if (!condition.present.length && !condition.absent?.length) throw new Error('EMPTY_CONDITION');
   let satisfied = true;
   for (const selector of condition.present) {
     const count = matches(snapshot, selector).length;
@@ -50,67 +36,65 @@ function guard(snapshot: Snapshot, condition: ScreenGuard): boolean {
   for (const selector of condition.absent ?? []) if (matches(snapshot, selector).length) satisfied = false;
   return satisfied;
 }
-/** Experimental visible evidence only. Resolution never certifies native input consumption or release. */
+function flags(options: ObservedTapOptions) {
+  const view = options.admission.readAction(options.request.actionId);
+  if (view?.kind !== 'allocation' || !view.allocation.actionEvidence) throw new Error('STATE_UNAVAILABLE');
+  return view.allocation.actionEvidence;
+}
+/** Internal admitted executor. Historical/public adapters use ObservedActionService for all authority. */
 export async function runObservedTap(options: ObservedTapOptions): Promise<ObservedTapResult> {
-  if (!Number.isSafeInteger(options.timeoutMs) || options.timeoutMs < 1 || options.timeoutMs > 300000
-    || !Number.isSafeInteger(options.pollIntervalMs ?? 100) || (options.pollIntervalMs ?? 100) < 1) throw new RangeError('Invalid observation deadline');
-  const deadline = AbortSignal.timeout(options.timeoutMs);
-  const signal = options.signal ? AbortSignal.any([options.signal, deadline]) : deadline;
-  const result: ObservedTapResult = {status:'refused',actionAttempted:false,actionAcknowledged:false,observations:0};
-  const attempt = await options.journal.begin({deviceId:options.deviceId,actionId:options.actionId,
-    intent:{selector:options.selector,before:options.before,after:options.after,scenario:options.scenario,
-      timeoutMs:options.timeoutMs,pollIntervalMs:options.pollIntervalMs ?? 100}});
-  let preparing = false;
-  let observing = false;
-  const bounded = async <T>(operation: () => Promise<T>, budget = signal): Promise<T> => {
-    budget.throwIfAborted();
-    return new Promise<T>((resolve,reject) => {
-      const abort = () => reject(new Error('DEADLINE_OR_CANCELLED'));
-      budget.addEventListener('abort',abort,{once:true});
-      Promise.resolve().then(() => {budget.throwIfAborted();return operation();}).then(resolve,reject)
-        .finally(() => budget.removeEventListener('abort',abort));
-    });
-  };
+  if (!options.claim || !options.request || !options.admission) throw new ObservedOperationError('MIGRATION_REQUIRED', 'Observed input requires a bound prepared allocation');
+  const view = options.admission.readAction(options.request.actionId);
+  if (view?.kind !== 'allocation' || !view.attempt || view.attempt.state !== 'active' ||
+    view.allocation.allocationId !== options.request.allocationId || view.allocation.device !== options.claim.identity.device ||
+    view.allocation.actionDigest !== observedActionDigest(options.request) || canonicalJson(view.allocation.actionRequest) !== canonicalJson(options.request) ||
+    view.attempt.owner.token !== options.claim.identity.token || view.attempt.owner.generation !== options.claim.identity.generation ||
+    options.claim.identity.attempt.kind !== 'observed' || options.claim.identity.attempt.id !== options.request.actionId) {
+    throw new ObservedOperationError('MIGRATION_REQUIRED', 'Observed input requires its immutable allocation binding');
+  }
+  let status: ObservedOutcome = 'refused'; let reason: ObservedReason | null = null;
+  let observing = false; let writing = false;
   const capture = async () => {
     observing = true;
-    const snapshot = await bounded(() => options.driver.observe(signal));
+    const snapshot = await boundedObserved(() => options.driver.observe(options.signal), options.signal);
     observing = false;
-    result.observations++;
-    if (snapshot.deviceId !== options.deviceId || snapshot.truncated || !Number.isFinite(snapshot.expiresAt) || Date.now() >= snapshot.expiresAt) throw new Error('INVALID_OBSERVATION');
-    if (options.onObservation) {
-      observing = true;
-      await bounded(() => options.onObservation!(snapshot,result.observations));
-      observing = false;
-    }
-    return snapshot;
+    if (snapshot.deviceId !== options.claim.identity.device || snapshot.truncated || !Number.isFinite(snapshot.expiresAt)
+      || Date.now() >= snapshot.expiresAt || !Number.isFinite(snapshot.capturedAt)) throw new Error('INVALID_OBSERVATION');
+    writing = true;
+    await boundedObserved(() => options.onObservation(snapshot, flags(options).observationCount + 1), options.signal);
+    writing = false; return snapshot;
   };
   try {
-    if (options.prepare) {preparing = true; await bounded(() => options.prepare!(signal));preparing = false;}
     const before = await capture();
-    if (guard(before,options.after)) result.status = 'already_satisfied';
+    if (guard(before, options.request.after)) status = 'already_satisfied';
     else {
-      if (!guard(before,options.before)) throw new Error('PRECONDITION_NOT_MET');
-      if (matches(before,options.selector).length !== 1) throw new Error('TARGET_NOT_UNIQUE');
-      const target = resolveActionTarget(before,options.selector,'tap');
-      await bounded(async () => {result.actionAttempted = true;await options.driver.tapOnce(target.ref,before,options.scenario,signal);});
-      result.actionAcknowledged = true;
-      while (!guard(await capture(),options.after)) await bounded(() => delay(options.pollIntervalMs ?? 100,undefined,{signal}));
-      result.status = 'outcome_observed';
+      if (!guard(before, options.request.before)) throw new Error('PRECONDITION_NOT_MET');
+      const targets = matches(before, options.request.action.selector);
+      if (targets.length !== 1) throw new Error('TARGET_NOT_UNIQUE');
+      const target = targets[0]!;
+      if (target.state?.enabled !== true) throw new Error('TARGET_UNAVAILABLE');
+      if (!target.actions.includes('tap') || !target.actions.includes('touch')) throw new Error('UNSUPPORTED_ACTION');
+      await boundedObserved(() => options.driver.tapOnce(target.ref, before, { app: options.request.app,
+        device: { udid: options.claim.identity.device }, values: {} }, options.signal), options.signal);
+      options.signal.throwIfAborted();
+      options.claim.recordActionReceipt({ actionAttempted: true, actionAcknowledged: true });
+      while (!guard(await capture(), options.request.after)) {
+        const view = options.admission.readAction(options.request.actionId);
+        if (view?.kind === 'allocation' && view.attempt?.cancellationRequested) throw new Error('CANCELLED');
+        await delay(100, undefined, { signal: options.signal });
+      }
+      status = 'outcome_observed';
     }
   } catch (error) {
-    result.status = preparing || observing || result.actionAttempted ? 'inconclusive' : 'refused';
-    result.reason = signal.aborted ? 'DEADLINE_OR_CANCELLED' : error instanceof Error ? error.message : 'OBSERVATION_FAILED';
+    const evidence = flags(options);
+    status = observing || writing || evidence.actionAttempted !== false ? 'inconclusive' : 'refused';
+    if (options.signal.aborted) reason = options.signal.reason instanceof Error && options.signal.reason.message === 'CANCELLED' ? 'CANCELLED' : 'DEADLINE_EXCEEDED';
+    else if (writing) reason = 'RESULT_EVIDENCE_UNCONFIRMED';
+    else if (observing) reason = 'OBSERVATION_UNCONFIRMED';
+    else if (evidence.actionAttempted === null || evidence.actionAcknowledged === null) reason = 'UI_ACTION_UNCONFIRMED';
+    else if (error instanceof StaleSnapshotError) reason = 'TARGET_UNAVAILABLE';
+    else reason = observedReason(error instanceof DeviceCliError ? error.code : error instanceof Error ? error.message : null);
   }
-  if (result.status !== 'inconclusive' && options.finish) {
-    try { await bounded(() => options.finish!(signal)); }
-    catch { result.status = 'inconclusive'; result.reason = 'FINISH_UNCONFIRMED'; }
-  }
-  if (options.onResult) {
-    // Local evidence finalization remains possible after the device deadline or cancellation.
-    try { await bounded(() => options.onResult!({ ...result }), AbortSignal.timeout(5_000)); }
-    catch { result.status = 'inconclusive'; result.reason = 'RESULT_EVIDENCE_UNCONFIRMED'; }
-  }
-  if (result.status === 'inconclusive') await attempt.uncertain(result.reason ?? 'UNCONFIRMED');
-  else await attempt.complete(result);
-  return result;
+  const evidence = flags(options);
+  return { status, reason, actionAttempted: evidence.actionAttempted, actionAcknowledged: evidence.actionAcknowledged, observations: evidence.observationCount };
 }

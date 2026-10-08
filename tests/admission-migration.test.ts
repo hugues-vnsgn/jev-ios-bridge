@@ -1,16 +1,35 @@
 import assert from 'node:assert/strict';
 import { test, type TestContext } from 'node:test';
 import { chmodSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from 'node:fs';
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { Admission } from '../src/device/admission.js';
 import { migrateAdmissionForTesting, type MigrationDeclaration } from '../src/device/admission-migration.js';
-import { ObservedActionJournal } from '../src/experimental/observed-journal.js';
 import { DatabaseSync } from 'node:sqlite';
 import { fileURLToPath } from 'node:url';
 import { runAdmissionMaintenance } from '../src/device/admission-maintenance.js';
+
+/** Test-only historical disk format, compared with the pinned original writer before its retirement. */
+class HistoricalJournalFixture {
+  constructor(private readonly root: string) {}
+  async begin(value: { deviceId: string; actionId: string; intent: unknown }) {
+    const input = JSON.parse(JSON.stringify(value)) as typeof value;
+    const directory = join(this.root, digest(input.deviceId));
+    mkdirSync(directory, { recursive: true, mode: 0o700 });
+    const put = (name: string, record: unknown) => writeFileSync(join(directory, name), JSON.stringify(record), { mode: 0o600, flag: 'wx' });
+    put('claim.json', { ...input, token: randomUUID() });
+    put(`${digest(input.actionId)}.intent.json`, { ...input, status: 'in-flight' });
+    const finish = (status: 'completed' | 'uncertain', result: unknown) => {
+      if (status === 'uncertain') put('quarantine.json', { deviceId: input.deviceId, reason: String(result) });
+      put(`${digest(input.actionId)}.result.json`, { ...input, status,
+        ...(status === 'completed' ? { result } : { reason: String(result) }) });
+      unlinkSync(join(directory, 'claim.json'));
+    };
+    return { complete: async (result: unknown) => finish('completed', result), uncertain: async (reason: string) => finish('uncertain', reason) };
+  }
+}
 
 const declaration: MigrationDeclaration = {
   version: 1, writersStopped: true, historicalRootsDeclaredOrExcluded: true,
@@ -48,7 +67,7 @@ test('explicit offline initialization enables admission and persists its operato
 test('completed historical actions retain original records and one read-only allocation identity without replay', async t => {
   const f = fixture(t);
   const source = f.options.defaultRoots.journal;
-  const journal = new ObservedActionJournal(source);
+  const journal = new HistoricalJournalFixture(source);
   await (await journal.begin({ deviceId: device.toLowerCase(), actionId: 'old-action', intent: { tap: 'old-selector' } })).complete(historicalResult);
   const deviceDirectory = join(source, readdirSync(source)[0]!);
   const sourceBytes = readdirSync(deviceDirectory).map(name => [name, readFileSync(join(deviceDirectory, name)).toString('hex')]);
@@ -80,7 +99,7 @@ for (const uncertainty of ['quarantine', 'claim', 'unfinished', 'temporary'] as 
   test(`${uncertainty} in a casing alias overrides apparent completion without changing sources`, async t => {
     const f = fixture(t);
     const source = f.options.defaultRoots.journal;
-    const journal = new ObservedActionJournal(source);
+    const journal = new HistoricalJournalFixture(source);
     await (await journal.begin({ deviceId: device.toLowerCase(), actionId: 'old', intent: {} })).complete(historicalResult);
     const directory = journalDirectory(source);
     mkdirSync(directory, { mode: 0o700 });
@@ -105,13 +124,13 @@ function treeBytes(root: string): unknown[] {
 
 test('well-formed case aliases consolidate clean completion and conflicting device bindings refuse activation', async t => {
   const f = fixture(t);
-  const journal = new ObservedActionJournal(f.options.defaultRoots.journal);
+  const journal = new HistoricalJournalFixture(f.options.defaultRoots.journal);
   for (const udid of [device, device.toLowerCase()]) await (await journal.begin({ deviceId: udid, actionId: 'alias', intent: {} })).complete(historicalResult);
   migrateAdmissionForTesting(declaration, f.options);
   assert.equal(f.open().readImportedAction('alias')?.outcome, 'outcome_observed');
   assert.equal(f.open().readImportedAction('alias')?.records.length, 4);
   const conflict = fixture(t);
-  const journal2 = new ObservedActionJournal(conflict.options.defaultRoots.journal);
+  const journal2 = new HistoricalJournalFixture(conflict.options.defaultRoots.journal);
   for (const udid of [device, otherDevice]) await (await journal2.begin({ deviceId: udid, actionId: 'duplicate', intent: {} })).complete(historicalResult);
   const before = treeBytes(conflict.options.defaultRoots.journal);
   assert.throws(() => migrateAdmissionForTesting(declaration, conflict.options), { code: 'STATE_UNAVAILABLE' });
@@ -238,7 +257,7 @@ test('changed historical sources on a rerun retain the migration guard and block
   const f = fixture(t);
   migrateAdmissionForTesting(declaration, f.options);
   const admission = f.open();
-  await new ObservedActionJournal(f.options.defaultRoots.journal).begin({ deviceId: device, actionId: 'appeared-later', intent: {} });
+  await new HistoricalJournalFixture(f.options.defaultRoots.journal).begin({ deviceId: device, actionId: 'appeared-later', intent: {} });
   const bytes = treeBytes(f.options.defaultRoots.journal);
   assert.throws(() => migrateAdmissionForTesting(declaration, f.options), { code: 'STATE_UNAVAILABLE' });
   assert.throws(() => admission.activation(), { code: 'STATE_UNAVAILABLE' });
@@ -258,7 +277,7 @@ for (const corruption of ['invalid-json', 'wrong-hash', 'symbolic-link', 'unexpe
   test(`${corruption} historical input refuses activation with source bytes unchanged`, async t => {
     const f = fixture(t);
     const source = f.options.defaultRoots.journal;
-    const journal = new ObservedActionJournal(source);
+    const journal = new HistoricalJournalFixture(source);
     await (await journal.begin({ deviceId: device, actionId: 'old', intent: {} })).complete(historicalResult);
     const path = join(journalDirectory(source), `${digest('old')}.intent.json`);
     if (corruption === 'invalid-json') writeFileSync(path, '{');
@@ -276,7 +295,7 @@ for (const corruption of ['invalid-json', 'wrong-hash', 'symbolic-link', 'unexpe
 test('explicit additional roots are imported, deduplicated and recorded without weakening defaults', async t => {
   const f = fixture(t);
   const extra = join(f.directory, 'other-home-journal');
-  await (await new ObservedActionJournal(extra).begin({ deviceId: device, actionId: 'extra', intent: {} })).uncertain('lost');
+  await (await new HistoricalJournalFixture(extra).begin({ deviceId: device, actionId: 'extra', intent: {} })).uncertain('lost');
   const input = { ...declaration, additionalJournalRoots: [extra, extra] };
   const receipt = migrateAdmissionForTesting(input, f.options);
   assert.equal(receipt.sources.length, 3);
@@ -309,7 +328,7 @@ test('offline maintenance accepts only an explicit declaration file and emits a 
 
 test('unreadable source and permissive or mismatched initialized storage remain closed', async t => {
   const f = fixture(t);
-  await (await new ObservedActionJournal(f.options.defaultRoots.journal).begin({ deviceId: device, actionId: 'private', intent: {} })).complete(historicalResult);
+  await (await new HistoricalJournalFixture(f.options.defaultRoots.journal).begin({ deviceId: device, actionId: 'private', intent: {} })).complete(historicalResult);
   const path = join(journalDirectory(f.options.defaultRoots.journal), `${digest('private')}.intent.json`);
   chmodSync(path, 0o000);
   try { assert.throws(() => migrateAdmissionForTesting(declaration, f.options), { code: 'STATE_UNAVAILABLE' }); }
@@ -327,7 +346,7 @@ test('unreadable source and permissive or mismatched initialized storage remain 
 
 test('conflicting attributable historical results cannot establish an observed outcome', async t => {
   const f = fixture(t);
-  const journal = new ObservedActionJournal(f.options.defaultRoots.journal);
+  const journal = new HistoricalJournalFixture(f.options.defaultRoots.journal);
   await (await journal.begin({ deviceId: device, actionId: 'conflict', intent: { tap: 'one' } })).complete(historicalResult);
   await (await journal.begin({ deviceId: device.toLowerCase(), actionId: 'conflict', intent: { tap: 'two' } })).complete(historicalResult);
   migrateAdmissionForTesting(declaration, f.options);
@@ -337,7 +356,7 @@ test('conflicting attributable historical results cannot establish an observed o
 
 test('a completed casing alias cannot finish the same action intent in another historical directory', async t => {
   const f = fixture(t);
-  const journal = new ObservedActionJournal(f.options.defaultRoots.journal);
+  const journal = new HistoricalJournalFixture(f.options.defaultRoots.journal);
   await (await journal.begin({ deviceId: device, actionId: 'split-terminal', intent: {} })).complete(historicalResult);
   const directory = journalDirectory(f.options.defaultRoots.journal, device.toLowerCase());
   mkdirSync(directory, { mode: 0o700 });

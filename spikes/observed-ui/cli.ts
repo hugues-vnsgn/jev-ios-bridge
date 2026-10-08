@@ -1,26 +1,32 @@
-import { resolve } from 'node:path';
-import { readObservedExperiment, runObservedExperiment } from '../../src/experimental/observed-run.js';
+import { dirname, resolve } from 'node:path';
+import { Admission } from '../../src/device/admission.js';
+import { readObservedExperiment, runObservedExperiment, parseObservedExperiment } from '../../src/experimental/observed-run.js';
+import { ObservedActionService, observedDriverFactory } from '../../src/observed/service.js';
+import { ObservedOperationError } from '../../src/observed/schema.js';
+import { observedActionExitCode } from '../../src/observed/report.js';
 
 const args = process.argv.slice(2);
 if (args.length !== 2) {
-  console.error('Usage: npx tsx spikes/observed-ui/cli.ts <experiment.json> <new-evidence-directory>');
+  console.error('Usage: npx tsx spikes/observed-ui/cli.ts <experiment.json> <evidence-directory>');
   process.exitCode = 2;
 } else {
+  let service: ObservedActionService | undefined;
   const abort = new AbortController();
-  const stop = () => abort.abort(new Error('Experiment cancelled'));
-  process.once('SIGINT', stop);
-  process.once('SIGTERM', stop);
+  const stop = () => { abort.abort(); void service?.close(); };
+  process.once('SIGINT', stop); process.once('SIGTERM', stop);
   try {
-    const result = await runObservedExperiment(await readObservedExperiment(resolve(args[0]!)), resolve(args[1]!),
-      { cwd: process.cwd(), signal: abort.signal });
-    console.log(JSON.stringify(result));
-    process.exitCode = result.status === 'outcome_observed' || result.status === 'already_satisfied' ? 0 : 2;
+    if (process.env.JEV_EXPERIMENTAL_OBSERVED !== '1') throw new ObservedOperationError('OBSERVED_DISABLED', 'Observed execution is disabled');
+    const raw = parseObservedExperiment(await readObservedExperiment(resolve(args[0]!)));
+    const admission = Admission.open();
+    service = new ObservedActionService({ admission, runsDir: dirname(resolve(args[1]!)), bridgeVersion: 'experimental', backend: 'real',
+      enabled: true, createDriver: observedDriverFactory({ cwd: process.cwd(), admission }) });
+    const result = await runObservedExperiment(raw, resolve(args[1]!), { cwd: process.cwd(), signal: abort.signal, service });
+    console.log(JSON.stringify(result)); process.exitCode = observedActionExitCode(result);
   } catch (error) {
-    // No vendor output, environment values or app content in the fallback error.
-    console.error(`Observed experiment did not complete (${error instanceof Error ? error.name : 'unknown error'}). Inspect its journal and evidence; do not replay uncertain input.`);
+    console.error(JSON.stringify(error instanceof ObservedOperationError ? error.toJSON() :
+      new ObservedOperationError('MIGRATION_REQUIRED', 'Shared admission must be configured before historical execution').toJSON()));
     process.exitCode = 2;
   } finally {
-    process.removeListener('SIGINT', stop);
-    process.removeListener('SIGTERM', stop);
+    await service?.close(); process.removeListener('SIGINT', stop); process.removeListener('SIGTERM', stop);
   }
 }
