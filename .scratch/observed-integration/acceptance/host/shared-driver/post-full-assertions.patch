@@ -1,0 +1,59 @@
+--- full-suite/tests/admission-driver.test.ts
++++ final/tests/admission-driver.test.ts
+@@ -5,8 +5,9 @@
+ import { tmpdir } from 'node:os';
+ import { join } from 'node:path';
+ import type { AllocationReservationInput } from '../src/device/admission-allocation.js';
++import { createPreparationDriver, createObservedDriver } from '../src/device/factory.js';
+ import { Admission } from '../src/device/admission.js';
+-import { MobileBuildMcpDriver, type CliRunner, type MobileBuildMcpDriverOptions } from '../src/device/index.js';
++import { MobileBuildMcpDriver, deviceWindowOpener, type CliRunner, type MobileBuildMcpDriverOptions } from '../src/device/index.js';
+ 
+ const udid = 'ABCDEF00-0000-4000-8000-000000000001';
+ const context = { app: { bundleId: 'dev.fixture' }, device: { udid }, values: {} };
+@@ -72,7 +73,10 @@
+       schemaVersion: '2', data: { artifacts: { simulatorId: udid } } });
+     return value;
+   };
+-  const p = await preparation(admission); const preparer = driver(root, admission, runner);
++  const p = await preparation(admission);
++  const options: MobileBuildMcpDriverOptions = { cwd: root, lockRoot: join(root, 'leases'), admission, runner,
++    deviceWindow: async () => {}, fakeBackend: { runner, window: undefined } };
++  const preparer = createPreparationDriver(options);
+   try {
+     await preparer.attachPreparation(p.claim, context, new AbortController().signal);
+     assert.deepEqual(calls, []);
+@@ -86,10 +90,10 @@
+     const consumed = admission.consumeAllocation({ allocationId: p.id, actionId: 'allocated', actionDigest: digest,
+       request: {}, appBundleId: 'dev.fixture', evidence: { bridgeVersion: 'fixture', directory: '/isolated/action', request: '/isolated/action/request.json' } });
+     assert.equal(consumed.kind, 'consumed'); if (consumed.kind !== 'consumed') throw new Error('consume');
+-    const action = driver(root, admission, runner); const before = [...calls];
++    const action = createObservedDriver(options); const before = [...calls];
+     await action.attachObserved(consumed.claim, context, new AbortController().signal);
+     assert.deepEqual(calls, before);
+-    await assert.rejects(preparer.observe(new AbortController().signal));
++    await assert.rejects(preparer.boot(new AbortController().signal));
+     await action.observe(new AbortController().signal);
+     assert.deepEqual(calls.slice(before.length), ['snapshot-ui']);
+     await action.close(new AbortController().signal);
+@@ -125,6 +129,10 @@
+     assert.throws(() => new MobileBuildMcpDriver({ cwd: root, admission }), /fake runner/);
+     const fake: CliRunner = async () => assert.fail('No backend construction effect');
+     assert.throws(() => new MobileBuildMcpDriver({ cwd: root, admission, runner: fake }), /fake runner/);
++    const realWindow = deviceWindowOpener(false, {})!;
++    assert.throws(() => new MobileBuildMcpDriver({ cwd: root, admission, runner: fake, deviceWindow: realWindow }), /fake runner/);
++    assert.throws(() => new MobileBuildMcpDriver({ cwd: root, admission, runner: fake, deviceWindow: realWindow,
++      fakeBackend: { runner: fake, window: realWindow } }), /injected runner and window opener/);
+     assert.throws(() => new MobileBuildMcpDriver({ cwd: root, admission, fakeBackend: { runner: fake } as never }), /window opener/);
+     assert.throws(() => new MobileBuildMcpDriver({ cwd: root, fakeBackend: { runner: fake, window: undefined } }), /isolated admission/);
+   } finally { rmSync(root, { recursive: true, force: true }); }
+@@ -307,7 +315,8 @@
+     await subject.launch(new AbortController().signal); await subject.readiness(new AbortController().signal);
+     assert.equal((await subject.park(['/isolated/readiness.json'], [], new AbortController().signal)).authority, 'committed');
+     const source = `
+-      import { Admission } from './src/device/admission.ts';
++      import { createPreparationDriver, createObservedDriver } from '../src/device/factory.js';
++import { Admission } from './src/device/admission.ts';
+       import { MobileBuildMcpDriver } from './src/device/index.ts';
+       const [root, id, device] = process.argv.slice(1);
+       const admission = Admission.forTesting({root: root + '/store', backend:'fake', initialize:false});

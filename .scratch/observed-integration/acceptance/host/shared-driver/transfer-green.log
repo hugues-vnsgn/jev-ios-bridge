@@ -1,0 +1,48 @@
+✔ a competing durable observed owner blocks legacy preparation before every device effect (35.552625ms)
+✔ preparation parks settled ownership and a consumed action attaches without relaunch or window (299.098917ms)
+✔ legacy cancellation aborts the caller wait and late transport settlement cannot dispatch cleanup (106.935209ms)
+✔ test authority rejects the real runner or real presentation before backend access (18.629166ms)
+✔ legacy admission excludes competing observed and preparation owners until confirmed close (98.497416ms)
+✔ unknown creation blocks legacy attachment before launch, selected listing and presentation (65.272209ms)
+✔ cancellation during list revokes all following selected-device effects (96.722083ms)
+✔ cancellation during window revokes all following selected-device effects (108.821708ms)
+✔ cancellation during launch-app revokes all following selected-device effects (135.837209ms)
+✔ cancellation during snapshot-ui revokes all following selected-device effects (165.785167ms)
+✔ cancellation during stop revokes all following selected-device effects (151.981166ms)
+✔ consumed observed ownership authorizes one touch even when the caller submits twice (238.356917ms)
+✔ observed late touch cannot authorize polling, fallback, cleanup or a second touch (261.93825ms)
+✔ cancelled preparation boot cannot proceed or park after a late receipt (128.677083ms)
+✔ cancelled preparation install cannot proceed or park after a late receipt (151.09075ms)
+✔ cancelled preparation launch-app cannot proceed or park after a late receipt (194.955333ms)
+✔ cancelled preparation readiness cannot proceed or park after a late receipt (204.961083ms)
+✔ malformed snapshot content cannot authorize a stop or make legacy admission available (126.241958ms)
+✔ initialized but missing authority refuses legacy effects without alternate-root fallback (22.4685ms)
+✔ a separate process consumes parked driver readiness without preparation or presentation (414.052916ms)
+✔ take holds the device in <ID>.lock, keyed by the device identity, and release gives it back (8.61675ms)
+✔ the lease file keeps the fields a 1.1 bridge reads: its process as pid, plus the run and what it owns (2.073042ms)
+✔ a live holder, including a 1.1 bridge, makes the device busy with the 1.1 wording (1.051ms)
+✔ a dead holder loses the lease to the next run, which gets the dead holder's record to sweep (66.744583ms)
+✔ a command in flight or with an unknown outcome keeps the lease; one that exited does not (1.090959ms)
+✔ the fence hook fences the unknown commands of its kind, which frees the lease, but not those still in flight (3.627833ms)
+✔ what the run owns is recorded in the lease file as it starts, and keeps the lease until it stops (7.559792ms)
+✔ late release: once every operation the run started settles, the kept lease is finished off (21.934208ms)
+✔ releasing a lease this run no longer holds leaves the new holder's file alone (1.034917ms)
+✔ rewrite writes via a private temp file: an interrupted write leaves the lease file holding its previous complete record, and cleans up the temp file (6.615083ms)
+✔ after an interrupted rewrite, a dead holder's lease can still be taken over (40.557792ms)
+✔ rewrite's temp file lives in the lease root and its name never ends in .lock, so a 1.1 bridge, which only opens <ID>.lock, ignores it (4.017458ms)
+✔ rewrite writes the temp file mode 0600 (4.843542ms)
+✔ own() and disown() calls on one lease serialize their writes, so concurrent updates can't interleave (7.009958ms)
+✔ release waits for a write already in flight, so a pending rename can't restore the file release just deleted (5.193ms)
+✔ release rechecks releasable once its own turn comes: an own() that arrives after release is queued loses to it and fails "not held", instead of putting the file back (7.139875ms)
+✔ after a failed disown() write, release still releases: the run confirmed the process stopped, so a stale owned record in the file does not keep the lease (1.215625ms)
+✔ two concurrent release() calls both resolve, and the lease file is gone (0.7595ms)
+✔ settle waits for every tracked operation, including one started meanwhile, and gives up when its signal aborts (15.001458ms)
+✔ iOS compatibility mode refuses dead holders without changing their lease bytes (42.362125ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3208.090291

@@ -1,0 +1,21 @@
+✔ a competing durable observed owner blocks legacy preparation before every device effect (43.13125ms)
+✔ preparation parks settled ownership and a consumed action attaches without relaunch or window (318.224875ms)
+✔ legacy cancellation aborts the caller wait and late transport settlement cannot dispatch cleanup (122.042541ms)
+✔ test authority rejects the real runner or real presentation before backend access (23.106708ms)
+✔ legacy admission excludes competing observed and preparation owners until confirmed close (104.369166ms)
+✔ unknown creation blocks legacy attachment before launch, selected listing and presentation (73.166834ms)
+✔ cancellation during list revokes all following selected-device effects (100.2755ms)
+✔ cancellation during window revokes all following selected-device effects (116.004083ms)
+✔ cancellation during launch-app revokes all following selected-device effects (133.528458ms)
+✔ cancellation during snapshot-ui revokes all following selected-device effects (158.553042ms)
+✔ cancellation during stop revokes all following selected-device effects (157.335583ms)
+✔ consumed observed ownership authorizes one touch even when the caller submits twice (263.11ms)
+✔ observed late touch cannot authorize polling, fallback, cleanup or a second touch (297.96725ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2049.367709

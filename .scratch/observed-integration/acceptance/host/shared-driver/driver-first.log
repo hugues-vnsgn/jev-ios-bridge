@@ -1,0 +1,236 @@
+✔ a competing durable observed owner blocks legacy preparation before every device effect (61.8565ms)
+✔ preparation parks settled ownership and a consumed action attaches without relaunch or window (1329.510083ms)
+✔ for an iOS script the factory builds the MobileBuildMCP driver from its options, carrying the pinned tap alias rule (586.849708ms)
+✔ the driver is built per scenario, never shared across the process (126.599125ms)
+✔ for an Android script the factory builds the Android driver, which ends at ANDROID_TOOLS_UNAVAILABLE without adb (13.521709ms)
+✔ the Android driver gets the script's device, else JEV_ANDROID_DEVICE, from the factory (17.020333ms)
+✔ the iOS driver writes the lease file a 1.1 bridge reads: exactly pid, token, deviceId, createdAt (424.935709ms)
+✖ a lease file that can no longer be read at release makes close fail and stays in place (622.886083ms)
+✔ an agent request with an unknown outcome keeps the lease until fence('agent') (15.008417ms)
+✔ fence('agent') leaves an adb command with an unknown outcome holding the lease (27.541833ms)
+✔ adb and agent commands in flight keep the lease until they exit, and a fence doesn't end one still in flight (35.246958ms)
+✔ settled(kind) is true only when every command of that kind exited or was fenced (29.709584ms)
+✔ runs pinned CLI actions in one workspace and normalizes compact captures (710.458875ms)
+✔ refreshes expired refs but refuses to act after a screen change (625.396625ms)
+✔ refreshes after actual MobileBuildMCP uiError SNAPSHOT_EXPIRED envelope (394.025291ms)
+✔ recoverable vendor error requires rejudgment if refreshed screen changed (336.265625ms)
+✔ locks a device across drivers and releases it after close (356.86175ms)
+✔ mixed-case spellings of one simulator UUID share the lock and canonical device identity (381.757584ms)
+✔ normalizes full captures and preserves structured CLI errors (0.579167ms)
+✔ keeps screenshot path as local evidence without adding it to screen elements (288.148167ms)
+✔ reads only the last 4 KiB from vendor launch logs and records unavailable tails (234.459958ms)
+✔ typing a supported literal uses JSON transport and replaces existing field text (127.919833ms)
+✔ leading hyphen value fails before MobileBuildMCP type-text is invoked (105.729292ms)
+✖ cancelled run waits for an issued CLI action acknowledgement before stop and unlock (142.409292ms)
+✔ independent UI command deadline retains lock when terminal outcome is lost (159.946584ms)
+✔ generic CLI transport error is not mistaken for terminal UI acknowledgement (201.508708ms)
+✖ cleanup deadline retains lock until the pending CLI later acknowledges and close is retried (135.990084ms)
+✖ a late acknowledgement finishes cleanup and releases the lock without another close call (1226.897791ms)
+✖ a lock left by an exited bridge process is cleared by the next run (114.39125ms)
+✔ a lock held by a live process names its holder and the lock file (51.968792ms)
+✖ unconfirmed app stop keeps the bridge device lock until cleanup retry (115.946792ms)
+✖ cancelled prepare waits for the issued launch acknowledgement before stop and unlock (85.444833ms)
+✖ cancelled observe waits for the issued snapshot acknowledgement before stop and unlock (112.007375ms)
+✔ missing launch or snapshot terminal result retains the device lock (191.603916ms)
+✔ acknowledged launch failure releases the lock without attempting app stop (196.477125ms)
+✖ pre-dispatch cancellation does not invoke launch or snapshot CLI (93.087458ms)
+✔ rejects booted aliases from defaults before any device command (21.747917ms)
+✔ with reuse enabled, actions request the settled capture and return it, with its screenshot, as the next observation (193.8795ms)
+✔ an action without a settled capture returns nothing, so the run captures again (148.540667ms)
+✔ observe starts the capture and the screenshot together, and can check they show the same screen (267.911083ms)
+✔ the default runner executes the pinned MobileBuildMCP CLI with Node, not npx (2.962708ms)
+✔ capture reuse is off by default, so actions stay non-verbose and the run captures again (157.288625ms)
+✖ launch arguments go to MobileBuildMCP as JSON, so a leading hyphen is not read as a CLI flag (115.090834ms)
+✔ the MobileBuildMCP driver refuses an Android app identity instead of launching an undefined bundle ID (18.877583ms)
+✔ an acknowledged stop failure (the app already exited) still releases the lock (179.197833ms)
+✔ measurement mode never leaves the run holding references from an older capture (522.731584ms)
+✔ appRunning and appProblem answer from the console helper in the runtime log's name: undefined before launch or without one (468.101ms)
+✔ take holds the device in <ID>.lock, keyed by the device identity, and release gives it back (23.367208ms)
+✔ the lease file keeps the fields a 1.1 bridge reads: its process as pid, plus the run and what it owns (7.936083ms)
+✔ a live holder, including a 1.1 bridge, makes the device busy with the 1.1 wording (17.477209ms)
+✔ a dead holder loses the lease to the next run, which gets the dead holder's record to sweep (125.503709ms)
+✔ a command in flight or with an unknown outcome keeps the lease; one that exited does not (18.588167ms)
+✔ the fence hook fences the unknown commands of its kind, which frees the lease, but not those still in flight (27.954417ms)
+✔ what the run owns is recorded in the lease file as it starts, and keeps the lease until it stops (72.958291ms)
+✔ late release: once every operation the run started settles, the kept lease is finished off (60.876042ms)
+✔ releasing a lease this run no longer holds leaves the new holder's file alone (46.966584ms)
+✔ rewrite writes via a private temp file: an interrupted write leaves the lease file holding its previous complete record, and cleans up the temp file (21.009084ms)
+✔ after an interrupted rewrite, a dead holder's lease can still be taken over (102.844958ms)
+✔ rewrite's temp file lives in the lease root and its name never ends in .lock, so a 1.1 bridge, which only opens <ID>.lock, ignores it (54.018125ms)
+✔ rewrite writes the temp file mode 0600 (54.890708ms)
+✔ own() and disown() calls on one lease serialize their writes, so concurrent updates can't interleave (91.144166ms)
+✔ release waits for a write already in flight, so a pending rename can't restore the file release just deleted (124.820208ms)
+✔ release rechecks releasable once its own turn comes: an own() that arrives after release is queued loses to it and fails "not held", instead of putting the file back (94.018917ms)
+✔ after a failed disown() write, release still releases: the run confirmed the process stopped, so a stale owned record in the file does not keep the lease (82.989083ms)
+✔ two concurrent release() calls both resolve, and the lease file is gone (44.278166ms)
+✔ settle waits for every tracked operation, including one started meanwhile, and gives up when its signal aborts (28.879083ms)
+✔ experimental tap uses one vendor touch down/up with hold; no semantic tap fallback (417.134ms)
+✔ missing touch capability refuses before submission (433.58975ms)
+✔ lost touch reply never invokes semantic tap or another touch (482.116375ms)
+✔ with the window on, prepare checks the simulator is booted, brings its window forward, then launches (792.289541ms)
+✔ a window that fails to open is a warning, never a failure (534.816333ms)
+✔ with the window on, a shut-down simulator is refused as DEVICE_NOT_BOOTED before the window opens or the app launches (314.079208ms)
+✔ a simulator still booting is DEVICE_NOT_BOOTED too (148.760416ms)
+✔ with the window on and the state unreadable, the window stays closed with a warning and the app still launches (250.609292ms)
+✔ with the window off, a successful launch sends no extra command and records no warning (198.223959ms)
+✔ with the window off, a launch that fails on a shut-down simulator becomes DEVICE_NOT_BOOTED (196.85575ms)
+✔ a launch failure on a booted simulator, or with the state unreadable, keeps its own error (620.773916ms)
+✔ the window command opens Simulator on the run's device (0.262375ms)
+✔ the window is on by default, off with --no-device-window or JEV_DEVICE_WINDOW=off (0.134583ms)
+✔ a run records prepare warnings on its prepared event, and nothing when there are none (5.594708ms)
+✔ a run on a shut-down simulator ends inconclusive with DEVICE_NOT_BOOTED, not DEVICE_ERROR (190.315ms)
+✔ the CLI takes --no-device-window on run only, and its help names it (486.298625ms)
+✔ malformed selected-device listing revokes dispatch before window or launch (161.123542ms)
+ℹ tests 83
+ℹ suites 0
+ℹ pass 73
+ℹ fail 10
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8721.470209
+
+✖ failing tests:
+
+test at tests/device-lease.test.ts:1:1672
+✖ a lease file that can no longer be read at release makes close fail and stays in place (622.886083ms)
+  AssertionError [ERR_ASSERTION]: The error is expected to be an instance of "SyntaxError". Received "DeviceCliError"
+  
+  Error message:
+  
+  Cleanup ended before the issued device operation acknowledged; device lock retained
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/device-lease.test.ts:43:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: DeviceCliError: Cleanup ended before the issued device operation acknowledged; device lock retained
+        at MobileBuildMcpDriver.finishClose (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/src/device/index.ts:1048:13)
+        at async waitForActual (node:assert:615:5)
+        at async strict.rejects (node:assert:738:25)
+        at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/device-lease.test.ts:43:5)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/device.test.ts:2:2908
+✖ cancelled run waits for an issued CLI action acknowledgement before stop and unlock (142.409292ms)
+  Error [DeviceCliError]: Device operation outcome is unknown; device lock retained
+      at MobileBuildMcpDriver.finishClose (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/src/device/index.ts:1028:13)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/device.test.ts:335:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'UI_ACTION_UNCONFIRMED',
+    terminalAcknowledged: false
+  }
+
+test at tests/device.test.ts:2:7939
+✖ cleanup deadline retains lock until the pending CLI later acknowledges and close is retried (135.990084ms)
+  AbortError: This operation was aborted
+      at new DOMException (node:internal/per_context/domexception:79:18)
+      at AbortController.abort (node:internal/abort_controller:572:18)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/device.test.ts:431:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/device.test.ts:2:9777
+✖ a late acknowledgement finishes cleanup and releases the lock without another close call (1226.897791ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/device.test.ts:481:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/device.test.ts:2:11439
+✖ a lock left by an exited bridge process is cleared by the next run (114.39125ms)
+  Error [DeviceCliError]: Device operation outcome is unknown; device lock retained
+      at MobileBuildMcpDriver.finishClose (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/src/device/index.ts:1028:13)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/device.test.ts:500:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'UI_ACTION_UNCONFIRMED',
+    terminalAcknowledged: false
+  }
+
+test at tests/device.test.ts:2:12867
+✖ unconfirmed app stop keeps the bridge device lock until cleanup retry (115.946792ms)
+  Error [DeviceCliError]: Device operation outcome is unknown; device lock retained
+      at MobileBuildMcpDriver.finishClose (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/src/device/index.ts:1028:13)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/device.test.ts:532:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'UI_ACTION_UNCONFIRMED',
+    terminalAcknowledged: false
+  }
+
+test at tests/device.test.ts:2:13906
+✖ cancelled prepare waits for the issued launch acknowledgement before stop and unlock (85.444833ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/device.test.ts:566:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/device.test.ts:2:15576
+✖ cancelled observe waits for the issued snapshot acknowledgement before stop and unlock (112.007375ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/device.test.ts:610:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/device.test.ts:2:19641
+✖ pre-dispatch cancellation does not invoke launch or snapshot CLI (93.087458ms)
+  Error [DeviceCliError]: Device operation outcome is unknown; device lock retained
+      at MobileBuildMcpDriver.finishClose (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/src/device/index.ts:1028:13)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/device.test.ts:704:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'UI_ACTION_UNCONFIRMED',
+    terminalAcknowledged: false
+  }
+
+test at tests/device.test.ts:2:26728
+✖ launch arguments go to MobileBuildMCP as JSON, so a leading hyphen is not read as a CLI flag (115.090834ms)
+  Error [AdmissionError]: Claim no longer owns admission
+      at AdmissionSqlite.owned (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/src/device/admission-sqlite.ts:238:363)
+      at <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/src/device/admission-sqlite.ts:618:24)
+      at AdmissionSqlite.write (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/src/device/admission-sqlite.ts:227:87)
+      at AdmissionSqlite.finalize (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/src/device/admission-sqlite.ts:615:17)
+      at OwnedClaim.finalize (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/src/device/admission.ts:154:64)
+      at MobileBuildMcpDriver.finishAdmission (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/src/device/index.ts:1018:34)
+      at MobileBuildMcpDriver.finishClose (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/src/device/index.ts:1046:37)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/device.test.ts:835:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'STALE_OWNER'
+  }

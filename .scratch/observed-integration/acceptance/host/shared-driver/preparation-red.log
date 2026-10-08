@@ -1,0 +1,19 @@
+✔ a competing durable observed owner blocks legacy preparation before every device effect (42.486625ms)
+✖ preparation parks settled ownership and a consumed action attaches without relaunch or window (78.802875ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 292.3285
+
+✖ failing tests:
+
+test at tests/admission-driver.test.ts:1:3620
+✖ preparation parks settled ownership and a consumed action attaches without relaunch or window (78.802875ms)
+  TypeError: preparer.attachPreparation is not a function
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/admission-driver.test.ts:76:20)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

@@ -1,0 +1,128 @@
+✔ back taps the navigation bar's BackButton by its reference, and records the path (402.7645ms)
+✔ without a BackButton, back taps the leftmost back-labelled button in the top bar, never one lower on the screen (386.311167ms)
+✔ with no back button in the top bar, back swipes in from the left edge with the screen's size in points (377.674292ms)
+✔ scroll swipes inside the largest scroll view with a centred stroke, the finger moving against the scroll's direction (267.516167ms)
+✔ a version 1 swipe keeps MobileBuildMCP's default stroke: no --distance (194.942208ms)
+✔ scroll with no scroll view uses the AXe preset named for the finger's direction, in the screen's centre, with the screen's size in points (273.176917ms)
+✔ tapAt is UNSUPPORTED_ACTION on iOS before any device command: MobileBuildMCP 2.7.1 has no tap at a point (163.289333ms)
+✔ one attempt verifies a fresh visible outcome (1.187ms)
+✔ cleanup failure cannot publish completed outcome (0.229958ms)
+✔ already satisfied sends nothing (0.099042ms)
+✔ raw duplicate identifiers refuse even when frames overlap (0.109208ms)
+✔ lost acknowledgement never polls or retries and quarantines (0.138084ms)
+✔ unchanged screen times out with one submission (15.057833ms)
+✔ prepare failure quarantines before any observation (0.193ms)
+✔ evidence write failure after input is inconclusive (0.146791ms)
+✔ ambiguous postcondition after action is inconclusive (0.114875ms)
+✔ nonfinite capture validity refuses before input (0.084917ms)
+✔ observation transport failure is uncertain without input (0.064709ms)
+✔ real driver single submission suppresses expired-reference retry and near-TTL refresh (280.8145ms)
+✔ cancellation after submission does not finish or observe again (0.424042ms)
+✔ late acknowledgement after deadline cannot enable observation or completion (46.868333ms)
+✔ journal claim refusal prevents prepare and observation (0.193042ms)
+✔ initial evidence persistence failure quarantines without input (0.09525ms)
+✔ result evidence is persisted after finish and before journal completion (0.164166ms)
+✔ result evidence failure quarantines before any successful journal terminal (0.09275ms)
+✔ cancelled attempt still persists inconclusive result before quarantine (0.156208ms)
+✔ journal intent includes scenario and observation limits (0.109667ms)
+✔ selector resolves one physical target across contained vendor aliases (1.847959ms)
+✔ same identity at distant frames remains ambiguous (5.209334ms)
+✔ Nolan same-frame button aliases resolve one tap target without a vendor identifier (0.219708ms)
+✔ unidentified tap buttons with different frames or actions remain ambiguous (0.162167ms)
+✔ same-frame no-identifier aliases are not generalized to typing or swiping (0.091125ms)
+✔ missing, disabled, offscreen, and truncated targets fail before action (0.118458ms)
+✔ an element marked selectable: false never matches, even when its label and role do (0.091209ms)
+✔ an absent guard ignores an unselectable element: it never counts as forbidden either (0.069ms)
+✔ screen guards require unique present anchors and zero forbidden anchors (0.075333ms)
+✔ a value filter selects the field whose value matches exactly (0.075ms)
+✔ one submitted script prepares once, acts on a unique target, and passes a Noul-only checkpoint (4.454625ms)
+✔ ambiguous targets stop inconclusively before any device action (0.354292ms)
+✔ checkpoint false fails and uncertain abstains with recorded probabilities (0.371583ms)
+✔ ADR-0004: a confidently false claim fails beside an uncertain one, and both stay in the report (0.475083ms)
+✔ checkpoint refuses an assertion judgment from a different model (0.207375ms)
+✔ stale reference retries only after a same-screen guard and unique selector refresh (0.361166ms)
+✔ phase timings include stale retry work, wait polling, and checkpoint judgment (96.133667ms)
+✔ failed prepare still records elapsed phase totals and cleanup (19.275917ms)
+✔ failed action records its elapsed duration and failed step (9.882542ms)
+✔ changed screen after stale reference never retries an input (0.42975ms)
+✔ pre-cancelled script does not dispatch device preparation (0.195167ms)
+✔ wall deadline ends a non-cooperative device observation (11.597084ms)
+✔ wrong-screen guard records the fresh capture before stopping (0.599291ms)
+✔ wait stops on an unexpected third screen instead of polling until timeout (1.932916ms)
+✔ global step budget stops before an unexecuted checkpoint (0.377583ms)
+✔ bounded wait observes the desired screen before the next checkpoint (1.734083ms)
+✔ wait timeout remains inconclusive and does not query Jev (5.529125ms)
+✔ cleanup failure prevents a pass even after assertion proof was recorded (0.462709ms)
+✔ cancellation waits for pending action acknowledgement before cleanup completes (6.514084ms)
+✔ report shows the wrong total beside the expected claim and never passes an interrupted journal (0.244375ms)
+✔ the step after an action uses the settled screen the action returned, without capturing again (0.4935ms)
+✔ a step that fails because the app died is reported as APP_EXITED (0.249833ms)
+✔ a step that fails while the driver says the app froze is reported as APP_NOT_RESPONDING, and the error event keeps its fields (0.202ms)
+✔ the driver's problem wins over appRunning: an APP_EXITED problem names the reason, and no problem keeps the step's own error (0.2395ms)
+✔ a driver that can wait for late app events is asked after a failed step, and its answer names the reason (0.424917ms)
+✔ a verdict already given stands when the driver then reports a problem (0.155166ms)
+✔ a cancel wins over the driver's problem and over appRunning (0.493ms)
+✔ an Android-path error reports its own new reason code, with no vendorCode (0.199917ms)
+✖ a real MobileBuildMCP uiError APP_NOT_INSTALLED still reports DEVICE_ERROR with the vendor code (289.60325ms)
+✔ the run reads the tap alias rule from the driver, not from a run-wide option (1.062834ms)
+✔ the started event names an iOS app by bundle ID and records a null bundle ID on an Android run (0.918709ms)
+✔ an Android started event defaults a missing activity to null and missing intent extras to {} (0.186167ms)
+✔ an Android run with no replace-text step gets a report.json with the app identity but no typedFields key (68.024417ms)
+✔ a DeviceReasonError carrying a vendorCode records it in the error event and in report.json (67.123625ms)
+✔ a DeviceReasonError whose vendorCode fails the pattern check records none (0.528459ms)
+✔ an Android run renders Jev's view with the Android header and placeholder, matching the rule started records (0.275458ms)
+✔ an Android run's prepared event carries the device identity, serial, agent SHA-256, and a crash-takeover sweep; the iOS driver sets none of it (0.990834ms)
+✔ an Android replace-text step records its driver-reported shown value, and a screen that never settled marks the next step (0.716834ms)
+✔ a tap that returns an ActOutcome records no shown value: only a replace-text step has one (0.312792ms)
+✔ an Android shown value echoing a typed value is redacted in run.jsonl, report.json, and the prose report (99.6695ms)
+✔ the run log keeps projectionRule unredacted even when a script value equals it, but redacts that value everywhere else (110.17025ms)
+✔ a typed value that collides with "android" never corrupts the recorded platform, report.json's Android fields, or the prose report (100.703416ms)
+✔ no typed value or API key survives anywhere in the run's written evidence, whichever field carries it (109.12975ms)
+✔ the prose report names the prepared device identity, serial, agent SHA-256 and sweep, and each shown value plus "screen still changing", Android only (0.475792ms)
+✔ an iOS run's prose report ignores a device line, typed fields and "screen still changing" even when the events happen to carry them (0.237334ms)
+✔ the prose report shows "screen still changing" for an unsettled action step too, not only checkpoints (0.258208ms)
+✔ the driver gets the device an iOS script names, and no device for an Android script (0.483333ms)
+✔ a script is typed per platform: an iOS app and simulator, or an Android package and device (0.054959ms)
+✔ a version 2 script with start: attach runs, and prepare and the started event get the start mode (4.494375ms)
+✔ an explicit start: restart reaches prepare and the started event as restart (0.396708ms)
+✔ a script with no start passes prepare no start mode and records none, exactly as before (0.453292ms)
+✔ an Android attach script passes the start mode too (0.71325ms)
+✔ Android attach takes the lease, checks the app is in front, starts the streams and the agent, and never relaunches (133.174125ms)
+✔ Android attach checks the app is in front before it starts any stream (117.294834ms)
+✔ Android attach refuses when another app is in front, before anything to undo, and releases the lease (25.09275ms)
+✔ Android attach refuses when no activity is resumed (11.363084ms)
+✔ Android attach refuses an app that isn't installed with APP_NOT_INSTALLED, before the foreground check (23.401917ms)
+✔ Android restart, explicit or by default, still force-stops and launches and never reads the resumed activity (185.695917ms)
+✔ the resumed package is read from topResumedActivity, else from a ResumedActivity line (0.229125ms)
+✔ iOS attach is refused with UNSUPPORTED_ACTION before any device command, lease or window (108.402875ms)
+✔ an iOS attach run ends INCONCLUSIVE with UNSUPPORTED_ACTION and never touches the simulator (50.152083ms)
+✔ iOS restart, explicit or by default, still launches the app (467.89ms)
+ℹ tests 99
+ℹ suites 0
+ℹ pass 98
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2294.434084
+
+✖ failing tests:
+
+test at tests/scripted-run.test.ts:1:39581
+✖ a real MobileBuildMCP uiError APP_NOT_INSTALLED still reports DEVICE_ERROR with the vendor code (289.60325ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CLEANUP_FAILED'
+  - 'DEVICE_ERROR'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/scripted-run.test.ts:788:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CLEANUP_FAILED',
+    expected: 'DEVICE_ERROR',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
