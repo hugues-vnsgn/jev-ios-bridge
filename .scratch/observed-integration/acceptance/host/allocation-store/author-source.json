@@ -1,0 +1,217 @@
+{
+  "base": "dc31c577a30b2aca0c8638f03420fd05b611dce7",
+  "candidate": "c8930102e6f04218f3097bb937434095521a9782",
+  "source": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-store/.scratch/observed-integration/acceptance/host/allocation-store",
+  "files": [
+    {
+      "file": "active-list-green.log",
+      "sha256": "455666f6351244a71ac1ce162a0fcc10fecb457477ee218b7f5fc667490674b1",
+      "bytes": 229
+    },
+    {
+      "file": "active-list-red.log",
+      "sha256": "59b28d6aae18dd9640c513ccd4e5ae6a6e9956deb79e739bb20b2cac304b69ee",
+      "bytes": 777
+    },
+    {
+      "file": "admission-suites.log",
+      "sha256": "3aa328f564e4aa3d12d5808d797647da7a9721f06498c95b3977cfd3eae95f21",
+      "bytes": 13656
+    },
+    {
+      "file": "build-final.log",
+      "sha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+      "bytes": 75
+    },
+    {
+      "file": "build.log",
+      "sha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+      "bytes": 75
+    },
+    {
+      "file": "coverage-final.log",
+      "sha256": "bb251b1bd2068d29aae5f27dcdc6cc138110c6b7337f41fedf43cc913db93789",
+      "bytes": 15889
+    },
+    {
+      "file": "coverage-green.log",
+      "sha256": "2a93f0b9c5318367954162bab48bcfde7b8c4689d0937e245f26d6121f8248ea",
+      "bytes": 15180
+    },
+    {
+      "file": "coverage.log",
+      "sha256": "52afa5b46bee3522e530890b2d1f543b4c6ac7c0259390c13508f1a3239f93bb",
+      "bytes": 14845
+    },
+    {
+      "file": "creation-regression-green.log",
+      "sha256": "ae96aba1e13a90db68bfad661de6447f7e4d78ed67bacad677bb019b734e1d34",
+      "bytes": 437
+    },
+    {
+      "file": "creation-revocation-green.log",
+      "sha256": "fefc8eb4db03ab6d5f1371ad01996e99dbc1e754d9d1df5588c11d52cb03c62f",
+      "bytes": 314
+    },
+    {
+      "file": "creation-revocation-red.log",
+      "sha256": "c491871aa6a1cebfce60994abae81bc00b6f6b32c52d84a337992ca26f89d8bc",
+      "bytes": 1679
+    },
+    {
+      "file": "evidence-revocation-green.log",
+      "sha256": "324b6bb2cb4c0b327cbb5f7a72c5decc5d016e3c916b6691569ca187309ff298",
+      "bytes": 217
+    },
+    {
+      "file": "evidence-revocation-red.log",
+      "sha256": "df4a47a239a12d03288c838717ca2bfa257a75d6510be05c70d29ca109e5de51",
+      "bytes": 914
+    },
+    {
+      "file": "jev-allocation-boundaries.log",
+      "sha256": "59a03db62006018e6d8fbc0a6f2cf7efd0138dfd839f302a4b59a5cf305f1e4b",
+      "bytes": 1911
+    },
+    {
+      "file": "jev-allocation-dependencies.log",
+      "sha256": "1b34a2c268f687dfa21897aa10182e564a84edbfcf6cd6e44642b31068d34467",
+      "bytes": 8717
+    },
+    {
+      "file": "jev-allocation-green-cancel.log",
+      "sha256": "6a6ee9d64cd4f00360a3e2846f725bc05f15154051ffecbe8d7c70f65b8c2516",
+      "bytes": 754
+    },
+    {
+      "file": "jev-allocation-green-create.log",
+      "sha256": "6511ae548c62f75b628897ae0a0fc48ef1a89610a33fbb0bc20e122acae05d10",
+      "bytes": 369
+    },
+    {
+      "file": "jev-allocation-green-park.log",
+      "sha256": "35fadb1b607cd0124e11b6e11e01b599955256019c346629483764c262dc7c9a",
+      "bytes": 504
+    },
+    {
+      "file": "jev-allocation-green-reservation.log",
+      "sha256": "cfab82a57445308e30a8d5af022bb77dd495d823cd7c6063cac269e152a4989c",
+      "bytes": 246
+    },
+    {
+      "file": "jev-allocation-processes.log",
+      "sha256": "369689859dfff09f4e2c6e4fb8dc898b2a2c6b0adf63f34780afba6f7a8c0c0e",
+      "bytes": 4145
+    },
+    {
+      "file": "jev-allocation-red-bypass.log",
+      "sha256": "5e9ba930b13fdc783b8e093c13318bf580a42193f00c7d1ede9b1452e006d1bd",
+      "bytes": 1782
+    },
+    {
+      "file": "jev-allocation-red-cancel.log",
+      "sha256": "512ce5f32e587f90cf02d8edf29f796387e99bc192125c3f71c083de577a5a6c",
+      "bytes": 2343
+    },
+    {
+      "file": "jev-allocation-red-create.log",
+      "sha256": "5fe79a5ed4483d50fcdd44d158f65d1c34cb8c5e0da03134eae33a09afc64652",
+      "bytes": 1170
+    },
+    {
+      "file": "jev-allocation-red-park.log",
+      "sha256": "e8cca4f372a81a97573648fb842296b0bf0ff885737eccdc6296ec32194277bf",
+      "bytes": 1210
+    },
+    {
+      "file": "jev-allocation-red-reservation.log",
+      "sha256": "a6e00a19c7ac951ff1cd552c6f54e03697f32ab1bc4700eacac4e1b3bb18a4fd",
+      "bytes": 919
+    },
+    {
+      "file": "jev-allocation-types-initial.log",
+      "sha256": "9653c46bed473acdc3cf0e03fef0b69cd5686222facecf6c954652db15bb2bb4",
+      "bytes": 1048
+    },
+    {
+      "file": "jev-allocation-types-park.log",
+      "sha256": "a5f26a123d51067a484f97018e93e9514bb2902f7ffbcecb9d2baba69d5b928a",
+      "bytes": 50
+    },
+    {
+      "file": "local-revocation-green.log",
+      "sha256": "f3d42b49b5366293cf8d5bacb7fe5aa64f9f00bb5323a80903a643353045e8fe",
+      "bytes": 206
+    },
+    {
+      "file": "local-revocation-red.log",
+      "sha256": "06a4c0634758b24743676298d29a137653049041686ef78bb1ee0b0db55cef05",
+      "bytes": 1005
+    },
+    {
+      "file": "node24-green.log",
+      "sha256": "3ae7c81887f3165e651b66b9f86046dea95c0ab12c499461470a4c1a9051b7c7",
+      "bytes": 14481
+    },
+    {
+      "file": "node24.log",
+      "sha256": "1fd98334c85070bb45a4abb0add3915bd900337e12898991d257f1b7276d5837",
+      "bytes": 15186
+    },
+    {
+      "file": "park-deadline-green.log",
+      "sha256": "508ebdacf12c75c71f5d182e95adc009a5be01fe75f13cd8f289c6510aef1518",
+      "bytes": 212
+    },
+    {
+      "file": "park-deadline-red.log",
+      "sha256": "ede56ea8a9bdd43f7ee1fe783fa3f501c0d0c0f372baf32163b9a2be7e667233",
+      "bytes": 901
+    },
+    {
+      "file": "process-park-green.log",
+      "sha256": "c99823eeb9fced387292a6acc0340636911e6446b07f843773a7318f1d0b1cc6",
+      "bytes": 225
+    },
+    {
+      "file": "process-park-red.log",
+      "sha256": "be71f7357107f8bc2f86ac7c60b72ecb07b3307674e4e8a7e3e49242345c7e0e",
+      "bytes": 1078
+    },
+    {
+      "file": "projections.log",
+      "sha256": "ed03575a2b6c47ae03c8de0a59b6e0425bb6e8a2bcefe6f9e85e7e469dd02413",
+      "bytes": 479
+    },
+    {
+      "file": "report.md",
+      "sha256": "b555dcf0c674885c1481f3034bfa73794845cc9135d12ed896cbd7e1d50513be",
+      "bytes": 9942
+    },
+    {
+      "file": "resume-green.log",
+      "sha256": "d29962ad76a69c80d8e34c1ef5180b92a878a75ef5e36775cd50e30939df7984",
+      "bytes": 314
+    },
+    {
+      "file": "resume-red.log",
+      "sha256": "b044fc52c0fa664c98ec457c66ffe884242bb074d9120fcbc8f3ef34dc91e701",
+      "bytes": 6129
+    },
+    {
+      "file": "typecheck-final.log",
+      "sha256": "a5f26a123d51067a484f97018e93e9514bb2902f7ffbcecb9d2baba69d5b928a",
+      "bytes": 50
+    },
+    {
+      "file": "typecheck-green.log",
+      "sha256": "a5f26a123d51067a484f97018e93e9514bb2902f7ffbcecb9d2baba69d5b928a",
+      "bytes": 50
+    },
+    {
+      "file": "typecheck.log",
+      "sha256": "36d461a38eab1c74a72b03e661354ee9c54fb27a3f04ebb94d987c7225dc5708",
+      "bytes": 1021
+    }
+  ]
+}

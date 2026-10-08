@@ -1,0 +1,84 @@
+✔ reservation globally binds identity; duplicates are pure retrieval and capacity refuses without consuming identity (41.098375ms)
+✔ creation guard fences all new admissions and receipt binding is write-once; existing owner can finish (130.243042ms)
+✔ park revokes preparation, consume transfers one fresh attachment, success retains allocation and evidence authority (347.107875ms)
+✔ cancellation fences reservation and action commands; parked readiness survives reads and expiry only transitions on consume (250.094917ms)
+✔ cancelled dispatched preparation and abandoned creation retain uncertainty and capacity (76.473166ms)
+✔ all protected UUIDs and duplicate inventory assignments are excluded independently of host admission availability (45.366583ms)
+✔ budget prerequisite boundary maxReservedBytes=799 does not reserve identity (17.539208ms)
+✔ budget prerequisite boundary simulatorFreeBytes=2799 does not reserve identity (19.190958ms)
+✔ budget prerequisite boundary stagingFreeBytes=2899 does not reserve identity (19.435708ms)
+✔ budget prerequisite boundary artifactBytes=201 does not reserve identity (19.540209ms)
+✔ exact free-space boundary accepts and stored configuration/content binding is immutable (45.625792ms)
+✔ creation unknown receipt retains host guard and capacity (67.144625ms)
+✔ creation malformed receipt retains host guard and capacity (72.246209ms)
+✔ creation collision receipt retains host guard and capacity (68.809625ms)
+✔ unknown creation blocks ready consumption but exact action duplicate remains retrieval (265.505125ms)
+✔ owner recovery is explicit, monotonic and preserves parked readiness (242.16075ms)
+✔ active allocation retirement is busy; explicit ready cancellation consumes stock without device effects (255.723917ms)
+✔ independent processes reserve one global identity and one remaining capacity slot (227.486875ms)
+✔ concurrent byte/capacity boundary admits allocation eight and refuses nine (502.062334ms)
+✔ parked preparation exits normally then two new processes yield one action driver attachment (351.388ms)
+✔ ready cancellation versus start is transactionally ordered across processes (327.39775ms)
+✔ TTL boundary versus early start grants at most one owner across processes (366.370708ms)
+✔ real owner death at reserveAllocation/beforeCommit cannot replay or split terminal authority (115.383042ms)
+✔ real owner death at reserveAllocation/afterCommit cannot replay or split terminal authority (134.122542ms)
+✔ real owner death at startCreation/beforeCommit cannot replay or split terminal authority (137.547083ms)
+✔ real owner death at startCreation/afterCommit cannot replay or split terminal authority (154.146834ms)
+✔ real owner death at recordCreation/beforeCommit cannot replay or split terminal authority (158.360333ms)
+✔ real owner death at recordCreation/afterCommit cannot replay or split terminal authority (166.622792ms)
+✔ real owner death at admitAllocation/beforeCommit cannot replay or split terminal authority (169.427833ms)
+✔ real owner death at admitAllocation/afterCommit cannot replay or split terminal authority (170.760583ms)
+✔ real owner death at parkAllocation/beforeCommit cannot replay or split terminal authority (283.832584ms)
+✔ real owner death at parkAllocation/afterCommit cannot replay or split terminal authority (290.164708ms)
+✔ real owner death at consumeAllocation/beforeCommit cannot replay or split terminal authority (297.474917ms)
+✔ real owner death at consumeAllocation/afterCommit cannot replay or split terminal authority (315.297667ms)
+✔ real owner death at finalize/beforeCommit cannot replay or split terminal authority (385.048416ms)
+✔ real owner death at finalize/afterCommit cannot replay or split terminal authority (392.400125ms)
+✔ real owner death at recordActionExport/beforeCommit cannot replay or split terminal authority (375.853416ms)
+✔ real owner death at recordActionExport/afterCommit cannot replay or split terminal authority (403.343416ms)
+✖ duplicate known-device admission cannot retire or disturb the live preparation owner (86.206333ms)
+✖ observed success cannot contradict persisted dispatch flags or skip captures (237.270458ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 38
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8165.88025
+
+✖ failing tests:
+
+test at tests/admission-allocation.test.ts:1:21293
+✖ duplicate known-device admission cannot retire or disturb the live preparation owner (86.206333ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-store/tests/admission-allocation.test.ts:280:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/admission-allocation.test.ts:1:21949
+✖ observed success cannot contradict persisted dispatch flags or skip captures (237.270458ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-store/tests/admission-allocation.test.ts:286:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }

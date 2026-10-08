@@ -1,0 +1,10 @@
+✔ reservation globally binds identity; duplicates are pure retrieval and capacity refuses without consuming identity (39.378959ms)
+✔ creation guard fences all new admissions and receipt binding is write-once; existing owner can finish (129.974042ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 330.187584

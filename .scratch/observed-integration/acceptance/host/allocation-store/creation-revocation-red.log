@@ -1,0 +1,40 @@
+✖ creation receipt beforeCommit failure revokes the local reservation without replay (70.76425ms)
+✖ creation receipt afterCommit failure revokes the local reservation without replay (79.895792ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 318.826208
+
+✖ failing tests:
+
+test at tests/admission-allocation.test.ts:1:29660
+✖ creation receipt beforeCommit failure revokes the local reservation without replay (70.76425ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-store/tests/admission-allocation.test.ts:391:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/admission-allocation.test.ts:1:29660
+✖ creation receipt afterCommit failure revokes the local reservation without replay (79.895792ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-store/tests/admission-allocation.test.ts:391:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }

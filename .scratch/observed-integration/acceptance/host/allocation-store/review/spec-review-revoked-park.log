@@ -1,0 +1,26 @@
+{"mode":"control","parkAuthority":"committed","parkedState":"ready","consumed":"consumed","newActionEffects":1}
+{"mode":"cancel-write-failure","parkAuthority":"committed","parkedState":"ready","consumed":"consumed","newActionEffects":1}
+{"mode":"terminal-write-failure","parkAuthority":"committed","parkedState":"ready","consumed":"consumed","newActionEffects":1}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Locally revoked preparation must not park and transfer new action authority
++ actual - expected
+
++ [
++   'cancel-write-failure',
++   'terminal-write-failure'
++ ]
+- []
+
+    at <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-store/.scratch/observed-integration/acceptance/host/allocation-store/spec-review-revoked-park.mts:60:8) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [ 'cancel-write-failure', 'terminal-write-failure' ],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.8.1

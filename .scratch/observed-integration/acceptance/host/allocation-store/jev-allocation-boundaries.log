@@ -1,0 +1,25 @@
+✔ reservation globally binds identity; duplicates are pure retrieval and capacity refuses without consuming identity (36.251417ms)
+✔ creation guard fences all new admissions and receipt binding is write-once; existing owner can finish (133.766375ms)
+✔ park revokes preparation, consume transfers one fresh attachment, success retains allocation and evidence authority (331.067834ms)
+✔ cancellation fences reservation and action commands; parked readiness survives reads and expiry only transitions on consume (274.879333ms)
+✔ cancelled dispatched preparation and abandoned creation retain uncertainty and capacity (78.470583ms)
+✔ all protected UUIDs and duplicate inventory assignments are excluded independently of host admission availability (44.245584ms)
+✔ budget prerequisite boundary maxReservedBytes=799 does not reserve identity (20.098ms)
+✔ budget prerequisite boundary simulatorFreeBytes=2799 does not reserve identity (20.031041ms)
+✔ budget prerequisite boundary stagingFreeBytes=2899 does not reserve identity (19.024959ms)
+✔ budget prerequisite boundary artifactBytes=201 does not reserve identity (24.935042ms)
+✔ exact free-space boundary accepts and stored configuration/content binding is immutable (43.2225ms)
+✔ creation unknown receipt retains host guard and capacity (67.043584ms)
+✔ creation malformed receipt retains host guard and capacity (64.924583ms)
+✔ creation collision receipt retains host guard and capacity (67.362417ms)
+✔ unknown creation blocks ready consumption but exact action duplicate remains retrieval (280.59125ms)
+✔ owner recovery is explicit, monotonic and preserves parked readiness (228.948708ms)
+✔ active allocation retirement is busy; explicit ready cancellation consumes stock without device effects (281.754667ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2196.150125

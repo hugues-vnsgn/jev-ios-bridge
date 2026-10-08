@@ -1,0 +1,18 @@
+✖ startup lists active owners without mutating, resuming or recovering parked and cancelled work (213.2835ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 344.553042
+
+✖ failing tests:
+
+test at tests/admission-allocation.test.ts:1:24058
+✖ startup lists active owners without mutating, resuming or recovering parked and cancelled work (213.2835ms)
+  TypeError: reader.listActiveAllocations is not a function
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-store/tests/admission-allocation.test.ts:319:27)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

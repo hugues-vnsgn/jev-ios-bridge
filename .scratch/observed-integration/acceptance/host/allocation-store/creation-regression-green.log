@@ -1,0 +1,11 @@
+✔ creation guard fences all new admissions and receipt binding is write-once; existing owner can finish (143.465625ms)
+✔ creation receipt beforeCommit failure revokes the local reservation without replay (56.338458ms)
+✔ creation receipt afterCommit failure revokes the local reservation without replay (71.545833ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 397.407334

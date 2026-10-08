@@ -1,0 +1,37 @@
+✔ reservation globally binds identity; duplicates are pure retrieval and capacity refuses without consuming identity (37.512042ms)
+✔ creation guard fences all new admissions and receipt binding is write-once; existing owner can finish (127.5375ms)
+✔ park revokes preparation, consume transfers one fresh attachment, success retains allocation and evidence authority (322.16275ms)
+✖ cancellation fences reservation and action commands; parked readiness survives reads and expiry only transitions on consume (27.830792ms)
+✖ cancelled dispatched preparation and abandoned creation retain uncertainty and capacity (53.088667ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 3
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 728.979375
+
+✖ failing tests:
+
+test at tests/admission-allocation.test.ts:1:7440
+✖ cancellation fences reservation and action commands; parked readiness survives reads and expiry only transitions on consume (27.830792ms)
+  TypeError: admission.cancelAllocation is not a function
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-store/tests/admission-allocation.test.ts:102:13)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/admission-allocation.test.ts:1:8485
+✖ cancelled dispatched preparation and abandoned creation retain uncertainty and capacity (53.088667ms)
+  TypeError: admission.cancelAllocation is not a function
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-store/tests/admission-allocation.test.ts:120:13)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

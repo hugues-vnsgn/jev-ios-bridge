@@ -1,0 +1,11 @@
+✔ restart projects capture counts, nullable dispatch flags, finalization and immutable export independently (396.187ms)
+✔ action cancellation during pending tap retains unknown flags and late settlement cannot promote terminal (310.636ms)
+✔ already satisfied commits only a captured no-input result; conflicting action bindings never mutate it (266.67275ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1095.58425

@@ -1,0 +1,23 @@
+[
+  {
+    "command": [
+      "node",
+      "--version"
+    ],
+    "exit": 0,
+    "stdout": "v26.8.1\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "npx",
+      "--yes",
+      "--package=node@24.0.0",
+      "node",
+      "--version"
+    ],
+    "exit": 0,
+    "stdout": "v24.0.0\n",
+    "stderr": ""
+  }
+]

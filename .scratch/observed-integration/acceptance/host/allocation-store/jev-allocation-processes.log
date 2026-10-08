@@ -1,0 +1,46 @@
+✔ reservation globally binds identity; duplicates are pure retrieval and capacity refuses without consuming identity (41.563833ms)
+✔ creation guard fences all new admissions and receipt binding is write-once; existing owner can finish (131.386916ms)
+✔ park revokes preparation, consume transfers one fresh attachment, success retains allocation and evidence authority (366.976709ms)
+✔ cancellation fences reservation and action commands; parked readiness survives reads and expiry only transitions on consume (279.483709ms)
+✔ cancelled dispatched preparation and abandoned creation retain uncertainty and capacity (92.952417ms)
+✔ all protected UUIDs and duplicate inventory assignments are excluded independently of host admission availability (51.989584ms)
+✔ budget prerequisite boundary maxReservedBytes=799 does not reserve identity (28.449834ms)
+✔ budget prerequisite boundary simulatorFreeBytes=2799 does not reserve identity (22.523625ms)
+✔ budget prerequisite boundary stagingFreeBytes=2899 does not reserve identity (18.016875ms)
+✔ budget prerequisite boundary artifactBytes=201 does not reserve identity (15.760541ms)
+✔ exact free-space boundary accepts and stored configuration/content binding is immutable (45.615083ms)
+✔ creation unknown receipt retains host guard and capacity (66.377666ms)
+✔ creation malformed receipt retains host guard and capacity (68.472166ms)
+✔ creation collision receipt retains host guard and capacity (68.4435ms)
+✔ unknown creation blocks ready consumption but exact action duplicate remains retrieval (283.613584ms)
+✔ owner recovery is explicit, monotonic and preserves parked readiness (265.489167ms)
+✔ active allocation retirement is busy; explicit ready cancellation consumes stock without device effects (291.45875ms)
+✔ independent processes reserve one global identity and one remaining capacity slot (281.295041ms)
+✔ concurrent byte/capacity boundary admits allocation eight and refuses nine (513.899625ms)
+✔ parked preparation exits normally then two new processes yield one action driver attachment (358.925375ms)
+✔ ready cancellation versus start is transactionally ordered across processes (307.592208ms)
+✔ TTL boundary versus early start grants at most one owner across processes (412.23425ms)
+✔ real owner death at reserveAllocation/beforeCommit cannot replay or split terminal authority (108.54375ms)
+✔ real owner death at reserveAllocation/afterCommit cannot replay or split terminal authority (126.330041ms)
+✔ real owner death at startCreation/beforeCommit cannot replay or split terminal authority (140.518459ms)
+✔ real owner death at startCreation/afterCommit cannot replay or split terminal authority (152.177792ms)
+✔ real owner death at recordCreation/beforeCommit cannot replay or split terminal authority (156.940042ms)
+✔ real owner death at recordCreation/afterCommit cannot replay or split terminal authority (165.796166ms)
+✔ real owner death at admitAllocation/beforeCommit cannot replay or split terminal authority (164.873584ms)
+✔ real owner death at admitAllocation/afterCommit cannot replay or split terminal authority (173.706416ms)
+✔ real owner death at parkAllocation/beforeCommit cannot replay or split terminal authority (281.026542ms)
+✔ real owner death at parkAllocation/afterCommit cannot replay or split terminal authority (278.731417ms)
+✔ real owner death at consumeAllocation/beforeCommit cannot replay or split terminal authority (289.102833ms)
+✔ real owner death at consumeAllocation/afterCommit cannot replay or split terminal authority (314.7875ms)
+✔ real owner death at finalize/beforeCommit cannot replay or split terminal authority (387.906958ms)
+✔ real owner death at finalize/afterCommit cannot replay or split terminal authority (392.191ms)
+✔ real owner death at recordActionExport/beforeCommit cannot replay or split terminal authority (372.962458ms)
+✔ real owner death at recordActionExport/afterCommit cannot replay or split terminal authority (421.751041ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8099.334208

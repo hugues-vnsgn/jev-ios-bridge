@@ -1,0 +1,13 @@
+✔ reservation globally binds identity; duplicates are pure retrieval and capacity refuses without consuming identity (33.613334ms)
+✔ creation guard fences all new admissions and receipt binding is write-once; existing owner can finish (127.439458ms)
+✔ park revokes preparation, consume transfers one fresh attachment, success retains allocation and evidence authority (327.296083ms)
+✔ cancellation fences reservation and action commands; parked readiness survives reads and expiry only transitions on consume (270.062791ms)
+✔ cancelled dispatched preparation and abandoned creation retain uncertainty and capacity (88.378208ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1011.308042
