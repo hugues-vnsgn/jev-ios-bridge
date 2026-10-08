@@ -36,3 +36,15 @@ Completion: A successful manifest enables updated entry points; unsafe imports s
 
 ## Comments
 
+### Root implementation guidance — 2026-10-08
+
+Read-only preparation mapped the actual journal writer in `src/experimental/observed-journal.ts`, wrapper intent in `observed-tap.ts:60–62`, default/custom roots in `observed-run.ts`, and shared iOS/Android lease format in `src/device/lease.ts`. Enumerate records directly; never call historical readers or lease acquisition because they can mutate/reclaim state.
+
+- Conflicting historical bindings of one action ID across different devices refuse activation; do not pick a winner. Same-device case aliases merge conservatively.
+- Persist once-assigned read-only imported allocation IDs behind a typed store seam for ticket03. They reserve replay identity but confer no prepared capability. Preserve original intent/result and source references; do not fabricate a new public request digest, evidence directory or readiness.
+- Completed-looking results with a remaining claim, quarantine, unfinished intent or other uncertain source state remain uncertain. Validate actual record shapes; the old journal accepts arbitrary JSON.
+- Account for interrupted publication `.tmp` records. UUID-attributable malformed leases retain that device. Well-formed matching non-UUID lease records may be classified as non-iOS and preserved without blocking Android; genuinely unattributable/conflicting records refuse activation. Document the classification and its limitation; do not silently discard unreadable data.
+- Use an explicit versioned maintenance manifest for operational old-writer quiescence, source roots and exclusions. The declaration is an operator assertion, not process/native proof. Include default roots plus declared non-default roots, including differing historical home/TMPDIR contexts. A missing explicitly declared source is not silently empty.
+- Preserve marker-present/missing-database refusal and partial-installation refusal. A marker inside the admission directory cannot detect deletion of that entire directory; do not claim otherwise or automatically rebuild missing state. Backup/restore and root deletion remain documented operational limitations.
+
+Implementation dispatch still requires integrated ticket01 and a pinned SHA. This preparation does not authorize dependent source edits before that handoff.
