@@ -1,7 +1,9 @@
 # 10 — Document and verify the installed observed workflow
 
 Type: task
-Status: ready-for-agent
+Status: resolved
+Claimed by: observed_installed_workflow
+Execution: Root-dispatched at d0f49f6c12cbaffb4c034217b7e25b96c52c6cb2
 Mode: AFK
 Blocked by: 08
 Owner: Documentation/packaging implementer
@@ -36,3 +38,11 @@ Completion: Installed users can find migration and safe workflow usage, while th
 
 ## Comments
 
+
+### Installed workflow candidate — 2026-10-08
+
+Implemented the installed migration/observed guide, normative local format reference, skill branch, troubleshooting/index links, minimum Node 24.0.0 CI matrix and mandatory isolated clean-install/plugin proof. Root authorized the narrow existing guide-example classifier transfer; all declaration/prepare/action examples use actual production parsers while existing Scenario validation/count remain intact.
+
+Original dispatch base was `d0f49f6c12cbaffb4c034217b7e25b96c52c6cb2`. Root advanced the paused worktree to `75d7618167729b9b9a5547eaa468e37eb12b2504` after the independently accepted maintenance-entry dependency repair, preserving all eleven owned file hashes and metadata. Both unchanged mandatory proof commands now pass on Node 26.8.1 and exact 24.0.0: genuine clean registry tarball installs, actual installed bin/shebang, CLI/MCP schema/text/gates, original alias maintenance help, plugin build and independent plugin npm ci. Each proof records 37 commands, no skipped cases or forbidden effects.
+
+Final actual `npm run check` passes 1482/1482 on both runtimes, zero skips, with typecheck/build; affected guide/docs/packaging scans pass 34/34 each. All fourteen golden files remain byte identical. Evidence and final report are under `/tmp/jev-ticket10-evidence/`; Root owns durable acceptance publication and final matrix/live verdict. Original bin-path harness failure, real maintenance-help failures and the first full test-child umask/timing failures remain preserved separately. Remote CI is configured, not executed here. No real admission activation, device/key access, merge or publication occurred.

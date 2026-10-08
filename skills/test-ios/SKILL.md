@@ -1,6 +1,6 @@
 ---
 name: test-ios
-description: Verify an iOS app (SwiftUI, UIKit, or Compose Multiplatform) on a simulator with a jev-ios-bridge script and report the recorded verdict. Use when asked to check, verify, or test iOS app behaviour on screen and the jev-ios-bridge MCP tools are available.
+description: Verify an iOS app (SwiftUI, UIKit, or Compose Multiplatform) on a simulator with a jev-ios-bridge script and report the recorded verdict. Use when asked to check, verify, or test iOS app behaviour on screen and the jev-ios-bridge MCP tools are available. Use the observed workflow branch when asked for one authored tap with deterministic visible predicates.
 ---
 
 # Verify an iOS app with jev-ios-bridge
@@ -39,6 +39,18 @@ The bridge runs one complete script on a dedicated simulator and returns a recor
    Present the verdict as recorded: **passed** means every step and checkpoint passed; **failed** means a claim was confidently false (≤ 0.1); **inconclusive** means verification is unresolved, which is never a pass. For an inconclusive run, point to guide `08-troubleshooting.md` for its reason code. A `GUARD_*` or `TARGET_*` code means the script, not the app, needs fixing.
 
 7. **To stop a run,** call `cancel_run` and read the report it leaves. A verdict already recorded stays final.
+
+## Observed workflow (experimental, one authored tap)
+
+Use this branch when the task calls for an observed outcome rather than a scripted Jev verdict. Read installed guide `14-observed-actions.md` and `reference/observed-format.md` before preparing anything. Keep the normal script workflow for assertion verdicts.
+
+1. Confirm offline migration, exclusive dedicated-device operation, installed Xcode/runtime prerequisites and an explicit unchanged simulator `.app`. Enable preparation/start only with exact `JEV_EXPERIMENTAL_OBSERVED=1`; observed startup needs no Jev key. Done when the operator can truthfully declare stopped writers and all historical roots declared/excluded as the guide requires.
+2. Declare one action ID, then call `prepare_observed_allocation` once with the strict version 1 request. Keep its distinct allocation ID. Proceed only with committed `prepared` authority; retrieve preparation uncertainty using the original IDs. Done when readiness is parked or its refusal/uncertainty is recorded.
+3. Author the strict action request with that action/allocation pair, one tap selector and deterministic before/after guards from real captures. Submit `start_observed_action` once, then poll `get_observed_action`. After a lost reply, retrieve or repeat only the exact original request. Changed input conflicts; replacement allocation or a renamed uncertain business action never supplies a retry.
+4. Report authority, outcome, current admission/allocation disposition and evidence pointers from both visible MCP text blocks. Only committed terminal authority establishes an observed outcome. Describe visible evidence without claiming Jev judgment, causality, native input consumption or release. Done when the user has the recorded outcome or explicit unresolved state.
+5. To stop work, use `cancel_observed_action` or `cancel_observed_allocation` as appropriate. An executing allocation directs action cancellation. Already authorized work may still act; transport cancellation only stops waiting. Use `retire_observed_allocation` only for retention bookkeeping. Preserve quarantine/unknown creation, claims and capacity for separate reconciliation.
+
+All allocated devices remain retained, including successes. Physical devices, other runtime shapes, real transport severance and native consumption remain untested; L04 is synthetic reply loss after backend success. Read the installed guide for configuration and limits.
 
 ## Driven mode (experimental, only when it's on)
 

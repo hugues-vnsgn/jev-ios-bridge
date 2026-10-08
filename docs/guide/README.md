@@ -31,7 +31,8 @@ Look these up when you need them:
 - [Limits](10-limits.md)
 - [Stability](11-stability.md): what 1.x promises, what 1.2 added, and upgrading from 0.1.0
 - [Driven steps (experimental)](13-driven-steps.md): `do` steps that Jev performs, and hand-backs to Claude
+- [Observed actions (experimental)](14-observed-actions.md): offline migration, one allocation and one authored tap, with retrieval after reply loss
 - Worked examples: [SwiftUI (Weather)](examples/swiftui-weather.md) and [Compose Multiplatform (a design-system gallery)](examples/compose-gallery.md)
-- Reference: [script format](reference/script-format.md), [reason codes](reference/reason-codes.md), [`report.json`](reference/report-json.md)
+- Reference: [script format](reference/script-format.md), [reason codes](reference/reason-codes.md), [`report.json`](reference/report-json.md), [observed format](reference/observed-format.md)
 
 **Before you start:** use test data, in an app you control. Screen text at each checkpoint is sent to TypeSafe, and text that someone else wrote on the screen can try to steer Jev's judgment. [Data handling](09-data-handling.md) has the details.
