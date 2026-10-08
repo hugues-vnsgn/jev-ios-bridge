@@ -1,8 +1,17 @@
 # Agent plan for observed-action integration
 
-Status: charted route; public contract and implementation briefs are not yet settled.
+Status: planning execution started 2026-10-08; public contract and implementation briefs are not yet settled.
 
 Start from [the map](map.md). Read a ticket's blockers and claim it before doing its work. The map and tickets own decisions; this file owns dispatch and handoff rules.
+
+## Approved model assignments
+
+| Agent work | Model | Effort |
+| --- | --- | --- |
+| Integration, provisioning, public contract, implementation | `gpt-6.1-sol` | high |
+| Admission, uncertainty lifecycle, independent safety review | `gpt-6-astra` | high |
+| Routine test planning, documentation, evidence checks | `gpt-6.1-sol` | medium |
+| Existing Orca live operator | `gpt-6-luna` | high; preserve pane configuration |
 
 ## Planning waves
 

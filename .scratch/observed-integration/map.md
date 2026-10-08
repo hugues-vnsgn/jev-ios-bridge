@@ -16,6 +16,7 @@ An implementation-ready plan for exposing the validated observed-action runner t
 - All child tickets use `wayfinder:task` or `wayfinder:research`; `Mode: AFK` means delegated technical work, not a human conversation. Never resolve a HITL question by impersonating the owner.
 - Consult `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, ADR-0002, ADR-0005, and ADR-0007. Preserve frozen script/verdict/report meanings; an observed outcome is not a Jev pass or a native receipt.
 - Dispatch and proposed implementation waves: [agent plan](agent-plan.md).
+- Approved models: `gpt-6.1-sol` high for integration/provisioning; `gpt-6-astra` high for admission and independent safety review; `gpt-6.1-sol` medium for routine tests/docs. Existing Orca live worker remains `gpt-6-luna` high.
 - Three child agents maximum at once. Parallel planning reads are allowed. Implementation later uses disjoint worktrees and commits; root integrates in dependency order and runs shared checks.
 - Live execution belongs to the user-selected Orca pane `b0e5a4b6-106b-4dab-a49a-b3933445d4ef:1b178e31-086e-40c9-b4e2-b9a3dd45ad90`. Only one device operator at a time. Root watches and fixes integration. No live work is dispatched while charting.
 - Preserve all existing quarantines and device claims; do not use the three retained live-test devices or the historical study device. Never read, copy, or print `.env` values.
@@ -24,6 +25,10 @@ An implementation-ready plan for exposing the validated observed-action runner t
 ## Decisions so far
 
 - [Establish supported fresh-simulator provisioning](issues/02-simulator-provisioning.md): the pin supports existing-device boot/install but not creation; the inventory-source decision is now explicit.
+
+- [Choose how dedicated simulator inventory is replenished](issues/08-inventory-replenishment.md): bounded creation-only adapter with durable reservations; MobileBuildMCP retains preparation and UI operations.
+
+- [Locate the MCP and reporting integration seam](issues/01-integration-seam.md): one observed-action service shared by additive CLI/MCP adapters; scenario semantics remain separate.
 
 ## Route
 
@@ -50,17 +55,15 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T02 resolved
-    class T01,T03,T08 frontier
+    class T01,T02,T08 resolved
+    class T03 claimed
     class T04,T05,T06,T07 blocked
 ```
 <!-- route:end -->
 
 ## Not yet specified
 
-- Exact implementation filenames, package sizes, and schema/tool names until compatibility and admission audits are available.
-- The cheapest useful additional app/runtime matrix until provisioning capabilities and candidate artifacts are known.
-- Release packaging and migration details until the public contract is selected. A release number is not chosen here.
+No unclassified fog currently. Public schema, allocation state, validation coverage and implementation partitioning are explicit child-ticket questions. Add a ticket if investigation exposes a new prerequisite; do not hide it inside implementation.
 
 ## Out of scope
 

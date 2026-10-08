@@ -4,7 +4,8 @@ Parent: [Observed actions from live experiment to agent workflow](../map.md)
 Label: wayfinder:task
 Type: task
 Mode: AFK
-Status: open
+Status: resolved
+Claimed by: seam-decision
 Triage: ready-for-agent
 Blocked by: none
 Agent role: integration-auditor
@@ -29,3 +30,11 @@ The answer cites inspectable evidence, distinguishes facts from recommendations,
 Created during charting. No implementation authorization is implied by this planning ticket.
 
 Read-only charting audit returned [preliminary findings](../evidence/integration-audit.md). Claim released after bounded inspection. The ticket stays open: its accepted recommendation and complete decision inputs still require a working session.
+
+## Answer
+
+Resolved 2026-10-08 by `seam-decision`: choose an additive observed-action module shared by thin MCP and CLI adapters, with the seam above `runObservedTap`. Proposed `src/observed/service.ts:ObservedActionService` owns execution jobs, non-mutating inspection, cancellation/shutdown, evidence lookup and authoritative terminal interpretation; reuse/refactor `runObservedExperiment` behind it. Preserve `BridgeService.start/status/reportJson/cancel` as scenario operations and retain the pinned `MobileBuildMcpDriver.tapOnce` single-submission path.
+
+The accepted [seam decision](../evidence/seam-decision.md) inventories exact symbols/call paths, rejects a new script step or mode flag for this slice, gives a concrete future write-set split, and names compatibility/fault checks. It identifies two essential traps: existing journal reads mutate quarantine, and even a completed record can precede failed finalization. Public polling must use a separate non-mutating authoritative resolver; provisional `result.json` cannot certify success. Observed outcomes remain visible evidence, distinct from Jev verdicts and native receipts.
+
+Ticket 04 owns public names/schema/versions/exits. Tickets 03 and 05/08 still own shared admission, finalization/recovery and dedicated allocation/retention/inventory. The seam requirements constrain their interfaces without presuming their pending choices. This resolution is a planning decision based on code inspection, not implementation or live acceptance. Coordinator owns the map pointer and route rendering.
