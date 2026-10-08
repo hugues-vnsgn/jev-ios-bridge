@@ -1,0 +1,18 @@
+{
+  "source": "/tmp/jev-ticket10-evidence",
+  "base": "d0f49f6c12cbaffb4c034217b7e25b96c52c6cb2",
+  "originalTestMatchesBase": true,
+  "result": "33/34; one legacy Scenario classifier rejects new observed/declaration examples; zero skips",
+  "files": [
+    {
+      "path": "initial-doc-scanner-failure.log",
+      "sha256": "5c4f4951b5abb75c3eaa9c7cc2074c2888cea26f0d84f824fee5c6890e0841f9",
+      "bytes": 7306
+    },
+    {
+      "path": "initial-docs.test.ts",
+      "sha256": "41b0cd2ff64e520e133af297ce69693df9c68cdf6da6f2d436bf3fd64b0cb69a",
+      "bytes": 14197
+    }
+  ]
+}

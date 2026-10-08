@@ -1,0 +1,9 @@
+# Ticket10 narrow guide-example classifier transfer
+
+Root authorizes this additional test-only write set after the installed guide's truthful multiline declaration, preparation and action examples reproduced an existing Scenario-only classifier mismatch. [Original test and raw run](installed-workflow/doc-scanner-baseline/preservation.json) match base `d0f49f6c12cbaffb4c034217b7e25b96c52c6cb2`: 33/34 pass, one failure, zero skips. This is additive documentation schema recognition, not a production regression or permission to weaken legacy validation.
+
+The ticket10 owner may change only the test named `every whole script shown in the guide parses` in `tests/docs.test.ts`, plus the minimal imports for the three existing production parsers. Parse each selected JSON block once. Known maintenance declaration shapes use `parseMigrationDeclaration`; preparation shapes use `parsePrepareAllocation`; action shapes use `parseObservedAction`. Every other selected version1 block keeps the original `parseScriptedScenario` assertion. The original Scenario counter and minimum of three validated scripts remain unchanged; no malformed/unknown version1 shape may be silently skipped. The new owned observed-docs test must separately account for and parse all three new examples through those production schemas.
+
+Preserve all other existing assertions, case names/counts, release-tag URL checks, legacy examples and goldens. Use the shipped local observed-format reference; no links to unpublished local SHA or new contracts at the old release tag. No source/package/release ownership is transferred.
+
+Keep the original file/raw red and final exact diff. Extend the final source/test/guide mapping to include this transferred file, rerun both runtimes after the final freeze and include it in independent reviews. Do not use JSON formatting to hide examples from validation. Root owns all acceptance artifacts and final integration.
