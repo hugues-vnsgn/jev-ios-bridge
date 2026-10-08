@@ -1,0 +1,14 @@
+✔ creation guard fences all new admissions and receipt binding is write-once; existing owner can finish (131.273792ms)
+✔ park revokes preparation, consume transfers one fresh attachment, success retains allocation and evidence authority (290.664167ms)
+✔ revoked preparation cannot park after failed cancel persistence (175.7165ms)
+✔ revoked preparation cannot park after failed failAllocation persistence (179.2325ms)
+✔ revoked preparation cannot park after failed finalize persistence (176.4855ms)
+✔ revoked preparation cannot park after failed parkAllocation persistence (168.337583ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1218.792

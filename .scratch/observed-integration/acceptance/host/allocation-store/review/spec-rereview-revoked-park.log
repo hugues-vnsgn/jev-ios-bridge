@@ -1,0 +1,9 @@
+{"point":"beforeCommit","operation":"cancel","repeatedPark":"DISPATCH_CLOSED","durableState":"preparing","consume":"refused","effects":0,"passed":true}
+{"point":"beforeCommit","operation":"failAllocation","repeatedPark":"DISPATCH_CLOSED","durableState":"preparing","consume":"refused","effects":0,"passed":true}
+{"point":"beforeCommit","operation":"finalize","repeatedPark":"DISPATCH_CLOSED","durableState":"preparing","consume":"refused","effects":0,"passed":true}
+{"point":"beforeCommit","operation":"parkAllocation","repeatedPark":"DISPATCH_CLOSED","durableState":"preparing","consume":"refused","effects":0,"passed":true}
+{"point":"afterCommit","operation":"cancel","repeatedPark":"DISPATCH_CLOSED","durableState":"preparing","consume":"refused","effects":0,"passed":true}
+{"point":"afterCommit","operation":"failAllocation","repeatedPark":"DISPATCH_CLOSED","durableState":"quarantined","consume":"refused","effects":0,"passed":true}
+{"point":"afterCommit","operation":"finalize","repeatedPark":"DISPATCH_CLOSED","durableState":"quarantined","consume":"refused","effects":0,"passed":true}
+{"point":"afterCommit","operation":"parkAllocation","repeatedPark":"DISPATCH_CLOSED","durableState":"ready","consume":"consumed","effects":1,"passed":true}
+PASS 8/8 independent repair cases

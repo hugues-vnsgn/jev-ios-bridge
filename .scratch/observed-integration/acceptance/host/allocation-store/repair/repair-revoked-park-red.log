@@ -1,0 +1,122 @@
+✖ revoked preparation cannot park after failed cancel persistence (252.439292ms)
+✖ revoked preparation cannot park after failed failAllocation persistence (264.809375ms)
+✖ revoked preparation cannot park after failed finalize persistence (233.769292ms)
+✖ revoked preparation cannot park after failed parkAllocation persistence (241.39625ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1188.956084
+
+✖ failing tests:
+
+test at tests/admission-allocation.test.ts:1:31488
+✖ revoked preparation cannot park after failed cancel persistence (252.439292ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   consume: 'consumed',
+  +   laterEffects: 1,
+  +   parkCode: undefined,
+  +   reason: null
+  -   consume: 'refused',
+  -   laterEffects: 0,
+  -   parkCode: 'DISPATCH_CLOSED',
+  -   reason: 'ALLOCATION_NOT_READY'
+    }
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-store/tests/admission-allocation.test.ts:432:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { parkCode: undefined, consume: 'consumed', reason: null, laterEffects: 1 },
+    expected: { parkCode: 'DISPATCH_CLOSED', consume: 'refused', reason: 'ALLOCATION_NOT_READY', laterEffects: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/admission-allocation.test.ts:1:31488
+✖ revoked preparation cannot park after failed failAllocation persistence (264.809375ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   consume: 'consumed',
+  +   laterEffects: 1,
+  +   parkCode: undefined,
+  +   reason: null
+  -   consume: 'refused',
+  -   laterEffects: 0,
+  -   parkCode: 'DISPATCH_CLOSED',
+  -   reason: 'ALLOCATION_NOT_READY'
+    }
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-store/tests/admission-allocation.test.ts:432:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { parkCode: undefined, consume: 'consumed', reason: null, laterEffects: 1 },
+    expected: { parkCode: 'DISPATCH_CLOSED', consume: 'refused', reason: 'ALLOCATION_NOT_READY', laterEffects: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/admission-allocation.test.ts:1:31488
+✖ revoked preparation cannot park after failed finalize persistence (233.769292ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   consume: 'consumed',
+  +   laterEffects: 1,
+  +   parkCode: undefined,
+  +   reason: null
+  -   consume: 'refused',
+  -   laterEffects: 0,
+  -   parkCode: 'DISPATCH_CLOSED',
+  -   reason: 'ALLOCATION_NOT_READY'
+    }
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-store/tests/admission-allocation.test.ts:432:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { parkCode: undefined, consume: 'consumed', reason: null, laterEffects: 1 },
+    expected: { parkCode: 'DISPATCH_CLOSED', consume: 'refused', reason: 'ALLOCATION_NOT_READY', laterEffects: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/admission-allocation.test.ts:1:31488
+✖ revoked preparation cannot park after failed parkAllocation persistence (241.39625ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   consume: 'consumed',
+  +   laterEffects: 1,
+  +   parkCode: undefined,
+  +   reason: null
+  -   consume: 'refused',
+  -   laterEffects: 0,
+  -   parkCode: 'DISPATCH_CLOSED',
+  -   reason: 'ALLOCATION_NOT_READY'
+    }
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-store/tests/admission-allocation.test.ts:432:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { parkCode: undefined, consume: 'consumed', reason: null, laterEffects: 1 },
+    expected: { parkCode: 'DISPATCH_CLOSED', consume: 'refused', reason: 'ALLOCATION_NOT_READY', laterEffects: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

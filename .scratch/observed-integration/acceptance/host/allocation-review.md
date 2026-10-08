@@ -23,3 +23,13 @@ Spec: one finding, worst P1; BLOCKED pending repair and independent re-review.
 ## Disposition
 
 Root assigned the confirmed P1 and small duplication cleanup to the allocation-store owner with diagnosing-bugs, TDD and do-test. Genuine pre-fix red, post-fix green, Node24/26 dependency suites, compilation and independent re-review are required. Ticket05 implementation remains gated on accepted integration; its read-only interface compatibility pass found no missing capability. Full H01–H09 and live acceptance remain UNVERIFIED.
+
+## Repair re-review
+
+Repair `a427cc6bd3bb08c966e16003325de6b0d679bc02` on `c893010` adds the pre-transaction closed/cancelled/parent-closed parking guard and removes the two duplicate helper projections. Four author regressions reproduced unsafe transfer before repair and pass afterward; dependency suites pass138/138 on Node26.8.1 and exact24.0.0, zero skips. [Repair evidence](allocation-store/repair/repair-report.md) remains separate from the original failed candidate.
+
+Independent Standards re-review: PASS, no remaining findings. Helper reuse preserves existing read/write transaction boundaries, missing-device semantics and creation-guard refusal fields.
+
+Independent Spec re-review: PASS, P1 closed. Eight independent before/after-COMMIT cases for cancel, reservation failure, finalization and parking pass, plus6/6 focused tests. Revoked claims cannot transfer authority or dispatch effects; conservative finalization still quarantines. A genuinely committed park survives lost reply and permits normal transfer. [Fresh re-review evidence](allocation-store/review/spec-rereview-report.md) preserves the distinction.
+
+Both axes accept the bounded repair. Root integration and combined checks are next; full public/live acceptance is not claimed.
