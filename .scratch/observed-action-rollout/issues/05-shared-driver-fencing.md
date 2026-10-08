@@ -22,6 +22,8 @@ Root supplies a full base SHA from the final pinned planning ref plus integrated
 
 Allowed writes: `src/device/index.ts`; `src/device/lease.ts`; `src/device/factory.ts`; `tests/device.test.ts`; `tests/device-lease.test.ts`; `tests/device-factory.test.ts`; `tests/lease.test.ts`; `tests/observed-touch-integration.test.ts`; `tests/admission-driver.test.ts`; this issue's Status and Comments only.
 
+Root-authorized bounded fixture setup extension (2026-10-08): `tests/device-driven-actions.test.ts`; `tests/simulator-window.test.ts`; `tests/start-attach.test.ts`; `tests/scripted-run.test.ts`; `tests/observed-tap.test.ts`. Change only fake-runner fixture construction to inject an explicit isolated admission store/backend and, where needed, use a synthetic fixture UUID. Preserve behavioral assertions and existing goldens. A golden-bound identity conflict returns to Root; never weaken protected-device eligibility or silently infer test storage from `lockRoot`.
+
 Protected shared files: `src/device/admission*.ts`; `src/experimental/**`; `src/observed/**`; `src/service.ts`; `src/cli.ts`; `src/mcp/**`; `src/device/android/**`, plus the common protected set in the handoff. Exactly one owner writes these allowed files; Root integrates and controls the next transfer.
 
 ## Bounded work
@@ -36,3 +38,10 @@ Completion: Root integrates the real typed session interface before dispatching 
 
 ## Comments
 
+### Root integration guidance — 2026-10-08
+
+Read-only driver preparation identified a distinction needed to preserve existing behavior. A backend `DeviceCliError` with validated `terminalAcknowledged` may be returned as a typed internal response envelope from the existing `AdmittedSession.dispatch<T>` callback, allowing confirmed command settlement before the driver throws the semantic error to its legacy retry caller. Transport loss, malformed/missing terminal payload and unknown outcome must reject inside dispatch and revoke issuance. This does not authorize native-release claims. No new generic store release API is needed.
+
+`tapOnce` authorizes operation kind `tap`, activating the core's durable single-tap guard. Ordinary legacy `act` uses a distinct driver-owned kind because scripted runs can legitimately contain multiple taps and the existing bounded stale-reference retry. No public caller supplies raw kinds/tokens; observed input has no refresh/retry/fallback.
+
+Keep production admission opening lazy for iOS effectful paths. Android-only factory construction and key-free adapter startup must not acquire a production store or require migration merely because mobileBuildMcp options are present. Ticket03 supplies typed park/consume ownership transfer; do not emulate it by reacquiring or relaunching.
