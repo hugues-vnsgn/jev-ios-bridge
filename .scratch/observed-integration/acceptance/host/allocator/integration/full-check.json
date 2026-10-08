@@ -1,0 +1,21 @@
+{
+  "command": [
+    "npm",
+    "run",
+    "check"
+  ],
+  "integratedCommit": "6d5536a551df853dd92fdf63253c1bacc244263f",
+  "candidate": "bfa73591673fb931d58df8e46f343700aae8a68a",
+  "exit": 0,
+  "seconds": 69.05,
+  "runtime": "v26.8.1",
+  "counts": {
+    "tests": 1423,
+    "pass": 1423,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "log": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/allocator/integration/full-check.log"
+}

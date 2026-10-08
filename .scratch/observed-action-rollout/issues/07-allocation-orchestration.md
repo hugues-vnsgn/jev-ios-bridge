@@ -2,6 +2,8 @@
 
 Type: task
 Status: ready-for-agent
+Execution: integrated
+Claimed by: shared_driver; integrated by Root
 Mode: AFK
 Blocked by: 04, 05
 Owner: Allocator implementer
@@ -35,6 +37,8 @@ H01/H03/H04/H05/H06/H07 allocator subsets: both sources, byte/capacity/free-spac
 Completion: Preparation can park safely and action transfer can attach exactly once without relaunch. Root integrates 06/07 together and resolves interface mismatch before 08. Return the handoff's fixed-format report with full commit/base SHA, files, commands/results, evidence, limitations and unresolved dependencies. A missing required assertion stays UNVERIFIED; a confirmed defect is BLOCKED until Root assigns its fix. No live operations, merge or publish belong to this ticket.
 
 ## Comments
+
+Root acceptance: candidate `bfa73591673fb931d58df8e46f343700aae8a68a` integrated as `6d5536a551df853dd92fdf63253c1bacc244263f` after separate Spec/Standards PASS and six unchanged probes on Node26/exact24. Combined657/657 each runtime, full1423/1423 plus typecheck/build and all21 runtime/allocator hashes pass; zero skips. [Review and evidence](../../observed-integration/acceptance/host/allocator-review.md). This accepts bounded implementation, not the complete public/host/live matrix. Source ownership returns to Root.
 
 
 ### Execution — 2026-10-08

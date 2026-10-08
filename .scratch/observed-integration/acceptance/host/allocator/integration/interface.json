@@ -1,0 +1,16 @@
+{
+  "command": [
+    "node",
+    "node_modules/typescript/bin/tsc",
+    "--noEmit",
+    "--project",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/allocator/integration/interface-tsconfig.json"
+  ],
+  "integratedCommit": "6d5536a551df853dd92fdf63253c1bacc244263f",
+  "candidate": "bfa73591673fb931d58df8e46f343700aae8a68a",
+  "exit": 0,
+  "seconds": 0.19,
+  "runtime": "v26.8.1",
+  "counts": {},
+  "log": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/allocator/integration/interface.log"
+}

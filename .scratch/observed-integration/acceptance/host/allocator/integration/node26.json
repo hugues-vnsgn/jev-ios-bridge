@@ -1,0 +1,40 @@
+{
+  "command": [
+    "/opt/homebrew/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-concurrency=1",
+    "tests/observed-allocation.test.ts",
+    "tests/observed-allocation-config.test.ts",
+    "tests/admission-allocation.test.ts",
+    "tests/admission-core.test.ts",
+    "tests/admission-migration.test.ts",
+    "tests/admission-driver.test.ts",
+    "tests/observed-sources.test.ts",
+    "tests/observed-artifact.test.ts",
+    "tests/device.test.ts",
+    "tests/simulator-window.test.ts",
+    "tests/android-driver.test.ts",
+    "tests/observed-service.test.ts",
+    "tests/observed-schema.test.ts",
+    "tests/observed-evidence.test.ts",
+    "tests/observed-journal.test.ts",
+    "tests/observed-tap.test.ts",
+    "tests/observed-run.test.ts"
+  ],
+  "integratedCommit": "6d5536a551df853dd92fdf63253c1bacc244263f",
+  "candidate": "bfa73591673fb931d58df8e46f343700aae8a68a",
+  "exit": 0,
+  "seconds": 100.53,
+  "runtime": "v26.8.1",
+  "counts": {
+    "tests": 657,
+    "pass": 657,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "log": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/allocator/integration/node26.log"
+}
