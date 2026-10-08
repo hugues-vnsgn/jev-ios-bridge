@@ -28,7 +28,7 @@ Root has added all eight supplement families:26 Source anchors,302 assertion-lin
 
 The owner selected iOS27.0 and chose to wait for installation. Last installed metadata exposed18.6/26.4; this is historical until rechecked. No runtime substitution or installation was dispatched.
 
-The approved sibling tab/leaf was `b0e5a4b6-106b-4dab-a49a-b3933445d4ef:f8633393-2114-4b9e-a4d7-6a85e0f16db3`. Refreshed Orca inventory after restart shows only Root's original leaf in this repo. Restore a dedicated sibling with the already approved model/effort, verify identity/idle state, and record the renewed binding before dispatch. Root never operates devices.
+The approved sibling tab/leaf was `b0e5a4b6-106b-4dab-a49a-b3933445d4ef:f8633393-2114-4b9e-a4d7-6a85e0f16db3`. Refreshed Orca inventory after restart had only Root's original leaf in this repo. Root restored the approved lunahigh role at tab/leaf `b0e5a4b6-106b-4dab-a49a-b3933445d4ef:363f3109-5b98-4014-a35c-44287d46a1df`; startup screen confirms model/effort and idle readiness. Host acceptance is committed at `38698fbfd1c3048c8eb09706eb3cecf58f006509`. A read-only runtime/host metadata preflight is the only current dispatch; Root never operates devices.
 
 Operational activation requires all older/external writers stopped and every historical root declared or affected devices excluded. The owner has been asked for these facts; isolated migration fixtures cannot supply them. The default admission/config/journal roots come from the OS account home, with legacy leases under the relevant TMPDIR. Root prepares a concrete declaration; the sole operator performs authorized migration only after entry facts pass. Preserve all source roots/claims. No actual account-store activation has occurred.
 

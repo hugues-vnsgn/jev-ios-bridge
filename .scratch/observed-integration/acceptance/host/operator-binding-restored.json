@@ -1,0 +1,21 @@
+{
+  "kind": "Restored approved sole live-operator role",
+  "oldApprovedTabLeaf": "b0e5a4b6-106b-4dab-a49a-b3933445d4ef:f8633393-2114-4b9e-a4d7-6a85e0f16db3",
+  "reason": "Orca restart removed original idle sibling; complete runtime inventory confirmed absence before restoration.",
+  "currentTabLeaf": "b0e5a4b6-106b-4dab-a49a-b3933445d4ef:363f3109-5b98-4014-a35c-44287d46a1df",
+  "terminalHandle": "term_30a0ed61-18e7-49e6-a206-824d107293aa",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "workingDirectory": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "verifiedStartupScreen": [
+    "GPT-6-Luna high",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic"
+  ],
+  "idleWaitSatisfied": true,
+  "acceptedHostEvidenceCommit": "38698fbfd1c3048c8eb09706eb3cecf58f006509",
+  "productCommit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
+  "authorizedNow": "Read-only runtime/host metadata preflight only",
+  "liveMutationDispatch": "not started",
+  "productionStoreActivation": "not started",
+  "RootRole": "coordinator; no device operations"
+}

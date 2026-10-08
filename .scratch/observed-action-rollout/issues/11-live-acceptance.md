@@ -5,7 +5,7 @@ Status: ready-for-agent
 Mode: AFK
 Blocked by: 09, 10
 Owner: Existing sole Orca live operator
-Pane: b0e5a4b6-106b-4dab-a49a-b3933445d4ef:f8633393-2114-4b9e-a4d7-6a85e0f16db3
+Pane: b0e5a4b6-106b-4dab-a49a-b3933445d4ef:363f3109-5b98-4014-a35c-44287d46a1df
 Model: gpt-6-luna
 Effort: high
 Skills: do-test, orca-cli, diagnosing-bugs
@@ -38,3 +38,7 @@ Return PASS/BLOCKED/UNVERIFIED, full integrated/base and evidence-commit SHAs, c
 The owner approved the idle sibling pane with `gpt-6-luna` high after the restart placed Root in the original live pane. The bound tab/leaf is listed above; the current terminal handle is `term_fc9bbfd1-cc30-42e2-875d-121b8bce21ec`. Refresh and verify that identity before dispatch. Root remains the coordinator. H01–H09 and live prerequisites must pass before this operator receives any device work.
 
 The owner chose to retain the explicit iOS27.0 target and wait for its installation. Read-only installed metadata currently exposes iOS18.6/26.4; iOS27.0 is absent. Continue independent host work, keep live acceptance UNVERIFIED, and verify the installed iOS27.0 prerequisite before dispatch. This instruction authorizes no runtime installation or substitution.
+
+### Restored sole-operator binding
+
+After the next Orca restart, the previously approved sibling leaf was absent from the complete read-only inventory. Root restored that same authorized role beside its existing coordinator pane, with `gpt-6-luna` high and the integration worktree as working directory. Current tab/leaf is `b0e5a4b6-106b-4dab-a49a-b3933445d4ef:363f3109-5b98-4014-a35c-44287d46a1df`, terminal `term_30a0ed61-18e7-49e6-a206-824d107293aa`. Startup screen confirms model/effort and idle readiness. Historical inventory and the old binding remain in acceptance evidence. Host H01–H09 PASS is committed at `38698fbfd1c3048c8eb09706eb3cecf58f006509`. Only read-only runtime/host metadata preflight is dispatched now; production migration/allocation/action/build effects remain gated. Root remains coordinator.

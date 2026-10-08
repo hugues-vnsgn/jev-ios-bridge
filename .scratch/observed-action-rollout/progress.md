@@ -105,3 +105,7 @@ Independent host completeness/raw audits are active. The maps need additional ex
 ## Complete host acceptance
 
 Root accepts H01–H09 PASS at product `b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433` after corrected independent completeness PASS (all8base supplements closed,12frozen maps/Source unchanged) and installed/startup raw correspondence PASS. Both actual default1675 checks/typecheck/build and both genuine37-command proofs are linked; original negatives remain unchanged. The acceptance receipt separates post-review status annotations and ticket09 Root metadata from exact reviewed runtime/test bytes. No additional test ran for the correspondence corrections. [Accepted host report](../observed-integration/acceptance/host/report.md). Next is restoration/verification of the sole approved lunahigh role and explicit27.0/operational migration prerequisites; no production store/live/12 dispatch occurred.
+
+## Sole-operator restoration and read-only preflight
+
+Host acceptance evidence is committed at `38698fbfd1c3048c8eb09706eb3cecf58f006509`, clean integration checkout before handoff metadata. Root restored the missing sibling role at `b0e5a4b6-106b-4dab-a49a-b3933445d4ef:363f3109-5b98-4014-a35c-44287d46a1df`, verified startup `GPT-6-Luna high` and idle readiness, and prepared a bounded read-only runtime/host metadata dispatch. This is not L01–L05 or production migration/allocation authorization; explicit27.0 and operational declaration still gate entry. Root remains coordinator. [Exact preflight scope](live-preflight-dispatch.md).
