@@ -1,0 +1,26 @@
+{
+  "label": "controlled-clock-node26",
+  "command": [
+    "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-name-pattern=boot-state polling is no more frequent",
+    "tests/observed-allocation.test.ts"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "exit": 0,
+  "durationSeconds": 0.617,
+  "beforeSourceSha256": "77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad",
+  "afterSourceSha256": "77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad",
+  "sourceUnchanged": true,
+  "logSha256": "9e8d9c4526b8ca0459ecb7358fbc91c3da26c23b7f03693e64f0a13a4f05881e",
+  "environmentRemoved": [
+    "TYPESAFE_API_KEY",
+    "NODE_OPTIONS",
+    "NODE_NO_WARNINGS"
+  ],
+  "evidenceUmask": "0077",
+  "childUmask": "0022",
+  "scope": "Focused corrected existing polling test; selection is not a full-check/zero-skip acceptance claim"
+}

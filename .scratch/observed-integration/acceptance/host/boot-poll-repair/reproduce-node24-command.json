@@ -1,0 +1,22 @@
+{
+  "kind": "controlled latency reproduces unchanged oracle failure",
+  "command": [
+    "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+    "--import",
+    "tsx",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/boot-poll/reproduce.ts",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/boot-poll/reproduce-node24.json"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "exit": 1,
+  "durationSeconds": 1.53,
+  "childUmask": "0022",
+  "evidenceUmask": "0077",
+  "environmentRemoved": [
+    "TYPESAFE_API_KEY",
+    "NODE_OPTIONS",
+    "NODE_NO_WARNINGS"
+  ],
+  "scriptSha256": "3967d5c0e6a85c07bf3277901f47221f84a7c597e5ff0c92a550caa67ce7c9d8",
+  "rawSha256": "041cda0d00c3c16d2bea91f53951a6f03d470bc01f175d77d020ddc5a90eecf1"
+}

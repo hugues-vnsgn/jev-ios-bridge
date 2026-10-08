@@ -1,0 +1,22 @@
+{
+  "kind": "controlled latency reproduces unchanged oracle failure",
+  "command": [
+    "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "--import",
+    "tsx",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/boot-poll/reproduce.ts",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/boot-poll/reproduce-node26.json"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "exit": 1,
+  "durationSeconds": 1.515,
+  "childUmask": "0022",
+  "evidenceUmask": "0077",
+  "environmentRemoved": [
+    "TYPESAFE_API_KEY",
+    "NODE_OPTIONS",
+    "NODE_NO_WARNINGS"
+  ],
+  "scriptSha256": "3967d5c0e6a85c07bf3277901f47221f84a7c597e5ff0c92a550caa67ce7c9d8",
+  "rawSha256": "ef927d13d2e15890c5f780131aa9a99495ac0b67086974f1817a297991ddcafd"
+}

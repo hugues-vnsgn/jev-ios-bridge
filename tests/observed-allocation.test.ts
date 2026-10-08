@@ -385,13 +385,24 @@ for (const phase of ['booting', 'readiness'] as const) test(`aggregate ${phase} 
   } finally { await allocator.close(); await f.cleanup(); }
 });
 
-test('boot-state polling is no more frequent than once per second and boot is never retried', async () => {
+test('boot-state polling is no more frequent than once per second and boot is never retried', { timeout: 15000 }, async t => {
   const f = await allocationFixture(); f.configure({ bootTimeoutMs: 1100 }); f.setState('Booting'); const allocator = subject(f); const times: number[] = [];
-  f.setBefore(async op => { if (op === 'list') times.push(Date.now()); });
-  try { const result = snapshot(await allocator.prepare(f.request())); assert.notEqual(result.state, 'ready');
+  let firstListed!: () => void; let secondListed!: () => void;
+  const firstPoll = new Promise<void>(resolve => { firstListed = resolve; });
+  const secondPoll = new Promise<void>(resolve => { secondListed = resolve; });
+  f.setBefore(async op => { if (op === 'list') {
+    times.push(Date.now()); if (times.length === 1) firstListed(); if (times.length === 2) secondListed();
+  } });
+  t.mock.timers.enable({ apis: ['Date', 'setTimeout'], now: Date.now() });
+  try { const preparing = allocator.prepare(f.request()); await firstPoll;
+    // Flush the settled fake command so its polling delay is scheduled.
+    await new Promise<void>(resolve => setImmediate(resolve));
+    t.mock.timers.tick(999); await new Promise<void>(resolve => setImmediate(resolve)); assert.equal(times.length, 1);
+    t.mock.timers.tick(1); await secondPoll; await new Promise<void>(resolve => setImmediate(resolve));
+    t.mock.timers.tick(100); const result = snapshot(await preparing); assert.notEqual(result.state, 'ready');
     assert.equal(deviceCalls(f.calls).filter(op => op === 'boot').length, 1); assert.equal(times.length, 2); assert.ok(times[1]! - times[0]! >= 1000);
     assert.ok(!deviceCalls(f.calls).includes('install'));
-  } finally { await allocator.close(); await f.cleanup(); }
+  } finally { t.mock.timers.reset(); await allocator.close(); await f.cleanup(); }
 });
 
 import { Admission } from '../src/device/admission.js';

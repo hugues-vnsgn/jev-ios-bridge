@@ -1,0 +1,26 @@
+{
+  "label": "controlled-clock-node24",
+  "command": [
+    "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-name-pattern=boot-state polling is no more frequent",
+    "tests/observed-allocation.test.ts"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "exit": 0,
+  "durationSeconds": 0.602,
+  "beforeSourceSha256": "77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad",
+  "afterSourceSha256": "77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad",
+  "sourceUnchanged": true,
+  "logSha256": "36306b48c85428496c687ee5e10f85c5d5ca15770518bfde42520bf63586e199",
+  "environmentRemoved": [
+    "TYPESAFE_API_KEY",
+    "NODE_OPTIONS",
+    "NODE_NO_WARNINGS"
+  ],
+  "evidenceUmask": "0077",
+  "childUmask": "0022",
+  "scope": "Focused corrected existing polling test; selection is not a full-check/zero-skip acceptance claim"
+}
