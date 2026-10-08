@@ -4,7 +4,7 @@ Parent: [Observed actions from live experiment to agent workflow](../map.md)
 Label: wayfinder:research
 Type: research
 Mode: AFK
-Status: claimed
+Status: resolved
 Claimed by: provisioning-researcher
 Triage: ready-for-agent
 Blocked by: none
@@ -28,3 +28,7 @@ The answer cites inspectable evidence, distinguishes facts from recommendations,
 ## Comments
 
 Created during charting. No implementation authorization is implied by this planning ticket.
+
+## Answer
+
+Resolved 2026-10-08 by provisioning-researcher. [Supported simulator provisioning in the pinned device layer](../evidence/provisioning.md) records the inspected package/source evidence and exact command templates. Pinned MobileBuildMCP supports listing, booting and installing onto existing explicit UUIDs, plus destructive erase. It exposes no create/clone/delete or standalone shutdown tool. Exclusive allocation from a supplied dedicated inventory is feasible; fully automatic fresh creation remains an explicit unsupported prerequisite under ADR-0002. Downstream lifecycle planning must preserve uncertainty, existing quarantines and inventory provenance. No device operations were performed.
