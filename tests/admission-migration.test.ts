@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test, type TestContext } from 'node:test';
-import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from 'node:fs';
+import { chmodSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
@@ -360,3 +360,61 @@ for (const milestone of ['markerWritten', 'beforeCommit', 'afterCommit']) {
     assert.equal(readFileSync(join(f.root, 'migration.lock'), 'utf8'), guard);
   });
 }
+
+for (const failure of ['unsafe-root', 'dangling-root', 'missing-declared-root', 'unreadable-root'] as const) {
+  test(`initialized admission stays closed after ${failure} prevents an offline rerun`, t => {
+    const f = fixture(t);
+    const extra = join(f.directory, 'declared-journal');
+    if (failure === 'missing-declared-root') mkdirSync(extra, { mode: 0o700 });
+    const input = failure === 'missing-declared-root' ? { ...declaration, additionalJournalRoots: [extra] } : declaration;
+    migrateAdmissionForTesting(input, f.options);
+    const admission = f.open();
+    const source = f.options.defaultRoots.journal;
+    if (failure === 'unsafe-root') { const elsewhere = join(f.directory, 'elsewhere'); mkdirSync(elsewhere); symlinkSync(elsewhere, source); }
+    if (failure === 'dangling-root') symlinkSync(join(f.directory, 'missing-target'), source);
+    if (failure === 'missing-declared-root') rmSync(extra, { recursive: true });
+    if (failure === 'unreadable-root') { mkdirSync(source); chmodSync(source, 0o000); }
+    try {
+      assert.throws(() => migrateAdmissionForTesting(input, f.options), { code: 'STATE_UNAVAILABLE' });
+      assert.throws(() => admission.acquire({ device, attempt: { kind: 'legacy', id: 'after-refused-rerun' }, digest: 'new', intent: {} }), { code: 'STATE_UNAVAILABLE' });
+      assert.throws(f.open, { code: 'STATE_UNAVAILABLE' });
+      assert.equal(existsSync(join(f.root, 'migration.lock')), true);
+    } finally { if (failure === 'unreadable-root') chmodSync(source, 0o700); }
+    if (failure === 'unsafe-root' || failure === 'dangling-root') assert.equal(lstatSync(source).isSymbolicLink(), true);
+    if (failure === 'missing-declared-root') assert.equal(existsSync(extra), false);
+    if (failure === 'unreadable-root') assert.deepEqual(readdirSync(source), []);
+  });
+}
+
+test('a recognized lease FIFO refuses within the child deadline without reading a device or retaining a fresh guard', t => {
+  const f = fixture(t);
+  mkdirSync(f.options.defaultRoots.leases, { mode: 0o700 });
+  const fifo = join(f.options.defaultRoots.leases, `${device}.lock`);
+  const created = spawnSync('mkfifo', [fifo], { encoding: 'utf8' });
+  assert.equal(created.status, 0, created.stderr);
+  const child = spawnSync(process.execPath, ['--import', import.meta.resolve('tsx'), '--input-type=module', '-e',
+    `import {migrateAdmissionForTesting} from ${JSON.stringify(new URL('../src/device/admission-migration.ts', import.meta.url).href)};
+    try { migrateAdmissionForTesting(JSON.parse(process.argv[1]), JSON.parse(process.argv[2])); process.exit(1); }
+    catch(error) { process.stdout.write(String(error.code)); process.exit(error.code === 'STATE_UNAVAILABLE' ? 3 : 2); }`,
+    JSON.stringify(declaration), JSON.stringify(f.options)], { encoding: 'utf8', timeout: 2000, killSignal: 'SIGKILL' });
+  assert.equal(child.signal, null, 'The importer must refuse the FIFO before the 2-second deadline');
+  assert.equal(child.status, 3, child.stderr);
+  assert.equal(child.stdout, 'STATE_UNAVAILABLE');
+  assert.equal(lstatSync(fifo).isFIFO(), true);
+  assert.equal(existsSync(join(f.root, 'migration.lock')), false);
+  assert.throws(f.open, { code: 'STATE_UNAVAILABLE' });
+});
+
+test('root separation and destination safety refuse without placing a guard inside a source or unsafe directory', t => {
+  const f = fixture(t);
+  migrateAdmissionForTesting(declaration, f.options);
+  symlinkSync(f.root, f.options.defaultRoots.journal);
+  const before = treeBytes(f.root);
+  assert.throws(() => migrateAdmissionForTesting(declaration, f.options), { code: 'STATE_UNAVAILABLE' });
+  assert.deepEqual(treeBytes(f.root), before);
+  assert.equal(existsSync(join(f.root, 'migration.lock')), false);
+  const unsafe = fixture(t);
+  mkdirSync(unsafe.root, { mode: 0o755 });
+  assert.throws(() => migrateAdmissionForTesting(declaration, unsafe.options), { code: 'STATE_UNAVAILABLE' });
+  assert.deepEqual(readdirSync(unsafe.root), []);
+});

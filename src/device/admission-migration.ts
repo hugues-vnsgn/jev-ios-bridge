@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { closeSync, constants, fstatSync, lstatSync, openSync, readFileSync, readdirSync, realpathSync } from 'node:fs';
+import { closeSync, constants, fstatSync, lstatSync, openSync, readFileSync, readdirSync, readlinkSync, realpathSync } from 'node:fs';
 import { homedir, tmpdir } from 'node:os';
 import { basename, dirname, isAbsolute, join, resolve, sep } from 'node:path';
 import { z } from 'zod/v4';
@@ -45,12 +45,17 @@ function sourceRoot(kind: MigrationSource['kind'], path: string, required: boole
     return { kind, root: canonicalLocation(absolute), present: false, files: [] };
   }
 }
-function canonicalLocation(path: string): string {
-  try { lstatSync(path); }
+function canonicalLocation(path: string, links = 0): string {
+  if (links > 40) throw new AdmissionError('STATE_UNAVAILABLE', 'Historical path separation cannot be established');
+  let stat: ReturnType<typeof lstatSync>;
+  try { stat = lstatSync(path); }
   catch (error) {
     if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
-    return join(canonicalLocation(dirname(path)), basename(path));
+    return join(canonicalLocation(dirname(path), links), basename(path));
   }
+  // Resolving a dangling link's intended location does not validate it as a
+  // source. The guarded scanner still rejects the link itself.
+  if (stat.isSymbolicLink()) return canonicalLocation(resolve(dirname(path), readlinkSync(path)), links + 1);
   return realpathSync(path);
 }
 type RecordObject = Record<string, unknown>;
@@ -63,7 +68,9 @@ const hash = (value: string | Buffer): string => createHash('sha256').update(val
 function object(value: unknown): value is RecordObject { return value !== null && typeof value === 'object' && !Array.isArray(value); }
 function unsafeSource(): never { throw new AdmissionError('STATE_UNAVAILABLE', 'Historical state is corrupt, conflicting or unattributable; activation refused'); }
 function readRecord(path: string, source: MigrationSource, allowMalformed = false): HistoricalRecord {
-  const fd = openSync(path, constants.O_RDONLY | constants.O_NOFOLLOW);
+  // A recognized filename can still name a FIFO or be replaced after lstat.
+  // Open without waiting for a writer, then validate the actual descriptor.
+  const fd = openSync(path, constants.O_RDONLY | constants.O_NOFOLLOW | constants.O_NONBLOCK);
   try {
     const stat = fstatSync(fd);
     if (!stat.isFile() || stat.size > 16 * 1024 * 1024) unsafeSource();
@@ -193,10 +200,15 @@ function migrate(raw: unknown, root: string, mode: 'test' | 'production', defaul
   try {
     if (!isAbsolute(root)) throw new AdmissionError('STATE_UNAVAILABLE', 'Admission root must be absolute');
     const destination = canonicalLocation(root);
-    // Source preservation includes directories. Never create a target or guard
-    // within a declared source, or consume the admission store as historical data.
-    for (const source of sourceRoots(declaration, defaults)) {
-      if (source.root === destination || source.root.startsWith(destination + sep) || destination.startsWith(source.root + sep)) unsafeSource();
+    // Only establish separation here. Source existence/type/readability belongs
+    // inside the migration guard, so a failed rerun closes initialized admission.
+    // Check both spelling and resolved location to avoid writing into a source.
+    const paths = [defaults.journal, defaults.leases, ...declaration.additionalJournalRoots, ...declaration.additionalLeaseRoots];
+    for (const path of paths) {
+      if (!isAbsolute(path)) throw new AdmissionError('INVALID_REQUEST', 'Historical roots must be absolute');
+      for (const location of [resolve(path), canonicalLocation(resolve(path))]) {
+        if (location === destination || location.startsWith(destination + sep) || destination.startsWith(location + sep)) unsafeSource();
+      }
     }
     return AdmissionSqlite.migrate({ root, mode }, () => collect(declaration, defaults), checkpoint);
   } catch (error) {
