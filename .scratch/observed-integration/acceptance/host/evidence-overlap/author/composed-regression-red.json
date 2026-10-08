@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/opt/homebrew/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-name-pattern",
+    "parked allocation and its observed action",
+    "tests/observed-evidence.test.ts"
+  ],
+  "exit": 1,
+  "seconds": 0.79
+}

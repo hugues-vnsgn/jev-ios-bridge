@@ -1,0 +1,29 @@
+{"fulfilled":0,"rejected":["EEXIST","EEXIST"]}
+✖ shared private allocation directory permits exactly one concurrent request publication (19.080792ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 116.175875
+
+✖ failing tests:
+
+test at ../../../../../../private/tmp/jev-evidence-overlap-spec-0r6ptzn_/concurrent.test.ts:2:1003
+✖ shared private allocation directory permits exactly one concurrent request publication (19.080792ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (/private/tmp/jev-evidence-overlap-spec-0r6ptzn_/concurrent.test.ts:5:348)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

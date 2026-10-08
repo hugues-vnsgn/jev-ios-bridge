@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/opt/homebrew/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    ".scratch/observed-integration/acceptance/host/evidence-overlap/poll-budget-probe.test.ts"
+  ],
+  "exit": 0,
+  "seconds": 1.67,
+  "runtime": "v26.8.1",
+  "counts": {
+    "tests": 1,
+    "pass": 1,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "purpose": "Controlled diagnostic only; does not replace unchanged polling test or full gate."
+}

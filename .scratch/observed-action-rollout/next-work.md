@@ -2,6 +2,8 @@
 
 Current milestone: tickets 01–07 and their bounded repairs are accepted. Runtime and allocator are integrated at `6d5536a551df853dd92fdf63253c1bacc244263f`; combined 657/657 tests pass on Node 26.8.1 and exact 24.0.0, full 1423/1423 plus typecheck/build pass, zero skips. [Runtime review](../observed-integration/acceptance/host/runtime-review.md); [allocator review](../observed-integration/acceptance/host/allocator-review.md).
 
+The composed public tests exposed an evidence-directory overlap between allocator and action runtime. Root's two-file repair is accepted at `d0a6d7efef9fc0d55324e3803207fb2dffdfaf18`: both independent reviews PASS, focused 225/225 on both runtimes, complete 1428/1428 plus typecheck/build, zero skips. The first full-run timing assertion failure and later unchanged passes remain separate. [Repair review and provenance](../observed-integration/acceptance/host/evidence-overlap-review.md). Next, advance the paused adapter worktree while preserving its owned files, then rerun its original reproduction and public cases unchanged.
+
 ## Execution order
 
 | Order | Work | Owner / prerequisite | Required result |

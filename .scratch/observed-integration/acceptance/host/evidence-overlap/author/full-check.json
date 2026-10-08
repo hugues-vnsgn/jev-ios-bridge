@@ -1,0 +1,20 @@
+{
+  "command": [
+    "npm",
+    "run",
+    "check"
+  ],
+  "base": "fd056b5b550d43710c095de105fd3e74c4516e20",
+  "exit": 1,
+  "seconds": 71.8,
+  "runtime": "v26.8.1",
+  "counts": {
+    "tests": 1428,
+    "pass": 1427,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "log": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-observed-evidence-overlap/.scratch/observed-integration/acceptance/host/evidence-overlap/full-check.log"
+}

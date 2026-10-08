@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/opt/homebrew/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-name-pattern=boot-state polling is no more frequent than once per second and boot is never retried",
+    "tests/observed-allocation.test.ts"
+  ],
+  "candidate": "d0a6d7efef9fc0d55324e3803207fb2dffdfaf18",
+  "exit": 0,
+  "seconds": 1.48,
+  "runtime": "v26.8.1",
+  "counts": {
+    "tests": 1,
+    "pass": 1,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

@@ -1,0 +1,10 @@
+✔ a slow first boot-state response consumes the same 1100 ms stage budget (1471.154459ms)
+ℹ {"elapsed":1347,"times":[1791445701014],"state":"quarantined","reason":"PREPARATION_UNCONFIRMED","calls":["plist","plist","plist","plist","plist","plist","plist","plist","plist","plist","create","boot","list"]}
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1633.467458

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/opt/homebrew/bin/node",
+    "--import",
+    "tsx",
+    ".scratch/observed-integration/acceptance/host/public-adapters/evidence-overlap-repro.ts"
+  ],
+  "exit": 1,
+  "seconds": 0.7,
+  "cwd": "feat-observed-public-adapters",
+  "sourceEvidenceSha256": "f4187d8328f8db8a8ab3e42a8dde3ea5917d92484753faea1475ba99a4cf945d"
+}

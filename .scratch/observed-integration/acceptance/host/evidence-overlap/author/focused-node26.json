@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/opt/homebrew/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-concurrency=1",
+    "tests/observed-evidence.test.ts",
+    "tests/observed-service.test.ts",
+    "tests/observed-allocation.test.ts",
+    "tests/observed-allocation-config.test.ts"
+  ],
+  "base": "fd056b5b550d43710c095de105fd3e74c4516e20",
+  "exit": 0,
+  "seconds": 65.66,
+  "runtime": "v26.8.1",
+  "counts": {
+    "tests": 225,
+    "pass": 225,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "log": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-observed-evidence-overlap/.scratch/observed-integration/acceptance/host/evidence-overlap/focused-node26.log"
+}

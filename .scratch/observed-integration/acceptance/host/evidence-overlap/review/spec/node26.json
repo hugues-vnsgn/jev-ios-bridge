@@ -1,0 +1,12 @@
+{
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-concurrency=1",
+    "tests/observed-evidence.test.ts"
+  ],
+  "nodeVersion": "v26.8.1",
+  "exit": 0
+}

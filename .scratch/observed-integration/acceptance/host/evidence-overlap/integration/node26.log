@@ -1,0 +1,17 @@
+✔ a parked allocation and its observed action share private evidence without repeating preparation (600.51025ms)
+✔ an existing file action path refuses without creating request evidence (1.519084ms)
+✔ an existing permissive action path refuses without creating request evidence (0.854334ms)
+✔ an existing symlink action path refuses without creating request evidence (1.108041ms)
+✔ an existing request file or symlink is never replaced in a private action directory (5.740708ms)
+✔ request, observation, screenshot and provisional evidence are absolute, private and exclusive (26.906667ms)
+✔ terminal exports require committed authority and cannot overwrite a prior projection (13.670375ms)
+✔ relative paths, symlink directories and permissive parents cannot become evidence authority (1.068291ms)
+✔ symlink and oversized screenshot sources refuse instead of following or exporting them (8.066833ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 870.252833

@@ -1,0 +1,19 @@
+(node:96806) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ a parked allocation and its observed action share private evidence without repeating preparation (613.168667ms)
+✔ an existing file action path refuses without creating request evidence (2.042875ms)
+✔ an existing permissive action path refuses without creating request evidence (1.246084ms)
+✔ an existing symlink action path refuses without creating request evidence (1.716833ms)
+✔ an existing request file or symlink is never replaced in a private action directory (6.777833ms)
+✔ request, observation, screenshot and provisional evidence are absolute, private and exclusive (23.338958ms)
+✔ terminal exports require committed authority and cannot overwrite a prior projection (13.395375ms)
+✔ relative paths, symlink directories and permissive parents cannot become evidence authority (1.76475ms)
+✔ symlink and oversized screenshot sources refuse instead of following or exporting them (10.744167ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 844.961292

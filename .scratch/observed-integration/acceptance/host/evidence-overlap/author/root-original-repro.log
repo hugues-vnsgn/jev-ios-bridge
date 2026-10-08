@@ -1,0 +1,93 @@
+{
+  allocation: {
+    version: 1,
+    allocationId: '54568149-4445-4975-8681-261B8924E1E4',
+    actionId: 'one',
+    state: 'ready',
+    phase: 'parked',
+    device: {
+      platform: 'ios-simulator',
+      udid: 'ABCDEF00-0000-4000-8000-000000000001'
+    },
+    reason: null,
+    outcome: 'prepared',
+    authority: 'committed',
+    readinessEvidence: [
+      '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-vekKcK/runs/observed/one/allocation/readiness-1.json'
+    ],
+    evidenceRefs: [
+      '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-vekKcK/runs/observed/one/allocation',
+      '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-vekKcK/runs/observed/one/allocation/host-prerequisites.json',
+      '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-vekKcK/runs/observed/one/allocation/preparation-request.json',
+      '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-vekKcK/runs/observed/one/allocation/source-diagnostics.json',
+      '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-vekKcK/runs/observed/one/allocation/readiness-1.json'
+    ],
+    reservation: { bytes: 1000, capacityHeld: true },
+    hostCreationBlocked: false,
+    cancellationRequested: false
+  }
+}
+{
+  terminal: {
+    version: 1,
+    kind: 'observed-action',
+    actionId: 'one',
+    allocationId: '54568149-4445-4975-8681-261B8924E1E4',
+    device: {
+      platform: 'ios-simulator',
+      udid: 'ABCDEF00-0000-4000-8000-000000000001'
+    },
+    bridgeVersion: 'fixture',
+    state: 'terminal',
+    authority: 'committed',
+    disposition: 'retrieved',
+    cancellationRequested: false,
+    actionAttempted: false,
+    actionAcknowledged: false,
+    observations: 0,
+    outcome: 'inconclusive',
+    reason: 'RESULT_EVIDENCE_UNCONFIRMED',
+    admission: 'quarantined',
+    allocationState: 'quarantined',
+    evidence: {
+      directory: '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-vekKcK/runs/observed/one',
+      request: '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-vekKcK/runs/observed/one/request.json',
+      observations: [],
+      terminal: '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-vekKcK/runs/observed/one/terminal.json',
+      exportStatus: 'complete'
+    }
+  },
+  calls: [
+    'open',       'plist',
+    'plist',      'plist',
+    'plist',      'plist',
+    'plist',      'plist',
+    'plist',      'plist',
+    'plist',      'create',
+    'boot',       'list',
+    'install',    'launch-app',
+    'list',       'snapshot-ui',
+    'screenshot'
+  ]
+}
+{ actionDirectoryExists: true }
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'inconclusive'
+- 'already_satisfied'
+
+    at <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/.scratch/observed-integration/acceptance/host/public-adapters/evidence-overlap-repro.ts:13:9) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'inconclusive',
+  expected: 'already_satisfied',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.8.1

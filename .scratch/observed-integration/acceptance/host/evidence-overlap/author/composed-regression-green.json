@@ -1,0 +1,12 @@
+{
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-name-pattern",
+    "parked allocation and its observed action",
+    "tests/observed-evidence.test.ts"
+  ],
+  "exit": 0
+}

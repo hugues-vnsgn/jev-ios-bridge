@@ -1,0 +1,128 @@
+{
+  "spec": {
+    "source": "/tmp/jev-evidence-overlap-spec-0r6ptzn_",
+    "files": [
+      {
+        "path": "after-hashes.json",
+        "sha256": "b10ea12cd4cf87bedefa1d0a544f6cfcaa6d75f2e4daf635f7d9b7a4fb5446e8"
+      },
+      {
+        "path": "before-evidence.ts",
+        "sha256": "f4187d8328f8db8a8ab3e42a8dde3ea5917d92484753faea1475ba99a4cf945d"
+      },
+      {
+        "path": "before-hashes.json",
+        "sha256": "b10ea12cd4cf87bedefa1d0a544f6cfcaa6d75f2e4daf635f7d9b7a4fb5446e8"
+      },
+      {
+        "path": "commit-association.json",
+        "sha256": "838da4a4a8f06ad86d8178e1978a8e61e2f609af2fb8e4ccfe6f2e82efae0cf5"
+      },
+      {
+        "path": "commit-association.md",
+        "sha256": "8d6eee9d975252a93409f62f0541d1a722190a45184ca179bc12daedb34420ce"
+      },
+      {
+        "path": "concurrent-green.json",
+        "sha256": "76ab98b782ea1c68f1fbc33c6922033a63b00b27d2d54429d7b87adaf240891e"
+      },
+      {
+        "path": "concurrent-green.log",
+        "sha256": "ee9a1583179d52bc460d5f499287ca063a7b8763140260d6e049602439b25a8e"
+      },
+      {
+        "path": "concurrent-red.json",
+        "sha256": "4a03917ddd22a905d33393f324fbc6a22ddf85b5ee37b778f6437efbf97927bd"
+      },
+      {
+        "path": "concurrent-red.log",
+        "sha256": "f7cd0cde8cc97158103750ad853ca7590e92cad5e05f6ea8ac75692b150629c7"
+      },
+      {
+        "path": "concurrent-setup-error.test.ts",
+        "sha256": "51640ea26e2d175896806a0b8a5524b9641b83fc656fcd94c068d76a16c12843"
+      },
+      {
+        "path": "concurrent-setup-green.json",
+        "sha256": "8d244a21562b8809632316d1def9b03e9ad9abf5ce2059adcb9cb6b49ded161d"
+      },
+      {
+        "path": "concurrent-setup-green.log",
+        "sha256": "c4d550a120f04c3a3b8d312f6b90dbfcf75895a903193a2645b7b6bbf782aa38"
+      },
+      {
+        "path": "concurrent-setup-red.json",
+        "sha256": "4a03917ddd22a905d33393f324fbc6a22ddf85b5ee37b778f6437efbf97927bd"
+      },
+      {
+        "path": "concurrent-setup-red.log",
+        "sha256": "f2eae542ba142c64644ee7a3a0bb5576020f634924da7adc640e83b2d35deca3"
+      },
+      {
+        "path": "concurrent.test.ts",
+        "sha256": "6756c9d6fee7d851eb2b0989e113abeacaaf2a8a6047d4ea29241ee483442e24"
+      },
+      {
+        "path": "manifest.json",
+        "sha256": "e2b4840dda167135fa42789e1def51ea2d473a9c5f58e5342ae9460f4e22c94e"
+      },
+      {
+        "path": "node24.json",
+        "sha256": "8128b02dc285d2720256ffb46dc24b749244b452cf497d78083cc1d084c2a8a8"
+      },
+      {
+        "path": "node24.log",
+        "sha256": "4edc5849ffa1658a465919a6e5c477eb30e8da0c87a15d535c3324b48bb74872"
+      },
+      {
+        "path": "node26.json",
+        "sha256": "6d41b477beb9065ab96e4aa35282d7274d56a520fe4302506c56737a3b149ca4"
+      },
+      {
+        "path": "node26.log",
+        "sha256": "690d8968c9951605511d94faed199fd426849f18a7a158d3c01c664174792f57"
+      },
+      {
+        "path": "review.md",
+        "sha256": "d7ff51608b9dd4b4c0cdc2c95ee8e9e6667e7e01ad973b4f49050b543f02fa08"
+      }
+    ]
+  },
+  "standards": {
+    "source": "/tmp/jev-evidence-overlap-standards-oxc_4m8e",
+    "files": [
+      {
+        "path": "after-hashes.json",
+        "sha256": "3ddc3f111a7cc1b954b74623de4f941b03e01983ae2e3701ab0ff96b0efbe1e8"
+      },
+      {
+        "path": "commit-association.json",
+        "sha256": "50e86ddabc63a84970d2aa360b0d7059a7dd1254f1feb45575654dc624362b4a"
+      },
+      {
+        "path": "commit-association.md",
+        "sha256": "25ace3c1bdd70478ccd4607a97b720942068dd1f9b1703b54cd8085889d3e052"
+      },
+      {
+        "path": "manifest.json",
+        "sha256": "aaf2c91376f35d78895f1032a807b83b7b11ca5256754bf0c1e4daeed599241a"
+      },
+      {
+        "path": "review.md",
+        "sha256": "bcfa9c2ac7a76ab1c2bb68546e862e6077609715d86b1b8e727a65ccf177c384"
+      },
+      {
+        "path": "reviewed.diff",
+        "sha256": "510e053eab0d4b3e3c1a4b1466dfd28810b5029c3b43f73a8eb97cf262171a18"
+      },
+      {
+        "path": "source/src/observed/evidence.ts",
+        "sha256": "deeb65d7c95c84de1c3b559ec2a885da768a8203a2be79af700f3262717462fb"
+      },
+      {
+        "path": "source/tests/observed-evidence.test.ts",
+        "sha256": "cf1d69ea76361bc77246b782b883cf21e3e2f25b28a5ae64d9c24a1a3b97180e"
+      }
+    ]
+  }
+}
