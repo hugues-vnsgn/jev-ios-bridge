@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-reporter=tap",
+    "--test-concurrency=1",
+    "tests/admission-maintenance-entry.test.ts"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "candidate": "2c6c41845e9db05de451d7b10d1674fc9136b891",
+  "node": "v24.0.0",
+  "exit": 0,
+  "durationSeconds": 0.74897870800487,
+  "counts": {
+    "tests": 5,
+    "pass": 5,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "logSha256": "6e6098f1106918ac11e55dce5669f4fd8910f8619c7f15ea76f17d73a211dfd9",
+  "childUmask": "0022",
+  "sqliteRuntimeFlags": false
+}

@@ -1,0 +1,22 @@
+{
+  "command": [
+    "npm",
+    "run",
+    "check"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-observed-maintenance-entry",
+  "candidate": "535973ed85ef206ab8a613105e9b24b620753c98",
+  "startedUtc": "2026-10-08T09:31:37.838534+00:00",
+  "durationSeconds": 78.72458958300194,
+  "exit": 0,
+  "counts": {
+    "tests": 1475,
+    "pass": 1475,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "childUmask": "0022",
+  "extraEnvironment": {},
+  "note": "isolated case selection is explicit; all full runs remain separate"
+}

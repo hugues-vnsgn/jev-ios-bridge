@@ -8,6 +8,8 @@ Public adapters are integrated at `538e5770d1a02b7ef92d2dd69cd3a8a9d692ec4a`. Bo
 
 ## Row state
 
+The packed-install maintenance dependency repair is accepted at `2c6c41845e9db05de451d7b10d1674fc9136b891`: both review axes, complete1475/1475 checks on both Node versions and37-file audit pass. [Bounded review and all preserved failures](maintenance-entry-review.md). Ticket10's original complete installed proofs still need rerunning after its dependency advance; no H09 PASS is inferred.
+
 | Rows | State / missing work | Evidence manifest |
 | --- | --- | --- |
 | H01/H02 | UNVERIFIED: audit all strict boundaries and both public transports | [Schema/envelopes](schema.json) |

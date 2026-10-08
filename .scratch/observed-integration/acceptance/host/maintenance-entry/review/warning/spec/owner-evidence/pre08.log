@@ -1,0 +1,32 @@
+(node:83323) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ CLI report reads persisted evidence without a device or key (183.656ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 381.028417
+
+✖ failing tests:
+
+test at tests/integration-edge.test.ts:1:10350
+✖ CLI report reads persisted evidence without a device or key (183.656ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '(node:83327) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n' +
+  +   '(Use `node --trace-warnings ...` to show where the warning was created)\n'
+  - ''
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-observed-evidence-overlap/tests/integration-edge.test.ts:237:12)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:332:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '(node:83327) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n',
+    expected: '',
+    operator: 'strictEqual'
+  }

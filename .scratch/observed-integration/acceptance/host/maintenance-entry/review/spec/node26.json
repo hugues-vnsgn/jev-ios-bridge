@@ -1,0 +1,13 @@
+{
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "tests/admission-maintenance-entry.test.ts"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-observed-maintenance-entry",
+  "version": "v26.8.1",
+  "exit": 0,
+  "childUmask": "0022"
+}

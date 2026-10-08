@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: maintenance direct canonical entry prints offline help
+ok 1 - maintenance direct canonical entry prints offline help
+  ---
+  duration_ms: 145.190583
+  type: 'test'
+  ...
+# Subtest: maintenance file symlink entry prints the same offline help
+ok 2 - maintenance file symlink entry prints the same offline help
+  ---
+  duration_ms: 83.270458
+  type: 'test'
+  ...
+# Subtest: maintenance directory alias entry prints the same offline help
+ok 3 - maintenance directory alias entry prints the same offline help
+  ---
+  duration_ms: 84.521333
+  type: 'test'
+  ...
+# Subtest: maintenance import stays inert with no host entry
+ok 4 - maintenance import stays inert with no host entry
+  ---
+  duration_ms: 81.273625
+  type: 'test'
+  ...
+# Subtest: maintenance import stays inert with missing host entry
+ok 5 - maintenance import stays inert with missing host entry
+  ---
+  duration_ms: 81.992792
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 538.929542

@@ -1,0 +1,67 @@
+✔ maintenance direct canonical entry prints offline help (172.347834ms)
+✔ maintenance file symlink entry prints the same offline help (120.723541ms)
+✔ maintenance directory alias entry prints the same offline help (123.768917ms)
+✔ maintenance import stays inert with no host entry (120.257917ms)
+✔ maintenance import stays inert with missing host entry (122.435709ms)
+✔ explicit offline initialization enables admission and persists its operator declaration (46.8425ms)
+✔ completed historical actions retain original records and one read-only allocation identity without replay (45.021458ms)
+✔ quarantine in a casing alias overrides apparent completion without changing sources (48.826333ms)
+✔ claim in a casing alias overrides apparent completion without changing sources (49.125333ms)
+✔ unfinished in a casing alias overrides apparent completion without changing sources (47.077916ms)
+✔ temporary in a casing alias overrides apparent completion without changing sources (47.951083ms)
+✔ well-formed case aliases consolidate clean completion and conflicting device bindings refuse activation (49.39575ms)
+✔ dead legacy iOS lease is never reclaimed and cannot authorize effects (75.225042ms)
+✔ malformed legacy iOS lease is never reclaimed and cannot authorize effects (36.898875ms)
+✔ temporary legacy iOS lease is never reclaimed and cannot authorize effects (71.949125ms)
+✔ live legacy iOS lease is never reclaimed and cannot authorize effects (10.546584ms)
+✔ matching non-UUID lease records remain untouched without becoming iOS claims; unattributable records close activation (40.10225ms)
+✔ protected study devices and declared exclusions remain unavailable even with no historical files (36.026375ms)
+✔ unquiesced or incomplete root declarations refuse before installation; explicit missing roots are not empty (10.924125ms)
+✔ migration guard blocks existing handles and independent readers; a stranded guard is never reclaimed (190.673791ms)
+✔ interrupted markerWritten installation never recreates missing authority (18.381834ms)
+✔ interrupted beforeCommit installation never recreates missing authority (19.524208ms)
+✔ interrupted afterCommit installation never recreates missing authority (37.622375ms)
+✔ activation revalidates persisted manifest and rejects missing initialized storage on every operation (43.276459ms)
+✔ changed historical sources on a rerun retain the migration guard and block previously activated handles (39.96325ms)
+✔ migration refuses an admission root inside a source before changing source bytes (0.900291ms)
+✔ invalid-json historical input refuses activation with source bytes unchanged (12.503ms)
+✔ wrong-hash historical input refuses activation with source bytes unchanged (12.666292ms)
+✔ symbolic-link historical input refuses activation with source bytes unchanged (10.301875ms)
+✔ unexpected-file historical input refuses activation with source bytes unchanged (11.46825ms)
+✔ empty-directory historical input refuses activation with source bytes unchanged (10.587583ms)
+✔ explicit additional roots are imported, deduplicated and recorded without weakening defaults (36.105209ms)
+✔ an unsafe source file cannot be bypassed by a malformed default root declaration (10.963083ms)
+✔ offline maintenance accepts only an explicit declaration file and emits a persisted receipt (33.669208ms)
+✔ unreadable source and permissive or mismatched initialized storage remain closed (45.160334ms)
+✔ conflicting attributable historical results cannot establish an observed outcome (35.656166ms)
+✔ a completed casing alias cannot finish the same action intent in another historical directory (36.337833ms)
+✔ real importer death at markerWritten retains its guard instead of authorizing a replacement (169.873375ms)
+✔ real importer death at beforeCommit retains its guard instead of authorizing a replacement (156.169084ms)
+✔ real importer death at afterCommit retains its guard instead of authorizing a replacement (162.110125ms)
+✔ initialized admission stays closed after unsafe-root prevents an offline rerun (33.939ms)
+✔ initialized admission stays closed after dangling-root prevents an offline rerun (39.078583ms)
+✔ initialized admission stays closed after missing-declared-root prevents an offline rerun (38.518916ms)
+✔ initialized admission stays closed after unreadable-root prevents an offline rerun (38.959041ms)
+✔ a recognized lease FIFO refuses within the child deadline without reading a device or retaining a fresh guard (141.917708ms)
+✔ root separation and destination safety refuse without placing a guard inside a source or unsafe directory (30.342292ms)
+✔ an inaccessible ancestor of a declared source closes initialized admission on rerun (37.687542ms)
+✔ a readable source overlap still prevents guard writes when another declared source is inaccessible (32.849625ms)
+ℹ tests 48
+ℹ suites 0
+ℹ pass 48
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3069.567458
+ℹ start of coverage report
+ℹ ---------------------------------------------------------------------------
+ℹ file                       | line % | branch % | funcs % | uncovered lines
+ℹ ---------------------------------------------------------------------------
+ℹ src                        |        |          |         | 
+ℹ  device                    |        |          |         | 
+ℹ   admission-maintenance.ts |  98.21 |    76.92 |  100.00 | 34
+ℹ ---------------------------------------------------------------------------
+ℹ all files                  |  98.21 |    76.92 |  100.00 | 
+ℹ ---------------------------------------------------------------------------
+ℹ end of coverage report

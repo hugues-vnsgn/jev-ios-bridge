@@ -1,0 +1,25 @@
+{
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-name-pattern=^boot-state polling is no more frequent than once per second and boot is never retried$",
+    "tests/observed-allocation.test.ts"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-observed-maintenance-entry",
+  "candidate": "535973ed85ef206ab8a613105e9b24b620753c98",
+  "startedUtc": "2026-10-08T09:31:34.751802+00:00",
+  "durationSeconds": 1.462395959002606,
+  "exit": 0,
+  "counts": {
+    "tests": 1,
+    "pass": 1,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "childUmask": "0022",
+  "extraEnvironment": {},
+  "note": "isolated case selection is explicit; all full runs remain separate"
+}

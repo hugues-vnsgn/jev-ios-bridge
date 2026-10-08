@@ -1,0 +1,13 @@
+✔ maintenance direct canonical entry prints offline help (112.538791ms)
+✔ maintenance file symlink entry prints the same offline help (103.642875ms)
+✔ maintenance directory alias entry prints the same offline help (101.199875ms)
+✔ maintenance import stays inert with no host entry (100.71525ms)
+✔ maintenance import stays inert with missing host entry (103.521958ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 624.458458

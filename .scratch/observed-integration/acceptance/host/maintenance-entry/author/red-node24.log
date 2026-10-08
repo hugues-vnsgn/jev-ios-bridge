@@ -1,0 +1,57 @@
+✔ maintenance direct canonical entry prints offline help (121.418625ms)
+✖ maintenance file symlink entry prints the same offline help (107.411666ms)
+✖ maintenance directory alias entry prints the same offline help (113.067125ms)
+✔ maintenance import stays inert with no host entry (103.793208ms)
+✔ maintenance import stays inert with missing host entry (103.396417ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 3
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 662.589958
+
+✖ failing tests:
+
+test at tests/admission-maintenance-entry.test.ts:1:1250
+✖ maintenance file symlink entry prints the same offline help (107.411666ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /^Usage: node dist\/device\/admission-maintenance\.js migrate <declaration\.json>\n/. Input:
+  
+  ''
+  
+      at help (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-observed-maintenance-entry/tests/admission-maintenance-entry.test.ts:24:10)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-observed-maintenance-entry/tests/admission-maintenance-entry.test.ts:37:3)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1062:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+      at Test.postRun (node:internal/test_runner/test:1191:19)
+      at Test.run (node:internal/test_runner/test:1119:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:332:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '',
+    expected: /^Usage: node dist\/device\/admission-maintenance\.js migrate <declaration\.json>\n/,
+    operator: 'match'
+  }
+
+test at tests/admission-maintenance-entry.test.ts:1:1590
+✖ maintenance directory alias entry prints the same offline help (113.067125ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /^Usage: node dist\/device\/admission-maintenance\.js migrate <declaration\.json>\n/. Input:
+  
+  ''
+  
+      at help (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-observed-maintenance-entry/tests/admission-maintenance-entry.test.ts:24:10)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-observed-maintenance-entry/tests/admission-maintenance-entry.test.ts:45:3)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1062:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+      at Test.postRun (node:internal/test_runner/test:1191:19)
+      at Test.run (node:internal/test_runner/test:1119:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '',
+    expected: /^Usage: node dist\/device\/admission-maintenance\.js migrate <declaration\.json>\n/,
+    operator: 'match'
+  }

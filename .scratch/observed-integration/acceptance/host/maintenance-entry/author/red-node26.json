@@ -1,0 +1,16 @@
+{
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-concurrency=1",
+    "tests/admission-maintenance-entry.test.ts"
+  ],
+  "exit": 1,
+  "files": {
+    "src/device/admission-maintenance.ts": "fbb67e9d3998df8c203c343312299d4dc8d2fba050f8f903712b0a385bb03252",
+    "tests/admission-maintenance-entry.test.ts": "992a918bfa26edfcecdd7fee0b6265261d5f7270a758968ca42ee14d2a131420"
+  },
+  "childUmask": "0022"
+}

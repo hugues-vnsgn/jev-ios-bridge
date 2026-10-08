@@ -1,0 +1,22 @@
+{
+  "command": [
+    "npm",
+    "run",
+    "check"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-observed-maintenance-entry",
+  "candidate": "535973ed85ef206ab8a613105e9b24b620753c98",
+  "startedUtc": "2026-10-08T09:27:31.011500+00:00",
+  "durationSeconds": 77.81598341599965,
+  "exit": 1,
+  "counts": {
+    "tests": 1475,
+    "pass": 1474,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "childUmask": "0022",
+  "extraEnvironment": {},
+  "extraSqliteFlags": false
+}

@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-reporter=tap",
+    "--test-concurrency=1",
+    "--test-name-pattern=^CLI report reads persisted evidence without a device or key$",
+    "tests/integration-edge.test.ts"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "candidate": "2c6c41845e9db05de451d7b10d1674fc9136b891",
+  "node": "v24.0.0",
+  "exit": 0,
+  "durationSeconds": 0.3569805000006454,
+  "counts": {
+    "tests": 1,
+    "pass": 1,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "logSha256": "10bc98dfb3014736a54abe83ca681991420242af0041b71eb972fdef5b306e16",
+  "childUmask": "0022",
+  "sqliteRuntimeFlags": false
+}

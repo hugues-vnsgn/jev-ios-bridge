@@ -1,0 +1,7 @@
+{
+  "status": "FAIL",
+  "node": "v26.8.1",
+  "evidence": "/tmp/jev-ticket10-evidence/node26-proof",
+  "commands": "/tmp/jev-ticket10-evidence/node26-proof/commands.jsonl",
+  "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '/private/tmp/jev-ticket10-evidence/node26-proof/clean/node_modules/jev-ios-bridge/dist/cli.js'\n- '/tmp/jev-ticket10-evidence/node26-proof/clean/node_modules/jev-ios-bridge/dist/cli.js'\n"
+}

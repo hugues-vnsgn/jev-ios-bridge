@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-name-pattern=^CLI report reads persisted evidence without a device or key$",
+    "tests/integration-edge.test.ts"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-observed-evidence-overlap",
+  "head": "d0a6d7efef9fc0d55324e3803207fb2dffdfaf18",
+  "exit": 1,
+  "counts": {
+    "tests": 1,
+    "pass": 0,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "testSha256": "0e8ecfcd13ca40fa08793615132db4d89f427fcb88675214afd3d7af85aac227",
+  "cliSha256": "b9e91a94db4ba6d7caecd64a548b81842308a0cbe5a5ebc5d2fe60bc5cd049b7",
+  "childUmask": "0022",
+  "sqliteRuntimeFlags": false
+}

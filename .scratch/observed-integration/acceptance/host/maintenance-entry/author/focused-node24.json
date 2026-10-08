@@ -1,0 +1,34 @@
+{
+  "command": [
+    "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-concurrency=1",
+    "tests/admission-core.test.ts",
+    "tests/admission-migration.test.ts",
+    "tests/admission-allocation.test.ts",
+    "tests/admission-driver.test.ts",
+    "tests/admission-maintenance-entry.test.ts",
+    "tests/observed-cli.test.ts",
+    "tests/observed-mcp.test.ts",
+    "tests/observed-contract.test.ts",
+    "tests/mcp.test.ts",
+    "tests/contract.test.ts"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-observed-maintenance-entry",
+  "candidate": "535973ed85ef206ab8a613105e9b24b620753c98",
+  "startedUtc": "2026-10-08T09:26:28.234899+00:00",
+  "durationSeconds": 59.61122975000035,
+  "exit": 0,
+  "counts": {
+    "tests": 251,
+    "pass": 251,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "childUmask": "0022",
+  "extraEnvironment": {},
+  "extraSqliteFlags": false
+}

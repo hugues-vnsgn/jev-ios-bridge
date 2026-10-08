@@ -8,6 +8,10 @@ Those original cases now pass unchanged. The first adapter round remains preserv
 
 ## Next host work
 
+Ticket10's real packed-install proof found a maintenance entry guard defect through the macOS temporary-directory alias. Root accepted the bounded repair at `2c6c41845e9db05de451d7b10d1674fc9136b891`: both independent axes pass, complete serial and actual standard checks pass1475/1475 on both Node versions, and the physical integration checks and37-file audit pass. An additional baseline Node24 stderr fixture correction is separate and narrowly reviewed. Earlier timing and harness failures remain preserved. [Maintenance repair review](../observed-integration/acceptance/host/maintenance-entry-review.md).
+
+Root now advances the frozen09/10 worktrees to the accepted dependency without changing their owned bytes. Ticket10 reruns both original mandatory clean packed-install/plugin proofs first; ticket09 then runs its complete fault suites. Its362 inventory subcases are not yet executed acceptance.
+
 1. Ticket09 builds independent public-process fault proofs for identities, cancellation, crash milestones, storage, migration and successor exclusion. Both CLI and MCP must have assertions where applicable, exact backend counts and truthful null crash flags. Confirmed source defects return to Root for bounded repairs.
 2. Ticket10 writes the installed guide and agent skill, pins exact Node24.0.0 CI, and proves a clean packed installation, installed CLI/MCP/maintenance startup and plugin build. The existing tarball/local-dependency proof remains partial.
 3. The two workers have disjoint files. Root serializes full tests, coverage, build and packaging runs, preserves failures, obtains independent reviews and integrates each candidate.

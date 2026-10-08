@@ -1,0 +1,191 @@
+{
+  "candidate": "2c6c41845e9db05de451d7b10d1674fc9136b891",
+  "files": {
+    "spikes/observed-ui/cli.ts": {
+      "sha256": "5d74ead33025a70d05de7a1bead83259ab4ec0a8c2af641135a80af27b9a4aa8",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "src/cli.ts": {
+      "sha256": "137b42ef8cdc34a3e143461cf762c659d4bc0a8da768f320ad8b0232e200d7de",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "src/experimental/observed-journal.ts": {
+      "sha256": "f7e5c57268175d09f7483f863b0c6bf7019a24d34d0649df94442d8341be88a7",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "src/experimental/observed-run.ts": {
+      "sha256": "567e16ed1f9229cfa21eddb761f24208123806593a8ec0c61eb250f6e79736bb",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "src/experimental/observed-tap.ts": {
+      "sha256": "db81880287f5635f7d0d66b390f4937e88434fcf06f4dc3b63ab243a11ad313b",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "src/mcp/index.ts": {
+      "sha256": "48e531d304d19852d461eb1d3317fee5f953a15654f405c3393b04ff4a494c2a",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "src/mcp/observed.ts": {
+      "sha256": "5522cc1933d54d13cd8c72b7d8caa5ebf262272f9e0110c13fceb58dd8fcc51b",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "src/observed/allocation-config.ts": {
+      "sha256": "b6519649edbaf203e5323a15c80273321a42a5cb49850551297268e6ee1f5f0a",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "src/observed/allocation-schema.ts": {
+      "sha256": "f48809598c4db4f8609f565659d89bc5438370d1d68b6229f97e8e40a8e6b3ca",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "src/observed/allocation.ts": {
+      "sha256": "0233ea8d8d571761596287e9369f7801bd693edfe6d95c459a950e4c3b943041",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "src/observed/cli.ts": {
+      "sha256": "17ed826b608359a9f901012a82447fd1e06d1d2a65e5b8b477e1c0a0885f8e78",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "src/observed/evidence.ts": {
+      "sha256": "deeb65d7c95c84de1c3b559ec2a885da768a8203a2be79af700f3262717462fb",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "src/observed/report.ts": {
+      "sha256": "b137ebad4b582f652bea7e788101a717a094073b57f8461b243e4dc0897fd1ff",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "src/observed/schema.ts": {
+      "sha256": "7592d02055e8a1c65294b3660685d27a0a1f4c70e2b8283c71cd45a5bded6774",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "src/observed/service.ts": {
+      "sha256": "0c9e6cd6bfc1d7308bc6dcdb1cbf88b9179143084f9cb66d28af09cb6a9def6d",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/admission-migration.test.ts": {
+      "sha256": "ad508ff49805eb79ea929b920f7748324d65c5111f4e5771a6c17a42060877e7",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/contract.test.ts": {
+      "sha256": "ec2589c363ed173e0fb1c86fc0846491434f248e2d9a6ca1c4be5caccda06553",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/fixtures/observed-allocation-backend.ts": {
+      "sha256": "82761f545831ccb2418936c5370e25b8970e972ddedf3879827d6c4c30df3814",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/fixtures/observed-cli-server.ts": {
+      "sha256": "50d02a4f919b6bf162f5e0b89992a5f0fe37158c0667c565f24bb997b713bfcb",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/fixtures/observed-mcp-server.ts": {
+      "sha256": "07c5005984b70ba4b63dca7336132e4de855bfe478033b1f768a274f7442b25b",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/golden/observed-mcp-v1.json": {
+      "sha256": "48dc6d413b8f272be845c03b0827f1429a053298676eab3812e568b90936a63b",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/golden/observed-replies-v1.json": {
+      "sha256": "cdbfbfe4b8ac3f93bebd0e7f8cc5243cc90d3549bc20bdbea97bdd670dc0602b",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/mcp.test.ts": {
+      "sha256": "850fb08ebc98f355de4958b287e23a228e685c7e2b6843abb65ff9f629d31531",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/observed-allocation-config.test.ts": {
+      "sha256": "cc46883cd5bd9bf344fe228b6b91b7b4b4745e262b2b4fe3108cf22b05123ab6",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/observed-allocation.test.ts": {
+      "sha256": "0b0358c4d031f24aef59cb0bf70a5bab7be2dd999fd168295cd6a5b48d7e794f",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/observed-cli.test.ts": {
+      "sha256": "754f0e747adcb181700f8d76a407c854b3f813f4e2c76ca712d8348d50194873",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/observed-contract.test.ts": {
+      "sha256": "583b0b8ab4b76358eb1e9a7f083ddd4302b7dbede3d0183210afa3fdc6ed21e3",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/observed-evidence.test.ts": {
+      "sha256": "cf1d69ea76361bc77246b782b883cf21e3e2f25b28a5ae64d9c24a1a3b97180e",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/observed-journal.test.ts": {
+      "sha256": "4fbc46d7687e12acb0eb17aba55ac0e1edca4548e8c3a9a3b87194fae232ac33",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/observed-mcp.test.ts": {
+      "sha256": "1e2913228684ab79c51226553a39b0c30a2194b7b05201fd21a86411037718d5",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/observed-run.test.ts": {
+      "sha256": "79c9a4041649e7efc6d450923ced3ffe4ded11765726d62e92499710e5455fb9",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/observed-schema.test.ts": {
+      "sha256": "c4bb87912f4e02c7b938909342823e9b4e1963941176ec7e45b4f4689c5d4acf",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/observed-service.test.ts": {
+      "sha256": "b80d5741d34f6cd1a0c350c5c6ddc50295f0483253eef0a111387476567222db",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/observed-tap.test.ts": {
+      "sha256": "30d9756c7da0e724eeb30254497f6f72c6d4c20e09fb0d5a911d14272ebe2e90",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "src/device/admission-maintenance.ts": {
+      "sha256": "908864b9c6df13805998b917f0ca1a3a7b430708548decdccb1abcb726e866a5",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/admission-maintenance-entry.test.ts": {
+      "sha256": "992a918bfa26edfcecdd7fee0b6265261d5f7270a758968ca42ee14d2a131420",
+      "matchesExpected": true,
+      "matchesCommit": true
+    },
+    "tests/integration-edge.test.ts": {
+      "sha256": "96ee8f46f3dc86a4546a6e934ecc1e26f9d331fb36472ac097ea86d6bc62120f",
+      "matchesExpected": true,
+      "matchesCommit": true
+    }
+  },
+  "count": 37
+}

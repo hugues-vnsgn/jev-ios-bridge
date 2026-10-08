@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-name-pattern=^CLI report reads persisted evidence without a device or key$",
+    "tests/integration-edge.test.ts"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-observed-maintenance-entry",
+  "head": "535973ed85ef206ab8a613105e9b24b620753c98",
+  "exit": 1,
+  "counts": {
+    "tests": 1,
+    "pass": 0,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "testSha256": "0e8ecfcd13ca40fa08793615132db4d89f427fcb88675214afd3d7af85aac227",
+  "cliSha256": "137b42ef8cdc34a3e143461cf762c659d4bc0a8da768f320ad8b0232e200d7de",
+  "childUmask": "0022",
+  "sqliteRuntimeFlags": false
+}

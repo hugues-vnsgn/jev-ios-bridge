@@ -1,0 +1,65 @@
+{
+  "base": "d0f49f6c12cbaffb4c034217b7e25b96c52c6cb2",
+  "branch": "feat/observed-installed-workflow",
+  "worktree": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow",
+  "metadataExcluded": [
+    ".scratch/observed-action-rollout/issues/10-docs-packaging.md"
+  ],
+  "files": [
+    {
+      "path": ".github/workflows/check.yml",
+      "sha256": "983e0ea1cb4f955b7fa01c7638383325390e9be51ba3e12ba525a5b9b876bdaf",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/pre-dependency-freeze/files/.github/workflows/check.yml"
+    },
+    {
+      "path": "docs/guide/14-observed-actions.md",
+      "sha256": "b1296abbdadb769d075876cb21cacc68a83a02962c6891c3f8f2e036c9ae8267",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/pre-dependency-freeze/files/docs/guide/14-observed-actions.md"
+    },
+    {
+      "path": "docs/guide/reference/observed-format.md",
+      "sha256": "75b47e9a5f9951412be514363c2d0ed1009d4bf666138efa1c52cfbef66e8c96",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/pre-dependency-freeze/files/docs/guide/reference/observed-format.md"
+    },
+    {
+      "path": "docs/guide/README.md",
+      "sha256": "e86fa091483524ffc75d23858ee39c422ee84acf2d966fd8153ea5cf5ef47d83",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/pre-dependency-freeze/files/docs/guide/README.md"
+    },
+    {
+      "path": "docs/guide/08-troubleshooting.md",
+      "sha256": "664da61c1712eed8c583800f8ee04f6e389982917cd4fd7e4c8af250e51249e0",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/pre-dependency-freeze/files/docs/guide/08-troubleshooting.md"
+    },
+    {
+      "path": "skills/test-ios/SKILL.md",
+      "sha256": "7d51dfee8530ca3fa8ba68179db97c64eb07804efe2fb5ec8defaee2ee2eaa33",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/pre-dependency-freeze/files/skills/test-ios/SKILL.md"
+    },
+    {
+      "path": "tests/docs.test.ts",
+      "sha256": "2e4063e4975efaf1a586eed9779c21c0a337c0f955cad0338e3092fdab4ce183",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/pre-dependency-freeze/files/tests/docs.test.ts"
+    },
+    {
+      "path": "tests/observed-docs.test.ts",
+      "sha256": "17f7770bc532966d9ac6f90ba44bd4c9abf6fded195ed2f01b2548f468ed3073",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/pre-dependency-freeze/files/tests/observed-docs.test.ts"
+    },
+    {
+      "path": "tests/observed-packaging.test.ts",
+      "sha256": "e9b869d11f3455a16aad3dcbdfce27ee70a3edf4be47d335db050ec63400629a",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/pre-dependency-freeze/files/tests/observed-packaging.test.ts"
+    },
+    {
+      "path": "tests/fixtures/observed-packaging/guard.mjs",
+      "sha256": "000c19430aae956338a406a9b4daceb68e99eb76d70bc3a0340fccf52ae0d2f7",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/pre-dependency-freeze/files/tests/fixtures/observed-packaging/guard.mjs"
+    },
+    {
+      "path": "tests/fixtures/observed-packaging/proof.mjs",
+      "sha256": "6aaf75a214d3dc89ddc2957b2be082ccf9eba7d93ade7511dd3bd652ae850635",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/pre-dependency-freeze/files/tests/fixtures/observed-packaging/proof.mjs"
+    }
+  ]
+}

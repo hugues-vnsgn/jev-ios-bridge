@@ -1,0 +1,30 @@
+{
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "--experimental-test-coverage",
+    "--test-coverage-include=**/src/device/admission-maintenance.ts",
+    "--test",
+    "--test-concurrency=1",
+    "tests/admission-migration.test.ts",
+    "tests/admission-maintenance-entry.test.ts"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-observed-maintenance-entry",
+  "candidate": "535973ed85ef206ab8a613105e9b24b620753c98",
+  "startedUtc": "2026-10-08T09:27:27.846848+00:00",
+  "durationSeconds": 3.1644142089971865,
+  "exit": 0,
+  "counts": {
+    "tests": 48,
+    "pass": 48,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "childUmask": "0022",
+  "extraEnvironment": {
+    "NODE_V8_COVERAGE": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-observed-maintenance-entry/.scratch/observed-integration/acceptance/host/maintenance-entry-repair/coverage"
+  },
+  "extraSqliteFlags": false
+}

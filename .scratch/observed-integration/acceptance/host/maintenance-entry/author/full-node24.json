@@ -1,0 +1,24 @@
+{
+  "command": [
+    "npm",
+    "run",
+    "check"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-observed-maintenance-entry",
+  "candidate": "535973ed85ef206ab8a613105e9b24b620753c98",
+  "startedUtc": "2026-10-08T09:32:56.563860+00:00",
+  "durationSeconds": 79.24327216600068,
+  "exit": 1,
+  "counts": {
+    "tests": 1475,
+    "pass": 1473,
+    "fail": 2,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "childUmask": "0022",
+  "extraEnvironment": {
+    "PATH": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin:/Users/hugues_mini/.qoder/entry:/Users/hugues_mini/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/hugues_mini/.codex/packages/standalone/releases/0.161.0-aarch64-apple-darwin/codex-path:/Users/hugues_mini/.codex/tmp/arg0/codex-arg0vm19sU:/Applications/Orca.app/Contents/Resources/bin:/opt/homebrew/lib/ruby/gems/4.0.0/bin:/opt/homebrew/opt/ruby/bin:/Users/hugues_mini/.bun/bin:/opt/miniconda3/bin:/opt/miniconda3/condabin:~/.bun/bin:/Users/hugues_mini/.local/bin:/Users/hugues_mini/.antigravity/antigravity/bin:/Users/hugues_mini/.nvm/versions/node/v22.22.2/bin:/Users/hugues_mini/.cargo/bin:/Users/hugues_mini/.volta/bin:/Users/hugues_mini/.asdf/shims:/Users/hugues_mini/.fnm/aliases/default/bin:/Users/hugues_mini/.local/share/mise/shims:/Users/hugues_mini/Library/pnpm:/Users/hugues_mini/.yarn/bin:/usr/local/sbin:/nix/var/nix/profiles/default/bin:/Users/hugues_mini/bin:/Users/hugues_mini/.nix-profile/bin:/Users/hugues_mini/.opencode/bin:/Users/hugues_mini/.vite-plus/bin:/Users/hugues_mini/Library/Android/sdk/tools:/Users/hugues_mini/Library/Android/sdk/platform-tools:/Users/hugues_mini/Library/Android/sdk/build-tools"
+  },
+  "note": "isolated case selection is explicit; all full runs remain separate"
+}

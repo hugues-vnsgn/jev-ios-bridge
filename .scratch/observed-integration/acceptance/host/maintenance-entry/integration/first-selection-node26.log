@@ -1,0 +1,23 @@
+TAP version 13
+1..0
+# Subtest: tests/admission-maintenance-entry.test.ts
+ok 1 - tests/admission-maintenance-entry.test.ts
+  ---
+  duration_ms: 134.93225
+  type: 'test'
+  ...
+# Subtest: CLI report reads persisted evidence without a device or key
+ok 2 - CLI report reads persisted evidence without a device or key
+  ---
+  duration_ms: 190.169
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 494.553625

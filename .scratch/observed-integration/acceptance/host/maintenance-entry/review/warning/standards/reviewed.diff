@@ -1,0 +1,28 @@
+diff --git a/tests/integration-edge.test.ts b/tests/integration-edge.test.ts
+index 45ec729..157301d 100644
+--- a/tests/integration-edge.test.ts
++++ b/tests/integration-edge.test.ts
+@@ -221,6 +221,14 @@ test('service close racing with start prevents a job from escaping shutdown', as
+ });
+ 
+ test('CLI report reads persisted evidence without a device or key', async () => {
++  // Node24 can prepend this complete runtime notice to the unchanged CLI output.
++  const withoutSqliteNotice = (text: string) => text.replace(/^\(node:\d+\) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n\(Use `node --trace-warnings \.\.\.` to show where the warning was created\)\n/, '');
++  const notice = '(node:123) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n';
++  assert.equal(withoutSqliteNotice(notice), '');
++  for (const other of [notice.split('\n')[0]! + '\n', notice.replace('SQLite', 'Other'), notice.replace('node --trace-warnings ...', 'different hint'), 'prefix\n' + notice, 'other diagnostic\n']) {
++    assert.equal(withoutSqliteNotice(other), other);
++  }
++  assert.equal(withoutSqliteNotice(notice + 'other diagnostic\n'), 'other diagnostic\n');
+   const root = await mkdtemp(join(tmpdir(), 'jev-cli-report-'));
+   try {
+     const log = await createRunLog(root, 'offline');
+@@ -234,7 +242,7 @@ test('CLI report reads persisted evidence without a device or key', async () =>
+     assert.equal(result.code, 1);
+     assert.match(result.stdout, /Status: finished/);
+     assert.match(result.stdout, /Run offline: failed/);
+-    assert.equal(result.stderr, '');
++    assert.equal(withoutSqliteNotice(result.stderr), '');
+     assert.equal((await readFile(join(root, 'offline', 'run.jsonl'), 'utf8')).split('\n').length, 3);
+   } finally { await rm(root, { recursive: true, force: true }); }
+ });

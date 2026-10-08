@@ -1,0 +1,95 @@
+{
+  "source": "/tmp/jev-maintenance-entry-standards-60qsr51z",
+  "files": [
+    {
+      "path": "after-hashes.json",
+      "sha256": "6fb7ce637e60b425be5817b983d4fa02eb6b59688e4ee7308ada8029a1283506",
+      "bytes": 1265
+    },
+    {
+      "path": "before-hashes.json",
+      "sha256": "44d024b3be23474739d2c3e2d56eadac4e121edbc9bdabb24614b47646e1172f",
+      "bytes": 1235
+    },
+    {
+      "path": "commit-association.json",
+      "sha256": "6fb7ce637e60b425be5817b983d4fa02eb6b59688e4ee7308ada8029a1283506",
+      "bytes": 1265
+    },
+    {
+      "path": "commit-association.md",
+      "sha256": "9a5da83c599a557f9abe02f5e420c8d503ce163f82942dba0a6e2157edb3a587",
+      "bytes": 389
+    },
+    {
+      "path": "evidence/base.json",
+      "sha256": "d656bf99e4a17072ada115f6ef495c05d4eedd0f76143b5ec5e58e72c783d368",
+      "bytes": 297
+    },
+    {
+      "path": "evidence/green-node24.json",
+      "sha256": "795140341e093d934acfd0b087c2a1d666ebed318c2889409bf98d194ffe77f4",
+      "bytes": 672
+    },
+    {
+      "path": "evidence/green-node24.log",
+      "sha256": "39ef5a8e3b5f1df9c457e5f14c387f293dd3dd7ad8d2cdb36d98bf349b2b2a24",
+      "bytes": 492
+    },
+    {
+      "path": "evidence/green-node26.json",
+      "sha256": "4920d7900cb60b3a757a2320613a81b643d67fafc9aea3662be0002bbd73dbd6",
+      "bytes": 604
+    },
+    {
+      "path": "evidence/green-node26.log",
+      "sha256": "91db88c7b1a9d7209b0fa6611993c4a20901d8fd238150f3fee52d1ed096fada",
+      "bytes": 489
+    },
+    {
+      "path": "evidence/red-node24.log",
+      "sha256": "21bb6445eba0a90b178daa6c38deb7fe08357b900e587c081e16f67112210a08",
+      "bytes": 2968
+    },
+    {
+      "path": "evidence/red-node26.log",
+      "sha256": "bf8035f5ccf456ec1a6136e418ffb36fa0a13ea626d4413fbeb8be3609f34d2f",
+      "bytes": 3002
+    },
+    {
+      "path": "evidence/red-source.json",
+      "sha256": "ad61c3c576eca143fa4cda2149d2befdc1b303c40f24f13d5f4c04bda36e09d6",
+      "bytes": 227
+    },
+    {
+      "path": "evidence.json",
+      "sha256": "b647840f787daa066050f207300f232bf5d53ff56f2101b0412030da3ea658f2",
+      "bytes": 301
+    },
+    {
+      "path": "manifest.json",
+      "sha256": "77d33e1ece38f5452c2b0fd3fe9b988e36e225e928598ffd7e780b6db3299205",
+      "bytes": 472
+    },
+    {
+      "path": "review.md",
+      "sha256": "e35c3d169709cbf9ef7bddb5df62a75620e1136f245b6445e2dd854c8bb1880f",
+      "bytes": 2085
+    },
+    {
+      "path": "reviewed.diff",
+      "sha256": "0cf6cd0e9ceb2a61e8b143ff71bf36e630a4e4d4642b4c827b19a2bd634923a6",
+      "bytes": 4039
+    },
+    {
+      "path": "source/src/device/admission-maintenance.ts",
+      "sha256": "908864b9c6df13805998b917f0ca1a3a7b430708548decdccb1abcb726e866a5",
+      "bytes": 3610
+    },
+    {
+      "path": "source/tests/admission-maintenance-entry.test.ts",
+      "sha256": "992a918bfa26edfcecdd7fee0b6265261d5f7270a758968ca42ee14d2a131420",
+      "bytes": 2607
+    }
+  ]
+}

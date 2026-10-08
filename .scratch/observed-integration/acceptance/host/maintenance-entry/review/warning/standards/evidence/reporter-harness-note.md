@@ -1,0 +1,1 @@
+The first selected Node26 run passed 1/1, but the Python count reader expected TAP while the default reporter was spec. This is a result-reader failure. The raw output is retained; subsequent commands explicitly request TAP. No source or test change followed this attempt.

@@ -1,0 +1,444 @@
+{
+  "source": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-observed-maintenance-entry/.scratch/observed-integration/acceptance/host/maintenance-entry-repair",
+  "allSourceFiles": true,
+  "count": 89,
+  "rawBytes": 12497358,
+  "archive": {
+    "path": "evidence.tar.xz",
+    "bytes": 291832,
+    "sha256": "13cc170023c8d057d4a253c006a611e1d2c62af7160789827dff7a23488c7cca",
+    "everyMemberVerified": true
+  },
+  "looseFiles": [
+    "base.json",
+    "boot-isolated-node24.json",
+    "boot-isolated-node24.log",
+    "boot-isolated-node26.json",
+    "boot-isolated-node26.log",
+    "coverage-node26.json",
+    "coverage-node26.log",
+    "default-recheck-node24.json",
+    "default-recheck-node24.log",
+    "default-recheck-node26.json",
+    "default-recheck-node26.log",
+    "final-full-node24.json",
+    "final-full-node24.log",
+    "final-source/src/device/admission-maintenance.ts",
+    "final-source/tests/admission-maintenance-entry.test.ts",
+    "final-source.json",
+    "focused-node24.json",
+    "focused-node24.log",
+    "focused-node26.json",
+    "focused-node26.log",
+    "full-node24.json",
+    "full-node24.log",
+    "full-node26-recheck.json",
+    "full-node26-recheck.log",
+    "full-node26.json",
+    "full-node26.log",
+    "green-node24.json",
+    "green-node24.log",
+    "green-node26.json",
+    "green-node26.log",
+    "node24-report-warning/association.json",
+    "node24-report-warning/current.json",
+    "node24-report-warning/current.log",
+    "node24-report-warning/final-integration-edge.test.ts",
+    "node24-report-warning/green-node24.json",
+    "node24-report-warning/green-node24.log",
+    "node24-report-warning/green-node26-first-reporter.log",
+    "node24-report-warning/green-node26.json",
+    "node24-report-warning/green-node26.log",
+    "node24-report-warning/original-integration-edge.test.ts",
+    "node24-report-warning/pre08.json",
+    "node24-report-warning/pre08.log",
+    "node24-report-warning/reporter-harness-note.md",
+    "original-admission-maintenance.ts",
+    "red-node24.json",
+    "red-node24.log",
+    "red-node26.json",
+    "red-node26.log",
+    "red-source.json",
+    "red-test.ts",
+    "repair-basis.md",
+    "serial-full-node24-build.json",
+    "serial-full-node24-build.log",
+    "serial-full-node24-tests.json",
+    "serial-full-node24-tests.log",
+    "serial-full-node24-typecheck.json",
+    "serial-full-node24-typecheck.log",
+    "serial-full-node24.json",
+    "serial-full-node26-build.json",
+    "serial-full-node26-build.log",
+    "serial-full-node26-tests.json",
+    "serial-full-node26-tests.log",
+    "serial-full-node26-typecheck.json",
+    "serial-full-node26-typecheck.log",
+    "serial-full-node26.json",
+    "source-audit-after-failure.json",
+    "source-audit-after-serial.json",
+    "source-audit-before.json",
+    "source-audit-final-after-node24.json",
+    "source-audit-final-after.json",
+    "source-audit-final-before.json",
+    "unchanged-boot-fixture.json"
+  ],
+  "files": {
+    "base.json": {
+      "sha256": "d656bf99e4a17072ada115f6ef495c05d4eedd0f76143b5ec5e58e72c783d368",
+      "bytes": 297
+    },
+    "boot-isolated-node24.json": {
+      "sha256": "8ec013cf9522a5aa57ea9f954700f0b781a8b9f405d9725cf66969ed5f2a11e2",
+      "bytes": 789
+    },
+    "boot-isolated-node24.log": {
+      "sha256": "8a6a4c6b9ff12032b7e4722f646f2ba431336b989d162720fefdcde36fd513f8",
+      "bytes": 391
+    },
+    "boot-isolated-node26.json": {
+      "sha256": "42d9426d5556330bd59053e302dc3636ea4604d5212b51b0b0136579a5ae27e4",
+      "bytes": 720
+    },
+    "boot-isolated-node26.log": {
+      "sha256": "5fed1fc2cd9ab9bb1cdb7f0aaf92495afc045fc74263f6f993ba566a8184094e",
+      "bytes": 219
+    },
+    "coverage/coverage-62232-1791451648661-1.json": {
+      "sha256": "e9c64bb4dee8e49ff26e8540f3d198d3675f7075068d7340706622b7cd8fdb5e",
+      "bytes": 391647
+    },
+    "coverage/coverage-62232-1791451648667-0.json": {
+      "sha256": "6a72eebfdaae74e9863a284d4c65cbe393332c787d3a3219a2bd1cf89f39f65c",
+      "bytes": 573215
+    },
+    "coverage/coverage-62234-1791451648138-1.json": {
+      "sha256": "4686067d9e0be9f8849a4d146e83d8ddc5f13a41f7274a4e06c57bde72fb7c89",
+      "bytes": 391804
+    },
+    "coverage/coverage-62234-1791451648144-0.json": {
+      "sha256": "7737a916151f8c813165f224a9788deed158f0c307c54d96ee397532b7b74d15",
+      "bytes": 792544
+    },
+    "coverage/coverage-62236-1791451648265-0.json": {
+      "sha256": "ba4262047cb0ed3038adf6beb9f740c868e7963a63332a6cbed831a2919a8eca",
+      "bytes": 764309
+    },
+    "coverage/coverage-62238-1791451648390-0.json": {
+      "sha256": "c57c6e3270cb621e3d7a11bc9d009c7b30ce6831a37d8cc1d3dbf32bafd2fd76",
+      "bytes": 764310
+    },
+    "coverage/coverage-62239-1791451648510-0.json": {
+      "sha256": "afcf7d820598e000e4aa1378791f694a522990c1b6cbf0baea681f8e283ab06e",
+      "bytes": 765483
+    },
+    "coverage/coverage-62240-1791451648632-0.json": {
+      "sha256": "4323c805b6be0334f0e4640273c43579ef61014b628a1f93800085a29eaa52b2",
+      "bytes": 765387
+    },
+    "coverage/coverage-62251-1791451650944-1.json": {
+      "sha256": "d0432182855118753e303c153b986052e49b8c9fc579b8b3c1f85c33b9e795f5",
+      "bytes": 391869
+    },
+    "coverage/coverage-62251-1791451650951-0.json": {
+      "sha256": "14fc03af6c6816ff3dcda742893c26f8d1128a63f1e52e8a2ac2535f5173589a",
+      "bytes": 1021930
+    },
+    "coverage/coverage-62253-1791451649195-0.json": {
+      "sha256": "1b6bb685a5e2c78182e901ae0db0d3f0e25d95aed4dd1785f97c5966e314f005",
+      "bytes": 107888
+    },
+    "coverage/coverage-62254-1791451649301-0.json": {
+      "sha256": "a337af7b5e03d72bf1322550f59b6839beb4b1d9b043c22178cc80e70831e4b5",
+      "bytes": 107888
+    },
+    "coverage/coverage-62267-1791451649611-0.json": {
+      "sha256": "7f0305e72b5e6ec8f95759e64688feed03a81de552b240b5d7ecf0cf8cd63384",
+      "bytes": 723146
+    },
+    "coverage/coverage-62268-1791451650202-0.json": {
+      "sha256": "9ffcaa472a8e3558c2d66e68aab1276be19058d1f3ded8fa2137569d34847b90",
+      "bytes": 781580
+    },
+    "coverage/coverage-62280-1791451650358-0.json": {
+      "sha256": "09c303d80292c47e7e40d2d9bd820d1e7c2274b7f1ac5faf359fccc7560e6502",
+      "bytes": 781913
+    },
+    "coverage/coverage-62282-1791451650520-0.json": {
+      "sha256": "9bced987891e9be87cd558e7367b9bdb43de5b2c8b28d314408e10ec6888fb39",
+      "bytes": 781863
+    },
+    "coverage/coverage-62292-1791451650813-0.json": {
+      "sha256": "1de6ebf664bbc75027450fa025e33800639321cc9fd6ba8b291054d367299be1",
+      "bytes": 766916
+    },
+    "coverage-node26.json": {
+      "sha256": "d9ab311269d183280582253e24fe75a6da5a416e1fd88706c44c76f8cfdbb14c",
+      "bytes": 930
+    },
+    "coverage-node26.log": {
+      "sha256": "87c3e84cab38ca907aefb9c61bf771d3cd6489617b6ec1ea73ef1e696f26a1c1",
+      "bytes": 5735
+    },
+    "default-recheck-node24.json": {
+      "sha256": "d6ccdeb38dfc5a4c30491676bcb014ab7a9b6104b0eea871882710949f2a3c64",
+      "bytes": 581
+    },
+    "default-recheck-node24.log": {
+      "sha256": "25d0a6379218a84b71dae50b35dc0ccd60e7cd5bcfb422e5ac6f42a34d7ca587",
+      "bytes": 157242
+    },
+    "default-recheck-node26.json": {
+      "sha256": "e02a1691a6bb6d1a035eae630e0d5c4cff780081d7e3a0c36d1ba63177c60f25",
+      "bytes": 581
+    },
+    "default-recheck-node26.log": {
+      "sha256": "e2937dcc5661145840e943ceeb113c179f6061c36933419be60926e89e0dcc9e",
+      "bytes": 146915
+    },
+    "final-full-node24.json": {
+      "sha256": "a15c4a44c90bdfa29a5c511bba82d69bc4382606bc6d70430ea0072f2c0b5bc1",
+      "bytes": 595
+    },
+    "final-full-node24.log": {
+      "sha256": "dd461d4028e1147d6f3a586fb03377fc951895e4d9fa7d6934073d1cba82ea3f",
+      "bytes": 157867
+    },
+    "final-source/src/device/admission-maintenance.ts": {
+      "sha256": "908864b9c6df13805998b917f0ca1a3a7b430708548decdccb1abcb726e866a5",
+      "bytes": 3610
+    },
+    "final-source/tests/admission-maintenance-entry.test.ts": {
+      "sha256": "992a918bfa26edfcecdd7fee0b6265261d5f7270a758968ca42ee14d2a131420",
+      "bytes": 2607
+    },
+    "final-source.json": {
+      "sha256": "77d33e1ece38f5452c2b0fd3fe9b988e36e225e928598ffd7e780b6db3299205",
+      "bytes": 472
+    },
+    "focused-node24.json": {
+      "sha256": "d1c8d8ecec0ad39d987f5e1e892ed49753ee1b8da282d180a8c7f7adf6f3b4b2",
+      "bytes": 981
+    },
+    "focused-node24.log": {
+      "sha256": "d9e515d77f96f94d225bbe1508109ed0ee01d082c9f5219104df444bd170f7b7",
+      "bytes": 26555
+    },
+    "focused-node26.json": {
+      "sha256": "e9c3b41bbf23b29abb6f1f2101013ff2b6ecbeca01c589bf1e4ae6d52f3fdf87",
+      "bytes": 914
+    },
+    "focused-node26.log": {
+      "sha256": "ca2a27844dfd6b559e01961d0eb5adb816a93ae5c9ab69531dea66a42f3e8106",
+      "bytes": 25189
+    },
+    "full-node24.json": {
+      "sha256": "cc76a794cab0b40ec78d4030dc23bad1c3a60e5bdba801a16bab2bfebefea004",
+      "bytes": 2151
+    },
+    "full-node24.log": {
+      "sha256": "91afe4ff370b2187ef2a4ed4b5f7c16c83db67012b2ff8228955cc6c66ac6a06",
+      "bytes": 159025
+    },
+    "full-node26-recheck.json": {
+      "sha256": "b992e6a05f64a4705f10624ceb3bba3bd4abf983528f5ab9be90144a9280c393",
+      "bytes": 552
+    },
+    "full-node26-recheck.log": {
+      "sha256": "b8302c67c8402342feab0e94c4d585a8e88a6a27d22e8477b5f864658ac46f67",
+      "bytes": 146929
+    },
+    "full-node26.json": {
+      "sha256": "cc2562a57db5ebb890d9f1c5bf5bbda3d460429c0a618bbad6fcc730f664e7f5",
+      "bytes": 501
+    },
+    "full-node26.log": {
+      "sha256": "da350c4cdb6669af03f4473d4f508a3c3f64cd3eec5810ac9537669c364ab6b3",
+      "bytes": 147576
+    },
+    "green-node24.json": {
+      "sha256": "795140341e093d934acfd0b087c2a1d666ebed318c2889409bf98d194ffe77f4",
+      "bytes": 672
+    },
+    "green-node24.log": {
+      "sha256": "39ef5a8e3b5f1df9c457e5f14c387f293dd3dd7ad8d2cdb36d98bf349b2b2a24",
+      "bytes": 492
+    },
+    "green-node26.json": {
+      "sha256": "4920d7900cb60b3a757a2320613a81b643d67fafc9aea3662be0002bbd73dbd6",
+      "bytes": 604
+    },
+    "green-node26.log": {
+      "sha256": "91db88c7b1a9d7209b0fa6611993c4a20901d8fd238150f3fee52d1ed096fada",
+      "bytes": 489
+    },
+    "node24-report-warning/association.json": {
+      "sha256": "073c740bdbbc849558e8b90ebf8f8e7678f90e54f7ff8b74535206ebf954e2d9",
+      "bytes": 326
+    },
+    "node24-report-warning/current.json": {
+      "sha256": "9055662c9b4ede7c95db881a41f906ffcdbb5822f291440400ddcd0da565e5c4",
+      "bytes": 754
+    },
+    "node24-report-warning/current.log": {
+      "sha256": "c191a98d1c976202d70ba68928036f6452228f31cdd370d82e1f6f57aace2a73",
+      "bytes": 1487
+    },
+    "node24-report-warning/final-integration-edge.test.ts": {
+      "sha256": "96ee8f46f3dc86a4546a6e934ecc1e26f9d331fb36472ac097ea86d6bc62120f",
+      "bytes": 16322
+    },
+    "node24-report-warning/green-node24.json": {
+      "sha256": "b581e3642beb2b6fef5e3a5788a58fd9146c9f29332602f736e2b7fa50100cd1",
+      "bytes": 761
+    },
+    "node24-report-warning/green-node24.log": {
+      "sha256": "3ba4fb53b3dd44cc80dc44bae77260b666e3e678044fb621361b3097a8e010be",
+      "bytes": 483
+    },
+    "node24-report-warning/green-node26-first-reporter.log": {
+      "sha256": "7e27764d2165b76c925de46c9b6735ca6d83113a179283ba2e8c53dfbb272448",
+      "bytes": 194
+    },
+    "node24-report-warning/green-node26.json": {
+      "sha256": "ccb176cb5de5377596f348f47f3b7d133d938d5bd950d2ce5dc0148e1c77be86",
+      "bytes": 710
+    },
+    "node24-report-warning/green-node26.log": {
+      "sha256": "3855921e91aa3272af97f3b215cb2f1e570a7e5852cc9de37686c8bdec7cbd86",
+      "bytes": 308
+    },
+    "node24-report-warning/original-integration-edge.test.ts": {
+      "sha256": "0e8ecfcd13ca40fa08793615132db4d89f427fcb88675214afd3d7af85aac227",
+      "bytes": 15388
+    },
+    "node24-report-warning/pre08.json": {
+      "sha256": "34256e1225d3213c5b63d2c67780560acfd58cf5b201770b707a87b754f52929",
+      "bytes": 753
+    },
+    "node24-report-warning/pre08.log": {
+      "sha256": "c6ec6ca276d50ad5abf6ae95f1dd967df4b6596d085fbdc26660ab05a09d9b63",
+      "bytes": 1395
+    },
+    "node24-report-warning/reporter-harness-note.md": {
+      "sha256": "c06ab949b401ce64cc527b049052642f2cfb44868ebd298653a23f9b01f3ac8f",
+      "bytes": 273
+    },
+    "original-admission-maintenance.ts": {
+      "sha256": "fbb67e9d3998df8c203c343312299d4dc8d2fba050f8f903712b0a385bb03252",
+      "bytes": 3483
+    },
+    "red-node24.json": {
+      "sha256": "7b21d1bc257f57ac7fb1959ad6c06621c41f3915cec4fc6dca2e1c1fc1619014",
+      "bytes": 502
+    },
+    "red-node24.log": {
+      "sha256": "21bb6445eba0a90b178daa6c38deb7fe08357b900e587c081e16f67112210a08",
+      "bytes": 2968
+    },
+    "red-node26.json": {
+      "sha256": "e983eb7d147a552eda613b2d8c162193079e6cfeaac873530b50f103c6fc9ddd",
+      "bytes": 434
+    },
+    "red-node26.log": {
+      "sha256": "bf8035f5ccf456ec1a6136e418ffb36fa0a13ea626d4413fbeb8be3609f34d2f",
+      "bytes": 3002
+    },
+    "red-source.json": {
+      "sha256": "ad61c3c576eca143fa4cda2149d2befdc1b303c40f24f13d5f4c04bda36e09d6",
+      "bytes": 227
+    },
+    "red-test.ts": {
+      "sha256": "992a918bfa26edfcecdd7fee0b6265261d5f7270a758968ca42ee14d2a131420",
+      "bytes": 2607
+    },
+    "repair-basis.md": {
+      "sha256": "9cd88a9cc72657bac33f75301f189dcd9a2fc3d211e4064aa604dacc0b349c1b",
+      "bytes": 3235
+    },
+    "serial-full-node24-build.json": {
+      "sha256": "0e7c296f72fb37bf8de11b2730e2bcea2329a2cc23680d2301351e9f22974b67",
+      "bytes": 512
+    },
+    "serial-full-node24-build.log": {
+      "sha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+      "bytes": 75
+    },
+    "serial-full-node24-tests.json": {
+      "sha256": "2358f24b871643096864e79e99b484495bbe88d1f588649365331ad9c3dec2a2",
+      "bytes": 4165
+    },
+    "serial-full-node24-tests.log": {
+      "sha256": "390ac462faf0eef15345e1851cc2c0eee9d2869c898e9c6595ab4a94c1eaec87",
+      "bytes": 356677
+    },
+    "serial-full-node24-typecheck.json": {
+      "sha256": "d0658fe51e97c7c169a427dea28954e6c9a87fc649a48ded638ab98bd2da16b2",
+      "bytes": 520
+    },
+    "serial-full-node24-typecheck.log": {
+      "sha256": "a5f26a123d51067a484f97018e93e9514bb2902f7ffbcecb9d2baba69d5b928a",
+      "bytes": 50
+    },
+    "serial-full-node24.json": {
+      "sha256": "8a729584a5895bfeb50201679fb167fbcc77209c156c9cc2e7588eb418de5fa1",
+      "bytes": 5989
+    },
+    "serial-full-node26-build.json": {
+      "sha256": "12092e670dfd6902a8a9aef00c1fcd7d61148e8599222c2070ead5dd6f37b6d1",
+      "bytes": 512
+    },
+    "serial-full-node26-build.log": {
+      "sha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+      "bytes": 75
+    },
+    "serial-full-node26-tests.json": {
+      "sha256": "91daff242d715abc4a1df5bea4ef0b5c61dfb7869607fd97a4da21e26062cbcf",
+      "bytes": 4114
+    },
+    "serial-full-node26-tests.log": {
+      "sha256": "a2a8962d15420982b67ce47adac03e4acf866933c8ace1c1ad831214abb813ac",
+      "bytes": 346122
+    },
+    "serial-full-node26-typecheck.json": {
+      "sha256": "af7f3b3fca64fa10ea105c7be6b31b792f667a282b22b209895dd4b39090d542",
+      "bytes": 520
+    },
+    "serial-full-node26-typecheck.log": {
+      "sha256": "a5f26a123d51067a484f97018e93e9514bb2902f7ffbcecb9d2baba69d5b928a",
+      "bytes": 50
+    },
+    "serial-full-node26.json": {
+      "sha256": "72c6171a400c57f8b8933d137bef9e78a2664cb5d1ac355e5d71895499072eac",
+      "bytes": 5938
+    },
+    "source-audit-after-failure.json": {
+      "sha256": "36071937508619a6f42538ea763b6bf141c45807313aec016c65622b8b1abaf1",
+      "bytes": 7740
+    },
+    "source-audit-after-serial.json": {
+      "sha256": "1cbc555d9b41b97f9a3b1ddfd80d951000c2d7889710aca9def4f423b8594fce",
+      "bytes": 9264
+    },
+    "source-audit-before.json": {
+      "sha256": "36071937508619a6f42538ea763b6bf141c45807313aec016c65622b8b1abaf1",
+      "bytes": 7740
+    },
+    "source-audit-final-after-node24.json": {
+      "sha256": "349fa3e39e5b5f9a57702321496642283feffcc1f9b9176790d135805fdc3a68",
+      "bytes": 7954
+    },
+    "source-audit-final-after.json": {
+      "sha256": "1cbc555d9b41b97f9a3b1ddfd80d951000c2d7889710aca9def4f423b8594fce",
+      "bytes": 9264
+    },
+    "source-audit-final-before.json": {
+      "sha256": "349fa3e39e5b5f9a57702321496642283feffcc1f9b9176790d135805fdc3a68",
+      "bytes": 7954
+    },
+    "unchanged-boot-fixture.json": {
+      "sha256": "40dee08c713f4036bf46ba8be5b5fd2f20cc02132911d4bc1372688c8e0fc0ed",
+      "bytes": 638
+    }
+  }
+}
