@@ -16,7 +16,7 @@ What additive public contract exposes observed actions while preserving legacy m
 
 ## Agent brief
 
-Compare alternatives using the two audits. Specify versioning, request validation, run lifecycle, cancellation, authoritative terminal results, four observed outcomes, evidence pointers, errors and migration. Record technical decision and alternatives. Escalate only a genuine scope/guarantee change to the owner; no invented HITL exchange.
+Compare alternatives using the two audits. Specify versioning, request validation, run lifecycle, cancellation, authoritative terminal results, four observed outcomes, evidence pointers, errors and migration. Require non-mutating polling, authoritative terminal reads, and a key-free deterministic entry point. Record technical decision and alternatives. Escalate only a genuine scope/guarantee change to the owner; no invented HITL exchange.
 
 Read the map Notes and blockers first. Claim before work. Work only on this ticket and its assigned evidence file; the coordinator owns shared map/contract edits. Findings are not production acceptance. Link evidence and append the resolution under `## Answer` only when the question is answered; never close a ticket merely because a report was drafted.
 

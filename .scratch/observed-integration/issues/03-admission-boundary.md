@@ -16,7 +16,7 @@ How can the normal agent interface preserve durable observed-action quarantine w
 
 ## Agent brief
 
-Trace observed and legacy claims, preparation, cancellation, result finalization and crash recovery. Separate enforceable in-process/bridge guarantees from external operator exclusivity. Recommend boundaries and meaningful fault/concurrency tests; never equate host admission with native release.
+Trace observed and legacy claims, preparation, cancellation, result finalization and crash recovery. Separate enforceable in-process/bridge guarantees from external operator exclusivity. Specify atomic ownership-aware admission across observed and legacy bridge entry points, canonical identity, and non-mutating status; a check-then-acquire sequence is insufficient. Recommend meaningful fault/concurrency tests; never equate host admission with native release.
 
 Read the map Notes and blockers first. Claim before work. Work only on this ticket and its assigned evidence file; the coordinator owns shared map/contract edits. Findings are not production acceptance. Link evidence and append the resolution under `## Answer` only when the question is answered; never close a ticket merely because a report was drafted.
 
@@ -27,3 +27,5 @@ The answer cites inspectable evidence, distinguishes facts from recommendations,
 ## Comments
 
 Created during charting. No implementation authorization is implied by this planning ticket.
+
+Read-only charting audit returned [preliminary findings](../evidence/admission-audit.md). Claim released after bounded inspection. The ticket stays open: its accepted recommendation and complete decision inputs still require a working session.

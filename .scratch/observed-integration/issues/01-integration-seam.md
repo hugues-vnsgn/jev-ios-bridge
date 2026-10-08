@@ -27,3 +27,5 @@ The answer cites inspectable evidence, distinguishes facts from recommendations,
 ## Comments
 
 Created during charting. No implementation authorization is implied by this planning ticket.
+
+Read-only charting audit returned [preliminary findings](../evidence/integration-audit.md). Claim released after bounded inspection. The ticket stays open: its accepted recommendation and complete decision inputs still require a working session.
