@@ -36,3 +36,5 @@ Return PASS/BLOCKED/UNVERIFIED, full integrated/base and evidence-commit SHAs, c
 ### Root operator binding: 2026-10-08
 
 The owner approved the idle sibling pane with `gpt-6-luna` high after the restart placed Root in the original live pane. The bound tab/leaf is listed above; the current terminal handle is `term_fc9bbfd1-cc30-42e2-875d-121b8bce21ec`. Refresh and verify that identity before dispatch. Root remains the coordinator. H01–H09 and live prerequisites must pass before this operator receives any device work.
+
+The owner chose to retain the explicit iOS27.0 target and wait for its installation. Read-only installed metadata currently exposes iOS18.6/26.4; iOS27.0 is absent. Continue independent host work, keep live acceptance UNVERIFIED, and verify the installed iOS27.0 prerequisite before dispatch. This instruction authorizes no runtime installation or substitution.
