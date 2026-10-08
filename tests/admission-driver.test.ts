@@ -8,7 +8,7 @@ import { join } from 'node:path';
 import type { AllocationReservationInput } from '../src/device/admission-allocation.js';
 import { createPreparationDriver, createObservedDriver } from '../src/device/factory.js';
 import { Admission } from '../src/device/admission.js';
-import { MobileBuildMcpDriver, deviceWindowOpener, type CliRunner, type MobileBuildMcpDriverOptions } from '../src/device/index.js';
+import { MobileBuildMcpDriver, deviceWindowOpener, DeviceCliError, type CliRunner, type MobileBuildMcpDriverOptions } from '../src/device/index.js';
 
 const udid = 'ABCDEF00-0000-4000-8000-000000000001';
 const context = { app: { bundleId: 'dev.fixture' }, device: { udid }, values: {} };
@@ -62,6 +62,139 @@ async function preparation(admission: Admission) {
   assert.equal(admitted.kind, 'admitted'); if (admitted.kind !== 'admitted') throw new Error('admit');
   return { claim: admitted.claim, id: reservation.identity.allocationId };
 }
+
+test('preparation inventory exposes selected availability without booting or presenting', async () => {
+  const { root, admission } = fixture(); const calls: string[] = [];
+  const runner: CliRunner = async args => {
+    calls.push(args[1]!);
+    return { stdout: JSON.stringify({ schema: 'mobilebuildmcp.output.simulator-list', schemaVersion: '2',
+      data: { simulators: [{ simulatorId: udid.toLowerCase(), state: 'Shutdown', isAvailable: true }] } }), stderr: '', exitCode: 0 };
+  };
+  const { claim } = await preparation(admission);
+  const subject = createPreparationDriver({ cwd: root, lockRoot: join(root, 'leases'), admission, runner,
+    fakeBackend: { runner, window: undefined } });
+  try {
+    await subject.attachPreparation(claim, context, new AbortController().signal);
+    assert.deepEqual(await subject.inventoryStatus(new AbortController().signal), { state: 'Shutdown', isAvailable: true });
+    assert.deepEqual(calls, ['list']);
+    await subject.close(new AbortController().signal);
+    assert.deepEqual(calls, ['list']);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test('malformed inventory error receipt cannot settle or authorize a later boot', async () => {
+  const { root, admission } = fixture(); const calls: string[] = [];
+  const runner: CliRunner = async args => {
+    calls.push(args[1]!);
+    return { stdout: JSON.stringify({ schema: 'mobilebuildmcp.output.simulator-list', schemaVersion: '2', didError: true,
+      error: { code: 'INVENTORY_ERROR', message: 'Unavailable' },
+      data: { simulators: [{ simulatorId: udid, state: 'Shutdown' }] } }), stderr: '', exitCode: 1 };
+  };
+  const { claim } = await preparation(admission);
+  const subject = createPreparationDriver({ cwd: root, lockRoot: join(root, 'leases'), admission, runner,
+    fakeBackend: { runner, window: undefined } });
+  try {
+    await subject.attachPreparation(claim, context, new AbortController().signal);
+    await assert.rejects(subject.inventoryStatus(new AbortController().signal),
+      (error: unknown) => error instanceof DeviceCliError && !error.terminalAcknowledged);
+    await assert.rejects(subject.boot(new AbortController().signal));
+    await assert.rejects(subject.close(new AbortController().signal));
+    assert.deepEqual(calls, ['list']);
+    assert.ok(readFileSync(join(root, 'leases', `${udid}.lock`)));
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+for (const [name, entries, expected] of [
+  ['unavailable selected identity', [{ simulatorId: udid, state: 'Shutdown', isAvailable: false }], { state: 'Shutdown', isAvailable: false }],
+  ['missing selected identity', [{ simulatorId: 'ABCDEF00-0000-4000-8000-000000000002', state: 'Booted', isAvailable: true }], undefined],
+  ['empty inventory', [], undefined],
+] as const) {
+  test(`preparation inventory reports ${name} without a device mutation`, async () => {
+    const { root, admission } = fixture(); const calls: string[] = [];
+    const runner: CliRunner = async args => {
+      calls.push(args[1]!);
+      return { stdout: JSON.stringify({ schema: 'mobilebuildmcp.output.simulator-list', schemaVersion: '2',
+        data: { simulators: entries } }), stderr: '', exitCode: 0 };
+    };
+    const { claim } = await preparation(admission);
+    const subject = createPreparationDriver({ cwd: root, lockRoot: join(root, 'leases'), admission, runner,
+      fakeBackend: { runner, window: undefined } });
+    try {
+      await subject.attachPreparation(claim, context, new AbortController().signal);
+      assert.deepEqual(await subject.inventoryStatus(new AbortController().signal), expected);
+      await subject.close(new AbortController().signal);
+      assert.deepEqual(calls, ['list']);
+    } finally { rmSync(root, { recursive: true, force: true }); }
+  });
+}
+
+for (const [name, entries] of [
+  ['missing availability', [{ simulatorId: udid, state: 'Shutdown' }]],
+  ['string availability', [{ simulatorId: udid, state: 'Shutdown', isAvailable: 'true' }]],
+  ['numeric availability', [{ simulatorId: udid, state: 'Shutdown', isAvailable: 1 }]],
+  ['null availability', [{ simulatorId: udid, state: 'Shutdown', isAvailable: null }]],
+  ['duplicate selected identity', [{ simulatorId: udid, state: 'Shutdown', isAvailable: true },
+    { simulatorId: udid.toLowerCase(), state: 'Shutdown', isAvailable: false }]],
+] as const) {
+  test(`malformed inventory (${name}) retains uncertainty with no later boot`, async () => {
+    const { root, admission } = fixture(); const calls: string[] = [];
+    const runner: CliRunner = async args => {
+      calls.push(args[1]!);
+      return { stdout: JSON.stringify({ schema: 'mobilebuildmcp.output.simulator-list', schemaVersion: '2',
+        data: { simulators: entries } }), stderr: '', exitCode: 0 };
+    };
+    const { claim } = await preparation(admission);
+    const subject = createPreparationDriver({ cwd: root, lockRoot: join(root, 'leases'), admission, runner,
+      fakeBackend: { runner, window: undefined } });
+    try {
+      await subject.attachPreparation(claim, context, new AbortController().signal);
+      await assert.rejects(subject.inventoryStatus(new AbortController().signal),
+        (error: unknown) => error instanceof DeviceCliError && !error.terminalAcknowledged);
+      await assert.rejects(subject.boot(new AbortController().signal));
+      await assert.rejects(subject.close(new AbortController().signal));
+      assert.deepEqual(calls, ['list']);
+      assert.ok(readFileSync(join(root, 'leases', `${udid}.lock`)));
+    } finally { rmSync(root, { recursive: true, force: true }); }
+  });
+}
+
+test('durable preparation cancellation prevents inventory dispatch', async () => {
+  const { root, admission } = fixture(); let calls = 0;
+  const runner: CliRunner = async args => { calls++; return response(args); };
+  const { claim } = await preparation(admission);
+  const subject = createPreparationDriver({ cwd: root, lockRoot: join(root, 'leases'), admission, runner,
+    fakeBackend: { runner, window: undefined } });
+  try {
+    await subject.attachPreparation(claim, context, new AbortController().signal);
+    claim.cancel();
+    await assert.rejects(subject.inventoryStatus(new AbortController().signal));
+    await assert.rejects(subject.boot(new AbortController().signal));
+    assert.equal(calls, 0);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test('lost inventory reply fences boot and retains the lease after a late valid reply', async () => {
+  const { root, admission } = fixture(); const calls: string[] = [];
+  let release!: (value: ReturnType<typeof response>) => void;
+  const pending = new Promise<ReturnType<typeof response>>(resolve => { release = resolve; });
+  const runner: CliRunner = async args => { calls.push(args[1]!); return pending; };
+  const { claim } = await preparation(admission);
+  const subject = createPreparationDriver({ cwd: root, lockRoot: join(root, 'leases'), admission, runner,
+    fakeBackend: { runner, window: undefined } });
+  try {
+    await subject.attachPreparation(claim, context, new AbortController().signal);
+    await assert.rejects(subject.inventoryStatus(new AbortController().signal, 5));
+    await assert.rejects(subject.boot(new AbortController().signal));
+    await assert.rejects(subject.close(new AbortController().signal));
+    const path = join(root, 'leases', `${udid}.lock`); const held = readFileSync(path, 'utf8');
+    release({ stdout: JSON.stringify({ schema: 'mobilebuildmcp.output.simulator-list', schemaVersion: '2',
+      data: { simulators: [{ simulatorId: udid, state: 'Shutdown', isAvailable: true }] } }), stderr: '', exitCode: 0 });
+    await new Promise(resolve => setTimeout(resolve, 20));
+    await assert.rejects(subject.boot(new AbortController().signal));
+    assert.equal(readFileSync(path, 'utf8'), held);
+    assert.deepEqual(calls, ['list']);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
 // Real store capability and fake system effects are the seams; no driver internals are mocked.
 test('preparation parks settled ownership and a consumed action attaches without relaunch or window', async () => {
   const { root, admission } = fixture(); const calls: string[] = [];

@@ -150,7 +150,7 @@ function terminalPayloadMatches(envelope: JsonObject, expectedSchema: string, su
   return true;
 }
 
-function parseEnvelope(result: CliResult, expectedSchema?: string): JsonObject {
+function parseEnvelope(result: CliResult, expectedSchema?: string, validatePayload?: (data: JsonObject) => boolean): JsonObject {
   let envelope: JsonObject;
   try {
     envelope = record(JSON.parse(result.stdout));
@@ -160,7 +160,8 @@ function parseEnvelope(result: CliResult, expectedSchema?: string): JsonObject {
   if (envelope.didError === true || result.exitCode !== 0) {
     const uiError = record(record(envelope.data).uiError);
     const legacyError = record(envelope.error);
-    const terminalAcknowledged = expectedSchema !== undefined && terminalPayloadMatches(envelope, expectedSchema, false);
+    const terminalAcknowledged = expectedSchema !== undefined && terminalPayloadMatches(envelope, expectedSchema, false) &&
+      (validatePayload === undefined || validatePayload(record(envelope.data)));
     throw new DeviceCliError(
       string(uiError.code) ?? string(legacyError.code) ?? 'DEVICE_ERROR',
       string(uiError.message) ?? string(envelope.error) ?? string(legacyError.message) ?? `MobileBuildMCP failed (exit ${result.exitCode})`,
@@ -170,7 +171,8 @@ function parseEnvelope(result: CliResult, expectedSchema?: string): JsonObject {
   if (!supportedVersion(envelope.schema, envelope.schemaVersion) || !envelope.data || typeof envelope.data !== 'object' || Array.isArray(envelope.data)) {
     throw new DeviceCliError('INVALID_ENVELOPE', 'MobileBuildMCP returned an unsupported envelope');
   }
-  if (expectedSchema && !terminalPayloadMatches(envelope, expectedSchema, true)) {
+  if (expectedSchema && (!terminalPayloadMatches(envelope, expectedSchema, true) ||
+    validatePayload !== undefined && !validatePayload(record(envelope.data)))) {
     throw new DeviceCliError('TERMINAL_ACK_MISSING', 'MobileBuildMCP did not return the expected terminal result');
   }
   return record(envelope.data);
@@ -466,8 +468,10 @@ const IOS_ATTACH_REFUSAL = 'Start mode "attach" is Android-only for now: on iOS 
 
 /** Narrow typed driver seams for allocator and observed runtime composition. */
 export type AdmittedAppContext = { app: { bundleId: string; launchArgs?: string[] } };
+export type PreparationInventoryStatus = { state: string; isAvailable: boolean };
 export interface IosPreparationDriver {
   attachPreparation(claim: PreparationClaim, context: AdmittedAppContext, signal: AbortSignal): Promise<void>;
+  inventoryStatus(signal: AbortSignal, timeoutMs?: number): Promise<PreparationInventoryStatus | undefined>;
   boot(signal: AbortSignal, timeoutMs?: number): Promise<void>;
   bootState(signal: AbortSignal, timeoutMs?: number): Promise<string | undefined>;
   install(artifactPath: string, signal: AbortSignal, timeoutMs?: number): Promise<void>;
@@ -575,9 +579,10 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
     };
   }
 
-  private async call(args: string[], signal: AbortSignal, expectedSchema?: string): Promise<JsonObject> {
+  private async call(args: string[], signal: AbortSignal, expectedSchema?: string,
+    validatePayload?: (data: JsonObject) => boolean): Promise<JsonObject> {
     if (signal.aborted) throw signal.reason ?? new Error('Aborted');
-    const data = parseEnvelope(await this.runner([...args, '--output', 'json'], signal), expectedSchema);
+    const data = parseEnvelope(await this.runner([...args, '--output', 'json'], signal), expectedSchema, validatePayload);
     if (args[0] === 'ui-automation' && args[1] === 'snapshot-ui') parseSnapshot(data, this.deviceId!);
     return data;
   }
@@ -702,6 +707,22 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
 
   bootState(signal: AbortSignal, timeoutMs = this.uiCommandTimeoutMs): Promise<string | undefined> {
     return this.simulatorState(this.preparedDevice(), signal, 'boot-state', timeoutMs);
+  }
+
+  /** Only the admitted identity's explicit vendor availability can qualify supplied inventory. */
+  inventoryStatus(signal: AbortSignal, timeoutMs = this.uiCommandTimeoutMs): Promise<PreparationInventoryStatus | undefined> {
+    const device = this.preparedDevice();
+    const select = (data: JsonObject) => (data.simulators as unknown[]).map(record)
+      .filter(simulator => string(simulator.simulatorId)?.toUpperCase() === device);
+    const validate = (data: JsonObject) => {
+      const selected = select(data);
+      return selected.length === 0 || selected.length === 1 && typeof selected[0]!.isAvailable === 'boolean';
+    };
+    return this.dispatch('inventory-status', signal, async issuedSignal => {
+      const data = await this.call(['simulator', 'list'], issuedSignal, 'mobilebuildmcp.output.simulator-list', validate);
+      const simulator = select(data)[0];
+      return simulator ? { state: simulator.state as string, isAvailable: simulator.isAvailable as boolean } : undefined;
+    }, timeoutMs);
   }
 
   async install(artifactPath: string, signal: AbortSignal, timeoutMs = this.uiCommandTimeoutMs): Promise<void> {
