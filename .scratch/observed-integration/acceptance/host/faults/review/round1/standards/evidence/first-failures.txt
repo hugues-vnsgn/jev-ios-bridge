@@ -1,0 +1,6 @@
+Preserved tool-output transcripts (bounded fixture setup, not product defects):
+1. Initial ordinal barrier afterCommit:authorize:2 expected null, actual false. The second authorization was capture. Replaced with a persisted-null semantic tap authorization milestone. Corrected bounded test PASS.
+2. Historical migration fixture root used /var/folders alias; rootPath rejected noncanonical absolute path. Changed host fixture temp root to realpath; completed-migration bounded test PASS.
+3. Readonly allocation test expected STORE_UNAVAILABLE, actual STATE_UNAVAILABLE. Allocation contract line111 explicitly includes STATE_UNAVAILABLE. Oracle corrected to documented preparation reason; fail-closed and byte/count assertions retained.
+4. Early artifact-staging shutdown probe expected capacityHeld:true but observed false. No creation/admission/device command had occurred; the pure reservation can be released. Preserved cancellation/no-ready/no-device assertions and corrected exact capacity:false.
+5. Preparation timeout minimum (1000ms) under concurrent Root maintenance host load returned uncertain rather than prepared. The schema boundary is valid but does not promise work finishes within its deadline; assert parsing accepts exact timeout and public adapter does not reject the schema. Durable reserved request timeout is also checked when a reservation was reached.

@@ -1,0 +1,376 @@
+✔ H06.01 cli killed public preparation owner at afterCommit:reserveAllocation:1 (863.974208ms)
+✔ H06.01 cli killed public preparation owner at afterCommit:startCreation:1 (693.087209ms)
+✔ H06.01 cli killed public preparation owner at backend:create:1 (759.285042ms)
+✔ H06.01 cli killed public preparation owner at afterCommit:recordCreation:1 (757.455292ms)
+✔ H06.01 cli killed public preparation owner at afterCommit:parkAllocation:1 (1437.409541ms)
+✔ H06.02 cli killed public action owner at afterCommit:consumeAllocation:1 (1381.064625ms)
+✔ H06.02 cli killed public action owner at durable:tap-authorized:1 (1518.851416ms)
+✔ H06.02 cli killed public action owner at backend:touch:1 (1598.745666ms)
+✔ H06.02 cli killed public action owner at afterCommit:recordActionReceipt:1 (1857.1665ms)
+✔ H06.02 cli killed public action owner at beforeCommit:finalize:1 (1770.546167ms)
+✔ H06.02 cli killed public action owner at afterCommit:finalize:1 (1651.3385ms)
+✔ H06.02 cli killed public action owner at evidence:terminal:1 (1889.585ms)
+✔ H06.02 cli killed public action owner at evidence:exported:1 (1926.568666ms)
+✔ H06.01 mcp killed public preparation owner at afterCommit:reserveAllocation:1 (727.877125ms)
+✔ H06.01 mcp killed public preparation owner at afterCommit:startCreation:1 (1091.103666ms)
+✔ H06.01 mcp killed public preparation owner at backend:create:1 (729.126583ms)
+✔ H06.01 mcp killed public preparation owner at afterCommit:recordCreation:1 (959.52ms)
+✔ H06.01 mcp killed public preparation owner at afterCommit:parkAllocation:1 (2000.640584ms)
+✔ H06.02 mcp killed public action owner at afterCommit:consumeAllocation:1 (1545.749167ms)
+✔ H06.02 mcp killed public action owner at durable:tap-authorized:1 (1735.598792ms)
+✔ H06.02 mcp killed public action owner at backend:touch:1 (1710.981625ms)
+✔ H06.02 mcp killed public action owner at afterCommit:recordActionReceipt:1 (1767.222167ms)
+✔ H06.02 mcp killed public action owner at beforeCommit:finalize:1 (1865.44275ms)
+✔ H06.02 mcp killed public action owner at afterCommit:finalize:1 (1627.9025ms)
+✔ H06.02 mcp killed public action owner at evidence:terminal:1 (2001.121292ms)
+✔ H06.02 mcp killed public action owner at evidence:exported:1 (2450.720625ms)
+✔ H06.03 genuine cli beforeCommit finalization response fault preserves authority (1680.329167ms)
+✖ H06.03 genuine mcp beforeCommit finalization response fault preserves authority (1901.731375ms)
+✔ H06.03 genuine cli afterCommit finalization response fault preserves authority (1966.057083ms)
+✔ H06.03 genuine mcp afterCommit finalization response fault preserves authority (2270.5915ms)
+✔ H06.04 duplicate finalization and stale token cannot change a genuine public committed result (1936.40075ms)
+✔ H06.05 genuine MCP owner late abort-ignoring touch reply cannot promote quarantined outcome (1718.861125ms)
+✔ H06.06 genuine CLI owner late abort-ignoring touch reply cannot promote quarantined outcome (1880.08025ms)
+✔ H01.01 cli strict action/preparation rejection leaves no calls or reservations (5855.545583ms)
+✔ H01.02 cli valid ID/guard/selector/timeout boundaries reach authority without effects (2196.010791ms)
+✔ H01.01 mcp strict action/preparation rejection leaves no calls or reservations (332.435583ms)
+✔ H01.02 mcp valid ID/guard/selector/timeout boundaries reach authority without effects (254.171625ms)
+✔ H02.01 cli seven public operations and observed envelope are key/network free (2540.584ms)
+✔ H02.01 cli seven public operations and already envelope are key/network free (2562.114542ms)
+✔ H02.01 cli seven public operations and refused envelope are key/network free (2392.679875ms)
+✔ H02.01 cli seven public operations and inconclusive envelope are key/network free (2500.588583ms)
+✔ H02.01 cli seven public operations and unresolved envelope are key/network free (2371.715833ms)
+✔ H02.01 mcp seven public operations and observed envelope are key/network free (1895.908417ms)
+✔ H02.01 mcp seven public operations and already envelope are key/network free (1432.395041ms)
+✔ H02.01 mcp seven public operations and refused envelope are key/network free (1337.955375ms)
+✔ H02.01 mcp seven public operations and inconclusive envelope are key/network free (1440.641542ms)
+✔ H02.01 mcp seven public operations and unresolved envelope are key/network free (1614.279417ms)
+✔ H07.03 cli healthy active owner public reads preserve exact database and logical state (1968.860708ms)
+✔ H07.03 mcp healthy active owner public reads preserve exact database and logical state (1509.747667ms)
+✔ H07.04 cli isolated readonly write fault refuses reservation with no alternative root (301.112208ms)
+✔ H07.04 mcp isolated readonly write fault refuses reservation with no alternative root (454.417542ms)
+✔ H07.04 cli isolated full write fault refuses reservation with no alternative root (401.090125ms)
+✔ H07.04 mcp isolated full write fault refuses reservation with no alternative root (257.057084ms)
+✔ H01.03 cli original UTF8 65535/65536/65537-byte boundaries (724.85ms)
+✔ H01.03 mcp original UTF8 65535/65536/65537-byte boundaries (295.624375ms)
+✔ H04.01 cli capacity7/8/9 exact bytes include retained and quarantined allocations (4364.540333ms)
+✔ H04.02 cli malformed create receipt blocks legacy/supplied/ready successors (850.369125ms)
+✔ H04.02 cli lost create receipt blocks legacy/supplied/ready successors (860.776ms)
+✔ H04.02 cli protected create receipt blocks legacy/supplied/ready successors (766.433334ms)
+✔ H04.02 cli collision create receipt blocks legacy/supplied/ready successors (792.854667ms)
+✔ H04.01 mcp capacity7/8/9 exact bytes include retained and quarantined allocations (4643.500542ms)
+✔ H04.02 mcp malformed create receipt blocks legacy/supplied/ready successors (879.513584ms)
+✔ H04.02 mcp lost create receipt blocks legacy/supplied/ready successors (910.709542ms)
+✔ H04.02 mcp protected create receipt blocks legacy/supplied/ready successors (995.172292ms)
+✔ H04.02 mcp collision create receipt blocks legacy/supplied/ready successors (909.153375ms)
+✔ H04.03 cli storage simulator boundary below respects exact held bytes (61.616333ms)
+✔ H04.03 mcp storage simulator boundary below respects exact held bytes (58.162ms)
+✔ H04.03 cli storage simulator boundary at respects exact held bytes (494.155ms)
+✔ H04.03 mcp storage simulator boundary at respects exact held bytes (426.465458ms)
+✔ H04.03 cli storage simulator boundary above respects exact held bytes (379.754459ms)
+✔ H04.03 mcp storage simulator boundary above respects exact held bytes (374.180625ms)
+✔ H04.04 cli artifact/runtime symlink refuses before install without rebuild (56.559334ms)
+✔ H04.04 mcp artifact/runtime symlink refuses before install without rebuild (51.080167ms)
+✔ H04.04 cli artifact/runtime source-mutation refuses before install without rebuild (123.291666ms)
+✔ H04.04 mcp artifact/runtime source-mutation refuses before install without rebuild (108.909958ms)
+✔ H04.04 cli artifact/runtime staged-mutation refuses before install without rebuild (243.977ms)
+✔ H04.04 mcp artifact/runtime staged-mutation refuses before install without rebuild (238.077875ms)
+✔ H04.04 cli artifact/runtime oversize refuses before install without rebuild (58.197125ms)
+✔ H04.04 mcp artifact/runtime oversize refuses before install without rebuild (55.182583ms)
+✔ H04.04 cli artifact/runtime runtime refuses before install without rebuild (52.5195ms)
+✔ H04.04 mcp artifact/runtime runtime refuses before install without rebuild (55.748334ms)
+✔ H07.01 cli real isolated missing store fails closed without alternate root (218.527584ms)
+✔ H07.01 mcp real isolated missing store fails closed without alternate root (231.517791ms)
+✔ H07.01 cli real isolated corrupt store fails closed without alternate root (226.144583ms)
+✔ H07.01 mcp real isolated corrupt store fails closed without alternate root (228.223916ms)
+✔ H07.01 cli real isolated unknown-schema store fails closed without alternate root (225.947291ms)
+✔ H07.01 mcp real isolated unknown-schema store fails closed without alternate root (230.385334ms)
+✔ H07.02 cli evidence provisional failure respects authoritative commit (1282.057875ms)
+✔ H07.02 mcp evidence provisional failure respects authoritative commit (1264.582459ms)
+✔ H07.02 cli evidence terminal failure respects authoritative commit (1253.070125ms)
+✔ H07.02 mcp evidence terminal failure respects authoritative commit (1237.242125ms)
+✔ H08.01 isolated completed historical migration preserves sources and conservative public authority (973.438958ms)
+✔ H08.01 isolated unfinished historical migration preserves sources and conservative public authority (957.444583ms)
+✔ H08.01 isolated quarantine historical migration preserves sources and conservative public authority (967.844542ms)
+✔ H08.01 isolated malformed historical migration preserves sources and conservative public authority (978.480625ms)
+✔ H08.01 isolated dead historical migration preserves sources and conservative public authority (981.48775ms)
+✔ H08.01 isolated live historical migration preserves sources and conservative public authority (54.312625ms)
+✔ H08.02 declaration/quiescence omissions refuse activation; experimental raw device cannot bypass admission (38.669375ms)
+✖ H03.04 cli legacy-first canonical supplied admission excludes the successor (102.980875ms)
+✖ H03.04 mcp legacy-first canonical supplied admission excludes the successor (121.887541ms)
+✖ H03.04 cli observed-first canonical supplied admission excludes the successor (360.997041ms)
+✖ H03.04 mcp observed-first canonical supplied admission excludes the successor (351.348166ms)
+✔ H05.04 cli action start at ready expiry offset -1 is transactional (489.484042ms)
+✔ H05.04 mcp action start at ready expiry offset -1 is transactional (602.276458ms)
+✖ H05.04 cli action start at ready expiry offset 0 is transactional (387.501833ms)
+✖ H05.04 mcp action start at ready expiry offset 0 is transactional (421.169ms)
+✖ H05.04 cli action start at ready expiry offset 1 is transactional (396.8ms)
+✖ H05.04 mcp action start at ready expiry offset 1 is transactional (380.58175ms)
+✔ H01.04 cli valid preparation timeout/build/path boundaries and no-reservation failures (1410.869959ms)
+✔ H01.04 mcp valid preparation timeout/build/path boundaries and no-reservation failures (1387.881584ms)
+✔ H04.05 cli all protected supplied UUIDs and unattested inventory refuse without reservation (80.290833ms)
+✔ H04.05 mcp all protected supplied UUIDs and unattested inventory refuse without reservation (83.8245ms)
+✔ H04.06 cli artifact byte boundary offset -1 is measured from supplied bytes (47.506334ms)
+✔ H04.06 mcp artifact byte boundary offset -1 is measured from supplied bytes (47.920875ms)
+✔ H04.06 cli artifact byte boundary offset 0 is measured from supplied bytes (384.906083ms)
+✔ H04.06 mcp artifact byte boundary offset 0 is measured from supplied bytes (588.200333ms)
+✔ H04.06 cli artifact byte boundary offset 1 is measured from supplied bytes (444.0855ms)
+✔ H04.06 mcp artifact byte boundary offset 1 is measured from supplied bytes (687.241ms)
+✔ H05.09 MCP close during configuration fences ignored-abort preparation (76.130625ms)
+✔ H05.09 MCP close during host-proof fences ignored-abort preparation (57.345958ms)
+✔ H05.09 MCP close during artifact-inspection fences ignored-abort preparation (64.167541ms)
+✔ H05.09 MCP close during artifact-staging fences ignored-abort preparation (194.530792ms)
+✔ H03.05 preparation duplicate/conflict and changed runs root preserve immutable original evidence (1301.999459ms)
+✔ H08.03 historical lexical aliases consolidate clean completion and explicitly missing roots refuse (114.852542ms)
+✔ H01.05 CLI allocation raw-file 65535/65536/65537 byte boundaries retain the original reservation (1202.807083ms)
+✔ H02.02 cli exact enable flag retains parked reads/cancel/retire with no new effects (1998.209083ms)
+✔ H02.02 mcp exact enable flag retains parked reads/cancel/retire with no new effects (1531.2765ms)
+✔ H02.03 cli acknowledged preparation refusal has committed error-free snapshot semantics (206.747875ms)
+✔ H02.03 mcp acknowledged preparation refusal has committed error-free snapshot semantics (205.254458ms)
+✔ H03.01 public concurrent preparation/start bind exactly one executor across cwd/project aliases (1913.941041ms)
+✔ H03.02 normal public allocation exit leaves durable parked ownership for a different transport (1101.016583ms)
+✔ H03.03 root aliases fail closed and cannot establish an alternate authority domain (806.894333ms)
+✔ H05.01 cli durable external preparation cancel at afterCommit:reserveAllocation:1 fences successors (665.322333ms)
+✔ H05.01 cli durable external preparation cancel at afterCommit:stageAllocation:1 fences successors (732.995541ms)
+✔ H05.01 cli durable external preparation cancel at afterCommit:startCreation:1 fences successors (774.413583ms)
+✔ H05.01 cli durable external preparation cancel at afterCommit:recordCreation:1 fences successors (839.753666ms)
+✔ H05.01 cli durable external preparation cancel at afterCommit:attach:1 fences successors (802.622ms)
+✔ H05.01 cli durable external preparation cancel at backend:boot:1 fences successors (912.571709ms)
+✔ H05.01 cli durable external preparation cancel at backend:list:1 fences successors (1049.242375ms)
+✔ H05.01 cli durable external preparation cancel at backend:install:1 fences successors (1130.6035ms)
+✔ H05.01 cli durable external preparation cancel at backend:launch-app:1 fences successors (1235.08775ms)
+✔ H05.01 cli durable external preparation cancel at backend:list:2 fences successors (1086.950083ms)
+✔ H05.01 cli durable external preparation cancel at backend:snapshot-ui:1 fences successors (1196.565209ms)
+✔ H05.01 cli durable external preparation cancel at backend:screenshot:1 fences successors (1414.137167ms)
+✔ H05.02 cli durable external action cancel at afterCommit:consumeAllocation:1 permits at most authorized input (1878.795834ms)
+✔ H05.02 cli durable external action cancel at durable:tap-authorized:1 permits at most authorized input (1743.626875ms)
+✔ H05.02 cli durable external action cancel at backend:touch:1 permits at most authorized input (1768.168833ms)
+✔ H05.02 cli durable external action cancel at evidence:provisional:1 permits at most authorized input (2516.788417ms)
+✔ H05.01 mcp durable external preparation cancel at afterCommit:reserveAllocation:1 fences successors (721.0485ms)
+✔ H05.01 mcp durable external preparation cancel at afterCommit:stageAllocation:1 fences successors (752.2165ms)
+✔ H05.01 mcp durable external preparation cancel at afterCommit:startCreation:1 fences successors (779.970583ms)
+✔ H05.01 mcp durable external preparation cancel at afterCommit:recordCreation:1 fences successors (1024.549875ms)
+✔ H05.01 mcp durable external preparation cancel at afterCommit:attach:1 fences successors (1021.303125ms)
+✔ H05.01 mcp durable external preparation cancel at backend:boot:1 fences successors (1040.082166ms)
+✔ H05.01 mcp durable external preparation cancel at backend:list:1 fences successors (1049.216084ms)
+✔ H05.01 mcp durable external preparation cancel at backend:install:1 fences successors (975.128667ms)
+✖ H05.01 mcp durable external preparation cancel at backend:launch-app:1 fences successors (477.346916ms)
+✔ H05.01 mcp durable external preparation cancel at backend:list:2 fences successors (1008.544875ms)
+✔ H05.01 mcp durable external preparation cancel at backend:snapshot-ui:1 fences successors (1085.267583ms)
+✔ H05.01 mcp durable external preparation cancel at backend:screenshot:1 fences successors (1038.529125ms)
+✔ H05.02 mcp durable external action cancel at afterCommit:consumeAllocation:1 permits at most authorized input (2288.93875ms)
+✔ H05.02 mcp durable external action cancel at durable:tap-authorized:1 permits at most authorized input (2378.099625ms)
+✔ H05.02 mcp durable external action cancel at backend:touch:1 permits at most authorized input (2205.156083ms)
+✔ H05.02 mcp durable external action cancel at evidence:provisional:1 permits at most authorized input (2389.373375ms)
+✔ H05.03 public SIGINT is bounded by 5000ms and production exits 130 (2108.657583ms)
+✔ H05.03 public SIGTERM is bounded by 5000ms and production exits 143 (1818.892083ms)
+✔ H05.05 concurrent genuine start/retire has one durable winner and no input replay (1337.844792ms)
+✔ H05.11 concurrent MCP start/retire has one durable winner and no input replay (1306.571ms)
+✔ H05.12 genuine CLI SIGTERM during configuration fences ignored-abort preparation (5378.250542ms)
+✔ H05.12 genuine CLI SIGTERM during host-proof fences ignored-abort preparation (5250.339292ms)
+✔ H05.12 genuine CLI SIGTERM during artifact-inspection fences ignored-abort preparation (5263.669333ms)
+✔ H05.12 genuine CLI SIGTERM during artifact-staging fences ignored-abort preparation (5458.777083ms)
+✔ H05.06 SIGINT racing durable ready commit preserves parked allocation (931.224375ms)
+✔ H05.06 SIGTERM racing durable ready commit preserves parked allocation (955.880916ms)
+✔ H05.07 public read-wait SIGINT leaves the active action untouched (1747.07975ms)
+✔ H05.07 public read-wait SIGTERM leaves the active action untouched (2022.979375ms)
+✔ H05.08 MCP transport-cancelled action wait preserves durable cancellation and active owner (1266.748917ms)
+✔ H05.10 MCP transport-cancelled preparation wait preserves durable cancellation and active owner (879.567291ms)
+ℹ tests 178
+ℹ suites 0
+ℹ pass 168
+ℹ fail 10
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 80969.813666
+
+✖ failing tests:
+
+test at tests/observed-crash.test.ts:1:5161
+✖ H06.03 genuine mcp beforeCommit finalization response fault preserves authority (1901.731375ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'finalizing'
+  - 'unresolved'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-host-faults/tests/observed-crash.test.ts:87:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'finalizing',
+    expected: 'unresolved',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-host-fault.test.ts:1:25246
+✖ H03.04 cli legacy-first canonical supplied admission excludes the successor (102.980875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'ADMISSION_REFUSED'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-host-faults/tests/observed-host-fault.test.ts:311:45)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'ADMISSION_REFUSED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-host-fault.test.ts:1:25246
+✖ H03.04 mcp legacy-first canonical supplied admission excludes the successor (121.887541ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'ADMISSION_REFUSED'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-host-faults/tests/observed-host-fault.test.ts:311:45)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'ADMISSION_REFUSED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-host-fault.test.ts:1:25246
+✖ H03.04 cli observed-first canonical supplied admission excludes the successor (360.997041ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      kind: 'refused',
+  +   reason: 'DEVICE_QUARANTINED'
+  -   reason: 'DEVICE_BUSY'
+    }
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-host-faults/tests/observed-host-fault.test.ts:312:62)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { kind: 'refused', reason: 'DEVICE_QUARANTINED' },
+    expected: { kind: 'refused', reason: 'DEVICE_BUSY' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-host-fault.test.ts:1:25246
+✖ H03.04 mcp observed-first canonical supplied admission excludes the successor (351.348166ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      kind: 'refused',
+  +   reason: 'DEVICE_QUARANTINED'
+  -   reason: 'DEVICE_BUSY'
+    }
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-host-faults/tests/observed-host-fault.test.ts:312:62)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { kind: 'refused', reason: 'DEVICE_QUARANTINED' },
+    expected: { kind: 'refused', reason: 'DEVICE_BUSY' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-host-fault.test.ts:1:26792
+✖ H05.04 cli action start at ready expiry offset 0 is transactional (387.501833ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'ALLOCATION_NOT_READY'
+  - 'READY_EXPIRED'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-host-faults/tests/observed-host-fault.test.ts:324:29)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'ALLOCATION_NOT_READY',
+    expected: 'READY_EXPIRED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-host-fault.test.ts:1:26792
+✖ H05.04 mcp action start at ready expiry offset 0 is transactional (421.169ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'ALLOCATION_NOT_READY'
+  - 'READY_EXPIRED'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-host-faults/tests/observed-host-fault.test.ts:324:29)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'ALLOCATION_NOT_READY',
+    expected: 'READY_EXPIRED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-host-fault.test.ts:1:26792
+✖ H05.04 cli action start at ready expiry offset 1 is transactional (396.8ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'ALLOCATION_NOT_READY'
+  - 'READY_EXPIRED'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-host-faults/tests/observed-host-fault.test.ts:324:29)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'ALLOCATION_NOT_READY',
+    expected: 'READY_EXPIRED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-host-fault.test.ts:1:26792
+✖ H05.04 mcp action start at ready expiry offset 1 is transactional (380.58175ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'ALLOCATION_NOT_READY'
+  - 'READY_EXPIRED'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-host-faults/tests/observed-host-fault.test.ts:324:29)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'ALLOCATION_NOT_READY',
+    expected: 'READY_EXPIRED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-public-races.test.ts:1:4485
+✖ H05.01 mcp durable external preparation cancel at backend:launch-app:1 fences successors (477.346916ms)
+  SyntaxError: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-host-faults/tests/fixtures/observed-host/harness.ts:89:113)
+      at Array.map (<anonymous>)
+      at Object.milestone (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-host-faults/tests/fixtures/observed-host/harness.ts:89:96)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-host-faults/tests/observed-public-races.test.ts:67:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

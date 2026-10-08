@@ -1,9 +1,9 @@
 # 10 — Document and verify the installed observed workflow
 
 Type: task
-Status: resolved
+Status: ready-for-agent
 Claimed by: observed_installed_workflow
-Execution: Root-dispatched at d0f49f6c12cbaffb4c034217b7e25b96c52c6cb2
+Execution: accepted by Root; candidate a319e5b integrated as eff4d10
 Mode: AFK
 Blocked by: 08
 Owner: Documentation/packaging implementer
@@ -37,6 +37,10 @@ H09 Node minimum/CI, npm pack clean isolated installation, CLI/MCP startup and n
 Completion: Installed users can find migration and safe workflow usage, while the Node 24.0.0 gate exercises SQLite. Final shipping/live verdict remains Root-owned. Return the handoff's fixed-format report with full commit/base SHA, files, commands/results, evidence, limitations and unresolved dependencies. A missing required assertion stays UNVERIFIED; a confirmed defect is BLOCKED until Root assigns its fix. No live operations, merge or publish belong to this ticket.
 
 ## Comments
+
+### Root bounded acceptance
+
+Both independent axes PASS on exact candidate `a319e5bea63415b6ac981c4ce4e8a25679b010c9`; integration `eff4d10dba92bd087d5fdcf980b0b16395d5bd98`. Root's physical affected34/34 and actual default full1482/1482 plus typecheck/build PASS on Node26.8.1 and exact24.0.0, zero skips. Root added the README guide link after these checks. Status remains the canonical triage label; Execution records acceptance. Complete composed host/live acceptance remains pending. [Root review and durable evidence](../../observed-integration/acceptance/host/installed-workflow-review.md).
 
 
 ### Installed workflow candidate — 2026-10-08

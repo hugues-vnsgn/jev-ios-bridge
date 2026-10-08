@@ -1,0 +1,17 @@
+{
+  "base": "75d7618167729b9b9a5547eaa468e37eb12b2504",
+  "originalBase": "d0f49f6c12cbaffb4c034217b7e25b96c52c6cb2",
+  "inventoryRows": 362,
+  "expectedTests": 178,
+  "files": {
+    ".scratch/observed-action-rollout/issues/09-host-fault-suite.md": "8a3bc340cc76c08d30bdd2015b08911c3dc43891ce9cdd0a44c22c69ad1a3d48",
+    "tests/fixtures/observed-host/early-cli.ts": "e6ae1ef16fc2f5f2b4340aae835f720f88403b1d6722db8cc78f2266dbe572e1",
+    "tests/fixtures/observed-host/case-matrix.json": "bda6d19e32f410a9d7412defc98d74636f230112ce5ff1607068ed589129a10a",
+    "tests/fixtures/observed-host/allocator-public.ts": "4b4b9152d4ac66fb6812dd5a894fd36eb8dd056793022b3b6760323794130e8b",
+    "tests/fixtures/observed-host/owner.ts": "1453f3d1143a02d30bb1ff823b591057725cfbbe68cdc9009600f19e5707e22f",
+    "tests/fixtures/observed-host/harness.ts": "7491a7f64bccb31f92c057090a36ec38341bb125c8fde96d793985e7a1439784",
+    "tests/observed-host-fault.test.ts": "dd8d48d553f6b5073ffe3ffcb72ca48666bde6b902f31630f1cdfd142587ce44",
+    "tests/observed-public-races.test.ts": "0b689d703582f62ab28870da16aeec6ae7f44eaa70d68ba4ad6f07458650384d",
+    "tests/observed-crash.test.ts": "55a00890b6eca9a7c64554f79ace6aa20a2cfdce0cbaf2504874aa9d7f8bbbb2"
+  }
+}

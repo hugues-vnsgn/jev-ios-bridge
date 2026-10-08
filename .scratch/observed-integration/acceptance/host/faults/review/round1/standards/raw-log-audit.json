@@ -1,0 +1,102 @@
+[
+  {
+    "name": "added-final-node26",
+    "command": [
+      "node",
+      "--import",
+      "tsx",
+      "--test",
+      "tests/observed-host-fault.test.ts",
+      "tests/observed-public-races.test.ts",
+      "tests/observed-crash.test.ts"
+    ],
+    "exit": 0,
+    "runtime": "26",
+    "recordSha256": "06ce31b1256929f64cdef9264dbc41bc8849e70fb7ba0cdd9cd657227611f338",
+    "logSha256": "07ee2bc5dd773ace74c057568942c2bf3c3f6c9c8c425eef2bc7dccbf39cb31d",
+    "tests": [
+      "\u2139 tests 193",
+      "\u2139 pass 193",
+      "\u2139 fail 0",
+      "\u2139 cancelled 0",
+      "\u2139 skipped 0",
+      "\u2139 todo 0"
+    ],
+    "typecheckPresent": false,
+    "buildPresent": false,
+    "rawFixtureArchivePresent": false
+  },
+  {
+    "name": "added-final-node24",
+    "command": [
+      "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+      "--import",
+      "tsx",
+      "--test",
+      "tests/observed-host-fault.test.ts",
+      "tests/observed-public-races.test.ts",
+      "tests/observed-crash.test.ts"
+    ],
+    "exit": 0,
+    "runtime": "24",
+    "recordSha256": "309f946758abc1cf15efbf7b209fae467fb15467d25ec01b4c73ed472ed709dc",
+    "logSha256": "32c569276ab5d70861868898ce6c2f88098a2282a7c9ed58944d5da0c910d4d9",
+    "tests": [
+      "\u2139 tests 193",
+      "\u2139 pass 193",
+      "\u2139 fail 0",
+      "\u2139 cancelled 0",
+      "\u2139 skipped 0",
+      "\u2139 todo 0"
+    ],
+    "typecheckPresent": false,
+    "buildPresent": false,
+    "rawFixtureArchivePresent": false
+  },
+  {
+    "name": "full-check-node26",
+    "command": [
+      "npm",
+      "run",
+      "check"
+    ],
+    "exit": 0,
+    "runtime": "26",
+    "recordSha256": "76a794aae5a0d8cf5fe0a796d9a0fb498294510c82c9e56e76e5e52704e4ea1b",
+    "logSha256": "4fe7cb3e4f63acbf86a5a6c02e2e61a385cff92d9c4337935dcda4ca37bdef17",
+    "tests": [
+      "\u2139 tests 1668",
+      "\u2139 pass 1668",
+      "\u2139 fail 0",
+      "\u2139 cancelled 0",
+      "\u2139 skipped 0",
+      "\u2139 todo 0"
+    ],
+    "typecheckPresent": true,
+    "buildPresent": true,
+    "rawFixtureArchivePresent": false
+  },
+  {
+    "name": "full-check-node24",
+    "command": [
+      "npm",
+      "run",
+      "check"
+    ],
+    "exit": 0,
+    "runtime": "24",
+    "recordSha256": "bcaf2714370f5abd74293ff3a5e3ae5f87f7b04e87d0492e48e2f1d0e663ea85",
+    "logSha256": "f77ee99b72bcd41d0b8ba7a1366af8e2629ef5a638a1d3da259ba8ab7c9600b2",
+    "tests": [
+      "\u2139 tests 1668",
+      "\u2139 pass 1668",
+      "\u2139 fail 0",
+      "\u2139 cancelled 0",
+      "\u2139 skipped 0",
+      "\u2139 todo 0"
+    ],
+    "typecheckPresent": true,
+    "buildPresent": true,
+    "rawFixtureArchivePresent": false
+  }
+]

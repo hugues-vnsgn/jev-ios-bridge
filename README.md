@@ -12,6 +12,8 @@ script ─► bridge ─► MobileBuildMCP ─► iOS simulator
             └─► verdict · report.json · screenshots · run.jsonl · live log pane
 ```
 
+For an authored iOS tap with explicit before and after screen guards, follow the experimental [observed action workflow](docs/guide/14-observed-actions.md).
+
 ## What a check costs
 
 A run can use two models: Jev, which reads screens, and Claude, which writes the script and steps in when Jev can't decide. Jev's share is small:

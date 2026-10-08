@@ -1,0 +1,42 @@
+{
+  "source": "/tmp/jev-root-observed-host-gates",
+  "selection": "four complete physical integration command records/logs and exact runner; original files unchanged",
+  "files": {
+    "ticket10-affected-node26.json": {
+      "sha256": "d0f13d767a6b2e87f31d28d04322e143f8f9cafebe130500ea8faf8d0b2602da",
+      "bytes": 100589
+    },
+    "ticket10-affected-node26.log": {
+      "sha256": "148fc3c30300f8025a994c98f694fbc6f60092ae439e4ca2de758729a5624fe1",
+      "bytes": 3411
+    },
+    "ticket10-affected-node24.json": {
+      "sha256": "b4a6ab8b77198ac5767b09872c8d1ca781beb53711532695a3f95174df663b24",
+      "bytes": 100651
+    },
+    "ticket10-affected-node24.log": {
+      "sha256": "afaa798888f67b54c49becd04de8870ed29914efb94eea4414446caa6038e7b9",
+      "bytes": 3735
+    },
+    "ticket10-check-node26.json": {
+      "sha256": "c146eb6075c7105cb82ae2c1992e8297d8a497aab6fc697ad4dc69865b4369ae",
+      "bytes": 100429
+    },
+    "ticket10-check-node26.log": {
+      "sha256": "cdbc929fdbe45fdc194c976376380331d374f7f7bf3124af4cff9332bd7bfdf6",
+      "bytes": 147617
+    },
+    "ticket10-check-node24.json": {
+      "sha256": "76def036cc844a0433a02dc49335028d253de77baf4b7410b0f50d3359410b6f",
+      "bytes": 100460
+    },
+    "ticket10-check-node24.log": {
+      "sha256": "dc0d281cec19b73c642f33baad6a1fd2d9c6dadde0f5eac42a7ac91c77af16aa",
+      "bytes": 158289
+    },
+    "root-gate-runner.py": {
+      "sha256": "1a64e2143b07c99532456bc215090ee0dfbf631624670d8b0b013be0c7727efc",
+      "bytes": 3753
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-name-pattern",
+    "H08.01",
+    "tests/observed-host-fault.test.ts"
+  ],
+  "runtime": "26",
+  "exit": 0,
+  "seconds": 5.986416339874268,
+  "archive": "/tmp/jev-observed-ticket09-evidence/h08-transport-node26",
+  "base": "75d7618167729b9b9a5547eaa468e37eb12b2504"
+}

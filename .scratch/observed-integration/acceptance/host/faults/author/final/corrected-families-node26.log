@@ -1,0 +1,23 @@
+✔ H06.03 genuine cli beforeCommit finalization response fault preserves authority (1565.903041ms)
+✔ H06.03 genuine mcp beforeCommit finalization response fault preserves authority (1809.560584ms)
+✔ H06.03 genuine cli afterCommit finalization response fault preserves authority (1572.412917ms)
+✔ H06.03 genuine mcp afterCommit finalization response fault preserves authority (1200.980708ms)
+✔ H03.04 cli legacy-first canonical supplied admission excludes the successor (192.245042ms)
+✔ H03.04 mcp legacy-first canonical supplied admission excludes the successor (350.250541ms)
+✔ H03.04 cli observed-first canonical supplied admission excludes the successor (606.812708ms)
+✔ H03.04 mcp observed-first canonical supplied admission excludes the successor (415.300833ms)
+✔ H05.04 cli action start at ready expiry offset -1 is transactional (639.919417ms)
+✔ H05.04 mcp action start at ready expiry offset -1 is transactional (610.910667ms)
+✔ H05.04 cli action start at ready expiry offset 0 is transactional (343.579375ms)
+✔ H05.04 mcp action start at ready expiry offset 0 is transactional (365.927791ms)
+✔ H05.04 cli action start at ready expiry offset 1 is transactional (620.901625ms)
+✔ H05.04 mcp action start at ready expiry offset 1 is transactional (577.038958ms)
+✔ H05.01 mcp durable external preparation cancel at backend:launch-app:1 fences successors (1215.02925ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6385.497625

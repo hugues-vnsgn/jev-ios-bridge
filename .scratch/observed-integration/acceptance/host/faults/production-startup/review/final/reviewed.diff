@@ -1,0 +1,39 @@
+--- previous-probe.mjs
++++ probe.mjs
+@@ -32,6 +32,11 @@
+   try { child = spawn(process.execPath, ['--import', guard, cli, ...args], { cwd, env: { ...env, JEV_PACKAGING_GUARD_LOG: guardLog }, stdio: ['pipe', 'pipe', 'pipe'] }); }
+   finally { process.umask(before); }
+   let stdout = '', stderr = '';
++  let stdinError;
++  child.stdin.on('error', error => {
++    stdinError = { name: error.name, message: error.message };
++    if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL');
++  });
+   child.stdout.on('data', b => { stdout += b; }); child.stderr.on('data', b => { stderr += b; });
+   const timer = setTimeout(() => child.kill('SIGKILL'), 12000);
+   let spawnError;
+@@ -39,7 +44,7 @@
+   const exited = new Promise(done => {
+     child.once('close', (code, signal) => {
+       clearTimeout(timer); writeFileSync(join(output, label + '.stdout'), stdout); writeFileSync(join(output, label + '.stderr'), stderr);
+-      const record = { label, command: [process.execPath, '--import', guard, cli, ...args], cwd, node: process.version, childUmask: '0022', code, signal, spawnError, stdout: label + '.stdout', stderr: label + '.stderr', guardLog: label + '-guard.jsonl' };
++      const record = { label, command: [process.execPath, '--import', guard, cli, ...args], cwd, node: process.version, childUmask: '0022', code, signal, spawnError, stdinError, stdout: label + '.stdout', stderr: label + '.stderr', guardLog: label + '-guard.jsonl' };
+       records.push(record); done({ ...record, stdout, stderr });
+     });
+   });
+@@ -73,6 +78,7 @@
+   for (const [label, command, value, kind] of [['cli-allocation', 'observed-allocation', allocationId, 'preparation'], ['cli-action', 'observed-report', 'store-fault', 'action']]) {
+     const operation = launch(label, [command, value, '--json']); operation.child.stdin.end();
+     const result = await operation.exited; assert.equal(result.code, 3); assert.equal(result.signal, null);
++    assert.equal(result.stdinError, undefined);
+     assertPublicSafe(result.stdout + result.stderr);
+     assert.equal(result.stdout.trim().split('\n').length, 1); assertReply(JSON.parse(result.stdout), kind); assertOnlyOpen(operation.guardLog);
+   }
+@@ -105,6 +111,7 @@
+     assertReply(JSON.parse(response.result.content[1].text), kind); assertOnlyOpen(server.guardLog);
+   }
+   server.child.stdin.end(); const stopped = await server.exited; lines.close(); assert.equal(stopped.code, 0); assert.equal(stopped.signal, null); assertOnlyOpen(server.guardLog);
++  assert.equal(stopped.stdinError, undefined);
+   assertPublicSafe(stopped.stdout + stopped.stderr); if (protocolError) throw protocolError;
+   writeFileSync(join(output, 'mcp-requests.jsonl'), sent.map(r => JSON.stringify(r)).join('\n') + '\n');
+   writeFileSync(join(output, 'commands.json'), JSON.stringify(records, null, 2) + '\n');

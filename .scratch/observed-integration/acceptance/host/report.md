@@ -1,6 +1,6 @@
 # Observed workflow host acceptance — UNVERIFIED
 
-Root accepts implementation tickets01–08 and their bounded repairs. Ticket10 has both independent axes PASS and is integrated; Root's combined gates are queued. Ticket09 is closing six independently identified proof gaps. Complete host rows H01–H09 remain UNVERIFIED until their assertion-level maps and integrated gates are complete. No live allocation is authorized by these subset checks.
+Root accepts implementation tickets01–08 and their bounded repairs, plus ticket10. Ticket09's first candidate passes both-runtime full checks but its final Spec review is BLOCKED by two cancellation/early-exit proof gaps. Complete host rows H01–H09 remain UNVERIFIED until their assertion-level maps and integrated gates are complete. No live allocation is authorized by these subset checks.
 
 ## Current evidence
 
@@ -10,7 +10,9 @@ Public adapters are integrated at `538e5770d1a02b7ef92d2dd69cd3a8a9d692ec4a`. Bo
 
 The packed-install maintenance dependency repair is accepted at `2c6c41845e9db05de451d7b10d1674fc9136b891`: both review axes, complete1475/1475 checks on both Node versions and37-file audit pass. [Bounded review and all preserved failures](maintenance-entry-review.md). Ticket10's original complete installed proofs now pass37 commands each on Node26.8.1/exact24.0.0, with actual full1482/1482 checks and both independent reviews. Candidate `a319e5b` is integrated at `eff4d10`; Root gates remain queued. [Installed proof and exact association](installed-workflow-review.md). No whole H09 PASS is inferred.
 
-Ticket09's original independent completeness readiness was [BLOCKED by six proof gaps](faults/review/readiness/review.md), despite pre-audit178/178 added-test passes on both runtimes. Root granted owned-test corrections for exact negative oracles, genuine MCP concurrency, cancelled-wait settlement, truthful flag transport labels, strict parser/reservation boundaries and both-volume storage rechecks. The pre-audit nine-file freeze and all fourteen reviewer artifacts are preserved. The [independent static closure audit](faults/review/closure/review.md) now closes all six families, with9 stable owned files and108 protected hashes matching base. Final added suites pass193/193 each runtime;396 inventory IDs are not396 executed tests. A final candidate, actual full checks and both review axes remain required.
+Ticket09's original independent completeness readiness was [BLOCKED by six proof gaps](faults/review/readiness/review.md). The [static closure audit](faults/review/closure/review.md) closes all six families. Candidate `08a9858` passes193/193 added and1668/1668 actual full checks on both runtimes, zero skips;396 inventory IDs are not396 tests. Final Standards PASS, but final Spec requires complete cancellation/late-reply call assertions and continuing early-SIGTERM dispatch traces. No product defect is inferred. Root granted owned-file proof repairs and will require new durable raw evidence, exact child-commit reviews and composed integration gates.
+
+All /tmp evidence was cleared between turns. Copied source snapshots, reports, hashes and aggregate logs survive in this repository;3176 original09 indexed raw files and the prior48-trace audit are unavailable. Original references remain provenance, not inspectable current raw proof. New runs must use the durable worktree vault; no reconstructed artifact is represented as the lost original.
 
 | Rows | State / missing work | Evidence manifest |
 | --- | --- | --- |

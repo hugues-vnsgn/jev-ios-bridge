@@ -1,0 +1,10 @@
+{
+  "sourceSha256": "ee824a1417b864a72fdf03fce3e7c02eb5848153eddbaef5e1750019df9433d3",
+  "reviewer": "shared_driver",
+  "mode": "static; no execution",
+  "findings": [
+    "Bounded owned-child/readline cleanup missing on assertions",
+    "Callback JSON parse can bypass failure preservation",
+    "Safety assertions omit MCP summary and CLI stderr"
+  ]
+}

@@ -1,6 +1,8 @@
-# Installed workflow candidate — reviewed and integrated; Root gates queued
+# Installed workflow candidate — bounded acceptance PASS
 
-Candidate `a319e5bea63415b6ac981c4ce4e8a25679b010c9`, sole parent `75d7618167729b9b9a5547eaa468e37eb12b2504`, is integrated at `eff4d10dba92bd087d5fdcf980b0b16395d5bd98`. Both independent axes PASS on the exact twelve-file candidate. Root checked its allowed scope and committed/frozen/current correspondence before integration. Root's physical combined checks remain queued behind ticket09's sole heavy window; complete H09 acceptance is not inferred.
+Candidate `a319e5bea63415b6ac981c4ce4e8a25679b010c9`, sole parent `75d7618167729b9b9a5547eaa468e37eb12b2504`, is integrated at `eff4d10dba92bd087d5fdcf980b0b16395d5bd98`. Both independent axes PASS on the exact twelve-file candidate. Root checked its allowed scope and committed/frozen/current correspondence before integration. Root's physical affected tests34/34 and actual default full checks1482/1482 plus typecheck/build now PASS on both runtimes, zero skips, with all audited source unchanged. This accepts bounded ticket10. Complete H09 and composed09/10 acceptance remain pending.
+
+Root's four commands ran at `8d36293147053ed194306787ec1f27e08390da3e`; exact raw logs/metadata are in [physical integration evidence](installed-workflow/integration/preservation.json). Every command records Source hashes before/after, Node executable/version, key/options/warning variables removed, private0077 evidence and child0022. No fallback was needed. Root added its README guide pointer after these checks; final whole-host packed proofs will include that documentation delta.
 
 ## Independent review and preserved source
 
@@ -32,4 +34,4 @@ The initial bin-path harness mismatch, genuine maintenance alias defect, origina
 
 Preservation receipts cover [36 top-level author files](installed-workflow/author/final/preservation.json), [259 selected proof/source/artifact files](installed-workflow/author/final-proof/preservation.json), and all [193 Spec](installed-workflow/review/spec/preservation.json) / [188 Standards](installed-workflow/review/standards/preservation.json) files, with per-file SHA256 verification. Full registry caches and installed dependency trees are excluded from the selected proof copy; no whole-directory preservation claim applies to it.
 
-CI configures exact24.0.0 plus24/26 and mandatory clean proof; remote CI was not executed. Startup/error proofs deny admission opening, SDK construction and device/child effects. They do not exercise a valid production admission, actual migration or live devices. Root's combined checks, whole H01–H09, L01–L05 and ticket12 remain pending. Root's README guide pointer will follow bounded ticket10 acceptance.
+CI configures exact24.0.0 plus24/26 and mandatory clean proof; remote CI was not executed. Startup/error proofs deny admission opening, SDK construction and device/child effects. They do not exercise a valid production admission, actual migration or live devices. Whole H01–H09, L01–L05 and ticket12 remain pending. Root's README now links the guide.

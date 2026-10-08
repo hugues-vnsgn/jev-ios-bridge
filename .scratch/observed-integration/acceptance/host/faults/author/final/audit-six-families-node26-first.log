@@ -1,0 +1,48 @@
+✔ H01.01 cli strict action/preparation rejection leaves no calls or reservations (5451.178875ms)
+✔ H01.02 cli valid ID/guard/selector/timeout boundaries reach authority without effects (2818.868708ms)
+✔ H01.01 mcp strict action/preparation rejection leaves no calls or reservations (242.236167ms)
+✔ H01.02 mcp valid ID/guard/selector/timeout boundaries reach authority without effects (227.590208ms)
+✔ H04.03 cli storage simulator boundary below respects exact held and artifact bytes (66.256625ms)
+✔ H04.03 mcp storage simulator boundary below respects exact held and artifact bytes (54.905542ms)
+✔ H04.03 cli storage simulator boundary at respects exact held and artifact bytes (325.916709ms)
+✔ H04.03 mcp storage simulator boundary at respects exact held and artifact bytes (340.337ms)
+✔ H04.03 cli storage simulator boundary above respects exact held and artifact bytes (333.67425ms)
+✔ H04.03 mcp storage simulator boundary above respects exact held and artifact bytes (348.954875ms)
+✔ H04.03 cli storage staging boundary below respects exact held and artifact bytes (46.411459ms)
+✔ H04.03 mcp storage staging boundary below respects exact held and artifact bytes (46.640291ms)
+✔ H04.03 cli storage staging boundary at respects exact held and artifact bytes (319.55125ms)
+✔ H04.03 mcp storage staging boundary at respects exact held and artifact bytes (362.207667ms)
+✔ H04.03 cli storage staging boundary above respects exact held and artifact bytes (332.164667ms)
+✔ H04.03 mcp storage staging boundary above respects exact held and artifact bytes (341.069792ms)
+✔ H04.07 cli simulator storage depletion pre-create fences the next dispatch (122.429416ms)
+✔ H04.07 mcp simulator storage depletion pre-create fences the next dispatch (111.5205ms)
+✔ H04.07 cli staging storage depletion pre-create fences the next dispatch (104.79475ms)
+✔ H04.07 mcp staging storage depletion pre-create fences the next dispatch (117.067083ms)
+✔ H04.07 cli simulator storage depletion pre-install fences the next dispatch (212.803125ms)
+✔ H04.07 mcp simulator storage depletion pre-install fences the next dispatch (213.954958ms)
+✔ H04.07 cli staging storage depletion pre-install fences the next dispatch (214.987209ms)
+✔ H04.07 mcp staging storage depletion pre-install fences the next dispatch (222.208917ms)
+✔ H04.04 cli artifact/runtime symlink refuses before install without rebuild (45.399167ms)
+✔ H04.04 mcp artifact/runtime symlink refuses before install without rebuild (42.674708ms)
+✔ H04.04 cli artifact/runtime source-mutation refuses before install without rebuild (102.41075ms)
+✔ H04.04 mcp artifact/runtime source-mutation refuses before install without rebuild (99.858791ms)
+✔ H04.04 cli artifact/runtime staged-mutation refuses before install without rebuild (211.776833ms)
+✔ H04.04 mcp artifact/runtime staged-mutation refuses before install without rebuild (212.176542ms)
+✔ H04.04 cli artifact/runtime oversize refuses before install without rebuild (44.82625ms)
+✔ H04.04 mcp artifact/runtime oversize refuses before install without rebuild (48.042666ms)
+✔ H04.04 cli artifact/runtime runtime refuses before install without rebuild (43.387375ms)
+✔ H04.04 mcp artifact/runtime runtime refuses before install without rebuild (50.4995ms)
+✔ H02.02 cli exact enable flag retains parked reads/cancel/retire with no new effects (1632.780375ms)
+✔ H02.02 mcp exact enable flag retains parked reads/cancel/retire with no new effects (1380.073834ms)
+✔ H03.01 cli public concurrent preparation/start bind exactly one executor across cwd/project aliases (1587.016583ms)
+✔ H03.01 mcp public concurrent preparation/start bind exactly one executor across cwd/project aliases (1018.514291ms)
+✔ H05.08 MCP transport-cancelled action wait preserves durable cancellation and active owner (1197.973ms)
+✔ H05.10 MCP transport-cancelled preparation wait preserves durable cancellation and active owner (719.730042ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17162.925166

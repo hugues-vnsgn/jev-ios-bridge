@@ -1,0 +1,16 @@
+{
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "tests/observed-host-fault.test.ts",
+    "tests/observed-public-races.test.ts",
+    "tests/observed-crash.test.ts"
+  ],
+  "runtime": "26",
+  "exit": 0,
+  "seconds": 81.30859971046448,
+  "archive": "/tmp/jev-observed-ticket09-evidence/added-node26-corrected",
+  "base": "75d7618167729b9b9a5547eaa468e37eb12b2504"
+}
