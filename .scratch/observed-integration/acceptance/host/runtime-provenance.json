@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-08",
+  "kind": "runtime-preflight",
+  "featureAcceptance": "UNVERIFIED",
+  "hostArchitecture": "darwin-arm64",
+  "currentNode": "26.8.1",
+  "minimumNode": "24.0.0",
+  "archive": "https://nodejs.org/dist/v24.0.0/node-v24.0.0-darwin-arm64.tar.gz",
+  "checksumSource": "https://nodejs.org/dist/v24.0.0/SHASUMS256.txt",
+  "sha256": "194e2f3dd3ec8c2adcaa713ed40f44c5ca38467880e160974ceac1659be60121",
+  "nodePath": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-observed-node24-_o2st3ld/node-v24.0.0-darwin-arm64/bin/node",
+  "sqliteSmoke": {
+    "exitCode": 0,
+    "result": "transaction-confirmed",
+    "warning": "SQLite is an experimental feature and might change at any time"
+  },
+  "limits": "In-memory load/transaction smoke only; behavioral and installed-package acceptance remain pending."
+}
