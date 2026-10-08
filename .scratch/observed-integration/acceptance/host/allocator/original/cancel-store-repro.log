@@ -1,0 +1,21 @@
+COMMAND ["node", "--import", "tsx", "--input-type=module", "-e", "\nimport assert from \"node:assert/strict\";\nimport { allocationFixture } from \"./tests/fixtures/observed-allocation-backend.ts\";\nimport { ObservedAllocator } from \"./src/observed/allocation.ts\";\nconst f=await allocationFixture();const allocator=new ObservedAllocator({admission:f.admission,runsDir:f.runsDir,fakeBackend:{process:f.source,runner:f.runner,window:f.window,host:f.host}});\nlet begin,release;const began=new Promise(r=>begin=r);const pending=new Promise(r=>release=r);f.setBefore(async op=>{if(op===\"boot\"){begin();await pending;}});\ntry { const preparing=allocator.prepare(f.request());await began;const record=f.admission.readAllocationForAction(\"allocate-one\");const original=f.admission.cancelAllocation;\nf.admission.cancelAllocation=()=>{throw new Error(\"isolated store failure\");};const cancelled=await allocator.cancel(record.allocationId);f.admission.cancelAllocation=original;\nrelease();const result=await preparing;console.log(JSON.stringify({cancelled,result,calls:f.calls.filter(c=>c!==\"plist\")}));assert.notEqual(result.state,\"ready\"); }\nfinally{release();await allocator.close();await f.cleanup();}\n"]
+{"cancelled":{"version":1,"kind":"observed-operation-error","code":"STORE_UNAVAILABLE","message":"Allocation operation refused: STORE_UNAVAILABLE.","allocationId":"A1262643-501A-443F-852A-A4024AE11EFB","acceptance":"unknown","acceptanceKind":"preparation"},"result":{"version":1,"allocationId":"A1262643-501A-443F-852A-A4024AE11EFB","actionId":"allocate-one","state":"ready","phase":"parked","device":{"platform":"ios-simulator","udid":"ABCDEF00-0000-4000-8000-000000000001"},"reason":null,"outcome":"prepared","authority":"committed","readinessEvidence":["/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-RpQN7N/runs/observed/allocate-one/allocation/readiness-1.json"],"evidenceRefs":["/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-RpQN7N/runs/observed/allocate-one/allocation","/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-RpQN7N/runs/observed/allocate-one/allocation/host-prerequisites.json","/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-RpQN7N/runs/observed/allocate-one/allocation/preparation-request.json","/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-RpQN7N/runs/observed/allocate-one/allocation/source-diagnostics.json","/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-RpQN7N/runs/observed/allocate-one/allocation/readiness-1.json"],"reservation":{"bytes":1000,"capacityHeld":true},"hostCreationBlocked":false,"cancellationRequested":false},"calls":["create","boot","list","install","launch-app","list","snapshot-ui","screenshot"]}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected "actual" to be strictly unequal to:
+
+'ready'
+    at file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/[eval1]:9:132 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'ready',
+  expected: 'ready',
+  operator: 'notStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.8.1
+
+EXIT 1 ELAPSED 0.47s

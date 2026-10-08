@@ -1,0 +1,19 @@
+COMMAND ["node", "--import", "tsx", "--input-type=module", "-e", "\nimport assert from \"node:assert/strict\";import native from \"node:fs/promises\";import {syncBuiltinESMExports} from \"node:module\";\nimport {allocationFixture} from \"./tests/fixtures/observed-allocation-backend.ts\";import {ObservedAllocator} from \"./src/observed/allocation.ts\";\nconst f=await allocationFixture();const allocator=new ObservedAllocator({admission:f.admission,runsDir:f.runsDir,fakeBackend:{process:f.source,runner:f.runner,window:f.window,host:f.host}});\nf.setCommandResult(\"install\",{exitCode:1,stderr:\"private fixture\",stdout:JSON.stringify({schema:\"mobilebuildmcp.output.install-result\",schemaVersion:\"2\",didError:true,error:{code:\"PRIVATE\",message:\"private fixture\"},data:{artifacts:{simulatorId:\"ABCDEF00-0000-4000-8000-000000000001\"}}})});\nlet start,releaseFile;const pendingFile=new Promise(r=>releaseFile=r);f.setBefore(async op=>{if(op===\"install\")start=Date.now();});const open=native.open,unlink=native.unlink;\nnative.open=async(...args)=>{if(String(args[0]).endsWith(\"/source-diagnostics.json\"))await pendingFile;return open(...args);};\nnative.unlink=async path=>{if(String(path).startsWith(f.runsDir+\"/leases/\"))await new Promise(r=>setTimeout(r,5100));return unlink(path);};syncBuiltinESMExports();\ntry{const result=await allocator.prepare(f.request());const elapsed=Date.now()-start;console.log(JSON.stringify({elapsed,result,calls:f.calls.filter(c=>c!==\"plist\")}));assert.ok(elapsed<5500,\"one finalization budget must bound diagnostics and local driver settlement together\");}\nfinally{releaseFile();native.open=open;native.unlink=unlink;syncBuiltinESMExports();await allocator.close();await f.cleanup();}\n"]
+{"elapsed":10141,"result":{"version":1,"allocationId":"1B63DCD6-1524-4CB7-804C-8F36AC3E7BB9","actionId":"allocate-one","state":"retained","phase":"terminal","device":{"platform":"ios-simulator","udid":"ABCDEF00-0000-4000-8000-000000000001"},"reason":"INSTALL_FAILED","outcome":"refused","authority":"committed","readinessEvidence":[],"evidenceRefs":["/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-7hpIWH/runs/observed/allocate-one/allocation","/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-7hpIWH/runs/observed/allocate-one/allocation/host-prerequisites.json","/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-7hpIWH/runs/observed/allocate-one/allocation/preparation-request.json"],"reservation":{"bytes":1000,"capacityHeld":true},"hostCreationBlocked":false,"cancellationRequested":false},"calls":["create","boot","list","install"]}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: one finalization budget must bound diagnostics and local driver settlement together
+    at file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/[eval1]:9:176 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v26.8.1
+
+EXIT 1 ELAPSED 10.53s

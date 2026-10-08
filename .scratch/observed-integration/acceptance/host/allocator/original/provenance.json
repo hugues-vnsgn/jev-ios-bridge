@@ -1,0 +1,16 @@
+{
+  "dependencyBase": "98f7de41baa316f47a65a7bc2160128a72051f3e",
+  "author": "/root/shared_driver",
+  "sourceManifest": "final-checked-hashes.json",
+  "scope": "Original uncommitted source; affected516/516 eachNode26/exact24; interrupted coverage and two genuine failing regressions preserved. New source requires new gates/review.",
+  "copiedFrom": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/.scratch/observed-integration/acceptance/host/allocator",
+  "files": [
+    "cancel-store-repro.log",
+    "finalization-known-fs-repro.log",
+    "final-checked-hashes.json",
+    "final-gate-hashes.json",
+    "final-focused-node26.log",
+    "final-focused-node24.log",
+    "final-coverage-node26.log"
+  ]
+}
