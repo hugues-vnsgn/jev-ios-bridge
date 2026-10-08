@@ -75,7 +75,7 @@ Start Claude Code in that directory. Open `/plugin` → **Installed** → **jev-
 - your **TypeSafe API key**, which goes to the system's secure storage;
 - your **iOS simulator UDID** (from `xcrun simctl list devices available`), or your **Android AVD name or device serial** (from `adb devices`). Leave the other platform's setting empty.
 
-Run `/mcp` and check that `jev-ios-bridge` is connected. The server won't start without the key.
+Run `/mcp` and check that `jev-ios-bridge` is connected. The server can connect without a key; starting a Jev-judged scenario requires one.
 
 ### 2. Prepare your app
 

@@ -1,0 +1,15 @@
+{
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-concurrency=1",
+    "/tmp/jev-public-adapters-spec-v9qit6ha/retirement-race.test.ts",
+    "/tmp/jev-public-adapters-spec-v9qit6ha/signal-exit-fixed-setup.test.ts"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters",
+  "version": "v26.8.1",
+  "exit": 0,
+  "childUmask": "0022"
+}

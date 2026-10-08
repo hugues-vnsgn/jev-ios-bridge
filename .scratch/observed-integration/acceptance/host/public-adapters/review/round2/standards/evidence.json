@@ -1,0 +1,30 @@
+{
+  "axis": "Standards",
+  "verdict": "PASS",
+  "documentedBreaches": 0,
+  "newSmells": 0,
+  "optionalAdvisories": [
+    {
+      "name": "possible Repeated Switches",
+      "severity": "Low",
+      "locations": [
+        "src/observed/cli.ts:19",
+        "src/cli.ts:252"
+      ],
+      "carriedFromRound1": true
+    }
+  ],
+  "base": "1275f93c616c90aba63e92468679cf39f13157b5",
+  "manifest": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/.scratch/observed-integration/acceptance/host/public-adapters/round2/final-source.json",
+  "readLogs": [
+    "round2/04-owned-regressions-green.log",
+    "round2/07-owned-regressions-node24-green.log",
+    "round2/06-final-oracle-original-source-red.log"
+  ],
+  "scope": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/public-adapters-repair-scope.md",
+  "originalReviewDirectory": "/tmp/jev-public-adapters-standards-zjp1qyoy",
+  "reviewSha256": "0ba61466112fcccc9250ed8199f597df732d824916c5166d3485159f18d69b71",
+  "commitAssociation": "pending",
+  "independentTestsRun": false,
+  "acceptanceClaimed": false
+}

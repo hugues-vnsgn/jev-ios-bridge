@@ -1,0 +1,110 @@
+{
+  "source": "/tmp/jev-public-adapters-standards-round2-cp3gn3zh",
+  "files": [
+    {
+      "path": "after-hashes.json",
+      "sha256": "463a6ac0970223d9ac2e76b92ae4e6442168d4baeeb30928cbaaf1c0dd34b9be",
+      "bytes": 4131
+    },
+    {
+      "path": "before-hashes.json",
+      "sha256": "fcf237412b531d1143c1d2b3752c7546132c80241170c401a3d56b5effa0250e",
+      "bytes": 3593
+    },
+    {
+      "path": "directory.txt",
+      "sha256": "58354f3af79d2ba234226781e84be2e0366771b80f19128b1a8df545a565745d",
+      "bytes": 51
+    },
+    {
+      "path": "evidence.json",
+      "sha256": "aa37852b5720edf5650a0b5e2cddcc144794f09417803c879ae20f8c200f77bd",
+      "bytes": 1166
+    },
+    {
+      "path": "manifest.json",
+      "sha256": "c37f9d13908747dce9404af1fdf292801d4400f7b3f9adda04ca9ecc49eba02e",
+      "bytes": 3011
+    },
+    {
+      "path": "review.md",
+      "sha256": "0ba61466112fcccc9250ed8199f597df732d824916c5166d3485159f18d69b71",
+      "bytes": 2494
+    },
+    {
+      "path": "reviewed.diff",
+      "sha256": "cff813e4b4728bee26faa575d1ba37398d0f9f4fe688a8620032ad964a8c0f0e",
+      "bytes": 126507
+    },
+    {
+      "path": "round2-delta.diff",
+      "sha256": "8d4514ceceba5e1dc386538e792cf504812a47e64ee57db4db7a9bec547b62ba",
+      "bytes": 10807
+    },
+    {
+      "path": "source/src/cli.ts",
+      "sha256": "137b42ef8cdc34a3e143461cf762c659d4bc0a8da768f320ad8b0232e200d7de",
+      "bytes": 16620
+    },
+    {
+      "path": "source/src/mcp/index.ts",
+      "sha256": "48e531d304d19852d461eb1d3317fee5f953a15654f405c3393b04ff4a494c2a",
+      "bytes": 6387
+    },
+    {
+      "path": "source/src/mcp/observed.ts",
+      "sha256": "5522cc1933d54d13cd8c72b7d8caa5ebf262272f9e0110c13fceb58dd8fcc51b",
+      "bytes": 5102
+    },
+    {
+      "path": "source/src/observed/cli.ts",
+      "sha256": "17ed826b608359a9f901012a82447fd1e06d1d2a65e5b8b477e1c0a0885f8e78",
+      "bytes": 12398
+    },
+    {
+      "path": "source/tests/contract.test.ts",
+      "sha256": "ec2589c363ed173e0fb1c86fc0846491434f248e2d9a6ca1c4be5caccda06553",
+      "bytes": 34643
+    },
+    {
+      "path": "source/tests/fixtures/observed-cli-server.ts",
+      "sha256": "50d02a4f919b6bf162f5e0b89992a5f0fe37158c0667c565f24bb997b713bfcb",
+      "bytes": 8278
+    },
+    {
+      "path": "source/tests/fixtures/observed-mcp-server.ts",
+      "sha256": "07c5005984b70ba4b63dca7336132e4de855bfe478033b1f768a274f7442b25b",
+      "bytes": 577
+    },
+    {
+      "path": "source/tests/golden/observed-mcp-v1.json",
+      "sha256": "48dc6d413b8f272be845c03b0827f1429a053298676eab3812e568b90936a63b",
+      "bytes": 17004
+    },
+    {
+      "path": "source/tests/golden/observed-replies-v1.json",
+      "sha256": "cdbfbfe4b8ac3f93bebd0e7f8cc5243cc90d3549bc20bdbea97bdd670dc0602b",
+      "bytes": 17109
+    },
+    {
+      "path": "source/tests/mcp.test.ts",
+      "sha256": "850fb08ebc98f355de4958b287e23a228e685c7e2b6843abb65ff9f629d31531",
+      "bytes": 10109
+    },
+    {
+      "path": "source/tests/observed-cli.test.ts",
+      "sha256": "754f0e747adcb181700f8d76a407c854b3f813f4e2c76ca712d8348d50194873",
+      "bytes": 19867
+    },
+    {
+      "path": "source/tests/observed-contract.test.ts",
+      "sha256": "583b0b8ab4b76358eb1e9a7f083ddd4302b7dbede3d0183210afa3fdc6ed21e3",
+      "bytes": 11333
+    },
+    {
+      "path": "source/tests/observed-mcp.test.ts",
+      "sha256": "1e2913228684ab79c51226553a39b0c30a2194b7b05201fd21a86411037718d5",
+      "bytes": 15926
+    }
+  ]
+}

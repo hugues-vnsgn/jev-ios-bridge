@@ -1,0 +1,149 @@
+--- round1/src/cli.ts
++++ round2/src/cli.ts
+@@ -107,8 +107,11 @@
+   if (parsed.values.help || !command) { console.log(USAGE); return; }
+   if (isObservedCommand(command)) {
+     const module = composition.observed ?? productionObservedComposition({ enabled: process.env.JEV_EXPERIMENTAL_OBSERVED === '1', runsDir: runsDir(), cwd: projectDir });
+-    const controller = new AbortController(); let signalExit: number | undefined;
+-    const stop = (code: number) => () => { signalExit ??= code; controller.abort(); void module.close(); };
++    const controller = new AbortController(); let signalExit: number | undefined; let signalStarted: number | undefined;
++    let output = Promise.resolve();
++    const stop = (code: number) => () => {
++      signalExit ??= code; signalStarted ??= Date.now(); controller.abort(); void module.close().catch(() => {});
++    };
+     const interrupt = stop(130); const terminate = stop(143);
+     process.once('SIGINT', interrupt); process.once('SIGTERM', terminate);
+     try {
+@@ -116,10 +119,19 @@
+         .some(name => parsed.values[name as keyof typeof parsed.values] !== undefined);
+       process.exitCode = await runObservedCommand(module, command, disallowed ? undefined : argument, {
+         json: parsed.values.json ?? false, projectDir, signal: controller.signal,
+-        ...(parsed.values['wait-ms'] !== undefined ? { waitMs: Number(parsed.values['wait-ms']) } : {}), write: text => { process.stdout.write(text); } });
++        ...(parsed.values['wait-ms'] !== undefined ? { waitMs: Number(parsed.values['wait-ms']) } : {}),
++        write: text => { output = new Promise<void>(done => { process.stdout.write(text, () => done()); }); } });
+     } finally {
+-      await module.close(); process.removeListener('SIGINT', interrupt); process.removeListener('SIGTERM', terminate);
+-      if (signalExit !== undefined) process.exitCode = signalExit;
++      try { await module.close(); }
++      finally {
++        process.removeListener('SIGINT', interrupt); process.removeListener('SIGTERM', terminate);
++        if (signalExit !== undefined) {
++          const code = signalExit;
++          // Flush the single response on a readable transport, within the existing signal budget.
++          const deadline = setTimeout(() => process.exit(code), Math.max(0, 5000 - (Date.now() - signalStarted!)));
++          await output; clearTimeout(deadline); process.exit(code);
++        }
++      }
+     }
+     return;
+   }
+--- round1/src/observed/cli.ts
++++ round2/src/observed/cli.ts
+@@ -67,8 +67,7 @@
+   try { await validate(); }
+   catch {
+     try {
+-      const fresh = admission.readAction(request.actionId);
+-      if (fresh?.kind === 'imported' || (fresh?.kind === 'allocation' && fresh.allocation.actionDigest !== null)) return;
++      if (!eligible()) return;
+     }
+     catch { throw new ObservedOperationError('STORE_UNAVAILABLE', 'Authoritative action state is unavailable', { actionId: request.actionId, acceptance: 'unknown' }); }
+     throw new ObservedOperationError('CONFIGURATION_ERROR', 'Observed allocation configuration is invalid', { actionId: request.actionId, allocationId: request.allocationId });
+--- round1/tests/observed-cli.test.ts
++++ round2/tests/observed-cli.test.ts
+@@ -193,3 +193,24 @@
+     assert.equal(code, 0, stderr); assert.equal(stdout, args.includes('--version') ? BRIDGE_VERSION + '\n' : 'imported\n');
+   }
+ });
++
++for (const [signal, code] of [['SIGINT', 130], ['SIGTERM', 143]] as const) {
++  test(`CLI ${signal} exits after bounded close despite an unsettled fake active resource`, { timeout: 15000 }, async t => {
++    const f = await prepare(t); const path = join(f.root, 'resource-action.json'); await writeFile(path, JSON.stringify({ ...actionRequest(f.allocationId), timeoutMs: 60000 }));
++    const before = fixtureCalls(f.root).length; const worker = childCommand(f.root, 'observed-action', path, 'pending-resource');
++    try {
++      await untilCall(f.root, 'resource-live', before); const start = Date.now(); worker.child.kill(signal);
++      let timer: ReturnType<typeof setTimeout> | undefined;
++      const stopped = await Promise.race([worker.result, new Promise<null>(done => { timer = setTimeout(() => done(null), 6500); })]);
++      clearTimeout(timer); assert.ok(stopped, 'CLI remains alive after its finalization budget'); assert.equal(stopped.code, code); assert.ok(Date.now() - start < 6500);
++      assert.equal(stopped.stdout.trim().split('\n').length, 1);
++      if (stopped.reply.kind === 'observed-operation-error') assert.equal(stopped.reply.code, 'WAIT_CANCELLED');
++      else assert.equal(stopped.reply.cancellationRequested, true);
++      const current = (await childCommand(f.root, 'observed-report', 'one', 'observed', 0, '0').result).reply;
++      assert.equal(current.cancellationRequested, true); assert.notEqual(current.actionAttempted, true); assert.notEqual(current.actionAcknowledged, true);
++      if (current.authority === 'committed') { assert.equal(current.outcome, 'inconclusive'); assert.equal(current.admission, 'quarantined'); }
++      else { assert.equal(current.outcome, null); assert.equal(current.state, 'unresolved'); }
++      assert.equal(fixtureCalls(f.root).slice(before).filter(value => value === 'touch').length, 0);
++    } finally { if (worker.child.exitCode === null) { worker.child.kill('SIGKILL'); await worker.result; } }
++  });
++}
+--- round1/tests/observed-contract.test.ts
++++ round2/tests/observed-contract.test.ts
+@@ -107,3 +107,24 @@
+   release({ ...literalPort({} as ObservedReply), async start() { starts++; return {} as never; }, async close() { closes++; } });
+   await Promise.all([closing, rejection, module.close()]); assert.equal(starts, 0); assert.equal(closes, 1);
+ });
++
++test('durable retirement during failed config validation delegates to authoritative unready refusal', async t => {
++  const { mkdtemp, rm } = await import('node:fs/promises');
++  const { tmpdir } = await import('node:os'); const { join } = await import('node:path');
++  const { Admission } = await import('../src/device/admission.js');
++  const { setupPublicFixture, fixtureObserved, fixtureCalls, actionRequest } = await import('./fixtures/observed-cli-server.js');
++  const root = await mkdtemp(join(tmpdir(), 'jev-public-config-race-')); const fixture = await setupPublicFixture(root);
++  const inner = fixtureObserved(root, true, 'already'); const admission = Admission.forTesting({ root: fixture.store, backend: 'fake', initialize: false });
++  t.after(async () => { await inner.close(); await fixture.cleanup(); await rm(root, { recursive: true, force: true }); });
++  const allocation = await inner.prepareAllocation(fixture.request('one')); assert.ok(!('kind' in allocation));
++  const before = fixtureCalls(root); let retired: unknown;
++  const module = createObservedComposition({ enabled: true, create: () => inner,
++    beforeStart: request => validateObservedStartConfiguration(admission, request, async () => {
++      assert.equal(admission.retireAllocation(allocation.allocationId).kind, 'retrieved'); retired = admission.readAction('one');
++      throw new Error('Private failed configuration validation');
++    }) });
++  await assert.rejects(module.start(actionRequest(allocation.allocationId)), { code: 'ALLOCATION_NOT_READY' });
++  assert.deepEqual(admission.readAction('one'), retired); assert.equal(admission.readAllocation(allocation.allocationId)!.actionDigest, null);
++  assert.equal(admission.readAllocation(allocation.allocationId)!.state, 'retained'); assert.deepEqual(fixtureCalls(root), before);
++  await module.close();
++});
+--- round1/tests/fixtures/observed-cli-server.ts
++++ round2/tests/fixtures/observed-cli-server.ts
+@@ -54,7 +54,10 @@
+     let touched = false;
+     const runner: CliRunner = async args => {
+       const operation = args[1]!; trace(operation); await hooks.before?.(operation);
+-      if ((mode === 'pending' && operation === 'snapshot-ui' && admission.readAllocationForAction('one')?.state === 'executing') || (mode === 'pending-preparation' && operation === 'boot')) return new Promise(() => {});
++      if ((['pending', 'pending-resource'].includes(mode) && operation === 'snapshot-ui' && admission.readAllocationForAction('one')?.state === 'executing') || (mode === 'pending-preparation' && operation === 'boot')) {
++        if (mode === 'pending-resource') { setInterval(() => {}, 1000); trace('resource-live'); }
++        return new Promise(() => {});
++      }
+       if (operation === 'touch') {
+         touched = true;
+         if (mode === 'inconclusive') throw new Error('Private vendor output must never escape');
+@@ -88,5 +91,4 @@
+   if (!root || !command || !isObservedCommand(command)) throw new Error('Invalid fixture invocation');
+   const module = fixtureObserved(root, process.env.JEV_EXPERIMENTAL_OBSERVED === '1', process.env.OBSERVED_FIXTURE_MODE);
+   await runCli([command, ...(argument ? [argument] : []), '--json', ...(process.argv[5] !== undefined ? ['--wait-ms', process.argv[5]] : [])], { observed: module, projectDir: root });
+-  process.exit(process.exitCode);
+ }
+--- round1/tests/contract.test.ts
++++ round2/tests/contract.test.ts
+@@ -516,6 +516,13 @@
+ }
+ 
+ test('contract: capture refusals print the reason code on stderr and need no TYPESAFE_API_KEY', { timeout: 20_000 }, async () => {
++  // Only this complete Node24 runtime notice precedes the unchanged program diagnostic.
++  const withoutSqliteNotice = (text: string) => text.replace(/^\(node:\d+\) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n\(Use `node --trace-warnings \.\.\.` to show where the warning was created\)\n/, '');
++  const notice = '(node:123) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n';
++  assert.equal(withoutSqliteNotice(notice + 'NO_DEVICE: expected\n'), 'NO_DEVICE: expected\n');
++  for (const other of [notice.split('\n')[0]! + '\n', notice.replace('SQLite', 'Other'), notice.replace('node --trace-warnings ...', 'different hint'), 'prefix\n' + notice]) {
++    assert.equal(withoutSqliteNotice(other + 'NO_DEVICE: expected\n'), other + 'NO_DEVICE: expected\n');
++  }
+   const root = await mkdtemp(join(tmpdir(), 'jev-contract-capture-message-'));
+   try {
+     const empty = join(root, 'empty');
+@@ -528,6 +535,7 @@
+     for (const [args, code] of [[[], 'NO_DEVICE'], [['--serial', 'has a space'], 'INVALID_DEVICE'],
+       [['--avd', 'jev-actions-api31'], 'ANDROID_TOOLS_UNAVAILABLE']] as const) {
+       const refused = await capture([...args]);
++      refused.stderr = withoutSqliteNotice(refused.stderr);
+       assert.equal(refused.code, 3);
+       assert.match(refused.stderr, new RegExp(`^${code}: \\S`));
+       assert.equal(refused.stdout, '');

@@ -1,0 +1,572 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "name": "already_satisfied",
+      "command": "observed-report",
+      "reply": {
+        "version": 1,
+        "kind": "observed-action",
+        "actionId": "one",
+        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
+        "device": {
+          "platform": "ios-simulator",
+          "udid": "ABCDEF00-0000-4000-8000-000000000001"
+        },
+        "bridgeVersion": "fixture",
+        "state": "terminal",
+        "authority": "committed",
+        "disposition": "retrieved",
+        "cancellationRequested": false,
+        "actionAttempted": false,
+        "actionAcknowledged": false,
+        "observations": 1,
+        "outcome": "already_satisfied",
+        "reason": null,
+        "admission": "available",
+        "allocationState": "retained",
+        "evidence": {
+          "directory": "/isolated/observed/one",
+          "request": "/isolated/observed/one/request.json",
+          "observations": [
+            "/isolated/observed/one/observation-1.json"
+          ],
+          "terminal": "/isolated/observed/one/terminal.json",
+          "exportStatus": "complete"
+        }
+      },
+      "exit": 0
+    },
+    {
+      "name": "outcome_observed",
+      "command": "observed-report",
+      "reply": {
+        "version": 1,
+        "kind": "observed-action",
+        "actionId": "one",
+        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
+        "device": {
+          "platform": "ios-simulator",
+          "udid": "ABCDEF00-0000-4000-8000-000000000001"
+        },
+        "bridgeVersion": "fixture",
+        "state": "terminal",
+        "authority": "committed",
+        "disposition": "retrieved",
+        "cancellationRequested": false,
+        "actionAttempted": true,
+        "actionAcknowledged": true,
+        "observations": 1,
+        "outcome": "outcome_observed",
+        "reason": null,
+        "admission": "available",
+        "allocationState": "retained",
+        "evidence": {
+          "directory": "/isolated/observed/one",
+          "request": "/isolated/observed/one/request.json",
+          "observations": [
+            "/isolated/observed/one/observation-1.json"
+          ],
+          "terminal": "/isolated/observed/one/terminal.json",
+          "exportStatus": "complete"
+        }
+      },
+      "exit": 0
+    },
+    {
+      "name": "refused",
+      "command": "observed-report",
+      "reply": {
+        "version": 1,
+        "kind": "observed-action",
+        "actionId": "one",
+        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
+        "device": {
+          "platform": "ios-simulator",
+          "udid": "ABCDEF00-0000-4000-8000-000000000001"
+        },
+        "bridgeVersion": "fixture",
+        "state": "terminal",
+        "authority": "committed",
+        "disposition": "retrieved",
+        "cancellationRequested": false,
+        "actionAttempted": false,
+        "actionAcknowledged": false,
+        "observations": 1,
+        "outcome": "refused",
+        "reason": "PRECONDITION_NOT_MET",
+        "admission": "available",
+        "allocationState": "retained",
+        "evidence": {
+          "directory": "/isolated/observed/one",
+          "request": "/isolated/observed/one/request.json",
+          "observations": [
+            "/isolated/observed/one/observation-1.json"
+          ],
+          "terminal": "/isolated/observed/one/terminal.json",
+          "exportStatus": "complete"
+        }
+      },
+      "exit": 3
+    },
+    {
+      "name": "inconclusive",
+      "command": "observed-report",
+      "reply": {
+        "version": 1,
+        "kind": "observed-action",
+        "actionId": "one",
+        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
+        "device": {
+          "platform": "ios-simulator",
+          "udid": "ABCDEF00-0000-4000-8000-000000000001"
+        },
+        "bridgeVersion": "fixture",
+        "state": "terminal",
+        "authority": "committed",
+        "disposition": "retrieved",
+        "cancellationRequested": false,
+        "actionAttempted": null,
+        "actionAcknowledged": null,
+        "observations": 1,
+        "outcome": "inconclusive",
+        "reason": "UI_ACTION_UNCONFIRMED",
+        "admission": "quarantined",
+        "allocationState": "quarantined",
+        "evidence": {
+          "directory": "/isolated/observed/one",
+          "request": "/isolated/observed/one/request.json",
+          "observations": [
+            "/isolated/observed/one/observation-1.json"
+          ],
+          "terminal": "/isolated/observed/one/terminal.json",
+          "exportStatus": "complete"
+        }
+      },
+      "exit": 2
+    },
+    {
+      "name": "running",
+      "command": "observed-report",
+      "reply": {
+        "version": 1,
+        "kind": "observed-action",
+        "actionId": "one",
+        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
+        "device": {
+          "platform": "ios-simulator",
+          "udid": "ABCDEF00-0000-4000-8000-000000000001"
+        },
+        "bridgeVersion": "fixture",
+        "state": "running",
+        "authority": "none",
+        "disposition": "retrieved",
+        "cancellationRequested": false,
+        "actionAttempted": false,
+        "actionAcknowledged": false,
+        "observations": 0,
+        "outcome": null,
+        "reason": null,
+        "admission": "active",
+        "allocationState": "executing",
+        "evidence": {
+          "directory": "/isolated/observed/one",
+          "request": "/isolated/observed/one/request.json",
+          "observations": [
+            "/isolated/observed/one/observation-1.json"
+          ],
+          "terminal": null,
+          "exportStatus": "pending"
+        }
+      },
+      "exit": 2
+    },
+    {
+      "name": "finalizing",
+      "command": "observed-report",
+      "reply": {
+        "version": 1,
+        "kind": "observed-action",
+        "actionId": "one",
+        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
+        "device": {
+          "platform": "ios-simulator",
+          "udid": "ABCDEF00-0000-4000-8000-000000000001"
+        },
+        "bridgeVersion": "fixture",
+        "state": "finalizing",
+        "authority": "none",
+        "disposition": "retrieved",
+        "cancellationRequested": false,
+        "actionAttempted": false,
+        "actionAcknowledged": false,
+        "observations": 1,
+        "outcome": null,
+        "reason": null,
+        "admission": "active",
+        "allocationState": "executing",
+        "evidence": {
+          "directory": "/isolated/observed/one",
+          "request": "/isolated/observed/one/request.json",
+          "observations": [
+            "/isolated/observed/one/observation-1.json"
+          ],
+          "terminal": null,
+          "exportStatus": "pending"
+        }
+      },
+      "exit": 2
+    },
+    {
+      "name": "unresolved",
+      "command": "observed-report",
+      "reply": {
+        "version": 1,
+        "kind": "observed-action",
+        "actionId": "one",
+        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
+        "device": {
+          "platform": "ios-simulator",
+          "udid": "ABCDEF00-0000-4000-8000-000000000001"
+        },
+        "bridgeVersion": "fixture",
+        "state": "unresolved",
+        "authority": "unconfirmed",
+        "disposition": "retrieved",
+        "cancellationRequested": false,
+        "actionAttempted": null,
+        "actionAcknowledged": null,
+        "observations": 1,
+        "outcome": null,
+        "reason": "OWNER_UNAVAILABLE",
+        "admission": "active",
+        "allocationState": "executing",
+        "evidence": {
+          "directory": "/isolated/observed/one",
+          "request": "/isolated/observed/one/request.json",
+          "observations": [
+            "/isolated/observed/one/observation-1.json"
+          ],
+          "terminal": null,
+          "exportStatus": "pending"
+        }
+      },
+      "exit": 2
+    },
+    {
+      "name": "prepared",
+      "command": "observed-allocation",
+      "reply": {
+        "version": 1,
+        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
+        "actionId": "one",
+        "state": "ready",
+        "phase": "parked",
+        "device": {
+          "platform": "ios-simulator",
+          "udid": "ABCDEF00-0000-4000-8000-000000000001"
+        },
+        "reason": null,
+        "outcome": "prepared",
+        "authority": "committed",
+        "readinessEvidence": [
+          "/isolated/observed/one/allocation/readiness-1.json"
+        ],
+        "evidenceRefs": [
+          "/isolated/observed/one/allocation"
+        ],
+        "reservation": {
+          "bytes": 1000,
+          "capacityHeld": true
+        },
+        "hostCreationBlocked": false,
+        "cancellationRequested": false
+      },
+      "exit": 0
+    },
+    {
+      "name": "preparing",
+      "command": "observed-allocation",
+      "reply": {
+        "version": 1,
+        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
+        "actionId": "one",
+        "state": "preparing",
+        "phase": "booting",
+        "device": {
+          "platform": "ios-simulator",
+          "udid": "ABCDEF00-0000-4000-8000-000000000001"
+        },
+        "reason": null,
+        "outcome": null,
+        "authority": "committed",
+        "readinessEvidence": [
+          "/isolated/observed/one/allocation/readiness-1.json"
+        ],
+        "evidenceRefs": [
+          "/isolated/observed/one/allocation"
+        ],
+        "reservation": {
+          "bytes": 1000,
+          "capacityHeld": true
+        },
+        "hostCreationBlocked": false,
+        "cancellationRequested": false
+      },
+      "exit": 2
+    },
+    {
+      "name": "executing",
+      "command": "observed-allocation",
+      "reply": {
+        "version": 1,
+        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
+        "actionId": "one",
+        "state": "executing",
+        "phase": "action",
+        "device": {
+          "platform": "ios-simulator",
+          "udid": "ABCDEF00-0000-4000-8000-000000000001"
+        },
+        "reason": null,
+        "outcome": null,
+        "authority": "committed",
+        "readinessEvidence": [
+          "/isolated/observed/one/allocation/readiness-1.json"
+        ],
+        "evidenceRefs": [
+          "/isolated/observed/one/allocation"
+        ],
+        "reservation": {
+          "bytes": 1000,
+          "capacityHeld": true
+        },
+        "hostCreationBlocked": false,
+        "cancellationRequested": false
+      },
+      "exit": 2
+    },
+    {
+      "name": "action_completed",
+      "command": "observed-allocation",
+      "reply": {
+        "version": 1,
+        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
+        "actionId": "one",
+        "state": "retained",
+        "phase": "terminal",
+        "device": {
+          "platform": "ios-simulator",
+          "udid": "ABCDEF00-0000-4000-8000-000000000001"
+        },
+        "reason": null,
+        "outcome": "action_completed",
+        "authority": "committed",
+        "readinessEvidence": [
+          "/isolated/observed/one/allocation/readiness-1.json"
+        ],
+        "evidenceRefs": [
+          "/isolated/observed/one/allocation"
+        ],
+        "reservation": {
+          "bytes": 1000,
+          "capacityHeld": true
+        },
+        "hostCreationBlocked": false,
+        "cancellationRequested": false
+      },
+      "exit": 0
+    },
+    {
+      "name": "allocation_refused",
+      "command": "observed-allocation",
+      "reply": {
+        "version": 1,
+        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
+        "actionId": "one",
+        "state": "retained",
+        "phase": "terminal",
+        "device": {
+          "platform": "ios-simulator",
+          "udid": "ABCDEF00-0000-4000-8000-000000000001"
+        },
+        "reason": "BOOT_FAILED",
+        "outcome": "refused",
+        "authority": "committed",
+        "readinessEvidence": [
+          "/isolated/observed/one/allocation/readiness-1.json"
+        ],
+        "evidenceRefs": [
+          "/isolated/observed/one/allocation"
+        ],
+        "reservation": {
+          "bytes": 1000,
+          "capacityHeld": true
+        },
+        "hostCreationBlocked": false,
+        "cancellationRequested": false
+      },
+      "exit": 3
+    },
+    {
+      "name": "uncertain",
+      "command": "observed-allocation",
+      "reply": {
+        "version": 1,
+        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
+        "actionId": "one",
+        "state": "quarantined",
+        "phase": "terminal",
+        "device": {
+          "platform": "ios-simulator",
+          "udid": "ABCDEF00-0000-4000-8000-000000000001"
+        },
+        "reason": "PREPARATION_UNCONFIRMED",
+        "outcome": "uncertain",
+        "authority": "committed",
+        "readinessEvidence": [
+          "/isolated/observed/one/allocation/readiness-1.json"
+        ],
+        "evidenceRefs": [
+          "/isolated/observed/one/allocation"
+        ],
+        "reservation": {
+          "bytes": 1000,
+          "capacityHeld": true
+        },
+        "hostCreationBlocked": false,
+        "cancellationRequested": false
+      },
+      "exit": 2
+    },
+    {
+      "name": "unconfirmed_allocation",
+      "command": "observed-allocation",
+      "reply": {
+        "version": 1,
+        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
+        "actionId": "one",
+        "state": "quarantined",
+        "phase": "terminal",
+        "device": {
+          "platform": "ios-simulator",
+          "udid": "ABCDEF00-0000-4000-8000-000000000001"
+        },
+        "reason": "PREPARATION_UNCONFIRMED",
+        "outcome": null,
+        "authority": "unconfirmed",
+        "readinessEvidence": [
+          "/isolated/observed/one/allocation/readiness-1.json"
+        ],
+        "evidenceRefs": [
+          "/isolated/observed/one/allocation"
+        ],
+        "reservation": {
+          "bytes": 1000,
+          "capacityHeld": true
+        },
+        "hostCreationBlocked": false,
+        "cancellationRequested": false
+      },
+      "exit": 2
+    },
+    {
+      "name": "retired_unused",
+      "command": "observed-allocation",
+      "reply": {
+        "version": 1,
+        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
+        "actionId": "one",
+        "state": "retained",
+        "phase": "terminal",
+        "device": {
+          "platform": "ios-simulator",
+          "udid": "ABCDEF00-0000-4000-8000-000000000001"
+        },
+        "reason": "RETAINED_UNUSED",
+        "outcome": "retired_unused",
+        "authority": "committed",
+        "readinessEvidence": [
+          "/isolated/observed/one/allocation/readiness-1.json"
+        ],
+        "evidenceRefs": [
+          "/isolated/observed/one/allocation"
+        ],
+        "reservation": {
+          "bytes": 1000,
+          "capacityHeld": true
+        },
+        "hostCreationBlocked": false,
+        "cancellationRequested": false
+      },
+      "exit": 0
+    },
+    {
+      "name": "historical",
+      "command": "observed-allocation",
+      "reply": {
+        "version": 1,
+        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
+        "actionId": "one",
+        "state": "quarantined",
+        "phase": "terminal",
+        "device": {
+          "platform": "ios-simulator",
+          "udid": "ABCDEF00-0000-4000-8000-000000000001"
+        },
+        "reason": null,
+        "outcome": "uncertain",
+        "authority": "committed",
+        "readinessEvidence": [
+          "/isolated/observed/one/allocation/readiness-1.json"
+        ],
+        "evidenceRefs": [
+          "/isolated/observed/one/allocation"
+        ],
+        "reservation": {
+          "bytes": 0,
+          "capacityHeld": false
+        },
+        "hostCreationBlocked": false,
+        "cancellationRequested": false,
+        "readOnly": true,
+        "historicalOutcome": "already_satisfied"
+      },
+      "exit": 2
+    },
+    {
+      "name": "preparing_busy",
+      "command": "observed-retire",
+      "reply": {
+        "version": 1,
+        "kind": "observed-operation-error",
+        "code": "ALLOCATION_BUSY",
+        "message": "Allocation preparation is active; use allocation cancellation via cancel_observed_allocation or observed-allocation-cancel.",
+        "actionId": "one",
+        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
+        "acceptance": "yes",
+        "acceptanceKind": "preparation",
+        "evidenceDirectory": "/isolated/observed/one/allocation",
+        "state": "preparing"
+      },
+      "exit": 3
+    },
+    {
+      "name": "executing_busy",
+      "command": "observed-allocation-cancel",
+      "reply": {
+        "version": 1,
+        "kind": "observed-operation-error",
+        "code": "ALLOCATION_BUSY",
+        "message": "Allocation is executing; use action cancellation via cancel_observed_action or observed-cancel.",
+        "actionId": "one",
+        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
+        "acceptance": "yes",
+        "acceptanceKind": "preparation",
+        "evidenceDirectory": "/isolated/observed/one/allocation",
+        "state": "executing"
+      },
+      "exit": 3
+    }
+  ]
+}

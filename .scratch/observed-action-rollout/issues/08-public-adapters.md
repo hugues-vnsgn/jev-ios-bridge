@@ -2,7 +2,7 @@
 
 Type: task
 Status: ready-for-agent
-Execution: complete
+Execution: integrated
 Claimed by: /root/observed_runtime
 Mode: AFK
 Blocked by: 06, 07
@@ -38,7 +38,6 @@ Completion: Production packed src entry points provide the accepted contract. Bo
 
 ## Comments
 
-
 2026-10-08: Root dispatched adapter-only implementation at 6ef2690fbb990e86fc57603c952304167d8c39b8 in linked feat/observed-public-adapters. Cook/TDD/worktree/codebase-design/do-test apply at the agreed CLI subprocess, MCP stdio and shared-service seams. No provider workflow, production stores/devices/secrets or protected writes.
 
 
@@ -48,4 +47,8 @@ Root granted only two existing MCP whole-list assertions/flag-off fixture setup,
 
 Original twelve-file round1/gates and independent findings remain preserved. Root-owned evidence-directory overlap fix was integrated disjointly before final adapter gates; unchanged original repro hash is retained. Two independent P2 repairs now delegate after loss of eligible ready authority during config validation and make real CLI signals exit130/143 after bounded finalization even with a pending fake active resource. CLI fixture no longer forces ordinary exit. Final same regression oracle is genuinely red3/3 on immutable round1 source and green after repair; setup-only failures and response-kind overassertion remain separately classified.
 
-Final frozen thirteen source/test/golden files: [manifest](../../observed-integration/acceptance/host/public-adapters/round2/final-source.json), [post-gate hash check](../../observed-integration/acceptance/host/public-adapters/round2/final-hash-check.json), [report](../../observed-integration/acceptance/host/public-adapters/round2/report.md). Focused63/63 Node26.8.1 and exact24.0.0, full1470/1470 plus typecheck/build, coverage160/160 with94.16%lines/83.42%branches aggregate,0skips. Both independent axes PASS on the frozen mapping; exact commit association follows. Exact tarball/local-dependency npm-bin proof passes both runtimes and stays partial; clean install belongs to10. Full H01–H09/live acceptance remains UNVERIFIED. Simplify unavailable and not run. One focused owned commit; source stopped for Root integration.
+Final frozen thirteen source/test/golden files: [manifest](../../observed-integration/acceptance/host/public-adapters/author/round2/final-source.json), [post-gate hash check](../../observed-integration/acceptance/host/public-adapters/author/round2/final-hash-check.json), [report](../../observed-integration/acceptance/host/public-adapters/author/round2/report.md). Focused63/63 Node26.8.1 and exact24.0.0, full1470/1470 plus typecheck/build, coverage160/160 with94.16%lines/83.42%branches aggregate,0skips. Both independent axes PASS on the frozen mapping; exact commit association follows. Exact tarball/local-dependency npm-bin proof passes both runtimes and stays partial; clean install belongs to10. Full H01–H09/live acceptance remains UNVERIFIED. Simplify unavailable and not run. One focused owned commit; source stopped for Root integration.
+
+### Root acceptance — 2026-10-08
+
+Accepted candidate `a38e7a039c680fce5acb4181e763613958feb742`, integrated as `538e5770d1a02b7ef92d2dd69cd3a8a9d692ec4a`, after both independent round2 axes and exact commit association. Root passes combined 725/725 on Node26.8.1 and exact24.0.0, full 1470/1470 plus typecheck/build, zero skips; all 34 audited files match. [Review, separate preserved rounds and limits](../../observed-integration/acceptance/host/public-adapters-review.md). All 330 round2 artifacts are preserved with verified hashes; the three author links above now point to their preserved Root copies. Whole host gates and clean installation remain pending tickets09/10.

@@ -1,0 +1,16 @@
+(node:49702) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"case":"durable-retirement-race","code":"ALLOCATION_NOT_READY","state":"retained","callsBefore":["open","plist","plist","plist","plist","plist","plist","plist","plist","plist","plist","create","boot","list","install","launch-app","list","snapshot-ui","screenshot"],"callsAfter":["open","plist","plist","plist","plist","plist","plist","plist","plist","plist","plist","create","boot","list","install","launch-app","list","snapshot-ui","screenshot"]}
+✔ real retirement during configuration validation returns authoritative unready refusal (428.760083ms)
+(node:49704) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"case":"signal-exit","result":143,"elapsed":92,"stdout":"{\"version\":1,\"kind\":\"observed-operation-error\",\"code\":\"WAIT_CANCELLED\",\"message\":\"Observed read wait was cancelled\",\"acceptance\":\"no\",\"acceptanceKind\":\"action\"}\n","stderr":"(node:49860) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\nFAKE_PENDING\n"}
+✔ actual runCli signal exits after bounded close despite an unsettled fake backend resource (687.334916ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7970.089417

@@ -1,0 +1,20 @@
+✔ contract: capture refusals print the reason code on stderr and need no TYPESAFE_API_KEY (526.040708ms)
+✔ invalid config blocks fresh ready action but preserves immutable retrieval/conflict and reads (1898.925292ms)
+✔ CLI SIGINT revokes owned action and returns 130 without late input (982.7315ms)
+✔ CLI SIGINT stops only a read wait with 130 (1567.176ms)
+✔ CLI SIGTERM revokes owned action and returns 143 without late input (967.366959ms)
+✔ CLI SIGTERM stops only a read wait with 143 (1527.433041ms)
+✔ CLI shutdown cancels only owned active preparation and leaves ready parked stock intact (526.862792ms)
+✔ concurrent preparation and action CLI retries share one durable owner and no repeated backend work (1479.4215ms)
+✔ CLI SIGINT exits after bounded close despite an unsettled fake active resource (1007.702042ms)
+✔ CLI SIGTERM exits after bounded close despite an unsettled fake active resource (1001.013667ms)
+✔ configuration validation preserves binding priority across a race and fails safely when authority is unavailable (68.523666ms)
+✔ durable retirement during failed config validation delegates to authoritative unready refusal (378.108333ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12458.074875

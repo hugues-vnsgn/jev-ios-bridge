@@ -1,0 +1,26 @@
+(node:28372) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ contract: capture refusals print the reason code on stderr and need no TYPESAFE_API_KEY (468.56275ms)
+(node:28397) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ invalid config blocks fresh ready action but preserves immutable retrieval/conflict and reads (1807.86575ms)
+✔ CLI SIGINT revokes owned action and returns 130 without late input (1010.756541ms)
+✔ CLI SIGINT stops only a read wait with 130 (1537.740167ms)
+✔ CLI SIGTERM revokes owned action and returns 143 without late input (975.290334ms)
+✔ CLI SIGTERM stops only a read wait with 143 (1480.762584ms)
+✔ CLI shutdown cancels only owned active preparation and leaves ready parked stock intact (492.698916ms)
+✔ concurrent preparation and action CLI retries share one durable owner and no repeated backend work (1423.448209ms)
+✔ CLI SIGINT exits after bounded close despite an unsettled fake active resource (1072.9895ms)
+✔ CLI SIGTERM exits after bounded close despite an unsettled fake active resource (1000.672042ms)
+(node:28823) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ configuration validation preserves binding priority across a race and fails safely when authority is unavailable (56.570167ms)
+✔ durable retirement during failed config validation delegates to authoritative unready refusal (367.471083ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12263.626084

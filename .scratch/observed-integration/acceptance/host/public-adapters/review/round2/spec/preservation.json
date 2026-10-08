@@ -1,0 +1,120 @@
+{
+  "source": "/tmp/jev-public-adapters-spec-round2-12hj13dh",
+  "files": [
+    {
+      "path": "after-hashes.json",
+      "sha256": "cd9b7c0b32d7c45a9e6429ef66fcdb45d72b4a858d85c5c90dae800b42169af4",
+      "bytes": 2916
+    },
+    {
+      "path": "before-hashes.json",
+      "sha256": "533073503799f249aeea8d058465855bf979523e607c399cb3425319cf8f4227",
+      "bytes": 2477
+    },
+    {
+      "path": "manifest.json",
+      "sha256": "af7732a91d1e94228d37a09a8fe3bf647db466c19560cfd05ea86e58030376b2",
+      "bytes": 3010
+    },
+    {
+      "path": "node24.json",
+      "sha256": "09a4d22814080bdda72ab10419347ca0ad554f68e52461bb2ac0897ef122b460",
+      "bytes": 471
+    },
+    {
+      "path": "node24.log",
+      "sha256": "f443f6974c067c8a212af5c1328e1995ca4702912ab104e22c164fc6c79b01bc",
+      "bytes": 1559
+    },
+    {
+      "path": "node26.json",
+      "sha256": "50b3e04783b66e977172e7f2f7011adbd1598c5e8c3892e57a00d3bd2ec2e70e",
+      "bytes": 403
+    },
+    {
+      "path": "node26.log",
+      "sha256": "38a496d1f006722d07221194e3183b7ebfd87de3329e68c5eaef7280eecb3a26",
+      "bytes": 1050
+    },
+    {
+      "path": "review.md",
+      "sha256": "e15d7af54a51fd7da7b41a42ff195ade6e5252e8b17cd8ce3b2d40597ccbb93e",
+      "bytes": 3276
+    },
+    {
+      "path": "reviewed-source/src/cli.ts",
+      "sha256": "137b42ef8cdc34a3e143461cf762c659d4bc0a8da768f320ad8b0232e200d7de",
+      "bytes": 16620
+    },
+    {
+      "path": "reviewed-source/src/mcp/index.ts",
+      "sha256": "48e531d304d19852d461eb1d3317fee5f953a15654f405c3393b04ff4a494c2a",
+      "bytes": 6387
+    },
+    {
+      "path": "reviewed-source/src/mcp/observed.ts",
+      "sha256": "5522cc1933d54d13cd8c72b7d8caa5ebf262272f9e0110c13fceb58dd8fcc51b",
+      "bytes": 5102
+    },
+    {
+      "path": "reviewed-source/src/observed/cli.ts",
+      "sha256": "17ed826b608359a9f901012a82447fd1e06d1d2a65e5b8b477e1c0a0885f8e78",
+      "bytes": 12398
+    },
+    {
+      "path": "reviewed-source/tests/contract.test.ts",
+      "sha256": "ec2589c363ed173e0fb1c86fc0846491434f248e2d9a6ca1c4be5caccda06553",
+      "bytes": 34643
+    },
+    {
+      "path": "reviewed-source/tests/fixtures/observed-cli-server.ts",
+      "sha256": "50d02a4f919b6bf162f5e0b89992a5f0fe37158c0667c565f24bb997b713bfcb",
+      "bytes": 8278
+    },
+    {
+      "path": "reviewed-source/tests/fixtures/observed-mcp-server.ts",
+      "sha256": "07c5005984b70ba4b63dca7336132e4de855bfe478033b1f768a274f7442b25b",
+      "bytes": 577
+    },
+    {
+      "path": "reviewed-source/tests/golden/observed-mcp-v1.json",
+      "sha256": "48dc6d413b8f272be845c03b0827f1429a053298676eab3812e568b90936a63b",
+      "bytes": 17004
+    },
+    {
+      "path": "reviewed-source/tests/golden/observed-replies-v1.json",
+      "sha256": "cdbfbfe4b8ac3f93bebd0e7f8cc5243cc90d3549bc20bdbea97bdd670dc0602b",
+      "bytes": 17109
+    },
+    {
+      "path": "reviewed-source/tests/mcp.test.ts",
+      "sha256": "850fb08ebc98f355de4958b287e23a228e685c7e2b6843abb65ff9f629d31531",
+      "bytes": 10109
+    },
+    {
+      "path": "reviewed-source/tests/observed-cli.test.ts",
+      "sha256": "754f0e747adcb181700f8d76a407c854b3f813f4e2c76ca712d8348d50194873",
+      "bytes": 19867
+    },
+    {
+      "path": "reviewed-source/tests/observed-contract.test.ts",
+      "sha256": "583b0b8ab4b76358eb1e9a7f083ddd4302b7dbede3d0183210afa3fdc6ed21e3",
+      "bytes": 11333
+    },
+    {
+      "path": "reviewed-source/tests/observed-mcp.test.ts",
+      "sha256": "1e2913228684ab79c51226553a39b0c30a2194b7b05201fd21a86411037718d5",
+      "bytes": 15926
+    },
+    {
+      "path": "revision.json",
+      "sha256": "022d64eb60c287ac6ac3e71d5fa61093def18622b0221ea3d5f8851a0a4d14ac",
+      "bytes": 145
+    },
+    {
+      "path": "unchanged-probes.json",
+      "sha256": "2b326f95ead966bbb99b4544e31f1ba63036c11ae5833d9fccb6552d5a667b24",
+      "bytes": 282
+    }
+  ]
+}

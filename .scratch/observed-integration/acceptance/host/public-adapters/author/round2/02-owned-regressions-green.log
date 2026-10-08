@@ -1,0 +1,61 @@
+✔ invalid config blocks fresh ready action but preserves immutable retrieval/conflict and reads (1907.807875ms)
+✔ CLI SIGINT revokes owned action and returns 130 without late input (1013.416959ms)
+✔ CLI SIGINT stops only a read wait with 130 (1623.676625ms)
+✔ CLI SIGTERM revokes owned action and returns 143 without late input (985.995875ms)
+✔ CLI SIGTERM stops only a read wait with 143 (1565.777958ms)
+✔ CLI shutdown cancels only owned active preparation and leaves ready parked stock intact (533.321417ms)
+✔ concurrent preparation and action CLI retries share one durable owner and no repeated backend work (1520.5895ms)
+✖ CLI SIGINT exits after bounded close despite an unsettled fake active resource (817.062792ms)
+✖ CLI SIGTERM exits after bounded close despite an unsettled fake active resource (837.559125ms)
+✔ configuration validation preserves binding priority across a race and fails safely when authority is unavailable (70.523167ms)
+✔ durable retirement during failed config validation delegates to authoritative unready refusal (358.527166ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 9
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11587.062833
+
+✖ failing tests:
+
+test at tests/observed-cli.test.ts:1:16374
+✖ CLI SIGINT exits after bounded close despite an unsettled fake active resource (817.062792ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - true
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:206:73)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-cli.test.ts:1:16374
+✖ CLI SIGTERM exits after bounded close despite an unsettled fake active resource (837.559125ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - true
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:206:73)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

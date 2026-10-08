@@ -1,0 +1,547 @@
+import { setTimeout as delay } from 'node:timers/promises';
+import type { Action, ActionScenarioContext, ActOutcome, AppProblem, DeviceDriver, Element, LogSources, Platform, PrepareScenarioContext, RunLog, Snapshot, Verdict } from '../contracts/index.js';
+import { isActOutcome } from '../contracts/index.js';
+import { DeviceCliError, DeviceReasonError, StaleSnapshotError } from '../device/index.js';
+import type { AssertionJudgment, ScriptedJudge, ScriptedScenario, ScriptedStep } from './contracts.js';
+import { SCRIPTED_JEV_MODEL, ScriptedJevError } from './jev.js';
+import { PROJECTION_RULES, renderAssertionState, ScriptedObservationError } from './observe.js';
+import { buildScriptedReport, type ScriptedReport } from './report.js';
+import { buildReportJson } from './report-json.js';
+import { MOBILEBUILDMCP_PASSTHROUGH_CODES } from './vocabulary.js';
+import { BRIDGE_VERSION } from '../version.js';
+import { maskSnapshot, maskValues, type DrivenJudge } from '../driven/decide.js';
+import { createSearchMemory, runDrivenStep, type Handback } from '../driven/step.js';
+import { HandbackTimeoutError } from '../driven/handback.js';
+import { parseScriptedScenario } from './schema.js';
+import { assertScreenGuard, resolveActionTarget, ScriptSelectionError,
+  type SelectionOptions } from './select.js';
+
+export interface ScriptedRunLimits {
+  maxSteps?: number;
+  wallTimeMs?: number;
+  pollIntervalMs?: number;
+  cleanupTimeMs?: number;
+}
+
+export interface ScriptedRunOptions {
+  runId: string;
+  scenario: ScriptedScenario;
+  driver: DeviceDriver;
+  judge: ScriptedJudge;
+  log: RunLog;
+  signal?: AbortSignal;
+  limits?: ScriptedRunLimits;
+  /** Called once the app is launched, with the log files the device layer writes for it. */
+  onPrepared?(info: { logSources: LogSources }): void;
+  /** Called just before cleanup stops the app. */
+  onCleanup?(): void;
+  /** What `do` steps need: Jev's decisions, Claude's hand-back gate, whether the preflight lets Jev perform test
+   *  writes (a function runs it, before the first `test_write` step's first observation), and which screens stay
+   *  local (E14). A script with a `do` step is refused without it. */
+  driven?: { judge: DrivenJudge; handback: Handback;
+    testWritesAllowed?: boolean | ((signal: AbortSignal) => Promise<boolean>);
+    /** Waits for the preflight's processes to be gone; cleanup closes the driver only after it resolves. */
+    settle?: (signal: AbortSignal) => Promise<void>;
+    localOnlyScreen?: (snapshot: Snapshot) => boolean;
+    /** Overrides how long a `do` step waits before looking again at a screen that may still be loading
+     *  (LATE_SCREEN_WAIT_MS); tests on fake devices set 0. */
+    lateScreenWaitMs?: number };
+}
+
+class ScriptRunError extends Error {
+  constructor(readonly code: 'CANCELLED' | 'WALL_LIMIT' | 'STEP_LIMIT' | 'WAIT_TIMEOUT' | 'SCREEN_CHANGED' |
+    'INVALID_JUDGMENT' | 'EXECUTION_ERROR' | 'CLEANUP_FAILED') {
+    super(code);
+    this.name = 'ScriptRunError';
+  }
+}
+
+/** How long cleanup may take by default: longer than one device command's own deadline (35 s), so cleanup can
+ *  see an in-flight command finish. */
+export const DEFAULT_CLEANUP_MS = 45_000;
+
+function bounded(value: number | undefined, fallback: number, minimum: number, maximum: number): number {
+  const selected = value ?? fallback;
+  if (!Number.isSafeInteger(selected) || selected < minimum || selected > maximum) throw new RangeError('Invalid script run limit');
+  return selected;
+}
+
+function prepareContext(script: ScriptedScenario, platform: Platform): PrepareScenarioContext {
+  // A driver's device field names an iOS simulator; an Android script's device isn't passed on.
+  return { app: script.app,
+    ...(platform === 'ios' && script.device ? { device: script.device } : {}),
+    ...(script.preconditions ? { preconditions: script.preconditions } : {}),
+    ...(script.start ? { start: script.start } : {}) };
+}
+
+function snapshotChanged(before: Snapshot, after: Snapshot): boolean {
+  if (before.screenHash && after.screenHash) return before.screenHash !== after.screenHash;
+  const identity = (snapshot: Snapshot) => JSON.stringify(snapshot.elements.map(({ ref: _ref, ...element }) => element));
+  return identity(before) !== identity(after);
+}
+
+function summary(snapshot: Snapshot): string {
+  const lines = snapshot.elements.filter(element => element.state?.visible === true && element.frame &&
+    element.frame.width > 0 && element.frame.height > 0)
+    .filter(element => Boolean(element.label || element.value || element.identifier))
+    .map(element => [element.role, element.label ?? element.identifier, element.value,
+      element.state?.selected === true ? 'selected' : undefined].filter(Boolean).join(' '));
+  const description = lines.join('\n');
+  if (description.length <= 4_000) return description;
+  return `${description.slice(0, 1_600)}\n[truncated; ${description.length - 3_800} characters omitted]\n${description.slice(-2_200)}`;
+}
+
+function requiredAction(step: Extract<ScriptedStep, { kind: 'action' }>): 'tap' | 'typeText' | 'swipeWithin' {
+  return step.action.kind === 'replaceText' ? 'typeText' : step.action.kind === 'swipe' ? 'swipeWithin' : 'tap';
+}
+
+function deviceAction(step: Extract<ScriptedStep, { kind: 'action' }>, target: Element): Action {
+  if (step.action.kind === 'replaceText') return { kind: 'type', targetRef: target.ref, valueKey: step.action.valueKey };
+  if (step.action.kind === 'swipe') return { kind: 'swipe', targetRef: target.ref, direction: step.action.direction };
+  return { kind: 'tap', targetRef: target.ref };
+}
+
+function abortableOperation<T>(operation: () => Promise<T>, signal: AbortSignal): Promise<T> {
+  if (signal.aborted) return Promise.reject(signal.reason);
+  return new Promise<T>((resolve, reject) => {
+    const onAbort = () => { signal.removeEventListener('abort', onAbort); reject(signal.reason); };
+    signal.addEventListener('abort', onAbort, { once: true });
+    if (signal.aborted) { onAbort(); return; }
+    let pending: Promise<T>;
+    try { pending = operation(); }
+    catch (error) { signal.removeEventListener('abort', onAbort); reject(error); return; }
+    pending.then(value => { signal.removeEventListener('abort', onAbort); resolve(value); },
+      error => { signal.removeEventListener('abort', onAbort); reject(error); });
+  });
+}
+
+function checkedJudgment(judgment: AssertionJudgment, assertions: Extract<ScriptedStep, { kind: 'checkpoint' }>['assertions']): void {
+  if (!Number.isSafeInteger(judgment.inputTokens) || judgment.inputTokens < 0 ||
+      !Number.isFinite(judgment.latencyMs) || judgment.latencyMs < 0 ||
+      judgment.model !== SCRIPTED_JEV_MODEL ||
+      Object.keys(judgment.probabilities).length !== assertions.length) throw new ScriptRunError('INVALID_JUDGMENT');
+  for (const assertion of assertions) {
+    const answer = judgment.probabilities[assertion.id];
+    if (typeof answer !== 'number' || !Number.isFinite(answer) || answer < 0 || answer > 1) {
+      throw new ScriptRunError('INVALID_JUDGMENT');
+    }
+  }
+}
+
+/** Why the app stopped, as the driver answers it; a driver without appProblem answers only whether the app still runs. */
+async function appProblemCode(driver: DeviceDriver, signal: AbortSignal): Promise<AppProblem['code'] | undefined> {
+  // A failed wait never hides the step's own error.
+  if (driver.appProblemAfterFailure) return (await driver.appProblemAfterFailure(signal).catch(() => undefined))?.code;
+  if (driver.appProblem) return driver.appProblem()?.code;
+  return driver.appRunning?.() === false ? 'APP_EXITED' : undefined;
+}
+
+/** A bridge-owned reason code, plus the device layer's own code when the bridge doesn't own it. */
+interface Failure { code: string; vendorCode?: string }
+
+const VENDOR_CODE = /^[A-Za-z0-9_.-]{1,80}$/;
+
+function failureOf(error: unknown, signal: AbortSignal): Failure {
+  if (signal.aborted) return { code: signal.reason instanceof ScriptRunError ? signal.reason.code : 'CANCELLED' };
+  if (error instanceof ScriptRunError || error instanceof ScriptSelectionError ||
+      error instanceof ScriptedObservationError || error instanceof ScriptedJevError ||
+      error instanceof HandbackTimeoutError) return { code: error.code };
+  // An Android error may carry the device layer that failed (`agent`, `adb`) as its vendorCode.
+  if (error instanceof DeviceReasonError) {
+    const vendorCode = error.vendorCode;
+    return { code: error.code, ...(vendorCode !== undefined && VENDOR_CODE.test(vendorCode) ? { vendorCode } : {}) };
+  }
+  if (error instanceof DeviceCliError) {
+    if (MOBILEBUILDMCP_PASSTHROUGH_CODES.has(error.code)) return { code: error.code };
+    return { code: 'DEVICE_ERROR', ...(VENDOR_CODE.test(error.code) ? { vendorCode: error.code } : {}) };
+  }
+  return { code: 'EXECUTION_ERROR' };
+}
+
+async function waitUntil(step: Extract<ScriptedStep, { kind: 'wait' }>, initial: Snapshot,
+  pollIntervalMs: number, pause: (milliseconds: number) => Promise<void>,
+  capture: () => Promise<{ snapshot: Snapshot; observeDurationMs: number }>,
+  onObserved: (snapshot: Snapshot, poll: number, observeDurationMs: number) => Promise<void>,
+  selectionOptions: SelectionOptions): Promise<void> {
+  const started = performance.now();
+  let current = initial;
+  let poll = 0;
+  while (true) {
+    try {
+      assertScreenGuard(current, step.until, selectionOptions);
+      if (poll > 0 && performance.now() - started > step.timeoutMs) throw new ScriptRunError('WAIT_TIMEOUT');
+      return;
+    }
+    catch (error) {
+      if (!(error instanceof ScriptSelectionError) || !['GUARD_MISSING', 'GUARD_FORBIDDEN'].includes(error.code)) throw error;
+    }
+    assertScreenGuard(current, step.guard, selectionOptions);
+    const left = step.timeoutMs - (performance.now() - started);
+    if (left <= 0) throw new ScriptRunError('WAIT_TIMEOUT');
+    await pause(Math.min(pollIntervalMs, left));
+    const captured = await capture();
+    current = captured.snapshot;
+    poll++;
+    await onObserved(current, poll, captured.observeDurationMs);
+  }
+}
+
+/** Bridge-owned execution of a fully authored action script. */
+export async function runScriptedScenario(options: ScriptedRunOptions): Promise<ScriptedReport> {
+  const script = parseScriptedScenario(options.scenario);
+  const driven = options.driven;
+  const firstDo = script.steps.find(step => step.kind === 'do');
+  if (firstDo && !driven) {
+    throw new Error(`This run can't perform "do" steps: step ${firstDo.id} is a do step, and the run was given no driven judge or hand-back`);
+  }
+  // The steps still to run; Claude's `revise` replaces those after the current do step.
+  const plan: ScriptedStep[] = [...script.steps];
+  // The one place the platform is read off the script; every later branch reads this, not `script.platform`,
+  // except the type narrowing `script.platform === 'android'` needs, which can only read the discriminant itself.
+  const platform: Platform = script.platform ?? 'ios';
+  const limits = options.limits ?? {};
+  const maxSteps = bounded(limits.maxSteps, 100, 1, 100);
+  const wallTimeMs = bounded(limits.wallTimeMs, 300_000, 1, 3_600_000);
+  const pollIntervalMs = bounded(limits.pollIntervalMs, 250, 1, 5_000);
+  const cleanupTimeMs = bounded(limits.cleanupTimeMs, DEFAULT_CLEANUP_MS, 1, 120_000);
+  const preparedContext = prepareContext(script, platform);
+  // Actions don't need the start mode; only prepare reads it.
+  const { start: _start, ...launchContext } = preparedContext;
+  const actionContext: ActionScenarioContext = { ...launchContext, values: script.values };
+  // The driver carries its own pinned tap semantics; the run reads it rather than taking it as an option.
+  const selectionOptions: SelectionOptions = options.driver.tapAliasRule
+    ? { tapAliasRule: options.driver.tapAliasRule } : {};
+  const started = performance.now();
+  const controller = new AbortController();
+  const signal = controller.signal;
+  const cancel = () => controller.abort(new ScriptRunError('CANCELLED'));
+  const requireActive = () => { if (signal.aborted) throw signal.reason; };
+  options.signal?.addEventListener('abort', cancel, { once: true });
+  if (options.signal?.aborted) cancel();
+  // The wall clock stops while a do step waits for Claude: the hand-back timeout bounds that wait instead.
+  let wallLeftMs = wallTimeMs;
+  let wallFrom = performance.now();
+  const startWall = () => setTimeout(() => controller.abort(new ScriptRunError('WALL_LIMIT')), Math.max(0, wallLeftMs));
+  let timer = startWall();
+  const pauseWall = () => { clearTimeout(timer); wallLeftMs -= performance.now() - wallFrom; };
+  const resumeWall = () => { wallFrom = performance.now(); timer = startWall(); };
+  let verdict: Verdict = 'inconclusive';
+  let reason = 'SCRIPT_INCOMPLETE';
+  let steps = 0;
+  // Actions a do step performed; each counts toward maxSteps beside the steps themselves.
+  let drivenActions = 0;
+  let inputTokens = 0;
+  let checkpointsPassed = 0;
+  let phase = 'prepare';
+  let activeStepId: string | undefined;
+  let activeStepStarted: number | undefined;
+  const phaseTimingsMs = { prepareMs: 0, observeMs: 0, decideMs: 0,
+    actMs: 0, waitMs: 0, cleanupMs: 0, verifyMs: 0 };
+  type TimedPhase = keyof typeof phaseTimingsMs;
+  const timed = async <T>(key: TimedPhase, operation: () => Promise<T>,
+    onMeasured?: (durationMs: number) => void): Promise<T> => {
+    const began = performance.now();
+    try { return await operation(); }
+    finally {
+      const durationMs = Math.max(0, performance.now() - began);
+      phaseTimingsMs[key] += durationMs;
+      onMeasured?.(durationMs);
+    }
+  };
+  const capture = async (): Promise<{ snapshot: Snapshot; observeDurationMs: number }> => {
+    let observeDurationMs = 0;
+    const snapshot = await timed('observeMs', () => abortableOperation(() => options.driver.observe(signal), signal),
+      durationMs => { observeDurationMs = durationMs; });
+    phaseTimingsMs.verifyMs += snapshot.verifyMs ?? 0;
+    return { snapshot, observeDurationMs };
+  };
+  // The screen the last action returned, reused as the next step's observation instead of capturing again.
+  // It may itself carry `settled: false` ("screen still changing"); "settled snapshot" (CONTEXT.md) means a
+  // screen that did stop changing, so this one isn't always that.
+  let nextSnapshot: Snapshot | undefined;
+  // Keeps the screen an act() result carries, for the next step to reuse instead of capturing again, and
+  // returns the shown value it carried, if any (only a replace-text outcome has one).
+  const keepActResult = (result: Snapshot | ActOutcome | undefined | void): string | undefined => {
+    if (!result) return undefined;
+    const outcome = isActOutcome(result);
+    const screen = outcome ? result.screen : result;
+    nextSnapshot = screen;
+    phaseTimingsMs.verifyMs += screen.verifyMs ?? 0;
+    return outcome ? result.shownValue : undefined;
+  };
+  const evidenceFields = (snapshot: Snapshot) => ({
+    ...(snapshot.screenshotPath ? { screenshotPath: snapshot.screenshotPath } : {}),
+    ...(snapshot.logTails ? { logTails: snapshot.logTails } : {}),
+    ...(snapshot.reusedFromAction ? { reusedCapture: true } : {}),
+    ...(snapshot.screenshotAgreement === undefined ? {} : { screenshotAgreement: snapshot.screenshotAgreement }),
+    ...(snapshot.verifyAttempts === undefined ? {} : { verifyAttempts: snapshot.verifyAttempts }),
+    // A screen an action returned unsettled is recorded here, on the step that observes it (often the next
+    // step), not on the action event of the step that acted.
+    ...(snapshot.settled === false ? { settled: false } : {}),
+  });
+  const android = script.platform === 'android';
+  // A driven run records who decided every action; a version 1 run's events stay as they were.
+  const scriptDecided = driven ? { decidedBy: 'script' } : {};
+  // A script with a do step; only its checkpoints are masked and checked against local-only screens.
+  const hasDoStep = firstDo !== undefined;
+  // What the target search learns in one do step holds for the run's later ones (Issue 17).
+  const searchMemory = createSearchMemory();
+
+  try {
+    // An Android app has no bundle ID, so an Android run records null.
+    await options.log.append('started', { mode: 'scripted',
+      bundleId: android ? null : script.app.bundleId,
+      ...(!android && script.app.launchArgs ? { launchArgs: script.app.launchArgs } : {}),
+      ...(android ? { platform, package: script.app.package,
+        activity: script.app.activity ?? null, intentExtras: script.app.intentExtras ?? {} } : {}),
+      // Only a version 2 script names a start mode; one that doesn't records none, as 1.2 did.
+      ...(script.start ? { start: script.start } : {}),
+      bridgeVersion: BRIDGE_VERSION, jevModel: SCRIPTED_JEV_MODEL,
+      projectionRule: PROJECTION_RULES[platform],
+      plannedSteps: script.steps.map(step => ({ id: step.id, kind: step.kind })) });
+    let prepareDurationMs = 0;
+    await timed('prepareMs', () => abortableOperation(() => options.driver.prepare(preparedContext, signal), signal),
+      durationMs => { prepareDurationMs = durationMs; });
+    const logSources = options.driver.logSources?.() ?? {};
+    const preparation = options.driver.preparation?.();
+    const prepareWarnings = options.driver.prepareWarnings?.() ?? [];
+    await options.log.append('prepared', { prepareDurationMs,
+      ...(Object.keys(logSources).length ? { logSources } : {}),
+      ...(prepareWarnings.length ? { warnings: prepareWarnings } : {}),
+      ...(preparation ? { deviceIdentity: preparation.deviceIdentity, serial: preparation.serial,
+        agentSha256: preparation.agentSha256,
+        ...(preparation.sweptLeftovers ? { sweptLeftovers: true } : {}) } : {}) });
+    try { options.onPrepared?.({ logSources }); } catch { /* the log pane never affects a run */ }
+    for (let index = 0; index < plan.length; index++) {
+      const step = plan[index]!;
+      activeStepId = undefined;
+      activeStepStarted = undefined;
+      phase = 'budget';
+      if (signal.aborted) throw signal.reason;
+      if (steps + drivenActions >= maxSteps) throw new ScriptRunError('STEP_LIMIT');
+      activeStepId = step.id;
+      activeStepStarted = performance.now();
+      steps++;
+
+      if (step.kind === 'do') {
+        const stepNumber = steps;
+        const allowWrites = driven!.testWritesAllowed ?? false;
+        let testWritesAllowed = allowWrites === true;
+        if (typeof allowWrites === 'function' && step.effect === 'test_write') {
+          phase = 'preflight';
+          testWritesAllowed = await abortableOperation(() => allowWrites(signal), signal);
+        }
+        const outcome = await runDrivenStep({ step, stepNumber, platform, values: script.values,
+          ...(script.goal === undefined ? {} : { goal: script.goal }),
+          ...(driven!.localOnlyScreen ? { localOnlyScreen: driven!.localOnlyScreen } : {}),
+          testWritesAllowed, searchMemory, log: options.log,
+          observe: async () => {
+            phase = 'observe';
+            const { snapshot, observeDurationMs } = nextSnapshot ? { snapshot: nextSnapshot, observeDurationMs: 0 } : await capture();
+            nextSnapshot = undefined;
+            await options.log.append('step', { step: stepNumber, stepId: step.id, kind: step.kind,
+              snapshotSequence: snapshot.sequence, observationSummary: summary(snapshot), observeDurationMs,
+              ...evidenceFields(snapshot) });
+            return snapshot;
+          },
+          decide: async prepared => {
+            phase = 'decide';
+            const decision = await timed('decideMs', () => abortableOperation(() => driven!.judge.decide(prepared, signal), signal));
+            inputTokens += decision.inputTokens;
+            return decision;
+          },
+          act: async (action, selected) => {
+            phase = 'budget';
+            if (steps + drivenActions >= maxSteps) throw new ScriptRunError('STEP_LIMIT');
+            phase = 'act';
+            let actDurationMs = 0;
+            keepActResult(await timed('actMs',
+              () => abortableOperation(() => options.driver.act(action, selected, actionContext, signal), signal),
+              durationMs => { actDurationMs = durationMs; }));
+            drivenActions++;
+            return { actDurationMs };
+          },
+          actPath: () => options.driver.actPath?.(),
+          pause: async milliseconds => {
+            const wait = driven!.lateScreenWaitMs ?? milliseconds;
+            if (wait > 0) await abortableOperation(() => delay(wait, undefined, { signal }), signal);
+          },
+          awaitAnswer: async packet => {
+            phase = 'handback';
+            pauseWall();
+            try { return await abortableOperation(() => driven!.handback(packet, signal), signal); }
+            finally { resumeWall(); }
+          },
+        });
+        requireActive();
+        if (outcome.kind === 'done') continue;
+        if (outcome.kind === 'revised') {
+          if (outcome.steps.at(-1)?.kind !== 'checkpoint') throw new ScriptRunError('EXECUTION_ERROR');
+          plan.splice(index + 1, Infinity, ...outcome.steps);
+          continue;
+        }
+        verdict = 'inconclusive';
+        reason = outcome.kind === 'stopped' ? 'STOPPED_BY_CLAUDE' : 'STEP_NOT_DONE';
+        break;
+      }
+      phase = 'observe';
+      const { snapshot, observeDurationMs } = nextSnapshot ? { snapshot: nextSnapshot, observeDurationMs: 0 } : await capture();
+      nextSnapshot = undefined;
+      let assertionObservation: string | undefined;
+      let observationError: unknown;
+      // E14 in a driven script: a checkpoint never sends a local-only screen to Jev, and Jev reads every typed
+      // value on the screen as `⟦value:<key>⟧`, as at a do step's decisions.
+      let localOnly = false;
+      try {
+        assertScreenGuard(snapshot, step.guard, selectionOptions);
+        if (step.kind === 'checkpoint') {
+          localOnly = hasDoStep && (driven!.localOnlyScreen?.(snapshot) ?? false);
+          if (!localOnly) assertionObservation = renderAssertionState(hasDoStep ? maskSnapshot(snapshot, script.values) : snapshot, platform);
+        }
+      } catch (error) { observationError = error; }
+      await options.log.append('step', { step: steps, stepId: step.id, kind: step.kind,
+        snapshotSequence: snapshot.sequence, observationSummary: summary(snapshot), observeDurationMs,
+        ...(assertionObservation === undefined ? {} : { assertionObservation }),
+        ...evidenceFields(snapshot) });
+      if (observationError) throw observationError;
+
+      if (step.kind === 'action') {
+        phase = 'act';
+        const target = resolveActionTarget(snapshot, step.action.selector, requiredAction(step), selectionOptions);
+        let selected = snapshot;
+        let ref = target;
+        let actDurationMs = 0;
+        const act = async () => timed('actMs',
+          () => abortableOperation(() => options.driver.act(deviceAction(step, ref), selected, actionContext, signal), signal),
+          durationMs => { actDurationMs += durationMs; });
+        let shownValue: string | undefined;
+        try { shownValue = keepActResult(await act()); }
+        catch (error) {
+          if (!(error instanceof StaleSnapshotError)) throw error;
+          phase = 'reobserve';
+          const refreshed = await capture();
+          const fresh = refreshed.snapshot;
+          await options.log.append('step', { step: steps, stepId: step.id, kind: step.kind, attempt: 2,
+            snapshotSequence: fresh.sequence, observationSummary: summary(fresh),
+            observeDurationMs: refreshed.observeDurationMs, ...evidenceFields(fresh) });
+          if (snapshotChanged(snapshot, fresh)) throw new ScriptRunError('SCREEN_CHANGED');
+          assertScreenGuard(fresh, step.guard, selectionOptions);
+          ref = resolveActionTarget(fresh, step.action.selector, requiredAction(step), selectionOptions);
+          selected = fresh;
+          phase = 'act';
+          shownValue = keepActResult(await act());
+        }
+        await options.log.append('action', { step: steps, stepId: step.id, action: step.action.kind,
+          selector: step.action.selector, resolvedRef: ref.ref, actDurationMs, ...scriptDecided,
+          // Only a replace-text action has a shown value; ignore one an outcome reports for any other kind.
+          ...(shownValue === undefined || step.action.kind !== 'replaceText' ? {} : { shownValue }),
+          stepDurationMs: Math.max(0, performance.now() - activeStepStarted) });
+        continue;
+      }
+
+      if (step.kind === 'wait') {
+        phase = 'wait';
+        const waitBefore = phaseTimingsMs.waitMs;
+        await waitUntil(step, snapshot, pollIntervalMs,
+          milliseconds => timed('waitMs', () => abortableOperation(
+            () => delay(milliseconds, undefined, { signal }), signal)), capture,
+          async (observed, poll, observedDurationMs) => {
+          await options.log.append('step', { step: steps, stepId: step.id, kind: step.kind, poll,
+            snapshotSequence: observed.sequence, observationSummary: summary(observed),
+            observeDurationMs: observedDurationMs,
+            ...evidenceFields(observed) });
+        }, selectionOptions);
+        await options.log.append('action', { step: steps, stepId: step.id, action: 'wait', timeoutMs: step.timeoutMs,
+          ...scriptDecided,
+          waitDurationMs: phaseTimingsMs.waitMs - waitBefore,
+          stepDurationMs: Math.max(0, performance.now() - activeStepStarted) });
+        continue;
+      }
+
+      if (localOnly) {
+        await options.log.append('checkpoint', { step: steps, stepId: step.id, status: 'inconclusive',
+          reason: 'LOCAL_ONLY_CHECKPOINT', stepDurationMs: Math.max(0, performance.now() - activeStepStarted),
+          assertions: [] });
+        verdict = 'inconclusive';
+        reason = 'LOCAL_ONLY_CHECKPOINT';
+        break;
+      }
+      phase = 'decide';
+      let decideDurationMs = 0;
+      // The claims Jev reads are masked too, so a claim never carries a typed value to Jev.
+      const assertions = hasDoStep ? step.assertions.map(assertion =>
+        ({ ...assertion, claim: maskValues(assertion.claim, script.values) })) : step.assertions;
+      const judgment = await timed('decideMs', async () => {
+        const state = assertionObservation!;
+        const result = await abortableOperation(() => options.judge.judge(assertions, state, signal), signal);
+        checkedJudgment(result, step.assertions);
+        return result;
+      }, durationMs => { decideDurationMs = durationMs; });
+      inputTokens += judgment.inputTokens;
+      await options.log.append('judgment', { step: steps, stepId: step.id, model: judgment.model,
+        probabilities: judgment.probabilities, inputTokens: judgment.inputTokens, latencyMs: judgment.latencyMs,
+        decideDurationMs });
+      requireActive();
+      const answers = step.assertions.map(assertion => judgment.probabilities[assertion.id]!);
+      // ADR-0004: a confidently false claim fails the checkpoint even beside uncertain claims.
+      const status = answers.some(value => value <= 0.1) ? 'failed' :
+        answers.some(value => value < 0.9) ? 'inconclusive' : 'passed';
+      await options.log.append('checkpoint', { step: steps, stepId: step.id, status,
+        stepDurationMs: Math.max(0, performance.now() - activeStepStarted),
+        assertions: step.assertions.map(assertion => ({ id: assertion.id, claim: assertion.claim,
+          probability: judgment.probabilities[assertion.id] })) });
+      requireActive();
+      if (status !== 'passed') {
+        verdict = status;
+        reason = status === 'failed' ? 'ASSERTION_FALSE' : 'ASSERTION_UNCERTAIN';
+        break;
+      }
+      checkpointsPassed++;
+    }
+    if (checkpointsPassed === plan.filter(step => step.kind === 'checkpoint').length &&
+        steps === plan.length && verdict === 'inconclusive' && reason === 'SCRIPT_INCOMPLETE') {
+      requireActive();
+      verdict = 'passed';
+      reason = 'ALL_CHECKPOINTS_PASSED';
+    }
+  } catch (error) {
+    verdict = 'inconclusive';
+    // A step that failed because the app died or froze is reported as that, not as the symptom it caused.
+    const problemCode = signal.aborted ? undefined : await appProblemCode(options.driver, signal);
+    const failure: Failure = problemCode ? { code: problemCode } : failureOf(error, signal);
+    reason = failure.code;
+    await options.log.append('error', { stepId: activeStepId, phase, code: reason,
+      ...(failure.vendorCode === undefined ? {} : { vendorCode: failure.vendorCode }),
+      ...(activeStepStarted === undefined ? {} : {
+        stepDurationMs: Math.max(0, performance.now() - activeStepStarted),
+      }) });
+  } finally {
+    clearTimeout(timer);
+    try { options.onCleanup?.(); } catch { /* the log pane never affects a run */ }
+    try {
+      const cleanupSignal = AbortSignal.timeout(cleanupTimeMs);
+      await timed('cleanupMs', async () => {
+        // A preflight process still running keeps the lease: the driver isn't closed (E12).
+        const settle = options.driven?.settle;
+        if (settle) await abortableOperation(() => settle(cleanupSignal), cleanupSignal);
+        await abortableOperation(() => options.driver.close(cleanupSignal), cleanupSignal);
+      });
+    } catch {
+      verdict = 'inconclusive';
+      reason = 'CLEANUP_FAILED';
+      await options.log.append('error', { phase: 'cleanup', code: reason });
+    }
+    if (signal.aborted && reason !== 'CLEANUP_FAILED') {
+      verdict = 'inconclusive';
+      reason = failureOf(signal.reason, signal).code;
+      await options.log.append('error', { phase: 'cleanup', code: reason });
+    }
+    options.signal?.removeEventListener('abort', cancel);
+    await options.log.append('verdict', { verdict, reason, steps, inputTokens,
+      durationMs: Math.max(0, performance.now() - started), checkpointsPassed,
+      checkpointCount: plan.filter(step => step.kind === 'checkpoint').length, phaseTimingsMs,
+      ...(options.driver.metrics ? { deviceMetrics: options.driver.metrics() } : {}) });
+    await options.log.writeReport?.(buildReportJson(await options.log.read()));
+  }
+  return buildScriptedReport(await options.log.read());
+}

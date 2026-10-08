@@ -1,0 +1,25 @@
+{
+  "base": "1275f93c616c90aba63e92468679cf39f13157b5",
+  "files": [
+    {
+      "path": "src/cli.ts",
+      "sha256": "87c631e9839c81219eacb5c05104a3a9d9e356931f576f0bd865943bb9c0fd32"
+    },
+    {
+      "path": "src/observed/cli.ts",
+      "sha256": "c10db12f994143673e4c821116fecb6c2e55eabcf7ed0b9b75d80502f110bd63"
+    },
+    {
+      "path": "tests/observed-contract.test.ts",
+      "sha256": "583b0b8ab4b76358eb1e9a7f083ddd4302b7dbede3d0183210afa3fdc6ed21e3"
+    },
+    {
+      "path": "tests/observed-cli.test.ts",
+      "sha256": "43229a27e161660cc7e7bc76a09fb9ee457e81ebd7f8b3782d011f44f970a76a"
+    },
+    {
+      "path": "tests/fixtures/observed-cli-server.ts",
+      "sha256": "50d02a4f919b6bf162f5e0b89992a5f0fe37158c0667c565f24bb997b713bfcb"
+    }
+  ]
+}
