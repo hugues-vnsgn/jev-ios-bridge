@@ -2,6 +2,8 @@
 
 Type: task
 Status: ready-for-agent
+Execution: implemented-awaiting-review
+Claimed by: admission-core
 Mode: AFK
 Blocked by: None
 Owner: Admission-core implementer
@@ -36,3 +38,50 @@ Completion: The core interface has passing transactional tests and no alternativ
 
 ## Comments
 
+
+
+### Implementation handoff — 2026-10-08
+
+Bounded verdict: PASS, implemented pending Root's independent review. No rollout acceptance is claimed.
+
+Skills applied: Cook (existing reviewed plan, autonomous user-authorized progression), TDD, codebase-design, use-git-worktree (existing isolation verified), and do-test. Cook's simplify threshold was crossed; the skill is unavailable in the installed roots, so Root covers maintainability in independent review. Shared plan sync, journal and code-review remain Root-owned per dispatch.
+
+Base: `b8c4a50942551bdf95d00036a6d2f7bb6142ff43`. Source: `src/device/admission.ts`, `src/device/admission-sqlite.ts`. Tests: `tests/admission-core.test.ts`, `tests/fixtures/admission-core-worker.ts`.
+
+The module owns SQLite authority: canonical UUID/root and installation identity, schema/migration checks inside transactions, atomic owner/intent acquisition, durable attachment/dispatch/cancel ordering, immutable terminal/disposition commits, and explicit owner-aware quarantine. Available disposition requires settled work and no uncertainty. Observed taps authorize once; legacy attempts retain multiple taps. A failed or ambiguous command authorization closes its local session. Reads do not transition claims; healthy polling and duplicate retrieval preserve database bytes and mtime. Production has no initialization or migration activation entry point in this ticket; only explicit fake-backend fixtures initialize test-mode stores, which real backend attachment rejects.
+
+#### Test matrix and evidence
+
+Oracle: admission decision invariants/state table and this ticket's core subsets of H03/H05/H06/H07/H09. Tests cross `Admission`, its owned claim/session, real SQLite and real child processes. Direct fixture SQL is used only to create corruption/contention, never as the assertion surface for authority.
+
+| Scenario | Expected / observed | Result |
+| --- | --- | --- |
+| Canonical identity and independent observed/legacy owner races | One owner; competitor refused; incumbent completes | PASS |
+| Immutable intent and global attempt identity | Exact duplicate retrieves; changed intent/device conflicts | PASS |
+| Read-only status and repeated retrieval | Database bytes/mtime preserved; healthy claim remains active | PASS |
+| Cancellation before acquire, before effects and during underlying work | No post-cancel dispatch; pre-effect refusal can complete; uncertain work quarantines | PASS |
+| Single observed tap and repeated legacy taps | At most one observed tap; legacy sequence preserved | PASS |
+| Lost/failing command authorization and operation reply | Session closes; no follow-up effect | PASS |
+| Terminal failure before/after commit | Unconfirmed candidate; fresh resolver sees whole committed transaction or prior active claim | PASS |
+| Real child death before/after acquire and terminal commit | All-or-nothing persisted authority; no automatic reclaim | PASS |
+| Live, dead, unknown and mismatched process incarnation | Live/unknown preserve owner; confirmed dead expected owner quarantines | PASS |
+| Token/generation mismatch and stale finalization | Successor preserved; exact old terminal only retrieves | PASS |
+| Missing/corrupt/schema/inactive/unsafe/aliased store and altered journal policy | Closed refusal; no replacement database or policy rewrite | PASS |
+| SQLite writer contention | Bounded wait; incumbent preserved | PASS |
+| Minimum Node version | Real tests and child processes pass on Node 24.0.0 | PASS |
+
+Commands/evidence:
+
+- `node --import tsx --test tests/admission-core.test.ts`: 30 passed, 0 failed/skipped; `/tmp/admission-core-targeted.log`.
+- `npm run typecheck`: exit 0; `/tmp/admission-core-typecheck.log`.
+- `npm run check`: exit 0, 994 tests passed, 0 failed/skipped, build passed; `/tmp/admission-core-full-check.log`. This run included 29 core cases; the subsequent journal-policy case and final metadata-validation change were covered by the final targeted/minimum-runtime/typecheck/build runs.
+- Root-provided official Node 24.0.0 binary with `--import tsx --test tests/admission-core.test.ts`: 30 passed, 0 failed/skipped; `/tmp/admission-core-node24.log`.
+- TDD red/green evidence: `/tmp/admission-core-red-01.log` through `red-04.log`, `red-07.log`, `red-08.log`, `red-09.log`; corresponding green logs plus final targeted output. Reproductions covered missing implementation, mismatched recovery incarnation, follow-up after uncertainty, changed intent under reused digest, ambiguous authorization, legacy multiple taps and altered journal policy.
+
+#### Interfaces and next ownership
+
+`Admission.open()` resolves the account-home canonical production root. `Admission.forTesting({root, backend:'fake', ...dependencies})` creates/reopens explicit test stores. Dependencies provide clock, process incarnation, liveness and before/after-COMMIT fault injection. `acquire` returns a module-owned `AdmissionClaim`, retrieval, or refusal. Claim `bindDriver` attaches once and returns `AdmittedSession.dispatch(kind, effect)`; the effect must return the underlying operation promise, never merely an abort wrapper. Claim `cancel` synchronously closes local issuance, and `finalize` closes issuance before its joint commit. `Admission.cancel` durably orders cross-process cancellation. `readAttempt` is the authoritative resolver. `quarantineAbandoned` requires the exact expected owner and confirmed-dead liveness; unknown/live remains busy.
+
+Transfer both admission source files to ticket 02, then 03 as planned. The internal `AdmissionSqlite` is the typed storage extension seam: add concrete migration/allocation operations alongside existing transaction methods and schema; no SQL executor/callback escapes to allocator orchestration. Metadata contains nullable migration manifest plus schema/root/installation/mode fields. 02 must implement offline initialization/import/activation and migration exclusion; 03 must add reservation, host creation guard, inventory eligibility, parking/transfer and joint allocation terminal policy in the same authority. No advance implementation of those policies is included.
+
+Limitations: no actual backend/device/model operations; no real filesystem exhaustion experiment; no public adapter/legacy-driver integration, migration or allocation policy yet. Those belong to dependent tickets and Root's acceptance matrix. SQLite crash tests establish host transaction behavior, not native release or durability under faulty hardware. OS PID reuse conservatively remains busy unless a supplied liveness adapter can establish the recorded incarnation is dead. Older binaries/external operators remain outside enforcement.
