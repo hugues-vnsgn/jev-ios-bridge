@@ -1,0 +1,26 @@
+{"case":"historical-allocation","importedId":"D22C622B-4D72-4546-937C-05E7E891530D","result":{"version":1,"kind":"observed-operation-error","code":"ALLOCATION_NOT_FOUND","message":"Allocation operation refused: ALLOCATION_NOT_FOUND.","allocationId":"D22C622B-4D72-4546-937C-05E7E891530D","acceptance":"no","acceptanceKind":"preparation"},"calls":[]}
+✖ historical read-only allocation identity remains retrievable (78.81125ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 291.123125
+
+✖ failing tests:
+
+test at ../../../../../../private/tmp/jev-allocator-spec-review-boonbrr6/historical.test.ts:2:1667
+✖ historical read-only allocation identity remains retrievable (78.81125ms)
+  AssertionError [ERR_ASSERTION]: Known historical allocation should not be reported missing
+      at TestContext.<anonymous> (/private/tmp/jev-allocator-spec-review-boonbrr6/historical.test.ts:13:170)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

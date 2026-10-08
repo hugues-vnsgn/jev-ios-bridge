@@ -1,0 +1,225 @@
+{
+  "final-coverage-node26.log": {
+    "argv": [
+      "node",
+      "--import",
+      "tsx",
+      "--test",
+      "--experimental-test-coverage",
+      "--test-coverage-include=src/observed/allocation*.ts",
+      "tests/observed-allocation.test.ts",
+      "tests/observed-allocation-config.test.ts"
+    ],
+    "exit": 0,
+    "elapsedSeconds": 35.95,
+    "logSha256": "2a8bfbd7cf76354030e8fa10fc2839c064e77829abfa0610acdecd598df97c52",
+    "tests": 155,
+    "pass": 155,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "final-focused-node24.log": {
+    "argv": [
+      "npx",
+      "--yes",
+      "--package=node@24.0.0",
+      "node",
+      "--import",
+      "tsx",
+      "--test",
+      "tests/observed-allocation.test.ts",
+      "tests/observed-allocation-config.test.ts",
+      "tests/admission-allocation.test.ts",
+      "tests/admission-core.test.ts",
+      "tests/admission-migration.test.ts",
+      "tests/admission-driver.test.ts",
+      "tests/observed-sources.test.ts",
+      "tests/observed-artifact.test.ts",
+      "tests/device.test.ts",
+      "tests/simulator-window.test.ts",
+      "tests/android-driver.test.ts"
+    ],
+    "exit": 0,
+    "elapsedSeconds": 58.13,
+    "logSha256": "327a72796ee65544cf676d50fb46f5c3f1e3c3939241b4e9e9f0461f2285655f",
+    "tests": 564,
+    "pass": 564,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "final-focused-node26.log": {
+    "argv": [
+      "node",
+      "--import",
+      "tsx",
+      "--test",
+      "tests/observed-allocation.test.ts",
+      "tests/observed-allocation-config.test.ts",
+      "tests/admission-allocation.test.ts",
+      "tests/admission-core.test.ts",
+      "tests/admission-migration.test.ts",
+      "tests/admission-driver.test.ts",
+      "tests/observed-sources.test.ts",
+      "tests/observed-artifact.test.ts",
+      "tests/device.test.ts",
+      "tests/simulator-window.test.ts",
+      "tests/android-driver.test.ts"
+    ],
+    "exit": 0,
+    "elapsedSeconds": 57.44,
+    "logSha256": "80c15ac36c08c9a0742782cfd5564f01fc958f9fe1b3b709a4d669721716e8bb",
+    "tests": 564,
+    "pass": 564,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "final-full-check.log": {
+    "argv": [
+      "npm",
+      "run",
+      "check"
+    ],
+    "exit": 0,
+    "elapsedSeconds": 71.53,
+    "logSha256": "b3081fd2aafd54bdfef5832e5321cee86ce468bc5ab4f1d4c19eb2de543b3cf4",
+    "tests": 1363,
+    "pass": 1363,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "final-node24-version.log": {
+    "argv": [
+      "npx",
+      "--yes",
+      "--package=node@24.0.0",
+      "node",
+      "--version"
+    ],
+    "exit": 0,
+    "elapsedSeconds": 0.55,
+    "logSha256": "5b03239077efd6dd631c8feab1721b9219be33e3d45de0eefa6d47194825ddc7",
+    "tests": null,
+    "pass": null,
+    "fail": null,
+    "cancelled": null,
+    "skipped": null
+  },
+  "final-node26-version.log": {
+    "argv": [
+      "node",
+      "--version"
+    ],
+    "exit": 0,
+    "elapsedSeconds": 0.02,
+    "logSha256": "3e96076e7d5c83119c9c9028696b855d4533501e79491d6f9e29d7b88f5bf3d1",
+    "tests": null,
+    "pass": null,
+    "fail": null,
+    "cancelled": null,
+    "skipped": null
+  },
+  "final-toolchain-version.log": {
+    "argv": [
+      "python3",
+      "-c",
+      "import subprocess,sys;print(\"Python\",sys.version.split()[0]);print(\"npm\",subprocess.check_output([\"npm\",\"--version\"],text=True).strip());print(subprocess.check_output([\"./node_modules/.bin/tsc\",\"--version\"],text=True).strip())"
+    ],
+    "exit": 0,
+    "elapsedSeconds": 0.16,
+    "logSha256": "2a370610ffe8fb99fe36166b10b910ca8cb3fd13782e0330fcb54f412e2f7dce",
+    "tests": null,
+    "pass": null,
+    "fail": null,
+    "cancelled": null,
+    "skipped": null
+  },
+  "green-retire-preparing.log": {
+    "argv": [
+      "node",
+      "--import",
+      "tsx",
+      "--test",
+      "--test-name-pattern",
+      "preparing retirement|busy ",
+      "tests/observed-allocation.test.ts"
+    ],
+    "exit": 0,
+    "elapsedSeconds": 5.86,
+    "logSha256": "85728fcdb15dd0d48d8f2aa6985930fbcebf31f6b3c165325a30719771e3e026",
+    "tests": 16,
+    "pass": 16,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "original-probes-node24.log": {
+    "argv": [
+      "npx",
+      "--yes",
+      "--package=node@24.0.0",
+      "node",
+      "--import",
+      "tsx",
+      "--test",
+      "--test-concurrency=1",
+      "/tmp/jev-allocator-spec-review-boonbrr6/probes.test.ts",
+      "/tmp/jev-allocator-spec-review-boonbrr6/evidence-failure.test.ts",
+      "/tmp/jev-allocator-spec-review-boonbrr6/busy.test.ts",
+      "/tmp/jev-allocator-spec-review-boonbrr6/historical.test.ts",
+      "/tmp/jev-allocator-spec-recheck-10qe7wtm/retire-preparing.test.ts"
+    ],
+    "exit": 0,
+    "elapsedSeconds": 2.71,
+    "logSha256": "0d349cfc0bbc863acf792ac44d3fe208c6b816c08eaf8e585e1bb045d896bf87",
+    "tests": 6,
+    "pass": 6,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "original-probes-node26.log": {
+    "argv": [
+      "node",
+      "--import",
+      "tsx",
+      "--test",
+      "--test-concurrency=1",
+      "/tmp/jev-allocator-spec-review-boonbrr6/probes.test.ts",
+      "/tmp/jev-allocator-spec-review-boonbrr6/evidence-failure.test.ts",
+      "/tmp/jev-allocator-spec-review-boonbrr6/busy.test.ts",
+      "/tmp/jev-allocator-spec-review-boonbrr6/historical.test.ts",
+      "/tmp/jev-allocator-spec-recheck-10qe7wtm/retire-preparing.test.ts"
+    ],
+    "exit": 0,
+    "elapsedSeconds": 1.99,
+    "logSha256": "ab1f984998fe11354bd90dd08476e44f29628a783b50b54f19fca432a1ce3b74",
+    "tests": 6,
+    "pass": 6,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "red-retire-preparing.log": {
+    "argv": [
+      "node",
+      "--import",
+      "tsx",
+      "--test",
+      "--test-name-pattern",
+      "preparing retirement|busy preparing-state",
+      "tests/observed-allocation.test.ts"
+    ],
+    "exit": 1,
+    "elapsedSeconds": 3.08,
+    "logSha256": "04547964fc7aff8b5d4e40c1e5b8bfbb7b98f564d4180ab29afcfe420270466c",
+    "tests": 8,
+    "pass": 7,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 0
+  }
+}

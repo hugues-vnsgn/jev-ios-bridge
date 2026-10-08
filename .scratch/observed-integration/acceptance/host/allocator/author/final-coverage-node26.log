@@ -1,0 +1,111 @@
+COMMAND ["node", "--import", "tsx", "--test", "--experimental-test-coverage", "--test-coverage-include=src/observed/allocation*.ts", "tests/observed-allocation.test.ts", "tests/observed-allocation-config.test.ts"]
+✔ strict preparation parsing fills only the overall default and canonicalizes object order (2.898041ms)
+✔ private fixed account configuration uses defaults and refuses unsafe or malformed settings (16.904334ms)
+✔ installed proof uses exact IDs and RuntimeRoot OS, never internal bundle or newest runtime versions (69.039417ms)
+✔ installed metadata replacement during plutil cannot supply compatibility even with identical bytes (65.818041ms)
+✔ production process composition allows only exact create and trusted fixed plist conversion with sanitized environment (74.857125ms)
+✔ production child cancellation and capped output do not claim settlement until the actual child closes (89.182584ms)
+✔ installed Xcode identity mismatch refuses without host effects (86.64475ms)
+✔ installed Xcode executable mismatch refuses without host effects (73.732208ms)
+✔ installed Xcode min host mismatch refuses without host effects (52.859375ms)
+✔ installed Xcode version mismatch refuses without host effects (52.491792ms)
+✔ installed Xcode build mismatch refuses without host effects (54.889791ms)
+✔ installed device architecture mismatch refuses without host effects (80.774375ms)
+✔ installed device family mismatch refuses without host effects (95.407542ms)
+✔ installed device min runtime mismatch refuses without host effects (98.164583ms)
+✔ installed device max runtime mismatch refuses without host effects (103.322958ms)
+✔ installed runtime platform mismatch refuses without host effects (49.297958ms)
+✔ installed runtime architecture mismatch refuses without host effects (68.415333ms)
+✔ installed runtime family mismatch refuses without host effects (74.15375ms)
+✔ installed runtime min host mismatch refuses without host effects (61.041875ms)
+✔ installed runtime declared OS mismatch refuses without host effects (81.788542ms)
+✔ installed runtime actual OS mismatch refuses without host effects (84.629458ms)
+✔ installed runtime build mismatch refuses without host effects (88.64825ms)
+✔ runtime mounted volume metadata is accepted while missing executable, unsafe metadata and excessive enumeration refuse (334.496542ms)
+✔ config becoming public between permission validation and stable read refuses (78.4815ms)
+✔ child error alone is not process settlement: a potentially live child stays tracked until close (69.073625ms)
+✔ private config rejects symlink, hardlink and overlong file without consulting alternate roots (235.819542ms)
+✔ canonical digest keeps build and supplied source immutable while invalid non-JSON requests stay safe (7.169ms)
+✔ child abort never reports a successful receipt even when its eventual close code is zero (97.540125ms)
+✔ child deadline never reports a successful receipt even when its eventual close code is zero (87.695417ms)
+✔ plist allowlist distinguishes device profiles from runtime OS metadata and rejects every invalid process option (90.347625ms)
+✔ one fresh allocation reserves and stages before create, prepares once and parks for a fresh action (482.768958ms)
+✔ shutdown during a pending configuration read returns promptly with no reservation or backend continuation (51.399167ms)
+✔ supplied inventory is reserved and admitted before availability, then prepares without create or source fallback (432.228208ms)
+✔ unavailable supplied vendor identity refuses before boot and never switches to create (216.690375ms)
+✔ eight retained allocations hold capacity, ninth refuses and changed config counts persisted reservation bytes (3200.972625ms)
+✔ storage simulator below boundary refuses before reservation and effects (36.563375ms)
+✔ storage unreadable storage refuses before reservation and effects (31.90125ms)
+✔ fresh storage check after staging holds all persisted reservations and prevents creation (95.292333ms)
+✔ free-space equality and exact artifact byte ceiling are accepted (371.603666ms)
+✔ artifact size, source mutation and staged mutation refuse without install or rebuilding (331.030959ms)
+✔ unknown creation (0/10) holds capacity and global guard without retry (139.495834ms)
+✔ unknown creation (1/36) holds capacity and global guard without retry (125.897459ms)
+✔ unknown creation (null/0) holds capacity and global guard without retry (120.164792ms)
+✔ unknown creation (0/65537) holds capacity and global guard without retry (114.330625ms)
+✔ protected receipt 73997430-DB8A-48C8-8146-12320CE6AEFE is never admitted or prepared (108.440625ms)
+✔ protected receipt 2FE383F2-2D0F-4286-8797-D3ACEFCD6220 is never admitted or prepared (107.647833ms)
+✔ protected receipt 6A8C5F93-F59A-456B-B157-10642209B734 is never admitted or prepared (113.98125ms)
+✔ protected receipt 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 is never admitted or prepared (114.025625ms)
+✔ cancel during staging prevents every later dispatch and late completion cannot park (100.911209ms)
+✔ cancel during create prevents every later dispatch and late completion cannot park (135.024ms)
+✔ cancel during boot prevents every later dispatch and late completion cannot park (206.143959ms)
+✔ cancel during boot-state prevents every later dispatch and late completion cannot park (227.215958ms)
+✔ cancel during install prevents every later dispatch and late completion cannot park (277.996167ms)
+✔ cancel during launch-app prevents every later dispatch and late completion cannot park (278.636208ms)
+✔ cancel during readiness-list prevents every later dispatch and late completion cannot park (313.638333ms)
+✔ cancel during snapshot-ui prevents every later dispatch and late completion cannot park (340.045208ms)
+✔ cancel during screenshot prevents every later dispatch and late completion cannot park (363.75975ms)
+✔ status wait abortion is a pure read and concurrent IDs retain immutable identity before any new effect (228.565375ms)
+✔ pure ready reads do not expire TTL; only first consume expires or transfers, terminal retirement is bookkeeping (361.674209ms)
+✔ explicit ready cancellation retires stock while executing allocation cancellation is busy (723.3305ms)
+✔ normal shutdown racing the committed park leaves ready ownership intact (382.986083ms)
+✔ missing initialized store refuses before config/source probes with no alternate root (38.258584ms)
+✔ corrupt initialized store refuses before config/source probes with no alternate root (31.042667ms)
+✔ public config errors discard credential-looking diagnostics and supplied values (31.094042ms)
+✔ public metadata errors discard credential-looking diagnostics and supplied values (34.009125ms)
+✔ public artifact errors discard credential-looking diagnostics and supplied values (33.349208ms)
+✔ public create errors discard credential-looking diagnostics and supplied values (120.387959ms)
+✔ public boot errors discard credential-looking diagnostics and supplied values (185.942292ms)
+✔ borrowed admission survives memoized module close; closed module retrieves ready stock before checking shutdown (391.622917ms)
+✔ production composition refuses a test store before any fake source, runner or opener can execute (35.098959ms)
+✔ supplied unknown stock refuses without creation fallback (32.538ms)
+✔ supplied protected stock refuses without creation fallback (36.5825ms)
+✔ supplied duplicate stock refuses without creation fallback (32.352667ms)
+✔ supplied used stock refuses without creation fallback (26.200167ms)
+✔ supplied identity is transactionally exhausted after ready and cannot be prepared twice (361.336166ms)
+✔ independent process consumes parked stock after owner closes, exactly once with the full action binding and zero preparation effects (474.24925ms)
+✔ one stage deadline bounds pending boot and late receipt cannot continue or become ready (213.111334ms)
+
+Interrupted while running:
+
+⚠ tests/observed-allocation.test.ts (tests/observed-allocation.test.ts:1:1)
+✖ tests/observed-allocation.test.ts (267788.686583ms)
+ℹ tests 78
+ℹ suites 0
+ℹ pass 77
+ℹ fail 0
+ℹ cancelled 1
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 267793.398167
+ℹ start of coverage report
+ℹ -----------------------------------------------------------------------
+ℹ file                   | line % | branch % | funcs % | uncovered lines
+ℹ -----------------------------------------------------------------------
+ℹ src                    |        |          |         | 
+ℹ  observed              |        |          |         | 
+ℹ   allocation-config.ts |  97.01 |    86.14 |   76.19 | 55 89 183-187
+ℹ   allocation-schema.ts |  88.24 |   100.00 |   78.57 | 37-43 46
+ℹ -----------------------------------------------------------------------
+ℹ all files              |  95.03 |    87.83 |   76.79 | 
+ℹ -----------------------------------------------------------------------
+ℹ end of coverage report
+
+✖ failing tests:
+
+test at tests/observed-allocation.test.ts:1:1
+✖ tests/observed-allocation.test.ts (267788.686583ms)
+  'Promise resolution is still pending but the event loop has already resolved'
+
+EXIT 1 ELAPSED 267.85s

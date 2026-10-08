@@ -1,0 +1,53 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "global .*identity|creation guard .*evidence|diagnostic publication failure|busy |historical |known acknowledged|one failure finalization budget|cancel .*commit store error", "tests/observed-allocation.test.ts"]
+✔ known acknowledged boot failure is a stable stage refusal with no retry or follow-up (202.142666ms)
+✔ known acknowledged install failure is a stable stage refusal with no retry or follow-up (229.796625ms)
+✔ known acknowledged launch-app failure is a stable stage refusal with no retry or follow-up (265.566875ms)
+✔ cancel before-commit store error synchronously revokes only the known locally owned preparation (546.325ms)
+✔ cancel after-commit store error synchronously revokes only the known locally owned preparation (519.492542ms)
+✔ one failure finalization budget bounds private diagnostics and pending local driver close together without late promotion (5847.1215ms)
+ℹ {"elapsed":5030,"state":"quarantined","capacityHeld":true,"device":"ABCDEF00-0000-4000-8000-000000000001","calls":["create","boot","list","install"]}
+✔ global observed identity conflicts before any allocation prerequisites (54.107041ms)
+✔ global preparation identity conflicts before any allocation prerequisites (44.513584ms)
+✔ creation guard valid evidence uses only its verified retained creator (131.418834ms)
+✔ creation guard unavailable evidence uses only its verified retained creator (129.27875ms)
+✔ creation guard missing evidence uses only its verified retained creator (115.810209ms)
+✔ creation guard relative evidence uses only its verified retained creator (115.945792ms)
+✔ creation guard wrong-identity evidence uses only its verified retained creator (122.708083ms)
+✔ creation guard not-blocking evidence uses only its verified retained creator (119.575042ms)
+✔ required diagnostic publication failure quarantines a settled known install refusal (238.820292ms)
+✔ busy cancel returns verified action context and explicit action cancellation direction (368.585709ms)
+✔ busy retire returns verified action context and explicit action cancellation direction (385.396833ms)
+✔ historical outcome_observed allocation get cancel retire is immutable read-only retrieval (76.141833ms)
+✔ historical already_satisfied allocation get cancel retire is immutable read-only retrieval (64.470208ms)
+✔ historical refused allocation get cancel retire is immutable read-only retrieval (59.685709ms)
+✔ historical inconclusive allocation get cancel retire is immutable read-only retrieval (61.064375ms)
+✔ historical original success preserves outcome with current active disposition (72.39375ms)
+✔ historical original success preserves outcome with current quarantined disposition (87.062167ms)
+✔ historical allocation retrieval survives a fresh process and changed cwd without effects or mutations (216.567333ms)
+✔ historical unavailable consistent disposition refuses without invented committed authority (62.993708ms)
+✔ historical missing consistent disposition refuses without invented committed authority (63.068083ms)
+✔ historical wrong-identity consistent disposition refuses without invented committed authority (63.585458ms)
+✔ historical missing-disposition consistent disposition refuses without invented committed authority (64.322625ms)
+✔ historical relative-evidence consistent disposition refuses without invented committed authority (67.612542ms)
+✔ historical invalid-device consistent disposition refuses without invented committed authority (63.911166ms)
+✔ historical wrong-disposition-device consistent disposition refuses without invented committed authority (74.384458ms)
+✔ historical invalid-disposition consistent disposition refuses without invented committed authority (58.539625ms)
+✔ historical not-read-only consistent disposition refuses without invented committed authority (58.553583ms)
+✔ historical invalid-outcome consistent disposition refuses without invented committed authority (62.981041ms)
+✔ historical empty-evidence consistent disposition refuses without invented committed authority (64.653209ms)
+✔ busy unavailable context cannot fabricate an action cancellation target (367.971833ms)
+✔ busy missing context cannot fabricate an action cancellation target (367.370666ms)
+✔ busy wrong-identity context cannot fabricate an action cancellation target (349.511458ms)
+✔ busy wrong-state context cannot fabricate an action cancellation target (346.309ms)
+✔ busy invalid-action context cannot fabricate an action cancellation target (358.524833ms)
+✔ busy relative-evidence context cannot fabricate an action cancellation target (357.412833ms)
+ℹ tests 41
+ℹ suites 0
+ℹ pass 41
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13123.16175
+
+EXIT 0 ELAPSED 13.16s

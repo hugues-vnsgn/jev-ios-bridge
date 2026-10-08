@@ -1,0 +1,120 @@
+
+final-focused-node26.log
+✔ malformed selected-device listing revokes dispatch before window or launch (507.706208ms)
+✔ malformed simulator entry (selected state is numeric) fences launch, presentation and cleanup (464.208708ms)
+✔ malformed simulator entry (selected state is missing) fences launch, presentation and cleanup (544.231166ms)
+✔ malformed simulator entry (selected state is null) fences launch, presentation and cleanup (375.301917ms)
+✔ malformed simulator entry (selected state is empty) fences launch, presentation and cleanup (412.193875ms)
+✔ malformed simulator entry (selected state is blank) fences launch, presentation and cleanup (481.915917ms)
+✔ malformed simulator entry (identity is numeric) fences launch, presentation and cleanup (468.69675ms)
+✔ malformed simulator entry (identity is missing) fences launch, presentation and cleanup (451.371167ms)
+✔ malformed simulator entry (identity is malformed) fences launch, presentation and cleanup (441.051333ms)
+✔ malformed simulator entry (list is missing) fences launch, presentation and cleanup (420.411959ms)
+✔ malformed simulator entry (list is null) fences launch, presentation and cleanup (338.082583ms)
+✔ malformed simulator entry (list is not an array) fences launch, presentation and cleanup (394.0895ms)
+✔ malformed simulator entry (entry is null) fences launch, presentation and cleanup (426.903667ms)
+✔ malformed simulator entry (entry is an array) fences launch, presentation and cleanup (368.721416ms)
+✔ malformed simulator entry (entry is a string) fences launch, presentation and cleanup (420.253417ms)
+✔ malformed simulator entry (unselected entry is malformed) fences launch, presentation and cleanup (380.752084ms)
+✔ a valid empty simulator list keeps missing-identity warning and acknowledged launch behavior (561.329792ms)
+✔ a malformed simulator-list error receipt cannot acknowledge settlement or authorize cleanup (574.255708ms)
+ℹ tests 564
+ℹ suites 0
+ℹ pass 564
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 57403.512709
+
+EXIT 0 ELAPSED 57.44s
+
+final-focused-node24.log
+✔ malformed selected-device listing revokes dispatch before window or launch (466.146125ms)
+✔ malformed simulator entry (selected state is numeric) fences launch, presentation and cleanup (546.907083ms)
+✔ malformed simulator entry (selected state is missing) fences launch, presentation and cleanup (505.662167ms)
+✔ malformed simulator entry (selected state is null) fences launch, presentation and cleanup (668.867708ms)
+✔ malformed simulator entry (selected state is empty) fences launch, presentation and cleanup (540.219125ms)
+✔ malformed simulator entry (selected state is blank) fences launch, presentation and cleanup (497.59ms)
+✔ malformed simulator entry (identity is numeric) fences launch, presentation and cleanup (537.127583ms)
+✔ malformed simulator entry (identity is missing) fences launch, presentation and cleanup (482.118542ms)
+✔ malformed simulator entry (identity is malformed) fences launch, presentation and cleanup (509.9335ms)
+✔ malformed simulator entry (list is missing) fences launch, presentation and cleanup (442.94775ms)
+✔ malformed simulator entry (list is null) fences launch, presentation and cleanup (380.738584ms)
+✔ malformed simulator entry (list is not an array) fences launch, presentation and cleanup (352.186667ms)
+✔ malformed simulator entry (entry is null) fences launch, presentation and cleanup (396.891292ms)
+✔ malformed simulator entry (entry is an array) fences launch, presentation and cleanup (478.450916ms)
+✔ malformed simulator entry (entry is a string) fences launch, presentation and cleanup (444.311917ms)
+✔ malformed simulator entry (unselected entry is malformed) fences launch, presentation and cleanup (447.443042ms)
+✔ a valid empty simulator list keeps missing-identity warning and acknowledged launch behavior (576.671333ms)
+✔ a malformed simulator-list error receipt cannot acknowledge settlement or authorize cleanup (400.802125ms)
+ℹ tests 564
+ℹ suites 0
+ℹ pass 564
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 57522.140042
+
+EXIT 0 ELAPSED 58.13s
+
+final-coverage-node26.log
+✔ preparing retirement missing returns only verified preparation context and preserves its job (344.452916ms)
+✔ preparing retirement wrong-identity returns only verified preparation context and preserves its job (340.514833ms)
+✔ preparing retirement wrong-state returns only verified preparation context and preserves its job (347.477375ms)
+✔ preparing retirement invalid-action returns only verified preparation context and preserves its job (348.796917ms)
+✔ preparing retirement relative-evidence returns only verified preparation context and preserves its job (336.342875ms)
+ℹ tests 155
+ℹ suites 0
+ℹ pass 155
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35869.710125
+ℹ start of coverage report
+ℹ ---------------------------------------------------------------------------
+ℹ file                   | line % | branch % | funcs % | uncovered lines
+ℹ ---------------------------------------------------------------------------
+ℹ src                    |        |          |         | 
+ℹ  observed              |        |          |         | 
+ℹ   allocation-config.ts |  99.57 |    88.24 |   95.35 | 89
+ℹ   allocation-schema.ts | 100.00 |   100.00 |  100.00 | 
+ℹ   allocation.ts        |  98.58 |    89.76 |   92.31 | 119-120 135-136 213
+ℹ ---------------------------------------------------------------------------
+ℹ all files              |  99.12 |    90.24 |   94.40 | 
+ℹ ---------------------------------------------------------------------------
+ℹ end of coverage report
+
+EXIT 0 ELAPSED 35.95s
+
+final-full-check.log
+✔ a missing or empty variable is MISSING_VALUE, naming the variable and the key, never a value (0.118375ms)
+✔ platform value rules run on the resolved value, and the message never carries it (0.397209ms)
+✔ ios: the service types the variable's value; driver and run see only resolved strings (205.865917ms)
+✔ android: the service types the variable's value; driver and run see only resolved strings (215.731ms)
+✔ a missing variable fails start with MISSING_VALUE before any driver is built or evidence written (15.640042ms)
+✔ a fromEnv value never appears in the script, run.jsonl, report.json, the watch page, the log pane or the reports (3433.959625ms)
+✔ over MCP, a fromEnv value is read from the server's environment, typed and shown, and never appears in tool output (330.633875ms)
+✔ start_scenario's description tells Claude about fromEnv (168.458ms)
+✔ over MCP, a missing variable is an error naming the variable and MISSING_VALUE (157.563ms)
+✔ the CLI pre-check fails a missing variable with exit 3, naming it, before asking for an API key or a device (170.069ms)
+✔ the CLI pre-check reports a resolved value that breaks the platform rule, without printing it (182.023833ms)
+✔ a paused driven run shows its decisions, search, hand-back, and that it waits for Claude (154.614291ms)
+✔ an answered hand-back shows Claude's answer kind and wait, and each action who decided it (165.597084ms)
+✔ a version 1 run's actions read as before, with no decider (116.524083ms)
+ℹ tests 1363
+ℹ suites 0
+ℹ pass 1363
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 70402.4265
+
+> jev-ios-bridge@1.3.1 build
+> rm -rf dist && tsc -p tsconfig.build.json
+
+
+EXIT 0 ELAPSED 71.53s

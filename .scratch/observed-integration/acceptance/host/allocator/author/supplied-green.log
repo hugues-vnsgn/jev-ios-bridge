@@ -1,0 +1,19 @@
+COMMAND ["node", "--import", "tsx", "--test", "tests/observed-allocation.test.ts", "tests/observed-allocation-config.test.ts"]
+✔ strict preparation parsing fills only the overall default and canonicalizes object order (2.110959ms)
+✔ private fixed account configuration uses defaults and refuses unsafe or malformed settings (9.329416ms)
+✔ installed proof uses exact IDs and RuntimeRoot OS, never internal bundle or newest runtime versions (57.597625ms)
+✔ installed metadata replacement during plutil cannot supply compatibility even with identical bytes (48.0275ms)
+✔ one fresh allocation reserves and stages before create, prepares once and parks for a fresh action (369.997167ms)
+✔ shutdown during a pending configuration read returns promptly with no reservation or backend continuation (27.158625ms)
+✔ supplied inventory is reserved and admitted before availability, then prepares without create or source fallback (328.697334ms)
+✔ unavailable supplied vendor identity refuses before boot and never switches to create (148.058375ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1019.140083
+
+EXIT 0 ELAPSED 1.06s

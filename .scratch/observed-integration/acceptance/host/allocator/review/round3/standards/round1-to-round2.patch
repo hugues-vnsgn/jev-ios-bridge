@@ -1,0 +1,343 @@
+--- round1/src/observed/allocation.ts
++++ round2/src/observed/allocation.ts
+@@ -9,7 +9,7 @@
+ import { selectSuppliedSource } from './supplied-source.js';
+ import { readAllocationConfig, installedHost, allocationSourceProcess, allocationStorage, verifyInstalledCompatibility,
+   AllocationPrerequisiteError, stableFile, isProductionSourceProcess, type InstalledHost } from './allocation-config.js';
+-import { allocationSnapshot, allocationError, allocationIdSchema, AllocationInputError, parsePrepareAllocation, preparationDigest,
++import { allocationSnapshot, importedAllocationSnapshot, allocationError, allocationIdSchema, allocationActionIdSchema, AllocationInputError, parsePrepareAllocation, preparationDigest,
+   type PrepareAllocationRequest, type AllocationResult, type AllocationOperationCode } from './allocation-schema.js';
+ export type { AllocationSnapshotV1, AllocationOperationError, AllocationResult } from './allocation-schema.js';
+ 
+@@ -68,6 +68,11 @@
+       const existing = this.admission.readAllocationForAction(request.actionId);
+       if (existing) return existing.preparationDigest === digest ? allocationSnapshot(existing)
+         : allocationError('ACTION_ID_CONFLICT', this.identity(existing), 'yes');
++      const imported = this.admission.readImportedAction(request.actionId);
++      if (imported) return allocationError('ACTION_ID_CONFLICT', { actionId: request.actionId, allocationId: imported.allocationId });
++      if (this.admission.readAttempt({ kind: 'observed', id: request.actionId }) || this.admission.readAttempt({ kind: 'preparation', id: request.actionId })) {
++        return allocationError('ACTION_ID_CONFLICT', { actionId: request.actionId });
++      }
+     } catch { return allocationError('STORE_UNAVAILABLE', { actionId: request.actionId }, 'unknown'); }
+     if (this.closed) return allocationError('SHUTTING_DOWN', { actionId: request.actionId });
+     const running = this.jobs.get(request.actionId);
+@@ -79,6 +84,22 @@
+     return job.promise;
+   }
+   private identity(record: AllocationRecord) { return { actionId: record.actionId, allocationId: record.allocationId, evidenceDirectory: record.evidenceDirectory }; }
++  private imported(id: string): AllocationResult | undefined {
++    const historical = this.admission.readImportedAllocation(id); if (!historical) return undefined;
++    const view = this.admission.readAction(historical.actionId);
++    if (view?.kind !== 'imported' || view.action.allocationId !== id || view.action.actionId !== historical.actionId
++      || view.action.device !== historical.device || view.action.outcome !== historical.outcome) throw new AllocationInputError('STORE_UNAVAILABLE');
++    return importedAllocationSnapshot(view);
++  }
++  private reservationRefusal(reason: AllocationReason, actionId: string, blockingAllocationId?: string): AllocationResult {
++    const identity = { actionId, ...(blockingAllocationId ? { blockingAllocationId } : {}) };
++    if (reason !== 'HOST_CREATION_UNRESOLVED') return allocationError(reason, identity);
++    try {
++      const blocker = blockingAllocationId ? this.admission.readAllocation(blockingAllocationId) : undefined;
++      if (!blocker || blocker.allocationId !== blockingAllocationId || !blocker.hostCreationBlocked || !isAbsolute(blocker.evidenceDirectory)) throw new AllocationInputError('STORE_UNAVAILABLE');
++      return allocationError(reason, { ...identity, evidenceDirectory: blocker.evidenceDirectory });
++    } catch { return allocationError('STORE_UNAVAILABLE', identity); }
++  }
+   private check(job: Job): void {
+     job.controller.signal.throwIfAborted();
+     if (Date.now() >= job.deadline) throw new PreparationFailure(job.phase === 'readiness' ? 'READINESS_FAILED' : 'PREPARATION_UNCONFIRMED');
+@@ -166,8 +187,7 @@
+         appBundleId: request.app.bundleId, source, inspectedContentDigest: inspected.contentDigest, artifactBytes: inspected.bytes,
+         configVersion: config.version, configDigest: config.digest, budgets: { ...config.budgets, timeoutMs: request.timeoutMs }, storage, evidenceDirectory });
+       if (reserved.kind === 'retrieved') return allocationSnapshot(reserved.allocation);
+-      if (reserved.kind === 'refused') return allocationError(reserved.reason, { actionId: request.actionId,
+-        ...(reserved.blockingAllocationId ? { blockingAllocationId: reserved.blockingAllocationId } : {}) });
++      if (reserved.kind === 'refused') return this.reservationRefusal(reserved.reason, request.actionId, reserved.blockingAllocationId);
+       job.reservation = reserved.reservation; this.check(job);
+       await this.local(job, this.directory(dirname(evidenceDirectory))); await this.local(job, fs.mkdir(evidenceDirectory, { mode: 0o700 })); await this.local(job, fs.mkdir(stagingRoot, { mode: 0o700 }));
+       const proofPath = join(evidenceDirectory, 'host-prerequisites.json');
+@@ -248,7 +268,7 @@
+       ]);
+       // A deadline wrapper is not proof that the underlying local close settled.
+       const alreadyUncertain = ['PREPARATION_UNCONFIRMED', 'CREATE_UNCONFIRMED', 'READINESS_FAILED', 'CANCELLED'].includes(reason);
+-      const terminalReason = finalized[1]!.status === 'rejected' && !alreadyUncertain ? 'PREPARATION_UNCONFIRMED' : reason;
++      const terminalReason = finalized.some(result => result.status === 'rejected') && !alreadyUncertain ? 'PREPARATION_UNCONFIRMED' : reason;
+       try {
+         const before = this.admission.readAllocation(job.reservation.identity.allocationId);
+         if (before && before.state !== 'preparing') return allocationSnapshot(before);
+@@ -267,7 +287,7 @@
+       while (true) {
+         if (options.signal?.aborted) return allocationError('WAIT_CANCELLED', { allocationId: parsed.data }, 'unknown');
+         const record = this.admission.readAllocation(parsed.data);
+-        if (!record) return allocationError('ALLOCATION_NOT_FOUND', { allocationId: parsed.data });
++        if (!record) return this.imported(parsed.data) ?? allocationError('ALLOCATION_NOT_FOUND', { allocationId: parsed.data });
+         if (record.state !== 'preparing' || Date.now() >= deadline) return allocationSnapshot(record);
+         await pause(Math.min(100, deadline - Date.now()), options.signal ?? new AbortController().signal);
+       }
+@@ -279,8 +299,19 @@
+     const owned = operation === 'cancel' ? [...this.jobs.values()].find(job => job.reservation?.identity.allocationId === parsed.data) : undefined;
+     const revokeOwned = () => { owned?.controller.abort(new PreparationFailure('CANCELLED')); owned?.driver?.revokeIssuance(); };
+     try {
++      if (!this.admission.readAllocation(parsed.data)) {
++        const historical = this.imported(parsed.data); if (historical) return historical;
++      }
+       const changed = operation === 'cancel' ? this.admission.cancelAllocation(parsed.data) : this.admission.retireAllocation(parsed.data);
+-      if (changed.kind === 'refused') return allocationError(changed.reason, { allocationId: parsed.data }, changed.reason === 'ALLOCATION_NOT_FOUND' ? 'no' : 'yes');
++      if (changed.kind === 'refused') {
++        if (changed.reason === 'ALLOCATION_BUSY') {
++          const current = this.admission.readAllocation(parsed.data);
++          if (!current || current.allocationId !== parsed.data || current.state !== 'executing' || !allocationActionIdSchema.safeParse(current.actionId).success
++            || !isAbsolute(current.evidenceDirectory)) throw new AllocationInputError('STORE_UNAVAILABLE');
++          return allocationError(changed.reason, { ...this.identity(current), state: current.state }, 'yes');
++        }
++        return allocationError(changed.reason, { allocationId: parsed.data }, changed.reason === 'ALLOCATION_NOT_FOUND' ? 'no' : 'yes');
++      }
+       const job = this.jobs.get(changed.allocation.actionId);
+       if (operation === 'cancel' && job && changed.allocation.state === 'preparing') {
+         job.controller.abort(new PreparationFailure('CANCELLED')); job.driver?.revokeIssuance();
+--- round1/src/observed/allocation-schema.ts
++++ round2/src/observed/allocation-schema.ts
+@@ -1,7 +1,8 @@
+ import { createHash } from 'node:crypto';
+ import { isAbsolute } from 'node:path';
+ import { z } from 'zod/v4';
+-import type { AllocationRecord, AllocationReason } from '../device/admission-allocation.js';
++import type { AllocationRecord, AllocationReason, ActionRecordView } from '../device/admission-allocation.js';
++import type { ImportedObservedAction } from '../device/admission-migration.js';
+ import { simulatorUuid, validSimulatorIdentifiers } from './create-source.js';
+ 
+ const text = z.string().min(1).max(500).refine(s => !!s.trim() && !s.includes('\0'));
+@@ -45,11 +46,13 @@
+   device: { platform: 'ios-simulator'; udid: string } | null; reason: AllocationReason | null;
+   outcome: AllocationRecord['outcome']; authority: 'committed' | 'unconfirmed'; readinessEvidence: string[]; evidenceRefs: string[];
+   reservation: { bytes: number; capacityHeld: boolean }; hostCreationBlocked: boolean; cancellationRequested: boolean;
++  readOnly?: true; historicalOutcome?: ImportedObservedAction['outcome'];
+ };
+ export type AllocationOperationError = {
+   version: 1; kind: 'observed-operation-error'; code: AllocationOperationCode; message: string;
+   actionId?: string; allocationId?: string; acceptance: 'no' | 'yes' | 'unknown'; acceptanceKind: 'preparation';
+   blockingAllocationId?: string; evidenceDirectory?: string;
++  state?: AllocationRecord['state'];
+ };
+ export type AllocationResult = AllocationSnapshotV1 | AllocationOperationError;
+ export function allocationSnapshot(record: AllocationRecord, authority: 'committed' | 'unconfirmed' = 'committed'): AllocationSnapshotV1 {
+@@ -61,8 +64,26 @@
+     hostCreationBlocked: record.hostCreationBlocked, cancellationRequested: record.cancellationRequested };
+ }
+ export function allocationError(code: AllocationOperationCode, identity: {
+-  actionId?: string; allocationId?: string; evidenceDirectory?: string; blockingAllocationId?: string;
++  actionId?: string; allocationId?: string; evidenceDirectory?: string; blockingAllocationId?: string; state?: AllocationRecord['state'];
+ } = {}, acceptance: AllocationOperationError['acceptance'] = 'no'): AllocationOperationError {
+-  return { version: 1, kind: 'observed-operation-error', code, message: `Allocation operation refused: ${code}.`,
++  return { version: 1, kind: 'observed-operation-error', code, message: code === 'ALLOCATION_BUSY'
++    ? 'Allocation is executing; use action cancellation via cancel_observed_action or observed-cancel.' : `Allocation operation refused: ${code}.`,
+     ...identity, acceptance, acceptanceKind: 'preparation' };
+ }
++/** Historical authority is immutable; current quarantine only lowers its allocation disposition. */
++export function importedAllocationSnapshot(view: Extract<ActionRecordView, { kind: 'imported' }>): AllocationSnapshotV1 {
++  const { action, admission } = view;
++  if (action.readOnly !== true || !allocationIdSchema.safeParse(action.allocationId).success || !allocationIdSchema.safeParse(action.device).success
++    || !['outcome_observed', 'already_satisfied', 'refused', 'inconclusive'].includes(action.outcome)
++    || !Array.isArray(action.records) || !action.records.length || action.records.some(record => !isAbsolute(record.path))
++    || !admission || admission.device !== action.device || !['active', 'available', 'quarantined'].includes(admission.state)) {
++    throw new AllocationInputError('STORE_UNAVAILABLE');
++  }
++  const uncertain = action.outcome === 'inconclusive' || admission.state === 'quarantined';
++  return { version: 1, allocationId: action.allocationId, actionId: action.actionId, state: uncertain ? 'quarantined' : 'retained', phase: 'terminal',
++    device: { platform: 'ios-simulator', udid: action.device }, reason: null, outcome: uncertain ? 'uncertain' : action.outcome === 'refused' ? 'refused' : 'action_completed',
++    authority: 'committed', readinessEvidence: [], evidenceRefs: [...new Set(action.records.map(record => record.path))],
++    reservation: { bytes: 0, capacityHeld: false }, hostCreationBlocked: false,
++    // No new allocation cancellation was accepted; this does not describe old attempt cancellation history.
++    cancellationRequested: false, readOnly: true, historicalOutcome: action.outcome };
++}
+--- round1/tests/observed-allocation.test.ts
++++ round2/tests/observed-allocation.test.ts
+@@ -4,6 +4,8 @@
+ import { join } from 'node:path';
+ import { ObservedAllocator } from '../src/observed/allocation.js';
+ import { allocationFixture } from './fixtures/observed-allocation-backend.js';
++import { createHash } from 'node:crypto';
++import { migrateAdmissionForTesting, type ImportedObservedAction } from '../src/device/admission-migration.js';
+ 
+ const deviceCalls = (calls: string[]) => calls.filter(c => c !== 'plist');
+ test('one fresh allocation reserves and stages before create, prepares once and parks for a fresh action', async () => {
+@@ -646,3 +648,181 @@
+   assert.equal(child.code,0,child.stderr);t.diagnostic(child.stdout.trim());const receipt=JSON.parse(child.stdout);assert.ok(receipt.elapsed<=5500);assert.equal(receipt.state,'quarantined');
+   assert.equal(receipt.capacityHeld,true);assert.deepEqual(receipt.calls,['create','boot','list','install']);
+ });
++
++for (const kind of ['observed', 'preparation'] as const) test(`global ${kind} identity conflicts before any allocation prerequisites`, async () => {
++  const f = await allocationFixture(); const allocator = subject(f);
++  try {
++    const prior = f.admission.acquire({ device: 'ABCDEF00-0000-4000-8000-000000000099', attempt: { kind, id: 'global-existing' }, digest: 'old-digest', intent: {} });
++    assert.equal(prior.kind, 'acquired'); const bytes = await fs.readFile(join(f.store, 'admission.sqlite'));
++    f.configure({ version: 2 }); refused(await allocator.prepare(f.request('global-existing')), 'ACTION_ID_CONFLICT');
++    assert.deepEqual(f.calls, []); assert.deepEqual(await fs.readFile(join(f.store, 'admission.sqlite')), bytes);
++    assert.deepEqual(f.admission.readAllocationCapacity(), { heldAllocations: 0, reservedBytes: 0 });
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++for (const mode of ['valid', 'unavailable', 'missing', 'relative', 'wrong-identity', 'not-blocking'] as const) test(`creation guard ${mode} evidence uses only its verified retained creator`, async () => {
++  const f = await allocationFixture(); const allocator = subject(f); f.setCreateResult({ exitCode: 1, stdout: '', stderr: 'private fake loss' });
++  try {
++    const blocker = snapshot(await allocator.prepare(f.request('creator'))); const read = f.admission.readAllocation.bind(f.admission);
++    const record = read(blocker.allocationId)!; const calls = [...f.calls]; const bytes = await fs.readFile(join(f.store, 'admission.sqlite'));
++    f.admission.readAllocation = id => {
++      assert.equal(id, blocker.allocationId);
++      if (mode === 'unavailable') throw new Error(hostile);
++      if (mode === 'missing') return undefined;
++      return { ...read(id)!, ...(mode === 'relative' ? { evidenceDirectory: 'relative' } : mode === 'wrong-identity' ? { allocationId: 'ABCDEF00-0000-4000-8000-000000000099' } : mode === 'not-blocking' ? { hostCreationBlocked: false } : {}) };
++    };
++    try {
++      const result = refused(await allocator.prepare(f.request('blocked')), mode === 'valid' ? 'HOST_CREATION_UNRESOLVED' : 'STORE_UNAVAILABLE');
++      assert.equal(result.blockingAllocationId, blocker.allocationId); assert.equal(result.acceptance, 'no');
++      assert.equal(result.evidenceDirectory, mode === 'valid' ? record.evidenceDirectory : undefined);
++      assert.equal(JSON.stringify(result).includes(hostile), false);
++    } finally { f.admission.readAllocation = read; }
++    assert.deepEqual(deviceCalls(f.calls), deviceCalls(calls)); assert.deepEqual(await fs.readFile(join(f.store, 'admission.sqlite')), bytes);
++    assert.equal(read(blocker.allocationId)!.hostCreationBlocked, true); assert.equal(read(blocker.allocationId)!.capacityHeld, true);
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++test('required diagnostic publication failure quarantines a settled known install refusal', async () => {
++  const f = await allocationFixture(); const allocator = subject(f);
++  f.setCommandResult('install', { exitCode: 1, stderr: hostile, stdout: JSON.stringify({ schema: 'mobilebuildmcp.output.install-result', schemaVersion: '2', didError: true,
++    error: { code: 'KNOWN_ERROR', message: hostile }, data: { artifacts: { simulatorId: 'ABCDEF00-0000-4000-8000-000000000001' } } }) });
++  f.setBefore(async op => { if (op === 'install') await fs.mkdir(join(f.admission.readAllocationForAction('allocate-one')!.evidenceDirectory, 'source-diagnostics.json'), { mode: 0o700 }); });
++  try {
++    const result = snapshot(await allocator.prepare(f.request())); assert.equal(result.state, 'quarantined'); assert.equal(result.outcome, 'uncertain');
++    assert.equal(result.reason, 'PREPARATION_UNCONFIRMED'); assert.equal(result.authority, 'committed'); assert.equal(result.reservation.capacityHeld, true);
++    assert.equal(result.device?.udid, 'ABCDEF00-0000-4000-8000-000000000001'); assert.equal(JSON.stringify(result).includes(hostile), false);
++    assert.ok(!result.evidenceRefs.some(ref => ref.endsWith('/source-diagnostics.json'))); assert.deepEqual(deviceCalls(f.calls), ['create', 'boot', 'list', 'install']);
++    const stored = f.admission.readAllocation(result.allocationId); await fs.rmdir(join(stored!.evidenceDirectory, 'source-diagnostics.json'));
++    await allocator.close(); assert.deepEqual(f.admission.readAllocation(result.allocationId), stored); assert.deepEqual(await allocator.get(result.allocationId), result);
++    assert.deepEqual(deviceCalls(f.calls), ['create', 'boot', 'list', 'install']); assert.equal(f.admission.inspect(result.device!.udid)?.state, 'quarantined');
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++for (const operation of ['cancel', 'retire'] as const) test(`busy ${operation} returns verified action context and explicit action cancellation direction`, async () => {
++  const f = await allocationFixture(); const allocator = subject(f);
++  try {
++    const ready = snapshot(await allocator.prepare(f.request())); assert.equal(allocator.consume(binding({ allocationId: ready.allocationId, actionId: ready.actionId }, f)).kind, 'consumed');
++    const stored = f.admission.readAllocation(ready.allocationId); const bytes = await fs.readFile(join(f.store, 'admission.sqlite')); const calls = [...f.calls];
++    const result = refused(await allocator[operation](ready.allocationId.toLowerCase()), 'ALLOCATION_BUSY');
++    assert.equal(result.actionId, ready.actionId); assert.equal((result as unknown as { state: string }).state, 'executing');
++    assert.equal(result.evidenceDirectory, stored!.evidenceDirectory); assert.match(result.message, /action cancellation/); assert.match(result.message, /cancel_observed_action/); assert.match(result.message, /observed-cancel/); assert.equal(result.acceptance, 'yes');
++    assert.deepEqual(f.admission.readAllocation(ready.allocationId), stored); assert.deepEqual(await fs.readFile(join(f.store, 'admission.sqlite')), bytes); assert.deepEqual(f.calls, calls);
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++async function historicalFixture(f: Awaited<ReturnType<typeof allocationFixture>>, outcome: ImportedObservedAction['outcome'], excluded = false) {
++  const hash = (value: string) => createHash('sha256').update(value).digest('hex'); const device = 'ABCDEF00-0000-4000-8000-000000000099';
++  const journal = join(f.root, 'historical'); const directory = join(journal, hash(device)); await fs.mkdir(directory, { recursive: true, mode: 0o700 });
++  const identity = { deviceId: device, actionId: 'historical', intent: { tap: 'old' } };
++  const paths = [join(directory, hash(identity.actionId) + '.intent.json'), join(directory, hash(identity.actionId) + '.result.json')];
++  await fs.writeFile(paths[0]!, JSON.stringify({ ...identity, status: 'in-flight' }), { mode: 0o600 });
++  await fs.writeFile(paths[1]!, JSON.stringify({ ...identity, status: 'completed', result: { status: outcome, actionAttempted: outcome === 'outcome_observed', actionAcknowledged: outcome === 'outcome_observed', observations: 2 } }), { mode: 0o600 });
++  const store = join(f.root, 'imported-store'); migrateAdmissionForTesting({ version: 1, writersStopped: true, historicalRootsDeclaredOrExcluded: true,
++    additionalJournalRoots: [], additionalLeaseRoots: [], excludedDevices: excluded ? [device] : [] }, { root: store, backend: 'fake', defaultRoots: { journal, leases: join(f.root, 'historical-leases') } });
++  const admission = Admission.forTesting({ root: store, backend: 'fake', initialize: false });
++  const allocator = new ObservedAllocator({ admission, runsDir: f.runsDir, fakeBackend: { process: f.source, runner: f.runner, window: f.window, host: f.host } });
++  return { admission, allocator, store, paths, imported: admission.readImportedAction(identity.actionId)! };
++}
++
++for (const outcome of ['outcome_observed', 'already_satisfied', 'refused', 'inconclusive'] as const) test(`historical ${outcome} allocation get cancel retire is immutable read-only retrieval`, async () => {
++  const f = await allocationFixture(); const h = await historicalFixture(f, outcome);
++  try {
++    const bytes = await fs.readFile(join(h.store, 'admission.sqlite')); const originals = await Promise.all(h.paths.map(path => fs.readFile(path)));
++    const result = snapshot(await h.allocator.get(h.imported.allocationId.toLowerCase()));
++    assert.equal(result.allocationId, h.imported.allocationId); assert.equal(result.actionId, h.imported.actionId); assert.equal(result.device!.udid, h.imported.device);
++    assert.equal((result as unknown as { readOnly: boolean }).readOnly, true); assert.equal((result as unknown as { historicalOutcome: string }).historicalOutcome, outcome);
++    assert.equal(result.phase, 'terminal'); assert.equal(result.state, outcome === 'inconclusive' ? 'quarantined' : 'retained');
++    assert.equal(result.outcome, outcome === 'inconclusive' ? 'uncertain' : outcome === 'refused' ? 'refused' : 'action_completed'); assert.equal(result.reason, null);
++    assert.equal(result.authority, 'committed'); assert.equal(result.cancellationRequested, false); assert.equal(result.hostCreationBlocked, false);
++    assert.deepEqual(result.reservation, { bytes: 0, capacityHeld: false }); assert.deepEqual(result.readinessEvidence, []);
++    assert.deepEqual(result.evidenceRefs, h.imported.records.map(record => record.path));
++    assert.deepEqual(await h.allocator.cancel(result.allocationId), result); assert.deepEqual(await h.allocator.retire(result.allocationId), result);
++    assert.deepEqual(await h.allocator.get(result.allocationId, { waitMs: 1 }), result); assert.deepEqual(f.calls, []);
++    refused(await h.allocator.get(result.allocationId, { waitMs: 1, signal: AbortSignal.abort() }), 'WAIT_CANCELLED');
++    assert.deepEqual(await fs.readFile(join(h.store, 'admission.sqlite')), bytes); assert.deepEqual(await Promise.all(h.paths.map(path => fs.readFile(path))), originals);
++    f.configure({ version: 2 }); refused(await h.allocator.prepare(f.request('historical')), 'ACTION_ID_CONFLICT'); assert.deepEqual(f.calls, []);
++    const consumed = h.allocator.consume(binding({ allocationId: result.allocationId, actionId: result.actionId }, f)); assert.equal(consumed.kind, 'refused');
++    assert.deepEqual(await fs.readFile(join(h.store, 'admission.sqlite')), bytes);
++  } finally { await h.allocator.close(); await f.cleanup(); }
++});
++
++test('historical exclusion retains current quarantine independently of zero new allocation capacity', async () => {
++  const f = await allocationFixture(); const h = await historicalFixture(f, 'outcome_observed', true);
++  try {
++    assert.equal(h.imported.outcome, 'outcome_observed'); const bytes = await fs.readFile(join(h.store, 'admission.sqlite'));
++    const result = snapshot(await h.allocator.get(h.imported.allocationId)); assert.equal(result.state, 'quarantined'); assert.equal(result.outcome, 'uncertain');
++    assert.equal(result.readOnly, true); assert.equal(result.historicalOutcome, 'outcome_observed'); assert.equal(result.reason, null);
++    assert.deepEqual(result.reservation, { bytes: 0, capacityHeld: false }); assert.deepEqual(h.admission.readAllocationCapacity(), { heldAllocations: 0, reservedBytes: 0 });
++    assert.deepEqual(await h.allocator.cancel(result.allocationId), result); assert.deepEqual(await h.allocator.retire(result.allocationId), result);
++    assert.deepEqual(await fs.readFile(join(h.store, 'admission.sqlite')), bytes);
++    const denied = h.admission.acquire({ device: h.imported.device, attempt: { kind: 'legacy', id: 'blocked-legacy' }, digest: 'later', intent: {} });
++    assert.equal(denied.kind, 'refused'); if (denied.kind !== 'refused') assert.fail(); assert.equal(denied.reason, 'DEVICE_QUARANTINED');
++    assert.deepEqual(f.calls, []); assert.deepEqual(await fs.readFile(join(h.store, 'admission.sqlite')), bytes);
++  } finally { await h.allocator.close(); await f.cleanup(); }
++});
++
++for (const current of ['active', 'quarantined'] as const) test(`historical original success preserves outcome with current ${current} disposition`, async () => {
++  const f = await allocationFixture(); const h = await historicalFixture(f, 'outcome_observed');
++  try {
++    const acquired = h.admission.acquire({ device: h.imported.device, attempt: { kind: 'legacy', id: 'later' }, digest: 'later', intent: {} });
++    assert.equal(acquired.kind, 'acquired'); if (acquired.kind !== 'acquired') assert.fail();
++    if (current === 'quarantined') assert.equal(acquired.claim.finalize({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] }).authority, 'committed');
++    const bytes = await fs.readFile(join(h.store, 'admission.sqlite')); const result = snapshot(await h.allocator.get(h.imported.allocationId));
++    assert.equal((result as unknown as { historicalOutcome: string }).historicalOutcome, 'outcome_observed');
++    assert.equal(result.state, current === 'quarantined' ? 'quarantined' : 'retained'); assert.equal(result.outcome, current === 'quarantined' ? 'uncertain' : 'action_completed');
++    assert.equal(result.reason, null); assert.deepEqual(await h.allocator.cancel(result.allocationId), result); assert.deepEqual(await h.allocator.retire(result.allocationId), result);
++    assert.deepEqual(await fs.readFile(join(h.store, 'admission.sqlite')), bytes); assert.deepEqual(f.calls, []);
++  } finally { await h.allocator.close(); await f.cleanup(); }
++});
++
++test('historical allocation retrieval survives a fresh process and changed cwd without effects or mutations', async () => {
++  const f = await allocationFixture(); const h = await historicalFixture(f, 'already_satisfied');
++  try {
++    const result = snapshot(await h.allocator.get(h.imported.allocationId)); await h.allocator.close(); const bytes = await fs.readFile(join(h.store, 'admission.sqlite'));
++    const child = await isolatedChild(`
++      import assert from 'node:assert/strict';import {ObservedAllocator} from ${JSON.stringify(new URL('../src/observed/allocation.ts', import.meta.url).href)};
++      import {Admission} from ${JSON.stringify(new URL('../src/device/admission.ts', import.meta.url).href)};
++      import {allocationFixture} from ${JSON.stringify(new URL('./fixtures/observed-allocation-backend.ts', import.meta.url).href)};
++      const [root,id,cwd]=process.argv.slice(1);const f=await allocationFixture();process.chdir(cwd);const a=new ObservedAllocator({admission:Admission.forTesting({root,backend:'fake',initialize:false}),runsDir:f.runsDir,fakeBackend:{process:f.source,runner:f.runner,window:f.window,host:f.host}});
++      try{const result=await a.get(id);assert.deepEqual(await a.cancel(id),result);assert.deepEqual(await a.retire(id),result);assert.deepEqual(f.calls,[]);console.log(JSON.stringify(result));}finally{await a.close();await f.cleanup();}
++    `, [h.store, h.imported.allocationId, f.root]);
++    assert.equal(child.code, 0, child.stderr); assert.deepEqual(JSON.parse(child.stdout), result); assert.deepEqual(await fs.readFile(join(h.store, 'admission.sqlite')), bytes); assert.deepEqual(f.calls, []);
++  } finally { await h.allocator.close(); await f.cleanup(); }
++});
++
++for (const mode of ['unavailable', 'missing', 'wrong-identity', 'missing-disposition', 'relative-evidence', 'invalid-device', 'wrong-disposition-device', 'invalid-disposition', 'not-read-only', 'invalid-outcome', 'empty-evidence'] as const) test(`historical ${mode} consistent disposition refuses without invented committed authority`, async () => {
++  const f = await allocationFixture(); const h = await historicalFixture(f, 'outcome_observed'); const read = h.admission.readAction.bind(h.admission);
++  h.admission.readAction = id => {
++    if (mode === 'unavailable') throw new Error(hostile); if (mode === 'missing') return undefined;
++    const view = read(id)!; if (view.kind !== 'imported') assert.fail();
++    if (mode === 'missing-disposition') return { ...view, admission: null };
++    if (mode === 'wrong-disposition-device') return { ...view, admission: { ...view.admission!, device: 'ABCDEF00-0000-4000-8000-000000000088' } };
++    if (mode === 'invalid-disposition') return { ...view, admission: { ...view.admission!, state: 'invalid' as never } };
++    return { ...view, action: { ...view.action, ...(mode === 'wrong-identity' ? { allocationId: 'ABCDEF00-0000-4000-8000-000000000099' }
++      : mode === 'relative-evidence' ? { records: [{ ...view.action.records[0]!, path: 'relative' }] }
++      : mode === 'invalid-device' ? { device: 'invalid' } : mode === 'not-read-only' ? { readOnly: false as never }
++      : mode === 'invalid-outcome' ? { outcome: 'invalid' as never } : { records: [] }) } };
++  };
++  try {
++    const bytes = await fs.readFile(join(h.store, 'admission.sqlite'));
++    for (const operation of ['get', 'cancel', 'retire'] as const) { const error = refused(await h.allocator[operation](h.imported.allocationId), 'STORE_UNAVAILABLE'); assert.equal(error.acceptance, 'unknown'); assert.equal(JSON.stringify(error).includes(hostile), false); }
++    assert.deepEqual(f.calls, []); assert.deepEqual(await fs.readFile(join(h.store, 'admission.sqlite')), bytes);
++  } finally { h.admission.readAction = read; await h.allocator.close(); await f.cleanup(); }
++});
++
++for (const mode of ['unavailable', 'missing', 'wrong-identity', 'wrong-state', 'invalid-action', 'relative-evidence'] as const) test(`busy ${mode} context cannot fabricate an action cancellation target`, async () => {
++  const f = await allocationFixture(); const allocator = subject(f);
++  try {
++    const ready = snapshot(await allocator.prepare(f.request())); assert.equal(allocator.consume(binding({ allocationId: ready.allocationId, actionId: ready.actionId }, f)).kind, 'consumed');
++    const read = f.admission.readAllocation.bind(f.admission); const bytes = await fs.readFile(join(f.store, 'admission.sqlite')); const calls = [...f.calls]; let reads = 0;
++    f.admission.readAllocation = id => {
++      if (++reads !== 2) return read(id);
++      if (mode === 'unavailable') throw new Error(hostile); if (mode === 'missing') return undefined;
++      return { ...read(id)!, ...(mode === 'wrong-identity' ? { allocationId: 'ABCDEF00-0000-4000-8000-000000000099' }
++        : mode === 'wrong-state' ? { state: 'retained' as const } : mode === 'invalid-action' ? { actionId: hostile } : { evidenceDirectory: 'relative' }) };
++    };
++    try { const result = refused(await allocator.cancel(ready.allocationId), 'STORE_UNAVAILABLE'); assert.equal(result.acceptance, 'unknown'); assert.equal(result.actionId, undefined); assert.equal(JSON.stringify(result).includes(hostile), false); }
++    finally { f.admission.readAllocation = read; }
++    assert.deepEqual(await fs.readFile(join(f.store, 'admission.sqlite')), bytes); assert.deepEqual(f.calls, calls); assert.equal(read(ready.allocationId)!.state, 'executing');
++  } finally { await allocator.close(); await f.cleanup(); }
++});

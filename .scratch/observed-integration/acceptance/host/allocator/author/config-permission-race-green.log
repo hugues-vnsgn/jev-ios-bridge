@@ -1,0 +1,12 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "config becoming", "tests/observed-allocation-config.test.ts"]
+✔ config becoming public between permission validation and stable read refuses (40.628833ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 164.24975
+
+EXIT 0 ELAPSED 0.20s

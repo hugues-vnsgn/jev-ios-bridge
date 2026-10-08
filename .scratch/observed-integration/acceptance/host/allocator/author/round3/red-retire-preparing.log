@@ -1,0 +1,41 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "preparing retirement|busy preparing-state", "tests/observed-allocation.test.ts"]
+✔ busy preparing-state context cannot fabricate an action cancellation target (383.519458ms)
+✖ preparing retirement valid returns only verified preparation context and preserves its job (352.899291ms)
+✔ preparing retirement unavailable returns only verified preparation context and preserves its job (350.458459ms)
+✔ preparing retirement missing returns only verified preparation context and preserves its job (342.682875ms)
+✔ preparing retirement wrong-identity returns only verified preparation context and preserves its job (362.926833ms)
+✔ preparing retirement wrong-state returns only verified preparation context and preserves its job (344.694584ms)
+✔ preparing retirement invalid-action returns only verified preparation context and preserves its job (347.692042ms)
+✔ preparing retirement relative-evidence returns only verified preparation context and preserves its job (345.798584ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3047.904333
+
+✖ failing tests:
+
+test at tests/observed-allocation.test.ts:49:3692
+✖ preparing retirement valid returns only verified preparation context and preserves its job (352.899291ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'STORE_UNAVAILABLE'
+  - 'ALLOCATION_BUSY'
+  
+      at refused (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:85:103)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:847:22)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'STORE_UNAVAILABLE',
+    expected: 'ALLOCATION_BUSY',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+EXIT 1 ELAPSED 3.08s

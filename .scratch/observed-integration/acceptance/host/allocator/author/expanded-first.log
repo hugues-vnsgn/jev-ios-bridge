@@ -1,0 +1,48 @@
+COMMAND ["node", "--import", "tsx", "--test", "tests/observed-allocation.test.ts", "tests/observed-allocation-config.test.ts"]
+✔ strict preparation parsing fills only the overall default and canonicalizes object order (2.234666ms)
+✔ private fixed account configuration uses defaults and refuses unsafe or malformed settings (9.13725ms)
+✔ installed proof uses exact IDs and RuntimeRoot OS, never internal bundle or newest runtime versions (47.274ms)
+✔ installed metadata replacement during plutil cannot supply compatibility even with identical bytes (52.682583ms)
+✔ one fresh allocation reserves and stages before create, prepares once and parks for a fresh action (368.778041ms)
+✔ shutdown during a pending configuration read returns promptly with no reservation or backend continuation (29.674ms)
+✔ supplied inventory is reserved and admitted before availability, then prepares without create or source fallback (343.942ms)
+✔ unavailable supplied vendor identity refuses before boot and never switches to create (149.999292ms)
+✔ eight retained allocations hold capacity, ninth refuses and changed config counts persisted reservation bytes (2903.284625ms)
+✔ storage simulator below boundary refuses before reservation and effects (37.111541ms)
+✔ storage unreadable storage refuses before reservation and effects (33.738333ms)
+✔ fresh storage check after staging holds all persisted reservations and prevents creation (88.146917ms)
+✔ free-space equality and exact artifact byte ceiling are accepted (325.92375ms)
+✔ artifact size, source mutation and staged mutation refuse without install or rebuilding (306.642667ms)
+✔ unknown creation (0/10) holds capacity and global guard without retry (125.103959ms)
+✔ unknown creation (1/36) holds capacity and global guard without retry (119.48775ms)
+✔ unknown creation (null/0) holds capacity and global guard without retry (114.95675ms)
+✔ unknown creation (0/65537) holds capacity and global guard without retry (107.9725ms)
+✔ protected receipt 73997430-DB8A-48C8-8146-12320CE6AEFE is never admitted or prepared (103.460291ms)
+✔ protected receipt 2FE383F2-2D0F-4286-8797-D3ACEFCD6220 is never admitted or prepared (103.890375ms)
+✔ protected receipt 6A8C5F93-F59A-456B-B157-10642209B734 is never admitted or prepared (100.952375ms)
+✔ protected receipt 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 is never admitted or prepared (110.926542ms)
+✔ cancel during staging prevents every later dispatch and late completion cannot park (97.15125ms)
+✔ cancel during create prevents every later dispatch and late completion cannot park (131.439292ms)
+✔ cancel during boot prevents every later dispatch and late completion cannot park (188.482125ms)
+✔ cancel during boot-state prevents every later dispatch and late completion cannot park (216.889958ms)
+✔ cancel during install prevents every later dispatch and late completion cannot park (251.269625ms)
+✔ cancel during launch-app prevents every later dispatch and late completion cannot park (261.55125ms)
+✔ cancel during readiness-list prevents every later dispatch and late completion cannot park (282.840459ms)
+✔ cancel during snapshot-ui prevents every later dispatch and late completion cannot park (330.000417ms)
+✔ cancel during screenshot prevents every later dispatch and late completion cannot park (342.088334ms)
+✔ status wait abortion is a pure read and concurrent IDs retain immutable identity before any new effect (204.986417ms)
+✔ pure ready reads do not expire TTL; only first consume expires or transfers, terminal retirement is bookkeeping (339.796333ms)
+✔ explicit ready cancellation retires stock while executing allocation cancellation is busy (657.888167ms)
+✔ normal shutdown racing the committed park leaves ready ownership intact (346.806875ms)
+✔ missing initialized store refuses before config/source probes with no alternate root (49.292708ms)
+✔ corrupt initialized store refuses before config/source probes with no alternate root (28.722708ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9390.644333
+
+EXIT 0 ELAPSED 9.43s

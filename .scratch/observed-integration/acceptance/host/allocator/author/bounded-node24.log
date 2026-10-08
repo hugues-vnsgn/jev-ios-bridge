@@ -1,0 +1,30 @@
+COMMAND ["npx", "--yes", "--package=node@24.0.0", "node", "--import", "tsx", "--test", "--test-name-pattern", "production|child|lost reservation|unknown creator directory|independent process|known acknowledged|aggregate", "tests/observed-allocation.test.ts", "tests/observed-allocation-config.test.ts"]
+(node:93536) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ production process composition allows only exact create and trusted fixed plist conversion with sanitized environment (53.197833ms)
+✔ production child cancellation and capped output do not claim settlement until the actual child closes (41.878291ms)
+✔ child error alone is not process settlement: a potentially live child stays tracked until close (64.227959ms)
+✔ child abort never reports a successful receipt even when its eventual close code is zero (86.945667ms)
+✔ child deadline never reports a successful receipt even when its eventual close code is zero (97.278666ms)
+(node:93537) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ production composition refuses a test store before any fake source, runner or opener can execute (44.154292ms)
+✔ independent process consumes parked stock after owner closes, exactly once with the full action binding and zero preparation effects (571.346875ms)
+✔ test authority rejects production window opener and production source composition at construction before any effects (30.27175ms)
+✔ aggregate booting stage budget covers every internal call without resetting on a settled response (305.332417ms)
+✔ aggregate readiness stage budget covers every internal call without resetting on a settled response (446.780792ms)
+✔ known acknowledged boot failure is a stable stage refusal with no retry or follow-up (175.153708ms)
+✔ known acknowledged install failure is a stable stage refusal with no retry or follow-up (245.170834ms)
+✔ known acknowledged launch-app failure is a stable stage refusal with no retry or follow-up (276.233708ms)
+✔ lost reservation commit reply returns only fresh accepted authority, never false no-acceptance or a replay (58.242208ms)
+✔ unknown creator directory pointer survives a fresh process and changed cwd with zero probes and unchanged durable state (291.366458ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2672.850959
+
+EXIT 0 ELAPSED 3.25s

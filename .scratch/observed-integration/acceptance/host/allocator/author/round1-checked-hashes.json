@@ -1,0 +1,67 @@
+{
+  "head": "98f7de41baa316f47a65a7bc2160128a72051f3e",
+  "branch": "feat/observed-allocator",
+  "gitDir": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.git/worktrees/feat-observed-allocator",
+  "originalDispatchBase": "fd9b3c0d19284b9fc22c4bb5e3a3fd4bb0d3b181",
+  "files": {
+    "src/observed/allocation.ts": {
+      "sha256": "8473502a4acc9f8cafcb5c7c708bc54a4464a438f181e59da6bbe0509d97cb9f",
+      "gitBlob": "344b2fc97ba5d9629da31aec2a070b93b5606ba8"
+    },
+    "src/observed/allocation-schema.ts": {
+      "sha256": "be51799b0b0b39ba97dcbb0dbe86d4020dcd9876ac1419636e1a652ecedf0762",
+      "gitBlob": "b4ded436ce49fea774ba24902c120a2ef24fb3f0"
+    },
+    "src/observed/allocation-config.ts": {
+      "sha256": "b6519649edbaf203e5323a15c80273321a42a5cb49850551297268e6ee1f5f0a",
+      "gitBlob": "e7c72a20932ca9ea63747d58b6ca2ff9f2cd137c"
+    },
+    "tests/observed-allocation.test.ts": {
+      "sha256": "edf6f58d85d83384c37ff331bf7e925b65a80b689800ef6b429c158b71786d40",
+      "gitBlob": "f3f070a3770a0406900ef3b15d0be547fc1ee64a"
+    },
+    "tests/observed-allocation-config.test.ts": {
+      "sha256": "cc46883cd5bd9bf344fe228b6b91b7b4b4745e262b2b4fe3108cf22b05123ab6",
+      "gitBlob": "b97b3e6ba4662940b4644e00042beca5a7f4d8f5"
+    },
+    "tests/fixtures/observed-allocation-backend.ts": {
+      "sha256": "82761f545831ccb2418936c5370e25b8970e972ddedf3879827d6c4c30df3814",
+      "gitBlob": "9332732d8399517748e21a8c49b5c10f2c36299b"
+    }
+  },
+  "previousManifest": "final-gate-hashes.json",
+  "repairChanged": [
+    "src/observed/allocation.ts",
+    "tests/observed-allocation.test.ts"
+  ],
+  "matchesFrozenManifest": true,
+  "gates": {
+    "repair-final-focused-node26.log": {
+      "exit": 0,
+      "tests": 520,
+      "pass": 520,
+      "skip": 0
+    },
+    "repair-final-focused-node24.log": {
+      "exit": 0,
+      "tests": 520,
+      "pass": 520,
+      "skip": 0
+    },
+    "repair-final-coverage-node26.log": {
+      "exit": 0,
+      "tests": 111,
+      "pass": 111,
+      "skip": 0
+    },
+    "repair-final-full-check.log": {
+      "exit": 0,
+      "tests": 1319,
+      "pass": 1319,
+      "skip": 0,
+      "typecheck": "PASS",
+      "build": "PASS"
+    }
+  },
+  "verdict": "BLOCKED pending independent review findings; suite pass is bounded host evidence only"
+}

@@ -1,0 +1,12 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "lost reservation commit", "tests/observed-allocation.test.ts"]
+✔ lost reservation commit reply returns only fresh accepted authority, never false no-acceptance or a replay (69.980958ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 212.898208
+
+EXIT 0 ELAPSED 0.25s

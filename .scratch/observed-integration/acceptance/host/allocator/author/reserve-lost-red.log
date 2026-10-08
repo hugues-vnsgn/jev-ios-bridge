@@ -1,0 +1,29 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "lost reservation commit", "tests/observed-allocation.test.ts"]
+✖ lost reservation commit reply returns only fresh accepted authority, never false no-acceptance or a replay (79.957083ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 263.181
+
+✖ failing tests:
+
+test at tests/observed-allocation.test.ts:13:5830
+✖ lost reservation commit reply returns only fresh accepted authority, never false no-acceptance or a replay (79.957083ms)
+  AssertionError [ERR_ASSERTION]: {"version":1,"kind":"observed-operation-error","code":"STATE_UNAVAILABLE","message":"Allocation operation refused: STATE_UNAVAILABLE.","actionId":"allocate-one","acceptance":"no","acceptanceKind":"preparation"}
+      at snapshot (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:80:10)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:486:24)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+EXIT 1 ELAPSED 0.30s

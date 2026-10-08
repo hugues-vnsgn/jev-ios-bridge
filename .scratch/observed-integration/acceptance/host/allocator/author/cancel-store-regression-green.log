@@ -1,0 +1,15 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "cancel .*commit store error|one stage deadline", "tests/observed-allocation.test.ts"]
+✔ one stage deadline bounds pending boot and late receipt cannot continue or become ready (225.015917ms)
+✔ one stage deadline bounds pending snapshot-ui and late receipt cannot continue or become ready (347.421167ms)
+✔ cancel before-commit store error synchronously revokes only the known locally owned preparation (511.092041ms)
+✔ cancel after-commit store error synchronously revokes only the known locally owned preparation (500.838708ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1744.7525
+
+EXIT 0 ELAPSED 1.78s

@@ -1,0 +1,11 @@
+COMMAND ["npm", "run", "typecheck"]
+
+> jev-ios-bridge@1.3.1 typecheck
+> tsc --noEmit
+
+tests/observed-allocation.test.ts(501,42): error TS2322: Type '{ inventoryId: string; udid: string; deviceTypeId: string; runtimeId: string; creation: { createdAt: string; origin: string; evidenceRef: string; }; attestation: { freshUnused: boolean; exclusive: boolean; }; kind: "supplied"; }' is not assignable to type '{ deviceTypeId: string; runtimeId: string; kind: "create"; } | { deviceTypeId: string; runtimeId: string; kind: "supplied"; inventoryId: string; udid: string; creation: { createdAt: string; origin: string; evidenceRef: string; }; attestation: { ...; }; }'.
+  Type '{ inventoryId: string; udid: string; deviceTypeId: string; runtimeId: string; creation: { createdAt: string; origin: string; evidenceRef: string; }; attestation: { freshUnused: boolean; exclusive: boolean; }; kind: "supplied"; }' is not assignable to type '{ deviceTypeId: string; runtimeId: string; kind: "supplied"; inventoryId: string; udid: string; creation: { createdAt: string; origin: string; evidenceRef: string; }; attestation: { freshUnused: true; exclusive: true; }; }'.
+    The types of 'attestation.freshUnused' are incompatible between these types.
+      Type 'boolean' is not assignable to type 'true'.
+
+EXIT 1 ELAPSED 0.37s

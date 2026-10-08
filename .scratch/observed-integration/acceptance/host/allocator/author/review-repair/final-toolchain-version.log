@@ -1,0 +1,6 @@
+COMMAND ["python3", "-c", "import subprocess,sys; print(sys.version); subprocess.run([\"npm\",\"--version\"],check=True); subprocess.run([\"node\",\"node_modules/typescript/bin/tsc\",\"--version\"],check=True)"]
+11.19.0
+Version 7.0.2
+3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]
+
+EXIT 0 ELAPSED 0.20s

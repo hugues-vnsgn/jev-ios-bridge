@@ -1,0 +1,20 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "one failure finalization budget|cancel .*commit store error|failed cancellation targets one|one stage deadline|known acknowledged", "tests/observed-allocation.test.ts"]
+✔ one stage deadline bounds pending boot and late receipt cannot continue or become ready (911.992875ms)
+✔ one stage deadline bounds pending snapshot-ui and late receipt cannot continue or become ready (1187.260041ms)
+✔ known acknowledged boot failure is a stable stage refusal with no retry or follow-up (584.120875ms)
+✔ known acknowledged install failure is a stable stage refusal with no retry or follow-up (679.034583ms)
+✔ known acknowledged launch-app failure is a stable stage refusal with no retry or follow-up (736.720667ms)
+✔ cancel before-commit store error synchronously revokes only the known locally owned preparation (910.162917ms)
+✔ cancel after-commit store error synchronously revokes only the known locally owned preparation (875.712583ms)
+✔ failed cancellation targets one owned allocation and preserves another live preparation (1111.786417ms)
+✔ one failure finalization budget bounds private diagnostics and pending local driver close together without late promotion (5772.131ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12927.792
+
+EXIT 0 ELAPSED 12.97s

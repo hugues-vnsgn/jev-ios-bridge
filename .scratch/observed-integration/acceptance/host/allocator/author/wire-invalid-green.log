@@ -1,0 +1,13 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "wire snapshots|invalid lifecycle", "tests/observed-allocation.test.ts"]
+✔ wire snapshots omit internal ownership and return copied references; unconfirmed projection cannot claim prepared outcome (347.521416ms)
+✔ invalid lifecycle IDs and waits refuse with zero probes and no accepted allocation (32.074333ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 572.87175
+
+EXIT 0 ELAPSED 0.61s

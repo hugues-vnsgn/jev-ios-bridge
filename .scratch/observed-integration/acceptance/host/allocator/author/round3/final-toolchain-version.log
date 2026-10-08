@@ -1,0 +1,6 @@
+COMMAND ["python3", "-c", "import subprocess,sys;print(\"Python\",sys.version.split()[0]);print(\"npm\",subprocess.check_output([\"npm\",\"--version\"],text=True).strip());print(subprocess.check_output([\"./node_modules/.bin/tsc\",\"--version\"],text=True).strip())"]
+Python 3.14.7
+npm 11.19.0
+Version 7.0.2
+
+EXIT 0 ELAPSED 0.16s

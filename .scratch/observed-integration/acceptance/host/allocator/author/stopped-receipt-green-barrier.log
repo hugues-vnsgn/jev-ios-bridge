@@ -1,0 +1,16 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "production|child", "tests/observed-allocation-config.test.ts"]
+✔ production process composition allows only exact create and trusted fixed plist conversion with sanitized environment (44.331208ms)
+✔ production child cancellation and capped output do not claim settlement until the actual child closes (29.938083ms)
+✔ child error alone is not process settlement: a potentially live child stays tracked until close (26.121125ms)
+✔ child abort never reports a successful receipt even when its eventual close code is zero (26.278791ms)
+✔ child deadline never reports a successful receipt even when its eventual close code is zero (45.764083ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 332.188
+
+EXIT 0 ELAPSED 0.37s

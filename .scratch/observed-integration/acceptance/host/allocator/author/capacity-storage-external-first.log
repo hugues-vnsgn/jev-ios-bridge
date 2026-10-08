@@ -1,0 +1,16 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "fresh authoritative|unsafe .*store|external cancellation", "tests/observed-allocation.test.ts"]
+✔ fresh authoritative held-capacity check before-create honors another config generation (180.96575ms)
+✔ fresh authoritative held-capacity check before-install honors another config generation (267.017459ms)
+✔ unsafe file store permissions fail closed before prerequisites and never choose another root (75.779458ms)
+✔ unsafe directory store permissions fail closed before prerequisites and never choose another root (32.797083ms)
+✔ external cancellation commits before an abort-ignoring boot settles and prevents immediate next dispatch without relying on the monitor (283.485083ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1032.307292
+
+EXIT 0 ELAPSED 1.07s

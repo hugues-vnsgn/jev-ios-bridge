@@ -1,0 +1,14 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "known acknowledged", "tests/observed-allocation.test.ts"]
+✔ known acknowledged boot failure is a stable stage refusal with no retry or follow-up (206.124833ms)
+✔ known acknowledged install failure is a stable stage refusal with no retry or follow-up (246.921333ms)
+✔ known acknowledged launch-app failure is a stable stage refusal with no retry or follow-up (270.062667ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 911.476125
+
+EXIT 0 ELAPSED 0.95s

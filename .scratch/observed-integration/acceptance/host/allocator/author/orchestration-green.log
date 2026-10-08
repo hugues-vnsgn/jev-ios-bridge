@@ -1,0 +1,12 @@
+COMMAND ["node", "--import", "tsx", "--test", "tests/observed-allocation.test.ts"]
+✔ one fresh allocation reserves and stages before create, prepares once and parks for a fresh action (364.725792ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 523.852584
+
+EXIT 0 ELAPSED 0.56s

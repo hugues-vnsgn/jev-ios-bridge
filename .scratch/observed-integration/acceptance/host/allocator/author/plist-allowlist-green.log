@@ -1,0 +1,12 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "plist allowlist distinguishes", "tests/observed-allocation-config.test.ts"]
+✔ plist allowlist distinguishes device profiles from runtime OS metadata and rejects every invalid process option (44.565375ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 204.298
+
+EXIT 0 ELAPSED 0.24s

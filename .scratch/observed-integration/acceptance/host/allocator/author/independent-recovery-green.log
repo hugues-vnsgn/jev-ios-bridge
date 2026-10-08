@@ -1,0 +1,13 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "dead independent|transactionally exhausted", "tests/observed-allocation.test.ts"]
+✔ supplied identity is transactionally exhausted after ready and cannot be prepared twice (359.463917ms)
+✔ dead independent preparation process is unchanged by get, then explicit recovery quarantines without clearing unknown-create stock (321.605917ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 875.587834
+
+EXIT 0 ELAPSED 0.91s

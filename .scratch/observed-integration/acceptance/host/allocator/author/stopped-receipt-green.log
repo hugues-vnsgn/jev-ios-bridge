@@ -1,0 +1,60 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "production|child", "tests/observed-allocation-config.test.ts"]
+✖ production process composition allows only exact create and trusted fixed plist conversion with sanitized environment (91.523916ms)
+✖ production child cancellation and capped output do not claim settlement until the actual child closes (67.289541ms)
+✖ child error alone is not process settlement: a potentially live child stays tracked until close (108.04ms)
+✖ child abort never reports a successful receipt even when its eventual close code is zero (62.958083ms)
+✔ child deadline never reports a successful receipt even when its eventual close code is zero (109.505709ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 1
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1354.308583
+
+✖ failing tests:
+
+test at tests/observed-allocation-config.test.ts:1:5408
+✖ production process composition allows only exact create and trusted fixed plist conversion with sanitized environment (91.523916ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation-config.test.ts:104:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation-config.test.ts:1:7049
+✖ production child cancellation and capped output do not claim settlement until the actual child closes (67.289541ms)
+  AbortError: This operation was aborted
+      at new DOMException (node:internal/per_context/domexception:79:18)
+      at AbortController.abort (node:internal/abort_controller:572:18)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation-config.test.ts:116:57)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/observed-allocation-config.test.ts:1:11743
+✖ child error alone is not process settlement: a potentially live child stays tracked until close (108.04ms)
+  Error: isolated kill error
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation-config.test.ts:182:68)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/observed-allocation-config.test.ts:1:14012
+✖ child abort never reports a successful receipt even when its eventual close code is zero (62.958083ms)
+  AbortError: This operation was aborted
+      at new DOMException (node:internal/per_context/domexception:79:18)
+      at AbortController.abort (node:internal/abort_controller:572:18)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation-config.test.ts:211:79)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+EXIT 1 ELAPSED 1.39s

@@ -1,0 +1,81 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "known acknowledged|readiness screenshot|commit response", "tests/observed-allocation.test.ts"]
+✖ known acknowledged boot failure is a stable stage refusal with no retry or follow-up (216.610208ms)
+✖ known acknowledged install failure is a stable stage refusal with no retry or follow-up (249.757875ms)
+✖ known acknowledged launch-app failure is a stable stage refusal with no retry or follow-up (274.175791ms)
+✔ readiness screenshot copy is persisted privately or refuses without parking (354.235166ms)
+✔ readiness screenshot missing is persisted privately or refuses without parking (341.134334ms)
+✔ readiness screenshot symlink is persisted privately or refuses without parking (362.251458ms)
+✔ readiness screenshot relative is persisted privately or refuses without parking (340.626ms)
+✔ lost stageAllocation commit response uses fresh durable state and never replays (105.747041ms)
+✔ lost startCreation commit response uses fresh durable state and never replays (120.864666ms)
+✔ lost recordCreation commit response uses fresh durable state and never replays (135.263ms)
+✔ lost parkAllocation commit response uses fresh durable state and never replays (352.187ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 8
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3049.872458
+
+✖ failing tests:
+
+test at tests/observed-allocation.test.ts:13:2710
+✖ known acknowledged boot failure is a stable stage refusal with no retry or follow-up (216.610208ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'PREPARATION_UNCONFIRMED'
+  - 'BOOT_FAILED'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:453:79)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'PREPARATION_UNCONFIRMED',
+    expected: 'BOOT_FAILED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:13:2710
+✖ known acknowledged install failure is a stable stage refusal with no retry or follow-up (249.757875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'PREPARATION_UNCONFIRMED'
+  - 'INSTALL_FAILED'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:453:79)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'PREPARATION_UNCONFIRMED',
+    expected: 'INSTALL_FAILED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:13:2710
+✖ known acknowledged launch-app failure is a stable stage refusal with no retry or follow-up (274.175791ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'PREPARATION_UNCONFIRMED'
+  - 'LAUNCH_FAILED'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:453:79)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'PREPARATION_UNCONFIRMED',
+    expected: 'LAUNCH_FAILED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+EXIT 1 ELAPSED 3.08s

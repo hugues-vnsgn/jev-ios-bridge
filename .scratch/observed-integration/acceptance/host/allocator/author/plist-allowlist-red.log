@@ -1,0 +1,28 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "plist allowlist distinguishes", "tests/observed-allocation-config.test.ts"]
+✖ plist allowlist distinguishes device profiles from runtime OS metadata and rejects every invalid process option (51.52425ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 190.095458
+
+✖ failing tests:
+
+test at tests/observed-allocation-config.test.ts:1:14760
+✖ plist allowlist distinguishes device profiles from runtime OS metadata and rejects every invalid process option (51.52425ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation-config.test.ts:223:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+EXIT 1 ELAPSED 0.23s

@@ -1,0 +1,31 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "cancel .*commit store error", "tests/observed-allocation.test.ts"]
+✖ cancel before-commit store error synchronously revokes only the known locally owned preparation (352.911375ms)
+✔ cancel after-commit store error synchronously revokes only the known locally owned preparation (542.698875ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1070.151666
+
+✖ failing tests:
+
+test at tests/observed-allocation.test.ts:23:3705
+✖ cancel before-commit store error synchronously revokes only the known locally owned preparation (352.911375ms)
+  AssertionError [ERR_ASSERTION]: Expected "actual" to be strictly unequal to:
+  
+  'ready'
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:599:52)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'ready',
+    expected: 'ready',
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+EXIT 1 ELAPSED 1.11s

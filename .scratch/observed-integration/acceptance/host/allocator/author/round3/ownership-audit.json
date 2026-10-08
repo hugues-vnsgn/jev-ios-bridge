@@ -1,0 +1,18 @@
+{
+  "head": "98f7de41baa316f47a65a7bc2160128a72051f3e",
+  "branch": "feat/observed-allocator",
+  "exactSevenFiles": [
+    ".scratch/observed-action-rollout/issues/07-allocation-orchestration.md",
+    "src/observed/allocation-config.ts",
+    "src/observed/allocation-schema.ts",
+    "src/observed/allocation.ts",
+    "tests/fixtures/observed-allocation-backend.ts",
+    "tests/observed-allocation-config.test.ts",
+    "tests/observed-allocation.test.ts"
+  ],
+  "noProtectedTrackedChanges": true,
+  "diffCheckExit": 0,
+  "allEvidencePrivate": true,
+  "unsafe": [],
+  "all6SourceTestHashesMatch": true
+}

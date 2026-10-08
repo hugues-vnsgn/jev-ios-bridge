@@ -1,0 +1,56 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern=supplied", "tests/observed-allocation.test.ts"]
+✖ supplied inventory is reserved and admitted before availability, then prepares without create or source fallback (128.131708ms)
+✖ unavailable supplied vendor identity refuses before boot and never switches to create (111.798167ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 429.522708
+
+✖ failing tests:
+
+test at tests/observed-allocation.test.ts:1:3025
+✖ supplied inventory is reserved and admitted before availability, then prepares without create or source fallback (128.131708ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'retained'
+  - 'ready'
+       ^
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:58:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'retained',
+    expected: 'ready',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:1:3939
+✖ unavailable supplied vendor identity refuses before boot and never switches to create (111.798167ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   'list'
+  - ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:71:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ 'list' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+EXIT 1 ELAPSED 0.47s

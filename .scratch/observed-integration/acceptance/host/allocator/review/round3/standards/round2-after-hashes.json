@@ -1,0 +1,29 @@
+{
+  "allSixUnchanged": true,
+  "files": {
+    "src/observed/allocation.ts": {
+      "sha256": "8c8fac7e154782c1b2ab10fc641135eb6afe0e88db38e92835dcfddbc22cfcc4",
+      "gitBlob": "87964a13e4745937acc5e7e0a72c6a23af083df7"
+    },
+    "src/observed/allocation-schema.ts": {
+      "sha256": "8b98f81eff0d9f94af96f9b526140938e679d9a7cf38d64060d3030a02a37a7e",
+      "gitBlob": "554178c9997fdc04802f12c8b785c2532a0947c6"
+    },
+    "src/observed/allocation-config.ts": {
+      "sha256": "b6519649edbaf203e5323a15c80273321a42a5cb49850551297268e6ee1f5f0a",
+      "gitBlob": "e7c72a20932ca9ea63747d58b6ca2ff9f2cd137c"
+    },
+    "tests/observed-allocation.test.ts": {
+      "sha256": "930c63928af339ca18ac9cb52c39dce839117d7ceb02f89f6d75946da36dbc37",
+      "gitBlob": "da65fe6546d779696a3cf7b8e6be85e1bd17e9fc"
+    },
+    "tests/observed-allocation-config.test.ts": {
+      "sha256": "cc46883cd5bd9bf344fe228b6b91b7b4b4745e262b2b4fe3108cf22b05123ab6",
+      "gitBlob": "b97b3e6ba4662940b4644e00042beca5a7f4d8f5"
+    },
+    "tests/fixtures/observed-allocation-backend.ts": {
+      "sha256": "82761f545831ccb2418936c5370e25b8970e972ddedf3879827d6c4c30df3814",
+      "gitBlob": "9332732d8399517748e21a8c49b5c10f2c36299b"
+    }
+  }
+}

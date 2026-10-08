@@ -1,0 +1,12 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "identical concurrent preflight", "tests/observed-allocation.test.ts"]
+✔ identical concurrent preflight shares one executor while conflicting digest refuses without a second probe (370.681958ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 522.957792
+
+EXIT 0 ELAPSED 0.56s

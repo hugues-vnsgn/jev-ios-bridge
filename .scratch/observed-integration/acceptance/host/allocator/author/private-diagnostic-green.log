@@ -1,0 +1,37 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "reserved failure retains bounded|public|one fresh", "tests/observed-allocation.test.ts"]
+✔ one fresh allocation reserves and stages before create, prepares once and parks for a fresh action (369.628291ms)
+✔ public config errors discard credential-looking diagnostics and supplied values (37.160167ms)
+✔ public metadata errors discard credential-looking diagnostics and supplied values (35.190583ms)
+✔ public artifact errors discard credential-looking diagnostics and supplied values (37.490334ms)
+✔ public create errors discard credential-looking diagnostics and supplied values (106.183458ms)
+✔ public boot errors discard credential-looking diagnostics and supplied values (187.778292ms)
+✖ reserved failure retains bounded private raw source diagnostics while public envelopes expose only truthful references (125.9555ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1052.854167
+
+✖ failing tests:
+
+test at tests/observed-allocation.test.ts:13:1786
+✖ reserved failure retains bounded private raw source diagnostics while public envelopes expose only truthful references (125.9555ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(diagnostic)
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:443:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+EXIT 1 ELAPSED 1.09s

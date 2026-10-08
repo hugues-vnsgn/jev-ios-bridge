@@ -1,0 +1,125 @@
+COMMAND ["node", "--import", "tsx", "--test", "--experimental-test-coverage", "--test-coverage-include=src/observed/allocation*.ts", "tests/observed-allocation.test.ts", "tests/observed-allocation-config.test.ts"]
+✔ strict preparation parsing fills only the overall default and canonicalizes object order (2.676583ms)
+✔ private fixed account configuration uses defaults and refuses unsafe or malformed settings (14.748291ms)
+✔ installed proof uses exact IDs and RuntimeRoot OS, never internal bundle or newest runtime versions (56.950875ms)
+✔ installed metadata replacement during plutil cannot supply compatibility even with identical bytes (40.179125ms)
+✔ production process composition allows only exact create and trusted fixed plist conversion with sanitized environment (71.8055ms)
+✔ production child cancellation and capped output do not claim settlement until the actual child closes (61.412625ms)
+✔ installed Xcode identity mismatch refuses without host effects (73.197167ms)
+✔ installed Xcode executable mismatch refuses without host effects (90.509084ms)
+✔ installed Xcode min host mismatch refuses without host effects (57.98525ms)
+✔ installed Xcode version mismatch refuses without host effects (54.656333ms)
+✔ installed Xcode build mismatch refuses without host effects (51.460625ms)
+✔ installed device architecture mismatch refuses without host effects (62.400542ms)
+✔ installed device family mismatch refuses without host effects (75.728834ms)
+✔ installed device min runtime mismatch refuses without host effects (110.024875ms)
+✔ installed device max runtime mismatch refuses without host effects (101.93525ms)
+✔ installed runtime platform mismatch refuses without host effects (80.749708ms)
+✔ installed runtime architecture mismatch refuses without host effects (56.756625ms)
+✔ installed runtime family mismatch refuses without host effects (84.083ms)
+✔ installed runtime min host mismatch refuses without host effects (75.622083ms)
+✔ installed runtime declared OS mismatch refuses without host effects (50.422ms)
+✔ installed runtime actual OS mismatch refuses without host effects (73.913625ms)
+✔ installed runtime build mismatch refuses without host effects (71.090583ms)
+✔ runtime mounted volume metadata is accepted while missing executable, unsafe metadata and excessive enumeration refuse (318.473875ms)
+✔ config becoming public between permission validation and stable read refuses (72.257959ms)
+✔ one fresh allocation reserves and stages before create, prepares once and parks for a fresh action (449.021ms)
+✔ shutdown during a pending configuration read returns promptly with no reservation or backend continuation (54.073625ms)
+✔ supplied inventory is reserved and admitted before availability, then prepares without create or source fallback (432.604083ms)
+✔ unavailable supplied vendor identity refuses before boot and never switches to create (215.941541ms)
+✔ eight retained allocations hold capacity, ninth refuses and changed config counts persisted reservation bytes (3087.2065ms)
+✔ storage simulator below boundary refuses before reservation and effects (35.677291ms)
+✔ storage unreadable storage refuses before reservation and effects (35.827459ms)
+✔ fresh storage check after staging holds all persisted reservations and prevents creation (103.393667ms)
+✔ free-space equality and exact artifact byte ceiling are accepted (352.963083ms)
+✔ artifact size, source mutation and staged mutation refuse without install or rebuilding (334.319834ms)
+✔ unknown creation (0/10) holds capacity and global guard without retry (125.907125ms)
+✔ unknown creation (1/36) holds capacity and global guard without retry (114.779083ms)
+✔ unknown creation (null/0) holds capacity and global guard without retry (122.680291ms)
+✔ unknown creation (0/65537) holds capacity and global guard without retry (133.429542ms)
+✔ protected receipt 73997430-DB8A-48C8-8146-12320CE6AEFE is never admitted or prepared (106.075125ms)
+✔ protected receipt 2FE383F2-2D0F-4286-8797-D3ACEFCD6220 is never admitted or prepared (115.230209ms)
+✔ protected receipt 6A8C5F93-F59A-456B-B157-10642209B734 is never admitted or prepared (109.8925ms)
+✔ protected receipt 0E42FDE2-5E09-42D3-9876-9EF0037FCBE7 is never admitted or prepared (117.450167ms)
+✔ cancel during staging prevents every later dispatch and late completion cannot park (97.678375ms)
+✔ cancel during create prevents every later dispatch and late completion cannot park (127.466166ms)
+✔ cancel during boot prevents every later dispatch and late completion cannot park (202.212ms)
+✔ cancel during boot-state prevents every later dispatch and late completion cannot park (231.535666ms)
+✔ cancel during install prevents every later dispatch and late completion cannot park (230.569ms)
+✔ cancel during launch-app prevents every later dispatch and late completion cannot park (271.041708ms)
+✔ cancel during readiness-list prevents every later dispatch and late completion cannot park (335.457542ms)
+✔ cancel during snapshot-ui prevents every later dispatch and late completion cannot park (364.132834ms)
+✔ cancel during screenshot prevents every later dispatch and late completion cannot park (384.2545ms)
+✔ status wait abortion is a pure read and concurrent IDs retain immutable identity before any new effect (227.601292ms)
+✔ pure ready reads do not expire TTL; only first consume expires or transfers, terminal retirement is bookkeeping (365.967208ms)
+✔ explicit ready cancellation retires stock while executing allocation cancellation is busy (876.112417ms)
+✔ normal shutdown racing the committed park leaves ready ownership intact (422.640625ms)
+✔ missing initialized store refuses before config/source probes with no alternate root (100.7ms)
+✔ corrupt initialized store refuses before config/source probes with no alternate root (64.654667ms)
+✔ public config errors discard credential-looking diagnostics and supplied values (72.364709ms)
+✔ public metadata errors discard credential-looking diagnostics and supplied values (40.247792ms)
+✔ public artifact errors discard credential-looking diagnostics and supplied values (33.031791ms)
+✔ public create errors discard credential-looking diagnostics and supplied values (115.089666ms)
+✔ public boot errors discard credential-looking diagnostics and supplied values (177.404625ms)
+✔ borrowed admission survives memoized module close; closed module retrieves ready stock before checking shutdown (362.700042ms)
+✔ production composition refuses a test store before any fake source, runner or opener can execute (33.148167ms)
+✔ supplied unknown stock refuses without creation fallback (33.49425ms)
+✔ supplied protected stock refuses without creation fallback (36.092917ms)
+✔ supplied duplicate stock refuses without creation fallback (29.941541ms)
+✔ supplied used stock refuses without creation fallback (29.987083ms)
+✖ supplied identity is transactionally exhausted after ready and cannot be prepared twice (337.519791ms)
+✔ independent process consumes parked stock after owner closes, exactly once with the full action binding and zero preparation effects (511.59975ms)
+✔ one stage deadline bounds pending boot and late receipt cannot continue or become ready (204.58ms)
+✔ one stage deadline bounds pending snapshot-ui and late receipt cannot continue or become ready (343.183166ms)
+✔ test authority rejects production window opener and production source composition at construction before any effects (40.858333ms)
+✔ lost creation reply times out with guard retained; eventual known UUID cannot bind or continue (162.74475ms)
+✔ aggregate booting stage budget covers every internal call without resetting on a settled response (272.901875ms)
+✔ aggregate readiness stage budget covers every internal call without resetting on a settled response (425.371ms)
+✔ boot-state polling is no more frequent than once per second and boot is never retried (1260.611ms)
+✔ retrieval and construction never recover missing local jobs; explicit recovery only uses conservative dead owner proof (118.660834ms)
+ℹ tests 78
+ℹ suites 0
+ℹ pass 77
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15270.136334
+ℹ start of coverage report
+ℹ --------------------------------------------------------------------------------
+ℹ file                   | line % | branch % | funcs % | uncovered lines
+ℹ --------------------------------------------------------------------------------
+ℹ src                    |        |          |         | 
+ℹ  observed              |        |          |         | 
+ℹ   allocation-config.ts |  97.41 |    87.35 |   93.02 | 57-60 82 90
+ℹ   allocation-schema.ts | 100.00 |    96.67 |  100.00 | 
+ℹ   allocation.ts        |  97.51 |    77.61 |   90.91 | 42-43 58 156 174 187 189
+ℹ --------------------------------------------------------------------------------
+ℹ all files              |  97.76 |    83.12 |   92.86 | 
+ℹ --------------------------------------------------------------------------------
+ℹ end of coverage report
+
+✖ failing tests:
+
+test at tests/observed-allocation.test.ts:1:20378
+✖ supplied identity is transactionally exhausted after ready and cannot be prepared twice (337.519791ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'INVENTORY_INELIGIBLE'
+  - 'INVENTORY_EXHAUSTED'
+               ^
+  
+      at refused (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:83:103)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:303:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'INVENTORY_INELIGIBLE',
+    expected: 'INVENTORY_EXHAUSTED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+EXIT 1 ELAPSED 15.33s

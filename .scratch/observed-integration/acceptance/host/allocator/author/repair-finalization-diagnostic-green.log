@@ -1,0 +1,21 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "one failure finalization budget|known acknowledged|public", "tests/observed-allocation.test.ts"]
+✔ public config errors discard credential-looking diagnostics and supplied values (43.104875ms)
+✔ public metadata errors discard credential-looking diagnostics and supplied values (33.114042ms)
+✔ public artifact errors discard credential-looking diagnostics and supplied values (32.498458ms)
+✔ public create errors discard credential-looking diagnostics and supplied values (122.046958ms)
+✔ public boot errors discard credential-looking diagnostics and supplied values (209.234917ms)
+✔ reserved failure retains bounded private raw source diagnostics while public envelopes expose only truthful references (119.999417ms)
+✔ known acknowledged boot failure is a stable stage refusal with no retry or follow-up (173.979625ms)
+✔ known acknowledged install failure is a stable stage refusal with no retry or follow-up (226.19275ms)
+✔ known acknowledged launch-app failure is a stable stage refusal with no retry or follow-up (251.057ms)
+✔ one failure finalization budget bounds private diagnostics and pending local driver close together without late promotion (5670.980625ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7053.819959
+
+EXIT 0 ELAPSED 7.09s

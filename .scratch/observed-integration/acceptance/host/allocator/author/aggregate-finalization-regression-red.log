@@ -1,0 +1,49 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "one failure finalization budget", "tests/observed-allocation.test.ts"]
+✖ one failure finalization budget bounds private diagnostics and pending local driver close together without late promotion (5740.819333ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5939.988583
+
+✖ failing tests:
+
+test at tests/observed-allocation.test.ts:23:6769
+✖ one failure finalization budget bounds private diagnostics and pending local driver close together without late promotion (5740.819333ms)
+  AssertionError [ERR_ASSERTION]: node:internal/modules/run_main:107
+      triggerUncaughtException(
+      ^
+  
+  AssertionError [ERR_ASSERTION]: Expected "actual" to be strictly unequal to:
+  
+  'finalization still pending'
+      at file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/[eval1]:12:45 {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'finalization still pending',
+    expected: 'finalization still pending',
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+  
+  Node.js v26.8.1
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:644:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+EXIT 1 ELAPSED 5.98s

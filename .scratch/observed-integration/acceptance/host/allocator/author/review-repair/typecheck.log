@@ -1,0 +1,8 @@
+COMMAND ["npm", "run", "typecheck"]
+
+> jev-ios-bridge@1.3.1 typecheck
+> tsc --noEmit
+
+tests/observed-allocation.test.ts(697,97): error TS2532: Object is possibly 'undefined'.
+
+EXIT 1 ELAPSED 0.54s

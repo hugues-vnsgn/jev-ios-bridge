@@ -1,0 +1,68 @@
+{"case":"global-duplicate","result":{"version":1,"kind":"observed-operation-error","code":"ACTION_ID_CONFLICT","message":"Allocation operation refused: ACTION_ID_CONFLICT.","actionId":"old-action","acceptance":"no","acceptanceKind":"preparation"},"calls":["plist","plist","plist","plist","plist","plist","plist","plist","plist"]}
+✖ existing global observed identity conflicts before prerequisite probes (78.071ms)
+{"case":"guard-evidence","expected":"/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-w77uTR/runs/observed/blocker/allocation","result":{"version":1,"kind":"observed-operation-error","code":"HOST_CREATION_UNRESOLVED","message":"Allocation operation refused: HOST_CREATION_UNRESOLVED.","actionId":"blocked","blockingAllocationId":"95647F9B-5007-491A-9D21-5084030C346C","acceptance":"no","acceptanceKind":"preparation"},"newCalls":["plist","plist","plist","plist","plist","plist","plist","plist","plist"]}
+✖ host guard refusal points to retained creators persisted evidence (115.980917ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 438.662625
+
+✖ failing tests:
+
+test at ../../../../../../private/tmp/jev-allocator-spec-review-boonbrr6/probes.test.ts:2:1448
+✖ existing global observed identity conflicts before prerequisite probes (78.071ms)
+  AssertionError [ERR_ASSERTION]: global conflicting identity must not probe
+  + actual - expected
+  
+  + [
+  +   'plist',
+  +   'plist',
+  +   'plist',
+  +   'plist',
+  +   'plist',
+  +   'plist',
+  +   'plist',
+  +   'plist',
+  +   'plist'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (/private/tmp/jev-allocator-spec-review-boonbrr6/probes.test.ts:10:74)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [
+      'plist', 'plist',
+      'plist', 'plist',
+      'plist', 'plist',
+      'plist', 'plist',
+      'plist'
+    ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../../private/tmp/jev-allocator-spec-review-boonbrr6/probes.test.ts:2:2205
+✖ host guard refusal points to retained creators persisted evidence (115.980917ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-w77uTR/runs/observed/blocker/allocation'
+  
+      at TestContext.<anonymous> (/private/tmp/jev-allocator-spec-review-boonbrr6/probes.test.ts:18:79)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-w77uTR/runs/observed/blocker/allocation',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

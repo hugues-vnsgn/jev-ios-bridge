@@ -1,0 +1,49 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "child (abort|deadline) never", "tests/observed-allocation-config.test.ts"]
+✖ child abort never reports a successful receipt even when its eventual close code is zero (89.465625ms)
+✖ child deadline never reports a successful receipt even when its eventual close code is zero (86.738709ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 329.588833
+
+✖ failing tests:
+
+test at tests/observed-allocation-config.test.ts:1:14012
+✖ child abort never reports a successful receipt even when its eventual close code is zero (89.465625ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== null
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation-config.test.ts:212:75)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation-config.test.ts:1:14012
+✖ child deadline never reports a successful receipt even when its eventual close code is zero (86.738709ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== null
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation-config.test.ts:212:75)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+EXIT 1 ELAPSED 0.38s

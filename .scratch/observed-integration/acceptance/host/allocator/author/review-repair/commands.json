@@ -1,0 +1,98 @@
+[
+  {
+    "raw": "final-focused-node26.log",
+    "command": [
+      "node",
+      "--import",
+      "tsx",
+      "--test",
+      "tests/observed-allocation.test.ts",
+      "tests/observed-allocation-config.test.ts",
+      "tests/admission-allocation.test.ts",
+      "tests/admission-core.test.ts",
+      "tests/admission-migration.test.ts",
+      "tests/admission-driver.test.ts",
+      "tests/observed-sources.test.ts",
+      "tests/observed-artifact.test.ts",
+      "tests/device.test.ts",
+      "tests/simulator-window.test.ts",
+      "tests/android-driver.test.ts"
+    ],
+    "exit": 0,
+    "seconds": 53.67,
+    "counts": {
+      "tests": 556,
+      "pass": 556,
+      "fail": 0,
+      "skip": 0
+    }
+  },
+  {
+    "raw": "final-focused-node24.log",
+    "command": [
+      "npx",
+      "--yes",
+      "--package=node@24.0.0",
+      "node",
+      "--import",
+      "tsx",
+      "--test",
+      "tests/observed-allocation.test.ts",
+      "tests/observed-allocation-config.test.ts",
+      "tests/admission-allocation.test.ts",
+      "tests/admission-core.test.ts",
+      "tests/admission-migration.test.ts",
+      "tests/admission-driver.test.ts",
+      "tests/observed-sources.test.ts",
+      "tests/observed-artifact.test.ts",
+      "tests/device.test.ts",
+      "tests/simulator-window.test.ts",
+      "tests/android-driver.test.ts"
+    ],
+    "exit": 0,
+    "seconds": 55.75,
+    "counts": {
+      "tests": 556,
+      "pass": 556,
+      "fail": 0,
+      "skip": 0
+    }
+  },
+  {
+    "raw": "final-coverage-node26.log",
+    "command": [
+      "node",
+      "--import",
+      "tsx",
+      "--test",
+      "--experimental-test-coverage",
+      "--test-coverage-include=src/observed/allocation*.ts",
+      "tests/observed-allocation.test.ts",
+      "tests/observed-allocation-config.test.ts"
+    ],
+    "exit": 0,
+    "seconds": 32.53,
+    "counts": {
+      "tests": 147,
+      "pass": 147,
+      "fail": 0,
+      "skip": 0
+    }
+  },
+  {
+    "raw": "final-full-check.log",
+    "command": [
+      "npm",
+      "run",
+      "check"
+    ],
+    "exit": 0,
+    "seconds": 58.97,
+    "counts": {
+      "tests": 1355,
+      "pass": 1355,
+      "fail": 0,
+      "skip": 0
+    }
+  }
+]

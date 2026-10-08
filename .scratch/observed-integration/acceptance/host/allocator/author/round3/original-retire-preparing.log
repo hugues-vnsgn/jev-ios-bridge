@@ -1,0 +1,31 @@
+{"case":"retire-preparing","result":{"version":1,"kind":"observed-operation-error","code":"STORE_UNAVAILABLE","message":"Allocation operation refused: STORE_UNAVAILABLE.","allocationId":"3069433D-A49E-4083-A6E3-6BD67B3E315F","acceptance":"unknown","acceptanceKind":"preparation"},"state":"preparing","calls":["plist","plist","plist","plist","plist","plist","plist","plist","plist","plist","create","boot"]}
+✖ retirement of active preparation returns ALLOCATION_BUSY (397.30325ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 585.128958
+
+✖ failing tests:
+
+test at ../../../../../../private/tmp/jev-allocator-spec-recheck-10qe7wtm/retire-preparing.test.ts:2:1177
+✖ retirement of active preparation returns ALLOCATION_BUSY (397.30325ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'STORE_UNAVAILABLE'
+  - 'ALLOCATION_BUSY'
+  
+      at TestContext.<anonymous> (/private/tmp/jev-allocator-spec-recheck-10qe7wtm/retire-preparing.test.ts:7:332)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'STORE_UNAVAILABLE',
+    expected: 'ALLOCATION_BUSY',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

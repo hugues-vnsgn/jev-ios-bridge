@@ -1,0 +1,83 @@
+--- round2/src/observed/allocation.ts
++++ round3/src/observed/allocation.ts
+@@ -306,7 +306,8 @@
+       if (changed.kind === 'refused') {
+         if (changed.reason === 'ALLOCATION_BUSY') {
+           const current = this.admission.readAllocation(parsed.data);
+-          if (!current || current.allocationId !== parsed.data || current.state !== 'executing' || !allocationActionIdSchema.safeParse(current.actionId).success
++          if (!current || current.allocationId !== parsed.data || !(current.state === 'executing' || operation === 'retire' && current.state === 'preparing')
++            || !allocationActionIdSchema.safeParse(current.actionId).success
+             || !isAbsolute(current.evidenceDirectory)) throw new AllocationInputError('STORE_UNAVAILABLE');
+           return allocationError(changed.reason, { ...this.identity(current), state: current.state }, 'yes');
+         }
+--- round2/src/observed/allocation-schema.ts
++++ round3/src/observed/allocation-schema.ts
+@@ -67,7 +67,10 @@
+   actionId?: string; allocationId?: string; evidenceDirectory?: string; blockingAllocationId?: string; state?: AllocationRecord['state'];
+ } = {}, acceptance: AllocationOperationError['acceptance'] = 'no'): AllocationOperationError {
+   return { version: 1, kind: 'observed-operation-error', code, message: code === 'ALLOCATION_BUSY'
+-    ? 'Allocation is executing; use action cancellation via cancel_observed_action or observed-cancel.' : `Allocation operation refused: ${code}.`,
++    ? identity.state === 'preparing'
++      ? 'Allocation preparation is active; use allocation cancellation via cancel_observed_allocation or observed-allocation-cancel.'
++      : 'Allocation is executing; use action cancellation via cancel_observed_action or observed-cancel.'
++    : `Allocation operation refused: ${code}.`,
+     ...identity, acceptance, acceptanceKind: 'preparation' };
+ }
+ /** Historical authority is immutable; current quarantine only lowers its allocation disposition. */
+--- round2/tests/observed-allocation.test.ts
++++ round3/tests/observed-allocation.test.ts
+@@ -810,7 +810,7 @@
+   } finally { h.admission.readAction = read; await h.allocator.close(); await f.cleanup(); }
+ });
+ 
+-for (const mode of ['unavailable', 'missing', 'wrong-identity', 'wrong-state', 'invalid-action', 'relative-evidence'] as const) test(`busy ${mode} context cannot fabricate an action cancellation target`, async () => {
++for (const mode of ['unavailable', 'missing', 'wrong-identity', 'wrong-state', 'preparing-state', 'invalid-action', 'relative-evidence'] as const) test(`busy ${mode} context cannot fabricate an action cancellation target`, async () => {
+   const f = await allocationFixture(); const allocator = subject(f);
+   try {
+     const ready = snapshot(await allocator.prepare(f.request())); assert.equal(allocator.consume(binding({ allocationId: ready.allocationId, actionId: ready.actionId }, f)).kind, 'consumed');
+@@ -819,10 +819,44 @@
+       if (++reads !== 2) return read(id);
+       if (mode === 'unavailable') throw new Error(hostile); if (mode === 'missing') return undefined;
+       return { ...read(id)!, ...(mode === 'wrong-identity' ? { allocationId: 'ABCDEF00-0000-4000-8000-000000000099' }
+-        : mode === 'wrong-state' ? { state: 'retained' as const } : mode === 'invalid-action' ? { actionId: hostile } : { evidenceDirectory: 'relative' }) };
++        : mode === 'wrong-state' ? { state: 'retained' as const } : mode === 'preparing-state' ? { state: 'preparing' as const } : mode === 'invalid-action' ? { actionId: hostile } : { evidenceDirectory: 'relative' }) };
+     };
+     try { const result = refused(await allocator.cancel(ready.allocationId), 'STORE_UNAVAILABLE'); assert.equal(result.acceptance, 'unknown'); assert.equal(result.actionId, undefined); assert.equal(JSON.stringify(result).includes(hostile), false); }
+     finally { f.admission.readAllocation = read; }
+     assert.deepEqual(await fs.readFile(join(f.store, 'admission.sqlite')), bytes); assert.deepEqual(f.calls, calls); assert.equal(read(ready.allocationId)!.state, 'executing');
+   } finally { await allocator.close(); await f.cleanup(); }
+ });
++
++for (const mode of ['valid', 'unavailable', 'missing', 'wrong-identity', 'wrong-state', 'invalid-action', 'relative-evidence'] as const) test(`preparing retirement ${mode} returns only verified preparation context and preserves its job`, async () => {
++  const f = await allocationFixture(); const allocator = subject(f);
++  let entered!: () => void; let release!: () => void;
++  const began = new Promise<void>(resolve => { entered = resolve; }); const pending = new Promise<void>(resolve => { release = resolve; });
++  f.setBefore(async operation => { if (operation === 'boot') { entered(); await pending; } });
++  const preparing = allocator.prepare(f.request()); const read = f.admission.readAllocation.bind(f.admission);
++  try {
++    await Promise.race([began, preparing.then(result => { assert.fail(`Preparation finished before pending boot: ${JSON.stringify(result)}`); })]);
++    const record = f.admission.readAllocationForAction('allocate-one')!; assert.equal(record.state, 'preparing');
++    const bytes = await fs.readFile(join(f.store, 'admission.sqlite')); const calls = [...f.calls]; let reads = 0;
++    f.admission.readAllocation = id => {
++      if (++reads !== 2 || mode === 'valid') return read(id);
++      if (mode === 'unavailable') throw new Error(hostile); if (mode === 'missing') return undefined;
++      return { ...read(id)!, ...(mode === 'wrong-identity' ? { allocationId: 'ABCDEF00-0000-4000-8000-000000000099' }
++        : mode === 'wrong-state' ? { state: 'retained' as const } : mode === 'invalid-action' ? { actionId: hostile } : { evidenceDirectory: 'relative' }) };
++    };
++    try {
++      const result = refused(await allocator.retire(record.allocationId.toLowerCase()), mode === 'valid' ? 'ALLOCATION_BUSY' : 'STORE_UNAVAILABLE');
++      assert.equal(result.allocationId, record.allocationId); assert.equal(result.acceptance, mode === 'valid' ? 'yes' : 'unknown');
++      assert.equal(result.actionId, mode === 'valid' ? record.actionId : undefined); assert.equal(result.state, mode === 'valid' ? 'preparing' : undefined);
++      assert.equal(result.evidenceDirectory, mode === 'valid' ? record.evidenceDirectory : undefined); assert.equal(JSON.stringify(result).includes(hostile), false);
++      if (mode === 'valid') {
++        assert.match(result.message, /preparation is active/); assert.match(result.message, /allocation cancellation/);
++        assert.match(result.message, /cancel_observed_allocation/); assert.match(result.message, /observed-allocation-cancel/);
++        assert.doesNotMatch(result.message, /executing|action cancellation|cancel_observed_action/);
++      }
++    } finally { f.admission.readAllocation = read; }
++    assert.deepEqual(read(record.allocationId), record); assert.equal(read(record.allocationId)!.cancellationRequested, false);
++    assert.deepEqual(await fs.readFile(join(f.store, 'admission.sqlite')), bytes); assert.deepEqual(f.calls, calls);
++    release(); const ready = snapshot(await preparing); assert.equal(ready.state, 'ready'); assert.equal(ready.outcome, 'prepared'); assert.equal(ready.cancellationRequested, false);
++    assert.deepEqual(deviceCalls(f.calls), ['create', 'boot', 'list', 'install', 'launch-app', 'list', 'snapshot-ui', 'screenshot']);
++  } finally { release(); f.admission.readAllocation = read; await preparing; await allocator.close(); await f.cleanup(); }
++});

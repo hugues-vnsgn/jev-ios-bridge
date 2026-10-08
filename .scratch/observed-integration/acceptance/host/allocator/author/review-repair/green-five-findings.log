@@ -1,0 +1,114 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "global .*identity|creation guard .*evidence|diagnostic publication failure|busy .*context|historical .*allocation|historical original|historical .*consistent|known acknowledged|one failure finalization budget|cancel .*commit store error", "tests/observed-allocation.test.ts"]
+✔ known acknowledged boot failure is a stable stage refusal with no retry or follow-up (202.593125ms)
+✔ known acknowledged install failure is a stable stage refusal with no retry or follow-up (217.706583ms)
+✔ known acknowledged launch-app failure is a stable stage refusal with no retry or follow-up (249.69825ms)
+✔ cancel before-commit store error synchronously revokes only the known locally owned preparation (507.225958ms)
+✔ cancel after-commit store error synchronously revokes only the known locally owned preparation (500.461834ms)
+✔ one failure finalization budget bounds private diagnostics and pending local driver close together without late promotion (5879.526916ms)
+ℹ {"elapsed":5027,"state":"quarantined","capacityHeld":true,"device":"ABCDEF00-0000-4000-8000-000000000001","calls":["create","boot","list","install"]}
+✔ global observed identity conflicts before any allocation prerequisites (56.860333ms)
+✔ global preparation identity conflicts before any allocation prerequisites (38.366917ms)
+✔ creation guard valid evidence uses only its verified retained creator (118.174083ms)
+✔ creation guard unavailable evidence uses only its verified retained creator (113.148792ms)
+✔ creation guard missing evidence uses only its verified retained creator (108.955416ms)
+✔ creation guard relative evidence uses only its verified retained creator (121.494875ms)
+✔ creation guard wrong-identity evidence uses only its verified retained creator (120.192792ms)
+✔ creation guard not-blocking evidence uses only its verified retained creator (124.252917ms)
+✔ required diagnostic publication failure quarantines a settled known install refusal (229.991375ms)
+✖ busy cancel returns verified action context and explicit action cancellation direction (334.713208ms)
+✖ busy retire returns verified action context and explicit action cancellation direction (313.074208ms)
+✖ historical outcome_observed allocation get cancel retire is immutable read-only retrieval (72.096958ms)
+✖ historical already_satisfied allocation get cancel retire is immutable read-only retrieval (62.61675ms)
+✖ historical refused allocation get cancel retire is immutable read-only retrieval (63.292959ms)
+✖ historical inconclusive allocation get cancel retire is immutable read-only retrieval (57.466ms)
+✔ historical original success preserves outcome with current active disposition (69.850083ms)
+✔ historical original success preserves outcome with current quarantined disposition (80.637375ms)
+✔ historical allocation retrieval survives a fresh process and changed cwd without effects or mutations (228.618917ms)
+✔ historical unavailable consistent disposition refuses without invented committed authority (55.075167ms)
+✔ historical missing consistent disposition refuses without invented committed authority (60.079375ms)
+✔ historical wrong-identity consistent disposition refuses without invented committed authority (61.421792ms)
+✔ historical missing-disposition consistent disposition refuses without invented committed authority (58.210417ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 22
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10349.018959
+
+✖ failing tests:
+
+test at tests/observed-allocation.test.ts:43:4503
+✖ busy cancel returns verified action context and explicit action cancellation direction (334.713208ms)
+  Error [AdmissionError]: Invalid internal action binding
+      at AdmissionSqlite.consumeAllocation (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/src/device/admission-sqlite.ts:433:32)
+      at Admission.consumeAllocation (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/src/device/admission.ts:78:31)
+      at ObservedAllocator.consume (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/src/observed/allocation.ts:325:84)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:704:90)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_REQUEST'
+  }
+
+test at tests/observed-allocation.test.ts:43:4503
+✖ busy retire returns verified action context and explicit action cancellation direction (313.074208ms)
+  Error [AdmissionError]: Invalid internal action binding
+      at AdmissionSqlite.consumeAllocation (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/src/device/admission-sqlite.ts:433:32)
+      at Admission.consumeAllocation (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/src/device/admission.ts:78:31)
+      at ObservedAllocator.consume (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/src/observed/allocation.ts:325:84)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:704:90)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_REQUEST'
+  }
+
+test at tests/observed-allocation.test.ts:43:7101
+✖ historical outcome_observed allocation get cancel retire is immutable read-only retrieval (72.096958ms)
+  Error [AdmissionError]: Invalid internal action binding
+      at AdmissionSqlite.consumeAllocation (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/src/device/admission-sqlite.ts:433:32)
+      at Admission.consumeAllocation (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/src/device/admission.ts:78:31)
+      at ObservedAllocator.consume (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/src/observed/allocation.ts:325:84)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:743:34)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_REQUEST'
+  }
+
+test at tests/observed-allocation.test.ts:43:7101
+✖ historical already_satisfied allocation get cancel retire is immutable read-only retrieval (62.61675ms)
+  Error [AdmissionError]: Invalid internal action binding
+      at AdmissionSqlite.consumeAllocation (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/src/device/admission-sqlite.ts:433:32)
+      at Admission.consumeAllocation (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/src/device/admission.ts:78:31)
+      at ObservedAllocator.consume (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/src/observed/allocation.ts:325:84)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:743:34)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_REQUEST'
+  }
+
+test at tests/observed-allocation.test.ts:43:7101
+✖ historical refused allocation get cancel retire is immutable read-only retrieval (63.292959ms)
+  Error [AdmissionError]: Invalid internal action binding
+      at AdmissionSqlite.consumeAllocation (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/src/device/admission-sqlite.ts:433:32)
+      at Admission.consumeAllocation (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/src/device/admission.ts:78:31)
+      at ObservedAllocator.consume (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/src/observed/allocation.ts:325:84)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:743:34)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_REQUEST'
+  }
+
+test at tests/observed-allocation.test.ts:43:7101
+✖ historical inconclusive allocation get cancel retire is immutable read-only retrieval (57.466ms)
+  Error [AdmissionError]: Invalid internal action binding
+      at AdmissionSqlite.consumeAllocation (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/src/device/admission-sqlite.ts:433:32)
+      at Admission.consumeAllocation (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/src/device/admission.ts:78:31)
+      at ObservedAllocator.consume (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/src/observed/allocation.ts:325:84)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:743:34)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_REQUEST'
+  }
+
+EXIT 1 ELAPSED 10.39s

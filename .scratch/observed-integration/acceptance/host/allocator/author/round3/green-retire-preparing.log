@@ -1,0 +1,27 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "preparing retirement|busy ", "tests/observed-allocation.test.ts"]
+✔ busy cancel returns verified action context and explicit action cancellation direction (394.255167ms)
+✔ busy retire returns verified action context and explicit action cancellation direction (367.148708ms)
+✔ busy unavailable context cannot fabricate an action cancellation target (366.04125ms)
+✔ busy missing context cannot fabricate an action cancellation target (353.561458ms)
+✔ busy wrong-identity context cannot fabricate an action cancellation target (379.25825ms)
+✔ busy wrong-state context cannot fabricate an action cancellation target (356.282ms)
+✔ busy preparing-state context cannot fabricate an action cancellation target (374.547417ms)
+✔ busy invalid-action context cannot fabricate an action cancellation target (347.974875ms)
+✔ busy relative-evidence context cannot fabricate an action cancellation target (345.66425ms)
+✔ preparing retirement valid returns only verified preparation context and preserves its job (338.462416ms)
+✔ preparing retirement unavailable returns only verified preparation context and preserves its job (345.133875ms)
+✔ preparing retirement missing returns only verified preparation context and preserves its job (331.011458ms)
+✔ preparing retirement wrong-identity returns only verified preparation context and preserves its job (359.062917ms)
+✔ preparing retirement wrong-state returns only verified preparation context and preserves its job (343.48025ms)
+✔ preparing retirement invalid-action returns only verified preparation context and preserves its job (342.324458ms)
+✔ preparing retirement relative-evidence returns only verified preparation context and preserves its job (337.024042ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5826.58525
+
+EXIT 0 ELAPSED 5.86s

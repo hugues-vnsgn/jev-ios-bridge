@@ -1,0 +1,31 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "installed|runtime mounted|independent process", "tests/observed-allocation-config.test.ts", "tests/observed-allocation.test.ts"]
+✔ installed proof uses exact IDs and RuntimeRoot OS, never internal bundle or newest runtime versions (56.82525ms)
+✔ installed metadata replacement during plutil cannot supply compatibility even with identical bytes (56.1915ms)
+✔ installed Xcode identity mismatch refuses without host effects (75.599917ms)
+✔ installed Xcode executable mismatch refuses without host effects (85.233875ms)
+✔ installed Xcode min host mismatch refuses without host effects (88.3895ms)
+✔ installed Xcode version mismatch refuses without host effects (68.826ms)
+✔ installed Xcode build mismatch refuses without host effects (28.20625ms)
+✔ installed device architecture mismatch refuses without host effects (31.222458ms)
+✔ installed device family mismatch refuses without host effects (37.822292ms)
+✔ installed device min runtime mismatch refuses without host effects (40.354791ms)
+✔ installed device max runtime mismatch refuses without host effects (37.468125ms)
+✔ installed runtime platform mismatch refuses without host effects (32.088417ms)
+✔ installed runtime architecture mismatch refuses without host effects (31.725958ms)
+✔ installed runtime family mismatch refuses without host effects (29.918583ms)
+✔ installed runtime min host mismatch refuses without host effects (35.062792ms)
+✔ installed runtime declared OS mismatch refuses without host effects (30.27275ms)
+✔ installed runtime actual OS mismatch refuses without host effects (32.9345ms)
+✔ installed runtime build mismatch refuses without host effects (31.61975ms)
+✔ runtime mounted volume metadata is accepted while missing executable, unsafe metadata and excessive enumeration refuse (117.405458ms)
+✔ independent process consumes parked stock after owner closes, exactly once with the full action binding and zero preparation effects (567.117958ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1077.519166
+
+EXIT 0 ELAPSED 1.11s

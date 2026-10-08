@@ -1,0 +1,436 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "global .*identity|creation guard .*evidence|diagnostic publication failure|busy .*context|historical .*allocation|historical original|historical .*consistent", "tests/observed-allocation.test.ts"]
+✖ global observed identity conflicts before any allocation prerequisites (61.131209ms)
+✖ global preparation identity conflicts before any allocation prerequisites (50.030125ms)
+✖ creation guard valid evidence uses only its verified retained creator (135.162167ms)
+✖ creation guard unavailable evidence uses only its verified retained creator (121.651916ms)
+✖ creation guard missing evidence uses only its verified retained creator (130.370958ms)
+✖ creation guard relative evidence uses only its verified retained creator (129.087958ms)
+✖ creation guard wrong-identity evidence uses only its verified retained creator (134.875541ms)
+✖ creation guard not-blocking evidence uses only its verified retained creator (127.394959ms)
+✖ required diagnostic publication failure quarantines a settled known install refusal (227.273ms)
+✖ busy cancel returns verified action context and explicit action cancellation direction (360.038667ms)
+✖ busy retire returns verified action context and explicit action cancellation direction (372.508125ms)
+✖ historical outcome_observed allocation get cancel retire is immutable read-only retrieval (69.654625ms)
+✖ historical already_satisfied allocation get cancel retire is immutable read-only retrieval (63.417417ms)
+✖ historical refused allocation get cancel retire is immutable read-only retrieval (57.676875ms)
+✖ historical inconclusive allocation get cancel retire is immutable read-only retrieval (63.388583ms)
+✖ historical original success preserves outcome with current active disposition (77.329792ms)
+✖ historical original success preserves outcome with current quarantined disposition (97.685625ms)
+✖ historical allocation retrieval survives a fresh process and changed cwd without effects or mutations (65.143916ms)
+✖ historical unavailable consistent disposition refuses without invented committed authority (65.774458ms)
+✖ historical missing consistent disposition refuses without invented committed authority (68.459709ms)
+✖ historical wrong-identity consistent disposition refuses without invented committed authority (61.628875ms)
+✖ historical missing-disposition consistent disposition refuses without invented committed authority (61.885042ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 0
+ℹ fail 22
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2828.531709
+
+✖ failing tests:
+
+test at tests/observed-allocation.test.ts:43:350
+✖ global observed identity conflicts before any allocation prerequisites (61.131209ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONFIG_INVALID'
+  - 'ACTION_ID_CONFLICT'
+  
+      at refused (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:85:103)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:657:34)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONFIG_INVALID',
+    expected: 'ACTION_ID_CONFLICT',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:43:350
+✖ global preparation identity conflicts before any allocation prerequisites (50.030125ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONFIG_INVALID'
+  - 'ACTION_ID_CONFLICT'
+  
+      at refused (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:85:103)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:657:34)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONFIG_INVALID',
+    expected: 'ACTION_ID_CONFLICT',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:43:1201
+✖ creation guard valid evidence uses only its verified retained creator (135.162167ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-lfpok5/runs/observed/creator/allocation'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:677:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-lfpok5/runs/observed/creator/allocation',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:43:1201
+✖ creation guard unavailable evidence uses only its verified retained creator (121.651916ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'HOST_CREATION_UNRESOLVED'
+  - 'STORE_UNAVAILABLE'
+  
+      at refused (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:85:103)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:675:22)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'HOST_CREATION_UNRESOLVED',
+    expected: 'STORE_UNAVAILABLE',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:43:1201
+✖ creation guard missing evidence uses only its verified retained creator (130.370958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'HOST_CREATION_UNRESOLVED'
+  - 'STORE_UNAVAILABLE'
+  
+      at refused (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:85:103)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:675:22)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'HOST_CREATION_UNRESOLVED',
+    expected: 'STORE_UNAVAILABLE',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:43:1201
+✖ creation guard relative evidence uses only its verified retained creator (129.087958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'HOST_CREATION_UNRESOLVED'
+  - 'STORE_UNAVAILABLE'
+  
+      at refused (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:85:103)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:675:22)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'HOST_CREATION_UNRESOLVED',
+    expected: 'STORE_UNAVAILABLE',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:43:1201
+✖ creation guard wrong-identity evidence uses only its verified retained creator (134.875541ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'HOST_CREATION_UNRESOLVED'
+  - 'STORE_UNAVAILABLE'
+  
+      at refused (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:85:103)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:675:22)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'HOST_CREATION_UNRESOLVED',
+    expected: 'STORE_UNAVAILABLE',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:43:1201
+✖ creation guard not-blocking evidence uses only its verified retained creator (127.394959ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'HOST_CREATION_UNRESOLVED'
+  - 'STORE_UNAVAILABLE'
+  
+      at refused (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:85:103)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:675:22)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'HOST_CREATION_UNRESOLVED',
+    expected: 'STORE_UNAVAILABLE',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:43:2769
+✖ required diagnostic publication failure quarantines a settled known install refusal (227.273ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'retained'
+  - 'quarantined'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:691:75)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'retained',
+    expected: 'quarantined',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:43:4504
+✖ busy cancel returns verified action context and explicit action cancellation direction (360.038667ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'allocate-one'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:707:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'allocate-one',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:43:4504
+✖ busy retire returns verified action context and explicit action cancellation direction (372.508125ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'allocate-one'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:707:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'allocate-one',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:43:7154
+✖ historical outcome_observed allocation get cancel retire is immutable read-only retrieval (69.654625ms)
+  AssertionError [ERR_ASSERTION]: {"version":1,"kind":"observed-operation-error","code":"ALLOCATION_NOT_FOUND","message":"Allocation operation refused: ALLOCATION_NOT_FOUND.","allocationId":"D874C46F-F978-4D83-8717-76BF16B82720","acceptance":"no","acceptanceKind":"preparation"}
+      at snapshot (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:82:10)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:731:20)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:43:7154
+✖ historical already_satisfied allocation get cancel retire is immutable read-only retrieval (63.417417ms)
+  AssertionError [ERR_ASSERTION]: {"version":1,"kind":"observed-operation-error","code":"ALLOCATION_NOT_FOUND","message":"Allocation operation refused: ALLOCATION_NOT_FOUND.","allocationId":"ADBB2BB6-ADAE-4373-9B14-69BCE87E986E","acceptance":"no","acceptanceKind":"preparation"}
+      at snapshot (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:82:10)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:731:20)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:43:7154
+✖ historical refused allocation get cancel retire is immutable read-only retrieval (57.676875ms)
+  AssertionError [ERR_ASSERTION]: {"version":1,"kind":"observed-operation-error","code":"ALLOCATION_NOT_FOUND","message":"Allocation operation refused: ALLOCATION_NOT_FOUND.","allocationId":"027B1664-D822-4087-9281-FF2123C83156","acceptance":"no","acceptanceKind":"preparation"}
+      at snapshot (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:82:10)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:731:20)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:43:7154
+✖ historical inconclusive allocation get cancel retire is immutable read-only retrieval (63.388583ms)
+  AssertionError [ERR_ASSERTION]: {"version":1,"kind":"observed-operation-error","code":"ALLOCATION_NOT_FOUND","message":"Allocation operation refused: ALLOCATION_NOT_FOUND.","allocationId":"5A6AAD76-CF48-45E5-8A9A-69825B466C14","acceptance":"no","acceptanceKind":"preparation"}
+      at snapshot (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:82:10)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:731:20)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:43:9259
+✖ historical original success preserves outcome with current active disposition (77.329792ms)
+  AssertionError [ERR_ASSERTION]: {"version":1,"kind":"observed-operation-error","code":"ALLOCATION_NOT_FOUND","message":"Allocation operation refused: ALLOCATION_NOT_FOUND.","allocationId":"15AA7401-8C04-4B41-98B6-2F5A30F6884D","acceptance":"no","acceptanceKind":"preparation"}
+      at snapshot (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:82:10)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:754:88)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:43:9259
+✖ historical original success preserves outcome with current quarantined disposition (97.685625ms)
+  AssertionError [ERR_ASSERTION]: {"version":1,"kind":"observed-operation-error","code":"ALLOCATION_NOT_FOUND","message":"Allocation operation refused: ALLOCATION_NOT_FOUND.","allocationId":"A2C936F1-8253-4B47-AC19-CFA706631804","acceptance":"no","acceptanceKind":"preparation"}
+      at snapshot (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:82:10)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:754:88)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:43:10509
+✖ historical allocation retrieval survives a fresh process and changed cwd without effects or mutations (65.143916ms)
+  AssertionError [ERR_ASSERTION]: {"version":1,"kind":"observed-operation-error","code":"ALLOCATION_NOT_FOUND","message":"Allocation operation refused: ALLOCATION_NOT_FOUND.","allocationId":"6CC5FECF-33FF-48D8-9B0D-0A722D02DF49","acceptance":"no","acceptanceKind":"preparation"}
+      at snapshot (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:82:10)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:765:20)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:49:381
+✖ historical unavailable consistent disposition refuses without invented committed authority (65.774458ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'ALLOCATION_NOT_FOUND'
+  - 'STORE_UNAVAILABLE'
+  
+      at refused (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:85:103)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:786:83)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'ALLOCATION_NOT_FOUND',
+    expected: 'STORE_UNAVAILABLE',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:49:381
+✖ historical missing consistent disposition refuses without invented committed authority (68.459709ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'ALLOCATION_NOT_FOUND'
+  - 'STORE_UNAVAILABLE'
+  
+      at refused (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:85:103)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:786:83)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'ALLOCATION_NOT_FOUND',
+    expected: 'STORE_UNAVAILABLE',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:49:381
+✖ historical wrong-identity consistent disposition refuses without invented committed authority (61.628875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'ALLOCATION_NOT_FOUND'
+  - 'STORE_UNAVAILABLE'
+  
+      at refused (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:85:103)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:786:83)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'ALLOCATION_NOT_FOUND',
+    expected: 'STORE_UNAVAILABLE',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-allocation.test.ts:49:381
+✖ historical missing-disposition consistent disposition refuses without invented committed authority (61.885042ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'ALLOCATION_NOT_FOUND'
+  - 'STORE_UNAVAILABLE'
+  
+      at refused (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:85:103)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/tests/observed-allocation.test.ts:786:83)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'ALLOCATION_NOT_FOUND',
+    expected: 'STORE_UNAVAILABLE',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+EXIT 1 ELAPSED 2.87s

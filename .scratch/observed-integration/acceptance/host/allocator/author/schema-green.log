@@ -1,0 +1,12 @@
+COMMAND ["node", "--import", "tsx", "--test", "tests/observed-allocation-config.test.ts"]
+✔ strict preparation parsing fills only the overall default and canonicalizes object order (2.430583ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 160.372916
+
+EXIT 0 ELAPSED 0.20s

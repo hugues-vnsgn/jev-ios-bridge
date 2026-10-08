@@ -1,0 +1,16 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "lost creation|aggregate|polling|retrieval and construction", "tests/observed-allocation.test.ts"]
+✔ lost creation reply times out with guard retained; eventual known UUID cannot bind or continue (177.864125ms)
+✔ aggregate booting stage budget covers every internal call without resetting on a settled response (292.522042ms)
+✔ aggregate readiness stage budget covers every internal call without resetting on a settled response (412.366208ms)
+✔ boot-state polling is no more frequent than once per second and boot is never retried (1251.005209ms)
+✔ retrieval and construction never recover missing local jobs; explicit recovery only uses conservative dead owner proof (103.522583ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2388.313125
+
+EXIT 0 ELAPSED 2.42s

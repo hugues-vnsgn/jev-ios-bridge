@@ -1,0 +1,3 @@
+COMMAND attempted unquoted --test-coverage-include=src/observed/allocation*.ts
+zsh:1: no matches found: --test-coverage-include=src/observed/allocation*.ts
+EXIT 1; shell glob rejection before wrapper/test started; no source/test changes. Quoted pattern retry follows.

@@ -1,0 +1,18 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "reserved failure retains bounded|unknown creator directory|unknown creation|lost creation", "tests/observed-allocation.test.ts"]
+✔ unknown creation (0/10) holds capacity and global guard without retry (273.263458ms)
+✔ unknown creation (1/36) holds capacity and global guard without retry (250.204625ms)
+✔ unknown creation (null/0) holds capacity and global guard without retry (263.807208ms)
+✔ unknown creation (0/65537) holds capacity and global guard without retry (224.967208ms)
+✔ lost creation reply times out with guard retained; eventual known UUID cannot bind or continue (324.143166ms)
+✔ reserved failure retains bounded private raw source diagnostics while public envelopes expose only truthful references (202.659417ms)
+✔ unknown creator directory pointer survives a fresh process and changed cwd with zero probes and unchanged durable state (442.767125ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2199.520625
+
+EXIT 0 ELAPSED 2.24s

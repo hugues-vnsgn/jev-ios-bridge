@@ -1,0 +1,12 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "child error alone", "tests/observed-allocation-config.test.ts"]
+✔ child error alone is not process settlement: a potentially live child stays tracked until close (41.302375ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 174.005667
+
+EXIT 0 ELAPSED 0.21s
