@@ -36,3 +36,8 @@ Completion: Runtime/allocator can implement every accepted transition using expo
 
 ## Comments
 
+### Driver integration expectations — 2026-10-08
+
+Read-only ticket05 preparation confirms the planned capability handoff: allocation reservation/known-device binding must yield a claim usable throughout preparation. Parking synchronously closes that handle and transactionally verifies settled commands, records readiness/evidence/TTL and removes its live attachment. Consumption binds the immutable action request and transfers a new owner token/generation with one fresh attachment. Cancellation orders against command authorization; terminal methods jointly publish action/allocation disposition. Unknown creation and retained eligibility are checked by every new acquisition, including legacy and ready consumption.
+
+The existing generic dispatch can carry a driver-private acknowledged-result envelope; no additional generic release or settlement override is requested. The driver will authorize observed touch as `tap` to enforce the single-input guard and use a distinct internal kind for ordinary multi-step legacy actions. Ticket05 will receive the actual integrated exported types before implementation.
