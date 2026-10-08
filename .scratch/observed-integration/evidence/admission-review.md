@@ -14,3 +14,5 @@ Root forwarded both requirements to the contract/lifecycle agents before their d
 ## Contract follow-up
 
 The public and allocation contracts now reserve action identity before creation and persist a host-wide unknown-create guard. Independent review found one lifecycle ambiguity: shutdown cancellation could retire ready allocations despite the cross-process handoff. Corrected the contract so the ready commit removes that allocation from active process-owned jobs; normal shutdown leaves parked readiness intact. Explicit allocation cancel/retire can retire it. Add a CLI prepare-exit → new-process start regression.
+
+Final SPEC review confirmed the parked-readiness correction and corresponding H03/H05 gates. The core specification/contracts preserve the owner constraints with no remaining core blocker. Exact implementation-package completeness awaits the final briefs review.

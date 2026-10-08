@@ -1,6 +1,6 @@
 # Allocation contract
 
-Resolved 2026-10-08 for [ticket 05](../issues/05-allocation-contract.md). Planning only; no device operations, product edits or secret access. The [inventory decision](inventory-decision.md), [provisioning research](provisioning.md), [admission decision](admission-decision.md) and [retained allocation record](../../observed-ui/live/allocation.md) are inspectable evidence. Defaults and interfaces below are design decisions, not measured performance or implemented guarantees.
+Resolved 2026-10-08 for [Define allocation and uncertain-device lifecycle](../issues/05-allocation-contract.md). Planning only; no device operations, product edits or secret access. The [inventory decision](inventory-decision.md), [provisioning research](provisioning.md), [admission decision](admission-decision.md) and [retained allocation record](../../observed-ui/live/allocation.md) are inspectable evidence. Defaults and interfaces below are design decisions, not measured performance or implemented guarantees.
 
 ## Terms and interface
 

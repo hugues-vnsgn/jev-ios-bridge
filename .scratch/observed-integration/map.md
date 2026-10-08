@@ -7,6 +7,8 @@ Created: 2026-10-08
 
 An implementation-ready plan for exposing the validated observed-action runner through the agent interface, assigning fresh dedicated simulators, and validating broader unmodified-app flows. The handoff names bounded work packages, dependencies, suitable skills, acceptance evidence, and integration ownership.
 
+Destination reached on 2026-10-08: [implementation specification](spec.md), [parallel handoff](implementation-plan.md), and [independent review](evidence/handoff-review.md). All eight planning questions are resolved; product work is tracked separately in the rollout tickets.
+
 ## Notes
 
 - Planning only: do not implement product code, operate simulators, merge, or publish in this effort. Task tickets may produce design, contract, and handoff documents to reach this destination; this is an explicit extension of wayfinder's prerequisite-only task convention.
@@ -37,6 +39,8 @@ An implementation-ready plan for exposing the validated observed-action runner t
 
 - [Specify broader live evidence and acceptance gates](issues/06-validation-matrix.md): nine host gates and five serial public-interface live cases across fixture and unchanged Weather app; every acceptance row starts unverified.
 
+- [Assemble and review the parallel implementation handoff](issues/07-implementation-handoff.md): twelve bounded rollout tickets, approved model assignments, explicit ownership and independent Spec/Standards passes.
+
 ## Route
 
 <!-- route:start -->
@@ -62,14 +66,13 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T06,T08 resolved
-    class T07 claimed
+    class T01,T02,T03,T04,T05,T06,T07,T08 resolved
 ```
 <!-- route:end -->
 
 ## Not yet specified
 
-No unclassified fog currently. Public schema, allocation state, validation coverage and implementation partitioning are explicit child-ticket questions. Add a ticket if investigation exposes a new prerequisite; do not hide it inside implementation.
+None. Public contract, allocation state, validation coverage and implementation partitioning are specified. Implementation findings that contradict a decision return to a new explicit planning ticket.
 
 ## Out of scope
 

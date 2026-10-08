@@ -1,6 +1,6 @@
 # Admission decision
 
-Date: 2026-10-08. Baseline inspected: `2ae75e5`. Scope: ticket 03 only; planning and isolated host diagnosis, no product edits or device operations. This recommendation resolves the design question; it does not certify an implementation.
+Date: 2026-10-08. Baseline inspected: `2ae75e5`. Scope: [Audit admission and quarantine across runners](../issues/03-admission-boundary.md) only; planning and isolated host diagnosis, no product edits or device operations. This recommendation resolves the design question; it does not certify an implementation.
 
 ## Decision and invariants
 

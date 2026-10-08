@@ -54,7 +54,7 @@ The when-stuck inversion was: “fresh simulator creation must be supplied by th
 
 ## Required lifecycle behavior
 
-These are requirements for ticket 05 and the implementation handoff, not claims about current code:
+These are requirements for [Define allocation and uncertain-device lifecycle](../issues/05-allocation-contract.md) and the implementation handoff, not claims about current code:
 
 1. Persist a unique **device allocation ID**, configured type/runtime, intended unique name, ownership scope, and budget reservation before starting creation. Use a cross-process allocation admission mechanism so concurrent requests cannot overspend the budget. Unknown create operations and retained devices continue consuming capacity; crashes/PID age do not release it. Existing protected devices and claims must be accounted for as exclusions, not available stock. Distinguish bridge-owned capacity accounting from a guarantee about total host disk capacity.
 2. Persist create-started before spawning. Invoke only the approved executable/argument shape under a deadline and cancellation policy. Once creation has started, a lost reply, invalid/missing UUID, process ambiguity or crash leaves a retained pending creation operation, potentially with an **unknown UDID orphan**. Do not blindly retry creation, free its reservation, or adopt a name-matched device. Read-only diagnostics may collect evidence; recovery/adoption needs a separate reconciled ownership decision. Neither unique naming nor a nonzero exit establishes that no device was created.

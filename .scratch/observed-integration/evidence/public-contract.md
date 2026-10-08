@@ -1,6 +1,6 @@
 # Observed-action public contract decision
 
-2026-10-08; planning only, no product edits or device operations. Resolves ticket 04 using the accepted [seam](seam-decision.md), [admission](admission-decision.md) and coordinated [allocation](allocation-contract.md) decisions. Allocation owns preparation schemas and lifecycle; this document owns action schemas and adapters.
+2026-10-08; planning only, no product edits or device operations. Resolves [Choose the observed-action public contract](../issues/04-public-contract.md) using the accepted [seam](seam-decision.md), [admission](admission-decision.md) and coordinated [allocation](allocation-contract.md) decisions. Allocation owns preparation schemas and lifecycle; this document owns action schemas and adapters.
 
 ## Facts and choice
 

@@ -1,6 +1,6 @@
 # Agent plan for observed-action integration
 
-Status: planning execution started 2026-10-08; public contract and implementation briefs are not yet settled.
+Status: planning complete. Use [the reviewed implementation handoff](implementation-plan.md) and its twelve rollout tickets for execution.
 
 Start from [the map](map.md). Read a ticket's blockers and claim it before doing its work. The map and tickets own decisions; this file owns dispatch and handoff rules.
 
@@ -75,6 +75,6 @@ The live operator receives the integrated commit hash and an explicit device all
 
 The plan is implementation-ready only when every planning ticket has an evidence-backed answer and the handoff review finds no missing prerequisite. Implementation is merge-ready only after compatibility checks, the agreed host matrix, live public-interface evidence, and independent review pass. No gate accepts native certification through screenshots or host process completion.
 
-## Charting review
+## Reviews
 
-2026-10-08: an independent planning agent found no blockers in the dependency graph, skill assignments, source hazards or provisioning limits. All local Markdown links resolve; the route renderer accepts all eight tickets. This review accepts the chart, not the still-pending implementation spec. Only the provisioning research ticket is resolved.
+The initial chart passed review before planning execution. All eight planning tickets are now resolved. [Final handoff review](evidence/handoff-review.md) records independent Spec and Standards passes; implementation and live acceptance remain unverified.

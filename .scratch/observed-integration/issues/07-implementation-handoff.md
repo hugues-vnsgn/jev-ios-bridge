@@ -4,7 +4,7 @@ Parent: [Observed actions from live experiment to agent workflow](../map.md)
 Label: wayfinder:task
 Type: task
 Mode: AFK
-Status: claimed
+Status: resolved
 Claimed by: root-handoff
 Triage: ready-for-agent
 Blocked by: 06
@@ -28,3 +28,7 @@ The answer cites inspectable evidence, distinguishes facts from recommendations,
 ## Comments
 
 Created during charting. No implementation authorization is implied by this planning ticket.
+
+## Answer
+
+Resolved 2026-10-08 by root-handoff after independent Spec and Standards reviews. [Specification](../spec.md) indexes the accepted contracts; [implementation handoff](../implementation-plan.md) assigns twelve [rollout tickets](../../observed-action-rollout/spec.md) with dependencies, exact write sets, approved models/efforts, suitable skills and acceptance evidence. [Review](../evidence/handoff-review.md) records both passes and ownership corrections. The first execution wave is admission core and source/artifact adapters in parallel; root pins the final planning ref before dispatch. Product implementation and all new acceptance gates remain unverified.
