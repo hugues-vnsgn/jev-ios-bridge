@@ -5,7 +5,7 @@ date: 2026-10-02
 
 # Simulator presentation and a bounded iOS point-tap exception
 
-[ADR-0002](0002-mobilebuildmcp-as-device-layer.md) says the bridge drives an iOS simulator only through pinned MobileBuildMCP, with no direct `simctl`, AXe or other device automation. Version 1.3 needs two things MobileBuildMCP 2.7.1 can't do. They aren't the same kind of thing, so this record treats them separately. Showing the simulator's window is presentation and never changes the app's screen. Claude's point tap changes the app's screen, and it's the only device automation the bridge may run outside MobileBuildMCP. Both stay behind the existing `MobileBuildMcpDriver`: the window in `prepare`, the tap in `act`.
+[ADR-0002](0002-mobilebuildmcp-as-device-layer.md) says the bridge drives an iOS simulator only through pinned MobileBuildMCP, with no direct `simctl`, AXe or other device automation. Version 1.3 needs two things MobileBuildMCP 2.7.1 can't do. They aren't the same kind of thing, so this record treats them separately. Showing the simulator's window is presentation and never changes the app's screen. Claude's point tap changes the app's screen, and it's the only direct UI input the bridge may run outside MobileBuildMCP. [ADR-0009](0009-bounded-simulator-creation.md) separately governs bounded simulator creation and does not extend this UI input permission. Both stay behind the existing `MobileBuildMcpDriver`: the window in `prepare`, the tap in `act`.
 
 ```
 MobileBuildMcpDriver
@@ -13,7 +13,7 @@ MobileBuildMcpDriver
 │   └── deviceWindow → open Simulator      optional presentation
 └── act
     ├── ordinary actions → MobileBuildMCP
-    └── Claude's tapAt → bundled AXe       the one automation exception
+    └── Claude's tapAt → bundled AXe       the UI input exception
 ```
 
 ## Presentation: the simulator window
