@@ -6,7 +6,7 @@ Execution authorized by the owner on 2026-10-08. Planning base: `b8c4a50942551bd
 | --- | --- | --- | --- |
 | Durable admission core | integrated | admission_core / gpt-6-astra / high | Integrated `9911710`; independent fix review PASS; 42 focused tests Node24/26, full check1007/1007 plus typecheck/build |
 | Offline migration | integrated | migration_readiness / gpt-6-astra / high | Integrated `60efe5f`; all findings independently closed; full check1091/1091 plus typecheck/build; Node24 combined126/126 |
-| Transactional allocation store | in-progress | allocation_store / gpt-6-astra / high | Resumed intact candidate at `dc31c57` after predecessor's interrupted turn; independent review and integration pending |
+| Transactional allocation store | repairing review finding | allocation_store / gpt-6-astra / high | Candidate `c893010`:134/134 Node24/26; independent Spec reproduced P1 revoked-park fence bypass; Standards one minor duplication; repair and re-review pending |
 | Creation and artifact adapters | integrated | source_adapters / gpt-6.1-sol / high | Integrated `448a026`; independent fix review PASS; 41 focused tests Node24/26 |
 | Remaining packages | waiting for dependencies | Assigned in implementation handoff | No acceptance claimed |
 
