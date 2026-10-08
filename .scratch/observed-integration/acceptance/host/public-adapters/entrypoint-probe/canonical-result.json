@@ -1,0 +1,61 @@
+{
+  "purpose": "General local Node boundary using canonical parent path; not an adapter source finding.",
+  "records": [
+    {
+      "command": [
+        "/opt/homebrew/bin/node",
+        "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-entrypoint-canonical-ev25ftoi/entry.mjs"
+      ],
+      "runtime": "v26.8.1",
+      "exit": 0,
+      "stdout": {
+        "importUrl": "file:///private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-entrypoint-canonical-ev25ftoi/entry.mjs",
+        "argvUrl": "file:///private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-entrypoint-canonical-ev25ftoi/entry.mjs",
+        "same": true
+      },
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/node",
+        "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-entrypoint-canonical-ev25ftoi/bin"
+      ],
+      "runtime": "v26.8.1",
+      "exit": 0,
+      "stdout": {
+        "importUrl": "file:///private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-entrypoint-canonical-ev25ftoi/entry.mjs",
+        "argvUrl": "file:///private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-entrypoint-canonical-ev25ftoi/bin",
+        "same": false
+      },
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-entrypoint-canonical-ev25ftoi/entry.mjs"
+      ],
+      "runtime": "v24.0.0",
+      "exit": 0,
+      "stdout": {
+        "importUrl": "file:///private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-entrypoint-canonical-ev25ftoi/entry.mjs",
+        "argvUrl": "file:///private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-entrypoint-canonical-ev25ftoi/entry.mjs",
+        "same": true
+      },
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-entrypoint-canonical-ev25ftoi/bin"
+      ],
+      "runtime": "v24.0.0",
+      "exit": 0,
+      "stdout": {
+        "importUrl": "file:///private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-entrypoint-canonical-ev25ftoi/entry.mjs",
+        "argvUrl": "file:///private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/jev-entrypoint-canonical-ev25ftoi/bin",
+        "same": false
+      },
+      "stderr": ""
+    }
+  ]
+}
