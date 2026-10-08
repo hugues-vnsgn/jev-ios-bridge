@@ -4,6 +4,8 @@ import { mkdtempSync, realpathSync, rmSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawn } from 'node:child_process';
+import { DatabaseSync } from 'node:sqlite';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { Admission } from '../src/device/admission.js';
 import type { AllocationReservationInput } from '../src/device/admission-allocation.js';
@@ -436,3 +438,78 @@ for (const closure of ['cancel', 'failAllocation', 'finalize', 'parkAllocation']
     assert.equal(admission.readAllocation(r.reservation.identity.allocationId)?.state, 'quarantined');
   });
 }
+test('allocation capacity includes held records across all states and excludes released capacity without mutating reads', async t => {
+  const { admission, root } = fixture(t);
+  assert.deepEqual(admission.readAllocationCapacity(), { heldAllocations: 0, reservedBytes: 0 });
+  for (const [index, state] of ['retained', 'quarantined', 'ready', 'executing', 'released', 'preparing'].entries()) {
+    const r = admission.reserveAllocation(supplied(state, `ABCDEF00-0000-4000-8000-${String(index + 1).padStart(12, '0')}`));
+    if (r.kind !== 'reserved') throw new Error('reserve');
+    if (state === 'released') { r.reservation.fail('ARTIFACT_INVALID'); continue; }
+    if (state === 'preparing') continue;
+    r.reservation.stage(staged()); const a = r.reservation.admit(); if (a.kind !== 'admitted') throw new Error('admit');
+    if (state === 'quarantined') { r.reservation.fail('PREPARATION_UNCONFIRMED'); continue; }
+    const driver = a.claim.bindDriver('fake');
+    for (const kind of ['boot', 'install', 'launch', 'readiness']) await driver.dispatch(kind, async () => true);
+    a.claim.park(['/isolated/readiness.json']);
+    if (state === 'ready') continue;
+    const action = admission.consumeAllocation(binding(r.reservation.identity.allocationId, state));
+    if (action.kind !== 'consumed') throw new Error('consume');
+    if (state === 'executing') continue;
+    action.claim.recordObservation(['/isolated/before.json']);
+    action.claim.finalize({ outcome: 'observed', disposition: 'available', payload: { outcome: 'already_satisfied', reason: null }, evidenceRefs: ['/isolated/before.json'] });
+  }
+  const bytes = readFileSync(join(root, 'admission.sqlite'));
+  const reopened = Admission.forTesting({ root, backend: 'fake', initialize: false });
+  assert.deepEqual(reopened.readAllocationCapacity(), { heldAllocations: 5, reservedBytes: 4000 });
+  assert.deepEqual(admission.readAllocationCapacity(), { heldAllocations: 5, reservedBytes: 4000 });
+  assert.deepEqual(readFileSync(join(root, 'admission.sqlite')), bytes);
+});
+test('allocation capacity sums persisted reservations after configuration changes', t => {
+  const { admission } = fixture(t);
+  const first = admission.reserveAllocation(supplied('first')); if (first.kind !== 'reserved') throw new Error('reserve');
+  first.reservation.stage(staged()); first.reservation.admit(); first.reservation.fail('BOOT_FAILED');
+  const next = supplied('second', 'ABCDEF00-0000-4000-8000-000000000002');
+  next.budgets.reservationBytesPerAllocation = 1200; next.configDigest = 'b'.repeat(64);
+  assert.equal(admission.reserveAllocation(next).kind, 'reserved');
+  const changed = supplied('first'); changed.configDigest = 'c'.repeat(64); changed.budgets.reservationBytesPerAllocation = 1;
+  assert.equal(admission.reserveAllocation(changed).kind, 'retrieved');
+  assert.deepEqual(admission.readAllocationCapacity(), { heldAllocations: 2, reservedBytes: 2000 });
+});
+
+// Fault injection only: corrupt a temporary store, then observe refusal through Admission.
+function corruptCapacity(root: string, change: (record: Record<string, unknown>) => void, validChecksum = true) {
+  const db = new DatabaseSync(join(root, 'admission.sqlite'));
+  try {
+    const row = db.prepare('SELECT id, record FROM allocations ORDER BY rowid LIMIT 1').get()!;
+    const record = JSON.parse(row.record as string) as Record<string, unknown>; change(record);
+    const json = JSON.stringify(record);
+    db.prepare('UPDATE allocations SET record=?, checksum=? WHERE id=?').run(json,
+      validChecksum ? createHash('sha256').update(json).digest('hex') : 'corrupt', row.id!);
+  } finally { db.close(); }
+}
+for (const [field, value] of [
+  ['capacityHeld', 'false'], ['capacityHeld', null], ['reservationBytes', -1], ['reservationBytes', 0],
+  ['reservationBytes', 1.5], ['reservationBytes', '800'], ['reservationBytes', Number.MAX_SAFE_INTEGER + 1],
+] as const) test(`allocation capacity rejects corrupt ${field} ${JSON.stringify(value)}`, t => {
+  const { admission, root } = fixture(t);
+  assert.equal(admission.reserveAllocation(input()).kind, 'reserved');
+  corruptCapacity(root, record => { record[field] = value; });
+  assert.throws(() => admission.readAllocationCapacity(), { code: 'STATE_UNAVAILABLE' });
+});
+test('allocation capacity rejects a corrupt checksum rather than returning an empty or partial count', t => {
+  const { admission, root } = fixture(t);
+  assert.equal(admission.reserveAllocation(input()).kind, 'reserved');
+  corruptCapacity(root, record => { record.capacityHeld = false; }, false);
+  assert.throws(() => admission.readAllocationCapacity(), { code: 'STATE_UNAVAILABLE' });
+});
+test('allocation capacity accepts the exact safe integer limit and refuses aggregate overflow', t => {
+  const { admission, root } = fixture(t);
+  const first = input('first'); first.budgets.maxConcurrentPreparations = 2;
+  assert.equal(admission.reserveAllocation(first).kind, 'reserved');
+  const second = input('second'); second.budgets.maxConcurrentPreparations = 2;
+  assert.equal(admission.reserveAllocation(second).kind, 'reserved');
+  corruptCapacity(root, record => { record.reservationBytes = Number.MAX_SAFE_INTEGER - 800; });
+  assert.deepEqual(admission.readAllocationCapacity(), { heldAllocations: 2, reservedBytes: Number.MAX_SAFE_INTEGER });
+  corruptCapacity(root, record => { record.reservationBytes = Number.MAX_SAFE_INTEGER; });
+  assert.throws(() => admission.readAllocationCapacity(), { code: 'STATE_UNAVAILABLE' });
+});

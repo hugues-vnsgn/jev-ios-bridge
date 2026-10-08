@@ -16,6 +16,8 @@ export const allocationBudgetsSchema = z.strictObject({
   createTimeoutMs: stageTime, bootTimeoutMs: stageTime, installTimeoutMs: stageTime, launchTimeoutMs: stageTime,
   readinessTimeoutMs: stageTime, readyTtlMs: stageTime, timeoutMs: z.number().int().min(1000).max(900000),
 }).refine(b => b.maxConcurrentPreparations <= b.maxRetainedAllocations && b.maxReservedBytes >= b.reservationBytesPerAllocation);
+/** Held reservations across every allocation state, independent of current configuration. */
+export type AllocationCapacity = { heldAllocations: number; reservedBytes: number };
 export type AllocationBudgets = z.infer<typeof allocationBudgetsSchema>;
 const sourceFields = { deviceTypeId: text, runtimeId: text };
 export const allocationSourceSchema = z.discriminatedUnion('kind', [

@@ -1,4 +1,4 @@
-import type { AllocationReservationInput, ReserveAllocationResult, AllocationRecord, AllocationOwner, AllocationReservation, AllocationCommit, AllocationReason, PreparationClaim, ActionBinding, ConsumeAllocationResult, ActionRecordView, ActionEvidence } from './admission-allocation.js';
+import type { AllocationCapacity, AllocationReservationInput, ReserveAllocationResult, AllocationRecord, AllocationOwner, AllocationReservation, AllocationCommit, AllocationReason, PreparationClaim, ActionBinding, ConsumeAllocationResult, ActionRecordView, ActionEvidence } from './admission-allocation.js';
 import { randomUUID } from 'node:crypto';
 import { userInfo } from 'node:os';
 import { join } from 'node:path';
@@ -79,6 +79,7 @@ export class Admission {
     if (result.kind !== 'consumed') return result;
     return { kind: 'consumed', claim: new OwnedClaim(this.store, result.owner), allocation: result.allocation };
   }
+  readAllocationCapacity(): AllocationCapacity { return this.store.readAllocationCapacity(); }
   listActiveAllocations(): AllocationRecord[] { return this.store.listActiveAllocations(); }
   readAction(actionId: string): ActionRecordView | undefined { return this.store.readAction(actionId); }
   recordActionExport(actionId: string, result: { status: 'complete'; terminal: string } | { status: 'failed' }): AllocationRecord { return this.store.recordActionExport(actionId, result); }

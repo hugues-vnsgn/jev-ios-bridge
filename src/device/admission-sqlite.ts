@@ -1,7 +1,7 @@
 import { isDeepStrictEqual } from 'node:util';
 import { DatabaseSync } from 'node:sqlite';
 import { randomUUID, createHash } from 'node:crypto';
-import { reservationSchema, type AllocationRecord, type AllocationReservationInput, type AllocationOwner, type AllocationRefusal, type AllocationReason, actionBindingSchema, type ActionBinding, type ActionRecordView, type ActionEvidence } from './admission-allocation.js';
+import { reservationSchema, type AllocationCapacity, type AllocationRecord, type AllocationReservationInput, type AllocationOwner, type AllocationRefusal, type AllocationReason, actionBindingSchema, type ActionBinding, type ActionRecordView, type ActionEvidence } from './admission-allocation.js';
 import { closeSync, constants, fsyncSync, lstatSync, mkdirSync, openSync, readFileSync, readdirSync, realpathSync, unlinkSync, writeFileSync } from 'node:fs';
 import { isAbsolute, join, resolve } from 'node:path';
 import { z } from 'zod/v4';
@@ -515,6 +515,25 @@ export class AdmissionSqlite {
       record.actionEvidence.exportStatus = result.status;
       if (result.status === 'complete') record.actionEvidence.terminal = result.terminal;
       this.saveAllocation(db, record); return record;
+    });
+  }
+  readAllocationCapacity(): AllocationCapacity {
+    return this.read(db => {
+      const capacity: AllocationCapacity = { heldAllocations: 0, reservedBytes: 0 };
+      for (const row of db.prepare('SELECT id FROM allocations').all()) {
+        const record = this.allocation(db, row.id as string);
+        if (!record || typeof record.capacityHeld !== 'boolean' || !Number.isSafeInteger(record.reservationBytes) || record.reservationBytes <= 0) {
+          throw new AdmissionError('STATE_UNAVAILABLE', 'Invalid allocation capacity record');
+        }
+        if (record.capacityHeld) {
+          if (capacity.heldAllocations >= Number.MAX_SAFE_INTEGER || record.reservationBytes > Number.MAX_SAFE_INTEGER - capacity.reservedBytes) {
+            throw new AdmissionError('STATE_UNAVAILABLE', 'Allocation capacity exceeds safe integer range');
+          }
+          capacity.heldAllocations++;
+          capacity.reservedBytes += record.reservationBytes;
+        }
+      }
+      return capacity;
     });
   }
   readAllocation(id: string): AllocationRecord | undefined { return this.read(db => this.allocation(db, id)); }
