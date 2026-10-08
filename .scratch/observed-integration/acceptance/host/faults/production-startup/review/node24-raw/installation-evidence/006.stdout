@@ -1,0 +1,32 @@
+jev-ios-bridge 1.3.1
+Usage:
+  jev-ios-bridge run <script.json> [--json] [--no-log-pane] [--no-device-window] [--max-steps N] [--timeout-ms N]
+  jev-ios-bridge report <run-id> [--json]
+  jev-ios-bridge logs <run-id>
+  jev-ios-bridge capture [--serial S | --avd A] [--jev]
+  jev-ios-bridge mcp
+  jev-ios-bridge observed-allocate <allocation-request.json> [--json]
+  jev-ios-bridge observed-allocation <allocation-id> [--json] [--wait-ms N]
+  jev-ios-bridge observed-retire <allocation-id> [--json]
+  jev-ios-bridge observed-allocation-cancel <allocation-id> [--json]
+  jev-ios-bridge observed-action <action-request.json> [--json]
+  jev-ios-bridge observed-report <action-id> [--json] [--wait-ms N]
+  jev-ios-bridge observed-cancel <action-id> [--json]
+  jev-ios-bridge --version | --help
+Set TYPESAFE_API_KEY and, for an iOS script, a dedicated simulator (JEV_DEVICE_UDID, the script's
+device.udid, or .mobilebuildmcp/config.yaml); for an Android script, a device (JEV_ANDROID_DEVICE,
+or the script's device.serial or device.avd). JEV_RUNS_DIR selects the evidence directory (default ./.jev-runs).
+JEV_PROJECT_DIR, when set, stands in for the working directory (a plugin sets it to your project).
+A run opens a live log pane of the app's own output in a new terminal window; turn it off with
+--no-log-pane or JEV_LOG_PANE=off, or choose the terminal app with JEV_LOG_PANE_APP.
+An iOS run brings its simulator's window to the front; turn that off with --no-device-window or
+JEV_DEVICE_WINDOW=off.
+capture prints the current Android screen as a run sees it, one JSON line per element, or with --jev
+as Jev's text. It never launches or restarts the app, and needs no TYPESAFE_API_KEY. It picks the device
+by --serial, then --avd, then JEV_ANDROID_DEVICE, and exits 0 when it printed, 3 when it couldn't.
+A run of a script with "do" steps (driven mode, experimental: JEV_EXPERIMENTAL_DRIVEN=1) can pause for
+Claude. run prints the pause and keeps waiting, but can't answer it: resolve_step is an MCP tool, so the
+pause times out unless the script runs through the MCP server.
+Observed prepare/start requires JEV_EXPERIMENTAL_OBSERVED=1 and offline admission migration/configuration.
+Observed commands need no Jev key; reads/cancellation/retirement remain available when disabled.
+Exit codes: 0 passed, 1 failed, 2 inconclusive, 3 could not start.

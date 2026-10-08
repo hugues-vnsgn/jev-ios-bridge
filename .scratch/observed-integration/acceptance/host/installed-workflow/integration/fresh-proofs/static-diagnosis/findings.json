@@ -1,0 +1,330 @@
+{
+  "scope": "STATIC ONLY; no source edits/tests/build/install/network/device/store/config/env reads",
+  "rows": [
+    {
+      "name": "integrated-installed-node26-installed",
+      "npmDebugLog": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-installed/registry-cache/_logs/2026-10-08T14_52_03_450Z-debug-0.log",
+      "lines": 115,
+      "tarballRequests": 0,
+      "tarballBodyEndLogs": 0,
+      "unfinishedRequestedTarballs": [],
+      "mobilebuildFiles": 0,
+      "mobilebuildBytes": 0,
+      "mobilebuildPackageJsonExists": false,
+      "mobilebuildCliExists": false,
+      "rawCommand003": {
+        "id": "003",
+        "command": "npm",
+        "args": [
+          "install",
+          "--ignore-scripts",
+          "--no-audit",
+          "--no-fund",
+          "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-installed/jev-ios-bridge-1.3.1.tgz"
+        ],
+        "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-installed/clean",
+        "node": "v26.8.1",
+        "exit": null,
+        "signal": "SIGKILL",
+        "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-installed/003.stdout",
+        "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-installed/003.stderr"
+      }
+    },
+    {
+      "name": "integrated-installed-node26-recheck-installed",
+      "npmDebugLog": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-recheck-installed/registry-cache/_logs/2026-10-08T15_00_02_471Z-debug-0.log",
+      "lines": 1380,
+      "tarballRequests": 155,
+      "tarballBodyEndLogs": 154,
+      "unfinishedRequestedTarballs": [
+        "mobilebuildmcp@https://registry.npmjs.org/mobilebuildmcp/-/mobilebuildmcp-2.7.1.tgz"
+      ],
+      "mobilebuildFiles": 6,
+      "mobilebuildBytes": 8248812,
+      "mobilebuildPackageJsonExists": false,
+      "mobilebuildCliExists": false,
+      "rawCommand003": {
+        "id": "003",
+        "command": "npm",
+        "args": [
+          "install",
+          "--ignore-scripts",
+          "--no-audit",
+          "--no-fund",
+          "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-recheck-installed/jev-ios-bridge-1.3.1.tgz"
+        ],
+        "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-recheck-installed/clean",
+        "node": "v26.8.1",
+        "exit": null,
+        "signal": "SIGKILL",
+        "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-recheck-installed/003.stdout",
+        "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-recheck-installed/003.stderr"
+      }
+    },
+    {
+      "name": "integrated-installed-node24-installed",
+      "npmDebugLog": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node24-installed/registry-cache/_logs/2026-10-08T14_57_32_382Z-debug-0.log",
+      "lines": 1545,
+      "tarballRequests": 155,
+      "tarballBodyEndLogs": 155,
+      "unfinishedRequestedTarballs": [],
+      "mobilebuildFiles": 1061,
+      "mobilebuildBytes": 44531099,
+      "mobilebuildPackageJsonExists": true,
+      "mobilebuildCliExists": true,
+      "rawCommand003": {
+        "id": "003",
+        "command": "npm",
+        "args": [
+          "install",
+          "--ignore-scripts",
+          "--no-audit",
+          "--no-fund",
+          "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node24-installed/jev-ios-bridge-1.3.1.tgz"
+        ],
+        "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node24-installed/clean",
+        "node": "v24.0.0",
+        "exit": 0,
+        "signal": null,
+        "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node24-installed/003.stdout",
+        "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node24-installed/003.stderr"
+      }
+    }
+  ],
+  "rootRecheckAndRoot24TarballMultisetsExactlyEqual": true,
+  "directPins": {
+    "@modelcontextprotocol/server": "2.1.0",
+    "@typesafe-ai/sdk": "0.6.0",
+    "mobilebuildmcp": "2.7.1",
+    "mobilecli": "1.0.14",
+    "zod": "4.6.5"
+  },
+  "commonBuildLockSha256": "7982b0a2fc02a088ab03761b8332e6c15ad3d0d841f1134e9a4dd50b94364479",
+  "authorPreservedPluginVsRootFreshResolutionChanges": [
+    {
+      "path": "node_modules/@hono/node-server",
+      "authorPreservedPluginVersion": "2.1.1",
+      "rootFreshVersion": "2.1.4",
+      "rootResolved": "https://registry.npmjs.org/@hono/node-server/-/node-server-2.1.4.tgz"
+    },
+    {
+      "path": "node_modules/@modelcontextprotocol/sdk",
+      "authorPreservedPluginVersion": "1.30.1",
+      "rootFreshVersion": "1.32.1",
+      "rootResolved": "https://registry.npmjs.org/@modelcontextprotocol/sdk/-/sdk-1.32.1.tgz"
+    },
+    {
+      "path": "node_modules/@opentelemetry/core",
+      "authorPreservedPluginVersion": "2.11.0",
+      "rootFreshVersion": "2.12.0",
+      "rootResolved": "https://registry.npmjs.org/@opentelemetry/core/-/core-2.12.0.tgz"
+    },
+    {
+      "path": "node_modules/@opentelemetry/resources",
+      "authorPreservedPluginVersion": "2.11.0",
+      "rootFreshVersion": "2.12.0",
+      "rootResolved": "https://registry.npmjs.org/@opentelemetry/resources/-/resources-2.12.0.tgz"
+    },
+    {
+      "path": "node_modules/@opentelemetry/sdk-trace",
+      "authorPreservedPluginVersion": "2.11.0",
+      "rootFreshVersion": "2.12.0",
+      "rootResolved": "https://registry.npmjs.org/@opentelemetry/sdk-trace/-/sdk-trace-2.12.0.tgz"
+    },
+    {
+      "path": "node_modules/@opentelemetry/sdk-trace-base",
+      "authorPreservedPluginVersion": "2.11.0",
+      "rootFreshVersion": "2.12.0",
+      "rootResolved": "https://registry.npmjs.org/@opentelemetry/sdk-trace-base/-/sdk-trace-base-2.12.0.tgz"
+    },
+    {
+      "path": "node_modules/@sentry/core",
+      "authorPreservedPluginVersion": "10.75.3",
+      "rootFreshVersion": "10.76.1",
+      "rootResolved": "https://registry.npmjs.org/@sentry/core/-/core-10.76.1.tgz"
+    },
+    {
+      "path": "node_modules/@sentry/node",
+      "authorPreservedPluginVersion": "10.75.3",
+      "rootFreshVersion": "10.76.1",
+      "rootResolved": "https://registry.npmjs.org/@sentry/node/-/node-10.76.1.tgz"
+    },
+    {
+      "path": "node_modules/@sentry/node-core",
+      "authorPreservedPluginVersion": "10.75.3",
+      "rootFreshVersion": "10.76.1",
+      "rootResolved": "https://registry.npmjs.org/@sentry/node-core/-/node-core-10.76.1.tgz"
+    },
+    {
+      "path": "node_modules/@sentry/opentelemetry",
+      "authorPreservedPluginVersion": "10.75.3",
+      "rootFreshVersion": "10.76.1",
+      "rootResolved": "https://registry.npmjs.org/@sentry/opentelemetry/-/opentelemetry-10.76.1.tgz"
+    },
+    {
+      "path": "node_modules/@sentry/server-utils",
+      "authorPreservedPluginVersion": "10.75.3",
+      "rootFreshVersion": "10.76.1",
+      "rootResolved": "https://registry.npmjs.org/@sentry/server-utils/-/server-utils-10.76.1.tgz"
+    },
+    {
+      "path": "node_modules/cjs-module-lexer",
+      "authorPreservedPluginVersion": "2.2.1",
+      "rootFreshVersion": "2.3.0",
+      "rootResolved": "https://registry.npmjs.org/cjs-module-lexer/-/cjs-module-lexer-2.3.0.tgz"
+    },
+    {
+      "path": "node_modules/es-module-lexer",
+      "authorPreservedPluginVersion": "3.0.2",
+      "rootFreshVersion": "3.0.3",
+      "rootResolved": "https://registry.npmjs.org/es-module-lexer/-/es-module-lexer-3.0.3.tgz"
+    },
+    {
+      "path": "node_modules/express-rate-limit",
+      "authorPreservedPluginVersion": "8.7.0",
+      "rootFreshVersion": "8.7.1",
+      "rootResolved": "https://registry.npmjs.org/express-rate-limit/-/express-rate-limit-8.7.1.tgz"
+    },
+    {
+      "path": "node_modules/hono",
+      "authorPreservedPluginVersion": "4.13.9",
+      "rootFreshVersion": "4.13.13",
+      "rootResolved": "https://registry.npmjs.org/hono/-/hono-4.13.13.tgz"
+    },
+    {
+      "path": "node_modules/import-in-the-middle",
+      "authorPreservedPluginVersion": "3.5.1",
+      "rootFreshVersion": "3.5.2",
+      "rootResolved": "https://registry.npmjs.org/import-in-the-middle/-/import-in-the-middle-3.5.2.tgz"
+    },
+    {
+      "path": "node_modules/ip-address",
+      "authorPreservedPluginVersion": "10.7.2",
+      "rootFreshVersion": "10.7.3",
+      "rootResolved": "https://registry.npmjs.org/ip-address/-/ip-address-10.7.3.tgz"
+    }
+  ],
+  "authorCleanResolutionLimit": "Original author clean package-lock and registry debug logs are not in preserved selected evidence; plugin/build locks are not asserted to be author clean resolution graphs.",
+  "inputs": [
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-installed/registry-cache/_logs/2026-10-08T14_52_03_450Z-debug-0.log",
+      "sha256": "2df906bfe68e1921afb15ea46061a0211f0f288180b9f66801b39691fc2b7730"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-installed/commands.jsonl",
+      "sha256": "ea2eb3ee92c73f3f482da23368b3569a8b5acfe298f670256b0df5121284afe9"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-installed/003.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-installed/003.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-installed/failure.json",
+      "sha256": "dbdfd97f9d50921758f6ae856dc56729ff86c3e15d6bfa0ef2d42033da2d7da4"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-installed/build-source/package.json",
+      "sha256": "d2fffea3e28d6ea794536b2cb67337abe8ec75c46cf10c2944ca1b3cd0a3a3ea"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-installed/build-source/package-lock.json",
+      "sha256": "7982b0a2fc02a088ab03761b8332e6c15ad3d0d841f1134e9a4dd50b94364479"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-recheck-installed/registry-cache/_logs/2026-10-08T15_00_02_471Z-debug-0.log",
+      "sha256": "5be53b8042bb14afe99f18f744c4c64e7532e4519df163bae4d6c7acb78e03ae"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-recheck-installed/commands.jsonl",
+      "sha256": "0dc02099c796ec15f9b2a9c1430f7db2585f15c66e949aab32e784af9bac5d17"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-recheck-installed/003.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-recheck-installed/003.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-recheck-installed/failure.json",
+      "sha256": "21a4d2fc6edf9fb95f548dba722130125bd0bda22debe13d4956ebbe7e871ee7"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-recheck-installed/build-source/package.json",
+      "sha256": "d2fffea3e28d6ea794536b2cb67337abe8ec75c46cf10c2944ca1b3cd0a3a3ea"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-recheck-installed/build-source/package-lock.json",
+      "sha256": "7982b0a2fc02a088ab03761b8332e6c15ad3d0d841f1134e9a4dd50b94364479"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node24-installed/registry-cache/_logs/2026-10-08T14_57_32_382Z-debug-0.log",
+      "sha256": "a9c02ecd5591d757aa08ebce496bd298dc63a5a69afdc5e078a207306f7362a7"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node24-installed/commands.jsonl",
+      "sha256": "e28098cfeba5590e8136311ed47a11950c6c37734574999d1bedff7600efc1c1"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node24-installed/003.stdout",
+      "sha256": "4a295bbe9022c5197b02563f877ff92a9272b80af5811f44ce538cb493d3ec42"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node24-installed/003.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node24-installed/summary.json",
+      "sha256": "ed91ec372b848e0c179132858fd4c1c94ce7c3177e88f4967b91fa546691cd17"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node24-installed/build-source/package.json",
+      "sha256": "d2fffea3e28d6ea794536b2cb67337abe8ec75c46cf10c2944ca1b3cd0a3a3ea"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node24-installed/build-source/package-lock.json",
+      "sha256": "7982b0a2fc02a088ab03761b8332e6c15ad3d0d841f1134e9a4dd50b94364479"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/installed-workflow/author/final-proof/accepted-node26-proof/build-source/package-lock.json",
+      "sha256": "7982b0a2fc02a088ab03761b8332e6c15ad3d0d841f1134e9a4dd50b94364479"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/installed-workflow/author/final-proof/accepted-node26-proof/plugin/package-lock.json",
+      "sha256": "be79b19a3f7891e340fcd123fe751260a4492a577e0bda22398325e6ea368cd7"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/installed-workflow/author/final-proof/accepted-node26-proof/003.stdout",
+      "sha256": "47486cd839ba1189f57994ddd92b7911ea1a3134cab27b56493eeace522fb67a"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/installed-workflow/author/final-proof/accepted-node26-proof/summary.json",
+      "sha256": "4d3a2eae1e8f9a7a85c4f2d9256b7b5fcf583aa615827fc0bdd9dad16cbaec71"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/installed-workflow/author/final-proof/accepted-node24-proof/build-source/package-lock.json",
+      "sha256": "7982b0a2fc02a088ab03761b8332e6c15ad3d0d841f1134e9a4dd50b94364479"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/installed-workflow/author/final-proof/accepted-node24-proof/plugin/package-lock.json",
+      "sha256": "be79b19a3f7891e340fcd123fe751260a4492a577e0bda22398325e6ea368cd7"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/installed-workflow/author/final-proof/accepted-node24-proof/003.stdout",
+      "sha256": "beafa70b99687bca1e4744c1d4ecdeb87475a79b452d17fa385e54fa7a9fc21f"
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/installed-workflow/author/final-proof/accepted-node24-proof/summary.json",
+      "sha256": "85ee290e6baeb6e9bc8459ff8d751cf20761638f82f6e3b1ab165cf7eb50f25b"
+    },
+    {
+      "path": "/opt/homebrew/lib/node_modules/npm/node_modules/npm-registry-fetch/lib/check-response.js",
+      "sha256": "3be275e675da6d9e16709ba875216c2218d291704ce174127dc95b2fc996ea52"
+    }
+  ]
+}

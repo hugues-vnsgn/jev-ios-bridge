@@ -1,0 +1,115 @@
+0 verbose cli /opt/homebrew/Cellar/node/26.8.1/bin/node /opt/homebrew/Cellar/node/26.8.1/bin/npm
+1 info using npm@11.19.0
+2 info using node@v26.8.1
+3 silly config load:file:/opt/homebrew/lib/node_modules/npm/npmrc
+4 silly config load:file:/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-installed/clean/.npmrc
+5 silly config load:file:/Users/hugues_mini/.npmrc
+6 silly config load:file:/opt/homebrew/etc/npmrc
+7 verbose title npm install /Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-installed/jev-ios-bridge-1.3.1.tgz
+8 verbose argv "install" "--ignore-scripts" "--no-audit" "--no-fund" "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-installed/jev-ios-bridge-1.3.1.tgz"
+9 verbose logfile logs-max:10 dir:/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-installed/registry-cache/_logs/2026-10-08T14_52_03_450Z-
+10 verbose logfile /Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node26-installed/registry-cache/_logs/2026-10-08T14_52_03_450Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4395630592 maxSize:1098907648 maxEntrySize:549453824
+13 silly idealTree buildDeps
+14 silly fetch manifest jev-ios-bridge@file:../jev-ios-bridge-1.3.1.tgz
+15 silly placeDep ROOT jev-ios-bridge@1.3.1 OK for: isolated-installed-proof@1.0.0 want: file:../jev-ios-bridge-1.3.1.tgz
+16 silly fetch manifest @modelcontextprotocol/server@2.1.0
+17 silly packumentCache full:https://registry.npmjs.org/@modelcontextprotocol%2fserver cache-miss
+18 silly fetch manifest @typesafe-ai/sdk@0.6.0
+19 silly packumentCache full:https://registry.npmjs.org/@typesafe-ai%2fsdk cache-miss
+20 silly fetch manifest mobilebuildmcp@2.7.1
+21 silly packumentCache full:https://registry.npmjs.org/mobilebuildmcp cache-miss
+22 silly fetch manifest mobilecli@1.0.14
+23 silly packumentCache full:https://registry.npmjs.org/mobilecli cache-miss
+24 silly fetch manifest zod@4.6.5
+25 silly packumentCache full:https://registry.npmjs.org/zod cache-miss
+26 http fetch GET 200 https://registry.npmjs.org/@modelcontextprotocol%2fserver 263ms (cache miss)
+27 silly packumentCache full:https://registry.npmjs.org/@modelcontextprotocol%2fserver set size:undefined disposed:false
+28 http fetch GET 200 https://registry.npmjs.org/mobilecli 325ms (cache miss)
+29 silly packumentCache full:https://registry.npmjs.org/mobilecli set size:undefined disposed:false
+30 http fetch GET 200 https://registry.npmjs.org/mobilebuildmcp 407ms (cache miss)
+31 silly packumentCache full:https://registry.npmjs.org/mobilebuildmcp set size:undefined disposed:false
+32 http fetch GET 200 https://registry.npmjs.org/zod 557ms (cache miss)
+33 silly packumentCache full:https://registry.npmjs.org/zod set size:undefined disposed:false
+34 http fetch GET 200 https://registry.npmjs.org/@typesafe-ai%2fsdk 776ms (cache miss)
+35 silly packumentCache full:https://registry.npmjs.org/@typesafe-ai%2fsdk set size:undefined disposed:false
+36 silly placeDep ROOT @modelcontextprotocol/server@2.1.0 OK for: jev-ios-bridge@1.3.1 want: 2.1.0
+37 silly placeDep ROOT @typesafe-ai/sdk@0.6.0 OK for: jev-ios-bridge@1.3.1 want: 0.6.0
+38 silly placeDep ROOT mobilebuildmcp@2.7.1 OK for: jev-ios-bridge@1.3.1 want: 2.7.1
+39 silly placeDep ROOT mobilecli@1.0.14 OK for: jev-ios-bridge@1.3.1 want: 1.0.14
+40 silly placeDep ROOT zod@4.6.5 OK for: jev-ios-bridge@1.3.1 want: 4.6.5
+41 silly fetch manifest zod@^4.2.0
+42 silly packumentCache full:https://registry.npmjs.org/zod cache-miss
+43 silly fetch manifest @modelcontextprotocol/core@2.1.0
+44 silly packumentCache full:https://registry.npmjs.org/@modelcontextprotocol%2fcore cache-miss
+45 silly fetch manifest zod@^4.0.0
+46 silly packumentCache full:https://registry.npmjs.org/zod cache-miss
+47 silly fetch manifest glob@^13.0.6
+48 silly packumentCache full:https://registry.npmjs.org/glob cache-miss
+49 silly fetch manifest uuid@^14.0.0
+50 silly packumentCache full:https://registry.npmjs.org/uuid cache-miss
+51 silly fetch manifest yaml@^2.4.5
+52 silly packumentCache full:https://registry.npmjs.org/yaml cache-miss
+53 silly fetch manifest yargs@^17.7.2
+54 silly packumentCache full:https://registry.npmjs.org/yargs cache-miss
+55 silly fetch manifest chokidar@^5.0.0
+56 silly packumentCache full:https://registry.npmjs.org/chokidar cache-miss
+57 silly fetch manifest @sentry/node@^10.43.0
+58 silly packumentCache full:https://registry.npmjs.org/@sentry%2fnode cache-miss
+59 silly fetch manifest yargs-parser@^22.0.0
+60 silly packumentCache full:https://registry.npmjs.org/yargs-parser cache-miss
+61 silly fetch manifest bplist-parser@^0.3.2
+62 silly packumentCache full:https://registry.npmjs.org/bplist-parser cache-miss
+63 http cache https://registry.npmjs.org/zod 15ms (cache hit)
+64 silly packumentCache full:https://registry.npmjs.org/zod set size:4166672 disposed:false
+65 silly fetch manifest @clack/prompts@^1.0.1
+66 silly packumentCache full:https://registry.npmjs.org/@clack%2fprompts cache-miss
+67 http cache https://registry.npmjs.org/zod 30ms (cache hit)
+68 silly packumentCache full:https://registry.npmjs.org/zod set size:4166672 disposed:false
+69 silly fetch manifest @modelcontextprotocol/sdk@^1.27.1
+70 silly packumentCache full:https://registry.npmjs.org/@modelcontextprotocol%2fsdk cache-miss
+71 http fetch GET 200 https://registry.npmjs.org/yaml 131ms (cache miss)
+72 silly packumentCache full:https://registry.npmjs.org/yaml set size:undefined disposed:false
+73 silly fetch manifest @mobilenext/mobilecli-linux-amd64@1.0.14
+74 silly packumentCache full:https://registry.npmjs.org/@mobilenext%2fmobilecli-linux-amd64 cache-miss
+75 http fetch GET 200 https://registry.npmjs.org/glob 145ms (cache miss)
+76 silly packumentCache full:https://registry.npmjs.org/glob set size:undefined disposed:false
+77 silly fetch manifest @mobilenext/mobilecli-linux-arm64@1.0.14
+78 silly packumentCache full:https://registry.npmjs.org/@mobilenext%2fmobilecli-linux-arm64 cache-miss
+79 http fetch GET 200 https://registry.npmjs.org/uuid 164ms (cache miss)
+80 silly packumentCache full:https://registry.npmjs.org/uuid set size:undefined disposed:false
+81 silly fetch manifest @mobilenext/mobilecli-darwin-amd64@1.0.14
+82 silly packumentCache full:https://registry.npmjs.org/@mobilenext%2fmobilecli-darwin-amd64 cache-miss
+83 http fetch GET 200 https://registry.npmjs.org/yargs 184ms (cache miss)
+84 silly packumentCache full:https://registry.npmjs.org/yargs set size:undefined disposed:false
+85 silly fetch manifest @mobilenext/mobilecli-darwin-arm64@1.0.14
+86 silly packumentCache full:https://registry.npmjs.org/@mobilenext%2fmobilecli-darwin-arm64 cache-miss
+87 http fetch GET 200 https://registry.npmjs.org/@mobilenext%2fmobilecli-linux-arm64 81ms (cache miss)
+88 silly packumentCache full:https://registry.npmjs.org/@mobilenext%2fmobilecli-linux-arm64 set size:undefined disposed:false
+89 silly fetch manifest @mobilenext/mobilecli-windows-amd64@1.0.14
+90 silly packumentCache full:https://registry.npmjs.org/@mobilenext%2fmobilecli-windows-amd64 cache-miss
+91 http fetch GET 200 https://registry.npmjs.org/@mobilenext%2fmobilecli-linux-amd64 100ms (cache miss)
+92 silly packumentCache full:https://registry.npmjs.org/@mobilenext%2fmobilecli-linux-amd64 set size:undefined disposed:false
+93 silly fetch manifest @mobilenext/mobilecli-windows-arm64@1.0.14
+94 silly packumentCache full:https://registry.npmjs.org/@mobilenext%2fmobilecli-windows-arm64 cache-miss
+95 http fetch GET 200 https://registry.npmjs.org/bplist-parser 235ms (cache miss)
+96 silly packumentCache full:https://registry.npmjs.org/bplist-parser set size:undefined disposed:false
+97 http fetch GET 200 https://registry.npmjs.org/@mobilenext%2fmobilecli-darwin-arm64 81ms (cache miss)
+98 silly packumentCache full:https://registry.npmjs.org/@mobilenext%2fmobilecli-darwin-arm64 set size:undefined disposed:false
+99 http fetch GET 200 https://registry.npmjs.org/@clack%2fprompts 246ms (cache miss)
+100 silly packumentCache full:https://registry.npmjs.org/@clack%2fprompts set size:undefined disposed:false
+101 http fetch GET 200 https://registry.npmjs.org/yargs-parser 272ms (cache miss)
+102 silly packumentCache full:https://registry.npmjs.org/yargs-parser set size:undefined disposed:false
+103 http fetch GET 200 https://registry.npmjs.org/@mobilenext%2fmobilecli-windows-amd64 79ms (cache miss)
+104 silly packumentCache full:https://registry.npmjs.org/@mobilenext%2fmobilecli-windows-amd64 set size:undefined disposed:false
+105 http fetch GET 200 https://registry.npmjs.org/@modelcontextprotocol%2fcore 348ms (cache miss)
+106 silly packumentCache full:https://registry.npmjs.org/@modelcontextprotocol%2fcore set size:undefined disposed:false
+107 http fetch GET 200 https://registry.npmjs.org/@mobilenext%2fmobilecli-windows-arm64 114ms (cache miss)
+108 silly packumentCache full:https://registry.npmjs.org/@mobilenext%2fmobilecli-windows-arm64 set size:undefined disposed:false
+109 http fetch GET 200 https://registry.npmjs.org/@modelcontextprotocol%2fsdk 309ms (cache miss)
+110 silly packumentCache full:https://registry.npmjs.org/@modelcontextprotocol%2fsdk set size:undefined disposed:false
+111 http fetch GET 200 https://registry.npmjs.org/@mobilenext%2fmobilecli-darwin-amd64 295ms (cache miss)
+112 silly packumentCache full:https://registry.npmjs.org/@mobilenext%2fmobilecli-darwin-amd64 set size:undefined disposed:false
+113 http fetch GET 200 https://registry.npmjs.org/@sentry%2fnode 502ms (cache miss)
+114 silly packumentCache full:https://registry.npmjs.org/@sentry%2fnode set size:undefined disposed:false

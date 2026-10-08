@@ -1,0 +1,13 @@
+# Node24 installed production startup: independent raw audit PASS
+
+Bounded verdict: **PASS for the preserved injected-open-error outputs and source correspondence.** Launch-time helper hash provenance remains **UNVERIFIED**; this is not complete H07 or Ticket09 acceptance.
+
+Root source at execution: `a274a5a27b71656f7523c15cf5a4c0fa9edf816e`. Exact Node24.0.0 command records show two CLI reads (exit3, no signal) and one MCP server (exit0, no signal) handling three valid reads. Raw CLI output is one JSON object each; all MCP results have two text blocks and isError:true. Every result is STORE_UNAVAILABLE, acceptance unknown, with the correct preparation/action kind and safe fixed message. The injected private exception is absent from entire public stdout/stderr and MCP replies.
+
+All three complete guard JSONL files contain exactly one Admission.open event each: one per CLI process, one memoized failure across the MCP composition. No SDK, driver or child-process event occurs. The unchanged guard injects a throw at the first statement of installed Admission.open, before admissionRoot()/account authority access. Installed productionObservedComposition catches that actual throw and maps it; its shared composition caches the rejected opening Promise. No fixture service manufactures these replies.
+
+Reviewed helper snapshot SHA256: `bf3b8b89d0ad11b03a30be23f2501b8e40aad8cf293b0ba94ce978f943ba0a4c`. Guard SHA256: `000c19430aae956338a406a9b4daceb68e99eb76d70bc3a0340fccf52ae0d2f7`. Both match preserved reviewed/current bytes; audit before/after has no drift.
+
+Clean-install correspondence: all70 source/package/lock files match Root’s commit; all68 compiled files match build, npm installation and plugin installation. All37 installation command/raw pairs exist. Raw receipts record genuine npm install and plugin npm ci with disclosed --ignore-scripts/--no-audit/--no-fund, plus compilation and packing. Build-only compilation dependencies are linked; installed node_modules directories are not symlinks.
+
+Root’s launch-association.json explicitly reconstructs the recorded command/exit0 from its transcript; no contemporaneous top-level helper hash receipt exists. It cannot establish independent pre-execution byte identity; a newly wrapped rerun would close that provenance gap. Physical production-root absence/corruption was not exercised; isolated Ticket09 SQLite fault evidence is still required. No Node26 supplemental probe exists; Root Node26 clean installs timed out separately. No tests/build/install/store/device/key operations were executed by this reviewer. Earlier static reviews remain unchanged.

@@ -1,0 +1,518 @@
+{
+  "source": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-host-faults/.scratch/observed-integration/acceptance/host/faults/production-startup-node24-audit",
+  "destination": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/faults/production-startup/review/node24-raw",
+  "fileCount": 102,
+  "bytes": 268884,
+  "files": [
+    {
+      "path": "after-hashes.json",
+      "bytes": 3980,
+      "sha256": "7c3e19bb1deec725ed0c60068546208d4f3ecbe0e00670a509ec56be0e776f51"
+    },
+    {
+      "path": "before-hashes.json",
+      "bytes": 3912,
+      "sha256": "f766087ae7947a505435a04d13f885c8007d3456c2862d0a81a259f8b8494452"
+    },
+    {
+      "path": "evidence-appendix.md",
+      "bytes": 940,
+      "sha256": "f7af90537ef835d1a27f00290ec433e11772980de428c8617908091cb23eae65"
+    },
+    {
+      "path": "guard.mjs",
+      "bytes": 1946,
+      "sha256": "000c19430aae956338a406a9b4daceb68e99eb76d70bc3a0340fccf52ae0d2f7"
+    },
+    {
+      "path": "installation-audit.json",
+      "bytes": 2086,
+      "sha256": "2fed10a0d1c92b09ca9ab516cf1b07f16b076de85adf0ba12279d13f64cf9b22"
+    },
+    {
+      "path": "installation-evidence/001.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "installation-evidence/001.stdout",
+      "bytes": 75,
+      "sha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a"
+    },
+    {
+      "path": "installation-evidence/002.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "installation-evidence/002.stdout",
+      "bytes": 10384,
+      "sha256": "461af8781fd219395f67765a12012caef1c3f0a9715b581349e7164a3bb39769"
+    },
+    {
+      "path": "installation-evidence/003.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "installation-evidence/003.stdout",
+      "bytes": 27,
+      "sha256": "4a295bbe9022c5197b02563f877ff92a9272b80af5811f44ce538cb493d3ec42"
+    },
+    {
+      "path": "installation-evidence/004.stderr",
+      "bytes": 169,
+      "sha256": "8830aefea69b566fb480b9dc4a83db796f8f240dc9130321c2af73413e87c259"
+    },
+    {
+      "path": "installation-evidence/004.stdout",
+      "bytes": 6,
+      "sha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe"
+    },
+    {
+      "path": "installation-evidence/005.stderr",
+      "bytes": 169,
+      "sha256": "d66f89d05de64da449da4bafd89dbecc5d0ed3aa02d84981828f345b64e0b268"
+    },
+    {
+      "path": "installation-evidence/005.stdout",
+      "bytes": 6,
+      "sha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe"
+    },
+    {
+      "path": "installation-evidence/006.stderr",
+      "bytes": 169,
+      "sha256": "a07cb42351dbb2182938cddec96ecb78bee680fd36e482397a027a05f28c9fc7"
+    },
+    {
+      "path": "installation-evidence/006.stdout",
+      "bytes": 2342,
+      "sha256": "f50dd83c1426aad138c97797e72ec869d70243765f4679a819e1d66e4d72967b"
+    },
+    {
+      "path": "installation-evidence/007.stderr",
+      "bytes": 169,
+      "sha256": "17281126a28d9a193b3b8b9fc7606ecf1853ad49c11fb9d2373d34f59f270a39"
+    },
+    {
+      "path": "installation-evidence/007.stdout",
+      "bytes": 173,
+      "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97"
+    },
+    {
+      "path": "installation-evidence/008.stderr",
+      "bytes": 169,
+      "sha256": "50d85d0823a47043f5b3a261f97468265eeb01440b5715e0b1d6f422f29ba7bc"
+    },
+    {
+      "path": "installation-evidence/008.stdout",
+      "bytes": 173,
+      "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97"
+    },
+    {
+      "path": "installation-evidence/009.stderr",
+      "bytes": 169,
+      "sha256": "f3abfb8cda962fb2cd7ece10d11a95633207705379116216286361787f289be6"
+    },
+    {
+      "path": "installation-evidence/009.stdout",
+      "bytes": 173,
+      "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97"
+    },
+    {
+      "path": "installation-evidence/010.stderr",
+      "bytes": 169,
+      "sha256": "a9be70db5d7759ae910a09295cc917fddf4e99b591a746dbc607e4daf313e159"
+    },
+    {
+      "path": "installation-evidence/010.stdout",
+      "bytes": 173,
+      "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97"
+    },
+    {
+      "path": "installation-evidence/011.stderr",
+      "bytes": 169,
+      "sha256": "8102464ce9062ff7b7dc6a5d2f1e4289f1d3f430b2f680c8794e819ae319ed09"
+    },
+    {
+      "path": "installation-evidence/011.stdout",
+      "bytes": 168,
+      "sha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259"
+    },
+    {
+      "path": "installation-evidence/012.stderr",
+      "bytes": 169,
+      "sha256": "f7c14eccb7bb97855f732d8be53dd3434183ff1d64bbb95e1dc6ce09e91deff5"
+    },
+    {
+      "path": "installation-evidence/012.stdout",
+      "bytes": 168,
+      "sha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259"
+    },
+    {
+      "path": "installation-evidence/013.stderr",
+      "bytes": 169,
+      "sha256": "aafc14edbb29485c975b1de196ea9ea444eb4a5d428b2a26362d8858b3c6734b"
+    },
+    {
+      "path": "installation-evidence/013.stdout",
+      "bytes": 168,
+      "sha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259"
+    },
+    {
+      "path": "installation-evidence/014.stderr",
+      "bytes": 169,
+      "sha256": "9ad27e83c537af8269d466b61114c7f8b76e8f5e1903834a9ce1c5e8fc146c41"
+    },
+    {
+      "path": "installation-evidence/014.stdout",
+      "bytes": 162,
+      "sha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f"
+    },
+    {
+      "path": "installation-evidence/015.stderr",
+      "bytes": 169,
+      "sha256": "13e797f02bf2483973d8263204f7d4738232355728f760768d789335e54a9def"
+    },
+    {
+      "path": "installation-evidence/015.stdout",
+      "bytes": 162,
+      "sha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f"
+    },
+    {
+      "path": "installation-evidence/016.stderr",
+      "bytes": 169,
+      "sha256": "8eb9003c493ffbd91a8920e1e8fba25556600eddb1d4136704e5c23acc571e66"
+    },
+    {
+      "path": "installation-evidence/016.stdout",
+      "bytes": 1435,
+      "sha256": "3a2efc26fff3f21e2682f1feab0b36675fa20c9ba74caacfdbb7bac39868abd6"
+    },
+    {
+      "path": "installation-evidence/017.stderr",
+      "bytes": 169,
+      "sha256": "a65d20aaa50d22e616c1a21f132e8eeca1634a6750933d658412624680a24c85"
+    },
+    {
+      "path": "installation-evidence/017.stdout",
+      "bytes": 16042,
+      "sha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104"
+    },
+    {
+      "path": "installation-evidence/018.stderr",
+      "bytes": 169,
+      "sha256": "b4aacffe35b95caa42788ea78cc06712dc5487310b67d0f620374ccd13ea0fd5"
+    },
+    {
+      "path": "installation-evidence/018.stdout",
+      "bytes": 16042,
+      "sha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104"
+    },
+    {
+      "path": "installation-evidence/019.stderr",
+      "bytes": 169,
+      "sha256": "bfb9d5823f84cbac74bacad97d3219a3e3ecbc1a62daee870286d0b2ec450155"
+    },
+    {
+      "path": "installation-evidence/019.stdout",
+      "bytes": 22045,
+      "sha256": "ae10dbd16f15963f6e1f752637090348dd337c3eadaf9b501cbd38ccc5dd1d3b"
+    },
+    {
+      "path": "installation-evidence/020.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "installation-evidence/020.stdout",
+      "bytes": 313,
+      "sha256": "f1eb0964f0c5c8579ad9ccc901f55e852b61111e02e033bd1d11321dbb045d9b"
+    },
+    {
+      "path": "installation-evidence/021.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "installation-evidence/021.stdout",
+      "bytes": 26,
+      "sha256": "3115a6cfe5ce2ce6a7d810ce2bd9f82767afc225e1c3495a0fcdc0a89bcb1e1d"
+    },
+    {
+      "path": "installation-evidence/022.stderr",
+      "bytes": 169,
+      "sha256": "b952a2234994e49bce808677ed9fa9f68c57050e0f0a90827dd351d5a3811be8"
+    },
+    {
+      "path": "installation-evidence/022.stdout",
+      "bytes": 6,
+      "sha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe"
+    },
+    {
+      "path": "installation-evidence/023.stderr",
+      "bytes": 169,
+      "sha256": "1f3cdaffc2aa1967afcad819960c67431f5236b1e757018bbf3f625eab518fe0"
+    },
+    {
+      "path": "installation-evidence/023.stdout",
+      "bytes": 6,
+      "sha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe"
+    },
+    {
+      "path": "installation-evidence/024.stderr",
+      "bytes": 169,
+      "sha256": "a8232c81a607abf291cb3b59d82319dd8f2821855b5f123e3bb5eebc740b043c"
+    },
+    {
+      "path": "installation-evidence/024.stdout",
+      "bytes": 2342,
+      "sha256": "f50dd83c1426aad138c97797e72ec869d70243765f4679a819e1d66e4d72967b"
+    },
+    {
+      "path": "installation-evidence/025.stderr",
+      "bytes": 169,
+      "sha256": "42fe369edb3e22c408008d04a0deb96096cc087f61c1792336da24ab7455f545"
+    },
+    {
+      "path": "installation-evidence/025.stdout",
+      "bytes": 173,
+      "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97"
+    },
+    {
+      "path": "installation-evidence/026.stderr",
+      "bytes": 169,
+      "sha256": "50cc6b9de98e721accc75571f509f50c919997ec2283849a9cd975677bc40c8b"
+    },
+    {
+      "path": "installation-evidence/026.stdout",
+      "bytes": 173,
+      "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97"
+    },
+    {
+      "path": "installation-evidence/027.stderr",
+      "bytes": 169,
+      "sha256": "5b105ee0719b770d7b56899112381a950ed1f9bbf398705a49c475661d3716f7"
+    },
+    {
+      "path": "installation-evidence/027.stdout",
+      "bytes": 173,
+      "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97"
+    },
+    {
+      "path": "installation-evidence/028.stderr",
+      "bytes": 169,
+      "sha256": "a01323df9e3e04f93db7adc86a8cedd128576ffca40bd1e81cc3c0d20c10ab19"
+    },
+    {
+      "path": "installation-evidence/028.stdout",
+      "bytes": 173,
+      "sha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97"
+    },
+    {
+      "path": "installation-evidence/029.stderr",
+      "bytes": 169,
+      "sha256": "9aa3e50960ec28d7564d11263015e3cb4678ab560b3210b7705910f7fb77d7b4"
+    },
+    {
+      "path": "installation-evidence/029.stdout",
+      "bytes": 168,
+      "sha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259"
+    },
+    {
+      "path": "installation-evidence/030.stderr",
+      "bytes": 169,
+      "sha256": "3739dc481b704c924ce1b74a1d546b500c88774ebc142823e2a9516ce083bf15"
+    },
+    {
+      "path": "installation-evidence/030.stdout",
+      "bytes": 168,
+      "sha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259"
+    },
+    {
+      "path": "installation-evidence/031.stderr",
+      "bytes": 169,
+      "sha256": "97742951af02747b2209935f64a0dc893472a274f1d80032d1cc7631588f8fb8"
+    },
+    {
+      "path": "installation-evidence/031.stdout",
+      "bytes": 168,
+      "sha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259"
+    },
+    {
+      "path": "installation-evidence/032.stderr",
+      "bytes": 169,
+      "sha256": "bca0f51336efa6bbacb9972641292eebb42e8eaf8360dcd5939e658b27e25b99"
+    },
+    {
+      "path": "installation-evidence/032.stdout",
+      "bytes": 162,
+      "sha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f"
+    },
+    {
+      "path": "installation-evidence/033.stderr",
+      "bytes": 169,
+      "sha256": "cc8a26ab2447380802260cce01c4f972b81c266bef30bb70706f479ca73351b1"
+    },
+    {
+      "path": "installation-evidence/033.stdout",
+      "bytes": 162,
+      "sha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f"
+    },
+    {
+      "path": "installation-evidence/034.stderr",
+      "bytes": 169,
+      "sha256": "60565aa1450d1bb3d17c17d1630ccd670eba67162d88f09ec6b7db6b11a8c98c"
+    },
+    {
+      "path": "installation-evidence/034.stdout",
+      "bytes": 1435,
+      "sha256": "3a2efc26fff3f21e2682f1feab0b36675fa20c9ba74caacfdbb7bac39868abd6"
+    },
+    {
+      "path": "installation-evidence/035.stderr",
+      "bytes": 169,
+      "sha256": "c79002e2c483d04591e8f9d91f8ca0f50e799484d1d894b8753a51f3b10a19e1"
+    },
+    {
+      "path": "installation-evidence/035.stdout",
+      "bytes": 16042,
+      "sha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104"
+    },
+    {
+      "path": "installation-evidence/036.stderr",
+      "bytes": 169,
+      "sha256": "537de5959a59aaab9938bd15a5201c26b0d43f298be78e2500c73731aae2d550"
+    },
+    {
+      "path": "installation-evidence/036.stdout",
+      "bytes": 16042,
+      "sha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104"
+    },
+    {
+      "path": "installation-evidence/037.stderr",
+      "bytes": 169,
+      "sha256": "efb2fba75ef09f63f0f8ddbdf939a17ca1113073364dd9f36ca9d67413ecf11f"
+    },
+    {
+      "path": "installation-evidence/037.stdout",
+      "bytes": 22045,
+      "sha256": "ae10dbd16f15963f6e1f752637090348dd337c3eadaf9b501cbd38ccc5dd1d3b"
+    },
+    {
+      "path": "installation-evidence/commands.jsonl",
+      "bytes": 36987,
+      "sha256": "e28098cfeba5590e8136311ed47a11950c6c37734574999d1bedff7600efc1c1"
+    },
+    {
+      "path": "installation-evidence/npm-forbidden.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "installation-evidence/plugin-forbidden.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "installation-evidence/summary.json",
+      "bytes": 4472,
+      "sha256": "ed91ec372b848e0c179132858fd4c1c94ce7c3177e88f4967b91fa546691cd17"
+    },
+    {
+      "path": "probe.mjs",
+      "bytes": 9143,
+      "sha256": "bf3b8b89d0ad11b03a30be23f2501b8e40aad8cf293b0ba94ce978f943ba0a4c"
+    },
+    {
+      "path": "provenance.json",
+      "bytes": 14399,
+      "sha256": "376082c73e4a3dc6cb24f97461e241ee63e5d269d8c7c97ae87f5b146dc03348"
+    },
+    {
+      "path": "raw-audit.json",
+      "bytes": 882,
+      "sha256": "aa2106dbfe6e969721deb6e710a2ed1e84d54cef797523e151a74f9dd689ad49"
+    },
+    {
+      "path": "raw-startup/cli-action-guard.jsonl",
+      "bytes": 31,
+      "sha256": "8ca5ed6102cf6575655b0014e6354b1c7eb2b0753c346246df78cc90d60b0202"
+    },
+    {
+      "path": "raw-startup/cli-action.stderr",
+      "bytes": 169,
+      "sha256": "dbf7ac947a6e26289a498ca0a3eb3820729c4ae5b62fae3e5013aa170477a1d5"
+    },
+    {
+      "path": "raw-startup/cli-action.stdout",
+      "bytes": 180,
+      "sha256": "49f79e0f5b6e48113ff085b943bdaeec515d09df82cfd55131976f3f739cb058"
+    },
+    {
+      "path": "raw-startup/cli-allocation-guard.jsonl",
+      "bytes": 31,
+      "sha256": "8ca5ed6102cf6575655b0014e6354b1c7eb2b0753c346246df78cc90d60b0202"
+    },
+    {
+      "path": "raw-startup/cli-allocation.stderr",
+      "bytes": 169,
+      "sha256": "3419dfbb4fcc6477f5e973bc7d6ff3ab04275ad8fa3e7785dbf29acb8a5e0139"
+    },
+    {
+      "path": "raw-startup/cli-allocation.stdout",
+      "bytes": 185,
+      "sha256": "00beff87177ec4f8c460fb2dea7962f94d2891e5a558f2a0fb3d0929c2af126e"
+    },
+    {
+      "path": "raw-startup/commands.json",
+      "bytes": 2839,
+      "sha256": "dd37cb0fe706231af5c543fbe1571dec3297530e9ce1ad22b3972090c7a1b57e"
+    },
+    {
+      "path": "raw-startup/launch-association.json",
+      "bytes": 1325,
+      "sha256": "ee2b919d0add6f7d692f33155cdb97e3bd7d9fa8703ed6a862e401499c421076"
+    },
+    {
+      "path": "raw-startup/mcp-guard.jsonl",
+      "bytes": 31,
+      "sha256": "8ca5ed6102cf6575655b0014e6354b1c7eb2b0753c346246df78cc90d60b0202"
+    },
+    {
+      "path": "raw-startup/mcp-requests.jsonl",
+      "bytes": 606,
+      "sha256": "4d283918ac0d8afddb4650e970981f60d5f578648ca5efc42c589b160e4cebed"
+    },
+    {
+      "path": "raw-startup/mcp.stderr",
+      "bytes": 169,
+      "sha256": "dfd7396bf23d68d90de2ca7a027638c6519b433ed41463d20a3865777bdf8842"
+    },
+    {
+      "path": "raw-startup/mcp.stdout",
+      "bytes": 1314,
+      "sha256": "e4e744e9fc080d3e8fa737f31c16d186dc057119a8142944c432e271b8e52193"
+    },
+    {
+      "path": "raw-startup/preservation.json",
+      "bytes": 2386,
+      "sha256": "85ed5ea9073adde614493bc3284b00247107c167ae77449e888543d0e352b7ac"
+    },
+    {
+      "path": "raw-startup/summary.json",
+      "bytes": 1009,
+      "sha256": "b1c656b77070612ba32981a79539115f7d459d3327be0464b50bc16530539c47"
+    },
+    {
+      "path": "review.md",
+      "bytes": 2634,
+      "sha256": "232cf1abe03e12a22651049bdf75ab3cf08a2e400c9210cf434677a2fec8a2d8"
+    },
+    {
+      "path": "source-correspondence.json",
+      "bytes": 41950,
+      "sha256": "29a88805f3540ade0f8c584a03d265fce11e265d6199f188b350268f2a522783"
+    }
+  ]
+}

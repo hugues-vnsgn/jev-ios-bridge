@@ -1,0 +1,39 @@
+{
+  "source": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs",
+  "destination": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/installed-workflow/integration/fresh-proofs/root-gates",
+  "fileCount": 6,
+  "bytes": 306588,
+  "files": [
+    {
+      "path": "integrated-installed-node24.json",
+      "sha256": "33d9be2d20251d8abcbf81d1065ac223effb92a8c16da3935e7ea3a763b15d59",
+      "bytes": 100546
+    },
+    {
+      "path": "integrated-installed-node24.log",
+      "sha256": "168df3857a649200e89b237b71ae6bb7998f9f307b0ab508e83088f7b96421cd",
+      "bytes": 4172
+    },
+    {
+      "path": "integrated-installed-node26-recheck.json",
+      "sha256": "538cd25ca078be45955f9b380448615554d83dfd4d5106cd20008da5b64112bc",
+      "bytes": 100500
+    },
+    {
+      "path": "integrated-installed-node26-recheck.log",
+      "sha256": "957d6997e650e2fcbcba012872fcb45340df1cb407bce2531aef05d0990079a8",
+      "bytes": 451
+    },
+    {
+      "path": "integrated-installed-node26.json",
+      "sha256": "2ed800bde264e6e91647c156df8b36390de26de7134c77a8267b3eb6e0027436",
+      "bytes": 100484
+    },
+    {
+      "path": "integrated-installed-node26.log",
+      "sha256": "4b60610b0f865e799a7e492e137cf9b55f3c40d328089498a7003aa0bd9552a6",
+      "bytes": 435
+    }
+  ],
+  "selection": "Selected raw logs, command journals, source/compiled snapshot and package artifacts; registry content and installed dependency trees excluded."
+}

@@ -1,0 +1,26 @@
+{
+  "kind": "retrospective launch association",
+  "basis": "Exact previously recorded tool invocation and result; current helper/guard bytes match preserved reviewed freeze. No contemporaneous top-level pre/post manifest was written.",
+  "commitAtExecution": "a274a5a27b71656f7523c15cf5a4c0fa9edf816e",
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "command": [
+    "env",
+    "-u",
+    "TYPESAFE_API_KEY",
+    "-u",
+    "NODE_OPTIONS",
+    "-u",
+    "NODE_NO_WARNINGS",
+    "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+    ".scratch/observed-integration/acceptance/host/faults/production-startup/review/final/probe.mjs",
+    ".scratch/observed-run-vault/root-host-proofs/integrated-installed-node24-installed",
+    ".scratch/observed-run-vault/root-host-proofs/production-startup-node24"
+  ],
+  "toolResult": {
+    "exit": 0,
+    "durationSeconds": 0.418
+  },
+  "currentHelperMatchesReviewedSha256": "bf3b8b89d0ad11b03a30be23f2501b8e40aad8cf293b0ba94ce978f943ba0a4c",
+  "currentGuardMatchesReviewedSha256": "000c19430aae956338a406a9b4daceb68e99eb76d70bc3a0340fccf52ae0d2f7",
+  "limit": "Current-byte and transcript association is not a contemporaneous launch-time hash receipt. A newly wrapped rerun can close that specific provenance gap."
+}

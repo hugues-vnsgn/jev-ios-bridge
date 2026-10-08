@@ -1,0 +1,904 @@
+{
+  "commit": "a274a5a27b71656f7523c15cf5a4c0fa9edf816e",
+  "source": [
+    {
+      "path": "src/capture.ts",
+      "commitSha256": "ad7c7d9227fd865e381e7b7feebd980443d074ad2dc7d1e9609ddb1bacd737e7",
+      "buildSnapshotSha256": "ad7c7d9227fd865e381e7b7feebd980443d074ad2dc7d1e9609ddb1bacd737e7",
+      "matches": true
+    },
+    {
+      "path": "src/cli.ts",
+      "commitSha256": "137b42ef8cdc34a3e143461cf762c659d4bc0a8da768f320ad8b0232e200d7de",
+      "buildSnapshotSha256": "137b42ef8cdc34a3e143461cf762c659d4bc0a8da768f320ad8b0232e200d7de",
+      "matches": true
+    },
+    {
+      "path": "src/contracts/index.ts",
+      "commitSha256": "2d1e497d56b13cbd948b2a0c350b60a0dc70aa706ee5d7ea3e7f33b3a2ec3ca6",
+      "buildSnapshotSha256": "2d1e497d56b13cbd948b2a0c350b60a0dc70aa706ee5d7ea3e7f33b3a2ec3ca6",
+      "matches": true
+    },
+    {
+      "path": "src/device/admission-allocation.ts",
+      "commitSha256": "7e75db8780fd24ace660701e23af6210dafbf9731920ece4cb71fa1d00414a5e",
+      "buildSnapshotSha256": "7e75db8780fd24ace660701e23af6210dafbf9731920ece4cb71fa1d00414a5e",
+      "matches": true
+    },
+    {
+      "path": "src/device/admission-maintenance.ts",
+      "commitSha256": "908864b9c6df13805998b917f0ca1a3a7b430708548decdccb1abcb726e866a5",
+      "buildSnapshotSha256": "908864b9c6df13805998b917f0ca1a3a7b430708548decdccb1abcb726e866a5",
+      "matches": true
+    },
+    {
+      "path": "src/device/admission-migration.ts",
+      "commitSha256": "14e66ab6ed5a84a241275f7eda67202a6662aeb978942e55e6980078dbb6ee8b",
+      "buildSnapshotSha256": "14e66ab6ed5a84a241275f7eda67202a6662aeb978942e55e6980078dbb6ee8b",
+      "matches": true
+    },
+    {
+      "path": "src/device/admission-sqlite.ts",
+      "commitSha256": "209e311d610f77d172f6af15ac815ba24c79496d0e065e3ef25f410d0fb10856",
+      "buildSnapshotSha256": "209e311d610f77d172f6af15ac815ba24c79496d0e065e3ef25f410d0fb10856",
+      "matches": true
+    },
+    {
+      "path": "src/device/admission.ts",
+      "commitSha256": "a0533274c6fbebecb227fa2dd7121a170ce2a2d9c84ddf73f4fad74a39569a91",
+      "buildSnapshotSha256": "a0533274c6fbebecb227fa2dd7121a170ce2a2d9c84ddf73f4fad74a39569a91",
+      "matches": true
+    },
+    {
+      "path": "src/device/android/adb.ts",
+      "commitSha256": "0d9629f9696b5f79d9cc8f74cdcc420200a60ff4c679f62f14ba302457fdd144",
+      "buildSnapshotSha256": "0d9629f9696b5f79d9cc8f74cdcc420200a60ff4c679f62f14ba302457fdd144",
+      "matches": true
+    },
+    {
+      "path": "src/device/android/agent-client.ts",
+      "commitSha256": "4f6732361e72320047bd12939618057f00b8e6d2f0d4f4f8ce3bc4982ab7ea47",
+      "buildSnapshotSha256": "4f6732361e72320047bd12939618057f00b8e6d2f0d4f4f8ce3bc4982ab7ea47",
+      "matches": true
+    },
+    {
+      "path": "src/device/android/agent-supply.ts",
+      "commitSha256": "1bd4424293515d2e2e593e143b88a2133d6cbbc10bffa710a0d757944d35b0a2",
+      "buildSnapshotSha256": "1bd4424293515d2e2e593e143b88a2133d6cbbc10bffa710a0d757944d35b0a2",
+      "matches": true
+    },
+    {
+      "path": "src/device/android/driver.ts",
+      "commitSha256": "ca188a7cf0a93fc1f955726101568a55aad924c981a04963a740b2fe31080c0a",
+      "buildSnapshotSha256": "ca188a7cf0a93fc1f955726101568a55aad924c981a04963a740b2fe31080c0a",
+      "matches": true
+    },
+    {
+      "path": "src/device/android/exit-watch.ts",
+      "commitSha256": "49580333ad22318b5dfcba345479cfba4a31a22f278a30a0b4020ef643467e50",
+      "buildSnapshotSha256": "49580333ad22318b5dfcba345479cfba4a31a22f278a30a0b4020ef643467e50",
+      "matches": true
+    },
+    {
+      "path": "src/device/android/ledger.ts",
+      "commitSha256": "8cfb098e5724db68234f7ce4f743d2c1857ba3041d7c4c20a484c81657c8eb77",
+      "buildSnapshotSha256": "8cfb098e5724db68234f7ce4f743d2c1857ba3041d7c4c20a484c81657c8eb77",
+      "matches": true
+    },
+    {
+      "path": "src/device/android/logcat.ts",
+      "commitSha256": "001ef7c26418b80cf53d24427ad393612cb3cfe5f5dc66554b90eb92475be4b0",
+      "buildSnapshotSha256": "001ef7c26418b80cf53d24427ad393612cb3cfe5f5dc66554b90eb92475be4b0",
+      "matches": true
+    },
+    {
+      "path": "src/device/android/mapping.ts",
+      "commitSha256": "57fdd34407b1abd0542946af72e56377264a66516517aa0642418064da6a8585",
+      "buildSnapshotSha256": "57fdd34407b1abd0542946af72e56377264a66516517aa0642418064da6a8585",
+      "matches": true
+    },
+    {
+      "path": "src/device/android/settle.ts",
+      "commitSha256": "659367ace0010cab3aeb002cb033ef65965bd5c0f78c4795af4ec5bbc57f09f3",
+      "buildSnapshotSha256": "659367ace0010cab3aeb002cb033ef65965bd5c0f78c4795af4ec5bbc57f09f3",
+      "matches": true
+    },
+    {
+      "path": "src/device/android/threadtime.ts",
+      "commitSha256": "26b03f0ba7a79bc778160c73beaec6e8c8537491ec83b6a0732c01bcb9a066e4",
+      "buildSnapshotSha256": "26b03f0ba7a79bc778160c73beaec6e8c8537491ec83b6a0732c01bcb9a066e4",
+      "matches": true
+    },
+    {
+      "path": "src/device/android/tools.ts",
+      "commitSha256": "9286ad5d386d03976ffd967a36ee83358e5c8db73440215c3d7657bfdca8e64a",
+      "buildSnapshotSha256": "9286ad5d386d03976ffd967a36ee83358e5c8db73440215c3d7657bfdca8e64a",
+      "matches": true
+    },
+    {
+      "path": "src/device/attach.ts",
+      "commitSha256": "d4f4d81392d9a7fb5fee87f80d6fdbbdaa6bada789696d289c1198345432ed9e",
+      "buildSnapshotSha256": "d4f4d81392d9a7fb5fee87f80d6fdbbdaa6bada789696d289c1198345432ed9e",
+      "matches": true
+    },
+    {
+      "path": "src/device/factory.ts",
+      "commitSha256": "a6c361f036ce7ead47d15b816a9220382eaa4b9d0d3fa4ae83885e74b4a94971",
+      "buildSnapshotSha256": "a6c361f036ce7ead47d15b816a9220382eaa4b9d0d3fa4ae83885e74b4a94971",
+      "matches": true
+    },
+    {
+      "path": "src/device/image.ts",
+      "commitSha256": "2faa0839bac89a13e08e5e873e3da1e96b58e3a41adc096d1f2621aff26eb88a",
+      "buildSnapshotSha256": "2faa0839bac89a13e08e5e873e3da1e96b58e3a41adc096d1f2621aff26eb88a",
+      "matches": true
+    },
+    {
+      "path": "src/device/index.ts",
+      "commitSha256": "21e63907b028cd5eb84e61834aa79e6bd59d74c19f3be30b00c0dacb659b5604",
+      "buildSnapshotSha256": "21e63907b028cd5eb84e61834aa79e6bd59d74c19f3be30b00c0dacb659b5604",
+      "matches": true
+    },
+    {
+      "path": "src/device/lease.ts",
+      "commitSha256": "d5587a7336c968560afb71ee2adcd00cd86118ad0b6266b2a0a1feac8f8b7f33",
+      "buildSnapshotSha256": "d5587a7336c968560afb71ee2adcd00cd86118ad0b6266b2a0a1feac8f8b7f33",
+      "matches": true
+    },
+    {
+      "path": "src/device/logs.ts",
+      "commitSha256": "25b9be6d7d99cae7fba3c46ffb3253050ee9ca3e27fe74e976392984109f5dc8",
+      "buildSnapshotSha256": "25b9be6d7d99cae7fba3c46ffb3253050ee9ca3e27fe74e976392984109f5dc8",
+      "matches": true
+    },
+    {
+      "path": "src/driven/candidates.ts",
+      "commitSha256": "486830dc9f526b7a0bb5dd448d4d788c1300ed1c825f0a24e37ba696b608ed60",
+      "buildSnapshotSha256": "486830dc9f526b7a0bb5dd448d4d788c1300ed1c825f0a24e37ba696b608ed60",
+      "matches": true
+    },
+    {
+      "path": "src/driven/decide.ts",
+      "commitSha256": "392b33542da85d13364a3b139e69af0ed21f27090829f23e3a8f5286ad2045f5",
+      "buildSnapshotSha256": "392b33542da85d13364a3b139e69af0ed21f27090829f23e3a8f5286ad2045f5",
+      "matches": true
+    },
+    {
+      "path": "src/driven/handback.ts",
+      "commitSha256": "198d06dd9f3b4d09f4abdec9b1c07d37f2881a597e958f60e4ccc2fd0f9a46c8",
+      "buildSnapshotSha256": "198d06dd9f3b4d09f4abdec9b1c07d37f2881a597e958f60e4ccc2fd0f9a46c8",
+      "matches": true
+    },
+    {
+      "path": "src/driven/marker.ts",
+      "commitSha256": "7453680b38c8890edfc4698629874bb55b73b5e6cbc539e3c2add7b8b802ac23",
+      "buildSnapshotSha256": "7453680b38c8890edfc4698629874bb55b73b5e6cbc539e3c2add7b8b802ac23",
+      "matches": true
+    },
+    {
+      "path": "src/driven/policy.ts",
+      "commitSha256": "577f1695a728fdc48851c10902ce28a37aee1f9c7b665a396e9cb786b4114c9c",
+      "buildSnapshotSha256": "577f1695a728fdc48851c10902ce28a37aee1f9c7b665a396e9cb786b4114c9c",
+      "matches": true
+    },
+    {
+      "path": "src/driven/project.ts",
+      "commitSha256": "ebf6db2c81cf0803f0ec1700e92987a175df4d60be453dc34b57edb9a236a90c",
+      "buildSnapshotSha256": "ebf6db2c81cf0803f0ec1700e92987a175df4d60be453dc34b57edb9a236a90c",
+      "matches": true
+    },
+    {
+      "path": "src/driven/step.ts",
+      "commitSha256": "ffa7d97ddbdfdabe7f6d9049f1ee5a2146c6438135954bafbb1d319d766a9d4c",
+      "buildSnapshotSha256": "ffa7d97ddbdfdabe7f6d9049f1ee5a2146c6438135954bafbb1d319d766a9d4c",
+      "matches": true
+    },
+    {
+      "path": "src/driven/vocabulary.ts",
+      "commitSha256": "8b6f9c4f666ba96d1deb61907d4c19cbffaf71b9241e15e2576980ec6eb8b781",
+      "buildSnapshotSha256": "8b6f9c4f666ba96d1deb61907d4c19cbffaf71b9241e15e2576980ec6eb8b781",
+      "matches": true
+    },
+    {
+      "path": "src/exit-codes.ts",
+      "commitSha256": "9d5cddb455145ffcc8993f6b693a14bdbc279a1da1fd93e8c4fdb293dcca3b62",
+      "buildSnapshotSha256": "9d5cddb455145ffcc8993f6b693a14bdbc279a1da1fd93e8c4fdb293dcca3b62",
+      "matches": true
+    },
+    {
+      "path": "src/experimental/observed-journal.ts",
+      "commitSha256": "f7e5c57268175d09f7483f863b0c6bf7019a24d34d0649df94442d8341be88a7",
+      "buildSnapshotSha256": "f7e5c57268175d09f7483f863b0c6bf7019a24d34d0649df94442d8341be88a7",
+      "matches": true
+    },
+    {
+      "path": "src/experimental/observed-run.ts",
+      "commitSha256": "567e16ed1f9229cfa21eddb761f24208123806593a8ec0c61eb250f6e79736bb",
+      "buildSnapshotSha256": "567e16ed1f9229cfa21eddb761f24208123806593a8ec0c61eb250f6e79736bb",
+      "matches": true
+    },
+    {
+      "path": "src/experimental/observed-tap.ts",
+      "commitSha256": "db81880287f5635f7d0d66b390f4937e88434fcf06f4dc3b63ab243a11ad313b",
+      "buildSnapshotSha256": "db81880287f5635f7d0d66b390f4937e88434fcf06f4dc3b63ab243a11ad313b",
+      "matches": true
+    },
+    {
+      "path": "src/log/index.ts",
+      "commitSha256": "bef9a52aba5090c73a631b242fd1051232ad0c4ee3e446787b36a79a3dc515c0",
+      "buildSnapshotSha256": "bef9a52aba5090c73a631b242fd1051232ad0c4ee3e446787b36a79a3dc515c0",
+      "matches": true
+    },
+    {
+      "path": "src/logpane/attach.ts",
+      "commitSha256": "399d95de2004751f031e9639af5b8b7588efda7b1f815aaef3de32ca8ebf1c88",
+      "buildSnapshotSha256": "399d95de2004751f031e9639af5b8b7588efda7b1f815aaef3de32ca8ebf1c88",
+      "matches": true
+    },
+    {
+      "path": "src/logpane/format.ts",
+      "commitSha256": "d00b7718f116fa83c4ba7834c1e94052aaaf5436b85f989bb9195c2505b4b88e",
+      "buildSnapshotSha256": "d00b7718f116fa83c4ba7834c1e94052aaaf5436b85f989bb9195c2505b4b88e",
+      "matches": true
+    },
+    {
+      "path": "src/logpane/stream.ts",
+      "commitSha256": "ca1b2e6fb9be6317f23e65194c90a8726c16abef6f8f3791bad8cd2ef87a013c",
+      "buildSnapshotSha256": "ca1b2e6fb9be6317f23e65194c90a8726c16abef6f8f3791bad8cd2ef87a013c",
+      "matches": true
+    },
+    {
+      "path": "src/logpane/window.ts",
+      "commitSha256": "8506e8734a69ccbc34256eae8fe69fe887ac4ef812af29e9e69627c22e49c3fd",
+      "buildSnapshotSha256": "8506e8734a69ccbc34256eae8fe69fe887ac4ef812af29e9e69627c22e49c3fd",
+      "matches": true
+    },
+    {
+      "path": "src/mcp/index.ts",
+      "commitSha256": "48e531d304d19852d461eb1d3317fee5f953a15654f405c3393b04ff4a494c2a",
+      "buildSnapshotSha256": "48e531d304d19852d461eb1d3317fee5f953a15654f405c3393b04ff4a494c2a",
+      "matches": true
+    },
+    {
+      "path": "src/mcp/observed.ts",
+      "commitSha256": "5522cc1933d54d13cd8c72b7d8caa5ebf262272f9e0110c13fceb58dd8fcc51b",
+      "buildSnapshotSha256": "5522cc1933d54d13cd8c72b7d8caa5ebf262272f9e0110c13fceb58dd8fcc51b",
+      "matches": true
+    },
+    {
+      "path": "src/observed/allocation-config.ts",
+      "commitSha256": "b6519649edbaf203e5323a15c80273321a42a5cb49850551297268e6ee1f5f0a",
+      "buildSnapshotSha256": "b6519649edbaf203e5323a15c80273321a42a5cb49850551297268e6ee1f5f0a",
+      "matches": true
+    },
+    {
+      "path": "src/observed/allocation-schema.ts",
+      "commitSha256": "f48809598c4db4f8609f565659d89bc5438370d1d68b6229f97e8e40a8e6b3ca",
+      "buildSnapshotSha256": "f48809598c4db4f8609f565659d89bc5438370d1d68b6229f97e8e40a8e6b3ca",
+      "matches": true
+    },
+    {
+      "path": "src/observed/allocation.ts",
+      "commitSha256": "0233ea8d8d571761596287e9369f7801bd693edfe6d95c459a950e4c3b943041",
+      "buildSnapshotSha256": "0233ea8d8d571761596287e9369f7801bd693edfe6d95c459a950e4c3b943041",
+      "matches": true
+    },
+    {
+      "path": "src/observed/artifact.ts",
+      "commitSha256": "5d861ffca7a15e9c078204aeccb533531cfe1de3fe8dcdfcc0ac3901a670b139",
+      "buildSnapshotSha256": "5d861ffca7a15e9c078204aeccb533531cfe1de3fe8dcdfcc0ac3901a670b139",
+      "matches": true
+    },
+    {
+      "path": "src/observed/cli.ts",
+      "commitSha256": "17ed826b608359a9f901012a82447fd1e06d1d2a65e5b8b477e1c0a0885f8e78",
+      "buildSnapshotSha256": "17ed826b608359a9f901012a82447fd1e06d1d2a65e5b8b477e1c0a0885f8e78",
+      "matches": true
+    },
+    {
+      "path": "src/observed/create-source.ts",
+      "commitSha256": "d13d6e4324be0b534ce32e0057dd0a1ca9654941976ce53dcf17bba530e258b1",
+      "buildSnapshotSha256": "d13d6e4324be0b534ce32e0057dd0a1ca9654941976ce53dcf17bba530e258b1",
+      "matches": true
+    },
+    {
+      "path": "src/observed/evidence.ts",
+      "commitSha256": "deeb65d7c95c84de1c3b559ec2a885da768a8203a2be79af700f3262717462fb",
+      "buildSnapshotSha256": "deeb65d7c95c84de1c3b559ec2a885da768a8203a2be79af700f3262717462fb",
+      "matches": true
+    },
+    {
+      "path": "src/observed/report.ts",
+      "commitSha256": "b137ebad4b582f652bea7e788101a717a094073b57f8461b243e4dc0897fd1ff",
+      "buildSnapshotSha256": "b137ebad4b582f652bea7e788101a717a094073b57f8461b243e4dc0897fd1ff",
+      "matches": true
+    },
+    {
+      "path": "src/observed/schema.ts",
+      "commitSha256": "7592d02055e8a1c65294b3660685d27a0a1f4c70e2b8283c71cd45a5bded6774",
+      "buildSnapshotSha256": "7592d02055e8a1c65294b3660685d27a0a1f4c70e2b8283c71cd45a5bded6774",
+      "matches": true
+    },
+    {
+      "path": "src/observed/service.ts",
+      "commitSha256": "0c9e6cd6bfc1d7308bc6dcdb1cbf88b9179143084f9cb66d28af09cb6a9def6d",
+      "buildSnapshotSha256": "0c9e6cd6bfc1d7308bc6dcdb1cbf88b9179143084f9cb66d28af09cb6a9def6d",
+      "matches": true
+    },
+    {
+      "path": "src/observed/supplied-source.ts",
+      "commitSha256": "323105c489fae0823fc8c4674479f9e8c58e1e8ef500da8af043d8343badad64",
+      "buildSnapshotSha256": "323105c489fae0823fc8c4674479f9e8c58e1e8ef500da8af043d8343badad64",
+      "matches": true
+    },
+    {
+      "path": "src/process.ts",
+      "commitSha256": "f1b2d73512bed07afbaf05aa6d4712243c8b39ea93b37b70c45ef56580174303",
+      "buildSnapshotSha256": "f1b2d73512bed07afbaf05aa6d4712243c8b39ea93b37b70c45ef56580174303",
+      "matches": true
+    },
+    {
+      "path": "src/scripted/contracts.ts",
+      "commitSha256": "8482d44dc73d522342a6a4db3ff29884f6bd26d44b4a3d8859d308fdaa43a21b",
+      "buildSnapshotSha256": "8482d44dc73d522342a6a4db3ff29884f6bd26d44b4a3d8859d308fdaa43a21b",
+      "matches": true
+    },
+    {
+      "path": "src/scripted/jev.ts",
+      "commitSha256": "b75b1004dd4bc68334a38a1ef775296168a9695f8822e087d88cb214695a29db",
+      "buildSnapshotSha256": "b75b1004dd4bc68334a38a1ef775296168a9695f8822e087d88cb214695a29db",
+      "matches": true
+    },
+    {
+      "path": "src/scripted/observe.ts",
+      "commitSha256": "926734786ae1c64911788270cc8b4a562c848d0a6cd7cde4db537fd0f219eadf",
+      "buildSnapshotSha256": "926734786ae1c64911788270cc8b4a562c848d0a6cd7cde4db537fd0f219eadf",
+      "matches": true
+    },
+    {
+      "path": "src/scripted/report-json.ts",
+      "commitSha256": "f819d75eed65ba9295d19e4a69f402b702c8e606bf9dfefbe122cb26c06aa720",
+      "buildSnapshotSha256": "f819d75eed65ba9295d19e4a69f402b702c8e606bf9dfefbe122cb26c06aa720",
+      "matches": true
+    },
+    {
+      "path": "src/scripted/report.ts",
+      "commitSha256": "b6d9c8d559ed156d85d986e75c23b66db2a8fed00f8a1f5bc7e228fde0b02f24",
+      "buildSnapshotSha256": "b6d9c8d559ed156d85d986e75c23b66db2a8fed00f8a1f5bc7e228fde0b02f24",
+      "matches": true
+    },
+    {
+      "path": "src/scripted/run.ts",
+      "commitSha256": "fdbb7f9c2485cb5e522efb8c134a7a482d0d881c8a009072838a0a852464c9bb",
+      "buildSnapshotSha256": "fdbb7f9c2485cb5e522efb8c134a7a482d0d881c8a009072838a0a852464c9bb",
+      "matches": true
+    },
+    {
+      "path": "src/scripted/schema.ts",
+      "commitSha256": "a944a877e63eff9d4a05e234cb0572a937afe268508baed224f5f98ead8934a0",
+      "buildSnapshotSha256": "a944a877e63eff9d4a05e234cb0572a937afe268508baed224f5f98ead8934a0",
+      "matches": true
+    },
+    {
+      "path": "src/scripted/select.ts",
+      "commitSha256": "7059fd5613a2ee054064dbfa1dcbc8b0c9deba1e10b91e0e20dcfb371817c3b4",
+      "buildSnapshotSha256": "7059fd5613a2ee054064dbfa1dcbc8b0c9deba1e10b91e0e20dcfb371817c3b4",
+      "matches": true
+    },
+    {
+      "path": "src/scripted/vocabulary.ts",
+      "commitSha256": "490a617c1c21781df9677c978cd336fec2fab6179f50c8819754cfa38abbae4f",
+      "buildSnapshotSha256": "490a617c1c21781df9677c978cd336fec2fab6179f50c8819754cfa38abbae4f",
+      "matches": true
+    },
+    {
+      "path": "src/service.ts",
+      "commitSha256": "9e028d3d7e2ee63ea52289d5cadbc142df6fa277da93d1462450960c7af60326",
+      "buildSnapshotSha256": "9e028d3d7e2ee63ea52289d5cadbc142df6fa277da93d1462450960c7af60326",
+      "matches": true
+    },
+    {
+      "path": "src/version.ts",
+      "commitSha256": "cbef0bb4b74e2b0d0113f24a67cd0a75e888d1684a081cd04abbb181b241968a",
+      "buildSnapshotSha256": "cbef0bb4b74e2b0d0113f24a67cd0a75e888d1684a081cd04abbb181b241968a",
+      "matches": true
+    },
+    {
+      "path": "src/watch/index.ts",
+      "commitSha256": "112b31d8360c5dfc9d9b9b57557461218824f031d2fc0e3b6c26dc05b6959e3f",
+      "buildSnapshotSha256": "112b31d8360c5dfc9d9b9b57557461218824f031d2fc0e3b6c26dc05b6959e3f",
+      "matches": true
+    },
+    {
+      "path": "package.json",
+      "commitSha256": "d2fffea3e28d6ea794536b2cb67337abe8ec75c46cf10c2944ca1b3cd0a3a3ea",
+      "buildSnapshotSha256": "d2fffea3e28d6ea794536b2cb67337abe8ec75c46cf10c2944ca1b3cd0a3a3ea",
+      "matches": true
+    },
+    {
+      "path": "package-lock.json",
+      "commitSha256": "7982b0a2fc02a088ab03761b8332e6c15ad3d0d841f1134e9a4dd50b94364479",
+      "buildSnapshotSha256": "7982b0a2fc02a088ab03761b8332e6c15ad3d0d841f1134e9a4dd50b94364479",
+      "matches": true
+    }
+  ],
+  "dist": [
+    {
+      "path": "dist/service.js",
+      "build": "a2b3f70361ffd728711767933bf74cba7c8a30c41ce8d8e76eb9fdb7396ffafe",
+      "npmInstalled": "a2b3f70361ffd728711767933bf74cba7c8a30c41ce8d8e76eb9fdb7396ffafe",
+      "pluginInstalled": "a2b3f70361ffd728711767933bf74cba7c8a30c41ce8d8e76eb9fdb7396ffafe",
+      "matches": true
+    },
+    {
+      "path": "dist/version.js",
+      "build": "1f2780b5f9cc2737f99ad1de9598baed2af758754ab53f6577fcff5c8bc8a226",
+      "npmInstalled": "1f2780b5f9cc2737f99ad1de9598baed2af758754ab53f6577fcff5c8bc8a226",
+      "pluginInstalled": "1f2780b5f9cc2737f99ad1de9598baed2af758754ab53f6577fcff5c8bc8a226",
+      "matches": true
+    },
+    {
+      "path": "dist/exit-codes.js",
+      "build": "c85c3e5ccc50b25255f516d2680539b4c0ed1817144c40d927733a556e2e9f95",
+      "npmInstalled": "c85c3e5ccc50b25255f516d2680539b4c0ed1817144c40d927733a556e2e9f95",
+      "pluginInstalled": "c85c3e5ccc50b25255f516d2680539b4c0ed1817144c40d927733a556e2e9f95",
+      "matches": true
+    },
+    {
+      "path": "dist/cli.js",
+      "build": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+      "npmInstalled": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+      "pluginInstalled": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+      "matches": true
+    },
+    {
+      "path": "dist/capture.js",
+      "build": "c4a0a4776605a3b1c72b2795fd97f1230184bd9134f4c343ba58aaefea31974f",
+      "npmInstalled": "c4a0a4776605a3b1c72b2795fd97f1230184bd9134f4c343ba58aaefea31974f",
+      "pluginInstalled": "c4a0a4776605a3b1c72b2795fd97f1230184bd9134f4c343ba58aaefea31974f",
+      "matches": true
+    },
+    {
+      "path": "dist/process.js",
+      "build": "62963d4ae970d3dbb06811e2ae7b983ebb7502380f02053d7f0e08a3e8f958f3",
+      "npmInstalled": "62963d4ae970d3dbb06811e2ae7b983ebb7502380f02053d7f0e08a3e8f958f3",
+      "pluginInstalled": "62963d4ae970d3dbb06811e2ae7b983ebb7502380f02053d7f0e08a3e8f958f3",
+      "matches": true
+    },
+    {
+      "path": "dist/experimental/observed-journal.js",
+      "build": "b57ab8f9cf69bc8f252626dd948bd7b60c149c104181b6013c37d8dc105ef6bd",
+      "npmInstalled": "b57ab8f9cf69bc8f252626dd948bd7b60c149c104181b6013c37d8dc105ef6bd",
+      "pluginInstalled": "b57ab8f9cf69bc8f252626dd948bd7b60c149c104181b6013c37d8dc105ef6bd",
+      "matches": true
+    },
+    {
+      "path": "dist/experimental/observed-tap.js",
+      "build": "80e81478bb734ce2b1c35e4005fb975e40fad68b86de6fb07b021d7c1ab331d7",
+      "npmInstalled": "80e81478bb734ce2b1c35e4005fb975e40fad68b86de6fb07b021d7c1ab331d7",
+      "pluginInstalled": "80e81478bb734ce2b1c35e4005fb975e40fad68b86de6fb07b021d7c1ab331d7",
+      "matches": true
+    },
+    {
+      "path": "dist/experimental/observed-run.js",
+      "build": "6ca67a307aed02f7cf9734558bdea7575b7661f4e060a410e0c81267ab491942",
+      "npmInstalled": "6ca67a307aed02f7cf9734558bdea7575b7661f4e060a410e0c81267ab491942",
+      "pluginInstalled": "6ca67a307aed02f7cf9734558bdea7575b7661f4e060a410e0c81267ab491942",
+      "matches": true
+    },
+    {
+      "path": "dist/scripted/run.js",
+      "build": "bc33b4c81a5c0185eb316a8016de67e691418f5e736e318d4c6e5e03298d74ea",
+      "npmInstalled": "bc33b4c81a5c0185eb316a8016de67e691418f5e736e318d4c6e5e03298d74ea",
+      "pluginInstalled": "bc33b4c81a5c0185eb316a8016de67e691418f5e736e318d4c6e5e03298d74ea",
+      "matches": true
+    },
+    {
+      "path": "dist/scripted/jev.js",
+      "build": "d227aff5eb07388becd0f5dea1a800823f1abcf1e23fb9e4f1f8542c7e6d414c",
+      "npmInstalled": "d227aff5eb07388becd0f5dea1a800823f1abcf1e23fb9e4f1f8542c7e6d414c",
+      "pluginInstalled": "d227aff5eb07388becd0f5dea1a800823f1abcf1e23fb9e4f1f8542c7e6d414c",
+      "matches": true
+    },
+    {
+      "path": "dist/scripted/report-json.js",
+      "build": "1bd59963d6d37331a98ed7d4e537415f2e902e1d861a2f1ea2405c0ff271ffdb",
+      "npmInstalled": "1bd59963d6d37331a98ed7d4e537415f2e902e1d861a2f1ea2405c0ff271ffdb",
+      "pluginInstalled": "1bd59963d6d37331a98ed7d4e537415f2e902e1d861a2f1ea2405c0ff271ffdb",
+      "matches": true
+    },
+    {
+      "path": "dist/scripted/select.js",
+      "build": "c2d364f7ef5aed1f219f9de21601a078376b23b1621eddce26578ea5a99b8d2a",
+      "npmInstalled": "c2d364f7ef5aed1f219f9de21601a078376b23b1621eddce26578ea5a99b8d2a",
+      "pluginInstalled": "c2d364f7ef5aed1f219f9de21601a078376b23b1621eddce26578ea5a99b8d2a",
+      "matches": true
+    },
+    {
+      "path": "dist/scripted/schema.js",
+      "build": "85ce0c365ef5cead2899e7e8487c75a8c4a371768bb51f1b985028bc9922adb1",
+      "npmInstalled": "85ce0c365ef5cead2899e7e8487c75a8c4a371768bb51f1b985028bc9922adb1",
+      "pluginInstalled": "85ce0c365ef5cead2899e7e8487c75a8c4a371768bb51f1b985028bc9922adb1",
+      "matches": true
+    },
+    {
+      "path": "dist/scripted/report.js",
+      "build": "b5a6c25355dd73ecadb9cb048479adf81cc05237a5c92193cf17cd1d5c3c1886",
+      "npmInstalled": "b5a6c25355dd73ecadb9cb048479adf81cc05237a5c92193cf17cd1d5c3c1886",
+      "pluginInstalled": "b5a6c25355dd73ecadb9cb048479adf81cc05237a5c92193cf17cd1d5c3c1886",
+      "matches": true
+    },
+    {
+      "path": "dist/scripted/vocabulary.js",
+      "build": "3ff8fdb40f9e141281a3af9e73a779c64073f8bac98b91b04bd8edc340d40284",
+      "npmInstalled": "3ff8fdb40f9e141281a3af9e73a779c64073f8bac98b91b04bd8edc340d40284",
+      "pluginInstalled": "3ff8fdb40f9e141281a3af9e73a779c64073f8bac98b91b04bd8edc340d40284",
+      "matches": true
+    },
+    {
+      "path": "dist/scripted/observe.js",
+      "build": "db2c8e6df75acfb8be14d1668c355ca92d27b5caefc6bf2870d1bb90c6498c08",
+      "npmInstalled": "db2c8e6df75acfb8be14d1668c355ca92d27b5caefc6bf2870d1bb90c6498c08",
+      "pluginInstalled": "db2c8e6df75acfb8be14d1668c355ca92d27b5caefc6bf2870d1bb90c6498c08",
+      "matches": true
+    },
+    {
+      "path": "dist/scripted/contracts.js",
+      "build": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "npmInstalled": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "pluginInstalled": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "matches": true
+    },
+    {
+      "path": "dist/driven/policy.js",
+      "build": "0b37bd689843a69fb7980273e915f20af44ae365305f736471705b6dd1500e04",
+      "npmInstalled": "0b37bd689843a69fb7980273e915f20af44ae365305f736471705b6dd1500e04",
+      "pluginInstalled": "0b37bd689843a69fb7980273e915f20af44ae365305f736471705b6dd1500e04",
+      "matches": true
+    },
+    {
+      "path": "dist/driven/handback.js",
+      "build": "d0be72d959d452efbb533cd5d7fad38aa805829025c28c7d4c0b1dc952176fd7",
+      "npmInstalled": "d0be72d959d452efbb533cd5d7fad38aa805829025c28c7d4c0b1dc952176fd7",
+      "pluginInstalled": "d0be72d959d452efbb533cd5d7fad38aa805829025c28c7d4c0b1dc952176fd7",
+      "matches": true
+    },
+    {
+      "path": "dist/driven/candidates.js",
+      "build": "ed9da6235a0bed29b25dda9b7089b602306979f9f0753c5b736b9bbf847bd510",
+      "npmInstalled": "ed9da6235a0bed29b25dda9b7089b602306979f9f0753c5b736b9bbf847bd510",
+      "pluginInstalled": "ed9da6235a0bed29b25dda9b7089b602306979f9f0753c5b736b9bbf847bd510",
+      "matches": true
+    },
+    {
+      "path": "dist/driven/project.js",
+      "build": "1482a41c0041be0e971da386497b12557f91575d205e2c7bebab9222e494daa2",
+      "npmInstalled": "1482a41c0041be0e971da386497b12557f91575d205e2c7bebab9222e494daa2",
+      "pluginInstalled": "1482a41c0041be0e971da386497b12557f91575d205e2c7bebab9222e494daa2",
+      "matches": true
+    },
+    {
+      "path": "dist/driven/vocabulary.js",
+      "build": "81d171daef1f450ea866321b13f4ef22c2cade4a0e7dc0a384327be6f9a8524a",
+      "npmInstalled": "81d171daef1f450ea866321b13f4ef22c2cade4a0e7dc0a384327be6f9a8524a",
+      "pluginInstalled": "81d171daef1f450ea866321b13f4ef22c2cade4a0e7dc0a384327be6f9a8524a",
+      "matches": true
+    },
+    {
+      "path": "dist/driven/step.js",
+      "build": "669eef883b2ad9994310a62561100a05e25d1b183b9360cffce39b640d37c3ae",
+      "npmInstalled": "669eef883b2ad9994310a62561100a05e25d1b183b9360cffce39b640d37c3ae",
+      "pluginInstalled": "669eef883b2ad9994310a62561100a05e25d1b183b9360cffce39b640d37c3ae",
+      "matches": true
+    },
+    {
+      "path": "dist/driven/decide.js",
+      "build": "64197e257066a9072cf00cd5af8e7ade8b97e7a952e37ad8a3370020753b8a7d",
+      "npmInstalled": "64197e257066a9072cf00cd5af8e7ade8b97e7a952e37ad8a3370020753b8a7d",
+      "pluginInstalled": "64197e257066a9072cf00cd5af8e7ade8b97e7a952e37ad8a3370020753b8a7d",
+      "matches": true
+    },
+    {
+      "path": "dist/driven/marker.js",
+      "build": "bb2bd3a84c2973d94495e923f0ab15538eb523a6c6764476fa137c95b889e7bf",
+      "npmInstalled": "bb2bd3a84c2973d94495e923f0ab15538eb523a6c6764476fa137c95b889e7bf",
+      "pluginInstalled": "bb2bd3a84c2973d94495e923f0ab15538eb523a6c6764476fa137c95b889e7bf",
+      "matches": true
+    },
+    {
+      "path": "dist/contracts/index.js",
+      "build": "dec6d2a8cea84e02493a041e74a15f36d80ce8f37e9dc6f43b82520570580864",
+      "npmInstalled": "dec6d2a8cea84e02493a041e74a15f36d80ce8f37e9dc6f43b82520570580864",
+      "pluginInstalled": "dec6d2a8cea84e02493a041e74a15f36d80ce8f37e9dc6f43b82520570580864",
+      "matches": true
+    },
+    {
+      "path": "dist/mcp/observed.js",
+      "build": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+      "npmInstalled": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+      "pluginInstalled": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+      "matches": true
+    },
+    {
+      "path": "dist/mcp/index.js",
+      "build": "64b3bb0d3733a367dfc3576ffa8e8c7f28e61031e53a82fc73292243f51d99a3",
+      "npmInstalled": "64b3bb0d3733a367dfc3576ffa8e8c7f28e61031e53a82fc73292243f51d99a3",
+      "pluginInstalled": "64b3bb0d3733a367dfc3576ffa8e8c7f28e61031e53a82fc73292243f51d99a3",
+      "matches": true
+    },
+    {
+      "path": "dist/logpane/stream.js",
+      "build": "adf4eabc21fc50188a8a2a966960ec22c824526b0d4b092513f40f0ce301f986",
+      "npmInstalled": "adf4eabc21fc50188a8a2a966960ec22c824526b0d4b092513f40f0ce301f986",
+      "pluginInstalled": "adf4eabc21fc50188a8a2a966960ec22c824526b0d4b092513f40f0ce301f986",
+      "matches": true
+    },
+    {
+      "path": "dist/logpane/format.js",
+      "build": "8ebe92bb56509576e315b5e723f511f10347e0b83a9362d9d553aaaba32b8009",
+      "npmInstalled": "8ebe92bb56509576e315b5e723f511f10347e0b83a9362d9d553aaaba32b8009",
+      "pluginInstalled": "8ebe92bb56509576e315b5e723f511f10347e0b83a9362d9d553aaaba32b8009",
+      "matches": true
+    },
+    {
+      "path": "dist/logpane/attach.js",
+      "build": "7162850524252f2e640c64a12cf75f2aacfe37b148b3238f2b1c051b3e8106a6",
+      "npmInstalled": "7162850524252f2e640c64a12cf75f2aacfe37b148b3238f2b1c051b3e8106a6",
+      "pluginInstalled": "7162850524252f2e640c64a12cf75f2aacfe37b148b3238f2b1c051b3e8106a6",
+      "matches": true
+    },
+    {
+      "path": "dist/logpane/window.js",
+      "build": "7297aca5f2f7b46d221ec0b754cb5ac4c30449c9485733ce1d8325d71d22ed6e",
+      "npmInstalled": "7297aca5f2f7b46d221ec0b754cb5ac4c30449c9485733ce1d8325d71d22ed6e",
+      "pluginInstalled": "7297aca5f2f7b46d221ec0b754cb5ac4c30449c9485733ce1d8325d71d22ed6e",
+      "matches": true
+    },
+    {
+      "path": "dist/watch/index.js",
+      "build": "f297ae862b9c13309e2ab56cc8bb7cc168c644f8342b0ee709245d82135a4a57",
+      "npmInstalled": "f297ae862b9c13309e2ab56cc8bb7cc168c644f8342b0ee709245d82135a4a57",
+      "pluginInstalled": "f297ae862b9c13309e2ab56cc8bb7cc168c644f8342b0ee709245d82135a4a57",
+      "matches": true
+    },
+    {
+      "path": "dist/log/index.js",
+      "build": "ead5f93a0fca9aeb3beec6e9f17ebb3c9a249501cf39be3b9fcfc0ecccb482b0",
+      "npmInstalled": "ead5f93a0fca9aeb3beec6e9f17ebb3c9a249501cf39be3b9fcfc0ecccb482b0",
+      "pluginInstalled": "ead5f93a0fca9aeb3beec6e9f17ebb3c9a249501cf39be3b9fcfc0ecccb482b0",
+      "matches": true
+    },
+    {
+      "path": "dist/device/factory.js",
+      "build": "9b3961c796b3c6d57ddafd39fd7cb1ec3f67fbe223947ca11c8e63dc7895fe70",
+      "npmInstalled": "9b3961c796b3c6d57ddafd39fd7cb1ec3f67fbe223947ca11c8e63dc7895fe70",
+      "pluginInstalled": "9b3961c796b3c6d57ddafd39fd7cb1ec3f67fbe223947ca11c8e63dc7895fe70",
+      "matches": true
+    },
+    {
+      "path": "dist/device/attach.js",
+      "build": "2e27df08bd5a975c4b061e0a8f707b70af53504f6415f03986ac25a1d1743bcf",
+      "npmInstalled": "2e27df08bd5a975c4b061e0a8f707b70af53504f6415f03986ac25a1d1743bcf",
+      "pluginInstalled": "2e27df08bd5a975c4b061e0a8f707b70af53504f6415f03986ac25a1d1743bcf",
+      "matches": true
+    },
+    {
+      "path": "dist/device/admission-maintenance.js",
+      "build": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+      "npmInstalled": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+      "pluginInstalled": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+      "matches": true
+    },
+    {
+      "path": "dist/device/admission-migration.js",
+      "build": "e2a2e1fe7c40c2f37a7fb0b74399bddd97da6c81208eefae9d56a3879b7c1b39",
+      "npmInstalled": "e2a2e1fe7c40c2f37a7fb0b74399bddd97da6c81208eefae9d56a3879b7c1b39",
+      "pluginInstalled": "e2a2e1fe7c40c2f37a7fb0b74399bddd97da6c81208eefae9d56a3879b7c1b39",
+      "matches": true
+    },
+    {
+      "path": "dist/device/index.js",
+      "build": "0f0105e0777963fa8c196da19e1d0550929d07a4d74e163b3a65983778151ee7",
+      "npmInstalled": "0f0105e0777963fa8c196da19e1d0550929d07a4d74e163b3a65983778151ee7",
+      "pluginInstalled": "0f0105e0777963fa8c196da19e1d0550929d07a4d74e163b3a65983778151ee7",
+      "matches": true
+    },
+    {
+      "path": "dist/device/admission-allocation.js",
+      "build": "ba6f8ad883ec2d0edd08bbcbb216a02283eb13a74645a65e3cca94c7d1215c27",
+      "npmInstalled": "ba6f8ad883ec2d0edd08bbcbb216a02283eb13a74645a65e3cca94c7d1215c27",
+      "pluginInstalled": "ba6f8ad883ec2d0edd08bbcbb216a02283eb13a74645a65e3cca94c7d1215c27",
+      "matches": true
+    },
+    {
+      "path": "dist/device/lease.js",
+      "build": "c54335efb2647f469c3e480e8b3036598e389ed41e56fc92b23cd669a9978523",
+      "npmInstalled": "c54335efb2647f469c3e480e8b3036598e389ed41e56fc92b23cd669a9978523",
+      "pluginInstalled": "c54335efb2647f469c3e480e8b3036598e389ed41e56fc92b23cd669a9978523",
+      "matches": true
+    },
+    {
+      "path": "dist/device/admission.js",
+      "build": "9006f0d3c9328e6d75e7cf51af13dbcfea4db16525b7ac67b68f8230060e51ef",
+      "npmInstalled": "9006f0d3c9328e6d75e7cf51af13dbcfea4db16525b7ac67b68f8230060e51ef",
+      "pluginInstalled": "9006f0d3c9328e6d75e7cf51af13dbcfea4db16525b7ac67b68f8230060e51ef",
+      "matches": true
+    },
+    {
+      "path": "dist/device/image.js",
+      "build": "19f4e3dddab9f1d4fe5a57c44d7f25ee1ed9fcbc10f38878437ddd3db19fc846",
+      "npmInstalled": "19f4e3dddab9f1d4fe5a57c44d7f25ee1ed9fcbc10f38878437ddd3db19fc846",
+      "pluginInstalled": "19f4e3dddab9f1d4fe5a57c44d7f25ee1ed9fcbc10f38878437ddd3db19fc846",
+      "matches": true
+    },
+    {
+      "path": "dist/device/logs.js",
+      "build": "799e9719aaa336321fc3dd3ae17b6ec7e24eb4268dca4f0c55f22364ea945cba",
+      "npmInstalled": "799e9719aaa336321fc3dd3ae17b6ec7e24eb4268dca4f0c55f22364ea945cba",
+      "pluginInstalled": "799e9719aaa336321fc3dd3ae17b6ec7e24eb4268dca4f0c55f22364ea945cba",
+      "matches": true
+    },
+    {
+      "path": "dist/device/admission-sqlite.js",
+      "build": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1",
+      "npmInstalled": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1",
+      "pluginInstalled": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1",
+      "matches": true
+    },
+    {
+      "path": "dist/observed/supplied-source.js",
+      "build": "74720e27069f89bf6e238cee90b8c804fd92783d6d0e82bdb23f7c9f75834c41",
+      "npmInstalled": "74720e27069f89bf6e238cee90b8c804fd92783d6d0e82bdb23f7c9f75834c41",
+      "pluginInstalled": "74720e27069f89bf6e238cee90b8c804fd92783d6d0e82bdb23f7c9f75834c41",
+      "matches": true
+    },
+    {
+      "path": "dist/observed/service.js",
+      "build": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+      "npmInstalled": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+      "pluginInstalled": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+      "matches": true
+    },
+    {
+      "path": "dist/observed/create-source.js",
+      "build": "1b3b13ab6dc55eb5f04f0f7a40b2b86a2d6fe46a96a7274bab1bf5cc81f5e8c3",
+      "npmInstalled": "1b3b13ab6dc55eb5f04f0f7a40b2b86a2d6fe46a96a7274bab1bf5cc81f5e8c3",
+      "pluginInstalled": "1b3b13ab6dc55eb5f04f0f7a40b2b86a2d6fe46a96a7274bab1bf5cc81f5e8c3",
+      "matches": true
+    },
+    {
+      "path": "dist/observed/artifact.js",
+      "build": "71697e79851b3afc6e0157e6bf3f2116ffec6233b13996463a54c24b6465aea5",
+      "npmInstalled": "71697e79851b3afc6e0157e6bf3f2116ffec6233b13996463a54c24b6465aea5",
+      "pluginInstalled": "71697e79851b3afc6e0157e6bf3f2116ffec6233b13996463a54c24b6465aea5",
+      "matches": true
+    },
+    {
+      "path": "dist/observed/allocation-config.js",
+      "build": "0926b7250a569f9f01d3557e528f4cb23ff2f702ae60cb1aba4f89ddfffa56e8",
+      "npmInstalled": "0926b7250a569f9f01d3557e528f4cb23ff2f702ae60cb1aba4f89ddfffa56e8",
+      "pluginInstalled": "0926b7250a569f9f01d3557e528f4cb23ff2f702ae60cb1aba4f89ddfffa56e8",
+      "matches": true
+    },
+    {
+      "path": "dist/observed/schema.js",
+      "build": "4981a31d0bf83c38d69efd54589cb57b344713dab6bdb223c28533d937861f53",
+      "npmInstalled": "4981a31d0bf83c38d69efd54589cb57b344713dab6bdb223c28533d937861f53",
+      "pluginInstalled": "4981a31d0bf83c38d69efd54589cb57b344713dab6bdb223c28533d937861f53",
+      "matches": true
+    },
+    {
+      "path": "dist/observed/allocation-schema.js",
+      "build": "1f4af01e2bd7559ccd78439b57e22477d6e58a2ef00dd85cc7bf159d314fde36",
+      "npmInstalled": "1f4af01e2bd7559ccd78439b57e22477d6e58a2ef00dd85cc7bf159d314fde36",
+      "pluginInstalled": "1f4af01e2bd7559ccd78439b57e22477d6e58a2ef00dd85cc7bf159d314fde36",
+      "matches": true
+    },
+    {
+      "path": "dist/observed/report.js",
+      "build": "c843ab9d562e8299371e64c6d7380fd94ac574769562791ab2f66238a8393eee",
+      "npmInstalled": "c843ab9d562e8299371e64c6d7380fd94ac574769562791ab2f66238a8393eee",
+      "pluginInstalled": "c843ab9d562e8299371e64c6d7380fd94ac574769562791ab2f66238a8393eee",
+      "matches": true
+    },
+    {
+      "path": "dist/observed/evidence.js",
+      "build": "682e600b8dca6ef3cfa5d869dab60cd8dc2865aa677bc84947629783762d158e",
+      "npmInstalled": "682e600b8dca6ef3cfa5d869dab60cd8dc2865aa677bc84947629783762d158e",
+      "pluginInstalled": "682e600b8dca6ef3cfa5d869dab60cd8dc2865aa677bc84947629783762d158e",
+      "matches": true
+    },
+    {
+      "path": "dist/observed/cli.js",
+      "build": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+      "npmInstalled": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+      "pluginInstalled": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+      "matches": true
+    },
+    {
+      "path": "dist/observed/allocation.js",
+      "build": "c78b4e2f37c3bf173afec88fa946ec3df094b8bc0719d137b387514a9ac29563",
+      "npmInstalled": "c78b4e2f37c3bf173afec88fa946ec3df094b8bc0719d137b387514a9ac29563",
+      "pluginInstalled": "c78b4e2f37c3bf173afec88fa946ec3df094b8bc0719d137b387514a9ac29563",
+      "matches": true
+    },
+    {
+      "path": "dist/device/android/settle.js",
+      "build": "6fad022c962493e735ea1198a8a83f24b5df4b1652b4308002051ca5afe61363",
+      "npmInstalled": "6fad022c962493e735ea1198a8a83f24b5df4b1652b4308002051ca5afe61363",
+      "pluginInstalled": "6fad022c962493e735ea1198a8a83f24b5df4b1652b4308002051ca5afe61363",
+      "matches": true
+    },
+    {
+      "path": "dist/device/android/tools.js",
+      "build": "38638379c79e1a4f9f22bc104dff7aefccd509ff9b822a7ef4d8db822d529774",
+      "npmInstalled": "38638379c79e1a4f9f22bc104dff7aefccd509ff9b822a7ef4d8db822d529774",
+      "pluginInstalled": "38638379c79e1a4f9f22bc104dff7aefccd509ff9b822a7ef4d8db822d529774",
+      "matches": true
+    },
+    {
+      "path": "dist/device/android/exit-watch.js",
+      "build": "9b312677a3b8c9d3eae677092837c6e86c49e4ed1d580ad87693efe92ba1faa6",
+      "npmInstalled": "9b312677a3b8c9d3eae677092837c6e86c49e4ed1d580ad87693efe92ba1faa6",
+      "pluginInstalled": "9b312677a3b8c9d3eae677092837c6e86c49e4ed1d580ad87693efe92ba1faa6",
+      "matches": true
+    },
+    {
+      "path": "dist/device/android/ledger.js",
+      "build": "113897aff0008ef044a6558f7463329c3a52a4d89bf5465d233a1833ec7ba049",
+      "npmInstalled": "113897aff0008ef044a6558f7463329c3a52a4d89bf5465d233a1833ec7ba049",
+      "pluginInstalled": "113897aff0008ef044a6558f7463329c3a52a4d89bf5465d233a1833ec7ba049",
+      "matches": true
+    },
+    {
+      "path": "dist/device/android/logcat.js",
+      "build": "1a70a5a6836886c48052586a7d27e26fb4e49c82c731e490bdb7861d85980761",
+      "npmInstalled": "1a70a5a6836886c48052586a7d27e26fb4e49c82c731e490bdb7861d85980761",
+      "pluginInstalled": "1a70a5a6836886c48052586a7d27e26fb4e49c82c731e490bdb7861d85980761",
+      "matches": true
+    },
+    {
+      "path": "dist/device/android/agent-client.js",
+      "build": "1da4c9fa54388fa8456713f4186de58e2ecd7fd5f9ef4ea70616176668196947",
+      "npmInstalled": "1da4c9fa54388fa8456713f4186de58e2ecd7fd5f9ef4ea70616176668196947",
+      "pluginInstalled": "1da4c9fa54388fa8456713f4186de58e2ecd7fd5f9ef4ea70616176668196947",
+      "matches": true
+    },
+    {
+      "path": "dist/device/android/driver.js",
+      "build": "7ea0701ff8017904fc22ce7ffb056be8d9742df150b681daeae9559b06b35a14",
+      "npmInstalled": "7ea0701ff8017904fc22ce7ffb056be8d9742df150b681daeae9559b06b35a14",
+      "pluginInstalled": "7ea0701ff8017904fc22ce7ffb056be8d9742df150b681daeae9559b06b35a14",
+      "matches": true
+    },
+    {
+      "path": "dist/device/android/mapping.js",
+      "build": "fbc53c8e96fd1bdd0a3ef92e26a2a455c08720b8dcdc8be0bf8c976a2b5b4952",
+      "npmInstalled": "fbc53c8e96fd1bdd0a3ef92e26a2a455c08720b8dcdc8be0bf8c976a2b5b4952",
+      "pluginInstalled": "fbc53c8e96fd1bdd0a3ef92e26a2a455c08720b8dcdc8be0bf8c976a2b5b4952",
+      "matches": true
+    },
+    {
+      "path": "dist/device/android/adb.js",
+      "build": "3edec1e60b2605c8252164a94ebc089afec9e196a3383d1cb58359b2226e28d6",
+      "npmInstalled": "3edec1e60b2605c8252164a94ebc089afec9e196a3383d1cb58359b2226e28d6",
+      "pluginInstalled": "3edec1e60b2605c8252164a94ebc089afec9e196a3383d1cb58359b2226e28d6",
+      "matches": true
+    },
+    {
+      "path": "dist/device/android/agent-supply.js",
+      "build": "7cef22170d1702b9b03e68cefe3060ef578643a47907dffc021debfd23b45330",
+      "npmInstalled": "7cef22170d1702b9b03e68cefe3060ef578643a47907dffc021debfd23b45330",
+      "pluginInstalled": "7cef22170d1702b9b03e68cefe3060ef578643a47907dffc021debfd23b45330",
+      "matches": true
+    },
+    {
+      "path": "dist/device/android/threadtime.js",
+      "build": "be36c941425f1a87cc2d9c2dffe175fd07dd2a273e36a144bfa11e9415714feb",
+      "npmInstalled": "be36c941425f1a87cc2d9c2dffe175fd07dd2a273e36a144bfa11e9415714feb",
+      "pluginInstalled": "be36c941425f1a87cc2d9c2dffe175fd07dd2a273e36a144bfa11e9415714feb",
+      "matches": true
+    }
+  ],
+  "packageInstalledMatchesBuild": true
+}

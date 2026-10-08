@@ -1,0 +1,37 @@
+{
+  "verdict": "PASS",
+  "node": "v24.0.0",
+  "cliCalls": 2,
+  "mcpCalls": 3,
+  "guards": [
+    {
+      "label": "cli-allocation",
+      "events": [
+        {
+          "forbidden": "Admission.open"
+        }
+      ]
+    },
+    {
+      "label": "cli-action",
+      "events": [
+        {
+          "forbidden": "Admission.open"
+        }
+      ]
+    },
+    {
+      "label": "mcp",
+      "events": [
+        {
+          "forbidden": "Admission.open"
+        }
+      ]
+    }
+  ],
+  "safeOutputs": true,
+  "actualReplyShapes": true,
+  "helperReviewedSnapshotSha256": "bf3b8b89d0ad11b03a30be23f2501b8e40aad8cf293b0ba94ce978f943ba0a4c",
+  "guardSha256": "000c19430aae956338a406a9b4daceb68e99eb76d70bc3a0340fccf52ae0d2f7",
+  "launchAssociation": "Root attested exact command; contemporaneous helper launch/hash manifest absent. Independent before-execution byte association UNVERIFIED."
+}

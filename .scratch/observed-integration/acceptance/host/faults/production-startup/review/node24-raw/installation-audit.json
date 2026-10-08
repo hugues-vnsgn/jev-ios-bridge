@@ -1,0 +1,42 @@
+{
+  "commandCount": 37,
+  "allRawPathsExist": true,
+  "cleanNpmInstall": {
+    "id": "003",
+    "command": "npm",
+    "args": [
+      "install",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund",
+      "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node24-installed/jev-ios-bridge-1.3.1.tgz"
+    ],
+    "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node24-installed/clean",
+    "node": "v24.0.0",
+    "exit": 0,
+    "signal": null,
+    "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node24-installed/003.stdout",
+    "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node24-installed/003.stderr"
+  },
+  "pluginNpmCi": {
+    "id": "021",
+    "command": "npm",
+    "args": [
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node24-installed/plugin",
+    "node": "v24.0.0",
+    "exit": 0,
+    "signal": null,
+    "stdout": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node24-installed/021.stdout",
+    "stderr": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs/integrated-installed-node24-installed/021.stderr"
+  },
+  "tarballSha256Matches": true,
+  "pluginZipSha256Matches": true,
+  "disclosures": [
+    "--ignore-scripts --no-audit --no-fund used for install/ci; normal install receipts do not prove registry/cache was initially empty from receipts alone."
+  ]
+}
