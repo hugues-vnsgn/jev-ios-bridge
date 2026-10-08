@@ -1,0 +1,55 @@
+{"case":"cancel-read-failure","calls":["snapshot-ui","touch","snapshot-ui"],"outcome":"outcome_observed","reason":null,"cancellationRequested":false}
+✖ local cancel fences continuation even when initial authoritative read fails (464.632416ms)
+{"case":"separate-finalization-budget","observedMs":58,"closedMs":740,"outcome":"inconclusive","reason":"DEADLINE_EXCEEDED"}
+✖ settled close within finalization budget does not consume action observation budget (1027.525542ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1749.56
+
+✖ failing tests:
+
+test at ../../../../../../private/tmp/jev-runtime-spec-review-5rTBCH/probes.test.ts:2:5198
+✖ local cancel fences continuation even when initial authoritative read fails (464.632416ms)
+  AssertionError [ERR_ASSERTION]: Explicit local cancellation must prevent follow-up input despite unavailable initial read
+  + actual - expected
+  
+    [
+      'snapshot-ui',
+  +   'touch',
+  +   'snapshot-ui'
+    ]
+  
+      at TestContext.<anonymous> (/private/tmp/jev-runtime-spec-review-5rTBCH/probes.test.ts:86:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'snapshot-ui', 'touch', 'snapshot-ui' ],
+    expected: [ 'snapshot-ui' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../../private/tmp/jev-runtime-spec-review-5rTBCH/probes.test.ts:2:6366
+✖ settled close within finalization budget does not consume action observation budget (1027.525542ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'inconclusive'
+  - 'already_satisfied'
+  
+      at TestContext.<anonymous> (/private/tmp/jev-runtime-spec-review-5rTBCH/probes.test.ts:102:32)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'inconclusive',
+    expected: 'already_satisfied',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

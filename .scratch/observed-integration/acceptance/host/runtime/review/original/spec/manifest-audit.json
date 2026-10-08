@@ -1,0 +1,20 @@
+{
+  "candidate": "c751a73df7931107af23619c350d2ca406ac55db",
+  "checks": {
+    "src/observed/service.ts": true,
+    "src/observed/schema.ts": true,
+    "src/observed/report.ts": true,
+    "src/observed/evidence.ts": true,
+    "src/experimental/observed-journal.ts": true,
+    "src/experimental/observed-tap.ts": true,
+    "src/experimental/observed-run.ts": true,
+    "spikes/observed-ui/cli.ts": true,
+    "tests/observed-service.test.ts": true,
+    "tests/observed-schema.test.ts": true,
+    "tests/observed-evidence.test.ts": true,
+    "tests/observed-journal.test.ts": true,
+    "tests/observed-tap.test.ts": true,
+    "tests/observed-run.test.ts": true,
+    "tests/admission-migration.test.ts": true
+  }
+}
