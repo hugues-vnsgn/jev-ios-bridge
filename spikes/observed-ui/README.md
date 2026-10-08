@@ -5,8 +5,10 @@ standalone experiment, outside the version 1/2 script formats. It uses the pinne
 MobileBuildMCP already in this repository; it needs no new provider interface,
 app SDK or Jev key.
 
-The host implementation passes automated checks. It has **not yet been validated
-on a live simulator**. Start with harmless navigation in a dedicated test app.
+Validated on the local navigation fixture using an iPhone 17 simulator on iOS 27.0:
+one-action navigation, already-satisfied with no input, and controlled response loss
+with restart refusal. See [live evidence](../../.scratch/observed-ui/live/report.md).
+This is a bounded fixture result, not a guarantee for every app or runtime.
 
 ## Run
 
@@ -64,6 +66,11 @@ the device layer acknowledged it. An observed outcome does not prove that the
 tap caused it, that the original native recipient was correct, or that a contact
 was consumed/released.
 
+The experimental driver issues one MobileBuildMCP `touch` request with down/up
+and a 50ms hold; the selected element must advertise both tap and touch. This
+replaces the semantic tap path that acknowledged without activating the live
+SwiftUI link. Ordinary Bridge actions retain their previous behavior.
+
 There is no automatic retap, including after stale-reference errors. The claim is
 at most one bridge tap submission, not exactly one downstream touch. Completed
 action IDs cannot be reused on that device. An unfinished attempt, cancellation,
@@ -74,10 +81,13 @@ The runner does not provision, shut down or delete devices, and quarantine does
 not stop native work or undo remote effects. Other automation tools do not read
 this journal, so device exclusivity remains an operating prerequisite.
 
-## Next verification
+## Evidence limits
 
-Run a navigation case on an independently provisioned dedicated simulator. Show
-zero taps when the destination is already visible, one request when navigation
-succeeds, and no second request after a deliberately lost reply. Preserve the
-actual CLI trace, screenshots and journal. The unresolved historical native-study
-device has not been released or reused for this experiment.
+The response-loss experiment withheld an actual successful driver response at the
+host wrapper; it did not induce native transport failure. Additional post-action
+captures in that case belong to the fault harness. The runner still recorded
+uncertainty, and a fresh process issued zero backend commands on the quarantined
+device. The historical native-study device was not touched.
+
+Production script/MCP integration and broader app/runtime coverage remain future
+work. The experiment does not claim native ownership or contact release.

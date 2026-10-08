@@ -1,0 +1,19 @@
+{
+  "schema": "mobilebuildmcp.output.stop-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "6A8C5F93-F59A-456B-B157-10642209B734",
+      "bundleId": "dev.jevbridge.observedfixture"
+    },
+    "diagnostics": {
+      "warnings": [],
+      "errors": []
+    }
+  }
+}

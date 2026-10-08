@@ -1,0 +1,22 @@
+{
+  "schema": "mobilebuildmcp.output.capture-result",
+  "schemaVersion": "2",
+  "didError": true,
+  "error": "Failed to get accessibility hierarchy.",
+  "data": {
+    "summary": {
+      "status": "FAILED"
+    },
+    "artifacts": {
+      "simulatorId": "2FE383F2-2D0F-4286-8797-D3ACEFCD6220"
+    },
+    "diagnostics": {
+      "warnings": [],
+      "errors": [
+        {
+          "message": "Timed out creating the simulator remote automation session"
+        }
+      ]
+    }
+  }
+}

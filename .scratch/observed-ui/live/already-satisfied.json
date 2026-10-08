@@ -1,0 +1,10 @@
+{
+  "experimental": "observed-tap-v1",
+  "actionId": "obsnav-satisfied-20261008",
+  "deviceId": "73997430-DB8A-48C8-8146-12320CE6AEFE",
+  "app": { "bundleId": "dev.jevbridge.observedfixture" },
+  "selector": { "role": "button", "identifier": "open.details" },
+  "before": { "present": [{ "identifier": "home.heading" }] },
+  "after": { "present": [{ "identifier": "home.heading" }] },
+  "timeoutMs": 30000
+}

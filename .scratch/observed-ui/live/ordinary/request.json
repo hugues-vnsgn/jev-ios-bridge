@@ -1,0 +1,37 @@
+{
+  "experimental": "observed-tap-v1",
+  "actionId": "obsnav-ordinary-20261008",
+  "deviceId": "73997430-DB8A-48C8-8146-12320CE6AEFE",
+  "app": {
+    "bundleId": "dev.jevbridge.observedfixture"
+  },
+  "selector": {
+    "identifier": "open.details",
+    "role": "button"
+  },
+  "before": {
+    "present": [
+      {
+        "identifier": "home.heading"
+      }
+    ],
+    "absent": [
+      {
+        "identifier": "details.heading"
+      }
+    ]
+  },
+  "after": {
+    "present": [
+      {
+        "identifier": "details.heading"
+      }
+    ],
+    "absent": [
+      {
+        "identifier": "home.heading"
+      }
+    ]
+  },
+  "timeoutMs": 30000
+}

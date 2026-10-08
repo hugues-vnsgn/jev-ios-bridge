@@ -1,0 +1,105 @@
+{
+  "commands": [
+    {
+      "sequence": 1,
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules/mobilebuildmcp/build/cli.js",
+        "simulator",
+        "launch-app",
+        "--simulator-id",
+        "6A8C5F93-F59A-456B-B157-10642209B734",
+        "--bundle-id",
+        "dev.jevbridge.observedfixture",
+        "--output",
+        "json"
+      ],
+      "exitCode": 0,
+      "responsePath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-ui/live/final/ordinary/backend/01-simulator-launch-app---simulator-id.json"
+    },
+    {
+      "sequence": 2,
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules/mobilebuildmcp/build/cli.js",
+        "ui-automation",
+        "snapshot-ui",
+        "--simulator-id",
+        "6A8C5F93-F59A-456B-B157-10642209B734",
+        "--verbose",
+        "--output",
+        "json"
+      ],
+      "exitCode": 0,
+      "responsePath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-ui/live/final/ordinary/backend/02-ui-automation-snapshot-ui---simulator-id.json"
+    },
+    {
+      "sequence": 3,
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules/mobilebuildmcp/build/cli.js",
+        "ui-automation",
+        "screenshot",
+        "--simulator-id",
+        "6A8C5F93-F59A-456B-B157-10642209B734",
+        "--return-format",
+        "path",
+        "--output",
+        "json"
+      ],
+      "exitCode": 0,
+      "responsePath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-ui/live/final/ordinary/backend/03-ui-automation-screenshot---simulator-id.json"
+    },
+    {
+      "sequence": 4,
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules/mobilebuildmcp/build/cli.js",
+        "ui-automation",
+        "touch",
+        "--json",
+        "{\"simulatorId\":\"6A8C5F93-F59A-456B-B157-10642209B734\",\"elementRef\":\"e15\",\"down\":true,\"up\":true,\"delay\":0.05}",
+        "--output",
+        "json"
+      ],
+      "exitCode": 0,
+      "responsePath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-ui/live/final/ordinary/backend/04-ui-automation-touch---json.json"
+    },
+    {
+      "sequence": 5,
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules/mobilebuildmcp/build/cli.js",
+        "ui-automation",
+        "snapshot-ui",
+        "--simulator-id",
+        "6A8C5F93-F59A-456B-B157-10642209B734",
+        "--verbose",
+        "--output",
+        "json"
+      ],
+      "exitCode": 0,
+      "responsePath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-ui/live/final/ordinary/backend/05-ui-automation-snapshot-ui---simulator-id.json"
+    },
+    {
+      "sequence": 6,
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules/mobilebuildmcp/build/cli.js",
+        "ui-automation",
+        "screenshot",
+        "--simulator-id",
+        "6A8C5F93-F59A-456B-B157-10642209B734",
+        "--return-format",
+        "path",
+        "--output",
+        "json"
+      ],
+      "exitCode": 0,
+      "responsePath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-ui/live/final/ordinary/backend/06-ui-automation-screenshot---simulator-id.json"
+    }
+  ],
+  "mobilebuildmcpCommands": 6,
+  "touchCommands": 1,
+  "tapCommands": 0
+}

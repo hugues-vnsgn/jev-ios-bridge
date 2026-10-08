@@ -1,0 +1,37 @@
+{
+  "schema": "mobilebuildmcp.output.build-run-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "request": {
+      "scheme": "DiagnosticApp",
+      "projectPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/examples/diagnostic-app/DiagnosticApp.xcodeproj",
+      "derivedDataPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-ui/live/derived-data",
+      "configuration": "Debug",
+      "platform": "iOS Simulator",
+      "simulatorId": "73997430-DB8A-48C8-8146-12320CE6AEFE"
+    },
+    "summary": {
+      "status": "SUCCEEDED",
+      "durationMs": 37602,
+      "target": "simulator"
+    },
+    "artifacts": {
+      "appPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-ui/live/derived-data/Build/Products/Debug-iphonesimulator/DiagnosticApp.app",
+      "bundleId": "dev.jevbridge.diagnostic",
+      "processId": 36897,
+      "simulatorId": "73997430-DB8A-48C8-8146-12320CE6AEFE",
+      "buildLogPath": "/Users/hugues_mini/Library/Developer/MobileBuildMCP/workspaces/feat-native-callback-diagnostic-d73bcde14962/logs/build_run_sim_2026-10-08T00-56-55-949Z_pid35143_1e655cf3.log",
+      "runtimeLogPath": "/Users/hugues_mini/Library/Developer/MobileBuildMCP/workspaces/feat-native-callback-diagnostic-d73bcde14962/logs/dev.jevbridge.diagnostic_2026-10-08T00-57-28-261Z_helperpid36722_ownerpid35143_3d92c5ee.log",
+      "osLogPath": "/Users/hugues_mini/Library/Developer/MobileBuildMCP/workspaces/feat-native-callback-diagnostic-d73bcde14962/logs/dev.jevbridge.diagnostic_oslog_2026-10-08T00-57-33-539Z_helperpid37139_ownerpid35143_6dda43ce.log"
+    },
+    "diagnostics": {
+      "warnings": [],
+      "errors": []
+    }
+  },
+  "nextSteps": [
+    "Stop app in simulator: mobilebuildmcp simulator stop --simulator-id 73997430-DB8A-48C8-8146-12320CE6AEFE --bundle-id dev.jevbridge.diagnostic"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "mode": "run",
+  "startedAt": "2026-10-08T01:15:02.490Z",
+  "finishedAt": "2026-10-08T01:15:07.959Z",
+  "result": {
+    "status": "already_satisfied",
+    "actionAttempted": false,
+    "actionAcknowledged": false,
+    "observations": 1
+  },
+  "mobilebuildmcpCommands": 3,
+  "touchCommands": 0,
+  "tapCommands": 0,
+  "terminalRecord": {
+    "deviceId": "6A8C5F93-F59A-456B-B157-10642209B734",
+    "actionId": "final-satisfied-20261008",
+    "intent": {
+      "selector": {
+        "identifier": "open.details",
+        "role": "button"
+      },
+      "before": {
+        "present": [
+          {
+            "identifier": "home.heading"
+          }
+        ]
+      },
+      "after": {
+        "present": [
+          {
+            "identifier": "home.heading"
+          }
+        ]
+      },
+      "scenario": {
+        "app": {
+          "bundleId": "dev.jevbridge.observedfixture"
+        },
+        "device": {
+          "udid": "6A8C5F93-F59A-456B-B157-10642209B734"
+        },
+        "values": {}
+      },
+      "timeoutMs": 30000,
+      "pollIntervalMs": 100
+    },
+    "status": "completed",
+    "result": {
+      "status": "already_satisfied",
+      "actionAttempted": false,
+      "actionAcknowledged": false,
+      "observations": 1
+    }
+  },
+  "deviceStatus": "available"
+}

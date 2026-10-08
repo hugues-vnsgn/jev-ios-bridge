@@ -12,6 +12,9 @@ native-provider route was unavailable. See [spec](spec.md) and [plan](plan.md).
 
 ## Decisions so far
 
+- 2026-10-08: all three live cases passed after the experimental touch-path fix.
+  [Live report](live/report.md); [integration verification](integration/verification.md).
+
 - Use the existing MobileBuildMCP driver with an explicit no-retry tap path.
 - Keep uncertainty in a durable journal; do not claim native contact release.
 - Leave legacy script formats and the 23 native-certification tickets unchanged.
@@ -32,8 +35,7 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03 resolved
-    class T04 frontier
+    class T01,T02,T03,T04 resolved
 ```
 <!-- route:end -->
 

@@ -55,7 +55,7 @@ import { DeviceCliError, MobileBuildMcpDriver, type CliRunner } from '../src/dev
 test('real driver single submission suppresses expired-reference retry and near-TTL refresh',async()=>{
  const root=await mkdtemp(join(tmpdir(),'observed-driver-'));const calls:string[][]=[];const udid='0E42FDE2-5E09-42D3-9876-9EF0037FCBE7';
  const runner:CliRunner=async args=>{
-  calls.push(args);const tap=args.includes('tap');
+  calls.push(args);const tap=args.includes('touch');
   return {stdout:JSON.stringify({schema:tap?'mobilebuildmcp.output.ui-action-result':'mobilebuildmcp.output.launch-result',schemaVersion:'2',didError:tap,
    data:{summary:{status:tap?'FAILED':'SUCCEEDED'},action:{type:'tap'},artifacts:{simulatorId:udid},diagnostics:{},...(tap?{uiError:{code:'SNAPSHOT_EXPIRED'}}:{})}}),stderr:'',exitCode:tap?1:0};
  };
@@ -64,8 +64,9 @@ test('real driver single submission suppresses expired-reference retry and near-
  try {
   await driver.prepare(context,new AbortController().signal);
   const snapshot={...screen(),deviceId:udid,expiresAt:Date.now()+2000};
+  snapshot.elements[0]!.actions.push('touch');
   await assert.rejects(driver.tapOnce('one',snapshot,context,new AbortController().signal),(error:unknown)=>error instanceof DeviceCliError && error.code==='SNAPSHOT_EXPIRED');
-  assert.equal(calls.filter(args=>args.includes('tap')).length,1);assert.equal(calls.filter(args=>args.includes('snapshot-ui')).length,0);
+  assert.equal(calls.filter(args=>args.includes('touch')).length,1);assert.equal(calls.filter(args=>args.includes('snapshot-ui')).length,0);
   await driver.close(new AbortController().signal);
  } finally {await rm(root,{recursive:true,force:true});}
 });

@@ -1,0 +1,10 @@
+{
+  "experimental": "observed-tap-v1",
+  "actionId": "final-successor-20261008",
+  "deviceId": "6A8C5F93-F59A-456B-B157-10642209B734",
+  "app": { "bundleId": "dev.jevbridge.observedfixture" },
+  "selector": { "role": "button", "identifier": "open.details" },
+  "before": { "present": [{ "identifier": "home.heading" }] },
+  "after": { "present": [{ "identifier": "details.heading" }] },
+  "timeoutMs": 30000
+}

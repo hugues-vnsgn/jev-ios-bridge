@@ -1,0 +1,16 @@
+{
+  "sequence": 4,
+  "argv": [
+    "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules/mobilebuildmcp/build/cli.js",
+    "ui-automation",
+    "touch",
+    "--json",
+    "{\"simulatorId\":\"6A8C5F93-F59A-456B-B157-10642209B734\",\"elementRef\":\"e15\",\"down\":true,\"up\":true,\"delay\":0.05}",
+    "--output",
+    "json"
+  ],
+  "exitCode": 0,
+  "stdout": "{\n  \"schema\": \"mobilebuildmcp.output.ui-action-result\",\n  \"schemaVersion\": \"2\",\n  \"didError\": false,\n  \"error\": null,\n  \"data\": {\n    \"summary\": {\n      \"status\": \"SUCCEEDED\"\n    },\n    \"action\": {\n      \"type\": \"touch\",\n      \"elementRef\": \"e15\",\n      \"event\": \"touch down+up\",\n      \"x\": 201,\n      \"y\": 527\n    },\n    \"artifacts\": {\n      \"simulatorId\": \"6A8C5F93-F59A-456B-B157-10642209B734\"\n    },\n    \"capture\": {\n      \"type\": \"runtime-snapshot\",\n      \"rs\": \"1\",\n      \"screenHash\": \"1yx95k5\",\n      \"seq\": 11,\n      \"count\": 17,\n      \"targets\": [\n        \"e9|tap|button|Home||BackButton\"\n      ],\n      \"scroll\": [],\n      \"text\": [\n        \"e15|text|text|Details||details.heading\"\n      ],\n      \"udid\": \"6A8C5F93-F59A-456B-B157-10642209B734\"\n    }\n  },\n  \"nextSteps\": [\n    \"Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 6A8C5F93-F59A-456B-B157-10642209B734 --element-ref e9\"\n  ]\n}\n",
+  "stderr": ""
+}

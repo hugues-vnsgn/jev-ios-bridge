@@ -1,0 +1,55 @@
+✖ experimental tap uses one vendor touch down/up with hold; no semantic tap fallback (7.626709ms)
+✖ missing touch capability refuses before submission (1.344584ms)
+✔ lost touch reply never invokes semantic tap or another touch (1.264917ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 1
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 141.634458
+
+✖ failing tests:
+
+test at tests/observed-touch-integration.test.ts:1:1660
+✖ experimental tap uses one vendor touch down/up with hold; no semantic tap fallback (7.626709ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      'ui-automation',
+  +   'tap',
+  +   '--simulator-id'
+  -   'touch',
+  -   '--json'
+    ]
+  
+      at <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/observed-touch-integration.test.ts:38:12)
+      at async withDriver (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/observed-touch-integration.test.ts:29:70)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/observed-touch-integration.test.ts:34:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'ui-automation', 'tap', '--simulator-id' ],
+    expected: [ 'ui-automation', 'touch', '--json' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-touch-integration.test.ts:1:2262
+✖ missing touch capability refuses before submission (1.344584ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/observed-touch-integration.test.ts:47:5)
+      at async withDriver (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/observed-touch-integration.test.ts:29:70)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/observed-touch-integration.test.ts:46:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /touch/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

@@ -12,3 +12,6 @@ No live simulator work in this slice; the historical retained study is not relea
 ## Completion
 
 Phases 1–4 complete for the host implementation. Independent reviews resolved all material findings. Live verification remains issue 04, explicitly outside the offline evidence claim. See [verification](verification.md).
+
+2026-10-08: Issue 04 also completed via the user-selected Orca pane. A live semantic
+tap no-op was corrected; see [integration verification](integration/verification.md).

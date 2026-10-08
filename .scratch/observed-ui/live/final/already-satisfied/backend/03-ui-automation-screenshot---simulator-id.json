@@ -1,0 +1,18 @@
+{
+  "sequence": 3,
+  "argv": [
+    "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules/mobilebuildmcp/build/cli.js",
+    "ui-automation",
+    "screenshot",
+    "--simulator-id",
+    "6A8C5F93-F59A-456B-B157-10642209B734",
+    "--return-format",
+    "path",
+    "--output",
+    "json"
+  ],
+  "exitCode": 0,
+  "stdout": "{\n  \"schema\": \"mobilebuildmcp.output.capture-result\",\n  \"schemaVersion\": \"2\",\n  \"didError\": false,\n  \"error\": null,\n  \"data\": {\n    \"summary\": {\n      \"status\": \"SUCCEEDED\"\n    },\n    \"artifacts\": {\n      \"simulatorId\": \"6A8C5F93-F59A-456B-B157-10642209B734\",\n      \"screenshotPath\": \"/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/screenshot_optimized_25f9939a-db80-412f-86b0-e1c98197ed85.jpg\"\n    },\n    \"capture\": {\n      \"format\": \"image/jpeg\",\n      \"width\": 368,\n      \"height\": 800\n    }\n  }\n}\n",
+  "stderr": ""
+}

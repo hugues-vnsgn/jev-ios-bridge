@@ -1,6 +1,8 @@
 # Verification: observed iOS action experiment
 
-Verdict: host implementation verified; live simulator behavior UNVERIFIED.
+Original host verification at f91ada4 follows. Live validation and its integration
+fix subsequently passed on 2026-10-08; see [integration verification](integration/verification.md)
+and [live report](live/report.md).
 
 The user chose unmodified apps, visible outcome verification and honest uncertain
 results. This change implements that alternative without an external provider

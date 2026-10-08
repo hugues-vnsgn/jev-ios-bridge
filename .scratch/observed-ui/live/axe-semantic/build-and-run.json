@@ -1,0 +1,37 @@
+{
+  "schema": "mobilebuildmcp.output.build-run-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "request": {
+      "scheme": "NavigationFixture",
+      "projectPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-ui/live/fixture-app/NavigationFixture.xcodeproj",
+      "derivedDataPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-ui/live/axe-semantic/derived-data",
+      "configuration": "Debug",
+      "platform": "iOS Simulator",
+      "simulatorId": "2FE383F2-2D0F-4286-8797-D3ACEFCD6220"
+    },
+    "summary": {
+      "status": "SUCCEEDED",
+      "durationMs": 32306,
+      "target": "simulator"
+    },
+    "artifacts": {
+      "appPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-ui/live/axe-semantic/derived-data/Build/Products/Debug-iphonesimulator/NavigationFixture.app",
+      "bundleId": "dev.jevbridge.observedfixture",
+      "processId": 64184,
+      "simulatorId": "2FE383F2-2D0F-4286-8797-D3ACEFCD6220",
+      "buildLogPath": "/Users/hugues_mini/Library/Developer/MobileBuildMCP/workspaces/feat-native-callback-diagnostic-d73bcde14962/logs/build_run_sim_2026-10-08T01-04-22-674Z_pid62252_f0adf484.log",
+      "runtimeLogPath": "/Users/hugues_mini/Library/Developer/MobileBuildMCP/workspaces/feat-native-callback-diagnostic-d73bcde14962/logs/dev.jevbridge.observedfixture_2026-10-08T01-04-50-593Z_helperpid63872_ownerpid62252_2f6261e2.log",
+      "osLogPath": "/Users/hugues_mini/Library/Developer/MobileBuildMCP/workspaces/feat-native-callback-diagnostic-d73bcde14962/logs/dev.jevbridge.observedfixture_oslog_2026-10-08T01-04-54-955Z_helperpid64281_ownerpid62252_861a230e.log"
+    },
+    "diagnostics": {
+      "warnings": [],
+      "errors": []
+    }
+  },
+  "nextSteps": [
+    "Stop app in simulator: mobilebuildmcp simulator stop --simulator-id 2FE383F2-2D0F-4286-8797-D3ACEFCD6220 --bundle-id dev.jevbridge.observedfixture"
+  ]
+}

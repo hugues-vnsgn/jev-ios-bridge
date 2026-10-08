@@ -1,0 +1,39 @@
+{
+  "schema": "mobilebuildmcp.output.ui-action-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "action": {
+      "type": "touch",
+      "elementRef": "e15",
+      "event": "touch down+up",
+      "x": 201,
+      "y": 527
+    },
+    "artifacts": {
+      "simulatorId": "6A8C5F93-F59A-456B-B157-10642209B734"
+    },
+    "capture": {
+      "type": "runtime-snapshot",
+      "rs": "1",
+      "screenHash": "1yx95k5",
+      "seq": 2,
+      "count": 17,
+      "targets": [
+        "e9|tap|button|Home||BackButton"
+      ],
+      "scroll": [],
+      "text": [
+        "e15|text|text|Details||details.heading"
+      ],
+      "udid": "6A8C5F93-F59A-456B-B157-10642209B734"
+    }
+  },
+  "nextSteps": [
+    "Tap an elementRef: mobilebuildmcp ui-automation tap --simulator-id 6A8C5F93-F59A-456B-B157-10642209B734 --element-ref e9"
+  ]
+}

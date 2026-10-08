@@ -1,0 +1,67 @@
+{
+  "mode": "run",
+  "startedAt": "2026-10-08T01:14:09.863Z",
+  "finishedAt": "2026-10-08T01:14:19.622Z",
+  "result": {
+    "status": "outcome_observed",
+    "actionAttempted": true,
+    "actionAcknowledged": true,
+    "observations": 2
+  },
+  "mobilebuildmcpCommands": 6,
+  "touchCommands": 1,
+  "tapCommands": 0,
+  "terminalRecord": {
+    "deviceId": "6A8C5F93-F59A-456B-B157-10642209B734",
+    "actionId": "final-ordinary-20261008",
+    "intent": {
+      "selector": {
+        "identifier": "open.details",
+        "role": "button"
+      },
+      "before": {
+        "present": [
+          {
+            "identifier": "home.heading"
+          }
+        ],
+        "absent": [
+          {
+            "identifier": "details.heading"
+          }
+        ]
+      },
+      "after": {
+        "present": [
+          {
+            "identifier": "details.heading"
+          }
+        ],
+        "absent": [
+          {
+            "identifier": "home.heading"
+          }
+        ]
+      },
+      "scenario": {
+        "app": {
+          "bundleId": "dev.jevbridge.observedfixture"
+        },
+        "device": {
+          "udid": "6A8C5F93-F59A-456B-B157-10642209B734"
+        },
+        "values": {}
+      },
+      "timeoutMs": 30000,
+      "pollIntervalMs": 100
+    },
+    "status": "completed",
+    "result": {
+      "status": "outcome_observed",
+      "actionAttempted": true,
+      "actionAcknowledged": true,
+      "observations": 2
+    }
+  },
+  "deviceStatus": "available"
+}

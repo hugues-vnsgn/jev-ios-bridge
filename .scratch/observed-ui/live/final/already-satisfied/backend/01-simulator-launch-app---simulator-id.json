@@ -1,0 +1,18 @@
+{
+  "sequence": 1,
+  "argv": [
+    "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules/mobilebuildmcp/build/cli.js",
+    "simulator",
+    "launch-app",
+    "--simulator-id",
+    "6A8C5F93-F59A-456B-B157-10642209B734",
+    "--bundle-id",
+    "dev.jevbridge.observedfixture",
+    "--output",
+    "json"
+  ],
+  "exitCode": 0,
+  "stdout": "{\n  \"schema\": \"mobilebuildmcp.output.launch-result\",\n  \"schemaVersion\": \"2\",\n  \"didError\": false,\n  \"error\": null,\n  \"data\": {\n    \"summary\": {\n      \"status\": \"SUCCEEDED\"\n    },\n    \"artifacts\": {\n      \"simulatorId\": \"6A8C5F93-F59A-456B-B157-10642209B734\",\n      \"bundleId\": \"dev.jevbridge.observedfixture\",\n      \"processId\": 98951,\n      \"runtimeLogPath\": \"/Users/hugues_mini/Library/Developer/MobileBuildMCP/workspaces/feat-native-callback-diagnostic-d73bcde14962/logs/dev.jevbridge.observedfixture_2026-10-08T01-15-03-025Z_helperpid98932_ownerpid98869_30a94ba0.log\",\n      \"osLogPath\": \"/Users/hugues_mini/Library/Developer/MobileBuildMCP/workspaces/feat-native-callback-diagnostic-d73bcde14962/logs/dev.jevbridge.observedfixture_oslog_2026-10-08T01-15-06-388Z_helperpid99065_ownerpid98869_aec56fea.log\"\n    },\n    \"diagnostics\": {\n      \"warnings\": [],\n      \"errors\": []\n    }\n  },\n  \"nextSteps\": [\n    \"Open Simulator app to see it: mobilebuildmcp simulator open\",\n    \"Stop app in simulator: mobilebuildmcp simulator stop --simulator-id 6A8C5F93-F59A-456B-B157-10642209B734 --bundle-id dev.jevbridge.observedfixture\"\n  ]\n}\n",
+  "stderr": ""
+}

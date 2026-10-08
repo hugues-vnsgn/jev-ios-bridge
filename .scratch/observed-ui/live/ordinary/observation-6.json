@@ -1,0 +1,328 @@
+{
+  "deviceId": "73997430-DB8A-48C8-8146-12320CE6AEFE",
+  "capturedAt": 1791421227740,
+  "expiresAt": 1791421287740,
+  "sequence": 9,
+  "elements": [
+    {
+      "ref": "e1",
+      "role": "application",
+      "label": "NavigationFixture",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 402,
+        "height": 874
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": []
+    },
+    {
+      "ref": "e2",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 402,
+        "height": 874
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e3",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 402,
+        "height": 874
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e4",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 402,
+        "height": 874
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e5",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 402,
+        "height": 874
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e6",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 402,
+        "height": 874
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e7",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 402,
+        "height": 874
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e8",
+      "role": "other",
+      "identifier": "Home",
+      "frame": {
+        "x": 0,
+        "y": 62,
+        "width": 402,
+        "height": 106
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e9",
+      "role": "other",
+      "label": "Home",
+      "frame": {
+        "x": 16,
+        "y": 120,
+        "width": 94.33,
+        "height": 42.67
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e10",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 402,
+        "height": 874
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e11",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 402,
+        "height": 874
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e12",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 402,
+        "height": 874
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e13",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 402,
+        "height": 874
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e14",
+      "role": "text",
+      "label": "Home",
+      "identifier": "home.heading",
+      "frame": {
+        "x": 178.17,
+        "y": 469.67,
+        "width": 45.67,
+        "height": 22.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e15",
+      "role": "button",
+      "label": "Open details",
+      "identifier": "open.details",
+      "frame": {
+        "x": 153,
+        "y": 516,
+        "width": 96,
+        "height": 22.33
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "tap",
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e16",
+      "role": "other",
+      "label": "Toolbar",
+      "identifier": "Toolbar",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 402,
+        "height": 874
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    },
+    {
+      "ref": "e17",
+      "role": "other",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 402,
+        "height": 874
+      },
+      "state": {
+        "enabled": true,
+        "visible": true
+      },
+      "actions": [
+        "longPress",
+        "touch"
+      ]
+    }
+  ],
+  "truncated": false,
+  "screenHash": "1yqo1pv",
+  "screenshotPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-ui/live/ordinary/observation-6.jpg",
+  "logTails": {
+    "runtime": "objc[46290]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iORLMT/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x1083a8398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iORLMT/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10989c310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.\r\n",
+    "os": "getpwuid_r did not find a match for uid 501\nFiltering the log data using \"subsystem == \"dev.jevbridge.observedfixture\"\"\n"
+  }
+}

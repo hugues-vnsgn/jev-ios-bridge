@@ -1,0 +1,26 @@
+{
+  "schema": "mobilebuildmcp.output.launch-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED"
+    },
+    "artifacts": {
+      "simulatorId": "6A8C5F93-F59A-456B-B157-10642209B734",
+      "bundleId": "dev.jevbridge.observedfixture",
+      "processId": 98207,
+      "runtimeLogPath": "/Users/hugues_mini/Library/Developer/MobileBuildMCP/workspaces/feat-native-callback-diagnostic-d73bcde14962/logs/dev.jevbridge.observedfixture_2026-10-08T01-14-52-817Z_helperpid98198_ownerpid98161_10e315ac.log",
+      "osLogPath": "/Users/hugues_mini/Library/Developer/MobileBuildMCP/workspaces/feat-native-callback-diagnostic-d73bcde14962/logs/dev.jevbridge.observedfixture_oslog_2026-10-08T01-14-54-862Z_helperpid98302_ownerpid98161_e8df3a96.log"
+    },
+    "diagnostics": {
+      "warnings": [],
+      "errors": []
+    }
+  },
+  "nextSteps": [
+    "Open Simulator app to see it: mobilebuildmcp simulator open",
+    "Stop app in simulator: mobilebuildmcp simulator stop --simulator-id 6A8C5F93-F59A-456B-B157-10642209B734 --bundle-id dev.jevbridge.observedfixture"
+  ]
+}
