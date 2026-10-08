@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "status": "UNVERIFIED",
+  "rows": [
+    "H09"
+  ],
+  "required": "Genuine clean packed installation, actual installed CLI/MCP/maintenance startup and plugin artifact checks.",
+  "productCommit": "538e5770d1a02b7ef92d2dd69cd3a8a9d692ec4a",
+  "acceptanceOwner": "Root",
+  "reason": "Tickets09/10 and complete row-level assertion mapping are pending.",
+  "cases": [],
+  "commands": [],
+  "limits": [
+    "Accepted implementation subset checks do not establish complete H rows.",
+    "Host fault injection does not establish live, real transport or native release."
+  ]
+}
+
