@@ -51,7 +51,7 @@ Public names are `prepare_observed_allocation`, `get_observed_allocation`, `reti
 
 Only `authority:committed` exposes an outcome: ready is `prepared`, executing/preparing are null, retained is `action_completed`, `refused` or `retired_unused`, quarantined is `uncertain`. Unconfirmed authority has null outcome. Allocation CLI exits 0 for prepared/action_completed/retired_unused, 3 for committed refusal, otherwise 2; an idempotent retirement never promotes uncertainty. Migration assigns historical records read-only allocation IDs once, with no preparation permission.
 
-Cancel preparing allocations through admission's durable cancellation/dispatch ordering, wait at most 5000 ms and return the current snapshot. No owner takeover or device cleanup. Ready cancellation retains unused stock; executing returns `ALLOCATION_BUSY` (use action cancellation); terminal cancellation retrieves. Process shutdown follows the same rule. Persist `cancellationRequested` and expose it as a boolean snapshot field.
+Cancel preparing allocations through admission's durable cancellation/dispatch ordering, wait at most 5000 ms and return the current snapshot. No owner takeover or device cleanup. Ready cancellation retains unused stock; executing returns `ALLOCATION_BUSY` (use action cancellation); terminal cancellation retrieves. At the ready commit the allocation leaves the process-owned active job set. Normal process close/signals cancel only still-active owned preparation/action jobs; they do not retire parked ready allocations. Explicit allocation cancellation or retirement may retire ready stock. Persist `cancellationRequested` and expose it as a boolean snapshot field.
 
 ## Prerequisites, configuration and budgets
 

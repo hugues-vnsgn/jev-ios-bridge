@@ -4,7 +4,7 @@ Parent: [Observed actions from live experiment to agent workflow](../map.md)
 Label: wayfinder:task
 Type: task
 Mode: AFK
-Status: claimed
+Status: resolved
 Claimed by: validation-plan
 Triage: ready-for-agent
 Blocked by: 04, 05
@@ -28,3 +28,9 @@ The answer cites inspectable evidence, distinguishes facts from recommendations,
 ## Comments
 
 Created during charting. No implementation authorization is implied by this planning ticket.
+
+## Answer
+
+Resolved the planning question in [the acceptance matrix](../evidence/validation-matrix.md). The plan binds host gates to the public/allocation/admission contracts, assigns host evidence to Root and every live operation to the sole selected Orca pane, and specifies five fresh retained allocations with an eight-allocation ceiling. It covers both new public adapters, fixture ordinary/no-input/refused/synthetic-uncertain cases, Weather Settings using existing source selectors, authoritative retrieval, exact command categories, migration, minimum Node 24.0.0, packaging and compatibility gates.
+
+Existing fixture live results and the 965-test baseline remain historical facts; every new acceptance row is UNVERIFIED until execution. Weather requires a fresh unchanged-source simulator build and verified capture selectors; the historical device/build command is prohibited. Synthetic reply withholding remains distinct from real transport failure and native proof. No tests, builds, device operations or product changes were made. Coordinator owns the map update and ticket 07 handoff.

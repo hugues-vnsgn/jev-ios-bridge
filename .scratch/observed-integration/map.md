@@ -35,6 +35,8 @@ An implementation-ready plan for exposing the validated observed-action runner t
 - [Choose the observed-action public contract](issues/04-public-contract.md): additive versioned allocation/action APIs with key-free execution, authoritative retrieval and explicit cancellation.
 - [Define allocation and uncertain-device lifecycle](issues/05-allocation-contract.md): durable bounded creation, single-use allocation, parked handoff, retained uncertainty and a host-wide unknown-create guard.
 
+- [Specify broader live evidence and acceptance gates](issues/06-validation-matrix.md): nine host gates and five serial public-interface live cases across fixture and unchanged Weather app; every acceptance row starts unverified.
+
 ## Route
 
 <!-- route:start -->
@@ -60,9 +62,8 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T04,T05,T08 resolved
-    class T06 claimed
-    class T07 blocked
+    class T01,T02,T03,T04,T05,T06,T08 resolved
+    class T07 claimed
 ```
 <!-- route:end -->
 
