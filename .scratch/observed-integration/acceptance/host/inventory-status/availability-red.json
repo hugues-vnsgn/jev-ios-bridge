@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/usr/bin/env",
+    "-u",
+    "TYPESAFE_API_KEY",
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-name-pattern=preparation inventory exposes",
+    "tests/admission-driver.test.ts"
+  ],
+  "exit": 1,
+  "seconds": 0.369,
+  "base": "fd9b3c0d19284b9fc22c4bb5e3a3fd4bb0d3b181",
+  "testUmask": "0022"
+}

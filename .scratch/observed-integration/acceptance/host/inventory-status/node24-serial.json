@@ -1,0 +1,38 @@
+{
+  "command": [
+    "/usr/bin/env",
+    "-u",
+    "TYPESAFE_API_KEY",
+    "npx",
+    "--yes",
+    "--package=node@24.0.0",
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "tests/admission-core.test.ts",
+    "tests/admission-migration.test.ts",
+    "tests/admission-allocation.test.ts",
+    "tests/observed-artifact.test.ts",
+    "tests/observed-sources.test.ts",
+    "tests/admission-driver.test.ts",
+    "tests/device.test.ts",
+    "tests/device-lease.test.ts",
+    "tests/device-factory.test.ts",
+    "tests/lease.test.ts",
+    "tests/observed-touch-integration.test.ts",
+    "tests/simulator-window.test.ts",
+    "tests/device-driven-actions.test.ts",
+    "tests/start-attach.test.ts",
+    "tests/scripted-run.test.ts",
+    "tests/observed-tap.test.ts"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 25.168,
+  "testUmask": "0022",
+  "checkedBlobs": {
+    "src/device/index.ts": "21e63907b028cd5eb84e61834aa79e6bd59d74c19f3be30b00c0dacb659b5604",
+    "tests/admission-driver.test.ts": "c43bcb5e5e35d65d197d41577890b43b536d54d90d5aa0806955305975ec2a69"
+  },
+  "note": "Sequential complete rerun after parallel checks hit unchanged SQLite contention fixtures; original failures retained."
+}

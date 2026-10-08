@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/usr/bin/env",
+    "-u",
+    "TYPESAFE_API_KEY",
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-name-pattern=malformed inventory error receipt",
+    "tests/admission-driver.test.ts"
+  ],
+  "exit": 0,
+  "seconds": 0.364,
+  "testUmask": "0022"
+}

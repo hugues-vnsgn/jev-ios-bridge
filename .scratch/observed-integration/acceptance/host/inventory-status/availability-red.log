@@ -1,0 +1,18 @@
+✖ preparation inventory exposes selected availability without booting or presenting (110.190916ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 334.506083
+
+✖ failing tests:
+
+test at tests/admission-driver.test.ts:1:3886
+✖ preparation inventory exposes selected availability without booting or presenting (110.190916ms)
+  TypeError: subject.inventoryStatus is not a function
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-inventory-status/tests/admission-driver.test.ts:78:36)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

@@ -1,0 +1,32 @@
+✖ malformed inventory error receipt cannot settle or authorize a later boot (129.803917ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 281.348834
+
+✖ failing tests:
+
+test at tests/admission-driver.test.ts:1:4851
+✖ malformed inventory error receipt cannot settle or authorize a later boot (129.803917ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  DeviceCliError: Unavailable
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-inventory-status/tests/admission-driver.test.ts:98:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: DeviceCliError: Unavailable
+        at parseEnvelope (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-inventory-status/src/device/index.ts:164:11)
+        at MobileBuildMcpDriver.call (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-inventory-status/src/device/index.ts:582:18)
+        at async <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-inventory-status/src/device/index.ts:713:20)
+        at async <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-inventory-status/src/device/index.ts:630:27),
+    operator: 'rejects',
+    diff: 'simple'
+  }

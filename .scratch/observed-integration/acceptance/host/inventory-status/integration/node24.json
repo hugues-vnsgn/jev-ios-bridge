@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/usr/bin/env",
+    "-u",
+    "TYPESAFE_API_KEY",
+    "npx",
+    "--yes",
+    "--package=node@24.0.0",
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "tests/admission-driver.test.ts",
+    "tests/simulator-window.test.ts"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 8.48,
+  "testUmask": "0022",
+  "integratedSHA": "f6ab3304288f730d1dbb02c6185239b6a600c66c",
+  "checkedBlobs": {
+    "src/device/index.ts": "21e63907b028cd5eb84e61834aa79e6bd59d74c19f3be30b00c0dacb659b5604",
+    "tests/admission-driver.test.ts": "c43bcb5e5e35d65d197d41577890b43b536d54d90d5aa0806955305975ec2a69"
+  }
+}

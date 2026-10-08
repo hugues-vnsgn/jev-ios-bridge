@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/usr/bin/env",
+    "-u",
+    "TYPESAFE_API_KEY",
+    "npx",
+    "--yes",
+    "--package=node@24.0.0",
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-name-pattern=parked preparation exits normally|ready cancellation versus start",
+    "tests/admission-allocation.test.ts"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 1.424,
+  "testUmask": "0022"
+}
