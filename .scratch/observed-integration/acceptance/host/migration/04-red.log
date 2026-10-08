@@ -1,0 +1,110 @@
+✔ explicit offline initialization enables admission and persists its operator declaration (51.119375ms)
+✔ completed historical actions retain original records and one read-only allocation identity without replay (73.142959ms)
+✔ quarantine in a casing alias overrides apparent completion without changing sources (79.703333ms)
+✔ claim in a casing alias overrides apparent completion without changing sources (73.022916ms)
+✔ unfinished in a casing alias overrides apparent completion without changing sources (71.010625ms)
+✔ temporary in a casing alias overrides apparent completion without changing sources (73.847458ms)
+✔ well-formed case aliases consolidate clean completion and conflicting device bindings refuse activation (176.290083ms)
+✖ dead legacy iOS lease is never reclaimed and cannot authorize effects (45.224375ms)
+✖ malformed legacy iOS lease is never reclaimed and cannot authorize effects (8.704167ms)
+✖ temporary legacy iOS lease is never reclaimed and cannot authorize effects (42.05075ms)
+✔ live legacy iOS lease is never reclaimed and cannot authorize effects (9.971416ms)
+✖ matching non-UUID lease records remain untouched without becoming iOS claims; unattributable records close activation (8.839834ms)
+✖ protected study devices and declared exclusions remain unavailable even with no historical files (28.691042ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 8
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 897.116417
+
+✖ failing tests:
+
+test at tests/admission-migration.test.ts:1:7227
+✖ dead legacy iOS lease is never reclaimed and cannot authorize effects (45.224375ms)
+  Error [AdmissionError]: Historical state is corrupt, conflicting or unattributable; activation refused
+      at unsafeSource (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:64:40)
+      at collect (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:142:47)
+      at <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:164:78)
+      at AdmissionSqlite.migrate (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-sqlite.ts:85:20)
+      at migrateAdmissionForTesting (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:164:26)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/tests/admission-migration.test.ts:137:7)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19) {
+    code: 'STATE_UNAVAILABLE'
+  }
+
+test at tests/admission-migration.test.ts:1:7227
+✖ malformed legacy iOS lease is never reclaimed and cannot authorize effects (8.704167ms)
+  Error [AdmissionError]: Historical state is corrupt, conflicting or unattributable; activation refused
+      at unsafeSource (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:64:40)
+      at collect (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:142:47)
+      at <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:164:78)
+      at AdmissionSqlite.migrate (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-sqlite.ts:85:20)
+      at migrateAdmissionForTesting (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:164:26)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/tests/admission-migration.test.ts:137:7)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19) {
+    code: 'STATE_UNAVAILABLE'
+  }
+
+test at tests/admission-migration.test.ts:1:7227
+✖ temporary legacy iOS lease is never reclaimed and cannot authorize effects (42.05075ms)
+  Error [AdmissionError]: Historical state is corrupt, conflicting or unattributable; activation refused
+      at unsafeSource (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:64:40)
+      at collect (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:142:47)
+      at <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:164:78)
+      at AdmissionSqlite.migrate (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-sqlite.ts:85:20)
+      at migrateAdmissionForTesting (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:164:26)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/tests/admission-migration.test.ts:137:7)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19) {
+    code: 'STATE_UNAVAILABLE'
+  }
+
+test at tests/admission-migration.test.ts:1:8386
+✖ matching non-UUID lease records remain untouched without becoming iOS claims; unattributable records close activation (8.839834ms)
+  Error [AdmissionError]: Historical state is corrupt, conflicting or unattributable; activation refused
+      at unsafeSource (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:64:40)
+      at collect (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:142:47)
+      at <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:164:78)
+      at AdmissionSqlite.migrate (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-sqlite.ts:85:20)
+      at migrateAdmissionForTesting (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:164:26)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/tests/admission-migration.test.ts:150:16)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19) {
+    code: 'STATE_UNAVAILABLE'
+  }
+
+test at tests/admission-migration.test.ts:1:9313
+✖ protected study devices and declared exclusions remain unavailable even with no historical files (28.691042ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'quarantined'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/tests/admission-migration.test.ts:164:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'quarantined',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

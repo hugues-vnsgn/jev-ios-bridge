@@ -1,0 +1,14 @@
+✔ migration refuses an admission root inside a source before changing source bytes (2.4775ms)
+✔ initialized admission stays closed after unsafe-root prevents an offline rerun (52.34175ms)
+✔ initialized admission stays closed after dangling-root prevents an offline rerun (34.022834ms)
+✔ initialized admission stays closed after missing-declared-root prevents an offline rerun (34.30775ms)
+✔ initialized admission stays closed after unreadable-root prevents an offline rerun (34.011833ms)
+✔ a recognized lease FIFO refuses within the child deadline without reading a device or retaining a fresh guard (129.011458ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 457.280042

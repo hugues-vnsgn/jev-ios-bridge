@@ -1,0 +1,15 @@
+{
+  "head": "04c57c3b74586e52556a567c32dab189cae8ada6",
+  "node": "v26.8.1",
+  "fixture": "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/migration-review-ancestor-wEgB63",
+  "rerun": {
+    "code": "STATE_UNAVAILABLE",
+    "message": "Historical state is corrupt, conflicting or unattributable; activation refused"
+  },
+  "guardRetained": true,
+  "acquisition": {
+    "code": "STATE_UNAVAILABLE",
+    "message": "Offline migration is in progress or requires operator review"
+  }
+}
+Temporary source and admission fixtures removed.

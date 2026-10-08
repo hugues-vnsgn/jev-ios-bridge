@@ -1,0 +1,17 @@
+{
+  "label": "newly saved repeat of FIFO reproduction",
+  "head": "0b06c1be391aa3a33e208e709c7b29ba245dc222",
+  "worktree": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration",
+  "node": "v26.8.1",
+  "fixture": "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/migration-review-fifo-9TahID",
+  "fifo": "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/migration-review-fifo-9TahID/leases/11111111-2222-4333-8444-555555555555.lock",
+  "timeoutMs": 2000,
+  "elapsedMs": 95,
+  "timedOut": false,
+  "exitCode": 3,
+  "signal": null,
+  "stdout": "entered\n{\"code\":\"STATE_UNAVAILABLE\",\"message\":\"Historical state is corrupt, conflicting or unattributable; activation refused\"}\n",
+  "stderr": "",
+  "guardRetained": false
+}
+Temporary source and admission fixtures removed.

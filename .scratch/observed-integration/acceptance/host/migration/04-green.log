@@ -1,0 +1,21 @@
+✔ explicit offline initialization enables admission and persists its operator declaration (51.473625ms)
+✔ completed historical actions retain original records and one read-only allocation identity without replay (81.981ms)
+✔ quarantine in a casing alias overrides apparent completion without changing sources (82.305917ms)
+✔ claim in a casing alias overrides apparent completion without changing sources (74.088875ms)
+✔ unfinished in a casing alias overrides apparent completion without changing sources (71.272375ms)
+✔ temporary in a casing alias overrides apparent completion without changing sources (77.86375ms)
+✔ well-formed case aliases consolidate clean completion and conflicting device bindings refuse activation (190.163291ms)
+✔ dead legacy iOS lease is never reclaimed and cannot authorize effects (80.98825ms)
+✔ malformed legacy iOS lease is never reclaimed and cannot authorize effects (30.851ms)
+✔ temporary legacy iOS lease is never reclaimed and cannot authorize effects (72.805875ms)
+✔ live legacy iOS lease is never reclaimed and cannot authorize effects (9.359584ms)
+✔ matching non-UUID lease records remain untouched without becoming iOS claims; unattributable records close activation (38.464083ms)
+✔ protected study devices and declared exclusions remain unavailable even with no historical files (30.233667ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1023.601

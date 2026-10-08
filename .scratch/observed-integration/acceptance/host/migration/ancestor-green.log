@@ -1,0 +1,16 @@
+✔ migration refuses an admission root inside a source before changing source bytes (2.235792ms)
+✔ explicit additional roots are imported, deduplicated and recorded without weakening defaults (79.270666ms)
+✔ initialized admission stays closed after unsafe-root prevents an offline rerun (32.372916ms)
+✔ initialized admission stays closed after dangling-root prevents an offline rerun (33.602333ms)
+✔ initialized admission stays closed after missing-declared-root prevents an offline rerun (39.040083ms)
+✔ initialized admission stays closed after unreadable-root prevents an offline rerun (35.465ms)
+✔ root separation and destination safety refuse without placing a guard inside a source or unsafe directory (36.64325ms)
+✔ an inaccessible ancestor of a declared source closes initialized admission on rerun (34.958375ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 463.99125

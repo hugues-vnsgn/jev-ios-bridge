@@ -1,0 +1,27 @@
+✖ initialized admission stays closed after dangling-root prevents an offline rerun (48.871333ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 209.0435
+
+✖ failing tests:
+
+test at tests/admission-migration.test.ts:1:20791
+✖ initialized admission stays closed after dangling-root prevents an offline rerun (48.871333ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/tests/admission-migration.test.ts:379:14)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws',
+    diff: 'simple'
+  }

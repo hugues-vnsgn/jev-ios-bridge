@@ -1,9 +1,9 @@
 # 02 — Import historical admission state offline
 
 Type: task
-Status: resolved
+Status: ready-for-agent
 Claimed by: migration implementer (/root/migration_readiness)
-Execution: base 8d8c5a0f582d025eab9da85611b0d38ce6c377f2; feat/observed-offline-migration
+Execution: integrated
 Mode: AFK
 Blocked by: 01
 Owner: Migration implementer

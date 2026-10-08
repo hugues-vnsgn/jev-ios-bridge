@@ -1,0 +1,17 @@
+{
+  "label": "newly saved repeat of FIFO reproduction",
+  "head": "0b06c1be391aa3a33e208e709c7b29ba245dc222",
+  "worktree": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration",
+  "node": "v26.8.1",
+  "fixture": "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/migration-review-fifo-dYH8Y7",
+  "fifo": "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/migration-review-fifo-dYH8Y7/leases/11111111-2222-4333-8444-555555555555.lock",
+  "timeoutMs": 2000,
+  "elapsedMs": 2011,
+  "timedOut": true,
+  "exitCode": null,
+  "signal": "SIGKILL",
+  "stdout": "entered\n",
+  "stderr": "",
+  "guardRetained": true
+}
+Temporary source and admission fixtures removed.

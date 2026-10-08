@@ -1,0 +1,23 @@
+(node:97961) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Usage: node dist/device/admission-maintenance.js migrate <declaration.json>
+
+Offline only. Stop all old bridge/experimental writers and arrange exclusive
+updated-bridge operation of the dedicated devices before declaring quiescence.
+No device commands are issued. The declaration is an operator assertion, not
+proof of process quiescence or native release. Declare every non-default journal
+and lease root (including historical home/TMPDIR locations), or exclude all
+affected device UUIDs. Existing declared roots must be readable.
+
+Declaration (version 1, no additional fields):
+{"version":1,"writersStopped":true,"historicalRootsDeclaredOrExcluded":true,"additionalJournalRoots":[],"additionalLeaseRoots":[],"excludedDevices":[]}
+
+Default historical roots are always included. Admission uses the OS account's
+private Application Support root; this command accepts no destination override.
+Sources are never rewritten or deleted. A repeated identical import returns
+the original receipt and IDs. Partial installations or a retained migration guard
+require operator investigation; do not delete them to reset authority.
+Back up the whole admission store. Deleting the entire root or restoring an old
+backup cannot be detected by its local installation marker and invalidates its
+guarantees. Matching well-formed non-UUID leases are classified outside iOS;
+the legacy format carries no platform tag, so this is not Android attestation.

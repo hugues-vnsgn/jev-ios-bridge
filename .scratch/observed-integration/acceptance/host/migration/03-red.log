@@ -1,0 +1,62 @@
+✔ explicit offline initialization enables admission and persists its operator declaration (40.963916ms)
+✔ completed historical actions retain original records and one read-only allocation identity without replay (72.476666ms)
+✖ quarantine in a casing alias overrides apparent completion without changing sources (45.460834ms)
+✖ claim in a casing alias overrides apparent completion without changing sources (48.730084ms)
+✔ unfinished in a casing alias overrides apparent completion without changing sources (80.326875ms)
+✖ temporary in a casing alias overrides apparent completion without changing sources (45.909291ms)
+✔ well-formed case aliases consolidate clean completion and conflicting device bindings refuse activation (171.565ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 4
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 696.880125
+
+✖ failing tests:
+
+test at tests/admission-migration.test.ts:1:4199
+✖ quarantine in a casing alias overrides apparent completion without changing sources (45.460834ms)
+  Error [AdmissionError]: Historical state is corrupt, conflicting or unattributable; activation refused
+      at unsafeSource (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:64:40)
+      at readJournal (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:103:19)
+      at collect (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:130:36)
+      at <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:153:78)
+      at AdmissionSqlite.migrate (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-sqlite.ts:85:20)
+      at migrateAdmissionForTesting (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:153:26)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/tests/admission-migration.test.ts:88:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'STATE_UNAVAILABLE'
+  }
+
+test at tests/admission-migration.test.ts:1:4199
+✖ claim in a casing alias overrides apparent completion without changing sources (48.730084ms)
+  Error [AdmissionError]: Historical state is corrupt, conflicting or unattributable; activation refused
+      at unsafeSource (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:64:40)
+      at readJournal (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:103:19)
+      at collect (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:130:36)
+      at <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:153:78)
+      at AdmissionSqlite.migrate (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-sqlite.ts:85:20)
+      at migrateAdmissionForTesting (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:153:26)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/tests/admission-migration.test.ts:88:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'STATE_UNAVAILABLE'
+  }
+
+test at tests/admission-migration.test.ts:1:4199
+✖ temporary in a casing alias overrides apparent completion without changing sources (45.909291ms)
+  Error [AdmissionError]: Historical state is corrupt, conflicting or unattributable; activation refused
+      at unsafeSource (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:64:40)
+      at readJournal (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:103:19)
+      at collect (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:130:36)
+      at <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:153:78)
+      at AdmissionSqlite.migrate (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-sqlite.ts:85:20)
+      at migrateAdmissionForTesting (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:153:26)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/tests/admission-migration.test.ts:88:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'STATE_UNAVAILABLE'
+  }

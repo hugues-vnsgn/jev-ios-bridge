@@ -1,0 +1,15 @@
+✔ explicit offline initialization enables admission and persists its operator declaration (43.68625ms)
+✔ completed historical actions retain original records and one read-only allocation identity without replay (70.635333ms)
+✔ quarantine in a casing alias overrides apparent completion without changing sources (83.018625ms)
+✔ claim in a casing alias overrides apparent completion without changing sources (72.260375ms)
+✔ unfinished in a casing alias overrides apparent completion without changing sources (74.015584ms)
+✔ temporary in a casing alias overrides apparent completion without changing sources (78.086959ms)
+✔ well-formed case aliases consolidate clean completion and conflicting device bindings refuse activation (152.195083ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 727.453708

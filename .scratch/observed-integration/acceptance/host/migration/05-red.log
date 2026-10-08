@@ -1,0 +1,47 @@
+✔ explicit offline initialization enables admission and persists its operator declaration (40.284041ms)
+✔ completed historical actions retain original records and one read-only allocation identity without replay (77.572209ms)
+✔ quarantine in a casing alias overrides apparent completion without changing sources (81.699042ms)
+✔ claim in a casing alias overrides apparent completion without changing sources (74.011875ms)
+✔ unfinished in a casing alias overrides apparent completion without changing sources (81.462458ms)
+✔ temporary in a casing alias overrides apparent completion without changing sources (77.013375ms)
+✔ well-formed case aliases consolidate clean completion and conflicting device bindings refuse activation (159.203833ms)
+✔ dead legacy iOS lease is never reclaimed and cannot authorize effects (69.839833ms)
+✔ malformed legacy iOS lease is never reclaimed and cannot authorize effects (29.769625ms)
+✔ temporary legacy iOS lease is never reclaimed and cannot authorize effects (65.859417ms)
+✔ live legacy iOS lease is never reclaimed and cannot authorize effects (8.437083ms)
+✔ matching non-UUID lease records remain untouched without becoming iOS claims; unattributable records close activation (37.427666ms)
+✔ protected study devices and declared exclusions remain unavailable even with no historical files (30.71525ms)
+✔ unquiesced or incomplete root declarations refuse before installation; explicit missing roots are not empty (10.103ms)
+✔ migration guard blocks existing handles and independent readers; a stranded guard is never reclaimed (131.099291ms)
+✔ interrupted markerWritten installation never recreates missing authority (25.307916ms)
+✔ interrupted beforeCommit installation never recreates missing authority (19.155625ms)
+✔ interrupted afterCommit installation never recreates missing authority (34.9735ms)
+✖ activation revalidates persisted manifest and rejects missing initialized storage on every operation (46.083458ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 18
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1216.759458
+
+✖ failing tests:
+
+test at tests/admission-migration.test.ts:1:12720
+✖ activation revalidates persisted manifest and rejects missing initialized storage on every operation (46.083458ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/tests/admission-migration.test.ts:227:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws',
+    diff: 'simple'
+  }

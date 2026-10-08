@@ -1,0 +1,77 @@
+✔ explicit offline initialization enables admission and persists its operator declaration (44.587667ms)
+✔ completed historical actions retain original records and one read-only allocation identity without replay (80.950875ms)
+✔ quarantine in a casing alias overrides apparent completion without changing sources (91.285333ms)
+✔ claim in a casing alias overrides apparent completion without changing sources (82.768584ms)
+✔ unfinished in a casing alias overrides apparent completion without changing sources (77.45275ms)
+✔ temporary in a casing alias overrides apparent completion without changing sources (78.534042ms)
+✔ well-formed case aliases consolidate clean completion and conflicting device bindings refuse activation (179.313417ms)
+✔ dead legacy iOS lease is never reclaimed and cannot authorize effects (66.168625ms)
+✔ malformed legacy iOS lease is never reclaimed and cannot authorize effects (35.576292ms)
+✔ temporary legacy iOS lease is never reclaimed and cannot authorize effects (61.727584ms)
+✔ live legacy iOS lease is never reclaimed and cannot authorize effects (10.81525ms)
+✔ matching non-UUID lease records remain untouched without becoming iOS claims; unattributable records close activation (50.209666ms)
+✔ protected study devices and declared exclusions remain unavailable even with no historical files (31.146917ms)
+✔ unquiesced or incomplete root declarations refuse before installation; explicit missing roots are not empty (8.448833ms)
+✔ migration guard blocks existing handles and independent readers; a stranded guard is never reclaimed (157.666958ms)
+✔ interrupted markerWritten installation never recreates missing authority (26.126708ms)
+✔ interrupted beforeCommit installation never recreates missing authority (24.906042ms)
+✔ interrupted afterCommit installation never recreates missing authority (35.0945ms)
+✔ activation revalidates persisted manifest and rejects missing initialized storage on every operation (36.987958ms)
+✖ changed historical sources on a rerun retain the migration guard and block previously activated handles (59.028583ms)
+✖ migration refuses an admission root inside a source before changing source bytes (9.898417ms)
+✔ invalid-json historical input refuses activation with source bytes unchanged (43.2095ms)
+✔ wrong-hash historical input refuses activation with source bytes unchanged (38.70925ms)
+✔ symbolic-link historical input refuses activation with source bytes unchanged (39.085792ms)
+✔ unexpected-file historical input refuses activation with source bytes unchanged (40.101083ms)
+✔ empty-directory historical input refuses activation with source bytes unchanged (38.973333ms)
+✔ explicit additional roots are imported, deduplicated and recorded without weakening defaults (73.524458ms)
+✔ an unsafe source file cannot be bypassed by a malformed default root declaration (9.715375ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 26
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1731.0495
+
+✖ failing tests:
+
+test at tests/admission-migration.test.ts:1:13539
+✖ changed historical sources on a rerun retain the migration guard and block previously activated handles (59.028583ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/tests/admission-migration.test.ts:242:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/admission-migration.test.ts:1:14215
+✖ migration refuses an admission root inside a source before changing source bytes (9.898417ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'admission'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/tests/admission-migration.test.ts:252:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'admission' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

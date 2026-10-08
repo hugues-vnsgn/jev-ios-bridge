@@ -1,0 +1,26 @@
+✔ explicit offline initialization enables admission and persists its operator declaration (41.889125ms)
+✖ completed historical actions retain original records and one read-only allocation identity without replay (40.564834ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 195.349
+
+✖ failing tests:
+
+test at tests/admission-migration.test.ts:1:2002
+✖ completed historical actions retain original records and one read-only allocation identity without replay (40.564834ms)
+  Error [AdmissionError]: Historical records require import
+      at sourceRoot (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:51:41)
+      at collect (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:59:20)
+      at <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:75:78)
+      at AdmissionSqlite.migrate (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-sqlite.ts:84:20)
+      at migrateAdmissionForTesting (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/src/device/admission-migration.ts:75:26)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/tests/admission-migration.test.ts:47:19)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'STATE_UNAVAILABLE'
+  }

@@ -1,0 +1,36 @@
+✔ explicit offline initialization enables admission and persists its operator declaration (49.635708ms)
+✔ completed historical actions retain original records and one read-only allocation identity without replay (76.442667ms)
+✔ quarantine in a casing alias overrides apparent completion without changing sources (81.842375ms)
+✔ claim in a casing alias overrides apparent completion without changing sources (74.644042ms)
+✔ unfinished in a casing alias overrides apparent completion without changing sources (74.207833ms)
+✔ temporary in a casing alias overrides apparent completion without changing sources (76.183125ms)
+✔ well-formed case aliases consolidate clean completion and conflicting device bindings refuse activation (186.96525ms)
+✔ dead legacy iOS lease is never reclaimed and cannot authorize effects (76.567916ms)
+✔ malformed legacy iOS lease is never reclaimed and cannot authorize effects (30.128667ms)
+✔ temporary legacy iOS lease is never reclaimed and cannot authorize effects (59.4215ms)
+✔ live legacy iOS lease is never reclaimed and cannot authorize effects (8.655458ms)
+✔ matching non-UUID lease records remain untouched without becoming iOS claims; unattributable records close activation (38.316084ms)
+✔ protected study devices and declared exclusions remain unavailable even with no historical files (33.581334ms)
+✔ unquiesced or incomplete root declarations refuse before installation; explicit missing roots are not empty (1.000583ms)
+✔ migration guard blocks existing handles and independent readers; a stranded guard is never reclaimed (154.194333ms)
+✔ interrupted markerWritten installation never recreates missing authority (15.59075ms)
+✔ interrupted beforeCommit installation never recreates missing authority (21.498792ms)
+✔ interrupted afterCommit installation never recreates missing authority (33.274292ms)
+✔ activation revalidates persisted manifest and rejects missing initialized storage on every operation (34.478042ms)
+✔ changed historical sources on a rerun retain the migration guard and block previously activated handles (52.141541ms)
+✔ migration refuses an admission root inside a source before changing source bytes (0.611166ms)
+✔ invalid-json historical input refuses activation with source bytes unchanged (47.318125ms)
+✔ wrong-hash historical input refuses activation with source bytes unchanged (52.413417ms)
+✔ symbolic-link historical input refuses activation with source bytes unchanged (49.422458ms)
+✔ unexpected-file historical input refuses activation with source bytes unchanged (50.018209ms)
+✔ empty-directory historical input refuses activation with source bytes unchanged (48.485833ms)
+✔ explicit additional roots are imported, deduplicated and recorded without weakening defaults (81.4775ms)
+✔ an unsafe source file cannot be bypassed by a malformed default root declaration (1.318125ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1666.012792

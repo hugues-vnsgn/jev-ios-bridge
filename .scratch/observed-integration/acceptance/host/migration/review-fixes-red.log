@@ -1,0 +1,69 @@
+✖ initialized admission stays closed after unsafe-root prevents an offline rerun (51.661792ms)
+✖ initialized admission stays closed after missing-declared-root prevents an offline rerun (42.458084ms)
+✔ initialized admission stays closed after unreadable-root prevents an offline rerun (37.24575ms)
+✖ a recognized lease FIFO refuses within the child deadline without reading a device or retaining a fresh guard (2006.403375ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2313.745125
+
+✖ failing tests:
+
+test at tests/admission-migration.test.ts:1:20775
+✖ initialized admission stays closed after unsafe-root prevents an offline rerun (51.661792ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/tests/admission-migration.test.ts:378:14)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/admission-migration.test.ts:1:20775
+✖ initialized admission stays closed after missing-declared-root prevents an offline rerun (42.458084ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/tests/admission-migration.test.ts:378:14)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/admission-migration.test.ts:1:22120
+✖ a recognized lease FIFO refuses within the child deadline without reading a device or retaining a fresh guard (2006.403375ms)
+  AssertionError [ERR_ASSERTION]: The importer must refuse the FIFO before the 2-second deadline
+  
+  'SIGKILL' !== null
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-offline-migration/tests/admission-migration.test.ts:399:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'SIGKILL',
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
