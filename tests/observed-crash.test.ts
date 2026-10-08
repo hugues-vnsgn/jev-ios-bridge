@@ -110,26 +110,32 @@ test('H06.04 duplicate finalization and stale token cannot change a genuine publ
 test('H06.05 genuine MCP owner late abort-ignoring touch reply cannot promote quarantined outcome', { timeout: 20000 }, async t => {
   const f = await hostFixture(t); const allocation = await f.prepare(); const server = await f.mcp({ gate: 'async:backend:touch:1' });
   await server.call('start_observed_action', actionRequest(allocation.allocationId)); await f.milestone('waiting:touch:1', server.child.pid);
+  const before = f.calls(); assert.equal(before.filter(op => op === 'touch').length, 1);
   const cancelled = await server.call('cancel_observed_action', { actionId: 'one' });
   assert.equal(cancelled.reply.cancellationRequested, true);
   const terminal = await server.call('get_observed_action', { actionId: 'one', waitMs: 5000 });
   assert.equal(terminal.reply.outcome, 'inconclusive'); assert.equal(terminal.reply.admission, 'quarantined');
   assert.equal(terminal.reply.actionAttempted, null); assert.equal(terminal.reply.actionAcknowledged, null);
+  assert.deepEqual(f.calls(), before, 'Cancellation cannot dispatch any successor to the already-issued touch');
   await f.release(); await f.milestone('late:touch:1', server.child.pid);
   const after = await server.call('get_observed_action', { actionId: 'one' }); assert.deepEqual(after.reply, terminal.reply);
   assert.equal(f.calls().filter(op => op === 'touch').length, 1);
   const legacy = f.admission().acquire({ device: terminal.reply.device.udid, attempt: { kind: 'legacy', id: 'late-successor' }, digest: 'late-successor', intent: {} });
   assert.deepEqual(legacy, { kind: 'refused', reason: 'DEVICE_QUARANTINED' }); await server.close();
+  assert.deepEqual(f.calls(), before, 'Late reply, reads, refused legacy successor and owner exit cannot add any backend/presentation/cleanup call');
 });
 
 test('H06.06 genuine CLI owner late abort-ignoring touch reply cannot promote quarantined outcome', { timeout: 20000 }, async t => {
   const f = await hostFixture(t); const allocation = await f.prepare(); const owner = f.spawnOwner('cli', 'observed-action', await f.requestFile(actionRequest(allocation.allocationId)), { gate: 'async:backend:touch:1' });
   await f.milestone('waiting:touch:1', owner.child.pid);
+  const before = f.calls(); assert.equal(before.filter(op => op === 'touch').length, 1);
   const cancel = await f.cli('observed-cancel', 'one'); assert.equal(cancel.reply.cancellationRequested, true);
   const terminal = await f.cli('observed-report', 'one', { waitMs: 45000 }); assert.equal(terminal.reply.outcome, 'inconclusive'); assert.equal(terminal.reply.admission, 'quarantined');
   assert.equal(terminal.reply.actionAttempted, null); assert.equal(terminal.reply.actionAcknowledged, null);
+  assert.deepEqual(f.calls(), before, 'Cancellation cannot dispatch any successor to the already-issued touch');
   await f.release(); await f.milestone('late:touch:1', owner.child.pid); const result = await owner.exited; assert.equal(result.code, 2);
   const after = await f.cli('observed-report', 'one');
   for (const field of ['outcome', 'authority', 'admission', 'actionAttempted', 'actionAcknowledged']) assert.equal(after.reply[field], terminal.reply[field], field);
   assert.equal(f.calls().filter(op => op === 'touch').length, 1);
+  assert.deepEqual(f.calls(), before, 'Late reply, owner exit and fresh reads cannot add any backend/presentation/cleanup call');
 });

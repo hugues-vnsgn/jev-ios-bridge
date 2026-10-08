@@ -52,19 +52,19 @@ test('H03.03 root aliases fail closed and cannot establish an alternate authorit
 });
 
 for (const transport of ['cli', 'mcp'] as const) {
-  for (const [gate, forbidden] of [
-    ['afterCommit:reserveAllocation:1', ['create', 'boot', 'install', 'launch-app', 'touch']],
-    ['afterCommit:stageAllocation:1', ['create', 'boot', 'install', 'launch-app', 'touch']],
-    ['afterCommit:startCreation:1', ['boot', 'install', 'launch-app', 'touch']],
-    ['afterCommit:recordCreation:1', ['boot', 'install', 'launch-app', 'touch']],
-    ['afterCommit:attach:1', ['boot', 'install', 'launch-app', 'touch']],
-    ['backend:boot:1', ['install', 'launch-app', 'touch']],
-    ['backend:list:1', ['install', 'launch-app', 'touch']],
-    ['backend:install:1', ['launch-app', 'touch']],
-    ['backend:launch-app:1', ['touch']],
-    ['backend:list:2', ['touch']],
-    ['backend:snapshot-ui:1', ['touch']],
-    ['backend:screenshot:1', ['touch']],
+  for (const [gate, authorizedAfterBarrier] of [
+    ['afterCommit:reserveAllocation:1', []],
+    ['afterCommit:stageAllocation:1', []],
+    ['afterCommit:startCreation:1', ['create']],
+    ['afterCommit:recordCreation:1', []],
+    ['afterCommit:attach:1', []],
+    ['backend:boot:1', []],
+    ['backend:list:1', []],
+    ['backend:install:1', []],
+    ['backend:launch-app:1', []],
+    ['backend:list:2', []],
+    ['backend:snapshot-ui:1', []],
+    ['backend:screenshot:1', []],
   ] as const) test(`H05.01 ${transport} durable external preparation cancel at ${gate} fences successors`, { timeout: 15000 }, async t => {
     const f = await hostFixture(t); const request = f.request('one');
     const server = transport === 'mcp' ? await f.mcp({ gate }) : undefined;
@@ -79,9 +79,10 @@ for (const transport of ['cli', 'mcp'] as const) {
     const final = server ? (await result!).reply : JSON.parse((await owner.exited).stdout);
     assert.equal(final.cancellationRequested, true); assert.notEqual(final.state, 'ready'); assert.notEqual(final.outcome, 'prepared');
     assert.equal(final.reservation.capacityHeld, !['afterCommit:reserveAllocation:1', 'afterCommit:stageAllocation:1'].includes(gate));
-    const after = f.calls().slice(before.length); assert.ok(after.every(op => !forbidden.includes(op as never)), JSON.stringify(after));
+    assert.deepEqual(f.calls(), [...before, ...authorizedAfterBarrier], 'Only creation already durably authorized before cancellation may dispatch');
     for (const op of ['create', 'boot', 'install', 'launch-app']) assert.ok(f.calls().filter(value => value === op).length <= 1, op);
     assert.equal(f.calls().filter(op => op === 'touch').length, 0); if (server) await server.close();
+    assert.deepEqual(f.calls(), [...before, ...authorizedAfterBarrier], 'Owner exit cannot add list/capture/presentation/cleanup/successor calls');
   });
 
   for (const [gate, touches] of [['afterCommit:consumeAllocation:1', 0], ['durable:tap-authorized:1', 1], ['backend:touch:1', 1], ['evidence:provisional:1', 1]] as const) {
@@ -91,15 +92,19 @@ for (const transport of ['cli', 'mcp'] as const) {
       const owner = server ?? f.spawnOwner('cli', 'observed-action', await f.requestFile(request), { gate });
       if (server) void server.begin('start_observed_action', request).catch(() => {});
       await f.milestone(gate, owner.child.pid);
+      const before = f.calls();
       const busy = await f.cli('observed-retire', allocation.allocationId); assert.equal(busy.reply.code, 'ALLOCATION_BUSY');
       const cancel = await f.cli('observed-cancel', 'one', { enabled: '0' }); assert.equal(cancel.reply.cancellationRequested, true);
       await f.release();
       const final = server ? (await server.call('get_observed_action', { actionId: 'one', waitMs: 5000 })).reply : JSON.parse((await owner.exited).stdout);
       assert.equal(final.outcome, 'inconclusive'); assert.equal(final.admission, 'quarantined'); assert.equal(final.cancellationRequested, true);
       assert.equal(f.calls().filter(op => op === 'touch').length, touches);
+      const expected = [...before, ...(gate === 'durable:tap-authorized:1' ? ['touch'] : [])];
+      assert.deepEqual(f.calls(), expected, 'Only the tap authorized before cancellation may issue after this barrier');
       const calls = f.calls(); const duplicate = await f.cli('observed-action', await f.requestFile(request, 'duplicate.json'));
       assert.equal(duplicate.reply.outcome, 'inconclusive'); assert.equal(duplicate.reply.disposition, 'retrieved'); assert.deepEqual(f.calls(), calls);
       if (server) await server.close();
+      assert.deepEqual(f.calls(), expected, 'Duplicate retrieval and owner exit cannot authorize any additional backend call');
     });
   }
 }
@@ -112,10 +117,12 @@ for (const [signal, code] of [['SIGINT', 130], ['SIGTERM', 143]] as const) {
     await f.milestone('backend:snapshot-ui:1', owner.child.pid);
     // resource-live is the producer's durable backend trace; wait until it exists.
     const end = Date.now() + 5000; while (!f.calls().includes('resource-live')) { assert.ok(Date.now() < end); await new Promise(done => setTimeout(done, 10)); }
+    const before = f.calls();
     const started = Date.now(); owner.child.kill(signal); const result = await owner.exited;
     assert.equal(result.code, code); assert.equal(result.signal, null); assert.ok(Date.now() - started < 6500);
     const read = await f.cli('observed-report', 'one'); assert.equal(read.reply.cancellationRequested, true); assert.notEqual(read.reply.actionAttempted, true); assert.notEqual(read.reply.actionAcknowledged, true);
     assert.equal(f.calls().filter(op => op === 'touch').length, 0);
+    assert.deepEqual(f.calls(), before, 'Signal finalization and fresh reads cannot issue further backend/presentation/cleanup calls');
   });
 }
 
@@ -145,30 +152,52 @@ for (const phase of ['configuration', 'host-proof', 'artifact-inspection', 'arti
   const exited = new Promise<{ code: number | null; signal: NodeJS.Signals | null }>(done => child.once('close', (code, signal) => done({ code, signal })));
   let backendRoot: string | undefined;
   t.after(async () => {
-    if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL'); await exited;
-    if (process.env.HOST_EVIDENCE_DIR) { const archive = join(process.env.HOST_EVIDENCE_DIR, 'early-' + phase); await mkdir(archive, { recursive: true, mode: 0o700 }); await writeFile(join(root, 'public-result.json'), JSON.stringify({ stdout, stderr }), { mode: 0o600 }); await cp(root, join(archive, 'public'), { recursive: true }); if (backendRoot) await cp(backendRoot, join(archive, 'backend'), { recursive: true }); }
+    if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL'); const finalExit = await exited;
+    if (process.env.HOST_EVIDENCE_DIR) { const archive = join(process.env.HOST_EVIDENCE_DIR, 'early-' + phase); await mkdir(archive, { recursive: true, mode: 0o700 }); await writeFile(join(root, 'public-result.json'), JSON.stringify({ pid: child.pid, code: finalExit.code, signal: finalExit.signal, stdout, stderr }), { mode: 0o600 }); await cp(root, join(archive, 'public'), { recursive: true }); if (backendRoot) await cp(backendRoot, join(archive, 'backend'), { recursive: true }); }
     async function writable(path: string): Promise<void> { const stat = await lstat(path); if (!stat.isDirectory() || stat.isSymbolicLink()) return; await chmod(path, 0o700); for (const entry of await readdir(path)) await writable(join(path, entry)); }
     if (backendRoot) { await writable(backendRoot); await rm(backendRoot, { recursive: true, force: true }); } await rm(root, { recursive: true, force: true });
   });
-  const end = Date.now() + 5000; while (true) { try { await readFile(join(root, 'milestone.jsonl')); break; } catch { assert.ok(Date.now() < end, 'Early CLI fixture did not reach phase: ' + stderr); await new Promise(done => setTimeout(done, 10)); } }
+  let milestone: string | undefined;
+  const end = Date.now() + 5000;
+  while (true) {
+    try { milestone = await readFile(join(root, 'milestone.jsonl'), 'utf8'); }
+    catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; }
+    if (milestone?.endsWith('\n')) break;
+    assert.ok(Date.now() < end, 'Early CLI fixture did not reach phase: ' + stderr); await new Promise(done => setTimeout(done, 10));
+  }
+  assert.deepEqual(JSON.parse(milestone.trim()), { phase, pid: child.pid });
+  const backendTrace = async () => {
+    const raw = await readFile(join(root, 'backend-attempts.jsonl'), 'utf8');
+    assert.ok(!raw || raw.endsWith('\n'), 'Exit/barrier trace must contain only complete records');
+    const events = raw ? raw.trim().split('\n').map(line => JSON.parse(line)) : [];
+    for (const event of events) assert.equal(event.pid, child.pid);
+    return events;
+  };
+  const before = (await backendTrace()).filter(event => event.kind === 'attempt');
+  if (phase === 'configuration') assert.equal(before.length, 0); else assert.ok(before.length > 0);
+  assert.ok(before.every(event => event.backend === 'source' && event.operation === 'plist' && event.executable === '/usr/bin/plutil'));
   const context = JSON.parse(await readFile(join(root, 'context.json'), 'utf8')); backendRoot = context.backendRoot;
   const started = Date.now(); child.kill('SIGTERM'); const result = await exited; assert.equal(result.code, 143); assert.equal(result.signal, null); assert.ok(Date.now() - started < 6500);
   assert.equal(stdout.trim().split('\n').length, 1); assert.notEqual(JSON.parse(stdout).outcome, 'prepared');
   const admission = Admission.forTesting({ root: context.store, backend: 'fake', initialize: false }); const record = admission.readAllocationForAction('allocate-one');
   if (phase === 'artifact-staging') { assert.ok(record); assert.equal(record.cancellationRequested, true); assert.equal(record.capacityHeld, false); } else assert.equal(record, undefined);
-  const calls = JSON.parse(await readFile(join(root, 'calls.json'), 'utf8')) as string[]; assert.ok(calls.every(call => call === 'plist'));
+  const events = await backendTrace(); const attempts = events.filter(event => event.kind === 'attempt');
+  assert.deepEqual(attempts, before, 'No source, runner or window attempt may follow the held phase or signal');
+  assert.deepEqual(events.filter(event => event.kind === 'process-exit'), [{ pid: child.pid, kind: 'process-exit', exitCode: 143 }]);
+  assert.equal(events.at(-1)?.kind, 'process-exit'); assert.equal(events.filter(event => event.kind === 'error').length, 0);
 });
 
 for (const [signal, code] of [['SIGINT', 130], ['SIGTERM', 143]] as const) test(`H05.06 ${signal} racing durable ready commit preserves parked allocation`, { timeout: 15000 }, async t => {
   const f = await hostFixture(t); const gate = 'afterCommit:parkAllocation:1';
   const owner = f.spawnOwner('cli', 'observed-allocate', await f.requestFile(f.request('one')), { gate });
-  await f.milestone(gate, owner.child.pid); const bytes = await f.database(); owner.child.kill(signal); await f.release();
+  await f.milestone(gate, owner.child.pid); const bytes = await f.database(); const before = f.calls(); owner.child.kill(signal); await f.release();
   const result = await owner.exited;
   // If ordinary completion wins before the signal event is delivered, zero is
   // valid. Signal handling, when it wins, must use the production 130/143 exit.
   assert.ok(result.code === 0 || result.code === code); assert.equal(result.signal, null);
   const allocation = f.admission().readAllocationForAction('one')!; assert.equal(allocation.state, 'ready'); assert.equal(allocation.cancellationRequested, false);
   assert.equal(allocation.owner.process.pid, 0); assert.deepEqual(await f.database(), bytes); assert.equal(f.calls().filter(op => op === 'touch').length, 0);
+  assert.deepEqual(f.calls(), before, 'Parked ready ownership survives signal/exit with no further backend/presentation/cleanup calls');
 });
 
 for (const [signal, code] of [['SIGINT', 130], ['SIGTERM', 143]] as const) test(`H05.07 public read-wait ${signal} leaves the active action untouched`, { timeout: 15000 }, async t => {

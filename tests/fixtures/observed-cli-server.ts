@@ -73,7 +73,7 @@ export function fixtureObserved(root: string, enabled = true, mode = 'observed',
         data: { artifacts: { simulatorId: fixtureDevice }, action: { type: 'tap' }, capture: { type: 'runtime-snapshot', protocol: 'rs/1', capturedAtMs: Date.now(), expiresAtMs: Date.now() + 60000,
           count: 1, elements: [{ ref: 'button', role: 'button', identifier, label: identifier, frame: { x: 0, y: 0, width: 100, height: 30 }, actions: ['tap', 'touch'], state: { visible: true, enabled: true } }] } } }), stderr: '', exitCode: 0 };
     };
-    const window = async () => assert.fail('No real or fake window presentation');
+    const window = async () => { trace('window'); assert.fail('No real or fake window presentation'); };
     const allocator = new ObservedAllocator({ runsDir: context.runsDir, admission, fakeBackend: { process: source, runner, window, host } });
     return new ObservedActionService({ admission, allocator, runsDir: context.runsDir, bridgeVersion: 'fixture', backend: 'fake', enabled, ...(hooks.evidence ? { evidence: hooks.evidence } : {}),
       createDriver: () => createObservedDriver({ cwd: context.root, admission, lockRoot: join(context.root, 'leases'), runner, deviceWindow: window,
