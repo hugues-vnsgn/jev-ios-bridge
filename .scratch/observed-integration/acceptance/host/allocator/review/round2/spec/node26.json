@@ -1,0 +1,15 @@
+{
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-concurrency=1",
+    "/tmp/jev-allocator-spec-review-boonbrr6/probes.test.ts",
+    "/tmp/jev-allocator-spec-review-boonbrr6/evidence-failure.test.ts",
+    "/tmp/jev-allocator-spec-review-boonbrr6/busy.test.ts",
+    "/tmp/jev-allocator-spec-review-boonbrr6/historical.test.ts"
+  ],
+  "nodeVersion": "v26.8.1",
+  "exit": 0
+}

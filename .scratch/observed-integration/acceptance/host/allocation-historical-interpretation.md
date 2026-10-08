@@ -18,6 +18,8 @@ Historical cancel and retire retrieve the same immutable projection. Allocation-
 
 Public-contract:79 requires ALLOCATION_BUSY to include the executing action's ID/current state and direct the caller to explicit action cancellation. Root chooses additive optional error field `state`, with the existing allocation-state type, alongside the accepted `actionId`, `allocationId` and evidence fields. The safe message identifies `cancel_observed_action`/`observed-cancel` as the follow-up. Populate context from the verified current durable record; no fabricated snapshot or vendor message is returned.
 
+Retirement also refuses an active preparation under allocation-contract:103. Its verified context has `state:preparing`; describe active preparation and direct any cancellation to the allocation interface. The executing action cancellation direction applies only to `state:executing`. Cancellation of an allocation itself returns busy only for execution. Preserve this operation distinction when validating the durable context; healthy preparation is not a storage failure.
+
 These output additions remain observed format version1 under its additive-field rule. New adapter golden fixtures must include the accepted behavior; existing frozen goldens are not transferred or changed by this clarification.
 
 ## Required repair evidence

@@ -1,0 +1,10 @@
+{
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "/tmp/jev-allocator-spec-recheck-10qe7wtm/retire-preparing.test.ts"
+  ],
+  "exit": 1
+}
