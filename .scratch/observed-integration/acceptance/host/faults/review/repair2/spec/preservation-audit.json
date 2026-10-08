@@ -1,0 +1,13 @@
+{
+  "396OrderedIdsUnchanged": true,
+  "perRowSourceHashesMatch": true,
+  "allAssertionLinesExist": true,
+  "sixPriorClosuresPreserved": true,
+  "unchangedFiles": [
+    "tests/observed-host-fault.test.ts",
+    "tests/fixtures/observed-host/owner.ts",
+    "tests/fixtures/observed-host/harness.ts",
+    "tests/fixtures/observed-host/allocator-public.ts"
+  ],
+  "concurrentMcpAndWaitCancellationBlocksUnchanged": true
+}

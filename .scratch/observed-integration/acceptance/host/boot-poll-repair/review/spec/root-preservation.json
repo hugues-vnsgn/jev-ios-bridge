@@ -1,0 +1,113 @@
+{
+  "source": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-host-faults/.scratch/spec-review-boot-poll-6610b13",
+  "destination": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/boot-poll-repair/review/spec",
+  "files": [
+    {
+      "path": "after-hashes.json",
+      "bytes": 4095,
+      "sha256": "dc7b71e9cc7e9f3e3c107b193f446992ed74a749da0f2a49af1075bc8927bc50"
+    },
+    {
+      "path": "appendix.md",
+      "bytes": 991,
+      "sha256": "840cac6c09851ad9bb142bff91c664e91a6d7947e04b116e522ac67736f17f8b"
+    },
+    {
+      "path": "before-hashes.json",
+      "bytes": 4095,
+      "sha256": "dc7b71e9cc7e9f3e3c107b193f446992ed74a749da0f2a49af1075bc8927bc50"
+    },
+    {
+      "path": "review.md",
+      "bytes": 1952,
+      "sha256": "8497fec1120f6fec90cae261a4943dca05fd59a3bce380061ce01ab7c34d374c"
+    },
+    {
+      "path": "reviewed.diff",
+      "bytes": 2385,
+      "sha256": "c5172e1425d32b1be9814441e6719d5fb2b14689437837ed0335b50800eab2ff"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/boot-poll-repair/controlled-clock-node24.json",
+      "bytes": 977,
+      "sha256": "4a22f6bcfbb6bae0f3a222d69f7e25dbaa4332bcf98711df89b5e06e4d25ddb0"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/boot-poll-repair/controlled-clock-node24.log",
+      "bytes": 389,
+      "sha256": "36306b48c85428496c687ee5e10f85c5d5ca15770518bfde42520bf63586e199"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/boot-poll-repair/controlled-clock-node26.json",
+      "bytes": 946,
+      "sha256": "48ad18053b667ba6938f3aaeed407ef5e1c0bf4e79b67493f2978a5f023dfb00"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/boot-poll-repair/controlled-clock-node26.log",
+      "bytes": 220,
+      "sha256": "9e8d9c4526b8ca0459ecb7358fbc91c3da26c23b7f03693e64f0a13a4f05881e"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/boot-poll-repair/corrected.test.ts",
+      "bytes": 81264,
+      "sha256": "77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/boot-poll-repair/freeze.json",
+      "bytes": 2254,
+      "sha256": "22be780e9d37260b0f822fa2ed6370042ac87aa7a039181d8f8aa4dfe6f45d4b"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/boot-poll-repair/original.test.ts",
+      "bytes": 80403,
+      "sha256": "0b0358c4d031f24aef59cb0bf70a5bab7be2dd999fd168295cd6a5b48d7e794f"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/boot-poll-repair/report.md",
+      "bytes": 2320,
+      "sha256": "4c4a1df731d3d9076a8a03201bca350ba8b2597d3a7839ad7baa6dabc2077353"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/boot-poll-repair/reproduce-node24-command.json",
+      "bytes": 938,
+      "sha256": "70937a037ba6f4db9f46fe334071fa361e47f87fa2967801043578c4cb767621"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/boot-poll-repair/reproduce-node24.json",
+      "bytes": 2606,
+      "sha256": "79bb13a469d02ab052e11b8be36c97ca11f1a2c26dd7f99e942693a1333fc4bd"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/boot-poll-repair/reproduce-node24.log",
+      "bytes": 695,
+      "sha256": "041cda0d00c3c16d2bea91f53951a6f03d470bc01f175d77d020ddc5a90eecf1"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/boot-poll-repair/reproduce-node26-command.json",
+      "bytes": 908,
+      "sha256": "16b1da179902fad0205ec47e00d1cf572f9ae2fa5401251638c135e9d72eff85"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/boot-poll-repair/reproduce-node26.json",
+      "bytes": 2606,
+      "sha256": "cbc1a93da8efc6db6948b44500c6f545da002ad82a7163a4b93ae56c68640677"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/boot-poll-repair/reproduce-node26.log",
+      "bytes": 544,
+      "sha256": "ef927d13d2e15890c5f780131aa9a99495ac0b67086974f1817a297991ddcafd"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/boot-poll-repair/reproduce.ts",
+      "bytes": 2372,
+      "sha256": "3967d5c0e6a85c07bf3277901f47221f84a7c597e5ff0c92a550caa67ce7c9d8"
+    },
+    {
+      "path": "snapshot/tests/observed-allocation.test.ts",
+      "bytes": 81264,
+      "sha256": "77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad"
+    }
+  ],
+  "fileCount": 21,
+  "bytes": 274224
+}

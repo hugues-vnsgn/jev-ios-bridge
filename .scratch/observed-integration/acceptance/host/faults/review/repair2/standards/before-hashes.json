@@ -1,0 +1,82 @@
+[
+  {
+    "path": ".scratch/observed-action-rollout/issues/09-host-fault-suite.md",
+    "manifestSha256": "482d9c6dfffd09237ec004b9a01a0b4e0bede9d495d1d24a84cebdd1c8b3bbf0",
+    "candidateSha256": "482d9c6dfffd09237ec004b9a01a0b4e0bede9d495d1d24a84cebdd1c8b3bbf0",
+    "workingSha256": "482d9c6dfffd09237ec004b9a01a0b4e0bede9d495d1d24a84cebdd1c8b3bbf0",
+    "authorSnapshotSha256": "482d9c6dfffd09237ec004b9a01a0b4e0bede9d495d1d24a84cebdd1c8b3bbf0",
+    "candidateBlob": "5673e3854409e35576f1e3f80aec70310c70b8bb"
+  },
+  {
+    "path": "tests/fixtures/observed-host/allocator-public.ts",
+    "manifestSha256": "4362eb422c0213918d9e37e0d43c04644ae9429322be39bed82b0ce98d1228e1",
+    "candidateSha256": "4362eb422c0213918d9e37e0d43c04644ae9429322be39bed82b0ce98d1228e1",
+    "workingSha256": "4362eb422c0213918d9e37e0d43c04644ae9429322be39bed82b0ce98d1228e1",
+    "authorSnapshotSha256": "4362eb422c0213918d9e37e0d43c04644ae9429322be39bed82b0ce98d1228e1",
+    "candidateBlob": "b32bc9595b88419d658f739124b6305461af1dbb"
+  },
+  {
+    "path": "tests/fixtures/observed-host/case-matrix.json",
+    "manifestSha256": "4a8d1f8b0cc818c55b087cfaac5d54efe5c5da6f1bce22e41df7b229f0d810f7",
+    "candidateSha256": "4a8d1f8b0cc818c55b087cfaac5d54efe5c5da6f1bce22e41df7b229f0d810f7",
+    "workingSha256": "4a8d1f8b0cc818c55b087cfaac5d54efe5c5da6f1bce22e41df7b229f0d810f7",
+    "authorSnapshotSha256": "4a8d1f8b0cc818c55b087cfaac5d54efe5c5da6f1bce22e41df7b229f0d810f7",
+    "candidateBlob": "0e0c1529136791bc155769dbdfb735ef71412e56"
+  },
+  {
+    "path": "tests/fixtures/observed-host/early-cli.ts",
+    "manifestSha256": "9625fc2f76374c41fdb9681fe5fa7c79afa35c1020b0cee98a3be4cd355e67f8",
+    "candidateSha256": "9625fc2f76374c41fdb9681fe5fa7c79afa35c1020b0cee98a3be4cd355e67f8",
+    "workingSha256": "9625fc2f76374c41fdb9681fe5fa7c79afa35c1020b0cee98a3be4cd355e67f8",
+    "authorSnapshotSha256": "9625fc2f76374c41fdb9681fe5fa7c79afa35c1020b0cee98a3be4cd355e67f8",
+    "candidateBlob": "4a669d3c2ca8dcd8e3d015a32cbf4cf91b7cda1e"
+  },
+  {
+    "path": "tests/fixtures/observed-host/harness.ts",
+    "manifestSha256": "463d7f5feb7eedc32ac5d688d2bcb57c87460875fd14b7de3f5864da29f893a1",
+    "candidateSha256": "463d7f5feb7eedc32ac5d688d2bcb57c87460875fd14b7de3f5864da29f893a1",
+    "workingSha256": "463d7f5feb7eedc32ac5d688d2bcb57c87460875fd14b7de3f5864da29f893a1",
+    "authorSnapshotSha256": "463d7f5feb7eedc32ac5d688d2bcb57c87460875fd14b7de3f5864da29f893a1",
+    "candidateBlob": "38d67168574a97e625a5c261ab84f8eb049a1716"
+  },
+  {
+    "path": "tests/fixtures/observed-host/owner.ts",
+    "manifestSha256": "b9a379c00645a1c3cc0704ad2986572b0c62ef0bbd3586d659649ecf160f941a",
+    "candidateSha256": "b9a379c00645a1c3cc0704ad2986572b0c62ef0bbd3586d659649ecf160f941a",
+    "workingSha256": "b9a379c00645a1c3cc0704ad2986572b0c62ef0bbd3586d659649ecf160f941a",
+    "authorSnapshotSha256": "b9a379c00645a1c3cc0704ad2986572b0c62ef0bbd3586d659649ecf160f941a",
+    "candidateBlob": "5b7a4eaffbf6043bb127fdc9c2d5accfeafdf00a"
+  },
+  {
+    "path": "tests/observed-crash.test.ts",
+    "manifestSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+    "candidateSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+    "workingSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+    "authorSnapshotSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+    "candidateBlob": "72a73caf582138c16790527f29eeeef9fb6c912b"
+  },
+  {
+    "path": "tests/observed-host-fault.test.ts",
+    "manifestSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+    "candidateSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+    "workingSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+    "authorSnapshotSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+    "candidateBlob": "84a7f2042bf09c3d26784088c99c63ced623a507"
+  },
+  {
+    "path": "tests/observed-public-races.test.ts",
+    "manifestSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+    "candidateSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+    "workingSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+    "authorSnapshotSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+    "candidateBlob": "2545b75e66f01a20f5b346ab1fc1889ad27916fb"
+  },
+  {
+    "path": "tests/fixtures/observed-cli-server.ts",
+    "manifestSha256": "e0bffe3dfe1b0ee90aed64b7fd2493ddb91faf73cf8c1c9e418338fc55f811d1",
+    "candidateSha256": "e0bffe3dfe1b0ee90aed64b7fd2493ddb91faf73cf8c1c9e418338fc55f811d1",
+    "workingSha256": "e0bffe3dfe1b0ee90aed64b7fd2493ddb91faf73cf8c1c9e418338fc55f811d1",
+    "authorSnapshotSha256": "e0bffe3dfe1b0ee90aed64b7fd2493ddb91faf73cf8c1c9e418338fc55f811d1",
+    "candidateBlob": "dc304edae1135c8f5971f383d0e7cf3b6d5b7d57"
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "parent": "08a985805cb442a2404eb9561ae92f69748ae5e0",
+  "path": "tests/fixtures/observed-cli-server.ts",
+  "sha256": "50d02a4f919b6bf162f5e0b89992a5f0fe37158c0667c565f24bb997b713bfcb",
+  "blob": "00585578e3e568196b4a3e0b2785830483678c08",
+  "authorizedDelta": "Synchronous trace(window) immediately before identical assert.fail; no hook/scheduling change",
+  "protectedAudit": "original108 mappings: authorized1 producer delta; remaining107 unchanged"
+}

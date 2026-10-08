@@ -1,0 +1,18 @@
+✖ failing tests:
+
+test at tests/observed-allocation.test.ts:388:1
+✖ boot-state polling is no more frequent than once per second and boot is never retried (1444.277375ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-host-faults/tests/observed-allocation.test.ts:392:86)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

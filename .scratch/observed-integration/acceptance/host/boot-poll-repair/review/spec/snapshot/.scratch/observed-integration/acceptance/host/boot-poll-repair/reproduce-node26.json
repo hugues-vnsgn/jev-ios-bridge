@@ -1,0 +1,67 @@
+{
+  "node": "v26.8.1",
+  "budgetMs": 1100,
+  "injectedFirstPollLatencyMs": 150,
+  "scope": "Controlled fake backend latency; unchanged production and original exact-two-poll oracle",
+  "durationMs": 1223,
+  "times": [
+    1791473745258
+  ],
+  "calls": [
+    "plist",
+    "plist",
+    "plist",
+    "plist",
+    "plist",
+    "plist",
+    "plist",
+    "plist",
+    "plist",
+    "plist",
+    "create",
+    "boot",
+    "list"
+  ],
+  "result": {
+    "version": 1,
+    "allocationId": "E8044CA6-03D4-401F-B38E-551B8A62EAAF",
+    "actionId": "allocate-one",
+    "state": "quarantined",
+    "phase": "terminal",
+    "device": {
+      "platform": "ios-simulator",
+      "udid": "ABCDEF00-0000-4000-8000-000000000001"
+    },
+    "reason": "PREPARATION_UNCONFIRMED",
+    "outcome": "uncertain",
+    "authority": "committed",
+    "readinessEvidence": [],
+    "evidenceRefs": [
+      "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-pkcGcR/runs/observed/allocate-one/allocation",
+      "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-pkcGcR/runs/observed/allocate-one/allocation/host-prerequisites.json",
+      "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-pkcGcR/runs/observed/allocate-one/allocation/preparation-request.json",
+      "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-pkcGcR/runs/observed/allocate-one/allocation/source-diagnostics.json"
+    ],
+    "reservation": {
+      "bytes": 1000,
+      "capacityHeld": true
+    },
+    "hostCreationBlocked": false,
+    "cancellationRequested": false
+  },
+  "originalOracleExpectedPollCount": 2,
+  "actualPollCount": 1,
+  "sourceBefore": {
+    "tests/observed-allocation.test.ts": "0b0358c4d031f24aef59cb0bf70a5bab7be2dd999fd168295cd6a5b48d7e794f",
+    "tests/fixtures/observed-allocation-backend.ts": "82761f545831ccb2418936c5370e25b8970e972ddedf3879827d6c4c30df3814",
+    "src/observed/allocation.ts": "0233ea8d8d571761596287e9369f7801bd693edfe6d95c459a950e4c3b943041",
+    "src/device/index.ts": "21e63907b028cd5eb84e61834aa79e6bd59d74c19f3be30b00c0dacb659b5604"
+  },
+  "sourceAfter": {
+    "tests/observed-allocation.test.ts": "0b0358c4d031f24aef59cb0bf70a5bab7be2dd999fd168295cd6a5b48d7e794f",
+    "tests/fixtures/observed-allocation-backend.ts": "82761f545831ccb2418936c5370e25b8970e972ddedf3879827d6c4c30df3814",
+    "src/observed/allocation.ts": "0233ea8d8d571761596287e9369f7801bd693edfe6d95c459a950e4c3b943041",
+    "src/device/index.ts": "21e63907b028cd5eb84e61834aa79e6bd59d74c19f3be30b00c0dacb659b5604"
+  },
+  "sourceUnchanged": true
+}

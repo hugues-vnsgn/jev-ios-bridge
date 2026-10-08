@@ -1,0 +1,514 @@
+{
+  "records": 84,
+  "perRuntime": {
+    "added-node26": 42,
+    "added-node24": 42
+  },
+  "allTraceHashesMatch": true,
+  "recordsMapping": [
+    {
+      "runtime": "added-node26",
+      "title": "H05.12 genuine CLI SIGTERM during artifact-inspection fences ignored-abort preparation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/early-artifact-inspection/public/backend-attempts.jsonl",
+      "sha256": "7647e3592bafbab3f8ea3cd8c8eb959a3b9c7183625e259b74db1a22a5b3a463"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.12 genuine CLI SIGTERM during artifact-staging fences ignored-abort preparation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/early-artifact-staging/public/backend-attempts.jsonl",
+      "sha256": "16cd59159687695e56b0d8ca39c3140fe6918d574f3b3a0724674039c676ff21"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.12 genuine CLI SIGTERM during configuration fences ignored-abort preparation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/early-configuration/public/backend-attempts.jsonl",
+      "sha256": "29c6ea6af391bcc101d810cf3f2c46512d0a7dca62075b0975b13ab7cea161d2"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.12 genuine CLI SIGTERM during host-proof fences ignored-abort preparation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/early-host-proof/public/backend-attempts.jsonl",
+      "sha256": "4a9ccf548706b1e4574fa6f516cbbb2d61241b6238ccfbb00b6b360a6ec8c81c"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.03 public SIGTERM is bounded by 5000ms and production exits 143",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-68nLQ7/public/calls.jsonl",
+      "sha256": "bfbc7438c5f99184bf040ed676b392ab3b08dd18a861fa13ce37f859fc272d6a"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at afterCommit:recordCreation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-6knkov/public/calls.jsonl",
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.02 mcp durable external action cancel at durable:tap-authorized:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-9qkUaR/public/calls.jsonl",
+      "sha256": "67e9baf77f0e6a1811947c90bac73740fab099e0673c1f19ad3d60eb7e177376"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at afterCommit:reserveAllocation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-IEs87w/public/calls.jsonl",
+      "sha256": "6aa2a7d53d745699baae08dc7cfba1914ffe4e127a08ba2b1119fae26a595d8e"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at afterCommit:startCreation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-KUUEtK/public/calls.jsonl",
+      "sha256": "fe9d81db9b27a1646db3a70c820d0597dc9d25a4910309d499a20d7f1476cc07"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at afterCommit:recordCreation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-MxGjsY/public/calls.jsonl",
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at backend:install:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-OY4SHN/public/calls.jsonl",
+      "sha256": "8787f824d9b120092ef858ca4d255f9fdb107116848dc20225780154344a4434"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.03 public SIGINT is bounded by 5000ms and production exits 130",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Ql69Ax/public/calls.jsonl",
+      "sha256": "bfbc7438c5f99184bf040ed676b392ab3b08dd18a861fa13ce37f859fc272d6a"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at afterCommit:startCreation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-RQOC5u/public/calls.jsonl",
+      "sha256": "fe9d81db9b27a1646db3a70c820d0597dc9d25a4910309d499a20d7f1476cc07"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at backend:list:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-U8GEFT/public/calls.jsonl",
+      "sha256": "cd0032898efdc0da253fbdbbbc57aac8e50b93097fe059b9d2940fbc236446c2"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at backend:snapshot-ui:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-VCU00l/public/calls.jsonl",
+      "sha256": "e5fe6e812f4a7f3118fad30b25e29696e6f5edee590d07d7269db6008b6a0988"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H06.05 genuine MCP owner late abort-ignoring touch reply cannot promote quarantined outcome",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-VvIYvy/public/calls.jsonl",
+      "sha256": "1298614f386db434cf54dcce75802360480d24fc8d72e4e215a4c6e21b8c527a"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.02 cli durable external action cancel at afterCommit:consumeAllocation:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-W32ztv/public/calls.jsonl",
+      "sha256": "1ecd25f67196b1b8fb4039005012e5b114657d5f0413ce621d665cdcd9c4afba"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.06 SIGTERM racing durable ready commit preserves parked allocation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-WoQsDi/public/calls.jsonl",
+      "sha256": "6a11c5c54d41478e460cccb0373cf51bd8fe98dcf81988a5bb6729e9b1d1df6f"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at backend:list:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-XNjAhC/public/calls.jsonl",
+      "sha256": "cd0032898efdc0da253fbdbbbc57aac8e50b93097fe059b9d2940fbc236446c2"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at afterCommit:attach:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-XksetX/public/calls.jsonl",
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at backend:boot:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Z6vj7F/public/calls.jsonl",
+      "sha256": "fd04cec329bef7d972c7da4b13eeb6d15dc231473d8088b9945da6db97c426e3"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.02 cli durable external action cancel at backend:touch:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Zz6vEP/public/calls.jsonl",
+      "sha256": "3a7a5e4e3b079f27425ba3973791c1b24da3fa10d281f0daf7be8fe265505179"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.02 mcp durable external action cancel at backend:touch:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-aRzifn/public/calls.jsonl",
+      "sha256": "3a7a5e4e3b079f27425ba3973791c1b24da3fa10d281f0daf7be8fe265505179"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at backend:launch-app:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-c6Gi1C/public/calls.jsonl",
+      "sha256": "0410b0f805b858eadd0b81652b5e863bb8e9ed62b5a98d86d4c85fc8c86d74dc"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.02 cli durable external action cancel at evidence:provisional:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-cf75r8/public/calls.jsonl",
+      "sha256": "84ea1ee0c1de1b1809717b4a9d361972ca2d2617ab6a00bce5e5d83903622602"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.02 mcp durable external action cancel at evidence:provisional:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-gCCyYZ/public/calls.jsonl",
+      "sha256": "84ea1ee0c1de1b1809717b4a9d361972ca2d2617ab6a00bce5e5d83903622602"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at afterCommit:stageAllocation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-kaZzaU/public/calls.jsonl",
+      "sha256": "5fb640d45edb9d02d43473dc8925f67ddda016738fe8ce7e2eab3914c3111516"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.02 cli durable external action cancel at durable:tap-authorized:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-m9U1B6/public/calls.jsonl",
+      "sha256": "67e9baf77f0e6a1811947c90bac73740fab099e0673c1f19ad3d60eb7e177376"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at backend:install:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-nm9Uxd/public/calls.jsonl",
+      "sha256": "8787f824d9b120092ef858ca4d255f9fdb107116848dc20225780154344a4434"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H06.06 genuine CLI owner late abort-ignoring touch reply cannot promote quarantined outcome",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-noDw1y/public/calls.jsonl",
+      "sha256": "3a7a5e4e3b079f27425ba3973791c1b24da3fa10d281f0daf7be8fe265505179"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at afterCommit:attach:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-nsek40/public/calls.jsonl",
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at afterCommit:reserveAllocation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-qehJvE/public/calls.jsonl",
+      "sha256": "6aa2a7d53d745699baae08dc7cfba1914ffe4e127a08ba2b1119fae26a595d8e"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at backend:snapshot-ui:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-qveqw3/public/calls.jsonl",
+      "sha256": "e5fe6e812f4a7f3118fad30b25e29696e6f5edee590d07d7269db6008b6a0988"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at backend:launch-app:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-ruaqIK/public/calls.jsonl",
+      "sha256": "0410b0f805b858eadd0b81652b5e863bb8e9ed62b5a98d86d4c85fc8c86d74dc"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at backend:list:2 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xI13G0/public/calls.jsonl",
+      "sha256": "53c1de9d38d5932128dba0cdcfbf168cb879e56524f4006caa41dc5eb4fcdf6a"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.02 mcp durable external action cancel at afterCommit:consumeAllocation:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xXuDNp/public/calls.jsonl",
+      "sha256": "1ecd25f67196b1b8fb4039005012e5b114657d5f0413ce621d665cdcd9c4afba"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at backend:boot:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xabqpK/public/calls.jsonl",
+      "sha256": "fd04cec329bef7d972c7da4b13eeb6d15dc231473d8088b9945da6db97c426e3"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at afterCommit:stageAllocation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xfWAEy/public/calls.jsonl",
+      "sha256": "5fb640d45edb9d02d43473dc8925f67ddda016738fe8ce7e2eab3914c3111516"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at backend:list:2 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-y2LctB/public/calls.jsonl",
+      "sha256": "53c1de9d38d5932128dba0cdcfbf168cb879e56524f4006caa41dc5eb4fcdf6a"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at backend:screenshot:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yA8Zag/public/calls.jsonl",
+      "sha256": "7d8a057f2d598b6d55a7a7453cef93168bf3c2f5db406fd1d83326fa88dd4478"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.06 SIGINT racing durable ready commit preserves parked allocation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yRniGj/public/calls.jsonl",
+      "sha256": "6a11c5c54d41478e460cccb0373cf51bd8fe98dcf81988a5bb6729e9b1d1df6f"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at backend:screenshot:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yx7OOR/public/calls.jsonl",
+      "sha256": "7d8a057f2d598b6d55a7a7453cef93168bf3c2f5db406fd1d83326fa88dd4478"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.12 genuine CLI SIGTERM during artifact-inspection fences ignored-abort preparation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/early-artifact-inspection/public/backend-attempts.jsonl",
+      "sha256": "2682e411ebbcdbbcf3cfd49dd167d24b9a0cf6fce5855c19c0f1865f663d31bd"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.12 genuine CLI SIGTERM during artifact-staging fences ignored-abort preparation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/early-artifact-staging/public/backend-attempts.jsonl",
+      "sha256": "aa4d54bf250992a759dc04c5bb0d718213daf845597371ad689f62916f2de6e6"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.12 genuine CLI SIGTERM during configuration fences ignored-abort preparation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/early-configuration/public/backend-attempts.jsonl",
+      "sha256": "b643ffca37c0a04de19b0e3dedd823c4843245e9de000622212748b929750b1b"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.12 genuine CLI SIGTERM during host-proof fences ignored-abort preparation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/early-host-proof/public/backend-attempts.jsonl",
+      "sha256": "e7580824ae24f9457cd23afba91d66d503d21396798a3450b4325869d737783e"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at afterCommit:attach:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-1bH9Yn/public/calls.jsonl",
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at backend:screenshot:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-2xrzbz/public/calls.jsonl",
+      "sha256": "7d8a057f2d598b6d55a7a7453cef93168bf3c2f5db406fd1d83326fa88dd4478"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at afterCommit:reserveAllocation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-4SX1Lf/public/calls.jsonl",
+      "sha256": "6aa2a7d53d745699baae08dc7cfba1914ffe4e127a08ba2b1119fae26a595d8e"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at backend:screenshot:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-5Scl7y/public/calls.jsonl",
+      "sha256": "7d8a057f2d598b6d55a7a7453cef93168bf3c2f5db406fd1d83326fa88dd4478"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at afterCommit:startCreation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-6QCuv6/public/calls.jsonl",
+      "sha256": "fe9d81db9b27a1646db3a70c820d0597dc9d25a4910309d499a20d7f1476cc07"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at afterCommit:recordCreation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-830N61/public/calls.jsonl",
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.02 mcp durable external action cancel at evidence:provisional:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8RWqQG/public/calls.jsonl",
+      "sha256": "84ea1ee0c1de1b1809717b4a9d361972ca2d2617ab6a00bce5e5d83903622602"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.02 cli durable external action cancel at evidence:provisional:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8lOT8Q/public/calls.jsonl",
+      "sha256": "84ea1ee0c1de1b1809717b4a9d361972ca2d2617ab6a00bce5e5d83903622602"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at backend:list:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-CRHouE/public/calls.jsonl",
+      "sha256": "cd0032898efdc0da253fbdbbbc57aac8e50b93097fe059b9d2940fbc236446c2"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.02 mcp durable external action cancel at backend:touch:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Czbv3J/public/calls.jsonl",
+      "sha256": "3a7a5e4e3b079f27425ba3973791c1b24da3fa10d281f0daf7be8fe265505179"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.02 cli durable external action cancel at afterCommit:consumeAllocation:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Dto68G/public/calls.jsonl",
+      "sha256": "1ecd25f67196b1b8fb4039005012e5b114657d5f0413ce621d665cdcd9c4afba"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H06.05 genuine MCP owner late abort-ignoring touch reply cannot promote quarantined outcome",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-IMoYPb/public/calls.jsonl",
+      "sha256": "1298614f386db434cf54dcce75802360480d24fc8d72e4e215a4c6e21b8c527a"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at backend:list:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-IVifuz/public/calls.jsonl",
+      "sha256": "cd0032898efdc0da253fbdbbbc57aac8e50b93097fe059b9d2940fbc236446c2"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at afterCommit:reserveAllocation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-JxCBXI/public/calls.jsonl",
+      "sha256": "6aa2a7d53d745699baae08dc7cfba1914ffe4e127a08ba2b1119fae26a595d8e"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at afterCommit:stageAllocation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-K147L0/public/calls.jsonl",
+      "sha256": "5fb640d45edb9d02d43473dc8925f67ddda016738fe8ce7e2eab3914c3111516"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.06 SIGTERM racing durable ready commit preserves parked allocation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-L4SnK9/public/calls.jsonl",
+      "sha256": "6a11c5c54d41478e460cccb0373cf51bd8fe98dcf81988a5bb6729e9b1d1df6f"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at backend:list:2 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-LNA7mW/public/calls.jsonl",
+      "sha256": "53c1de9d38d5932128dba0cdcfbf168cb879e56524f4006caa41dc5eb4fcdf6a"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at afterCommit:recordCreation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-NipRBt/public/calls.jsonl",
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at backend:install:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-NymJYq/public/calls.jsonl",
+      "sha256": "8787f824d9b120092ef858ca4d255f9fdb107116848dc20225780154344a4434"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at backend:snapshot-ui:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-RNM6pN/public/calls.jsonl",
+      "sha256": "e5fe6e812f4a7f3118fad30b25e29696e6f5edee590d07d7269db6008b6a0988"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.03 public SIGINT is bounded by 5000ms and production exits 130",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Srh41p/public/calls.jsonl",
+      "sha256": "bfbc7438c5f99184bf040ed676b392ab3b08dd18a861fa13ce37f859fc272d6a"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H06.06 genuine CLI owner late abort-ignoring touch reply cannot promote quarantined outcome",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TTZSDr/public/calls.jsonl",
+      "sha256": "3a7a5e4e3b079f27425ba3973791c1b24da3fa10d281f0daf7be8fe265505179"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.02 cli durable external action cancel at durable:tap-authorized:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TfZ87o/public/calls.jsonl",
+      "sha256": "67e9baf77f0e6a1811947c90bac73740fab099e0673c1f19ad3d60eb7e177376"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.02 cli durable external action cancel at backend:touch:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Xwubmr/public/calls.jsonl",
+      "sha256": "3a7a5e4e3b079f27425ba3973791c1b24da3fa10d281f0daf7be8fe265505179"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at backend:install:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Zee2Z6/public/calls.jsonl",
+      "sha256": "8787f824d9b120092ef858ca4d255f9fdb107116848dc20225780154344a4434"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at afterCommit:attach:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-bQqgcW/public/calls.jsonl",
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at afterCommit:stageAllocation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-cnCpqo/public/calls.jsonl",
+      "sha256": "5fb640d45edb9d02d43473dc8925f67ddda016738fe8ce7e2eab3914c3111516"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.03 public SIGTERM is bounded by 5000ms and production exits 143",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-jFqvlt/public/calls.jsonl",
+      "sha256": "bfbc7438c5f99184bf040ed676b392ab3b08dd18a861fa13ce37f859fc272d6a"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.02 mcp durable external action cancel at durable:tap-authorized:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-keUsGx/public/calls.jsonl",
+      "sha256": "67e9baf77f0e6a1811947c90bac73740fab099e0673c1f19ad3d60eb7e177376"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at backend:boot:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-khT920/public/calls.jsonl",
+      "sha256": "fd04cec329bef7d972c7da4b13eeb6d15dc231473d8088b9945da6db97c426e3"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at backend:list:2 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-khymXR/public/calls.jsonl",
+      "sha256": "53c1de9d38d5932128dba0cdcfbf168cb879e56524f4006caa41dc5eb4fcdf6a"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.06 SIGINT racing durable ready commit preserves parked allocation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-l5v59E/public/calls.jsonl",
+      "sha256": "6a11c5c54d41478e460cccb0373cf51bd8fe98dcf81988a5bb6729e9b1d1df6f"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at backend:boot:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-rnaa8T/public/calls.jsonl",
+      "sha256": "fd04cec329bef7d972c7da4b13eeb6d15dc231473d8088b9945da6db97c426e3"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at backend:launch-app:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-u0UNx2/public/calls.jsonl",
+      "sha256": "0410b0f805b858eadd0b81652b5e863bb8e9ed62b5a98d86d4c85fc8c86d74dc"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at backend:snapshot-ui:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-xnYV6Y/public/calls.jsonl",
+      "sha256": "e5fe6e812f4a7f3118fad30b25e29696e6f5edee590d07d7269db6008b6a0988"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at afterCommit:startCreation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZk1B2/public/calls.jsonl",
+      "sha256": "fe9d81db9b27a1646db3a70c820d0597dc9d25a4910309d499a20d7f1476cc07"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.02 mcp durable external action cancel at afterCommit:consumeAllocation:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZsQDq/public/calls.jsonl",
+      "sha256": "1ecd25f67196b1b8fb4039005012e5b114657d5f0413ce621d665cdcd9c4afba"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at backend:launch-app:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-zRhGVd/public/calls.jsonl",
+      "sha256": "0410b0f805b858eadd0b81652b5e863bb8e9ed62b5a98d86d4c85fc8c86d74dc"
+    }
+  ]
+}

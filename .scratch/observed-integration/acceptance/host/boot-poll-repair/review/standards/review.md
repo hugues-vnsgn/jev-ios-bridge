@@ -1,0 +1,11 @@
+# Root boot-poll fixture independent Standards: PASS
+
+Candidate `6610b1363850a2cd019c508f1170a0fe1edec8ec`; sole parent `33cf39373353d3dd0137be20a172af0bd4059c5e`. Exact test hash `77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad` matches committed/current/frozen/snapshot bytes before/after. The sole runtime/test delta is this one existing test; remaining commit paths are Root-owned evidence/report/snapshots. No production, package, fixture-backend, golden or CI delta.
+
+**Documented breaches: 0. New named heuristic smells: 0.** Applied the code-review Standards axis with AGENTS/domain/glossary and ADR0002/0005/0007/0008/0009; tooling excluded. This review is independent of Root’s repair authorship and separate from my historical allocation implementation.
+
+The fixture uses the explicit existing isolated fake allocationFixture/subject. Controlled Date/setTimeout replace elapsed-wall scheduling in this test only (`tests/observed-allocation.test.ts:388–405`). The budget stays1100ms; exactly two lists, ≥1000ms separation, one boot, no install and not-ready assertions remain. New999ms/1000ms checkpoints strengthen the cadence oracle. Barriers observe the actual fake list attempts; setImmediate flushes their settled promise work before clock advancement. The finally block restores timers before closing the local allocator and removing the isolated fixture. No production budget, default parallelism, asserted expected count or backend behavior is relaxed.
+
+Read raw original-oracle controlled150ms-latency reproductions: exit1/one poll on both Node26.8.1 and exact24.0.0, one boot/no install, unchanged-source receipts. Read selected corrected logs/receipts:1/1 each runtime, exit0, matching source hashes. These prove the reported focused runs; selection is not full-suite acceptance. Exact freeze references/raw hashes all match.
+
+Static source/raw audit only; no tests/build/runtime/store/device/key/network command executed by this reviewer. Full Root gates were pending at dispatch and are not inferred here. The two Ticket09 Node26 failures remain preserved as failures on the old fixture. This distinct Standards PASS neither changes the Ticket09 candidate nor accepts any H row, live/native proof or Ticket12. Independent Spec remains separate.

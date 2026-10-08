@@ -1,0 +1,11 @@
+# Boot polling fixture repair — candidate, full gates and reviews pending
+
+Ticket09's two actual default Node26 full runs each report1667/1668, zero skips, with the sole unchanged `boot-state polling is no more frequent than once per second and boot is never retried` assertion expecting2 polls but observing1. Typecheck passes; build is not reached. ExactNode24 full1668 and both corrected added193 suites pass. These failures remain in the author's durable round2 vault and are not converted to passes.
+
+The original fixture uses1100ms of wall time and assumes two list calls. Production waits1000ms after the first list completes. A delay exceeding100ms leaves only one list within the same aggregate boot deadline, consistent with its required maximum polling frequency. This is a fixture scheduling assumption; no production cadence or timeout defect is inferred.
+
+Root's [controlled reproduction](reproduce.ts) adds150ms fake latency to the first list with unchanged production/budget/original exact-two oracle. Both Node26.8.1 and exact24.0.0 reproduce exit1/one poll, while issuing one boot and no install. [Node26 raw record](reproduce-node26.json) and [Node24 raw record](reproduce-node24.json) retain result/calls/timestamps and source hashes; command receipts and logs are alongside them.
+
+The repair changes one test only. Node's [controlled timer/date API](https://nodejs.org/download/release/v24.0.0/docs/api/test.html#class-mocktimers) advances the existing1100ms budget after the settled fake command:999ms proves no second poll,1000ms reaches the second, and1100ms closes the stage without install/readiness. Both exact-two and ≥1000ms interval assertions remain. One boot remains required. Explicit test-context cleanup restores timers before closing the isolated allocator. No production, fixture-backend, request, timeout-budget, golden or default-check parallelism changes.
+
+Focused corrected checks pass1/1 on both runtimes, no source drift. They select one test and do not substitute for the actual complete default checks. [Original/corrected source freeze and command hashes](freeze.json) pin the candidate at base `33cf39373353d3dd0137be20a172af0bd4059c5e`. Independent Spec/Standards review and full default both-runtime gates are pending. Ticket09 and complete H rows remain unaccepted.

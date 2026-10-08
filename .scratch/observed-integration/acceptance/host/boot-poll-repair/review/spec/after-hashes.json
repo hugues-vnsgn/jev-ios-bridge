@@ -1,0 +1,73 @@
+{
+  "candidate": "6610b1363850a2cd019c508f1170a0fe1edec8ec",
+  "parent": "33cf39373353d3dd0137be20a172af0bd4059c5e",
+  "sourceTestPaths": 1,
+  "evidencePaths": 15,
+  "files": {
+    ".scratch/observed-integration/acceptance/host/boot-poll-repair/controlled-clock-node24.json": {
+      "sha256": "4a22f6bcfbb6bae0f3a222d69f7e25dbaa4332bcf98711df89b5e06e4d25ddb0",
+      "blob": "90f358d77e52d0dcb47d396ee378039a7247c636"
+    },
+    ".scratch/observed-integration/acceptance/host/boot-poll-repair/controlled-clock-node24.log": {
+      "sha256": "36306b48c85428496c687ee5e10f85c5d5ca15770518bfde42520bf63586e199",
+      "blob": "442e151d4a436b935814a11fe8d90f654e4d88d6"
+    },
+    ".scratch/observed-integration/acceptance/host/boot-poll-repair/controlled-clock-node26.json": {
+      "sha256": "48ad18053b667ba6938f3aaeed407ef5e1c0bf4e79b67493f2978a5f023dfb00",
+      "blob": "a8aa12755563eca35ac0e81ac608877a0f1d31b2"
+    },
+    ".scratch/observed-integration/acceptance/host/boot-poll-repair/controlled-clock-node26.log": {
+      "sha256": "9e8d9c4526b8ca0459ecb7358fbc91c3da26c23b7f03693e64f0a13a4f05881e",
+      "blob": "df82d955f59a1203263e5aee3f53d840f14ce1f5"
+    },
+    ".scratch/observed-integration/acceptance/host/boot-poll-repair/corrected.test.ts": {
+      "sha256": "77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad",
+      "blob": "3227e0e3cf44fc6847eb2a7f1c6bed6700baae21"
+    },
+    ".scratch/observed-integration/acceptance/host/boot-poll-repair/freeze.json": {
+      "sha256": "22be780e9d37260b0f822fa2ed6370042ac87aa7a039181d8f8aa4dfe6f45d4b",
+      "blob": "3e04dc8cad12010ea1112d9c089ea4554bcc2b69"
+    },
+    ".scratch/observed-integration/acceptance/host/boot-poll-repair/original.test.ts": {
+      "sha256": "0b0358c4d031f24aef59cb0bf70a5bab7be2dd999fd168295cd6a5b48d7e794f",
+      "blob": "a63386a67cb6b843a8fe93a691ad794d20c19772"
+    },
+    ".scratch/observed-integration/acceptance/host/boot-poll-repair/report.md": {
+      "sha256": "4c4a1df731d3d9076a8a03201bca350ba8b2597d3a7839ad7baa6dabc2077353",
+      "blob": "262d60c2e3cc7d5559d765725375f0d3d34f4b36"
+    },
+    ".scratch/observed-integration/acceptance/host/boot-poll-repair/reproduce-node24-command.json": {
+      "sha256": "70937a037ba6f4db9f46fe334071fa361e47f87fa2967801043578c4cb767621",
+      "blob": "9efa272120dbb65455a1335151f9ee2cf51c69e5"
+    },
+    ".scratch/observed-integration/acceptance/host/boot-poll-repair/reproduce-node24.json": {
+      "sha256": "79bb13a469d02ab052e11b8be36c97ca11f1a2c26dd7f99e942693a1333fc4bd",
+      "blob": "a2b56cef7a7d870660ce93ecdf82cc85d18534af"
+    },
+    ".scratch/observed-integration/acceptance/host/boot-poll-repair/reproduce-node24.log": {
+      "sha256": "041cda0d00c3c16d2bea91f53951a6f03d470bc01f175d77d020ddc5a90eecf1",
+      "blob": "257d21d96b156cbf954716faead6377816e280ca"
+    },
+    ".scratch/observed-integration/acceptance/host/boot-poll-repair/reproduce-node26-command.json": {
+      "sha256": "16b1da179902fad0205ec47e00d1cf572f9ae2fa5401251638c135e9d72eff85",
+      "blob": "0801108595f6c9d201b71b3063d216e2562369c8"
+    },
+    ".scratch/observed-integration/acceptance/host/boot-poll-repair/reproduce-node26.json": {
+      "sha256": "cbc1a93da8efc6db6948b44500c6f545da002ad82a7163a4b93ae56c68640677",
+      "blob": "399f842e4a6a40e71b88b5e4d25bb952e9409447"
+    },
+    ".scratch/observed-integration/acceptance/host/boot-poll-repair/reproduce-node26.log": {
+      "sha256": "ef927d13d2e15890c5f780131aa9a99495ac0b67086974f1817a297991ddcafd",
+      "blob": "bbbede90bdea1c23c5459daf00c9b137205d98f3"
+    },
+    ".scratch/observed-integration/acceptance/host/boot-poll-repair/reproduce.ts": {
+      "sha256": "3967d5c0e6a85c07bf3277901f47221f84a7c597e5ff0c92a550caa67ce7c9d8",
+      "blob": "c7c79842eeda0f9bd48bd659af989bbec84666ec"
+    },
+    "tests/observed-allocation.test.ts": {
+      "sha256": "77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad",
+      "blob": "3227e0e3cf44fc6847eb2a7f1c6bed6700baae21"
+    }
+  },
+  "originalTestSha256": "0b0358c4d031f24aef59cb0bf70a5bab7be2dd999fd168295cd6a5b48d7e794f"
+}

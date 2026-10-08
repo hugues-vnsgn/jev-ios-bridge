@@ -1,0 +1,29 @@
+{
+  "verdict": "PASS",
+  "axis": "Standards only",
+  "candidate": "d0c24bbbef7961a9377d6338fcff140e7373244e",
+  "soleParent": "08a985805cb442a2404eb9561ae92f69748ae5e0",
+  "expectedParent": "08a985805cb442a2404eb9561ae92f69748ae5e0",
+  "candidateTree": "3e6528bc6f7e6c9ac1ae64b6b960fbfa25db30a0",
+  "currentHead": "d0c24bbbef7961a9377d6338fcff140e7373244e",
+  "actualChangedPaths": [
+    ".scratch/observed-action-rollout/issues/09-host-fault-suite.md",
+    "tests/fixtures/observed-cli-server.ts",
+    "tests/fixtures/observed-host/case-matrix.json",
+    "tests/fixtures/observed-host/early-cli.ts",
+    "tests/observed-crash.test.ts",
+    "tests/observed-public-races.test.ts"
+  ],
+  "allowedFrozenPaths": 10,
+  "mappingBeforeAfterMatches": true,
+  "protectedOriginal108": {
+    "unchanged": 107,
+    "authorizedOneLineProducerDelta": 1
+  },
+  "trackedDiff": "",
+  "trackedCachedDiff": "",
+  "manifestSha256": "59a5b4e0a8036d5cd5f8829d51063efc372d4823e39857743e3bf21596224310",
+  "authorReportSha256": "08f52f2929278c301db7e1a5ed1dc8abe531b5f0f0ba2361dcfa92b6b32ac21a",
+  "fullGateStatus": "BLOCKED: unchanged protected boot-poll Node26 actual1667/1668 twice; build not reached; no full26 acceptance",
+  "reviewerExecutedTests": false
+}

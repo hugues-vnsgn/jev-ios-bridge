@@ -1,0 +1,18 @@
+{
+  "classification": "Sole unchanged known boot-poll fixture1100ms boundary repeated on authorized unchanged default rerun; no product defect inferred",
+  "tests": 1668,
+  "pass": 1667,
+  "fail": 1,
+  "cancelled": 0,
+  "skipped": 0,
+  "exitCode": 1,
+  "typecheck": "PASS",
+  "build": "Not reached",
+  "failure": "tests/observed-allocation.test.ts:392:86 list timestamp count expected2 actual1",
+  "sourceSha256": "0b0358c4d031f24aef59cb0bf70a5bab7be2dd999fd168295cd6a5b48d7e794f",
+  "beforeAfterOwnedSourceMatch": true,
+  "logSha256": "485f13b5d7061e9999c4916eac838916f1d2a782f30f77766b6eed6de1b1a43b",
+  "excerptSha256": "759b552429697e0abaf3be135914942b0742c2c2c224b8ff120bcedc34933b2f",
+  "furtherRuns": "Not authorized; reported to Root before further action",
+  "fallback": "None"
+}

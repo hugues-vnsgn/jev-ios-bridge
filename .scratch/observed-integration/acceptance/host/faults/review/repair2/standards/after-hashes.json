@@ -1,0 +1,72 @@
+[
+  {
+    "path": ".scratch/observed-action-rollout/issues/09-host-fault-suite.md",
+    "workingSha256": "482d9c6dfffd09237ec004b9a01a0b4e0bede9d495d1d24a84cebdd1c8b3bbf0",
+    "snapshotSha256": "482d9c6dfffd09237ec004b9a01a0b4e0bede9d495d1d24a84cebdd1c8b3bbf0",
+    "candidateSha256": "482d9c6dfffd09237ec004b9a01a0b4e0bede9d495d1d24a84cebdd1c8b3bbf0",
+    "unchanged": true
+  },
+  {
+    "path": "tests/fixtures/observed-host/allocator-public.ts",
+    "workingSha256": "4362eb422c0213918d9e37e0d43c04644ae9429322be39bed82b0ce98d1228e1",
+    "snapshotSha256": "4362eb422c0213918d9e37e0d43c04644ae9429322be39bed82b0ce98d1228e1",
+    "candidateSha256": "4362eb422c0213918d9e37e0d43c04644ae9429322be39bed82b0ce98d1228e1",
+    "unchanged": true
+  },
+  {
+    "path": "tests/fixtures/observed-host/case-matrix.json",
+    "workingSha256": "4a8d1f8b0cc818c55b087cfaac5d54efe5c5da6f1bce22e41df7b229f0d810f7",
+    "snapshotSha256": "4a8d1f8b0cc818c55b087cfaac5d54efe5c5da6f1bce22e41df7b229f0d810f7",
+    "candidateSha256": "4a8d1f8b0cc818c55b087cfaac5d54efe5c5da6f1bce22e41df7b229f0d810f7",
+    "unchanged": true
+  },
+  {
+    "path": "tests/fixtures/observed-host/early-cli.ts",
+    "workingSha256": "9625fc2f76374c41fdb9681fe5fa7c79afa35c1020b0cee98a3be4cd355e67f8",
+    "snapshotSha256": "9625fc2f76374c41fdb9681fe5fa7c79afa35c1020b0cee98a3be4cd355e67f8",
+    "candidateSha256": "9625fc2f76374c41fdb9681fe5fa7c79afa35c1020b0cee98a3be4cd355e67f8",
+    "unchanged": true
+  },
+  {
+    "path": "tests/fixtures/observed-host/harness.ts",
+    "workingSha256": "463d7f5feb7eedc32ac5d688d2bcb57c87460875fd14b7de3f5864da29f893a1",
+    "snapshotSha256": "463d7f5feb7eedc32ac5d688d2bcb57c87460875fd14b7de3f5864da29f893a1",
+    "candidateSha256": "463d7f5feb7eedc32ac5d688d2bcb57c87460875fd14b7de3f5864da29f893a1",
+    "unchanged": true
+  },
+  {
+    "path": "tests/fixtures/observed-host/owner.ts",
+    "workingSha256": "b9a379c00645a1c3cc0704ad2986572b0c62ef0bbd3586d659649ecf160f941a",
+    "snapshotSha256": "b9a379c00645a1c3cc0704ad2986572b0c62ef0bbd3586d659649ecf160f941a",
+    "candidateSha256": "b9a379c00645a1c3cc0704ad2986572b0c62ef0bbd3586d659649ecf160f941a",
+    "unchanged": true
+  },
+  {
+    "path": "tests/observed-crash.test.ts",
+    "workingSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+    "snapshotSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+    "candidateSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+    "unchanged": true
+  },
+  {
+    "path": "tests/observed-host-fault.test.ts",
+    "workingSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+    "snapshotSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+    "candidateSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+    "unchanged": true
+  },
+  {
+    "path": "tests/observed-public-races.test.ts",
+    "workingSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+    "snapshotSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+    "candidateSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+    "unchanged": true
+  },
+  {
+    "path": "tests/fixtures/observed-cli-server.ts",
+    "workingSha256": "e0bffe3dfe1b0ee90aed64b7fd2493ddb91faf73cf8c1c9e418338fc55f811d1",
+    "snapshotSha256": "e0bffe3dfe1b0ee90aed64b7fd2493ddb91faf73cf8c1c9e418338fc55f811d1",
+    "candidateSha256": "e0bffe3dfe1b0ee90aed64b7fd2493ddb91faf73cf8c1c9e418338fc55f811d1",
+    "unchanged": true
+  }
+]

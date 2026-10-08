@@ -1,0 +1,47 @@
+--- a5f1ba15
++++ 42dedbf1
+@@ -69,29 +69,28 @@
+ execution_error = None
+ cleanup_errors = []
+ received_signal = None
+-publishing_child = False
+ def interrupted(signum, frame):
+     global received_signal
+-    if received_signal is not None:
+-        return
+-    received_signal = signum
+-    if not publishing_child:
+-        raise InterruptedError('Owned host runner interrupted')
++    # Record only: no asynchronous exception can escape spawn or cleanup.
++    received_signal = received_signal or signum
+ previous_handlers = {number: signal.getsignal(number) for number in [signal.SIGINT, signal.SIGTERM]}
+ for number in previous_handlers:
+     signal.signal(number, interrupted)
+ try:
+     with (directory / 'stdout').open('wb') as stdout, (directory / 'stderr').open('wb') as stderr:
+-        # A handler records interruption until the owned handle is published.
+-        # Child processes inherit their ordinary signal mask.
+-        publishing_child = True
+-        try:
+-            child = subprocess.Popen(command, cwd=cwd, env=env, stdout=stdout, stderr=stderr, umask=0o022, start_new_session=True)
+-        finally:
+-            publishing_child = False
+-        if received_signal:
+-            raise InterruptedError('Owned host runner interrupted during spawn')
+-        code = child.wait(timeout=timeout)
++        child = subprocess.Popen(command, cwd=cwd, env=env, stdout=stdout, stderr=stderr, umask=0o022, start_new_session=True)
++        deadline = start + timeout
++        while True:
++            if received_signal:
++                raise InterruptedError('Owned host runner interrupted')
++            remaining = deadline - time.monotonic()
++            if remaining <= 0:
++                raise subprocess.TimeoutExpired(command, timeout)
++            try:
++                code = child.wait(timeout=min(0.25, remaining))
++                break
++            except subprocess.TimeoutExpired:
++                continue
+ except subprocess.TimeoutExpired:
+     timed_out = True
+ except BaseException as error:

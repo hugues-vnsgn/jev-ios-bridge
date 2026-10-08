@@ -1,0 +1,5525 @@
+{
+  "sourceFreeze": "round2-static-freeze.json",
+  "casesPerRuntime": 42,
+  "records": [
+    {
+      "runtime": "added-node26",
+      "title": "H05.12 genuine CLI SIGTERM during artifact-inspection fences ignored-abort preparation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/early-artifact-inspection/public/backend-attempts.jsonl",
+      "sha256": "7647e3592bafbab3f8ea3cd8c8eb959a3b9c7183625e259b74db1a22a5b3a463",
+      "attemptCounts": {
+        "plist": 9
+      },
+      "attempts": [
+        {
+          "pid": 98684,
+          "kind": "attempt",
+          "sequence": 1,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Applications/Xcode.app/Contents/Info.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 98684,
+          "kind": "attempt",
+          "sequence": 2,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Applications/Xcode.app/Contents/version.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 98684,
+          "kind": "attempt",
+          "sequence": 3,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/System/Library/CoreServices/SystemVersion.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 98684,
+          "kind": "attempt",
+          "sequence": 4,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 98684,
+          "kind": "attempt",
+          "sequence": 5,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 98684,
+          "kind": "attempt",
+          "sequence": 6,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 98684,
+          "kind": "attempt",
+          "sequence": 7,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 98684,
+          "kind": "attempt",
+          "sequence": 8,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 98684,
+          "kind": "attempt",
+          "sequence": 9,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-hrNJsf/Fixture.app/Info.plist"
+          ],
+          "signalAborted": false
+        }
+      ],
+      "exit": [
+        {
+          "pid": 98684,
+          "kind": "process-exit",
+          "exitCode": 143
+        }
+      ],
+      "actualPublicExit": {
+        "pid": 98684,
+        "code": 143,
+        "signal": null
+      },
+      "errors": 0
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.12 genuine CLI SIGTERM during artifact-staging fences ignored-abort preparation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/early-artifact-staging/public/backend-attempts.jsonl",
+      "sha256": "16cd59159687695e56b0d8ca39c3140fe6918d574f3b3a0724674039c676ff21",
+      "attemptCounts": {
+        "plist": 10
+      },
+      "attempts": [
+        {
+          "pid": 99126,
+          "kind": "attempt",
+          "sequence": 1,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Applications/Xcode.app/Contents/Info.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 99126,
+          "kind": "attempt",
+          "sequence": 2,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Applications/Xcode.app/Contents/version.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 99126,
+          "kind": "attempt",
+          "sequence": 3,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/System/Library/CoreServices/SystemVersion.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 99126,
+          "kind": "attempt",
+          "sequence": 4,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 99126,
+          "kind": "attempt",
+          "sequence": 5,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 99126,
+          "kind": "attempt",
+          "sequence": 6,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 99126,
+          "kind": "attempt",
+          "sequence": 7,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 99126,
+          "kind": "attempt",
+          "sequence": 8,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 99126,
+          "kind": "attempt",
+          "sequence": 9,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-KhFelf/Fixture.app/Info.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 99126,
+          "kind": "attempt",
+          "sequence": 10,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-KhFelf/runs/observed/allocate-one/allocation/staging/artifact-gCMFWY/Fixture.app/Info.plist"
+          ],
+          "signalAborted": false
+        }
+      ],
+      "exit": [
+        {
+          "pid": 99126,
+          "kind": "process-exit",
+          "exitCode": 143
+        }
+      ],
+      "actualPublicExit": {
+        "pid": 99126,
+        "code": 143,
+        "signal": null
+      },
+      "errors": 0
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.12 genuine CLI SIGTERM during configuration fences ignored-abort preparation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/early-configuration/public/backend-attempts.jsonl",
+      "sha256": "29c6ea6af391bcc101d810cf3f2c46512d0a7dca62075b0975b13ab7cea161d2",
+      "attemptCounts": {},
+      "attempts": [],
+      "exit": [
+        {
+          "pid": 98145,
+          "kind": "process-exit",
+          "exitCode": 143
+        }
+      ],
+      "actualPublicExit": {
+        "pid": 98145,
+        "code": 143,
+        "signal": null
+      },
+      "errors": 0
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.12 genuine CLI SIGTERM during host-proof fences ignored-abort preparation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/early-host-proof/public/backend-attempts.jsonl",
+      "sha256": "4a9ccf548706b1e4574fa6f516cbbb2d61241b6238ccfbb00b6b360a6ec8c81c",
+      "attemptCounts": {
+        "plist": 1
+      },
+      "attempts": [
+        {
+          "pid": 98445,
+          "kind": "attempt",
+          "sequence": 1,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Applications/Xcode.app/Contents/Info.plist"
+          ],
+          "signalAborted": false
+        }
+      ],
+      "exit": [
+        {
+          "pid": 98445,
+          "kind": "process-exit",
+          "exitCode": 143
+        }
+      ],
+      "actualPublicExit": {
+        "pid": 98445,
+        "code": 143,
+        "signal": null
+      },
+      "errors": 0
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.03 public SIGTERM is bounded by 5000ms and production exits 143",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-68nLQ7/public/calls.jsonl",
+      "sha256": "bfbc7438c5f99184bf040ed676b392ab3b08dd18a861fa13ce37f859fc272d6a",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot",
+        "snapshot-ui",
+        "screenshot",
+        "resource-live"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 2,
+        "screenshot": 2,
+        "resource-live": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-68nLQ7/public/command-1.json",
+          "pid": 97935,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-68nLQ7/public/command-2.json",
+          "pid": 97985,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 143,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-68nLQ7/public/command-3.json",
+          "pid": 97987,
+          "transport": "cli",
+          "command": "observed-report",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at afterCommit:recordCreation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-6knkov/public/calls.jsonl",
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-6knkov/public/command-1.json",
+          "pid": 97046,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-6knkov/public/command-2.json",
+          "pid": 97049,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-6knkov/public/command-3.json",
+          "pid": 97051,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.02 mcp durable external action cancel at durable:tap-authorized:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-9qkUaR/public/calls.jsonl",
+      "sha256": "67e9baf77f0e6a1811947c90bac73740fab099e0673c1f19ad3d60eb7e177376",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot",
+        "snapshot-ui",
+        "screenshot",
+        "touch"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 2,
+        "screenshot": 2,
+        "touch": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-9qkUaR/public/command-1.json",
+          "pid": 97583,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-9qkUaR/public/command-2.json",
+          "pid": 97607,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-9qkUaR/public/command-3.json",
+          "pid": 97619,
+          "transport": "cli",
+          "command": "observed-retire",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-9qkUaR/public/command-4.json",
+          "pid": 97620,
+          "transport": "cli",
+          "command": "observed-cancel",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-9qkUaR/public/command-5.json",
+          "pid": 97633,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at afterCommit:reserveAllocation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-IEs87w/public/calls.jsonl",
+      "sha256": "6aa2a7d53d745699baae08dc7cfba1914ffe4e127a08ba2b1119fae26a595d8e",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist"
+      ],
+      "callCounts": {
+        "plist": 9
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-IEs87w/public/command-1.json",
+          "pid": 95725,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-IEs87w/public/command-2.json",
+          "pid": 95793,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-IEs87w/public/command-3.json",
+          "pid": 95866,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at afterCommit:startCreation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-KUUEtK/public/calls.jsonl",
+      "sha256": "fe9d81db9b27a1646db3a70c820d0597dc9d25a4910309d499a20d7f1476cc07",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-KUUEtK/public/command-1.json",
+          "pid": 95890,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-KUUEtK/public/command-2.json",
+          "pid": 95903,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-KUUEtK/public/command-3.json",
+          "pid": 95906,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at afterCommit:recordCreation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-MxGjsY/public/calls.jsonl",
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-MxGjsY/public/command-1.json",
+          "pid": 95911,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-MxGjsY/public/command-2.json",
+          "pid": 95924,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-MxGjsY/public/command-3.json",
+          "pid": 95928,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at backend:install:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-OY4SHN/public/calls.jsonl",
+      "sha256": "8787f824d9b120092ef858ca4d255f9fdb107116848dc20225780154344a4434",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 1,
+        "install": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-OY4SHN/public/command-1.json",
+          "pid": 97139,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-OY4SHN/public/command-2.json",
+          "pid": 97144,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-OY4SHN/public/command-3.json",
+          "pid": 97145,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.03 public SIGINT is bounded by 5000ms and production exits 130",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Ql69Ax/public/calls.jsonl",
+      "sha256": "bfbc7438c5f99184bf040ed676b392ab3b08dd18a861fa13ce37f859fc272d6a",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot",
+        "snapshot-ui",
+        "screenshot",
+        "resource-live"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 2,
+        "screenshot": 2,
+        "resource-live": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Ql69Ax/public/command-1.json",
+          "pid": 97734,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Ql69Ax/public/command-2.json",
+          "pid": 97881,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 130,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Ql69Ax/public/command-3.json",
+          "pid": 97885,
+          "transport": "cli",
+          "command": "observed-report",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at afterCommit:startCreation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-RQOC5u/public/calls.jsonl",
+      "sha256": "fe9d81db9b27a1646db3a70c820d0597dc9d25a4910309d499a20d7f1476cc07",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-RQOC5u/public/command-1.json",
+          "pid": 97009,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-RQOC5u/public/command-2.json",
+          "pid": 97032,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-RQOC5u/public/command-3.json",
+          "pid": 97033,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at backend:list:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-U8GEFT/public/calls.jsonl",
+      "sha256": "cd0032898efdc0da253fbdbbbc57aac8e50b93097fe059b9d2940fbc236446c2",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-U8GEFT/public/command-1.json",
+          "pid": 95983,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-U8GEFT/public/command-2.json",
+          "pid": 96063,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-U8GEFT/public/command-3.json",
+          "pid": 96065,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at backend:snapshot-ui:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-VCU00l/public/calls.jsonl",
+      "sha256": "e5fe6e812f4a7f3118fad30b25e29696e6f5edee590d07d7269db6008b6a0988",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-VCU00l/public/command-1.json",
+          "pid": 97219,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-VCU00l/public/command-2.json",
+          "pid": 97226,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-VCU00l/public/command-3.json",
+          "pid": 97237,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H06.05 genuine MCP owner late abort-ignoring touch reply cannot promote quarantined outcome",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-VvIYvy/public/calls.jsonl",
+      "sha256": "1298614f386db434cf54dcce75802360480d24fc8d72e4e215a4c6e21b8c527a",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot",
+        "snapshot-ui",
+        "screenshot",
+        "touch"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 2,
+        "screenshot": 2,
+        "touch": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-VvIYvy/public/command-1.json",
+          "pid": 97884,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-VvIYvy/public/command-2.json",
+          "pid": 97933,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.02 cli durable external action cancel at afterCommit:consumeAllocation:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-W32ztv/public/calls.jsonl",
+      "sha256": "1ecd25f67196b1b8fb4039005012e5b114657d5f0413ce621d665cdcd9c4afba",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 1,
+        "screenshot": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-W32ztv/public/command-1.json",
+          "pid": 96368,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-W32ztv/public/command-2.json",
+          "pid": 96382,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-W32ztv/public/command-3.json",
+          "pid": 96384,
+          "transport": "cli",
+          "command": "observed-retire",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-W32ztv/public/command-4.json",
+          "pid": 96386,
+          "transport": "cli",
+          "command": "observed-cancel",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-W32ztv/public/command-5.json",
+          "pid": 96400,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.06 SIGTERM racing durable ready commit preserves parked allocation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-WoQsDi/public/calls.jsonl",
+      "sha256": "6a11c5c54d41478e460cccb0373cf51bd8fe98dcf81988a5bb6729e9b1d1df6f",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 1,
+        "screenshot": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-WoQsDi/public/command-1.json",
+          "pid": 99312,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at backend:list:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-XNjAhC/public/calls.jsonl",
+      "sha256": "cd0032898efdc0da253fbdbbbc57aac8e50b93097fe059b9d2940fbc236446c2",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-XNjAhC/public/command-1.json",
+          "pid": 97110,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-XNjAhC/public/command-2.json",
+          "pid": 97121,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-XNjAhC/public/command-3.json",
+          "pid": 97126,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at afterCommit:attach:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-XksetX/public/calls.jsonl",
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-XksetX/public/command-1.json",
+          "pid": 95942,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-XksetX/public/command-2.json",
+          "pid": 95956,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-XksetX/public/command-3.json",
+          "pid": 95959,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at backend:boot:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Z6vj7F/public/calls.jsonl",
+      "sha256": "fd04cec329bef7d972c7da4b13eeb6d15dc231473d8088b9945da6db97c426e3",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Z6vj7F/public/command-1.json",
+          "pid": 97081,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Z6vj7F/public/command-2.json",
+          "pid": 97084,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Z6vj7F/public/command-3.json",
+          "pid": 97097,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.02 cli durable external action cancel at backend:touch:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Zz6vEP/public/calls.jsonl",
+      "sha256": "3a7a5e4e3b079f27425ba3973791c1b24da3fa10d281f0daf7be8fe265505179",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot",
+        "snapshot-ui",
+        "screenshot",
+        "touch"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 2,
+        "screenshot": 2,
+        "touch": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Zz6vEP/public/command-1.json",
+          "pid": 96717,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Zz6vEP/public/command-2.json",
+          "pid": 96733,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Zz6vEP/public/command-3.json",
+          "pid": 96737,
+          "transport": "cli",
+          "command": "observed-retire",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Zz6vEP/public/command-4.json",
+          "pid": 96749,
+          "transport": "cli",
+          "command": "observed-cancel",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Zz6vEP/public/command-5.json",
+          "pid": 96754,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.02 mcp durable external action cancel at backend:touch:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-aRzifn/public/calls.jsonl",
+      "sha256": "3a7a5e4e3b079f27425ba3973791c1b24da3fa10d281f0daf7be8fe265505179",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot",
+        "snapshot-ui",
+        "screenshot",
+        "touch"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 2,
+        "screenshot": 2,
+        "touch": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-aRzifn/public/command-1.json",
+          "pid": 97634,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-aRzifn/public/command-2.json",
+          "pid": 97647,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-aRzifn/public/command-3.json",
+          "pid": 97668,
+          "transport": "cli",
+          "command": "observed-retire",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-aRzifn/public/command-4.json",
+          "pid": 97669,
+          "transport": "cli",
+          "command": "observed-cancel",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-aRzifn/public/command-5.json",
+          "pid": 97673,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at backend:launch-app:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-c6Gi1C/public/calls.jsonl",
+      "sha256": "0410b0f805b858eadd0b81652b5e863bb8e9ed62b5a98d86d4c85fc8c86d74dc",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 1,
+        "install": 1,
+        "launch-app": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-c6Gi1C/public/command-1.json",
+          "pid": 97158,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-c6Gi1C/public/command-2.json",
+          "pid": 97181,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-c6Gi1C/public/command-3.json",
+          "pid": 97188,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.02 cli durable external action cancel at evidence:provisional:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-cf75r8/public/calls.jsonl",
+      "sha256": "84ea1ee0c1de1b1809717b4a9d361972ca2d2617ab6a00bce5e5d83903622602",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot",
+        "snapshot-ui",
+        "screenshot",
+        "touch",
+        "snapshot-ui",
+        "screenshot"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 3,
+        "screenshot": 3,
+        "touch": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-cf75r8/public/command-1.json",
+          "pid": 96778,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-cf75r8/public/command-2.json",
+          "pid": 96801,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-cf75r8/public/command-3.json",
+          "pid": 96815,
+          "transport": "cli",
+          "command": "observed-retire",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-cf75r8/public/command-4.json",
+          "pid": 96828,
+          "transport": "cli",
+          "command": "observed-cancel",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-cf75r8/public/command-5.json",
+          "pid": 96848,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.02 mcp durable external action cancel at evidence:provisional:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-gCCyYZ/public/calls.jsonl",
+      "sha256": "84ea1ee0c1de1b1809717b4a9d361972ca2d2617ab6a00bce5e5d83903622602",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot",
+        "snapshot-ui",
+        "screenshot",
+        "touch",
+        "snapshot-ui",
+        "screenshot"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 3,
+        "screenshot": 3,
+        "touch": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-gCCyYZ/public/command-1.json",
+          "pid": 97685,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-gCCyYZ/public/command-2.json",
+          "pid": 97697,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-gCCyYZ/public/command-3.json",
+          "pid": 97709,
+          "transport": "cli",
+          "command": "observed-retire",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-gCCyYZ/public/command-4.json",
+          "pid": 97710,
+          "transport": "cli",
+          "command": "observed-cancel",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-gCCyYZ/public/command-5.json",
+          "pid": 97732,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at afterCommit:stageAllocation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-kaZzaU/public/calls.jsonl",
+      "sha256": "5fb640d45edb9d02d43473dc8925f67ddda016738fe8ce7e2eab3914c3111516",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist"
+      ],
+      "callCounts": {
+        "plist": 10
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-kaZzaU/public/command-1.json",
+          "pid": 96867,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-kaZzaU/public/command-2.json",
+          "pid": 96879,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-kaZzaU/public/command-3.json",
+          "pid": 96883,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.02 cli durable external action cancel at durable:tap-authorized:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-m9U1B6/public/calls.jsonl",
+      "sha256": "67e9baf77f0e6a1811947c90bac73740fab099e0673c1f19ad3d60eb7e177376",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot",
+        "snapshot-ui",
+        "screenshot",
+        "touch"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 2,
+        "screenshot": 2,
+        "touch": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-m9U1B6/public/command-1.json",
+          "pid": 96403,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-m9U1B6/public/command-2.json",
+          "pid": 96596,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-m9U1B6/public/command-3.json",
+          "pid": 96698,
+          "transport": "cli",
+          "command": "observed-retire",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-m9U1B6/public/command-4.json",
+          "pid": 96699,
+          "transport": "cli",
+          "command": "observed-cancel",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-m9U1B6/public/command-5.json",
+          "pid": 96715,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at backend:install:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-nm9Uxd/public/calls.jsonl",
+      "sha256": "8787f824d9b120092ef858ca4d255f9fdb107116848dc20225780154344a4434",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 1,
+        "install": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-nm9Uxd/public/command-1.json",
+          "pid": 96078,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-nm9Uxd/public/command-2.json",
+          "pid": 96092,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-nm9Uxd/public/command-3.json",
+          "pid": 96095,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H06.06 genuine CLI owner late abort-ignoring touch reply cannot promote quarantined outcome",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-noDw1y/public/calls.jsonl",
+      "sha256": "3a7a5e4e3b079f27425ba3973791c1b24da3fa10d281f0daf7be8fe265505179",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot",
+        "snapshot-ui",
+        "screenshot",
+        "touch"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 2,
+        "screenshot": 2,
+        "touch": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-noDw1y/public/command-1.json",
+          "pid": 97986,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-noDw1y/public/command-2.json",
+          "pid": 98104,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-noDw1y/public/command-3.json",
+          "pid": 98106,
+          "transport": "cli",
+          "command": "observed-cancel",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-noDw1y/public/command-4.json",
+          "pid": 98117,
+          "transport": "cli",
+          "command": "observed-report",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-noDw1y/public/command-5.json",
+          "pid": 98120,
+          "transport": "cli",
+          "command": "observed-report",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at afterCommit:attach:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-nsek40/public/calls.jsonl",
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-nsek40/public/command-1.json",
+          "pid": 97065,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-nsek40/public/command-2.json",
+          "pid": 97067,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-nsek40/public/command-3.json",
+          "pid": 97068,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at afterCommit:reserveAllocation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-qehJvE/public/calls.jsonl",
+      "sha256": "6aa2a7d53d745699baae08dc7cfba1914ffe4e127a08ba2b1119fae26a595d8e",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist"
+      ],
+      "callCounts": {
+        "plist": 9
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-qehJvE/public/command-1.json",
+          "pid": 96861,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-qehJvE/public/command-2.json",
+          "pid": 96863,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-qehJvE/public/command-3.json",
+          "pid": 96864,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at backend:snapshot-ui:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-qveqw3/public/calls.jsonl",
+      "sha256": "e5fe6e812f4a7f3118fad30b25e29696e6f5edee590d07d7269db6008b6a0988",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-qveqw3/public/command-1.json",
+          "pid": 96171,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-qveqw3/public/command-2.json",
+          "pid": 96184,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-qveqw3/public/command-3.json",
+          "pid": 96197,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at backend:launch-app:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-ruaqIK/public/calls.jsonl",
+      "sha256": "0410b0f805b858eadd0b81652b5e863bb8e9ed62b5a98d86d4c85fc8c86d74dc",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 1,
+        "install": 1,
+        "launch-app": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-ruaqIK/public/command-1.json",
+          "pid": 96111,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-ruaqIK/public/command-2.json",
+          "pid": 96124,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-ruaqIK/public/command-3.json",
+          "pid": 96127,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at backend:list:2 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xI13G0/public/calls.jsonl",
+      "sha256": "53c1de9d38d5932128dba0cdcfbf168cb879e56524f4006caa41dc5eb4fcdf6a",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xI13G0/public/command-1.json",
+          "pid": 96139,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xI13G0/public/command-2.json",
+          "pid": 96154,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xI13G0/public/command-3.json",
+          "pid": 96167,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.02 mcp durable external action cancel at afterCommit:consumeAllocation:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xXuDNp/public/calls.jsonl",
+      "sha256": "1ecd25f67196b1b8fb4039005012e5b114657d5f0413ce621d665cdcd9c4afba",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 1,
+        "screenshot": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xXuDNp/public/command-1.json",
+          "pid": 97555,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xXuDNp/public/command-2.json",
+          "pid": 97567,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xXuDNp/public/command-3.json",
+          "pid": 97568,
+          "transport": "cli",
+          "command": "observed-retire",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xXuDNp/public/command-4.json",
+          "pid": 97570,
+          "transport": "cli",
+          "command": "observed-cancel",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xXuDNp/public/command-5.json",
+          "pid": 97581,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at backend:boot:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xabqpK/public/calls.jsonl",
+      "sha256": "fd04cec329bef7d972c7da4b13eeb6d15dc231473d8088b9945da6db97c426e3",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xabqpK/public/command-1.json",
+          "pid": 95964,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xabqpK/public/command-2.json",
+          "pid": 95979,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xabqpK/public/command-3.json",
+          "pid": 95980,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at afterCommit:stageAllocation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xfWAEy/public/calls.jsonl",
+      "sha256": "5fb640d45edb9d02d43473dc8925f67ddda016738fe8ce7e2eab3914c3111516",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist"
+      ],
+      "callCounts": {
+        "plist": 10
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xfWAEy/public/command-1.json",
+          "pid": 95871,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xfWAEy/public/command-2.json",
+          "pid": 95884,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xfWAEy/public/command-3.json",
+          "pid": 95886,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at backend:list:2 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-y2LctB/public/calls.jsonl",
+      "sha256": "53c1de9d38d5932128dba0cdcfbf168cb879e56524f4006caa41dc5eb4fcdf6a",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-y2LctB/public/command-1.json",
+          "pid": 97191,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-y2LctB/public/command-2.json",
+          "pid": 97205,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-y2LctB/public/command-3.json",
+          "pid": 97206,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 mcp durable external preparation cancel at backend:screenshot:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yA8Zag/public/calls.jsonl",
+      "sha256": "7d8a057f2d598b6d55a7a7453cef93168bf3c2f5db406fd1d83326fa88dd4478",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 1,
+        "screenshot": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yA8Zag/public/command-1.json",
+          "pid": 97241,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yA8Zag/public/command-2.json",
+          "pid": 97265,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yA8Zag/public/command-3.json",
+          "pid": 97319,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.06 SIGINT racing durable ready commit preserves parked allocation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yRniGj/public/calls.jsonl",
+      "sha256": "6a11c5c54d41478e460cccb0373cf51bd8fe98dcf81988a5bb6729e9b1d1df6f",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 1,
+        "screenshot": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yRniGj/public/command-1.json",
+          "pid": 99299,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node26",
+      "title": "H05.01 cli durable external preparation cancel at backend:screenshot:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yx7OOR/public/calls.jsonl",
+      "sha256": "7d8a057f2d598b6d55a7a7453cef93168bf3c2f5db406fd1d83326fa88dd4478",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 1,
+        "screenshot": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yx7OOR/public/command-1.json",
+          "pid": 96324,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yx7OOR/public/command-2.json",
+          "pid": 96342,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yx7OOR/public/command-3.json",
+          "pid": 96355,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.12 genuine CLI SIGTERM during artifact-inspection fences ignored-abort preparation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/early-artifact-inspection/public/backend-attempts.jsonl",
+      "sha256": "2682e411ebbcdbbcf3cfd49dd167d24b9a0cf6fce5855c19c0f1865f663d31bd",
+      "attemptCounts": {
+        "plist": 9
+      },
+      "attempts": [
+        {
+          "pid": 4388,
+          "kind": "attempt",
+          "sequence": 1,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Applications/Xcode.app/Contents/Info.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 4388,
+          "kind": "attempt",
+          "sequence": 2,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Applications/Xcode.app/Contents/version.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 4388,
+          "kind": "attempt",
+          "sequence": 3,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/System/Library/CoreServices/SystemVersion.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 4388,
+          "kind": "attempt",
+          "sequence": 4,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 4388,
+          "kind": "attempt",
+          "sequence": 5,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 4388,
+          "kind": "attempt",
+          "sequence": 6,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 4388,
+          "kind": "attempt",
+          "sequence": 7,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 4388,
+          "kind": "attempt",
+          "sequence": 8,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 4388,
+          "kind": "attempt",
+          "sequence": 9,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-gpYG6D/Fixture.app/Info.plist"
+          ],
+          "signalAborted": false
+        }
+      ],
+      "exit": [
+        {
+          "pid": 4388,
+          "kind": "process-exit",
+          "exitCode": 143
+        }
+      ],
+      "actualPublicExit": {
+        "pid": 4388,
+        "code": 143,
+        "signal": null
+      },
+      "errors": 0
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.12 genuine CLI SIGTERM during artifact-staging fences ignored-abort preparation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/early-artifact-staging/public/backend-attempts.jsonl",
+      "sha256": "aa4d54bf250992a759dc04c5bb0d718213daf845597371ad689f62916f2de6e6",
+      "attemptCounts": {
+        "plist": 10
+      },
+      "attempts": [
+        {
+          "pid": 4762,
+          "kind": "attempt",
+          "sequence": 1,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Applications/Xcode.app/Contents/Info.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 4762,
+          "kind": "attempt",
+          "sequence": 2,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Applications/Xcode.app/Contents/version.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 4762,
+          "kind": "attempt",
+          "sequence": 3,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/System/Library/CoreServices/SystemVersion.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 4762,
+          "kind": "attempt",
+          "sequence": 4,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 4762,
+          "kind": "attempt",
+          "sequence": 5,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 4762,
+          "kind": "attempt",
+          "sequence": 6,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 4762,
+          "kind": "attempt",
+          "sequence": 7,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 4762,
+          "kind": "attempt",
+          "sequence": 8,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 4762,
+          "kind": "attempt",
+          "sequence": 9,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-NKmdO0/Fixture.app/Info.plist"
+          ],
+          "signalAborted": false
+        },
+        {
+          "pid": 4762,
+          "kind": "attempt",
+          "sequence": 10,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-NKmdO0/runs/observed/allocate-one/allocation/staging/artifact-vU6lVd/Fixture.app/Info.plist"
+          ],
+          "signalAborted": false
+        }
+      ],
+      "exit": [
+        {
+          "pid": 4762,
+          "kind": "process-exit",
+          "exitCode": 143
+        }
+      ],
+      "actualPublicExit": {
+        "pid": 4762,
+        "code": 143,
+        "signal": null
+      },
+      "errors": 0
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.12 genuine CLI SIGTERM during configuration fences ignored-abort preparation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/early-configuration/public/backend-attempts.jsonl",
+      "sha256": "b643ffca37c0a04de19b0e3dedd823c4843245e9de000622212748b929750b1b",
+      "attemptCounts": {},
+      "attempts": [],
+      "exit": [
+        {
+          "pid": 3958,
+          "kind": "process-exit",
+          "exitCode": 143
+        }
+      ],
+      "actualPublicExit": {
+        "pid": 3958,
+        "code": 143,
+        "signal": null
+      },
+      "errors": 0
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.12 genuine CLI SIGTERM during host-proof fences ignored-abort preparation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/early-host-proof/public/backend-attempts.jsonl",
+      "sha256": "e7580824ae24f9457cd23afba91d66d503d21396798a3450b4325869d737783e",
+      "attemptCounts": {
+        "plist": 1
+      },
+      "attempts": [
+        {
+          "pid": 4274,
+          "kind": "attempt",
+          "sequence": 1,
+          "backend": "source",
+          "operation": "plist",
+          "executable": "/usr/bin/plutil",
+          "args": [
+            "-convert",
+            "json",
+            "-o",
+            "-",
+            "--",
+            "/Applications/Xcode.app/Contents/Info.plist"
+          ],
+          "signalAborted": false
+        }
+      ],
+      "exit": [
+        {
+          "pid": 4274,
+          "kind": "process-exit",
+          "exitCode": 143
+        }
+      ],
+      "actualPublicExit": {
+        "pid": 4274,
+        "code": 143,
+        "signal": null
+      },
+      "errors": 0
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at afterCommit:attach:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-1bH9Yn/public/calls.jsonl",
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-1bH9Yn/public/command-1.json",
+          "pid": 2791,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-1bH9Yn/public/command-2.json",
+          "pid": 2804,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-1bH9Yn/public/command-3.json",
+          "pid": 2806,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at backend:screenshot:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-2xrzbz/public/calls.jsonl",
+      "sha256": "7d8a057f2d598b6d55a7a7453cef93168bf3c2f5db406fd1d83326fa88dd4478",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 1,
+        "screenshot": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-2xrzbz/public/command-1.json",
+          "pid": 3049,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-2xrzbz/public/command-2.json",
+          "pid": 3181,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-2xrzbz/public/command-3.json",
+          "pid": 3206,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at afterCommit:reserveAllocation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-4SX1Lf/public/calls.jsonl",
+      "sha256": "6aa2a7d53d745699baae08dc7cfba1914ffe4e127a08ba2b1119fae26a595d8e",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist"
+      ],
+      "callCounts": {
+        "plist": 9
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-4SX1Lf/public/command-1.json",
+          "pid": 1363,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-4SX1Lf/public/command-2.json",
+          "pid": 1368,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-4SX1Lf/public/command-3.json",
+          "pid": 1372,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at backend:screenshot:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-5Scl7y/public/calls.jsonl",
+      "sha256": "7d8a057f2d598b6d55a7a7453cef93168bf3c2f5db406fd1d83326fa88dd4478",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 1,
+        "screenshot": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-5Scl7y/public/command-1.json",
+          "pid": 1917,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-5Scl7y/public/command-2.json",
+          "pid": 1996,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-5Scl7y/public/command-3.json",
+          "pid": 2088,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at afterCommit:startCreation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-6QCuv6/public/calls.jsonl",
+      "sha256": "fe9d81db9b27a1646db3a70c820d0597dc9d25a4910309d499a20d7f1476cc07",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-6QCuv6/public/command-1.json",
+          "pid": 2717,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-6QCuv6/public/command-2.json",
+          "pid": 2759,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-6QCuv6/public/command-3.json",
+          "pid": 2762,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at afterCommit:recordCreation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-830N61/public/calls.jsonl",
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-830N61/public/command-1.json",
+          "pid": 2774,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-830N61/public/command-2.json",
+          "pid": 2786,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-830N61/public/command-3.json",
+          "pid": 2788,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.02 mcp durable external action cancel at evidence:provisional:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8RWqQG/public/calls.jsonl",
+      "sha256": "84ea1ee0c1de1b1809717b4a9d361972ca2d2617ab6a00bce5e5d83903622602",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot",
+        "snapshot-ui",
+        "screenshot",
+        "touch",
+        "snapshot-ui",
+        "screenshot"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 3,
+        "screenshot": 3,
+        "touch": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8RWqQG/public/command-1.json",
+          "pid": 3488,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8RWqQG/public/command-2.json",
+          "pid": 3521,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8RWqQG/public/command-3.json",
+          "pid": 3535,
+          "transport": "cli",
+          "command": "observed-retire",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8RWqQG/public/command-4.json",
+          "pid": 3536,
+          "transport": "cli",
+          "command": "observed-cancel",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8RWqQG/public/command-5.json",
+          "pid": 3547,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.02 cli durable external action cancel at evidence:provisional:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8lOT8Q/public/calls.jsonl",
+      "sha256": "84ea1ee0c1de1b1809717b4a9d361972ca2d2617ab6a00bce5e5d83903622602",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot",
+        "snapshot-ui",
+        "screenshot",
+        "touch",
+        "snapshot-ui",
+        "screenshot"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 3,
+        "screenshot": 3,
+        "touch": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8lOT8Q/public/command-1.json",
+          "pid": 2526,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8lOT8Q/public/command-2.json",
+          "pid": 2550,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8lOT8Q/public/command-3.json",
+          "pid": 2563,
+          "transport": "cli",
+          "command": "observed-retire",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8lOT8Q/public/command-4.json",
+          "pid": 2564,
+          "transport": "cli",
+          "command": "observed-cancel",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8lOT8Q/public/command-5.json",
+          "pid": 2580,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at backend:list:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-CRHouE/public/calls.jsonl",
+      "sha256": "cd0032898efdc0da253fbdbbbc57aac8e50b93097fe059b9d2940fbc236446c2",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-CRHouE/public/command-1.json",
+          "pid": 2849,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-CRHouE/public/command-2.json",
+          "pid": 2852,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-CRHouE/public/command-3.json",
+          "pid": 2854,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.02 mcp durable external action cancel at backend:touch:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Czbv3J/public/calls.jsonl",
+      "sha256": "3a7a5e4e3b079f27425ba3973791c1b24da3fa10d281f0daf7be8fe265505179",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot",
+        "snapshot-ui",
+        "screenshot",
+        "touch"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 2,
+        "screenshot": 2,
+        "touch": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Czbv3J/public/command-1.json",
+          "pid": 3381,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Czbv3J/public/command-2.json",
+          "pid": 3422,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Czbv3J/public/command-3.json",
+          "pid": 3461,
+          "transport": "cli",
+          "command": "observed-retire",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Czbv3J/public/command-4.json",
+          "pid": 3462,
+          "transport": "cli",
+          "command": "observed-cancel",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Czbv3J/public/command-5.json",
+          "pid": 3486,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.02 cli durable external action cancel at afterCommit:consumeAllocation:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Dto68G/public/calls.jsonl",
+      "sha256": "1ecd25f67196b1b8fb4039005012e5b114657d5f0413ce621d665cdcd9c4afba",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 1,
+        "screenshot": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Dto68G/public/command-1.json",
+          "pid": 2184,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Dto68G/public/command-2.json",
+          "pid": 2234,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Dto68G/public/command-3.json",
+          "pid": 2275,
+          "transport": "cli",
+          "command": "observed-retire",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Dto68G/public/command-4.json",
+          "pid": 2276,
+          "transport": "cli",
+          "command": "observed-cancel",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Dto68G/public/command-5.json",
+          "pid": 2281,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H06.05 genuine MCP owner late abort-ignoring touch reply cannot promote quarantined outcome",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-IMoYPb/public/calls.jsonl",
+      "sha256": "1298614f386db434cf54dcce75802360480d24fc8d72e4e215a4c6e21b8c527a",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot",
+        "snapshot-ui",
+        "screenshot",
+        "touch"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 2,
+        "screenshot": 2,
+        "touch": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-IMoYPb/public/command-1.json",
+          "pid": 3809,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-IMoYPb/public/command-2.json",
+          "pid": 3828,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at backend:list:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-IVifuz/public/calls.jsonl",
+      "sha256": "cd0032898efdc0da253fbdbbbc57aac8e50b93097fe059b9d2940fbc236446c2",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-IVifuz/public/command-1.json",
+          "pid": 1631,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-IVifuz/public/command-2.json",
+          "pid": 1645,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-IVifuz/public/command-3.json",
+          "pid": 1656,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at afterCommit:reserveAllocation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-JxCBXI/public/calls.jsonl",
+      "sha256": "6aa2a7d53d745699baae08dc7cfba1914ffe4e127a08ba2b1119fae26a595d8e",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist"
+      ],
+      "callCounts": {
+        "plist": 9
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-JxCBXI/public/command-1.json",
+          "pid": 2585,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-JxCBXI/public/command-2.json",
+          "pid": 2587,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-JxCBXI/public/command-3.json",
+          "pid": 2590,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at afterCommit:stageAllocation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-K147L0/public/calls.jsonl",
+      "sha256": "5fb640d45edb9d02d43473dc8925f67ddda016738fe8ce7e2eab3914c3111516",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist"
+      ],
+      "callCounts": {
+        "plist": 10
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-K147L0/public/command-1.json",
+          "pid": 2604,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-K147L0/public/command-2.json",
+          "pid": 2606,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-K147L0/public/command-3.json",
+          "pid": 2618,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.06 SIGTERM racing durable ready commit preserves parked allocation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-L4SnK9/public/calls.jsonl",
+      "sha256": "6a11c5c54d41478e460cccb0373cf51bd8fe98dcf81988a5bb6729e9b1d1df6f",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 1,
+        "screenshot": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-L4SnK9/public/command-1.json",
+          "pid": 4958,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at backend:list:2 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-LNA7mW/public/calls.jsonl",
+      "sha256": "53c1de9d38d5932128dba0cdcfbf168cb879e56524f4006caa41dc5eb4fcdf6a",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-LNA7mW/public/command-1.json",
+          "pid": 2989,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-LNA7mW/public/command-2.json",
+          "pid": 3003,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-LNA7mW/public/command-3.json",
+          "pid": 3006,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at afterCommit:recordCreation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-NipRBt/public/calls.jsonl",
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-NipRBt/public/command-1.json",
+          "pid": 1561,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-NipRBt/public/command-2.json",
+          "pid": 1575,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-NipRBt/public/command-3.json",
+          "pid": 1577,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at backend:install:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-NymJYq/public/calls.jsonl",
+      "sha256": "8787f824d9b120092ef858ca4d255f9fdb107116848dc20225780154344a4434",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 1,
+        "install": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-NymJYq/public/command-1.json",
+          "pid": 2868,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-NymJYq/public/command-2.json",
+          "pid": 2880,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-NymJYq/public/command-3.json",
+          "pid": 2883,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at backend:snapshot-ui:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-RNM6pN/public/calls.jsonl",
+      "sha256": "e5fe6e812f4a7f3118fad30b25e29696e6f5edee590d07d7269db6008b6a0988",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-RNM6pN/public/command-1.json",
+          "pid": 3008,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-RNM6pN/public/command-2.json",
+          "pid": 3023,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-RNM6pN/public/command-3.json",
+          "pid": 3026,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.03 public SIGINT is bounded by 5000ms and production exits 130",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Srh41p/public/calls.jsonl",
+      "sha256": "bfbc7438c5f99184bf040ed676b392ab3b08dd18a861fa13ce37f859fc272d6a",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot",
+        "snapshot-ui",
+        "screenshot",
+        "resource-live"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 2,
+        "screenshot": 2,
+        "resource-live": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Srh41p/public/command-1.json",
+          "pid": 3558,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Srh41p/public/command-2.json",
+          "pid": 3715,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 130,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Srh41p/public/command-3.json",
+          "pid": 3727,
+          "transport": "cli",
+          "command": "observed-report",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H06.06 genuine CLI owner late abort-ignoring touch reply cannot promote quarantined outcome",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TTZSDr/public/calls.jsonl",
+      "sha256": "3a7a5e4e3b079f27425ba3973791c1b24da3fa10d281f0daf7be8fe265505179",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot",
+        "snapshot-ui",
+        "screenshot",
+        "touch"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 2,
+        "screenshot": 2,
+        "touch": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TTZSDr/public/command-1.json",
+          "pid": 3905,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TTZSDr/public/command-2.json",
+          "pid": 3928,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TTZSDr/public/command-3.json",
+          "pid": 3943,
+          "transport": "cli",
+          "command": "observed-cancel",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TTZSDr/public/command-4.json",
+          "pid": 3945,
+          "transport": "cli",
+          "command": "observed-report",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TTZSDr/public/command-5.json",
+          "pid": 3956,
+          "transport": "cli",
+          "command": "observed-report",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.02 cli durable external action cancel at durable:tap-authorized:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TfZ87o/public/calls.jsonl",
+      "sha256": "67e9baf77f0e6a1811947c90bac73740fab099e0673c1f19ad3d60eb7e177376",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot",
+        "snapshot-ui",
+        "screenshot",
+        "touch"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 2,
+        "screenshot": 2,
+        "touch": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TfZ87o/public/command-1.json",
+          "pid": 2294,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TfZ87o/public/command-2.json",
+          "pid": 2365,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TfZ87o/public/command-3.json",
+          "pid": 2388,
+          "transport": "cli",
+          "command": "observed-retire",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TfZ87o/public/command-4.json",
+          "pid": 2390,
+          "transport": "cli",
+          "command": "observed-cancel",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TfZ87o/public/command-5.json",
+          "pid": 2395,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.02 cli durable external action cancel at backend:touch:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Xwubmr/public/calls.jsonl",
+      "sha256": "3a7a5e4e3b079f27425ba3973791c1b24da3fa10d281f0daf7be8fe265505179",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot",
+        "snapshot-ui",
+        "screenshot",
+        "touch"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 2,
+        "screenshot": 2,
+        "touch": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Xwubmr/public/command-1.json",
+          "pid": 2407,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Xwubmr/public/command-2.json",
+          "pid": 2425,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Xwubmr/public/command-3.json",
+          "pid": 2427,
+          "transport": "cli",
+          "command": "observed-retire",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Xwubmr/public/command-4.json",
+          "pid": 2430,
+          "transport": "cli",
+          "command": "observed-cancel",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Xwubmr/public/command-5.json",
+          "pid": 2442,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at backend:install:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Zee2Z6/public/calls.jsonl",
+      "sha256": "8787f824d9b120092ef858ca4d255f9fdb107116848dc20225780154344a4434",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 1,
+        "install": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Zee2Z6/public/command-1.json",
+          "pid": 1660,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Zee2Z6/public/command-2.json",
+          "pid": 1675,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Zee2Z6/public/command-3.json",
+          "pid": 1677,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at afterCommit:attach:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-bQqgcW/public/calls.jsonl",
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-bQqgcW/public/command-1.json",
+          "pid": 1580,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-bQqgcW/public/command-2.json",
+          "pid": 1594,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-bQqgcW/public/command-3.json",
+          "pid": 1597,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at afterCommit:stageAllocation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-cnCpqo/public/calls.jsonl",
+      "sha256": "5fb640d45edb9d02d43473dc8925f67ddda016738fe8ce7e2eab3914c3111516",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist"
+      ],
+      "callCounts": {
+        "plist": 10
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-cnCpqo/public/command-1.json",
+          "pid": 1388,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-cnCpqo/public/command-2.json",
+          "pid": 1412,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-cnCpqo/public/command-3.json",
+          "pid": 1433,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.03 public SIGTERM is bounded by 5000ms and production exits 143",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-jFqvlt/public/calls.jsonl",
+      "sha256": "bfbc7438c5f99184bf040ed676b392ab3b08dd18a861fa13ce37f859fc272d6a",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot",
+        "snapshot-ui",
+        "screenshot",
+        "resource-live"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 2,
+        "screenshot": 2,
+        "resource-live": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-jFqvlt/public/command-1.json",
+          "pid": 3808,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-jFqvlt/public/command-2.json",
+          "pid": 3827,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 143,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-jFqvlt/public/command-3.json",
+          "pid": 3904,
+          "transport": "cli",
+          "command": "observed-report",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.02 mcp durable external action cancel at durable:tap-authorized:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-keUsGx/public/calls.jsonl",
+      "sha256": "67e9baf77f0e6a1811947c90bac73740fab099e0673c1f19ad3d60eb7e177376",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot",
+        "snapshot-ui",
+        "screenshot",
+        "touch"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 2,
+        "screenshot": 2,
+        "touch": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-keUsGx/public/command-1.json",
+          "pid": 3258,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-keUsGx/public/command-2.json",
+          "pid": 3338,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-keUsGx/public/command-3.json",
+          "pid": 3342,
+          "transport": "cli",
+          "command": "observed-retire",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-keUsGx/public/command-4.json",
+          "pid": 3343,
+          "transport": "cli",
+          "command": "observed-cancel",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-keUsGx/public/command-5.json",
+          "pid": 3355,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at backend:boot:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-khT920/public/calls.jsonl",
+      "sha256": "fd04cec329bef7d972c7da4b13eeb6d15dc231473d8088b9945da6db97c426e3",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-khT920/public/command-1.json",
+          "pid": 1600,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-khT920/public/command-2.json",
+          "pid": 1613,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-khT920/public/command-3.json",
+          "pid": 1614,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at backend:list:2 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-khymXR/public/calls.jsonl",
+      "sha256": "53c1de9d38d5932128dba0cdcfbf168cb879e56524f4006caa41dc5eb4fcdf6a",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-khymXR/public/command-1.json",
+          "pid": 1722,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-khymXR/public/command-2.json",
+          "pid": 1748,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-khymXR/public/command-3.json",
+          "pid": 1751,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.06 SIGINT racing durable ready commit preserves parked allocation",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-l5v59E/public/calls.jsonl",
+      "sha256": "6a11c5c54d41478e460cccb0373cf51bd8fe98dcf81988a5bb6729e9b1d1df6f",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 1,
+        "screenshot": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-l5v59E/public/command-1.json",
+          "pid": 4947,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at backend:boot:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-rnaa8T/public/calls.jsonl",
+      "sha256": "fd04cec329bef7d972c7da4b13eeb6d15dc231473d8088b9945da6db97c426e3",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-rnaa8T/public/command-1.json",
+          "pid": 2830,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-rnaa8T/public/command-2.json",
+          "pid": 2833,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-rnaa8T/public/command-3.json",
+          "pid": 2835,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at backend:launch-app:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-u0UNx2/public/calls.jsonl",
+      "sha256": "0410b0f805b858eadd0b81652b5e863bb8e9ed62b5a98d86d4c85fc8c86d74dc",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 1,
+        "install": 1,
+        "launch-app": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-u0UNx2/public/command-1.json",
+          "pid": 1693,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-u0UNx2/public/command-2.json",
+          "pid": 1707,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-u0UNx2/public/command-3.json",
+          "pid": 1710,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at backend:snapshot-ui:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-xnYV6Y/public/calls.jsonl",
+      "sha256": "e5fe6e812f4a7f3118fad30b25e29696e6f5edee590d07d7269db6008b6a0988",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-xnYV6Y/public/command-1.json",
+          "pid": 1762,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-xnYV6Y/public/command-2.json",
+          "pid": 1775,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-xnYV6Y/public/command-3.json",
+          "pid": 1777,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 cli durable external preparation cancel at afterCommit:startCreation:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZk1B2/public/calls.jsonl",
+      "sha256": "fe9d81db9b27a1646db3a70c820d0597dc9d25a4910309d499a20d7f1476cc07",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZk1B2/public/command-1.json",
+          "pid": 1437,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZk1B2/public/command-2.json",
+          "pid": 1451,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZk1B2/public/command-3.json",
+          "pid": 1505,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.02 mcp durable external action cancel at afterCommit:consumeAllocation:1 permits at most authorized input",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZsQDq/public/calls.jsonl",
+      "sha256": "1ecd25f67196b1b8fb4039005012e5b114657d5f0413ce621d665cdcd9c4afba",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app",
+        "list",
+        "snapshot-ui",
+        "screenshot"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 2,
+        "install": 1,
+        "launch-app": 1,
+        "snapshot-ui": 1,
+        "screenshot": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZsQDq/public/command-1.json",
+          "pid": 3210,
+          "transport": "cli",
+          "command": "observed-allocate",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZsQDq/public/command-2.json",
+          "pid": 3223,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZsQDq/public/command-3.json",
+          "pid": 3234,
+          "transport": "cli",
+          "command": "observed-retire",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZsQDq/public/command-4.json",
+          "pid": 3235,
+          "transport": "cli",
+          "command": "observed-cancel",
+          "code": 2,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZsQDq/public/command-5.json",
+          "pid": 3247,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    },
+    {
+      "runtime": "added-node24",
+      "title": "H05.01 mcp durable external preparation cancel at backend:launch-app:1 fences successors",
+      "trace": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-zRhGVd/public/calls.jsonl",
+      "sha256": "0410b0f805b858eadd0b81652b5e863bb8e9ed62b5a98d86d4c85fc8c86d74dc",
+      "completeCalls": [
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "plist",
+        "create",
+        "boot",
+        "list",
+        "install",
+        "launch-app"
+      ],
+      "callCounts": {
+        "plist": 10,
+        "create": 1,
+        "boot": 1,
+        "list": 1,
+        "install": 1,
+        "launch-app": 1
+      },
+      "actualOwnerExits": [
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-zRhGVd/public/command-1.json",
+          "pid": 2885,
+          "transport": "mcp",
+          "command": "",
+          "code": 0,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-zRhGVd/public/command-2.json",
+          "pid": 2973,
+          "transport": "cli",
+          "command": "observed-action",
+          "code": 3,
+          "signal": null
+        },
+        {
+          "path": ".scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-zRhGVd/public/command-3.json",
+          "pid": 2976,
+          "transport": "cli",
+          "command": "observed-allocation-cancel",
+          "code": 2,
+          "signal": null
+        }
+      ],
+      "oracle": "Runtime assertion compares exact complete calls to captured pre-barrier prefix plus only explicit durably authorized create/touch; archived final sequence is supplemental, not a fabricated before snapshot"
+    }
+  ],
+  "scope": "Fresh executed repaired cases only; unavailable prior48trace audit is not recreated"
+}

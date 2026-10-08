@@ -1,0 +1,174 @@
+{
+  "before-hashes.json": {
+    "sha256": "6d9639e877ec832a2d7a6f31f59eea9a8eca8895b7b7a16a356d90b0db3f4a97",
+    "bytes": 4958
+  },
+  "prior-report-hashes.json": {
+    "sha256": "7654d101f8a727ac5d73520bd5fe84f870c6affdb7b11878e4c5839decef9aff",
+    "bytes": 715
+  },
+  "protected-audit.json": {
+    "sha256": "c09307e224486138c1de7560675418558d9798d967b4037038273972272fad9c",
+    "bytes": 35422
+  },
+  "commit-association.json": {
+    "sha256": "1ae8dee3a745f76e75926faa5b9100d43bff12a194a56564fe9111c13dbe677b",
+    "bytes": 1239
+  },
+  "gate-audit.json": {
+    "sha256": "c9322f54382a3349e240b46f9bc6c78c246abab94825e3bba7945518433ff985",
+    "bytes": 2021
+  },
+  "raw-index-audit.json": {
+    "sha256": "c36d9c0f7b978ee1511892ec1b53fa1ba013b939745b78e97c37d95be6ff9c93",
+    "bytes": 297
+  },
+  "commit-association.md": {
+    "sha256": "25ee0d54c507b61520af55c385a35d7c38748038b87949066529b14fb5aa6d86",
+    "bytes": 362
+  },
+  "corrected42-audit.json": {
+    "sha256": "c2ee358cfb84816893625d3e6ccdfc6a117c85d4bd23d41ecf2baaa0148b730b",
+    "bytes": 30035
+  },
+  "reviewed.diff": {
+    "sha256": "0babb28389ed353a0c28064995a9bbf10bc6b57ab51b7b19c3d73f0417b21013",
+    "bytes": 6821059
+  },
+  "review.md": {
+    "sha256": "7cfd3c6b9a76ede809562d2373e5d452d3d680806b5b851b0eca1ca4d8cfae90",
+    "bytes": 2692
+  },
+  "matrix-audit.json": {
+    "sha256": "e2888cc37484cf598320ac50dfa2658563eb15a1626f86691af0f4112155e307",
+    "bytes": 132
+  },
+  "after-hashes.json": {
+    "sha256": "e4aec94e4dbc0c7f07563329c63c5cb10c1271d44c854ed64f61625917d59c20",
+    "bytes": 3578
+  },
+  "evidence/round2-gate-summary.json": {
+    "sha256": "3e3428ed588f746a633763afe39b3c4af8d47e6256dc544206d0780879918e8c",
+    "bytes": 14837
+  },
+  "evidence/round2-fresh42-trace-audit.json": {
+    "sha256": "35eea5c739ed437f859f68606747ad21a246709061add321b56100412cb18045",
+    "bytes": 179196
+  },
+  "evidence/round2-commit-association.json": {
+    "sha256": "49442311354d76749ebb2fe8b2d4e47dfc6e31a249cba01c485d36010664f019",
+    "bytes": 1953
+  },
+  "evidence/round2-final-freeze.json": {
+    "sha256": "59a5b4e0a8036d5cd5f8829d51063efc372d4823e39857743e3bf21596224310",
+    "bytes": 2496
+  },
+  "evidence/round2-evidence-loss.json": {
+    "sha256": "eef8af348345e936b1dcdd20aa5202430befa6f7762307c1dca7b63f23c60669",
+    "bytes": 431
+  },
+  "evidence/round2-report.md": {
+    "sha256": "08f52f2929278c301db7e1a5ed1dc8abe531b5f0f0ba2361dcfa92b6b32ac21a",
+    "bytes": 9151
+  },
+  "evidence/round2-raw-index.json": {
+    "sha256": "d267aaa0d859db7de5bfd805231019b3663efd12622452dc23166533b932615f",
+    "bytes": 12565594
+  },
+  "evidence/round2-producer-minimal.diff": {
+    "sha256": "f7ed04b3d0725f3cca67b63f1d723408a6bfcb022b45c9d40105956cd7f13cb7",
+    "bytes": 1443
+  },
+  "evidence/round2-final-protected-audit.json": {
+    "sha256": "ffd3945dabe515ac6590523a9bd55738001b59c1b6de490e42b51b59029c04fa",
+    "bytes": 27796
+  },
+  "evidence/round2-static-freeze.json": {
+    "sha256": "1db1839ce55f14211c08722d6c6b9d871e5002a903d131059e0a8b8ce9ffe02d",
+    "bytes": 1367
+  },
+  "evidence/round2-producer-transfer.json": {
+    "sha256": "f57b09c8989356febea71f754f992f928c5b4b916c034147535701c9c6231b8a",
+    "bytes": 458
+  },
+  "source/tests/observed-public-races.test.ts": {
+    "sha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+    "bytes": 24482
+  },
+  "source/tests/observed-host-fault.test.ts": {
+    "sha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+    "bytes": 51424
+  },
+  "source/tests/observed-crash.test.ts": {
+    "sha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+    "bytes": 11838
+  },
+  "source/.scratch/observed-action-rollout/issues/09-host-fault-suite.md": {
+    "sha256": "482d9c6dfffd09237ec004b9a01a0b4e0bede9d495d1d24a84cebdd1c8b3bbf0",
+    "bytes": 8430
+  },
+  "source/tests/fixtures/observed-cli-server.ts": {
+    "sha256": "e0bffe3dfe1b0ee90aed64b7fd2493ddb91faf73cf8c1c9e418338fc55f811d1",
+    "bytes": 8300
+  },
+  "source/tests/fixtures/observed-host/early-cli.ts": {
+    "sha256": "9625fc2f76374c41fdb9681fe5fa7c79afa35c1020b0cee98a3be4cd355e67f8",
+    "bytes": 4699
+  },
+  "source/tests/fixtures/observed-host/case-matrix.json": {
+    "sha256": "4a8d1f8b0cc818c55b087cfaac5d54efe5c5da6f1bce22e41df7b229f0d810f7",
+    "bytes": 4725755
+  },
+  "source/tests/fixtures/observed-host/allocator-public.ts": {
+    "sha256": "4362eb422c0213918d9e37e0d43c04644ae9429322be39bed82b0ce98d1228e1",
+    "bytes": 5468
+  },
+  "source/tests/fixtures/observed-host/owner.ts": {
+    "sha256": "b9a379c00645a1c3cc0704ad2986572b0c62ef0bbd3586d659649ecf160f941a",
+    "bytes": 6091
+  },
+  "source/tests/fixtures/observed-host/harness.ts": {
+    "sha256": "463d7f5feb7eedc32ac5d688d2bcb57c87460875fd14b7de3f5864da29f893a1",
+    "bytes": 7961
+  },
+  "evidence/added-node26/result.json": {
+    "sha256": "4bf9d0eca9ff9c18f5b71852819ed4ebc7d2637da03b7708cf9312d91960e80f",
+    "bytes": 1907
+  },
+  "evidence/added-node26/output.log": {
+    "sha256": "d47ed3a2e972aa9a4985608046e88842b14b8758748874f5e923435a7f73c195",
+    "bytes": 19341
+  },
+  "evidence/check-node26/result.json": {
+    "sha256": "57b9c14cebc80e61bdf0194478a1fc0600f8fa1ff5fa78596d85923a2ad0d255",
+    "bytes": 1827
+  },
+  "evidence/check-node26/output.log": {
+    "sha256": "699ac20c5dea5e4745658e47f2d1cc6324de24adc38b9d3c71bfb83988240d75",
+    "bytes": 166859
+  },
+  "evidence/check-node26-rerun/result.json": {
+    "sha256": "f90111047b71b8a0f7f0849092d9f0ece7a1ea672ea708b0141f94e6c41149be",
+    "bytes": 1828
+  },
+  "evidence/check-node26-rerun/output.log": {
+    "sha256": "485f13b5d7061e9999c4916eac838916f1d2a782f30f77766b6eed6de1b1a43b",
+    "bytes": 166837
+  },
+  "evidence/check-node24/result.json": {
+    "sha256": "23fb384b2ab26dc94b17c8d931e4c9ac87e2e2b4a01aa4fe8345988dc4814314",
+    "bytes": 1878
+  },
+  "evidence/check-node24/output.log": {
+    "sha256": "29991df8fd297b084db7b091f13aae798819a6f01db02f45d8ed98d54f970c13",
+    "bytes": 177063
+  },
+  "evidence/added-node24/result.json": {
+    "sha256": "2a76e06f286af0ae21c090f933a1b7b222071deea68e3e998adea02eaab4a45d",
+    "bytes": 1959
+  },
+  "evidence/added-node24/output.log": {
+    "sha256": "6915ab42a41beabe8f660fad5c3983c45c1f84c0bac6772427cf2a938c414ba0",
+    "bytes": 19840
+  }
+}

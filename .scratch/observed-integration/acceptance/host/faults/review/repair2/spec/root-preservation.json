@@ -1,0 +1,1888 @@
+{
+  "source": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-host-faults/.scratch/spec-review-ticket09-repair2-d0c24bb",
+  "destination": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/faults/review/repair2/spec",
+  "files": [
+    {
+      "path": "after-hashes.json",
+      "bytes": 2143,
+      "sha256": "dee4ef8e09eb5482556f557e3839a719b2b10875128bd34a7d69da921bbd2dea"
+    },
+    {
+      "path": "appendix.md",
+      "bytes": 3223,
+      "sha256": "38d3c6248c568a710496642d601b8637c968cdf077038aff234c76dd4fb57c52"
+    },
+    {
+      "path": "before-hashes.json",
+      "bytes": 2143,
+      "sha256": "dee4ef8e09eb5482556f557e3839a719b2b10875128bd34a7d69da921bbd2dea"
+    },
+    {
+      "path": "gate-logs/added-node24/output.log",
+      "bytes": 19840,
+      "sha256": "6915ab42a41beabe8f660fad5c3983c45c1f84c0bac6772427cf2a938c414ba0"
+    },
+    {
+      "path": "gate-logs/added-node24/result.json",
+      "bytes": 1959,
+      "sha256": "2a76e06f286af0ae21c090f933a1b7b222071deea68e3e998adea02eaab4a45d"
+    },
+    {
+      "path": "gate-logs/added-node26/output.log",
+      "bytes": 19341,
+      "sha256": "d47ed3a2e972aa9a4985608046e88842b14b8758748874f5e923435a7f73c195"
+    },
+    {
+      "path": "gate-logs/added-node26/result.json",
+      "bytes": 1907,
+      "sha256": "4bf9d0eca9ff9c18f5b71852819ed4ebc7d2637da03b7708cf9312d91960e80f"
+    },
+    {
+      "path": "gate-logs/check-node24/output.log",
+      "bytes": 177063,
+      "sha256": "29991df8fd297b084db7b091f13aae798819a6f01db02f45d8ed98d54f970c13"
+    },
+    {
+      "path": "gate-logs/check-node24/result.json",
+      "bytes": 1878,
+      "sha256": "23fb384b2ab26dc94b17c8d931e4c9ac87e2e2b4a01aa4fe8345988dc4814314"
+    },
+    {
+      "path": "gate-logs/check-node26/output.log",
+      "bytes": 166859,
+      "sha256": "699ac20c5dea5e4745658e47f2d1cc6324de24adc38b9d3c71bfb83988240d75"
+    },
+    {
+      "path": "gate-logs/check-node26/result.json",
+      "bytes": 1827,
+      "sha256": "57b9c14cebc80e61bdf0194478a1fc0600f8fa1ff5fa78596d85923a2ad0d255"
+    },
+    {
+      "path": "gate-logs/check-node26-rerun/output.log",
+      "bytes": 166837,
+      "sha256": "485f13b5d7061e9999c4916eac838916f1d2a782f30f77766b6eed6de1b1a43b"
+    },
+    {
+      "path": "gate-logs/check-node26-rerun/result.json",
+      "bytes": 1828,
+      "sha256": "f90111047b71b8a0f7f0849092d9f0ece7a1ea672ea708b0141f94e6c41149be"
+    },
+    {
+      "path": "independent-gate-read.json",
+      "bytes": 13102,
+      "sha256": "bf0fb8acbd55806d6d51c40b388b2cfb3dd74df5cf021a03006f8fd0edba226d"
+    },
+    {
+      "path": "independent-raw-audit.json",
+      "bytes": 560,
+      "sha256": "b2007623a407e9bd880da6ac5b6b6a9776b4d4c35bb48ce54f4f679ddc7586b4"
+    },
+    {
+      "path": "preservation-audit.json",
+      "bytes": 417,
+      "sha256": "770b5a0c752baa5034e89efc81de9accdb9481344e90b09f918aca64e0ba85c6"
+    },
+    {
+      "path": "review.md",
+      "bytes": 2429,
+      "sha256": "bac02ff68095eb0f2b121c8da9d65baf784bc9ea0e4324b8898299180c54f1ad"
+    },
+    {
+      "path": "round2-check-node26-failure.txt",
+      "bytes": 696,
+      "sha256": "b14c52777b721c09f295392462486eb2fc9c0c3f63dda55874ffe23ce28e1ae2"
+    },
+    {
+      "path": "round2-check-node26-rerun-failure.txt",
+      "bytes": 696,
+      "sha256": "759b552429697e0abaf3be135914942b0742c2c2c224b8ff120bcedc34933b2f"
+    },
+    {
+      "path": "round2-commit-association.json",
+      "bytes": 1953,
+      "sha256": "49442311354d76749ebb2fe8b2d4e47dfc6e31a249cba01c485d36010664f019"
+    },
+    {
+      "path": "round2-evidence-loss.json",
+      "bytes": 431,
+      "sha256": "eef8af348345e936b1dcdd20aa5202430befa6f7762307c1dca7b63f23c60669"
+    },
+    {
+      "path": "round2-final-freeze.json",
+      "bytes": 2496,
+      "sha256": "59a5b4e0a8036d5cd5f8829d51063efc372d4823e39857743e3bf21596224310"
+    },
+    {
+      "path": "round2-final-protected-audit.json",
+      "bytes": 27796,
+      "sha256": "ffd3945dabe515ac6590523a9bd55738001b59c1b6de490e42b51b59029c04fa"
+    },
+    {
+      "path": "round2-fresh42-trace-audit.json",
+      "bytes": 179196,
+      "sha256": "35eea5c739ed437f859f68606747ad21a246709061add321b56100412cb18045"
+    },
+    {
+      "path": "round2-gate-summary.json",
+      "bytes": 14837,
+      "sha256": "3e3428ed588f746a633763afe39b3c4af8d47e6256dc544206d0780879918e8c"
+    },
+    {
+      "path": "round2-producer-minimal.diff",
+      "bytes": 1443,
+      "sha256": "f7ed04b3d0725f3cca67b63f1d723408a6bfcb022b45c9d40105956cd7f13cb7"
+    },
+    {
+      "path": "round2-raw-index.json",
+      "bytes": 12565594,
+      "sha256": "d267aaa0d859db7de5bfd805231019b3663efd12622452dc23166533b932615f"
+    },
+    {
+      "path": "round2-report.md",
+      "bytes": 9151,
+      "sha256": "08f52f2929278c301db7e1a5ed1dc8abe531b5f0f0ba2361dcfa92b6b32ac21a"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/early-artifact-inspection/public/backend-attempts.jsonl",
+      "bytes": 4041,
+      "sha256": "2682e411ebbcdbbcf3cfd49dd167d24b9a0cf6fce5855c19c0f1865f663d31bd"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/early-artifact-staging/public/backend-attempts.jsonl",
+      "bytes": 4677,
+      "sha256": "aa4d54bf250992a759dc04c5bb0d718213daf845597371ad689f62916f2de6e6"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/early-configuration/public/backend-attempts.jsonl",
+      "bytes": 50,
+      "sha256": "b643ffca37c0a04de19b0e3dedd823c4843245e9de000622212748b929750b1b"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/early-host-proof/public/backend-attempts.jsonl",
+      "bytes": 272,
+      "sha256": "e7580824ae24f9457cd23afba91d66d503d21396798a3450b4325869d737783e"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-1bH9Yn/public/calls.jsonl",
+      "bytes": 110,
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-1bH9Yn/public/command-1.json",
+      "bytes": 2365,
+      "sha256": "4e42f66cb754d11233973e957a611038001988813c16386cab7fdd3225acf23c"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-1bH9Yn/public/command-2.json",
+      "bytes": 667,
+      "sha256": "a7361b89dd5bed1f7604f744da1782aa84d429d095158ebd0981550f00c440ed"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-1bH9Yn/public/command-3.json",
+      "bytes": 937,
+      "sha256": "836fb8a1f5755beae4a2187e085de151a9ed82f36466552fb303a6358f18110a"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-2xrzbz/public/calls.jsonl",
+      "bytes": 181,
+      "sha256": "7d8a057f2d598b6d55a7a7453cef93168bf3c2f5db406fd1d83326fa88dd4478"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-2xrzbz/public/command-1.json",
+      "bytes": 2372,
+      "sha256": "4c69d07af31ad0aa056e74c88b2492294d881ea1ec11264efbbadb3d310364eb"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-2xrzbz/public/command-2.json",
+      "bytes": 667,
+      "sha256": "24e09ef6e93d33cb01c10d7239ec7dda1f329b91d6554ab811b586b13d254ab3"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-2xrzbz/public/command-3.json",
+      "bytes": 937,
+      "sha256": "bfa1b0ecadb1481cf8ca20819fa1b7fa79428bd97f7968f48670ea6682c78ddd"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-4SX1Lf/public/calls.jsonl",
+      "bytes": 93,
+      "sha256": "6aa2a7d53d745699baae08dc7cfba1914ffe4e127a08ba2b1119fae26a595d8e"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-4SX1Lf/public/command-1.json",
+      "bytes": 947,
+      "sha256": "49df2456dfee399d12227f6e69c96bc93cfd5eb6f148ff34f3f44db6d3dc1c67"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-4SX1Lf/public/command-2.json",
+      "bytes": 667,
+      "sha256": "0248744f238e83481e334feb5a727df97daf12ab53cd1dbc56b7fdea1de8236e"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-4SX1Lf/public/command-3.json",
+      "bytes": 858,
+      "sha256": "0ac94d6d2460f262f9adae7628845b4024c45d34e9aeb9b0fc930ea3f9f7cbac"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-5Scl7y/public/calls.jsonl",
+      "bytes": 181,
+      "sha256": "7d8a057f2d598b6d55a7a7453cef93168bf3c2f5db406fd1d83326fa88dd4478"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-5Scl7y/public/command-1.json",
+      "bytes": 1439,
+      "sha256": "60d23ba46979f1cb2113b8c87bd0d1abe90e6b8ec317368d2352834735cf3270"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-5Scl7y/public/command-2.json",
+      "bytes": 667,
+      "sha256": "eaf1b20ab73a3cd04f40c8bee98f6957ce2c6ab2d769d228a23c90efb5afd024"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-5Scl7y/public/command-3.json",
+      "bytes": 937,
+      "sha256": "eb4b0b6ead9341a1c912c6144237eb1bf9171cb991f31620dcc0651923972fb5"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-6QCuv6/public/calls.jsonl",
+      "bytes": 110,
+      "sha256": "fe9d81db9b27a1646db3a70c820d0597dc9d25a4910309d499a20d7f1476cc07"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-6QCuv6/public/command-1.json",
+      "bytes": 2284,
+      "sha256": "7bfe6a12acaf61ad566f7abbb7d4cdeeb5835c720ca610976ad92c29274f6a7a"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-6QCuv6/public/command-2.json",
+      "bytes": 667,
+      "sha256": "8891b27e80d1607d16e546e550bf85b0d4f8ad576ec643022f72738ecc507c7e"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-6QCuv6/public/command-3.json",
+      "bytes": 857,
+      "sha256": "917c373677eb303099e9c384a4c661ab823659ebde40a6b553aac5f3b83f4050"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-830N61/public/calls.jsonl",
+      "bytes": 110,
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-830N61/public/command-1.json",
+      "bytes": 2373,
+      "sha256": "bbe0c454dca9bad2fbcc81562fe6b9408bd9ef3465c2999909b7d4689bddcecf"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-830N61/public/command-2.json",
+      "bytes": 667,
+      "sha256": "1b119086ff59a6ca11b5a0cde42bf24da26da865af90c3389f92f0a7aafc7293"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-830N61/public/command-3.json",
+      "bytes": 937,
+      "sha256": "a3708e0046c30c937868b784f8df41c34f2b380e28a6a13028ea8e50a0b8c3bf"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8RWqQG/public/calls.jsonl",
+      "bytes": 257,
+      "sha256": "84ea1ee0c1de1b1809717b4a9d361972ca2d2617ab6a00bce5e5d83903622602"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8RWqQG/public/command-1.json",
+      "bytes": 1658,
+      "sha256": "a55844b25504396370c1478a0800dc2a56ce2572f67b739ea46f4154438546df"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8RWqQG/public/command-2.json",
+      "bytes": 3466,
+      "sha256": "29583d81a0c5de573146c5b08696956dfdff033e0da7bf26e29ecf9f6fbff8c6"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8RWqQG/public/command-3.json",
+      "bytes": 833,
+      "sha256": "78fd7ab22ace58fdf37b47629eb50f50a4e87f1fbf962f28b830320ce4eab2c8"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8RWqQG/public/command-4.json",
+      "bytes": 1418,
+      "sha256": "43078eafa296bc20bf689acfce713aa6315a476963a7b636280747002c6b496d"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8RWqQG/public/command-5.json",
+      "bytes": 1641,
+      "sha256": "2adef0f4fd9d9e39c78599b447665dc781218bbd8bcab35345bfa6af10902c16"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8lOT8Q/public/calls.jsonl",
+      "bytes": 257,
+      "sha256": "84ea1ee0c1de1b1809717b4a9d361972ca2d2617ab6a00bce5e5d83903622602"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8lOT8Q/public/command-1.json",
+      "bytes": 1658,
+      "sha256": "0e0702c1aca455bfac506e6d612bcc9f3553afbe9db11957970ef3b38a4d5979"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8lOT8Q/public/command-2.json",
+      "bytes": 1668,
+      "sha256": "233c73040e47eee6cc1d27208ad04ec72260e9cba2af55f1c4c9647845e34320"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8lOT8Q/public/command-3.json",
+      "bytes": 833,
+      "sha256": "44b38e6bfc12b19d002121561b70575fb834e4375a17e054ba519042e2831333"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8lOT8Q/public/command-4.json",
+      "bytes": 1418,
+      "sha256": "46818e646a5e4a9c7cd58b555c1a85501ce88a7496b5f0b08bc58db882702ea6"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-8lOT8Q/public/command-5.json",
+      "bytes": 1641,
+      "sha256": "9c195835e0be76021f6e39ac462f29f99d193fb76e063487dce0c6752d554cbc"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-CRHouE/public/calls.jsonl",
+      "bytes": 124,
+      "sha256": "cd0032898efdc0da253fbdbbbc57aac8e50b93097fe059b9d2940fbc236446c2"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-CRHouE/public/command-1.json",
+      "bytes": 2366,
+      "sha256": "a9350eb4f234a418b7d5cc645cdc9f7fa0f494cfded1b9a1e7af541cf1ab726f"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-CRHouE/public/command-2.json",
+      "bytes": 667,
+      "sha256": "17c1233e73d0406a38d4ea538aa0347cb450b1f79c44fcd804a69f4abfae9fb9"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-CRHouE/public/command-3.json",
+      "bytes": 935,
+      "sha256": "d185c7451238df2bf929354d5a5985263660dd34e936fd7dfc62b8d8326771ed"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Czbv3J/public/calls.jsonl",
+      "bytes": 230,
+      "sha256": "3a7a5e4e3b079f27425ba3973791c1b24da3fa10d281f0daf7be8fe265505179"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Czbv3J/public/command-1.json",
+      "bytes": 1658,
+      "sha256": "0e127933345402f41a98e1e4f219f88b242f78ee7cd8fc2430aa38a4855ea8fb"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Czbv3J/public/command-2.json",
+      "bytes": 3343,
+      "sha256": "779f956dd194376487b47194c380f90fccd0c9c5490074c7039442eda5f1dff3"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Czbv3J/public/command-3.json",
+      "bytes": 833,
+      "sha256": "26462c67415dafe3eea996ff828bed91ee6a62f4e9c43995684657aa0ad239fd"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Czbv3J/public/command-4.json",
+      "bytes": 1291,
+      "sha256": "0cd09af2496f4556300480c1e711a1b67a5d2f28346615d2a32c955ab81926f6"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Czbv3J/public/command-5.json",
+      "bytes": 1529,
+      "sha256": "9e23bdf89e5f29baa0294fb5a398826ff30eef3338bb2438cd4a3f1e65a72fbe"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Dto68G/public/calls.jsonl",
+      "bytes": 195,
+      "sha256": "1ecd25f67196b1b8fb4039005012e5b114657d5f0413ce621d665cdcd9c4afba"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Dto68G/public/command-1.json",
+      "bytes": 1658,
+      "sha256": "3aa6232a75f1b17dd1ce3fe5aae2bb889caf0a7fc0a2527b00175ed731b50832"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Dto68G/public/command-2.json",
+      "bytes": 1446,
+      "sha256": "cb8ed88c3c5460e8c6837dd999a4b66cf07ef34e7178f63ab3c04e1b19d0de4b"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Dto68G/public/command-3.json",
+      "bytes": 833,
+      "sha256": "485dd16039ab759247ea55db67cec3f96f69d8714a18a493b3e241c7c4e1dae7"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Dto68G/public/command-4.json",
+      "bytes": 1170,
+      "sha256": "ff1ccbd912fe97424c320795b3c31ca5aae123684964a4c0171575c53743abb2"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Dto68G/public/command-5.json",
+      "bytes": 1410,
+      "sha256": "d2297dbd9320bc425be62f60258f9ad130ebe72887258b6eae63c9e83e072ea3"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-IMoYPb/public/calls.jsonl",
+      "bytes": 209,
+      "sha256": "1298614f386db434cf54dcce75802360480d24fc8d72e4e215a4c6e21b8c527a"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-IMoYPb/public/command-1.json",
+      "bytes": 1658,
+      "sha256": "53798885493710644f84bfe641ef9521cfffadca036dbccfa6328fd09246baaf"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-IMoYPb/public/command-2.json",
+      "bytes": 6455,
+      "sha256": "3a721aa7910611c9fd8c0ebb469da8b1ec3f303c64ab703271f483c64084e4d4"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-IVifuz/public/calls.jsonl",
+      "bytes": 124,
+      "sha256": "cd0032898efdc0da253fbdbbbc57aac8e50b93097fe059b9d2940fbc236446c2"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-IVifuz/public/command-1.json",
+      "bytes": 1433,
+      "sha256": "7ef4af4c4481e1a7d2c902e7b190ab589403da138f6cb89644d909ba9161f199"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-IVifuz/public/command-2.json",
+      "bytes": 667,
+      "sha256": "4a9cb860527dd88ab5f5254b494bcebb3bd4d37a2a234198c265e64b8ed4149d"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-IVifuz/public/command-3.json",
+      "bytes": 935,
+      "sha256": "a759a2a27cf181309bffd286bf73725fe9f1ab681ef098a9a8b5023de1750f74"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-JxCBXI/public/calls.jsonl",
+      "bytes": 93,
+      "sha256": "6aa2a7d53d745699baae08dc7cfba1914ffe4e127a08ba2b1119fae26a595d8e"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-JxCBXI/public/command-1.json",
+      "bytes": 1438,
+      "sha256": "c4f31db20788c87161ea77f58897b04301ee06ebc726ead95732423cf4e7c4c2"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-JxCBXI/public/command-2.json",
+      "bytes": 667,
+      "sha256": "24e5ba46d6155e440fae52cc307f832af3f81d5c09148d8ba7f2869e4f1720e6"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-JxCBXI/public/command-3.json",
+      "bytes": 858,
+      "sha256": "a886b8d1c31756dc6c6719c45481bf7ddd435fbb2e37afd688441d282abb3cba"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-K147L0/public/calls.jsonl",
+      "bytes": 101,
+      "sha256": "5fb640d45edb9d02d43473dc8925f67ddda016738fe8ce7e2eab3914c3111516"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-K147L0/public/command-1.json",
+      "bytes": 2281,
+      "sha256": "415033d77687cf8d3c531ab20049c4c2a4beeada9a59a6f43e32c8d3364a41e3"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-K147L0/public/command-2.json",
+      "bytes": 667,
+      "sha256": "3f6ca80d6b899248f5bbb0f0e299dbef905399271608b556b7728ada95eaa99b"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-K147L0/public/command-3.json",
+      "bytes": 858,
+      "sha256": "8b7288530aeeab89a59bf3354b7f169f3cc3142bcdb64b3ade535ff47a48d5d2"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-L4SnK9/public/calls.jsonl",
+      "bytes": 167,
+      "sha256": "6a11c5c54d41478e460cccb0373cf51bd8fe98dcf81988a5bb6729e9b1d1df6f"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-L4SnK9/public/command-1.json",
+      "bytes": 1695,
+      "sha256": "24f107fce9e28bb98c0a3fc445e5f5a49806a27e46404e817bf4a0c4ec77adb4"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-LNA7mW/public/calls.jsonl",
+      "bytes": 154,
+      "sha256": "53c1de9d38d5932128dba0cdcfbf168cb879e56524f4006caa41dc5eb4fcdf6a"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-LNA7mW/public/command-1.json",
+      "bytes": 2380,
+      "sha256": "c5d890f72ed1f7365e39d088b7ab937b59065421b8b5d2f3404a840b02288eae"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-LNA7mW/public/command-2.json",
+      "bytes": 667,
+      "sha256": "050e60587249ada0019c0845146df14e2ae4719b01700263b5758f76ca984e67"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-LNA7mW/public/command-3.json",
+      "bytes": 937,
+      "sha256": "1d22bcba00671a4d2c6dba382a5591dc57759d2d2da1b2a245cb176da34c2dbb"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-NipRBt/public/calls.jsonl",
+      "bytes": 110,
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-NipRBt/public/command-1.json",
+      "bytes": 1442,
+      "sha256": "e6624c64b41f39924d1cc801900d8009ebe57f8e2e30bf8f39a9791093987390"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-NipRBt/public/command-2.json",
+      "bytes": 667,
+      "sha256": "1578ab58488c3a4c541092c61bf853a1d1d3669e631d3f1cd250b8aaab8fb269"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-NipRBt/public/command-3.json",
+      "bytes": 937,
+      "sha256": "6f5cd78b98bc1bd5f2745a814f0a574737294325916971ef5f2f763d91cec184"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-NymJYq/public/calls.jsonl",
+      "bytes": 134,
+      "sha256": "8787f824d9b120092ef858ca4d255f9fdb107116848dc20225780154344a4434"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-NymJYq/public/command-1.json",
+      "bytes": 2369,
+      "sha256": "366e74dca16db91f1cfd6e74c6c481cbbaad03b148f1877e7311c9d55b883642"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-NymJYq/public/command-2.json",
+      "bytes": 667,
+      "sha256": "f7d6bdd6d9ab21fed62df52ca6fd3425f10db00217b69e5e70123bb39179ae82"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-NymJYq/public/command-3.json",
+      "bytes": 938,
+      "sha256": "ace0a9ffa872b5235c7927277e74bc10ce747f23c051b25d6e4618c0f37cac74"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-RNM6pN/public/calls.jsonl",
+      "bytes": 168,
+      "sha256": "e5fe6e812f4a7f3118fad30b25e29696e6f5edee590d07d7269db6008b6a0988"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-RNM6pN/public/command-1.json",
+      "bytes": 2387,
+      "sha256": "19eec2146c5ba6534ec0fbb027a1b4d1dc044869d9070f125974dfefc871d77b"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-RNM6pN/public/command-2.json",
+      "bytes": 667,
+      "sha256": "bbdce8fbf18d207e70575757fd5a5e649811308665c82b56703a773dcf967a97"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-RNM6pN/public/command-3.json",
+      "bytes": 937,
+      "sha256": "b23236bac706540d2118f64cd4525fbe0e3f7778b2f00e43de973a9a1ede2301"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Srh41p/public/calls.jsonl",
+      "bytes": 224,
+      "sha256": "bfbc7438c5f99184bf040ed676b392ab3b08dd18a861fa13ce37f859fc272d6a"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Srh41p/public/command-1.json",
+      "bytes": 1658,
+      "sha256": "aa5050610f37ec7d3445b6cbcce5d37e751f7e23bee62d27b787f4a26c3dbb1f"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Srh41p/public/command-2.json",
+      "bytes": 604,
+      "sha256": "75b96f173d0a00facb0920c6677946a1437389b3ff9865ce53e8e98d253cd370"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Srh41p/public/command-3.json",
+      "bytes": 1306,
+      "sha256": "51de8e1b2f6c4c51198bf28350bdc989fd8f705fa416519f8d6b3e7cdd38b761"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TTZSDr/public/calls.jsonl",
+      "bytes": 230,
+      "sha256": "3a7a5e4e3b079f27425ba3973791c1b24da3fa10d281f0daf7be8fe265505179"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TTZSDr/public/command-1.json",
+      "bytes": 1658,
+      "sha256": "7f04be36c645e7e976c006fe0ad4a78729099fb3f2685ab4769012559c39db4b"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TTZSDr/public/command-2.json",
+      "bytes": 1543,
+      "sha256": "5c6d93b46e00692dc0bf7539a903e0a182c0ea33da9df20113fdd5a3d18c7f96"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TTZSDr/public/command-3.json",
+      "bytes": 1278,
+      "sha256": "a13baf0747c2bcb31c880dfa4cda08a3ba8edbc2eb03dedd2b7e5041e322db4d"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TTZSDr/public/command-4.json",
+      "bytes": 1441,
+      "sha256": "6723c9a3288780acaa0fe56681e8a72400ca2258dfb5ff1ead49b05649d6bfda"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TTZSDr/public/command-5.json",
+      "bytes": 1427,
+      "sha256": "46e83fbed34c2c014e30633eec9b21ef093f15823d258f618051cd43e2e05dcb"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TfZ87o/public/calls.jsonl",
+      "bytes": 230,
+      "sha256": "67e9baf77f0e6a1811947c90bac73740fab099e0673c1f19ad3d60eb7e177376"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TfZ87o/public/command-1.json",
+      "bytes": 1658,
+      "sha256": "70b7e5270eed869b8eca2e1fe9db0e91910ce356ed0f57a0040ca35868b71bc8"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TfZ87o/public/command-2.json",
+      "bytes": 1558,
+      "sha256": "c651a1667899489434b4d778de7135826d8f6fec0bc65a6b8e76121fae932200"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TfZ87o/public/command-3.json",
+      "bytes": 833,
+      "sha256": "3af9f261f40353a9b360bbf9e977f24cff941192cdd5f114ae224d3d621c990a"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TfZ87o/public/command-4.json",
+      "bytes": 1291,
+      "sha256": "bffa979cde48614a2e7bde71f2595d5e198d8b62f675a3c9d8f722e9e5c2cb65"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-TfZ87o/public/command-5.json",
+      "bytes": 1529,
+      "sha256": "086869285ea84e1f61245f0dd4a1eeb668a6105c4ec8d5cae153bce47e0e6763"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Xwubmr/public/calls.jsonl",
+      "bytes": 230,
+      "sha256": "3a7a5e4e3b079f27425ba3973791c1b24da3fa10d281f0daf7be8fe265505179"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Xwubmr/public/command-1.json",
+      "bytes": 1658,
+      "sha256": "5b5aad9ac8b48247845d8348051857bf890c39a3ebcb3afa988dd8947dde9d2c"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Xwubmr/public/command-2.json",
+      "bytes": 1549,
+      "sha256": "2421ab231b440b131fbc1a1db534b037071e272e74f65786e423797d6a4d28fd"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Xwubmr/public/command-3.json",
+      "bytes": 833,
+      "sha256": "5cda837fca7e1aa5cfa7d26f3bde5fb1f48d44f424829eefa12d2a46d42237ca"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Xwubmr/public/command-4.json",
+      "bytes": 1291,
+      "sha256": "76e0e83d6a1691768af29bf046cb7f81f22b3f87b4b04d03fcf2a72da3a0ae1f"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Xwubmr/public/command-5.json",
+      "bytes": 1529,
+      "sha256": "460dbbc39cd90974e23c98e5bb91fa455dc4c7f01876b36a2a884db0e9061965"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Zee2Z6/public/calls.jsonl",
+      "bytes": 134,
+      "sha256": "8787f824d9b120092ef858ca4d255f9fdb107116848dc20225780154344a4434"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Zee2Z6/public/command-1.json",
+      "bytes": 1436,
+      "sha256": "1eb42ac0c964c2783cfc92acecfd6f54ee0865de32f1d97e859eb9b925f50b60"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Zee2Z6/public/command-2.json",
+      "bytes": 667,
+      "sha256": "9fc33093645bfca0941309ad395ac23e54fa7fae3dd9f3181a7b0da705074860"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-Zee2Z6/public/command-3.json",
+      "bytes": 938,
+      "sha256": "6b44ac10d8b489e61ffe309c470c100c55996315d53c2eec36db1634d0539159"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-bQqgcW/public/calls.jsonl",
+      "bytes": 110,
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-bQqgcW/public/command-1.json",
+      "bytes": 1434,
+      "sha256": "810185de394a7a0f99d280f57d48135b9df3c67194b7f79cf2c96a8d05a4d824"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-bQqgcW/public/command-2.json",
+      "bytes": 667,
+      "sha256": "7bc76a0c9c08a0f5f9ca47c9cf30ac65757ada14d74c16d614b8f8c8e8c9bbb6"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-bQqgcW/public/command-3.json",
+      "bytes": 937,
+      "sha256": "1e25ff3050f8388e271db32262d4ba97415de299d8d991c397c9bfa54b1dc66c"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-cnCpqo/public/calls.jsonl",
+      "bytes": 101,
+      "sha256": "5fb640d45edb9d02d43473dc8925f67ddda016738fe8ce7e2eab3914c3111516"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-cnCpqo/public/command-1.json",
+      "bytes": 1366,
+      "sha256": "b55b3c06213632fcf86f82bf533c23ae0126399742f4f9025bf1d45c57e63aea"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-cnCpqo/public/command-2.json",
+      "bytes": 667,
+      "sha256": "5d529dbe843dd2c701f048e2927d909efb8b4a563561105eb6a7cab4f2a474bb"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-cnCpqo/public/command-3.json",
+      "bytes": 858,
+      "sha256": "9f205d4234fa5c3df9ee83c698d8f29666434a0e70cc3573ad20d8db6340d803"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-jFqvlt/public/calls.jsonl",
+      "bytes": 224,
+      "sha256": "bfbc7438c5f99184bf040ed676b392ab3b08dd18a861fa13ce37f859fc272d6a"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-jFqvlt/public/command-1.json",
+      "bytes": 1658,
+      "sha256": "e054a6064054a9d9b0c18ff745fb5a40d767323c10a6b0be2585553deb2401db"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-jFqvlt/public/command-2.json",
+      "bytes": 604,
+      "sha256": "a24e9deb8a187133f37611205ddba185f0b7c31ad04bd0105102beee50965826"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-jFqvlt/public/command-3.json",
+      "bytes": 1306,
+      "sha256": "2e3bfdfb3786affb157bc8a51f138dffd7f08eebba97e8ef23d3d41a4da252d1"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-keUsGx/public/calls.jsonl",
+      "bytes": 230,
+      "sha256": "67e9baf77f0e6a1811947c90bac73740fab099e0673c1f19ad3d60eb7e177376"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-keUsGx/public/command-1.json",
+      "bytes": 1658,
+      "sha256": "e7e0e97fccb9dfe382345d15e3aa28888c3f51519a7731f22c31e2af92faf1b7"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-keUsGx/public/command-2.json",
+      "bytes": 3352,
+      "sha256": "dae7176645a5d0b83a5208ea5e07f97da2d1ab97415110cfd1148ab3b650469f"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-keUsGx/public/command-3.json",
+      "bytes": 833,
+      "sha256": "5dd1d40670ee39627cfcb3f372f214bd2b1920525dcdbb0b4bf70ad4f1345572"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-keUsGx/public/command-4.json",
+      "bytes": 1291,
+      "sha256": "327dfa6bcd1932465f30339f200f52641ae0303bbaefe2d6b54460f725494eef"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-keUsGx/public/command-5.json",
+      "bytes": 1529,
+      "sha256": "7f63e097e173a6458a1ff09588a6274fd7ad0c9b8bc6649b858a7c419b41bf95"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-khT920/public/calls.jsonl",
+      "bytes": 117,
+      "sha256": "fd04cec329bef7d972c7da4b13eeb6d15dc231473d8088b9945da6db97c426e3"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-khT920/public/command-1.json",
+      "bytes": 1433,
+      "sha256": "6d4516a01d383eccd7dfd10a3ace58a821c9c022e059516293ac3e9e3b2b9160"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-khT920/public/command-2.json",
+      "bytes": 667,
+      "sha256": "cc4420059dbc7e2b88b7649ee63f958e347b9bde0625fb8b21a3c46017018be9"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-khT920/public/command-3.json",
+      "bytes": 935,
+      "sha256": "3587d1b9db6a7f8eb9eeeea3bb823a1ae49ad2a75f17c033d3db1838c37118c5"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-khymXR/public/calls.jsonl",
+      "bytes": 154,
+      "sha256": "53c1de9d38d5932128dba0cdcfbf168cb879e56524f4006caa41dc5eb4fcdf6a"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-khymXR/public/command-1.json",
+      "bytes": 1447,
+      "sha256": "61c6c5d6533ebbbd4dec0189e1a6c424f84456ed223d3d1b9bf54713217f9471"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-khymXR/public/command-2.json",
+      "bytes": 667,
+      "sha256": "3e31df2a8d2595fa5a0a37872158c75a64f41821c9326b44d9f94ec6ee76622d"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-khymXR/public/command-3.json",
+      "bytes": 937,
+      "sha256": "e7690787cc17c7f644a6c33790b0345bcdcba2bac043189ddbd60dd3a8b0040e"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-l5v59E/public/calls.jsonl",
+      "bytes": 167,
+      "sha256": "6a11c5c54d41478e460cccb0373cf51bd8fe98dcf81988a5bb6729e9b1d1df6f"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-l5v59E/public/command-1.json",
+      "bytes": 1695,
+      "sha256": "8361f488afa54ae73081925bb9d94cda184de00a0a78d7b2224e7a33f8d5b718"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-rnaa8T/public/calls.jsonl",
+      "bytes": 117,
+      "sha256": "fd04cec329bef7d972c7da4b13eeb6d15dc231473d8088b9945da6db97c426e3"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-rnaa8T/public/command-1.json",
+      "bytes": 2366,
+      "sha256": "24b72b22f68a5fd17455842054578d674636afc5fda0ebca2505b4cbdffca5f2"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-rnaa8T/public/command-2.json",
+      "bytes": 667,
+      "sha256": "8751b92188795e76958a568d990cf92185d9438573ad9fc8ee01ee8bed889c8f"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-rnaa8T/public/command-3.json",
+      "bytes": 935,
+      "sha256": "fd1d029a3423f98d4bfdada12edbf15013503cea80eea7f0a912468a0929beb4"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-u0UNx2/public/calls.jsonl",
+      "bytes": 147,
+      "sha256": "0410b0f805b858eadd0b81652b5e863bb8e9ed62b5a98d86d4c85fc8c86d74dc"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-u0UNx2/public/command-1.json",
+      "bytes": 1439,
+      "sha256": "e87748336d1fc4f020b9849d026b659367efb36215bded18651f8d68063d488a"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-u0UNx2/public/command-2.json",
+      "bytes": 667,
+      "sha256": "8f9ff46dbee2c29a9a1ad9a7569b3147861879d40db0a674c7d6fcd449ad13fa"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-u0UNx2/public/command-3.json",
+      "bytes": 937,
+      "sha256": "dacfebb3a65ee6a05d4e8ffa54122fc2be4b65e0a90c7f64731cfeb6eefad748"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-xnYV6Y/public/calls.jsonl",
+      "bytes": 168,
+      "sha256": "e5fe6e812f4a7f3118fad30b25e29696e6f5edee590d07d7269db6008b6a0988"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-xnYV6Y/public/command-1.json",
+      "bytes": 1454,
+      "sha256": "5c5ae4042116312763066f01d8fc9135f48297231e50b6747ea5027ba3b3908d"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-xnYV6Y/public/command-2.json",
+      "bytes": 667,
+      "sha256": "35b099a1609a777671d20140441a285f9f56897c5b5b07f09ca3ef49af800998"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-xnYV6Y/public/command-3.json",
+      "bytes": 937,
+      "sha256": "b847787dd26fec11bf579d5098a280c8751b6b736880f3d96757200ad9606dd6"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZk1B2/public/calls.jsonl",
+      "bytes": 110,
+      "sha256": "fe9d81db9b27a1646db3a70c820d0597dc9d25a4910309d499a20d7f1476cc07"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZk1B2/public/command-1.json",
+      "bytes": 1367,
+      "sha256": "9f9f92e7d6a54215195d9a025392d3a479be27edba344be217e79cf5d1888c84"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZk1B2/public/command-2.json",
+      "bytes": 667,
+      "sha256": "ca2c94b391eea6f58f2c118a5386c5ba12d9dfb36dbf7e068a4fa3b8cadbcd73"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZk1B2/public/command-3.json",
+      "bytes": 857,
+      "sha256": "eb662b7d46b9c916379b4eb055dd9856a4e08d201bace6106e2d76275a5b8efc"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZsQDq/public/calls.jsonl",
+      "bytes": 195,
+      "sha256": "1ecd25f67196b1b8fb4039005012e5b114657d5f0413ce621d665cdcd9c4afba"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZsQDq/public/command-1.json",
+      "bytes": 1658,
+      "sha256": "d33682f9105f4c3f6d5ecdae89b7ed3e7f86f9ac1df7ea1c6f08419f823f9f56"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZsQDq/public/command-2.json",
+      "bytes": 3235,
+      "sha256": "f590bfb8e5e2a1bd6bc21e280b3cf3b606e27441fe1e5e3dc176764876c660e2"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZsQDq/public/command-3.json",
+      "bytes": 833,
+      "sha256": "4d3da7f4cb0eaa93abf09401acf48830b3bbd88aa2281dc40b297a37d276d01f"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZsQDq/public/command-4.json",
+      "bytes": 1170,
+      "sha256": "364e6d7b57b8d3af4d75a2c0c0013c73ca75de73cc990d37d89ce77b73da3b14"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-yZsQDq/public/command-5.json",
+      "bytes": 1410,
+      "sha256": "a474d2aa6dea91b61855a488ad1705f6b58fe2b269fd77e77c854b7a72ae6f14"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-zRhGVd/public/calls.jsonl",
+      "bytes": 147,
+      "sha256": "0410b0f805b858eadd0b81652b5e863bb8e9ed62b5a98d86d4c85fc8c86d74dc"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-zRhGVd/public/command-1.json",
+      "bytes": 2372,
+      "sha256": "694c5373aabd8161e418e8eb5ede41a324b9621a921d29ceafe7d4c2644fc519"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-zRhGVd/public/command-2.json",
+      "bytes": 667,
+      "sha256": "c8ff40804daa899d12f78e6ada5a55f655646cb1b67fbcb6beb410777d0b2282"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node24/raw/jev-host-fault-zRhGVd/public/command-3.json",
+      "bytes": 937,
+      "sha256": "34fd9f2e03f9a7c9f21ef429e4a9d3b3fcf54690c8e585a2af3417053fabd601"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/early-artifact-inspection/public/backend-attempts.jsonl",
+      "bytes": 4059,
+      "sha256": "7647e3592bafbab3f8ea3cd8c8eb959a3b9c7183625e259b74db1a22a5b3a463"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/early-artifact-staging/public/backend-attempts.jsonl",
+      "bytes": 4697,
+      "sha256": "16cd59159687695e56b0d8ca39c3140fe6918d574f3b3a0724674039c676ff21"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/early-configuration/public/backend-attempts.jsonl",
+      "bytes": 51,
+      "sha256": "29c6ea6af391bcc101d810cf3f2c46512d0a7dca62075b0975b13ab7cea161d2"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/early-host-proof/public/backend-attempts.jsonl",
+      "bytes": 274,
+      "sha256": "4a9ccf548706b1e4574fa6f516cbbb2d61241b6238ccfbb00b6b360a6ec8c81c"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-68nLQ7/public/calls.jsonl",
+      "bytes": 224,
+      "sha256": "bfbc7438c5f99184bf040ed676b392ab3b08dd18a861fa13ce37f859fc272d6a"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-68nLQ7/public/command-1.json",
+      "bytes": 1489,
+      "sha256": "667f6854e609c13ca185df7ed6f492b74c5f9654afbd643449354bf5efc816aa"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-68nLQ7/public/command-2.json",
+      "bytes": 435,
+      "sha256": "ace9ab7a81cbd5ecfb132075f11f1b64dd93c2c31c8bfb8815fb335414f52e3e"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-68nLQ7/public/command-3.json",
+      "bytes": 1137,
+      "sha256": "1cf125406e0f6e55fe0936941869175a92f2c08eb5d173867d5695dd4c1fff9d"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-6knkov/public/calls.jsonl",
+      "bytes": 110,
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-6knkov/public/command-1.json",
+      "bytes": 2204,
+      "sha256": "d5ebfce6b35e654649274fcbf8a436d6f233a1667c38733751848a550f79cd9c"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-6knkov/public/command-2.json",
+      "bytes": 498,
+      "sha256": "79736642e574483f411d56750bae7ba820e1a16a5bcaa2e8053e0a6e36a027b5"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-6knkov/public/command-3.json",
+      "bytes": 768,
+      "sha256": "ddece18bccd2e74863f9180e944cac5cb4f8408a513514843945eb5e4f6fa0a0"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-9qkUaR/public/calls.jsonl",
+      "bytes": 230,
+      "sha256": "67e9baf77f0e6a1811947c90bac73740fab099e0673c1f19ad3d60eb7e177376"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-9qkUaR/public/command-1.json",
+      "bytes": 1489,
+      "sha256": "5f8e188fafbfd1dc9e01215561a7bf014975219833c990f1f39b03d8e967ced3"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-9qkUaR/public/command-2.json",
+      "bytes": 3183,
+      "sha256": "4044d13cf142d40b151fd70f00ea3150b4355926aa8a981e4fff4dcfb955a676"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-9qkUaR/public/command-3.json",
+      "bytes": 664,
+      "sha256": "58aeab4b26e8f7b2658dfa3984f0b34695380a097e0894f28f2a608cd2a32a2d"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-9qkUaR/public/command-4.json",
+      "bytes": 1122,
+      "sha256": "7fd3e0e8a699c5ff7589a22a75ceeab04ee648285ad4a4fc168829ba2f345c4d"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-9qkUaR/public/command-5.json",
+      "bytes": 1360,
+      "sha256": "b2822629fcd84503794a1ce562893d640d72bed2c35e68731943a864287d05cb"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-IEs87w/public/calls.jsonl",
+      "bytes": 93,
+      "sha256": "6aa2a7d53d745699baae08dc7cfba1914ffe4e127a08ba2b1119fae26a595d8e"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-IEs87w/public/command-1.json",
+      "bytes": 778,
+      "sha256": "7d1f502a864101ee58eef70179319610e67d06162390640969aba9baf31ad023"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-IEs87w/public/command-2.json",
+      "bytes": 498,
+      "sha256": "d39fd9fc8c9f33495d7fe1866c5511eb67f2691d39551956b5c06d91b2583d64"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-IEs87w/public/command-3.json",
+      "bytes": 689,
+      "sha256": "90cb6f78867c00853f8fd0606ab89cbe1b96a73a17b82aaad3be2e09f0c7cab5"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-KUUEtK/public/calls.jsonl",
+      "bytes": 110,
+      "sha256": "fe9d81db9b27a1646db3a70c820d0597dc9d25a4910309d499a20d7f1476cc07"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-KUUEtK/public/command-1.json",
+      "bytes": 1198,
+      "sha256": "440d94a30306eb39dd110d5190a8897734c6c5514601f59fa1948bb7ba32bb39"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-KUUEtK/public/command-2.json",
+      "bytes": 498,
+      "sha256": "4ea6a2779376af31cc0a8885c9597d7207274392fda41a6d4747b802552ef8d1"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-KUUEtK/public/command-3.json",
+      "bytes": 688,
+      "sha256": "f825ff3544941b14b381cfe1daccfa1eb91baa5e74782899e8207464c92c2bee"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-MxGjsY/public/calls.jsonl",
+      "bytes": 110,
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-MxGjsY/public/command-1.json",
+      "bytes": 1273,
+      "sha256": "637b517b187fa49490d5a0a1dd3bbeee6b2c1d15c5b3adfe4d2e24ba96720100"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-MxGjsY/public/command-2.json",
+      "bytes": 498,
+      "sha256": "dd404b0f4ce8f8adf31c47e606f348535f58a3a98337d274b0d6cdf60aaa2418"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-MxGjsY/public/command-3.json",
+      "bytes": 768,
+      "sha256": "e66c09127fdc842c996236cefc25279b543667723a35926474404c1aa85fb6d1"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-OY4SHN/public/calls.jsonl",
+      "bytes": 134,
+      "sha256": "8787f824d9b120092ef858ca4d255f9fdb107116848dc20225780154344a4434"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-OY4SHN/public/command-1.json",
+      "bytes": 2200,
+      "sha256": "b6747d6305e0bcd4b505544dd7cc1375e5b8c33c9595f5678f8848dc9117ae92"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-OY4SHN/public/command-2.json",
+      "bytes": 498,
+      "sha256": "badd141dc0daa74873b83b42ffb7f4ff01460859e91134717c7731458f5adf0c"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-OY4SHN/public/command-3.json",
+      "bytes": 769,
+      "sha256": "eb87ab74a7c50960b1a9c9fb822c043776e65880312bbdca4ae22a7cf50ae2d7"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Ql69Ax/public/calls.jsonl",
+      "bytes": 224,
+      "sha256": "bfbc7438c5f99184bf040ed676b392ab3b08dd18a861fa13ce37f859fc272d6a"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Ql69Ax/public/command-1.json",
+      "bytes": 1489,
+      "sha256": "548975a46127fec1a94a313d8d689058e563a17a2f233448e237cddb300c5560"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Ql69Ax/public/command-2.json",
+      "bytes": 435,
+      "sha256": "c37f95f398a183ee279a04ce71aaf5c4f5cabfadc5f9e4b54bcd36690d02d6e7"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Ql69Ax/public/command-3.json",
+      "bytes": 1137,
+      "sha256": "7f03118248f6443a9df4aa8e176c28508ca08d29ca9ab969dd3e11cea723f46a"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-RQOC5u/public/calls.jsonl",
+      "bytes": 110,
+      "sha256": "fe9d81db9b27a1646db3a70c820d0597dc9d25a4910309d499a20d7f1476cc07"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-RQOC5u/public/command-1.json",
+      "bytes": 2115,
+      "sha256": "8183f41337baa373e5b7d5dda96fabc2b63d8c44349ee0dcaf5a9a8bfc410378"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-RQOC5u/public/command-2.json",
+      "bytes": 498,
+      "sha256": "99fb0b1ccd61a32dbdbe15fb04e092a2899aff13131c71a047fc3690c517e010"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-RQOC5u/public/command-3.json",
+      "bytes": 688,
+      "sha256": "5cb6379a6f9dc464520d2f7962d74d12cb9e52234f02e5ae9254449704cb1ad3"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-U8GEFT/public/calls.jsonl",
+      "bytes": 124,
+      "sha256": "cd0032898efdc0da253fbdbbbc57aac8e50b93097fe059b9d2940fbc236446c2"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-U8GEFT/public/command-1.json",
+      "bytes": 1264,
+      "sha256": "27386ec978b51ded32e3044bfa20f67a09e5740fe0f6877e589777066cb961b1"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-U8GEFT/public/command-2.json",
+      "bytes": 498,
+      "sha256": "55f7b05d6247c90fd14f998328edbc4b6804c3672a9f673f659a08ff8cf1c43f"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-U8GEFT/public/command-3.json",
+      "bytes": 766,
+      "sha256": "1b4f9e8c7f2c83b96ad8a67dc8b9d6e628173237cac08ee4c07c07507f00dc13"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-VCU00l/public/calls.jsonl",
+      "bytes": 168,
+      "sha256": "e5fe6e812f4a7f3118fad30b25e29696e6f5edee590d07d7269db6008b6a0988"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-VCU00l/public/command-1.json",
+      "bytes": 2218,
+      "sha256": "c9a3811e4f7e81d6761dc8998ec206119fedb14d3884e80ef4e84647864742e1"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-VCU00l/public/command-2.json",
+      "bytes": 498,
+      "sha256": "9bd584613cea9a2f61ca27d03f143cb6092f7071c269c933514762421541e0c2"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-VCU00l/public/command-3.json",
+      "bytes": 768,
+      "sha256": "d93309e2c3b6484c8e0fd2af3558c6e5463ed39b4fd8811f067512db3b5ccef2"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-VvIYvy/public/calls.jsonl",
+      "bytes": 209,
+      "sha256": "1298614f386db434cf54dcce75802360480d24fc8d72e4e215a4c6e21b8c527a"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-VvIYvy/public/command-1.json",
+      "bytes": 1489,
+      "sha256": "c69649d1dae765d6656d54b372b7e26d7991bedeadf51c59a42b0f6b0e84caf6"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-VvIYvy/public/command-2.json",
+      "bytes": 6286,
+      "sha256": "0073c894038a9d5a641851acb9655005e091cd5280fb49d812ce722cb86eed94"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-W32ztv/public/calls.jsonl",
+      "bytes": 195,
+      "sha256": "1ecd25f67196b1b8fb4039005012e5b114657d5f0413ce621d665cdcd9c4afba"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-W32ztv/public/command-1.json",
+      "bytes": 1489,
+      "sha256": "f7c4dee98543652f8955da64f780b4dcb38c20707293f658bda2bc325c051e33"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-W32ztv/public/command-2.json",
+      "bytes": 1277,
+      "sha256": "df48a271369c515418348499aed09507c336d2b163ac1b9e51023783bf07fb5b"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-W32ztv/public/command-3.json",
+      "bytes": 664,
+      "sha256": "6c19fdf89f1844ffb5765ad7fd3bbc908ed4a60498731a78cff5d96e5790526f"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-W32ztv/public/command-4.json",
+      "bytes": 1001,
+      "sha256": "f9ee86e67c55bb1f6f1d8acc105c2bf6e32961dfffd541bed9b478acb9d0e622"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-W32ztv/public/command-5.json",
+      "bytes": 1241,
+      "sha256": "78f3599671f90fc00e304affdaf952513118f9f0ffa57482650f4ae9bd4cb1d1"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-WoQsDi/public/calls.jsonl",
+      "bytes": 167,
+      "sha256": "6a11c5c54d41478e460cccb0373cf51bd8fe98dcf81988a5bb6729e9b1d1df6f"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-WoQsDi/public/command-1.json",
+      "bytes": 1526,
+      "sha256": "6ebdee295df375d35779bbd6785f46aa6569ccb3ea48df8d6b025ccace0227ec"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-XNjAhC/public/calls.jsonl",
+      "bytes": 124,
+      "sha256": "cd0032898efdc0da253fbdbbbc57aac8e50b93097fe059b9d2940fbc236446c2"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-XNjAhC/public/command-1.json",
+      "bytes": 2197,
+      "sha256": "53d5a58b68bb29b571eb03e023f793860af4c207d21c3585c48e9ca5c4ab2abd"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-XNjAhC/public/command-2.json",
+      "bytes": 498,
+      "sha256": "bc3ec21b7b611bb693519e54b317ecb735dd7773c99568e77b691428a4fac406"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-XNjAhC/public/command-3.json",
+      "bytes": 766,
+      "sha256": "138b8acd860960de6fb1cb939404f6433a53beb35754c85a5cad20f5218d7a73"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-XksetX/public/calls.jsonl",
+      "bytes": 110,
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-XksetX/public/command-1.json",
+      "bytes": 1265,
+      "sha256": "3c0f9b70c1621f3136c1f522852bc2399162a8cd2d1b464d880c473313ddebb1"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-XksetX/public/command-2.json",
+      "bytes": 498,
+      "sha256": "afef08e340e66b12b78bbcee2484ad033284c47cbfc1719216485a92aa4ba6d9"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-XksetX/public/command-3.json",
+      "bytes": 768,
+      "sha256": "8f00f098987304f99404c84dad3ff2ab30320dbc67c8ddb66af04b53abe9058e"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Z6vj7F/public/calls.jsonl",
+      "bytes": 117,
+      "sha256": "fd04cec329bef7d972c7da4b13eeb6d15dc231473d8088b9945da6db97c426e3"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Z6vj7F/public/command-1.json",
+      "bytes": 2197,
+      "sha256": "8932ec8539b05363f7acf8a58ac4243a7f905cf048cbf53c9ca693fe0d026724"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Z6vj7F/public/command-2.json",
+      "bytes": 498,
+      "sha256": "608483f72a8f0a66d6c83eef4a840d8f669b0bd8a23f4e81e7f1724824e7cb68"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Z6vj7F/public/command-3.json",
+      "bytes": 766,
+      "sha256": "2b50a3d6f6725628607230ec355d66ce5587603647ee687554a251d335ae314c"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Zz6vEP/public/calls.jsonl",
+      "bytes": 230,
+      "sha256": "3a7a5e4e3b079f27425ba3973791c1b24da3fa10d281f0daf7be8fe265505179"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Zz6vEP/public/command-1.json",
+      "bytes": 1489,
+      "sha256": "fa94fbbc8e8d16486b9509fc08fef7c12d320afe4089694bf21dad0538379846"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Zz6vEP/public/command-2.json",
+      "bytes": 1380,
+      "sha256": "e1a61a3a1b572d3d9eb298da3a10fe34ae914607ad7d1d0a5bf54f23c80fb8ce"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Zz6vEP/public/command-3.json",
+      "bytes": 664,
+      "sha256": "0f487ab647b7ca73dde65d92d8473d242c1b852cbd8f24ff21010fea6e3a04fb"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Zz6vEP/public/command-4.json",
+      "bytes": 1122,
+      "sha256": "3c190a71e303eaffadc54358ddbb26273f0d9c42d1898c0a1b841c345b479647"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-Zz6vEP/public/command-5.json",
+      "bytes": 1360,
+      "sha256": "1df12425ff239c6ee436c484dbd930edade154a433e8ef63b445f8949a6bdc3a"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-aRzifn/public/calls.jsonl",
+      "bytes": 230,
+      "sha256": "3a7a5e4e3b079f27425ba3973791c1b24da3fa10d281f0daf7be8fe265505179"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-aRzifn/public/command-1.json",
+      "bytes": 1489,
+      "sha256": "95b347f817977c481d36c868864300962c840b571ca6b7bb9a648d1afeb5d2e2"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-aRzifn/public/command-2.json",
+      "bytes": 3174,
+      "sha256": "2dc9b0d8f992e80fc802bfb0e6be2f027a484b8fe70271122a204b541ee28359"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-aRzifn/public/command-3.json",
+      "bytes": 664,
+      "sha256": "94bee1ec7296d1956b43d6baece150d618717c9ae134ce35536d1aad5b471e85"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-aRzifn/public/command-4.json",
+      "bytes": 1122,
+      "sha256": "779ac31344c0ad4abff11911970da590acf3ffced68aa7396d4346f883d41e0c"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-aRzifn/public/command-5.json",
+      "bytes": 1360,
+      "sha256": "9ef201ca76d3fb2ef9e0dd78de9f2c0b778ae1154f2af95e8826103366586d8f"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-c6Gi1C/public/calls.jsonl",
+      "bytes": 147,
+      "sha256": "0410b0f805b858eadd0b81652b5e863bb8e9ed62b5a98d86d4c85fc8c86d74dc"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-c6Gi1C/public/command-1.json",
+      "bytes": 2203,
+      "sha256": "21bd89007a1c93c7fc7496796666788be5b3d8ea28f7226ce2f03489ee5f3fb0"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-c6Gi1C/public/command-2.json",
+      "bytes": 498,
+      "sha256": "94aaa8175a4ff9df8a78cc02a9363e4478e942c7068452bec568735f7e59e0d5"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-c6Gi1C/public/command-3.json",
+      "bytes": 768,
+      "sha256": "402e36935d84d9122dc67322d7ba0726572e2d9dd293153592bec315b5043942"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-cf75r8/public/calls.jsonl",
+      "bytes": 257,
+      "sha256": "84ea1ee0c1de1b1809717b4a9d361972ca2d2617ab6a00bce5e5d83903622602"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-cf75r8/public/command-1.json",
+      "bytes": 1489,
+      "sha256": "ec03534c158c7e8e8153572cc88969c2d1291e9fe5758f9d61d23cbb2b9feea9"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-cf75r8/public/command-2.json",
+      "bytes": 1499,
+      "sha256": "86c3948ace27f8c0891b344b74efb86a859ec47750fef460e4435266c3f46ad9"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-cf75r8/public/command-3.json",
+      "bytes": 664,
+      "sha256": "dd1d201fdb92279c96f4a2b5de809439799730a0f4daab36508d6754e2dbc53c"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-cf75r8/public/command-4.json",
+      "bytes": 1249,
+      "sha256": "731700d41588521f69023d16852cc02c062b2917eb8422655d68bdbb95dd0e8a"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-cf75r8/public/command-5.json",
+      "bytes": 1472,
+      "sha256": "2a52a50dbd5158c2855c16cd34da162d89c9ae375ea428d07c22af1dacbb2a2b"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-gCCyYZ/public/calls.jsonl",
+      "bytes": 257,
+      "sha256": "84ea1ee0c1de1b1809717b4a9d361972ca2d2617ab6a00bce5e5d83903622602"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-gCCyYZ/public/command-1.json",
+      "bytes": 1489,
+      "sha256": "d0516bc2c2a3918a65a68c7603bf6f6f45a64578f7a2a6d3a6127142d6ad4aba"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-gCCyYZ/public/command-2.json",
+      "bytes": 3297,
+      "sha256": "4b5d1f002f4d6b1d1f225c5d5876e831747ac5cd94cac38334a93ebec05a94eb"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-gCCyYZ/public/command-3.json",
+      "bytes": 664,
+      "sha256": "a842321b615a58f9db2ffd1fe1dc9b54db5a335a38e02c7388345eef51bf4c55"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-gCCyYZ/public/command-4.json",
+      "bytes": 1249,
+      "sha256": "3107aa975112acdffb7f002fe7b6cd1457f14716a7be5f4d2ef3a51b498f9c88"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-gCCyYZ/public/command-5.json",
+      "bytes": 1472,
+      "sha256": "c2a0af347cbf84f060a9dacf775cc86a5f6d0f950e7ad4eb94ae43e9f9479b48"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-kaZzaU/public/calls.jsonl",
+      "bytes": 101,
+      "sha256": "5fb640d45edb9d02d43473dc8925f67ddda016738fe8ce7e2eab3914c3111516"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-kaZzaU/public/command-1.json",
+      "bytes": 2112,
+      "sha256": "b18cc9eec5b8dbee2b8c887f3f1eb5491f903cba0fbb8e9bc0b84edb0befb0a8"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-kaZzaU/public/command-2.json",
+      "bytes": 498,
+      "sha256": "193f362167fd499ef259f0be721e75d92d57ba43940e50107ab1fda00e89238a"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-kaZzaU/public/command-3.json",
+      "bytes": 689,
+      "sha256": "86b8091347a25d6c9505f0d2008cefd5e041560068df3251bbb260e455ebc8bf"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-m9U1B6/public/calls.jsonl",
+      "bytes": 230,
+      "sha256": "67e9baf77f0e6a1811947c90bac73740fab099e0673c1f19ad3d60eb7e177376"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-m9U1B6/public/command-1.json",
+      "bytes": 1489,
+      "sha256": "b1be798719777b2344ffd2248a15a590d7fd93eeeef7f97155fa5985b0682475"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-m9U1B6/public/command-2.json",
+      "bytes": 1389,
+      "sha256": "066edeba2d3c3e0d76fbdea4b8acabd8adc04492388a0935b8847a828429f449"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-m9U1B6/public/command-3.json",
+      "bytes": 664,
+      "sha256": "1aad21dd94e2d367aecf2370fb368e46f1b98f569d14ca3c1f78807171735157"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-m9U1B6/public/command-4.json",
+      "bytes": 1122,
+      "sha256": "431eea7742e5efcfbdb14c03e4abb932977643085eb5c45784ab1d227f40026c"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-m9U1B6/public/command-5.json",
+      "bytes": 1360,
+      "sha256": "aa6e904612c62a2ae25d16431cdd709952df2dfc88ecfa092bc1ac6e3b3bea44"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-nm9Uxd/public/calls.jsonl",
+      "bytes": 134,
+      "sha256": "8787f824d9b120092ef858ca4d255f9fdb107116848dc20225780154344a4434"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-nm9Uxd/public/command-1.json",
+      "bytes": 1267,
+      "sha256": "67c87561e12a6e5b78511c1f78c2a9875876b80284a93b8433dd35988ccb78c8"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-nm9Uxd/public/command-2.json",
+      "bytes": 498,
+      "sha256": "03e624b72d9b3238fa9d50305b583d3473b6ef068b362d1c78c04389030ba814"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-nm9Uxd/public/command-3.json",
+      "bytes": 769,
+      "sha256": "e6d683360698de6c677f157567923163219031355c44e978a4d709cb327ce150"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-noDw1y/public/calls.jsonl",
+      "bytes": 230,
+      "sha256": "3a7a5e4e3b079f27425ba3973791c1b24da3fa10d281f0daf7be8fe265505179"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-noDw1y/public/command-1.json",
+      "bytes": 1489,
+      "sha256": "209f6f89ba9132b1422c3da578a10544052673f8d2f559191389f54106c88102"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-noDw1y/public/command-2.json",
+      "bytes": 1374,
+      "sha256": "0a653300056ba2adad8d9840afffbfbbae8bd1bcf49bb77d0898efa80fd97b67"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-noDw1y/public/command-3.json",
+      "bytes": 1109,
+      "sha256": "aabb0af5cc4909e795f2e6eb0ef6f0e66fd5f2de7a5e88cfcac1ffcf59fd93a4"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-noDw1y/public/command-4.json",
+      "bytes": 1272,
+      "sha256": "d2c0cb2a96225b78682075256f703ae3de8d362ca55034c88cdc7ac022edee97"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-noDw1y/public/command-5.json",
+      "bytes": 1258,
+      "sha256": "7ccf6a9e00c67571606161c1165a2e5c92f5518ea8f29f31d9aaf8f24b6749ba"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-nsek40/public/calls.jsonl",
+      "bytes": 110,
+      "sha256": "c8e69587181b7b38e61e9a3aa19f9501a1bc3e807a409d8666e9774517196eb3"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-nsek40/public/command-1.json",
+      "bytes": 2196,
+      "sha256": "065fc7c82be68eb8fd8ac54178b3e424d7d8b2dc36f21bdcd58797273e88cf2b"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-nsek40/public/command-2.json",
+      "bytes": 498,
+      "sha256": "8c9e769177663812229d849b940b0c1f5111696e7a62a4105ce7359abc25acba"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-nsek40/public/command-3.json",
+      "bytes": 768,
+      "sha256": "8f5e11debf56465480faa16ca4ab8eb668e3a78ad99bb15aef4110f3582f11b8"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-qehJvE/public/calls.jsonl",
+      "bytes": 93,
+      "sha256": "6aa2a7d53d745699baae08dc7cfba1914ffe4e127a08ba2b1119fae26a595d8e"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-qehJvE/public/command-1.json",
+      "bytes": 1269,
+      "sha256": "2d60f88acbab90bc2201962139a350b16d85a3784abd7caa74957e9c4f5a1a49"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-qehJvE/public/command-2.json",
+      "bytes": 498,
+      "sha256": "01c3a20b555da0084b2f953c97d924c231bc3acfbf282a0140163ca54e5a04ed"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-qehJvE/public/command-3.json",
+      "bytes": 689,
+      "sha256": "c940e5436d1c0b61b0482b73a2b6c301dccfd297ca96da1e037abf23a46e9a37"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-qveqw3/public/calls.jsonl",
+      "bytes": 168,
+      "sha256": "e5fe6e812f4a7f3118fad30b25e29696e6f5edee590d07d7269db6008b6a0988"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-qveqw3/public/command-1.json",
+      "bytes": 1285,
+      "sha256": "edc6f882b2a8d72a2ecd874b57f0395fc98b1f2ef2e55860c8a2ccc1bc4fe446"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-qveqw3/public/command-2.json",
+      "bytes": 498,
+      "sha256": "74405e55500257f4edf6c4ac1cd0ecbefd907974e3f4224c702c1ec8e1496407"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-qveqw3/public/command-3.json",
+      "bytes": 768,
+      "sha256": "cc692b53cf42b77b6f8fe3944ea35733c600987e0784276e26cc3805bbeb6f58"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-ruaqIK/public/calls.jsonl",
+      "bytes": 147,
+      "sha256": "0410b0f805b858eadd0b81652b5e863bb8e9ed62b5a98d86d4c85fc8c86d74dc"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-ruaqIK/public/command-1.json",
+      "bytes": 1270,
+      "sha256": "b27880895b250ef8cc7897865d9ffa7bb904e872cf20bed25aa43ae1090dcc92"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-ruaqIK/public/command-2.json",
+      "bytes": 498,
+      "sha256": "a1da85ede66ee1290e8ee3d647cd43de232e665acbfae2b45aa30af57d9d2c65"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-ruaqIK/public/command-3.json",
+      "bytes": 768,
+      "sha256": "b6360676fa1937cca7f6c3d6b0228425fc70434eee866245ca08acbf7ee76762"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xI13G0/public/calls.jsonl",
+      "bytes": 154,
+      "sha256": "53c1de9d38d5932128dba0cdcfbf168cb879e56524f4006caa41dc5eb4fcdf6a"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xI13G0/public/command-1.json",
+      "bytes": 1278,
+      "sha256": "fc63e89909b0068f5f03dd692090309ad27a45633556cecb58a5f92dde80384d"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xI13G0/public/command-2.json",
+      "bytes": 498,
+      "sha256": "b214d6b6514e7bc2d2c066b3dfe7b5259b029257183c6852a4484f62557c0e83"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xI13G0/public/command-3.json",
+      "bytes": 768,
+      "sha256": "7b1c36489092dbfe351d754078913c38308d5af8c6f0f56c96b4e3063e94acf5"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xXuDNp/public/calls.jsonl",
+      "bytes": 195,
+      "sha256": "1ecd25f67196b1b8fb4039005012e5b114657d5f0413ce621d665cdcd9c4afba"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xXuDNp/public/command-1.json",
+      "bytes": 1489,
+      "sha256": "45e3d8c44031e4832d6a7b17f46c6126ff207f58ce06b0f01b910b6a27d429b9"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xXuDNp/public/command-2.json",
+      "bytes": 3066,
+      "sha256": "ae1c1581c04f702bf022dad7a5fe729c038b881cd8f1f87fd6b001b0a98bc6e5"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xXuDNp/public/command-3.json",
+      "bytes": 664,
+      "sha256": "a79aad6d6c0c66b86c4a290ad78d6abeba89046fa2921b530bcd2b61d4da9e06"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xXuDNp/public/command-4.json",
+      "bytes": 1001,
+      "sha256": "718c64c588a035ce107f2bae00800209c53dc14e6c6992b2ec10f227614a9ed4"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xXuDNp/public/command-5.json",
+      "bytes": 1241,
+      "sha256": "90039882ec50f99f0f3d582f1ee8511e06f6c4d29e9dc487620b1a137dc81288"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xabqpK/public/calls.jsonl",
+      "bytes": 117,
+      "sha256": "fd04cec329bef7d972c7da4b13eeb6d15dc231473d8088b9945da6db97c426e3"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xabqpK/public/command-1.json",
+      "bytes": 1264,
+      "sha256": "c6a4e59ad0e010c9b6008db3007e78674db0f721f3443191014cdfaa1e930fce"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xabqpK/public/command-2.json",
+      "bytes": 498,
+      "sha256": "d159f91b7bbec0719f0c0e3d0bbf54371f65deac90bff617b9caebd7e88d0dbb"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xabqpK/public/command-3.json",
+      "bytes": 766,
+      "sha256": "d79c28418f59ea4932278c0cdc2cb37ea48a0ba088bafbed5fb0e5a9cf6e2380"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xfWAEy/public/calls.jsonl",
+      "bytes": 101,
+      "sha256": "5fb640d45edb9d02d43473dc8925f67ddda016738fe8ce7e2eab3914c3111516"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xfWAEy/public/command-1.json",
+      "bytes": 1197,
+      "sha256": "227dcb7ee8a630b952b606485f16868362ddabea00657070eadbf276bc5de0ff"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xfWAEy/public/command-2.json",
+      "bytes": 498,
+      "sha256": "f6923ddd60e05b1d44d31f5f80d5a470cbc5bdf67bdd554fb4d50aeada5a61af"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-xfWAEy/public/command-3.json",
+      "bytes": 689,
+      "sha256": "9f7b0825c70034dc39e92f7652a12f954ba804416034a023cff9832df7cf1427"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-y2LctB/public/calls.jsonl",
+      "bytes": 154,
+      "sha256": "53c1de9d38d5932128dba0cdcfbf168cb879e56524f4006caa41dc5eb4fcdf6a"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-y2LctB/public/command-1.json",
+      "bytes": 2211,
+      "sha256": "bd116e537009f94e9839db33a18dbec5e43cbc11e2f0870241c5c784c3f5e40d"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-y2LctB/public/command-2.json",
+      "bytes": 498,
+      "sha256": "07ff3d5870aff050feeec97bb70d802bfab3b7dbe5f642b550577840f2a3a5dd"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-y2LctB/public/command-3.json",
+      "bytes": 768,
+      "sha256": "5e8439620bae0ef5bb05a8828b91247a5e5f156ff10f1949d358ef49f01230b9"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yA8Zag/public/calls.jsonl",
+      "bytes": 181,
+      "sha256": "7d8a057f2d598b6d55a7a7453cef93168bf3c2f5db406fd1d83326fa88dd4478"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yA8Zag/public/command-1.json",
+      "bytes": 2203,
+      "sha256": "40e49f24ff6d130e57b8434bc58943840d193e79d599511da054d7693f8debea"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yA8Zag/public/command-2.json",
+      "bytes": 498,
+      "sha256": "7f4f522ef5eba95cc896f5d5111f0ccae2ae93007301b69dcb304f8ea309a146"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yA8Zag/public/command-3.json",
+      "bytes": 768,
+      "sha256": "e3f6725d1c7909baa3dd2b54ec28e166958d4db232cf2c9cd3bd739fb7204966"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yRniGj/public/calls.jsonl",
+      "bytes": 167,
+      "sha256": "6a11c5c54d41478e460cccb0373cf51bd8fe98dcf81988a5bb6729e9b1d1df6f"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yRniGj/public/command-1.json",
+      "bytes": 1526,
+      "sha256": "652f54f0bd9657a965108ab1e92ce16c85bb98537d7e69fdd248acd1948e5433"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yx7OOR/public/calls.jsonl",
+      "bytes": 181,
+      "sha256": "7d8a057f2d598b6d55a7a7453cef93168bf3c2f5db406fd1d83326fa88dd4478"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yx7OOR/public/command-1.json",
+      "bytes": 1270,
+      "sha256": "89ca0c7f90413feb70bb37efdd0f3490f0a9c6b518ddd9c403bc9a65f717456d"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yx7OOR/public/command-2.json",
+      "bytes": 498,
+      "sha256": "4635f83bb603c502418781cf7d019eb04337e4d362805004c16a77698dfca0e3"
+    },
+    {
+      "path": "selected-raw/.scratch/ticket09-repair2-evidence/round2-added-node26/raw/jev-host-fault-yx7OOR/public/command-3.json",
+      "bytes": 768,
+      "sha256": "5b2199f9d295a04f23946b685cf86c387e2f9846f9b5963b5d4be150df41cfe1"
+    },
+    {
+      "path": "source/.scratch/observed-action-rollout/issues/09-host-fault-suite.md",
+      "bytes": 8430,
+      "sha256": "482d9c6dfffd09237ec004b9a01a0b4e0bede9d495d1d24a84cebdd1c8b3bbf0"
+    },
+    {
+      "path": "source/tests/fixtures/observed-cli-server.ts",
+      "bytes": 8300,
+      "sha256": "e0bffe3dfe1b0ee90aed64b7fd2493ddb91faf73cf8c1c9e418338fc55f811d1"
+    },
+    {
+      "path": "source/tests/fixtures/observed-host/allocator-public.ts",
+      "bytes": 5468,
+      "sha256": "4362eb422c0213918d9e37e0d43c04644ae9429322be39bed82b0ce98d1228e1"
+    },
+    {
+      "path": "source/tests/fixtures/observed-host/case-matrix.json",
+      "bytes": 4725755,
+      "sha256": "4a8d1f8b0cc818c55b087cfaac5d54efe5c5da6f1bce22e41df7b229f0d810f7"
+    },
+    {
+      "path": "source/tests/fixtures/observed-host/early-cli.ts",
+      "bytes": 4699,
+      "sha256": "9625fc2f76374c41fdb9681fe5fa7c79afa35c1020b0cee98a3be4cd355e67f8"
+    },
+    {
+      "path": "source/tests/fixtures/observed-host/harness.ts",
+      "bytes": 7961,
+      "sha256": "463d7f5feb7eedc32ac5d688d2bcb57c87460875fd14b7de3f5864da29f893a1"
+    },
+    {
+      "path": "source/tests/fixtures/observed-host/owner.ts",
+      "bytes": 6091,
+      "sha256": "b9a379c00645a1c3cc0704ad2986572b0c62ef0bbd3586d659649ecf160f941a"
+    },
+    {
+      "path": "source/tests/observed-crash.test.ts",
+      "bytes": 11838,
+      "sha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea"
+    },
+    {
+      "path": "source/tests/observed-host-fault.test.ts",
+      "bytes": 51424,
+      "sha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a"
+    },
+    {
+      "path": "source/tests/observed-public-races.test.ts",
+      "bytes": 24482,
+      "sha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e"
+    }
+  ],
+  "fileCount": 376,
+  "bytes": 18591223
+}

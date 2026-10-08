@@ -1,0 +1,19 @@
+{"node":"v26.8.1","actualPollCount":1,"durationMs":1223,"sourceUnchanged":true}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Unchanged original fixture oracle reproduced
+
+1 !== 2
+
+    at <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/boot-poll/reproduce.ts:38:10) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 2,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.8.1

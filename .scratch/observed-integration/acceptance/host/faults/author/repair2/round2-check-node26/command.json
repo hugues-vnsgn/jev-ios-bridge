@@ -1,0 +1,32 @@
+{
+  "runtime": "26",
+  "gate": "check",
+  "command": [
+    "/opt/homebrew/bin/node",
+    "/opt/homebrew/lib/node_modules/npm/bin/npm-cli.js",
+    "run",
+    "check"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-host-faults",
+  "parent": "08a985805cb442a2404eb9561ae92f69748ae5e0",
+  "source": {
+    ".scratch/observed-action-rollout/issues/09-host-fault-suite.md": "a3f8c8d64a53de1993228bd2ee34bb2bc36972cc2798033264afe474244655bc",
+    "tests/fixtures/observed-host/allocator-public.ts": "4362eb422c0213918d9e37e0d43c04644ae9429322be39bed82b0ce98d1228e1",
+    "tests/fixtures/observed-host/case-matrix.json": "2ee851b636b7e667e23d7b6058d9cbecb4d0615855b181d07bd265d9985ba40f",
+    "tests/fixtures/observed-host/early-cli.ts": "9625fc2f76374c41fdb9681fe5fa7c79afa35c1020b0cee98a3be4cd355e67f8",
+    "tests/fixtures/observed-host/harness.ts": "463d7f5feb7eedc32ac5d688d2bcb57c87460875fd14b7de3f5864da29f893a1",
+    "tests/fixtures/observed-host/owner.ts": "b9a379c00645a1c3cc0704ad2986572b0c62ef0bbd3586d659649ecf160f941a",
+    "tests/observed-crash.test.ts": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+    "tests/observed-host-fault.test.ts": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+    "tests/observed-public-races.test.ts": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+    "tests/fixtures/observed-cli-server.ts": "e0bffe3dfe1b0ee90aed64b7fd2493ddb91faf73cf8c1c9e418338fc55f811d1"
+  },
+  "evidenceUmask": "0077",
+  "childUmask": "0022",
+  "environmentRemoved": [
+    "TYPESAFE_API_KEY",
+    "NODE_OPTIONS",
+    "NODE_NO_WARNINGS"
+  ],
+  "started": 1791472816.404778
+}

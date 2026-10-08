@@ -1,0 +1,19 @@
+{
+  "classification": "Sole known unchanged boot-state polling fixed-time test boundary; no repaired fixture or product defect inferred",
+  "exitCode": 1,
+  "tests": 1668,
+  "pass": 1667,
+  "fail": 1,
+  "cancelled": 0,
+  "skipped": 0,
+  "failure": "tests/observed-allocation.test.ts:392:86",
+  "assertion": "bootCalls expected2 actual1 after fixed1150ms; unchanged test",
+  "sourceSha256": "0b0358c4d031f24aef59cb0bf70a5bab7be2dd999fd168295cd6a5b48d7e794f",
+  "sourceSameAsParent": true,
+  "typecheck": "PASS",
+  "build": "Not reached because npm test exit1",
+  "fallback": "None",
+  "retry": "Not yet run; Root consideration pending",
+  "logSha256": "699ac20c5dea5e4745658e47f2d1cc6324de24adc38b9d3c71bfb83988240d75",
+  "excerptSha256": "b14c52777b721c09f295392462486eb2fc9c0c3f63dda55874ffe23ce28e1ae2"
+}

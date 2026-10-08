@@ -1,0 +1,87 @@
+[
+  {
+    "name": "added-node26",
+    "exitCode": 0,
+    "rawLogSha256": "d47ed3a2e972aa9a4985608046e88842b14b8758748874f5e923435a7f73c195",
+    "verdict": "PASS",
+    "summary": {
+      "tests": 193,
+      "pass": 193,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "runtimeEightFilesUnchanged": true,
+    "typecheckPresent": false,
+    "buildPresent": false
+  },
+  {
+    "name": "added-node24",
+    "exitCode": 0,
+    "rawLogSha256": "6915ab42a41beabe8f660fad5c3983c45c1f84c0bac6772427cf2a938c414ba0",
+    "verdict": "PASS",
+    "summary": {
+      "tests": 193,
+      "pass": 193,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "runtimeEightFilesUnchanged": true,
+    "typecheckPresent": false,
+    "buildPresent": false
+  },
+  {
+    "name": "check-node26",
+    "exitCode": 1,
+    "rawLogSha256": "699ac20c5dea5e4745658e47f2d1cc6324de24adc38b9d3c71bfb83988240d75",
+    "verdict": "FAIL",
+    "summary": {
+      "tests": 1668,
+      "pass": 1667,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "runtimeEightFilesUnchanged": true,
+    "typecheckPresent": true,
+    "buildPresent": false
+  },
+  {
+    "name": "check-node24",
+    "exitCode": 0,
+    "rawLogSha256": "29991df8fd297b084db7b091f13aae798819a6f01db02f45d8ed98d54f970c13",
+    "verdict": "PASS",
+    "summary": {
+      "tests": 1668,
+      "pass": 1668,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "runtimeEightFilesUnchanged": true,
+    "typecheckPresent": true,
+    "buildPresent": true
+  },
+  {
+    "name": "check-node26-rerun",
+    "exitCode": 1,
+    "rawLogSha256": "485f13b5d7061e9999c4916eac838916f1d2a782f30f77766b6eed6de1b1a43b",
+    "verdict": "FAIL",
+    "summary": {
+      "tests": 1668,
+      "pass": 1667,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "runtimeEightFilesUnchanged": true,
+    "typecheckPresent": true,
+    "buildPresent": false
+  }
+]
