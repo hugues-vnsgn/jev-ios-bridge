@@ -1,3 +1,5 @@
+import { registerObservedTools } from './observed.js';
+import type { ObservedComposition } from '../observed/cli.js';
 import { McpServer } from '@modelcontextprotocol/server';
 import { z } from 'zod/v4';
 import { scriptedScenarioSchema, ScriptValueError } from '../scripted/schema.js';
@@ -27,7 +29,7 @@ const RESOLVE_STEP_DESCRIPTION = 'Answer a paused run (get_report state needs_cl
   'screen is refused with the reason, and the pause stays open for a corrected one.';
 
 /** `driven`: the experimental driven-mode switch is on, so `resolve_step` and the hand-back limit are published. */
-export function createMcpServer(service: BridgeService, options: { driven?: boolean } = {}): McpServer {
+export function createMcpServer(service: BridgeService, options: { driven?: boolean; observed?: ObservedComposition } = {}): McpServer {
   const server = new McpServer({ name: 'jev-ios-bridge', version: BRIDGE_VERSION });
   server.registerTool('start_scenario', {
     description: 'Start an explicit iOS or Android action script with assertion checkpoints. Returns a run id, a local watch URL, and logsCommand, a terminal command that follows the app\'s own output live (a log pane window usually opens by itself). Poll get_report for completion; use cancel_run to stop. TypeSafe receives observed screen text and current assertion claims. Typed values go to device actions and may later appear in screen text; screenshots stay local. A value may be {"fromEnv": "NAME"}, read from this server\'s environment, so a credential stays out of the script.',
@@ -72,5 +74,6 @@ export function createMcpServer(service: BridgeService, options: { driven?: bool
       }
     });
   }
+  if (options.observed) registerObservedTools(server, options.observed);
   return server;
 }

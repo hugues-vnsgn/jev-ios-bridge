@@ -1,6 +1,9 @@
 #!/usr/bin/env node
+import { isObservedCommand, productionObservedComposition, runObservedCommand, observedError, observedSummary, type ObservedComposition } from './observed/cli.js';
 import { readFile } from 'node:fs/promises';
+import { realpathSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { ObservedOperationError } from './observed/schema.js';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { serveStdio } from '@modelcontextprotocol/server/stdio';
@@ -29,6 +32,13 @@ Usage:
   jev-ios-bridge logs <run-id>
   jev-ios-bridge capture [--serial S | --avd A] [--jev]
   jev-ios-bridge mcp
+  jev-ios-bridge observed-allocate <allocation-request.json> [--json]
+  jev-ios-bridge observed-allocation <allocation-id> [--json] [--wait-ms N]
+  jev-ios-bridge observed-retire <allocation-id> [--json]
+  jev-ios-bridge observed-allocation-cancel <allocation-id> [--json]
+  jev-ios-bridge observed-action <action-request.json> [--json]
+  jev-ios-bridge observed-report <action-id> [--json] [--wait-ms N]
+  jev-ios-bridge observed-cancel <action-id> [--json]
   jev-ios-bridge --version | --help
 Set TYPESAFE_API_KEY and, for an iOS script, a dedicated simulator (JEV_DEVICE_UDID, the script's
 device.udid, or .mobilebuildmcp/config.yaml); for an Android script, a device (JEV_ANDROID_DEVICE,
@@ -44,7 +54,7 @@ by --serial, then --avd, then JEV_ANDROID_DEVICE, and exits 0 when it printed, 3
 A run of a script with "do" steps (driven mode, experimental: JEV_EXPERIMENTAL_DRIVEN=1) can pause for
 Claude. run prints the pause and keeps waiting, but can't answer it: resolve_step is an MCP tool, so the
 pause times out unless the script runs through the MCP server.
-Exit codes: 0 passed, 1 failed, 2 inconclusive, 3 could not start.`;
+Observed prepare/start requires JEV_EXPERIMENTAL_OBSERVED=1 and offline admission migration/configuration.\nObserved commands need no Jev key; reads/cancellation/retirement remain available when disabled.\nExit codes: 0 passed, 1 failed, 2 inconclusive, 3 could not start.`;
 
 /** A problem found before any run started. The message is safe to print. */
 class StartError extends Error {}
@@ -77,19 +87,55 @@ async function readScript(path: string): Promise<unknown> {
   catch { throw new StartError(`Script file ${path} is not valid JSON`); }
 }
 
-async function main(): Promise<void> {
+const cliOptions = {
+  help: { type: 'boolean' }, version: { type: 'boolean' }, json: { type: 'boolean' }, 'no-log-pane': { type: 'boolean' },
+  'no-device-window': { type: 'boolean' },
+  'wait-ms': { type: 'string' }, 'max-steps': { type: 'string' }, 'timeout-ms': { type: 'string' },
+  serial: { type: 'string' }, avd: { type: 'string' }, jev: { type: 'boolean' },
+} as const;
+
+/** Internal composition seam shared by the installed entry and isolated subprocess fixtures. */
+export type CliComposition = { observed?: ObservedComposition; legacy?: BridgeService; projectDir?: string };
+async function dispatchCli(args: string[], composition: CliComposition): Promise<void> {
+  const projectDir = composition.projectDir ?? resolve(process.env.JEV_PROJECT_DIR?.trim() || process.cwd());
   let parsed;
   try {
-    parsed = parseArgs({ allowPositionals: true, options: {
-      help: { type: 'boolean' }, version: { type: 'boolean' }, json: { type: 'boolean' }, 'no-log-pane': { type: 'boolean' },
-      'no-device-window': { type: 'boolean' },
-      'max-steps': { type: 'string' }, 'timeout-ms': { type: 'string' },
-      serial: { type: 'string' }, avd: { type: 'string' }, jev: { type: 'boolean' },
-    } });
+    parsed = parseArgs({ args, allowPositionals: true, options: cliOptions });
   } catch (error) { throw new StartError(`${(error as Error).message}\n${USAGE}`); }
   const [command, argument] = parsed.positionals;
   if (parsed.values.version) { console.log(BRIDGE_VERSION); return; }
   if (parsed.values.help || !command) { console.log(USAGE); return; }
+  if (isObservedCommand(command)) {
+    const module = composition.observed ?? productionObservedComposition({ enabled: process.env.JEV_EXPERIMENTAL_OBSERVED === '1', runsDir: runsDir(), cwd: projectDir });
+    const controller = new AbortController(); let signalExit: number | undefined; let signalStarted: number | undefined;
+    let output = Promise.resolve();
+    const stop = (code: number) => () => {
+      signalExit ??= code; signalStarted ??= Date.now(); controller.abort(); void module.close().catch(() => {});
+    };
+    const interrupt = stop(130); const terminate = stop(143);
+    process.once('SIGINT', interrupt); process.once('SIGTERM', terminate);
+    try {
+      const disallowed = parsed.positionals.length !== 2 || ['max-steps', 'timeout-ms', 'serial', 'avd', 'jev', 'no-log-pane', 'no-device-window']
+        .some(name => parsed.values[name as keyof typeof parsed.values] !== undefined);
+      process.exitCode = await runObservedCommand(module, command, disallowed ? undefined : argument, {
+        json: parsed.values.json ?? false, projectDir, signal: controller.signal,
+        ...(parsed.values['wait-ms'] !== undefined ? { waitMs: Number(parsed.values['wait-ms']) } : {}),
+        write: text => { output = new Promise<void>(done => { process.stdout.write(text, () => done()); }); } });
+    } finally {
+      try { await module.close(); }
+      finally {
+        process.removeListener('SIGINT', interrupt); process.removeListener('SIGTERM', terminate);
+        if (signalExit !== undefined) {
+          const code = signalExit;
+          // Flush the single response on a readable transport, within the existing signal budget.
+          const deadline = setTimeout(() => process.exit(code), Math.max(0, 5000 - (Date.now() - signalStarted!)));
+          await output; clearTimeout(deadline); process.exit(code);
+        }
+      }
+    }
+    return;
+  }
+  if (parsed.values['wait-ms'] !== undefined) throw new StartError('--wait-ms applies only to observed reads');
   const expected = command === 'mcp' || command === 'capture' ? 1 : 2;
   if (!['run', 'report', 'logs', 'capture', 'mcp'].includes(command)) throw new StartError(`Unknown command: ${command}\n${USAGE}`);
   if (parsed.positionals.length !== expected) throw new StartError(`Wrong number of arguments for ${command}\n${USAGE}`);
@@ -135,7 +181,7 @@ async function main(): Promise<void> {
 
   // Under MCP there is no flag: JEV_DEVICE_WINDOW=off in the server's environment turns the window off.
   const deviceWindow = deviceWindowOpener(parsed.values['no-device-window'] === true);
-  const service = new BridgeService({
+  const service = composition.legacy ?? new BridgeService({
     baseDir: runsDir(),
     createDriver: createDriverFactory({ mobileBuildMcp: { cwd: projectDir,
       ...(process.env.JEV_DEVICE_UDID ? { defaultUdid: process.env.JEV_DEVICE_UDID } : {}),
@@ -150,17 +196,18 @@ async function main(): Promise<void> {
       // MCP's stdout carries the protocol, so pane notices go to stderr in both modes.
       onNotice: (_runId, text) => { console.error(text); } },
   });
+  const observed = command === 'mcp' ? composition.observed ?? productionObservedComposition({ enabled: process.env.JEV_EXPERIMENTAL_OBSERVED === '1', runsDir: runsDir(), cwd: projectDir }) : undefined;
   let closing = false;
   const close = async () => {
     if (closing) return;
     closing = true;
-    await service.close();
+    await Promise.allSettled([service.close(), observed?.close()]);
   };
   process.once('SIGINT', () => { void close().then(() => process.exit(130)); });
   process.once('SIGTERM', () => { void close().then(() => process.exit(143)); });
   if (command === 'mcp') {
     // The experimental switch (E13) publishes resolve_step; the plugin sets it from its experimentalDriven setting.
-    serveStdio(() => createMcpServer(service, { driven: experimentalDrivenOn(process.env) }), { onerror: () => { console.error('MCP transport error'); } });
+    serveStdio(() => createMcpServer(service, { driven: experimentalDrivenOn(process.env), observed: observed! }), { onerror: () => { console.error('MCP transport error'); } });
     process.stdin.once('end', () => { void close(); });
     return;
   }
@@ -196,11 +243,26 @@ async function main(): Promise<void> {
   } finally { await close(); }
 }
 
-main().catch((error: unknown) => {
-  if (error instanceof z.ZodError) console.error(`Script is invalid:\n${z.prettifyError(error)}`);
-  else if (error instanceof StartError || error instanceof ScriptValueError || error instanceof DrivenProjectError ||
-    isDeviceSelectionError(error)) {
-    console.error(error.message);
-  } else console.error('Bridge could not start. Check arguments, script, and environment.');
-  process.exitCode = EXIT.couldNotStart;
-});
+export async function runCli(args = process.argv.slice(2), composition: CliComposition = {}): Promise<void> {
+  try { await dispatchCli(args, composition); }
+  catch (error: unknown) {
+    const command = parseArgs({ args, allowPositionals: true, strict: false, options: cliOptions }).positionals[0];
+    if (command && isObservedCommand(command)) {
+      const reply = observedError(new ObservedOperationError('INVALID_REQUEST', 'Invalid observed command arguments'),
+        ['observed-action', 'observed-report', 'observed-cancel'].includes(command) ? 'action' : 'preparation');
+      process.stdout.write((args.includes('--json') ? JSON.stringify(reply) : observedSummary(reply)) + '\n');
+      process.exitCode = 3; return;
+    }
+    if (error instanceof z.ZodError) console.error(`Script is invalid:\n${z.prettifyError(error)}`);
+    else if (error instanceof StartError || error instanceof ScriptValueError || error instanceof DrivenProjectError ||
+      isDeviceSelectionError(error)) {
+      console.error(error.message);
+    } else console.error('Bridge could not start. Check arguments, script, and environment.');
+    process.exitCode = EXIT.couldNotStart;
+  }
+}
+// npm invokes the bin through a symlink; fixture imports must remain inert.
+let directEntry = false;
+try { directEntry = !!process.argv[1] && realpathSync(fileURLToPath(import.meta.url)) === realpathSync(process.argv[1]); }
+catch { /* An importing host may have no filesystem entrypoint. */ }
+if (directEntry) void runCli();

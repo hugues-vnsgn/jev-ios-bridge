@@ -8,7 +8,7 @@ import { createInterface } from 'node:readline';
 import { openMcpSession } from './fixtures/mcp-session.js';
 
 test('stdio server negotiates and exposes start/report/cancel without a key', { timeout: 10_000 }, async () => {
-  const env = { ...process.env }; delete env.TYPESAFE_API_KEY;
+  const env = { ...process.env, JEV_EXPERIMENTAL_OBSERVED: '0' }; delete (env as NodeJS.ProcessEnv).TYPESAFE_API_KEY;
   const child = spawn(process.execPath, ['--import', 'tsx', 'src/cli.ts', 'mcp'], { env, stdio: ['pipe', 'pipe', 'pipe'] });
   const pending = new Map<number, (value: any) => void>();
   const lines = createInterface({ input: child.stdout });
@@ -26,7 +26,7 @@ test('stdio server negotiates and exposes start/report/cancel without a key', { 
     assert.equal(init.result.serverInfo.version, '1.3.1');
     child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' }) + '\n');
     const list = await request(2, 'tools/list');
-    assert.deepEqual(list.result.tools.map((tool: { name: string }) => tool.name).sort(), ['cancel_run', 'get_report', 'start_scenario']);
+    assert.deepEqual(list.result.tools.map((tool: { name: string }) => tool.name).sort(), ['cancel_observed_action', 'cancel_observed_allocation', 'cancel_run', 'get_observed_action', 'get_observed_allocation', 'get_report', 'retire_observed_allocation', 'start_scenario']);
     const startSchema = list.result.tools.find((tool: { name: string }) => tool.name === 'start_scenario').inputSchema;
     assert.ok(startSchema.properties.scenario);
     const report = await request(3, 'tools/call', { name: 'get_report', arguments: { runId: 'missing' } });
@@ -49,10 +49,10 @@ test('start_scenario\'s description names both iOS and Android', { timeout: 10_0
 });
 
 test('the MCP server starts and lists its tools with both device settings empty', { timeout: 10_000 }, async () => {
-  const session = await openMcpSession('empty-devices', { entryPoint: 'cli', env: { JEV_DEVICE_UDID: '', JEV_ANDROID_DEVICE: '' } });
+  const session = await openMcpSession('empty-devices', { entryPoint: 'cli', env: { JEV_DEVICE_UDID: '', JEV_ANDROID_DEVICE: '', JEV_EXPERIMENTAL_OBSERVED: '0' } });
   try {
     const tools = await session.listTools();
-    assert.deepEqual(tools.map((tool: { name: string }) => tool.name).sort(), ['cancel_run', 'get_report', 'start_scenario']);
+    assert.deepEqual(tools.map((tool: { name: string }) => tool.name).sort(), ['cancel_observed_action', 'cancel_observed_allocation', 'cancel_run', 'get_observed_action', 'get_observed_allocation', 'get_report', 'retire_observed_allocation', 'start_scenario']);
   } finally { await session.close(); }
 });
 
