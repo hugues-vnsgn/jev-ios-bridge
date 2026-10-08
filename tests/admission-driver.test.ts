@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
+import { getEventListeners } from 'node:events';
 import { test } from 'node:test';
-import { mkdtempSync, mkdirSync, realpathSync, rmSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, readFileSync, realpathSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import type { AllocationReservationInput } from '../src/device/admission-allocation.js';
@@ -78,7 +79,9 @@ test('preparation parks settled ownership and a consumed action attaches without
     deviceWindow: async () => {}, fakeBackend: { runner, window: undefined } };
   const preparer = createPreparationDriver(options);
   try {
-    await preparer.attachPreparation(p.claim, context, new AbortController().signal);
+    const preparationSignal = new AbortController().signal;
+    await preparer.attachPreparation(p.claim, context, preparationSignal);
+    assert.equal(getEventListeners(preparationSignal, 'abort').length, 1);
     assert.deepEqual(calls, []);
     await preparer.boot(new AbortController().signal);
     assert.equal(await preparer.bootState(new AbortController().signal), 'Booted');
@@ -87,16 +90,20 @@ test('preparation parks settled ownership and a consumed action attaches without
     await preparer.readiness(new AbortController().signal);
     const parked = await preparer.park(['/isolated/evidence/readiness.json'], [], new AbortController().signal);
     assert.equal(parked.authority, 'committed');
+    assert.equal(getEventListeners(preparationSignal, 'abort').length, 0);
     const consumed = admission.consumeAllocation({ allocationId: p.id, actionId: 'allocated', actionDigest: digest,
       request: {}, appBundleId: 'dev.fixture', evidence: { bridgeVersion: 'fixture', directory: '/isolated/action', request: '/isolated/action/request.json' } });
     assert.equal(consumed.kind, 'consumed'); if (consumed.kind !== 'consumed') throw new Error('consume');
     const action = createObservedDriver(options); const before = [...calls];
-    await action.attachObserved(consumed.claim, context, new AbortController().signal);
+    const actionSignal = new AbortController().signal;
+    await action.attachObserved(consumed.claim, context, actionSignal);
+    assert.equal(getEventListeners(actionSignal, 'abort').length, 1);
     assert.deepEqual(calls, before);
     await assert.rejects(preparer.boot(new AbortController().signal));
     await action.observe(new AbortController().signal);
     assert.deepEqual(calls.slice(before.length), ['snapshot-ui']);
     await action.close(new AbortController().signal);
+    assert.equal(getEventListeners(actionSignal, 'abort').length, 0);
     assert.deepEqual(calls.slice(before.length), ['snapshot-ui']);
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
@@ -315,7 +322,6 @@ test('a separate process consumes parked driver readiness without preparation or
     await subject.launch(new AbortController().signal); await subject.readiness(new AbortController().signal);
     assert.equal((await subject.park(['/isolated/readiness.json'], [], new AbortController().signal)).authority, 'committed');
     const source = `
-      import { createPreparationDriver, createObservedDriver } from '../src/device/factory.js';
 import { Admission } from './src/device/admission.ts';
       import { MobileBuildMcpDriver } from './src/device/index.ts';
       const [root, id, device] = process.argv.slice(1);
@@ -343,3 +349,37 @@ import { Admission } from './src/device/admission.ts';
     assert.equal(admission.readAllocation(p.id)?.state, 'retained');
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
+
+for (const ownership of ['preparation', 'observed'] as const) {
+  test(`uncertain ${ownership} close removes attach listeners while retaining the pending operation and lease`, async () => {
+    const { root, admission } = fixture();
+    const claim = ownership === 'preparation' ? (await preparation(admission)).claim : (await consumed(admission)).claim;
+    const attach = new AbortController(); const cancel = new AbortController(); const calls: string[] = [];
+    let began!: () => void; let late!: () => void; let settled = false;
+    const started = new Promise<void>(resolve => { began = resolve; });
+    const pending = new Promise<void>(resolve => { late = resolve; });
+    const runner: CliRunner = async args => {
+      calls.push(args[1]!); began(); await pending; settled = true;
+      if (args[1] === 'boot') return { stdout: JSON.stringify({ schema: 'mobilebuildmcp.output.simulator-action-result', schemaVersion: '2',
+        data: { artifacts: { simulatorId: udid } } }), stderr: '', exitCode: 0 };
+      return response(args);
+    };
+    const subject = driver(root, admission, runner);
+    try {
+      if (ownership === 'preparation') await subject.attachPreparation(claim as Awaited<ReturnType<typeof preparation>>['claim'], context, attach.signal);
+      else await subject.attachObserved(claim as Awaited<ReturnType<typeof consumed>>['claim'], context, attach.signal);
+      assert.equal(getEventListeners(attach.signal, 'abort').length, 1);
+      const lease = join(root, 'leases', `${udid}.lock`); const held = readFileSync(lease, 'utf8');
+      const operation = ownership === 'preparation' ? subject.boot(cancel.signal) : subject.observe(cancel.signal);
+      const rejected = assert.rejects(operation); await started; cancel.abort(); await rejected;
+      await assert.rejects(subject.close(new AbortController().signal), /unknown/);
+      assert.equal(getEventListeners(attach.signal, 'abort').length, 0, 'Closed driver must stop watching its attach signal');
+      assert.equal(settled, false, 'Listener cleanup cannot certify an abort-ignoring operation');
+      assert.equal(readFileSync(lease, 'utf8'), held);
+      attach.abort(); late(); await new Promise(resolve => setImmediate(resolve));
+      await assert.rejects(subject.close(new AbortController().signal), /unknown/);
+      assert.equal(readFileSync(lease, 'utf8'), held, 'Late settlement cannot release quarantined local ownership');
+      assert.deepEqual(calls, [ownership === 'preparation' ? 'boot' : 'snapshot-ui']);
+    } finally { late(); await new Promise(resolve => setImmediate(resolve)); rmSync(root, { recursive: true, force: true }); }
+  });
+}

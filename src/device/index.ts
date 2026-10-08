@@ -137,7 +137,13 @@ function number(value: unknown): number | undefined {
 function terminalPayloadMatches(envelope: JsonObject, expectedSchema: string, success: boolean): boolean {
   if (envelope.schema !== expectedSchema || !supportedVersion(envelope.schema, envelope.schemaVersion)) return false;
   const data = record(envelope.data);
-  if (expectedSchema === 'mobilebuildmcp.output.simulator-list') return Array.isArray(data.simulators);
+  if (expectedSchema === 'mobilebuildmcp.output.simulator-list') {
+    return Array.isArray(data.simulators) && data.simulators.every(value => {
+      const simulator = record(value);
+      return typeof simulator.simulatorId === 'string' && SIMULATOR_UUID.test(simulator.simulatorId) &&
+        typeof simulator.state === 'string' && simulator.state.trim().length > 0;
+    });
+  }
   if (Object.keys(record(data.artifacts)).length === 0) return false;
   if (expectedSchema === UI_ACTION_RESULT && Object.keys(record(data.action)).length === 0) return false;
   if (expectedSchema === 'mobilebuildmcp.output.capture-result' && success && Object.keys(record(data.capture)).length === 0) return false;
@@ -596,6 +602,11 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
     if (signal.aborted) cancel();
   }
 
+  private clearSignalListeners(): void {
+    for (const cleanup of this.signalCleanup) cleanup();
+    this.signalCleanup.clear();
+  }
+
   private async dispatch<T>(kind: string, signal: AbortSignal, effect: (signal: AbortSignal) => Promise<T>,
     timeoutMs = this.uiCommandTimeoutMs): Promise<T> {
     if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 900_000) throw new RangeError('Command timeout must be between 1 and 900000');
@@ -730,9 +741,9 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
       await this.lease.release();
       const result = this.preparationClaim!.park(readinessEvidence, evidenceRefs);
       this.issuanceClosed = true;
-      for (const cleanup of this.signalCleanup) cleanup(); this.signalCleanup.clear();
       return result;
     } catch (error) { this.revoke(true); throw error; }
+    finally { this.clearSignalListeners(); }
   }
 
   /** Finalization closes future effects synchronously; pending effects remain uncertain. */
@@ -1040,11 +1051,12 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
     if (this.closing) return this.closing;
     // Public continuations cannot issue while cleanup is running. Cleanup uses its own gate below.
     this.detached = true;
-    this.closing = this.finishClose(signal).finally(() => { this.closing = undefined; });
+    this.closing = this.finishClose(signal).finally(() => { this.clearSignalListeners(); this.closing = undefined; });
     return this.closing;
   }
 
   private async finishAdmission(completed: boolean): Promise<void> {
+    this.clearSignalListeners();
     if (!this.ownsClaim || !this.claim) return;
     const candidate = this.uncertain
       ? { outcome: 'inconclusive' as const, disposition: 'quarantined' as const, payload: { reason: 'DEVICE_OPERATION_UNCONFIRMED' }, evidenceRefs: [] }
@@ -1052,7 +1064,6 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
     const finalized = this.claim.finalize(candidate);
     this.issuanceClosed = true;
     this.ownsClaim = false;
-    for (const cleanup of this.signalCleanup) cleanup(); this.signalCleanup.clear();
     if (finalized.authority !== 'committed') throw new DeviceCliError('UI_ACTION_UNCONFIRMED', 'Device admission finalization is unconfirmed');
   }
 
@@ -1076,7 +1087,6 @@ export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver,
       const legacy = this.ownsClaim;
       await this.finishAdmission(true);
       if (legacy) { this.claim = undefined; this.session = undefined; }
-      for (const cleanup of this.signalCleanup) cleanup(); this.signalCleanup.clear();
       this.launched = false; this.logPaths = {}; this.logNotes = {};
     } catch (error) {
       this.revoke(true); await this.finishAdmission(false);

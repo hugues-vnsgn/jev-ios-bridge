@@ -241,3 +241,60 @@ test('malformed selected-device listing revokes dispatch before window or launch
     assert.deepEqual(calls, ['simulator list']);
   });
 });
+
+for (const [name, entries] of [
+  ['selected state is numeric', [{ simulatorId: udid, state: 123 }]],
+  ['selected state is missing', [{ simulatorId: udid }]],
+  ['selected state is null', [{ simulatorId: udid, state: null }]],
+  ['selected state is empty', [{ simulatorId: udid, state: '' }]],
+  ['selected state is blank', [{ simulatorId: udid, state: '   ' }]],
+  ['identity is numeric', [{ simulatorId: 123, state: 'Booted' }]],
+  ['identity is missing', [{ state: 'Booted' }]],
+  ['identity is malformed', [{ simulatorId: 'not-a-uuid', state: 'Booted' }]],
+  ['list is missing', undefined],
+  ['list is null', null],
+  ['list is not an array', {}],
+  ['entry is null', [null]],
+  ['entry is an array', [[]]],
+  ['entry is a string', ['Booted']],
+  ['unselected entry is malformed', [{ simulatorId: udid, state: 'Booted' },
+    { simulatorId: 'AD6669D1-0000-0000-0000-000000000000', state: 123 }]],
+] as const) {
+  test(`malformed simulator entry (${name}) fences launch, presentation and cleanup`, async () => {
+    const list = () => JSON.stringify({ schema: 'mobilebuildmcp.output.simulator-list', schemaVersion: '2',
+      didError: false, data: { simulators: entries } });
+    await withDriver({ list, window: async () => assert.fail('No presentation after malformed listing') }, async (driver, calls, root) => {
+      await assert.rejects(driver.prepare(scenario, new AbortController().signal),
+        (error: unknown) => error instanceof DeviceCliError && !error.terminalAcknowledged);
+      await assert.rejects(driver.observe(new AbortController().signal));
+      await assert.rejects(driver.close(new AbortController().signal), /unknown/);
+      assert.deepEqual(calls, ['simulator list']);
+      const admission = Admission.forTesting({ root: realpathSync(join(root, 'admission')), backend: 'fake', initialize: false });
+      assert.equal(admission.inspect(udid)?.state, 'quarantined');
+    });
+  });
+}
+
+test('a valid empty simulator list keeps missing-identity warning and acknowledged launch behavior', async () => {
+  const list = () => JSON.stringify({ schema: 'mobilebuildmcp.output.simulator-list', schemaVersion: '2',
+    didError: false, data: { simulators: [] } });
+  await withDriver({ list, window: async () => assert.fail('No selected identity to present') }, async (driver, calls) => {
+    await driver.prepare(scenario, new AbortController().signal);
+    assert.deepEqual(calls, ['simulator list', 'simulator launch-app']);
+    assert.equal(driver.prepareWarnings().length, 1);
+    await driver.close(new AbortController().signal);
+    assert.deepEqual(calls, ['simulator list', 'simulator launch-app', 'simulator stop']);
+  });
+});
+
+
+test('a malformed simulator-list error receipt cannot acknowledge settlement or authorize cleanup', async () => {
+  const list = () => JSON.stringify({ schema: 'mobilebuildmcp.output.simulator-list', schemaVersion: '2',
+    didError: true, error: 'List failed', data: { simulators: [{ simulatorId: udid, state: 123 }] } });
+  await withDriver({ list, window: async () => assert.fail('No window after unconfirmed list error') }, async (driver, calls) => {
+    await assert.rejects(driver.prepare(scenario, new AbortController().signal),
+      (error: unknown) => error instanceof DeviceCliError && !error.terminalAcknowledged);
+    await assert.rejects(driver.close(new AbortController().signal), /unknown/);
+    assert.deepEqual(calls, ['simulator list']);
+  });
+});
