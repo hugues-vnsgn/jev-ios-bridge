@@ -1,0 +1,20 @@
+✖ allocation capacity includes held records across all states and excludes released capacity without mutating reads (22.322709ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 206.508541
+
+✖ failing tests:
+
+test at tests/admission-allocation.test.ts:1:33622
+✖ allocation capacity includes held records across all states and excludes released capacity without mutating reads (22.322709ms)
+  TypeError: admission.readAllocationCapacity is not a function
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-capacity/tests/admission-allocation.test.ts:441:30)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)

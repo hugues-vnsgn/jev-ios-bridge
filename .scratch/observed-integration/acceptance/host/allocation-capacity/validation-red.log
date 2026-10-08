@@ -1,0 +1,165 @@
+✔ allocation capacity includes held records across all states and excludes released capacity without mutating reads (675.404334ms)
+✔ allocation capacity sums persisted reservations after configuration changes (88.416583ms)
+✖ allocation capacity rejects corrupt capacityHeld "false" (33.876666ms)
+✖ allocation capacity rejects corrupt capacityHeld null (35.334041ms)
+✖ allocation capacity rejects corrupt reservationBytes -1 (32.474ms)
+✖ allocation capacity rejects corrupt reservationBytes 0 (32.425041ms)
+✖ allocation capacity rejects corrupt reservationBytes 1.5 (33.292375ms)
+✖ allocation capacity rejects corrupt reservationBytes "800" (34.71175ms)
+✖ allocation capacity rejects corrupt reservationBytes 9007199254740992 (37.952333ms)
+✔ allocation capacity rejects a corrupt checksum rather than returning an empty or partial count (33.917583ms)
+✖ allocation capacity accepts the exact safe integer limit and refuses aggregate overflow (47.244542ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 3
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1218.008541
+
+✖ failing tests:
+
+test at tests/admission-allocation.test.ts:1:37046
+✖ allocation capacity rejects corrupt capacityHeld "false" (33.876666ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-capacity/tests/admission-allocation.test.ts:497:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/admission-allocation.test.ts:1:37046
+✖ allocation capacity rejects corrupt capacityHeld null (35.334041ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-capacity/tests/admission-allocation.test.ts:497:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/admission-allocation.test.ts:1:37046
+✖ allocation capacity rejects corrupt reservationBytes -1 (32.474ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-capacity/tests/admission-allocation.test.ts:497:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/admission-allocation.test.ts:1:37046
+✖ allocation capacity rejects corrupt reservationBytes 0 (32.425041ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-capacity/tests/admission-allocation.test.ts:497:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/admission-allocation.test.ts:1:37046
+✖ allocation capacity rejects corrupt reservationBytes 1.5 (33.292375ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-capacity/tests/admission-allocation.test.ts:497:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/admission-allocation.test.ts:1:37046
+✖ allocation capacity rejects corrupt reservationBytes "800" (34.71175ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-capacity/tests/admission-allocation.test.ts:497:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/admission-allocation.test.ts:1:37046
+✖ allocation capacity rejects corrupt reservationBytes 9007199254740992 (37.952333ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-capacity/tests/admission-allocation.test.ts:497:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/admission-allocation.test.ts:1:37715
+✖ allocation capacity accepts the exact safe integer limit and refuses aggregate overflow (47.244542ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocation-capacity/tests/admission-allocation.test.ts:514:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws',
+    diff: 'simple'
+  }

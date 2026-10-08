@@ -1,0 +1,19 @@
+✔ allocation capacity includes held records across all states and excludes released capacity without mutating reads (663.323458ms)
+✔ allocation capacity sums persisted reservations after configuration changes (87.169959ms)
+✔ allocation capacity rejects corrupt capacityHeld "false" (28.088042ms)
+✔ allocation capacity rejects corrupt capacityHeld null (31.110625ms)
+✔ allocation capacity rejects corrupt reservationBytes -1 (33.119459ms)
+✔ allocation capacity rejects corrupt reservationBytes 0 (37.674875ms)
+✔ allocation capacity rejects corrupt reservationBytes 1.5 (38.910375ms)
+✔ allocation capacity rejects corrupt reservationBytes "800" (30.543ms)
+✔ allocation capacity rejects corrupt reservationBytes 9007199254740992 (38.218458ms)
+✔ allocation capacity rejects a corrupt checksum rather than returning an empty or partial count (30.989458ms)
+✔ allocation capacity accepts the exact safe integer limit and refuses aggregate overflow (39.415708ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1240.339333

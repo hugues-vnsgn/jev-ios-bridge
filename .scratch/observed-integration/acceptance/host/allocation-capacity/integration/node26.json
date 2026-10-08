@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/usr/bin/env",
+    "-u",
+    "TYPESAFE_API_KEY",
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "tests/admission-core.test.ts",
+    "tests/admission-migration.test.ts",
+    "tests/admission-allocation.test.ts",
+    "tests/observed-artifact.test.ts",
+    "tests/observed-sources.test.ts"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 14.12,
+  "integratedSHA": "dd4331391ce856fb59c1bc72f03fccbe5f9e6679",
+  "testUmask": "0022"
+}

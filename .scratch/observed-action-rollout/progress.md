@@ -7,6 +7,7 @@ Execution authorized by the owner on 2026-10-08. Planning base: `b8c4a50942551bd
 | Durable admission core | integrated | admission_core / gpt-6-astra / high | Integrated `9911710`; independent fix review PASS; 42 focused tests Node24/26, full check1007/1007 plus typecheck/build |
 | Offline migration | integrated | migration_readiness / gpt-6-astra / high | Integrated `60efe5f`; all findings independently closed; full check1091/1091 plus typecheck/build; Node24 combined126/126 |
 | Transactional allocation store | integrated | allocation_store / gpt-6-astra / high | Integrated `009a798`/`a49abb7`; Spec and Standards repair re-review PASS; combined1144/1144 plus typecheck/build; Node24 combined179/179 |
+| Held allocation capacity read | integrated | allocation_store / gpt-6-astra / high | Integrated `dd43313`; independent Spec/Standards PASS; combined190/190 on Node26 and exact Node24, zero skips |
 | Creation and artifact adapters | integrated | source_adapters / gpt-6.1-sol / high | Integrated `448a026`; independent fix review PASS; 41 focused tests Node24/26 |
 | Shared iOS driver | implementing | shared_driver / gpt-6.1-sol / high | Read-only interface compatibility complete; receives accepted03 capability and exclusive driver/lease/factory ownership |
 | Remaining packages | waiting for dependencies | Assigned in implementation handoff | No acceptance claimed |
@@ -24,6 +25,8 @@ The owner subsequently approved the idle sibling pane `b0e5a4b6-106b-4dab-a49a-b
 Wave E readiness completed without product edits or device commands. Runtime and allocator agreed on full `ActionBinding` consumption, authoritative `readAction()` projection and zero-call parked attachment. Allocator readiness found two prerequisites: installed metadata exposes iOS18.6/26.4, while the historical iOS27.0 target is absent; and second storage checks need all held reservation bytes, including retained/quarantined records. Root dispatched the prior store owner in a fresh worktree at `b70a7ab` to add only `readAllocationCapacity(): { heldAllocations; reservedBytes }` with tests and independent review. No runtime substitution is automatic.
 
 The owner chose to keep iOS27.0 and wait for it to be installed. Live cases remain UNVERIFIED until that explicit prerequisite is verified; implementation, reviews and host gates continue. No runtime installation was dispatched.
+
+The capacity repair is accepted at `dd43313`: `readAllocationCapacity()` now provides the consistent held count and persisted byte total required by allocator storage rechecks. Both independent review axes passed with no findings; Root's combined five-suite rerun passed190/190 on Node26 and exact Node24.0.0, zero skips. [Review and provenance](../observed-integration/acceptance/host/allocation-capacity-review.md). This accepts the bounded repair; complete host gates remain pending.
 
 Driver baseline evidence includes an unintended real runner invocation on synthetic UUID `ABCDEF00-0000-4000-8000-000000000001`: app launch failed and the old diagnostic path attempted a list. Raw vendor stdout was not retained by that old path, so side effects are unconfirmed. The worker preserved the original red log, corrected explicit existing runner/window-opener injections, and will issue no cleanup or diagnostic device calls. This incident is not live acceptance evidence.
 
