@@ -1,0 +1,20 @@
+diff --git a/.scratch/observed-action-rollout/issues/09-host-fault-suite.md b/.scratch/observed-action-rollout/issues/09-host-fault-suite.md
+index 2b973aa..7723771 100644
+--- a/.scratch/observed-action-rollout/issues/09-host-fault-suite.md
++++ b/.scratch/observed-action-rollout/issues/09-host-fault-suite.md
+@@ -1,7 +1,9 @@
+ # 09 — Verify integrated authority with independent host faults
+ 
+ Type: task
+-Status: ready-for-agent
++Status: claimed
++Execution: claimed
++Claimed by: observed_host_faults (Root dispatch, 2026-10-08)
+ Mode: AFK
+ Blocked by: 08
+ Owner: Host-verification implementer
+@@ -35,4 +37,3 @@ H03–H08 exhaustive mapped cases and H01/H02 boundary regressions have assertio
+ Completion: Every required host fault row has evidence or a named UNVERIFIED blocker. No simulator, migration of real stores, transport failure or native release claim is inferred. Return the handoff's fixed-format report with full commit/base SHA, files, commands/results, evidence, limitations and unresolved dependencies. A missing required assertion stays UNVERIFIED; a confirmed defect is BLOCKED until Root assigns its fix. No live operations, merge or publish belong to this ticket.
+ 
+ ## Comments
+-

@@ -1,0 +1,56 @@
+{
+  "head": "75d7618167729b9b9a5547eaa468e37eb12b2504",
+  "owned": {
+    ".github/workflows/check.yml": {
+      "sha256": "983e0ea1cb4f955b7fa01c7638383325390e9be51ba3e12ba525a5b9b876bdaf",
+      "matchesBefore": true
+    },
+    "docs/guide/14-observed-actions.md": {
+      "sha256": "b1296abbdadb769d075876cb21cacc68a83a02962c6891c3f8f2e036c9ae8267",
+      "matchesBefore": true
+    },
+    "docs/guide/reference/observed-format.md": {
+      "sha256": "75b47e9a5f9951412be514363c2d0ed1009d4bf666138efa1c52cfbef66e8c96",
+      "matchesBefore": true
+    },
+    "docs/guide/README.md": {
+      "sha256": "e86fa091483524ffc75d23858ee39c422ee84acf2d966fd8153ea5cf5ef47d83",
+      "matchesBefore": true
+    },
+    "docs/guide/08-troubleshooting.md": {
+      "sha256": "664da61c1712eed8c583800f8ee04f6e389982917cd4fd7e4c8af250e51249e0",
+      "matchesBefore": true
+    },
+    "skills/test-ios/SKILL.md": {
+      "sha256": "7d51dfee8530ca3fa8ba68179db97c64eb07804efe2fb5ec8defaee2ee2eaa33",
+      "matchesBefore": true
+    },
+    "tests/docs.test.ts": {
+      "sha256": "2e4063e4975efaf1a586eed9779c21c0a337c0f955cad0338e3092fdab4ce183",
+      "matchesBefore": true
+    },
+    "tests/observed-docs.test.ts": {
+      "sha256": "17f7770bc532966d9ac6f90ba44bd4c9abf6fded195ed2f01b2548f468ed3073",
+      "matchesBefore": true
+    },
+    "tests/observed-packaging.test.ts": {
+      "sha256": "e9b869d11f3455a16aad3dcbdfce27ee70a3edf4be47d335db050ec63400629a",
+      "matchesBefore": true
+    },
+    "tests/fixtures/observed-packaging/guard.mjs": {
+      "sha256": "000c19430aae956338a406a9b4daceb68e99eb76d70bc3a0340fccf52ae0d2f7",
+      "matchesBefore": true
+    },
+    "tests/fixtures/observed-packaging/proof.mjs": {
+      "sha256": "6aaf75a214d3dc89ddc2957b2be082ccf9eba7d93ade7511dd3bd652ae850635",
+      "matchesBefore": true
+    },
+    ".scratch/observed-action-rollout/issues/10-docs-packaging.md": {
+      "sha256": "2faffe2f4f2e2eab8c0bd1c37bc612a3289fceccdbc7a5afb49eb8f2fb2865d0",
+      "matchesBefore": true
+    }
+  },
+  "binaryDiffUnchanged": true,
+  "source11MatchesFrozen": true,
+  "issueMetadataPreserved": true
+}

@@ -1,0 +1,142 @@
+diff --git a/.github/workflows/check.yml b/.github/workflows/check.yml
+index 9dabc0b..5ef0c5d 100644
+--- a/.github/workflows/check.yml
++++ b/.github/workflows/check.yml
+@@ -7,11 +7,15 @@ permissions:
+ jobs:
+   check:
+     runs-on: ubuntu-latest
++    strategy:
++      fail-fast: false
++      matrix:
++        node: ['24.0.0', '24', '26']
+     steps:
+       - uses: actions/checkout@v7.0.1
+       - uses: actions/setup-node@v7.0.0
+         with:
+-          node-version: 24
++          node-version: ${{ matrix.node }}
+           cache: npm
+       - run: npm ci
+       - run: npm run check
+@@ -19,4 +23,6 @@ jobs:
+         run: python3 -W error::ResourceWarning -m unittest discover -s spikes/native-owner/host -p 'test_*.py' -v
+       - name: Startup container diagnostic regression
+         run: python3 -W error::ResourceWarning .scratch/native-owner-recovery/startup-probe/test_observe.py -v
++      - name: Mandatory clean installed observed CLI/MCP and plugin proof
++        run: node tests/fixtures/observed-packaging/proof.mjs
+       - run: npm pack --dry-run
+diff --git a/.scratch/observed-action-rollout/issues/10-docs-packaging.md b/.scratch/observed-action-rollout/issues/10-docs-packaging.md
+index 56e938c..95d05f7 100644
+--- a/.scratch/observed-action-rollout/issues/10-docs-packaging.md
++++ b/.scratch/observed-action-rollout/issues/10-docs-packaging.md
+@@ -1,7 +1,9 @@
+ # 10 — Document and verify the installed observed workflow
+ 
+ Type: task
+-Status: ready-for-agent
++Status: claimed
++Claimed by: observed_installed_workflow
++Execution: Root-dispatched at d0f49f6c12cbaffb4c034217b7e25b96c52c6cb2
+ Mode: AFK
+ Blocked by: 08
+ Owner: Documentation/packaging implementer
+diff --git a/docs/guide/08-troubleshooting.md b/docs/guide/08-troubleshooting.md
+index 1828ac8..1c39f67 100644
+--- a/docs/guide/08-troubleshooting.md
++++ b/docs/guide/08-troubleshooting.md
+@@ -134,3 +134,15 @@ Don't use `pkill -f com.mobilenext.mobilecli.DeviceServer`: it also stops a fore
+ ## Limits and control
+ 
+ **`STEP_LIMIT`, `WALL_LIMIT`**: the run hit `--max-steps` or `--timeout-ms`. **`CANCELLED`**: someone cancelled it. **`INTERRUPTED`**: the bridge process stopped before recording a verdict. That run's evidence is kept, but it proves nothing.
++
++## Observed actions (experimental)
++
++Use the [observed workflow](14-observed-actions.md) and [format reference](reference/observed-format.md) for these separate outcomes and errors.
++
++`OBSERVED_DISABLED`: set the exact `JEV_EXPERIMENTAL_OBSERVED=1` after offline migration; reads/cancellation/retirement stay available when off. `MIGRATION_REQUIRED`, `STORE_UNAVAILABLE` or `STATE_UNAVAILABLE`: preserve storage and investigate the declaration, historical roots and installation state. Never delete the store to reset authority.
++
++`ACTION_ID_CONFLICT`: keep the original request and IDs. `ALLOCATION_NOT_READY` or `ACTION_NOT_STARTED`: retrieve the original allocation; neither authorizes replacement. After a lost reply, use original-identity retrieval, never a new ID/device for the same uncertain business action.
++
++`HOST_CREATION_UNRESOLVED`: preserve the blocking allocation ID/evidence. Creation may have produced an unidentified simulator, so new iOS admission remains blocked pending separate ownership reconciliation. `BUDGET_EXHAUSTED` or `INVENTORY_EXHAUSTED`: retained allocations are not reusable stock; retirement frees no device or capacity. A further distinct action needs explicit valid capacity and storage.
++
++`ALLOCATION_BUSY`: cancel preparation with allocation cancellation, or cancel its executing action with action cancellation. Cancellation may leave already authorized input outstanding. Quarantine, unconfirmed authority and null outcomes remain unresolved even if a late callback or provisional file appears successful. There is no automatic recovery replay or device cleanup.
+diff --git a/docs/guide/README.md b/docs/guide/README.md
+index 57c6c18..58448c4 100644
+--- a/docs/guide/README.md
++++ b/docs/guide/README.md
+@@ -31,7 +31,8 @@ Look these up when you need them:
+ - [Limits](10-limits.md)
+ - [Stability](11-stability.md): what 1.x promises, what 1.2 added, and upgrading from 0.1.0
+ - [Driven steps (experimental)](13-driven-steps.md): `do` steps that Jev performs, and hand-backs to Claude
++- [Observed actions (experimental)](14-observed-actions.md): offline migration, one allocation and one authored tap, with retrieval after reply loss
+ - Worked examples: [SwiftUI (Weather)](examples/swiftui-weather.md) and [Compose Multiplatform (a design-system gallery)](examples/compose-gallery.md)
+-- Reference: [script format](reference/script-format.md), [reason codes](reference/reason-codes.md), [`report.json`](reference/report-json.md)
++- Reference: [script format](reference/script-format.md), [reason codes](reference/reason-codes.md), [`report.json`](reference/report-json.md), [observed format](reference/observed-format.md)
+ 
+ **Before you start:** use test data, in an app you control. Screen text at each checkpoint is sent to TypeSafe, and text that someone else wrote on the screen can try to steer Jev's judgment. [Data handling](09-data-handling.md) has the details.
+diff --git a/skills/test-ios/SKILL.md b/skills/test-ios/SKILL.md
+index ee9ebc7..d000325 100644
+--- a/skills/test-ios/SKILL.md
++++ b/skills/test-ios/SKILL.md
+@@ -1,6 +1,6 @@
+ ---
+ name: test-ios
+-description: Verify an iOS app (SwiftUI, UIKit, or Compose Multiplatform) on a simulator with a jev-ios-bridge script and report the recorded verdict. Use when asked to check, verify, or test iOS app behaviour on screen and the jev-ios-bridge MCP tools are available.
++description: Verify an iOS app (SwiftUI, UIKit, or Compose Multiplatform) on a simulator with a jev-ios-bridge script and report the recorded verdict. Use when asked to check, verify, or test iOS app behaviour on screen and the jev-ios-bridge MCP tools are available. Use the observed workflow branch when asked for one authored tap with deterministic visible predicates.
+ ---
+ 
+ # Verify an iOS app with jev-ios-bridge
+@@ -40,6 +40,18 @@ The bridge runs one complete script on a dedicated simulator and returns a recor
+ 
+ 7. **To stop a run,** call `cancel_run` and read the report it leaves. A verdict already recorded stays final.
+ 
++## Observed workflow (experimental, one authored tap)
++
++Use this branch when the task calls for an observed outcome rather than a scripted Jev verdict. Read installed guide `14-observed-actions.md` and `reference/observed-format.md` before preparing anything. Keep the normal script workflow for assertion verdicts.
++
++1. Confirm offline migration, exclusive dedicated-device operation, installed Xcode/runtime prerequisites and an explicit unchanged simulator `.app`. Enable preparation/start only with exact `JEV_EXPERIMENTAL_OBSERVED=1`; observed startup needs no Jev key. Done when the operator can truthfully declare stopped writers and all historical roots declared/excluded as the guide requires.
++2. Declare one action ID, then call `prepare_observed_allocation` once with the strict version 1 request. Keep its distinct allocation ID. Proceed only with committed `prepared` authority; retrieve preparation uncertainty using the original IDs. Done when readiness is parked or its refusal/uncertainty is recorded.
++3. Author the strict action request with that action/allocation pair, one tap selector and deterministic before/after guards from real captures. Submit `start_observed_action` once, then poll `get_observed_action`. After a lost reply, retrieve or repeat only the exact original request. Changed input conflicts; replacement allocation or a renamed uncertain business action never supplies a retry.
++4. Report authority, outcome, current admission/allocation disposition and evidence pointers from both visible MCP text blocks. Only committed terminal authority establishes an observed outcome. Describe visible evidence without claiming Jev judgment, causality, native input consumption or release. Done when the user has the recorded outcome or explicit unresolved state.
++5. To stop work, use `cancel_observed_action` or `cancel_observed_allocation` as appropriate. An executing allocation directs action cancellation. Already authorized work may still act; transport cancellation only stops waiting. Use `retire_observed_allocation` only for retention bookkeeping. Preserve quarantine/unknown creation, claims and capacity for separate reconciliation.
++
++All allocated devices remain retained, including successes. Physical devices, other runtime shapes, real transport severance and native consumption remain untested; L04 is synthetic reply loss after backend success. Read the installed guide for configuration and limits.
++
+ ## Driven mode (experimental, only when it's on)
+ 
+ Driven mode is on when the jev-ios-bridge MCP server offers a `resolve_step` tool. If it doesn't, write version 1 scripts only: a script with a `do` step is refused with `DRIVEN_NOT_ENABLED`. Read guide `13-driven-steps.md` before your first driven script.
+diff --git a/tests/docs.test.ts b/tests/docs.test.ts
+index 6f6736f..65b24bf 100644
+--- a/tests/docs.test.ts
++++ b/tests/docs.test.ts
+@@ -2,6 +2,9 @@ import { test } from 'node:test';
+ import assert from 'node:assert/strict';
+ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
+ import { dirname, join, normalize, relative } from 'node:path';
++import { parseMigrationDeclaration } from '../src/device/admission-migration.js';
++import { parsePrepareAllocation } from '../src/observed/allocation-schema.js';
++import { parseObservedAction } from '../src/observed/schema.js';
+ import { parseScriptedScenario } from '../src/scripted/schema.js';
+ import { REASON_CODES, ROLES } from '../src/scripted/vocabulary.js';
+ 
+@@ -151,8 +154,17 @@ test('every whole script shown in the guide parses', () => {
+   let scripts = 0;
+   for (const file of markdownFiles('docs/guide')) {
+     for (const [, block] of readFileSync(file, 'utf8').matchAll(/```json\n(\{\n\s*"version": 1,[\s\S]*?)\n```/g)) {
+-      assert.doesNotThrow(() => parseScriptedScenario(JSON.parse(block!)), `${file} shows a script that doesn't parse`);
+-      scripts++;
++      const example = JSON.parse(block!);
++      if ('writersStopped' in example) {
++        assert.doesNotThrow(() => parseMigrationDeclaration(example), `${file} shows a migration declaration that doesn't parse`);
++      } else if ('source' in example) {
++        assert.doesNotThrow(() => parsePrepareAllocation(example), `${file} shows an allocation request that doesn't parse`);
++      } else if ('allocationId' in example) {
++        assert.doesNotThrow(() => parseObservedAction(example), `${file} shows an action request that doesn't parse`);
++      } else {
++        assert.doesNotThrow(() => parseScriptedScenario(example), `${file} shows a script that doesn't parse`);
++        scripts++;
++      }
+     }
+   }
+   assert.ok(scripts >= 3, `expected the guide's example scripts, found ${scripts}`);

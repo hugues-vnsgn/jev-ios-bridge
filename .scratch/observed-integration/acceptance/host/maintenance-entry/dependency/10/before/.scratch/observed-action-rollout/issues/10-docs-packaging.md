@@ -1,0 +1,40 @@
+# 10 — Document and verify the installed observed workflow
+
+Type: task
+Status: claimed
+Claimed by: observed_installed_workflow
+Execution: Root-dispatched at d0f49f6c12cbaffb4c034217b7e25b96c52c6cb2
+Mode: AFK
+Blocked by: 08
+Owner: Documentation/packaging implementer
+Model: gpt-6.1-sol
+Effort: medium
+Skills: writing-for-agents, unslop, project-organization, do-test, use-git-worktree
+Expected commit: `docs: add observed workflow guide and installed runtime checks`
+
+## Dispatch contract
+
+Root supplies a full base SHA from the final pinned planning ref plus integrated dependencies, an isolated worktree/branch and this issue path. Follow [the implementation handoff](../../observed-integration/implementation-plan.md) for common protected files, context, ownership transfers and fixed-format response. Execution starts on Root’s explicit ticket dispatch with the pinned base and satisfied dependencies; the charting effort remains planning only. Stop and report a contract contradiction, unsupported operation, unsafe authority/replay, missing prerequisite or required protected-file edit; return bounded evidence, never substitute success.
+
+## Context
+
+[Validation](../../observed-integration/evidence/validation-matrix.md): H09/live prerequisites/limits. [Public](../../observed-integration/evidence/public-contract.md), [allocation](../../observed-integration/evidence/allocation-contract.md), [inventory](../../observed-integration/evidence/inventory-decision.md): installed usage and scope.
+
+## Write ownership
+
+Allowed writes: `docs/guide/14-observed-actions.md`; `docs/guide/reference/observed-format.md`; `docs/guide/README.md`; `docs/guide/08-troubleshooting.md`; `skills/test-ios/SKILL.md`; `tests/observed-docs.test.ts`; `tests/observed-packaging.test.ts`; `tests/fixtures/observed-packaging/**`; `.github/workflows/check.yml`; this issue's Status and Comments only.
+
+Protected shared files: `src/**`; `src/version.ts`; `package.json`; `package-lock.json`; `README.md`; `CHANGELOG.md`; `docs/adr/**`; `scripts/build-plugin.mjs`; `src/device/index.ts`; `existing goldens`; `all other tests`, plus the common protected set in the handoff. Exactly one owner writes these allowed files; Root integrates and controls the next transfer.
+
+## Bounded work
+
+Write installed CLI/MCP workflow, offline migration invocation/quiescence and declared roots, key-free enablement, unchanged app artifact requirements, distinct identities, retrieval after lost reply, retained/unknown-create handling and limits. Link normative format rather than duplicate lifecycle rules. Add Node 24.0.0 CI gate and clean packed-install/plugin smoke with no extra runtime flags; verify packaged maintenance entry and startup. Tests check real installed commands, not mirrored documentation prose. Root owns ADR/domain/release changes and broader packaging fixes.
+
+## Acceptance and stop criteria
+
+H09 Node minimum/CI, npm pack clean isolated installation, CLI/MCP startup and npm run build:plugin pass without secrets/device operations; legacy golden checks unchanged. Docs links resolve and accurately state synthetic versus real loss and native limitations. Return any packaging defect for Root.
+
+Completion: Installed users can find migration and safe workflow usage, while the Node 24.0.0 gate exercises SQLite. Final shipping/live verdict remains Root-owned. Return the handoff's fixed-format report with full commit/base SHA, files, commands/results, evidence, limitations and unresolved dependencies. A missing required assertion stays UNVERIFIED; a confirmed defect is BLOCKED until Root assigns its fix. No live operations, merge or publish belong to this ticket.
+
+## Comments
+
