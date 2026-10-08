@@ -1,0 +1,35 @@
+{
+  "scope": "Authorized read-only runtime/host metadata preflight only; no live mutation dispatch",
+  "receipt": {
+    "id": "1232cab0-c576-43df-9c8f-1d480f2a365a",
+    "ok": true,
+    "result": {
+      "send": {
+        "handle": "term_30a0ed61-18e7-49e6-a206-824d107293aa",
+        "accepted": true,
+        "bytesWritten": 1572,
+        "prompt": {
+          "requestId": "38306248-a2d9-4ce4-97e2-4c884e1740c4",
+          "stages": [
+            "input_accepted",
+            "turn_started"
+          ],
+          "provider": "codex",
+          "observation": "supported",
+          "processIncarnation": "7fa6c45a-8fa5-4250-bada-0a76923ee8ae",
+          "generation": 8,
+          "baselineWorkingSequence": 1,
+          "baselineExplicitWorkingStartedAt": null,
+          "baselinePermissionSequence": 0
+        }
+      },
+      "mutation": {
+        "requestId": "38306248-a2d9-4ce4-97e2-4c884e1740c4",
+        "replayed": false
+      }
+    },
+    "_meta": {
+      "runtimeId": "4a0c1156-025f-4be7-ad19-8e517cc45e3d"
+    }
+  }
+}

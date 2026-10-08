@@ -1,0 +1,493 @@
+{
+  "schemaVersion": 1,
+  "status": "UNVERIFIED",
+  "scope": "read-only runtime/host metadata preflight only",
+  "capturedDate": "2026-10-08",
+  "workspace": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "currentHead": "087efc19103479391da8bf2d91fc5f1bcc04d7ae",
+  "acceptedHostEvidenceCommit": "38698fbfd1c3048c8eb09706eb3cecf58f006509",
+  "testedProductCommit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
+  "operatorBinding": {
+    "tabId": "b0e5a4b6-106b-4dab-a49a-b3933445d4ef",
+    "leafId": "363f3109-5b98-4014-a35c-44287d46a1df",
+    "terminal": "term_30a0ed61-18e7-49e6-a206-824d107293aa",
+    "verifiedBy": "read-only orca status and terminal inventory"
+  },
+  "hostAcceptance": {
+    "verdict": "PASS",
+    "rows": [
+      "H01",
+      "H02",
+      "H03",
+      "H04",
+      "H05",
+      "H06",
+      "H07",
+      "H08",
+      "H09"
+    ],
+    "hostAcceptancePath": ".scratch/observed-integration/acceptance/host/host-acceptance.json",
+    "hostAcceptanceSha256": "0a299b3709b2ebda2ec5843e63744f2caf7ad6e3dc9841c74b821afa59490fe2",
+    "acceptedHostFreezePath": ".scratch/observed-integration/acceptance/host/accepted-host-freeze.json",
+    "acceptedHostFreezeSha256": "60b537e4e7c35e8ee12668cf9162989a0024727f17812686c3535e27b80ee6a3",
+    "freezeFilesVerified": 15,
+    "freezeFileHashesMatch": true,
+    "evidenceCommitIsAncestorOfHead": true,
+    "changesSinceHostGate": "coordination/evidence metadata only; no source, test, package, or workflow delta",
+    "currentSourceHashes": {
+      "package.json": "d2fffea3e28d6ea794536b2cb67337abe8ec75c46cf10c2944ca1b3cd0a3a3ea",
+      "package-lock.json": "7982b0a2fc02a088ab03761b8332e6c15ad3d0d841f1134e9a4dd50b94364479",
+      "src/observed/allocation-config.ts": "b6519649edbaf203e5323a15c80273321a42a5cb49850551297268e6ee1f5f0a",
+      "tests/observed-allocation-config.test.ts": "cc46883cd5bd9bf344fe228b6b91b7b4b4745e262b2b4fe3108cf22b05123ab6",
+      "tests/fixtures/observed-allocation-backend.ts": "82761f545831ccb2418936c5370e25b8970e972ddedf3879827d6c4c30df3814"
+    },
+    "independentSourceCorrespondenceReceipt": {
+      "path": ".scratch/observed-integration/acceptance/host/post-handoff-source-correspondence.json",
+      "reportedBy": "Root",
+      "reportedVerifiedPathCount": 437,
+      "statement": "Root reports 437 current product/test/doc/package paths match the passing gate.",
+      "executedByThisPreflight": false
+    }
+  },
+  "hostMetadata": {
+    "macOS": {
+      "version": "27.0.1",
+      "build": "26A434",
+      "architecture": "arm64"
+    },
+    "xcode": {
+      "version": "27.0",
+      "build": "27A266a"
+    },
+    "node": "v26.8.1",
+    "installedPinnedPackages": {
+      "mobilebuildmcp": "2.7.1",
+      "mobilecli": "1.0.14",
+      "@modelcontextprotocol/server": "2.1.0",
+      "@typesafe-ai/sdk": "0.6.0"
+    }
+  },
+  "requestedRuntime": {
+    "version": "iOS 27.0",
+    "runtimeIdFromCurrentTestFixture": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+    "status": "UNVERIFIED",
+    "exactBuild": null,
+    "runtimeBundleMetadataPath": null,
+    "evidence": [
+      {
+        "result": "No .simruntime directory found in the allocator supported runtime roots.",
+        "receiptIndexes": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "result": "The iPhone 17 type and profile metadata are present; the profile declares the 26.0\u201399.99 range.",
+        "receiptIndexes": [
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "result": "The current cache directory names include iOS 18.6 build 22G86 and iOS 26.4 build 23E254a; cache names are not installed-runtime proof.",
+        "receiptIndexes": [
+          4
+        ]
+      },
+      {
+        "path": ".scratch/observed-integration/acceptance/host/prerequisite-metadata/selected-fields.json",
+        "sha256": "24cfc6096f42b25d0a005cc9521df9a7cace20d7cc359860e9cfdabc8dfdbbd0",
+        "capturedAt": "2026-10-08T05:14:38.477836+00:00",
+        "result": "Earlier capture recorded iOS 26.4.1 build 23E254a and runtime ID com.apple.CoreSimulator.SimRuntime.iOS-26-4; its runtime bundle paths are absent in the current supported-root inspection."
+      }
+    ],
+    "observedDyldCacheVersions": [
+      {
+        "version": "iOS 18.6",
+        "build": "22G86",
+        "runtimeId": "com.apple.CoreSimulator.SimRuntime.iOS-18-6",
+        "evidencePath": "/Library/Developer/CoreSimulator/Caches/dyld/26A434/com.apple.CoreSimulator.SimRuntime.iOS-18-6.22G86",
+        "classification": "cache only; not installed-runtime proof"
+      },
+      {
+        "version": "iOS 26.4",
+        "build": "23E254a",
+        "runtimeId": "com.apple.CoreSimulator.SimRuntime.iOS-26-4",
+        "evidencePath": "/Library/Developer/CoreSimulator/Caches/dyld/26A434/com.apple.CoreSimulator.SimRuntime.iOS-26-4.23E254a",
+        "classification": "cache only; not installed-runtime proof"
+      }
+    ],
+    "priorMetadataCapture": {
+      "path": ".scratch/observed-integration/acceptance/host/prerequisite-metadata/selected-fields.json",
+      "sha256": "24cfc6096f42b25d0a005cc9521df9a7cace20d7cc359860e9cfdabc8dfdbbd0",
+      "capturedAt": "2026-10-08T05:14:38.477836+00:00",
+      "runtimeRecord": "iOS 26.4.1 build 23E254a; com.apple.CoreSimulator.SimRuntime.iOS-26-4",
+      "currentRuntimeMetadataPathsPresent": false
+    },
+    "installedInAllocatorSupportedMetadataRoots": false,
+    "installStatusScope": "No iOS 27.0 .simruntime bundle was inspectable in the allocator supported metadata roots (/Library/Developer/CoreSimulator/Profiles/Runtimes and each enumerated /Library/Developer/CoreSimulator/Volumes/<name>/Library/Developer/CoreSimulator/Profiles/Runtimes). This makes no claim about unmounted archive or image catalogs."
+  },
+  "deviceType": {
+    "name": "iPhone 17",
+    "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17",
+    "infoPlist": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist",
+    "infoPlistSha256": "7b919f007de487c548592a348a98f78f9cf8e48bffbc0a12ad1cc37e97422e1d",
+    "profilePlist": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist",
+    "profilePlistSha256": "098e2080d544facbecaae8ec5eebc8b99de6581f02107ce753b80eba21597318",
+    "compatibilityMetadata": {
+      "minRuntimeVersion": "26.0",
+      "createByDefaultForRuntimeVersions": {
+        "versionMin": "26.0",
+        "versionMax": "99.99"
+      },
+      "supportedArchs": [
+        "arm64",
+        "x86_64"
+      ]
+    },
+    "iOS27DeclaredCompatibleByDeviceTypeMetadata": true,
+    "iOS27RuntimeCompatibilityConfirmed": false,
+    "reason": "The device type profile includes 27.0 in its declared range, but the corresponding runtime profile and runtime root are unavailable."
+  },
+  "liveRows": {
+    "L01": "UNVERIFIED",
+    "L02": "UNVERIFIED",
+    "L03": "UNVERIFIED",
+    "L04": "UNVERIFIED",
+    "L05": "UNVERIFIED"
+  },
+  "provenance": {
+    "readOnlyCommands": [
+      "Exact argv/cwd/exit/stdout/stderr in provenance.commandReceipts",
+      "Input hashes and relevant plist value projections in provenance.metadataInputs"
+    ],
+    "notRun": [
+      "simctl (including simctl list)",
+      "device, bridge, or MCP backend calls",
+      "tests, builds, runtime installation/download/update",
+      "production admission/config/journal/lease access or migration",
+      "allocations, launches, captures, input, cleanup, shutdown, erase, delete, reset, replay, claim clearing"
+    ],
+    "secretHandling": "No .env or TYPESAFE_API_KEY was read, copied, or printed. Node, npm, Orca, and system version-query child commands were run with TYPESAFE_API_KEY, NODE_OPTIONS, and NODE_NO_WARNINGS removed.",
+    "commandReceipts": {
+      "capturedAt": "2026-10-08T16:49:20.828891+00:00",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+      "environment": "Each child inherited the environment with TYPESAFE_API_KEY, NODE_OPTIONS, and NODE_NO_WARNINGS removed; their values were not read or printed.",
+      "receipts": [
+        {
+          "argv": [
+            "find",
+            "/Library/Developer/CoreSimulator/Profiles/Runtimes",
+            "-maxdepth",
+            "1",
+            "-type",
+            "d",
+            "-name",
+            "*.simruntime",
+            "-print"
+          ],
+          "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+          "exitCode": 1,
+          "stdout": "",
+          "stderr": "find: /Library/Developer/CoreSimulator/Profiles/Runtimes: No such file or directory\n"
+        },
+        {
+          "argv": [
+            "find",
+            "/Library/Developer/CoreSimulator/Volumes",
+            "-type",
+            "d",
+            "-path",
+            "*/Library/Developer/CoreSimulator/Profiles/Runtimes/*.simruntime",
+            "-print"
+          ],
+          "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+          "exitCode": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "ls",
+            "-la",
+            "/Library/Developer/CoreSimulator/Volumes"
+          ],
+          "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+          "exitCode": 0,
+          "stdout": "total 0\ndrwxr-xr-x@ 4 root  wheel  128 Oct  6 11:08 .\ndrwxr-xr-x  7 root  wheel  224 May  8 09:55 ..\ndrwxr-xr-x  2 root  wheel   64 Jun  9 18:23 iOS_22G86\ndrwxr-xr-x  2 root  wheel   64 May  8 10:05 iOS_23E254a\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "ls",
+            "-la",
+            "/Library/Developer/CoreSimulator/Volumes/iOS_22G86",
+            "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a"
+          ],
+          "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+          "exitCode": 0,
+          "stdout": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86:\ntotal 0\ndrwxr-xr-x  2 root  wheel   64 Jun  9 18:23 .\ndrwxr-xr-x@ 4 root  wheel  128 Oct  6 11:08 ..\n\n/Library/Developer/CoreSimulator/Volumes/iOS_23E254a:\ntotal 0\ndrwxr-xr-x  2 root  wheel   64 May  8 10:05 .\ndrwxr-xr-x@ 4 root  wheel  128 Oct  6 11:08 ..\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "find",
+            "/Library/Developer/CoreSimulator/Caches/dyld/26A434",
+            "-maxdepth",
+            "1",
+            "-type",
+            "d",
+            "-print"
+          ],
+          "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+          "exitCode": 0,
+          "stdout": "/Library/Developer/CoreSimulator/Caches/dyld/26A434\n/Library/Developer/CoreSimulator/Caches/dyld/26A434/inc\n/Library/Developer/CoreSimulator/Caches/dyld/26A434/com.apple.CoreSimulator.SimRuntime.iOS-18-6.22G86\n/Library/Developer/CoreSimulator/Caches/dyld/26A434/com.apple.CoreSimulator.SimRuntime.iOS-26-4.23E254a\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "find",
+            "/Library/Developer/CoreSimulator/Profiles/DeviceTypes",
+            "-maxdepth",
+            "1",
+            "-type",
+            "d",
+            "-name",
+            "iPhone 17.simdevicetype",
+            "-print"
+          ],
+          "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+          "exitCode": 0,
+          "stdout": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "plutil",
+            "-p",
+            "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist"
+          ],
+          "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+          "exitCode": 0,
+          "stdout": "{\n  \"BuildMachineOSBuild\" => \"23A344017\"\n  \"CFBundleDevelopmentRegion\" => \"English\"\n  \"CFBundleExecutable\" => \"iPhone 17\"\n  \"CFBundleIdentifier\" => \"com.apple.CoreSimulator.SimDeviceType.iPhone-17\"\n  \"CFBundleInfoDictionaryVersion\" => \"6.0\"\n  \"CFBundleName\" => \"iPhone 17\"\n  \"CFBundlePackageType\" => \"BNDL\"\n  \"CFBundleShortVersionString\" => \"405\"\n  \"CFBundleSignature\" => \"????\"\n  \"CFBundleSupportedPlatforms\" => [\n    0 => \"MacOSX\"\n  ]\n  \"CFBundleVersion\" => \"405\"\n  \"DTCompiler\" => \"com.apple.compilers.llvm.clang.1_0\"\n  \"DTPlatformBuild\" => \"26A393\"\n  \"DTPlatformName\" => \"macosx\"\n  \"DTPlatformVersion\" => \"27.0\"\n  \"DTSDKBuild\" => \"26A393\"\n  \"DTSDKName\" => \"macosx27.0.internal\"\n  \"DTXcode\" => \"2720\"\n  \"DTXcodeBuild\" => \"27B28\"\n  \"LSMinimumSystemVersion\" => \"14.0\"\n  \"NSHumanReadableCopyright\" => \"Copyright \u00a9 2013-2025 Apple Inc. All rights reserved.\"\n}\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "plutil",
+            "-p",
+            "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist"
+          ],
+          "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+          "exitCode": 0,
+          "stdout": "{\n  \"chromeIdentifier\" => \"com.apple.dt.devicekit.chrome.phone11\"\n  \"createByDefaultForRuntimeVersions\" => {\n    \"versionMax\" => \"99.99\"\n    \"versionMin\" => \"26.0\"\n  }\n  \"environment\" => {\n    \"SIMULATOR_LEGACY_ASSET_SUFFIX\" => \"iphone\"\n  }\n  \"framebufferMask\" => \"4E5532ED-1470-47D1-BDF4-7AA90C26957A\"\n  \"minRuntimeVersion\" => \"26.0\"\n  \"modelIdentifier\" => \"iPhone18,3\"\n  \"pairByDefaultForRuntimeVersions\" => {\n    \"versionMax\" => \"99.99\"\n    \"versionMin\" => \"26.0\"\n  }\n  \"productClass\" => \"V57\"\n  \"representedModelIdentifiers\" => [\n    0 => \"iPhone18,3\"\n  ]\n  \"sensorBarImage\" => \"sensor_bar_class_04\"\n  \"springBoardConfigName\" => \"iPhone4Simulator\"\n  \"supportedArchs\" => [\n    0 => \"arm64\"\n    1 => \"x86_64\"\n  ]\n  \"supportedFeatures\" => {\n    \"com.apple.display.aot\" => true\n    \"com.apple.display.integrated\" => true\n    \"com.apple.display.supports-external\" => true\n    \"com.apple.hid.keyboard\" => true\n    \"com.apple.hid.staccato\" => true\n    \"com.apple.hid.touch-screen\" => true\n    \"com.apple.pearl-id\" => true\n  }\n  \"supportedFeaturesConditionalOnRuntime\" => {\n    \"com.apple.carplay\" => true\n    \"com.apple.CoreSimulator.display.resizableScene\" => true\n    \"com.apple.CoreSimulator.pairing\" => true\n    \"com.apple.deviceIdentity\" => true\n    \"com.apple.display.ambient-overlay\" => true\n    \"com.apple.hid.applepay.authorize\" => true\n    \"com.apple.location.nearby-interaction\" => true\n    \"com.apple.watch.pairing.companion\" => true\n    \"com.apple.watch.pairing.qws\" => true\n  }\n  \"supportedProductFamilyIDs\" => [\n    0 => 1\n  ]\n}\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "shasum",
+            "-a",
+            "256",
+            "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist"
+          ],
+          "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+          "exitCode": 0,
+          "stdout": "7b919f007de487c548592a348a98f78f9cf8e48bffbc0a12ad1cc37e97422e1d  /Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "shasum",
+            "-a",
+            "256",
+            "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist"
+          ],
+          "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+          "exitCode": 0,
+          "stdout": "098e2080d544facbecaae8ec5eebc8b99de6581f02107ce753b80eba21597318  /Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "plutil",
+            "-p",
+            "/Applications/Xcode.app/Contents/version.plist"
+          ],
+          "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+          "exitCode": 0,
+          "stdout": "{\n  \"BuildVersion\" => \"2\"\n  \"CFBundleShortVersionString\" => \"27.0\"\n  \"CFBundleVersion\" => \"25183.107.5\"\n  \"ProductBuildVersion\" => \"27A266a\"\n  \"ProjectName\" => \"IDEApplication\"\n  \"SourceVersion\" => \"25183107005000000\"\n}\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "shasum",
+            "-a",
+            "256",
+            "/Applications/Xcode.app/Contents/version.plist"
+          ],
+          "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+          "exitCode": 0,
+          "stdout": "99aa0f4ffa738d03c9d86b273745d4a3945c7cdc7462221033fb807463d895e9  /Applications/Xcode.app/Contents/version.plist\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "plutil",
+            "-p",
+            "/System/Library/CoreServices/SystemVersion.plist"
+          ],
+          "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+          "exitCode": 0,
+          "stdout": "{\n  \"BuildID\" => \"0B27979E-B7E7-11F1-B3D2-24EC53F49301\"\n  \"iOSSupportVersion\" => \"27.0\"\n  \"ProductBuildVersion\" => \"26A434\"\n  \"ProductCopyright\" => \"1983-2026 Apple Inc.\"\n  \"ProductName\" => \"macOS\"\n  \"ProductUserVisibleVersion\" => \"27.0.1\"\n  \"ProductVersion\" => \"27.0.1\"\n}\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "shasum",
+            "-a",
+            "256",
+            "/System/Library/CoreServices/SystemVersion.plist"
+          ],
+          "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+          "exitCode": 0,
+          "stdout": "bd61e19dd67dd97ce9a27c79a2148d42cc9685a71c6f17ff27d62b819f39f983  /System/Library/CoreServices/SystemVersion.plist\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "sw_vers"
+          ],
+          "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+          "exitCode": 0,
+          "stdout": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "uname",
+            "-m"
+          ],
+          "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+          "exitCode": 0,
+          "stdout": "arm64\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "xcodebuild",
+            "-version"
+          ],
+          "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+          "exitCode": 0,
+          "stdout": "Xcode 27.0\nBuild version 27A266a\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "node",
+            "--version"
+          ],
+          "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+          "exitCode": 0,
+          "stdout": "v26.8.1\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "node",
+            "-p",
+            "JSON.stringify({platform:process.platform,arch:process.arch})"
+          ],
+          "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+          "exitCode": 0,
+          "stdout": "{\"platform\":\"darwin\",\"arch\":\"arm64\"}\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "npm",
+            "ls",
+            "--depth=0",
+            "--json"
+          ],
+          "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+          "exitCode": 0,
+          "stdout": "{\n  \"version\": \"1.3.1\",\n  \"name\": \"jev-ios-bridge\",\n  \"dependencies\": {\n    \"@modelcontextprotocol/server\": {\n      \"version\": \"2.1.0\",\n      \"resolved\": \"https://registry.npmjs.org/@modelcontextprotocol/server/-/server-2.1.0.tgz\",\n      \"overridden\": false\n    },\n    \"@types/node\": {\n      \"version\": \"24.13.6\",\n      \"resolved\": \"https://registry.npmjs.org/@types/node/-/node-24.13.6.tgz\",\n      \"overridden\": false\n    },\n    \"@typesafe-ai/sdk\": {\n      \"version\": \"0.6.0\",\n      \"resolved\": \"https://registry.npmjs.org/@typesafe-ai/sdk/-/sdk-0.6.0.tgz\",\n      \"overridden\": false\n    },\n    \"mobilebuildmcp\": {\n      \"version\": \"2.7.1\",\n      \"resolved\": \"https://registry.npmjs.org/mobilebuildmcp/-/mobilebuildmcp-2.7.1.tgz\",\n      \"overridden\": false\n    },\n    \"mobilecli\": {\n      \"version\": \"1.0.14\",\n      \"resolved\": \"https://registry.npmjs.org/mobilecli/-/mobilecli-1.0.14.tgz\",\n      \"overridden\": false\n    },\n    \"tsx\": {\n      \"version\": \"4.23.15\",\n      \"resolved\": \"https://registry.npmjs.org/tsx/-/tsx-4.23.15.tgz\",\n      \"overridden\": false\n    },\n    \"typescript\": {\n      \"version\": \"7.0.2\",\n      \"resolved\": \"https://registry.npmjs.org/typescript/-/typescript-7.0.2.tgz\",\n      \"overridden\": false\n    },\n    \"zod\": {\n      \"version\": \"4.6.5\",\n      \"resolved\": \"https://registry.npmjs.org/zod/-/zod-4.6.5.tgz\",\n      \"overridden\": false\n    }\n  }\n}\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "metadataInputs": [
+      {
+        "path": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist",
+        "sha256": "7b919f007de487c548592a348a98f78f9cf8e48bffbc0a12ad1cc37e97422e1d",
+        "projection": {
+          "CFBundleIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17",
+          "CFBundleName": "iPhone 17",
+          "CFBundleVersion": "405",
+          "DTPlatformVersion": "27.0"
+        },
+        "receiptIndexes": [
+          6,
+          8
+        ]
+      },
+      {
+        "path": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist",
+        "sha256": "098e2080d544facbecaae8ec5eebc8b99de6581f02107ce753b80eba21597318",
+        "projection": {
+          "minRuntimeVersion": "26.0",
+          "createByDefaultForRuntimeVersions": {
+            "versionMin": "26.0",
+            "versionMax": "99.99"
+          },
+          "supportedArchs": [
+            "arm64",
+            "x86_64"
+          ],
+          "supportedProductFamilyIDs": [
+            1
+          ]
+        },
+        "receiptIndexes": [
+          7,
+          9
+        ]
+      },
+      {
+        "path": "/Applications/Xcode.app/Contents/version.plist",
+        "sha256": "99aa0f4ffa738d03c9d86b273745d4a3945c7cdc7462221033fb807463d895e9",
+        "projection": {
+          "CFBundleShortVersionString": "27.0",
+          "ProductBuildVersion": "27A266a"
+        },
+        "receiptIndexes": [
+          10,
+          11
+        ]
+      },
+      {
+        "path": "/System/Library/CoreServices/SystemVersion.plist",
+        "sha256": "bd61e19dd67dd97ce9a27c79a2148d42cc9685a71c6f17ff27d62b819f39f983",
+        "projection": {
+          "ProductVersion": "27.0.1",
+          "ProductBuildVersion": "26A434"
+        },
+        "receiptIndexes": [
+          12,
+          13
+        ]
+      }
+    ]
+  },
+  "remainingPrerequisites": [
+    "Install iOS 27.0 through the owner's normal process, then repeat read-only metadata verification; no fallback is authorized.",
+    "Truthful old-writer quiescence and historical journal/lease root declarations or exclusions remain pending.",
+    "Effective private configuration, migration, builds, capacity, storage, and live acceptance remain gated."
+  ]
+}

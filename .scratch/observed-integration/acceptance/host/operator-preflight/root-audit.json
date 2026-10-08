@@ -1,0 +1,29 @@
+{
+  "scope": "Static Root audit of completed read-only operator preflight and exact20metadata receipts. No system/device/store reads by Root.",
+  "evidenceVerdict": "PASS: inspectable bounded preflight provenance",
+  "runtimePrerequisite": "UNVERIFIED: no27.0 bundle in allocator supported metadata roots; no conclusion about unmounted catalogs",
+  "liveRows": {
+    "L01": "UNVERIFIED",
+    "L02": "UNVERIFIED",
+    "L03": "UNVERIFIED",
+    "L04": "UNVERIFIED",
+    "L05": "UNVERIFIED"
+  },
+  "metadataReceiptCount": 20,
+  "expectedMissingRootQueryExit": 1,
+  "otherQueryExits": 0,
+  "hostFreezeFilesStillMatch": 15,
+  "files": [
+    {
+      "path": ".scratch/observed-integration/acceptance/live/report.md",
+      "bytes": 2967,
+      "sha256": "f1d6105b57567f79edc1c68cc797cf6a18f2f6043b2ce4a9797e463deea03ca1"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/live/versions.json",
+      "bytes": 24210,
+      "sha256": "bb7424dd82da8be0c70716c70afa4f5e6350e87bfe6eaf23b211c49bfc12f509"
+    }
+  ],
+  "limits": "No backend/device operation, build, activation, migration or live/native/final-safety verdict. Initial abbreviated-provenance report is preserved separately."
+}

@@ -1,0 +1,35 @@
+{
+  "scope": "Exact read-only metadata provenance supplement only",
+  "receipt": {
+    "id": "6b89b4db-915b-4f0e-ac23-f779855e0a63",
+    "ok": true,
+    "result": {
+      "send": {
+        "handle": "term_30a0ed61-18e7-49e6-a206-824d107293aa",
+        "accepted": true,
+        "bytesWritten": 1405,
+        "prompt": {
+          "requestId": "4d470ffb-13ab-4e1d-954d-a4dd1ba52131",
+          "stages": [
+            "input_accepted",
+            "turn_started"
+          ],
+          "provider": "codex",
+          "observation": "supported",
+          "processIncarnation": "7fa6c45a-8fa5-4250-bada-0a76923ee8ae",
+          "generation": 8,
+          "baselineWorkingSequence": 3,
+          "baselineExplicitWorkingStartedAt": null,
+          "baselinePermissionSequence": 0
+        }
+      },
+      "mutation": {
+        "requestId": "4d470ffb-13ab-4e1d-954d-a4dd1ba52131",
+        "replayed": false
+      }
+    },
+    "_meta": {
+      "runtimeId": "4a0c1156-025f-4be7-ad19-8e517cc45e3d"
+    }
+  }
+}

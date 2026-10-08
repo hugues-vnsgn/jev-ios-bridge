@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "status": "UNVERIFIED",
+  "scope": "read-only runtime/host metadata preflight only",
+  "capturedDate": "2026-10-08",
+  "workspace": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "currentHead": "087efc19103479391da8bf2d91fc5f1bcc04d7ae",
+  "acceptedHostEvidenceCommit": "38698fbfd1c3048c8eb09706eb3cecf58f006509",
+  "testedProductCommit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
+  "operatorBinding": {
+    "tabId": "b0e5a4b6-106b-4dab-a49a-b3933445d4ef",
+    "leafId": "363f3109-5b98-4014-a35c-44287d46a1df",
+    "terminal": "term_30a0ed61-18e7-49e6-a206-824d107293aa",
+    "verifiedBy": "read-only orca status and terminal inventory"
+  },
+  "hostAcceptance": {
+    "verdict": "PASS",
+    "rows": [
+      "H01",
+      "H02",
+      "H03",
+      "H04",
+      "H05",
+      "H06",
+      "H07",
+      "H08",
+      "H09"
+    ],
+    "hostAcceptancePath": ".scratch/observed-integration/acceptance/host/host-acceptance.json",
+    "hostAcceptanceSha256": "0a299b3709b2ebda2ec5843e63744f2caf7ad6e3dc9841c74b821afa59490fe2",
+    "acceptedHostFreezePath": ".scratch/observed-integration/acceptance/host/accepted-host-freeze.json",
+    "acceptedHostFreezeSha256": "60b537e4e7c35e8ee12668cf9162989a0024727f17812686c3535e27b80ee6a3",
+    "freezeFilesVerified": 15,
+    "freezeFileHashesMatch": true,
+    "evidenceCommitIsAncestorOfHead": true,
+    "changesSinceHostGate": "coordination/evidence metadata only; no source, test, package, or workflow delta",
+    "currentSourceHashes": {
+      "package.json": "d2fffea3e28d6ea794536b2cb67337abe8ec75c46cf10c2944ca1b3cd0a3a3ea",
+      "package-lock.json": "7982b0a2fc02a088ab03761b8332e6c15ad3d0d841f1134e9a4dd50b94364479",
+      "src/observed/allocation-config.ts": "b6519649edbaf203e5323a15c80273321a42a5cb49850551297268e6ee1f5f0a",
+      "tests/observed-allocation-config.test.ts": "cc46883cd5bd9bf344fe228b6b91b7b4b4745e262b2b4fe3108cf22b05123ab6",
+      "tests/fixtures/observed-allocation-backend.ts": "82761f545831ccb2418936c5370e25b8970e972ddedf3879827d6c4c30df3814"
+    }
+  },
+  "hostMetadata": {
+    "macOS": {
+      "version": "27.0.1",
+      "build": "26A434",
+      "architecture": "arm64"
+    },
+    "xcode": {
+      "version": "27.0",
+      "build": "27A266a"
+    },
+    "node": "v26.8.1",
+    "installedPinnedPackages": {
+      "mobilebuildmcp": "2.7.1",
+      "mobilecli": "1.0.14",
+      "@modelcontextprotocol/server": "2.1.0",
+      "@typesafe-ai/sdk": "0.6.0"
+    }
+  },
+  "requestedRuntime": {
+    "version": "iOS 27.0",
+    "runtimeIdFromCurrentTestFixture": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+    "installed": false,
+    "status": "UNVERIFIED",
+    "exactBuild": null,
+    "runtimeBundleMetadataPath": null,
+    "evidence": [
+      {
+        "method": "filesystem metadata inspection only; no simctl invocation",
+        "command": "find /Library/Developer/CoreSimulator and /Applications/Xcode.app for *.simruntime bundles",
+        "result": "no simulator runtime bundle directories found"
+      },
+      {
+        "path": "/Library/Developer/CoreSimulator/Volumes",
+        "result": "only empty iOS_22G86 and iOS_23E254a mount directories; expected runtime Contents/Info.plist paths absent"
+      },
+      {
+        "path": "/Library/Developer/CoreSimulator/Caches/dyld/26A434",
+        "result": "cache names identify prior iOS 18.6 build 22G86 and iOS 26.4 build 23E254a; cache entries are not installed runtime evidence"
+      },
+      {
+        "path": ".scratch/observed-integration/acceptance/host/prerequisite-metadata/selected-fields.json",
+        "capturedAt": "2026-10-08T05:14:38.477836+00:00",
+        "result": "earlier read-only metadata capture recorded iOS 26.4.1 build 23E254a, runtime ID com.apple.CoreSimulator.SimRuntime.iOS-26-4; its runtime bundle paths are absent in this current inspection"
+      }
+    ],
+    "observedDyldCacheVersions": [
+      {
+        "version": "iOS 18.6",
+        "build": "22G86",
+        "runtimeId": "com.apple.CoreSimulator.SimRuntime.iOS-18-6",
+        "evidencePath": "/Library/Developer/CoreSimulator/Caches/dyld/26A434/com.apple.CoreSimulator.SimRuntime.iOS-18-6.22G86",
+        "classification": "cache only; not installed-runtime proof"
+      },
+      {
+        "version": "iOS 26.4",
+        "build": "23E254a",
+        "runtimeId": "com.apple.CoreSimulator.SimRuntime.iOS-26-4",
+        "evidencePath": "/Library/Developer/CoreSimulator/Caches/dyld/26A434/com.apple.CoreSimulator.SimRuntime.iOS-26-4.23E254a",
+        "classification": "cache only; not installed-runtime proof"
+      }
+    ],
+    "priorMetadataCapture": {
+      "path": ".scratch/observed-integration/acceptance/host/prerequisite-metadata/selected-fields.json",
+      "sha256": "24cfc6096f42b25d0a005cc9521df9a7cace20d7cc359860e9cfdabc8dfdbbd0",
+      "capturedAt": "2026-10-08T05:14:38.477836+00:00",
+      "runtimeRecord": "iOS 26.4.1 build 23E254a; com.apple.CoreSimulator.SimRuntime.iOS-26-4",
+      "currentRuntimeMetadataPathsPresent": false
+    }
+  },
+  "deviceType": {
+    "name": "iPhone 17",
+    "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17",
+    "infoPlist": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist",
+    "infoPlistSha256": "7b919f007de487c548592a348a98f78f9cf8e48bffbc0a12ad1cc37e97422e1d",
+    "profilePlist": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist",
+    "profilePlistSha256": "098e2080d544facbecaae8ec5eebc8b99de6581f02107ce753b80eba21597318",
+    "compatibilityMetadata": {
+      "minRuntimeVersion": "26.0",
+      "createByDefaultForRuntimeVersions": {
+        "versionMin": "26.0",
+        "versionMax": "99.99"
+      },
+      "supportedArchs": [
+        "arm64",
+        "x86_64"
+      ]
+    },
+    "iOS27DeclaredCompatibleByDeviceTypeMetadata": true,
+    "iOS27RuntimeCompatibilityConfirmed": false,
+    "reason": "The device type profile includes 27.0 in its declared range, but the corresponding runtime profile and runtime root are unavailable."
+  },
+  "liveRows": {
+    "L01": "UNVERIFIED",
+    "L02": "UNVERIFIED",
+    "L03": "UNVERIFIED",
+    "L04": "UNVERIFIED",
+    "L05": "UNVERIFIED"
+  },
+  "provenance": {
+    "readOnlyCommands": [
+      "git rev-parse/show/diff/status",
+      "shasum -a 256",
+      "Python JSON manifest hash verification",
+      "orca status --json",
+      "orca terminal list --json --include-visual-layouts",
+      "sw_vers",
+      "uname -m",
+      "xcodebuild -version",
+      "node --version",
+      "npm ls --depth=0 --json",
+      "plutil -p on iPhone 17 type metadata",
+      "find/ls on simulator runtime metadata paths and dyld cache names"
+    ],
+    "notRun": [
+      "simctl (including simctl list)",
+      "device, bridge, or MCP backend calls",
+      "tests, builds, runtime installation/download/update",
+      "production admission/config/journal/lease access or migration",
+      "allocations, launches, captures, input, cleanup, shutdown, erase, delete, reset, replay, claim clearing"
+    ],
+    "secretHandling": "No .env or TYPESAFE_API_KEY was read, copied, or printed. Node, npm, Orca, and system version-query child commands were run with TYPESAFE_API_KEY, NODE_OPTIONS, and NODE_NO_WARNINGS removed."
+  },
+  "remainingPrerequisites": [
+    "Install iOS 27.0 through the owner's normal process, then repeat read-only metadata verification; no fallback is authorized.",
+    "Truthful old-writer quiescence and historical journal/lease root declarations or exclusions remain pending.",
+    "Effective private configuration, migration, builds, capacity, storage, and live acceptance remain gated."
+  ]
+}
