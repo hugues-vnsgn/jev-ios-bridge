@@ -67,6 +67,8 @@ The shared-driver owner alone writes `src/device/index.ts`, `src/device/lease.ts
 
 Runtime owns `src/experimental/**` and `src/observed/service.ts`; allocator owns `src/observed/allocation.ts`. Their injected dependencies are the integrated store capability and typed driver session. CLI/MCP have one writer in 08 after both modules are integrated. Host faults and documentation have disjoint sets in G and may run in parallel. Root owns integrated acceptance artifacts and defect fixes. Any unlisted file requires an explicit handoff; a necessary conflict stops only the dependent slice while evidence is returned.
 
+Root-authorized ticket06 fixture extension (2026-10-08): the runtime owner may change `tests/admission-migration.test.ts` only to replace calls to the retired raw-root journal writer with local historical-disk fixture construction. Preserve the pinned original disk formats, all migration assertions, aliases and uncertainty cases; capture representative fixture correspondence and rerun migration tests on Node26/exact Node24. No migration/store source or assertions are transferred.
+
 ## Completion and evidence
 
 Each implementation ticket ends with one focused commit. Report: outcome (PASS/BLOCKED/UNVERIFIED), full commit SHA and base SHA, changed files, checks with command/exit/assertion counts, evidence links, limitations and unresolved dependencies. State skipped cases explicitly. Include any requested ownership transfer. Do not cherry-pick, merge or update other agents' branches. Root applies the dependency commits.
