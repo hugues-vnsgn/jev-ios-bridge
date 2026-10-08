@@ -1,0 +1,218 @@
+diff --git a/.scratch/observed-action-rollout/issues/08-public-adapters.md b/.scratch/observed-action-rollout/issues/08-public-adapters.md
+index 9336cce..6761f49 100644
+--- a/.scratch/observed-action-rollout/issues/08-public-adapters.md
++++ b/.scratch/observed-action-rollout/issues/08-public-adapters.md
+@@ -2,6 +2,8 @@
+ 
+ Type: task
+ Status: ready-for-agent
++Execution: in-progress
++Claimed by: /root/observed_runtime
+ Mode: AFK
+ Blocked by: 06, 07
+ Owner: Public-adapter implementer
+@@ -36,3 +38,5 @@ Completion: Production packed src entry points provide the accepted contract. Bo
+ 
+ ## Comments
+ 
++
++2026-10-08: Root dispatched adapter-only implementation at 6ef2690fbb990e86fc57603c952304167d8c39b8 in linked feat/observed-public-adapters. Cook/TDD/worktree/codebase-design/do-test apply at the agreed CLI subprocess, MCP stdio and shared-service seams. No provider workflow, production stores/devices/secrets or protected writes.
+diff --git a/src/cli.ts b/src/cli.ts
+index 9778635..ae59256 100644
+--- a/src/cli.ts
++++ b/src/cli.ts
+@@ -1,7 +1,9 @@
+ #!/usr/bin/env node
++import { isObservedCommand, productionObservedComposition, runObservedCommand, observedError, observedSummary, type ObservedComposition } from './observed/cli.js';
+ import { readFile } from 'node:fs/promises';
+ import { join, resolve } from 'node:path';
+-import { fileURLToPath } from 'node:url';
++import { ObservedOperationError } from './observed/schema.js';
++import { fileURLToPath, pathToFileURL } from 'node:url';
+ import { parseArgs } from 'node:util';
+ import { serveStdio } from '@modelcontextprotocol/server/stdio';
+ import { z } from 'zod/v4';
+@@ -29,6 +31,13 @@ Usage:
+   jev-ios-bridge logs <run-id>
+   jev-ios-bridge capture [--serial S | --avd A] [--jev]
+   jev-ios-bridge mcp
++  jev-ios-bridge observed-allocate <allocation-request.json> [--json]
++  jev-ios-bridge observed-allocation <allocation-id> [--json] [--wait-ms N]
++  jev-ios-bridge observed-retire <allocation-id> [--json]
++  jev-ios-bridge observed-allocation-cancel <allocation-id> [--json]
++  jev-ios-bridge observed-action <action-request.json> [--json]
++  jev-ios-bridge observed-report <action-id> [--json] [--wait-ms N]
++  jev-ios-bridge observed-cancel <action-id> [--json]
+   jev-ios-bridge --version | --help
+ Set TYPESAFE_API_KEY and, for an iOS script, a dedicated simulator (JEV_DEVICE_UDID, the script's
+ device.udid, or .mobilebuildmcp/config.yaml); for an Android script, a device (JEV_ANDROID_DEVICE,
+@@ -44,7 +53,7 @@ by --serial, then --avd, then JEV_ANDROID_DEVICE, and exits 0 when it printed, 3
+ A run of a script with "do" steps (driven mode, experimental: JEV_EXPERIMENTAL_DRIVEN=1) can pause for
+ Claude. run prints the pause and keeps waiting, but can't answer it: resolve_step is an MCP tool, so the
+ pause times out unless the script runs through the MCP server.
+-Exit codes: 0 passed, 1 failed, 2 inconclusive, 3 could not start.`;
++Observed prepare/start requires JEV_EXPERIMENTAL_OBSERVED=1 and offline admission migration/configuration.\nObserved commands need no Jev key; reads/cancellation/retirement remain available when disabled.\nExit codes: 0 passed, 1 failed, 2 inconclusive, 3 could not start.`;
+ 
+ /** A problem found before any run started. The message is safe to print. */
+ class StartError extends Error {}
+@@ -77,19 +86,41 @@ async function readScript(path: string): Promise<unknown> {
+   catch { throw new StartError(`Script file ${path} is not valid JSON`); }
+ }
+ 
+-async function main(): Promise<void> {
++/** Internal composition seam shared by the installed entry and isolated subprocess fixtures. */
++export type CliComposition = { observed?: ObservedComposition; legacy?: BridgeService; projectDir?: string };
++async function dispatchCli(args: string[], composition: CliComposition): Promise<void> {
++  const projectDir = composition.projectDir ?? resolve(process.env.JEV_PROJECT_DIR?.trim() || process.cwd());
+   let parsed;
+   try {
+-    parsed = parseArgs({ allowPositionals: true, options: {
++    parsed = parseArgs({ args, allowPositionals: true, options: {
+       help: { type: 'boolean' }, version: { type: 'boolean' }, json: { type: 'boolean' }, 'no-log-pane': { type: 'boolean' },
+       'no-device-window': { type: 'boolean' },
+-      'max-steps': { type: 'string' }, 'timeout-ms': { type: 'string' },
++      'wait-ms': { type: 'string' }, 'max-steps': { type: 'string' }, 'timeout-ms': { type: 'string' },
+       serial: { type: 'string' }, avd: { type: 'string' }, jev: { type: 'boolean' },
+     } });
+   } catch (error) { throw new StartError(`${(error as Error).message}\n${USAGE}`); }
+   const [command, argument] = parsed.positionals;
+   if (parsed.values.version) { console.log(BRIDGE_VERSION); return; }
+   if (parsed.values.help || !command) { console.log(USAGE); return; }
++  if (isObservedCommand(command)) {
++    const module = composition.observed ?? productionObservedComposition({ enabled: process.env.JEV_EXPERIMENTAL_OBSERVED === '1', runsDir: runsDir(), cwd: projectDir });
++    const controller = new AbortController(); let signalExit: number | undefined;
++    const stop = (code: number) => () => { signalExit ??= code; controller.abort(); void module.close(); };
++    const interrupt = stop(130); const terminate = stop(143);
++    process.once('SIGINT', interrupt); process.once('SIGTERM', terminate);
++    try {
++      const disallowed = parsed.positionals.length !== 2 || ['max-steps', 'timeout-ms', 'serial', 'avd', 'jev', 'no-log-pane', 'no-device-window']
++        .some(name => parsed.values[name as keyof typeof parsed.values] !== undefined);
++      process.exitCode = await runObservedCommand(module, command, disallowed ? undefined : argument, {
++        json: parsed.values.json ?? false, projectDir, signal: controller.signal,
++        ...(parsed.values['wait-ms'] !== undefined ? { waitMs: Number(parsed.values['wait-ms']) } : {}), write: text => { process.stdout.write(text); } });
++    } finally {
++      await module.close(); process.removeListener('SIGINT', interrupt); process.removeListener('SIGTERM', terminate);
++      if (signalExit !== undefined) process.exitCode = signalExit;
++    }
++    return;
++  }
++  if (parsed.values['wait-ms'] !== undefined) throw new StartError('--wait-ms applies only to observed reads');
+   const expected = command === 'mcp' || command === 'capture' ? 1 : 2;
+   if (!['run', 'report', 'logs', 'capture', 'mcp'].includes(command)) throw new StartError(`Unknown command: ${command}\n${USAGE}`);
+   if (parsed.positionals.length !== expected) throw new StartError(`Wrong number of arguments for ${command}\n${USAGE}`);
+@@ -135,7 +166,7 @@ async function main(): Promise<void> {
+ 
+   // Under MCP there is no flag: JEV_DEVICE_WINDOW=off in the server's environment turns the window off.
+   const deviceWindow = deviceWindowOpener(parsed.values['no-device-window'] === true);
+-  const service = new BridgeService({
++  const service = composition.legacy ?? new BridgeService({
+     baseDir: runsDir(),
+     createDriver: createDriverFactory({ mobileBuildMcp: { cwd: projectDir,
+       ...(process.env.JEV_DEVICE_UDID ? { defaultUdid: process.env.JEV_DEVICE_UDID } : {}),
+@@ -150,17 +181,18 @@ async function main(): Promise<void> {
+       // MCP's stdout carries the protocol, so pane notices go to stderr in both modes.
+       onNotice: (_runId, text) => { console.error(text); } },
+   });
++  const observed = command === 'mcp' ? composition.observed ?? productionObservedComposition({ enabled: process.env.JEV_EXPERIMENTAL_OBSERVED === '1', runsDir: runsDir(), cwd: projectDir }) : undefined;
+   let closing = false;
+   const close = async () => {
+     if (closing) return;
+     closing = true;
+-    await service.close();
++    await Promise.allSettled([service.close(), observed?.close()]);
+   };
+   process.once('SIGINT', () => { void close().then(() => process.exit(130)); });
+   process.once('SIGTERM', () => { void close().then(() => process.exit(143)); });
+   if (command === 'mcp') {
+     // The experimental switch (E13) publishes resolve_step; the plugin sets it from its experimentalDriven setting.
+-    serveStdio(() => createMcpServer(service, { driven: experimentalDrivenOn(process.env) }), { onerror: () => { console.error('MCP transport error'); } });
++    serveStdio(() => createMcpServer(service, { driven: experimentalDrivenOn(process.env), observed: observed! }), { onerror: () => { console.error('MCP transport error'); } });
+     process.stdin.once('end', () => { void close(); });
+     return;
+   }
+@@ -196,11 +228,22 @@ async function main(): Promise<void> {
+   } finally { await close(); }
+ }
+ 
+-main().catch((error: unknown) => {
++export async function runCli(args = process.argv.slice(2), composition: CliComposition = {}): Promise<void> {
++  try { await dispatchCli(args, composition); }
++  catch (error: unknown) {
++    const command = args.find(isObservedCommand);
++    if (command) {
++      const reply = observedError(new ObservedOperationError('INVALID_REQUEST', 'Invalid observed command arguments'),
++        ['observed-action', 'observed-report', 'observed-cancel'].includes(command) ? 'action' : 'preparation');
++      process.stdout.write((args.includes('--json') ? JSON.stringify(reply) : observedSummary(reply)) + '\n');
++      process.exitCode = 3; return;
++    }
+   if (error instanceof z.ZodError) console.error(`Script is invalid:\n${z.prettifyError(error)}`);
+   else if (error instanceof StartError || error instanceof ScriptValueError || error instanceof DrivenProjectError ||
+     isDeviceSelectionError(error)) {
+     console.error(error.message);
+   } else console.error('Bridge could not start. Check arguments, script, and environment.');
+   process.exitCode = EXIT.couldNotStart;
+-});
++  }
++}
++if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) void runCli();
+diff --git a/src/mcp/index.ts b/src/mcp/index.ts
+index 7a24d40..76cc20b 100644
+--- a/src/mcp/index.ts
++++ b/src/mcp/index.ts
+@@ -1,3 +1,5 @@
++import { registerObservedTools } from './observed.js';
++import type { ObservedComposition } from '../observed/cli.js';
+ import { McpServer } from '@modelcontextprotocol/server';
+ import { z } from 'zod/v4';
+ import { scriptedScenarioSchema, ScriptValueError } from '../scripted/schema.js';
+@@ -27,7 +29,7 @@ const RESOLVE_STEP_DESCRIPTION = 'Answer a paused run (get_report state needs_cl
+   'screen is refused with the reason, and the pause stays open for a corrected one.';
+ 
+ /** `driven`: the experimental driven-mode switch is on, so `resolve_step` and the hand-back limit are published. */
+-export function createMcpServer(service: BridgeService, options: { driven?: boolean } = {}): McpServer {
++export function createMcpServer(service: BridgeService, options: { driven?: boolean; observed?: ObservedComposition } = {}): McpServer {
+   const server = new McpServer({ name: 'jev-ios-bridge', version: BRIDGE_VERSION });
+   server.registerTool('start_scenario', {
+     description: 'Start an explicit iOS or Android action script with assertion checkpoints. Returns a run id, a local watch URL, and logsCommand, a terminal command that follows the app\'s own output live (a log pane window usually opens by itself). Poll get_report for completion; use cancel_run to stop. TypeSafe receives observed screen text and current assertion claims. Typed values go to device actions and may later appear in screen text; screenshots stay local. A value may be {"fromEnv": "NAME"}, read from this server\'s environment, so a credential stays out of the script.',
+@@ -72,5 +74,6 @@ export function createMcpServer(service: BridgeService, options: { driven?: bool
+       }
+     });
+   }
++  if (options.observed) registerObservedTools(server, options.observed);
+   return server;
+ }
+diff --git a/tests/mcp.test.ts b/tests/mcp.test.ts
+index eccb08d..ae3d293 100644
+--- a/tests/mcp.test.ts
++++ b/tests/mcp.test.ts
+@@ -8,7 +8,7 @@ import { createInterface } from 'node:readline';
+ import { openMcpSession } from './fixtures/mcp-session.js';
+ 
+ test('stdio server negotiates and exposes start/report/cancel without a key', { timeout: 10_000 }, async () => {
+-  const env = { ...process.env }; delete env.TYPESAFE_API_KEY;
++  const env = { ...process.env, JEV_EXPERIMENTAL_OBSERVED: '0' }; delete (env as NodeJS.ProcessEnv).TYPESAFE_API_KEY;
+   const child = spawn(process.execPath, ['--import', 'tsx', 'src/cli.ts', 'mcp'], { env, stdio: ['pipe', 'pipe', 'pipe'] });
+   const pending = new Map<number, (value: any) => void>();
+   const lines = createInterface({ input: child.stdout });
+@@ -26,7 +26,7 @@ test('stdio server negotiates and exposes start/report/cancel without a key', {
+     assert.equal(init.result.serverInfo.version, '1.3.1');
+     child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' }) + '\n');
+     const list = await request(2, 'tools/list');
+-    assert.deepEqual(list.result.tools.map((tool: { name: string }) => tool.name).sort(), ['cancel_run', 'get_report', 'start_scenario']);
++    assert.deepEqual(list.result.tools.map((tool: { name: string }) => tool.name).sort(), ['cancel_observed_action', 'cancel_observed_allocation', 'cancel_run', 'get_observed_action', 'get_observed_allocation', 'get_report', 'retire_observed_allocation', 'start_scenario']);
+     const startSchema = list.result.tools.find((tool: { name: string }) => tool.name === 'start_scenario').inputSchema;
+     assert.ok(startSchema.properties.scenario);
+     const report = await request(3, 'tools/call', { name: 'get_report', arguments: { runId: 'missing' } });
+@@ -49,10 +49,10 @@ test('start_scenario\'s description names both iOS and Android', { timeout: 10_0
+ });
+ 
+ test('the MCP server starts and lists its tools with both device settings empty', { timeout: 10_000 }, async () => {
+-  const session = await openMcpSession('empty-devices', { entryPoint: 'cli', env: { JEV_DEVICE_UDID: '', JEV_ANDROID_DEVICE: '' } });
++  const session = await openMcpSession('empty-devices', { entryPoint: 'cli', env: { JEV_DEVICE_UDID: '', JEV_ANDROID_DEVICE: '', JEV_EXPERIMENTAL_OBSERVED: '0' } });
+   try {
+     const tools = await session.listTools();
+-    assert.deepEqual(tools.map((tool: { name: string }) => tool.name).sort(), ['cancel_run', 'get_report', 'start_scenario']);
++    assert.deepEqual(tools.map((tool: { name: string }) => tool.name).sort(), ['cancel_observed_action', 'cancel_observed_allocation', 'cancel_run', 'get_observed_action', 'get_observed_allocation', 'get_report', 'retire_observed_allocation', 'start_scenario']);
+   } finally { await session.close(); }
+ });
+ 

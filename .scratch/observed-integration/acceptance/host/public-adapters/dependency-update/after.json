@@ -1,0 +1,77 @@
+{
+  "head": "1275f93c616c90aba63e92468679cf39f13157b5",
+  "allOwnedFilesUnchanged": true,
+  "originalReproductionUnchanged": true,
+  "files": {
+    ".scratch/observed-action-rollout/issues/08-public-adapters.md": {
+      "sha256": "1f662f7dd8a062c63647bbc79e6e27e422d07955020345dfb5c00f2c71b8af8f",
+      "gitBlob": "6761f4926b57193d3b95651541a35a3db16189dc",
+      "bytes": 3944
+    },
+    "src/cli.ts": {
+      "sha256": "47ab28827a25d46febd81b4a8e76e055040ae2ccedb0a71ac3e9428a13e374c7",
+      "gitBlob": "ae59256093174cef47eaf154ebf08a446ed767e5",
+      "bytes": 15709
+    },
+    "src/mcp/index.ts": {
+      "sha256": "48e531d304d19852d461eb1d3317fee5f953a15654f405c3393b04ff4a494c2a",
+      "gitBlob": "76cc20be10d26f79c46a07132144c7575e38423f",
+      "bytes": 6387
+    },
+    "src/mcp/observed.ts": {
+      "sha256": "5522cc1933d54d13cd8c72b7d8caa5ebf262272f9e0110c13fceb58dd8fcc51b",
+      "gitBlob": "ba1f95c0a6384e538f2e72249ee9285b7abfd566",
+      "bytes": 5102
+    },
+    "src/observed/cli.ts": {
+      "sha256": "56f9ff6ec690795805bfcdf3d18ea6414b55e668c131b4b66f75d20006f39464",
+      "gitBlob": "1ffd01b3094cb0fa1bab5a1e395bebe627263f9a",
+      "bytes": 12115
+    },
+    "tests/fixtures/observed-cli-server.ts": {
+      "sha256": "491b897ea4372220ee3a8b401632fdd2cc2095064b34fe846c71aa07853928ae",
+      "gitBlob": "14b1ddb707656b342670aa3dbef8e25f91f8aabb",
+      "bytes": 8188
+    },
+    "tests/fixtures/observed-mcp-server.ts": {
+      "sha256": "07c5005984b70ba4b63dca7336132e4de855bfe478033b1f768a274f7442b25b",
+      "gitBlob": "7ef3e74a2ba6fdf6316ecfebfe97a209664cfcf2",
+      "bytes": 577
+    },
+    "tests/golden/observed-mcp-v1.json": {
+      "sha256": "48dc6d413b8f272be845c03b0827f1429a053298676eab3812e568b90936a63b",
+      "gitBlob": "8c37604adc7c546f5779a1e224476f1a3becde17",
+      "bytes": 17004
+    },
+    "tests/golden/observed-replies-v1.json": {
+      "sha256": "cdbfbfe4b8ac3f93bebd0e7f8cc5243cc90d3549bc20bdbea97bdd670dc0602b",
+      "gitBlob": "0e11c9a3e55d162e559e2e7d237a14fa50e9d190",
+      "bytes": 17109
+    },
+    "tests/mcp.test.ts": {
+      "sha256": "850fb08ebc98f355de4958b287e23a228e685c7e2b6843abb65ff9f629d31531",
+      "gitBlob": "ae3d29395656e522ca0741185753848274306dc3",
+      "bytes": 10109
+    },
+    "tests/observed-cli.test.ts": {
+      "sha256": "b5fca9ae8bf289ef9f16a3217d55b7c59e06f72eb8c241b125132455e0805aae",
+      "gitBlob": "eecf27496e23f82a74dcdad9e62ad67e439d20e4",
+      "bytes": 12453
+    },
+    "tests/observed-contract.test.ts": {
+      "sha256": "5b2a4995a28655e4fb0cb540d600f530418a6048e1ace771af5e5bca90d08ac7",
+      "gitBlob": "3341b78155348dae8f3ce4fab34c3b0285ba3b3a",
+      "bytes": 6091
+    },
+    "tests/observed-mcp.test.ts": {
+      "sha256": "6f92b005272292ca92e2d2ec96f1372dec1667ef6edfd818349c307731f342a0",
+      "gitBlob": "a932ca824006d989da0d5cade110431393d5ada2",
+      "bytes": 13219
+    },
+    ".scratch/observed-integration/acceptance/host/public-adapters/evidence-overlap-repro.ts": {
+      "sha256": "790f0d2356e711f656ba964490ebb3f1e1f81ad8d99ace8751906eaf9a4426ad",
+      "gitBlob": "bcabc7dc6c5cb03fdc2318ef3c45883c564cf756",
+      "bytes": 1073
+    }
+  }
+}
