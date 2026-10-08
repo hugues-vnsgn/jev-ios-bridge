@@ -1,0 +1,46 @@
+(node:90100) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ shipped docs link only to files inside the package, and every link resolves (4.499375ms)
+✔ the reason-code reference lists exactly the bridge-owned codes (0.430083ms)
+✔ the script-format reference lists exactly the bridge-owned roles (0.173583ms)
+✔ the script-format reference documents platform and the Android app/device fields (0.081125ms)
+✔ the script-format reference says the 2048-character typed-value limit counts UTF-16 code units (0.09675ms)
+✔ every link into a shipped doc that names a heading finds that heading (5.013166ms)
+✔ shipped docs link to this repo's other files at the v1.3.1 tag, and each linked path exists here (0.910125ms)
+✔ the guide index links every guide and reference page, and the Android setup page exists (0.211958ms)
+✔ the Android setup page covers tools, device naming, identifiers, control state, settings, other UI tools and screen lock (0.21575ms)
+✔ the reason-code reference gives each code the vocabulary's own wording (0.352375ms)
+✔ troubleshooting covers every Android reason code, crash lookups, and clearing leftovers by hand (0.152417ms)
+✔ the report.json reference lists every field of an iOS and an Android report (0.27225ms)
+✔ the running page documents capture with every option in the CLI's usage line (0.150083ms)
+✔ the script-format reference says a non-ASCII typed value passes through the device clipboard (0.062291ms)
+✔ every whole script shown in the guide parses (6.230583ms)
+✔ the limits page says an upper-case copy goes unmasked in the log pane and run.jsonl, and no page says a log file is masked (0.908ms)
+✔ data handling names exactly the intent-extra keys whose values are masked (0.1425ms)
+✔ data handling and the release notes say which device reads the bridge makes (0.09425ms)
+✔ the architecture page names only source paths that exist (0.121792ms)
+✔ the quickstart's Android section puts adb and emulator on the PATH (0.053167ms)
+✔ the identifiers page says an empty field shows its hint only without a content description (0.041209ms)
+✔ the guide says device lease, not device lock, outside the frozen reason-code wording (0.671917ms)
+✔ the limits page's Android speed table names each evidence script once (0.1855ms)
+✔ the clipboard is described as the path for non-ASCII text, not non-English text (0.90075ms)
+✔ a guide page first calls a foreign agent another tool's UI-automation agent (0.735125ms)
+✔ the prepare page gives the Android device its own section (0.133875ms)
+✔ the release notes and the package description keep phones, marked untested (0.113291ms)
+(node:90101) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ observed guide example requests parse through production strict schemas (3.821542ms)
+✔ observed installed guide links resolve and the index/skill expose it (0.460583ms)
+✔ observed operation map covers the actual command surface and seven MCP names (0.200916ms)
+✔ observed reference separates key-free startup, offline migration and unverified native/live scope (0.110708ms)
+✔ H09 installed observed guide and maintenance entry are included by package files (0.813708ms)
+✔ plugin skill rewrite retains the installed observed workflow references (0.36ms)
+✔ mandatory integration proof has a bounded key-free help entry; this unit check does not assert installation (30.304083ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 187.262291

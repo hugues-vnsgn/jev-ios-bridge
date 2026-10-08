@@ -1,0 +1,169 @@
+{
+  "passed": {
+    "reportVersion": 1,
+    "runId": "driven-run",
+    "bridgeVersion": "1.3.0",
+    "jevModel": "jev-1.13.0",
+    "projectionRule": "android-full-text-v1",
+    "bundleId": null,
+    "launchArgs": [],
+    "verdict": "passed",
+    "reason": "ALL_CHECKPOINTS_PASSED",
+    "error": null,
+    "steps": 3,
+    "plannedSteps": 3,
+    "checkpointsPassed": 1,
+    "checkpointCount": 1,
+    "inputTokens": 1330,
+    "durationMs": 29000,
+    "startedAt": "2026-10-01T08:00:00.000Z",
+    "finishedAt": "2026-10-01T08:00:29.000Z",
+    "checkpoints": [
+      {
+        "stepId": "verify",
+        "status": "passed",
+        "claims": [
+          {
+            "id": "saved",
+            "claim": "The card is saved.",
+            "probability": 0.97
+          }
+        ],
+        "screenshot": "screen-19.jpg",
+        "evidenceEvent": 18
+      }
+    ],
+    "evidence": {
+      "log": "run.jsonl",
+      "screenshots": [
+        "screen-3.jpg",
+        "screen-19.jpg"
+      ]
+    },
+    "platform": "android",
+    "package": "com.example.app",
+    "activity": null,
+    "intentExtras": {},
+    "driven": {
+      "start": "attach",
+      "preflight": {
+        "status": "failed",
+        "exitCode": 1,
+        "failure": "exit",
+        "durationMs": 30
+      },
+      "decisions": 3,
+      "decisionInputTokens": 1230,
+      "actions": [
+        {
+          "stepId": "signIn",
+          "action": "scroll",
+          "direction": "down",
+          "decidedBy": "bridge",
+          "changed": false
+        },
+        {
+          "stepId": "signIn",
+          "action": "tap",
+          "ref": "b1",
+          "target": {
+            "role": "button",
+            "label": "Sign in"
+          },
+          "decidedBy": "claude"
+        },
+        {
+          "stepId": "signIn",
+          "action": "type",
+          "ref": "f1",
+          "target": {
+            "role": "text-field",
+            "label": "Email"
+          },
+          "valueKey": "email",
+          "decidedBy": "jev",
+          "key": "type:f1:email",
+          "confidence": 0.95
+        }
+      ],
+      "doSteps": [
+        {
+          "stepId": "signIn",
+          "completedBy": "jev",
+          "done": 0.96
+        },
+        {
+          "stepId": "save",
+          "completedBy": "claude"
+        }
+      ],
+      "handbacks": [
+        {
+          "stepId": "signIn",
+          "reason": "NONE_FITS",
+          "answer": "tap",
+          "waitMs": 12000,
+          "event": 6
+        },
+        {
+          "stepId": "save",
+          "reason": "LOCAL_ONLY_SCREEN",
+          "answer": "done",
+          "waitMs": 3000,
+          "event": 16
+        }
+      ]
+    }
+  },
+  "handbackTimeout": {
+    "reportVersion": 1,
+    "runId": "driven-run",
+    "bridgeVersion": "1.3.0",
+    "jevModel": "jev-1.13.0",
+    "projectionRule": "visible-full-text-v2",
+    "bundleId": "com.example.app",
+    "launchArgs": [],
+    "verdict": "inconclusive",
+    "reason": "HANDBACK_TIMEOUT",
+    "error": {
+      "code": "HANDBACK_TIMEOUT",
+      "phase": "handback",
+      "stepId": "delete"
+    },
+    "steps": 1,
+    "plannedSteps": 2,
+    "checkpointsPassed": 0,
+    "checkpointCount": 1,
+    "inputTokens": 0,
+    "durationMs": 303000,
+    "startedAt": "2026-10-01T08:00:00.000Z",
+    "finishedAt": "2026-10-01T08:05:03.000Z",
+    "checkpoints": [],
+    "evidence": {
+      "log": "run.jsonl",
+      "screenshots": []
+    },
+    "driven": {
+      "start": "restart",
+      "preflight": null,
+      "decisions": 0,
+      "decisionInputTokens": 0,
+      "actions": [],
+      "doSteps": [
+        {
+          "stepId": "delete",
+          "completedBy": null
+        }
+      ],
+      "handbacks": [
+        {
+          "stepId": "delete",
+          "reason": "DESTRUCTIVE_STEP",
+          "answer": null,
+          "waitMs": null,
+          "event": 4
+        }
+      ]
+    }
+  }
+}

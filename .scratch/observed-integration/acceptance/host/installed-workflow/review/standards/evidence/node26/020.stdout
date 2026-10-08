@@ -1,0 +1,13 @@
+
+> jev-ios-bridge@1.3.1 build:plugin
+> node scripts/build-plugin.mjs
+
+
+> jev-ios-bridge@1.3.1 build
+> rm -rf dist && tsc -p tsconfig.build.json
+
+
+up to date in 149ms
+build/plugin/jev-ios-bridge-plugin-1.3.1.zip
+sha256 3a2bec0bfb2fc1866c141f4db6ad3dfcb67c5536c5d0e4f52b76aa942a832af4
+build/plugin/marketplace.json

@@ -1,0 +1,34 @@
+diff --git a/tests/docs.test.ts b/tests/docs.test.ts
+index 6f6736f..65b24bf 100644
+--- a/tests/docs.test.ts
++++ b/tests/docs.test.ts
+@@ -2,6 +2,9 @@ import { test } from 'node:test';
+ import assert from 'node:assert/strict';
+ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
+ import { dirname, join, normalize, relative } from 'node:path';
++import { parseMigrationDeclaration } from '../src/device/admission-migration.js';
++import { parsePrepareAllocation } from '../src/observed/allocation-schema.js';
++import { parseObservedAction } from '../src/observed/schema.js';
+ import { parseScriptedScenario } from '../src/scripted/schema.js';
+ import { REASON_CODES, ROLES } from '../src/scripted/vocabulary.js';
+ 
+@@ -151,8 +154,17 @@ test('every whole script shown in the guide parses', () => {
+   let scripts = 0;
+   for (const file of markdownFiles('docs/guide')) {
+     for (const [, block] of readFileSync(file, 'utf8').matchAll(/```json\n(\{\n\s*"version": 1,[\s\S]*?)\n```/g)) {
+-      assert.doesNotThrow(() => parseScriptedScenario(JSON.parse(block!)), `${file} shows a script that doesn't parse`);
+-      scripts++;
++      const example = JSON.parse(block!);
++      if ('writersStopped' in example) {
++        assert.doesNotThrow(() => parseMigrationDeclaration(example), `${file} shows a migration declaration that doesn't parse`);
++      } else if ('source' in example) {
++        assert.doesNotThrow(() => parsePrepareAllocation(example), `${file} shows an allocation request that doesn't parse`);
++      } else if ('allocationId' in example) {
++        assert.doesNotThrow(() => parseObservedAction(example), `${file} shows an action request that doesn't parse`);
++      } else {
++        assert.doesNotThrow(() => parseScriptedScenario(example), `${file} shows a script that doesn't parse`);
++        scripts++;
++      }
+     }
+   }
+   assert.ok(scripts >= 3, `expected the guide's example scripts, found ${scripts}`);

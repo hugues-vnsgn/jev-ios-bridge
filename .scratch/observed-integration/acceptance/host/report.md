@@ -1,6 +1,6 @@
 # Observed workflow host acceptance — UNVERIFIED
 
-Root accepts implementation tickets01–08 and their bounded repairs. Complete host rows H01–H09 remain UNVERIFIED while tickets09/10 build the missing fault and installed-package proofs. No live allocation is authorized by these subset checks.
+Root accepts implementation tickets01–08 and their bounded repairs. Ticket10 has both independent axes PASS and is integrated; Root's combined gates are queued. Ticket09 is closing six independently identified proof gaps. Complete host rows H01–H09 remain UNVERIFIED until their assertion-level maps and integrated gates are complete. No live allocation is authorized by these subset checks.
 
 ## Current evidence
 
@@ -8,7 +8,9 @@ Public adapters are integrated at `538e5770d1a02b7ef92d2dd69cd3a8a9d692ec4a`. Bo
 
 ## Row state
 
-The packed-install maintenance dependency repair is accepted at `2c6c41845e9db05de451d7b10d1674fc9136b891`: both review axes, complete1475/1475 checks on both Node versions and37-file audit pass. [Bounded review and all preserved failures](maintenance-entry-review.md). Ticket10's original complete installed proofs still need rerunning after its dependency advance; no H09 PASS is inferred.
+The packed-install maintenance dependency repair is accepted at `2c6c41845e9db05de451d7b10d1674fc9136b891`: both review axes, complete1475/1475 checks on both Node versions and37-file audit pass. [Bounded review and all preserved failures](maintenance-entry-review.md). Ticket10's original complete installed proofs now pass37 commands each on Node26.8.1/exact24.0.0, with actual full1482/1482 checks and both independent reviews. Candidate `a319e5b` is integrated at `eff4d10`; Root gates remain queued. [Installed proof and exact association](installed-workflow-review.md). No whole H09 PASS is inferred.
+
+Ticket09's independent completeness readiness is [BLOCKED by six proof gaps](faults/review/readiness/review.md), despite pre-audit178/178 added-test passes on both runtimes. Root granted owned-test corrections for exact negative oracles, genuine MCP concurrency, cancelled-wait settlement, truthful flag transport labels, strict parser/reservation boundaries and both-volume storage rechecks. The pre-audit nine-file freeze and all fourteen reviewer artifacts are preserved. A final candidate, actual full checks and both review axes remain required.
 
 | Rows | State / missing work | Evidence manifest |
 | --- | --- | --- |

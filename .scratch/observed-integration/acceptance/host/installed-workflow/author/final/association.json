@@ -1,0 +1,211 @@
+{
+  "candidate": "a319e5bea63415b6ac981c4ce4e8a25679b010c9",
+  "soleParent": "75d7618167729b9b9a5547eaa468e37eb12b2504",
+  "originalBase": "d0f49f6c12cbaffb4c034217b7e25b96c52c6cb2",
+  "sourceFrozen": true,
+  "workingTreeClean": true,
+  "implementationBeforeAfter": [
+    {
+      "path": ".github/workflows/check.yml",
+      "beforeSha256": "983e0ea1cb4f955b7fa01c7638383325390e9be51ba3e12ba525a5b9b876bdaf",
+      "afterSha256": "983e0ea1cb4f955b7fa01c7638383325390e9be51ba3e12ba525a5b9b876bdaf",
+      "unchanged": true
+    },
+    {
+      "path": "docs/guide/14-observed-actions.md",
+      "beforeSha256": "b1296abbdadb769d075876cb21cacc68a83a02962c6891c3f8f2e036c9ae8267",
+      "afterSha256": "b1296abbdadb769d075876cb21cacc68a83a02962c6891c3f8f2e036c9ae8267",
+      "unchanged": true
+    },
+    {
+      "path": "docs/guide/reference/observed-format.md",
+      "beforeSha256": "75b47e9a5f9951412be514363c2d0ed1009d4bf666138efa1c52cfbef66e8c96",
+      "afterSha256": "75b47e9a5f9951412be514363c2d0ed1009d4bf666138efa1c52cfbef66e8c96",
+      "unchanged": true
+    },
+    {
+      "path": "docs/guide/README.md",
+      "beforeSha256": "e86fa091483524ffc75d23858ee39c422ee84acf2d966fd8153ea5cf5ef47d83",
+      "afterSha256": "e86fa091483524ffc75d23858ee39c422ee84acf2d966fd8153ea5cf5ef47d83",
+      "unchanged": true
+    },
+    {
+      "path": "docs/guide/08-troubleshooting.md",
+      "beforeSha256": "664da61c1712eed8c583800f8ee04f6e389982917cd4fd7e4c8af250e51249e0",
+      "afterSha256": "664da61c1712eed8c583800f8ee04f6e389982917cd4fd7e4c8af250e51249e0",
+      "unchanged": true
+    },
+    {
+      "path": "skills/test-ios/SKILL.md",
+      "beforeSha256": "7d51dfee8530ca3fa8ba68179db97c64eb07804efe2fb5ec8defaee2ee2eaa33",
+      "afterSha256": "7d51dfee8530ca3fa8ba68179db97c64eb07804efe2fb5ec8defaee2ee2eaa33",
+      "unchanged": true
+    },
+    {
+      "path": "tests/docs.test.ts",
+      "beforeSha256": "2e4063e4975efaf1a586eed9779c21c0a337c0f955cad0338e3092fdab4ce183",
+      "afterSha256": "2e4063e4975efaf1a586eed9779c21c0a337c0f955cad0338e3092fdab4ce183",
+      "unchanged": true
+    },
+    {
+      "path": "tests/observed-docs.test.ts",
+      "beforeSha256": "17f7770bc532966d9ac6f90ba44bd4c9abf6fded195ed2f01b2548f468ed3073",
+      "afterSha256": "17f7770bc532966d9ac6f90ba44bd4c9abf6fded195ed2f01b2548f468ed3073",
+      "unchanged": true
+    },
+    {
+      "path": "tests/observed-packaging.test.ts",
+      "beforeSha256": "e9b869d11f3455a16aad3dcbdfce27ee70a3edf4be47d335db050ec63400629a",
+      "afterSha256": "e9b869d11f3455a16aad3dcbdfce27ee70a3edf4be47d335db050ec63400629a",
+      "unchanged": true
+    },
+    {
+      "path": "tests/fixtures/observed-packaging/guard.mjs",
+      "beforeSha256": "000c19430aae956338a406a9b4daceb68e99eb76d70bc3a0340fccf52ae0d2f7",
+      "afterSha256": "000c19430aae956338a406a9b4daceb68e99eb76d70bc3a0340fccf52ae0d2f7",
+      "unchanged": true
+    },
+    {
+      "path": "tests/fixtures/observed-packaging/proof.mjs",
+      "beforeSha256": "6aaf75a214d3dc89ddc2957b2be082ccf9eba7d93ade7511dd3bd652ae850635",
+      "afterSha256": "6aaf75a214d3dc89ddc2957b2be082ccf9eba7d93ade7511dd3bd652ae850635",
+      "unchanged": true
+    }
+  ],
+  "goldenBeforeAfter": [
+    {
+      "path": "tests/golden/android-capture.json",
+      "originalBaseSha256": "2d1d7c7435fe35b36a75637048c373bae414f2afa9cdb2f691aeab83424fcdba",
+      "advancedBaseSha256": "2d1d7c7435fe35b36a75637048c373bae414f2afa9cdb2f691aeab83424fcdba",
+      "afterSha256": "2d1d7c7435fe35b36a75637048c373bae414f2afa9cdb2f691aeab83424fcdba",
+      "unchanged": true,
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/goldens/tests/golden/android-capture.json"
+    },
+    {
+      "path": "tests/golden/android-elements.json",
+      "originalBaseSha256": "35d5c060cd85cdba27b6f96fb33a91eb497a9be9bc388e6991ebb0c22b4222e5",
+      "advancedBaseSha256": "35d5c060cd85cdba27b6f96fb33a91eb497a9be9bc388e6991ebb0c22b4222e5",
+      "afterSha256": "35d5c060cd85cdba27b6f96fb33a91eb497a9be9bc388e6991ebb0c22b4222e5",
+      "unchanged": true,
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/goldens/tests/golden/android-elements.json"
+    },
+    {
+      "path": "tests/golden/android-render.json",
+      "originalBaseSha256": "609fd79d528f8c681deab7ab55e61055866e9427d8be928d3ba5844cee35a367",
+      "advancedBaseSha256": "609fd79d528f8c681deab7ab55e61055866e9427d8be928d3ba5844cee35a367",
+      "afterSha256": "609fd79d528f8c681deab7ab55e61055866e9427d8be928d3ba5844cee35a367",
+      "unchanged": true,
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/goldens/tests/golden/android-render.json"
+    },
+    {
+      "path": "tests/golden/cli-exit-codes.json",
+      "originalBaseSha256": "2ae6bf0deb86b74063d0e3b9d3260b72322d5416ae053281abb92afe0cfaae37",
+      "advancedBaseSha256": "2ae6bf0deb86b74063d0e3b9d3260b72322d5416ae053281abb92afe0cfaae37",
+      "afterSha256": "2ae6bf0deb86b74063d0e3b9d3260b72322d5416ae053281abb92afe0cfaae37",
+      "unchanged": true,
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/goldens/tests/golden/cli-exit-codes.json"
+    },
+    {
+      "path": "tests/golden/evidence-layout.json",
+      "originalBaseSha256": "ac49e9b6433e71636364e707a691c89817b1c8404b582e809a47a3b70d52f880",
+      "advancedBaseSha256": "ac49e9b6433e71636364e707a691c89817b1c8404b582e809a47a3b70d52f880",
+      "afterSha256": "ac49e9b6433e71636364e707a691c89817b1c8404b582e809a47a3b70d52f880",
+      "unchanged": true,
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/goldens/tests/golden/evidence-layout.json"
+    },
+    {
+      "path": "tests/golden/mcp.json",
+      "originalBaseSha256": "4f69fcd0c1414dbd392f1b223de9d83709b761e80fef299300930c57d2bfed41",
+      "advancedBaseSha256": "4f69fcd0c1414dbd392f1b223de9d83709b761e80fef299300930c57d2bfed41",
+      "afterSha256": "4f69fcd0c1414dbd392f1b223de9d83709b761e80fef299300930c57d2bfed41",
+      "unchanged": true,
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/goldens/tests/golden/mcp.json"
+    },
+    {
+      "path": "tests/golden/observed-mcp-v1.json",
+      "originalBaseSha256": "48dc6d413b8f272be845c03b0827f1429a053298676eab3812e568b90936a63b",
+      "advancedBaseSha256": "48dc6d413b8f272be845c03b0827f1429a053298676eab3812e568b90936a63b",
+      "afterSha256": "48dc6d413b8f272be845c03b0827f1429a053298676eab3812e568b90936a63b",
+      "unchanged": true,
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/goldens/tests/golden/observed-mcp-v1.json"
+    },
+    {
+      "path": "tests/golden/observed-replies-v1.json",
+      "originalBaseSha256": "cdbfbfe4b8ac3f93bebd0e7f8cc5243cc90d3549bc20bdbea97bdd670dc0602b",
+      "advancedBaseSha256": "cdbfbfe4b8ac3f93bebd0e7f8cc5243cc90d3549bc20bdbea97bdd670dc0602b",
+      "afterSha256": "cdbfbfe4b8ac3f93bebd0e7f8cc5243cc90d3549bc20bdbea97bdd670dc0602b",
+      "unchanged": true,
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/goldens/tests/golden/observed-replies-v1.json"
+    },
+    {
+      "path": "tests/golden/report-json-android.json",
+      "originalBaseSha256": "67db1d463d3b0fea60e7e81cbd9a969fe4a61fd429e7b57f04d19b313cf12912",
+      "advancedBaseSha256": "67db1d463d3b0fea60e7e81cbd9a969fe4a61fd429e7b57f04d19b313cf12912",
+      "afterSha256": "67db1d463d3b0fea60e7e81cbd9a969fe4a61fd429e7b57f04d19b313cf12912",
+      "unchanged": true,
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/goldens/tests/golden/report-json-android.json"
+    },
+    {
+      "path": "tests/golden/report-json-driven.json",
+      "originalBaseSha256": "08c65ce98a15888f6adb6b877c9237350585abb7c030c00f0426db747c858996",
+      "advancedBaseSha256": "08c65ce98a15888f6adb6b877c9237350585abb7c030c00f0426db747c858996",
+      "afterSha256": "08c65ce98a15888f6adb6b877c9237350585abb7c030c00f0426db747c858996",
+      "unchanged": true,
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/goldens/tests/golden/report-json-driven.json"
+    },
+    {
+      "path": "tests/golden/report-json.json",
+      "originalBaseSha256": "f1bab04f2dbe8e96eb85f23b12777cb429ae042d14fe10e6585977b6d751e036",
+      "advancedBaseSha256": "f1bab04f2dbe8e96eb85f23b12777cb429ae042d14fe10e6585977b6d751e036",
+      "afterSha256": "f1bab04f2dbe8e96eb85f23b12777cb429ae042d14fe10e6585977b6d751e036",
+      "unchanged": true,
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/goldens/tests/golden/report-json.json"
+    },
+    {
+      "path": "tests/golden/report-text-driven.json",
+      "originalBaseSha256": "1dd527e603948f1b430eadd3e926f23a8514432b405a04f3e80059f98169cb86",
+      "advancedBaseSha256": "1dd527e603948f1b430eadd3e926f23a8514432b405a04f3e80059f98169cb86",
+      "afterSha256": "1dd527e603948f1b430eadd3e926f23a8514432b405a04f3e80059f98169cb86",
+      "unchanged": true,
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/goldens/tests/golden/report-text-driven.json"
+    },
+    {
+      "path": "tests/golden/scripts.json",
+      "originalBaseSha256": "de152f8d69050614d0504f3818255c65d8a3972861e169e803a5ec59b465cb77",
+      "advancedBaseSha256": "de152f8d69050614d0504f3818255c65d8a3972861e169e803a5ec59b465cb77",
+      "afterSha256": "de152f8d69050614d0504f3818255c65d8a3972861e169e803a5ec59b465cb77",
+      "unchanged": true,
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/goldens/tests/golden/scripts.json"
+    },
+    {
+      "path": "tests/golden/vocabulary.json",
+      "originalBaseSha256": "d9b39682a2f836b05938cd1abe80c452112d013f1425fa24409131b5ae9e984f",
+      "advancedBaseSha256": "d9b39682a2f836b05938cd1abe80c452112d013f1425fa24409131b5ae9e984f",
+      "afterSha256": "d9b39682a2f836b05938cd1abe80c452112d013f1425fa24409131b5ae9e984f",
+      "unchanged": true,
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/goldens/tests/golden/vocabulary.json"
+    }
+  ],
+  "guideClassifier": {
+    "originalTest": "/tmp/jev-ticket10-evidence/initial-docs.test.ts",
+    "originalSha256": "41b0cd2ff64e520e133af297ce69693df9c68cdf6da6f2d436bf3fd64b0cb69a",
+    "matchesBothBases": true,
+    "originalRaw": "/tmp/jev-ticket10-evidence/initial-doc-scanner-failure.log",
+    "originalRawSha256": "5c4f4951b5abb75c3eaa9c7cc2074c2888cea26f0d84f824fee5c6890e0841f9",
+    "originalCounts": {
+      "passed": 33,
+      "failed": 1,
+      "skipped": 0
+    },
+    "finalTestSha256": "2e4063e4975efaf1a586eed9779c21c0a337c0f955cad0338e3092fdab4ce183",
+    "finalCountsPerRuntime": {
+      "passed": 34,
+      "failed": 0,
+      "skipped": 0
+    },
+    "scope": "three production parser imports + named version1 example classifier only; original Scenario count >=3 retained",
+    "exactDiff": "/tmp/jev-ticket10-evidence/guide-classifier.diff"
+  },
+  "proofSourceCorrespondence": "/tmp/jev-ticket10-evidence/proof-source-correspondence.json",
+  "rawGateMetadata": "/tmp/jev-ticket10-evidence/gate-commands.json"
+}

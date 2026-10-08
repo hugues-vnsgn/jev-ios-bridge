@@ -1,0 +1,42 @@
+✔ shipped docs link only to files inside the package, and every link resolves (6.454625ms)
+✔ the reason-code reference lists exactly the bridge-owned codes (0.473458ms)
+✔ the script-format reference lists exactly the bridge-owned roles (0.135458ms)
+✔ the script-format reference documents platform and the Android app/device fields (0.082167ms)
+✔ the script-format reference says the 2048-character typed-value limit counts UTF-16 code units (0.099ms)
+✔ every link into a shipped doc that names a heading finds that heading (4.168333ms)
+✔ shipped docs link to this repo's other files at the v1.3.1 tag, and each linked path exists here (1.4365ms)
+✔ the guide index links every guide and reference page, and the Android setup page exists (0.385375ms)
+✔ the Android setup page covers tools, device naming, identifiers, control state, settings, other UI tools and screen lock (0.22525ms)
+✔ the reason-code reference gives each code the vocabulary's own wording (0.974917ms)
+✔ troubleshooting covers every Android reason code, crash lookups, and clearing leftovers by hand (0.217625ms)
+✔ the report.json reference lists every field of an iOS and an Android report (0.579125ms)
+✔ the running page documents capture with every option in the CLI's usage line (0.425583ms)
+✔ the script-format reference says a non-ASCII typed value passes through the device clipboard (0.07875ms)
+✔ every whole script shown in the guide parses (5.641208ms)
+✔ the limits page says an upper-case copy goes unmasked in the log pane and run.jsonl, and no page says a log file is masked (1.246833ms)
+✔ data handling names exactly the intent-extra keys whose values are masked (0.463083ms)
+✔ data handling and the release notes say which device reads the bridge makes (0.200042ms)
+✔ the architecture page names only source paths that exist (0.402584ms)
+✔ the quickstart's Android section puts adb and emulator on the PATH (0.074667ms)
+✔ the identifiers page says an empty field shows its hint only without a content description (0.055375ms)
+✔ the guide says device lease, not device lock, outside the frozen reason-code wording (0.808834ms)
+✔ the limits page's Android speed table names each evidence script once (0.409042ms)
+✔ the clipboard is described as the path for non-ASCII text, not non-English text (0.811459ms)
+✔ a guide page first calls a foreign agent another tool's UI-automation agent (9.181791ms)
+✔ the prepare page gives the Android device its own section (0.159666ms)
+✔ the release notes and the package description keep phones, marked untested (0.148209ms)
+✔ observed guide example requests parse through production strict schemas (3.227375ms)
+✔ observed installed guide links resolve and the index/skill expose it (0.852958ms)
+✔ observed operation map covers the actual command surface and seven MCP names (0.669125ms)
+✔ observed reference separates key-free startup, offline migration and unverified native/live scope (0.085125ms)
+✔ H09 installed observed guide and maintenance entry are included by package files (0.5025ms)
+✔ plugin skill rewrite retains the installed observed workflow references (0.596ms)
+✔ mandatory integration proof has a bounded key-free help entry; this unit check does not assert installation (50.2785ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 332.095208

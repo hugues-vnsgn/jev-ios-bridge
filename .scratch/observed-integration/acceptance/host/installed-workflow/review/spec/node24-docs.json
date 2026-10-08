@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "tests/docs.test.ts",
+    "tests/observed-docs.test.ts",
+    "tests/observed-packaging.test.ts"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow",
+  "runtime": "v24.0.0",
+  "exit": 0,
+  "childUmask": "0022"
+}

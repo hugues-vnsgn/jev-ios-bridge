@@ -1,0 +1,33 @@
+{
+  "base": "75d7618167729b9b9a5547eaa468e37eb12b2504",
+  "firstDefaultCheck": {
+    "log": "final-check-node26.log",
+    "exit": 1,
+    "passed": 1477,
+    "failed": 5,
+    "skipped": 0,
+    "childUmask": "0077",
+    "classification": {
+      "permissionFixtures": "four failures from incorrect child umask",
+      "bootPolling": "separate unchanged documented aggregate-stage timing fixture"
+    }
+  },
+  "unchangedFiles": [
+    {
+      "path": "tests/admission-core.test.ts",
+      "sha256": "1f632ae2daf483feac3e47cd8c643defcac6c97198c6c051f64e7331f1018060"
+    },
+    {
+      "path": "tests/admission-migration.test.ts",
+      "sha256": "ad508ff49805eb79ea929b920f7748324d65c5111f4e5771a6c17a42060877e7"
+    },
+    {
+      "path": "tests/observed-allocation.test.ts",
+      "sha256": "0b0358c4d031f24aef59cb0bf70a5bab7be2dd999fd168295cd6a5b48d7e794f"
+    },
+    {
+      "path": "src/device/admission-maintenance.ts",
+      "sha256": "908864b9c6df13805998b917f0ca1a3a7b430708548decdccb1abcb726e866a5"
+    }
+  ]
+}

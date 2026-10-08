@@ -1,0 +1,1527 @@
+{
+  "productionPackageSourceMatches": [
+    {
+      "path": "src/capture.ts",
+      "sha256": "ad7c7d9227fd865e381e7b7feebd980443d074ad2dc7d1e9609ddb1bacd737e7",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/cli.ts",
+      "sha256": "137b42ef8cdc34a3e143461cf762c659d4bc0a8da768f320ad8b0232e200d7de",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/contracts/index.ts",
+      "sha256": "2d1e497d56b13cbd948b2a0c350b60a0dc70aa706ee5d7ea3e7f33b3a2ec3ca6",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/admission-allocation.ts",
+      "sha256": "7e75db8780fd24ace660701e23af6210dafbf9731920ece4cb71fa1d00414a5e",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/admission-maintenance.ts",
+      "sha256": "908864b9c6df13805998b917f0ca1a3a7b430708548decdccb1abcb726e866a5",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/admission-migration.ts",
+      "sha256": "14e66ab6ed5a84a241275f7eda67202a6662aeb978942e55e6980078dbb6ee8b",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/admission-sqlite.ts",
+      "sha256": "209e311d610f77d172f6af15ac815ba24c79496d0e065e3ef25f410d0fb10856",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/admission.ts",
+      "sha256": "a0533274c6fbebecb227fa2dd7121a170ce2a2d9c84ddf73f4fad74a39569a91",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/android/adb.ts",
+      "sha256": "0d9629f9696b5f79d9cc8f74cdcc420200a60ff4c679f62f14ba302457fdd144",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/android/agent-client.ts",
+      "sha256": "4f6732361e72320047bd12939618057f00b8e6d2f0d4f4f8ce3bc4982ab7ea47",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/android/agent-supply.ts",
+      "sha256": "1bd4424293515d2e2e593e143b88a2133d6cbbc10bffa710a0d757944d35b0a2",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/android/driver.ts",
+      "sha256": "ca188a7cf0a93fc1f955726101568a55aad924c981a04963a740b2fe31080c0a",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/android/exit-watch.ts",
+      "sha256": "49580333ad22318b5dfcba345479cfba4a31a22f278a30a0b4020ef643467e50",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/android/ledger.ts",
+      "sha256": "8cfb098e5724db68234f7ce4f743d2c1857ba3041d7c4c20a484c81657c8eb77",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/android/logcat.ts",
+      "sha256": "001ef7c26418b80cf53d24427ad393612cb3cfe5f5dc66554b90eb92475be4b0",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/android/mapping.ts",
+      "sha256": "57fdd34407b1abd0542946af72e56377264a66516517aa0642418064da6a8585",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/android/settle.ts",
+      "sha256": "659367ace0010cab3aeb002cb033ef65965bd5c0f78c4795af4ec5bbc57f09f3",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/android/threadtime.ts",
+      "sha256": "26b03f0ba7a79bc778160c73beaec6e8c8537491ec83b6a0732c01bcb9a066e4",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/android/tools.ts",
+      "sha256": "9286ad5d386d03976ffd967a36ee83358e5c8db73440215c3d7657bfdca8e64a",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/attach.ts",
+      "sha256": "d4f4d81392d9a7fb5fee87f80d6fdbbdaa6bada789696d289c1198345432ed9e",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/factory.ts",
+      "sha256": "a6c361f036ce7ead47d15b816a9220382eaa4b9d0d3fa4ae83885e74b4a94971",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/image.ts",
+      "sha256": "2faa0839bac89a13e08e5e873e3da1e96b58e3a41adc096d1f2621aff26eb88a",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/index.ts",
+      "sha256": "21e63907b028cd5eb84e61834aa79e6bd59d74c19f3be30b00c0dacb659b5604",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/lease.ts",
+      "sha256": "d5587a7336c968560afb71ee2adcd00cd86118ad0b6266b2a0a1feac8f8b7f33",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/device/logs.ts",
+      "sha256": "25b9be6d7d99cae7fba3c46ffb3253050ee9ca3e27fe74e976392984109f5dc8",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/driven/candidates.ts",
+      "sha256": "486830dc9f526b7a0bb5dd448d4d788c1300ed1c825f0a24e37ba696b608ed60",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/driven/decide.ts",
+      "sha256": "392b33542da85d13364a3b139e69af0ed21f27090829f23e3a8f5286ad2045f5",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/driven/handback.ts",
+      "sha256": "198d06dd9f3b4d09f4abdec9b1c07d37f2881a597e958f60e4ccc2fd0f9a46c8",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/driven/marker.ts",
+      "sha256": "7453680b38c8890edfc4698629874bb55b73b5e6cbc539e3c2add7b8b802ac23",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/driven/policy.ts",
+      "sha256": "577f1695a728fdc48851c10902ce28a37aee1f9c7b665a396e9cb786b4114c9c",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/driven/project.ts",
+      "sha256": "ebf6db2c81cf0803f0ec1700e92987a175df4d60be453dc34b57edb9a236a90c",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/driven/step.ts",
+      "sha256": "ffa7d97ddbdfdabe7f6d9049f1ee5a2146c6438135954bafbb1d319d766a9d4c",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/driven/vocabulary.ts",
+      "sha256": "8b6f9c4f666ba96d1deb61907d4c19cbffaf71b9241e15e2576980ec6eb8b781",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/exit-codes.ts",
+      "sha256": "9d5cddb455145ffcc8993f6b693a14bdbc279a1da1fd93e8c4fdb293dcca3b62",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/experimental/observed-journal.ts",
+      "sha256": "f7e5c57268175d09f7483f863b0c6bf7019a24d34d0649df94442d8341be88a7",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/experimental/observed-run.ts",
+      "sha256": "567e16ed1f9229cfa21eddb761f24208123806593a8ec0c61eb250f6e79736bb",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/experimental/observed-tap.ts",
+      "sha256": "db81880287f5635f7d0d66b390f4937e88434fcf06f4dc3b63ab243a11ad313b",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/log/index.ts",
+      "sha256": "bef9a52aba5090c73a631b242fd1051232ad0c4ee3e446787b36a79a3dc515c0",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/logpane/attach.ts",
+      "sha256": "399d95de2004751f031e9639af5b8b7588efda7b1f815aaef3de32ca8ebf1c88",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/logpane/format.ts",
+      "sha256": "d00b7718f116fa83c4ba7834c1e94052aaaf5436b85f989bb9195c2505b4b88e",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/logpane/stream.ts",
+      "sha256": "ca1b2e6fb9be6317f23e65194c90a8726c16abef6f8f3791bad8cd2ef87a013c",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/logpane/window.ts",
+      "sha256": "8506e8734a69ccbc34256eae8fe69fe887ac4ef812af29e9e69627c22e49c3fd",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/mcp/index.ts",
+      "sha256": "48e531d304d19852d461eb1d3317fee5f953a15654f405c3393b04ff4a494c2a",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/mcp/observed.ts",
+      "sha256": "5522cc1933d54d13cd8c72b7d8caa5ebf262272f9e0110c13fceb58dd8fcc51b",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/observed/allocation-config.ts",
+      "sha256": "b6519649edbaf203e5323a15c80273321a42a5cb49850551297268e6ee1f5f0a",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/observed/allocation-schema.ts",
+      "sha256": "f48809598c4db4f8609f565659d89bc5438370d1d68b6229f97e8e40a8e6b3ca",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/observed/allocation.ts",
+      "sha256": "0233ea8d8d571761596287e9369f7801bd693edfe6d95c459a950e4c3b943041",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/observed/artifact.ts",
+      "sha256": "5d861ffca7a15e9c078204aeccb533531cfe1de3fe8dcdfcc0ac3901a670b139",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/observed/cli.ts",
+      "sha256": "17ed826b608359a9f901012a82447fd1e06d1d2a65e5b8b477e1c0a0885f8e78",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/observed/create-source.ts",
+      "sha256": "d13d6e4324be0b534ce32e0057dd0a1ca9654941976ce53dcf17bba530e258b1",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/observed/evidence.ts",
+      "sha256": "deeb65d7c95c84de1c3b559ec2a885da768a8203a2be79af700f3262717462fb",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/observed/report.ts",
+      "sha256": "b137ebad4b582f652bea7e788101a717a094073b57f8461b243e4dc0897fd1ff",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/observed/schema.ts",
+      "sha256": "7592d02055e8a1c65294b3660685d27a0a1f4c70e2b8283c71cd45a5bded6774",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/observed/service.ts",
+      "sha256": "0c9e6cd6bfc1d7308bc6dcdb1cbf88b9179143084f9cb66d28af09cb6a9def6d",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/observed/supplied-source.ts",
+      "sha256": "323105c489fae0823fc8c4674479f9e8c58e1e8ef500da8af043d8343badad64",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/process.ts",
+      "sha256": "f1b2d73512bed07afbaf05aa6d4712243c8b39ea93b37b70c45ef56580174303",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/scripted/contracts.ts",
+      "sha256": "8482d44dc73d522342a6a4db3ff29884f6bd26d44b4a3d8859d308fdaa43a21b",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/scripted/jev.ts",
+      "sha256": "b75b1004dd4bc68334a38a1ef775296168a9695f8822e087d88cb214695a29db",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/scripted/observe.ts",
+      "sha256": "926734786ae1c64911788270cc8b4a562c848d0a6cd7cde4db537fd0f219eadf",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/scripted/report-json.ts",
+      "sha256": "f819d75eed65ba9295d19e4a69f402b702c8e606bf9dfefbe122cb26c06aa720",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/scripted/report.ts",
+      "sha256": "b6d9c8d559ed156d85d986e75c23b66db2a8fed00f8a1f5bc7e228fde0b02f24",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/scripted/run.ts",
+      "sha256": "fdbb7f9c2485cb5e522efb8c134a7a482d0d881c8a009072838a0a852464c9bb",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/scripted/schema.ts",
+      "sha256": "a944a877e63eff9d4a05e234cb0572a937afe268508baed224f5f98ead8934a0",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/scripted/select.ts",
+      "sha256": "7059fd5613a2ee054064dbfa1dcbc8b0c9deba1e10b91e0e20dcfb371817c3b4",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/scripted/vocabulary.ts",
+      "sha256": "490a617c1c21781df9677c978cd336fec2fab6179f50c8819754cfa38abbae4f",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/service.ts",
+      "sha256": "9e028d3d7e2ee63ea52289d5cadbc142df6fa277da93d1462450960c7af60326",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/version.ts",
+      "sha256": "cbef0bb4b74e2b0d0113f24a67cd0a75e888d1684a081cd04abbb181b241968a",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "src/watch/index.ts",
+      "sha256": "112b31d8360c5dfc9d9b9b57557461218824f031d2fc0e3b6c26dc05b6959e3f",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "package.json",
+      "sha256": "d2fffea3e28d6ea794536b2cb67337abe8ec75c46cf10c2944ca1b3cd0a3a3ea",
+      "matchesCurrentBothSnapshots": true
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "7982b0a2fc02a088ab03761b8332e6c15ad3d0d841f1134e9a4dd50b94364479",
+      "matchesCurrentBothSnapshots": true
+    }
+  ],
+  "unchangedGoldens": [
+    {
+      "path": "tests/golden/android-capture.json",
+      "sha256": "2d1d7c7435fe35b36a75637048c373bae414f2afa9cdb2f691aeab83424fcdba",
+      "unchanged": true
+    },
+    {
+      "path": "tests/golden/android-elements.json",
+      "sha256": "35d5c060cd85cdba27b6f96fb33a91eb497a9be9bc388e6991ebb0c22b4222e5",
+      "unchanged": true
+    },
+    {
+      "path": "tests/golden/android-render.json",
+      "sha256": "609fd79d528f8c681deab7ab55e61055866e9427d8be928d3ba5844cee35a367",
+      "unchanged": true
+    },
+    {
+      "path": "tests/golden/cli-exit-codes.json",
+      "sha256": "2ae6bf0deb86b74063d0e3b9d3260b72322d5416ae053281abb92afe0cfaae37",
+      "unchanged": true
+    },
+    {
+      "path": "tests/golden/evidence-layout.json",
+      "sha256": "ac49e9b6433e71636364e707a691c89817b1c8404b582e809a47a3b70d52f880",
+      "unchanged": true
+    },
+    {
+      "path": "tests/golden/mcp.json",
+      "sha256": "4f69fcd0c1414dbd392f1b223de9d83709b761e80fef299300930c57d2bfed41",
+      "unchanged": true
+    },
+    {
+      "path": "tests/golden/observed-mcp-v1.json",
+      "sha256": "48dc6d413b8f272be845c03b0827f1429a053298676eab3812e568b90936a63b",
+      "unchanged": true
+    },
+    {
+      "path": "tests/golden/observed-replies-v1.json",
+      "sha256": "cdbfbfe4b8ac3f93bebd0e7f8cc5243cc90d3549bc20bdbea97bdd670dc0602b",
+      "unchanged": true
+    },
+    {
+      "path": "tests/golden/report-json-android.json",
+      "sha256": "67db1d463d3b0fea60e7e81cbd9a969fe4a61fd429e7b57f04d19b313cf12912",
+      "unchanged": true
+    },
+    {
+      "path": "tests/golden/report-json-driven.json",
+      "sha256": "08c65ce98a15888f6adb6b877c9237350585abb7c030c00f0426db747c858996",
+      "unchanged": true
+    },
+    {
+      "path": "tests/golden/report-json.json",
+      "sha256": "f1bab04f2dbe8e96eb85f23b12777cb429ae042d14fe10e6585977b6d751e036",
+      "unchanged": true
+    },
+    {
+      "path": "tests/golden/report-text-driven.json",
+      "sha256": "1dd527e603948f1b430eadd3e926f23a8514432b405a04f3e80059f98169cb86",
+      "unchanged": true
+    },
+    {
+      "path": "tests/golden/scripts.json",
+      "sha256": "de152f8d69050614d0504f3818255c65d8a3972861e169e803a5ec59b465cb77",
+      "unchanged": true
+    },
+    {
+      "path": "tests/golden/vocabulary.json",
+      "sha256": "d9b39682a2f836b05938cd1abe80c452112d013f1425fa24409131b5ae9e984f",
+      "unchanged": true
+    }
+  ],
+  "rawProofAudit": [
+    {
+      "runtime": "v26.8.1",
+      "records": 37,
+      "allSignalsNull": true,
+      "exitDistribution": {
+        "0": 19,
+        "3": 18
+      },
+      "mcpErrorCallsReadFromRaw": 34,
+      "mcpListsReadFromRaw": 6,
+      "emptyGuardLogs": true,
+      "installedManifestMatchesBuild": true,
+      "tarballSha256Matches": true,
+      "pluginZipSha256Matches": true,
+      "commands": [
+        {
+          "id": "001",
+          "command": "npm",
+          "args": [
+            "run",
+            "build"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "002",
+          "command": "npm",
+          "args": [
+            "pack",
+            "--json",
+            "--pack-destination",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "f0ad837a3c6e5e852c6c5a8adc2013efe081d78fa680fc6b1dbb607365c4d5c9",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "003",
+          "command": "npm",
+          "args": [
+            "install",
+            "--ignore-scripts",
+            "--no-audit",
+            "--no-fund",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/jev-ios-bridge-1.3.1.tgz"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "47486cd839ba1189f57994ddd92b7911ea1a3134cab27b56493eeace522fb67a",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "004",
+          "command": "/tmp/jev-ticket10-evidence/accepted-node26-proof/clean/node_modules/.bin/jev-ios-bridge",
+          "args": [
+            "--version"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "005",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "--version"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "006",
+          "command": "/tmp/jev-ticket10-evidence/accepted-node26-proof/clean/node_modules/.bin/jev-ios-bridge",
+          "args": [
+            "--help"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "f50dd83c1426aad138c97797e72ec869d70243765f4679a819e1d66e4d72967b",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "007",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "observed-allocate",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "008",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "observed-allocation",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "009",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "observed-allocation-cancel",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "010",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "observed-retire",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "011",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "observed-action",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "012",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "observed-report",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "013",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "observed-cancel",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "014",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "observed-action",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/clean/npm-action.json",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "015",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "observed-action",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/clean/npm-action.json",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "016",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/clean/node_modules/jev-ios-bridge/dist/device/admission-maintenance.js",
+            "--help"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "3a2efc26fff3f21e2682f1feab0b36675fa20c9ba74caacfdbb7bac39868abd6",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "017",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "mcp"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "018",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "mcp"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "019",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "mcp"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "ae10dbd16f15963f6e1f752637090348dd337c3eadaf9b501cbd38ccc5dd1d3b",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "020",
+          "command": "npm",
+          "args": [
+            "run",
+            "build:plugin"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "19866ab30cbc1bcff2cc462916716738abf12b269d1c894d46490045914fe8fa",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "021",
+          "command": "npm",
+          "args": [
+            "ci",
+            "--ignore-scripts",
+            "--no-audit",
+            "--no-fund"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "4799672eb74a1afa72d75e2cd7d89e1ea9b5268066173dad0472eb39090a8adb",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "022",
+          "command": "/tmp/jev-ticket10-evidence/accepted-node26-proof/plugin/dist/cli.js",
+          "args": [
+            "--version"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "023",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/plugin/dist/cli.js",
+            "--version"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "024",
+          "command": "/tmp/jev-ticket10-evidence/accepted-node26-proof/plugin/dist/cli.js",
+          "args": [
+            "--help"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "f50dd83c1426aad138c97797e72ec869d70243765f4679a819e1d66e4d72967b",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "025",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/plugin/dist/cli.js",
+            "observed-allocate",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "026",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/plugin/dist/cli.js",
+            "observed-allocation",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "027",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/plugin/dist/cli.js",
+            "observed-allocation-cancel",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "028",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/plugin/dist/cli.js",
+            "observed-retire",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "029",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/plugin/dist/cli.js",
+            "observed-action",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "030",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/plugin/dist/cli.js",
+            "observed-report",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "031",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/plugin/dist/cli.js",
+            "observed-cancel",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "032",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/plugin/dist/cli.js",
+            "observed-action",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/plugin/plugin-action.json",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "033",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/plugin/dist/cli.js",
+            "observed-action",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/plugin/plugin-action.json",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "034",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/plugin/dist/device/admission-maintenance.js",
+            "--help"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "3a2efc26fff3f21e2682f1feab0b36675fa20c9ba74caacfdbb7bac39868abd6",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "035",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/plugin/dist/cli.js",
+            "mcp"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "036",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/plugin/dist/cli.js",
+            "mcp"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "037",
+          "command": "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node26-proof/plugin/dist/cli.js",
+            "mcp"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "ae10dbd16f15963f6e1f752637090348dd337c3eadaf9b501cbd38ccc5dd1d3b",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "runtime": "v24.0.0",
+      "records": 37,
+      "allSignalsNull": true,
+      "exitDistribution": {
+        "0": 19,
+        "3": 18
+      },
+      "mcpErrorCallsReadFromRaw": 34,
+      "mcpListsReadFromRaw": 6,
+      "emptyGuardLogs": true,
+      "installedManifestMatchesBuild": true,
+      "tarballSha256Matches": true,
+      "pluginZipSha256Matches": true,
+      "commands": [
+        {
+          "id": "001",
+          "command": "npm",
+          "args": [
+            "run",
+            "build"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+          "stderrSha256": "edd8ec36d2c86fec158798a728482d81342ce87a826046c8d1792ee86a8273f9"
+        },
+        {
+          "id": "002",
+          "command": "npm",
+          "args": [
+            "pack",
+            "--json",
+            "--pack-destination",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "41b7fadebc11cea7cf23a701d182401a5ea99c40e1d2408db4def42c07e78bb6",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "003",
+          "command": "npm",
+          "args": [
+            "install",
+            "--ignore-scripts",
+            "--no-audit",
+            "--no-fund",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/jev-ios-bridge-1.3.1.tgz"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "beafa70b99687bca1e4744c1d4ecdeb87475a79b452d17fa385e54fa7a9fc21f",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "004",
+          "command": "/tmp/jev-ticket10-evidence/accepted-node24-proof/clean/node_modules/.bin/jev-ios-bridge",
+          "args": [
+            "--version"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe",
+          "stderrSha256": "aad1e8fccde8e205cefc19894a1f2b91a2b6ccdc21f79ccab4f9bff5db9ce6c8"
+        },
+        {
+          "id": "005",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "--version"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe",
+          "stderrSha256": "af439c7807da4727101deb3601892d0c4f12ca1179e8cc18361860a752f0ae1b"
+        },
+        {
+          "id": "006",
+          "command": "/tmp/jev-ticket10-evidence/accepted-node24-proof/clean/node_modules/.bin/jev-ios-bridge",
+          "args": [
+            "--help"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "f50dd83c1426aad138c97797e72ec869d70243765f4679a819e1d66e4d72967b",
+          "stderrSha256": "5640860cf4215d403128a2ef7ee075cf81997dd8ea08d57436abcd2bbc586d36"
+        },
+        {
+          "id": "007",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "observed-allocate",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "stderrSha256": "6a37bf1d327fc79f0946f9d3bcb71be22dbcd855b391594d7257959bff4fbffe"
+        },
+        {
+          "id": "008",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "observed-allocation",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "stderrSha256": "b07f4b2c5c65267caa5f7ccf1eab2eba151ece4d1b64314060348a48a67c47c2"
+        },
+        {
+          "id": "009",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "observed-allocation-cancel",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "stderrSha256": "c603ea3156830d03f7d59c4d27f11589cf21f35460ba72e7c8c63f18f19ae010"
+        },
+        {
+          "id": "010",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "observed-retire",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "stderrSha256": "1f29aecb0afcdc820b4a817d1e1e66ca2cc99c20f25702e6c2c04ca225cbb265"
+        },
+        {
+          "id": "011",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "observed-action",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "stderrSha256": "9735fc2ec852f70e7210d1a9885254c152a82f22a7d728ca305d71cb3d022888"
+        },
+        {
+          "id": "012",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "observed-report",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "stderrSha256": "c93af5596c929a98db205fcc6883dc78273930efd36db8fc972940b6ee88c144"
+        },
+        {
+          "id": "013",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "observed-cancel",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "stderrSha256": "e120cada1b5d6ec33f271a1369dfb69211a760d36ee6fb815ad9ea18b6dbfa20"
+        },
+        {
+          "id": "014",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "observed-action",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/clean/npm-action.json",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f",
+          "stderrSha256": "c2584734ce2520d2436acc35af280b21f6bb01727b588018717ce6351ee7d88c"
+        },
+        {
+          "id": "015",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "observed-action",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/clean/npm-action.json",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f",
+          "stderrSha256": "6a351797d3b87da3e0cc1db6c018e7e5aa25e88e013e357544da35359a89751f"
+        },
+        {
+          "id": "016",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/clean/node_modules/jev-ios-bridge/dist/device/admission-maintenance.js",
+            "--help"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "3a2efc26fff3f21e2682f1feab0b36675fa20c9ba74caacfdbb7bac39868abd6",
+          "stderrSha256": "90020f127be98b50d82fbd309eb1970a4d300f197033267abe07020c1be2f501"
+        },
+        {
+          "id": "017",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "mcp"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104",
+          "stderrSha256": "e098dba8b3df730f6aecb9ae80fed55e0e0c95aa425462c81725913bf6074d73"
+        },
+        {
+          "id": "018",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "mcp"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104",
+          "stderrSha256": "db1f3c09102e7809cbdbdd50e397c8fa225448bb1f8508dae0175e474dcfc83d"
+        },
+        {
+          "id": "019",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/clean/node_modules/jev-ios-bridge/dist/cli.js",
+            "mcp"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "ae10dbd16f15963f6e1f752637090348dd337c3eadaf9b501cbd38ccc5dd1d3b",
+          "stderrSha256": "41705d5463a36f826ec956fb9d23046f0c3a8965e5c6d571d5276610ba31f271"
+        },
+        {
+          "id": "020",
+          "command": "npm",
+          "args": [
+            "run",
+            "build:plugin"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "16a3ba58fbedb44a0d19fbb4c91f4e53ce8e80172bbc97c71275787f7c224ac8",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "021",
+          "command": "npm",
+          "args": [
+            "ci",
+            "--ignore-scripts",
+            "--no-audit",
+            "--no-fund"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "4799672eb74a1afa72d75e2cd7d89e1ea9b5268066173dad0472eb39090a8adb",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "id": "022",
+          "command": "/tmp/jev-ticket10-evidence/accepted-node24-proof/plugin/dist/cli.js",
+          "args": [
+            "--version"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe",
+          "stderrSha256": "5035fa0ace691d5897ea7201ea47166571e5137ffb0ed68895ace4ea6bd8162b"
+        },
+        {
+          "id": "023",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/plugin/dist/cli.js",
+            "--version"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "10e2e117b01523891ca271a615ae36e9d5e52348fd7d642f66727602c1b8dcbe",
+          "stderrSha256": "746d97a65e97b4a8a87ed8d72c24e43c91d21612244fd73309ef93b80a70586a"
+        },
+        {
+          "id": "024",
+          "command": "/tmp/jev-ticket10-evidence/accepted-node24-proof/plugin/dist/cli.js",
+          "args": [
+            "--help"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "f50dd83c1426aad138c97797e72ec869d70243765f4679a819e1d66e4d72967b",
+          "stderrSha256": "d4a240cda2fab736620329218882add0cf2ff31339529218ab07285384c39c66"
+        },
+        {
+          "id": "025",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/plugin/dist/cli.js",
+            "observed-allocate",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "stderrSha256": "f318eafcc991315aea4f334225b5fbfbd6a9b3489537f77ebeb7aedf9a970e98"
+        },
+        {
+          "id": "026",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/plugin/dist/cli.js",
+            "observed-allocation",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "stderrSha256": "312e716dade76342abd1c5cf6b905f8b221154ba3d9a6118d064e796939775a9"
+        },
+        {
+          "id": "027",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/plugin/dist/cli.js",
+            "observed-allocation-cancel",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "stderrSha256": "872996a854a46a517dfc8fc62bf905db942ed93a6c4a17e13533fbe6fb9fddf7"
+        },
+        {
+          "id": "028",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/plugin/dist/cli.js",
+            "observed-retire",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "10a9d77af3f48efc87403fa65b3027bfe2676d0382c23552511bb9d544a8ed97",
+          "stderrSha256": "6b12b86c80ef6f9f67d76a76a912c01f786d969bf63c428672cc9228cf3e8724"
+        },
+        {
+          "id": "029",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/plugin/dist/cli.js",
+            "observed-action",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "stderrSha256": "62c52a87e7da89aa004b4c2fabdd03607074ca55e266f04483124177655494c8"
+        },
+        {
+          "id": "030",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/plugin/dist/cli.js",
+            "observed-report",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "stderrSha256": "927c2aec14e0e5e5240861446205404afa106f04213e7684519574ef68380236"
+        },
+        {
+          "id": "031",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/plugin/dist/cli.js",
+            "observed-cancel",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "8e4b3ab872ecbe079927b4528be55c178e2bc7fc167efc51a1ab3ed542f6d259",
+          "stderrSha256": "e0204ab073b92f229480f0ebace49a4981de80829a15d2e3e362f2e7463f5f97"
+        },
+        {
+          "id": "032",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/plugin/dist/cli.js",
+            "observed-action",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/plugin/plugin-action.json",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f",
+          "stderrSha256": "d9b0311e37a1bcf38b418c18e6101f4bf259075b8ed470b807d3461604c9b260"
+        },
+        {
+          "id": "033",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/plugin/dist/cli.js",
+            "observed-action",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/plugin/plugin-action.json",
+            "--json"
+          ],
+          "exit": 3,
+          "signal": null,
+          "stdoutSha256": "0ca6e4367908aa33e3174af0dce098dfa3f275d14d759dedf352dd62251eda2f",
+          "stderrSha256": "3702a82cf604f6ec686ab01210f7be73d93313a4b48b026c6dae32d268176cc9"
+        },
+        {
+          "id": "034",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/plugin/dist/device/admission-maintenance.js",
+            "--help"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "3a2efc26fff3f21e2682f1feab0b36675fa20c9ba74caacfdbb7bac39868abd6",
+          "stderrSha256": "0d1ee4617457e9c33bcbd54cd3094b148d752815a29d0bb2748a4a59567e1d81"
+        },
+        {
+          "id": "035",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/plugin/dist/cli.js",
+            "mcp"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104",
+          "stderrSha256": "c72426805ef879f302f5f7df2510fabac3192e9a438f30c42117fe36dc696d99"
+        },
+        {
+          "id": "036",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/plugin/dist/cli.js",
+            "mcp"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104",
+          "stderrSha256": "76e77021d00292ef0c0ee111b17c531a8622f073cbaf961f0e16b8efbc9555d8"
+        },
+        {
+          "id": "037",
+          "command": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+          "args": [
+            "--import",
+            "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow/tests/fixtures/observed-packaging/guard.mjs",
+            "/tmp/jev-ticket10-evidence/accepted-node24-proof/plugin/dist/cli.js",
+            "mcp"
+          ],
+          "exit": 0,
+          "signal": null,
+          "stdoutSha256": "ae10dbd16f15963f6e1f752637090348dd337c3eadaf9b501cbd38ccc5dd1d3b",
+          "stderrSha256": "90f172cbf5bc2407cd847c7a75100b5bc7aa6ce2ba047501f27bc273090ee387"
+        }
+      ]
+    }
+  ],
+  "classifier": {
+    "parentOriginalMatchesPreserved": true,
+    "originalDispatchMatchesPreserved": true
+  },
+  "gateRawHashAudit": [
+    {
+      "name": "actual-default-check-node26",
+      "sha256": "8b393334e5758e591243c9cbae9ae3b427d7b953791f4a4dbebd2bad57d7908a",
+      "matchesDeclaredHash": true
+    },
+    {
+      "name": "affected-docs-node26",
+      "sha256": "8e5d866893762c19a6422d978bb1d6d816715e9c482c40e2677b8df22c5a5c8d",
+      "matchesDeclaredHash": true
+    },
+    {
+      "name": "actual-default-check-node24",
+      "sha256": "0363787037d351b716e9e4efbbaf424f0466635a9bac6240b8b421121bfc8b3f",
+      "matchesDeclaredHash": true
+    },
+    {
+      "name": "affected-docs-node24",
+      "sha256": "1b7f4c22bb7d19508dc882a1109e44f1e9db05dbacac74873347a781eedada35",
+      "matchesDeclaredHash": true
+    },
+    {
+      "name": "preserved-first-default-node26",
+      "sha256": "013a9b51d80bceb6c702bf1462d4e09cddf9ce5a814b1a86fd803772149406ff",
+      "matchesDeclaredHash": true
+    }
+  ]
+}

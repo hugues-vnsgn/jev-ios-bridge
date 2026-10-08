@@ -1,0 +1,167 @@
+import assert from 'node:assert/strict';
+import { spawn } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { appendFileSync, chmodSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { dirname, join, resolve } from 'node:path';
+import { createInterface } from 'node:readline';
+
+process.umask(0o077);
+if (process.argv.includes('--help')) {
+  console.log('Usage: node tests/fixtures/observed-packaging/proof.mjs\nMandatory H09 integration proof: isolated build snapshot, clean registry tarball install, installed CLI/MCP, plugin install. No key/device/store effects; no substitute or skip branch.');
+  process.exit(0);
+}
+const checkout = resolve('.');
+const source = checkout;
+const evidence = process.env.JEV_PACKAGING_EVIDENCE_DIR
+  ? resolve(process.env.JEV_PACKAGING_EVIDENCE_DIR) : mkdtempSync(join(tmpdir(), 'jev-installed-proof-'));
+mkdirSync(evidence, { recursive: true, mode: 0o700 }); chmodSync(evidence, 0o700);
+const snapshot = join(evidence, 'build-source');
+const { cpSync, symlinkSync } = await import('node:fs');
+mkdirSync(snapshot, { mode: 0o700 });
+for (const file of ['src', 'scripts', 'skills', 'docs/guide', 'plugin', 'package.json', 'package-lock.json',
+  'tsconfig.build.json', 'tsconfig.json', 'README.md', 'CHANGELOG.md', 'LICENSE']) {
+  cpSync(join(checkout, file), join(snapshot, file), { recursive: true });
+}
+// Build tools may use checkout deps. Installed proof projects never inherit this link.
+symlinkSync(realpathSync(join(checkout, 'node_modules')), join(snapshot, 'node_modules'), 'dir');
+const commands = join(evidence, 'commands.jsonl');
+const env = { ...process.env, PATH: dirname(process.execPath) + ':' + process.env.PATH,
+  npm_config_cache: join(evidence, 'registry-cache'), npm_config_fetch_retries: '0', npm_config_fetch_timeout: '45000' };
+delete env.TYPESAFE_API_KEY; delete env.NODE_OPTIONS;
+const guard = resolve('tests/fixtures/observed-packaging/guard.mjs');
+let sequence = 0;
+function launch(command, args, options) {
+  const previous = process.umask(0o022);
+  try { return spawn(command, args, options); } finally { process.umask(previous); }
+}
+function record(command, args, cwd, result) {
+  const id = String(++sequence).padStart(3, '0');
+  const stdout = join(evidence, id + '.stdout'); const stderr = join(evidence, id + '.stderr');
+  writeFileSync(stdout, result.stdout); writeFileSync(stderr, result.stderr);
+  appendFileSync(commands, JSON.stringify({ id, command, args, cwd, node: process.version, exit: result.code,
+    signal: result.signal, stdout, stderr }) + '\n');
+}
+async function run(command, args, cwd = snapshot, extra = {}) {
+  const child = launch(command, args, { cwd, env: { ...env, ...extra }, stdio: ['ignore', 'pipe', 'pipe'] });
+  let stdout = ''; let stderr = ''; child.stdout.on('data', b => { stdout += b; }); child.stderr.on('data', b => { stderr += b; });
+  const timer = setTimeout(() => child.kill('SIGKILL'), 90000);
+  const result = await new Promise((done, fail) => {
+    child.once('error', fail); child.once('close', (code, signal) => done({ code, signal, stdout, stderr }));
+  }); clearTimeout(timer); record(command, args, cwd, result); return result;
+}
+function ok(result) { assert.equal(result.code, 0, result.stderr + '\n' + result.stdout); assert.equal(result.signal, null); return result.stdout; }
+const required = ['docs/guide/14-observed-actions.md', 'docs/guide/reference/observed-format.md', 'skills/test-ios/SKILL.md',
+  'dist/cli.js', 'dist/mcp/observed.js', 'dist/observed/cli.js', 'dist/observed/service.js',
+  'dist/observed/allocation.js', 'dist/device/admission-maintenance.js', 'dist/device/admission-sqlite.js'];
+const sha = path => createHash('sha256').update(readFileSync(path)).digest('hex');
+function manifest(root) { return Object.fromEntries(required.map(file => [file, sha(join(root, file))])); }
+async function mcp(cli, cwd, gate, guardLog) {
+  const args = ['--import', guard, cli, 'mcp'];
+  const child = launch(process.execPath, args, { cwd, env: { ...env, JEV_EXPERIMENTAL_OBSERVED: gate,
+    JEV_PACKAGING_GUARD_LOG: guardLog }, stdio: ['pipe', 'pipe', 'pipe'] });
+  const pending = new Map(); let next = 0; let stdout = ''; let stderr = '';
+  child.stdout.on('data', b => { stdout += b; }); child.stderr.on('data', b => { stderr += b; });
+  const lines = createInterface({ input: child.stdout });
+  lines.on('line', line => { const reply = JSON.parse(line); const waiter = pending.get(reply.id); if (waiter) { pending.delete(reply.id); waiter.resolve(reply); } });
+  child.once('exit', () => { for (const p of pending.values()) p.reject(new Error('MCP exited: ' + stderr)); });
+  const rpc = (method, params = {}) => new Promise((resolve, reject) => {
+    const id = ++next; pending.set(id, { resolve, reject });
+    child.stdin.write(JSON.stringify({ jsonrpc: '2.0', id, method, params }) + '\n');
+  });
+  const timer = setTimeout(() => child.kill('SIGKILL'), 12000);
+  try {
+    const init = await rpc('initialize', { protocolVersion: '2025-03-26', capabilities: {}, clientInfo: { name: 'installed-proof', version: '1' } });
+    assert.equal(init.result.serverInfo.name, 'jev-ios-bridge');
+    child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' }) + '\n');
+    const tools = (await rpc('tools/list')).result.tools.filter(t => t.name.includes('observed')).sort((a,b) => a.name.localeCompare(b.name));
+    const golden = JSON.parse(readFileSync(join(source, 'tests/golden/observed-mcp-v1.json'), 'utf8')).tools;
+    const expected = gate === '1' ? golden : golden.filter(t => !['prepare_observed_allocation', 'start_observed_action'].includes(t.name));
+    assert.deepEqual(tools, expected);
+    for (const tool of tools) {
+      const reply = (await rpc('tools/call', { name: tool.name, arguments: { bogus: 'private-submitted-value' } })).result;
+      assert.equal(reply.isError, true); assert.equal(reply.content.length, 2);
+      assert.ok(reply.content.every(c => c.type === 'text')); assert.equal(reply.structuredContent, undefined);
+      const error = JSON.parse(reply.content[1].text);
+      assert.equal(error.kind, 'observed-operation-error'); assert.ok(['INVALID_REQUEST', 'UNSUPPORTED_VERSION'].includes(error.code));
+      assert.equal(error.acceptance, 'no'); assert.ok(!JSON.stringify(reply).includes('private-submitted-value'));
+    }
+  } finally {
+    child.stdin.end(); const stopped = child.exitCode === null ? new Promise(done => child.once('close', (code, signal) => done({ code, signal }))) : Promise.resolve({ code: child.exitCode, signal: child.signalCode });
+    const result = await stopped; clearTimeout(timer); lines.close(); record(process.execPath, args, cwd, { ...result, stdout, stderr });
+    assert.equal(result.code, 0, stderr);
+  }
+}
+async function smoke(root, bin, cwd, name) {
+  const cli = join(root, 'dist/cli.js');
+  const guardLog = join(evidence, name + '-forbidden.jsonl'); writeFileSync(guardLog, '');
+  assert.equal(readFileSync(cli, 'utf8').split('\n')[0], '#!/usr/bin/env node');
+  const version = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')).version;
+  assert.equal(ok(await run(bin, ['--version'], cwd)).trim(), version);
+  assert.equal(ok(await run(process.execPath, [cli, '--version'], cwd)).trim(), version);
+  const help = ok(await run(bin, ['--help'], cwd));
+  const commandsList = ['observed-allocate', 'observed-allocation', 'observed-allocation-cancel', 'observed-retire',
+    'observed-action', 'observed-report', 'observed-cancel'];
+  for (const command of commandsList) {
+    assert.ok(help.includes(command));
+    // Missing/invalid input refuses offline, so no production store is opened.
+    const invalid = await run(process.execPath, ['--import', guard, cli, command, '--json'], cwd,
+      { JEV_EXPERIMENTAL_OBSERVED: '1', JEV_PACKAGING_GUARD_LOG: guardLog });
+    assert.equal(invalid.code, 3, invalid.stderr); const error = JSON.parse(invalid.stdout);
+    assert.equal(error.code, 'INVALID_REQUEST'); assert.equal(error.acceptance, 'no');
+  }
+  const disabled = join(cwd, name + '-action.json');
+  writeFileSync(disabled, JSON.stringify({ version: 1, actionId: 'installed-one', allocationId: 'ABCDEF00-0000-4000-8000-000000000001',
+    app: { bundleId: 'com.example.app' }, action: { kind: 'tap', selector: { identifier: 'button' } },
+    before: { present: [{ identifier: 'before' }] }, after: { present: [{ identifier: 'after' }] }, timeoutMs: 1000 }));
+  for (const gate of ['0', 'true']) {
+    const result = await run(process.execPath, ['--import', guard, cli, 'observed-action', disabled, '--json'], cwd,
+      { JEV_EXPERIMENTAL_OBSERVED: gate, JEV_PACKAGING_GUARD_LOG: guardLog });
+    assert.equal(result.code, 3); assert.equal(JSON.parse(result.stdout).code, 'OBSERVED_DISABLED');
+  }
+  const maintenance = ok(await run(process.execPath, [join(root, 'dist/device/admission-maintenance.js'), '--help'], cwd));
+  assert.ok(maintenance.includes('migrate <declaration.json>')); assert.ok(maintenance.includes('no destination override'));
+  for (const gate of ['0', 'true', '1']) await mcp(cli, cwd, gate, guardLog);
+  assert.equal(readFileSync(guardLog, 'utf8'), '', 'Startup/schema validation attempted a forbidden effect');
+}
+try {
+  ok(await run('npm', ['run', 'build'], snapshot));
+  const packed = JSON.parse(ok(await run('npm', ['pack', '--json', '--pack-destination', evidence])))[0];
+  const tarball = join(evidence, packed.filename);
+  for (const file of required) assert.ok(packed.files.some(f => f.path === file), 'tarball missing ' + file);
+  const clean = join(evidence, 'clean'); mkdirSync(clean, { mode: 0o700 });
+  writeFileSync(join(clean, 'package.json'), JSON.stringify({ name: 'isolated-installed-proof', private: true, version: '1.0.0' }));
+  assert.deepEqual(readdirSync(clean), ['package.json']); assert.ok(!existsSync(join(clean, 'node_modules')));
+  ok(await run('npm', ['install', '--ignore-scripts', '--no-audit', '--no-fund', tarball], clean));
+  const installed = join(clean, 'node_modules/jev-ios-bridge'); const bin = join(clean, 'node_modules/.bin/jev-ios-bridge');
+  assert.ok(lstatSync(bin).isSymbolicLink()); assert.equal(realpathSync(bin), realpathSync(join(installed, 'dist/cli.js')));
+  assert.ok(!lstatSync(installed).isSymbolicLink());
+  assert.deepEqual(manifest(installed), manifest(snapshot));
+  await smoke(installed, bin, clean, 'npm');
+  ok(await run('npm', ['run', 'build:plugin']));
+  const plugin = join(snapshot, 'build/plugin/jev-ios-bridge');
+  for (const file of required) assert.ok(existsSync(join(plugin, file)), 'plugin missing ' + file);
+  const pluginSkill = readFileSync(join(plugin, 'skills/test-ios/SKILL.md'), 'utf8');
+  assert.ok(pluginSkill.includes('${CLAUDE_PLUGIN_ROOT}/docs/guide/')); assert.ok(pluginSkill.includes('14-observed-actions.md'));
+  const market = JSON.parse(readFileSync(join(snapshot, 'build/plugin/marketplace.json'), 'utf8'));
+  const zip = join(snapshot, 'build/plugin', market.plugins[0].source.url.split('/').at(-1));
+  assert.equal(sha(zip), market.plugins[0].source.sha256);
+  // Install the copied plugin in an independent location, as Claude Code does.
+  const pluginInstall = join(evidence, 'plugin');
+  cpSync(plugin, pluginInstall, { recursive: true });
+  assert.ok(!existsSync(join(pluginInstall, 'node_modules')));
+  ok(await run('npm', ['ci', '--ignore-scripts', '--no-audit', '--no-fund'], pluginInstall));
+  // The plugin has no npm bin declaration; invoke its compiled CLI directly.
+  const pluginBin = join(pluginInstall, 'dist/cli.js'); chmodSync(pluginBin, 0o755);
+  await smoke(pluginInstall, pluginBin, pluginInstall, 'plugin');
+  const summary = { status: 'PASS', node: process.version, evidence, commands, cleanInstall: true, symlink: true, shebang: true,
+    skips: 0, cliOperationsPerInstallation: 7, mcpGateCasesPerInstallation: 3, installations: 2, mcpSchemaErrorCalls: 34, commandCount: sequence, plugin: true, forbiddenEffects: 0,
+    tarball: { path: tarball, sha256: sha(tarball) }, pluginZip: { path: zip, sha256: sha(zip) },
+    source: manifest(snapshot), installed: manifest(installed), pluginFiles: manifest(pluginInstall) };
+  writeFileSync(join(evidence, 'summary.json'), JSON.stringify(summary, null, 2) + '\n');
+  console.log(JSON.stringify(summary));
+} catch (error) {
+  const summary = { status: 'FAIL', node: process.version, evidence, commands, error: error.message };
+  writeFileSync(join(evidence, 'failure.json'), JSON.stringify(summary, null, 2) + '\n');
+  console.error(JSON.stringify(summary)); process.exitCode = 1;
+}

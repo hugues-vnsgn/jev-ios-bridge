@@ -1,0 +1,62 @@
+{
+  "base": "75d7618167729b9b9a5547eaa468e37eb12b2504",
+  "candidate": "a319e5bea63415b6ac981c4ce4e8a25679b010c9",
+  "unchanged": [
+    {
+      "path": "tests/golden/android-capture.json",
+      "sha256": "2d1d7c7435fe35b36a75637048c373bae414f2afa9cdb2f691aeab83424fcdba"
+    },
+    {
+      "path": "tests/golden/android-elements.json",
+      "sha256": "35d5c060cd85cdba27b6f96fb33a91eb497a9be9bc388e6991ebb0c22b4222e5"
+    },
+    {
+      "path": "tests/golden/android-render.json",
+      "sha256": "609fd79d528f8c681deab7ab55e61055866e9427d8be928d3ba5844cee35a367"
+    },
+    {
+      "path": "tests/golden/cli-exit-codes.json",
+      "sha256": "2ae6bf0deb86b74063d0e3b9d3260b72322d5416ae053281abb92afe0cfaae37"
+    },
+    {
+      "path": "tests/golden/evidence-layout.json",
+      "sha256": "ac49e9b6433e71636364e707a691c89817b1c8404b582e809a47a3b70d52f880"
+    },
+    {
+      "path": "tests/golden/mcp.json",
+      "sha256": "4f69fcd0c1414dbd392f1b223de9d83709b761e80fef299300930c57d2bfed41"
+    },
+    {
+      "path": "tests/golden/observed-mcp-v1.json",
+      "sha256": "48dc6d413b8f272be845c03b0827f1429a053298676eab3812e568b90936a63b"
+    },
+    {
+      "path": "tests/golden/observed-replies-v1.json",
+      "sha256": "cdbfbfe4b8ac3f93bebd0e7f8cc5243cc90d3549bc20bdbea97bdd670dc0602b"
+    },
+    {
+      "path": "tests/golden/report-json-android.json",
+      "sha256": "67db1d463d3b0fea60e7e81cbd9a969fe4a61fd429e7b57f04d19b313cf12912"
+    },
+    {
+      "path": "tests/golden/report-json-driven.json",
+      "sha256": "08c65ce98a15888f6adb6b877c9237350585abb7c030c00f0426db747c858996"
+    },
+    {
+      "path": "tests/golden/report-json.json",
+      "sha256": "f1bab04f2dbe8e96eb85f23b12777cb429ae042d14fe10e6585977b6d751e036"
+    },
+    {
+      "path": "tests/golden/report-text-driven.json",
+      "sha256": "1dd527e603948f1b430eadd3e926f23a8514432b405a04f3e80059f98169cb86"
+    },
+    {
+      "path": "tests/golden/scripts.json",
+      "sha256": "de152f8d69050614d0504f3818255c65d8a3972861e169e803a5ec59b465cb77"
+    },
+    {
+      "path": "tests/golden/vocabulary.json",
+      "sha256": "d9b39682a2f836b05938cd1abe80c452112d013f1425fa24409131b5ae9e984f"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "reportVersion": 1,
+  "runId": "<runId>",
+  "bridgeVersion": "<bridgeVersion>",
+  "jevModel": "jev-1.13.0",
+  "projectionRule": "android-full-text-v1",
+  "bundleId": null,
+  "launchArgs": [],
+  "verdict": "passed",
+  "reason": "ALL_CHECKPOINTS_PASSED",
+  "error": null,
+  "steps": 2,
+  "plannedSteps": 2,
+  "checkpointsPassed": 1,
+  "checkpointCount": 1,
+  "inputTokens": 10,
+  "durationMs": "<ms>",
+  "startedAt": "<timestamp>",
+  "finishedAt": "<timestamp>",
+  "checkpoints": [
+    {
+      "stepId": "verify",
+      "status": "passed",
+      "claims": [
+        {
+          "id": "shown",
+          "claim": "The marker is visible.",
+          "probability": 1
+        }
+      ],
+      "screenshot": null,
+      "evidenceEvent": 5
+    }
+  ],
+  "evidence": {
+    "log": "run.jsonl",
+    "screenshots": []
+  },
+  "platform": "android",
+  "package": "com.hugues.test_cmp",
+  "activity": ".DebugGalleryActivity",
+  "intentExtras": {
+    "screen": "gallery"
+  },
+  "typedFields": [
+    {
+      "stepId": "type",
+      "shownValue": "placeholder-text"
+    }
+  ]
+}

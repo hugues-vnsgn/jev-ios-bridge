@@ -1,0 +1,138 @@
+{
+  "scope": "Preserved initial/bounded runs; final proof/check metadata remains gate-commands.json",
+  "gates": [
+    {
+      "name": "node26-proof",
+      "exactCommand": "JEV_PACKAGING_EVIDENCE_DIR=/tmp/jev-ticket10-evidence/node26-proof node tests/fixtures/observed-packaging/proof.mjs > /tmp/jev-ticket10-evidence/node26-proof.stdout 2> /tmp/jev-ticket10-evidence/node26-proof.stderr",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow",
+      "node": "v26.8.1",
+      "parentUmask": "0077",
+      "childUmask": "0077",
+      "exit": 1,
+      "rawCommands": "/tmp/jev-ticket10-evidence/node26-proof/commands.jsonl",
+      "recordedCommands": 3,
+      "failure": "/tmp/jev-ticket10-evidence/node26-proof/failure.json",
+      "scope": "original preserved failure; no complete packaging PASS inferred",
+      "environment": "harness removed TYPESAFE_API_KEY and NODE_OPTIONS internally; outer command did not explicitly unset NODE_NO_WARNINGS"
+    },
+    {
+      "name": "node26-proof-round2",
+      "exactCommand": "JEV_PACKAGING_EVIDENCE_DIR=/tmp/jev-ticket10-evidence/node26-proof-round2 node tests/fixtures/observed-packaging/proof.mjs > /tmp/jev-ticket10-evidence/node26-proof-round2.stdout 2> /tmp/jev-ticket10-evidence/node26-proof-round2.stderr",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow",
+      "node": "v26.8.1",
+      "parentUmask": "0077",
+      "childUmask": "0022",
+      "exit": 1,
+      "rawCommands": "/tmp/jev-ticket10-evidence/node26-proof-round2/commands.jsonl",
+      "recordedCommands": 16,
+      "failure": "/tmp/jev-ticket10-evidence/node26-proof-round2/failure.json",
+      "scope": "original preserved failure; no complete packaging PASS inferred",
+      "environment": "harness removed TYPESAFE_API_KEY and NODE_OPTIONS internally; outer command did not explicitly unset NODE_NO_WARNINGS"
+    },
+    {
+      "name": "node24-proof",
+      "exactCommand": "JEV_PACKAGING_EVIDENCE_DIR=/tmp/jev-ticket10-evidence/node24-proof /Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node tests/fixtures/observed-packaging/proof.mjs > /tmp/jev-ticket10-evidence/node24-proof.stdout 2> /tmp/jev-ticket10-evidence/node24-proof.stderr",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow",
+      "node": "v24.0.0",
+      "parentUmask": "0077",
+      "childUmask": "0022",
+      "exit": 1,
+      "rawCommands": "/tmp/jev-ticket10-evidence/node24-proof/commands.jsonl",
+      "recordedCommands": 16,
+      "failure": "/tmp/jev-ticket10-evidence/node24-proof/failure.json",
+      "scope": "original preserved failure; no complete packaging PASS inferred",
+      "environment": "harness removed TYPESAFE_API_KEY and NODE_OPTIONS internally; outer command did not explicitly unset NODE_NO_WARNINGS"
+    },
+    {
+      "name": "original-doc-scanner-red",
+      "exactCommand": "node --import tsx --test tests/observed-docs.test.ts tests/observed-packaging.test.ts tests/docs.test.ts > /tmp/jev-ticket10-evidence/initial-doc-scanner-failure.log 2>&1",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow",
+      "node": "v26.8.1",
+      "childUmask": "0077",
+      "exit": 1,
+      "passed": 33,
+      "failed": 1,
+      "skipped": 0,
+      "raw": "initial-doc-scanner-failure.log"
+    },
+    {
+      "name": "initial-typecheck",
+      "exactCommand": "npm run typecheck > /tmp/jev-ticket10-evidence/typecheck.log 2>&1",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow",
+      "node": "v26.8.1",
+      "childUmask": "0077",
+      "exit": 0,
+      "raw": "typecheck.log"
+    },
+    {
+      "name": "docs-node26",
+      "exactCommand": "node --import tsx --test tests/docs.test.ts tests/observed-docs.test.ts tests/observed-packaging.test.ts > /tmp/jev-ticket10-evidence/docs-node26.log 2>&1",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow",
+      "node": "v26.8.1",
+      "childUmask": "0077",
+      "exit": 0,
+      "passed": 34,
+      "failed": 0,
+      "skipped": 0,
+      "raw": "/tmp/jev-ticket10-evidence/docs-node26.log",
+      "note": "final corrected child0022 scans are separately recorded in gate-commands.json"
+    },
+    {
+      "name": "final-docs-node26",
+      "exactCommand": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS node --import tsx --test tests/docs.test.ts tests/observed-docs.test.ts tests/observed-packaging.test.ts > /tmp/jev-ticket10-evidence/final-docs-node26.log 2>&1",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow",
+      "node": "v26.8.1",
+      "childUmask": "0077",
+      "exit": 0,
+      "passed": 34,
+      "failed": 0,
+      "skipped": 0,
+      "raw": "/tmp/jev-ticket10-evidence/final-docs-node26.log",
+      "note": "final corrected child0022 scans are separately recorded in gate-commands.json"
+    },
+    {
+      "name": "canonical-maintenance-node26",
+      "exactCommand": "env -u TYPESAFE_API_KEY node /private/tmp/jev-ticket10-evidence/node26-proof-round2/clean/node_modules/jev-ios-bridge/dist/device/admission-maintenance.js --help > /tmp/jev-ticket10-evidence/maintenance-canonical-node26.stdout 2> /tmp/jev-ticket10-evidence/maintenance-canonical-node26.stderr",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow",
+      "node": "v26.8.1",
+      "childUmask": "0077",
+      "exit": 0,
+      "assertion": "help visible via canonical path; diagnostic only, never substituted for failed alias oracle"
+    },
+    {
+      "name": "docs-node24",
+      "exactCommand": "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node --import tsx --test tests/docs.test.ts tests/observed-docs.test.ts tests/observed-packaging.test.ts > /tmp/jev-ticket10-evidence/docs-node24.log 2>&1",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow",
+      "node": "v24.0.0",
+      "childUmask": "0077",
+      "exit": 0,
+      "passed": 34,
+      "failed": 0,
+      "skipped": 0,
+      "raw": "/tmp/jev-ticket10-evidence/docs-node24.log",
+      "note": "final corrected child0022 scans are separately recorded in gate-commands.json"
+    },
+    {
+      "name": "final-docs-node24",
+      "exactCommand": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node --import tsx --test tests/docs.test.ts tests/observed-docs.test.ts tests/observed-packaging.test.ts > /tmp/jev-ticket10-evidence/final-docs-node24.log 2>&1",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow",
+      "node": "v24.0.0",
+      "childUmask": "0077",
+      "exit": 0,
+      "passed": 34,
+      "failed": 0,
+      "skipped": 0,
+      "raw": "/tmp/jev-ticket10-evidence/final-docs-node24.log",
+      "note": "final corrected child0022 scans are separately recorded in gate-commands.json"
+    },
+    {
+      "name": "canonical-maintenance-node24",
+      "exactCommand": "env -u TYPESAFE_API_KEY /Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node /private/tmp/jev-ticket10-evidence/node24-proof/clean/node_modules/jev-ios-bridge/dist/device/admission-maintenance.js --help > /tmp/jev-ticket10-evidence/maintenance-canonical-node24.stdout 2> /tmp/jev-ticket10-evidence/maintenance-canonical-node24.stderr",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-installed-workflow",
+      "node": "v24.0.0",
+      "childUmask": "0077",
+      "exit": 0,
+      "assertion": "help visible via canonical path; diagnostic only, never substituted for failed alias oracle"
+    }
+  ]
+}

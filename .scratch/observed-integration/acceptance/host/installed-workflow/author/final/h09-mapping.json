@@ -1,0 +1,212 @@
+{
+  "scope": "Ticket10 bounded H09 installed workflow",
+  "candidate": "a319e5bea63415b6ac981c4ce4e8a25679b010c9",
+  "base": "75d7618167729b9b9a5547eaa468e37eb12b2504",
+  "remoteCI": "configured only; unexecuted",
+  "live": "UNVERIFIED; outside ticket10",
+  "runtimeProofs": {
+    "26": {
+      "status": "PASS",
+      "node": "v26.8.1",
+      "evidence": "/tmp/jev-ticket10-evidence/accepted-node26-proof",
+      "commands": "/tmp/jev-ticket10-evidence/accepted-node26-proof/commands.jsonl",
+      "cleanInstall": true,
+      "symlink": true,
+      "shebang": true,
+      "skips": 0,
+      "cliOperationsPerInstallation": 7,
+      "mcpGateCasesPerInstallation": 3,
+      "installations": 2,
+      "mcpSchemaErrorCalls": 34,
+      "commandCount": 37,
+      "plugin": true,
+      "forbiddenEffects": 0,
+      "tarball": {
+        "path": "/tmp/jev-ticket10-evidence/accepted-node26-proof/jev-ios-bridge-1.3.1.tgz",
+        "sha256": "67c39ea5002e68ebe4a4d36cf2db36085e6e98f97c0bbc594bce491584fa67e1"
+      },
+      "pluginZip": {
+        "path": "/tmp/jev-ticket10-evidence/accepted-node26-proof/build-source/build/plugin/jev-ios-bridge-plugin-1.3.1.zip",
+        "sha256": "3a2bec0bfb2fc1866c141f4db6ad3dfcb67c5536c5d0e4f52b76aa942a832af4"
+      },
+      "source": {
+        "docs/guide/14-observed-actions.md": "b1296abbdadb769d075876cb21cacc68a83a02962c6891c3f8f2e036c9ae8267",
+        "docs/guide/reference/observed-format.md": "75b47e9a5f9951412be514363c2d0ed1009d4bf666138efa1c52cfbef66e8c96",
+        "skills/test-ios/SKILL.md": "7d51dfee8530ca3fa8ba68179db97c64eb07804efe2fb5ec8defaee2ee2eaa33",
+        "dist/cli.js": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+        "dist/mcp/observed.js": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+        "dist/observed/cli.js": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+        "dist/observed/service.js": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+        "dist/observed/allocation.js": "c78b4e2f37c3bf173afec88fa946ec3df094b8bc0719d137b387514a9ac29563",
+        "dist/device/admission-maintenance.js": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+        "dist/device/admission-sqlite.js": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1"
+      },
+      "installed": {
+        "docs/guide/14-observed-actions.md": "b1296abbdadb769d075876cb21cacc68a83a02962c6891c3f8f2e036c9ae8267",
+        "docs/guide/reference/observed-format.md": "75b47e9a5f9951412be514363c2d0ed1009d4bf666138efa1c52cfbef66e8c96",
+        "skills/test-ios/SKILL.md": "7d51dfee8530ca3fa8ba68179db97c64eb07804efe2fb5ec8defaee2ee2eaa33",
+        "dist/cli.js": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+        "dist/mcp/observed.js": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+        "dist/observed/cli.js": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+        "dist/observed/service.js": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+        "dist/observed/allocation.js": "c78b4e2f37c3bf173afec88fa946ec3df094b8bc0719d137b387514a9ac29563",
+        "dist/device/admission-maintenance.js": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+        "dist/device/admission-sqlite.js": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1"
+      },
+      "pluginFiles": {
+        "docs/guide/14-observed-actions.md": "b1296abbdadb769d075876cb21cacc68a83a02962c6891c3f8f2e036c9ae8267",
+        "docs/guide/reference/observed-format.md": "75b47e9a5f9951412be514363c2d0ed1009d4bf666138efa1c52cfbef66e8c96",
+        "skills/test-ios/SKILL.md": "089f443b4131615778ae8bb1f7fbbc0ff18a3936f08ce6b9f61f616bbb0dac46",
+        "dist/cli.js": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+        "dist/mcp/observed.js": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+        "dist/observed/cli.js": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+        "dist/observed/service.js": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+        "dist/observed/allocation.js": "c78b4e2f37c3bf173afec88fa946ec3df094b8bc0719d137b387514a9ac29563",
+        "dist/device/admission-maintenance.js": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+        "dist/device/admission-sqlite.js": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1"
+      }
+    },
+    "24": {
+      "status": "PASS",
+      "node": "v24.0.0",
+      "evidence": "/tmp/jev-ticket10-evidence/accepted-node24-proof",
+      "commands": "/tmp/jev-ticket10-evidence/accepted-node24-proof/commands.jsonl",
+      "cleanInstall": true,
+      "symlink": true,
+      "shebang": true,
+      "skips": 0,
+      "cliOperationsPerInstallation": 7,
+      "mcpGateCasesPerInstallation": 3,
+      "installations": 2,
+      "mcpSchemaErrorCalls": 34,
+      "commandCount": 37,
+      "plugin": true,
+      "forbiddenEffects": 0,
+      "tarball": {
+        "path": "/tmp/jev-ticket10-evidence/accepted-node24-proof/jev-ios-bridge-1.3.1.tgz",
+        "sha256": "dc53307f9129e5417a984676a460fa80c4eb3b6ebb249c2a2972efc1e95a63d0"
+      },
+      "pluginZip": {
+        "path": "/tmp/jev-ticket10-evidence/accepted-node24-proof/build-source/build/plugin/jev-ios-bridge-plugin-1.3.1.zip",
+        "sha256": "2320543798b0ab715b4c6f3d8859e141ede0c5f5a12eb27594882d11a9b7a8d1"
+      },
+      "source": {
+        "docs/guide/14-observed-actions.md": "b1296abbdadb769d075876cb21cacc68a83a02962c6891c3f8f2e036c9ae8267",
+        "docs/guide/reference/observed-format.md": "75b47e9a5f9951412be514363c2d0ed1009d4bf666138efa1c52cfbef66e8c96",
+        "skills/test-ios/SKILL.md": "7d51dfee8530ca3fa8ba68179db97c64eb07804efe2fb5ec8defaee2ee2eaa33",
+        "dist/cli.js": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+        "dist/mcp/observed.js": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+        "dist/observed/cli.js": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+        "dist/observed/service.js": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+        "dist/observed/allocation.js": "c78b4e2f37c3bf173afec88fa946ec3df094b8bc0719d137b387514a9ac29563",
+        "dist/device/admission-maintenance.js": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+        "dist/device/admission-sqlite.js": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1"
+      },
+      "installed": {
+        "docs/guide/14-observed-actions.md": "b1296abbdadb769d075876cb21cacc68a83a02962c6891c3f8f2e036c9ae8267",
+        "docs/guide/reference/observed-format.md": "75b47e9a5f9951412be514363c2d0ed1009d4bf666138efa1c52cfbef66e8c96",
+        "skills/test-ios/SKILL.md": "7d51dfee8530ca3fa8ba68179db97c64eb07804efe2fb5ec8defaee2ee2eaa33",
+        "dist/cli.js": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+        "dist/mcp/observed.js": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+        "dist/observed/cli.js": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+        "dist/observed/service.js": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+        "dist/observed/allocation.js": "c78b4e2f37c3bf173afec88fa946ec3df094b8bc0719d137b387514a9ac29563",
+        "dist/device/admission-maintenance.js": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+        "dist/device/admission-sqlite.js": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1"
+      },
+      "pluginFiles": {
+        "docs/guide/14-observed-actions.md": "b1296abbdadb769d075876cb21cacc68a83a02962c6891c3f8f2e036c9ae8267",
+        "docs/guide/reference/observed-format.md": "75b47e9a5f9951412be514363c2d0ed1009d4bf666138efa1c52cfbef66e8c96",
+        "skills/test-ios/SKILL.md": "089f443b4131615778ae8bb1f7fbbc0ff18a3936f08ce6b9f61f616bbb0dac46",
+        "dist/cli.js": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+        "dist/mcp/observed.js": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+        "dist/observed/cli.js": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+        "dist/observed/service.js": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+        "dist/observed/allocation.js": "c78b4e2f37c3bf173afec88fa946ec3df094b8bc0719d137b387514a9ac29563",
+        "dist/device/admission-maintenance.js": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+        "dist/device/admission-sqlite.js": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1"
+      }
+    }
+  },
+  "subcases": {
+    "minimum-node24-sqlite": {
+      "result": "PASS",
+      "command": "PATH=<exact24-bin> npm run check",
+      "exit": 0,
+      "tests": 1482,
+      "skips": 0,
+      "evidence": "final-check-node24-child0022.log"
+    },
+    "supported-node26": {
+      "result": "PASS",
+      "command": "npm run check",
+      "exit": 0,
+      "tests": 1482,
+      "skips": 0,
+      "evidence": "final-check-node26-child0022.log"
+    },
+    "clean-packed-install": {
+      "result": "PASS",
+      "perRuntimeCommands": [
+        "001 build",
+        "002 npm pack --json",
+        "003 npm install --ignore-scripts --no-audit --no-fund <tarball>"
+      ],
+      "cache": "separate new per-runtime cache; build snapshot alone links existing compilation dependencies; installed runtime dependency trees come from normal registry install"
+    },
+    "installed-bin-cli": {
+      "result": "PASS",
+      "perRuntimeCommandIds": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "checks": "actual installed .bin symlink/shebang/version/help; exact-node version; seven CLI missing-input errors, strict JSON exits3, two disabled start gates"
+    },
+    "maintenance-alias-help": {
+      "result": "PASS",
+      "perRuntimeCommandIds": [
+        "016 npm package",
+        "034 plugin"
+      ],
+      "checks": "unchanged --help assertion through /tmp alias; no migration invoked"
+    },
+    "installed-mcp": {
+      "result": "PASS",
+      "perRuntimeCommandIds": [
+        "017-019 npm",
+        "035-037 plugin"
+      ],
+      "checks": "key absent; gates0/true/1; golden list/schema parity; retained tool availability;34 invalid calls with two safe text blocks; no hidden structured dependency"
+    },
+    "plugin": {
+      "result": "PASS",
+      "perRuntimeCommandIds": [
+        "020 npm run build:plugin",
+        "021 npm ci --ignore-scripts --no-audit --no-fund"
+      ],
+      "cache": "fresh plugin project/no node_modules; cache warmed only by same runtime preceding tarball install",
+      "checks": "required files, rewritten skill paths, marketplace zip hash, installed CLI/MCP smoke"
+    },
+    "legacy-docs-goldens": {
+      "result": "PASS",
+      "docsTestsPerRuntime": 34,
+      "skips": 0,
+      "goldenFiles": 14,
+      "evidence": [
+        "final-docs-node26-child0022.log",
+        "final-docs-node24-child0022.log",
+        "goldens.json"
+      ]
+    }
+  }
+}

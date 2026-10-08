@@ -1,0 +1,140 @@
+{
+  "files": [
+    {
+      "path": ".github/workflows/check.yml",
+      "sha256": "983e0ea1cb4f955b7fa01c7638383325390e9be51ba3e12ba525a5b9b876bdaf",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/files/.github/workflows/check.yml",
+      "gitBlob": "5ef0c5d9a9c67a6d978fd0820e3f0eb3fe7a07ab"
+    },
+    {
+      "path": ".scratch/observed-action-rollout/issues/10-docs-packaging.md",
+      "sha256": "226dc275efee69b3182e596b3e28468150dcd146fa098f713320f98f7c2a42c1",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/files/.scratch/observed-action-rollout/issues/10-docs-packaging.md",
+      "gitBlob": "cdb3c9160f63e670d40767c4792ae1112c614d3e"
+    },
+    {
+      "path": "docs/guide/08-troubleshooting.md",
+      "sha256": "664da61c1712eed8c583800f8ee04f6e389982917cd4fd7e4c8af250e51249e0",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/files/docs/guide/08-troubleshooting.md",
+      "gitBlob": "1c39f67d27102390b0fbe687ea22a2489908d51b"
+    },
+    {
+      "path": "docs/guide/14-observed-actions.md",
+      "sha256": "b1296abbdadb769d075876cb21cacc68a83a02962c6891c3f8f2e036c9ae8267",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/files/docs/guide/14-observed-actions.md",
+      "gitBlob": "50606b66e7bb0cda59d3b83d28340d9f835cf467"
+    },
+    {
+      "path": "docs/guide/README.md",
+      "sha256": "e86fa091483524ffc75d23858ee39c422ee84acf2d966fd8153ea5cf5ef47d83",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/files/docs/guide/README.md",
+      "gitBlob": "58448c46b15b1fb80b31f211d5a47dfa8d971c9d"
+    },
+    {
+      "path": "docs/guide/reference/observed-format.md",
+      "sha256": "75b47e9a5f9951412be514363c2d0ed1009d4bf666138efa1c52cfbef66e8c96",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/files/docs/guide/reference/observed-format.md",
+      "gitBlob": "721e19240a566f2417129c00a07cacb39bd0b75d"
+    },
+    {
+      "path": "skills/test-ios/SKILL.md",
+      "sha256": "7d51dfee8530ca3fa8ba68179db97c64eb07804efe2fb5ec8defaee2ee2eaa33",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/files/skills/test-ios/SKILL.md",
+      "gitBlob": "d0003254bffb02ff432a25a7b2cf235222dfa84b"
+    },
+    {
+      "path": "tests/docs.test.ts",
+      "sha256": "2e4063e4975efaf1a586eed9779c21c0a337c0f955cad0338e3092fdab4ce183",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/files/tests/docs.test.ts",
+      "gitBlob": "65b24bf858dbb5680d591503aa52d1911a9829a0"
+    },
+    {
+      "path": "tests/fixtures/observed-packaging/guard.mjs",
+      "sha256": "000c19430aae956338a406a9b4daceb68e99eb76d70bc3a0340fccf52ae0d2f7",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/files/tests/fixtures/observed-packaging/guard.mjs",
+      "gitBlob": "1d610a55334544b5aaae617b7c77e21964bd2411"
+    },
+    {
+      "path": "tests/fixtures/observed-packaging/proof.mjs",
+      "sha256": "6aaf75a214d3dc89ddc2957b2be082ccf9eba7d93ade7511dd3bd652ae850635",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/files/tests/fixtures/observed-packaging/proof.mjs",
+      "gitBlob": "482654bd16df7be95baf1f65b95db9b75d5484e3"
+    },
+    {
+      "path": "tests/observed-docs.test.ts",
+      "sha256": "17f7770bc532966d9ac6f90ba44bd4c9abf6fded195ed2f01b2548f468ed3073",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/files/tests/observed-docs.test.ts",
+      "gitBlob": "8ffce914f208a965cdf864b7384feb45296e6946"
+    },
+    {
+      "path": "tests/observed-packaging.test.ts",
+      "sha256": "e9b869d11f3455a16aad3dcbdfce27ee70a3edf4be47d335db050ec63400629a",
+      "immutableCopy": "/tmp/jev-ticket10-evidence/final-freeze/files/tests/observed-packaging.test.ts",
+      "gitBlob": "330c8d72e2e17b37ad7b13cb62579a7a2f5afc76"
+    }
+  ],
+  "goldens": [
+    {
+      "path": "tests/golden/android-capture.json",
+      "sha256": "2d1d7c7435fe35b36a75637048c373bae414f2afa9cdb2f691aeab83424fcdba"
+    },
+    {
+      "path": "tests/golden/android-elements.json",
+      "sha256": "35d5c060cd85cdba27b6f96fb33a91eb497a9be9bc388e6991ebb0c22b4222e5"
+    },
+    {
+      "path": "tests/golden/android-render.json",
+      "sha256": "609fd79d528f8c681deab7ab55e61055866e9427d8be928d3ba5844cee35a367"
+    },
+    {
+      "path": "tests/golden/cli-exit-codes.json",
+      "sha256": "2ae6bf0deb86b74063d0e3b9d3260b72322d5416ae053281abb92afe0cfaae37"
+    },
+    {
+      "path": "tests/golden/evidence-layout.json",
+      "sha256": "ac49e9b6433e71636364e707a691c89817b1c8404b582e809a47a3b70d52f880"
+    },
+    {
+      "path": "tests/golden/mcp.json",
+      "sha256": "4f69fcd0c1414dbd392f1b223de9d83709b761e80fef299300930c57d2bfed41"
+    },
+    {
+      "path": "tests/golden/observed-mcp-v1.json",
+      "sha256": "48dc6d413b8f272be845c03b0827f1429a053298676eab3812e568b90936a63b"
+    },
+    {
+      "path": "tests/golden/observed-replies-v1.json",
+      "sha256": "cdbfbfe4b8ac3f93bebd0e7f8cc5243cc90d3549bc20bdbea97bdd670dc0602b"
+    },
+    {
+      "path": "tests/golden/report-json-android.json",
+      "sha256": "67db1d463d3b0fea60e7e81cbd9a969fe4a61fd429e7b57f04d19b313cf12912"
+    },
+    {
+      "path": "tests/golden/report-json-driven.json",
+      "sha256": "08c65ce98a15888f6adb6b877c9237350585abb7c030c00f0426db747c858996"
+    },
+    {
+      "path": "tests/golden/report-json.json",
+      "sha256": "f1bab04f2dbe8e96eb85f23b12777cb429ae042d14fe10e6585977b6d751e036"
+    },
+    {
+      "path": "tests/golden/report-text-driven.json",
+      "sha256": "1dd527e603948f1b430eadd3e926f23a8514432b405a04f3e80059f98169cb86"
+    },
+    {
+      "path": "tests/golden/scripts.json",
+      "sha256": "de152f8d69050614d0504f3818255c65d8a3972861e169e803a5ec59b465cb77"
+    },
+    {
+      "path": "tests/golden/vocabulary.json",
+      "sha256": "d9b39682a2f836b05938cd1abe80c452112d013f1425fa24409131b5ae9e984f"
+    }
+  ],
+  "candidate": "a319e5bea63415b6ac981c4ce4e8a25679b010c9",
+  "parent": "75d7618167729b9b9a5547eaa468e37eb12b2504",
+  "checkedAt": "2026-10-08T10:17:57.884743+00:00",
+  "trackedWorktreeClean": true,
+  "allCurrentCommitImmutableEqual": true,
+  "oldGuideMatchesBothBases": true
+}

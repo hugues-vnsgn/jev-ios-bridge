@@ -1,0 +1,22 @@
+[
+  {
+    "runtime": "v26.8.1",
+    "commands": 37,
+    "safeMcpErrorCalls": 34,
+    "goldenSchemasMatched": true,
+    "installedArtifactsHashesMatched": true,
+    "allProductionSourceAndPackageBytesMatchBase": true,
+    "forbiddenLogsEmpty": true,
+    "actualBinSymlinkAndShebang": true
+  },
+  {
+    "runtime": "v24.0.0",
+    "commands": 37,
+    "safeMcpErrorCalls": 34,
+    "goldenSchemasMatched": true,
+    "installedArtifactsHashesMatched": true,
+    "allProductionSourceAndPackageBytesMatchBase": true,
+    "forbiddenLogsEmpty": true,
+    "actualBinSymlinkAndShebang": true
+  }
+]
