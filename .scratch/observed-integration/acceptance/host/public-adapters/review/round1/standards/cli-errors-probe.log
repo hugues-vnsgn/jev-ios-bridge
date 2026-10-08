@@ -1,0 +1,24 @@
+COMMAND ["node", "--import", "tsx", "/tmp/jev-public-adapters-standards-zjp1qyoy/cli-errors-probe.ts"]
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+Error: Transform failed with 2 errors:
+/private/tmp/jev-public-adapters-standards-zjp1qyoy/cli-errors-probe.ts:8:1: ERROR: Top-level await is currently not supported with the "cjs" output format
+/private/tmp/jev-public-adapters-standards-zjp1qyoy/cli-errors-probe.ts:12:41: ERROR: Top-level await is currently not supported with the "cjs" output format
+    at failureErrorWithLog (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules/esbuild/lib/main.js:1752:15)
+    at /Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules/esbuild/lib/main.js:1019:50
+    at responseCallbacks.<computed> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules/esbuild/lib/main.js:886:9)
+    at handleIncomingPacket (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules/esbuild/lib/main.js:941:12)
+    at Socket.readFromStdout (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules/esbuild/lib/main.js:864:7)
+    at Socket.emit (node:events:514:20)
+    at addChunk (node:internal/streams/readable:575:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:526:3)
+    at Readable.push (node:internal/streams/readable:406:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23) {
+  name: 'TransformError'
+}
+
+Node.js v26.8.1
+
+EXIT 1

@@ -1,0 +1,31 @@
+{"case":"durable-retirement-race","code":"CONFIGURATION_ERROR","state":"retained","callsBefore":["open","plist","plist","plist","plist","plist","plist","plist","plist","plist","plist","create","boot","list","install","launch-app","list","snapshot-ui","screenshot"],"callsAfter":["open","plist","plist","plist","plist","plist","plist","plist","plist","plist","plist","create","boot","list","install","launch-app","list","snapshot-ui","screenshot"]}
+✖ real retirement during configuration validation returns authoritative unready refusal (420.5435ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 636.120042
+
+✖ failing tests:
+
+test at ../../../../../../private/tmp/jev-public-adapters-spec-v9qit6ha/retirement-race.test.ts:1:717
+✖ real retirement during configuration validation returns authoritative unready refusal (420.5435ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONFIGURATION_ERROR'
+  - 'ALLOCATION_NOT_READY'
+  
+      at TestContext.<anonymous> (/private/tmp/jev-public-adapters-spec-v9qit6ha/retirement-race.test.ts:9:188)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONFIGURATION_ERROR',
+    expected: 'ALLOCATION_NOT_READY',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

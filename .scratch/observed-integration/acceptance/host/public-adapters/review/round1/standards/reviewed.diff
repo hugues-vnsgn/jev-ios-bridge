@@ -1,0 +1,2137 @@
+--- a/src/cli.ts
++++ b/src/cli.ts
+@@ -1,6 +1,9 @@
+ #!/usr/bin/env node
++import { isObservedCommand, productionObservedComposition, runObservedCommand, observedError, observedSummary, type ObservedComposition } from './observed/cli.js';
+ import { readFile } from 'node:fs/promises';
++import { realpathSync } from 'node:fs';
+ import { join, resolve } from 'node:path';
++import { ObservedOperationError } from './observed/schema.js';
+ import { fileURLToPath } from 'node:url';
+ import { parseArgs } from 'node:util';
+ import { serveStdio } from '@modelcontextprotocol/server/stdio';
+@@ -29,6 +32,13 @@
+   jev-ios-bridge logs <run-id>
+   jev-ios-bridge capture [--serial S | --avd A] [--jev]
+   jev-ios-bridge mcp
++  jev-ios-bridge observed-allocate <allocation-request.json> [--json]
++  jev-ios-bridge observed-allocation <allocation-id> [--json] [--wait-ms N]
++  jev-ios-bridge observed-retire <allocation-id> [--json]
++  jev-ios-bridge observed-allocation-cancel <allocation-id> [--json]
++  jev-ios-bridge observed-action <action-request.json> [--json]
++  jev-ios-bridge observed-report <action-id> [--json] [--wait-ms N]
++  jev-ios-bridge observed-cancel <action-id> [--json]
+   jev-ios-bridge --version | --help
+ Set TYPESAFE_API_KEY and, for an iOS script, a dedicated simulator (JEV_DEVICE_UDID, the script's
+ device.udid, or .mobilebuildmcp/config.yaml); for an Android script, a device (JEV_ANDROID_DEVICE,
+@@ -44,7 +54,7 @@
+ A run of a script with "do" steps (driven mode, experimental: JEV_EXPERIMENTAL_DRIVEN=1) can pause for
+ Claude. run prints the pause and keeps waiting, but can't answer it: resolve_step is an MCP tool, so the
+ pause times out unless the script runs through the MCP server.
+-Exit codes: 0 passed, 1 failed, 2 inconclusive, 3 could not start.`;
++Observed prepare/start requires JEV_EXPERIMENTAL_OBSERVED=1 and offline admission migration/configuration.\nObserved commands need no Jev key; reads/cancellation/retirement remain available when disabled.\nExit codes: 0 passed, 1 failed, 2 inconclusive, 3 could not start.`;
+ 
+ /** A problem found before any run started. The message is safe to print. */
+ class StartError extends Error {}
+@@ -77,19 +87,43 @@
+   catch { throw new StartError(`Script file ${path} is not valid JSON`); }
+ }
+ 
+-async function main(): Promise<void> {
++const cliOptions = {
++  help: { type: 'boolean' }, version: { type: 'boolean' }, json: { type: 'boolean' }, 'no-log-pane': { type: 'boolean' },
++  'no-device-window': { type: 'boolean' },
++  'wait-ms': { type: 'string' }, 'max-steps': { type: 'string' }, 'timeout-ms': { type: 'string' },
++  serial: { type: 'string' }, avd: { type: 'string' }, jev: { type: 'boolean' },
++} as const;
++
++/** Internal composition seam shared by the installed entry and isolated subprocess fixtures. */
++export type CliComposition = { observed?: ObservedComposition; legacy?: BridgeService; projectDir?: string };
++async function dispatchCli(args: string[], composition: CliComposition): Promise<void> {
++  const projectDir = composition.projectDir ?? resolve(process.env.JEV_PROJECT_DIR?.trim() || process.cwd());
+   let parsed;
+   try {
+-    parsed = parseArgs({ allowPositionals: true, options: {
+-      help: { type: 'boolean' }, version: { type: 'boolean' }, json: { type: 'boolean' }, 'no-log-pane': { type: 'boolean' },
+-      'no-device-window': { type: 'boolean' },
+-      'max-steps': { type: 'string' }, 'timeout-ms': { type: 'string' },
+-      serial: { type: 'string' }, avd: { type: 'string' }, jev: { type: 'boolean' },
+-    } });
++    parsed = parseArgs({ args, allowPositionals: true, options: cliOptions });
+   } catch (error) { throw new StartError(`${(error as Error).message}\n${USAGE}`); }
+   const [command, argument] = parsed.positionals;
+   if (parsed.values.version) { console.log(BRIDGE_VERSION); return; }
+   if (parsed.values.help || !command) { console.log(USAGE); return; }
++  if (isObservedCommand(command)) {
++    const module = composition.observed ?? productionObservedComposition({ enabled: process.env.JEV_EXPERIMENTAL_OBSERVED === '1', runsDir: runsDir(), cwd: projectDir });
++    const controller = new AbortController(); let signalExit: number | undefined;
++    const stop = (code: number) => () => { signalExit ??= code; controller.abort(); void module.close(); };
++    const interrupt = stop(130); const terminate = stop(143);
++    process.once('SIGINT', interrupt); process.once('SIGTERM', terminate);
++    try {
++      const disallowed = parsed.positionals.length !== 2 || ['max-steps', 'timeout-ms', 'serial', 'avd', 'jev', 'no-log-pane', 'no-device-window']
++        .some(name => parsed.values[name as keyof typeof parsed.values] !== undefined);
++      process.exitCode = await runObservedCommand(module, command, disallowed ? undefined : argument, {
++        json: parsed.values.json ?? false, projectDir, signal: controller.signal,
++        ...(parsed.values['wait-ms'] !== undefined ? { waitMs: Number(parsed.values['wait-ms']) } : {}), write: text => { process.stdout.write(text); } });
++    } finally {
++      await module.close(); process.removeListener('SIGINT', interrupt); process.removeListener('SIGTERM', terminate);
++      if (signalExit !== undefined) process.exitCode = signalExit;
++    }
++    return;
++  }
++  if (parsed.values['wait-ms'] !== undefined) throw new StartError('--wait-ms applies only to observed reads');
+   const expected = command === 'mcp' || command === 'capture' ? 1 : 2;
+   if (!['run', 'report', 'logs', 'capture', 'mcp'].includes(command)) throw new StartError(`Unknown command: ${command}\n${USAGE}`);
+   if (parsed.positionals.length !== expected) throw new StartError(`Wrong number of arguments for ${command}\n${USAGE}`);
+@@ -135,7 +169,7 @@
+ 
+   // Under MCP there is no flag: JEV_DEVICE_WINDOW=off in the server's environment turns the window off.
+   const deviceWindow = deviceWindowOpener(parsed.values['no-device-window'] === true);
+-  const service = new BridgeService({
++  const service = composition.legacy ?? new BridgeService({
+     baseDir: runsDir(),
+     createDriver: createDriverFactory({ mobileBuildMcp: { cwd: projectDir,
+       ...(process.env.JEV_DEVICE_UDID ? { defaultUdid: process.env.JEV_DEVICE_UDID } : {}),
+@@ -150,17 +184,18 @@
+       // MCP's stdout carries the protocol, so pane notices go to stderr in both modes.
+       onNotice: (_runId, text) => { console.error(text); } },
+   });
++  const observed = command === 'mcp' ? composition.observed ?? productionObservedComposition({ enabled: process.env.JEV_EXPERIMENTAL_OBSERVED === '1', runsDir: runsDir(), cwd: projectDir }) : undefined;
+   let closing = false;
+   const close = async () => {
+     if (closing) return;
+     closing = true;
+-    await service.close();
++    await Promise.allSettled([service.close(), observed?.close()]);
+   };
+   process.once('SIGINT', () => { void close().then(() => process.exit(130)); });
+   process.once('SIGTERM', () => { void close().then(() => process.exit(143)); });
+   if (command === 'mcp') {
+     // The experimental switch (E13) publishes resolve_step; the plugin sets it from its experimentalDriven setting.
+-    serveStdio(() => createMcpServer(service, { driven: experimentalDrivenOn(process.env) }), { onerror: () => { console.error('MCP transport error'); } });
++    serveStdio(() => createMcpServer(service, { driven: experimentalDrivenOn(process.env), observed: observed! }), { onerror: () => { console.error('MCP transport error'); } });
+     process.stdin.once('end', () => { void close(); });
+     return;
+   }
+@@ -196,11 +231,26 @@
+   } finally { await close(); }
+ }
+ 
+-main().catch((error: unknown) => {
+-  if (error instanceof z.ZodError) console.error(`Script is invalid:\n${z.prettifyError(error)}`);
+-  else if (error instanceof StartError || error instanceof ScriptValueError || error instanceof DrivenProjectError ||
+-    isDeviceSelectionError(error)) {
+-    console.error(error.message);
+-  } else console.error('Bridge could not start. Check arguments, script, and environment.');
+-  process.exitCode = EXIT.couldNotStart;
+-});
++export async function runCli(args = process.argv.slice(2), composition: CliComposition = {}): Promise<void> {
++  try { await dispatchCli(args, composition); }
++  catch (error: unknown) {
++    const command = parseArgs({ args, allowPositionals: true, strict: false, options: cliOptions }).positionals[0];
++    if (command && isObservedCommand(command)) {
++      const reply = observedError(new ObservedOperationError('INVALID_REQUEST', 'Invalid observed command arguments'),
++        ['observed-action', 'observed-report', 'observed-cancel'].includes(command) ? 'action' : 'preparation');
++      process.stdout.write((args.includes('--json') ? JSON.stringify(reply) : observedSummary(reply)) + '\n');
++      process.exitCode = 3; return;
++    }
++    if (error instanceof z.ZodError) console.error(`Script is invalid:\n${z.prettifyError(error)}`);
++    else if (error instanceof StartError || error instanceof ScriptValueError || error instanceof DrivenProjectError ||
++      isDeviceSelectionError(error)) {
++      console.error(error.message);
++    } else console.error('Bridge could not start. Check arguments, script, and environment.');
++    process.exitCode = EXIT.couldNotStart;
++  }
++}
++// npm invokes the bin through a symlink; fixture imports must remain inert.
++let directEntry = false;
++try { directEntry = !!process.argv[1] && realpathSync(fileURLToPath(import.meta.url)) === realpathSync(process.argv[1]); }
++catch { /* An importing host may have no filesystem entrypoint. */ }
++if (directEntry) void runCli();
+--- a/src/mcp/index.ts
++++ b/src/mcp/index.ts
+@@ -1,3 +1,5 @@
++import { registerObservedTools } from './observed.js';
++import type { ObservedComposition } from '../observed/cli.js';
+ import { McpServer } from '@modelcontextprotocol/server';
+ import { z } from 'zod/v4';
+ import { scriptedScenarioSchema, ScriptValueError } from '../scripted/schema.js';
+@@ -27,7 +29,7 @@
+   'screen is refused with the reason, and the pause stays open for a corrected one.';
+ 
+ /** `driven`: the experimental driven-mode switch is on, so `resolve_step` and the hand-back limit are published. */
+-export function createMcpServer(service: BridgeService, options: { driven?: boolean } = {}): McpServer {
++export function createMcpServer(service: BridgeService, options: { driven?: boolean; observed?: ObservedComposition } = {}): McpServer {
+   const server = new McpServer({ name: 'jev-ios-bridge', version: BRIDGE_VERSION });
+   server.registerTool('start_scenario', {
+     description: 'Start an explicit iOS or Android action script with assertion checkpoints. Returns a run id, a local watch URL, and logsCommand, a terminal command that follows the app\'s own output live (a log pane window usually opens by itself). Poll get_report for completion; use cancel_run to stop. TypeSafe receives observed screen text and current assertion claims. Typed values go to device actions and may later appear in screen text; screenshots stay local. A value may be {"fromEnv": "NAME"}, read from this server\'s environment, so a credential stays out of the script.',
+@@ -72,5 +74,6 @@
+       }
+     });
+   }
++  if (options.observed) registerObservedTools(server, options.observed);
+   return server;
+ }
+--- /dev/null
++++ b/src/mcp/observed.ts
+@@ -0,0 +1,51 @@
++import type { McpServer, StandardSchemaWithJSON } from '@modelcontextprotocol/server';
++import { z } from 'zod/v4';
++import { observedActionRequestSchema, observedActionIdSchema, observedAllocationIdSchema, parseObservedAction,
++  ObservedOperationError } from '../observed/schema.js';
++import { prepareAllocationSchema, parsePrepareAllocation } from '../observed/allocation-schema.js';
++import { observedError, isObservedError, observedSummary, type ObservedComposition, type ObservedReply } from '../observed/cli.js';
++
++const actionId = z.strictObject({ actionId: observedActionIdSchema });
++const allocationId = z.strictObject({ allocationId: observedAllocationIdSchema });
++const wait = { waitMs: z.number().int().min(0).max(45000).optional() };
++/** Keep the published strict schema; invalid raw input reaches our safe versioned error renderer. */
++function transportSchema(schema: z.ZodType): StandardSchemaWithJSON<unknown, unknown> {
++  return { '~standard': { ...schema['~standard'], validate: value => ({ value }) } };
++}
++function parsed<T extends z.ZodType>(schema: T, raw: unknown): z.output<T> {
++  try { if (Buffer.byteLength(JSON.stringify(raw)) > 65536) throw new Error(); }
++  catch { throw new ObservedOperationError('INVALID_REQUEST', 'Expected bounded observed input'); }
++  const value = schema.safeParse(raw);
++  if (!value.success) throw new ObservedOperationError('INVALID_REQUEST', 'Invalid observed input');
++  return value.data;
++}
++export function registerObservedTools(server: McpServer, module: ObservedComposition): void {
++  const register = (name: string, description: string, schema: z.ZodType, kind: 'action' | 'preparation',
++    call: (raw: unknown, signal: AbortSignal) => Promise<ObservedReply>, readOnly = false) => {
++    server.registerTool(name, { description, inputSchema: transportSchema(schema),
++      ...(readOnly ? { annotations: { readOnlyHint: true } } : {}) }, async (raw, ctx) => {
++      let reply: ObservedReply;
++      try { reply = await call(raw, ctx.mcpReq.signal); }
++      catch (error) {
++        reply = observedError(error, kind);
++      }
++      return { content: [{ type: 'text' as const, text: observedSummary(reply) }, { type: 'text' as const, text: JSON.stringify(reply) }],
++        ...(isObservedError(reply) ? { isError: true } : {}) };
++    });
++  };
++  if (module.enabled) {
++    register('start_observed_action', 'Start one observed tap on a prepared dedicated allocation. Returns visible predicate evidence, never a Jev verdict or native receipt. Retry the exact same identity/request only to retrieve; poll get_observed_action. Transport cancellation does not cancel an admitted action.', observedActionRequestSchema, 'action',
++      raw => { parseObservedAction(raw); return module.start(raw); });
++    register('prepare_observed_allocation', 'Prepare one dedicated simulator for the declared action identity, retaining it after use or uncertainty. Requires explicit compatible source and unmodified app artifact. No automatic replacement or replay; preparation waits within its bounded budgets.', prepareAllocationSchema, 'preparation',
++      raw => { parsePrepareAllocation(raw); return module.prepareAllocation(raw); });
++  }
++  register('get_observed_action', 'Read one consistent authoritative observed action snapshot and full local evidence pointers. waitMs is 0–45000; aborting this wait stops only the wait. No recovery or replay.', actionId.extend(wait), 'action', async (raw, signal) => {
++    const input = parsed(actionId.extend(wait), raw); return module.inspect(input.actionId, { waitMs: input.waitMs ?? 0, signal });
++  }, true);
++  register('cancel_observed_action', 'Explicitly cancel the exact observed action and wait at most 5000ms for local finalization. Cancellation cannot certify native release; unknown work stays unavailable. Terminal cancellation retrieves.', actionId, 'action', raw => module.cancel(parsed(actionId, raw).actionId));
++  register('get_observed_allocation', 'Read persisted allocation authority, evidence and retention. waitMs is 0–45000; aborting this wait stops only the wait. Historical readOnly/historicalOutcome never grant preparation or input permission.', allocationId.extend(wait), 'preparation', async (raw, signal) => {
++    const input = parsed(allocationId.extend(wait), raw); return module.getAllocation(input.allocationId, { waitMs: input.waitMs ?? 0, signal });
++  }, true);
++  register('cancel_observed_allocation', 'Cancel active preparation with bounded local finalization, or retire ready unused stock. Executing ALLOCATION_BUSY directs cancel_observed_action; no device cleanup, reuse or owner takeover.', allocationId, 'preparation', raw => module.cancelAllocation(parsed(allocationId, raw).allocationId));
++  register('retire_observed_allocation', 'Change ready allocation retention metadata only; never stop, delete or reuse a device. Active preparing ALLOCATION_BUSY directs cancel_observed_allocation; executing directs cancel_observed_action. Terminal and historical retirement retrieve.', allocationId, 'preparation', raw => module.retireAllocation(parsed(allocationId, raw).allocationId));
++}
+--- /dev/null
++++ b/src/observed/cli.ts
+@@ -0,0 +1,168 @@
++import { parsePrepareAllocation, AllocationInputError, allocationError } from './allocation-schema.js';
++import { open } from 'node:fs/promises';
++import { constants } from 'node:fs';
++import { resolve } from 'node:path';
++import type { Admission } from '../device/admission.js';
++import type { ObservedActionService } from './service.js';
++import type { AllocationResult, AllocationOperationError, AllocationSnapshotV1 } from './allocation.js';
++import { parseObservedAction, ObservedOperationError, observedActionIdSchema, observedAllocationIdSchema,
++  observedReadOptionsSchema, type ObservedOperationErrorV1, type ObservedActionRequest } from './schema.js';
++import { observedActionExitCode, observedActionSummary, type ObservedActionSnapshot } from './report.js';
++
++export type ObservedPublic = Pick<ObservedActionService<AllocationResult>, 'start' | 'inspect' | 'cancel' | 'prepareAllocation' | 'getAllocation' | 'cancelAllocation' | 'retireAllocation' | 'close'>;
++export type ObservedComposition = ObservedPublic & { readonly enabled: boolean };
++export type ObservedReply = ObservedActionSnapshot | AllocationResult | ObservedOperationErrorV1;
++export const observedCommands = ['observed-allocate', 'observed-allocation', 'observed-retire', 'observed-allocation-cancel',
++  'observed-action', 'observed-report', 'observed-cancel'] as const;
++export type ObservedCommand = typeof observedCommands[number];
++export const isObservedCommand = (command: string): command is ObservedCommand => observedCommands.some(value => value === command);
++const preparationCommand = (command: ObservedCommand) => command !== 'observed-action' && command !== 'observed-report' && command !== 'observed-cancel';
++
++/** A transport owns no jobs: construction is inert, and close delegates once to the shared runtime. */
++export function createObservedComposition(options: { enabled: boolean; create: () => ObservedPublic | Promise<ObservedPublic>;
++  beforeStart?: (request: ObservedActionRequest) => Promise<void> }): ObservedComposition {
++  let module: ObservedPublic | undefined; let opening: Promise<ObservedPublic> | undefined;
++  let closing: Promise<void> | undefined; let closed = false;
++  const get = (): Promise<ObservedPublic> => {
++    if (!opening) opening = Promise.resolve().then(options.create).then(value => { module = value; return value; });
++    return opening;
++  };
++  const allowStart = (acceptanceKind: 'action' | 'preparation') => {
++    if (closed) throw new ObservedOperationError('SHUTTING_DOWN', 'Observed execution is shutting down', { acceptanceKind });
++    if (!options.enabled) throw new ObservedOperationError('OBSERVED_DISABLED', 'Observed execution is disabled', { acceptanceKind });
++  };
++  return { enabled: options.enabled,
++    async start(raw) {
++      allowStart('action'); const request = parseObservedAction(raw); const service = await get();
++      allowStart('action'); await options.beforeStart?.(request); allowStart('action'); return service.start(raw);
++    },
++    async inspect(id, opts) { return (await get()).inspect(id, opts); }, async cancel(id) { return (await get()).cancel(id); },
++    async prepareAllocation(raw) {
++      allowStart('preparation');
++      try { parsePrepareAllocation(raw); }
++      catch (error) { throw new ObservedOperationError(error instanceof AllocationInputError && error.code === 'UNSUPPORTED_VERSION' ? 'UNSUPPORTED_VERSION' : 'INVALID_REQUEST', 'Invalid allocation request', { acceptanceKind: 'preparation' }); }
++      const service = await get(); allowStart('preparation'); return service.prepareAllocation(raw);
++    },
++    async getAllocation(id, opts) { return (await get()).getAllocation(id, opts); },
++    async cancelAllocation(id) { return (await get()).cancelAllocation(id); }, async retireAllocation(id) { return (await get()).retireAllocation(id); },
++    close() {
++      closed = true;
++      // Calling the existing module now revokes its local gates before any bounded wait.
++      return closing ??= module ? module.close() : opening ? opening.then(value => value.close(), () => undefined) : Promise.resolve();
++    } };
++}
++
++/** Configuration gates only new ready consumption; immutable retrieval/conflict remains runtime-owned. */
++export async function validateObservedStartConfiguration(admission: Pick<Admission, 'readAction'>, request: ObservedActionRequest,
++  validate: () => Promise<unknown>): Promise<void> {
++  const eligible = () => {
++    const view = admission.readAction(request.actionId);
++    return view?.kind === 'allocation' && view.allocation.actionId === request.actionId &&
++      view.allocation.allocationId === request.allocationId && view.allocation.appBundleId === request.app.bundleId &&
++      view.allocation.actionDigest === null && view.allocation.state === 'ready';
++  };
++  let ready: boolean;
++  try { ready = eligible(); } catch { throw new ObservedOperationError('STORE_UNAVAILABLE', 'Authoritative action state is unavailable', { actionId: request.actionId, acceptance: 'unknown' }); }
++  if (!ready) return;
++  try { await validate(); }
++  catch {
++    try {
++      const fresh = admission.readAction(request.actionId);
++      if (fresh?.kind === 'imported' || (fresh?.kind === 'allocation' && fresh.allocation.actionDigest !== null)) return;
++    }
++    catch { throw new ObservedOperationError('STORE_UNAVAILABLE', 'Authoritative action state is unavailable', { actionId: request.actionId, acceptance: 'unknown' }); }
++    throw new ObservedOperationError('CONFIGURATION_ERROR', 'Observed allocation configuration is invalid', { actionId: request.actionId, allocationId: request.allocationId });
++  }
++}
++
++/** Only installed CLI composition reaches this factory; test stores have no production override. */
++export function productionObservedComposition(options: { enabled: boolean; runsDir: string; cwd: string }): ObservedComposition {
++  let admission: Admission;
++  return createObservedComposition({ enabled: options.enabled,
++    async create() {
++      const [{ Admission }, { ObservedAllocator }, { ObservedActionService, observedDriverFactory }, { deviceWindowOpener }, { BRIDGE_VERSION }] = await Promise.all([
++        import('../device/admission.js'), import('./allocation.js'), import('./service.js'), import('../device/index.js'), import('../version.js')]);
++      try { admission = Admission.open(); }
++      catch { throw new ObservedOperationError('STORE_UNAVAILABLE', 'Existing admission authority is unavailable', { acceptance: 'unknown' }); }
++      const runsDir = resolve(options.runsDir);
++      const allocator = new ObservedAllocator({ admission, runsDir });
++      const deviceWindow = deviceWindowOpener(false);
++      return new ObservedActionService({ admission, allocator, runsDir, bridgeVersion: BRIDGE_VERSION, backend: 'real', enabled: options.enabled,
++        createDriver: observedDriverFactory({ cwd: options.cwd, admission, ...(deviceWindow ? { deviceWindow } : {}) }) });
++    },
++    async beforeStart(request) {
++      const { readAllocationConfig } = await import('./allocation-config.js');
++      await validateObservedStartConfiguration(admission, request, () => readAllocationConfig());
++    } });
++}
++export function observedError(error: unknown, acceptanceKind: 'action' | 'preparation'): ObservedOperationErrorV1 | AllocationOperationError {
++  if (error instanceof ObservedOperationError) return { ...error.toJSON(), acceptanceKind };
++  if (error instanceof AllocationInputError) {
++    if (acceptanceKind === 'preparation') return allocationError(error.code, {}, ['STATE_UNAVAILABLE', 'STORE_UNAVAILABLE'].includes(error.code) ? 'unknown' : 'no');
++    return new ObservedOperationError(error.code === 'INVALID_REQUEST' || error.code === 'UNSUPPORTED_VERSION' ? error.code : 'CONFIGURATION_ERROR', 'Observed allocation configuration is invalid').toJSON();
++  }
++  return new ObservedOperationError('INTERNAL_ERROR', 'Observed operation failed', { acceptanceKind, acceptance: 'unknown' }).toJSON();
++}
++export const isObservedError = (reply: ObservedReply): reply is ObservedOperationErrorV1 | AllocationOperationError => 'kind' in reply && reply.kind === 'observed-operation-error';
++export function observedExitCode(reply: ObservedReply): 0 | 2 | 3 {
++  if (isObservedError(reply)) return 3;
++  if ('kind' in reply) return observedActionExitCode(reply);
++  return reply.authority === 'committed' && ['prepared', 'action_completed', 'retired_unused'].includes(reply.outcome ?? '') ? 0
++    : reply.authority === 'committed' && reply.outcome === 'refused' ? 3 : 2;
++}
++export function observedSummary(reply: ObservedReply): string {
++  if (isObservedError(reply)) return `${reply.code}: ${reply.message}${reply.evidenceDirectory ? '; evidence ' + reply.evidenceDirectory : ''}`;
++  if ('kind' in reply) return observedActionSummary(reply);
++  const evidence = reply.evidenceRefs.join(', ') || '(no recorded evidence)';
++  return `${reply.allocationId}: ${reply.outcome ?? reply.state} (${reply.authority}); evidence ${evidence}`;
++}
++async function readRequest(path: string, projectDir: string): Promise<unknown> {
++  try {
++    const file = await open(resolve(projectDir, path), constants.O_RDONLY | constants.O_NONBLOCK);
++    try {
++      if (!(await file.stat()).isFile()) throw new Error();
++      const bytes = Buffer.alloc(65537); let length = 0;
++      while (length < bytes.length) {
++        const result = await file.read(bytes, length, bytes.length - length);
++        if (result.bytesRead === 0) break;
++        length += result.bytesRead;
++      }
++      if (length > 65536) throw new Error();
++      return JSON.parse(bytes.subarray(0, length).toString('utf8'));
++    } finally { await file.close(); }
++  } catch { throw new ObservedOperationError('INVALID_REQUEST', 'Expected a readable bounded JSON request file'); }
++}
++/** CLI parsing/rendering only. Signals stop waits or close the owned shared runtime, never replay. */
++export async function runObservedCommand(module: ObservedComposition, command: ObservedCommand, argument: string | undefined,
++  options: { json: boolean; waitMs?: number; projectDir: string; signal?: AbortSignal; write: (text: string) => void }): Promise<number> {
++  const acceptanceKind = preparationCommand(command) ? 'preparation' : 'action';
++  let reply: ObservedReply;
++  try {
++    if (!argument) throw new ObservedOperationError('INVALID_REQUEST', 'Observed command requires one argument', { acceptanceKind });
++    const read = command === 'observed-report' || command === 'observed-allocation';
++    if (options.waitMs !== undefined && !read) throw new ObservedOperationError('INVALID_REQUEST', '--wait-ms is only valid for observed reads', { acceptanceKind });
++    const wait = observedReadOptionsSchema.safeParse({ waitMs: options.waitMs ?? 0 });
++    if (!wait.success) throw new ObservedOperationError('INVALID_REQUEST', 'Invalid observed wait duration', { acceptanceKind });
++    const readOptions = { waitMs: wait.data.waitMs, ...(options.signal ? { signal: options.signal } : {}) };
++    if (command === 'observed-action' || command === 'observed-allocate') {
++      if (!module.enabled) throw new ObservedOperationError('OBSERVED_DISABLED', 'Observed execution is disabled', { acceptanceKind });
++      const raw = await readRequest(argument, options.projectDir);
++      if (command === 'observed-allocate') reply = await module.prepareAllocation(raw);
++      else {
++        const started = await module.start(raw); reply = started;
++        while (reply.state !== 'terminal' && reply.state !== 'unresolved') reply = await module.inspect(started.actionId, { waitMs: 45000, ...(options.signal ? { signal: options.signal } : {}) });
++        reply = { ...reply, disposition: started.disposition };
++      }
++    } else if (acceptanceKind === 'action') {
++      if (!observedActionIdSchema.safeParse(argument).success) throw new ObservedOperationError('INVALID_REQUEST', 'Invalid action identity');
++      reply = command === 'observed-report' ? await module.inspect(argument, readOptions) : await module.cancel(argument);
++    } else {
++      const id = observedAllocationIdSchema.safeParse(argument);
++      if (!id.success) throw new ObservedOperationError('INVALID_REQUEST', 'Invalid allocation identity', { acceptanceKind });
++      reply = command === 'observed-allocation' ? await module.getAllocation(id.data, readOptions)
++        : command === 'observed-retire' ? await module.retireAllocation(id.data) : await module.cancelAllocation(id.data);
++    }
++  } catch (error) { reply = observedError(error, acceptanceKind); }
++  options.write((options.json ? JSON.stringify(reply) : observedSummary(reply)) + '\n');
++  return observedExitCode(reply);
++}
+--- /dev/null
++++ b/tests/observed-cli.test.ts
+@@ -0,0 +1,195 @@
++import assert from 'node:assert/strict';
++import test, { type TestContext } from 'node:test';
++import { spawn } from 'node:child_process';
++import { mkdtemp, rm, writeFile, readFile, symlink } from 'node:fs/promises';
++import { tmpdir } from 'node:os';
++import { join, resolve } from 'node:path';
++import { BRIDGE_VERSION } from '../src/version.js';
++import { setupPublicFixture, fixtureCalls, actionRequest } from './fixtures/observed-cli-server.js';
++
++export async function publicFixture(t: TestContext) {
++  const root = await mkdtemp(join(tmpdir(), 'jev-public-'));
++  const fixture = await setupPublicFixture(root);
++  t.after(async () => { await fixture.cleanup(); await rm(root, { recursive: true, force: true }); });
++  return { ...fixture, root, backendRoot: fixture.root };
++}
++function childCommand(root: string, command: string, argument: string, mode = 'observed', wait?: number, enabled = '1') {
++  const env = { ...process.env, JEV_EXPERIMENTAL_OBSERVED: enabled, OBSERVED_FIXTURE_MODE: mode }; delete (env as NodeJS.ProcessEnv).TYPESAFE_API_KEY;
++  const child = spawn(process.execPath, ['--import', 'tsx', 'tests/fixtures/observed-cli-server.ts', root, command, argument, ...(wait === undefined ? [] : [String(wait)])], { env, stdio: ['ignore', 'pipe', 'pipe'] });
++  let stdout = ''; let stderr = '';
++  child.stdout.on('data', bytes => { stdout += bytes; }); child.stderr.on('data', bytes => { stderr += bytes; });
++  const result = new Promise<{code:number|null;stdout:string;stderr:string;reply:any}>(done => child.once('exit', code => {
++    const lines = stdout.trim().split('\n'); assert.equal(lines.length, 1, stdout); done({ code, stdout, stderr, reply: JSON.parse(lines[0]!) });
++  }));
++  return { child, result };
++}
++async function prepare(t: TestContext) {
++  const f = await publicFixture(t); const path = join(f.root, 'prepare.json'); await writeFile(path, JSON.stringify(f.request('one')));
++  const result = await childCommand(f.root, 'observed-allocate', path).result;
++  assert.equal(result.code, 0, result.stdout + result.stderr); assert.equal(result.reply.outcome, 'prepared'); assert.equal(result.reply.state, 'ready');
++  return { ...f, allocationId: result.reply.allocationId, prepared: result.reply };
++}
++for (const [mode, outcome, code, touches] of [['observed', 'outcome_observed', 0, 1], ['already', 'already_satisfied', 0, 0], ['refused', 'refused', 3, 0], ['inconclusive', 'inconclusive', 2, 1], ['unresolved', null, 2, 0]] as const) {
++  test(`separate allocation/action CLI processes render ${mode} with exact exit and no relaunch`, { timeout: 15000 }, async t => {
++    const f = await prepare(t); const path = join(f.root, 'action.json');
++    await writeFile(path, JSON.stringify(actionRequest(f.allocationId)));
++    const before = fixtureCalls(f.root).filter(value => value !== 'open');
++    const result = await childCommand(f.root, 'observed-action', path, mode === 'unresolved' ? 'unresolved' : mode).result;
++    assert.equal(result.code, code, result.stdout + result.stderr); assert.equal(result.reply.outcome, outcome);
++    assert.equal(result.reply.authority, mode === 'unresolved' ? 'unconfirmed' : 'committed');
++    assert.equal(result.reply.disposition, 'started');
++    const after = fixtureCalls(f.root).filter(value => value !== 'open').slice(before.length);
++    assert.equal(after.filter(value => value === 'touch').length, mode === 'unresolved' ? 1 : touches);
++    assert.ok(after.every(value => !['create', 'boot', 'install', 'launch-app', 'window'].includes(value)), JSON.stringify(after));
++    assert.ok(!result.stdout.includes('Private vendor'));
++    if (mode !== 'unresolved') {
++      const retrieved = await childCommand(f.root, 'observed-action', path, mode).result;
++      assert.equal(retrieved.reply.outcome, outcome); assert.equal(retrieved.reply.disposition, 'retrieved');
++      assert.deepEqual(fixtureCalls(f.root).filter(value => value !== 'open').slice(before.length), after);
++      const conflictPath = join(f.root, 'conflict.json'); await writeFile(conflictPath, JSON.stringify({ ...actionRequest(f.allocationId), timeoutMs: 6000 }));
++      const conflict = await childCommand(f.root, 'observed-action', conflictPath).result;
++      assert.equal(conflict.code, 3); assert.equal(conflict.reply.code, 'ACTION_ID_CONFLICT');
++      assert.deepEqual(fixtureCalls(f.root).filter(value => value !== 'open').slice(before.length), after);
++    }
++  });
++}
++test('disabled CLI refuses new effects, retains ready reads/cancel/retire, and uses exact flag', async t => {
++  const f = await prepare(t);
++  for (const enabled of ['0', 'true', 'yes', '']) {
++    const refused = await childCommand(f.root, 'observed-action', '/missing/request.json', 'observed', undefined, enabled).result;
++    assert.equal(refused.code, 3); assert.equal(refused.reply.code, 'OBSERVED_DISABLED');
++  }
++  const read = await childCommand(f.root, 'observed-allocation', f.allocationId, 'observed', 0, '0').result;
++  assert.equal(read.code, 0); assert.equal(read.reply.state, 'ready');
++  const cancel = await childCommand(f.root, 'observed-allocation-cancel', f.allocationId, 'observed', undefined, '0').result;
++  assert.equal(cancel.code, 0); assert.equal(cancel.reply.outcome, 'retired_unused');
++  const retire = await childCommand(f.root, 'observed-retire', f.allocationId, 'observed', undefined, '0').result;
++  assert.deepEqual(retire.reply, cancel.reply);
++});
++test('invalid config blocks fresh ready action but preserves immutable retrieval/conflict and reads', async t => {
++  const f = await prepare(t); const path = join(f.root, 'action.json'); await writeFile(path, JSON.stringify(actionRequest(f.allocationId)));
++  await writeFile(f.configPath, '{bad', { mode: 0o600 });
++  const calls = fixtureCalls(f.root).filter(value => value !== 'open');
++  const blocked = await childCommand(f.root, 'observed-action', path).result;
++  assert.equal(blocked.reply.code, 'CONFIGURATION_ERROR'); assert.equal(blocked.reply.acceptance, 'no');
++  assert.deepEqual(fixtureCalls(f.root).filter(value => value !== 'open'), calls);
++  assert.equal((await childCommand(f.root, 'observed-allocation', f.allocationId).result).reply.state, 'ready');
++  const original = await readFile(join(f.home, 'Library/Application Support/jev-ios-bridge/allocation.json'), 'utf8'); assert.equal(original, '{bad');
++  await writeFile(f.configPath, JSON.stringify({ version: 1 }), { mode: 0o600 });
++  const observed = await childCommand(f.root, 'observed-action', path, 'already').result; assert.equal(observed.reply.outcome, 'already_satisfied');
++  await writeFile(f.configPath, '{bad', { mode: 0o600 });
++  assert.equal((await childCommand(f.root, 'observed-action', path).result).reply.outcome, 'already_satisfied');
++  await writeFile(path, JSON.stringify({ ...actionRequest(f.allocationId), timeoutMs: 6000 }));
++  assert.equal((await childCommand(f.root, 'observed-action', path).result).reply.code, 'ACTION_ID_CONFLICT');
++  assert.equal((await childCommand(f.root, 'observed-cancel', 'one', 'observed', undefined, '0').result).reply.outcome, 'already_satisfied');
++  assert.equal((await childCommand(f.root, 'observed-retire', f.allocationId, 'observed', undefined, '0').result).reply.outcome, 'action_completed');
++});
++
++async function untilCall(root: string, operation: string, offset = 0) {
++  const end=Date.now()+5000;
++  while(!fixtureCalls(root).slice(offset).includes(operation)) { assert.ok(Date.now()<end,'Missing fake milestone '+operation);await new Promise(done=>setTimeout(done,20)); }
++}
++for(const [signal,code] of [['SIGINT',130],['SIGTERM',143]] as const) {
++  test(`CLI ${signal} revokes owned action and returns ${code} without late input`,{timeout:15000},async t=>{
++    const f=await prepare(t);const path=join(f.root,'action.json');await writeFile(path,JSON.stringify({...actionRequest(f.allocationId),timeoutMs:60000}));
++    const before=fixtureCalls(f.root).length;
++    const worker=childCommand(f.root,'observed-action',path,'pending');
++    await untilCall(f.root,'snapshot-ui',before);
++    const started=Date.now();worker.child.kill(signal);const stopped=await worker.result;
++    assert.equal(stopped.code,code);assert.ok(Date.now()-started<6500);
++    const current=await childCommand(f.root,'observed-report','one','observed',0,'0').result;
++    assert.equal(current.reply.cancellationRequested,true);
++    if(current.reply.authority==='committed') {assert.equal(current.reply.outcome,'inconclusive');assert.equal(current.reply.admission,'quarantined');}
++    else {assert.equal(current.reply.outcome,null);assert.equal(current.reply.state,'unresolved');assert.ok(['active','quarantined','unknown'].includes(current.reply.admission));}
++    assert.notEqual(current.reply.actionAttempted,true);assert.notEqual(current.reply.actionAcknowledged,true);
++    assert.equal(fixtureCalls(f.root).slice(before).filter(value=>value==='touch').length,0);
++  });
++  test(`CLI ${signal} stops only a read wait with ${code}`,{timeout:20000},async t=>{
++    const f=await prepare(t);const path=join(f.root,'action.json');await writeFile(path,JSON.stringify({...actionRequest(f.allocationId),timeoutMs:60000}));
++    const before=fixtureCalls(f.root).length;const worker=childCommand(f.root,'observed-action',path,'pending');
++    t.after(async()=>{if(worker.child.exitCode===null){worker.child.kill('SIGTERM');await worker.result;}});
++    await untilCall(f.root,'snapshot-ui',before);
++    const initial=(await childCommand(f.root,'observed-report','one','observed',0,'0').result).reply;
++    const waiting=childCommand(f.root,'observed-report','one','observed',45000,'0');
++    await new Promise(done=>setTimeout(done,350));waiting.child.kill(signal);const stopped=await waiting.result;
++    assert.equal(stopped.code,code);assert.equal(stopped.reply.code,'WAIT_CANCELLED');
++    const current=(await childCommand(f.root,'observed-report','one','observed',0,'0').result).reply;
++    assert.deepEqual(current,initial);assert.equal(current.cancellationRequested,false);assert.equal(worker.child.exitCode,null);
++    assert.equal(fixtureCalls(f.root).slice(before).filter(value=>value==='touch').length,0);
++    worker.child.kill('SIGTERM');await worker.result;
++  });
++}
++test('CLI shutdown cancels only owned active preparation and leaves ready parked stock intact',{timeout:15000},async t=>{
++  const f=await publicFixture(t);const path=join(f.root,'prepare.json');await writeFile(path,JSON.stringify(f.request('one')));
++  const child=childCommand(f.root,'observed-allocate',path,'pending-preparation');await untilCall(f.root,'boot');
++  child.child.kill('SIGTERM');const stopped=await child.result;assert.equal(stopped.code,143);
++  if(stopped.reply.authority==='committed'){assert.equal(stopped.reply.state,'quarantined');assert.equal(stopped.reply.outcome,'uncertain');}
++  else {assert.equal(stopped.reply.outcome,null);assert.ok(['preparing','quarantined'].includes(stopped.reply.state));}
++  assert.equal(stopped.reply.reservation.capacityHeld,true);assert.equal(stopped.reply.cancellationRequested,true);
++  assert.equal(fixtureCalls(f.root).filter(value=>['install','launch-app','touch'].includes(value)).length,0);
++  const read=(await childCommand(f.root,'observed-allocation',stopped.reply.allocationId,'observed',0,'0').result).reply;
++  assert.deepEqual(read,stopped.reply);
++});
++test('actual CLI offline invalid/disabled argument errors are one safe JSON record without a key',async t=>{
++  const root=await mkdtemp(join(tmpdir(),'jev-public-offline-'));t.after(()=>rm(root,{recursive:true,force:true}));
++  const env={...process.env,JEV_EXPERIMENTAL_OBSERVED:'0'};delete (env as NodeJS.ProcessEnv).TYPESAFE_API_KEY;
++  for(const args of [['observed-action','/never-read','--json'],['observed-report','unsafe/id','--json'],['observed-allocation','bad','--json'],['observed-report','one','--json','--wait-ms','NaN'],['observed-action','/never-read','--json','--unknown-secret','private-value']]) {
++    const child=spawn(process.execPath,['--import','tsx','src/cli.ts',...args],{env,cwd:process.cwd(),stdio:['ignore','pipe','pipe']});let stdout='';let stderr='';child.stdout.on('data',bytes=>{stdout+=bytes;});child.stderr.on('data',bytes=>{stderr+=bytes;});
++    const code=await new Promise<number|null>(done=>child.once('exit',done));assert.equal(code,3);assert.equal(stdout.trim().split('\n').length,1);const reply=JSON.parse(stdout);
++    assert.equal(reply.kind,'observed-operation-error');assert.ok(['OBSERVED_DISABLED','INVALID_REQUEST'].includes(reply.code));assert.ok(!stdout.includes('private-value'));assert.ok(!stderr.includes('private-value'));
++  }
++});
++
++test('legacy command arguments named like observed commands retain legacy error rendering', async () => {
++  const env = { ...process.env, JEV_EXPERIMENTAL_OBSERVED: '0' }; delete (env as NodeJS.ProcessEnv).TYPESAFE_API_KEY;
++  const child = spawn(process.execPath, ['--import', 'tsx', 'src/cli.ts', 'run', 'observed-action', '--json', '--unknown'], { env, stdio: ['ignore', 'pipe', 'pipe'] });
++  let stdout = ''; let stderr = '';
++  child.stdout.on('data', bytes => { stdout += bytes; }); child.stderr.on('data', bytes => { stderr += bytes; });
++  const code = await new Promise<number | null>(done => child.once('exit', done));
++  assert.equal(code, 3); assert.equal(stdout, ''); assert.match(stderr, /Unknown option/);
++});
++
++test('concurrent preparation and action CLI retries share one durable owner and no repeated backend work', { timeout: 20000 }, async t => {
++  const f = await publicFixture(t); const preparePath = join(f.root, 'prepare.json'); const request = f.request('one');
++  await writeFile(preparePath, JSON.stringify(request));
++  const allocations = await Promise.all([childCommand(f.root, 'observed-allocate', preparePath).result, childCommand(f.root, 'observed-allocate', preparePath).result]);
++  assert.ok(allocations.every(value => value.reply.outcome === 'prepared' || (value.code === 2 && value.reply.state === 'preparing')), JSON.stringify(allocations));
++  assert.equal(allocations[0]!.reply.allocationId, allocations[1]!.reply.allocationId);
++  const allocationId = allocations[0]!.reply.allocationId;
++  const prepared = await childCommand(f.root, 'observed-allocation', allocationId).result; assert.equal(prepared.reply.outcome, 'prepared');
++  const calls = fixtureCalls(f.root).filter(value => value !== 'open'); assert.equal(calls.filter(value => value === 'create').length, 1);
++  assert.equal(calls.filter(value => value === 'boot').length, 1); assert.equal(calls.filter(value => value === 'install').length, 1); assert.equal(calls.filter(value => value === 'launch-app').length, 1);
++  const repeated = await childCommand(f.root, 'observed-allocate', preparePath).result; assert.equal(repeated.reply.allocationId, allocationId);
++  assert.deepEqual(fixtureCalls(f.root).filter(value => value !== 'open'), calls);
++  const conflictPath = join(f.root, 'prepare-conflict.json'); await writeFile(conflictPath, JSON.stringify({ ...request, timeoutMs: 6000 }));
++  const conflict = await childCommand(f.root, 'observed-allocate', conflictPath).result; assert.equal(conflict.code, 3); assert.equal(conflict.reply.code, 'ACTION_ID_CONFLICT');
++  assert.deepEqual(fixtureCalls(f.root).filter(value => value !== 'open'), calls);
++  const actionPath = join(f.root, 'action.json'); await writeFile(actionPath, JSON.stringify(actionRequest(allocationId)));
++  const actions = await Promise.all([childCommand(f.root, 'observed-action', actionPath).result, childCommand(f.root, 'observed-action', actionPath).result]);
++  assert.ok(actions.every(value => value.code === 0 && value.reply.outcome === 'outcome_observed'), JSON.stringify(actions));
++  assert.deepEqual(actions.map(value => value.reply.disposition).sort(), ['retrieved', 'started']);
++  const after = fixtureCalls(f.root).filter(value => value !== 'open').slice(calls.length);
++  assert.equal(after.filter(value => value === 'touch').length, 1); assert.equal(after.filter(value => value === 'snapshot-ui').length, 2);
++  assert.ok(after.every(value => !['create', 'boot', 'install', 'launch-app', 'window'].includes(value)));
++});
++
++test('CLI strict request files reject malformed, versioned, extra and oversized inputs without opening authority', async t => {
++  const f = await publicFixture(t); const path = join(f.root, 'invalid.json');
++  for (const [text, code] of [['{bad', 'INVALID_REQUEST'], ['{"version":2}', 'UNSUPPORTED_VERSION'], [JSON.stringify({ ...actionRequest('ABCDEF00-0000-4000-8000-000000000099'), admissionRoot: '/secret' }), 'INVALID_REQUEST'], [' '.repeat(65537), 'INVALID_REQUEST']] as const) {
++    await writeFile(path, text); const result = await childCommand(f.root, 'observed-action', path).result;
++    assert.equal(result.code, 3); assert.equal(result.reply.code, code); assert.equal(result.reply.acceptanceKind, 'action'); assert.equal(result.reply.acceptance, 'no');
++  }
++  assert.deepEqual(fixtureCalls(f.root), []);
++});
++
++test('CLI executes through a bin symlink and its internal import remains inert', async t => {
++  const root = await mkdtemp(join(tmpdir(), 'jev-public-bin-')); t.after(() => rm(root, { recursive: true, force: true }));
++  const link = join(root, 'jev-ios-bridge'); await symlink(resolve('src/cli.ts'), link);
++  const env = { ...process.env, JEV_EXPERIMENTAL_OBSERVED: '0' }; delete (env as NodeJS.ProcessEnv).TYPESAFE_API_KEY;
++  for (const args of [['--import', 'tsx', link, '--version'], ['--import', 'tsx', '--input-type=module', '-e', "await import('./src/cli.ts'); process.stdout.write('imported\\n')"]]) {
++    const child = spawn(process.execPath, args, { env, stdio: ['ignore', 'pipe', 'pipe'] }); let stdout = ''; let stderr = '';
++    child.stdout.on('data', bytes => { stdout += bytes; }); child.stderr.on('data', bytes => { stderr += bytes; });
++    const code = await new Promise<number | null>(done => child.once('exit', done));
++    assert.equal(code, 0, stderr); assert.equal(stdout, args.includes('--version') ? BRIDGE_VERSION + '\n' : 'imported\n');
++  }
++});
+--- /dev/null
++++ b/tests/observed-mcp.test.ts
+@@ -0,0 +1,170 @@
++import assert from 'node:assert/strict';
++import test, { type TestContext } from 'node:test';
++import { spawn } from 'node:child_process';
++import { mkdtemp, rm, readFile } from 'node:fs/promises';
++import { tmpdir } from 'node:os';
++import { join } from 'node:path';
++import { createInterface } from 'node:readline';
++import { setupPublicFixture, fixtureObserved, fixtureCalls, actionRequest } from './fixtures/observed-cli-server.js';
++const retainedTools = ['cancel_observed_action', 'cancel_observed_allocation', 'get_observed_action', 'get_observed_allocation', 'retire_observed_allocation'];
++async function session(t: TestContext, mode = 'observed', enabled = '1', actual = false) {
++  const root = await mkdtemp(join(tmpdir(), 'jev-public-mcp-')); const fixture = await setupPublicFixture(root);
++  const env = { ...process.env, JEV_EXPERIMENTAL_OBSERVED: enabled, OBSERVED_FIXTURE_MODE: mode }; delete (env as NodeJS.ProcessEnv).TYPESAFE_API_KEY;
++  const child = spawn(process.execPath, ['--import', 'tsx', actual ? 'src/cli.ts' : 'tests/fixtures/observed-mcp-server.ts', actual ? 'mcp' : root], { env, stdio: ['pipe', 'pipe', 'pipe'] });
++  const pending = new Map<number, {done:(value:any)=>void;fail:(error:Error)=>void}>(); let next = 1; let stderr = '';
++  child.stderr.on('data', bytes => { stderr += bytes; });
++  const lines = createInterface({ input: child.stdout });
++  lines.on('line', line => { const reply = JSON.parse(line); pending.get(reply.id)?.done(reply); pending.delete(reply.id); });
++  child.on('exit', () => { for (const waiter of pending.values()) waiter.fail(new Error('Fixture exited: ' + stderr)); pending.clear(); });
++  const request = (method: string, params: object = {}) => {
++    const id = next++; const result = new Promise<any>((done, fail) => { pending.set(id, {done,fail}); child.stdin.write(JSON.stringify({ jsonrpc:'2.0',id,method,params }) + '\n'); });
++    return {id,result};
++  };
++  t.after(async () => {
++    child.stdin.end(); const stopped = child.exitCode === null ? new Promise<void>(done => child.once('exit', () => done())) : Promise.resolve();
++    const timer = setTimeout(() => child.kill('SIGTERM'), 6500); await stopped; clearTimeout(timer); lines.close();
++    await fixture.cleanup(); await rm(root,{recursive:true,force:true});
++  });
++  assert.equal((await request('initialize', {protocolVersion:'2025-03-26',capabilities:{},clientInfo:{name:'observed',version:'1'}}).result).result.serverInfo.name,'jev-ios-bridge');
++  child.stdin.write(JSON.stringify({jsonrpc:'2.0',method:'notifications/initialized'}) + '\n');
++  return {...fixture, publicRoot:root, child, rpc:request, allocationRequest:fixture.request,
++    async tools() { const response=await request('tools/list').result; assert.ok(response.result,JSON.stringify(response));return response.result.tools as any[]; },
++    async call(name:string,args:object) { const response=await request('tools/call',{name,arguments:args}).result; assert.ok(response.result,JSON.stringify(response));return response.result; } };
++}
++function snapshot(reply:any) {
++  assert.equal(reply.content.length,2); assert.equal(reply.content[0].type,'text'); assert.equal(reply.content[1].type,'text');
++  assert.equal(reply.structuredContent,undefined); return JSON.parse(reply.content[1].text);
++}
++for (const enabled of ['0','true','1']) test(`actual key-free CLI MCP startup publishes exact observed gate ${enabled}`,{timeout:10000},async t=>{
++  const s=await session(t,'observed',enabled,true); const tools=await s.tools();
++  const observed=tools.map(value=>value.name).filter(name=>name.includes('observed')).sort();
++  assert.deepEqual(observed, [...retainedTools,...(enabled==='1'?['prepare_observed_allocation','start_observed_action']:[])].sort());
++  for(const name of ['get_observed_action','get_observed_allocation']) assert.equal(tools.find(value=>value.name===name).annotations.readOnlyHint,true);
++  assert.deepEqual(fixtureCalls(s.publicRoot),[]);
++});
++test('strict MCP input errors use two safe text blocks and do not open authority',{timeout:10000},async t=>{
++  const s=await session(t); const cases:[string,object,string,string][]=[
++    ['start_observed_action',{},'UNSUPPORTED_VERSION','action'],
++    ['start_observed_action',{...actionRequest('ABCDEF00-0000-4000-8000-000000000099'),deviceId:'secret-vendor'},'INVALID_REQUEST','action'],
++    ['prepare_observed_allocation',{version:2},'UNSUPPORTED_VERSION','preparation'],
++    ['prepare_observed_allocation',{version:1,admissionRoot:'/secret'},'INVALID_REQUEST','preparation'],
++    ['get_observed_action',{actionId:'one',waitMs:45001},'INVALID_REQUEST','action'],
++    ['get_observed_action',{actionId:'one',junk:'secret'.repeat(12000)},'INVALID_REQUEST','action'],
++    ['get_observed_action',{actionId:'one',waitMs:-1},'INVALID_REQUEST','action'],
++    ['get_observed_allocation',{allocationId:'ABCDEF00-0000-4000-8000-000000000099',waitMs:0.5},'INVALID_REQUEST','preparation'],
++    ['get_observed_allocation',{allocationId:'bad'},'INVALID_REQUEST','preparation'],
++    ['cancel_observed_action',{actionId:'one',unknown:'secret'},'INVALID_REQUEST','action'],
++    ['retire_observed_allocation',{allocationId:'ABCDEF00-0000-4000-8000-000000000099',unknown:'secret'},'INVALID_REQUEST','preparation'],
++    ['start_observed_action',{...actionRequest('ABCDEF00-0000-4000-8000-000000000099'),junk:'secret'.repeat(12000)},'INVALID_REQUEST','action'],
++  ];
++  for(const [tool,input,code,kind] of cases){const reply=await s.call(tool,input);const value=snapshot(reply);assert.equal(reply.isError,true);assert.equal(value.kind,'observed-operation-error');assert.equal(value.code,code);assert.equal(value.acceptanceKind,kind);assert.ok(!JSON.stringify(reply).includes('secret'));}
++  assert.deepEqual(fixtureCalls(s.publicRoot),[]);
++});
++for(const [mode,outcome,touches] of [['observed','outcome_observed',1],['already','already_satisfied',0],['refused','refused',0],['inconclusive','inconclusive',1],['unresolved',null,1]] as const){
++  test(`MCP shared authority renders ${mode}, preserves evidence and exact-once retrieval`,{timeout:20000},async t=>{
++    const s=await session(t,mode);const preparedReply=await s.call('prepare_observed_allocation',s.allocationRequest('one'));
++    const allocation=snapshot(preparedReply);assert.equal(preparedReply.isError,undefined);assert.equal(allocation.outcome,'prepared');
++    const calls=fixtureCalls(s.publicRoot).filter(value=>value!=='open');
++    const request=actionRequest(allocation.allocationId);
++    const started=snapshot(await s.call('start_observed_action',request));assert.equal(started.disposition,'started');
++    const terminalReply=await s.call('get_observed_action',{actionId:'one',waitMs:5000}); const terminal=snapshot(terminalReply);
++    assert.equal(terminalReply.isError,undefined);assert.equal(terminal.outcome,outcome);assert.equal(terminal.authority,mode==='unresolved'?'unconfirmed':'committed');
++    assert.ok(terminalReply.content[0].text.includes(terminal.evidence.directory));
++    const actionCalls=fixtureCalls(s.publicRoot).filter(value=>value!=='open').slice(calls.length);
++    assert.equal(actionCalls.filter(value=>value==='touch').length,touches);
++    assert.ok(actionCalls.every(value=>!['boot','install','launch-app','create','window'].includes(value)));
++    const duplicate=snapshot(await s.call('start_observed_action',request));assert.equal(duplicate.disposition,'retrieved');assert.equal(duplicate.outcome,outcome);
++    const conflictingReply=await s.call('start_observed_action',{...request,timeoutMs:6000});const conflict=snapshot(conflictingReply);
++    assert.equal(conflictingReply.isError,true);assert.equal(conflict.code,'ACTION_ID_CONFLICT');
++    assert.deepEqual(fixtureCalls(s.publicRoot).filter(value=>value!=='open').slice(calls.length),actionCalls);
++  });
++}
++
++function boundaryRequest(bytes: number) {
++  const request = actionRequest('ABCDEF00-0000-4000-8000-000000000099') as any;
++  request.before.present = Array.from({length:12}, () => ({identifier:'x',label:'x',value:'x'}));
++  request.after.present = Array.from({length:12}, () => ({identifier:'x',label:'x',value:'x'}));
++  for(const selector of [...request.before.present,...request.after.present]) {
++    for(const field of ['identifier','label','value']) {
++      const remaining=bytes-Buffer.byteLength(JSON.stringify(request));if(!remaining)return request;
++      const count=Math.min(499,Math.floor(remaining/3)); const rest=Math.min(remaining-count*3,499-count);
++      selector[field]='x'+'界'.repeat(count)+'x'.repeat(rest);
++    }
++  }
++  assert.equal(Buffer.byteLength(JSON.stringify(request)),bytes);return request;
++}
++test('MCP counts original UTF-8 request bytes before filling guard defaults',{timeout:10000},async t=>{
++  const s=await session(t);
++  const at=boundaryRequest(65536);assert.equal(Buffer.byteLength(JSON.stringify(at)),65536);
++  assert.equal(at.before.absent,undefined);assert.equal(at.after.absent,undefined);
++  const valid=snapshot(await s.call('start_observed_action',at));assert.equal(valid.code,'ALLOCATION_NOT_FOUND');
++  const calls=fixtureCalls(s.publicRoot).filter(value=>value!=='open');
++  const above=boundaryRequest(65537);assert.equal(Buffer.byteLength(JSON.stringify(above)),65537);
++  const invalid=snapshot(await s.call('start_observed_action',above));assert.equal(invalid.code,'INVALID_REQUEST');
++  assert.deepEqual(fixtureCalls(s.publicRoot).filter(value=>value!=='open'),calls);assert.deepEqual(calls,[]);
++});
++
++test('MCP transport cancellation stops only the wait; busy executing allocation directs action cancellation',{timeout:15000},async t=>{
++  const s=await session(t,'pending');const allocation=snapshot(await s.call('prepare_observed_allocation',s.allocationRequest('one')));
++  const action=snapshot(await s.call('start_observed_action',{...actionRequest(allocation.allocationId),timeoutMs:60000}));
++  const initial=snapshot(await s.call('get_observed_action',{actionId:'one'}));assert.equal(initial.state,'running');assert.equal(initial.cancellationRequested,false);
++  const waiting=s.rpc('tools/call',{name:'get_observed_action',arguments:{actionId:'one',waitMs:45000}});let received=false;
++  void waiting.result.then(()=>{received=true;},()=>{});
++  await new Promise(done=>setTimeout(done,100));
++  s.child.stdin.write(JSON.stringify({jsonrpc:'2.0',method:'notifications/cancelled',params:{requestId:waiting.id,reason:'stop waiting'}})+'\n');
++  await new Promise(done=>setTimeout(done,100));
++  const current=snapshot(await s.call('get_observed_action',{actionId:'one'}));assert.deepEqual(current,initial);assert.equal(current.cancellationRequested,false);
++  // The pinned SDK deliberately suppresses replies for transport-cancelled requests.
++  assert.equal(received,false);
++  for(const tool of ['cancel_observed_allocation','retire_observed_allocation']) {
++    const reply=await s.call(tool,{allocationId:allocation.allocationId});const busy=snapshot(reply);
++    assert.equal(reply.isError,true);assert.equal(busy.code,'ALLOCATION_BUSY');assert.equal(busy.state,'executing');assert.equal(busy.actionId,action.actionId);
++    assert.match(busy.message,/cancel_observed_action/);assert.match(busy.message,/observed-cancel/);
++  }
++  assert.equal(fixtureCalls(s.publicRoot).filter(value=>value==='touch').length,0);
++  const cancelled=snapshot(await s.call('cancel_observed_action',{actionId:'one'}));assert.equal(cancelled.cancellationRequested,true);
++  const finished=snapshot(await s.call('get_observed_action',{actionId:'one',waitMs:5000}));
++  if(finished.authority==='committed'){assert.equal(finished.outcome,'inconclusive');assert.equal(finished.admission,'quarantined');}
++  else {assert.equal(finished.outcome,null);assert.equal(finished.state,'unresolved');assert.ok(['active','quarantined','unknown'].includes(finished.admission));}
++});
++test('MCP disabled mode retains reads, cancellation and retirement under invalid configuration',{timeout:15000},async t=>{
++  const s=await session(t,'observed','0');const local=fixtureObserved(s.publicRoot,true);
++  const allocation=await local.prepareAllocation(s.allocationRequest('one'));await local.close();assert.ok(!('kind' in allocation));
++  await import('node:fs/promises').then(fs=>fs.writeFile(s.configPath,'{bad',{mode:0o600}));
++  assert.equal(snapshot(await s.call('get_observed_action',{actionId:'one'})).code,'ACTION_NOT_STARTED');
++  assert.equal(snapshot(await s.call('cancel_observed_action',{actionId:'one'})).code,'ACTION_NOT_STARTED');
++  assert.equal(snapshot(await s.call('get_observed_allocation',{allocationId:allocation.allocationId})).state,'ready');
++  assert.equal(snapshot(await s.call('cancel_observed_allocation',{allocationId:allocation.allocationId})).outcome,'retired_unused');
++  assert.equal(snapshot(await s.call('retire_observed_allocation',{allocationId:allocation.allocationId})).outcome,'retired_unused');
++});
++
++test('observed MCP v1 golden advertises exact strict schemas independently of legacy tools',{timeout:10000},async t=>{
++  const s=await session(t);const tools=(await s.tools()).filter(value=>value.name.includes('observed')).sort((a,b)=>a.name.localeCompare(b.name));
++  const golden=JSON.parse(await readFile(new URL('./golden/observed-mcp-v1.json',import.meta.url),'utf8'));
++  assert.equal(golden.version,1);assert.deepEqual(tools,golden.tools);
++  for(const tool of tools)assert.equal(tool.inputSchema.additionalProperties,false,tool.name);
++  assert.deepEqual(tools.find(value=>value.name==='start_observed_action').inputSchema.required,['version','actionId','allocationId','app','action','before','after','timeoutMs']);
++});
++
++test('MCP preparing busy guidance and allocation wait cancellation preserve the active preparation', { timeout: 15000 }, async t => {
++  const s = await session(t, 'pending-preparation');
++  const preparing = s.rpc('tools/call', { name: 'prepare_observed_allocation', arguments: s.allocationRequest('one') });
++  void preparing.result.catch(() => {});
++  const deadline = Date.now() + 5000;
++  while (!fixtureCalls(s.publicRoot).includes('boot')) { assert.ok(Date.now() < deadline); await new Promise(done => setTimeout(done, 20)); }
++  const allocation = snapshot(await s.call('prepare_observed_allocation', s.allocationRequest('one'))); assert.equal(allocation.state, 'preparing');
++  const initial = snapshot(await s.call('get_observed_allocation', { allocationId: allocation.allocationId }));
++  const waiting = s.rpc('tools/call', { name: 'get_observed_allocation', arguments: { allocationId: allocation.allocationId, waitMs: 45000 } });
++  let received = false; void waiting.result.then(() => { received = true; }, () => {});
++  await new Promise(done => setTimeout(done, 100));
++  s.child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/cancelled', params: { requestId: waiting.id } }) + '\n');
++  await new Promise(done => setTimeout(done, 100));
++  assert.deepEqual(snapshot(await s.call('get_observed_allocation', { allocationId: allocation.allocationId })), initial); assert.equal(received, false);
++  const busyReply = await s.call('retire_observed_allocation', { allocationId: allocation.allocationId }); const busy = snapshot(busyReply);
++  assert.equal(busyReply.isError, true); assert.equal(busy.code, 'ALLOCATION_BUSY'); assert.equal(busy.state, 'preparing'); assert.equal(busy.actionId, 'one');
++  assert.match(busy.message, /cancel_observed_allocation/); assert.match(busy.message, /observed-allocation-cancel/);
++  const cancelled = snapshot(await s.call('cancel_observed_allocation', { allocationId: allocation.allocationId })); assert.equal(cancelled.cancellationRequested, true);
++  assert.equal(cancelled.state, 'quarantined'); assert.equal(cancelled.outcome, 'uncertain'); assert.equal(cancelled.reservation.capacityHeld, true);
++  assert.deepEqual(snapshot(await preparing.result.then(value => value.result)), cancelled);
++  assert.equal(fixtureCalls(s.publicRoot).filter(value => ['install', 'launch-app', 'touch', 'shutdown', 'delete'].includes(value)).length, 0);
++});
+--- /dev/null
++++ b/tests/observed-contract.test.ts
+@@ -0,0 +1,109 @@
++import { readFile } from 'node:fs/promises';
++import { runObservedCommand, observedExitCode, observedSummary, observedError, type ObservedReply, type ObservedCommand } from '../src/observed/cli.js';
++import { ObservedOperationError } from '../src/observed/schema.js';
++import assert from 'node:assert/strict';
++import test from 'node:test';
++import { createObservedComposition, validateObservedStartConfiguration } from '../src/observed/cli.js';
++
++test('observed composition is lazy and disabled mutations refuse before opening authority', async () => {
++  let opens = 0;
++  const publicModule = createObservedComposition({ enabled: false, create: () => { opens++; throw new Error('Never open'); } });
++  assert.equal(opens, 0);
++  await assert.rejects(publicModule.start({}), { code: 'OBSERVED_DISABLED' });
++  await assert.rejects(publicModule.prepareAllocation({}), { code: 'OBSERVED_DISABLED' });
++  await publicModule.close();
++  assert.equal(opens, 0);
++});
++
++test('composition memoizes authority and leaves reads available with enablement off', async () => {
++  let opens = 0; let closes = 0;
++  const module = createObservedComposition({ enabled: false, create: () => {
++    opens++;
++    return { async inspect() { return { marker: 'persisted' } as never; }, async getAllocation() { return { marker: 'allocation' } as never; },
++      async cancel() { return { marker: 'cancel' } as never; }, async cancelAllocation() { return { marker: 'allocation-cancel' } as never; },
++      async retireAllocation() { return { marker: 'retire' } as never; }, async start() { assert.fail(); }, async prepareAllocation() { assert.fail(); },
++      async close() { closes++; } };
++  } });
++  assert.deepEqual(await module.inspect('one'), { marker: 'persisted' });
++  assert.deepEqual(await module.getAllocation('ABCDEF00-0000-4000-8000-000000000001'), { marker: 'allocation' });
++  assert.deepEqual(await module.cancel('one'), { marker: 'cancel' });
++  assert.deepEqual(await module.cancelAllocation('ABCDEF00-0000-4000-8000-000000000001'), { marker: 'allocation-cancel' });
++  assert.deepEqual(await module.retireAllocation('ABCDEF00-0000-4000-8000-000000000001'), { marker: 'retire' });
++  await Promise.all([module.close(), module.close()]);
++  assert.equal(opens, 1); assert.equal(closes, 1);
++});
++
++test('enabled invalid preparation is rejected offline before authority opens', async () => {
++  let opens = 0;
++  const module = createObservedComposition({ enabled: true, create: () => { opens++; throw new Error('Never open'); } });
++  await assert.rejects(module.prepareAllocation({ version: 2 }), { code: 'UNSUPPORTED_VERSION' });
++  await assert.rejects(module.prepareAllocation({ version: 1, admissionRoot: '/unsafe' }), { code: 'INVALID_REQUEST' });
++  assert.equal(opens, 0);
++});
++
++const literalPort = (reply: ObservedReply) => ({
++  async start() { return reply as never; }, async inspect() { return reply as never; }, async cancel() { return reply as never; },
++  async prepareAllocation() { return reply as never; }, async getAllocation() { return reply as never; },
++  async cancelAllocation() { return reply as never; }, async retireAllocation() { return reply as never; }, async close() {},
++});
++test('versioned reply goldens freeze exact outcome exits and preserve historical/busy optional fields', async () => {
++  const golden = JSON.parse(await readFile(new URL('./golden/observed-replies-v1.json', import.meta.url),'utf8')) as {version:number;cases:{name:string;command:ObservedCommand;reply:ObservedReply;exit:number}[]};
++  assert.equal(golden.version,1);assert.equal(golden.cases.length,18);
++  for(const row of golden.cases) {
++    const module=createObservedComposition({enabled:true,create:()=>literalPort(row.reply)});let stdout='';
++    const action=['observed-report','observed-cancel'].includes(row.command);
++    const code=await runObservedCommand(module,row.command,action?'one':'ABCDEF00-0000-4000-8000-000000000099',{json:true,projectDir:'/isolated',write:text=>{stdout+=text;}});
++    assert.equal(code,row.exit,row.name);assert.equal(observedExitCode(row.reply),row.exit,row.name);
++    assert.equal(stdout.trim().split('\n').length,1);assert.deepEqual(JSON.parse(stdout),row.reply,row.name);
++    assert.ok(observedSummary(row.reply).includes('evidence'),row.name);
++    let prose = '';
++    assert.equal(await runObservedCommand(module,row.command,action?'one':'ABCDEF00-0000-4000-8000-000000000099',{json:false,projectDir:'/isolated',write:text=>{prose+=text;}}),row.exit,row.name);
++    assert.equal(prose, observedSummary(row.reply)+'\n');
++    if ('authority' in row.reply) assert.ok(prose.includes(row.reply.authority), row.name);
++    await module.close();
++  }
++  const historical=golden.cases.find(row=>row.name==='historical')!.reply as any;
++  assert.equal(historical.readOnly,true);assert.equal(historical.historicalOutcome,'already_satisfied');assert.equal(historical.reservation.capacityHeld,false);
++  const preparing=golden.cases.find(row=>row.name==='preparing_busy')!.reply as any;assert.equal(preparing.state,'preparing');assert.match(preparing.message,/cancel_observed_allocation/);
++  const executing=golden.cases.find(row=>row.name==='executing_busy')!.reply as any;assert.equal(executing.state,'executing');assert.match(executing.message,/cancel_observed_action/);
++});
++test('safe operation errors preserve accepted metadata and never expose unknown exceptions',()=>{
++  assert.deepEqual(observedError(new ObservedOperationError('ACTION_ID_CONFLICT','Immutable identity conflict',{actionId:'one',acceptance:'yes'}),'action'),
++    {version:1,kind:'observed-operation-error',code:'ACTION_ID_CONFLICT',message:'Immutable identity conflict',actionId:'one',acceptance:'yes',acceptanceKind:'action'});
++  const unknown=observedError(new Error('private vendor secret'),'preparation');assert.equal(unknown.code,'INTERNAL_ERROR');assert.equal(unknown.acceptance,'unknown');assert.equal(unknown.acceptanceKind,'preparation');assert.ok(!JSON.stringify(unknown).includes('secret'));
++});
++
++test('typed allocation configuration errors retain their shared safe preparation code', async () => {
++  const { AllocationInputError } = await import('../src/observed/allocation-schema.js');
++  const error = observedError(new AllocationInputError('CONFIG_INVALID'),'preparation');
++  assert.equal(error.code,'CONFIG_INVALID');assert.equal(error.acceptanceKind,'preparation');assert.equal(error.acceptance,'no');
++  assert.equal(observedError(new AllocationInputError('CONFIG_INVALID'),'action').code,'CONFIGURATION_ERROR');
++});
++
++test('configuration validation preserves binding priority across a race and fails safely when authority is unavailable', async () => {
++  const { actionRequest } = await import('./fixtures/observed-cli-server.js');
++  const request = actionRequest('ABCDEF00-0000-4000-8000-000000000099') as Parameters<typeof validateObservedStartConfiguration>[1];
++  const ready = { kind: 'allocation', allocation: { actionId: 'one', allocationId: request.allocationId, appBundleId: request.app.bundleId, actionDigest: null, state: 'ready' } };
++  let reads = 0; let checks = 0;
++  await validateObservedStartConfiguration({ readAction: () => (++reads === 1 ? ready : { ...ready, allocation: { ...ready.allocation, actionDigest: 'committed-binding' } }) as never }, request, async () => { checks++; throw new Error('Private configuration details'); });
++  assert.equal(reads, 2); assert.equal(checks, 1);
++  for (const view of [null, { kind: 'imported' }, { ...ready, allocation: { ...ready.allocation, state: 'executing', actionDigest: 'committed' } }, { ...ready, allocation: { ...ready.allocation, allocationId: 'different' } }]) {
++    await validateObservedStartConfiguration({ readAction: () => view as never }, request, async () => { assert.fail('No validation before retrieval/conflict'); });
++  }
++  await assert.rejects(validateObservedStartConfiguration({ readAction: () => { throw new Error('Private database'); } }, request, async () => {}), (error: unknown) => { const reply = observedError(error, 'action'); assert.equal(reply.code, 'STORE_UNAVAILABLE'); assert.equal(reply.acceptance, 'unknown'); return true; });
++  reads = 0;
++  await assert.rejects(validateObservedStartConfiguration({ readAction: () => { if (++reads === 1) return ready as never; throw new Error('Private database'); } }, request, async () => { throw new Error('Private config'); }), { code: 'STORE_UNAVAILABLE' });
++  await assert.rejects(validateObservedStartConfiguration({ readAction: () => ready as never }, request, async () => { throw new Error('Private config'); }), { code: 'CONFIGURATION_ERROR' });
++});
++
++test('composition close during lazy opening rejects new issuance and closes the resolved module once', async () => {
++  let release!: (value: ReturnType<typeof literalPort>) => void; let closes = 0; let starts = 0;
++  const ready = new Promise<ReturnType<typeof literalPort>>(done => { release = done; });
++  const module = createObservedComposition({ enabled: true, create: () => ready });
++  const { actionRequest } = await import('./fixtures/observed-cli-server.js');
++  const started = module.start(actionRequest('ABCDEF00-0000-4000-8000-000000000099'));
++  const rejection = assert.rejects(started, { code: 'SHUTTING_DOWN' });
++  await Promise.resolve(); const closing = module.close();
++  release({ ...literalPort({} as ObservedReply), async start() { starts++; return {} as never; }, async close() { closes++; } });
++  await Promise.all([closing, rejection, module.close()]); assert.equal(starts, 0); assert.equal(closes, 1);
++});
+--- /dev/null
++++ b/tests/fixtures/observed-mcp-server.ts
+@@ -0,0 +1,8 @@
++import assert from 'node:assert/strict';
++import { BridgeService } from '../../src/service.js';
++import { runCli } from '../../src/cli.js';
++import { fixtureObserved } from './observed-cli-server.js';
++const root = process.argv[2]!;
++const observed = fixtureObserved(root, process.env.JEV_EXPERIMENTAL_OBSERVED === '1', process.env.OBSERVED_FIXTURE_MODE);
++const legacy = new BridgeService({ baseDir: root, createDriver: () => assert.fail('No scenario driver'), createJudge: () => assert.fail('No SDK construction') });
++await runCli(['mcp'], { observed, legacy, projectDir: root });
+--- /dev/null
++++ b/tests/fixtures/observed-cli-server.ts
+@@ -0,0 +1,92 @@
++import assert from 'node:assert/strict';
++import * as fs from 'node:fs/promises';
++import { appendFileSync, readFileSync, existsSync } from 'node:fs';
++import { join, resolve } from 'node:path';
++import { pathToFileURL } from 'node:url';
++import { Admission } from '../../src/device/admission.js';
++import { createObservedDriver } from '../../src/device/factory.js';
++import type { CliRunner } from '../../src/device/index.js';
++import { ObservedAllocator } from '../../src/observed/allocation.js';
++import { ObservedActionService } from '../../src/observed/service.js';
++import { readAllocationConfig, type InstalledHost } from '../../src/observed/allocation-config.js';
++import type { SourceProcess } from '../../src/observed/create-source.js';
++import { runCli } from '../../src/cli.js';
++import type { AdmissionDependencies } from '../../src/device/admission.js';
++import type { ObservedEvidenceStore } from '../../src/observed/evidence.js';
++import { createObservedComposition, isObservedCommand, validateObservedStartConfiguration } from '../../src/observed/cli.js';
++import { allocationFixture, fixtureDevice } from './observed-allocation-backend.js';
++
++export async function setupPublicFixture(root: string) {
++  const fixture = await allocationFixture();
++  const context = { root: fixture.root, home: fixture.home, store: fixture.store, runsDir: fixture.runsDir, app: fixture.app };
++  await fs.writeFile(join(root, 'fixture.json'), JSON.stringify(context), { mode: 0o600 });
++  return { ...context, request: fixture.request, cleanup: fixture.cleanup, configPath: fixture.configPath };
++}
++export function fixtureObserved(root: string, enabled = true, mode = 'observed', hooks: { fault?: AdmissionDependencies['fault']; before?: (operation: string) => Promise<void>; evidence?: ObservedEvidenceStore } = {}) {
++  let admission: Admission;
++  let config: () => Promise<unknown>;
++  return createObservedComposition({ enabled, async create() {
++    const context = JSON.parse(await fs.readFile(join(root, 'fixture.json'), 'utf8')) as {root:string;home:string;store:string;runsDir:string;app:string};
++    const trace = (operation: string) => appendFileSync(join(root, 'calls.jsonl'), JSON.stringify(operation) + '\n', { mode: 0o600 });
++    trace('open');
++    admission = Admission.forTesting({ root: context.store, backend: 'fake', initialize: false,
++      ...(hooks.fault ? { fault: hooks.fault } : {}),
++      ...(mode === 'unresolved' ? { fault(point, operation) { if (point === 'beforeCommit' && operation === 'finalize') throw new Error('Fixture finalization fault'); } } : {}) });
++    const map = (path: string) => /^\/(?:Applications|Library|System|usr)(?:\/|$)/.test(path) ? join(context.root, 'host', path) : path;
++    const fakeFs = { ...fs,
++      lstat: ((p: string, ...args: []) => fs.lstat(map(p), ...args)) as typeof fs.lstat,
++      open: ((p: string, ...args: [number, number?]) => fs.open(map(p), ...args)) as typeof fs.open,
++      readdir: ((p: string, ...args: []) => fs.readdir(map(p), ...args)) as typeof fs.readdir,
++      statfs: (async (_path: string) => ({ type: 0, bsize: 1, blocks: 1000000, bfree: 1000000, bavail: 1000000, files: 100000, ffree: 100000 })) as typeof fs.statfs,
++    };
++    const host: InstalledHost = { fs: fakeFs, account: { homedir: context.home, uid: process.getuid!() }, platform: 'darwin', architecture: 'arm64' };
++    config = () => readAllocationConfig({ account: host.account, fs: fakeFs });
++    const source: SourceProcess = async (executable, args, options) => {
++      await hooks.before?.(executable === '/usr/bin/plutil' ? 'plist' : 'create');
++      assert.equal(options.shell, false); assert.equal(options.signal.aborted, false);
++      if (executable === '/usr/bin/plutil') {
++        trace('plist');
++        return { stdout: args[5]!.endsWith('.app/Info.plist') ? JSON.stringify({ CFBundleIdentifier: 'org.example.fixture', CFBundleExecutable: 'Fixture', CFBundlePackageType: 'APPL', CFBundleSupportedPlatforms: ['iPhoneSimulator'], MinimumOSVersion: '17.0' }) : await fs.readFile(map(args[5]!), 'utf8'), stderr: '', exitCode: 0 };
++      }
++      assert.equal(executable, '/usr/bin/xcrun'); assert.deepEqual(args.slice(0, 2), ['simctl', 'create']);
++      trace('create'); return { stdout: fixtureDevice + '\n', stderr: '', exitCode: 0 };
++    };
++    let touched = false;
++    const runner: CliRunner = async args => {
++      const operation = args[1]!; trace(operation); await hooks.before?.(operation);
++      if ((mode === 'pending' && operation === 'snapshot-ui' && admission.readAllocationForAction('one')?.state === 'executing') || (mode === 'pending-preparation' && operation === 'boot')) return new Promise(() => {});
++      if (operation === 'touch') {
++        touched = true;
++        if (mode === 'inconclusive') throw new Error('Private vendor output must never escape');
++      }
++      if (operation === 'list') return { stdout: JSON.stringify({ schema: 'mobilebuildmcp.output.simulator-list', schemaVersion: '2', didError: false,
++        data: { simulators: [{ simulatorId: fixtureDevice, state: 'Booted', isAvailable: true }] } }), stderr: '', exitCode: 0 };
++      assert.ok(['boot', 'install', 'launch-app', 'snapshot-ui', 'screenshot', 'touch'].includes(operation), 'No cleanup/retry backend commands');
++      const schema = operation === 'boot' ? 'simulator-action-result' : operation === 'install' ? 'install-result'
++        : operation === 'launch-app' ? 'launch-result' : operation === 'touch' ? 'ui-action-result' : 'capture-result';
++      const done = mode === 'already' || touched;
++      const identifier = mode === 'refused' ? 'other' : done ? 'done' : 'go';
++      return { stdout: JSON.stringify({ schema: 'mobilebuildmcp.output.' + schema, schemaVersion: '2', didError: false,
++        data: { artifacts: { simulatorId: fixtureDevice }, action: { type: 'tap' }, capture: { type: 'runtime-snapshot', protocol: 'rs/1', capturedAtMs: Date.now(), expiresAtMs: Date.now() + 60000,
++          count: 1, elements: [{ ref: 'button', role: 'button', identifier, label: identifier, frame: { x: 0, y: 0, width: 100, height: 30 }, actions: ['tap', 'touch'], state: { visible: true, enabled: true } }] } } }), stderr: '', exitCode: 0 };
++    };
++    const window = async () => assert.fail('No real or fake window presentation');
++    const allocator = new ObservedAllocator({ runsDir: context.runsDir, admission, fakeBackend: { process: source, runner, window, host } });
++    return new ObservedActionService({ admission, allocator, runsDir: context.runsDir, bridgeVersion: 'fixture', backend: 'fake', enabled, ...(hooks.evidence ? { evidence: hooks.evidence } : {}),
++      createDriver: () => createObservedDriver({ cwd: context.root, admission, lockRoot: join(context.root, 'leases'), runner, deviceWindow: window,
++        capture: 'full', screenshots: true, reuseActionCapture: false, verifyScreenshotAgreement: false,
++        fakeBackend: { runner, window } }) });
++  }, async beforeStart(request) { await validateObservedStartConfiguration(admission, request, config); } });
++}
++export const actionRequest = (allocationId: string, actionId = 'one') => ({ version: 1, actionId, allocationId, app: { bundleId: 'org.example.fixture' },
++  action: { kind: 'tap', selector: { identifier: 'go' } }, before: { present: [{ identifier: 'go' }] }, after: { present: [{ identifier: 'done' }] }, timeoutMs: 5000 });
++export function fixtureCalls(root: string): string[] {
++  return existsSync(join(root, 'calls.jsonl')) ? readFileSync(join(root, 'calls.jsonl'), 'utf8').trim().split('\n').filter(Boolean).map(line => JSON.parse(line) as string) : [];
++}
++if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
++  const [root, command, argument] = process.argv.slice(2);
++  if (!root || !command || !isObservedCommand(command)) throw new Error('Invalid fixture invocation');
++  const module = fixtureObserved(root, process.env.JEV_EXPERIMENTAL_OBSERVED === '1', process.env.OBSERVED_FIXTURE_MODE);
++  await runCli([command, ...(argument ? [argument] : []), '--json', ...(process.argv[5] !== undefined ? ['--wait-ms', process.argv[5]] : [])], { observed: module, projectDir: root });
++  process.exit(process.exitCode);
++}
+--- /dev/null
++++ b/tests/golden/observed-mcp-v1.json
+@@ -0,0 +1,537 @@
++{
++  "version": 1,
++  "tools": [
++    {
++      "name": "cancel_observed_action",
++      "description": "Explicitly cancel the exact observed action and wait at most 5000ms for local finalization. Cancellation cannot certify native release; unknown work stays unavailable. Terminal cancellation retrieves.",
++      "inputSchema": {
++        "type": "object",
++        "$schema": "https://json-schema.org/draft/2020-12/schema",
++        "properties": {
++          "actionId": {
++            "type": "string",
++            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$"
++          }
++        },
++        "required": [
++          "actionId"
++        ],
++        "additionalProperties": false
++      }
++    },
++    {
++      "name": "cancel_observed_allocation",
++      "description": "Cancel active preparation with bounded local finalization, or retire ready unused stock. Executing ALLOCATION_BUSY directs cancel_observed_action; no device cleanup, reuse or owner takeover.",
++      "inputSchema": {
++        "type": "object",
++        "$schema": "https://json-schema.org/draft/2020-12/schema",
++        "properties": {
++          "allocationId": {
++            "type": "string",
++            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
++          }
++        },
++        "required": [
++          "allocationId"
++        ],
++        "additionalProperties": false
++      }
++    },
++    {
++      "name": "get_observed_action",
++      "description": "Read one consistent authoritative observed action snapshot and full local evidence pointers. waitMs is 0–45000; aborting this wait stops only the wait. No recovery or replay.",
++      "inputSchema": {
++        "type": "object",
++        "$schema": "https://json-schema.org/draft/2020-12/schema",
++        "properties": {
++          "actionId": {
++            "type": "string",
++            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$"
++          },
++          "waitMs": {
++            "type": "integer",
++            "minimum": 0,
++            "maximum": 45000
++          }
++        },
++        "required": [
++          "actionId"
++        ],
++        "additionalProperties": false
++      },
++      "annotations": {
++        "readOnlyHint": true
++      }
++    },
++    {
++      "name": "get_observed_allocation",
++      "description": "Read persisted allocation authority, evidence and retention. waitMs is 0–45000; aborting this wait stops only the wait. Historical readOnly/historicalOutcome never grant preparation or input permission.",
++      "inputSchema": {
++        "type": "object",
++        "$schema": "https://json-schema.org/draft/2020-12/schema",
++        "properties": {
++          "allocationId": {
++            "type": "string",
++            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
++          },
++          "waitMs": {
++            "type": "integer",
++            "minimum": 0,
++            "maximum": 45000
++          }
++        },
++        "required": [
++          "allocationId"
++        ],
++        "additionalProperties": false
++      },
++      "annotations": {
++        "readOnlyHint": true
++      }
++    },
++    {
++      "name": "prepare_observed_allocation",
++      "description": "Prepare one dedicated simulator for the declared action identity, retaining it after use or uncertainty. Requires explicit compatible source and unmodified app artifact. No automatic replacement or replay; preparation waits within its bounded budgets.",
++      "inputSchema": {
++        "type": "object",
++        "$schema": "https://json-schema.org/draft/2020-12/schema",
++        "properties": {
++          "version": {
++            "type": "number",
++            "const": 1
++          },
++          "actionId": {
++            "type": "string",
++            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$"
++          },
++          "source": {
++            "oneOf": [
++              {
++                "type": "object",
++                "properties": {
++                  "kind": {
++                    "type": "string",
++                    "const": "create"
++                  },
++                  "deviceTypeId": {
++                    "type": "string",
++                    "minLength": 1,
++                    "maxLength": 500
++                  },
++                  "runtimeId": {
++                    "type": "string",
++                    "minLength": 1,
++                    "maxLength": 500
++                  }
++                },
++                "required": [
++                  "kind",
++                  "deviceTypeId",
++                  "runtimeId"
++                ],
++                "additionalProperties": false
++              },
++              {
++                "type": "object",
++                "properties": {
++                  "kind": {
++                    "type": "string",
++                    "const": "supplied"
++                  },
++                  "inventoryId": {
++                    "type": "string",
++                    "minLength": 1,
++                    "maxLength": 500
++                  }
++                },
++                "required": [
++                  "kind",
++                  "inventoryId"
++                ],
++                "additionalProperties": false
++              }
++            ]
++          },
++          "app": {
++            "type": "object",
++            "properties": {
++              "artifactPath": {
++                "type": "string",
++                "minLength": 1,
++                "maxLength": 4096
++              },
++              "bundleId": {
++                "type": "string",
++                "maxLength": 500,
++                "pattern": "^[A-Za-z0-9][A-Za-z0-9.-]*$"
++              },
++              "build": {
++                "type": "object",
++                "properties": {
++                  "id": {
++                    "type": "string",
++                    "minLength": 1,
++                    "maxLength": 500
++                  },
++                  "origin": {
++                    "type": "string",
++                    "minLength": 1,
++                    "maxLength": 500
++                  }
++                },
++                "required": [
++                  "id",
++                  "origin"
++                ],
++                "additionalProperties": false
++              }
++            },
++            "required": [
++              "artifactPath",
++              "bundleId",
++              "build"
++            ],
++            "additionalProperties": false
++          },
++          "timeoutMs": {
++            "default": 360000,
++            "type": "integer",
++            "minimum": 1000,
++            "maximum": 900000
++          }
++        },
++        "required": [
++          "version",
++          "actionId",
++          "source",
++          "app"
++        ],
++        "additionalProperties": false
++      }
++    },
++    {
++      "name": "retire_observed_allocation",
++      "description": "Change ready allocation retention metadata only; never stop, delete or reuse a device. Active preparing ALLOCATION_BUSY directs cancel_observed_allocation; executing directs cancel_observed_action. Terminal and historical retirement retrieve.",
++      "inputSchema": {
++        "type": "object",
++        "$schema": "https://json-schema.org/draft/2020-12/schema",
++        "properties": {
++          "allocationId": {
++            "type": "string",
++            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
++          }
++        },
++        "required": [
++          "allocationId"
++        ],
++        "additionalProperties": false
++      }
++    },
++    {
++      "name": "start_observed_action",
++      "description": "Start one observed tap on a prepared dedicated allocation. Returns visible predicate evidence, never a Jev verdict or native receipt. Retry the exact same identity/request only to retrieve; poll get_observed_action. Transport cancellation does not cancel an admitted action.",
++      "inputSchema": {
++        "type": "object",
++        "$schema": "https://json-schema.org/draft/2020-12/schema",
++        "properties": {
++          "version": {
++            "type": "number",
++            "const": 1
++          },
++          "actionId": {
++            "type": "string",
++            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$"
++          },
++          "allocationId": {
++            "type": "string",
++            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
++          },
++          "app": {
++            "type": "object",
++            "properties": {
++              "bundleId": {
++                "type": "string",
++                "pattern": "^[A-Za-z0-9-]+(?:\\.[A-Za-z0-9-]+)+$"
++              }
++            },
++            "required": [
++              "bundleId"
++            ],
++            "additionalProperties": false
++          },
++          "action": {
++            "type": "object",
++            "properties": {
++              "kind": {
++                "type": "string",
++                "const": "tap"
++              },
++              "selector": {
++                "type": "object",
++                "properties": {
++                  "identifier": {
++                    "type": "string",
++                    "minLength": 1,
++                    "maxLength": 500
++                  },
++                  "role": {
++                    "type": "string",
++                    "enum": [
++                      "application",
++                      "window",
++                      "button",
++                      "keyboard-key",
++                      "text-field",
++                      "menu",
++                      "text",
++                      "image",
++                      "switch",
++                      "slider",
++                      "cell",
++                      "scroll-view",
++                      "list",
++                      "tab",
++                      "other"
++                    ]
++                  },
++                  "label": {
++                    "type": "string",
++                    "minLength": 1,
++                    "maxLength": 500
++                  },
++                  "value": {
++                    "type": "string",
++                    "minLength": 1,
++                    "maxLength": 500
++                  }
++                },
++                "additionalProperties": false
++              }
++            },
++            "required": [
++              "kind",
++              "selector"
++            ],
++            "additionalProperties": false
++          },
++          "before": {
++            "type": "object",
++            "properties": {
++              "present": {
++                "minItems": 1,
++                "maxItems": 12,
++                "type": "array",
++                "items": {
++                  "type": "object",
++                  "properties": {
++                    "identifier": {
++                      "type": "string",
++                      "minLength": 1,
++                      "maxLength": 500
++                    },
++                    "role": {
++                      "type": "string",
++                      "enum": [
++                        "application",
++                        "window",
++                        "button",
++                        "keyboard-key",
++                        "text-field",
++                        "menu",
++                        "text",
++                        "image",
++                        "switch",
++                        "slider",
++                        "cell",
++                        "scroll-view",
++                        "list",
++                        "tab",
++                        "other"
++                      ]
++                    },
++                    "label": {
++                      "type": "string",
++                      "minLength": 1,
++                      "maxLength": 500
++                    },
++                    "value": {
++                      "type": "string",
++                      "minLength": 1,
++                      "maxLength": 500
++                    }
++                  },
++                  "additionalProperties": false
++                }
++              },
++              "absent": {
++                "maxItems": 12,
++                "type": "array",
++                "items": {
++                  "type": "object",
++                  "properties": {
++                    "identifier": {
++                      "type": "string",
++                      "minLength": 1,
++                      "maxLength": 500
++                    },
++                    "role": {
++                      "type": "string",
++                      "enum": [
++                        "application",
++                        "window",
++                        "button",
++                        "keyboard-key",
++                        "text-field",
++                        "menu",
++                        "text",
++                        "image",
++                        "switch",
++                        "slider",
++                        "cell",
++                        "scroll-view",
++                        "list",
++                        "tab",
++                        "other"
++                      ]
++                    },
++                    "label": {
++                      "type": "string",
++                      "minLength": 1,
++                      "maxLength": 500
++                    },
++                    "value": {
++                      "type": "string",
++                      "minLength": 1,
++                      "maxLength": 500
++                    }
++                  },
++                  "additionalProperties": false
++                }
++              }
++            },
++            "required": [
++              "present"
++            ],
++            "additionalProperties": false
++          },
++          "after": {
++            "type": "object",
++            "properties": {
++              "present": {
++                "minItems": 1,
++                "maxItems": 12,
++                "type": "array",
++                "items": {
++                  "type": "object",
++                  "properties": {
++                    "identifier": {
++                      "type": "string",
++                      "minLength": 1,
++                      "maxLength": 500
++                    },
++                    "role": {
++                      "type": "string",
++                      "enum": [
++                        "application",
++                        "window",
++                        "button",
++                        "keyboard-key",
++                        "text-field",
++                        "menu",
++                        "text",
++                        "image",
++                        "switch",
++                        "slider",
++                        "cell",
++                        "scroll-view",
++                        "list",
++                        "tab",
++                        "other"
++                      ]
++                    },
++                    "label": {
++                      "type": "string",
++                      "minLength": 1,
++                      "maxLength": 500
++                    },
++                    "value": {
++                      "type": "string",
++                      "minLength": 1,
++                      "maxLength": 500
++                    }
++                  },
++                  "additionalProperties": false
++                }
++              },
++              "absent": {
++                "maxItems": 12,
++                "type": "array",
++                "items": {
++                  "type": "object",
++                  "properties": {
++                    "identifier": {
++                      "type": "string",
++                      "minLength": 1,
++                      "maxLength": 500
++                    },
++                    "role": {
++                      "type": "string",
++                      "enum": [
++                        "application",
++                        "window",
++                        "button",
++                        "keyboard-key",
++                        "text-field",
++                        "menu",
++                        "text",
++                        "image",
++                        "switch",
++                        "slider",
++                        "cell",
++                        "scroll-view",
++                        "list",
++                        "tab",
++                        "other"
++                      ]
++                    },
++                    "label": {
++                      "type": "string",
++                      "minLength": 1,
++                      "maxLength": 500
++                    },
++                    "value": {
++                      "type": "string",
++                      "minLength": 1,
++                      "maxLength": 500
++                    }
++                  },
++                  "additionalProperties": false
++                }
++              }
++            },
++            "required": [
++              "present"
++            ],
++            "additionalProperties": false
++          },
++          "timeoutMs": {
++            "type": "integer",
++            "minimum": 100,
++            "maximum": 60000
++          }
++        },
++        "required": [
++          "version",
++          "actionId",
++          "allocationId",
++          "app",
++          "action",
++          "before",
++          "after",
++          "timeoutMs"
++        ],
++        "additionalProperties": false
++      }
++    }
++  ]
++}
+--- /dev/null
++++ b/tests/golden/observed-replies-v1.json
+@@ -0,0 +1,572 @@
++{
++  "version": 1,
++  "cases": [
++    {
++      "name": "already_satisfied",
++      "command": "observed-report",
++      "reply": {
++        "version": 1,
++        "kind": "observed-action",
++        "actionId": "one",
++        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
++        "device": {
++          "platform": "ios-simulator",
++          "udid": "ABCDEF00-0000-4000-8000-000000000001"
++        },
++        "bridgeVersion": "fixture",
++        "state": "terminal",
++        "authority": "committed",
++        "disposition": "retrieved",
++        "cancellationRequested": false,
++        "actionAttempted": false,
++        "actionAcknowledged": false,
++        "observations": 1,
++        "outcome": "already_satisfied",
++        "reason": null,
++        "admission": "available",
++        "allocationState": "retained",
++        "evidence": {
++          "directory": "/isolated/observed/one",
++          "request": "/isolated/observed/one/request.json",
++          "observations": [
++            "/isolated/observed/one/observation-1.json"
++          ],
++          "terminal": "/isolated/observed/one/terminal.json",
++          "exportStatus": "complete"
++        }
++      },
++      "exit": 0
++    },
++    {
++      "name": "outcome_observed",
++      "command": "observed-report",
++      "reply": {
++        "version": 1,
++        "kind": "observed-action",
++        "actionId": "one",
++        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
++        "device": {
++          "platform": "ios-simulator",
++          "udid": "ABCDEF00-0000-4000-8000-000000000001"
++        },
++        "bridgeVersion": "fixture",
++        "state": "terminal",
++        "authority": "committed",
++        "disposition": "retrieved",
++        "cancellationRequested": false,
++        "actionAttempted": true,
++        "actionAcknowledged": true,
++        "observations": 1,
++        "outcome": "outcome_observed",
++        "reason": null,
++        "admission": "available",
++        "allocationState": "retained",
++        "evidence": {
++          "directory": "/isolated/observed/one",
++          "request": "/isolated/observed/one/request.json",
++          "observations": [
++            "/isolated/observed/one/observation-1.json"
++          ],
++          "terminal": "/isolated/observed/one/terminal.json",
++          "exportStatus": "complete"
++        }
++      },
++      "exit": 0
++    },
++    {
++      "name": "refused",
++      "command": "observed-report",
++      "reply": {
++        "version": 1,
++        "kind": "observed-action",
++        "actionId": "one",
++        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
++        "device": {
++          "platform": "ios-simulator",
++          "udid": "ABCDEF00-0000-4000-8000-000000000001"
++        },
++        "bridgeVersion": "fixture",
++        "state": "terminal",
++        "authority": "committed",
++        "disposition": "retrieved",
++        "cancellationRequested": false,
++        "actionAttempted": false,
++        "actionAcknowledged": false,
++        "observations": 1,
++        "outcome": "refused",
++        "reason": "PRECONDITION_NOT_MET",
++        "admission": "available",
++        "allocationState": "retained",
++        "evidence": {
++          "directory": "/isolated/observed/one",
++          "request": "/isolated/observed/one/request.json",
++          "observations": [
++            "/isolated/observed/one/observation-1.json"
++          ],
++          "terminal": "/isolated/observed/one/terminal.json",
++          "exportStatus": "complete"
++        }
++      },
++      "exit": 3
++    },
++    {
++      "name": "inconclusive",
++      "command": "observed-report",
++      "reply": {
++        "version": 1,
++        "kind": "observed-action",
++        "actionId": "one",
++        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
++        "device": {
++          "platform": "ios-simulator",
++          "udid": "ABCDEF00-0000-4000-8000-000000000001"
++        },
++        "bridgeVersion": "fixture",
++        "state": "terminal",
++        "authority": "committed",
++        "disposition": "retrieved",
++        "cancellationRequested": false,
++        "actionAttempted": null,
++        "actionAcknowledged": null,
++        "observations": 1,
++        "outcome": "inconclusive",
++        "reason": "UI_ACTION_UNCONFIRMED",
++        "admission": "quarantined",
++        "allocationState": "quarantined",
++        "evidence": {
++          "directory": "/isolated/observed/one",
++          "request": "/isolated/observed/one/request.json",
++          "observations": [
++            "/isolated/observed/one/observation-1.json"
++          ],
++          "terminal": "/isolated/observed/one/terminal.json",
++          "exportStatus": "complete"
++        }
++      },
++      "exit": 2
++    },
++    {
++      "name": "running",
++      "command": "observed-report",
++      "reply": {
++        "version": 1,
++        "kind": "observed-action",
++        "actionId": "one",
++        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
++        "device": {
++          "platform": "ios-simulator",
++          "udid": "ABCDEF00-0000-4000-8000-000000000001"
++        },
++        "bridgeVersion": "fixture",
++        "state": "running",
++        "authority": "none",
++        "disposition": "retrieved",
++        "cancellationRequested": false,
++        "actionAttempted": false,
++        "actionAcknowledged": false,
++        "observations": 0,
++        "outcome": null,
++        "reason": null,
++        "admission": "active",
++        "allocationState": "executing",
++        "evidence": {
++          "directory": "/isolated/observed/one",
++          "request": "/isolated/observed/one/request.json",
++          "observations": [
++            "/isolated/observed/one/observation-1.json"
++          ],
++          "terminal": null,
++          "exportStatus": "pending"
++        }
++      },
++      "exit": 2
++    },
++    {
++      "name": "finalizing",
++      "command": "observed-report",
++      "reply": {
++        "version": 1,
++        "kind": "observed-action",
++        "actionId": "one",
++        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
++        "device": {
++          "platform": "ios-simulator",
++          "udid": "ABCDEF00-0000-4000-8000-000000000001"
++        },
++        "bridgeVersion": "fixture",
++        "state": "finalizing",
++        "authority": "none",
++        "disposition": "retrieved",
++        "cancellationRequested": false,
++        "actionAttempted": false,
++        "actionAcknowledged": false,
++        "observations": 1,
++        "outcome": null,
++        "reason": null,
++        "admission": "active",
++        "allocationState": "executing",
++        "evidence": {
++          "directory": "/isolated/observed/one",
++          "request": "/isolated/observed/one/request.json",
++          "observations": [
++            "/isolated/observed/one/observation-1.json"
++          ],
++          "terminal": null,
++          "exportStatus": "pending"
++        }
++      },
++      "exit": 2
++    },
++    {
++      "name": "unresolved",
++      "command": "observed-report",
++      "reply": {
++        "version": 1,
++        "kind": "observed-action",
++        "actionId": "one",
++        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
++        "device": {
++          "platform": "ios-simulator",
++          "udid": "ABCDEF00-0000-4000-8000-000000000001"
++        },
++        "bridgeVersion": "fixture",
++        "state": "unresolved",
++        "authority": "unconfirmed",
++        "disposition": "retrieved",
++        "cancellationRequested": false,
++        "actionAttempted": null,
++        "actionAcknowledged": null,
++        "observations": 1,
++        "outcome": null,
++        "reason": "OWNER_UNAVAILABLE",
++        "admission": "active",
++        "allocationState": "executing",
++        "evidence": {
++          "directory": "/isolated/observed/one",
++          "request": "/isolated/observed/one/request.json",
++          "observations": [
++            "/isolated/observed/one/observation-1.json"
++          ],
++          "terminal": null,
++          "exportStatus": "pending"
++        }
++      },
++      "exit": 2
++    },
++    {
++      "name": "prepared",
++      "command": "observed-allocation",
++      "reply": {
++        "version": 1,
++        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
++        "actionId": "one",
++        "state": "ready",
++        "phase": "parked",
++        "device": {
++          "platform": "ios-simulator",
++          "udid": "ABCDEF00-0000-4000-8000-000000000001"
++        },
++        "reason": null,
++        "outcome": "prepared",
++        "authority": "committed",
++        "readinessEvidence": [
++          "/isolated/observed/one/allocation/readiness-1.json"
++        ],
++        "evidenceRefs": [
++          "/isolated/observed/one/allocation"
++        ],
++        "reservation": {
++          "bytes": 1000,
++          "capacityHeld": true
++        },
++        "hostCreationBlocked": false,
++        "cancellationRequested": false
++      },
++      "exit": 0
++    },
++    {
++      "name": "preparing",
++      "command": "observed-allocation",
++      "reply": {
++        "version": 1,
++        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
++        "actionId": "one",
++        "state": "preparing",
++        "phase": "booting",
++        "device": {
++          "platform": "ios-simulator",
++          "udid": "ABCDEF00-0000-4000-8000-000000000001"
++        },
++        "reason": null,
++        "outcome": null,
++        "authority": "committed",
++        "readinessEvidence": [
++          "/isolated/observed/one/allocation/readiness-1.json"
++        ],
++        "evidenceRefs": [
++          "/isolated/observed/one/allocation"
++        ],
++        "reservation": {
++          "bytes": 1000,
++          "capacityHeld": true
++        },
++        "hostCreationBlocked": false,
++        "cancellationRequested": false
++      },
++      "exit": 2
++    },
++    {
++      "name": "executing",
++      "command": "observed-allocation",
++      "reply": {
++        "version": 1,
++        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
++        "actionId": "one",
++        "state": "executing",
++        "phase": "action",
++        "device": {
++          "platform": "ios-simulator",
++          "udid": "ABCDEF00-0000-4000-8000-000000000001"
++        },
++        "reason": null,
++        "outcome": null,
++        "authority": "committed",
++        "readinessEvidence": [
++          "/isolated/observed/one/allocation/readiness-1.json"
++        ],
++        "evidenceRefs": [
++          "/isolated/observed/one/allocation"
++        ],
++        "reservation": {
++          "bytes": 1000,
++          "capacityHeld": true
++        },
++        "hostCreationBlocked": false,
++        "cancellationRequested": false
++      },
++      "exit": 2
++    },
++    {
++      "name": "action_completed",
++      "command": "observed-allocation",
++      "reply": {
++        "version": 1,
++        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
++        "actionId": "one",
++        "state": "retained",
++        "phase": "terminal",
++        "device": {
++          "platform": "ios-simulator",
++          "udid": "ABCDEF00-0000-4000-8000-000000000001"
++        },
++        "reason": null,
++        "outcome": "action_completed",
++        "authority": "committed",
++        "readinessEvidence": [
++          "/isolated/observed/one/allocation/readiness-1.json"
++        ],
++        "evidenceRefs": [
++          "/isolated/observed/one/allocation"
++        ],
++        "reservation": {
++          "bytes": 1000,
++          "capacityHeld": true
++        },
++        "hostCreationBlocked": false,
++        "cancellationRequested": false
++      },
++      "exit": 0
++    },
++    {
++      "name": "allocation_refused",
++      "command": "observed-allocation",
++      "reply": {
++        "version": 1,
++        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
++        "actionId": "one",
++        "state": "retained",
++        "phase": "terminal",
++        "device": {
++          "platform": "ios-simulator",
++          "udid": "ABCDEF00-0000-4000-8000-000000000001"
++        },
++        "reason": "BOOT_FAILED",
++        "outcome": "refused",
++        "authority": "committed",
++        "readinessEvidence": [
++          "/isolated/observed/one/allocation/readiness-1.json"
++        ],
++        "evidenceRefs": [
++          "/isolated/observed/one/allocation"
++        ],
++        "reservation": {
++          "bytes": 1000,
++          "capacityHeld": true
++        },
++        "hostCreationBlocked": false,
++        "cancellationRequested": false
++      },
++      "exit": 3
++    },
++    {
++      "name": "uncertain",
++      "command": "observed-allocation",
++      "reply": {
++        "version": 1,
++        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
++        "actionId": "one",
++        "state": "quarantined",
++        "phase": "terminal",
++        "device": {
++          "platform": "ios-simulator",
++          "udid": "ABCDEF00-0000-4000-8000-000000000001"
++        },
++        "reason": "PREPARATION_UNCONFIRMED",
++        "outcome": "uncertain",
++        "authority": "committed",
++        "readinessEvidence": [
++          "/isolated/observed/one/allocation/readiness-1.json"
++        ],
++        "evidenceRefs": [
++          "/isolated/observed/one/allocation"
++        ],
++        "reservation": {
++          "bytes": 1000,
++          "capacityHeld": true
++        },
++        "hostCreationBlocked": false,
++        "cancellationRequested": false
++      },
++      "exit": 2
++    },
++    {
++      "name": "unconfirmed_allocation",
++      "command": "observed-allocation",
++      "reply": {
++        "version": 1,
++        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
++        "actionId": "one",
++        "state": "quarantined",
++        "phase": "terminal",
++        "device": {
++          "platform": "ios-simulator",
++          "udid": "ABCDEF00-0000-4000-8000-000000000001"
++        },
++        "reason": "PREPARATION_UNCONFIRMED",
++        "outcome": null,
++        "authority": "unconfirmed",
++        "readinessEvidence": [
++          "/isolated/observed/one/allocation/readiness-1.json"
++        ],
++        "evidenceRefs": [
++          "/isolated/observed/one/allocation"
++        ],
++        "reservation": {
++          "bytes": 1000,
++          "capacityHeld": true
++        },
++        "hostCreationBlocked": false,
++        "cancellationRequested": false
++      },
++      "exit": 2
++    },
++    {
++      "name": "retired_unused",
++      "command": "observed-allocation",
++      "reply": {
++        "version": 1,
++        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
++        "actionId": "one",
++        "state": "retained",
++        "phase": "terminal",
++        "device": {
++          "platform": "ios-simulator",
++          "udid": "ABCDEF00-0000-4000-8000-000000000001"
++        },
++        "reason": "RETAINED_UNUSED",
++        "outcome": "retired_unused",
++        "authority": "committed",
++        "readinessEvidence": [
++          "/isolated/observed/one/allocation/readiness-1.json"
++        ],
++        "evidenceRefs": [
++          "/isolated/observed/one/allocation"
++        ],
++        "reservation": {
++          "bytes": 1000,
++          "capacityHeld": true
++        },
++        "hostCreationBlocked": false,
++        "cancellationRequested": false
++      },
++      "exit": 0
++    },
++    {
++      "name": "historical",
++      "command": "observed-allocation",
++      "reply": {
++        "version": 1,
++        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
++        "actionId": "one",
++        "state": "quarantined",
++        "phase": "terminal",
++        "device": {
++          "platform": "ios-simulator",
++          "udid": "ABCDEF00-0000-4000-8000-000000000001"
++        },
++        "reason": null,
++        "outcome": "uncertain",
++        "authority": "committed",
++        "readinessEvidence": [
++          "/isolated/observed/one/allocation/readiness-1.json"
++        ],
++        "evidenceRefs": [
++          "/isolated/observed/one/allocation"
++        ],
++        "reservation": {
++          "bytes": 0,
++          "capacityHeld": false
++        },
++        "hostCreationBlocked": false,
++        "cancellationRequested": false,
++        "readOnly": true,
++        "historicalOutcome": "already_satisfied"
++      },
++      "exit": 2
++    },
++    {
++      "name": "preparing_busy",
++      "command": "observed-retire",
++      "reply": {
++        "version": 1,
++        "kind": "observed-operation-error",
++        "code": "ALLOCATION_BUSY",
++        "message": "Allocation preparation is active; use allocation cancellation via cancel_observed_allocation or observed-allocation-cancel.",
++        "actionId": "one",
++        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
++        "acceptance": "yes",
++        "acceptanceKind": "preparation",
++        "evidenceDirectory": "/isolated/observed/one/allocation",
++        "state": "preparing"
++      },
++      "exit": 3
++    },
++    {
++      "name": "executing_busy",
++      "command": "observed-allocation-cancel",
++      "reply": {
++        "version": 1,
++        "kind": "observed-operation-error",
++        "code": "ALLOCATION_BUSY",
++        "message": "Allocation is executing; use action cancellation via cancel_observed_action or observed-cancel.",
++        "actionId": "one",
++        "allocationId": "ABCDEF00-0000-4000-8000-000000000099",
++        "acceptance": "yes",
++        "acceptanceKind": "preparation",
++        "evidenceDirectory": "/isolated/observed/one/allocation",
++        "state": "executing"
++      },
++      "exit": 3
++    }
++  ]
++}
+--- a/tests/mcp.test.ts
++++ b/tests/mcp.test.ts
+@@ -8,7 +8,7 @@
+ import { openMcpSession } from './fixtures/mcp-session.js';
+ 
+ test('stdio server negotiates and exposes start/report/cancel without a key', { timeout: 10_000 }, async () => {
+-  const env = { ...process.env }; delete env.TYPESAFE_API_KEY;
++  const env = { ...process.env, JEV_EXPERIMENTAL_OBSERVED: '0' }; delete (env as NodeJS.ProcessEnv).TYPESAFE_API_KEY;
+   const child = spawn(process.execPath, ['--import', 'tsx', 'src/cli.ts', 'mcp'], { env, stdio: ['pipe', 'pipe', 'pipe'] });
+   const pending = new Map<number, (value: any) => void>();
+   const lines = createInterface({ input: child.stdout });
+@@ -26,7 +26,7 @@
+     assert.equal(init.result.serverInfo.version, '1.3.1');
+     child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' }) + '\n');
+     const list = await request(2, 'tools/list');
+-    assert.deepEqual(list.result.tools.map((tool: { name: string }) => tool.name).sort(), ['cancel_run', 'get_report', 'start_scenario']);
++    assert.deepEqual(list.result.tools.map((tool: { name: string }) => tool.name).sort(), ['cancel_observed_action', 'cancel_observed_allocation', 'cancel_run', 'get_observed_action', 'get_observed_allocation', 'get_report', 'retire_observed_allocation', 'start_scenario']);
+     const startSchema = list.result.tools.find((tool: { name: string }) => tool.name === 'start_scenario').inputSchema;
+     assert.ok(startSchema.properties.scenario);
+     const report = await request(3, 'tools/call', { name: 'get_report', arguments: { runId: 'missing' } });
+@@ -49,10 +49,10 @@
+ });
+ 
+ test('the MCP server starts and lists its tools with both device settings empty', { timeout: 10_000 }, async () => {
+-  const session = await openMcpSession('empty-devices', { entryPoint: 'cli', env: { JEV_DEVICE_UDID: '', JEV_ANDROID_DEVICE: '' } });
++  const session = await openMcpSession('empty-devices', { entryPoint: 'cli', env: { JEV_DEVICE_UDID: '', JEV_ANDROID_DEVICE: '', JEV_EXPERIMENTAL_OBSERVED: '0' } });
+   try {
+     const tools = await session.listTools();
+-    assert.deepEqual(tools.map((tool: { name: string }) => tool.name).sort(), ['cancel_run', 'get_report', 'start_scenario']);
++    assert.deepEqual(tools.map((tool: { name: string }) => tool.name).sort(), ['cancel_observed_action', 'cancel_observed_allocation', 'cancel_run', 'get_observed_action', 'get_observed_allocation', 'get_report', 'retire_observed_allocation', 'start_scenario']);
+   } finally { await session.close(); }
+ });
+ 

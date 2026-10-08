@@ -1,0 +1,32 @@
+(node:78107) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ contract: capture refusals print the reason code on stderr and need no TYPESAFE_API_KEY (191.385334ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 420.734667
+
+✖ failing tests:
+
+test at tests/contract.test.ts:1:25626
+✖ contract: capture refusals print the reason code on stderr and need no TYPESAFE_API_KEY (191.385334ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /^NO_DEVICE: \S/. Input:
+  
+  '(node:78119) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n' +
+    '(Use `node --trace-warnings ...` to show where the warning was created)\n' +
+    'NO_DEVICE: Pass --serial or --avd, or set JEV_ANDROID_DEVICE\n'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/contract.test.ts:532:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:332:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '(node:78119) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\nNO_DEVICE: Pass --serial or --avd, or set JEV_ANDROID_DEVICE\n',
+    expected: /^NO_DEVICE: \S/,
+    operator: 'match'
+  }

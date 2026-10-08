@@ -1,0 +1,23 @@
+{
+  "base": "1275f93c616c90aba63e92468679cf39f13157b5",
+  "manifestPath": ".scratch/observed-integration/acceptance/host/public-adapters/final-source.json",
+  "all12HashesMatch": true,
+  "originalReportsUnmodified": true,
+  "standardsVerdict": "PASS with optional low advisory",
+  "documentedBreaches": 0,
+  "heuristicSmells": [
+    {
+      "name": "possible Repeated Switches",
+      "severity": "low",
+      "locations": [
+        "src/observed/cli.ts:19",
+        "src/cli.ts:240"
+      ]
+    }
+  ],
+  "readRootBaseline": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/public-adapters/node24-legacy-warning/baseline.log",
+  "boundedProbe": "cli-errors-confirmed.log",
+  "boundedProbeExpectedExit": 3,
+  "noLargeExecution": true,
+  "commitAssociation": "pending"
+}

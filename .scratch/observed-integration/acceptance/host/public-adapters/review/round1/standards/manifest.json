@@ -1,0 +1,80 @@
+{
+  "base": "1275f93c616c90aba63e92468679cf39f13157b5",
+  "branch": "feat/observed-public-adapters",
+  "files": {
+    "src/cli.ts": {
+      "path": "src/cli.ts",
+      "sha256": "87c631e9839c81219eacb5c05104a3a9d9e356931f576f0bd865943bb9c0fd32",
+      "gitBlob": "3d7e9b939c8316141ed682d770298548135de2d6",
+      "frozenCopyMatches": true
+    },
+    "src/mcp/index.ts": {
+      "path": "src/mcp/index.ts",
+      "sha256": "48e531d304d19852d461eb1d3317fee5f953a15654f405c3393b04ff4a494c2a",
+      "gitBlob": "76cc20be10d26f79c46a07132144c7575e38423f",
+      "frozenCopyMatches": true
+    },
+    "src/mcp/observed.ts": {
+      "path": "src/mcp/observed.ts",
+      "sha256": "5522cc1933d54d13cd8c72b7d8caa5ebf262272f9e0110c13fceb58dd8fcc51b",
+      "gitBlob": "ba1f95c0a6384e538f2e72249ee9285b7abfd566",
+      "frozenCopyMatches": true
+    },
+    "src/observed/cli.ts": {
+      "path": "src/observed/cli.ts",
+      "sha256": "c10db12f994143673e4c821116fecb6c2e55eabcf7ed0b9b75d80502f110bd63",
+      "gitBlob": "f0e881fd25ef2c01450e835ca8fcf00d8b503cd8",
+      "frozenCopyMatches": true
+    },
+    "tests/observed-cli.test.ts": {
+      "path": "tests/observed-cli.test.ts",
+      "sha256": "815c3808bb76b2ba2facef67fee6e17dcbca4d1592c1439e4e03ab195e4defa6",
+      "gitBlob": "4a9dc407f5ee72cedba60afd42f7f73c70b03db2",
+      "frozenCopyMatches": true
+    },
+    "tests/observed-mcp.test.ts": {
+      "path": "tests/observed-mcp.test.ts",
+      "sha256": "1e2913228684ab79c51226553a39b0c30a2194b7b05201fd21a86411037718d5",
+      "gitBlob": "00ab5ce293cd24c5dc93ffbd18aa21e907394299",
+      "frozenCopyMatches": true
+    },
+    "tests/observed-contract.test.ts": {
+      "path": "tests/observed-contract.test.ts",
+      "sha256": "fd26c2e82bdfa3b108c695eefa1721e006b84ad1cd3cb020123085863adb81a1",
+      "gitBlob": "6b53f6d61861d718a05ebe3bb9d33bd4536aa48e",
+      "frozenCopyMatches": true
+    },
+    "tests/fixtures/observed-mcp-server.ts": {
+      "path": "tests/fixtures/observed-mcp-server.ts",
+      "sha256": "07c5005984b70ba4b63dca7336132e4de855bfe478033b1f768a274f7442b25b",
+      "gitBlob": "7ef3e74a2ba6fdf6316ecfebfe97a209664cfcf2",
+      "frozenCopyMatches": true
+    },
+    "tests/fixtures/observed-cli-server.ts": {
+      "path": "tests/fixtures/observed-cli-server.ts",
+      "sha256": "11b67bebed7f045bfa730d87fc024f2b634d6c743eaad623e84019980b79bc36",
+      "gitBlob": "bdd81aac872e4599a1b6c35913aed2bcb62a5e6a",
+      "frozenCopyMatches": true
+    },
+    "tests/golden/observed-mcp-v1.json": {
+      "path": "tests/golden/observed-mcp-v1.json",
+      "sha256": "48dc6d413b8f272be845c03b0827f1429a053298676eab3812e568b90936a63b",
+      "gitBlob": "8c37604adc7c546f5779a1e224476f1a3becde17",
+      "frozenCopyMatches": true
+    },
+    "tests/golden/observed-replies-v1.json": {
+      "path": "tests/golden/observed-replies-v1.json",
+      "sha256": "cdbfbfe4b8ac3f93bebd0e7f8cc5243cc90d3549bc20bdbea97bdd670dc0602b",
+      "gitBlob": "0e11c9a3e55d162e559e2e7d237a14fa50e9d190",
+      "frozenCopyMatches": true
+    },
+    "tests/mcp.test.ts": {
+      "path": "tests/mcp.test.ts",
+      "sha256": "850fb08ebc98f355de4958b287e23a228e685c7e2b6843abb65ff9f629d31531",
+      "gitBlob": "ae3d29395656e522ca0741185753848274306dc3",
+      "frozenCopyMatches": true
+    }
+  },
+  "sourceTestGoldens12Match": true,
+  "review": "Standards only; commit association pending"
+}

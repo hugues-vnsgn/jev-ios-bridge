@@ -1,0 +1,14 @@
+{
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "/tmp/jev-public-adapters-spec-v9qit6ha/signal-exit-fixed-setup.test.ts"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters",
+  "nodeVersion": "v26.8.1",
+  "childUmask": "0022",
+  "exit": 1,
+  "setupCorrection": "Escaped child source newlines and exact stderr barrier; initial setup logs unchanged."
+}

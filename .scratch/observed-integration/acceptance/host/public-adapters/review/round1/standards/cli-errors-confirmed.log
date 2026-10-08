@@ -1,0 +1,4 @@
+COMMAND ["node", "--import", "tsx", "/tmp/jev-public-adapters-standards-zjp1qyoy/cli-errors-confirmed.mts"]
+{"assertions":"PASS","expectedExit":3,"reply":{"version":1,"kind":"observed-operation-error","code":"INVALID_REQUEST","message":"Invalid observed command arguments","acceptance":"no","acceptanceKind":"action"},"authorityOpened":false}
+
+EXIT 3 EXPECTED 3

@@ -1,0 +1,32 @@
+{"case":"signal-exit","result":"still-running","elapsed":6501,"stdout":"{\"version\":1,\"kind\":\"observed-operation-error\",\"code\":\"WAIT_CANCELLED\",\"message\":\"Observed read wait was cancelled\",\"acceptance\":\"no\",\"acceptanceKind\":\"action\"}\n","stderr":"FAKE_PENDING\nRUNCLI_RETURNED 143\n"}
+✖ actual runCli signal exits after bounded close despite an unsettled fake backend resource (7123.147792ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7379.262
+
+✖ failing tests:
+
+test at ../../../../../../private/tmp/jev-public-adapters-spec-v9qit6ha/signal-exit-fixed-setup.test.ts:1:365
+✖ actual runCli signal exits after bounded close despite an unsettled fake backend resource (7123.147792ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'still-running'
+  - 143
+  
+      at TestContext.<anonymous> (/private/tmp/jev-public-adapters-spec-v9qit6ha/signal-exit-fixed-setup.test.ts:8:507)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'still-running',
+    expected: 143,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

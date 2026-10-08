@@ -1,0 +1,36 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+Error: Transform failed with 1 error:
+/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/fixtures/observed-cli-server.ts:90:2: ERROR: Top-level await is currently not supported with the "cjs" output format
+    at failureErrorWithLog (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules/esbuild/lib/main.js:1752:15)
+    at /Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules/esbuild/lib/main.js:1019:50
+    at responseCallbacks.<computed> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules/esbuild/lib/main.js:886:9)
+    at handleIncomingPacket (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules/esbuild/lib/main.js:941:12)
+    at Socket.readFromStdout (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/node_modules/esbuild/lib/main.js:864:7)
+    at Socket.emit (node:events:514:20)
+    at addChunk (node:internal/streams/readable:575:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:526:3)
+    at Readable.push (node:internal/streams/readable:406:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23) {
+  name: 'TransformError',
+  code: 'ERR_REQUIRE_ASYNC_MODULE'
+}
+
+Node.js v26.8.1
+✖ /tmp/jev-public-adapters-spec-v9qit6ha/probes.test.ts (450.371167ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 453.639333
+
+✖ failing tests:
+
+test at ../../../../../../tmp/jev-public-adapters-spec-v9qit6ha/probes.test.ts:1:1
+✖ /tmp/jev-public-adapters-spec-v9qit6ha/probes.test.ts (450.371167ms)
+  'test failed'

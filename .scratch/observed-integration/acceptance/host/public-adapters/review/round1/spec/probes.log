@@ -1,0 +1,53 @@
+{"case":"missing-value","stdout":"{\"version\":1,\"kind\":\"observed-operation-error\",\"code\":\"INVALID_REQUEST\",\"message\":\"Invalid observed command arguments\",\"acceptance\":\"no\",\"acceptanceKind\":\"action\"}\n","error":null}
+{"case":"retirement-config-race","reads":2,"code":"CONFIGURATION_ERROR"}
+✔ missing CLI option value returns safe one-record INVALID_REQUEST (1.103084ms)
+✖ failed configuration after retirement delegates authoritative unready result (1.430084ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 246.795792
+
+✖ failing tests:
+
+test at ../../../../../../private/tmp/jev-public-adapters-spec-v9qit6ha/probes.test.ts:1:1362
+✖ failed configuration after retirement delegates authoritative unready result (1.430084ms)
+  AssertionError [ERR_ASSERTION]: No longer eligible for fresh binding: service must resolve current authority
+  + actual - expected
+  
+  + ObservedOperationError: Observed allocation configuration is invalid
+  +     at validateObservedStartConfiguration (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/src/observed/cli.ts:74:11)
+  +     at async TestContext.<anonymous> (/private/tmp/jev-public-adapters-spec-v9qit6ha/probes.test.ts:12:6)
+  +     at async Test.run (node:internal/test_runner/test:1409:7)
+  +     at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+  +   code: 'CONFIGURATION_ERROR',
+  +   snapshot: {
+  +     acceptance: 'no',
+  +     acceptanceKind: 'action',
+  +     actionId: 'one',
+  +     allocationId: 'ABCDEF00-0000-4000-8000-000000000099',
+  +     code: 'CONFIGURATION_ERROR',
+  +     kind: 'observed-operation-error',
+  +     message: 'Observed allocation configuration is invalid',
+  +     version: 1
+  +   }
+  + }
+  - undefined
+  
+      at TestContext.<anonymous> (/private/tmp/jev-public-adapters-spec-v9qit6ha/probes.test.ts:13:102)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: ObservedOperationError: Observed allocation configuration is invalid
+        at validateObservedStartConfiguration (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/src/observed/cli.ts:74:11)
+        at async TestContext.<anonymous> (/private/tmp/jev-public-adapters-spec-v9qit6ha/probes.test.ts:12:6)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: undefined,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

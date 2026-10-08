@@ -1,0 +1,133 @@
+{
+  "source": "/tmp/jev-public-adapters-spec-v9qit6ha",
+  "files": [
+    {
+      "path": "after-hashes.json",
+      "sha256": "68ba14ffae7b4333a0abaffa95fb07d396970e96c289a0bf3d04796e6f5a5d2b"
+    },
+    {
+      "path": "before-hashes.json",
+      "sha256": "e09ec550b11e1b2b68ca60af4e9a4f1945912f1f4f5c0bfe6d62dd90d371e68d"
+    },
+    {
+      "path": "manifest.json",
+      "sha256": "fe2af1aaefc36d74f46cdbaea6e9b466295a74fe21b92269cfd8c42a73311cff"
+    },
+    {
+      "path": "package.json",
+      "sha256": "1239d4d885dcad42201a27ed9324f8f0f760b78700d8db9ced39a511cffe7eae"
+    },
+    {
+      "path": "probes-command.json",
+      "sha256": "216786a84250e2c25dbafe0dba5b993d2b7944c8d98ab3374b54a313b99c831e"
+    },
+    {
+      "path": "probes-setup-error-command.json",
+      "sha256": "216786a84250e2c25dbafe0dba5b993d2b7944c8d98ab3374b54a313b99c831e"
+    },
+    {
+      "path": "probes-setup-error.log",
+      "sha256": "6b09f585200995b981dbb8d53035db32648a1b7e687e26f5f9f3684655bfe820"
+    },
+    {
+      "path": "probes.log",
+      "sha256": "05468f980357114634248ea38851737ced8a561cbc1311f8000e53c42107566f"
+    },
+    {
+      "path": "probes.test.ts",
+      "sha256": "462485705e9e05fb65085921486aa1242cced0b14f8ec66e84a9064f7796e19b"
+    },
+    {
+      "path": "retirement-race-command.json",
+      "sha256": "abe5efeda2c43951ac5abdf9736d25a62ee5c4ae29c588aa3dcc015ed80faac7"
+    },
+    {
+      "path": "retirement-race.log",
+      "sha256": "030aa40837d4fa390455e94a71e38fc5c25a52412208f4b185d4de30f68f2bf0"
+    },
+    {
+      "path": "retirement-race.test.ts",
+      "sha256": "0c854bfb8606047ace486e6664a75fcd3af927df0adb8418baecac2a15ed9271"
+    },
+    {
+      "path": "review.md",
+      "sha256": "0a5dad39bf61fd4e14bbfe1cf9e941805f7dd0cd64709e817ba49e4d71168d47"
+    },
+    {
+      "path": "reviewed-source/src/cli.ts",
+      "sha256": "87c631e9839c81219eacb5c05104a3a9d9e356931f576f0bd865943bb9c0fd32"
+    },
+    {
+      "path": "reviewed-source/src/mcp/index.ts",
+      "sha256": "48e531d304d19852d461eb1d3317fee5f953a15654f405c3393b04ff4a494c2a"
+    },
+    {
+      "path": "reviewed-source/src/mcp/observed.ts",
+      "sha256": "5522cc1933d54d13cd8c72b7d8caa5ebf262272f9e0110c13fceb58dd8fcc51b"
+    },
+    {
+      "path": "reviewed-source/src/observed/cli.ts",
+      "sha256": "c10db12f994143673e4c821116fecb6c2e55eabcf7ed0b9b75d80502f110bd63"
+    },
+    {
+      "path": "reviewed-source/tests/fixtures/observed-cli-server.ts",
+      "sha256": "11b67bebed7f045bfa730d87fc024f2b634d6c743eaad623e84019980b79bc36"
+    },
+    {
+      "path": "reviewed-source/tests/fixtures/observed-mcp-server.ts",
+      "sha256": "07c5005984b70ba4b63dca7336132e4de855bfe478033b1f768a274f7442b25b"
+    },
+    {
+      "path": "reviewed-source/tests/golden/observed-mcp-v1.json",
+      "sha256": "48dc6d413b8f272be845c03b0827f1429a053298676eab3812e568b90936a63b"
+    },
+    {
+      "path": "reviewed-source/tests/golden/observed-replies-v1.json",
+      "sha256": "cdbfbfe4b8ac3f93bebd0e7f8cc5243cc90d3549bc20bdbea97bdd670dc0602b"
+    },
+    {
+      "path": "reviewed-source/tests/mcp.test.ts",
+      "sha256": "850fb08ebc98f355de4958b287e23a228e685c7e2b6843abb65ff9f629d31531"
+    },
+    {
+      "path": "reviewed-source/tests/observed-cli.test.ts",
+      "sha256": "815c3808bb76b2ba2facef67fee6e17dcbca4d1592c1439e4e03ab195e4defa6"
+    },
+    {
+      "path": "reviewed-source/tests/observed-contract.test.ts",
+      "sha256": "fd26c2e82bdfa3b108c695eefa1721e006b84ad1cd3cb020123085863adb81a1"
+    },
+    {
+      "path": "reviewed-source/tests/observed-mcp.test.ts",
+      "sha256": "1e2913228684ab79c51226553a39b0c30a2194b7b05201fd21a86411037718d5"
+    },
+    {
+      "path": "revision.json",
+      "sha256": "8597f3dcc3c091949af73beffa8f01f84ce8aca8808eb7f03aa6337a6921302e"
+    },
+    {
+      "path": "signal-exit-command.json",
+      "sha256": "0a4877188c09b0500fdba7302e0fa9d47638b9e220f353e8b614ed1e4bb2680d"
+    },
+    {
+      "path": "signal-exit-fixed-setup-command.json",
+      "sha256": "dfa4ca81275fd6bfe8837b5a64074c9f226282f9419286f655cb441e8676f0ca"
+    },
+    {
+      "path": "signal-exit-fixed-setup.log",
+      "sha256": "c84e097319dd8339d2f1bbab7e41ffc935af258d3149f5a0f30ac4776eb49d77"
+    },
+    {
+      "path": "signal-exit-fixed-setup.test.ts",
+      "sha256": "72d981a3e816672eb730d3de36c7956227b05793f4fa0ec85e4c33ed9ff71299"
+    },
+    {
+      "path": "signal-exit.log",
+      "sha256": "94f1c3672ee9e686aa3a27d7ae485cdb9b0a97df3a48b2e33df986df33d98b9a"
+    },
+    {
+      "path": "signal-exit.test.ts",
+      "sha256": "95f6a1c45f081dd6c9eb1961cbcf961ee3828d8b11ee9d409dc6b66a7c47b786"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-name-pattern=contract: capture refusals print the reason code on stderr and need no TYPESAFE_API_KEY",
+    "tests/contract.test.ts"
+  ],
+  "head": "fe1843f4770c07b7c787d87e4bd7794226dd24be",
+  "exit": 1,
+  "seconds": 0.56,
+  "counts": {
+    "tests": 1,
+    "pass": 0,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "runtime": "v24.0.0",
+  "source": "Accepted integration before ticket08; test/assertion/environment unchanged, no warning flags."
+}
