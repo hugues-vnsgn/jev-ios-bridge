@@ -2,7 +2,7 @@
 
 Type: task
 Status: ready-for-agent
-Execution: implemented-awaiting-review
+Execution: integrated
 Claimed by: admission-core
 Mode: AFK
 Blocked by: None

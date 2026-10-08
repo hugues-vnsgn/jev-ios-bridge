@@ -4,7 +4,8 @@ Execution authorized by the owner on 2026-10-08. Planning base: `b8c4a50942551bd
 
 | Work | Execution | Agent / model / effort | Evidence |
 | --- | --- | --- | --- |
-| Durable admission core | review fixes in progress | admission_core / gpt-6-astra / high | Candidate `03fcbe4`; 30 focused tests pass on Node 24/26; cancellation-persistence and existing-journal defects require fixes |
+| Durable admission core | integrated | admission_core / gpt-6-astra / high | Integrated `9911710`; independent fix review PASS; 42 focused tests Node24/26, full check1007/1007 plus typecheck/build |
+| Offline migration | dispatching | migration implementer / gpt-6-astra / high | Dependency01 integrated; historical formats and conservative import guidance recorded in ticket02 |
 | Creation and artifact adapters | review fixes in progress | source_adapters / gpt-6.1-sol / high | Candidate `d5a5a8d`; 38 focused tests pass on Node 24/26; descriptor verification and cleanup defects require fixes |
 | Remaining packages | waiting for dependencies | Assigned in implementation handoff | No acceptance claimed |
 
