@@ -33,7 +33,10 @@ export class FileObservedEvidence implements ObservedEvidenceStore {
     if (!isAbsolute(directory)) throw new Error('Evidence requires an absolute directory');
     await mkdir(dirname(directory), { recursive: true, mode: 0o700 });
     await privateDirectory(dirname(directory));
-    await mkdir(directory, { mode: 0o700 }); await privateDirectory(directory); await syncDirectory(dirname(directory));
+    // Allocation preparation may already have created this shared action directory.
+    try { await mkdir(directory, { mode: 0o700 }); }
+    catch (error) { if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error; }
+    await privateDirectory(directory); await syncDirectory(dirname(directory));
     await writeExclusive(join(directory, 'request.json'), JSON.stringify(request, null, 2) + '\n');
   }
   async observation(directory: string, snapshot: Snapshot, index: number): Promise<string[]> {
