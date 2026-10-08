@@ -156,3 +156,44 @@ test('the filesystem seam detects source mutation during bounded copying', async
   try { await assert.rejects(stageArtifact(f.request, { ...f.dependencies, fs: interceptedFs }), { reason: 'ARTIFACT_INVALID' }); assert.equal(changed, true); assert.deepEqual(await fs.readdir(f.stagingRoot), []); }
   finally { await cleanup(f.root); }
 });
+test('verification refuses an opened staged file made writable after the path stat', async () => {
+  const f = await fixture(); let changed = false;
+  try {
+    const receipt = await stageArtifact(f.request, f.dependencies);
+    const interceptedFs: typeof fs = { ...fs, open: async (...args: Parameters<typeof fs.open>) => {
+      if (!changed && String(args[0]) === join(receipt.stagedPath, 'Info.plist')) {
+        changed = true; await fs.chmod(String(args[0]), 0o600);
+      }
+      return fs.open(...args);
+    } };
+    await assert.rejects(verifyStagedArtifact(receipt, { fs: interceptedFs }), { reason: 'ARTIFACT_INVALID' });
+    assert.equal(changed, true);
+  } finally { await cleanup(f.root); }
+});
+test('staging closes its source descriptor when opening the output fails with ENOSPC', async () => {
+  const f = await fixture(); const handles: fs.FileHandle[] = []; let inputForCopy: fs.FileHandle | undefined;
+  const interceptedFs: typeof fs = { ...fs, open: async (...args: Parameters<typeof fs.open>) => {
+    if (args[1] === 'wx') { inputForCopy = handles.at(-1); throw Object.assign(new Error('fixture output full'), { code: 'ENOSPC' }); }
+    const handle = await fs.open(...args); handles.push(handle); return handle;
+  } };
+  try {
+    await assert.rejects(stageArtifact(f.request, { ...f.dependencies, fs: interceptedFs }), { reason: 'ARTIFACT_INVALID' });
+    assert.ok(inputForCopy); assert.equal(inputForCopy.fd, -1, 'failed output open must close the already-open source');
+    assert.deepEqual(await fs.readdir(f.stagingRoot), []);
+  } finally { await Promise.allSettled(handles.map(handle => handle.close())); await cleanup(f.root); }
+});
+test('staging attempts the output close even when the source close rejects', async () => {
+  const f = await fixture(); const handles: fs.FileHandle[] = []; let outputForCopy: fs.FileHandle | undefined;
+  const interceptedFs: typeof fs = { ...fs, open: async (...args: Parameters<typeof fs.open>) => {
+    const handle = await fs.open(...args);
+    if (args[1] === 'wx') {
+      outputForCopy = handle; const input = handles.at(-1)!; const close = input.close.bind(input);
+      input.close = async () => { await close(); throw new Error('fixture source close failure'); };
+    }
+    handles.push(handle); return handle;
+  } };
+  try {
+    await assert.rejects(stageArtifact(f.request, { ...f.dependencies, fs: interceptedFs }), { reason: 'ARTIFACT_INVALID' });
+    assert.ok(outputForCopy); assert.equal(outputForCopy.fd, -1, 'source close rejection must not skip closing the output');
+  } finally { await Promise.allSettled(handles.map(handle => handle.close())); await cleanup(f.root); }
+});

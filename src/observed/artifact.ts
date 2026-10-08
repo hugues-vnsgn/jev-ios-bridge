@@ -30,19 +30,26 @@ const contains = (root: string, path: string) => { const r = relative(root, path
 const version = (value: unknown): number[] => typeof value === 'string' && /^\d{1,3}\.\d{1,3}(?:\.\d{1,3})?$/.test(value)
   ? value.split('.').map(Number) : invalid('Missing or invalid OS version');
 const newer = (a: number[], b: number[]) => { for (let i = 0; i < 3; i++) { if ((a[i] ?? 0) !== (b[i] ?? 0)) return (a[i] ?? 0) > (b[i] ?? 0); } return false; };
-const stamp = (s: import('node:fs').Stats) => `${s.dev}:${s.ino}:${s.size}:${s.mtimeMs}:${s.ctimeMs}:${s.mode}`;
+const stamp = (s: import('node:fs').Stats) => `${s.dev}:${s.ino}:${s.size}:${s.mtimeMs}:${s.ctimeMs}:${s.mode}:${s.uid}:${s.gid}:${s.nlink}`;
+function checkImmutable(s: import('node:fs').Stats): void {
+  if (s.uid !== process.getuid?.() || (!s.isSymbolicLink() && ((s.mode & 0o222) !== 0 || (s.mode & 0o077) !== 0)) || (s.isFile() && s.nlink !== 1)) invalid('Staged artifact is no longer immutable and private');
+}
 
-async function fileDigest(path: string, fs: typeof nativeFs, maxBytes: number, signal?: AbortSignal): Promise<{ digest: string; bytes: number; stamp: string }> {
+async function fileDigest(path: string, fs: typeof nativeFs, maxBytes: number, expected: import('node:fs').Stats, signal?: AbortSignal, immutable = false): Promise<{ digest: string; bytes: number; stamp: string }> {
   const handle = await fs.open(path, constants.O_RDONLY | constants.O_NOFOLLOW);
   try {
     const before = await handle.stat();
+    if (stamp(before) !== stamp(expected)) invalid('Artifact changed before reading');
+    if (immutable) checkImmutable(before);
     if (!before.isFile() || before.size > maxBytes) invalid('Artifact size limit exceeded');
     const hash = createHash('sha256'); const chunk = Buffer.alloc(65536); let bytes = 0;
     while (true) {
       signal?.throwIfAborted(); const read = await handle.read(chunk, 0, chunk.length, null); if (!read.bytesRead) break;
       bytes += read.bytesRead; if (bytes > maxBytes) invalid('Artifact size limit exceeded'); hash.update(chunk.subarray(0, read.bytesRead));
     }
-    if (stamp(before) !== stamp(await handle.stat()) || stamp(before) !== stamp(await fs.lstat(path))) invalid('Artifact changed while reading');
+    const after = await handle.stat();
+    if (immutable) checkImmutable(after);
+    if (stamp(before) !== stamp(after) || stamp(before) !== stamp(await fs.lstat(path))) invalid('Artifact changed while reading');
     return { digest: hash.digest('hex'), bytes, stamp: stamp(before) };
   } finally { await handle.close(); }
 }
@@ -52,7 +59,7 @@ async function tree(root: string, fs: typeof nativeFs, maxBytes: number, signal?
   const entries: Entry[] = []; let bytes = 0;
   async function walk(path: string): Promise<void> {
     signal?.throwIfAborted(); const s = await fs.lstat(path); const name = relative(root, path);
-    if (immutable && (s.uid !== process.getuid?.() || (!s.isSymbolicLink() && ((s.mode & 0o222) !== 0 || (s.mode & 0o077) !== 0)) || (s.isFile() && s.nlink !== 1))) invalid('Staged artifact is no longer immutable and private');
+    if (immutable) checkImmutable(s);
     if (entries.length >= 100000) invalid('Artifact entry limit exceeded');
     if (s.isSymbolicLink()) {
       const link = await fs.readlink(path);
@@ -64,7 +71,7 @@ async function tree(root: string, fs: typeof nativeFs, maxBytes: number, signal?
       for (const child of (await fs.readdir(path)).sort()) await walk(join(path, child));
       if (stamp(s) !== stamp(await fs.lstat(path))) invalid('Artifact changed while inspecting');
     } else if (s.isFile()) {
-      const d = await fileDigest(path, fs, maxBytes - bytes, signal); bytes += d.bytes;
+      const d = await fileDigest(path, fs, maxBytes - bytes, s, signal, immutable); bytes += d.bytes;
       entries.push({ path: name, kind: 'file', ...d, executable: (s.mode & 0o111) !== 0 });
     } else invalid('Artifact contains an unsupported file type');
   }
@@ -197,8 +204,9 @@ export async function stageArtifact(request: ArtifactRequest, deps: ArtifactDepe
       else if (entry.kind === 'link') await fs.symlink(entry.digest, destination);
       else {
         const input = await fs.open(source, constants.O_RDONLY | constants.O_NOFOLLOW);
-        const output = await fs.open(destination, 'wx', entry.executable ? 0o500 : 0o400);
+        let output: nativeFs.FileHandle | undefined;
         try {
+          output = await fs.open(destination, 'wx', entry.executable ? 0o500 : 0o400);
           if (stamp(await input.stat()) !== entry.stamp) invalid('Artifact changed before copying');
           const buffer = Buffer.alloc(65536); const hash = createHash('sha256'); let bytes = 0;
           while (true) {
@@ -208,7 +216,9 @@ export async function stageArtifact(request: ArtifactRequest, deps: ArtifactDepe
           }
           if (bytes !== entry.bytes || hash.digest('hex') !== entry.digest || stamp(await input.stat()) !== entry.stamp) invalid('Artifact changed while copying');
           await output.sync();
-        } finally { await input.close(); await output.close(); }
+        } finally {
+          try { await input.close(); } finally { await output?.close(); }
+        }
         await fs.chmod(destination, entry.executable ? 0o500 : 0o400);
       }
     }
