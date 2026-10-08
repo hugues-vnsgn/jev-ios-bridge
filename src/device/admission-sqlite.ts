@@ -29,6 +29,7 @@ export function parseMigrationDeclaration(raw: unknown): MigrationDeclaration {
 const receiptSchema = z.strictObject({
   version: z.literal(1), installationId: z.string().uuid(), declaration: declarationSchema,
   sources: z.array(z.strictObject({ kind: z.enum(['journal', 'leases']), root: z.string().refine(isAbsolute), present: z.boolean(),
+    requestedRoots: z.array(z.string().refine(isAbsolute)).min(1),
     files: z.array(z.strictObject({ path: z.string().refine(isAbsolute), sha256: z.string().regex(/^[\da-f]{64}$/) })) })).min(2),
   importedActions: z.number().int().nonnegative(), retainedDevices: z.number().int().nonnegative(), ignoredNonIosLeases: z.number().int().nonnegative(),
 });

@@ -418,3 +418,41 @@ test('root separation and destination safety refuse without placing a guard insi
   assert.throws(() => migrateAdmissionForTesting(declaration, unsafe.options), { code: 'STATE_UNAVAILABLE' });
   assert.deepEqual(readdirSync(unsafe.root), []);
 });
+
+test('an inaccessible ancestor of a declared source closes initialized admission on rerun', t => {
+  const f = fixture(t);
+  const parent = join(f.directory, 'historical-parent');
+  const journal = join(parent, 'journal');
+  mkdirSync(journal, { recursive: true, mode: 0o700 });
+  const input = { ...declaration, additionalJournalRoots: [journal] };
+  migrateAdmissionForTesting(input, f.options);
+  const admission = f.open();
+  const before = treeBytes(parent);
+  chmodSync(parent, 0o000);
+  try {
+    assert.throws(() => migrateAdmissionForTesting(input, f.options), { code: 'STATE_UNAVAILABLE' });
+    assert.throws(() => admission.acquire({ device, attempt: { kind: 'legacy', id: 'after-ancestor-failure' }, digest: 'new', intent: {} }), { code: 'STATE_UNAVAILABLE' });
+    assert.throws(f.open, { code: 'STATE_UNAVAILABLE' });
+    assert.equal(existsSync(join(f.root, 'migration.lock')), true);
+  } finally { chmodSync(parent, 0o700); }
+  assert.deepEqual(treeBytes(parent), before);
+});
+
+test('a readable source overlap still prevents guard writes when another declared source is inaccessible', t => {
+  const f = fixture(t);
+  const parent = join(f.directory, 'historical-parent');
+  const journal = join(parent, 'journal');
+  const redirected = join(f.directory, 'redirected');
+  mkdirSync(journal, { recursive: true, mode: 0o700 });
+  mkdirSync(redirected, { mode: 0o700 });
+  const input = { ...declaration, additionalJournalRoots: [journal, redirected] };
+  migrateAdmissionForTesting(input, f.options);
+  rmSync(redirected, { recursive: true });
+  symlinkSync(f.root, redirected);
+  const before = treeBytes(f.root);
+  chmodSync(parent, 0o000);
+  try { assert.throws(() => migrateAdmissionForTesting(input, f.options), { code: 'STATE_UNAVAILABLE' }); }
+  finally { chmodSync(parent, 0o700); }
+  assert.deepEqual(treeBytes(f.root), before);
+  assert.equal(existsSync(join(f.root, 'migration.lock')), false);
+});

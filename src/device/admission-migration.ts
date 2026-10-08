@@ -9,7 +9,7 @@ import { AdmissionError, AdmissionSqlite, parseMigrationDeclaration, type Migrat
 
 /** These booleans are operational assertions, never proof that an old writer is fenced. */
 export { parseMigrationDeclaration, type MigrationDeclaration } from './admission-sqlite.js';
-export type MigrationSource = { kind: 'journal' | 'leases'; root: string; present: boolean; files: { path: string; sha256: string }[] };
+export type MigrationSource = { kind: 'journal' | 'leases'; root: string; requestedRoots: string[]; present: boolean; files: { path: string; sha256: string }[] };
 export type ImportedObservedAction = {
   actionId: string; allocationId: string; device: string; readOnly: true;
   outcome: 'outcome_observed' | 'already_satisfied' | 'refused' | 'inconclusive';
@@ -39,10 +39,10 @@ function sourceRoot(kind: MigrationSource['kind'], path: string, required: boole
     const stat = lstatSync(absolute);
     if (!stat.isDirectory() || stat.isSymbolicLink()) throw new AdmissionError('STATE_UNAVAILABLE', 'Unsafe historical root');
     const root = realpathSync(absolute);
-    return { kind, root, present: true, files: [] };
+    return { kind, root, requestedRoots: [absolute], present: true, files: [] };
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code !== 'ENOENT' || required) throw error;
-    return { kind, root: canonicalLocation(absolute), present: false, files: [] };
+    return { kind, root: canonicalLocation(absolute), requestedRoots: [absolute], present: false, files: [] };
   }
 }
 function canonicalLocation(path: string, links = 0): string {
@@ -169,7 +169,13 @@ function sourceRoots(declaration: MigrationDeclaration, defaults: DefaultRoots):
   const roots = [sourceRoot('journal', defaults.journal, false), sourceRoot('leases', defaults.leases, false)];
   for (const path of declaration.additionalJournalRoots) roots.push(sourceRoot('journal', path, true));
   for (const path of declaration.additionalLeaseRoots) roots.push(sourceRoot('leases', path, true));
-  return roots.filter((source, index) => roots.findIndex(other => other.root === source.root && other.kind === source.kind) === index);
+  const sources: MigrationSource[] = [];
+  for (const source of roots) {
+    const existing = sources.find(other => other.root === source.root && other.kind === source.kind);
+    if (existing) existing.requestedRoots = [...new Set([...existing.requestedRoots, ...source.requestedRoots])];
+    else sources.push(source);
+  }
+  return sources;
 }
 function collect(declaration: MigrationDeclaration, defaults: DefaultRoots): MigrationImport {
   const sources = sourceRoots(declaration, defaults);
@@ -195,20 +201,49 @@ function collect(declaration: MigrationDeclaration, defaults: DefaultRoots): Mig
   return { declaration, sources, devices: [...devices].map(([device, uncertain]) => ({ device, uncertain,
     reason: exclusions.has(device) ? 'protected-device' : uncertain ? 'historical-uncertainty' : null })), actions: imported, ignoredNonIosLeases };
 }
+function separate(source: string, destination: string): void {
+  if (source === destination || source.startsWith(destination + sep) || destination.startsWith(source + sep)) unsafeSource();
+}
+function sourceRequests(declaration: MigrationDeclaration, defaults: DefaultRoots): { kind: MigrationSource['kind']; path: string }[] {
+  return [
+    ...[defaults.journal, ...declaration.additionalJournalRoots].map(path => ({ kind: 'journal' as const, path })),
+    ...[defaults.leases, ...declaration.additionalLeaseRoots].map(path => ({ kind: 'leases' as const, path })),
+  ];
+}
+function verifyPriorSeparation(root: string, mode: 'test' | 'production', declaration: MigrationDeclaration, requests: ReturnType<typeof sourceRequests>): void {
+  // Read only the known admission destination, never a historical source. A
+  // validated prior manifest can justify closing this authority, not importing
+  // via a cached path or proving that inaccessible source topology is unchanged.
+  const previous = new AdmissionSqlite({ root, mode }).activation();
+  if (!isDeepStrictEqual(previous.declaration, declaration)) unsafeSource();
+  const expected = [...new Set(requests.map(source => JSON.stringify([source.kind, resolve(source.path)])))].sort();
+  const recorded = [...new Set(previous.sources.flatMap(source => source.requestedRoots.map(path => JSON.stringify([source.kind, path]))))].sort();
+  if (!isDeepStrictEqual(expected, recorded)) unsafeSource();
+  for (const source of previous.sources) {
+    if (resolve(source.root) !== source.root) unsafeSource();
+    separate(source.root, root);
+  }
+}
 function migrate(raw: unknown, root: string, mode: 'test' | 'production', defaults: DefaultRoots, checkpoint?: MigrationTestOptions['checkpoint']): MigrationReceipt {
   const declaration = parseMigrationDeclaration(raw);
   try {
     if (!isAbsolute(root)) throw new AdmissionError('STATE_UNAVAILABLE', 'Admission root must be absolute');
     const destination = canonicalLocation(root);
-    // Only establish separation here. Source existence/type/readability belongs
-    // inside the migration guard, so a failed rerun closes initialized admission.
-    // Check both spelling and resolved location to avoid writing into a source.
-    const paths = [defaults.journal, defaults.leases, ...declaration.additionalJournalRoots, ...declaration.additionalLeaseRoots];
-    for (const path of paths) {
+    const requests = sourceRequests(declaration, defaults);
+    let resolutionFailed = false;
+    for (const { path } of requests) {
       if (!isAbsolute(path)) throw new AdmissionError('INVALID_REQUEST', 'Historical roots must be absolute');
-      for (const location of [resolve(path), canonicalLocation(resolve(path))]) {
-        if (location === destination || location.startsWith(destination + sep) || destination.startsWith(location + sep)) unsafeSource();
-      }
+      separate(resolve(path), destination);
+      let location: string;
+      try { location = canonicalLocation(resolve(path)); }
+      catch { resolutionFailed = true; continue; }
+      // Successful overlap detection always refuses without writing a guard,
+      // even when another source has already failed resolution.
+      separate(location, destination);
+    }
+    if (resolutionFailed) {
+      verifyPriorSeparation(root, mode, declaration, requests);
+      return AdmissionSqlite.migrate({ root, mode }, () => unsafeSource(), checkpoint);
     }
     return AdmissionSqlite.migrate({ root, mode }, () => collect(declaration, defaults), checkpoint);
   } catch (error) {
