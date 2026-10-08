@@ -49,3 +49,17 @@ Keep production admission opening lazy for iOS effectful paths. Android-only fac
 Read-only coverage map at `8e5b182`: most commands use `index.ts:519`, but window opening (`571`), selected-device listing (`615`) and app stop (`854`) bypass it; launch-error diagnostic listing (`596`) must also stop after uncertainty. `close`/`releaseLate` at831–859 currently schedules late device cleanup. Existing tests asserting cancellation followed by stop/unlock, late cleanup/retry or iOS dead-PID reclaim must change to the accepted fencing behavior; this is an intentional behavior correction, not permission to weaken test assertions. Preserve the ordinary acknowledged stale-reference retry tests. A parked driver attaches device/app context without launch, boot, install or window opening.
 
 Test backend isolation includes an injected window opener: a fake command runner alone must not let a test store reach the real opener. Config selection, local log-tail reads and process-liveness inspection are local operations, not selected-device dispatches.
+
+### Execution claim — 2026-10-08
+
+Root dispatched implementation at `b70a7ab3883dfb1530918f16cc39324b1662f91e`; claimed by shared-driver implementer in the isolated `feat/observed-shared-driver` worktree. Reviewed plan and integrated ticket 03 interfaces accepted. Host-only fake effects and isolated durable stores; independent review supplied by Root.
+
+Root approved a narrow simulator-window assertion extension: malformed selected-device list closes dispatch with zero launch; valid missing-identity listing retains warning behavior. Distinguish acknowledged settled opener failure from unresolved transport failure. Other extension files remain fixture setup only.
+
+Fixture-only scripted vendor-error correction: the fake diagnostic `simulator list` now returns a valid empty simulator-list envelope; existing DEVICE_ERROR/vendor-code assertions are unchanged.
+
+### Implementation handoff — 2026-10-08
+
+Driver source complete from base `b70a7ab3883dfb1530918f16cc39324b1662f91e`; Root owns subsequent shared-driver edits after the focused commit. Host evidence is in `.scratch/observed-integration/acceptance/host/shared-driver/` (untracked). Focused checks: 201/201 on Node 26.8.1 and exact Node 24.0.0; full suite once: 1166/1166, zero skips; typecheck/build passed. Final boundary assertions added after the full suite were checked on both runtimes. Simplify was unavailable; inline maintainability review and Root's independent review cover the diff.
+
+The initial ownership red harness accidentally invoked the original default backend on synthetic UUID `ABCDEF00-0000-4000-8000-000000000001` because the planned fakeBackend field was not yet implemented. Root was informed immediately. Original evidence remains unchanged; missing raw vendor output and side effects remain UNVERIFIED. Corrected baseline and subsequent host harnesses explicitly inject fake runner/window dependencies and isolated admission. No cleanup/investigation device operation followed the incident.

@@ -1,3 +1,4 @@
+import { createHash, randomUUID } from 'node:crypto';
 import { execFile } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { readFile } from 'node:fs/promises';
@@ -7,6 +8,9 @@ import { isIosApp, type Action, type ActionScenarioContext, type ActPath, type A
 import { androidAvd, androidSerial } from '../scripted/schema.js';
 import { ROLES, type ReasonCode, type Role } from '../scripted/vocabulary.js';
 import { DeviceLease, DeviceLeaseBusyError } from './lease.js';
+import { Admission, AdmissionError, type AdmissionClaim, type AdmittedSession } from './admission.js';
+import type { PreparationClaim, ObservedClaim, AllocationCommit } from './admission-allocation.js';
+import { processAlive as processAliveForLease } from '../process.js';
 import { readLogTail } from './logs.js';
 
 type JsonObject = Record<string, unknown>;
@@ -15,6 +19,11 @@ export type CliRunner = (args: string[], signal: AbortSignal) => Promise<CliResu
 
 export interface MobileBuildMcpDriverOptions {
   cwd: string;
+  /** Internal shared authority; production opening stays lazy until an iOS attachment. */
+  admission?: Admission;
+  runId?: string;
+  /** Explicit test transport. Both dependencies are supplied; undefined window disables presentation. */
+  fakeBackend?: { runner: CliRunner; window: DeviceWindowOpener | undefined };
   executable?: string;
   prefixArgs?: string[];
   defaultUdid?: string;
@@ -56,7 +65,11 @@ export function simulatorWindowCommand(udid: string): [file: string, args: strin
 /** Opens the window with `open`, in the device-layer environment (no Jev key), giving up after 10 seconds. */
 const openSimulatorWindow: DeviceWindowOpener = (udid, signal) => new Promise((done, reject) => {
   const [file, args] = simulatorWindowCommand(udid);
-  execFile(file, args, { env: deviceEnvironment(), signal, timeout: 10_000 }, error => { if (error) reject(error); else done(); });
+  execFile(file, args, { env: deviceEnvironment(), signal, timeout: 10_000 }, error => {
+    if (error) reject(new DeviceCliError('WINDOW_FAILED', 'Simulator window could not be opened',
+      !signal.aborted && typeof error.code === 'number'));
+    else done();
+  });
 });
 
 /** The window opener a run uses: on by default, off with `--no-device-window` (`turnedOff`) or `JEV_DEVICE_WINDOW=off`. */
@@ -124,6 +137,7 @@ function number(value: unknown): number | undefined {
 function terminalPayloadMatches(envelope: JsonObject, expectedSchema: string, success: boolean): boolean {
   if (envelope.schema !== expectedSchema || !supportedVersion(envelope.schema, envelope.schemaVersion)) return false;
   const data = record(envelope.data);
+  if (expectedSchema === 'mobilebuildmcp.output.simulator-list') return Array.isArray(data.simulators);
   if (Object.keys(record(data.artifacts)).length === 0) return false;
   if (expectedSchema === UI_ACTION_RESULT && Object.keys(record(data.action)).length === 0) return false;
   if (expectedSchema === 'mobilebuildmcp.output.capture-result' && success && Object.keys(record(data.capture)).length === 0) return false;
@@ -431,7 +445,7 @@ function notBooted(state: string | undefined): state is string {
   return state !== undefined && state !== 'Booted';
 }
 
-/** A simulator that isn't booted, with how to boot it. The bridge never boots one itself. */
+/** Legacy preparation requires a booted device; allocation preparation explicitly boots under admission. */
 function notBootedError(deviceId: string, state: string): DeviceReasonError {
   return new DeviceReasonError('DEVICE_NOT_BOOTED', `Simulator ${deviceId} is not booted (state: ${state}). ` +
     `Boot it with \`xcrun simctl boot ${deviceId}\` or from Simulator, then run again.`);
@@ -444,10 +458,43 @@ function notBootedError(deviceId: string, state: string): DeviceReasonError {
 const IOS_ATTACH_REFUSAL = 'Start mode "attach" is Android-only for now: on iOS the bridge can\'t tell whether the app is ' +
   'the one in front. Use "start": "restart" on iOS.';
 
-export class MobileBuildMcpDriver implements DeviceDriver {
+/** Narrow typed driver seams for allocator and observed runtime composition. */
+export type AdmittedAppContext = { app: { bundleId: string; launchArgs?: string[] } };
+export interface IosPreparationDriver {
+  attachPreparation(claim: PreparationClaim, context: AdmittedAppContext, signal: AbortSignal): Promise<void>;
+  boot(signal: AbortSignal, timeoutMs?: number): Promise<void>;
+  bootState(signal: AbortSignal, timeoutMs?: number): Promise<string | undefined>;
+  install(artifactPath: string, signal: AbortSignal, timeoutMs?: number): Promise<void>;
+  launch(signal: AbortSignal, timeoutMs?: number): Promise<void>;
+  readiness(signal: AbortSignal, timeoutMs?: number): Promise<Snapshot>;
+  park(readinessEvidence: string[], evidenceRefs: string[], signal: AbortSignal): Promise<AllocationCommit>;
+  revokeIssuance(): void;
+  close(signal: AbortSignal): Promise<void>;
+}
+export interface ObservedActionDriver {
+  attachObserved(claim: ObservedClaim, context: AdmittedAppContext, signal: AbortSignal): Promise<void>;
+  observe(signal: AbortSignal): Promise<Snapshot>;
+  tapOnce(ref: string, snapshot: Snapshot, context: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined>;
+  revokeIssuance(): void;
+  close(signal: AbortSignal): Promise<void>;
+}
+
+export class MobileBuildMcpDriver implements DeviceDriver, IosPreparationDriver, ObservedActionDriver {
   /** This pinned integration's proven tap-alias collapsing. The run reads it from the driver. */
   readonly tapAliasRule: TapAliasRule = 'mobilebuildmcp-2.7.1';
   private readonly runner: CliRunner;
+  private readonly window: DeviceWindowOpener | undefined;
+  private claim: AdmissionClaim | undefined;
+  private session: AdmittedSession | undefined;
+  private ownsClaim = false;
+  private issuanceClosed = false;
+  private uncertain = false;
+  private detached = false;
+  private tapOnceIssued = false;
+  private preparationClaim: PreparationClaim | undefined;
+  private preparationApp: { bundleId: string; launchArgs?: string[] } | undefined;
+  private readonly aborters = new Set<AbortController>();
+  private readonly signalCleanup = new Set<() => void>();
   private deviceId?: string;
   /** The app's identity: its bundle ID on iOS. */
   private appId?: string;
@@ -466,8 +513,19 @@ export class MobileBuildMcpDriver implements DeviceDriver {
   private warnings: string[] = [];
 
   constructor(private readonly options: MobileBuildMcpDriverOptions) {
-    this.runner = options.runner ?? defaultRunner(options);
-    this.lease = new DeviceLease(options.lockRoot ? { root: options.lockRoot } : {});
+    this.runner = options.fakeBackend?.runner ?? options.runner ?? defaultRunner(options);
+    this.window = options.fakeBackend ? options.fakeBackend.window : options.deviceWindow;
+    if (options.fakeBackend && (!Object.hasOwn(options.fakeBackend, 'window') || typeof options.fakeBackend.runner !== 'function' ||
+        (options.fakeBackend.window !== undefined && options.fakeBackend.window === openSimulatorWindow))) {
+      throw new AdmissionError('STATE_UNAVAILABLE', 'Fake backend requires an injected runner and window opener');
+    }
+    if (options.fakeBackend && !options.admission) {
+      throw new AdmissionError('STATE_UNAVAILABLE', 'Fake backend requires an explicit isolated admission store');
+    }
+    if (options.admission?.mode === 'test' && !options.fakeBackend) {
+      throw new AdmissionError('STATE_UNAVAILABLE', 'Test admission requires explicit fake runner and window opener');
+    }
+    this.lease = new DeviceLease({ ...(options.lockRoot ? { root: options.lockRoot } : {}), reclaimDeadHolder: false });
     const timeout = options.uiCommandTimeoutMs ?? 35_000;
     if (!Number.isSafeInteger(timeout) || timeout < 1 || timeout > 300_000) throw new RangeError('uiCommandTimeoutMs must be between 1 and 300000');
     this.uiCommandTimeoutMs = timeout;
@@ -513,25 +571,174 @@ export class MobileBuildMcpDriver implements DeviceDriver {
 
   private async call(args: string[], signal: AbortSignal, expectedSchema?: string): Promise<JsonObject> {
     if (signal.aborted) throw signal.reason ?? new Error('Aborted');
-    return parseEnvelope(await this.runner([...args, '--output', 'json'], signal), expectedSchema);
+    const data = parseEnvelope(await this.runner([...args, '--output', 'json'], signal), expectedSchema);
+    if (args[0] === 'ui-automation' && args[1] === 'snapshot-ui') parseSnapshot(data, this.deviceId!);
+    return data;
   }
 
-  private async issueCommand(args: string[], runSignal: AbortSignal, expectedSchema: string): Promise<JsonObject> {
-    if (runSignal.aborted) throw runSignal.reason;
-    const command = new AbortController();
-    const deadline = setTimeout(() => command.abort(new Error('UI command deadline reached')), this.uiCommandTimeoutMs);
-    const issued = this.lease.command('mobilebuildmcp');
+  /** Local closure is synchronous, even when the durable cancellation write fails. */
+  private revoke(uncertain: boolean): void {
+    this.issuanceClosed = true;
+    this.uncertain ||= uncertain;
+    try { this.claim?.cancel(); } catch { /* The local gate remains closed. */ }
+    for (const controller of this.aborters) controller.abort(new Error('Device issuance closed'));
+  }
+
+  private checkIssuance(signal: AbortSignal): void {
+    if (signal.aborted) { this.revoke(this.session !== undefined); throw signal.reason; }
+    if (this.issuanceClosed || !this.session) throw new AdmissionError('DISPATCH_CLOSED', 'Device issuance is closed');
+  }
+
+  private watchSignal(signal: AbortSignal): void {
+    const cancel = () => this.revoke(true);
+    signal.addEventListener('abort', cancel, { once: true });
+    this.signalCleanup.add(() => signal.removeEventListener('abort', cancel));
+    if (signal.aborted) cancel();
+  }
+
+  private async dispatch<T>(kind: string, signal: AbortSignal, effect: (signal: AbortSignal) => Promise<T>,
+    timeoutMs = this.uiCommandTimeoutMs): Promise<T> {
+    if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 900_000) throw new RangeError('Command timeout must be between 1 and 900000');
+    this.checkIssuance(signal);
+    if (this.detached && kind !== 'stop') throw new AdmissionError('DISPATCH_CLOSED', 'Driver is closing');
+    const controller = new AbortController();
+    this.aborters.add(controller);
+    const cancel = () => { controller.abort(signal.reason); this.revoke(true); };
+    signal.addEventListener('abort', cancel, { once: true });
+    const deadline = setTimeout(() => { controller.abort(new Error('UI command deadline reached')); this.revoke(true); }, timeoutMs);
+    type Response = { kind: 'value'; value: T } | { kind: 'acknowledged-error'; error: DeviceCliError };
     try {
-      const result = await awaitResultOrAbort(this.call(args, command.signal, expectedSchema), command.signal);
-      issued.exited();
-      return result;
+      // dispatch invokes this callback synchronously after its authorization COMMIT.
+      const authorized = this.session!.dispatch<Response>(kind, () => {
+        const issued = this.lease.command('mobilebuildmcp');
+        // track the backend promise itself; an abortable waiting wrapper is not settlement.
+        return this.lease.track(async () => {
+          try {
+            const value = await effect(controller.signal);
+            issued.exited();
+            return { kind: 'value' as const, value };
+          } catch (error) {
+            if (error instanceof DeviceCliError && error.terminalAcknowledged) {
+              issued.exited(); return { kind: 'acknowledged-error' as const, error };
+            }
+            issued.unknown(); throw error;
+          }
+        });
+      });
+      const result = await awaitResultOrAbort(this.lease.track(() => authorized), controller.signal);
+      this.checkIssuance(signal);
+      if (result.kind === 'acknowledged-error') throw result.error;
+      return result.value;
     } catch (error) {
-      if (error instanceof DeviceCliError && error.terminalAcknowledged) issued.exited();
-      else issued.unknown();
+      if (!(error instanceof DeviceCliError && error.terminalAcknowledged) || controller.signal.aborted) this.revoke(true);
       throw error;
     } finally {
-      clearTimeout(deadline);
+      clearTimeout(deadline); this.aborters.delete(controller); signal.removeEventListener('abort', cancel);
     }
+  }
+
+  private issueCommand(args: string[], signal: AbortSignal, expectedSchema?: string, kind = 'legacy-command',
+    timeoutMs = this.uiCommandTimeoutMs): Promise<JsonObject> {
+    return this.dispatch(kind, signal, issuedSignal => this.call(args, issuedSignal, expectedSchema), timeoutMs);
+  }
+
+  private async attach(claim: AdmissionClaim, appId: string, signal: AbortSignal): Promise<void> {
+    if (this.claim || this.lease.held || this.detached) throw new Error('Driver is already attached');
+    if (signal.aborted) throw signal.reason;
+    const backend = this.options.fakeBackend ? 'fake' : 'real';
+    this.options.admission?.assertBackend(backend);
+    this.claim = claim;
+    this.session = claim.bindDriver(backend);
+    this.deviceId = claim.identity.device;
+    this.appId = appId;
+    this.watchSignal(signal);
+    try { await this.lease.take(this.deviceId); this.checkIssuance(signal); }
+    catch (error) {
+      if (error instanceof DeviceLeaseBusyError) {
+        if (error.holder?.processId === undefined || !processAliveForLease(error.holder.processId)) this.revoke(true);
+        else this.issuanceClosed = true;
+        throw new DeviceCliError('DEVICE_BUSY', error.message);
+      }
+      this.revoke(true); throw error;
+    }
+  }
+
+  /** Attach already admitted preparation; allocation ownership never reacquires or launches here. */
+  async attachPreparation(claim: PreparationClaim, context: AdmittedAppContext,
+    signal: AbortSignal): Promise<void> {
+    if (claim.identity.attempt.kind !== 'preparation') throw new AdmissionError('INVALID_REQUEST', 'Expected preparation ownership');
+    await this.attach(claim, context.app.bundleId, signal);
+    this.preparationClaim = claim;
+    this.preparationApp = context.app;
+  }
+
+  /** Attach a consumed parked action, including in a fresh process. No preparation or presentation. */
+  async attachObserved(claim: ObservedClaim, context: AdmittedAppContext, signal: AbortSignal): Promise<void> {
+    if (claim.identity.attempt.kind !== 'observed') throw new AdmissionError('INVALID_REQUEST', 'Expected observed ownership');
+    await this.attach(claim, context.app.bundleId, signal);
+  }
+
+  private preparedDevice(): string {
+    if (!this.preparationClaim || !this.deviceId || this.detached) throw new AdmissionError('DISPATCH_CLOSED', 'Preparation is not attached');
+    return this.deviceId;
+  }
+
+  async boot(signal: AbortSignal, timeoutMs = this.uiCommandTimeoutMs): Promise<void> {
+    const device = this.preparedDevice();
+    await this.issueCommand(['simulator', 'boot', '--simulator-id', device], signal,
+      'mobilebuildmcp.output.simulator-action-result', 'boot', timeoutMs);
+  }
+
+  bootState(signal: AbortSignal, timeoutMs = this.uiCommandTimeoutMs): Promise<string | undefined> {
+    return this.simulatorState(this.preparedDevice(), signal, 'boot-state', timeoutMs);
+  }
+
+  async install(artifactPath: string, signal: AbortSignal, timeoutMs = this.uiCommandTimeoutMs): Promise<void> {
+    const device = this.preparedDevice();
+    if (!isAbsolute(artifactPath)) throw new AdmissionError('INVALID_REQUEST', 'Expected absolute staged app path');
+    await this.issueCommand(['simulator', 'install', '--simulator-id', device, '--app-path', artifactPath], signal,
+      'mobilebuildmcp.output.install-result', 'install', timeoutMs);
+  }
+
+  async launch(signal: AbortSignal, timeoutMs = this.uiCommandTimeoutMs): Promise<void> {
+    const device = this.preparedDevice(); const app = this.preparationApp!;
+    await this.issueCommand(['simulator', 'launch-app', '--simulator-id', device, '--bundle-id', app.bundleId,
+      ...(app.launchArgs?.length ? ['--json', JSON.stringify({ launchArgs: app.launchArgs })] : [])], signal,
+      'mobilebuildmcp.output.launch-result', 'launch', timeoutMs);
+  }
+
+  /** Bounded initial listing and visible capture after acknowledged launch. */
+  async readiness(signal: AbortSignal, timeoutMs = this.uiCommandTimeoutMs): Promise<Snapshot> {
+    const device = this.preparedDevice();
+    const state = await this.simulatorState(device, signal, 'readiness', timeoutMs);
+    if (state !== 'Booted') throw new DeviceCliError('READINESS_FAILED', 'Prepared simulator is not confirmed booted', true);
+    const data = await this.issueCommand(this.captureArgs(device), signal, 'mobilebuildmcp.output.capture-result', 'readiness', timeoutMs);
+    const shot = this.options.screenshots ? await this.issueCommand(['ui-automation', 'screenshot', '--simulator-id', device,
+      '--return-format', 'path'], signal, 'mobilebuildmcp.output.capture-result', 'readiness', timeoutMs) : undefined;
+    const screenshotPath = shot && (string(record(shot.artifacts).screenshotPath) ?? string(record(shot.capture).path) ?? string(shot.path));
+    return this.evidence(data, device, screenshotPath, signal);
+  }
+
+  /** Local settlement and lease cleanup precede the authoritative parked commit. */
+  async park(readinessEvidence: string[], evidenceRefs: string[], signal: AbortSignal): Promise<AllocationCommit> {
+    this.preparedDevice();
+    this.detached = true;
+    try {
+      await this.lease.settle(signal);
+      this.checkIssuance(signal);
+      if (!this.lease.releasable) throw new Error('Preparation operations are unknown');
+      await this.lease.release();
+      const result = this.preparationClaim!.park(readinessEvidence, evidenceRefs);
+      this.issuanceClosed = true;
+      for (const cleanup of this.signalCleanup) cleanup(); this.signalCleanup.clear();
+      return result;
+    } catch (error) { this.revoke(true); throw error; }
+  }
+
+  /** Finalization closes future effects synchronously; pending effects remain uncertain. */
+  revokeIssuance(): void {
+    this.issuanceClosed = true; this.detached = true;
+    if (this.aborters.size) this.revoke(true);
   }
 
   prepare(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void> {
@@ -540,6 +747,7 @@ export class MobileBuildMcpDriver implements DeviceDriver {
 
   private async prepareIssued(scenario: PrepareScenarioContext, signal: AbortSignal): Promise<void> {
     if (this.lease.held) throw new Error('Driver is already prepared');
+    if (!this.claim && !this.uncertain) { this.detached = false; this.issuanceClosed = false; }
     this.warnings = [];
     if (signal.aborted) throw signal.reason;
     if (!isIosApp(scenario.app)) {
@@ -548,12 +756,16 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     if (scenario.start === 'attach') throw new DeviceReasonError('UNSUPPORTED_ACTION', IOS_ATTACH_REFUSAL);
     const bundleId = scenario.app.bundleId;
     const deviceId = await selectDeviceId(this.options.cwd, scenario.device?.udid, this.options.defaultUdid);
-    // A crashed holder's record lists nothing to sweep on iOS: MobileBuildMCP owns its own processes.
-    try { await this.lease.take(deviceId); }
-    catch (error) {
-      if (error instanceof DeviceLeaseBusyError) throw new DeviceCliError('DEVICE_BUSY', error.message);
-      throw error;
-    }
+    const admission = this.options.admission ?? Admission.open();
+    admission.assertBackend(this.options.fakeBackend ? 'fake' : 'real');
+    const intent = { deviceId, app: scenario.app, start: scenario.start ?? 'restart' };
+    const acquired = admission.acquire({ device: deviceId, attempt: { kind: 'legacy', id: this.options.runId ?? randomUUID() },
+      digest: createHash('sha256').update(JSON.stringify(intent)).digest('hex'), intent, signal });
+    if (acquired.kind !== 'acquired') throw new DeviceCliError('DEVICE_BUSY', `Device admission refused: ${acquired.kind === 'refused' ? acquired.reason : 'ATTEMPT_ALREADY_EXISTS'}`);
+    this.ownsClaim = true;
+    try { await this.attach(acquired.claim, bundleId, signal); }
+    catch (error) { await this.finishAdmission(false); throw error; }
+    this.tapOnceIssued = false;
     this.referenceRefreshes = 0;
     this.referenceExpiries = 0;
     this.nearTtlRefreshes = 0;
@@ -562,15 +774,15 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     // Read before the window opens (Simulator boots the device it opens on); without a window, only once a launch fails.
     let stateRead = false;
     try {
-      if (this.options.deviceWindow) {
+      if (this.window) {
         const state = await this.simulatorState(deviceId, signal);
         stateRead = true;
         if (notBooted(state)) throw notBootedError(deviceId, state);
         if (state === undefined) this.warnings.push('Simulator window not opened: the simulator\'s state could not be read.');
         else {
-          try { await this.options.deviceWindow(deviceId, signal); }
+          try { await this.dispatch('window', signal, issuedSignal => this.window!(deviceId, issuedSignal), Math.min(this.uiCommandTimeoutMs, 10_000)); }
           catch {
-            if (signal.aborted) throw signal.reason;
+            if (signal.aborted || this.issuanceClosed) throw signal.reason ?? new AdmissionError('DISPATCH_CLOSED', 'Window outcome is unknown');
             this.warnings.push('Simulator window not opened: Simulator could not be opened on the run\'s device.');
           }
         }
@@ -592,39 +804,30 @@ export class MobileBuildMcpDriver implements DeviceDriver {
       this.launched = true;
     } catch (error) {
       let failure = error;
-      if (!stateRead && error instanceof DeviceCliError && !signal.aborted) {
-        const state = await this.simulatorState(deviceId, signal).catch(() => undefined);
+      if (!stateRead && error instanceof DeviceCliError && error.terminalAcknowledged && !signal.aborted && !this.issuanceClosed) {
+        let state: string | undefined;
+        try { state = await this.simulatorState(deviceId, signal); } catch { /* Preserve launch semantics; issuance remains closed. */ }
         if (notBooted(state)) failure = notBootedError(deviceId, state);
       }
-      if (this.lease.releasable) await this.lease.release();
+      if (!this.uncertain && this.lease.releasable) await this.lease.release();
+      await this.finishAdmission(false);
       throw failure;
     }
   }
 
   /**
    * The simulator's state as MobileBuildMCP lists it (`Booted`, `Shutdown`, `Booting`, ...); undefined when it can't be
-   * read or the device isn't listed. A read-only listing, so it isn't entered in the lease's command ledger.
+   * read or the device isn't listed. Once selected, listing needs admission and a command ledger entry.
    */
-  private async simulatorState(deviceId: string, signal: AbortSignal): Promise<string | undefined> {
-    if (signal.aborted) throw signal.reason;
-    const command = new AbortController();
-    const stop = () => command.abort(signal.reason);
-    signal.addEventListener('abort', stop, { once: true });
-    const deadline = setTimeout(() => command.abort(new Error('Simulator list deadline reached')), this.uiCommandTimeoutMs);
-    try {
-      const data = await awaitResultOrAbort(this.call(['simulator', 'list'], command.signal), command.signal);
-      const simulators = Array.isArray(data.simulators) ? data.simulators.map(record) : [];
-      return string(simulators.find(simulator => string(simulator.simulatorId)?.toUpperCase() === deviceId)?.state);
-    } catch {
-      if (signal.aborted) throw signal.reason;
-      return undefined;
-    } finally {
-      clearTimeout(deadline);
-      signal.removeEventListener('abort', stop);
-    }
+  private async simulatorState(deviceId: string, signal: AbortSignal, kind = 'selected-device-list',
+    timeoutMs = this.uiCommandTimeoutMs): Promise<string | undefined> {
+    const data = await this.issueCommand(['simulator', 'list'], signal, 'mobilebuildmcp.output.simulator-list', kind, timeoutMs);
+    const simulators = Array.isArray(data.simulators) ? data.simulators.map(record) : [];
+    return string(simulators.find(simulator => string(simulator.simulatorId)?.toUpperCase() === deviceId)?.state);
   }
 
   observe(signal: AbortSignal): Promise<Snapshot> {
+    if (this.detached) return Promise.reject(new AdmissionError('DISPATCH_CLOSED', 'Driver is closed'));
     return this.lease.track(() => this.observeIssued(signal));
   }
 
@@ -693,6 +896,7 @@ export class MobileBuildMcpDriver implements DeviceDriver {
   }
 
   act(action: Action, snapshot: Snapshot, scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined> {
+    if (this.detached) return Promise.reject(new AdmissionError('DISPATCH_CLOSED', 'Driver is closed'));
     return this.lease.track(() => this.actIssued(action, snapshot, scenario, signal));
   }
 
@@ -764,10 +968,11 @@ export class MobileBuildMcpDriver implements DeviceDriver {
     return this.gesture(direction === 'down' ? 'scroll-up' : 'scroll-down', snapshot, signal);
   }
 
-  /** Experimental tap via one vendor touch down/up request. The default semantic tap can
+  /** Single observed tap via one vendor touch down/up request. The default semantic tap can
    * acknowledge without activating SwiftUI navigation on iOS 27; a 50ms hold worked in the
    * live comparison. This is an execution acknowledgement, never a native release certificate. */
   tapOnce(ref: string, snapshot: Snapshot, _scenario: ActionScenarioContext, signal: AbortSignal): Promise<Snapshot | undefined> {
+    if (this.detached) return Promise.reject(new AdmissionError('DISPATCH_CLOSED', 'Driver is closed'));
     return this.lease.track(async () => {
       if (!this.deviceId || snapshot.deviceId !== this.deviceId) throw new Error('Snapshot belongs to a different device');
       if (!Number.isFinite(snapshot.expiresAt) || Date.now() >= snapshot.expiresAt) throw new StaleSnapshotError();
@@ -776,9 +981,12 @@ export class MobileBuildMcpDriver implements DeviceDriver {
       if (!target.actions.includes('tap') || !target.actions.includes('touch')) {
         throw new DeviceCliError('UNSUPPORTED_ACTION', 'Experimental tap requires tap and touch capabilities');
       }
+      this.checkIssuance(signal);
+      if (this.tapOnceIssued) throw new AdmissionError('DISPATCH_CLOSED', 'Tap already authorized');
+      this.tapOnceIssued = true;
       const data = await this.issueCommand(['ui-automation', 'touch', '--json', JSON.stringify({
         simulatorId: this.deviceId, elementRef: ref, down: true, up: true, delay: 0.05,
-      })], signal, UI_ACTION_RESULT);
+      })], signal, UI_ACTION_RESULT, 'tap');
       return this.settledCapture(data, signal);
     });
   }
@@ -830,39 +1038,53 @@ export class MobileBuildMcpDriver implements DeviceDriver {
 
   close(signal: AbortSignal): Promise<void> {
     if (this.closing) return this.closing;
-    this.closing = this.finishClose(signal).catch((error: unknown) => {
-      // Keep the lease; once the issued operation acknowledges, finish cleanup and release it late.
-      if (error instanceof DeviceCliError && error.code === 'UI_ACTION_UNCONFIRMED') {
-        this.lease.releaseLate(() => this.close(AbortSignal.timeout(this.uiCommandTimeoutMs + 5_000)));
-      }
-      throw error;
-    }).finally(() => { this.closing = undefined; });
+    // Public continuations cannot issue while cleanup is running. Cleanup uses its own gate below.
+    this.detached = true;
+    this.closing = this.finishClose(signal).finally(() => { this.closing = undefined; });
     return this.closing;
   }
 
-  private async finishClose(signal: AbortSignal): Promise<void> {
-    try { await this.lease.settle(signal); }
-    catch { throw new DeviceCliError('UI_ACTION_UNCONFIRMED', 'Cleanup ended before the issued device operation acknowledged; device lock retained'); }
-    if (!this.lease.held) return;
-    // A lost CLI response has no proven acknowledgement. A new daemon snapshot
-    // alone cannot establish that an earlier request will never arrive late.
-    if (!this.lease.releasable) throw new DeviceCliError('UI_ACTION_UNCONFIRMED', 'Device operation outcome is unknown; device lock retained');
-    if (this.launched && this.options.stopAppOnClose !== false && this.deviceId && this.appId) {
-      // Stop is not in MobileBuildMCP's UI queue. Keep the lease if its CLI
-      // response is lost, so another run cannot overlap uncertain cleanup.
-      try {
-        await this.call(['simulator', 'stop', '--simulator-id', this.deviceId, '--bundle-id', this.appId], signal,
-          'mobilebuildmcp.output.stop-result');
-      } catch (error) {
-        // An acknowledged stop failure (typically: the app already exited) leaves no command in flight.
-        if (!(error instanceof DeviceCliError && error.terminalAcknowledged)) throw error;
-      }
-    }
-    await this.lease.release();
-    this.launched = false;
-    this.logPaths = {};
-    this.logNotes = {};
+  private async finishAdmission(completed: boolean): Promise<void> {
+    if (!this.ownsClaim || !this.claim) return;
+    const candidate = this.uncertain
+      ? { outcome: 'inconclusive' as const, disposition: 'quarantined' as const, payload: { reason: 'DEVICE_OPERATION_UNCONFIRMED' }, evidenceRefs: [] }
+      : { outcome: completed ? 'completed' as const : 'refused' as const, disposition: 'available' as const, payload: { completed }, evidenceRefs: [] };
+    const finalized = this.claim.finalize(candidate);
+    this.issuanceClosed = true;
+    this.ownsClaim = false;
+    for (const cleanup of this.signalCleanup) cleanup(); this.signalCleanup.clear();
+    if (finalized.authority !== 'committed') throw new DeviceCliError('UI_ACTION_UNCONFIRMED', 'Device admission finalization is unconfirmed');
   }
+
+  private async finishClose(signal: AbortSignal): Promise<void> {
+    if (this.uncertain) {
+      await this.finishAdmission(false);
+      throw new DeviceCliError('UI_ACTION_UNCONFIRMED', 'Device operation outcome is unknown; device lock retained');
+    }
+    try {
+      await this.lease.settle(signal);
+      if (!this.lease.held) { await this.finishAdmission(false); return; }
+      if (!this.lease.releasable) throw new Error('Device operation outcome is unknown');
+      if (this.ownsClaim && this.launched && this.options.stopAppOnClose !== false && this.deviceId && this.appId) {
+        try {
+          await this.issueCommand(['simulator', 'stop', '--simulator-id', this.deviceId, '--bundle-id', this.appId], signal,
+            'mobilebuildmcp.output.stop-result', 'stop');
+        } catch (error) { if (!(error instanceof DeviceCliError && error.terminalAcknowledged)) throw error; }
+      }
+      this.issuanceClosed = true;
+      await this.lease.release();
+      const legacy = this.ownsClaim;
+      await this.finishAdmission(true);
+      if (legacy) { this.claim = undefined; this.session = undefined; }
+      for (const cleanup of this.signalCleanup) cleanup(); this.signalCleanup.clear();
+      this.launched = false; this.logPaths = {}; this.logNotes = {};
+    } catch (error) {
+      this.revoke(true); await this.finishAdmission(false);
+      if (error instanceof DeviceCliError || error instanceof SyntaxError) throw error;
+      throw new DeviceCliError('UI_ACTION_UNCONFIRMED', 'Cleanup ended before the issued device operation acknowledged; device lock retained');
+    }
+  }
+
 }
 
 export function createMobileBuildMcpDriver(options: MobileBuildMcpDriverOptions): DeviceDriver {

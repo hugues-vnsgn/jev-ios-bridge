@@ -1,3 +1,5 @@
+import { mkdirSync, realpathSync } from 'node:fs';
+import { Admission } from '../src/device/admission.js';
 import assert from 'node:assert/strict';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -25,7 +27,7 @@ async function withDriver(check: (driver: MobileBuildMcpDriver, calls: string[][
         ...(action ? { action: { type: 'touch', elementRef: 'e15', event: 'touch down+up', x: 201, y: 527 } } : {}),
         artifacts: { simulatorId: udid }, diagnostics: {} } }), stderr: '', exitCode: 0 };
   };
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner, stopAppOnClose: false });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner, stopAppOnClose: false });
   try { await driver.prepare(context, new AbortController().signal); await check(driver, calls); }
   finally { await rm(root, { recursive: true, force: true }); }
 }
@@ -57,3 +59,12 @@ test('lost touch reply never invokes semantic tap or another touch', async () =>
     await assert.rejects(driver.close(new AbortController().signal), /unknown/);
   }, true);
 });
+
+function fakeDriver(options: import('../src/device/index.js').MobileBuildMcpDriverOptions): MobileBuildMcpDriver {
+  const storeRoot = join(options.cwd, 'admission');
+  mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
+  const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' });
+  return new MobileBuildMcpDriver({ ...options, admission,
+    deviceWindow: options.deviceWindow ?? (async () => {}),
+    fakeBackend: { runner: options.runner!, window: options.deviceWindow } });
+}

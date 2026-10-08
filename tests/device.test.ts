@@ -1,3 +1,5 @@
+import { mkdirSync, realpathSync } from 'node:fs';
+import { Admission } from '../src/device/admission.js';
 import assert from 'node:assert/strict';
 import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -6,7 +8,7 @@ import { test } from 'node:test';
 import type { ActionScenarioContext, DeviceDriver } from '../src/contracts/index.js';
 import { DeviceCliError, MobileBuildMcpDriver, StaleSnapshotError, parseSnapshot, type CliRunner } from '../src/device/index.js';
 
-const udid = '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7';
+const udid = 'ABCDEF00-0000-4000-8000-000000000001';
 const scenario: ActionScenarioContext = { app: { bundleId: 'com.apple.Preferences' }, values: {}, device: { udid } };
 
 function envelope(data: unknown, didError = false, schema = 'mobilebuildmcp.output.capture-result'): string {
@@ -25,6 +27,7 @@ function actionEnvelope(): string {
 }
 
 function commandEnvelope(args: string[], data: unknown = {}): string {
+  if (args.includes('list')) return JSON.stringify({ schema: 'mobilebuildmcp.output.simulator-list', schemaVersion: '2', data: { simulators: [] } });
   if (args.includes('launch-app')) return envelope(data, false, 'mobilebuildmcp.output.launch-result');
   if (args.includes('stop')) return envelope(data, false, 'mobilebuildmcp.output.stop-result');
   if (args.includes('tap') || args.includes('type-text') || args.includes('swipe')) return actionEnvelope();
@@ -44,7 +47,7 @@ test('runs pinned CLI actions in one workspace and normalizes compact captures',
     calls.push(args);
     return { stdout: commandEnvelope(args, args.includes('snapshot-ui') ? capture() : {}), stderr: '', exitCode: 0 };
   };
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
     await driver.prepare(scenario, new AbortController().signal);
     const snapshot = await driver.observe(new AbortController().signal);
@@ -72,7 +75,7 @@ test('refreshes expired refs but refuses to act after a screen change', async ()
     if (args.includes('snapshot-ui')) snapshots++;
     return { stdout: commandEnvelope(args, args.includes('snapshot-ui') ? capture(snapshots === 1 ? 'old' : 'new', Date.now() - 1) : {}), stderr: '', exitCode: 0 };
   };
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
     await driver.prepare(scenario, new AbortController().signal);
     const snapshot = await driver.observe(new AbortController().signal);
@@ -110,7 +113,7 @@ test('refreshes after actual MobileBuildMCP uiError SNAPSHOT_EXPIRED envelope', 
     }
     return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
   };
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
     await driver.prepare(scenario, new AbortController().signal);
     const original = await driver.observe(new AbortController().signal);
@@ -139,7 +142,7 @@ test('recoverable vendor error requires rejudgment if refreshed screen changed',
     }
     return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
   };
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
     await driver.prepare(scenario, new AbortController().signal);
     const original = await driver.observe(new AbortController().signal);
@@ -155,8 +158,8 @@ test('recoverable vendor error requires rejudgment if refreshed screen changed',
 test('locks a device across drivers and releases it after close', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-device-lock-'));
   const runner: CliRunner = async args => ({ stdout: commandEnvelope(args), stderr: '', exitCode: 0 });
-  const first = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
-  const second = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const first = fakeDriver({ cwd: root, lockRoot: root, runner });
+  const second = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
     await first.prepare(scenario, new AbortController().signal);
     await assert.rejects(second.prepare(scenario, new AbortController().signal), (error: unknown) => error instanceof DeviceCliError && error.code === 'DEVICE_BUSY');
@@ -176,8 +179,8 @@ test('mixed-case spellings of one simulator UUID share the lock and canonical de
     calls.push(args);
     return { stdout: commandEnvelope(args, args.includes('snapshot-ui') ? capture() : {}), stderr: '', exitCode: 0 };
   };
-  const first = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
-  const second = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const first = fakeDriver({ cwd: root, lockRoot: root, runner });
+  const second = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
     await first.prepare({ app: scenario.app, device: { udid: udid.toLowerCase() } }, new AbortController().signal);
     const observed = await first.observe(new AbortController().signal);
@@ -209,7 +212,7 @@ test('keeps screenshot path as local evidence without adding it to screen elemen
       : args.includes('snapshot-ui') ? capture() : {}),
     stderr: '', exitCode: 0,
   });
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, screenshots: true, runner });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, screenshots: true, runner });
   try {
     await driver.prepare(scenario, new AbortController().signal);
     const snapshot = await driver.observe(new AbortController().signal);
@@ -232,7 +235,7 @@ test('reads only the last 4 KiB from vendor launch logs and records unavailable 
       : args.includes('snapshot-ui') ? capture() : {}),
     stderr: '', exitCode: 0,
   });
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
     await driver.prepare(scenario, new AbortController().signal);
     const observed = await driver.observe(new AbortController().signal);
@@ -249,7 +252,7 @@ test('reads only the last 4 KiB from vendor launch logs and records unavailable 
 test('typing a supported literal uses JSON transport and replaces existing field text', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-device-replace-'));
   const calls: string[][] = [];
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner: async args => {
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner: async args => {
     calls.push(args); return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
   } });
   const editing = { ...scenario, values: { lastName: 'Stone-' } };
@@ -269,7 +272,7 @@ test('typing a supported literal uses JSON transport and replaces existing field
 test('leading hyphen value fails before MobileBuildMCP type-text is invoked', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-device-unsupported-text-'));
   const calls: string[][] = [];
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner: async args => {
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner: async args => {
     calls.push(args);
     return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
   } });
@@ -285,53 +288,42 @@ test('leading hyphen value fails before MobileBuildMCP type-text is invoked', as
   } finally { await driver.close(new AbortController().signal); await rm(root, { recursive: true, force: true }); }
 });
 
-test('cancelled run waits for an issued CLI action acknowledgement before stop and unlock', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'jev-device-action-ack-'));
-  const calls: string[] = [];
-  let actionStarted!: () => void;
-  let finishDaemonAction!: (result: { stdout: string; stderr: string; exitCode: number }) => void;
-  let issuedSignal: AbortSignal | undefined;
-  const started = new Promise<void>(resolve => { actionStarted = resolve; });
-  const daemonResult = new Promise<{ stdout: string; stderr: string; exitCode: number }>(resolve => { finishDaemonAction = resolve; });
+test('cancelled tap closes issuance and a late acknowledgement cannot stop or unlock', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-cancel-tap-'));
+  let began!: () => void; let late!: (value: { stdout: string; stderr: string; exitCode: number }) => void;
+  const started = new Promise<void>(resolve => { began = resolve; });
+  const pending = new Promise<{ stdout: string; stderr: string; exitCode: number }>(resolve => { late = resolve; });
+  const calls: string[] = []; let issuedSignal: AbortSignal | undefined;
   const runner: CliRunner = async (args, signal) => {
-    if (args.includes('snapshot-ui')) {
-      return { stdout: envelope(capture()), stderr: '', exitCode: 0 };
-    }
-    if (args.includes('tap')) {
-      calls.push('tap'); actionStarted();
-      issuedSignal = signal;
-      return daemonResult;
-    }
-    if (args.includes('stop')) calls.push('stop');
-    return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
+    calls.push(args[1]!);
+    if (args[1] === 'tap') { issuedSignal = signal; began(); return pending; }
+    return { stdout: commandEnvelope(args, args.includes('snapshot-ui') ? capture() : {}), stderr: '', exitCode: 0 };
   };
-  const first = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
-  const second = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const first = fakeDriver({ cwd: root, lockRoot: root, runner });
+  const second = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
-    await first.prepare(scenario, new AbortController().signal);
-    const observed = await first.observe(new AbortController().signal);
     const cancelled = new AbortController();
-    const action = first.act({ kind: 'tap', targetRef: 'e1' }, observed, scenario, cancelled.signal);
-    await started;
-    cancelled.abort();
-    assert.equal(issuedSignal?.aborted, false);
+    await first.prepare(scenario, new AbortController().signal);
+    const snapshot = await first.observe(new AbortController().signal);
+    const operation = first.act({ kind: 'tap', targetRef: 'e1' }, snapshot, scenario, cancelled.signal);
+    const rejected = assert.rejects(operation);
+    await started; cancelled.abort();
+    assert.equal(issuedSignal?.aborted, true);
+    await rejected;
     const closing = first.close(new AbortController().signal);
     assert.strictEqual(first.close(new AbortController().signal), closing);
+    await assert.rejects(closing, /unknown/);
+    late({ stdout: commandEnvelope(['simulator', 'tap'], {}), stderr: '', exitCode: 0 });
     await new Promise(resolve => setImmediate(resolve));
-    assert.deepEqual(calls, ['tap']);
-    await assert.rejects(second.prepare(scenario, new AbortController().signal),
-      (error: unknown) => error instanceof DeviceCliError && error.code === 'DEVICE_BUSY');
-    finishDaemonAction({ stdout: actionEnvelope(), stderr: '', exitCode: 0 });
-    await action;
-    await closing;
-    assert.deepEqual(calls, ['tap', 'stop']);
-    await first.close(new AbortController().signal);
-    assert.deepEqual(calls, ['tap', 'stop']);
-    await second.prepare(scenario, new AbortController().signal);
+    const before = [...calls];
+    await assert.rejects(first.observe(new AbortController().signal));
+    await assert.rejects(first.close(new AbortController().signal), /unknown/);
+    await assert.rejects(second.prepare(scenario, new AbortController().signal), /DEVICE_QUARANTINED/);
+    assert.deepEqual(calls, before);
+    assert.ok(!calls.includes('stop'));
+    assert.equal(firstStore(root).inspect(udid)?.state, 'quarantined');
   } finally {
-    finishDaemonAction({ stdout: actionEnvelope(), stderr: '', exitCode: 0 });
-    await first.close(new AbortController().signal);
-    await second.close(new AbortController().signal);
+    late({ stdout: commandEnvelope(['simulator', 'tap']), stderr: '', exitCode: 0 });
     await rm(root, { recursive: true, force: true });
   }
 });
@@ -351,8 +343,8 @@ test('independent UI command deadline retains lock when terminal outcome is lost
     if (args.includes('stop')) stops++;
     return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
   };
-  const first = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner, uiCommandTimeoutMs: 20 });
-  const second = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const first = fakeDriver({ cwd: root, lockRoot: root, runner, uiCommandTimeoutMs: 20 });
+  const second = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
     await first.prepare(scenario, new AbortController().signal);
     const observed = await first.observe(new AbortController().signal);
@@ -387,8 +379,8 @@ test('generic CLI transport error is not mistaken for terminal UI acknowledgemen
     if (args.includes('stop')) stops++;
     return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
   };
-  const first = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
-  const second = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const first = fakeDriver({ cwd: root, lockRoot: root, runner });
+  const second = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
     await first.prepare(scenario, new AbortController().signal);
     const observed = await first.observe(new AbortController().signal);
@@ -405,7 +397,7 @@ test('generic CLI transport error is not mistaken for terminal UI acknowledgemen
   }
 });
 
-test('cleanup deadline retains lock until the pending CLI later acknowledges and close is retried', async () => {
+test('cleanup deadline retains admission after pending CLI acknowledges and close is retried', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-device-cleanup-deadline-'));
   let actionStarted!: () => void;
   let finishAction!: (result: { stdout: string; stderr: string; exitCode: number }) => void;
@@ -418,13 +410,14 @@ test('cleanup deadline retains lock until the pending CLI later acknowledges and
     if (args.includes('stop')) stops++;
     return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
   };
-  const first = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner, uiCommandTimeoutMs: 1_000 });
-  const second = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const first = fakeDriver({ cwd: root, lockRoot: root, runner, uiCommandTimeoutMs: 1_000 });
+  const second = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
     await first.prepare(scenario, new AbortController().signal);
     const observed = await first.observe(new AbortController().signal);
     const runAbort = new AbortController();
     const action = first.act({ kind: 'tap', targetRef: 'e1' }, observed, scenario, runAbort.signal);
+    const rejected = assert.rejects(action);
     await started;
     runAbort.abort();
     const cleanup = new AbortController();
@@ -435,10 +428,10 @@ test('cleanup deadline retains lock until the pending CLI later acknowledges and
     await assert.rejects(second.prepare(scenario, new AbortController().signal),
       (error: unknown) => error instanceof DeviceCliError && error.code === 'DEVICE_BUSY');
     finishAction({ stdout: actionEnvelope(), stderr: '', exitCode: 0 });
-    await action;
-    await first.close(new AbortController().signal);
-    assert.equal(stops, 1);
-    await second.prepare(scenario, new AbortController().signal);
+    await rejected;
+    await assert.rejects(first.close(new AbortController().signal), /unknown/);
+    assert.equal(stops, 0);
+    await assert.rejects(second.prepare(scenario, new AbortController().signal), /DEVICE_QUARANTINED/);
   } finally {
     finishAction({ stdout: actionEnvelope(), stderr: '', exitCode: 0 });
     await first.close(new AbortController().signal).catch(() => {});
@@ -447,7 +440,7 @@ test('cleanup deadline retains lock until the pending CLI later acknowledges and
   }
 });
 
-test('a late acknowledgement finishes cleanup and releases the lock without another close call', async () => {
+test('a late acknowledgement cannot finish cleanup or release admission without another close call', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-device-late-ack-'));
   let actionStarted!: () => void;
   let finishAction!: (result: { stdout: string; stderr: string; exitCode: number }) => void;
@@ -460,8 +453,8 @@ test('a late acknowledgement finishes cleanup and releases the lock without anot
     if (args.includes('stop')) stops++;
     return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
   };
-  const first = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner, uiCommandTimeoutMs: 1_000 });
-  const second = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const first = fakeDriver({ cwd: root, lockRoot: root, runner, uiCommandTimeoutMs: 1_000 });
+  const second = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
     await first.prepare(scenario, new AbortController().signal);
     const observed = await first.observe(new AbortController().signal);
@@ -475,9 +468,10 @@ test('a late acknowledgement finishes cleanup and releases the lock without anot
     await assert.rejects(closing, (error: unknown) => error instanceof DeviceCliError && error.code === 'UI_ACTION_UNCONFIRMED');
     finishAction({ stdout: actionEnvelope(), stderr: '', exitCode: 0 });
     await action;
-    for (let attempt = 0; attempt < 100 && stops === 0; attempt++) await new Promise(done => setTimeout(done, 10));
-    assert.equal(stops, 1);
-    await second.prepare(scenario, new AbortController().signal);
+    await new Promise(resolve => setImmediate(resolve));
+    assert.equal(stops, 0);
+    await assert.rejects(second.prepare(scenario, new AbortController().signal), /DEVICE_QUARANTINED/);
+    assert.equal(firstStore(root).inspect(udid)?.state, 'quarantined');
   } finally {
     finishAction({ stdout: actionEnvelope(), stderr: '', exitCode: 0 });
     await second.close(new AbortController().signal);
@@ -485,17 +479,18 @@ test('a late acknowledgement finishes cleanup and releases the lock without anot
   }
 });
 
-test('a lock left by an exited bridge process is cleared by the next run', async () => {
+test('an iOS lease left by an exited bridge process is retained without dispatch', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-device-stale-lock-'));
   const { spawnSync } = await import('node:child_process');
   const exited = spawnSync(process.execPath, ['-e', '0']).pid;
   await writeFile(join(root, `${udid}.lock`), JSON.stringify({ pid: exited, token: 'old' }));
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root,
-    runner: async args => ({ stdout: commandEnvelope(args), stderr: '', exitCode: 0 }) });
+  const driver = fakeDriver({ cwd: root, lockRoot: root,
+    runner: async () => assert.fail('Dead holder cannot authorize device effects') });
   try {
-    await driver.prepare(scenario, new AbortController().signal);
+    await assert.rejects(driver.prepare(scenario, new AbortController().signal), /locked/);
+    assert.equal(firstStore(root).inspect(udid)?.state, 'quarantined');
   } finally {
-    await driver.close(new AbortController().signal);
+    await assert.rejects(driver.close(new AbortController().signal), /unknown/);
     await rm(root, { recursive: true, force: true });
   }
 });
@@ -503,7 +498,7 @@ test('a lock left by an exited bridge process is cleared by the next run', async
 test('a lock held by a live process names its holder and the lock file', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-device-live-lock-'));
   await writeFile(join(root, `${udid}.lock`), JSON.stringify({ pid: process.pid, token: 'other' }));
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root,
+  const driver = fakeDriver({ cwd: root, lockRoot: root,
     runner: async args => ({ stdout: commandEnvelope(args), stderr: '', exitCode: 0 }) });
   try {
     await assert.rejects(driver.prepare(scenario, new AbortController().signal), (error: unknown) =>
@@ -512,23 +507,23 @@ test('a lock held by a live process names its holder and the lock file', async (
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
-test('unconfirmed app stop keeps the bridge device lock until cleanup retry', async () => {
+test('unconfirmed app stop keeps admission and never dispatches a cleanup retry', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-device-stop-retry-'));
   let stopFails = true;
   const runner: CliRunner = async args => {
     if (args.includes('stop') && stopFails) throw new Error('stop transport failed');
     return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
   };
-  const first = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
-  const second = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const first = fakeDriver({ cwd: root, lockRoot: root, runner });
+  const second = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
     await first.prepare(scenario, new AbortController().signal);
     await assert.rejects(first.close(new AbortController().signal));
     await assert.rejects(second.prepare(scenario, new AbortController().signal),
       (error: unknown) => error instanceof DeviceCliError && error.code === 'DEVICE_BUSY');
     stopFails = false;
-    await first.close(new AbortController().signal);
-    await second.prepare(scenario, new AbortController().signal);
+    await assert.rejects(first.close(new AbortController().signal), /unknown/);
+    await assert.rejects(second.prepare(scenario, new AbortController().signal), /DEVICE_QUARANTINED/);
   } finally {
     stopFails = false;
     await first.close(new AbortController().signal).catch(() => {});
@@ -537,89 +532,80 @@ test('unconfirmed app stop keeps the bridge device lock until cleanup retry', as
   }
 });
 
-test('cancelled prepare waits for the issued launch acknowledgement before stop and unlock', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'jev-device-prepare-ack-'));
-  let launchStarted!: () => void;
-  let finishLaunch!: (result: { stdout: string; stderr: string; exitCode: number }) => void;
-  const started = new Promise<void>(resolve => { launchStarted = resolve; });
-  const terminal = new Promise<{ stdout: string; stderr: string; exitCode: number }>(resolve => { finishLaunch = resolve; });
-  let launches = 0;
-  let issuedSignal: AbortSignal | undefined;
-  const calls: string[] = [];
+test('cancelled launch-app closes issuance and a late acknowledgement cannot stop or unlock', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-cancel-launch-app-'));
+  let began!: () => void; let late!: (value: { stdout: string; stderr: string; exitCode: number }) => void;
+  const started = new Promise<void>(resolve => { began = resolve; });
+  const pending = new Promise<{ stdout: string; stderr: string; exitCode: number }>(resolve => { late = resolve; });
+  const calls: string[] = []; let issuedSignal: AbortSignal | undefined;
   const runner: CliRunner = async (args, signal) => {
-    if (args.includes('launch-app')) {
-      launches++;
-      if (launches === 1) { issuedSignal = signal; calls.push('launch'); launchStarted(); return terminal; }
-    }
-    if (args.includes('stop')) calls.push('stop');
-    return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
+    calls.push(args[1]!);
+    if (args[1] === 'launch-app') { issuedSignal = signal; began(); return pending; }
+    return { stdout: commandEnvelope(args, args.includes('snapshot-ui') ? capture() : {}), stderr: '', exitCode: 0 };
   };
-  const first = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
-  const second = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const first = fakeDriver({ cwd: root, lockRoot: root, runner });
+  const second = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
-    const aborted = new AbortController();
-    const preparing = first.prepare(scenario, aborted.signal);
-    await started;
-    aborted.abort();
-    assert.equal(issuedSignal?.aborted, false);
+    const cancelled = new AbortController();
+
+    const operation = first.prepare(scenario, cancelled.signal);
+    const rejected = assert.rejects(operation);
+    await started; cancelled.abort();
+    assert.equal(issuedSignal?.aborted, true);
+    await rejected;
     const closing = first.close(new AbortController().signal);
+    assert.strictEqual(first.close(new AbortController().signal), closing);
+    await assert.rejects(closing, /unknown/);
+    late({ stdout: commandEnvelope(['simulator', 'launch-app'], {}), stderr: '', exitCode: 0 });
     await new Promise(resolve => setImmediate(resolve));
-    assert.deepEqual(calls, ['launch']);
-    await assert.rejects(second.prepare(scenario, new AbortController().signal),
-      (error: unknown) => error instanceof DeviceCliError && error.code === 'DEVICE_BUSY');
-    finishLaunch({ stdout: commandEnvelope(['launch-app']), stderr: '', exitCode: 0 });
-    await preparing;
-    await closing;
-    assert.deepEqual(calls, ['launch', 'stop']);
-    await second.prepare(scenario, new AbortController().signal);
+    const before = [...calls];
+    await assert.rejects(first.observe(new AbortController().signal));
+    await assert.rejects(first.close(new AbortController().signal), /unknown/);
+    await assert.rejects(second.prepare(scenario, new AbortController().signal), /DEVICE_QUARANTINED/);
+    assert.deepEqual(calls, before);
+    assert.ok(!calls.includes('stop'));
+    assert.equal(firstStore(root).inspect(udid)?.state, 'quarantined');
   } finally {
-    finishLaunch({ stdout: commandEnvelope(['launch-app']), stderr: '', exitCode: 0 });
-    await first.close(new AbortController().signal).catch(() => {});
-    await second.close(new AbortController().signal);
+    late({ stdout: commandEnvelope(['simulator', 'launch-app']), stderr: '', exitCode: 0 });
     await rm(root, { recursive: true, force: true });
   }
 });
 
-test('cancelled observe waits for the issued snapshot acknowledgement before stop and unlock', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'jev-device-observe-ack-'));
-  let snapshotStarted!: () => void;
-  let finishSnapshot!: (result: { stdout: string; stderr: string; exitCode: number }) => void;
-  const started = new Promise<void>(resolve => { snapshotStarted = resolve; });
-  const terminal = new Promise<{ stdout: string; stderr: string; exitCode: number }>(resolve => { finishSnapshot = resolve; });
-  let snapshots = 0;
-  let issuedSignal: AbortSignal | undefined;
-  const calls: string[] = [];
+test('cancelled snapshot-ui closes issuance and a late acknowledgement cannot stop or unlock', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev-device-cancel-snapshot-ui-'));
+  let began!: () => void; let late!: (value: { stdout: string; stderr: string; exitCode: number }) => void;
+  const started = new Promise<void>(resolve => { began = resolve; });
+  const pending = new Promise<{ stdout: string; stderr: string; exitCode: number }>(resolve => { late = resolve; });
+  const calls: string[] = []; let issuedSignal: AbortSignal | undefined;
   const runner: CliRunner = async (args, signal) => {
-    if (args.includes('snapshot-ui')) {
-      snapshots++;
-      if (snapshots === 1) { issuedSignal = signal; calls.push('snapshot'); snapshotStarted(); return terminal; }
-    }
-    if (args.includes('stop')) calls.push('stop');
-    return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
+    calls.push(args[1]!);
+    if (args[1] === 'snapshot-ui') { issuedSignal = signal; began(); return pending; }
+    return { stdout: commandEnvelope(args, args.includes('snapshot-ui') ? capture() : {}), stderr: '', exitCode: 0 };
   };
-  const first = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
-  const second = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const first = fakeDriver({ cwd: root, lockRoot: root, runner });
+  const second = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
+    const cancelled = new AbortController();
     await first.prepare(scenario, new AbortController().signal);
-    const aborted = new AbortController();
-    const observing = first.observe(aborted.signal);
-    await started;
-    aborted.abort();
-    assert.equal(issuedSignal?.aborted, false);
+    const operation = first.observe(cancelled.signal);
+    const rejected = assert.rejects(operation);
+    await started; cancelled.abort();
+    assert.equal(issuedSignal?.aborted, true);
+    await rejected;
     const closing = first.close(new AbortController().signal);
+    assert.strictEqual(first.close(new AbortController().signal), closing);
+    await assert.rejects(closing, /unknown/);
+    late({ stdout: commandEnvelope(['simulator', 'snapshot-ui'], 'snapshot-ui' === 'snapshot-ui' ? capture() : {}), stderr: '', exitCode: 0 });
     await new Promise(resolve => setImmediate(resolve));
-    assert.deepEqual(calls, ['snapshot']);
-    await assert.rejects(second.prepare(scenario, new AbortController().signal),
-      (error: unknown) => error instanceof DeviceCliError && error.code === 'DEVICE_BUSY');
-    finishSnapshot({ stdout: envelope(capture()), stderr: '', exitCode: 0 });
-    await observing;
-    await closing;
-    assert.deepEqual(calls, ['snapshot', 'stop']);
-    await second.prepare(scenario, new AbortController().signal);
+    const before = [...calls];
+    await assert.rejects(first.observe(new AbortController().signal));
+    await assert.rejects(first.close(new AbortController().signal), /unknown/);
+    await assert.rejects(second.prepare(scenario, new AbortController().signal), /DEVICE_QUARANTINED/);
+    assert.deepEqual(calls, before);
+    assert.ok(!calls.includes('stop'));
+    assert.equal(firstStore(root).inspect(udid)?.state, 'quarantined');
   } finally {
-    finishSnapshot({ stdout: envelope(capture()), stderr: '', exitCode: 0 });
-    await first.close(new AbortController().signal).catch(() => {});
-    await second.close(new AbortController().signal);
+    late({ stdout: commandEnvelope(['simulator', 'snapshot-ui']), stderr: '', exitCode: 0 });
     await rm(root, { recursive: true, force: true });
   }
 });
@@ -636,8 +622,8 @@ test('missing launch or snapshot terminal result retains the device lock', async
       if (args.includes('stop')) stops++;
       return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
     };
-    const first = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
-    const second = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+    const first = fakeDriver({ cwd: root, lockRoot: root, runner });
+    const second = fakeDriver({ cwd: root, lockRoot: root, runner });
     try {
       if (phase === 'launch-app') await assert.rejects(first.prepare(scenario, new AbortController().signal));
       else {
@@ -669,8 +655,8 @@ test('acknowledged launch failure releases the lock without attempting app stop'
     if (args.includes('stop')) stops++;
     return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
   };
-  const first = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
-  const second = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const first = fakeDriver({ cwd: root, lockRoot: root, runner });
+  const second = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
     await assert.rejects(first.prepare(scenario, new AbortController().signal), DeviceCliError);
     await first.close(new AbortController().signal);
@@ -690,7 +676,7 @@ test('pre-dispatch cancellation does not invoke launch or snapshot CLI', async (
     calls.push(args[1] ?? 'unknown');
     return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
   };
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
     const cancelled = new AbortController();
     cancelled.abort();
@@ -699,7 +685,7 @@ test('pre-dispatch cancellation does not invoke launch or snapshot CLI', async (
     await driver.prepare(scenario, new AbortController().signal);
     await assert.rejects(driver.observe(cancelled.signal));
     assert.deepEqual(calls, ['launch-app']);
-    await driver.close(new AbortController().signal);
+    await assert.rejects(driver.close(new AbortController().signal), /unknown/);
   } finally {
     await driver.close(new AbortController().signal).catch(() => {});
     await rm(root, { recursive: true, force: true });
@@ -709,7 +695,7 @@ test('pre-dispatch cancellation does not invoke launch or snapshot CLI', async (
 test('rejects booted aliases from defaults before any device command', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-device-explicit-id-'));
   let calls = 0;
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, defaultUdid: 'booted', runner: async args => {
+  const driver = fakeDriver({ cwd: root, lockRoot: root, defaultUdid: 'booted', runner: async args => {
     calls++;return {stdout:commandEnvelope(args),stderr:'',exitCode:0};
   } });
   const { device: _device, ...withoutDevice } = scenario;
@@ -741,7 +727,7 @@ test('with reuse enabled, actions request the settled capture and return it, wit
     if (args.includes('screenshot')) return { stdout: envelope({ artifacts: { screenshotPath: shot }, capture: { format: 'image/png' } }), stderr: '', exitCode: 0 };
     return { stdout: commandEnvelope(args, args.includes('snapshot-ui') ? capture() : {}), stderr: '', exitCode: 0 };
   };
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner, capture: 'full', screenshots: true, reuseActionCapture: true });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner, capture: 'full', screenshots: true, reuseActionCapture: true });
   try {
     await driver.prepare(scenario, new AbortController().signal);
     const observed = await driver.observe(new AbortController().signal);
@@ -761,7 +747,7 @@ test('an action without a settled capture returns nothing, so the run captures a
   const runner: CliRunner = async args => args.includes('tap')
     ? { stdout: verboseActionEnvelope(), stderr: '', exitCode: 0 }
     : { stdout: commandEnvelope(args, args.includes('snapshot-ui') ? capture() : {}), stderr: '', exitCode: 0 };
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner, capture: 'full', reuseActionCapture: true });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner, capture: 'full', reuseActionCapture: true });
   try {
     await driver.prepare(scenario, new AbortController().signal);
     const observed = await driver.observe(new AbortController().signal);
@@ -781,7 +767,7 @@ test('observe starts the capture and the screenshot together, and can check they
     if (args.includes('screenshot')) return { stdout: envelope({ artifacts: { screenshotPath: shot }, capture: { format: 'image/png' } }), stderr: '', exitCode: 0 };
     return { stdout: commandEnvelope(args, args.includes('snapshot-ui') ? capture() : {}), stderr: '', exitCode: 0 };
   };
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner, screenshots: true, verifyScreenshotAgreement: true });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner, screenshots: true, verifyScreenshotAgreement: true });
   try {
     await driver.prepare(scenario, new AbortController().signal);
     const observed = await driver.observe(new AbortController().signal);
@@ -807,7 +793,7 @@ test('capture reuse is off by default, so actions stay non-verbose and the run c
     calls.push(args);
     return { stdout: commandEnvelope(args, args.includes('snapshot-ui') ? capture() : {}), stderr: '', exitCode: 0 };
   };
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner, capture: 'full' });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner, capture: 'full' });
   try {
     await driver.prepare(scenario, new AbortController().signal);
     const observed = await driver.observe(new AbortController().signal);
@@ -820,7 +806,7 @@ test('launch arguments go to MobileBuildMCP as JSON, so a leading hyphen is not 
   const root = await mkdtemp(join(tmpdir(), 'jev-device-launch-args-'));
   const calls: string[][] = [];
   const runner: CliRunner = async args => { calls.push(args); return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 }; };
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
     await driver.prepare({ app: { bundleId: 'com.example.app', launchArgs: ['-of-evidence-gallery'] }, device: { udid } },
       new AbortController().signal);
@@ -836,7 +822,7 @@ test('launch arguments go to MobileBuildMCP as JSON, so a leading hyphen is not 
 test('the MobileBuildMCP driver refuses an Android app identity instead of launching an undefined bundle ID', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-device-android-identity-'));
   const runner: CliRunner = async args => ({ stdout: commandEnvelope(args), stderr: '', exitCode: 0 });
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
     await assert.rejects(driver.prepare({ app: { package: 'com.example.app' }, device: { udid } },
       new AbortController().signal),
@@ -851,8 +837,8 @@ test('an acknowledged stop failure (the app already exited) still releases the l
   const runner: CliRunner = async args => args.includes('stop')
     ? { stdout: failedStop, stderr: '', exitCode: 1 }
     : { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
-  const first = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
-  const second = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const first = fakeDriver({ cwd: root, lockRoot: root, runner });
+  const second = fakeDriver({ cwd: root, lockRoot: root, runner });
   try {
     await first.prepare(scenario, new AbortController().signal);
     await first.close(new AbortController().signal);
@@ -871,7 +857,7 @@ test('measurement mode never leaves the run holding references from an older cap
     if (args.includes('snapshot-ui')) return { stdout: envelope(capture(hashes[Math.min(captures++, hashes.length - 1)])), stderr: '', exitCode: 0 };
     return { stdout: commandEnvelope(args), stderr: '', exitCode: 0 };
   };
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner, screenshots: true, verifyScreenshotAgreement: true });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner, screenshots: true, verifyScreenshotAgreement: true });
   try {
     await driver.prepare(scenario, new AbortController().signal);
     const observed = await driver.observe(new AbortController().signal);
@@ -897,7 +883,7 @@ test('appRunning and appProblem answer from the console helper in the runtime lo
       stdout: commandEnvelope(args, args.includes('launch-app') && runtime ? { artifacts: { simulatorId: udid, runtimeLogPath: runtime } } : {}),
       stderr: '', exitCode: 0,
     });
-    return new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+    return fakeDriver({ cwd: root, lockRoot: root, runner });
   };
   const answers = async (runtime: string | undefined) => {
     const driver = launchedWith(runtime);
@@ -923,3 +909,14 @@ test('appRunning and appProblem answer from the console helper in the runtime lo
     await rm(root, { recursive: true, force: true });
   }
 });
+
+function fakeDriver(options: import('../src/device/index.js').MobileBuildMcpDriverOptions): MobileBuildMcpDriver {
+  const storeRoot = join(options.cwd, 'admission');
+  mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
+  const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' });
+  return new MobileBuildMcpDriver({ ...options, admission,
+    deviceWindow: options.deviceWindow ?? (async () => {}),
+    fakeBackend: { runner: options.runner!, window: options.deviceWindow } });
+}
+
+function firstStore(root: string) { return Admission.forTesting({ root: realpathSync(join(root, 'admission')), backend: 'fake', initialize: false }); }

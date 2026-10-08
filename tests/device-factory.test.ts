@@ -1,3 +1,5 @@
+import { mkdirSync, realpathSync } from 'node:fs';
+import { Admission } from '../src/device/admission.js';
 import assert from 'node:assert/strict';
 import { mkdir, mkdtemp, readdir, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -10,7 +12,7 @@ import type { AdbRunner } from '../src/device/android/adb.js';
 import { AndroidDriver } from '../src/device/android/driver.js';
 import { androidTools } from '../src/device/android/tools.js';
 
-const udid = '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7';
+const udid = 'ABCDEF00-0000-4000-8000-000000000001';
 const iosScript: ScriptedScenario = { version: 1, app: { bundleId: 'com.example.app' }, values: {}, steps: [] };
 
 const launched = JSON.stringify({ schema: 'mobilebuildmcp.output.launch-result', schemaVersion: '2', didError: false, error: null,
@@ -26,7 +28,7 @@ test('for an iOS script the factory builds the MobileBuildMCP driver from its op
     return { stdout: args.includes('launch-app') ? launched : stopped, stderr: '', exitCode: 0 };
   };
   try {
-    const createDriver = createDriverFactory({ mobileBuildMcp: { cwd: root, lockRoot: root, defaultUdid: udid, runner } });
+    const createDriver = createDriverFactory({ mobileBuildMcp: fakeOptions({ cwd: root, lockRoot: root, defaultUdid: udid, runner }) });
     const driver = createDriver(iosScript);
     assert.equal(driver.tapAliasRule, 'mobilebuildmcp-2.7.1');
     await driver.prepare({ app: iosScript.app }, new AbortController().signal);
@@ -41,7 +43,7 @@ test('the driver is built per scenario, never shared across the process', async 
   const root = await mkdtemp(join(tmpdir(), 'jev-device-factory-scoped-'));
   try {
     const runner: CliRunner = async () => ({ stdout: '{}', stderr: '', exitCode: 0 });
-    const createDriver = createDriverFactory({ mobileBuildMcp: { cwd: root, lockRoot: root, runner } });
+    const createDriver = createDriverFactory({ mobileBuildMcp: fakeOptions({ cwd: root, lockRoot: root, runner }) });
     assert.notEqual(createDriver(iosScript), createDriver(iosScript));
   } finally { await rm(root, { recursive: true, force: true }); }
 });
@@ -86,3 +88,9 @@ test('the Android driver gets the script\'s device, else JEV_ANDROID_DEVICE, fro
     assert.deepEqual(adbCalls, ['devices -l', 'devices -l']);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
+
+function fakeOptions(options: import('../src/device/index.js').MobileBuildMcpDriverOptions) {
+  const storeRoot = join(options.cwd, 'admission'); mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
+  return { ...options, admission: Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' }),
+    deviceWindow: async () => {}, fakeBackend: { runner: options.runner!, window: undefined } };
+}

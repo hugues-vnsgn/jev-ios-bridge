@@ -1,3 +1,5 @@
+import { mkdirSync, realpathSync } from 'node:fs';
+import { Admission } from '../src/device/admission.js';
 import assert from 'node:assert/strict';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -761,7 +763,7 @@ test('an Android-path error reports its own new reason code, with no vendorCode'
 });
 
 test('a real MobileBuildMCP uiError APP_NOT_INSTALLED still reports DEVICE_ERROR with the vendor code', async () => {
-  const udid = '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7';
+  const udid = 'ABCDEF00-0000-4000-8000-000000000001';
   const root = await mkdtemp(join(tmpdir(), 'jev-scripted-vendor-error-'));
   const runner: CliRunner = async args => {
     if (args.includes('launch-app')) {
@@ -772,9 +774,10 @@ test('a real MobileBuildMCP uiError APP_NOT_INSTALLED still reports DEVICE_ERROR
           uiError: { code: 'APP_NOT_INSTALLED', message: 'The app is not installed on the simulator.' } },
       }), stderr: '', exitCode: 1 };
     }
-    return { stdout: '{}', stderr: '', exitCode: 0 };
+    return { stdout: JSON.stringify({ schema: 'mobilebuildmcp.output.simulator-list', schemaVersion: '2',
+      data: { simulators: [] } }), stderr: '', exitCode: 0 };
   };
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner });
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner });
   const log = memoryLog();
   try {
     const report = await runScriptedScenario({ runId: 'scripted-1', log,
@@ -1317,3 +1320,12 @@ test('a script is typed per platform: an iOS app and simulator, or an Android pa
   assert.equal(iosScript?.platform !== 'android' ? iosScript?.app.bundleId : undefined, 'com.example.app');
   assert.equal(androidScript?.platform === 'android' ? androidScript.app.package : undefined, 'com.example.android');
 });
+
+function fakeDriver(options: import('../src/device/index.js').MobileBuildMcpDriverOptions): MobileBuildMcpDriver {
+  const storeRoot = join(options.cwd, 'admission');
+  mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
+  const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' });
+  return new MobileBuildMcpDriver({ ...options, admission,
+    deviceWindow: options.deviceWindow ?? (async () => {}),
+    fakeBackend: { runner: options.runner!, window: options.deviceWindow } });
+}

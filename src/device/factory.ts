@@ -2,7 +2,7 @@ import type { DeviceDriver } from '../contracts/index.js';
 import type { ScriptedScenario } from '../scripted/contracts.js';
 import { AndroidDriver, type AndroidDriverOptions } from './android/driver.js';
 import { createExitWatch } from './android/exit-watch.js';
-import { createMobileBuildMcpDriver, type MobileBuildMcpDriverOptions } from './index.js';
+import { MobileBuildMcpDriver, type IosPreparationDriver, type ObservedActionDriver, createMobileBuildMcpDriver, type MobileBuildMcpDriverOptions } from './index.js';
 
 export interface DriverFactoryOptions {
   mobileBuildMcp: MobileBuildMcpDriverOptions;
@@ -21,6 +21,14 @@ export function createDriverFactory(options: DriverFactoryOptions): (scenario: S
     if (scenario.platform === 'android') {
       return new AndroidDriver({ createExitWatch, ...options.android, device: scenario.device, runId: run?.runId });
     }
-    return createMobileBuildMcpDriver(options.mobileBuildMcp);
+    return createMobileBuildMcpDriver({ ...options.mobileBuildMcp, ...(run ? { runId: run.runId } : {}) });
   };
+}
+
+/** Allocation and action composition use narrow typed seams, never fake scenario casts. */
+export function createPreparationDriver(options: MobileBuildMcpDriverOptions): IosPreparationDriver {
+  return new MobileBuildMcpDriver({ ...options, stopAppOnClose: false });
+}
+export function createObservedDriver(options: MobileBuildMcpDriverOptions): ObservedActionDriver {
+  return new MobileBuildMcpDriver({ ...options, stopAppOnClose: false });
 }

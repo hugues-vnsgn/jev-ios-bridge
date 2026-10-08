@@ -1,3 +1,5 @@
+import { mkdirSync, realpathSync } from 'node:fs';
+import { Admission } from '../src/device/admission.js';
 /**
  * Start mode "attach" (Issue 11, E2): a version 2 script with `"start": "attach"` runs from the screen already
  * showing. The run passes the start mode to the driver's `prepare`; the Android driver then skips its restart but
@@ -218,7 +220,7 @@ test('the resumed package is read from topResumedActivity, else from a ResumedAc
 // ---------------------------------------------------------------------------------------------------------------
 // iOS: attach is refused before any device work; restart is unchanged.
 
-const udid = '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7';
+const udid = 'ABCDEF00-0000-4000-8000-000000000001';
 const iosAttach = { app: { bundleId: 'com.example.app' }, device: { udid }, start: 'attach' } as const;
 
 function launched(): string {
@@ -245,7 +247,7 @@ async function withIos(fn: (setup: { driver: MobileBuildMcpDriver; calls: string
   options: { deviceWindow?: boolean } = {}): Promise<void> {
   const root = await mkdtemp(join(tmpdir(), 'jev-attach-ios-'));
   const calls: string[] = [];
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: join(root, 'lease'), runner: fakeRunner(calls),
+  const driver = fakeDriver({ cwd: root, lockRoot: join(root, 'lease'), runner: fakeRunner(calls),
     ...(options.deviceWindow ? { deviceWindow: async () => { calls.push('window'); } } : {}) });
   try { await fn({ driver, calls, root }); }
   finally {
@@ -289,3 +291,12 @@ test('iOS restart, explicit or by default, still launches the app', async () => 
     });
   }
 });
+
+function fakeDriver(options: import('../src/device/index.js').MobileBuildMcpDriverOptions): MobileBuildMcpDriver {
+  const storeRoot = join(options.cwd, 'admission');
+  mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
+  const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' });
+  return new MobileBuildMcpDriver({ ...options, admission,
+    deviceWindow: options.deviceWindow ?? (async () => {}),
+    fakeBackend: { runner: options.runner!, window: options.deviceWindow } });
+}

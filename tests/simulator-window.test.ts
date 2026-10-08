@@ -1,3 +1,5 @@
+import { mkdirSync, realpathSync } from 'node:fs';
+import { Admission } from '../src/device/admission.js';
 import assert from 'node:assert/strict';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -10,7 +12,7 @@ import { DeviceCliError, DeviceReasonError, MobileBuildMcpDriver, deviceWindowOp
 import { runScriptedScenario } from '../src/scripted/run.js';
 import { SCRIPTED_JEV_MODEL } from '../src/scripted/jev.js';
 
-const udid = '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7';
+const udid = 'ABCDEF00-0000-4000-8000-000000000001';
 const scenario = { app: { bundleId: 'com.apple.Preferences' }, device: { udid } };
 
 function launched(): string {
@@ -60,7 +62,7 @@ async function withDriver(options: { list?: () => string; launch?: () => string;
   body: (driver: MobileBuildMcpDriver, calls: string[], root: string) => Promise<void>): Promise<void> {
   const root = await mkdtemp(join(tmpdir(), 'jev-sim-window-'));
   const calls = options.calls ?? [];
-  const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner: fakeRunner(options, calls),
+  const driver = fakeDriver({ cwd: root, lockRoot: root, runner: fakeRunner(options, calls),
     ...(options.window ? { deviceWindow: options.window } : {}) });
   try { await body(driver, calls, root); }
   finally {
@@ -83,7 +85,7 @@ test('with the window on, prepare checks the simulator is booted, brings its win
 });
 
 test('a window that fails to open is a warning, never a failure', async () => {
-  await withDriver({ list: () => listed('Booted'), window: async () => { throw new Error('open exited 1: secret detail'); } },
+  await withDriver({ list: () => listed('Booted'), window: async () => { throw new DeviceCliError('WINDOW_FAILED', 'open exited 1: secret detail', true); } },
     async (driver, calls) => {
       await driver.prepare(scenario, new AbortController().signal);
       assert.deepEqual(calls, ['simulator list', 'simulator launch-app']);
@@ -102,7 +104,7 @@ test('with the window on, a shut-down simulator is refused as DEVICE_NOT_BOOTED 
     assert.equal(opened, 0, 'opening Simulator on a shut-down device would boot it');
     assert.deepEqual(calls, ['simulator list']);
     // The lease is released, so another driver can take the device.
-    const next = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, runner: fakeRunner({}, []) });
+    const next = fakeDriver({ cwd: root, lockRoot: root, runner: fakeRunner({}, []) });
     await next.prepare(scenario, new AbortController().signal);
     await next.close(new AbortController().signal);
   });
@@ -116,7 +118,7 @@ test('a simulator still booting is DEVICE_NOT_BOOTED too', async () => {
 
 test('with the window on and the state unreadable, the window stays closed with a warning and the app still launches', async () => {
   let opened = 0;
-  for (const list of [() => 'not json', () => listed('Booted', 'AD6669D1-0000-0000-0000-000000000000')]) {
+  for (const list of [() => listed('Booted', 'AD6669D1-0000-0000-0000-000000000000')]) {
     await withDriver({ list, window: async () => { opened++; } }, async (driver, calls) => {
       await driver.prepare(scenario, new AbortController().signal);
       assert.deepEqual(calls, ['simulator list', 'simulator launch-app']);
@@ -196,7 +198,7 @@ test('a run records prepare warnings on its prepared event, and nothing when the
 test('a run on a shut-down simulator ends inconclusive with DEVICE_NOT_BOOTED, not DEVICE_ERROR', async () => {
   const root = await mkdtemp(join(tmpdir(), 'jev-sim-window-run-'));
   try {
-    const driver = new MobileBuildMcpDriver({ cwd: root, lockRoot: root, defaultUdid: udid,
+    const driver = fakeDriver({ cwd: root, lockRoot: root, defaultUdid: udid,
       runner: fakeRunner({ list: () => listed('Shutdown'), launch: launchFailed }, []) });
     const log = memoryLog();
     const report = await runScriptedScenario({ runId: 'window-1', scenario: script, driver, judge, log });
@@ -220,4 +222,22 @@ test('the CLI takes --no-device-window on run only, and its help names it', { ti
   const report = await execute(['report', 'some-run', '--no-device-window']);
   assert.equal(report.code, 3);
   assert.match(report.stderr, /--no-device-window applies only to run/);
+});
+
+function fakeDriver(options: import('../src/device/index.js').MobileBuildMcpDriverOptions): MobileBuildMcpDriver {
+  const storeRoot = join(options.cwd, 'admission');
+  mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
+  const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' });
+  return new MobileBuildMcpDriver({ ...options, admission,
+    deviceWindow: options.deviceWindow ?? (async () => {}),
+    fakeBackend: { runner: options.runner!, window: options.deviceWindow } });
+}
+
+test('malformed selected-device listing revokes dispatch before window or launch', async () => {
+  await withDriver({ list: () => 'not json', window: async () => assert.fail('No window after uncertainty') }, async (driver, calls) => {
+    await assert.rejects(driver.prepare(scenario, new AbortController().signal), /invalid JSON/);
+    assert.deepEqual(calls, ['simulator list']);
+    await assert.rejects(driver.observe(new AbortController().signal));
+    assert.deepEqual(calls, ['simulator list']);
+  });
 });

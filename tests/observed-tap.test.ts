@@ -1,3 +1,5 @@
+import { mkdirSync, realpathSync } from 'node:fs';
+import { Admission } from '../src/device/admission.js';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import type { Snapshot } from '../src/contracts/index.js';
@@ -53,13 +55,13 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { DeviceCliError, MobileBuildMcpDriver, type CliRunner } from '../src/device/index.js';
 test('real driver single submission suppresses expired-reference retry and near-TTL refresh',async()=>{
- const root=await mkdtemp(join(tmpdir(),'observed-driver-'));const calls:string[][]=[];const udid='0E42FDE2-5E09-42D3-9876-9EF0037FCBE7';
+ const root=await mkdtemp(join(tmpdir(),'observed-driver-'));const calls:string[][]=[];const udid='ABCDEF00-0000-4000-8000-000000000001';
  const runner:CliRunner=async args=>{
   calls.push(args);const tap=args.includes('touch');
   return {stdout:JSON.stringify({schema:tap?'mobilebuildmcp.output.ui-action-result':'mobilebuildmcp.output.launch-result',schemaVersion:'2',didError:tap,
    data:{summary:{status:tap?'FAILED':'SUCCEEDED'},action:{type:'tap'},artifacts:{simulatorId:udid},diagnostics:{},...(tap?{uiError:{code:'SNAPSHOT_EXPIRED'}}:{})}}),stderr:'',exitCode:tap?1:0};
  };
- const driver=new MobileBuildMcpDriver({cwd:root,lockRoot:root,runner,stopAppOnClose:false});
+ const driver=fakeDriver({cwd:root,lockRoot:root,runner,stopAppOnClose:false});
  const context={app:{bundleId:'example.app'},device:{udid},values:{}};
  try {
   await driver.prepare(context,new AbortController().signal);
@@ -111,3 +113,12 @@ test('journal intent includes scenario and observation limits',async()=>{
  assert.deepEqual(intent,{selector:{identifier:'go'},before:{present:[{identifier:'go'}]},after:{present:[{identifier:'done'}]},
   scenario:{app:{bundleId:'example.app'},values:{}},timeoutMs:100,pollIntervalMs:1});
 });
+
+function fakeDriver(options: import('../src/device/index.js').MobileBuildMcpDriverOptions): MobileBuildMcpDriver {
+  const storeRoot = join(options.cwd, 'admission');
+  mkdirSync(storeRoot, { recursive: true, mode: 0o700 });
+  const admission = Admission.forTesting({ root: realpathSync(storeRoot), backend: 'fake' });
+  return new MobileBuildMcpDriver({ ...options, admission,
+    deviceWindow: options.deviceWindow ?? (async () => {}),
+    fakeBackend: { runner: options.runner!, window: options.deviceWindow } });
+}
