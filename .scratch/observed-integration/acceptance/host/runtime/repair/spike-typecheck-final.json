@@ -1,0 +1,27 @@
+{
+  "command": [
+    "node",
+    "node_modules/typescript/bin/tsc",
+    "--noEmit",
+    "--ignoreConfig",
+    "--target",
+    "ES2023",
+    "--module",
+    "NodeNext",
+    "--moduleResolution",
+    "NodeNext",
+    "--strict",
+    "--noUncheckedIndexedAccess",
+    "--exactOptionalPropertyTypes",
+    "--skipLibCheck",
+    "--types",
+    "node",
+    "spikes/observed-ui/cli.ts"
+  ],
+  "nodeVersion": "v26.8.1",
+  "exit": 0,
+  "seconds": 0.19,
+  "counts": {},
+  "unchangedSourceTestFiles": 15,
+  "sourceTestFiles": 15
+}

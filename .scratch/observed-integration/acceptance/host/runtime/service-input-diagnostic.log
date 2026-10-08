@@ -1,0 +1,54 @@
+✔ a missing allocation refuses before attaching a driver (24.382542ms)
+✖ one input and fresh post-input observation, including concurrent identical starts (323.390417ms)
+✔ settled precondition failure refuses without an input and retains the prepared device (316.603667ms)
+✖ lost input reply keeps durable null receipts, quarantines, and never replays after reconstruction (337.287666ms)
+✔ dead-owner inspection and wait never mutate authority; recovery is explicit (207.145958ms)
+✔ already satisfied commits from the store without input and repeats retrieve without backend calls (322.8285ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 4
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1689.341333
+
+✖ failing tests:
+
+test at tests/observed-service.test.ts:1:4934
+✖ one input and fresh post-input observation, including concurrent identical starts (323.390417ms)
+  AssertionError [ERR_ASSERTION]: {"terminal":{"version":1,"kind":"observed-action","actionId":"one","allocationId":"703FBB92-509B-428A-8EBD-537602CF8689","device":{"platform":"ios-simulator","udid":"ABCDEF00-0000-4000-8000-000000000001"},"bridgeVersion":"fixture","state":"terminal","authority":"committed","disposition":"retrieved","cancellationRequested":true,"actionAttempted":false,"actionAcknowledged":false,"observations":0,"outcome":"inconclusive","reason":"OBSERVATION_UNCONFIRMED","admission":"quarantined","allocationState":"quarantined","evidence":{"directory":"/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-service-F6kwRq/evidence/observed/one","request":"/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-service-F6kwRq/evidence/observed/one/request.json","observations":[],"terminal":"/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-service-F6kwRq/evidence/observed/one/terminal.json","exportStatus":"complete"}},"calls":[["ui-automation","snapshot-ui","--simulator-id","ABCDEF00-0000-4000-8000-000000000001","--verbose","--output","json"]]}
+  + actual - expected
+  
+  + 'inconclusive'
+  - 'outcome_observed'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/tests/observed-service.test.ts:84:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'inconclusive',
+    expected: 'outcome_observed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-service.test.ts:1:6619
+✖ lost input reply keeps durable null receipts, quarantines, and never replays after reconstruction (337.287666ms)
+  AssertionError [ERR_ASSERTION]: {"terminal":{"version":1,"kind":"observed-action","actionId":"one","allocationId":"6296C51C-8213-4946-B7A7-4AED2FC24C47","device":{"platform":"ios-simulator","udid":"ABCDEF00-0000-4000-8000-000000000001"},"bridgeVersion":"fixture","state":"terminal","authority":"committed","disposition":"retrieved","cancellationRequested":true,"actionAttempted":false,"actionAcknowledged":false,"observations":0,"outcome":"inconclusive","reason":"OBSERVATION_UNCONFIRMED","admission":"quarantined","allocationState":"quarantined","evidence":{"directory":"/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-service-KnlQgq/evidence/observed/one","request":"/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-service-KnlQgq/evidence/observed/one/request.json","observations":[],"terminal":"/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-service-KnlQgq/evidence/observed/one/terminal.json","exportStatus":"complete"}},"calls":["snapshot-ui"]}
+  + actual - expected
+  
+  + 'OBSERVATION_UNCONFIRMED'
+  - 'UI_ACTION_UNCONFIRMED'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/tests/observed-service.test.ts:107:58)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'OBSERVATION_UNCONFIRMED',
+    expected: 'UI_ACTION_UNCONFIRMED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

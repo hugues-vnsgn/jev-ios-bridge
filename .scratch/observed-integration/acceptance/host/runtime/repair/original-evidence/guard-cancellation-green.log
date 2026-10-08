@@ -1,0 +1,36 @@
+✔ a missing allocation refuses before attaching a driver (28.560584ms)
+✔ begin-finalization failure still revokes and closes the attached driver locally (311.292833ms)
+✔ finalization beforeCommit never treats provisional success as authority (311.115667ms)
+✔ finalization afterCommit never treats provisional success as authority (321.8445ms)
+✔ one input and fresh post-input observation, including concurrent identical starts (487.712333ms)
+✔ settled precondition failure refuses without an input and retains the prepared device (314.590833ms)
+✔ lost input reply keeps durable null receipts, quarantines, and never replays after reconstruction (408.819041ms)
+✔ dead-owner inspection and wait never mutate authority; recovery is explicit (194.057625ms)
+✔ already satisfied commits from the store without input and repeats retrieve without backend calls (318.224375ms)
+✔ evidence prepare failure preserves the corresponding durable authority boundary (318.151958ms)
+✔ evidence observation failure preserves the corresponding durable authority boundary (301.392417ms)
+✔ evidence provisional failure preserves the corresponding durable authority boundary (355.756042ms)
+✔ evidence terminal failure preserves the corresponding durable authority boundary (311.164125ms)
+✔ receipt persistence failure never converts a settled input into success (393.266792ms)
+✔ cancel while input is pending keeps quarantine and the identical lease after a late receipt (393.099083ms)
+✔ external-cancel while input is pending keeps quarantine and the identical lease after a late receipt (454.898708ms)
+✔ deadline while input is pending keeps quarantine and the identical lease after a late receipt (1050.751167ms)
+✔ cancellation during an abort-ignoring observation never submits input or persists the late capture (360.857375ms)
+✔ disabled and shutting-down starts refuse without consuming, while existing reads and cancellation remain usable (191.383542ms)
+✔ full canonical payload comparison rejects a corrupted binding even if its digest field matches (172.363042ms)
+✔ cancellation write failure still closes local issuance before returning an honest store error (345.723541ms)
+✔ allocator delegation preserves its renderer and full binding, with disabled preparation fenced centrally (307.134ms)
+✔ ambiguous-after refuses with settled capture and no input (313.664583ms)
+✔ ambiguous-target refuses with settled capture and no input (316.641875ms)
+✔ target-disabled refuses with settled capture and no input (295.249083ms)
+✔ missing-touch refuses with settled capture and no input (315.575959ms)
+✔ invalid-expiry refuses with settled capture and no input (300.262417ms)
+✔ absent-condition refuses with settled capture and no input (285.355792ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9646.831917

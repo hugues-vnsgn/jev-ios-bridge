@@ -1,0 +1,31 @@
+{"case":"separate-finalization-budget","observedMs":73,"closedMs":757,"outcome":"inconclusive","reason":"DEADLINE_EXCEEDED"}
+✖ settled close within finalization budget does not consume action observation budget (1040.814875ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1207.492083
+
+✖ failing tests:
+
+test at tests/observed-service.test.ts:1:49334
+✖ settled close within finalization budget does not consume action observation budget (1040.814875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'inconclusive'
+  - 'already_satisfied'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/tests/observed-service.test.ts:701:33)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'inconclusive',
+    expected: 'already_satisfied',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

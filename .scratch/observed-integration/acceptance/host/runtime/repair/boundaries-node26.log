@@ -1,0 +1,54 @@
+✔ local cancel fences continuation even when initial authoritative read fails (269.338875ms)
+✔ settled close within finalization budget does not consume action observation budget (1029.437666ms)
+✖ local cancellation with a failed durable write during prolonged close cannot commit computed success (1049.366625ms)
+✖ local cancellation with a failed durable write during prolonged provisional cannot commit computed success (1028.746792ms)
+✔ host creation refusal exposes persisted blocking allocation evidence (251.351042ms)
+✔ unverified unavailable blocker evidence refuses safely without attaching or consuming (238.28175ms)
+✔ unverified missing blocker evidence refuses safely without attaching or consuming (237.3695ms)
+✔ unverified relative blocker evidence refuses safely without attaching or consuming (233.286083ms)
+✔ unverified wrong-identity blocker evidence refuses safely without attaching or consuming (244.255291ms)
+✔ unverified not-blocking blocker evidence refuses safely without attaching or consuming (232.740709ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 8
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4988.154833
+
+✖ failing tests:
+
+test at tests/observed-service.test.ts:1:51166
+✖ local cancellation with a failed durable write during prolonged close cannot commit computed success (1049.366625ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/tests/observed-service.test.ts:736:56)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-service.test.ts:1:51166
+✖ local cancellation with a failed durable write during prolonged provisional cannot commit computed success (1028.746792ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/tests/observed-service.test.ts:736:56)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

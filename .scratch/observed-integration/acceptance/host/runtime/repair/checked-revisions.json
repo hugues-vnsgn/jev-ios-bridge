@@ -1,0 +1,90 @@
+{
+  "candidate": "a898e80bf3d0d5af7b17618f9fcec56695174289",
+  "parentOriginalCandidate": "c751a73df7931107af23619c350d2ca406ac55db",
+  "dependencyBase": "98f7de41baa316f47a65a7bc2160128a72051f3e",
+  "dispatchBase": "fd9b3c0d19284b9fc22c4bb5e3a3fd4bb0d3b181",
+  "files": [
+    ".scratch/observed-action-rollout/issues/06-observed-runtime.md",
+    "src/observed/service.ts",
+    "tests/observed-service.test.ts"
+  ],
+  "productTestFiles": {
+    "src/observed/service.ts": {
+      "sha256Matches": true,
+      "committedMatches": true,
+      "gitBlobMatches": true
+    },
+    "src/observed/schema.ts": {
+      "sha256Matches": true,
+      "committedMatches": true,
+      "gitBlobMatches": true
+    },
+    "src/observed/report.ts": {
+      "sha256Matches": true,
+      "committedMatches": true,
+      "gitBlobMatches": true
+    },
+    "src/observed/evidence.ts": {
+      "sha256Matches": true,
+      "committedMatches": true,
+      "gitBlobMatches": true
+    },
+    "src/experimental/observed-journal.ts": {
+      "sha256Matches": true,
+      "committedMatches": true,
+      "gitBlobMatches": true
+    },
+    "src/experimental/observed-tap.ts": {
+      "sha256Matches": true,
+      "committedMatches": true,
+      "gitBlobMatches": true
+    },
+    "src/experimental/observed-run.ts": {
+      "sha256Matches": true,
+      "committedMatches": true,
+      "gitBlobMatches": true
+    },
+    "spikes/observed-ui/cli.ts": {
+      "sha256Matches": true,
+      "committedMatches": true,
+      "gitBlobMatches": true
+    },
+    "tests/observed-service.test.ts": {
+      "sha256Matches": true,
+      "committedMatches": true,
+      "gitBlobMatches": true
+    },
+    "tests/observed-schema.test.ts": {
+      "sha256Matches": true,
+      "committedMatches": true,
+      "gitBlobMatches": true
+    },
+    "tests/observed-evidence.test.ts": {
+      "sha256Matches": true,
+      "committedMatches": true,
+      "gitBlobMatches": true
+    },
+    "tests/observed-journal.test.ts": {
+      "sha256Matches": true,
+      "committedMatches": true,
+      "gitBlobMatches": true
+    },
+    "tests/observed-tap.test.ts": {
+      "sha256Matches": true,
+      "committedMatches": true,
+      "gitBlobMatches": true
+    },
+    "tests/observed-run.test.ts": {
+      "sha256Matches": true,
+      "committedMatches": true,
+      "gitBlobMatches": true
+    },
+    "tests/admission-migration.test.ts": {
+      "sha256Matches": true,
+      "committedMatches": true,
+      "gitBlobMatches": true
+    }
+  },
+  "trackedClean": true,
+  "all15Matched": true
+}

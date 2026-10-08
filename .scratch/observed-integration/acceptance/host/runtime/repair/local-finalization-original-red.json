@@ -1,0 +1,15 @@
+{
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-concurrency=1",
+    "--test-name-pattern=local cancellation with a failed durable write",
+    "tests/observed-service.test.ts"
+  ],
+  "exit": 1,
+  "sourceCandidate": "c751a73df7931107af23619c350d2ca406ac55db",
+  "serviceSha256": "ceccd3408ea76a167e980661a0793c537d4b2945378b9f7bee774a3055103dc3",
+  "testSha256": "608b20d1a1a1cbbcbbf2ebd16e1957efc29fea138ce82910256df1f99179abdf"
+}

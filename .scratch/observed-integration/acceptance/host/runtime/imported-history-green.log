@@ -1,0 +1,11 @@
+✔ imported completed records resolve read-only without allocating or attaching (43.665333ms)
+✔ imported uncertain records resolve read-only without allocating or attaching (32.758708ms)
+✔ historical ready-allocation adapter uses the same resolver and refuses another device or identity (338.019ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 607.1395

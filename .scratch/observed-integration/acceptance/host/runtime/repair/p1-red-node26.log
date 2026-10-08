@@ -1,0 +1,34 @@
+{"case":"cancel-read-failure","calls":["snapshot-ui","touch","snapshot-ui"],"outcome":"outcome_observed","reason":null,"cancellationRequested":false}
+✖ local cancel fences continuation even when initial authoritative read fails (456.338167ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 644.144125
+
+✖ failing tests:
+
+test at tests/observed-service.test.ts:1:47954
+✖ local cancel fences continuation even when initial authoritative read fails (456.338167ms)
+  AssertionError [ERR_ASSERTION]: Explicit local cancellation must prevent follow-up input despite unavailable initial read
+  + actual - expected
+  
+    [
+      'snapshot-ui',
+  +   'touch',
+  +   'snapshot-ui'
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/tests/observed-service.test.ts:679:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'snapshot-ui', 'touch', 'snapshot-ui' ],
+    expected: [ 'snapshot-ui' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

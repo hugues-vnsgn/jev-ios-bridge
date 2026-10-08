@@ -1,0 +1,58 @@
+✔ begin-finalization failure still revokes and closes the attached driver locally (303.159458ms)
+✔ finalization beforeCommit never treats provisional success as authority (302.897458ms)
+✔ finalization afterCommit never treats provisional success as authority (329.358375ms)
+✔ cancel while input is pending keeps quarantine and the identical lease after a late receipt (399.905ms)
+✔ external-cancel while input is pending keeps quarantine and the identical lease after a late receipt (465.712ms)
+✔ deadline while input is pending keeps quarantine and the identical lease after a late receipt (2835.014584ms)
+✔ cancellation during an abort-ignoring observation never submits input or persists the late capture (353.458125ms)
+✔ disabled and shutting-down starts refuse without consuming, while existing reads and cancellation remain usable (179.265ms)
+✔ cancellation write failure still closes local issuance before returning an honest store error (388.339042ms)
+✔ external cancellation during provisional persistence commits inconclusive instead of publishing the computed success (321.647375ms)
+✔ allocator configuration errors are typed preparation errors and shutdown never closes the borrowed store (19.383833ms)
+✔ shutdown synchronously closes owned action and allocator gates before awaiting either cleanup (326.718541ms)
+✔ local close error cannot promote an observed success and finishes within the separate five-second budget (309.532125ms)
+✔ local close pending cannot promote an observed success and finishes within the separate five-second budget (5376.679542ms)
+✖ retrieved consume and host creation refusal invoke zero driver or probe calls (181.361417ms)
+✔ local cancel fences continuation even when initial authoritative read fails (230.857417ms)
+✔ settled close within finalization budget does not consume action observation budget (1041.615084ms)
+✔ local cancellation with a failed durable write during prolonged close cannot commit computed success (1035.8725ms)
+✔ local cancellation with a failed durable write during prolonged provisional cannot commit computed success (1059.841458ms)
+✔ host creation refusal exposes persisted blocking allocation evidence (248.977834ms)
+✔ unverified unavailable blocker evidence refuses safely without attaching or consuming (225.169916ms)
+✔ unverified missing blocker evidence refuses safely without attaching or consuming (234.35775ms)
+✔ unverified relative blocker evidence refuses safely without attaching or consuming (249.413958ms)
+✔ unverified wrong-identity blocker evidence refuses safely without attaching or consuming (227.748667ms)
+✔ unverified not-blocking blocker evidence refuses safely without attaching or consuming (222.997666ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 24
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17061.518125
+
+✖ failing tests:
+
+test at tests/observed-service.test.ts:1:44054
+✖ retrieved consume and host creation refusal invoke zero driver or probe calls (181.361417ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'STORE_UNAVAILABLE'
+  - 'HOST_CREATION_UNRESOLVED'
+  
+      at Object.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/tests/observed-service.test.ts:620:12)
+      at expectedException (node:assert:547:17)
+      at expectsError (node:assert:672:21)
+      at strict.rejects (node:assert:738:3)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/tests/observed-service.test.ts:618:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'STORE_UNAVAILABLE',
+    expected: 'HOST_CREATION_UNRESOLVED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

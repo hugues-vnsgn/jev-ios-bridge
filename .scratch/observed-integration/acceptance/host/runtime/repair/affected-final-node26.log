@@ -1,0 +1,33 @@
+✔ begin-finalization failure still revokes and closes the attached driver locally (308.753375ms)
+✔ finalization beforeCommit never treats provisional success as authority (300.077417ms)
+✔ finalization afterCommit never treats provisional success as authority (314.848291ms)
+✔ cancel while input is pending keeps quarantine and the identical lease after a late receipt (415.043125ms)
+✔ external-cancel while input is pending keeps quarantine and the identical lease after a late receipt (445.805417ms)
+✔ deadline while input is pending keeps quarantine and the identical lease after a late receipt (2832.544959ms)
+✔ cancellation during an abort-ignoring observation never submits input or persists the late capture (357.830583ms)
+✔ disabled and shutting-down starts refuse without consuming, while existing reads and cancellation remain usable (201.208ms)
+✔ cancellation write failure still closes local issuance before returning an honest store error (367.939666ms)
+✔ external cancellation during provisional persistence commits inconclusive instead of publishing the computed success (343.075875ms)
+✔ allocator configuration errors are typed preparation errors and shutdown never closes the borrowed store (20.698625ms)
+✔ shutdown synchronously closes owned action and allocator gates before awaiting either cleanup (308.633791ms)
+✔ local close error cannot promote an observed success and finishes within the separate five-second budget (338.609416ms)
+✔ local close pending cannot promote an observed success and finishes within the separate five-second budget (5303.986458ms)
+✔ retrieved consume and host creation refusal invoke zero driver or probe calls (272.760709ms)
+✔ local cancel fences continuation even when initial authoritative read fails (270.001208ms)
+✔ settled close within finalization budget does not consume action observation budget (1019.468584ms)
+✔ local cancellation with a failed durable write during prolonged close cannot commit computed success (1050.75325ms)
+✔ local cancellation with a failed durable write during prolonged provisional cannot commit computed success (1046.365791ms)
+✔ host creation refusal exposes persisted blocking allocation evidence (234.250208ms)
+✔ unverified unavailable blocker evidence refuses safely without attaching or consuming (240.123333ms)
+✔ unverified missing blocker evidence refuses safely without attaching or consuming (247.883875ms)
+✔ unverified relative blocker evidence refuses safely without attaching or consuming (231.501875ms)
+✔ unverified wrong-identity blocker evidence refuses safely without attaching or consuming (237.0625ms)
+✔ unverified not-blocking blocker evidence refuses safely without attaching or consuming (245.379958ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17126.3255

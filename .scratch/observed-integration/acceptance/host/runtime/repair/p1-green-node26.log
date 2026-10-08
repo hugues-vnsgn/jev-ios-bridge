@@ -1,0 +1,10 @@
+{"case":"cancel-read-failure","calls":["snapshot-ui"],"outcome":null,"reason":"FINALIZATION_UNCONFIRMED","cancellationRequested":false}
+✔ local cancel fences continuation even when initial authoritative read fails (276.1135ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 438.943292

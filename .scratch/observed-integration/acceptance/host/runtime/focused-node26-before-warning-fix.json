@@ -1,0 +1,19 @@
+{
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-concurrency=1",
+    "tests/observed-service.test.ts",
+    "tests/observed-schema.test.ts",
+    "tests/observed-evidence.test.ts",
+    "tests/observed-journal.test.ts",
+    "tests/observed-tap.test.ts",
+    "tests/observed-run.test.ts",
+    "tests/admission-migration.test.ts"
+  ],
+  "exit": 0,
+  "elapsedSeconds": 29.57,
+  "nodeVersion": "v26.8.1"
+}

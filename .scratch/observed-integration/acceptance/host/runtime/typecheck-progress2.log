@@ -1,0 +1,5 @@
+
+> jev-ios-bridge@1.3.1 typecheck
+> tsc --noEmit
+
+tests/observed-service.test.ts(343,66): error TS2353: Object literal may only specify known properties, and 'role' does not exist in type '{ identifier: string; }'.

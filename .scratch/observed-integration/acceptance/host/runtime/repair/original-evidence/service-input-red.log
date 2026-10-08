@@ -1,0 +1,54 @@
+✔ a missing allocation refuses before attaching a driver (28.629459ms)
+✖ one input and fresh post-input observation, including concurrent identical starts (329.271959ms)
+✔ settled precondition failure refuses without an input and retains the prepared device (341.069208ms)
+✖ lost input reply keeps durable null receipts, quarantines, and never replays after reconstruction (340.152792ms)
+✔ dead-owner inspection and wait never mutate authority; recovery is explicit (236.28875ms)
+✔ already satisfied commits from the store without input and repeats retrieve without backend calls (336.291375ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 4
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1764.807792
+
+✖ failing tests:
+
+test at tests/observed-service.test.ts:1:4934
+✖ one input and fresh post-input observation, including concurrent identical starts (329.271959ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'inconclusive'
+  - 'outcome_observed'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/tests/observed-service.test.ts:84:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'inconclusive',
+    expected: 'outcome_observed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-service.test.ts:1:6586
+✖ lost input reply keeps durable null receipts, quarantines, and never replays after reconstruction (340.152792ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'OBSERVATION_UNCONFIRMED'
+  - 'UI_ACTION_UNCONFIRMED'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/tests/observed-service.test.ts:107:58)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'OBSERVATION_UNCONFIRMED',
+    expected: 'UI_ACTION_UNCONFIRMED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,1 @@
+COMMAND ["node", "node_modules/typescript/bin/tsc", "--noEmit", "--ignoreConfig", "--target", "ES2023", "--module", "NodeNext", "--moduleResolution", "NodeNext", "--strict", "--noUncheckedIndexedAccess", "--exactOptionalPropertyTypes", "--skipLibCheck", "--types", "node", "spikes/observed-ui/cli.ts"]

@@ -1,0 +1,32 @@
+✖ cancellation write failure still closes local issuance before returning an honest store error (348.199167ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 488.110875
+
+✖ failing tests:
+
+test at tests/observed-service.test.ts:1:20270
+✖ cancellation write failure still closes local issuance before returning an honest store error (348.199167ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      'snapshot-ui',
+  +   'touch'
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/tests/observed-service.test.ts:296:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'snapshot-ui', 'touch' ],
+    expected: [ 'snapshot-ui' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,5 @@
+--- tests/observed-run.test.ts before warning handling
++++ tests/observed-run.test.ts final
+@@
+-  const child = spawnSync(process.execPath, ['--import', import.meta.resolve('tsx'),
++  const child = spawnSync(process.execPath, ['--disable-warning=ExperimentalWarning', '--import', import.meta.resolve('tsx'),

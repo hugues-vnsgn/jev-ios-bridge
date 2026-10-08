@@ -1,0 +1,35 @@
+(node:53618) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ begin-finalization failure still revokes and closes the attached driver locally (314.048042ms)
+✔ finalization beforeCommit never treats provisional success as authority (304.265291ms)
+✔ finalization afterCommit never treats provisional success as authority (264.973208ms)
+✔ cancel while input is pending keeps quarantine and the identical lease after a late receipt (385.615ms)
+✔ external-cancel while input is pending keeps quarantine and the identical lease after a late receipt (402.62ms)
+✔ deadline while input is pending keeps quarantine and the identical lease after a late receipt (2833.292333ms)
+✔ cancellation during an abort-ignoring observation never submits input or persists the late capture (339.979208ms)
+✔ disabled and shutting-down starts refuse without consuming, while existing reads and cancellation remain usable (190.599333ms)
+✔ cancellation write failure still closes local issuance before returning an honest store error (359.051167ms)
+✔ external cancellation during provisional persistence commits inconclusive instead of publishing the computed success (329.334333ms)
+✔ allocator configuration errors are typed preparation errors and shutdown never closes the borrowed store (19.517541ms)
+✔ shutdown synchronously closes owned action and allocator gates before awaiting either cleanup (320.543417ms)
+✔ local close error cannot promote an observed success and finishes within the separate five-second budget (342.347625ms)
+✔ local close pending cannot promote an observed success and finishes within the separate five-second budget (5419.842625ms)
+✔ retrieved consume and host creation refusal invoke zero driver or probe calls (247.480583ms)
+✔ local cancel fences continuation even when initial authoritative read fails (257.364ms)
+✔ settled close within finalization budget does not consume action observation budget (1035.813916ms)
+✔ local cancellation with a failed durable write during prolonged close cannot commit computed success (1044.909875ms)
+✔ local cancellation with a failed durable write during prolonged provisional cannot commit computed success (1044.412917ms)
+✔ host creation refusal exposes persisted blocking allocation evidence (246.252708ms)
+✔ unverified unavailable blocker evidence refuses safely without attaching or consuming (240.046041ms)
+✔ unverified missing blocker evidence refuses safely without attaching or consuming (219.349791ms)
+✔ unverified relative blocker evidence refuses safely without attaching or consuming (236.132291ms)
+✔ unverified wrong-identity blocker evidence refuses safely without attaching or consuming (221.483125ms)
+✔ unverified not-blocking blocker evidence refuses safely without attaching or consuming (226.941291ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17037.908791

@@ -1,0 +1,15 @@
+✔ consume beforeCommit failure resolves authoritatively without attaching or rebinding (196.365417ms)
+✔ consume afterCommit failure resolves authoritatively without attaching or rebinding (196.640916ms)
+✔ retrieved consume and host creation refusal invoke zero driver or probe calls (201.365958ms)
+✔ a retired unused allocation refuses action consumption without binding action intent (219.375042ms)
+✔ export tracking beforeCommit failure cannot rewrite the committed outcome (349.341708ms)
+✔ export tracking afterCommit failure cannot rewrite the committed outcome (298.225292ms)
+✔ explicit startup recovery quarantines only the proven abandoned expected owner; reads stay invariant (233.498125ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1860.08125

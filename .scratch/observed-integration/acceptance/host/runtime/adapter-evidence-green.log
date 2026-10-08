@@ -1,0 +1,16 @@
+✔ request, observation, screenshot and provisional evidence are absolute, private and exclusive (34.349833ms)
+✔ terminal exports require committed authority and cannot overwrite a prior projection (13.482208ms)
+✔ relative paths, symlink directories and permissive parents cannot become evidence authority (1.075625ms)
+✔ symlink and oversized screenshot sources refuse instead of following or exporting them (9.621041ms)
+✔ original experiment spelling remains strict and normalizes the device without allocation adoption (2.808792ms)
+✔ standalone raw-device execution refuses safely with no evidence or preparation (0.918292ms)
+✔ experiment file reader enforces byte size and reports invalid JSON safely (12.831625ms)
+✔ spike uses the approved flag and refuses before opening admission when it is off (147.387708ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 323.288125

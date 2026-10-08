@@ -1,0 +1,41 @@
+{
+  "commit": "c751a73df7931107af23619c350d2ca406ac55db",
+  "dispatchBase": "fd9b3c0d19284b9fc22c4bb5e3a3fd4bb0d3b181",
+  "parent": "98f7de41baa316f47a65a7bc2160128a72051f3e",
+  "changedFiles": [
+    ".scratch/observed-action-rollout/issues/06-observed-runtime.md",
+    "spikes/observed-ui/cli.ts",
+    "src/experimental/observed-journal.ts",
+    "src/experimental/observed-run.ts",
+    "src/experimental/observed-tap.ts",
+    "src/observed/evidence.ts",
+    "src/observed/report.ts",
+    "src/observed/schema.ts",
+    "src/observed/service.ts",
+    "tests/admission-migration.test.ts",
+    "tests/observed-evidence.test.ts",
+    "tests/observed-journal.test.ts",
+    "tests/observed-run.test.ts",
+    "tests/observed-schema.test.ts",
+    "tests/observed-service.test.ts",
+    "tests/observed-tap.test.ts"
+  ],
+  "pinnedFilesMatchCommit": {
+    "src/observed/service.ts": true,
+    "src/observed/schema.ts": true,
+    "src/observed/report.ts": true,
+    "src/observed/evidence.ts": true,
+    "src/experimental/observed-journal.ts": true,
+    "src/experimental/observed-tap.ts": true,
+    "src/experimental/observed-run.ts": true,
+    "spikes/observed-ui/cli.ts": true,
+    "tests/observed-service.test.ts": true,
+    "tests/observed-schema.test.ts": true,
+    "tests/observed-evidence.test.ts": true,
+    "tests/observed-journal.test.ts": true,
+    "tests/observed-tap.test.ts": true,
+    "tests/observed-run.test.ts": true,
+    "tests/admission-migration.test.ts": true
+  },
+  "trackedClean": true
+}

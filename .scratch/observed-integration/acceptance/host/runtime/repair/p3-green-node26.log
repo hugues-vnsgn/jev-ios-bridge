@@ -1,0 +1,10 @@
+{"case":"host-guard-evidence","blockingAllocationId":"7213911E-8B4D-4759-A75C-79445673D1FC","result":{"version":1,"kind":"observed-operation-error","code":"HOST_CREATION_UNRESOLVED","message":"Prepared allocation cannot be consumed","acceptance":"no","acceptanceKind":"action","actionId":"one","allocationId":"13614250-0056-42CB-B5F9-5B5310F9988C","blockingAllocationId":"7213911E-8B4D-4759-A75C-79445673D1FC","evidenceDirectory":"/isolated/blocker-evidence"}}
+✔ host creation refusal exposes persisted blocking allocation evidence (247.8155ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 398.870083

@@ -1,0 +1,23 @@
+✔ begin-finalization failure still revokes and closes the attached driver locally (313.912458ms)
+✔ finalization beforeCommit never treats provisional success as authority (294.204875ms)
+✔ finalization afterCommit never treats provisional success as authority (331.027875ms)
+✔ cancellation during an abort-ignoring observation never submits input or persists the late capture (357.921209ms)
+✔ disabled and shutting-down starts refuse without consuming, while existing reads and cancellation remain usable (187.31925ms)
+✔ cancellation write failure still closes local issuance before returning an honest store error (375.464417ms)
+✔ external cancellation during provisional persistence commits inconclusive instead of publishing the computed success (332.960416ms)
+✔ allocator configuration errors are typed preparation errors and shutdown never closes the borrowed store (22.52075ms)
+✔ shutdown synchronously closes owned action and allocator gates before awaiting either cleanup (346.715542ms)
+✔ local close error cannot promote an observed success and finishes within the separate five-second budget (331.474042ms)
+✔ local close pending cannot promote an observed success and finishes within the separate five-second budget (5406.538708ms)
+{"case":"cancel-read-failure","calls":["snapshot-ui"],"outcome":null,"reason":"FINALIZATION_UNCONFIRMED","cancellationRequested":false}
+✔ local cancel fences continuation even when initial authoritative read fails (277.530083ms)
+{"case":"separate-finalization-budget","observedMs":63,"closedMs":743,"outcome":"already_satisfied","reason":null}
+✔ settled close within finalization budget does not consume action observation budget (1018.112ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9775.858

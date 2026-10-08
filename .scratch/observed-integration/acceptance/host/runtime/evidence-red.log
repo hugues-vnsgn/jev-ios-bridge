@@ -1,0 +1,38 @@
+✔ request, observation, screenshot and provisional evidence are absolute, private and exclusive (30.548208ms)
+✔ terminal exports require committed authority and cannot overwrite a prior projection (11.364208ms)
+✔ relative paths, symlink directories and permissive parents cannot become evidence authority (1.055541ms)
+✖ symlink and oversized screenshot sources refuse instead of following or exporting them (9.696917ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 173.137083
+
+✖ failing tests:
+
+test at tests/observed-evidence.test.ts:1:3706
+✖ symlink and oversized screenshot sources refuse instead of following or exporting them (9.696917ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /absolute/. Input:
+  
+  "Error: ENOENT: no such file or directory, open 'relative.jpg'"
+  
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/tests/observed-evidence.test.ts:56:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: ENOENT: no such file or directory, open 'relative.jpg'
+        at async open (node:internal/fs/promises:1387:25)
+        at async FileObservedEvidence.observation (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/src/observed/evidence.ts:43:22)
+        at async waitForActual (node:assert:615:5)
+        at async strict.rejects (node:assert:738:25)
+        at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/tests/observed-evidence.test.ts:56:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: /absolute/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

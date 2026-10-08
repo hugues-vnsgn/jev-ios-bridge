@@ -1,0 +1,20 @@
+{
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-concurrency=1",
+    "--test-name-pattern=cancel|deadline|finalization|local close|shutdown|settled close|host creation refusal|blocker evidence",
+    "tests/observed-service.test.ts"
+  ],
+  "nodeVersion": "v26.8.1",
+  "exit": 1,
+  "seconds": 17.13,
+  "counts": {
+    "tests": 25,
+    "pass": 24,
+    "fail": 1,
+    "skipped": 0
+  }
+}

@@ -1,0 +1,156 @@
+COMMAND ["node", "--import", "tsx", "--experimental-test-coverage", "--test-coverage-include=**/src/observed/*.ts", "--test-coverage-include=**/src/experimental/observed*.ts", "--test-coverage-include=**/spikes/observed-ui/cli.ts", "--test", "--test-concurrency=1", "tests/observed-service.test.ts", "tests/observed-schema.test.ts", "tests/observed-evidence.test.ts", "tests/observed-journal.test.ts", "tests/observed-tap.test.ts", "tests/observed-run.test.ts", "tests/admission-migration.test.ts"]
+✔ explicit offline initialization enables admission and persists its operator declaration (72.516834ms)
+✔ completed historical actions retain original records and one read-only allocation identity without replay (61.077125ms)
+✔ quarantine in a casing alias overrides apparent completion without changing sources (57.156708ms)
+✔ claim in a casing alias overrides apparent completion without changing sources (49.465125ms)
+✔ unfinished in a casing alias overrides apparent completion without changing sources (46.828458ms)
+✔ temporary in a casing alias overrides apparent completion without changing sources (50.852458ms)
+✔ well-formed case aliases consolidate clean completion and conflicting device bindings refuse activation (57.585209ms)
+✔ dead legacy iOS lease is never reclaimed and cannot authorize effects (78.65525ms)
+✔ malformed legacy iOS lease is never reclaimed and cannot authorize effects (38.084583ms)
+✔ temporary legacy iOS lease is never reclaimed and cannot authorize effects (70.694209ms)
+✔ live legacy iOS lease is never reclaimed and cannot authorize effects (10.296417ms)
+✔ matching non-UUID lease records remain untouched without becoming iOS claims; unattributable records close activation (35.392959ms)
+✔ protected study devices and declared exclusions remain unavailable even with no historical files (34.363209ms)
+✔ unquiesced or incomplete root declarations refuse before installation; explicit missing roots are not empty (9.064833ms)
+✔ migration guard blocks existing handles and independent readers; a stranded guard is never reclaimed (202.902792ms)
+✔ interrupted markerWritten installation never recreates missing authority (29.224292ms)
+✔ interrupted beforeCommit installation never recreates missing authority (26.952375ms)
+✔ interrupted afterCommit installation never recreates missing authority (47.602292ms)
+✔ activation revalidates persisted manifest and rejects missing initialized storage on every operation (46.369417ms)
+✔ changed historical sources on a rerun retain the migration guard and block previously activated handles (48.434083ms)
+✔ migration refuses an admission root inside a source before changing source bytes (0.922584ms)
+✔ invalid-json historical input refuses activation with source bytes unchanged (9.486458ms)
+✔ wrong-hash historical input refuses activation with source bytes unchanged (8.057375ms)
+✔ symbolic-link historical input refuses activation with source bytes unchanged (9.821667ms)
+✔ unexpected-file historical input refuses activation with source bytes unchanged (8.158083ms)
+✔ empty-directory historical input refuses activation with source bytes unchanged (9.965667ms)
+✔ explicit additional roots are imported, deduplicated and recorded without weakening defaults (34.637583ms)
+✔ an unsafe source file cannot be bypassed by a malformed default root declaration (14.137708ms)
+✔ offline maintenance accepts only an explicit declaration file and emits a persisted receipt (37.938125ms)
+✔ unreadable source and permissive or mismatched initialized storage remain closed (48.337666ms)
+✔ conflicting attributable historical results cannot establish an observed outcome (42.1165ms)
+✔ a completed casing alias cannot finish the same action intent in another historical directory (39.831208ms)
+✔ real importer death at markerWritten retains its guard instead of authorizing a replacement (190.144292ms)
+✔ real importer death at beforeCommit retains its guard instead of authorizing a replacement (171.660083ms)
+✔ real importer death at afterCommit retains its guard instead of authorizing a replacement (186.340167ms)
+✔ initialized admission stays closed after unsafe-root prevents an offline rerun (66.138167ms)
+✔ initialized admission stays closed after dangling-root prevents an offline rerun (48.470167ms)
+✔ initialized admission stays closed after missing-declared-root prevents an offline rerun (46.948708ms)
+✔ initialized admission stays closed after unreadable-root prevents an offline rerun (48.042916ms)
+✔ a recognized lease FIFO refuses within the child deadline without reading a device or retaining a fresh guard (137.435792ms)
+✔ root separation and destination safety refuse without placing a guard inside a source or unsafe directory (34.202541ms)
+✔ an inaccessible ancestor of a declared source closes initialized admission on rerun (39.303292ms)
+✔ a readable source overlap still prevents guard writes when another declared source is inaccessible (29.4185ms)
+✔ request, observation, screenshot and provisional evidence are absolute, private and exclusive (46.265791ms)
+✔ terminal exports require committed authority and cannot overwrite a prior projection (20.840083ms)
+✔ relative paths, symlink directories and permissive parents cannot become evidence authority (1.293375ms)
+✔ symlink and oversized screenshot sources refuse instead of following or exporting them (13.115875ms)
+✔ the historical raw-root writer refuses without creating an alternate admission journal (1.563875ms)
+✔ original experiment spelling remains strict and normalizes the device without allocation adoption (2.773666ms)
+✔ standalone raw-device execution refuses safely with no evidence or preparation (0.94225ms)
+✔ experiment file reader enforces byte size and reports invalid JSON safely (6.490375ms)
+✔ spike uses the approved flag and refuses before opening admission when it is off (220.889709ms)
+✔ canonical requests fill defaults, normalize UUIDs and recursively freeze an independent snapshot (3.121542ms)
+✔ digest ignores object key order and UUID case, preserving arrays and text exactly (0.520042ms)
+✔ invalid request rejects safely 4 (0.247625ms)
+✔ invalid request rejects safely 2 (0.045375ms)
+✔ invalid request rejects safely 295 (0.044125ms)
+✔ invalid request rejects safely 312 (0.0755ms)
+✔ invalid request rejects safely 294 (0.082459ms)
+✔ invalid request rejects safely 297 (0.065583ms)
+✔ invalid request rejects safely 297 (0.072083ms)
+✔ invalid request rejects safely 301 (0.065417ms)
+✔ invalid request rejects safely 373 (0.051958ms)
+✔ invalid request rejects safely 262 (0.073709ms)
+✔ invalid request rejects safely 291 (0.053041ms)
+✔ invalid request rejects safely 274 (0.083125ms)
+✔ invalid request rejects safely 274 (0.083708ms)
+✔ invalid request rejects safely 559 (0.089625ms)
+✔ invalid request rejects safely 299 (0.055ms)
+✔ invalid request rejects safely 72286 (0.094958ms)
+✔ request bounds accept the documented endpoints and reject circular/non-JSON input (2.941167ms)
+✔ a missing allocation refuses before attaching a driver (30.725375ms)
+✔ begin-finalization failure still revokes and closes the attached driver locally (298.165917ms)
+✔ finalization beforeCommit never treats provisional success as authority (301.909625ms)
+✔ finalization afterCommit never treats provisional success as authority (321.181542ms)
+✔ one input and fresh post-input observation, including concurrent identical starts (455.51025ms)
+✔ settled precondition failure refuses without an input and retains the prepared device (337.064792ms)
+✔ lost input reply keeps durable null receipts, quarantines, and never replays after reconstruction (426.24925ms)
+✔ dead-owner inspection and wait never mutate authority; recovery is explicit (202.45325ms)
+✔ already satisfied commits from the store without input and repeats retrieve without backend calls (334.23475ms)
+✔ evidence prepare failure preserves the corresponding durable authority boundary (308.22525ms)
+✔ evidence observation failure preserves the corresponding durable authority boundary (311.3755ms)
+✔ evidence provisional failure preserves the corresponding durable authority boundary (324.140417ms)
+✔ evidence terminal failure preserves the corresponding durable authority boundary (323.390958ms)
+✔ receipt persistence failure never converts a settled input into success (396.529458ms)
+✔ cancel while input is pending keeps quarantine and the identical lease after a late receipt (401.861959ms)
+✔ external-cancel while input is pending keeps quarantine and the identical lease after a late receipt (454.648209ms)
+✔ deadline while input is pending keeps quarantine and the identical lease after a late receipt (2899.292375ms)
+✔ cancellation during an abort-ignoring observation never submits input or persists the late capture (373.353541ms)
+✔ disabled and shutting-down starts refuse without consuming, while existing reads and cancellation remain usable (196.366208ms)
+✔ full canonical payload comparison rejects a corrupted binding even if its digest field matches (201.653ms)
+✔ cancellation write failure still closes local issuance before returning an honest store error (346.06275ms)
+✔ allocator delegation preserves its renderer and full binding, with disabled preparation fenced centrally (338.985459ms)
+✔ ambiguous-after refuses with settled capture and no input (417.767416ms)
+✔ ambiguous-target refuses with settled capture and no input (332.464042ms)
+✔ target-disabled refuses with settled capture and no input (419.04075ms)
+✔ missing-touch refuses with settled capture and no input (415.378959ms)
+✔ invalid-expiry refuses with settled capture and no input (320.088875ms)
+✔ absent-condition refuses with settled capture and no input (343.78025ms)
+✔ external cancellation during provisional persistence commits inconclusive instead of publishing the computed success (344.125583ms)
+✔ imported completed records resolve read-only without allocating or attaching (54.086084ms)
+✔ imported uncertain records resolve read-only without allocating or attaching (48.854625ms)
+✔ historical ready-allocation adapter uses the same resolver and refuses another device or identity (343.764041ms)
+✔ a settled acknowledged input with no observed outcome expires inconclusive without a second tap (2838.716667ms)
+✔ retained allocations exclude another action and global identity cannot be reassigned (332.033708ms)
+✔ store closure refuses reads/start safely and never reconstructs authority from terminal exports (409.08275ms)
+✔ read validation and healthy foreign-owner polling do not mutate or take over an action (298.801458ms)
+✔ allocator configuration errors are typed preparation errors and shutdown never closes the borrowed store (20.132125ms)
+✔ shutdown synchronously closes owned action and allocator gates before awaiting either cleanup (317.350458ms)
+✔ authoritative renderer validates binding consistency and absolute evidence before exposing success (423.844291ms)
+✔ local close error cannot promote an observed success and finishes within the separate five-second budget (352.380292ms)
+✔ local close pending cannot promote an observed success and finishes within the separate five-second budget (5377.821667ms)
+✔ aborting the historical wait leaves admitted execution running to its authoritative result (348.748916ms)
+✔ a fresh attachment failure is conservative preparation uncertainty with no observation or input (320.44275ms)
+✔ production capture composition forces full fresh captures and private screenshots with no reuse, verification probe or stop (527.759708ms)
+✔ consume beforeCommit failure resolves authoritatively without attaching or rebinding (185.240333ms)
+✔ consume afterCommit failure resolves authoritatively without attaching or rebinding (193.175875ms)
+✔ retrieved consume and host creation refusal invoke zero driver or probe calls (206.807917ms)
+✔ a retired unused allocation refuses action consumption without binding action intent (205.920542ms)
+✔ export tracking beforeCommit failure cannot rewrite the committed outcome (292.323958ms)
+✔ export tracking afterCommit failure cannot rewrite the committed outcome (321.412ms)
+✔ explicit startup recovery quarantines only the proven abandoned expected owner; reads stay invariant (219.228333ms)
+✔ raw historical tap options cannot bypass prepared allocation admission (0.850209ms)
+✔ a genuine generic observed claim is insufficient without a full immutable allocation binding (37.54375ms)
+✔ bounded waiting releases its own abort listener immediately when an abort-ignoring operation remains pending (0.172459ms)
+✔ bounded waiting never calls an operation after its signal is already cancelled (0.074167ms)
+ℹ tests 126
+ℹ suites 0
+ℹ pass 126
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 29870.614917
+ℹ start of coverage report
+ℹ ----------------------------------------------------------------------
+ℹ file                  | line % | branch % | funcs % | uncovered lines
+ℹ ----------------------------------------------------------------------
+ℹ spikes                |        |          |         | 
+ℹ  observed-ui          |        |          |         | 
+ℹ   cli.ts              |  75.00 |    33.33 |   50.00 | 11-12 19-23 26
+ℹ src                   |        |          |         | 
+ℹ  experimental         |        |          |         | 
+ℹ   observed-journal.ts | 100.00 |    87.50 |  100.00 | 
+ℹ   observed-run.ts     | 100.00 |   100.00 |   90.00 | 
+ℹ   observed-tap.ts     | 100.00 |    89.86 |  100.00 | 
+ℹ  observed             |        |          |         | 
+ℹ   evidence.ts         | 100.00 |    97.56 |  100.00 | 
+ℹ   report.ts           | 100.00 |    87.18 |  100.00 | 
+ℹ   schema.ts           | 100.00 |    94.59 |  100.00 | 
+ℹ   service.ts          |  99.63 |    90.10 |   94.87 | 93
+ℹ ----------------------------------------------------------------------
+ℹ all files             |  98.77 |    90.32 |   96.36 | 
+ℹ ----------------------------------------------------------------------
+ℹ end of coverage report

@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-concurrency=1",
+    "tests/observed-service.test.ts",
+    "tests/observed-schema.test.ts",
+    "tests/observed-evidence.test.ts",
+    "tests/observed-journal.test.ts",
+    "tests/observed-tap.test.ts",
+    "tests/observed-run.test.ts",
+    "tests/admission-migration.test.ts"
+  ],
+  "exit": 1,
+  "elapsedSeconds": 28.06,
+  "nodeVersion": "v24.0.0"
+}

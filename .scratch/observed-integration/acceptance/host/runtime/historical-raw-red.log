@@ -1,0 +1,25 @@
+✖ the historical raw-root writer refuses without creating an alternate admission journal (33.047917ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 136.598875
+
+✖ failing tests:
+
+test at tests/observed-journal.test.ts:1:263
+✖ the historical raw-root writer refuses without creating an alternate admission journal (33.047917ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/tests/observed-journal.test.ts:12:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'MIGRATION_REQUIRED' },
+    operator: 'rejects',
+    diff: 'simple'
+  }

@@ -1,0 +1,14 @@
+✔ a missing allocation refuses before attaching a driver (26.568042ms)
+✔ one input and fresh post-input observation, including concurrent identical starts (442.005458ms)
+✔ settled precondition failure refuses without an input and retains the prepared device (318.78525ms)
+✔ lost input reply keeps durable null receipts, quarantines, and never replays after reconstruction (437.967917ms)
+✔ dead-owner inspection and wait never mutate authority; recovery is explicit (186.408792ms)
+✔ already satisfied commits from the store without input and repeats retrieve without backend calls (322.421583ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1932.110208

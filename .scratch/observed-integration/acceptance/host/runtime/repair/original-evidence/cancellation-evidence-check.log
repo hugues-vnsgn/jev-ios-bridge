@@ -1,0 +1,27 @@
+✔ a missing allocation refuses before attaching a driver (46.607667ms)
+✔ begin-finalization failure still revokes and closes the attached driver locally (305.05875ms)
+✔ finalization beforeCommit never treats provisional success as authority (410.96025ms)
+✔ finalization afterCommit never treats provisional success as authority (328.848208ms)
+✔ one input and fresh post-input observation, including concurrent identical starts (467.657ms)
+✔ settled precondition failure refuses without an input and retains the prepared device (330.262708ms)
+✔ lost input reply keeps durable null receipts, quarantines, and never replays after reconstruction (438.424958ms)
+✔ dead-owner inspection and wait never mutate authority; recovery is explicit (203.431333ms)
+✔ already satisfied commits from the store without input and repeats retrieve without backend calls (344.628291ms)
+✔ evidence prepare failure preserves the corresponding durable authority boundary (320.297958ms)
+✔ evidence observation failure preserves the corresponding durable authority boundary (312.302458ms)
+✔ evidence provisional failure preserves the corresponding durable authority boundary (306.186542ms)
+✔ evidence terminal failure preserves the corresponding durable authority boundary (310.529292ms)
+✔ receipt persistence failure never converts a settled input into success (428.347083ms)
+✔ cancel while input is pending keeps quarantine and the identical lease after a late receipt (394.815334ms)
+✔ external-cancel while input is pending keeps quarantine and the identical lease after a late receipt (476.943875ms)
+✔ deadline while input is pending keeps quarantine and the identical lease after a late receipt (1073.679625ms)
+✔ cancellation during an abort-ignoring observation never submits input or persists the late capture (349.662917ms)
+✔ disabled and shutting-down starts refuse without consuming, while existing reads and cancellation remain usable (175.595083ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7234.440792

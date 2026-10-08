@@ -1,0 +1,31 @@
+{"case":"host-guard-evidence","blockingAllocationId":"4CED6E4A-6A30-496C-AD7C-F7B912D9942B","result":{"version":1,"kind":"observed-operation-error","code":"HOST_CREATION_UNRESOLVED","message":"Prepared allocation cannot be consumed","acceptance":"no","acceptanceKind":"action","actionId":"one","allocationId":"71B49511-28A1-4356-A488-BA19D4F03BA6","blockingAllocationId":"4CED6E4A-6A30-496C-AD7C-F7B912D9942B"}}
+✖ host creation refusal exposes persisted blocking allocation evidence (253.094375ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 438.308833
+
+✖ failing tests:
+
+test at tests/observed-service.test.ts:1:51256
+✖ host creation refusal exposes persisted blocking allocation evidence (253.094375ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - '/isolated/blocker-evidence'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/tests/observed-service.test.ts:730:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: '/isolated/blocker-evidence',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

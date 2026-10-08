@@ -1,0 +1,25 @@
+✖ a missing allocation refuses before attaching a driver (1.09775ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 197.312583
+
+✖ failing tests:
+
+test at tests/observed-service.test.ts:1:403
+✖ a missing allocation refuses before attaching a driver (1.09775ms)
+  Error [AdmissionError]: Admission storage unavailable: ENOENT: no such file or directory, lstat '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-service-xNK3cV/store'
+      at unavailable (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/src/device/admission-sqlite.ts:60:52)
+      at AdmissionSqlite.initializeTestStore (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/src/device/admission-sqlite.ts:177:29)
+      at Admission.forTesting (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/src/device/admission.ts:42:55)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/tests/observed-service.test.ts:12:31)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    code: 'STATE_UNAVAILABLE'
+  }

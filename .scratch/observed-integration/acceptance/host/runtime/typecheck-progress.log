@@ -1,0 +1,5 @@
+
+> jev-ios-bridge@1.3.1 typecheck
+> tsc --noEmit
+
+tests/observed-tap.test.ts(24,52): error TS2739: Type 'AdmissionClaim' is missing the following properties from type 'ObservedClaim': recordObservation, recordActionReceipt, beginFinalization

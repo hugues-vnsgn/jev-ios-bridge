@@ -1,0 +1,21 @@
+✔ a missing allocation refuses before attaching a driver (38.792042ms)
+✔ begin-finalization failure still revokes and closes the attached driver locally (304.192083ms)
+✔ finalization beforeCommit never treats provisional success as authority (304.205167ms)
+✔ finalization afterCommit never treats provisional success as authority (306.67025ms)
+✔ one input and fresh post-input observation, including concurrent identical starts (442.159209ms)
+✔ settled precondition failure refuses without an input and retains the prepared device (314.002459ms)
+✔ lost input reply keeps durable null receipts, quarantines, and never replays after reconstruction (416.309542ms)
+✔ dead-owner inspection and wait never mutate authority; recovery is explicit (199.338583ms)
+✔ already satisfied commits from the store without input and repeats retrieve without backend calls (323.669375ms)
+✔ raw historical tap options cannot bypass prepared allocation admission (0.64925ms)
+✔ a genuine generic observed claim is insufficient without a full immutable allocation binding (53.244125ms)
+✔ bounded waiting releases its own abort listener immediately when an abort-ignoring operation remains pending (0.149834ms)
+✔ bounded waiting never calls an operation after its signal is already cancelled (0.075291ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2821.918542

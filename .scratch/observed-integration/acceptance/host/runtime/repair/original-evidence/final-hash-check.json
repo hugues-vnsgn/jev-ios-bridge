@@ -1,0 +1,21 @@
+{
+  "dependencyBase": "98f7de41baa316f47a65a7bc2160128a72051f3e",
+  "files": {
+    "src/observed/service.ts": true,
+    "src/observed/schema.ts": true,
+    "src/observed/report.ts": true,
+    "src/observed/evidence.ts": true,
+    "src/experimental/observed-journal.ts": true,
+    "src/experimental/observed-tap.ts": true,
+    "src/experimental/observed-run.ts": true,
+    "spikes/observed-ui/cli.ts": true,
+    "tests/observed-service.test.ts": true,
+    "tests/observed-schema.test.ts": true,
+    "tests/observed-evidence.test.ts": true,
+    "tests/observed-journal.test.ts": true,
+    "tests/observed-tap.test.ts": true,
+    "tests/observed-run.test.ts": true,
+    "tests/admission-migration.test.ts": true
+  },
+  "sourceUnchangedAcrossFinalGates": true
+}

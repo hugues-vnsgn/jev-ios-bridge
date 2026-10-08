@@ -1,0 +1,25 @@
+✖ allocator delegation preserves its renderer and full binding, with disabled preparation fenced centrally (331.069834ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 522.85725
+
+✖ failing tests:
+
+test at tests/observed-service.test.ts:1:21242
+✖ allocator delegation preserves its renderer and full binding, with disabled preparation fenced centrally (331.069834ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/tests/observed-service.test.ts:322:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'OBSERVED_DISABLED' },
+    operator: 'rejects',
+    diff: 'simple'
+  }

@@ -1,0 +1,31 @@
+✔ a settled acknowledged input with no observed outcome expires inconclusive without a second tap (1048.401708ms)
+✔ retained allocations exclude another action and global identity cannot be reassigned (343.104792ms)
+✔ store closure refuses reads/start safely and never reconstructs authority from terminal exports (306.357459ms)
+✔ read validation and healthy foreign-owner polling do not mutate or take over an action (315.150708ms)
+✖ allocator configuration errors are typed preparation errors and shutdown never closes the borrowed store (21.409041ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2197.055084
+
+✖ failing tests:
+
+test at tests/observed-service.test.ts:1:34904
+✖ allocator configuration errors are typed preparation errors and shutdown never closes the borrowed store (21.409041ms)
+  Error [ObservedOperationError]: Observed allocation is not configured
+      at ObservedActionService.allocator (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/src/observed/service.ts:236:40)
+      at ObservedActionService.getAllocation (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/src/observed/service.ts:244:113)
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/tests/observed-service.test.ts:479:32)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'CONFIGURATION_ERROR',
+    snapshot: { version: 1, kind: 'observed-operation-error', code: 'CONFIGURATION_ERROR', message: 'Observed allocation is not configured', acceptance: 'no', acceptanceKind: 'preparation' }
+  }

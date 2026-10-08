@@ -1,0 +1,27 @@
+✔ canonical requests fill defaults, normalize UUIDs and recursively freeze an independent snapshot (2.545ms)
+✔ digest ignores object key order and UUID case, preserving arrays and text exactly (0.5225ms)
+✔ invalid request rejects safely 4 (0.191333ms)
+✔ invalid request rejects safely 2 (0.03525ms)
+✔ invalid request rejects safely 295 (0.035916ms)
+✔ invalid request rejects safely 312 (0.064417ms)
+✔ invalid request rejects safely 294 (0.135ms)
+✔ invalid request rejects safely 297 (0.110542ms)
+✔ invalid request rejects safely 297 (0.086791ms)
+✔ invalid request rejects safely 301 (0.084917ms)
+✔ invalid request rejects safely 373 (0.058209ms)
+✔ invalid request rejects safely 262 (0.076167ms)
+✔ invalid request rejects safely 291 (0.053542ms)
+✔ invalid request rejects safely 274 (0.098292ms)
+✔ invalid request rejects safely 274 (0.073958ms)
+✔ invalid request rejects safely 559 (0.081291ms)
+✔ invalid request rejects safely 299 (0.044291ms)
+✔ invalid request rejects safely 72286 (0.036209ms)
+✔ request bounds accept the documented endpoints and reject circular/non-JSON input (2.737416ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 143.512708

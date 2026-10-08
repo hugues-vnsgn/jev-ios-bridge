@@ -1,0 +1,48 @@
+✖ canonical requests fill defaults, normalize UUIDs and recursively freeze an independent snapshot (3.314875ms)
+✔ digest ignores object key order and UUID case, preserving arrays and text exactly (0.650291ms)
+✔ invalid request rejects safely 4 (0.226917ms)
+✔ invalid request rejects safely 2 (0.044834ms)
+✔ invalid request rejects safely 295 (0.062041ms)
+✔ invalid request rejects safely 312 (0.211ms)
+✔ invalid request rejects safely 294 (0.133042ms)
+✔ invalid request rejects safely 297 (0.080209ms)
+✔ invalid request rejects safely 297 (0.074ms)
+✔ invalid request rejects safely 301 (0.077875ms)
+✔ invalid request rejects safely 373 (0.057ms)
+✔ invalid request rejects safely 262 (0.062541ms)
+✔ invalid request rejects safely 291 (0.046666ms)
+✔ invalid request rejects safely 274 (0.075167ms)
+✔ invalid request rejects safely 274 (0.056ms)
+✔ invalid request rejects safely 559 (0.092833ms)
+✔ invalid request rejects safely 299 (0.058875ms)
+✔ invalid request rejects safely 72286 (0.031125ms)
+✔ request bounds accept the documented endpoints and reject circular/non-JSON input (2.964125ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 18
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 163.769541
+
+✖ failing tests:
+
+test at tests/observed-schema.test.ts:1:568
+✖ canonical requests fill defaults, normalize UUIDs and recursively freeze an independent snapshot (3.314875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/tests/observed-schema.test.ts:16:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

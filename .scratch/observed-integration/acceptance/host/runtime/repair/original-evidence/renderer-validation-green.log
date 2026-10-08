@@ -1,0 +1,13 @@
+✔ lost input reply keeps durable null receipts, quarantines, and never replays after reconstruction (423.1005ms)
+✔ already satisfied commits from the store without input and repeats retrieve without backend calls (337.473042ms)
+✔ imported completed records resolve read-only without allocating or attaching (46.537666ms)
+✔ imported uncertain records resolve read-only without allocating or attaching (31.97075ms)
+✔ authoritative renderer validates binding consistency and absolute evidence before exposing success (299.392791ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1341.377625

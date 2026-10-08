@@ -1,0 +1,31 @@
+✔ local cancellation with a failed durable write during prolonged close cannot commit computed success (1072.638583ms)
+✖ local cancellation with a failed durable write during prolonged provisional cannot commit computed success (1057.302417ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2334.481542
+
+✖ failing tests:
+
+test at tests/observed-service.test.ts:1:51166
+✖ local cancellation with a failed durable write during prolonged provisional cannot commit computed success (1057.302417ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'unconfirmed'
+  - 'committed'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-runtime/tests/observed-service.test.ts:735:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'unconfirmed',
+    expected: 'committed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

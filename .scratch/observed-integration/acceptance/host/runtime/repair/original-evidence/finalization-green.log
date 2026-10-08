@@ -1,0 +1,17 @@
+✔ a missing allocation refuses before attaching a driver (29.959333ms)
+✔ begin-finalization failure still revokes and closes the attached driver locally (294.794166ms)
+✔ finalization beforeCommit never treats provisional success as authority (309.341291ms)
+✔ finalization afterCommit never treats provisional success as authority (321.986834ms)
+✔ one input and fresh post-input observation, including concurrent identical starts (437.959417ms)
+✔ settled precondition failure refuses without an input and retains the prepared device (333.429917ms)
+✔ lost input reply keeps durable null receipts, quarantines, and never replays after reconstruction (428.014625ms)
+✔ dead-owner inspection and wait never mutate authority; recovery is explicit (203.07425ms)
+✔ already satisfied commits from the store without input and repeats retrieve without backend calls (317.008125ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2814.280792
