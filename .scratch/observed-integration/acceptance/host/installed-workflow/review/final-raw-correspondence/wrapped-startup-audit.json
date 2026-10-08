@@ -1,0 +1,122 @@
+[
+  {
+    "node": "v26.8.1",
+    "launchCommit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
+    "sourcePathsBeforeAfter": 352,
+    "specialSha256": {
+      "tests/fixtures/observed-packaging/guard.mjs": "000c19430aae956338a406a9b4daceb68e99eb76d70bc3a0340fccf52ae0d2f7",
+      ".scratch/observed-integration/acceptance/host/faults/production-startup/review/final/probe.mjs": "bf3b8b89d0ad11b03a30be23f2501b8e40aad8cf293b0ba94ce978f943ba0a4c",
+      ".scratch/observed-run-vault/root-isolated-probe-runner.py": "42dedbf1e6936f6942794b88f1af2bffedd9ca95de3f67f46a8c80458beb8ab1"
+    },
+    "exit": 0,
+    "timeout": false,
+    "cliCommands": 2,
+    "mcpValidReads": 3,
+    "cliOpenPerProcess": 1,
+    "mcpOpenTotal": 1,
+    "sdkDriverChildEffects": 0,
+    "injectedBoundary": "Admission.open before any account store access",
+    "replyShapes": [
+      {
+        "version": 1,
+        "kind": "observed-operation-error",
+        "code": "STORE_UNAVAILABLE",
+        "message": "Existing admission authority is unavailable",
+        "acceptance": "unknown",
+        "acceptanceKind": "preparation"
+      },
+      {
+        "version": 1,
+        "kind": "observed-operation-error",
+        "code": "STORE_UNAVAILABLE",
+        "message": "Existing admission authority is unavailable",
+        "acceptance": "unknown",
+        "acceptanceKind": "action"
+      },
+      {
+        "version": 1,
+        "kind": "observed-operation-error",
+        "code": "STORE_UNAVAILABLE",
+        "message": "Existing admission authority is unavailable",
+        "acceptance": "unknown",
+        "acceptanceKind": "preparation"
+      },
+      {
+        "version": 1,
+        "kind": "observed-operation-error",
+        "code": "STORE_UNAVAILABLE",
+        "message": "Existing admission authority is unavailable",
+        "acceptance": "unknown",
+        "acceptanceKind": "preparation"
+      },
+      {
+        "version": 1,
+        "kind": "observed-operation-error",
+        "code": "STORE_UNAVAILABLE",
+        "message": "Existing admission authority is unavailable",
+        "acceptance": "unknown",
+        "acceptanceKind": "action"
+      }
+    ]
+  },
+  {
+    "node": "v24.0.0",
+    "launchCommit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
+    "sourcePathsBeforeAfter": 352,
+    "specialSha256": {
+      "tests/fixtures/observed-packaging/guard.mjs": "000c19430aae956338a406a9b4daceb68e99eb76d70bc3a0340fccf52ae0d2f7",
+      ".scratch/observed-integration/acceptance/host/faults/production-startup/review/final/probe.mjs": "bf3b8b89d0ad11b03a30be23f2501b8e40aad8cf293b0ba94ce978f943ba0a4c",
+      ".scratch/observed-run-vault/root-isolated-probe-runner.py": "42dedbf1e6936f6942794b88f1af2bffedd9ca95de3f67f46a8c80458beb8ab1"
+    },
+    "exit": 0,
+    "timeout": false,
+    "cliCommands": 2,
+    "mcpValidReads": 3,
+    "cliOpenPerProcess": 1,
+    "mcpOpenTotal": 1,
+    "sdkDriverChildEffects": 0,
+    "injectedBoundary": "Admission.open before any account store access",
+    "replyShapes": [
+      {
+        "version": 1,
+        "kind": "observed-operation-error",
+        "code": "STORE_UNAVAILABLE",
+        "message": "Existing admission authority is unavailable",
+        "acceptance": "unknown",
+        "acceptanceKind": "preparation"
+      },
+      {
+        "version": 1,
+        "kind": "observed-operation-error",
+        "code": "STORE_UNAVAILABLE",
+        "message": "Existing admission authority is unavailable",
+        "acceptance": "unknown",
+        "acceptanceKind": "action"
+      },
+      {
+        "version": 1,
+        "kind": "observed-operation-error",
+        "code": "STORE_UNAVAILABLE",
+        "message": "Existing admission authority is unavailable",
+        "acceptance": "unknown",
+        "acceptanceKind": "preparation"
+      },
+      {
+        "version": 1,
+        "kind": "observed-operation-error",
+        "code": "STORE_UNAVAILABLE",
+        "message": "Existing admission authority is unavailable",
+        "acceptance": "unknown",
+        "acceptanceKind": "preparation"
+      },
+      {
+        "version": 1,
+        "kind": "observed-operation-error",
+        "code": "STORE_UNAVAILABLE",
+        "message": "Existing admission authority is unavailable",
+        "acceptance": "unknown",
+        "acceptanceKind": "action"
+      }
+    ]
+  }
+]

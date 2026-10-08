@@ -2,7 +2,7 @@
 
 Type: task
 Status: ready-for-agent
-Execution: implemented
+Execution: accepted
 Claimed by: observed_host_faults (Root dispatch, 2026-10-08)
 Mode: AFK
 Blocked by: 08
@@ -63,3 +63,7 @@ Both complete added suites passed193/193 with zero skipped/cancelled tests on No
 The post-execution case-matrix evidence/verdict and this comment are metadata-only associations, distinct from the10-path gate freeze. All396 IDs are retained with0 additional IDs/tests in repair2; shared/family artifact sets represent193 actual test executions per added run, not396 unique executions. Each ID links assertion Source SHA and inspectable durable artifacts for both added runs; full24PASS and both full26FAIL are explicitly separate. Final private evidence/report is `.scratch/ticket09-repair2-evidence/round2-report.md`; complete fresh raw index preserves30765 regular files and25 symbolic-link records from all five suite runs. The earlier3176 raw files and48trace audit remain unavailable and are not reconstructed or recertified.
 
 Original108 protected mappings now comprise107 unchanged paths plus the exact Root-authorized fake window-attempt trace delta; the original producer blob/hash/minimal diff is preserved. Canonical Status remains ready-for-agent; execution/acceptance/reviews remain Root-owned. No further tests or protected edits are authorized to this worker.
+
+### Root bounded integration acceptance
+
+Original09 `08a9858` and focused child `d0c24bb` are integrated at `b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433`, alongside the separately reviewed clock fixture `6610b136`. Both Source review axes and actual composed default1675/1675 + typecheck/build pass on Node26.8.1 and exact24.0.0, zero skips and unchanged Source. Complete H01–H09 maps now have corrected independent Spec PASS and installed/startup raw correspondence PASS. Original failures and missing historical raw artifacts remain explicit. This appended Root metadata postdates the gate/review snapshots; the nine test/fixture paths remain exact reviewed bytes. Live11 and final safety12 are separate.

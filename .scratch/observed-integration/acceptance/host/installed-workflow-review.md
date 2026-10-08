@@ -1,5 +1,11 @@
 # Installed workflow candidate — bounded acceptance PASS
 
+## Current integrated evidence
+
+Root's final composed09/10 gates pass1675/1675 plus typecheck/build on Node26.8.1 and exact24.0.0 at `b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433`, zero skips. The latest unchanged genuine Node26 packed proof passes37 commands in18.351s; the genuine exact24 proof passes37 in21.514s with current71 source/package/lock/README and68 compiled-file correspondence. Both startup probes now have contemporaneous launch hashes and pass. [Current raw ledger and preserved negatives](installed-workflow/integration/fresh-proofs/report.md). Complete H01–H09 mapping now has independent PASS and Root bounded host acceptance.
+
+## Original bounded acceptance
+
 Candidate `a319e5bea63415b6ac981c4ce4e8a25679b010c9`, sole parent `75d7618167729b9b9a5547eaa468e37eb12b2504`, is integrated at `eff4d10dba92bd087d5fdcf980b0b16395d5bd98`. Both independent axes PASS on the exact twelve-file candidate. Root checked its allowed scope and committed/frozen/current correspondence before integration. Root's physical affected tests34/34 and actual default full checks1482/1482 plus typecheck/build now PASS on both runtimes, zero skips, with all audited source unchanged. This accepts bounded ticket10. Complete H09 and composed09/10 acceptance remain pending.
 
 Root's four commands ran at `8d36293147053ed194306787ec1f27e08390da3e`; exact raw logs/metadata are in [physical integration evidence](installed-workflow/integration/preservation.json). Every command records Source hashes before/after, Node executable/version, key/options/warning variables removed, private0077 evidence and child0022. No fallback was needed. Root added its README guide pointer after these checks; final whole-host packed proofs will include that documentation delta.

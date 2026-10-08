@@ -1,0 +1,709 @@
+{
+  "version": 1,
+  "status": "UNVERIFIED",
+  "rows": [
+    "H08"
+  ],
+  "required": "Isolated conservative historical imports, unsafe declarations, aliases/quarantine, source invariance and raw-device bypass refusal.",
+  "productCommit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
+  "acceptanceOwner": "Root",
+  "reason": "All mapped cases PASS with both integrated gates; whole-row completeness audit pending.",
+  "cases": [
+    {
+      "id": "H08.01.cli.completed",
+      "hostRow": "H08",
+      "scenario": "historical disk fixtures",
+      "variant": "completed",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:293",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:306",
+        "tests/observed-host-fault.test.ts:310",
+        "tests/observed-host-fault.test.ts:311",
+        "tests/observed-host-fault.test.ts:317",
+        "tests/observed-host-fault.test.ts:322",
+        "tests/observed-host-fault.test.ts:324",
+        "tests/observed-host-fault.test.ts:326",
+        "tests/observed-host-fault.test.ts:327",
+        "tests/observed-host-fault.test.ts:331",
+        "tests/observed-host-fault.test.ts:333"
+      ],
+      "expected": "read-only imports;uncertainty quarantine;live refuses migration;sources unchanged;historical IDs cannot prepare/start",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-2ccdd83a7ad1553a8904"
+        ],
+        "added-node24": [
+          "group-5e841844a09608e27833"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H08.01.cli.unfinished",
+      "hostRow": "H08",
+      "scenario": "historical disk fixtures",
+      "variant": "unfinished",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:293",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:306",
+        "tests/observed-host-fault.test.ts:310",
+        "tests/observed-host-fault.test.ts:311",
+        "tests/observed-host-fault.test.ts:317",
+        "tests/observed-host-fault.test.ts:322",
+        "tests/observed-host-fault.test.ts:324",
+        "tests/observed-host-fault.test.ts:326",
+        "tests/observed-host-fault.test.ts:327",
+        "tests/observed-host-fault.test.ts:331",
+        "tests/observed-host-fault.test.ts:333"
+      ],
+      "expected": "read-only imports;uncertainty quarantine;live refuses migration;sources unchanged;historical IDs cannot prepare/start",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-5e643f8af36aa5c85295"
+        ],
+        "added-node24": [
+          "group-ef9a67f070027f8935a8"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H08.01.cli.quarantine",
+      "hostRow": "H08",
+      "scenario": "historical disk fixtures",
+      "variant": "quarantine",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:293",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:306",
+        "tests/observed-host-fault.test.ts:310",
+        "tests/observed-host-fault.test.ts:311",
+        "tests/observed-host-fault.test.ts:317",
+        "tests/observed-host-fault.test.ts:322",
+        "tests/observed-host-fault.test.ts:324",
+        "tests/observed-host-fault.test.ts:326",
+        "tests/observed-host-fault.test.ts:327",
+        "tests/observed-host-fault.test.ts:331",
+        "tests/observed-host-fault.test.ts:333"
+      ],
+      "expected": "read-only imports;uncertainty quarantine;live refuses migration;sources unchanged;historical IDs cannot prepare/start",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-3f3164d6a0b74cf4fe0e"
+        ],
+        "added-node24": [
+          "group-c32b530e2cd94cef3c6f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H08.01.cli.malformed",
+      "hostRow": "H08",
+      "scenario": "historical disk fixtures",
+      "variant": "malformed",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:293",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:306",
+        "tests/observed-host-fault.test.ts:310",
+        "tests/observed-host-fault.test.ts:311",
+        "tests/observed-host-fault.test.ts:317",
+        "tests/observed-host-fault.test.ts:322",
+        "tests/observed-host-fault.test.ts:324",
+        "tests/observed-host-fault.test.ts:326",
+        "tests/observed-host-fault.test.ts:327",
+        "tests/observed-host-fault.test.ts:331",
+        "tests/observed-host-fault.test.ts:333"
+      ],
+      "expected": "read-only imports;uncertainty quarantine;live refuses migration;sources unchanged;historical IDs cannot prepare/start",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d4f75fab65139eba50d8"
+        ],
+        "added-node24": [
+          "group-fb55d1d52f42d587a4e1"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H08.01.cli.dead",
+      "hostRow": "H08",
+      "scenario": "historical disk fixtures",
+      "variant": "dead",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:293",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:306",
+        "tests/observed-host-fault.test.ts:310",
+        "tests/observed-host-fault.test.ts:311",
+        "tests/observed-host-fault.test.ts:317",
+        "tests/observed-host-fault.test.ts:322",
+        "tests/observed-host-fault.test.ts:324",
+        "tests/observed-host-fault.test.ts:326",
+        "tests/observed-host-fault.test.ts:327",
+        "tests/observed-host-fault.test.ts:331",
+        "tests/observed-host-fault.test.ts:333"
+      ],
+      "expected": "read-only imports;uncertainty quarantine;live refuses migration;sources unchanged;historical IDs cannot prepare/start",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d627f82d8fef75cdf09e"
+        ],
+        "added-node24": [
+          "group-0b3dc14bbe52b1d6874d"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H08.01.cli.live",
+      "hostRow": "H08",
+      "scenario": "historical disk fixtures",
+      "variant": "live",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:293",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:306",
+        "tests/observed-host-fault.test.ts:310",
+        "tests/observed-host-fault.test.ts:311",
+        "tests/observed-host-fault.test.ts:317",
+        "tests/observed-host-fault.test.ts:322",
+        "tests/observed-host-fault.test.ts:324",
+        "tests/observed-host-fault.test.ts:326",
+        "tests/observed-host-fault.test.ts:327",
+        "tests/observed-host-fault.test.ts:331",
+        "tests/observed-host-fault.test.ts:333"
+      ],
+      "expected": "STATE_UNAVAILABLE on isolated migration; historical source bytes unchanged",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-368c00c427a4e424a4be"
+        ],
+        "added-node24": [
+          "group-0da5430f22d3e5f9f875"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H08.01.mcp.completed",
+      "hostRow": "H08",
+      "scenario": "historical disk fixtures",
+      "variant": "completed",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:293",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:306",
+        "tests/observed-host-fault.test.ts:310",
+        "tests/observed-host-fault.test.ts:311",
+        "tests/observed-host-fault.test.ts:317",
+        "tests/observed-host-fault.test.ts:322",
+        "tests/observed-host-fault.test.ts:324",
+        "tests/observed-host-fault.test.ts:326",
+        "tests/observed-host-fault.test.ts:327",
+        "tests/observed-host-fault.test.ts:331",
+        "tests/observed-host-fault.test.ts:333"
+      ],
+      "expected": "read-only imports;uncertainty quarantine;live refuses migration;sources unchanged;historical IDs cannot prepare/start",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-2ccdd83a7ad1553a8904"
+        ],
+        "added-node24": [
+          "group-5e841844a09608e27833"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H08.01.mcp.unfinished",
+      "hostRow": "H08",
+      "scenario": "historical disk fixtures",
+      "variant": "unfinished",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:293",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:306",
+        "tests/observed-host-fault.test.ts:310",
+        "tests/observed-host-fault.test.ts:311",
+        "tests/observed-host-fault.test.ts:317",
+        "tests/observed-host-fault.test.ts:322",
+        "tests/observed-host-fault.test.ts:324",
+        "tests/observed-host-fault.test.ts:326",
+        "tests/observed-host-fault.test.ts:327",
+        "tests/observed-host-fault.test.ts:331",
+        "tests/observed-host-fault.test.ts:333"
+      ],
+      "expected": "read-only imports;uncertainty quarantine;live refuses migration;sources unchanged;historical IDs cannot prepare/start",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-5e643f8af36aa5c85295"
+        ],
+        "added-node24": [
+          "group-ef9a67f070027f8935a8"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H08.01.mcp.quarantine",
+      "hostRow": "H08",
+      "scenario": "historical disk fixtures",
+      "variant": "quarantine",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:293",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:306",
+        "tests/observed-host-fault.test.ts:310",
+        "tests/observed-host-fault.test.ts:311",
+        "tests/observed-host-fault.test.ts:317",
+        "tests/observed-host-fault.test.ts:322",
+        "tests/observed-host-fault.test.ts:324",
+        "tests/observed-host-fault.test.ts:326",
+        "tests/observed-host-fault.test.ts:327",
+        "tests/observed-host-fault.test.ts:331",
+        "tests/observed-host-fault.test.ts:333"
+      ],
+      "expected": "read-only imports;uncertainty quarantine;live refuses migration;sources unchanged;historical IDs cannot prepare/start",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-3f3164d6a0b74cf4fe0e"
+        ],
+        "added-node24": [
+          "group-c32b530e2cd94cef3c6f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H08.01.mcp.malformed",
+      "hostRow": "H08",
+      "scenario": "historical disk fixtures",
+      "variant": "malformed",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:293",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:306",
+        "tests/observed-host-fault.test.ts:310",
+        "tests/observed-host-fault.test.ts:311",
+        "tests/observed-host-fault.test.ts:317",
+        "tests/observed-host-fault.test.ts:322",
+        "tests/observed-host-fault.test.ts:324",
+        "tests/observed-host-fault.test.ts:326",
+        "tests/observed-host-fault.test.ts:327",
+        "tests/observed-host-fault.test.ts:331",
+        "tests/observed-host-fault.test.ts:333"
+      ],
+      "expected": "read-only imports;uncertainty quarantine;live refuses migration;sources unchanged;historical IDs cannot prepare/start",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d4f75fab65139eba50d8"
+        ],
+        "added-node24": [
+          "group-fb55d1d52f42d587a4e1"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H08.01.mcp.dead",
+      "hostRow": "H08",
+      "scenario": "historical disk fixtures",
+      "variant": "dead",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:293",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:306",
+        "tests/observed-host-fault.test.ts:310",
+        "tests/observed-host-fault.test.ts:311",
+        "tests/observed-host-fault.test.ts:317",
+        "tests/observed-host-fault.test.ts:322",
+        "tests/observed-host-fault.test.ts:324",
+        "tests/observed-host-fault.test.ts:326",
+        "tests/observed-host-fault.test.ts:327",
+        "tests/observed-host-fault.test.ts:331",
+        "tests/observed-host-fault.test.ts:333"
+      ],
+      "expected": "read-only imports;uncertainty quarantine;live refuses migration;sources unchanged;historical IDs cannot prepare/start",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d627f82d8fef75cdf09e"
+        ],
+        "added-node24": [
+          "group-0b3dc14bbe52b1d6874d"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H08.01.mcp.live",
+      "hostRow": "H08",
+      "scenario": "historical disk fixtures",
+      "variant": "live",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:293",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:306",
+        "tests/observed-host-fault.test.ts:310",
+        "tests/observed-host-fault.test.ts:311",
+        "tests/observed-host-fault.test.ts:317",
+        "tests/observed-host-fault.test.ts:322",
+        "tests/observed-host-fault.test.ts:324",
+        "tests/observed-host-fault.test.ts:326",
+        "tests/observed-host-fault.test.ts:327",
+        "tests/observed-host-fault.test.ts:331",
+        "tests/observed-host-fault.test.ts:333"
+      ],
+      "expected": "STATE_UNAVAILABLE on isolated migration; historical source bytes unchanged",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-368c00c427a4e424a4be"
+        ],
+        "added-node24": [
+          "group-0da5430f22d3e5f9f875"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H08.02.primitive.missing-declaration",
+      "hostRow": "H08",
+      "scenario": "declarations/raw bypass",
+      "variant": "missing-declaration",
+      "transport": "primitive",
+      "test": "tests/observed-host-fault.test.ts:336",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:338",
+        "tests/observed-host-fault.test.ts:339",
+        "tests/observed-host-fault.test.ts:340"
+      ],
+      "expected": "INVALID_REQUEST declarations;MIGRATION_REQUIRED raw experimental execution;no reservation/backend calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-e7b171178eab60d77ee1"
+        ],
+        "added-node24": [
+          "group-97382ef665267a1d115a"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H08.02.primitive.writers-not-stopped",
+      "hostRow": "H08",
+      "scenario": "declarations/raw bypass",
+      "variant": "writers-not-stopped",
+      "transport": "primitive",
+      "test": "tests/observed-host-fault.test.ts:336",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:338",
+        "tests/observed-host-fault.test.ts:339",
+        "tests/observed-host-fault.test.ts:340"
+      ],
+      "expected": "INVALID_REQUEST declarations;MIGRATION_REQUIRED raw experimental execution;no reservation/backend calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-e7b171178eab60d77ee1"
+        ],
+        "added-node24": [
+          "group-97382ef665267a1d115a"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H08.02.primitive.roots-not-declared",
+      "hostRow": "H08",
+      "scenario": "declarations/raw bypass",
+      "variant": "roots-not-declared",
+      "transport": "primitive",
+      "test": "tests/observed-host-fault.test.ts:336",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:338",
+        "tests/observed-host-fault.test.ts:339",
+        "tests/observed-host-fault.test.ts:340"
+      ],
+      "expected": "INVALID_REQUEST declarations;MIGRATION_REQUIRED raw experimental execution;no reservation/backend calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-e7b171178eab60d77ee1"
+        ],
+        "added-node24": [
+          "group-97382ef665267a1d115a"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H08.02.primitive.raw-device",
+      "hostRow": "H08",
+      "scenario": "declarations/raw bypass",
+      "variant": "raw-device",
+      "transport": "primitive",
+      "test": "tests/observed-host-fault.test.ts:336",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:338",
+        "tests/observed-host-fault.test.ts:339",
+        "tests/observed-host-fault.test.ts:340"
+      ],
+      "expected": "INVALID_REQUEST declarations;MIGRATION_REQUIRED raw experimental execution;no reservation/backend calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-e7b171178eab60d77ee1"
+        ],
+        "added-node24": [
+          "group-97382ef665267a1d115a"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H08.03.primitive.clean-case-alias",
+      "hostRow": "H08",
+      "scenario": "offline root/case aliases",
+      "variant": "clean-case-alias",
+      "transport": "primitive",
+      "test": "tests/observed-host-fault.test.ts:458",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:468",
+        "tests/observed-host-fault.test.ts:469",
+        "tests/observed-host-fault.test.ts:470",
+        "tests/observed-host-fault.test.ts:471",
+        "tests/observed-host-fault.test.ts:472"
+      ],
+      "expected": "one imported action/4 records;one consolidated journal root;explicit missing source refuses;bytes unchanged",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-10ff6dd5e6a025bdc1f7"
+        ],
+        "added-node24": [
+          "group-56decf8060761dca93cf"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H08.03.primitive.lexical-root-alias",
+      "hostRow": "H08",
+      "scenario": "offline root/case aliases",
+      "variant": "lexical-root-alias",
+      "transport": "primitive",
+      "test": "tests/observed-host-fault.test.ts:458",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:468",
+        "tests/observed-host-fault.test.ts:469",
+        "tests/observed-host-fault.test.ts:470",
+        "tests/observed-host-fault.test.ts:471",
+        "tests/observed-host-fault.test.ts:472"
+      ],
+      "expected": "one imported action/4 records;one consolidated journal root;explicit missing source refuses;bytes unchanged",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-10ff6dd5e6a025bdc1f7"
+        ],
+        "added-node24": [
+          "group-56decf8060761dca93cf"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H08.03.primitive.declared-missing-root",
+      "hostRow": "H08",
+      "scenario": "offline root/case aliases",
+      "variant": "declared-missing-root",
+      "transport": "primitive",
+      "test": "tests/observed-host-fault.test.ts:458",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:468",
+        "tests/observed-host-fault.test.ts:469",
+        "tests/observed-host-fault.test.ts:470",
+        "tests/observed-host-fault.test.ts:471",
+        "tests/observed-host-fault.test.ts:472"
+      ],
+      "expected": "one imported action/4 records;one consolidated journal root;explicit missing source refuses;bytes unchanged",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-10ff6dd5e6a025bdc1f7"
+        ],
+        "added-node24": [
+          "group-56decf8060761dca93cf"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    }
+  ],
+  "commands": {
+    "node26": {
+      "record": ".scratch/observed-integration/acceptance/host/faults/integration/full-gates/composed-host-node26.json",
+      "sha256": "b096b6dc6c25e2133dae89fbf41d1a577d27ab54027655a12fe292a5834954d0",
+      "node": "v26.8.1",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "counts": {
+        "tests": 1675,
+        "pass": 1675,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "commit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433"
+    },
+    "node24": {
+      "record": ".scratch/observed-integration/acceptance/host/faults/integration/full-gates/composed-host-node24.json",
+      "sha256": "53eeeb47bb602d7b83f45a5e26d47a43ca36b3d9be72e65c6645fe60f86173bb",
+      "node": "v24.0.0",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "counts": {
+        "tests": 1675,
+        "pass": 1675,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "commit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433"
+    }
+  },
+  "limits": [
+    "Accepted implementation subset checks do not establish complete H rows.",
+    "Host fault injection does not establish live, real transport or native release."
+  ],
+  "artifactGroups": ".scratch/observed-integration/acceptance/host/faults/artifact-groups.json",
+  "sourceReviews": {
+    "spec": "faults/review/repair2/spec/review.md",
+    "standards": "faults/review/repair2/standards/review.md"
+  },
+  "preservedOriginalFailures": "faults/author/repair2/round2-report.md",
+  "inventoryScope": {
+    "ids": 396,
+    "testsPerAddedRuntime": 193,
+    "sharing": "Multiple variants can share one actual fixture execution and raw group."
+  }
+}

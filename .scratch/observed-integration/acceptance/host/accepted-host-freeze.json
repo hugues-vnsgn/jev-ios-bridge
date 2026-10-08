@@ -1,0 +1,22 @@
+{
+  "productCommit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
+  "verdict": "PASS",
+  "scope": "Final host acceptance files after independently reviewed content and explicit acceptance metadata annotations; no runtime/test delta.",
+  "files": {
+    ".scratch/observed-integration/acceptance/host/schema.json": "75fcbdfd5c2a0699a1098cfe25e3d0d08c0684d9becc4174de2de0256fd7f55f",
+    ".scratch/observed-integration/acceptance/host/identity.json": "dc92b5fe1531ad7f5b2fca642106acb2a9bcd0b9a968aed672a90f7c1dc63add",
+    ".scratch/observed-integration/acceptance/host/cancel.json": "c4b5178ee7f1c849cfabba6913528a6ccc6ef9b96a745127ea9924f2574bf9e0",
+    ".scratch/observed-integration/acceptance/host/crash.json": "9141de9a13473351652ca3fcc6628d2ee6e8501ef8175a1c8a81f0447e06be66",
+    ".scratch/observed-integration/acceptance/host/storage.json": "76303675ebb1010742915c5538a5d7e119d347a2e8da1eed67b43018e474232a",
+    ".scratch/observed-integration/acceptance/host/migration.json": "524ef3292eaeb300700051f830bda4cbdea676ce78aca7318ed6c6745a5de344",
+    ".scratch/observed-integration/acceptance/host/runtime.json": "480a38ec78de22022e0b6a5bf57a503030a549c27853470029ec7a84974ef338",
+    ".scratch/observed-integration/acceptance/host/packaging.json": "be1ff3fc73519a0d847ed6487ff61356f5f22144065210b1667596ea86799ff6",
+    ".scratch/observed-integration/acceptance/host/compatibility.json": "194888d03a55af2a0d17bbc58a3d0bb67ab8d2750031dd4482fcfba856157c70",
+    ".scratch/observed-integration/acceptance/host/faults/artifact-groups.json": "9f7e06f8d8947377c647090c40bd2d1530d6e4dd09d415e5a9dca75263c0c088",
+    ".scratch/observed-integration/acceptance/host/installed-workflow/integration/current-product-correspondence.json": "1e2740aa6a86c0578c8a9e979cb85530b8301879e773561fc788bb1ed7b9e7c2",
+    ".scratch/observed-integration/acceptance/host/base-supplements/correspondence.json": "e8f9302cb1668bd6aafad769441effea1bf7570eb0a205d84ff39d488ce0d3aa",
+    ".scratch/observed-integration/acceptance/host/host-acceptance.json": "0a299b3709b2ebda2ec5843e63744f2caf7ad6e3dc9841c74b821afa59490fe2",
+    ".scratch/observed-integration/acceptance/host/report.md": "145c5732620510be148a5f97b0b10bc8d6f3798d8df45135b59e48e0e6416f5d",
+    ".scratch/observed-integration/acceptance/host/faults/integration/root-acceptance-metadata.json": "981195345af392db84c69f8b8ebfe2b49636a3bead51c697fdfec43294cb8380"
+  }
+}

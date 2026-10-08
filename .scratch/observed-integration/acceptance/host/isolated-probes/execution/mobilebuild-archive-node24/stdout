@@ -1,0 +1,5321 @@
+[
+  {
+    "id": "mobilebuildmcp@2.7.1",
+    "name": "mobilebuildmcp",
+    "version": "2.7.1",
+    "size": 9615980,
+    "unpackedSize": 44531099,
+    "shasum": "d7a66aad26d36f9b5fd699830693caf59bc069e9",
+    "integrity": "sha512-vitigwMbMlngkkXcRuucBKwV1+JDbB64diPVsIjKRsXYXb0KSBFBRazmSz7QgEAeMKD7gh2nz/8S1wOwQnAXPA==",
+    "filename": "mobilebuildmcp-2.7.1.tgz",
+    "files": [
+      {
+        "path": "LICENSE",
+        "size": 1070,
+        "mode": 420
+      },
+      {
+        "path": "README.md",
+        "size": 7056,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/claude-invocation.js",
+        "size": 2958,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/claude-invocation.js.map",
+        "size": 5704,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/compare.js",
+        "size": 5233,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/compare.js.map",
+        "size": 10432,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/config.js",
+        "size": 11384,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/config.js.map",
+        "size": 20790,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/constants.js",
+        "size": 690,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/constants.js.map",
+        "size": 1004,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/first-run-preflight.js",
+        "size": 7062,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/first-run-preflight.js.map",
+        "size": 13564,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/harness.js",
+        "size": 28980,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/harness.js.map",
+        "size": 51207,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/mcp-config.js",
+        "size": 3874,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/mcp-config.js.map",
+        "size": 7201,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/preflight-commands.js",
+        "size": 4096,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/preflight-commands.js.map",
+        "size": 7980,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/progress.js",
+        "size": 1105,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/progress.js.map",
+        "size": 2560,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/render.js",
+        "size": 15391,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/render.js.map",
+        "size": 30106,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/run-directory.js",
+        "size": 1528,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/run-directory.js.map",
+        "size": 2839,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/simulator-deletion.js",
+        "size": 1890,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/simulator-deletion.js.map",
+        "size": 3537,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/simulator-frontend.js",
+        "size": 2480,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/simulator-frontend.js.map",
+        "size": 4651,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/simulator-lifecycle.js",
+        "size": 11449,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/simulator-lifecycle.js.map",
+        "size": 22167,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/transcript.js",
+        "size": 12563,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/transcript.js.map",
+        "size": 23628,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/types.js",
+        "size": 33,
+        "mode": 420
+      },
+      {
+        "path": "build/benchmarks/claude-ui/types.js.map",
+        "size": 71,
+        "mode": 420
+      },
+      {
+        "path": "build/cli.js",
+        "size": 5189,
+        "mode": 493
+      },
+      {
+        "path": "build/cli.js.map",
+        "size": 9273,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/cli-tool-catalog.js",
+        "size": 4854,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/cli-tool-catalog.js.map",
+        "size": 9516,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/commands/daemon.js",
+        "size": 8538,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/commands/daemon.js.map",
+        "size": 15859,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/commands/init.js",
+        "size": 18401,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/commands/init.js.map",
+        "size": 33295,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/commands/mcp.js",
+        "size": 292,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/commands/mcp.js.map",
+        "size": 585,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/commands/purge-interactive-model.js",
+        "size": 3667,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/commands/purge-interactive-model.js.map",
+        "size": 7057,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/commands/purge-interactive.js",
+        "size": 10110,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/commands/purge-interactive.js.map",
+        "size": 19778,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/commands/purge-ui.js",
+        "size": 10852,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/commands/purge-ui.js.map",
+        "size": 19588,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/commands/purge.js",
+        "size": 10237,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/commands/purge.js.map",
+        "size": 19439,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/commands/setup.js",
+        "size": 30162,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/commands/setup.js.map",
+        "size": 55163,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/commands/tools.js",
+        "size": 5778,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/commands/tools.js.map",
+        "size": 12096,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/commands/upgrade.js",
+        "size": 15932,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/commands/upgrade.js.map",
+        "size": 30537,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/daemon-client.js",
+        "size": 7876,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/daemon-client.js.map",
+        "size": 14708,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/daemon-control.js",
+        "size": 5682,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/daemon-control.js.map",
+        "size": 11443,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/interactive/prompts.js",
+        "size": 4265,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/interactive/prompts.js.map",
+        "size": 9078,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/jsonl-event.js",
+        "size": 224,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/jsonl-event.js.map",
+        "size": 1077,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/output.js",
+        "size": 2026,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/output.js.map",
+        "size": 3929,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/register-tool-commands.js",
+        "size": 13680,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/register-tool-commands.js.map",
+        "size": 25489,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/schema-to-yargs.js",
+        "size": 4814,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/schema-to-yargs.js.map",
+        "size": 11857,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/session-defaults.js",
+        "size": 1502,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/session-defaults.js.map",
+        "size": 3015,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/yargs-app.js",
+        "size": 2820,
+        "mode": 420
+      },
+      {
+        "path": "build/cli/yargs-app.js.map",
+        "size": 5335,
+        "mode": 420
+      },
+      {
+        "path": "build/core/manifest/import-resource-module.js",
+        "size": 1129,
+        "mode": 420
+      },
+      {
+        "path": "build/core/manifest/import-resource-module.js.map",
+        "size": 2545,
+        "mode": 420
+      },
+      {
+        "path": "build/core/manifest/import-tool-module.js",
+        "size": 1213,
+        "mode": 420
+      },
+      {
+        "path": "build/core/manifest/import-tool-module.js.map",
+        "size": 3036,
+        "mode": 420
+      },
+      {
+        "path": "build/core/manifest/index.js",
+        "size": 184,
+        "mode": 420
+      },
+      {
+        "path": "build/core/manifest/index.js.map",
+        "size": 346,
+        "mode": 420
+      },
+      {
+        "path": "build/core/manifest/load-manifest.js",
+        "size": 6666,
+        "mode": 420
+      },
+      {
+        "path": "build/core/manifest/load-manifest.js.map",
+        "size": 12440,
+        "mode": 420
+      },
+      {
+        "path": "build/core/manifest/schema.js",
+        "size": 4824,
+        "mode": 420
+      },
+      {
+        "path": "build/core/manifest/schema.js.map",
+        "size": 10222,
+        "mode": 420
+      },
+      {
+        "path": "build/core/plugin-types.js",
+        "size": 66,
+        "mode": 420
+      },
+      {
+        "path": "build/core/plugin-types.js.map",
+        "size": 207,
+        "mode": 420
+      },
+      {
+        "path": "build/core/resource-root.js",
+        "size": 2790,
+        "mode": 420
+      },
+      {
+        "path": "build/core/resource-root.js.map",
+        "size": 4652,
+        "mode": 420
+      },
+      {
+        "path": "build/core/resources.js",
+        "size": 2289,
+        "mode": 420
+      },
+      {
+        "path": "build/core/resources.js.map",
+        "size": 5265,
+        "mode": 420
+      },
+      {
+        "path": "build/core/structured-output-schema.js",
+        "size": 8672,
+        "mode": 420
+      },
+      {
+        "path": "build/core/structured-output-schema.js.map",
+        "size": 15335,
+        "mode": 420
+      },
+      {
+        "path": "build/daemon.js",
+        "size": 15796,
+        "mode": 493
+      },
+      {
+        "path": "build/daemon.js.map",
+        "size": 26523,
+        "mode": 420
+      },
+      {
+        "path": "build/daemon/activity-registry.js",
+        "size": 1250,
+        "mode": 420
+      },
+      {
+        "path": "build/daemon/activity-registry.js.map",
+        "size": 2539,
+        "mode": 420
+      },
+      {
+        "path": "build/daemon/daemon-registry.js",
+        "size": 7368,
+        "mode": 420
+      },
+      {
+        "path": "build/daemon/daemon-registry.js.map",
+        "size": 14482,
+        "mode": 420
+      },
+      {
+        "path": "build/daemon/daemon-server.js",
+        "size": 10314,
+        "mode": 420
+      },
+      {
+        "path": "build/daemon/daemon-server.js.map",
+        "size": 18377,
+        "mode": 420
+      },
+      {
+        "path": "build/daemon/framing.js",
+        "size": 1041,
+        "mode": 420
+      },
+      {
+        "path": "build/daemon/framing.js.map",
+        "size": 2349,
+        "mode": 420
+      },
+      {
+        "path": "build/daemon/idle-shutdown.js",
+        "size": 847,
+        "mode": 420
+      },
+      {
+        "path": "build/daemon/idle-shutdown.js.map",
+        "size": 1217,
+        "mode": 420
+      },
+      {
+        "path": "build/daemon/protocol.js",
+        "size": 109,
+        "mode": 420
+      },
+      {
+        "path": "build/daemon/protocol.js.map",
+        "size": 3172,
+        "mode": 420
+      },
+      {
+        "path": "build/daemon/socket-path.js",
+        "size": 2913,
+        "mode": 420
+      },
+      {
+        "path": "build/daemon/socket-path.js.map",
+        "size": 5021,
+        "mode": 420
+      },
+      {
+        "path": "build/doctor-cli.js",
+        "size": 1638,
+        "mode": 493
+      },
+      {
+        "path": "build/doctor-cli.js.map",
+        "size": 3010,
+        "mode": 420
+      },
+      {
+        "path": "build/integrations/xcode-tools-bridge/bridge-response-artifact.js",
+        "size": 2229,
+        "mode": 420
+      },
+      {
+        "path": "build/integrations/xcode-tools-bridge/bridge-response-artifact.js.map",
+        "size": 4346,
+        "mode": 420
+      },
+      {
+        "path": "build/integrations/xcode-tools-bridge/bridge-tool-result.js",
+        "size": 2493,
+        "mode": 420
+      },
+      {
+        "path": "build/integrations/xcode-tools-bridge/bridge-tool-result.js.map",
+        "size": 6278,
+        "mode": 420
+      },
+      {
+        "path": "build/integrations/xcode-tools-bridge/client.js",
+        "size": 4596,
+        "mode": 420
+      },
+      {
+        "path": "build/integrations/xcode-tools-bridge/client.js.map",
+        "size": 9222,
+        "mode": 420
+      },
+      {
+        "path": "build/integrations/xcode-tools-bridge/core.js",
+        "size": 3047,
+        "mode": 420
+      },
+      {
+        "path": "build/integrations/xcode-tools-bridge/core.js.map",
+        "size": 6402,
+        "mode": 420
+      },
+      {
+        "path": "build/integrations/xcode-tools-bridge/index.js",
+        "size": 900,
+        "mode": 420
+      },
+      {
+        "path": "build/integrations/xcode-tools-bridge/index.js.map",
+        "size": 2174,
+        "mode": 420
+      },
+      {
+        "path": "build/integrations/xcode-tools-bridge/jsonschema-to-zod.js",
+        "size": 2604,
+        "mode": 420
+      },
+      {
+        "path": "build/integrations/xcode-tools-bridge/jsonschema-to-zod.js.map",
+        "size": 5633,
+        "mode": 420
+      },
+      {
+        "path": "build/integrations/xcode-tools-bridge/manager.js",
+        "size": 7053,
+        "mode": 420
+      },
+      {
+        "path": "build/integrations/xcode-tools-bridge/manager.js.map",
+        "size": 13056,
+        "mode": 420
+      },
+      {
+        "path": "build/integrations/xcode-tools-bridge/registry.js",
+        "size": 4375,
+        "mode": 420
+      },
+      {
+        "path": "build/integrations/xcode-tools-bridge/registry.js.map",
+        "size": 8454,
+        "mode": 420
+      },
+      {
+        "path": "build/integrations/xcode-tools-bridge/standalone.js",
+        "size": 4080,
+        "mode": 420
+      },
+      {
+        "path": "build/integrations/xcode-tools-bridge/standalone.js.map",
+        "size": 7600,
+        "mode": 420
+      },
+      {
+        "path": "build/integrations/xcode-tools-bridge/tool-service.js",
+        "size": 3403,
+        "mode": 420
+      },
+      {
+        "path": "build/integrations/xcode-tools-bridge/tool-service.js.map",
+        "size": 7082,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/resources/devices.js",
+        "size": 1572,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/resources/devices.js.map",
+        "size": 3050,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/resources/doctor.js",
+        "size": 1512,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/resources/doctor.js.map",
+        "size": 3051,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/resources/session-status.js",
+        "size": 932,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/resources/session-status.js.map",
+        "size": 1713,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/resources/simulators.js",
+        "size": 1747,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/resources/simulators.js.map",
+        "size": 3322,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/resources/xcode-ide-state.js",
+        "size": 1361,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/resources/xcode-ide-state.js.map",
+        "size": 2899,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/coverage/get_coverage_report.js",
+        "size": 6982,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/coverage/get_coverage_report.js.map",
+        "size": 13806,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/coverage/get_file_coverage.js",
+        "size": 8356,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/coverage/get_file_coverage.js.map",
+        "size": 16779,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/debugging/debug_attach_sim.js",
+        "size": 9056,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/debugging/debug_attach_sim.js.map",
+        "size": 15529,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/debugging/debug_breakpoint_add.js",
+        "size": 3632,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/debugging/debug_breakpoint_add.js.map",
+        "size": 7133,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/debugging/debug_breakpoint_remove.js",
+        "size": 2373,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/debugging/debug_breakpoint_remove.js.map",
+        "size": 4592,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/debugging/debug_continue.js",
+        "size": 2378,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/debugging/debug_continue.js.map",
+        "size": 4657,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/debugging/debug_detach.js",
+        "size": 2260,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/debugging/debug_detach.js.map",
+        "size": 4475,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/debugging/debug_lldb_command.js",
+        "size": 2682,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/debugging/debug_lldb_command.js.map",
+        "size": 5230,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/debugging/debug_stack.js",
+        "size": 4476,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/debugging/debug_stack.js.map",
+        "size": 8697,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/debugging/debug_variables.js",
+        "size": 5115,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/debugging/debug_variables.js.map",
+        "size": 9963,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/device/build_device.js",
+        "size": 7758,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/device/build_device.js.map",
+        "size": 13781,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/device/build_run_device.js",
+        "size": 11632,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/device/build_run_device.js.map",
+        "size": 19362,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/device/build-settings.js",
+        "size": 1092,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/device/build-settings.js.map",
+        "size": 1874,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/device/get_device_app_path.js",
+        "size": 4095,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/device/get_device_app_path.js.map",
+        "size": 7363,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/device/install_app_device.js",
+        "size": 2459,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/device/install_app_device.js.map",
+        "size": 4543,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/device/launch_app_device.js",
+        "size": 4060,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/device/launch_app_device.js.map",
+        "size": 7290,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/device/list_devices.js",
+        "size": 7778,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/device/list_devices.js.map",
+        "size": 15665,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/device/stop_app_device.js",
+        "size": 2494,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/device/stop_app_device.js.map",
+        "size": 4681,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/device/test_device.js",
+        "size": 7165,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/device/test_device.js.map",
+        "size": 12573,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/doctor/doctor.js",
+        "size": 23174,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/doctor/doctor.js.map",
+        "size": 41097,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/doctor/lib/doctor.deps.js",
+        "size": 5966,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/doctor/lib/doctor.deps.js.map",
+        "size": 12243,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/macos/build_macos.js",
+        "size": 8216,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/macos/build_macos.js.map",
+        "size": 14271,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/macos/build_run_macos.js",
+        "size": 7895,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/macos/build_run_macos.js.map",
+        "size": 13263,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/macos/get_mac_app_path.js",
+        "size": 4132,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/macos/get_mac_app_path.js.map",
+        "size": 7135,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/macos/launch_mac_app.js",
+        "size": 2615,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/macos/launch_mac_app.js.map",
+        "size": 4661,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/macos/stop_mac_app.js",
+        "size": 2948,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/macos/stop_mac_app.js.map",
+        "size": 5422,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/macos/test_macos.js",
+        "size": 6645,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/macos/test_macos.js.map",
+        "size": 11568,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/project-discovery/discover_projs.js",
+        "size": 8944,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/project-discovery/discover_projs.js.map",
+        "size": 16884,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/project-discovery/get_app_bundle_id.js",
+        "size": 3150,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/project-discovery/get_app_bundle_id.js.map",
+        "size": 5852,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/project-discovery/get_mac_bundle_id.js",
+        "size": 3549,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/project-discovery/get_mac_bundle_id.js.map",
+        "size": 6287,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/project-discovery/list_schemes.js",
+        "size": 4621,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/project-discovery/list_schemes.js.map",
+        "size": 8535,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/project-discovery/show_build_settings.js",
+        "size": 5619,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/project-discovery/show_build_settings.js.map",
+        "size": 10260,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/project-scaffolding/domain-result.js",
+        "size": 954,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/project-scaffolding/domain-result.js.map",
+        "size": 2007,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/project-scaffolding/ios-scaffold-settings.js",
+        "size": 824,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/project-scaffolding/ios-scaffold-settings.js.map",
+        "size": 1757,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/project-scaffolding/scaffold_ios_project.js",
+        "size": 12579,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/project-scaffolding/scaffold_ios_project.js.map",
+        "size": 23867,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/project-scaffolding/scaffold_macos_project.js",
+        "size": 10020,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/project-scaffolding/scaffold_macos_project.js.map",
+        "size": 19553,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/session-management/session_clear_defaults.js",
+        "size": 4326,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/session-management/session_clear_defaults.js.map",
+        "size": 8390,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/session-management/session_set_defaults.js",
+        "size": 7925,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/session-management/session_set_defaults.js.map",
+        "size": 13651,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/session-management/session_show_defaults.js",
+        "size": 2452,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/session-management/session_show_defaults.js.map",
+        "size": 5136,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/session-management/session_use_defaults_profile.js",
+        "size": 3881,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/session-management/session_use_defaults_profile.js.map",
+        "size": 6800,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/session-management/session-format-helpers.js",
+        "size": 872,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/session-management/session-format-helpers.js.map",
+        "size": 1662,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator-management/_keyboard_shortcut.js",
+        "size": 5251,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator-management/_keyboard_shortcut.js.map",
+        "size": 9074,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator-management/erase_sims.js",
+        "size": 3475,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator-management/erase_sims.js.map",
+        "size": 6556,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator-management/reset_sim_location.js",
+        "size": 3520,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator-management/reset_sim_location.js.map",
+        "size": 6456,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator-management/set_sim_appearance.js",
+        "size": 3672,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator-management/set_sim_appearance.js.map",
+        "size": 6786,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator-management/set_sim_location.js",
+        "size": 4769,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator-management/set_sim_location.js.map",
+        "size": 8515,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator-management/sim_statusbar.js",
+        "size": 4111,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator-management/sim_statusbar.js.map",
+        "size": 7635,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator-management/toggle_connect_hardware_keyboard.js",
+        "size": 3618,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator-management/toggle_connect_hardware_keyboard.js.map",
+        "size": 6546,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator-management/toggle_software_keyboard.js",
+        "size": 3428,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator-management/toggle_software_keyboard.js.map",
+        "size": 6262,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/boot_sim.js",
+        "size": 4665,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/boot_sim.js.map",
+        "size": 8496,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/build_run_sim.js",
+        "size": 18053,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/build_run_sim.js.map",
+        "size": 30576,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/build_sim.js",
+        "size": 9198,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/build_sim.js.map",
+        "size": 16356,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/get_sim_app_path.js",
+        "size": 5731,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/get_sim_app_path.js.map",
+        "size": 10022,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/install_app_sim.js",
+        "size": 4957,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/install_app_sim.js.map",
+        "size": 8644,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/launch_app_sim.js",
+        "size": 6481,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/launch_app_sim.js.map",
+        "size": 11239,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/list_sims.js",
+        "size": 4329,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/list_sims.js.map",
+        "size": 8639,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/open_sim.js",
+        "size": 2433,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/open_sim.js.map",
+        "size": 4612,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/record_sim_video.js",
+        "size": 6772,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/record_sim_video.js.map",
+        "size": 12882,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/stop_app_sim.js",
+        "size": 4461,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/stop_app_sim.js.map",
+        "size": 7764,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/test_sim.js",
+        "size": 10370,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/simulator/test_sim.js.map",
+        "size": 17757,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/swift-package/active-processes.js",
+        "size": 2715,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/swift-package/active-processes.js.map",
+        "size": 5904,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/swift-package/swift_package_build.js",
+        "size": 4546,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/swift-package/swift_package_build.js.map",
+        "size": 8158,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/swift-package/swift_package_clean.js",
+        "size": 2556,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/swift-package/swift_package_clean.js.map",
+        "size": 4714,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/swift-package/swift_package_list.js",
+        "size": 2369,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/swift-package/swift_package_list.js.map",
+        "size": 4764,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/swift-package/swift_package_run.js",
+        "size": 10822,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/swift-package/swift_package_run.js.map",
+        "size": 19192,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/swift-package/swift_package_stop.js",
+        "size": 3237,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/swift-package/swift_package_stop.js.map",
+        "size": 6251,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/swift-package/swift_package_test.js",
+        "size": 5389,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/swift-package/swift_package_test.js.map",
+        "size": 9607,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/batch.js",
+        "size": 8352,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/batch.js.map",
+        "size": 14627,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/button.js",
+        "size": 4553,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/button.js.map",
+        "size": 8028,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/drag.js",
+        "size": 8087,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/drag.js.map",
+        "size": 14560,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/gesture.js",
+        "size": 6210,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/gesture.js.map",
+        "size": 11305,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/key_press.js",
+        "size": 4603,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/key_press.js.map",
+        "size": 8231,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/key_sequence.js",
+        "size": 4742,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/key_sequence.js.map",
+        "size": 8618,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/long_press.js",
+        "size": 5500,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/long_press.js.map",
+        "size": 9742,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/screenshot.js",
+        "size": 12404,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/screenshot.js.map",
+        "size": 21429,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/shared/axe-command.js",
+        "size": 1941,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/shared/axe-command.js.map",
+        "size": 3478,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/shared/domain-result.js",
+        "size": 7988,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/shared/domain-result.js.map",
+        "size": 16002,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/shared/post-action-snapshot.js",
+        "size": 3939,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/shared/post-action-snapshot.js.map",
+        "size": 7363,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/shared/runtime-next-steps.js",
+        "size": 18889,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/shared/runtime-next-steps.js.map",
+        "size": 39871,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/shared/runtime-snapshot.js",
+        "size": 24445,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/shared/runtime-snapshot.js.map",
+        "size": 46716,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/shared/semantic-tap.js",
+        "size": 4459,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/shared/semantic-tap.js.map",
+        "size": 8701,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/shared/snapshot-ui-state.js",
+        "size": 6178,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/shared/snapshot-ui-state.js.map",
+        "size": 10644,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/shared/wait-predicate.js",
+        "size": 9570,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/shared/wait-predicate.js.map",
+        "size": 17722,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/snapshot_ui.js",
+        "size": 5912,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/snapshot_ui.js.map",
+        "size": 10218,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/swipe.js",
+        "size": 8230,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/swipe.js.map",
+        "size": 14705,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/tap.js",
+        "size": 6284,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/tap.js.map",
+        "size": 11097,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/touch.js",
+        "size": 6110,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/touch.js.map",
+        "size": 10988,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/type_text.js",
+        "size": 7010,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/type_text.js.map",
+        "size": 12108,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/wait_for_ui.js",
+        "size": 12297,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/ui-automation/wait_for_ui.js.map",
+        "size": 22169,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/utilities/clean.js",
+        "size": 7041,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/utilities/clean.js.map",
+        "size": 12845,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/workflow-discovery/manage_workflows.js",
+        "size": 3001,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/workflow-discovery/manage_workflows.js.map",
+        "size": 5362,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/xcode-ide/shared.js",
+        "size": 3969,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/xcode-ide/shared.js.map",
+        "size": 7956,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/xcode-ide/sync_xcode_defaults.js",
+        "size": 4463,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/xcode-ide/sync_xcode_defaults.js.map",
+        "size": 8764,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/xcode-ide/xcode_ide_call_tool.js",
+        "size": 2919,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/xcode-ide/xcode_ide_call_tool.js.map",
+        "size": 5114,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/xcode-ide/xcode_ide_list_tools.js",
+        "size": 1598,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/xcode-ide/xcode_ide_list_tools.js.map",
+        "size": 2636,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/xcode-ide/xcode_tools_bridge_disconnect.js",
+        "size": 1445,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/xcode-ide/xcode_tools_bridge_disconnect.js.map",
+        "size": 2348,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/xcode-ide/xcode_tools_bridge_status.js",
+        "size": 1397,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/xcode-ide/xcode_tools_bridge_status.js.map",
+        "size": 2308,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/xcode-ide/xcode_tools_bridge_sync.js",
+        "size": 1359,
+        "mode": 420
+      },
+      {
+        "path": "build/mcp/tools/xcode-ide/xcode_tools_bridge_sync.js.map",
+        "size": 2265,
+        "mode": 420
+      },
+      {
+        "path": "build/rendering/render-items.js",
+        "size": 40,
+        "mode": 420
+      },
+      {
+        "path": "build/rendering/render-items.js.map",
+        "size": 71,
+        "mode": 420
+      },
+      {
+        "path": "build/rendering/render.js",
+        "size": 4524,
+        "mode": 420
+      },
+      {
+        "path": "build/rendering/render.js.map",
+        "size": 9442,
+        "mode": 420
+      },
+      {
+        "path": "build/rendering/types.js",
+        "size": 33,
+        "mode": 420
+      },
+      {
+        "path": "build/rendering/types.js.map",
+        "size": 71,
+        "mode": 420
+      },
+      {
+        "path": "build/runtime/bootstrap-runtime.js",
+        "size": 4072,
+        "mode": 420
+      },
+      {
+        "path": "build/runtime/bootstrap-runtime.js.map",
+        "size": 7732,
+        "mode": 420
+      },
+      {
+        "path": "build/runtime/naming.js",
+        "size": 652,
+        "mode": 420
+      },
+      {
+        "path": "build/runtime/naming.js.map",
+        "size": 2110,
+        "mode": 420
+      },
+      {
+        "path": "build/runtime/tool-catalog.js",
+        "size": 5996,
+        "mode": 420
+      },
+      {
+        "path": "build/runtime/tool-catalog.js.map",
+        "size": 12321,
+        "mode": 420
+      },
+      {
+        "path": "build/runtime/tool-invoker.js",
+        "size": 16802,
+        "mode": 420
+      },
+      {
+        "path": "build/runtime/tool-invoker.js.map",
+        "size": 29930,
+        "mode": 420
+      },
+      {
+        "path": "build/runtime/types.js",
+        "size": 33,
+        "mode": 420
+      },
+      {
+        "path": "build/runtime/types.js.map",
+        "size": 71,
+        "mode": 420
+      },
+      {
+        "path": "build/server/bootstrap.js",
+        "size": 7062,
+        "mode": 420
+      },
+      {
+        "path": "build/server/bootstrap.js.map",
+        "size": 12062,
+        "mode": 420
+      },
+      {
+        "path": "build/server/mcp-idle-shutdown.js",
+        "size": 3151,
+        "mode": 420
+      },
+      {
+        "path": "build/server/mcp-idle-shutdown.js.map",
+        "size": 5421,
+        "mode": 420
+      },
+      {
+        "path": "build/server/mcp-lifecycle.js",
+        "size": 10251,
+        "mode": 420
+      },
+      {
+        "path": "build/server/mcp-lifecycle.js.map",
+        "size": 21002,
+        "mode": 420
+      },
+      {
+        "path": "build/server/mcp-shutdown.js",
+        "size": 7295,
+        "mode": 420
+      },
+      {
+        "path": "build/server/mcp-shutdown.js.map",
+        "size": 13753,
+        "mode": 420
+      },
+      {
+        "path": "build/server/request-lifecycle.js",
+        "size": 2071,
+        "mode": 420
+      },
+      {
+        "path": "build/server/request-lifecycle.js.map",
+        "size": 3879,
+        "mode": 420
+      },
+      {
+        "path": "build/server/server-state.js",
+        "size": 332,
+        "mode": 420
+      },
+      {
+        "path": "build/server/server-state.js.map",
+        "size": 648,
+        "mode": 420
+      },
+      {
+        "path": "build/server/server.js",
+        "size": 3834,
+        "mode": 420
+      },
+      {
+        "path": "build/server/server.js.map",
+        "size": 5875,
+        "mode": 420
+      },
+      {
+        "path": "build/server/start-mcp-server.js",
+        "size": 7557,
+        "mode": 493
+      },
+      {
+        "path": "build/server/start-mcp-server.js.map",
+        "size": 13208,
+        "mode": 420
+      },
+      {
+        "path": "build/server/startup-profiler.js",
+        "size": 939,
+        "mode": 420
+      },
+      {
+        "path": "build/server/startup-profiler.js.map",
+        "size": 1743,
+        "mode": 420
+      },
+      {
+        "path": "build/smoke-tests/mcp-test-harness.js",
+        "size": 6545,
+        "mode": 420
+      },
+      {
+        "path": "build/smoke-tests/mcp-test-harness.js.map",
+        "size": 13172,
+        "mode": 420
+      },
+      {
+        "path": "build/smoke-tests/test-helpers.js",
+        "size": 1017,
+        "mode": 420
+      },
+      {
+        "path": "build/smoke-tests/test-helpers.js.map",
+        "size": 2184,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/codex-031-input-schema.js",
+        "size": 4755,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/codex-031-input-schema.js.map",
+        "size": 8475,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/contracts.js",
+        "size": 855,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/contracts.js.map",
+        "size": 2515,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/device-availability.js",
+        "size": 1305,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/device-availability.js.map",
+        "size": 3180,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/fixture-io.js",
+        "size": 8216,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/fixture-io.js.map",
+        "size": 15790,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/harness.js",
+        "size": 8443,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/harness.js.map",
+        "size": 16354,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/json-harness.js",
+        "size": 908,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/json-harness.js.map",
+        "size": 1828,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/json-normalize.js",
+        "size": 13289,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/json-normalize.js.map",
+        "size": 24956,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/json-schema-validation.js",
+        "size": 11826,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/json-schema-validation.js.map",
+        "size": 21742,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/mcp-harness.js",
+        "size": 5224,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/mcp-harness.js.map",
+        "size": 9831,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/mcp-tool-contract-fixtures.js",
+        "size": 4688,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/mcp-tool-contract-fixtures.js.map",
+        "size": 9063,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/normalize.js",
+        "size": 22963,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/normalize.js.map",
+        "size": 34380,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/output-parsers.js",
+        "size": 2914,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/output-parsers.js.map",
+        "size": 5171,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/preflight/cleanup.js",
+        "size": 673,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/preflight/cleanup.js.map",
+        "size": 1522,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/preflight/command-runner.js",
+        "size": 3153,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/preflight/command-runner.js.map",
+        "size": 6526,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/preflight/device.js",
+        "size": 4190,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/preflight/device.js.map",
+        "size": 7478,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/preflight/simulator-state.js",
+        "size": 2745,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/preflight/simulator-state.js.map",
+        "size": 5182,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/preflight/simulator.js",
+        "size": 7769,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/preflight/simulator.js.map",
+        "size": 14021,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/preflight/xcode-state.js",
+        "size": 1012,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/preflight/xcode-state.js.map",
+        "size": 1375,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/preflight/xcodebuild.js",
+        "size": 1295,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/preflight/xcodebuild.js.map",
+        "size": 2609,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/resource-harness.js",
+        "size": 3646,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/resource-harness.js.map",
+        "size": 6270,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/coverage-suite.js",
+        "size": 4379,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/coverage-suite.js.map",
+        "size": 6963,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/debugging-suite.js",
+        "size": 10328,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/debugging-suite.js.map",
+        "size": 16779,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/device-suite.js",
+        "size": 11743,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/device-suite.js.map",
+        "size": 18743,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/helpers.js",
+        "size": 1590,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/helpers.js.map",
+        "size": 3250,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/macos-suite.js",
+        "size": 12129,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/macos-suite.js.map",
+        "size": 20149,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/project-discovery-suite.js",
+        "size": 4849,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/project-discovery-suite.js.map",
+        "size": 7808,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/project-scaffolding-suite.js",
+        "size": 2560,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/project-scaffolding-suite.js.map",
+        "size": 4223,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/resources-suite.js",
+        "size": 1203,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/resources-suite.js.map",
+        "size": 2001,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/session-management-suite.js",
+        "size": 7197,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/session-management-suite.js.map",
+        "size": 11514,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/simulator-management-suite.js",
+        "size": 10829,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/simulator-management-suite.js.map",
+        "size": 17338,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/simulator-suite.js",
+        "size": 13949,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/simulator-suite.js.map",
+        "size": 22148,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/swift-package-suite.js",
+        "size": 6862,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/swift-package-suite.js.map",
+        "size": 11793,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/ui-automation-suite.js",
+        "size": 13566,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/ui-automation-suite.js.map",
+        "size": 22098,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/utilities-suite.js",
+        "size": 1725,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/utilities-suite.js.map",
+        "size": 2872,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/xcode-ide-suite.js",
+        "size": 8176,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/suites/xcode-ide-suite.js.map",
+        "size": 14068,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/tool-manifest-resolver.js",
+        "size": 967,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/tool-manifest-resolver.js.map",
+        "size": 1913,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/xcode-ide-availability.js",
+        "size": 949,
+        "mode": 420
+      },
+      {
+        "path": "build/snapshot-tests/xcode-ide-availability.js.map",
+        "size": 1543,
+        "mode": 420
+      },
+      {
+        "path": "build/test-utils/mock-executors.js",
+        "size": 10154,
+        "mode": 420
+      },
+      {
+        "path": "build/test-utils/mock-executors.js.map",
+        "size": 21070,
+        "mode": 420
+      },
+      {
+        "path": "build/test-utils/test-helpers.js",
+        "size": 4081,
+        "mode": 420
+      },
+      {
+        "path": "build/test-utils/test-helpers.js.map",
+        "size": 9711,
+        "mode": 420
+      },
+      {
+        "path": "build/test-utils/vitest-executor-safety.setup.js",
+        "size": 1899,
+        "mode": 420
+      },
+      {
+        "path": "build/test-utils/vitest-executor-safety.setup.js.map",
+        "size": 3232,
+        "mode": 420
+      },
+      {
+        "path": "build/types/common.js",
+        "size": 793,
+        "mode": 420
+      },
+      {
+        "path": "build/types/common.js.map",
+        "size": 5022,
+        "mode": 420
+      },
+      {
+        "path": "build/types/domain-fragments.js",
+        "size": 255,
+        "mode": 420
+      },
+      {
+        "path": "build/types/domain-fragments.js.map",
+        "size": 7544,
+        "mode": 420
+      },
+      {
+        "path": "build/types/domain-results.js",
+        "size": 42,
+        "mode": 420
+      },
+      {
+        "path": "build/types/domain-results.js.map",
+        "size": 71,
+        "mode": 420
+      },
+      {
+        "path": "build/types/index.js",
+        "size": 252,
+        "mode": 420
+      },
+      {
+        "path": "build/types/index.js.map",
+        "size": 384,
+        "mode": 420
+      },
+      {
+        "path": "build/types/runtime-status.js",
+        "size": 200,
+        "mode": 420
+      },
+      {
+        "path": "build/types/runtime-status.js.map",
+        "size": 806,
+        "mode": 420
+      },
+      {
+        "path": "build/types/structured-output.js",
+        "size": 45,
+        "mode": 420
+      },
+      {
+        "path": "build/types/structured-output.js.map",
+        "size": 71,
+        "mode": 420
+      },
+      {
+        "path": "build/types/tool-execution.js",
+        "size": 42,
+        "mode": 420
+      },
+      {
+        "path": "build/types/tool-execution.js.map",
+        "size": 71,
+        "mode": 420
+      },
+      {
+        "path": "build/types/ui-snapshot.js",
+        "size": 123,
+        "mode": 420
+      },
+      {
+        "path": "build/types/ui-snapshot.js.map",
+        "size": 3644,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/app-lifecycle-results.js",
+        "size": 4154,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/app-lifecycle-results.js.map",
+        "size": 7759,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/app-path-resolver.js",
+        "size": 2334,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/app-path-resolver.js.map",
+        "size": 4472,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/app-query-results.js",
+        "size": 2075,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/app-query-results.js.map",
+        "size": 3851,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/axe-helpers.js",
+        "size": 5129,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/axe-helpers.js.map",
+        "size": 9721,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/axe/index.js",
+        "size": 356,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/axe/index.js.map",
+        "size": 364,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/build-preflight.js",
+        "size": 2839,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/build-preflight.js.map",
+        "size": 5724,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/build-utils.js",
+        "size": 8069,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/build-utils.js.map",
+        "size": 13582,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/build/index.js",
+        "size": 134,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/build/index.js.map",
+        "size": 248,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/bundle-id.js",
+        "size": 721,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/bundle-id.js.map",
+        "size": 1383,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/cli-progress-reporter.js",
+        "size": 515,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/cli-progress-reporter.js.map",
+        "size": 1023,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/command.js",
+        "size": 7763,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/command.js.map",
+        "size": 14379,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/CommandExecutor.js",
+        "size": 141,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/CommandExecutor.js.map",
+        "size": 975,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/config-store.js",
+        "size": 18289,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/config-store.js.map",
+        "size": 35559,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/backends/dap-backend.js",
+        "size": 16589,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/backends/dap-backend.js.map",
+        "size": 32577,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/backends/DebuggerBackend.js",
+        "size": 43,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/backends/DebuggerBackend.js.map",
+        "size": 71,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/backends/lldb-cli-backend.js",
+        "size": 9170,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/backends/lldb-cli-backend.js.map",
+        "size": 17654,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/dap/adapter-discovery.js",
+        "size": 1101,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/dap/adapter-discovery.js.map",
+        "size": 1853,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/dap/transport.js",
+        "size": 5436,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/dap/transport.js.map",
+        "size": 10851,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/dap/types.js",
+        "size": 33,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/dap/types.js.map",
+        "size": 71,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/debugger-manager.js",
+        "size": 5509,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/debugger-manager.js.map",
+        "size": 11528,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/index.js",
+        "size": 880,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/index.js.map",
+        "size": 1192,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/simctl.js",
+        "size": 1394,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/simctl.js.map",
+        "size": 2682,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/tool-context.js",
+        "size": 775,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/tool-context.js.map",
+        "size": 1392,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/types.js",
+        "size": 33,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/types.js.map",
+        "size": 71,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/ui-automation-guard.js",
+        "size": 2061,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/debugger/ui-automation-guard.js.map",
+        "size": 4061,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/derived-data-path.js",
+        "size": 1712,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/derived-data-path.js.map",
+        "size": 2920,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/device-name-resolver.js",
+        "size": 2668,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/device-name-resolver.js.map",
+        "size": 5786,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/device-steps.js",
+        "size": 1983,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/device-steps.js.map",
+        "size": 4165,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/diagnostics.js",
+        "size": 2124,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/diagnostics.js.map",
+        "size": 4139,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/environment-variable-input.js",
+        "size": 1669,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/environment-variable-input.js.map",
+        "size": 2945,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/environment.js",
+        "size": 2111,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/environment.js.map",
+        "size": 3934,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/errors.js",
+        "size": 2127,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/errors.js.map",
+        "size": 3225,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/execution/index.js",
+        "size": 795,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/execution/index.js.map",
+        "size": 1210,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/execution/interactive-process.js",
+        "size": 1732,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/execution/interactive-process.js.map",
+        "size": 3551,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/execution/tool-execution-context.js",
+        "size": 447,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/execution/tool-execution-context.js.map",
+        "size": 1315,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/file-path-render-style.js",
+        "size": 360,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/file-path-render-style.js.map",
+        "size": 828,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/FileSystemExecutor.js",
+        "size": 98,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/FileSystemExecutor.js.map",
+        "size": 1078,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/focus-policy.js",
+        "size": 2250,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/focus-policy.js.map",
+        "size": 5567,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/fs-lock-shared.js",
+        "size": 980,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/fs-lock-shared.js.map",
+        "size": 1913,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/fs-lock-sync.js",
+        "size": 4212,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/fs-lock-sync.js.map",
+        "size": 8368,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/fs-lock.js",
+        "size": 4954,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/fs-lock.js.map",
+        "size": 9867,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/idle-timeout.js",
+        "size": 662,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/idle-timeout.js.map",
+        "size": 1359,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/infer-platform.js",
+        "size": 6223,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/infer-platform.js.map",
+        "size": 12311,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/log-capture/index.js",
+        "size": 629,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/log-capture/index.js.map",
+        "size": 518,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/log-capture/simulator-launch-oslog-registry.js",
+        "size": 11002,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/log-capture/simulator-launch-oslog-registry.js.map",
+        "size": 20877,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/log-capture/simulator-launch-oslog-sessions.js",
+        "size": 10839,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/log-capture/simulator-launch-oslog-sessions.js.map",
+        "size": 19690,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/log-naming.js",
+        "size": 318,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/log-naming.js.map",
+        "size": 523,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/log-paths.js",
+        "size": 2164,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/log-paths.js.map",
+        "size": 4085,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/logger.js",
+        "size": 4869,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/logger.js.map",
+        "size": 11387,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/logging/index.js",
+        "size": 87,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/logging/index.js.map",
+        "size": 287,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/macos-steps.js",
+        "size": 1637,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/macos-steps.js.map",
+        "size": 3326,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/nskeyedarchiver-parser.js",
+        "size": 5578,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/nskeyedarchiver-parser.js.map",
+        "size": 11633,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/path.js",
+        "size": 577,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/path.js.map",
+        "size": 1846,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/platform-detection.js",
+        "size": 98,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/platform-detection.js.map",
+        "size": 356,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/process-liveness.js",
+        "size": 297,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/process-liveness.js.map",
+        "size": 610,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/process-tree.js",
+        "size": 2061,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/process-tree.js.map",
+        "size": 4082,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/project-config.js",
+        "size": 11605,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/project-config.js.map",
+        "size": 22951,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/purge-storage.js",
+        "size": 545,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/purge-storage.js.map",
+        "size": 1074,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/purge-storage/enumerate.js",
+        "size": 6088,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/purge-storage/enumerate.js.map",
+        "size": 11436,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/purge-storage/execution.js",
+        "size": 12390,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/purge-storage/execution.js.map",
+        "size": 21242,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/purge-storage/planning.js",
+        "size": 15019,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/purge-storage/planning.js.map",
+        "size": 27155,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/purge-storage/registry-record.js",
+        "size": 1198,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/purge-storage/registry-record.js.map",
+        "size": 2476,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/purge-storage/scan.js",
+        "size": 2843,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/purge-storage/scan.js.map",
+        "size": 5171,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/purge-storage/test-products.js",
+        "size": 4089,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/purge-storage/test-products.js.map",
+        "size": 7476,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/purge-storage/types.js",
+        "size": 363,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/purge-storage/types.js.map",
+        "size": 4346,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/remove-undefined.js",
+        "size": 267,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/remove-undefined.js.map",
+        "size": 583,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/renderers/cli-text-renderer.js",
+        "size": 18371,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/renderers/cli-text-renderer.js.map",
+        "size": 33022,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/renderers/domain-result-text.js",
+        "size": 75129,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/renderers/domain-result-text.js.map",
+        "size": 139603,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/renderers/event-formatting.js",
+        "size": 18609,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/renderers/event-formatting.js.map",
+        "size": 35195,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/renderers/index.js",
+        "size": 434,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/renderers/index.js.map",
+        "size": 1302,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/renderers/path-tree.js",
+        "size": 4118,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/renderers/path-tree.js.map",
+        "size": 8203,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/responses/next-step-formatting.js",
+        "size": 2884,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/responses/next-step-formatting.js.map",
+        "size": 5767,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/responses/next-steps-renderer.js",
+        "size": 1480,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/responses/next-steps-renderer.js.map",
+        "size": 2836,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/result-bundle-args.js",
+        "size": 1208,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/result-bundle-args.js.map",
+        "size": 2215,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/result-bundle-path.js",
+        "size": 2533,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/result-bundle-path.js.map",
+        "size": 3929,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/runtime-config-schema.js",
+        "size": 1734,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/runtime-config-schema.js.map",
+        "size": 3445,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/runtime-config-types.js",
+        "size": 48,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/runtime-config-types.js.map",
+        "size": 71,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/runtime-instance.js",
+        "size": 1438,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/runtime-instance.js.map",
+        "size": 2540,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/schema-helpers.js",
+        "size": 1259,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/schema-helpers.js.map",
+        "size": 2451,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/sentry-config.js",
+        "size": 716,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/sentry-config.js.map",
+        "size": 1194,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/sentry.js",
+        "size": 14018,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/sentry.js.map",
+        "size": 28058,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/session-default-args.js",
+        "size": 8459,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/session-default-args.js.map",
+        "size": 15158,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/session-defaults-profile.js",
+        "size": 346,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/session-defaults-profile.js.map",
+        "size": 584,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/session-defaults-schema.js",
+        "size": 2452,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/session-defaults-schema.js.map",
+        "size": 3898,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/session-status.js",
+        "size": 1590,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/session-status.js.map",
+        "size": 3407,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/session-store.js",
+        "size": 3985,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/session-store.js.map",
+        "size": 8391,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/shell-escape.js",
+        "size": 151,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/shell-escape.js.map",
+        "size": 676,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/shutdown-state.js",
+        "size": 2019,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/shutdown-state.js.map",
+        "size": 3564,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/simulator-defaults-refresh.js",
+        "size": 3597,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/simulator-defaults-refresh.js.map",
+        "size": 8388,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/simulator-resolver.js",
+        "size": 3438,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/simulator-resolver.js.map",
+        "size": 6951,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/simulator-steps.js",
+        "size": 9414,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/simulator-steps.js.map",
+        "size": 18713,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/simulator-test-execution.js",
+        "size": 2008,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/simulator-test-execution.js.map",
+        "size": 3691,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/simulator-utils.js",
+        "size": 3424,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/simulator-utils.js.map",
+        "size": 5996,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/structured-error.js",
+        "size": 742,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/structured-error.js.map",
+        "size": 1484,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/structured-output-envelope.js",
+        "size": 9222,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/structured-output-envelope.js.map",
+        "size": 18621,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/swift-test-discovery.js",
+        "size": 7194,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/swift-test-discovery.js.map",
+        "size": 12901,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/swift-testing-line-parsers.js",
+        "size": 3907,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/swift-testing-line-parsers.js.map",
+        "size": 8647,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/template-manager.js",
+        "size": 4283,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/template-manager.js.map",
+        "size": 7526,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/template/index.js",
+        "size": 121,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/template/index.js.map",
+        "size": 187,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/terminal-output.js",
+        "size": 1136,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/terminal-output.js.map",
+        "size": 2214,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/test-common.js",
+        "size": 10459,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/test-common.js.map",
+        "size": 19169,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/test-preflight.js",
+        "size": 13099,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/test-preflight.js.map",
+        "size": 25263,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/test-products-lifecycle.js",
+        "size": 2833,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/test-products-lifecycle.js.map",
+        "size": 5408,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/test-products-path.js",
+        "size": 4209,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/test-products-path.js.map",
+        "size": 6771,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/test-source.js",
+        "size": 5054,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/test-source.js.map",
+        "size": 8760,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/test/index.js",
+        "size": 122,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/test/index.js.map",
+        "size": 181,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/tool-execution-compat.js",
+        "size": 321,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/tool-execution-compat.js.map",
+        "size": 1026,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/tool-registry.js",
+        "size": 12861,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/tool-registry.js.map",
+        "size": 23525,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/transcript-context.js",
+        "size": 197,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/transcript-context.js.map",
+        "size": 447,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/typed-tool-factory.js",
+        "size": 8624,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/typed-tool-factory.js.map",
+        "size": 17364,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/validation.js",
+        "size": 421,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/validation.js.map",
+        "size": 886,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/version/index.js",
+        "size": 197,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/version/index.js.map",
+        "size": 235,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/video_capture.js",
+        "size": 6101,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/video_capture.js.map",
+        "size": 12481,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/video-capture/index.js",
+        "size": 200,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/video-capture/index.js.map",
+        "size": 338,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/workspace-filesystem-lifecycle.js",
+        "size": 21712,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/workspace-filesystem-lifecycle.js.map",
+        "size": 39303,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/workspace-identity.js",
+        "size": 1194,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/workspace-identity.js.map",
+        "size": 2215,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcode-process.js",
+        "size": 649,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcode-process.js.map",
+        "size": 1398,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcode-state-reader.js",
+        "size": 6697,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcode-state-reader.js.map",
+        "size": 12161,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcode-state-watcher.js",
+        "size": 6507,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcode-state-watcher.js.map",
+        "size": 12864,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcode.js",
+        "size": 1520,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcode.js.map",
+        "size": 2405,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcodebuild-domain-results.js",
+        "size": 10566,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcodebuild-domain-results.js.map",
+        "size": 21333,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcodebuild-error-utils.js",
+        "size": 1256,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcodebuild-error-utils.js.map",
+        "size": 2136,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcodebuild-event-parser.js",
+        "size": 12061,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcodebuild-event-parser.js.map",
+        "size": 21134,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcodebuild-line-parsers.js",
+        "size": 4310,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcodebuild-line-parsers.js.map",
+        "size": 8312,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcodebuild-log-capture.js",
+        "size": 2603,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcodebuild-log-capture.js.map",
+        "size": 4921,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcodebuild-output.js",
+        "size": 1266,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcodebuild-output.js.map",
+        "size": 2673,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcodebuild-pipeline.js",
+        "size": 6700,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcodebuild-pipeline.js.map",
+        "size": 13530,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcodebuild-run-state.js",
+        "size": 6064,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcodebuild-run-state.js.map",
+        "size": 12559,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcodemake.js",
+        "size": 5145,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcodemake.js.map",
+        "size": 8974,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcodemake/index.js",
+        "size": 272,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcodemake/index.js.map",
+        "size": 305,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcresult-test-failures.js",
+        "size": 3739,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/xcresult-test-failures.js.map",
+        "size": 6989,
+        "mode": 420
+      },
+      {
+        "path": "build/version.js",
+        "size": 372,
+        "mode": 420
+      },
+      {
+        "path": "build/version.js.map",
+        "size": 472,
+        "mode": 420
+      },
+      {
+        "path": "build/visibility/exposure.js",
+        "size": 2944,
+        "mode": 420
+      },
+      {
+        "path": "build/visibility/exposure.js.map",
+        "size": 7740,
+        "mode": 420
+      },
+      {
+        "path": "build/visibility/index.js",
+        "size": 143,
+        "mode": 420
+      },
+      {
+        "path": "build/visibility/index.js.map",
+        "size": 290,
+        "mode": 420
+      },
+      {
+        "path": "build/visibility/predicate-registry.js",
+        "size": 1991,
+        "mode": 420
+      },
+      {
+        "path": "build/visibility/predicate-registry.js.map",
+        "size": 4088,
+        "mode": 420
+      },
+      {
+        "path": "build/visibility/predicate-types.js",
+        "size": 43,
+        "mode": 420
+      },
+      {
+        "path": "build/visibility/predicate-types.js.map",
+        "size": 71,
+        "mode": 420
+      },
+      {
+        "path": "bundled/axe",
+        "size": 5723952,
+        "mode": 493
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/_CodeSignature/CodeResources",
+        "size": 10690,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/FBControlCore",
+        "size": 5024624,
+        "mode": 493
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBAccessibilityTraits.h",
+        "size": 868,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBArchitecture.h",
+        "size": 681,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBArchiveOperations.h",
+        "size": 5896,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBBinaryDescriptor.h",
+        "size": 2220,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBControlCore-Swift.h",
+        "size": 202487,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBControlCore-SwiftImport.h",
+        "size": 1066,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBControlCore.h",
+        "size": 1906,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBControlCoreFrameworkLoader.h",
+        "size": 2904,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBControlCoreLogger.h",
+        "size": 3182,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBControlCoreLogger+OSLog.h",
+        "size": 742,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBCrashLog.h",
+        "size": 744,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBDataBuffer.h",
+        "size": 2175,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBDataConsumer.h",
+        "size": 5310,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBFileContainer.h",
+        "size": 2060,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBFileReader.h",
+        "size": 702,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBFourCharCode.h",
+        "size": 1065,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBFuture.h",
+        "size": 21493,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBFuture+Sync.h",
+        "size": 4574,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBFutureContextManager.h",
+        "size": 1819,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBInstalledApplication.h",
+        "size": 1525,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBInstrumentsCommands.h",
+        "size": 856,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBInstrumentsOperation.h",
+        "size": 2966,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBiOSTarget.h",
+        "size": 2335,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBiOSTargetConfiguration.h",
+        "size": 18933,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBiOSTargetConstants.h",
+        "size": 1777,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBiOSTargetOperation.h",
+        "size": 471,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBObjCExceptionGuard.h",
+        "size": 2308,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBProcessBuilder.h",
+        "size": 8390,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBProcessFetcher.h",
+        "size": 4577,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBProcessIO.h",
+        "size": 3366,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBProcessStream.h",
+        "size": 4714,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBProcessTerminationStrategy.h",
+        "size": 901,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBScreenshotCommands.h",
+        "size": 488,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBSettingsCommands.h",
+        "size": 959,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBSocketServer.h",
+        "size": 1412,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBSubprocess.h",
+        "size": 5202,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBVideoStream.h",
+        "size": 11470,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBVideoStreamConfiguration.h",
+        "size": 1925,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Headers/FBXCTraceOperation.h",
+        "size": 408,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Modules/FBControlCore.swiftmodule/arm64-apple-macos.abi.json",
+        "size": 1880224,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Modules/FBControlCore.swiftmodule/arm64-apple-macos.private.swiftinterface",
+        "size": 96575,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Modules/FBControlCore.swiftmodule/arm64-apple-macos.swiftdoc",
+        "size": 71708,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Modules/FBControlCore.swiftmodule/arm64-apple-macos.swiftinterface",
+        "size": 96575,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Modules/FBControlCore.swiftmodule/arm64-apple-macos.swiftmodule",
+        "size": 557740,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Modules/FBControlCore.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+        "size": 228416,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Modules/FBControlCore.swiftmodule/Project/x86_64-apple-macos.swiftsourceinfo",
+        "size": 228416,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Modules/FBControlCore.swiftmodule/x86_64-apple-macos.abi.json",
+        "size": 1880224,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Modules/FBControlCore.swiftmodule/x86_64-apple-macos.private.swiftinterface",
+        "size": 96576,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Modules/FBControlCore.swiftmodule/x86_64-apple-macos.swiftdoc",
+        "size": 71708,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Modules/FBControlCore.swiftmodule/x86_64-apple-macos.swiftinterface",
+        "size": 96576,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Modules/FBControlCore.swiftmodule/x86_64-apple-macos.swiftmodule",
+        "size": 557740,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Modules/module.modulemap",
+        "size": 172,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBControlCore.framework/Versions/A/Resources/Info.plist",
+        "size": 1460,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/_CodeSignature/CodeResources",
+        "size": 7132,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/FBDeviceControl",
+        "size": 3744336,
+        "mode": 493
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Headers/FBAFCConnection.h",
+        "size": 4025,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Headers/FBAMDefines.h",
+        "size": 11004,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Headers/FBAMDevice.h",
+        "size": 5233,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Headers/FBAMDeviceManager.h",
+        "size": 2075,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Headers/FBAMDServiceConnection.h",
+        "size": 8747,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Headers/FBAMRestorableDevice.h",
+        "size": 2779,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Headers/FBAMRestorableDeviceManager.h",
+        "size": 1115,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Headers/FBDevice.h",
+        "size": 4120,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Headers/FBDeviceCommands.h",
+        "size": 4563,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Headers/FBDeviceControl-Swift.h",
+        "size": 69831,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Headers/FBDeviceControl.h",
+        "size": 926,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Headers/FBDeviceControlFrameworkLoader.h",
+        "size": 608,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Headers/FBDeviceDebugSymbolsCommands.h",
+        "size": 1084,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Headers/FBDeviceManager.h",
+        "size": 3465,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Headers/FBInstrumentsClient.h",
+        "size": 1347,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Modules/FBDeviceControl.swiftmodule/arm64-apple-macos.abi.json",
+        "size": 589508,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Modules/FBDeviceControl.swiftmodule/arm64-apple-macos.private.swiftinterface",
+        "size": 31261,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Modules/FBDeviceControl.swiftmodule/arm64-apple-macos.swiftdoc",
+        "size": 1564,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Modules/FBDeviceControl.swiftmodule/arm64-apple-macos.swiftinterface",
+        "size": 31261,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Modules/FBDeviceControl.swiftmodule/arm64-apple-macos.swiftmodule",
+        "size": 357560,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Modules/FBDeviceControl.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+        "size": 73972,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Modules/FBDeviceControl.swiftmodule/Project/x86_64-apple-macos.swiftsourceinfo",
+        "size": 73972,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Modules/FBDeviceControl.swiftmodule/x86_64-apple-macos.abi.json",
+        "size": 589508,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Modules/FBDeviceControl.swiftmodule/x86_64-apple-macos.private.swiftinterface",
+        "size": 31262,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Modules/FBDeviceControl.swiftmodule/x86_64-apple-macos.swiftdoc",
+        "size": 1564,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Modules/FBDeviceControl.swiftmodule/x86_64-apple-macos.swiftinterface",
+        "size": 31262,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Modules/FBDeviceControl.swiftmodule/x86_64-apple-macos.swiftmodule",
+        "size": 357872,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Modules/module.modulemap",
+        "size": 180,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBDeviceControl.framework/Versions/A/Resources/Info.plist",
+        "size": 1466,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/_CodeSignature/CodeResources",
+        "size": 6513,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/FBSimulatorControl",
+        "size": 5553024,
+        "mode": 493
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Headers/FBFramebuffer.h",
+        "size": 588,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Headers/FBPeriodicStatsTimer.h",
+        "size": 1428,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Headers/FBSimDeviceWrapper.h",
+        "size": 4617,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Headers/FBSimulator.h",
+        "size": 7179,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Headers/FBSimulatorBootConfiguration.h",
+        "size": 867,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Headers/FBSimulatorControl-Swift.h",
+        "size": 134029,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Headers/FBSimulatorControl.h",
+        "size": 894,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Headers/FBSimulatorControlFrameworkLoader.h",
+        "size": 1624,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Headers/FBSimulatorVideoStream.h",
+        "size": 5613,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Modules/FBSimulatorControl.swiftmodule/arm64-apple-macos.abi.json",
+        "size": 1766250,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Modules/FBSimulatorControl.swiftmodule/arm64-apple-macos.private.swiftinterface",
+        "size": 84403,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Modules/FBSimulatorControl.swiftmodule/arm64-apple-macos.swiftdoc",
+        "size": 70248,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Modules/FBSimulatorControl.swiftmodule/arm64-apple-macos.swiftinterface",
+        "size": 84403,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Modules/FBSimulatorControl.swiftmodule/arm64-apple-macos.swiftmodule",
+        "size": 677664,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Modules/FBSimulatorControl.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+        "size": 221644,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Modules/FBSimulatorControl.swiftmodule/Project/x86_64-apple-macos.swiftsourceinfo",
+        "size": 221644,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Modules/FBSimulatorControl.swiftmodule/x86_64-apple-macos.abi.json",
+        "size": 1766250,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Modules/FBSimulatorControl.swiftmodule/x86_64-apple-macos.private.swiftinterface",
+        "size": 84404,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Modules/FBSimulatorControl.swiftmodule/x86_64-apple-macos.swiftdoc",
+        "size": 70248,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Modules/FBSimulatorControl.swiftmodule/x86_64-apple-macos.swiftinterface",
+        "size": 84404,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Modules/FBSimulatorControl.swiftmodule/x86_64-apple-macos.swiftmodule",
+        "size": 677916,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Modules/module.modulemap",
+        "size": 192,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Resources/Info.plist",
+        "size": 1475,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/FBSimulatorControl.framework/Versions/A/Resources/README.md",
+        "size": 10455,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/_CodeSignature/CodeResources",
+        "size": 6706,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Headers/FBActivityRecord.h",
+        "size": 1091,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Headers/FBAttachment.h",
+        "size": 771,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Headers/FBCodeCoverageConfiguration.h",
+        "size": 365,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Headers/FBTestBundleConnection.h",
+        "size": 1399,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Headers/FBTestConfiguration.h",
+        "size": 3333,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Headers/FBTestManagerAPIMediator.h",
+        "size": 1830,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Headers/FBTestManagerResultSummary.h",
+        "size": 465,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Headers/FBTestReporterAdapter.h",
+        "size": 689,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Headers/FBXCTestConfiguration.h",
+        "size": 935,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Headers/XCTestBootstrap-Swift.h",
+        "size": 93299,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Headers/XCTestBootstrap.h",
+        "size": 855,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Headers/XCTestBootstrapError.h",
+        "size": 662,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Modules/module.modulemap",
+        "size": 297,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Modules/XCTestBootstrap.swiftmodule/arm64-apple-macos.abi.json",
+        "size": 581292,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Modules/XCTestBootstrap.swiftmodule/arm64-apple-macos.private.swiftinterface",
+        "size": 33214,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Modules/XCTestBootstrap.swiftmodule/arm64-apple-macos.swiftdoc",
+        "size": 420,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Modules/XCTestBootstrap.swiftmodule/arm64-apple-macos.swiftinterface",
+        "size": 33214,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Modules/XCTestBootstrap.swiftmodule/arm64-apple-macos.swiftmodule",
+        "size": 281692,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Modules/XCTestBootstrap.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+        "size": 61612,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Modules/XCTestBootstrap.swiftmodule/Project/x86_64-apple-macos.swiftsourceinfo",
+        "size": 61612,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Modules/XCTestBootstrap.swiftmodule/x86_64-apple-macos.abi.json",
+        "size": 581292,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Modules/XCTestBootstrap.swiftmodule/x86_64-apple-macos.private.swiftinterface",
+        "size": 33215,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Modules/XCTestBootstrap.swiftmodule/x86_64-apple-macos.swiftdoc",
+        "size": 420,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Modules/XCTestBootstrap.swiftmodule/x86_64-apple-macos.swiftinterface",
+        "size": 33215,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Modules/XCTestBootstrap.swiftmodule/x86_64-apple-macos.swiftmodule",
+        "size": 281696,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/Resources/Info.plist",
+        "size": 1466,
+        "mode": 420
+      },
+      {
+        "path": "bundled/Frameworks/XCTestBootstrap.framework/Versions/A/XCTestBootstrap",
+        "size": 2177888,
+        "mode": 493
+      },
+      {
+        "path": "manifests/resources/devices.yaml",
+        "size": 200,
+        "mode": 420
+      },
+      {
+        "path": "manifests/resources/doctor.yaml",
+        "size": 202,
+        "mode": 420
+      },
+      {
+        "path": "manifests/resources/session-status.yaml",
+        "size": 206,
+        "mode": 420
+      },
+      {
+        "path": "manifests/resources/simulators.yaml",
+        "size": 185,
+        "mode": 420
+      },
+      {
+        "path": "manifests/resources/xcode-ide-state.yaml",
+        "size": 272,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/batch.yaml",
+        "size": 996,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/boot_sim.yaml",
+        "size": 850,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/build_device.yaml",
+        "size": 605,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/build_macos.yaml",
+        "size": 594,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/build_run_device.yaml",
+        "size": 558,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/build_run_macos.yaml",
+        "size": 479,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/build_run_sim.yaml",
+        "size": 668,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/build_sim.yaml",
+        "size": 642,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/button.yaml",
+        "size": 469,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/clean.yaml",
+        "size": 322,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/debug_attach_sim.yaml",
+        "size": 647,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/debug_breakpoint_add.yaml",
+        "size": 384,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/debug_breakpoint_remove.yaml",
+        "size": 402,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/debug_continue.yaml",
+        "size": 359,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/debug_detach.yaml",
+        "size": 342,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/debug_lldb_command.yaml",
+        "size": 372,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/debug_stack.yaml",
+        "size": 332,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/debug_variables.yaml",
+        "size": 362,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/discover_projs.yaml",
+        "size": 732,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/doctor.yaml",
+        "size": 286,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/drag.yaml",
+        "size": 660,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/erase_sims.yaml",
+        "size": 326,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/gesture.yaml",
+        "size": 458,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/get_app_bundle_id.yaml",
+        "size": 738,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/get_coverage_report.yaml",
+        "size": 499,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/get_device_app_path.yaml",
+        "size": 638,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/get_file_coverage.yaml",
+        "size": 509,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/get_mac_app_path.yaml",
+        "size": 515,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/get_mac_bundle_id.yaml",
+        "size": 542,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/get_sim_app_path.yaml",
+        "size": 687,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/install_app_device.yaml",
+        "size": 338,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/install_app_sim.yaml",
+        "size": 519,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/key_press.yaml",
+        "size": 600,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/key_sequence.yaml",
+        "size": 610,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/launch_app_device.yaml",
+        "size": 428,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/launch_app_sim.yaml",
+        "size": 624,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/launch_mac_app.yaml",
+        "size": 316,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/list_devices.yaml",
+        "size": 585,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/list_schemes.yaml",
+        "size": 749,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/list_sims.yaml",
+        "size": 884,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/long_press.yaml",
+        "size": 523,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/manage_workflows.yaml",
+        "size": 577,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/open_sim.yaml",
+        "size": 581,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/record_sim_video.yaml",
+        "size": 478,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/reset_sim_location.yaml",
+        "size": 370,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/scaffold_ios_project.yaml",
+        "size": 741,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/scaffold_macos_project.yaml",
+        "size": 747,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/screenshot.yaml",
+        "size": 312,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/session_clear_defaults.yaml",
+        "size": 421,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/session_set_defaults.yaml",
+        "size": 434,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/session_show_defaults.yaml",
+        "size": 479,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/session_use_defaults_profile.yaml",
+        "size": 425,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/set_sim_appearance.yaml",
+        "size": 370,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/set_sim_location.yaml",
+        "size": 358,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/show_build_settings.yaml",
+        "size": 671,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/sim_statusbar.yaml",
+        "size": 353,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/snapshot_ui.yaml",
+        "size": 555,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/stop_app_device.yaml",
+        "size": 314,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/stop_app_sim.yaml",
+        "size": 308,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/stop_mac_app.yaml",
+        "size": 302,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/swift_package_build.yaml",
+        "size": 389,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/swift_package_clean.yaml",
+        "size": 342,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/swift_package_list.yaml",
+        "size": 366,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/swift_package_run.yaml",
+        "size": 478,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/swift_package_stop.yaml",
+        "size": 360,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/swift_package_test.yaml",
+        "size": 387,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/swipe.yaml",
+        "size": 736,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/sync_xcode_defaults.yaml",
+        "size": 452,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/tap.yaml",
+        "size": 853,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/test_device.yaml",
+        "size": 336,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/test_macos.yaml",
+        "size": 334,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/test_sim.yaml",
+        "size": 334,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/toggle_connect_hardware_keyboard.yaml",
+        "size": 672,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/toggle_software_keyboard.yaml",
+        "size": 569,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/touch.yaml",
+        "size": 516,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/type_text.yaml",
+        "size": 700,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/wait_for_ui.yaml",
+        "size": 868,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/xcode_ide_call_tool.yaml",
+        "size": 393,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/xcode_ide_list_tools.yaml",
+        "size": 521,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/xcode_tools_bridge_disconnect.yaml",
+        "size": 470,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/xcode_tools_bridge_status.yaml",
+        "size": 447,
+        "mode": 420
+      },
+      {
+        "path": "manifests/tools/xcode_tools_bridge_sync.yaml",
+        "size": 456,
+        "mode": 420
+      },
+      {
+        "path": "manifests/workflows/coverage.yaml",
+        "size": 224,
+        "mode": 420
+      },
+      {
+        "path": "manifests/workflows/debugging.yaml",
+        "size": 365,
+        "mode": 420
+      },
+      {
+        "path": "manifests/workflows/device.yaml",
+        "size": 511,
+        "mode": 420
+      },
+      {
+        "path": "manifests/workflows/doctor.yaml",
+        "size": 268,
+        "mode": 420
+      },
+      {
+        "path": "manifests/workflows/macos.yaml",
+        "size": 458,
+        "mode": 420
+      },
+      {
+        "path": "manifests/workflows/project-discovery.yaml",
+        "size": 371,
+        "mode": 420
+      },
+      {
+        "path": "manifests/workflows/project-scaffolding.yaml",
+        "size": 205,
+        "mode": 420
+      },
+      {
+        "path": "manifests/workflows/session-management.yaml",
+        "size": 419,
+        "mode": 420
+      },
+      {
+        "path": "manifests/workflows/simulator-management.yaml",
+        "size": 564,
+        "mode": 420
+      },
+      {
+        "path": "manifests/workflows/simulator.yaml",
+        "size": 609,
+        "mode": 420
+      },
+      {
+        "path": "manifests/workflows/swift-package.yaml",
+        "size": 371,
+        "mode": 420
+      },
+      {
+        "path": "manifests/workflows/ui-automation.yaml",
+        "size": 419,
+        "mode": 420
+      },
+      {
+        "path": "manifests/workflows/utilities.yaml",
+        "size": 194,
+        "mode": 420
+      },
+      {
+        "path": "manifests/workflows/workflow-discovery.yaml",
+        "size": 267,
+        "mode": 420
+      },
+      {
+        "path": "manifests/workflows/xcode-ide.yaml",
+        "size": 433,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 6039,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/_defs/common.schema.json",
+        "size": 13090,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.app-path/1.schema.json",
+        "size": 2554,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.app-path/2.schema.json",
+        "size": 2728,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.build-result/1.schema.json",
+        "size": 3213,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.build-result/2.schema.json",
+        "size": 3387,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.build-result/3.schema.json",
+        "size": 4086,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.build-run-result/1.schema.json",
+        "size": 3521,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.build-run-result/2.schema.json",
+        "size": 3695,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.build-settings/1.schema.json",
+        "size": 1824,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.build-settings/2.schema.json",
+        "size": 1998,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.bundle-id/1.schema.json",
+        "size": 1514,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.bundle-id/2.schema.json",
+        "size": 1688,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.capture-result/1.schema.json",
+        "size": 5055,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.capture-result/2.schema.json",
+        "size": 9951,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.coverage-result/1.schema.json",
+        "size": 6071,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.coverage-result/2.schema.json",
+        "size": 6245,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.debug-breakpoint-result/1.schema.json",
+        "size": 3823,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.debug-breakpoint-result/2.schema.json",
+        "size": 3997,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.debug-command-result/1.schema.json",
+        "size": 1399,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.debug-command-result/2.schema.json",
+        "size": 1573,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.debug-session-action/1.schema.json",
+        "size": 2289,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.debug-session-action/2.schema.json",
+        "size": 2463,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.debug-stack-result/1.schema.json",
+        "size": 3049,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.debug-stack-result/2.schema.json",
+        "size": 3223,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.debug-variables-result/1.schema.json",
+        "size": 3963,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.debug-variables-result/2.schema.json",
+        "size": 4137,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.device-list/1.schema.json",
+        "size": 2039,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.device-list/2.schema.json",
+        "size": 2213,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.doctor-report/1.schema.json",
+        "size": 2274,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.doctor-report/2.schema.json",
+        "size": 2448,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.error/1.schema.json",
+        "size": 1185,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.install-result/1.schema.json",
+        "size": 1829,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.install-result/2.schema.json",
+        "size": 2003,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.launch-result/1.schema.json",
+        "size": 2149,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.launch-result/2.schema.json",
+        "size": 2323,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.process-list/1.schema.json",
+        "size": 2286,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.process-list/2.schema.json",
+        "size": 2460,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.project-list/1.schema.json",
+        "size": 2777,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.project-list/2.schema.json",
+        "size": 2951,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.scaffold-result/1.schema.json",
+        "size": 2139,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.scaffold-result/2.schema.json",
+        "size": 2313,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.scheme-list/1.schema.json",
+        "size": 2012,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.scheme-list/2.schema.json",
+        "size": 2186,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.session-defaults/1.schema.json",
+        "size": 1869,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.session-defaults/2.schema.json",
+        "size": 2043,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.session-profile/1.schema.json",
+        "size": 1216,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.session-profile/2.schema.json",
+        "size": 1390,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.simulator-action-result/1.schema.json",
+        "size": 5388,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.simulator-action-result/2.schema.json",
+        "size": 5562,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.simulator-list/1.schema.json",
+        "size": 1754,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.simulator-list/2.schema.json",
+        "size": 1928,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.stop-result/1.schema.json",
+        "size": 1994,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.stop-result/2.schema.json",
+        "size": 2168,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.test-result/1.schema.json",
+        "size": 4297,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.test-result/2.schema.json",
+        "size": 4471,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.test-result/3.schema.json",
+        "size": 4885,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.ui-action-result/1.schema.json",
+        "size": 6474,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.ui-action-result/2.schema.json",
+        "size": 12697,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.ui-action-result/3.schema.json",
+        "size": 14078,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.workflow-selection/1.schema.json",
+        "size": 1544,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.workflow-selection/2.schema.json",
+        "size": 1718,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.xcode-bridge-call-result/1.schema.json",
+        "size": 1709,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.xcode-bridge-call-result/2.schema.json",
+        "size": 1872,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.xcode-bridge-call-result/3.schema.json",
+        "size": 2046,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.xcode-bridge-status/1.schema.json",
+        "size": 1336,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.xcode-bridge-status/2.schema.json",
+        "size": 1510,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.xcode-bridge-sync/1.schema.json",
+        "size": 1847,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.xcode-bridge-sync/2.schema.json",
+        "size": 2021,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.xcode-bridge-tool-list/1.schema.json",
+        "size": 2338,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.xcode-bridge-tool-list/2.schema.json",
+        "size": 1424,
+        "mode": 420
+      },
+      {
+        "path": "schemas/structured-output/mobilebuildmcp.output.xcode-bridge-tool-list/3.schema.json",
+        "size": 1598,
+        "mode": 420
+      },
+      {
+        "path": "skills/mobilebuildmcp-cli/SKILL.md",
+        "size": 1671,
+        "mode": 420
+      },
+      {
+        "path": "skills/mobilebuildmcp/SKILL.md",
+        "size": 2623,
+        "mode": 420
+      }
+    ],
+    "entryCount": 1061,
+    "bundled": []
+  }
+]

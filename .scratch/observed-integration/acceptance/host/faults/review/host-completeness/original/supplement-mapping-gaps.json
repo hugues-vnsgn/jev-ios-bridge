@@ -1,0 +1,232 @@
+[
+  {
+    "id": "S1",
+    "hostRows": "H01/H02",
+    "missingFrom": "schema.json",
+    "normative": "public-contract:30; seam-decision:83",
+    "requiredOracle": "Ambiguous guards/target, disabled target, missing touch capability and expired capture must give their exact refusal reason with one capture/zero input.",
+    "primarySource": "tests/observed-service.test.ts",
+    "lines": [
+      336,
+      358
+    ],
+    "sourceSha256": "b80d5741d34f6cd1a0c350c5c6ddc50295f0483253eef0a111387476567222db",
+    "additionalSourceAnchors": [
+      "tests/admission-driver.test.ts:345\u2013382"
+    ],
+    "actualCombinedPassingLogLines": {
+      "node26": [
+        "\u2714 ambiguous-after refuses with settled capture and no input (681.037833ms)",
+        "\u2714 ambiguous-target refuses with settled capture and no input (755.69175ms)",
+        "\u2714 target-disabled refuses with settled capture and no input (998.558708ms)",
+        "\u2714 missing-touch refuses with settled capture and no input (824.101334ms)",
+        "\u2714 invalid-expiry refuses with settled capture and no input (805.808417ms)",
+        "\u2714 absent-condition refuses with settled capture and no input (638.747334ms)"
+      ],
+      "node24": [
+        "\u2714 ambiguous-after refuses with settled capture and no input (715.168375ms)",
+        "\u2714 ambiguous-target refuses with settled capture and no input (753.409292ms)",
+        "\u2714 target-disabled refuses with settled capture and no input (1064.289041ms)",
+        "\u2714 missing-touch refuses with settled capture and no input (908.2235ms)",
+        "\u2714 invalid-expiry refuses with settled capture and no input (661.987708ms)",
+        "\u2714 absent-condition refuses with settled capture and no input (678.150792ms)"
+      ]
+    },
+    "evidenceClass": "Already executed source assertions in actual1675 gates; direct/shared-module supplements must not be labeled as new per-variant CLI/MCP raw executions."
+  },
+  {
+    "id": "S2",
+    "hostRows": "H03",
+    "missingFrom": "identity.json",
+    "normative": "public-contract:34; validation-matrix:30",
+    "requiredOracle": "Configuration failure/retirement race must defer to immutable retrieval or authoritative ALLOCATION_NOT_READY without binding/effects.",
+    "primarySource": "tests/observed-contract.test.ts",
+    "lines": [
+      83,
+      127
+    ],
+    "sourceSha256": "583b0b8ab4b76358eb1e9a7f083ddd4302b7dbede3d0183210afa3fdc6ed21e3",
+    "additionalSourceAnchors": [
+      "tests/observed-cli.test.ts:69\u201391",
+      "tests/observed-mcp.test.ts:130\u2013139",
+      "tests/observed-contract.test.ts:111\u2013128"
+    ],
+    "actualCombinedPassingLogLines": {
+      "node26": [
+        "\u2714 configuration validation preserves binding priority across a race and fails safely when authority is unavailable (69.462958ms)"
+      ],
+      "node24": [
+        "\u2714 configuration validation preserves binding priority across a race and fails safely when authority is unavailable (51.24375ms)"
+      ]
+    },
+    "evidenceClass": "Already executed source assertions in actual1675 gates; direct/shared-module supplements must not be labeled as new per-variant CLI/MCP raw executions."
+  },
+  {
+    "id": "S3",
+    "hostRows": "H03/H04",
+    "missingFrom": "identity.json",
+    "normative": "allocation-contract:74,82,115",
+    "requiredOracle": "Distinct concurrent reservations competing for the eighth byte/capacity slot allow one reserved/one BUDGET_EXHAUSTED; persisted capacity corruption/overflow cannot become partial or zero capacity.",
+    "primarySource": "tests/admission-allocation.test.ts",
+    "lines": [
+      223,
+      235
+    ],
+    "sourceSha256": "13eecf7dfd821fc3bb27c3bc4a9d826eb25bb493585f46c5615c2fed07675ada",
+    "additionalSourceAnchors": [
+      "tests/admission-allocation.test.ts:441\u2013517",
+      "tests/observed-allocation.test.ts:511\u2013527,663\u2013673"
+    ],
+    "actualCombinedPassingLogLines": {
+      "node26": [
+        "\u2714 concurrent byte/capacity boundary admits allocation eight and refuses nine (1374.734333ms)"
+      ],
+      "node24": [
+        "\u2714 concurrent byte/capacity boundary admits allocation eight and refuses nine (1405.429792ms)"
+      ]
+    },
+    "evidenceClass": "Already executed source assertions in actual1675 gates; direct/shared-module supplements must not be labeled as new per-variant CLI/MCP raw executions."
+  },
+  {
+    "id": "S4",
+    "hostRows": "H04",
+    "missingFrom": "identity.json",
+    "normative": "allocation-contract:76,78; inventory-decision:38,83",
+    "requiredOracle": "Unavailable supplied identity yields INVENTORY_INELIGIBLE after only listing, no boot/create fallback; compatible installed metadata and immutable simulator binary checks must reject missing/incompatible variants.",
+    "primarySource": "tests/observed-allocation.test.ts",
+    "lines": [
+      65,
+      74
+    ],
+    "sourceSha256": "77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad",
+    "additionalSourceAnchors": [
+      "tests/admission-driver.test.ts:66\u2013197",
+      "tests/observed-allocation-config.test.ts:51\u201386,123\u2013165",
+      "tests/observed-artifact.test.ts:55\u2013100,113\u2013122"
+    ],
+    "actualCombinedPassingLogLines": {
+      "node26": [
+        "\u2714 unavailable supplied vendor identity refuses before boot and never switches to create (1241.150333ms)"
+      ],
+      "node24": [
+        "\u2714 unavailable supplied vendor identity refuses before boot and never switches to create (1111.369792ms)"
+      ]
+    },
+    "evidenceClass": "Already executed source assertions in actual1675 gates; direct/shared-module supplements must not be labeled as new per-variant CLI/MCP raw executions."
+  },
+  {
+    "id": "S5",
+    "hostRows": "H05",
+    "missingFrom": "cancel.json",
+    "normative": "allocation-contract:72,101,105; public-contract:30,77",
+    "requiredOracle": "Shared boot/readiness/overall deadline and separate aggregate5000ms finalization; failed durable cancellation still revokes local issuance, targets only owned work, cannot become ready/success.",
+    "primarySource": "tests/observed-allocation.test.ts",
+    "lines": [
+      335,
+      405
+    ],
+    "sourceSha256": "77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad",
+    "additionalSourceAnchors": [
+      "tests/observed-allocation.test.ts:606\u2013660",
+      "tests/observed-service.test.ts:662\u2013769"
+    ],
+    "actualCombinedPassingLogLines": {
+      "node26": [
+        "\u2714 aggregate booting stage budget covers every internal call without resetting on a settled response (685.184583ms)",
+        "\u2714 aggregate readiness stage budget covers every internal call without resetting on a settled response (601.103458ms)"
+      ],
+      "node24": [
+        "\u2714 aggregate booting stage budget covers every internal call without resetting on a settled response (372.307ms)",
+        "\u2714 aggregate readiness stage budget covers every internal call without resetting on a settled response (843.345542ms)"
+      ]
+    },
+    "evidenceClass": "Already executed source assertions in actual1675 gates; direct/shared-module supplements must not be labeled as new per-variant CLI/MCP raw executions."
+  },
+  {
+    "id": "S6",
+    "hostRows": "H06",
+    "missingFrom": "crash.json",
+    "normative": "allocation-contract:107; admission-decision:155",
+    "requiredOracle": "Lost preparation reserve/stage/create-start/receipt/park and consume COMMIT replies resolve only from fresh durable authority, never replay or attach falsely.",
+    "primarySource": "tests/observed-allocation.test.ts",
+    "lines": [
+      492,
+      508
+    ],
+    "sourceSha256": "77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad",
+    "additionalSourceAnchors": [
+      "tests/observed-service.test.ts:589\u2013606",
+      "tests/admission-allocation.test.ts:260\u2013280,388\u2013419"
+    ],
+    "actualCombinedPassingLogLines": {
+      "node26": [
+        "\u2714 lost stageAllocation commit response uses fresh durable state and never replays (459.677375ms)",
+        "\u2714 lost startCreation commit response uses fresh durable state and never replays (351.416625ms)",
+        "\u2714 lost recordCreation commit response uses fresh durable state and never replays (372.625625ms)",
+        "\u2714 lost parkAllocation commit response uses fresh durable state and never replays (904.167333ms)",
+        "\u2714 lost reservation commit reply returns only fresh accepted authority, never false no-acceptance or a replay (229.424125ms)"
+      ],
+      "node24": [
+        "\u2714 lost stageAllocation commit response uses fresh durable state and never replays (446.4405ms)",
+        "\u2714 lost startCreation commit response uses fresh durable state and never replays (312.476708ms)",
+        "\u2714 lost recordCreation commit response uses fresh durable state and never replays (353.59625ms)",
+        "\u2714 lost parkAllocation commit response uses fresh durable state and never replays (956.972542ms)",
+        "\u2714 lost reservation commit reply returns only fresh accepted authority, never false no-acceptance or a replay (280.1885ms)"
+      ]
+    },
+    "evidenceClass": "Already executed source assertions in actual1675 gates; direct/shared-module supplements must not be labeled as new per-variant CLI/MCP raw executions."
+  },
+  {
+    "id": "S7",
+    "hostRows": "H07",
+    "missingFrom": "storage.json",
+    "normative": "allocation-contract:101; admission-decision:155",
+    "requiredOracle": "Preparation evidence publication/readiness screenshot failure must quarantine without parking or claiming nonexistent evidence; actual corrupt capacity/manifest/unsafe permissions fail closed.",
+    "primarySource": "tests/observed-allocation.test.ts",
+    "lines": [
+      696,
+      708
+    ],
+    "sourceSha256": "77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad",
+    "additionalSourceAnchors": [
+      "tests/observed-allocation.test.ts:478\u2013490,529\u2013534",
+      "tests/admission-allocation.test.ts:493\u2013517",
+      "tests/admission-migration.test.ts:242\u2013253"
+    ],
+    "actualCombinedPassingLogLines": {
+      "node26": [
+        "\u2714 required diagnostic publication failure quarantines a settled known install refusal (607.679833ms)"
+      ],
+      "node24": [
+        "\u2714 required diagnostic publication failure quarantines a settled known install refusal (545.728375ms)"
+      ]
+    },
+    "evidenceClass": "Already executed source assertions in actual1675 gates; direct/shared-module supplements must not be labeled as new per-variant CLI/MCP raw executions."
+  },
+  {
+    "id": "S8",
+    "hostRows": "H08",
+    "missingFrom": "migration.json",
+    "normative": "admission-decision:161; allocation-contract:52,107; validation-matrix:35",
+    "requiredOracle": "Migration guard must block existing handles/new readers/dispatch, interruption cannot recreate authority, activation revalidates manifest; historical read-only projection remains immutable under current disposition.",
+    "primarySource": "tests/admission-migration.test.ts",
+    "lines": [
+      201,
+      252
+    ],
+    "sourceSha256": "ad508ff49805eb79ea929b920f7748324d65c5111f4e5771a6c17a42060877e7",
+    "additionalSourceAnchors": [
+      "tests/admission-migration.test.ts:228\u2013253",
+      "tests/observed-allocation.test.ts:738\u2013837"
+    ],
+    "actualCombinedPassingLogLines": {
+      "node26": [
+        "\u2714 migration guard blocks existing handles and independent readers; a stranded guard is never reclaimed (410.403208ms)"
+      ],
+      "node24": [
+        "\u2714 migration guard blocks existing handles and independent readers; a stranded guard is never reclaimed (408.109ms)"
+      ]
+    },
+    "evidenceClass": "Already executed source assertions in actual1675 gates; direct/shared-module supplements must not be labeled as new per-variant CLI/MCP raw executions."
+  }
+]

@@ -1,0 +1,4809 @@
+{
+  "version": 1,
+  "status": "UNVERIFIED",
+  "rows": [
+    "H01",
+    "H02"
+  ],
+  "required": "Strict public requests and all seven CLI/MCP envelopes, outcomes, gate modes and key-free startup.",
+  "productCommit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
+  "acceptanceOwner": "Root",
+  "reason": "All mapped cases PASS with both integrated gates; whole-row completeness audit pending.",
+  "cases": [
+    {
+      "id": "H01.01.cli.action.missing-version",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/missing-version",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "UNSUPPORTED_VERSION; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.action.unsupported-version",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/unsupported-version",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "UNSUPPORTED_VERSION; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.action.extra-field",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/extra-field",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.action.raw-udid",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/raw-udid",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.action.coordinates",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/coordinates",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.action.timeout-min-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/timeout-min-adjacent",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.action.timeout-max-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/timeout-max-adjacent",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.action.timeout-fraction",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/timeout-fraction",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.action.id-empty",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/id-empty",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.action.id-max-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/id-max-adjacent",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.action.id-path",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/id-path",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.action.allocation-id",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/allocation-id",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.action.guard-empty",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/guard-empty",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.action.guard-max-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/guard-max-adjacent",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.action.absent-max-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/absent-max-adjacent",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.action.selector-empty",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/selector-empty",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.action.selector-value-only",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/selector-value-only",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.action.selector-max-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/selector-max-adjacent",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.action.guard-extra",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/guard-extra",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.preparation.missing-version",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/missing-version",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.preparation.unsupported-version",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/unsupported-version",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "UNSUPPORTED_VERSION; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.preparation.extra-field",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/extra-field",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.preparation.raw-udid",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/raw-udid",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.preparation.timeout-min-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/timeout-min-adjacent",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.preparation.timeout-max-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/timeout-max-adjacent",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.preparation.id-empty",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/id-empty",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.preparation.id-max-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/id-max-adjacent",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.preparation.path-relative",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/path-relative",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.preparation.path-max-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/path-max-adjacent",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.preparation.path-null",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/path-null",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.preparation.source-extra",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/source-extra",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.action.missing-version",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/missing-version",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "UNSUPPORTED_VERSION; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.action.unsupported-version",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/unsupported-version",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "UNSUPPORTED_VERSION; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.action.extra-field",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/extra-field",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.action.raw-udid",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/raw-udid",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.action.coordinates",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/coordinates",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.action.timeout-min-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/timeout-min-adjacent",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.action.timeout-max-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/timeout-max-adjacent",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.action.timeout-fraction",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/timeout-fraction",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.action.id-empty",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/id-empty",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.action.id-max-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/id-max-adjacent",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.action.id-path",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/id-path",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.action.allocation-id",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/allocation-id",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.action.guard-empty",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/guard-empty",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.action.guard-max-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/guard-max-adjacent",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.action.absent-max-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/absent-max-adjacent",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.action.selector-empty",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/selector-empty",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.action.selector-value-only",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/selector-value-only",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.action.selector-max-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/selector-max-adjacent",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.action.guard-extra",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/guard-extra",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.preparation.missing-version",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/missing-version",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.preparation.unsupported-version",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/unsupported-version",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "UNSUPPORTED_VERSION; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.preparation.extra-field",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/extra-field",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.preparation.raw-udid",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/raw-udid",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.preparation.timeout-min-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/timeout-min-adjacent",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.preparation.timeout-max-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/timeout-max-adjacent",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.preparation.id-empty",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/id-empty",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.preparation.id-max-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/id-max-adjacent",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.preparation.path-relative",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/path-relative",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.preparation.path-max-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/path-max-adjacent",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.preparation.path-null",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/path-null",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.preparation.source-extra",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "preparation/source-extra",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.cli.min",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "min",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0bd5747f6d68fa03d140"
+        ],
+        "added-node24": [
+          "group-85d0193ea8f624515dc6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.cli.min+1",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "min+1",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0bd5747f6d68fa03d140"
+        ],
+        "added-node24": [
+          "group-85d0193ea8f624515dc6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.cli.max-1",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "max-1",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0bd5747f6d68fa03d140"
+        ],
+        "added-node24": [
+          "group-85d0193ea8f624515dc6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.cli.max",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "max",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0bd5747f6d68fa03d140"
+        ],
+        "added-node24": [
+          "group-85d0193ea8f624515dc6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.cli.wait0",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "wait0",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0bd5747f6d68fa03d140"
+        ],
+        "added-node24": [
+          "group-85d0193ea8f624515dc6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.cli.wait1",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "wait1",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0bd5747f6d68fa03d140"
+        ],
+        "added-node24": [
+          "group-85d0193ea8f624515dc6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.cli.wait44999",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "wait44999",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0bd5747f6d68fa03d140"
+        ],
+        "added-node24": [
+          "group-85d0193ea8f624515dc6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.cli.wait45000",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "wait45000",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0bd5747f6d68fa03d140"
+        ],
+        "added-node24": [
+          "group-85d0193ea8f624515dc6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.cli.wait-1",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "wait-1",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0bd5747f6d68fa03d140"
+        ],
+        "added-node24": [
+          "group-85d0193ea8f624515dc6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.cli.wait45001",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "wait45001",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0bd5747f6d68fa03d140"
+        ],
+        "added-node24": [
+          "group-85d0193ea8f624515dc6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.cli.wait0.5",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "wait0.5",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0bd5747f6d68fa03d140"
+        ],
+        "added-node24": [
+          "group-85d0193ea8f624515dc6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.mcp.min",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "min",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-4ac96f894839f19477c9"
+        ],
+        "added-node24": [
+          "group-57ef22055e88bb40b020"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.mcp.min+1",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "min+1",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-4ac96f894839f19477c9"
+        ],
+        "added-node24": [
+          "group-57ef22055e88bb40b020"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.mcp.max-1",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "max-1",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-4ac96f894839f19477c9"
+        ],
+        "added-node24": [
+          "group-57ef22055e88bb40b020"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.mcp.max",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "max",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-4ac96f894839f19477c9"
+        ],
+        "added-node24": [
+          "group-57ef22055e88bb40b020"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.mcp.wait0",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "wait0",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-4ac96f894839f19477c9"
+        ],
+        "added-node24": [
+          "group-57ef22055e88bb40b020"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.mcp.wait1",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "wait1",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-4ac96f894839f19477c9"
+        ],
+        "added-node24": [
+          "group-57ef22055e88bb40b020"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.mcp.wait44999",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "wait44999",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-4ac96f894839f19477c9"
+        ],
+        "added-node24": [
+          "group-57ef22055e88bb40b020"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.mcp.wait45000",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "wait45000",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-4ac96f894839f19477c9"
+        ],
+        "added-node24": [
+          "group-57ef22055e88bb40b020"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.mcp.wait-1",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "wait-1",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-4ac96f894839f19477c9"
+        ],
+        "added-node24": [
+          "group-57ef22055e88bb40b020"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.mcp.wait45001",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "wait45001",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-4ac96f894839f19477c9"
+        ],
+        "added-node24": [
+          "group-57ef22055e88bb40b020"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.mcp.wait0.5",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "wait0.5",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND or ACTION_NOT_FOUND at valid bounds; invalid wait rejected; zero held allocation/calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-4ac96f894839f19477c9"
+        ],
+        "added-node24": [
+          "group-57ef22055e88bb40b020"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.03.cli.65535",
+      "hostRow": "H01",
+      "scenario": "UTF8 original bytes",
+      "variant": "65535",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:150",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:153",
+        "tests/observed-host-fault.test.ts:155",
+        "tests/observed-host-fault.test.ts:156"
+      ],
+      "expected": "<=65536 reaches missing-allocation authority; 65537 invalid; zero calls/reservations",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-aa596436c2d6b495f479"
+        ],
+        "added-node24": [
+          "group-fde74ba8a892a8b1290d"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.03.cli.65536",
+      "hostRow": "H01",
+      "scenario": "UTF8 original bytes",
+      "variant": "65536",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:150",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:153",
+        "tests/observed-host-fault.test.ts:155",
+        "tests/observed-host-fault.test.ts:156"
+      ],
+      "expected": "<=65536 reaches missing-allocation authority; 65537 invalid; zero calls/reservations",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-aa596436c2d6b495f479"
+        ],
+        "added-node24": [
+          "group-fde74ba8a892a8b1290d"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.03.cli.65537",
+      "hostRow": "H01",
+      "scenario": "UTF8 original bytes",
+      "variant": "65537",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:150",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:153",
+        "tests/observed-host-fault.test.ts:155",
+        "tests/observed-host-fault.test.ts:156"
+      ],
+      "expected": "<=65536 reaches missing-allocation authority; 65537 invalid; zero calls/reservations",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-aa596436c2d6b495f479"
+        ],
+        "added-node24": [
+          "group-fde74ba8a892a8b1290d"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.03.mcp.65535",
+      "hostRow": "H01",
+      "scenario": "UTF8 original bytes",
+      "variant": "65535",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:150",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:153",
+        "tests/observed-host-fault.test.ts:155",
+        "tests/observed-host-fault.test.ts:156"
+      ],
+      "expected": "<=65536 reaches missing-allocation authority; 65537 invalid; zero calls/reservations",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-444a17188ad7d5befa6a"
+        ],
+        "added-node24": [
+          "group-6665cbd10cc7d53a8023"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.03.mcp.65536",
+      "hostRow": "H01",
+      "scenario": "UTF8 original bytes",
+      "variant": "65536",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:150",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:153",
+        "tests/observed-host-fault.test.ts:155",
+        "tests/observed-host-fault.test.ts:156"
+      ],
+      "expected": "<=65536 reaches missing-allocation authority; 65537 invalid; zero calls/reservations",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-444a17188ad7d5befa6a"
+        ],
+        "added-node24": [
+          "group-6665cbd10cc7d53a8023"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.03.mcp.65537",
+      "hostRow": "H01",
+      "scenario": "UTF8 original bytes",
+      "variant": "65537",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:150",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:153",
+        "tests/observed-host-fault.test.ts:155",
+        "tests/observed-host-fault.test.ts:156"
+      ],
+      "expected": "<=65536 reaches missing-allocation authority; 65537 invalid; zero calls/reservations",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-444a17188ad7d5befa6a"
+        ],
+        "added-node24": [
+          "group-6665cbd10cc7d53a8023"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.04.cli.timeout1000",
+      "hostRow": "H01",
+      "scenario": "valid preparation bounds",
+      "variant": "timeout1000",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:377",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:382",
+        "tests/observed-host-fault.test.ts:386",
+        "tests/observed-host-fault.test.ts:387",
+        "tests/observed-host-fault.test.ts:392"
+      ],
+      "expected": "exact parsed timeout/build500 accepted; deadline may expire; invalid artifacts have no reservation",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-f90443b8612ee6bcd52e"
+        ],
+        "added-node24": [
+          "group-11352dc20335f9e9bd42"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.04.cli.timeout1001",
+      "hostRow": "H01",
+      "scenario": "valid preparation bounds",
+      "variant": "timeout1001",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:377",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:382",
+        "tests/observed-host-fault.test.ts:386",
+        "tests/observed-host-fault.test.ts:387",
+        "tests/observed-host-fault.test.ts:392"
+      ],
+      "expected": "exact parsed timeout/build500 accepted; deadline may expire; invalid artifacts have no reservation",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-f90443b8612ee6bcd52e"
+        ],
+        "added-node24": [
+          "group-11352dc20335f9e9bd42"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.04.cli.timeout899999",
+      "hostRow": "H01",
+      "scenario": "valid preparation bounds",
+      "variant": "timeout899999",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:377",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:382",
+        "tests/observed-host-fault.test.ts:386",
+        "tests/observed-host-fault.test.ts:387",
+        "tests/observed-host-fault.test.ts:392"
+      ],
+      "expected": "exact parsed timeout/build500 accepted; deadline may expire; invalid artifacts have no reservation",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-f90443b8612ee6bcd52e"
+        ],
+        "added-node24": [
+          "group-11352dc20335f9e9bd42"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.04.cli.timeout900000",
+      "hostRow": "H01",
+      "scenario": "valid preparation bounds",
+      "variant": "timeout900000",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:377",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:382",
+        "tests/observed-host-fault.test.ts:386",
+        "tests/observed-host-fault.test.ts:387",
+        "tests/observed-host-fault.test.ts:392"
+      ],
+      "expected": "exact parsed timeout/build500 accepted; deadline may expire; invalid artifacts have no reservation",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-f90443b8612ee6bcd52e"
+        ],
+        "added-node24": [
+          "group-11352dc20335f9e9bd42"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.04.cli.path1",
+      "hostRow": "H01",
+      "scenario": "valid preparation bounds",
+      "variant": "path1",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:377",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:382",
+        "tests/observed-host-fault.test.ts:386",
+        "tests/observed-host-fault.test.ts:387",
+        "tests/observed-host-fault.test.ts:392"
+      ],
+      "expected": "exact parsed timeout/build500 accepted; deadline may expire; invalid artifacts have no reservation",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-f90443b8612ee6bcd52e"
+        ],
+        "added-node24": [
+          "group-11352dc20335f9e9bd42"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.04.cli.path2",
+      "hostRow": "H01",
+      "scenario": "valid preparation bounds",
+      "variant": "path2",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:377",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:382",
+        "tests/observed-host-fault.test.ts:386",
+        "tests/observed-host-fault.test.ts:387",
+        "tests/observed-host-fault.test.ts:392"
+      ],
+      "expected": "exact parsed timeout/build500 accepted; deadline may expire; invalid artifacts have no reservation",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-f90443b8612ee6bcd52e"
+        ],
+        "added-node24": [
+          "group-11352dc20335f9e9bd42"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.04.cli.path4095",
+      "hostRow": "H01",
+      "scenario": "valid preparation bounds",
+      "variant": "path4095",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:377",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:382",
+        "tests/observed-host-fault.test.ts:386",
+        "tests/observed-host-fault.test.ts:387",
+        "tests/observed-host-fault.test.ts:392"
+      ],
+      "expected": "exact parsed timeout/build500 accepted; deadline may expire; invalid artifacts have no reservation",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-f90443b8612ee6bcd52e"
+        ],
+        "added-node24": [
+          "group-11352dc20335f9e9bd42"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.04.cli.path4096",
+      "hostRow": "H01",
+      "scenario": "valid preparation bounds",
+      "variant": "path4096",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:377",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:382",
+        "tests/observed-host-fault.test.ts:386",
+        "tests/observed-host-fault.test.ts:387",
+        "tests/observed-host-fault.test.ts:392"
+      ],
+      "expected": "exact parsed timeout/build500 accepted; deadline may expire; invalid artifacts have no reservation",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-f90443b8612ee6bcd52e"
+        ],
+        "added-node24": [
+          "group-11352dc20335f9e9bd42"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.04.mcp.timeout1000",
+      "hostRow": "H01",
+      "scenario": "valid preparation bounds",
+      "variant": "timeout1000",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:377",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:382",
+        "tests/observed-host-fault.test.ts:386",
+        "tests/observed-host-fault.test.ts:387",
+        "tests/observed-host-fault.test.ts:392"
+      ],
+      "expected": "exact parsed timeout/build500 accepted; deadline may expire; invalid artifacts have no reservation",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-c43338ec53267215b94d"
+        ],
+        "added-node24": [
+          "group-b635617152c2e678b0a0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.04.mcp.timeout1001",
+      "hostRow": "H01",
+      "scenario": "valid preparation bounds",
+      "variant": "timeout1001",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:377",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:382",
+        "tests/observed-host-fault.test.ts:386",
+        "tests/observed-host-fault.test.ts:387",
+        "tests/observed-host-fault.test.ts:392"
+      ],
+      "expected": "exact parsed timeout/build500 accepted; deadline may expire; invalid artifacts have no reservation",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-c43338ec53267215b94d"
+        ],
+        "added-node24": [
+          "group-b635617152c2e678b0a0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.04.mcp.timeout899999",
+      "hostRow": "H01",
+      "scenario": "valid preparation bounds",
+      "variant": "timeout899999",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:377",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:382",
+        "tests/observed-host-fault.test.ts:386",
+        "tests/observed-host-fault.test.ts:387",
+        "tests/observed-host-fault.test.ts:392"
+      ],
+      "expected": "exact parsed timeout/build500 accepted; deadline may expire; invalid artifacts have no reservation",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-c43338ec53267215b94d"
+        ],
+        "added-node24": [
+          "group-b635617152c2e678b0a0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.04.mcp.timeout900000",
+      "hostRow": "H01",
+      "scenario": "valid preparation bounds",
+      "variant": "timeout900000",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:377",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:382",
+        "tests/observed-host-fault.test.ts:386",
+        "tests/observed-host-fault.test.ts:387",
+        "tests/observed-host-fault.test.ts:392"
+      ],
+      "expected": "exact parsed timeout/build500 accepted; deadline may expire; invalid artifacts have no reservation",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-c43338ec53267215b94d"
+        ],
+        "added-node24": [
+          "group-b635617152c2e678b0a0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.04.mcp.path1",
+      "hostRow": "H01",
+      "scenario": "valid preparation bounds",
+      "variant": "path1",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:377",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:382",
+        "tests/observed-host-fault.test.ts:386",
+        "tests/observed-host-fault.test.ts:387",
+        "tests/observed-host-fault.test.ts:392"
+      ],
+      "expected": "exact parsed timeout/build500 accepted; deadline may expire; invalid artifacts have no reservation",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-c43338ec53267215b94d"
+        ],
+        "added-node24": [
+          "group-b635617152c2e678b0a0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.04.mcp.path2",
+      "hostRow": "H01",
+      "scenario": "valid preparation bounds",
+      "variant": "path2",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:377",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:382",
+        "tests/observed-host-fault.test.ts:386",
+        "tests/observed-host-fault.test.ts:387",
+        "tests/observed-host-fault.test.ts:392"
+      ],
+      "expected": "exact parsed timeout/build500 accepted; deadline may expire; invalid artifacts have no reservation",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-c43338ec53267215b94d"
+        ],
+        "added-node24": [
+          "group-b635617152c2e678b0a0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.04.mcp.path4095",
+      "hostRow": "H01",
+      "scenario": "valid preparation bounds",
+      "variant": "path4095",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:377",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:382",
+        "tests/observed-host-fault.test.ts:386",
+        "tests/observed-host-fault.test.ts:387",
+        "tests/observed-host-fault.test.ts:392"
+      ],
+      "expected": "exact parsed timeout/build500 accepted; deadline may expire; invalid artifacts have no reservation",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-c43338ec53267215b94d"
+        ],
+        "added-node24": [
+          "group-b635617152c2e678b0a0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.04.mcp.path4096",
+      "hostRow": "H01",
+      "scenario": "valid preparation bounds",
+      "variant": "path4096",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:377",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:382",
+        "tests/observed-host-fault.test.ts:386",
+        "tests/observed-host-fault.test.ts:387",
+        "tests/observed-host-fault.test.ts:392"
+      ],
+      "expected": "exact parsed timeout/build500 accepted; deadline may expire; invalid artifacts have no reservation",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-c43338ec53267215b94d"
+        ],
+        "added-node24": [
+          "group-b635617152c2e678b0a0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.05.cli.65535",
+      "hostRow": "H01",
+      "scenario": "CLI raw whitespace bytes",
+      "variant": "65535",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:475",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:478",
+        "tests/observed-host-fault.test.ts:480",
+        "tests/observed-host-fault.test.ts:481",
+        "tests/observed-host-fault.test.ts:483"
+      ],
+      "expected": "one retained original reservation; duplicate no create; oversized raw file invalid with no additional calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-2e4556fb5be85ee1cc2d"
+        ],
+        "added-node24": [
+          "group-60dc1ed55adc3cedf209"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.05.cli.65536",
+      "hostRow": "H01",
+      "scenario": "CLI raw whitespace bytes",
+      "variant": "65536",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:475",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:478",
+        "tests/observed-host-fault.test.ts:480",
+        "tests/observed-host-fault.test.ts:481",
+        "tests/observed-host-fault.test.ts:483"
+      ],
+      "expected": "one retained original reservation; duplicate no create; oversized raw file invalid with no additional calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-2e4556fb5be85ee1cc2d"
+        ],
+        "added-node24": [
+          "group-60dc1ed55adc3cedf209"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.05.cli.65537",
+      "hostRow": "H01",
+      "scenario": "CLI raw whitespace bytes",
+      "variant": "65537",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:475",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:478",
+        "tests/observed-host-fault.test.ts:480",
+        "tests/observed-host-fault.test.ts:481",
+        "tests/observed-host-fault.test.ts:483"
+      ],
+      "expected": "one retained original reservation; duplicate no create; oversized raw file invalid with no additional calls",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-2e4556fb5be85ee1cc2d"
+        ],
+        "added-node24": [
+          "group-60dc1ed55adc3cedf209"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.01.cli.observed",
+      "hostRow": "H02",
+      "scenario": "public operation envelopes",
+      "variant": "observed",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:102",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:107",
+        "tests/observed-host-fault.test.ts:111",
+        "tests/observed-host-fault.test.ts:112",
+        "tests/observed-host-fault.test.ts:113",
+        "tests/observed-host-fault.test.ts:116",
+        "tests/observed-host-fault.test.ts:117",
+        "tests/observed-host-fault.test.ts:120",
+        "tests/observed-host-fault.test.ts:122"
+      ],
+      "expected": "4 outcomes/unresolved; CLI0/0/3/2/2; MCP committed snapshots not isError; touches1/0/0/1/1;7 enabled/5 disabled tools; no outbound network",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-2d79c56f76f2aff293e9"
+        ],
+        "added-node24": [
+          "group-ea8bc592f0ac23d101fc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.01.cli.already",
+      "hostRow": "H02",
+      "scenario": "public operation envelopes",
+      "variant": "already",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:102",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:107",
+        "tests/observed-host-fault.test.ts:111",
+        "tests/observed-host-fault.test.ts:112",
+        "tests/observed-host-fault.test.ts:113",
+        "tests/observed-host-fault.test.ts:116",
+        "tests/observed-host-fault.test.ts:117",
+        "tests/observed-host-fault.test.ts:120",
+        "tests/observed-host-fault.test.ts:122"
+      ],
+      "expected": "4 outcomes/unresolved; CLI0/0/3/2/2; MCP committed snapshots not isError; touches1/0/0/1/1;7 enabled/5 disabled tools; no outbound network",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-f124ce192f2a6b964286"
+        ],
+        "added-node24": [
+          "group-2354bce8babe60ea0f18"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.01.cli.refused",
+      "hostRow": "H02",
+      "scenario": "public operation envelopes",
+      "variant": "refused",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:102",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:107",
+        "tests/observed-host-fault.test.ts:111",
+        "tests/observed-host-fault.test.ts:112",
+        "tests/observed-host-fault.test.ts:113",
+        "tests/observed-host-fault.test.ts:116",
+        "tests/observed-host-fault.test.ts:117",
+        "tests/observed-host-fault.test.ts:120",
+        "tests/observed-host-fault.test.ts:122"
+      ],
+      "expected": "4 outcomes/unresolved; CLI0/0/3/2/2; MCP committed snapshots not isError; touches1/0/0/1/1;7 enabled/5 disabled tools; no outbound network",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-cf92d4ba9951f9a9274e"
+        ],
+        "added-node24": [
+          "group-0a214802fdf55b50e0d0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.01.cli.inconclusive",
+      "hostRow": "H02",
+      "scenario": "public operation envelopes",
+      "variant": "inconclusive",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:102",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:107",
+        "tests/observed-host-fault.test.ts:111",
+        "tests/observed-host-fault.test.ts:112",
+        "tests/observed-host-fault.test.ts:113",
+        "tests/observed-host-fault.test.ts:116",
+        "tests/observed-host-fault.test.ts:117",
+        "tests/observed-host-fault.test.ts:120",
+        "tests/observed-host-fault.test.ts:122"
+      ],
+      "expected": "4 outcomes/unresolved; CLI0/0/3/2/2; MCP committed snapshots not isError; touches1/0/0/1/1;7 enabled/5 disabled tools; no outbound network",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-72497c3a408288b2463a"
+        ],
+        "added-node24": [
+          "group-0d11a7eae9199be1d044"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.01.cli.unresolved",
+      "hostRow": "H02",
+      "scenario": "public operation envelopes",
+      "variant": "unresolved",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:102",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:107",
+        "tests/observed-host-fault.test.ts:111",
+        "tests/observed-host-fault.test.ts:112",
+        "tests/observed-host-fault.test.ts:113",
+        "tests/observed-host-fault.test.ts:116",
+        "tests/observed-host-fault.test.ts:117",
+        "tests/observed-host-fault.test.ts:120",
+        "tests/observed-host-fault.test.ts:122"
+      ],
+      "expected": "4 outcomes/unresolved; CLI0/0/3/2/2; MCP committed snapshots not isError; touches1/0/0/1/1;7 enabled/5 disabled tools; no outbound network",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-b92716efe2e8a7abfd2e"
+        ],
+        "added-node24": [
+          "group-15167019ff981b484e2f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.01.mcp.observed",
+      "hostRow": "H02",
+      "scenario": "public operation envelopes",
+      "variant": "observed",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:102",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:107",
+        "tests/observed-host-fault.test.ts:111",
+        "tests/observed-host-fault.test.ts:112",
+        "tests/observed-host-fault.test.ts:113",
+        "tests/observed-host-fault.test.ts:116",
+        "tests/observed-host-fault.test.ts:117",
+        "tests/observed-host-fault.test.ts:120",
+        "tests/observed-host-fault.test.ts:122"
+      ],
+      "expected": "4 outcomes/unresolved; CLI0/0/3/2/2; MCP committed snapshots not isError; touches1/0/0/1/1;7 enabled/5 disabled tools; no outbound network",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-99dfc883a5a7fb35b04a"
+        ],
+        "added-node24": [
+          "group-d6d37dd1c883a6bab6b6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.01.mcp.already",
+      "hostRow": "H02",
+      "scenario": "public operation envelopes",
+      "variant": "already",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:102",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:107",
+        "tests/observed-host-fault.test.ts:111",
+        "tests/observed-host-fault.test.ts:112",
+        "tests/observed-host-fault.test.ts:113",
+        "tests/observed-host-fault.test.ts:116",
+        "tests/observed-host-fault.test.ts:117",
+        "tests/observed-host-fault.test.ts:120",
+        "tests/observed-host-fault.test.ts:122"
+      ],
+      "expected": "4 outcomes/unresolved; CLI0/0/3/2/2; MCP committed snapshots not isError; touches1/0/0/1/1;7 enabled/5 disabled tools; no outbound network",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-739756c47ea81f57f0f2"
+        ],
+        "added-node24": [
+          "group-3de324c465fb0ea3835a"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.01.mcp.refused",
+      "hostRow": "H02",
+      "scenario": "public operation envelopes",
+      "variant": "refused",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:102",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:107",
+        "tests/observed-host-fault.test.ts:111",
+        "tests/observed-host-fault.test.ts:112",
+        "tests/observed-host-fault.test.ts:113",
+        "tests/observed-host-fault.test.ts:116",
+        "tests/observed-host-fault.test.ts:117",
+        "tests/observed-host-fault.test.ts:120",
+        "tests/observed-host-fault.test.ts:122"
+      ],
+      "expected": "4 outcomes/unresolved; CLI0/0/3/2/2; MCP committed snapshots not isError; touches1/0/0/1/1;7 enabled/5 disabled tools; no outbound network",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-a6f557138c012898d832"
+        ],
+        "added-node24": [
+          "group-985123029e265a214515"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.01.mcp.inconclusive",
+      "hostRow": "H02",
+      "scenario": "public operation envelopes",
+      "variant": "inconclusive",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:102",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:107",
+        "tests/observed-host-fault.test.ts:111",
+        "tests/observed-host-fault.test.ts:112",
+        "tests/observed-host-fault.test.ts:113",
+        "tests/observed-host-fault.test.ts:116",
+        "tests/observed-host-fault.test.ts:117",
+        "tests/observed-host-fault.test.ts:120",
+        "tests/observed-host-fault.test.ts:122"
+      ],
+      "expected": "4 outcomes/unresolved; CLI0/0/3/2/2; MCP committed snapshots not isError; touches1/0/0/1/1;7 enabled/5 disabled tools; no outbound network",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-53c7414b965a0e34e594"
+        ],
+        "added-node24": [
+          "group-5d6a91382557e99059a6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.01.mcp.unresolved",
+      "hostRow": "H02",
+      "scenario": "public operation envelopes",
+      "variant": "unresolved",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:102",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:107",
+        "tests/observed-host-fault.test.ts:111",
+        "tests/observed-host-fault.test.ts:112",
+        "tests/observed-host-fault.test.ts:113",
+        "tests/observed-host-fault.test.ts:116",
+        "tests/observed-host-fault.test.ts:117",
+        "tests/observed-host-fault.test.ts:120",
+        "tests/observed-host-fault.test.ts:122"
+      ],
+      "expected": "4 outcomes/unresolved; CLI0/0/3/2/2; MCP committed snapshots not isError; touches1/0/0/1/1;7 enabled/5 disabled tools; no outbound network",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-5d2b0aa84b3cdfb1d09c"
+        ],
+        "added-node24": [
+          "group-364cc553d5ab4d7935d4"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.02.cli.flag0",
+      "hostRow": "H02",
+      "scenario": "exact flag/parked retention",
+      "variant": "flag0",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:486",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:489",
+        "tests/observed-host-fault.test.ts:493",
+        "tests/observed-host-fault.test.ts:495",
+        "tests/observed-host-fault.test.ts:497",
+        "tests/observed-host-fault.test.ts:502",
+        "tests/observed-host-fault.test.ts:504",
+        "tests/observed-host-fault.test.ts:506"
+      ],
+      "expected": "disabled effect refuses; parked read/cancel/retire remain; capacity retained; no extra backend work",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-1e53edf6e012f7910caa"
+        ],
+        "added-node24": [
+          "group-dbab6a7a1a773a68951f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.02.cli.flagtrue",
+      "hostRow": "H02",
+      "scenario": "exact flag/parked retention",
+      "variant": "flagtrue",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:486",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:489",
+        "tests/observed-host-fault.test.ts:493",
+        "tests/observed-host-fault.test.ts:495",
+        "tests/observed-host-fault.test.ts:497",
+        "tests/observed-host-fault.test.ts:502",
+        "tests/observed-host-fault.test.ts:504",
+        "tests/observed-host-fault.test.ts:506"
+      ],
+      "expected": "disabled effect refuses; parked read/cancel/retire remain; capacity retained; no extra backend work",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-1e53edf6e012f7910caa"
+        ],
+        "added-node24": [
+          "group-dbab6a7a1a773a68951f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.02.cli.flagyes",
+      "hostRow": "H02",
+      "scenario": "exact flag/parked retention",
+      "variant": "flagyes",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:486",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:489",
+        "tests/observed-host-fault.test.ts:493",
+        "tests/observed-host-fault.test.ts:495",
+        "tests/observed-host-fault.test.ts:497",
+        "tests/observed-host-fault.test.ts:502",
+        "tests/observed-host-fault.test.ts:504",
+        "tests/observed-host-fault.test.ts:506"
+      ],
+      "expected": "disabled effect refuses; parked read/cancel/retire remain; capacity retained; no extra backend work",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-1e53edf6e012f7910caa"
+        ],
+        "added-node24": [
+          "group-dbab6a7a1a773a68951f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.02.cli.flagempty",
+      "hostRow": "H02",
+      "scenario": "exact flag/parked retention",
+      "variant": "flagempty",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:486",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:489",
+        "tests/observed-host-fault.test.ts:493",
+        "tests/observed-host-fault.test.ts:495",
+        "tests/observed-host-fault.test.ts:497",
+        "tests/observed-host-fault.test.ts:502",
+        "tests/observed-host-fault.test.ts:504",
+        "tests/observed-host-fault.test.ts:506"
+      ],
+      "expected": "disabled effect refuses; parked read/cancel/retire remain; capacity retained; no extra backend work",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-1e53edf6e012f7910caa"
+        ],
+        "added-node24": [
+          "group-dbab6a7a1a773a68951f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.02.cli.ready-read",
+      "hostRow": "H02",
+      "scenario": "exact flag/parked retention",
+      "variant": "ready-read",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:486",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:489",
+        "tests/observed-host-fault.test.ts:493",
+        "tests/observed-host-fault.test.ts:495",
+        "tests/observed-host-fault.test.ts:497",
+        "tests/observed-host-fault.test.ts:502",
+        "tests/observed-host-fault.test.ts:504",
+        "tests/observed-host-fault.test.ts:506"
+      ],
+      "expected": "disabled effect refuses; parked read/cancel/retire remain; capacity retained; no extra backend work",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-1e53edf6e012f7910caa"
+        ],
+        "added-node24": [
+          "group-dbab6a7a1a773a68951f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.02.cli.ready-cancel",
+      "hostRow": "H02",
+      "scenario": "exact flag/parked retention",
+      "variant": "ready-cancel",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:486",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:489",
+        "tests/observed-host-fault.test.ts:493",
+        "tests/observed-host-fault.test.ts:495",
+        "tests/observed-host-fault.test.ts:497",
+        "tests/observed-host-fault.test.ts:502",
+        "tests/observed-host-fault.test.ts:504",
+        "tests/observed-host-fault.test.ts:506"
+      ],
+      "expected": "disabled effect refuses; parked read/cancel/retire remain; capacity retained; no extra backend work",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-1e53edf6e012f7910caa"
+        ],
+        "added-node24": [
+          "group-dbab6a7a1a773a68951f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.02.cli.retire-retrieval",
+      "hostRow": "H02",
+      "scenario": "exact flag/parked retention",
+      "variant": "retire-retrieval",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:486",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:489",
+        "tests/observed-host-fault.test.ts:493",
+        "tests/observed-host-fault.test.ts:495",
+        "tests/observed-host-fault.test.ts:497",
+        "tests/observed-host-fault.test.ts:502",
+        "tests/observed-host-fault.test.ts:504",
+        "tests/observed-host-fault.test.ts:506"
+      ],
+      "expected": "disabled effect refuses; parked read/cancel/retire remain; capacity retained; no extra backend work",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-1e53edf6e012f7910caa"
+        ],
+        "added-node24": [
+          "group-dbab6a7a1a773a68951f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.02.mcp.flag0",
+      "hostRow": "H02",
+      "scenario": "exact flag/parked retention",
+      "variant": "flag0",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:486",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:489",
+        "tests/observed-host-fault.test.ts:493",
+        "tests/observed-host-fault.test.ts:495",
+        "tests/observed-host-fault.test.ts:497",
+        "tests/observed-host-fault.test.ts:502",
+        "tests/observed-host-fault.test.ts:504",
+        "tests/observed-host-fault.test.ts:506"
+      ],
+      "expected": "Actual MCP flag variant: exactly five retained observed tools, start/prepare absent; denied calls SDK -32602/Tool NAME not found, no result/store/backend effects; retained reads/cancel/retire available at flag0",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-2fb0a97a030ae9fc47b3"
+        ],
+        "added-node24": [
+          "group-e71818bc89213386b74f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.02.mcp.flagtrue",
+      "hostRow": "H02",
+      "scenario": "exact flag/parked retention",
+      "variant": "flagtrue",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:486",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:489",
+        "tests/observed-host-fault.test.ts:493",
+        "tests/observed-host-fault.test.ts:495",
+        "tests/observed-host-fault.test.ts:497",
+        "tests/observed-host-fault.test.ts:502",
+        "tests/observed-host-fault.test.ts:504",
+        "tests/observed-host-fault.test.ts:506"
+      ],
+      "expected": "Actual MCP flag variant: exactly five retained observed tools, start/prepare absent; denied calls SDK -32602/Tool NAME not found, no result/store/backend effects; retained reads/cancel/retire available at flag0",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-2fb0a97a030ae9fc47b3"
+        ],
+        "added-node24": [
+          "group-e71818bc89213386b74f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.02.mcp.flagyes",
+      "hostRow": "H02",
+      "scenario": "exact flag/parked retention",
+      "variant": "flagyes",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:486",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:489",
+        "tests/observed-host-fault.test.ts:493",
+        "tests/observed-host-fault.test.ts:495",
+        "tests/observed-host-fault.test.ts:497",
+        "tests/observed-host-fault.test.ts:502",
+        "tests/observed-host-fault.test.ts:504",
+        "tests/observed-host-fault.test.ts:506"
+      ],
+      "expected": "Actual MCP flag variant: exactly five retained observed tools, start/prepare absent; denied calls SDK -32602/Tool NAME not found, no result/store/backend effects; retained reads/cancel/retire available at flag0",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-2fb0a97a030ae9fc47b3"
+        ],
+        "added-node24": [
+          "group-e71818bc89213386b74f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.02.mcp.flagempty",
+      "hostRow": "H02",
+      "scenario": "exact flag/parked retention",
+      "variant": "flagempty",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:486",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:489",
+        "tests/observed-host-fault.test.ts:493",
+        "tests/observed-host-fault.test.ts:495",
+        "tests/observed-host-fault.test.ts:497",
+        "tests/observed-host-fault.test.ts:502",
+        "tests/observed-host-fault.test.ts:504",
+        "tests/observed-host-fault.test.ts:506"
+      ],
+      "expected": "Actual MCP flag variant: exactly five retained observed tools, start/prepare absent; denied calls SDK -32602/Tool NAME not found, no result/store/backend effects; retained reads/cancel/retire available at flag0",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-2fb0a97a030ae9fc47b3"
+        ],
+        "added-node24": [
+          "group-e71818bc89213386b74f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.02.mcp.ready-read",
+      "hostRow": "H02",
+      "scenario": "exact flag/parked retention",
+      "variant": "ready-read",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:486",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:489",
+        "tests/observed-host-fault.test.ts:493",
+        "tests/observed-host-fault.test.ts:495",
+        "tests/observed-host-fault.test.ts:497",
+        "tests/observed-host-fault.test.ts:502",
+        "tests/observed-host-fault.test.ts:504",
+        "tests/observed-host-fault.test.ts:506"
+      ],
+      "expected": "Actual MCP flag variant: exactly five retained observed tools, start/prepare absent; denied calls SDK -32602/Tool NAME not found, no result/store/backend effects; retained reads/cancel/retire available at flag0",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-2fb0a97a030ae9fc47b3"
+        ],
+        "added-node24": [
+          "group-e71818bc89213386b74f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.02.mcp.ready-cancel",
+      "hostRow": "H02",
+      "scenario": "exact flag/parked retention",
+      "variant": "ready-cancel",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:486",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:489",
+        "tests/observed-host-fault.test.ts:493",
+        "tests/observed-host-fault.test.ts:495",
+        "tests/observed-host-fault.test.ts:497",
+        "tests/observed-host-fault.test.ts:502",
+        "tests/observed-host-fault.test.ts:504",
+        "tests/observed-host-fault.test.ts:506"
+      ],
+      "expected": "Actual MCP flag variant: exactly five retained observed tools, start/prepare absent; denied calls SDK -32602/Tool NAME not found, no result/store/backend effects; retained reads/cancel/retire available at flag0",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-2fb0a97a030ae9fc47b3"
+        ],
+        "added-node24": [
+          "group-e71818bc89213386b74f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.02.mcp.retire-retrieval",
+      "hostRow": "H02",
+      "scenario": "exact flag/parked retention",
+      "variant": "retire-retrieval",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:486",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:489",
+        "tests/observed-host-fault.test.ts:493",
+        "tests/observed-host-fault.test.ts:495",
+        "tests/observed-host-fault.test.ts:497",
+        "tests/observed-host-fault.test.ts:502",
+        "tests/observed-host-fault.test.ts:504",
+        "tests/observed-host-fault.test.ts:506"
+      ],
+      "expected": "Actual MCP flag variant: exactly five retained observed tools, start/prepare absent; denied calls SDK -32602/Tool NAME not found, no result/store/backend effects; retained reads/cancel/retire available at flag0",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-2fb0a97a030ae9fc47b3"
+        ],
+        "added-node24": [
+          "group-e71818bc89213386b74f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.03.cli.acknowledged-boot-error",
+      "hostRow": "H02",
+      "scenario": "known preparation error",
+      "variant": "acknowledged-boot-error",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:509",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:513",
+        "tests/observed-host-fault.test.ts:514",
+        "tests/observed-host-fault.test.ts:515"
+      ],
+      "expected": "committed refused/BOOT_FAILED;CLI3,MCPundefined isError;1 boot,0 install;safe vendor-free snapshot",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-c2c2ef3e0e04e53ed8f4"
+        ],
+        "added-node24": [
+          "group-532d0e7180d1b1d5b087"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H02.03.mcp.acknowledged-boot-error",
+      "hostRow": "H02",
+      "scenario": "known preparation error",
+      "variant": "acknowledged-boot-error",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:509",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:513",
+        "tests/observed-host-fault.test.ts:514",
+        "tests/observed-host-fault.test.ts:515"
+      ],
+      "expected": "committed refused/BOOT_FAILED;CLI3,MCPundefined isError;1 boot,0 install;safe vendor-free snapshot",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-f7b01941e5108a353e93"
+        ],
+        "added-node24": [
+          "group-0984258019d5ffc2b917"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.cli.action.after-absent-max-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/after-absent-max-adjacent",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3e8c464ae84955bd15b"
+        ],
+        "added-node24": [
+          "group-38db8867f2283d3095dc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.cli.before.absent1",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "before/absent1",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND proves accepted absent guard length; zero backend calls/reservations",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0bd5747f6d68fa03d140"
+        ],
+        "added-node24": [
+          "group-85d0193ea8f624515dc6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.cli.before.absent11",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "before/absent11",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND proves accepted absent guard length; zero backend calls/reservations",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0bd5747f6d68fa03d140"
+        ],
+        "added-node24": [
+          "group-85d0193ea8f624515dc6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.cli.before.absent12",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "before/absent12",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND proves accepted absent guard length; zero backend calls/reservations",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0bd5747f6d68fa03d140"
+        ],
+        "added-node24": [
+          "group-85d0193ea8f624515dc6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.cli.after.absent1",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "after/absent1",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND proves accepted absent guard length; zero backend calls/reservations",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0bd5747f6d68fa03d140"
+        ],
+        "added-node24": [
+          "group-85d0193ea8f624515dc6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.cli.after.absent11",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "after/absent11",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND proves accepted absent guard length; zero backend calls/reservations",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0bd5747f6d68fa03d140"
+        ],
+        "added-node24": [
+          "group-85d0193ea8f624515dc6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.cli.after.absent12",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "after/absent12",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND proves accepted absent guard length; zero backend calls/reservations",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0bd5747f6d68fa03d140"
+        ],
+        "added-node24": [
+          "group-85d0193ea8f624515dc6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.01.mcp.action.after-absent-max-adjacent",
+      "hostRow": "H01",
+      "scenario": "CLI/MCP strict invalid input",
+      "variant": "action/after-absent-max-adjacent",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:19",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:51",
+        "tests/observed-host-fault.test.ts:52",
+        "tests/observed-host-fault.test.ts:53",
+        "tests/observed-host-fault.test.ts:54",
+        "tests/observed-host-fault.test.ts:55",
+        "tests/observed-host-fault.test.ts:56"
+      ],
+      "expected": "INVALID_REQUEST; CLI3/MCPisError; no calls; global pristine database bytes and capacity0 establish no inserted/released reservations including changed IDs",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-12172280c32033bcdf54"
+        ],
+        "added-node24": [
+          "group-421764ffe69fbd2b3fe0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.mcp.before.absent1",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "before/absent1",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND proves accepted absent guard length; zero backend calls/reservations",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-4ac96f894839f19477c9"
+        ],
+        "added-node24": [
+          "group-57ef22055e88bb40b020"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.mcp.before.absent11",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "before/absent11",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND proves accepted absent guard length; zero backend calls/reservations",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-4ac96f894839f19477c9"
+        ],
+        "added-node24": [
+          "group-57ef22055e88bb40b020"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.mcp.before.absent12",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "before/absent12",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND proves accepted absent guard length; zero backend calls/reservations",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-4ac96f894839f19477c9"
+        ],
+        "added-node24": [
+          "group-57ef22055e88bb40b020"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.mcp.after.absent1",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "after/absent1",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND proves accepted absent guard length; zero backend calls/reservations",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-4ac96f894839f19477c9"
+        ],
+        "added-node24": [
+          "group-57ef22055e88bb40b020"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.mcp.after.absent11",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "after/absent11",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND proves accepted absent guard length; zero backend calls/reservations",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-4ac96f894839f19477c9"
+        ],
+        "added-node24": [
+          "group-57ef22055e88bb40b020"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H01.02.mcp.after.absent12",
+      "hostRow": "H01",
+      "scenario": "valid action schema/reads",
+      "variant": "after/absent12",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:61",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:68",
+        "tests/observed-host-fault.test.ts:72",
+        "tests/observed-host-fault.test.ts:77",
+        "tests/observed-host-fault.test.ts:81",
+        "tests/observed-host-fault.test.ts:83",
+        "tests/observed-host-fault.test.ts:96"
+      ],
+      "expected": "ALLOCATION_NOT_FOUND proves accepted absent guard length; zero backend calls/reservations",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-4ac96f894839f19477c9"
+        ],
+        "added-node24": [
+          "group-57ef22055e88bb40b020"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    }
+  ],
+  "commands": {
+    "node26": {
+      "record": ".scratch/observed-integration/acceptance/host/faults/integration/full-gates/composed-host-node26.json",
+      "sha256": "b096b6dc6c25e2133dae89fbf41d1a577d27ab54027655a12fe292a5834954d0",
+      "node": "v26.8.1",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "counts": {
+        "tests": 1675,
+        "pass": 1675,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "commit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433"
+    },
+    "node24": {
+      "record": ".scratch/observed-integration/acceptance/host/faults/integration/full-gates/composed-host-node24.json",
+      "sha256": "53eeeb47bb602d7b83f45a5e26d47a43ca36b3d9be72e65c6645fe60f86173bb",
+      "node": "v24.0.0",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "counts": {
+        "tests": 1675,
+        "pass": 1675,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "commit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433"
+    }
+  },
+  "limits": [
+    "Accepted implementation subset checks do not establish complete H rows.",
+    "Host fault injection does not establish live, real transport or native release."
+  ],
+  "artifactGroups": ".scratch/observed-integration/acceptance/host/faults/artifact-groups.json",
+  "sourceReviews": {
+    "spec": "faults/review/repair2/spec/review.md",
+    "standards": "faults/review/repair2/standards/review.md"
+  },
+  "preservedOriginalFailures": "faults/author/repair2/round2-report.md",
+  "inventoryScope": {
+    "ids": 396,
+    "testsPerAddedRuntime": 193,
+    "sharing": "Multiple variants can share one actual fixture execution and raw group."
+  }
+}

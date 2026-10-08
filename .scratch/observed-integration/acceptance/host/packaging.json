@@ -1,18 +1,97 @@
 {
   "version": 1,
-  "status": "UNVERIFIED",
+  "status": "PASS",
   "rows": [
     "H09"
   ],
   "required": "Genuine clean packed installation, actual installed CLI/MCP/maintenance startup and plugin artifact checks.",
-  "productCommit": "538e5770d1a02b7ef92d2dd69cd3a8a9d692ec4a",
+  "productCommit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
   "acceptanceOwner": "Root",
-  "reason": "Tickets09/10 and complete row-level assertion mapping are pending.",
-  "cases": [],
-  "commands": [],
+  "reason": "Root accepts complete bounded host row evidence after independent corrected-map Spec PASS and current installed/startup raw correspondence PASS.",
+  "cases": [
+    {
+      "id": "H09.package.node24",
+      "verdict": "PASS",
+      "node": "v24.0.0",
+      "commandCount": 37,
+      "installations": 2,
+      "skips": 0,
+      "forbiddenEffects": 0,
+      "proofCommit": "a274a5a27b71656f7523c15cf5a4c0fa9edf816e",
+      "evidence": "installed-workflow/integration/fresh-proofs/integrated-installed-node24/summary.json",
+      "correspondence": "installed-workflow/integration/current-product-correspondence.json"
+    },
+    {
+      "id": "H09.package.node26",
+      "verdict": "PASS",
+      "node": "v26.8.1",
+      "commandCount": 37,
+      "installations": 2,
+      "skips": 0,
+      "forbiddenEffects": 0,
+      "proofCommit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
+      "evidence": "installed-workflow/integration/final-proofs/post-integration-installed-node26/summary.json"
+    }
+  ],
+  "commands": {
+    "node26": {
+      "path": ".scratch/observed-integration/acceptance/host/faults/integration/full-gates/composed-host-node26.json",
+      "node": "v26.8.1",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exit": 0,
+      "counts": {
+        "tests": 1675,
+        "pass": 1675,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceUnchanged": true
+    },
+    "node24": {
+      "path": ".scratch/observed-integration/acceptance/host/faults/integration/full-gates/composed-host-node24.json",
+      "node": "v24.0.0",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exit": 0,
+      "counts": {
+        "tests": 1675,
+        "pass": 1675,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceUnchanged": true
+    }
+  },
   "limits": [
     "Accepted implementation subset checks do not establish complete H rows.",
-    "Host fault injection does not establish live, real transport or native release."
-  ]
+    "Host fault injection does not establish live, real transport or native release.",
+    "Both genuine acceptance installations use independent empty projects/caches and --ignore-scripts/--no-audit/--no-fund; plugin cache is warmed only by that same-runtime genuine npm install. Isolated archive diagnostics use separate caches and never substitute for installation. Prior timeouts lower-level cause remains unverified."
+  ],
+  "preservedFailures": [
+    {
+      "id": "Root.node26.initial",
+      "executionVerdict": "FAIL",
+      "effectOnCurrentCoverage": "Historical incomplete proof, retained; later unchanged fresh proof PASS does not rewrite it.",
+      "evidence": "installed-workflow/integration/fresh-proofs/integrated-installed-node26/failure.json"
+    },
+    {
+      "id": "Root.node26.recheck",
+      "executionVerdict": "FAIL",
+      "evidence": "installed-workflow/integration/fresh-proofs/integrated-installed-node26-recheck/failure.json"
+    }
+  ],
+  "rawCorrespondenceReview": "installed-workflow/review/final-raw-correspondence/review.md",
+  "acceptanceReview": "faults/review/host-completeness/round2/review.md",
+  "acceptanceScope": "Host: isolated stores, fake backends and declared injection/installed-proof limits. No live/native/remote-CI/final-safety verdict."
 }
-

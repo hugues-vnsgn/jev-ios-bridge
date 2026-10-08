@@ -1,0 +1,139 @@
+{
+  "version": 1,
+  "status": "UNVERIFIED",
+  "rows": [
+    "H09"
+  ],
+  "required": "Legacy scenario/Android contracts and existing frozen script/verdict/report/exit goldens.",
+  "productCommit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
+  "acceptanceOwner": "Root",
+  "reason": "Current installed/startup raw correspondence independently PASS; complete corrected-map audit pending.",
+  "cases": [
+    {
+      "id": "H09.compatibility.existing-goldens",
+      "verdict": "PASS",
+      "oracle": "All14 pre09/10 goldens byte-identical to accepted75d base;12 legacy plus2 observed additive goldens. Actual default1675 both includes legacy scenario/Android/script/report/verdict/exit contract assertions.",
+      "goldens": [
+        {
+          "path": "tests/golden/android-capture.json",
+          "sha256": "2d1d7c7435fe35b36a75637048c373bae414f2afa9cdb2f691aeab83424fcdba",
+          "observedAdditiveGolden": false
+        },
+        {
+          "path": "tests/golden/android-elements.json",
+          "sha256": "35d5c060cd85cdba27b6f96fb33a91eb497a9be9bc388e6991ebb0c22b4222e5",
+          "observedAdditiveGolden": false
+        },
+        {
+          "path": "tests/golden/android-render.json",
+          "sha256": "609fd79d528f8c681deab7ab55e61055866e9427d8be928d3ba5844cee35a367",
+          "observedAdditiveGolden": false
+        },
+        {
+          "path": "tests/golden/cli-exit-codes.json",
+          "sha256": "2ae6bf0deb86b74063d0e3b9d3260b72322d5416ae053281abb92afe0cfaae37",
+          "observedAdditiveGolden": false
+        },
+        {
+          "path": "tests/golden/evidence-layout.json",
+          "sha256": "ac49e9b6433e71636364e707a691c89817b1c8404b582e809a47a3b70d52f880",
+          "observedAdditiveGolden": false
+        },
+        {
+          "path": "tests/golden/mcp.json",
+          "sha256": "4f69fcd0c1414dbd392f1b223de9d83709b761e80fef299300930c57d2bfed41",
+          "observedAdditiveGolden": false
+        },
+        {
+          "path": "tests/golden/observed-mcp-v1.json",
+          "sha256": "48dc6d413b8f272be845c03b0827f1429a053298676eab3812e568b90936a63b",
+          "observedAdditiveGolden": true
+        },
+        {
+          "path": "tests/golden/observed-replies-v1.json",
+          "sha256": "cdbfbfe4b8ac3f93bebd0e7f8cc5243cc90d3549bc20bdbea97bdd670dc0602b",
+          "observedAdditiveGolden": true
+        },
+        {
+          "path": "tests/golden/report-json-android.json",
+          "sha256": "67db1d463d3b0fea60e7e81cbd9a969fe4a61fd429e7b57f04d19b313cf12912",
+          "observedAdditiveGolden": false
+        },
+        {
+          "path": "tests/golden/report-json-driven.json",
+          "sha256": "08c65ce98a15888f6adb6b877c9237350585abb7c030c00f0426db747c858996",
+          "observedAdditiveGolden": false
+        },
+        {
+          "path": "tests/golden/report-json.json",
+          "sha256": "f1bab04f2dbe8e96eb85f23b12777cb429ae042d14fe10e6585977b6d751e036",
+          "observedAdditiveGolden": false
+        },
+        {
+          "path": "tests/golden/report-text-driven.json",
+          "sha256": "1dd527e603948f1b430eadd3e926f23a8514432b405a04f3e80059f98169cb86",
+          "observedAdditiveGolden": false
+        },
+        {
+          "path": "tests/golden/scripts.json",
+          "sha256": "de152f8d69050614d0504f3818255c65d8a3972861e169e803a5ec59b465cb77",
+          "observedAdditiveGolden": false
+        },
+        {
+          "path": "tests/golden/vocabulary.json",
+          "sha256": "d9b39682a2f836b05938cd1abe80c452112d013f1425fa24409131b5ae9e984f",
+          "observedAdditiveGolden": false
+        }
+      ],
+      "executedGates": [
+        "node26",
+        "node24"
+      ]
+    }
+  ],
+  "commands": {
+    "node26": {
+      "path": ".scratch/observed-integration/acceptance/host/faults/integration/full-gates/composed-host-node26.json",
+      "node": "v26.8.1",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exit": 0,
+      "counts": {
+        "tests": 1675,
+        "pass": 1675,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceUnchanged": true
+    },
+    "node24": {
+      "path": ".scratch/observed-integration/acceptance/host/faults/integration/full-gates/composed-host-node24.json",
+      "node": "v24.0.0",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exit": 0,
+      "counts": {
+        "tests": 1675,
+        "pass": 1675,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceUnchanged": true
+    }
+  },
+  "limits": [
+    "Accepted implementation subset checks do not establish complete H rows.",
+    "Host fault injection does not establish live, real transport or native release."
+  ],
+  "rawCorrespondenceReview": "installed-workflow/review/final-raw-correspondence/review.md"
+}

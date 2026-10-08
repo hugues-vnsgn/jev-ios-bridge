@@ -1,4 +1,18 @@
-# Fresh Root installed proofs — partial, H09 UNVERIFIED
+# Fresh Root installed proofs — both runtimes PASS, H09 accepted
+
+## Current result
+
+The unchanged mandatory proof ran again on physical integrated commit `b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433`, using a new empty project and independent empty registry cache. Node26.8.1 passes **37 commands in18.351s**, including genuine npm and plugin installations, with zero skipped or forbidden effects and audited source unchanged. [Selected raw proof](../final-proofs/post-integration-installed-node26/preservation.json) and [Root command receipt](../final-proofs/root-gate/post-integration-installed-node26.json) are preserved. The original90s deadline, assertions, dependency declarations and runtime environment are unchanged.
+
+The existing genuine exactNode24.0.0 proof remains37/37 PASS in21.514s. [Current product correspondence](../current-product-correspondence.json) pins71 source/package/lock/README paths and68 compiled JavaScript paths to both successful build snapshots and current Root. This establishes the current product association; it does not rewrite either earlier Node26 failure.
+
+Separate isolated archive diagnostics pass on Node26 in1.571s and Node24 in1.626s. Both produce9,615,980 identical bytes, SHA256 `caf15f8e7e7f5775efbcdd7f788bc129439f2921ba57a6ee010b204761a4f7e8`. [Node26 receipt](../../../isolated-probes/execution/mobilebuild-archive-node26/result.json) and [Node24 receipt](../../../isolated-probes/execution/mobilebuild-archive-node24/result.json) use independent diagnostic caches that never warm the acceptance cache. The lower cause of the earlier timeouts remains UNVERIFIED.
+
+Both newly wrapped production startup probes pass, with contemporaneous helper/guard/runner and source hashes at launch and after completion: [Node26](../../../faults/production-startup/execution/production-startup-node26-wrapped/result.json) in0.387s and [Node24](../../../faults/production-startup/execution/production-startup-node24-wrapped/result.json) in0.447s. Each exercises two CLI and three MCP retrievals through actual production composition. An injected factory-open error returns safe `STORE_UNAVAILABLE`; SDK/driver/child effects and actual account-root operations remain0. These prove factory translation, not physical corruption of an actual account store. The original retrospective launch-provenance limitation remains below as history.
+
+[Independent current raw correspondence PASS](../../review/final-raw-correspondence/review.md) verifies both37-command proofs,71 Source and68 compiled correspondences and both wrapped startup probes. [Complete H09 mapping independently passes](../../../faults/review/host-completeness/round2/review.md); Root accepts the bounded host row. No live or final safety acceptance is inferred.
+
+## Preserved earlier checkpoint and negative results
 
 These commands ran on physical Root commit `a274a5a27b71656f7523c15cf5a4c0fa9edf816e`, including its README guide pointer. The unchanged mandatory proof SHA256 is `6aaf75a214d3dc89ddc2957b2be082ccf9eba7d93ade7511dd3bd652ae850635`. Each run has an independent empty project/cache, private evidence0077 and child0022. The driver removes `TYPESAFE_API_KEY`, `NODE_OPTIONS` and `NODE_NO_WARNINGS`; audited source matches before/after each run. All commands have completed.
 

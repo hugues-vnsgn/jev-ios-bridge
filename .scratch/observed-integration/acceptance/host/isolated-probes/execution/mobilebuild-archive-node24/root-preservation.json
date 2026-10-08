@@ -1,0 +1,44 @@
+{
+  "source": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-isolated-probes/mobilebuild-archive-node24",
+  "destination": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/isolated-probes/execution/mobilebuild-archive-node24",
+  "fileCount": 7,
+  "bytes": 9882439,
+  "files": [
+    {
+      "path": "launch.json",
+      "sha256": "64a430695b50bfd8bd5d63785ae70bff8733082cc9eb482c8c10a89aeaee0f95",
+      "bytes": 41066
+    },
+    {
+      "path": "mobilebuildmcp-2.7.1.tgz",
+      "sha256": "caf15f8e7e7f5775efbcdd7f788bc129439f2921ba57a6ee010b204761a4f7e8",
+      "bytes": 9615980
+    },
+    {
+      "path": "registry-cache/_logs/2026-10-08T15_59_36_272Z-debug-0.log",
+      "sha256": "4a9a2afb421d8f1d3bfe6cf261b7d686f0409633837f8e09b77ee167d7015fff",
+      "bytes": 3071
+    },
+    {
+      "path": "registry-cache/_logs/2026-10-08T15_59_36_272Z-timing.json",
+      "sha256": "9d4a2c47899e2b059a0ad7bd0ed905a141f6590fe61bc1b4cf0f89bc13197cd5",
+      "bytes": 1034
+    },
+    {
+      "path": "result.json",
+      "sha256": "c0e6d17322a96103cc51cc9b95111be8f4830c0116e1adcd56f63baa56b65c9f",
+      "bytes": 81449
+    },
+    {
+      "path": "stderr",
+      "sha256": "c7eadd6cb1fe035df8c7628ef0231d1d9f0d8df969fa0557649f94e1224a29ba",
+      "bytes": 3072
+    },
+    {
+      "path": "stdout",
+      "sha256": "ea5c4cc3f01421e7ec2d19a50188d84f258b0698f5e4b52c126e9a0125f1f50d",
+      "bytes": 136767
+    }
+  ],
+  "selection": "Raw commands/logs/source/compiled/package artifacts and npm debug/timing logs; registry content and installed dependency trees excluded."
+}

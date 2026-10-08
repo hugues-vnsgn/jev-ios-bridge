@@ -1,0 +1,18 @@
+{
+  "verdict": "PASS",
+  "scope": "Static current installed/raw startup correspondence only",
+  "rootCommit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
+  "sourceFiles": 71,
+  "compiledFiles": 68,
+  "commandsPerRuntime": 37,
+  "wrappedSourceBeforeAfterPathsPerRuntime": 352,
+  "inputFilesUnchanged": 633,
+  "reviewerExecutedTests": false,
+  "reviewSha256": "5eb1b7e3eb39eec193001256a8b98f58e1c9fc41eddd1ed725a6789e66ff39a4",
+  "limits": [
+    "Injection before account-root access, not account-store corruption",
+    "Historical first24 launch remains retrospective",
+    "Prior26 timeout lower-level cause UNVERIFIED",
+    "No12/safety/native/live acceptance"
+  ]
+}

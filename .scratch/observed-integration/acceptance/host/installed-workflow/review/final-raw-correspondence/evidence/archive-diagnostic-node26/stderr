@@ -1,0 +1,37 @@
+npm verbose cli /opt/homebrew/Cellar/node/26.8.1/bin/node /opt/homebrew/lib/node_modules/npm/bin/npm-cli.js
+npm info using npm@11.19.0
+npm info using node@v26.8.1
+npm timing npm:load:whichnode Completed in 1ms
+npm silly config load:file:/opt/homebrew/lib/node_modules/npm/npmrc
+npm silly config load:file:/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.npmrc
+npm silly config load:file:/Users/hugues_mini/.npmrc
+npm silly config load:file:/opt/homebrew/etc/npmrc
+npm timing npm:load:configload Completed in 6ms
+npm timing config:load:flatten Completed in 1ms
+npm timing npm:load:mkdirpcache Completed in 0ms
+npm timing npm:load:mkdirplogs Completed in 0ms
+npm verbose title npm pack mobilebuildmcp@2.7.1
+npm verbose argv "pack" "mobilebuildmcp@2.7.1" "--ignore-scripts" "--json" "--pack-destination" "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-isolated-probes/mobilebuild-archive-node26" "--cache" "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-isolated-probes/mobilebuild-archive-node26/registry-cache" "--fetch-retries" "0" "--fetch-timeout" "45000" "--loglevel" "silly" "--timing"
+npm timing npm:load:setTitle Completed in 2ms
+npm verbose logfile logs-max:10 dir:/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-isolated-probes/mobilebuild-archive-node26/registry-cache/_logs/2026-10-08T15_57_27_830Z-
+npm verbose logfile /Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-isolated-probes/mobilebuild-archive-node26/registry-cache/_logs/2026-10-08T15_57_27_830Z-debug-0.log
+npm timing npm:load Completed in 15ms
+npm silly logfile done cleaning log files
+npm http fetch GET 200 https://registry.npmjs.org/mobilebuildmcp 460ms (cache miss)
+npm http fetch GET 200 https://registry.npmjs.org/npm 479ms
+npm http fetch GET 200 https://registry.npmjs.org/mobilebuildmcp 71ms (cache revalidated)
+npm http fetch GET 200 https://registry.npmjs.org/mobilebuildmcp/-/mobilebuildmcp-2.7.1.tgz 699ms (cache miss)
+npm timing command:pack Completed in 1306ms
+npm timing npm Completed in 1489ms
+npm info timing Timing info written to: /Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-isolated-probes/mobilebuild-archive-node26/registry-cache/_logs/2026-10-08T15_57_27_830Z-timing.json
+npm verbose cwd /Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-isolated-probes/mobilebuild-archive-node26
+npm verbose os Darwin 27.0.0
+npm verbose node v26.8.1
+npm verbose npm  v11.19.0
+npm notice
+npm notice New major version of npm available! 11.19.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice
+npm verbose exit 0
+npm info ok

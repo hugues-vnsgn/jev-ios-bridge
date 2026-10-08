@@ -1,0 +1,38 @@
+{
+  "kind": "read-only Orca operator inventory",
+  "runtimeId": "4a0c1156-025f-4be7-ad19-8e517cc45e3d",
+  "inventoryCount": 2,
+  "truncated": false,
+  "approvedTab": "b0e5a4b6-106b-4dab-a49a-b3933445d4ef",
+  "approvedLeaf": "f8633393-2114-4b9e-a4d7-6a85e0f16db3",
+  "approvedModel": "gpt-6-luna",
+  "approvedEffort": "high",
+  "terminals": [
+    {
+      "handle": "term_39eab365-d21a-4d9f-b0f1-3cc60c855665",
+      "worktreePath": "/Users/hugues_mini/Codes/Mobiles/BFSOne_Mobile_App",
+      "tabId": "76350efb-00cb-4998-95d9-9b8ef6bbc425",
+      "leafId": "0a31fdff-6469-4a73-b072-a0491a971d6b",
+      "agentIdentity": "claude",
+      "connected": true,
+      "writable": true,
+      "orphaned": false
+    },
+    {
+      "handle": "term_437e03a9-638d-4a7a-8085-fe7f0cf65769",
+      "worktreePath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge",
+      "tabId": "b0e5a4b6-106b-4dab-a49a-b3933445d4ef",
+      "leafId": "1b178e31-086e-40c9-b4e2-b9a3dd45ad90",
+      "agentIdentity": "codex",
+      "connected": true,
+      "writable": true,
+      "orphaned": false
+    }
+  ],
+  "approvedSiblingPresent": false,
+  "deviceCommands": 0,
+  "productionStoreAccess": 0,
+  "runtime27CurrentStatus": "UNVERIFIED; historical metadata lacked27.0, no new device/runtime probe by Root",
+  "operationalDeclaration": "UNVERIFIED; user facts requested",
+  "liveDispatch": "not started"
+}

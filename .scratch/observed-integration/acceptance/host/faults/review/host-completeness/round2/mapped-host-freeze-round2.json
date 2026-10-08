@@ -1,0 +1,20 @@
+{
+  "productCommit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
+  "scope": "Corrected host mapping freeze; eight explicit base Source-assertion supplement families; independent completeness re-audit pending. No live/ticket12/safety verdict.",
+  "originalFreeze": "mapped-host-freeze.json",
+  "originalSnapshot": "faults/review/host-completeness/original/root-frozen-map-snapshot",
+  "files": {
+    ".scratch/observed-integration/acceptance/host/schema.json": "947afdc2be8a05b03518b3bc65b8d62075ad990d67d9b9bcff835123daede95a",
+    ".scratch/observed-integration/acceptance/host/identity.json": "5deda601891da09c4f3af05c0d680eb6e8e4bff9a287d8ed3b00e85e01def48c",
+    ".scratch/observed-integration/acceptance/host/cancel.json": "5f05110348c41cbc4b3bf7124acc8d7a574f0260626011ea553e2df1350be6dc",
+    ".scratch/observed-integration/acceptance/host/crash.json": "a6844841f7624e6d22f372fb01a6b8e3d57e2ecd0618cb4af69039a5457074f9",
+    ".scratch/observed-integration/acceptance/host/storage.json": "67b529b97b53d32930e4e3a360f17dc457fa5d2a2736af7200f4405645aed2e6",
+    ".scratch/observed-integration/acceptance/host/migration.json": "b36ab570b8fc037aaa0d5db58c3d164c4709903742884145e0b8c2fb826c50f9",
+    ".scratch/observed-integration/acceptance/host/runtime.json": "d307a3648583d5400c5abdf351a64ce8300eadb36b0d7c90ed76d20327246e04",
+    ".scratch/observed-integration/acceptance/host/packaging.json": "b0a929ed4f65680e9b0d36c419d04e49e3d8189705bf1b333e548efe89b0e9f7",
+    ".scratch/observed-integration/acceptance/host/compatibility.json": "2901236fa84edab9e9db3c09a39b662838e65c6d75f3b6deec239867ee20550f",
+    ".scratch/observed-integration/acceptance/host/faults/artifact-groups.json": "9f7e06f8d8947377c647090c40bd2d1530d6e4dd09d415e5a9dca75263c0c088",
+    ".scratch/observed-integration/acceptance/host/installed-workflow/integration/current-product-correspondence.json": "1e2740aa6a86c0578c8a9e979cb85530b8301879e773561fc788bb1ed7b9e7c2",
+    ".scratch/observed-integration/acceptance/host/base-supplements/correspondence.json": "9ec989e525772b153cf8e6bf17e3bbc9b0d9326756774d4a1df4792088488a1b"
+  }
+}

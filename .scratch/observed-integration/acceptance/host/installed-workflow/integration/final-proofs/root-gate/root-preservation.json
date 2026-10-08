@@ -1,0 +1,19 @@
+{
+  "source": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-host-proofs",
+  "destination": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/installed-workflow/integration/final-proofs/root-gate",
+  "fileCount": 2,
+  "bytes": 106520,
+  "files": [
+    {
+      "path": "post-integration-installed-node26.json",
+      "sha256": "cfabe6ceb63e57a7ce39dfb83b713ed1a53964b9026ae318014d22fcf9dfffaa",
+      "bytes": 102324
+    },
+    {
+      "path": "post-integration-installed-node26.log",
+      "sha256": "130758506ed52a388cb858ab1d69bc36919439fe52106fa4ffb0e6dadfc1d397",
+      "bytes": 4196
+    }
+  ],
+  "selection": "Raw commands/logs/source/compiled/package artifacts and npm debug/timing logs; registry content and installed dependency trees excluded."
+}

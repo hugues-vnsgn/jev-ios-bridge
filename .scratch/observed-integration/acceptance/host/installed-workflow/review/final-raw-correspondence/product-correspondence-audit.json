@@ -1,0 +1,1535 @@
+{
+  "commit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
+  "sourceCount": 71,
+  "compiledCount": 68,
+  "source": [
+    {
+      "path": "src/exit-codes.ts",
+      "sha256": "9d5cddb455145ffcc8993f6b693a14bdbc279a1da1fd93e8c4fdb293dcca3b62",
+      "mappings": {
+        "current": "9d5cddb455145ffcc8993f6b693a14bdbc279a1da1fd93e8c4fdb293dcca3b62",
+        "commit": "9d5cddb455145ffcc8993f6b693a14bdbc279a1da1fd93e8c4fdb293dcca3b62",
+        "snapshot26": "9d5cddb455145ffcc8993f6b693a14bdbc279a1da1fd93e8c4fdb293dcca3b62",
+        "snapshot24": "9d5cddb455145ffcc8993f6b693a14bdbc279a1da1fd93e8c4fdb293dcca3b62"
+      }
+    },
+    {
+      "path": "src/process.ts",
+      "sha256": "f1b2d73512bed07afbaf05aa6d4712243c8b39ea93b37b70c45ef56580174303",
+      "mappings": {
+        "current": "f1b2d73512bed07afbaf05aa6d4712243c8b39ea93b37b70c45ef56580174303",
+        "commit": "f1b2d73512bed07afbaf05aa6d4712243c8b39ea93b37b70c45ef56580174303",
+        "snapshot26": "f1b2d73512bed07afbaf05aa6d4712243c8b39ea93b37b70c45ef56580174303",
+        "snapshot24": "f1b2d73512bed07afbaf05aa6d4712243c8b39ea93b37b70c45ef56580174303"
+      }
+    },
+    {
+      "path": "src/cli.ts",
+      "sha256": "137b42ef8cdc34a3e143461cf762c659d4bc0a8da768f320ad8b0232e200d7de",
+      "mappings": {
+        "current": "137b42ef8cdc34a3e143461cf762c659d4bc0a8da768f320ad8b0232e200d7de",
+        "commit": "137b42ef8cdc34a3e143461cf762c659d4bc0a8da768f320ad8b0232e200d7de",
+        "snapshot26": "137b42ef8cdc34a3e143461cf762c659d4bc0a8da768f320ad8b0232e200d7de",
+        "snapshot24": "137b42ef8cdc34a3e143461cf762c659d4bc0a8da768f320ad8b0232e200d7de"
+      }
+    },
+    {
+      "path": "src/capture.ts",
+      "sha256": "ad7c7d9227fd865e381e7b7feebd980443d074ad2dc7d1e9609ddb1bacd737e7",
+      "mappings": {
+        "current": "ad7c7d9227fd865e381e7b7feebd980443d074ad2dc7d1e9609ddb1bacd737e7",
+        "commit": "ad7c7d9227fd865e381e7b7feebd980443d074ad2dc7d1e9609ddb1bacd737e7",
+        "snapshot26": "ad7c7d9227fd865e381e7b7feebd980443d074ad2dc7d1e9609ddb1bacd737e7",
+        "snapshot24": "ad7c7d9227fd865e381e7b7feebd980443d074ad2dc7d1e9609ddb1bacd737e7"
+      }
+    },
+    {
+      "path": "src/version.ts",
+      "sha256": "cbef0bb4b74e2b0d0113f24a67cd0a75e888d1684a081cd04abbb181b241968a",
+      "mappings": {
+        "current": "cbef0bb4b74e2b0d0113f24a67cd0a75e888d1684a081cd04abbb181b241968a",
+        "commit": "cbef0bb4b74e2b0d0113f24a67cd0a75e888d1684a081cd04abbb181b241968a",
+        "snapshot26": "cbef0bb4b74e2b0d0113f24a67cd0a75e888d1684a081cd04abbb181b241968a",
+        "snapshot24": "cbef0bb4b74e2b0d0113f24a67cd0a75e888d1684a081cd04abbb181b241968a"
+      }
+    },
+    {
+      "path": "src/service.ts",
+      "sha256": "9e028d3d7e2ee63ea52289d5cadbc142df6fa277da93d1462450960c7af60326",
+      "mappings": {
+        "current": "9e028d3d7e2ee63ea52289d5cadbc142df6fa277da93d1462450960c7af60326",
+        "commit": "9e028d3d7e2ee63ea52289d5cadbc142df6fa277da93d1462450960c7af60326",
+        "snapshot26": "9e028d3d7e2ee63ea52289d5cadbc142df6fa277da93d1462450960c7af60326",
+        "snapshot24": "9e028d3d7e2ee63ea52289d5cadbc142df6fa277da93d1462450960c7af60326"
+      }
+    },
+    {
+      "path": "src/experimental/observed-run.ts",
+      "sha256": "567e16ed1f9229cfa21eddb761f24208123806593a8ec0c61eb250f6e79736bb",
+      "mappings": {
+        "current": "567e16ed1f9229cfa21eddb761f24208123806593a8ec0c61eb250f6e79736bb",
+        "commit": "567e16ed1f9229cfa21eddb761f24208123806593a8ec0c61eb250f6e79736bb",
+        "snapshot26": "567e16ed1f9229cfa21eddb761f24208123806593a8ec0c61eb250f6e79736bb",
+        "snapshot24": "567e16ed1f9229cfa21eddb761f24208123806593a8ec0c61eb250f6e79736bb"
+      }
+    },
+    {
+      "path": "src/experimental/observed-journal.ts",
+      "sha256": "f7e5c57268175d09f7483f863b0c6bf7019a24d34d0649df94442d8341be88a7",
+      "mappings": {
+        "current": "f7e5c57268175d09f7483f863b0c6bf7019a24d34d0649df94442d8341be88a7",
+        "commit": "f7e5c57268175d09f7483f863b0c6bf7019a24d34d0649df94442d8341be88a7",
+        "snapshot26": "f7e5c57268175d09f7483f863b0c6bf7019a24d34d0649df94442d8341be88a7",
+        "snapshot24": "f7e5c57268175d09f7483f863b0c6bf7019a24d34d0649df94442d8341be88a7"
+      }
+    },
+    {
+      "path": "src/experimental/observed-tap.ts",
+      "sha256": "db81880287f5635f7d0d66b390f4937e88434fcf06f4dc3b63ab243a11ad313b",
+      "mappings": {
+        "current": "db81880287f5635f7d0d66b390f4937e88434fcf06f4dc3b63ab243a11ad313b",
+        "commit": "db81880287f5635f7d0d66b390f4937e88434fcf06f4dc3b63ab243a11ad313b",
+        "snapshot26": "db81880287f5635f7d0d66b390f4937e88434fcf06f4dc3b63ab243a11ad313b",
+        "snapshot24": "db81880287f5635f7d0d66b390f4937e88434fcf06f4dc3b63ab243a11ad313b"
+      }
+    },
+    {
+      "path": "src/scripted/schema.ts",
+      "sha256": "a944a877e63eff9d4a05e234cb0572a937afe268508baed224f5f98ead8934a0",
+      "mappings": {
+        "current": "a944a877e63eff9d4a05e234cb0572a937afe268508baed224f5f98ead8934a0",
+        "commit": "a944a877e63eff9d4a05e234cb0572a937afe268508baed224f5f98ead8934a0",
+        "snapshot26": "a944a877e63eff9d4a05e234cb0572a937afe268508baed224f5f98ead8934a0",
+        "snapshot24": "a944a877e63eff9d4a05e234cb0572a937afe268508baed224f5f98ead8934a0"
+      }
+    },
+    {
+      "path": "src/scripted/report.ts",
+      "sha256": "b6d9c8d559ed156d85d986e75c23b66db2a8fed00f8a1f5bc7e228fde0b02f24",
+      "mappings": {
+        "current": "b6d9c8d559ed156d85d986e75c23b66db2a8fed00f8a1f5bc7e228fde0b02f24",
+        "commit": "b6d9c8d559ed156d85d986e75c23b66db2a8fed00f8a1f5bc7e228fde0b02f24",
+        "snapshot26": "b6d9c8d559ed156d85d986e75c23b66db2a8fed00f8a1f5bc7e228fde0b02f24",
+        "snapshot24": "b6d9c8d559ed156d85d986e75c23b66db2a8fed00f8a1f5bc7e228fde0b02f24"
+      }
+    },
+    {
+      "path": "src/scripted/vocabulary.ts",
+      "sha256": "490a617c1c21781df9677c978cd336fec2fab6179f50c8819754cfa38abbae4f",
+      "mappings": {
+        "current": "490a617c1c21781df9677c978cd336fec2fab6179f50c8819754cfa38abbae4f",
+        "commit": "490a617c1c21781df9677c978cd336fec2fab6179f50c8819754cfa38abbae4f",
+        "snapshot26": "490a617c1c21781df9677c978cd336fec2fab6179f50c8819754cfa38abbae4f",
+        "snapshot24": "490a617c1c21781df9677c978cd336fec2fab6179f50c8819754cfa38abbae4f"
+      }
+    },
+    {
+      "path": "src/scripted/select.ts",
+      "sha256": "7059fd5613a2ee054064dbfa1dcbc8b0c9deba1e10b91e0e20dcfb371817c3b4",
+      "mappings": {
+        "current": "7059fd5613a2ee054064dbfa1dcbc8b0c9deba1e10b91e0e20dcfb371817c3b4",
+        "commit": "7059fd5613a2ee054064dbfa1dcbc8b0c9deba1e10b91e0e20dcfb371817c3b4",
+        "snapshot26": "7059fd5613a2ee054064dbfa1dcbc8b0c9deba1e10b91e0e20dcfb371817c3b4",
+        "snapshot24": "7059fd5613a2ee054064dbfa1dcbc8b0c9deba1e10b91e0e20dcfb371817c3b4"
+      }
+    },
+    {
+      "path": "src/scripted/contracts.ts",
+      "sha256": "8482d44dc73d522342a6a4db3ff29884f6bd26d44b4a3d8859d308fdaa43a21b",
+      "mappings": {
+        "current": "8482d44dc73d522342a6a4db3ff29884f6bd26d44b4a3d8859d308fdaa43a21b",
+        "commit": "8482d44dc73d522342a6a4db3ff29884f6bd26d44b4a3d8859d308fdaa43a21b",
+        "snapshot26": "8482d44dc73d522342a6a4db3ff29884f6bd26d44b4a3d8859d308fdaa43a21b",
+        "snapshot24": "8482d44dc73d522342a6a4db3ff29884f6bd26d44b4a3d8859d308fdaa43a21b"
+      }
+    },
+    {
+      "path": "src/scripted/observe.ts",
+      "sha256": "926734786ae1c64911788270cc8b4a562c848d0a6cd7cde4db537fd0f219eadf",
+      "mappings": {
+        "current": "926734786ae1c64911788270cc8b4a562c848d0a6cd7cde4db537fd0f219eadf",
+        "commit": "926734786ae1c64911788270cc8b4a562c848d0a6cd7cde4db537fd0f219eadf",
+        "snapshot26": "926734786ae1c64911788270cc8b4a562c848d0a6cd7cde4db537fd0f219eadf",
+        "snapshot24": "926734786ae1c64911788270cc8b4a562c848d0a6cd7cde4db537fd0f219eadf"
+      }
+    },
+    {
+      "path": "src/scripted/report-json.ts",
+      "sha256": "f819d75eed65ba9295d19e4a69f402b702c8e606bf9dfefbe122cb26c06aa720",
+      "mappings": {
+        "current": "f819d75eed65ba9295d19e4a69f402b702c8e606bf9dfefbe122cb26c06aa720",
+        "commit": "f819d75eed65ba9295d19e4a69f402b702c8e606bf9dfefbe122cb26c06aa720",
+        "snapshot26": "f819d75eed65ba9295d19e4a69f402b702c8e606bf9dfefbe122cb26c06aa720",
+        "snapshot24": "f819d75eed65ba9295d19e4a69f402b702c8e606bf9dfefbe122cb26c06aa720"
+      }
+    },
+    {
+      "path": "src/scripted/jev.ts",
+      "sha256": "b75b1004dd4bc68334a38a1ef775296168a9695f8822e087d88cb214695a29db",
+      "mappings": {
+        "current": "b75b1004dd4bc68334a38a1ef775296168a9695f8822e087d88cb214695a29db",
+        "commit": "b75b1004dd4bc68334a38a1ef775296168a9695f8822e087d88cb214695a29db",
+        "snapshot26": "b75b1004dd4bc68334a38a1ef775296168a9695f8822e087d88cb214695a29db",
+        "snapshot24": "b75b1004dd4bc68334a38a1ef775296168a9695f8822e087d88cb214695a29db"
+      }
+    },
+    {
+      "path": "src/scripted/run.ts",
+      "sha256": "fdbb7f9c2485cb5e522efb8c134a7a482d0d881c8a009072838a0a852464c9bb",
+      "mappings": {
+        "current": "fdbb7f9c2485cb5e522efb8c134a7a482d0d881c8a009072838a0a852464c9bb",
+        "commit": "fdbb7f9c2485cb5e522efb8c134a7a482d0d881c8a009072838a0a852464c9bb",
+        "snapshot26": "fdbb7f9c2485cb5e522efb8c134a7a482d0d881c8a009072838a0a852464c9bb",
+        "snapshot24": "fdbb7f9c2485cb5e522efb8c134a7a482d0d881c8a009072838a0a852464c9bb"
+      }
+    },
+    {
+      "path": "src/driven/project.ts",
+      "sha256": "ebf6db2c81cf0803f0ec1700e92987a175df4d60be453dc34b57edb9a236a90c",
+      "mappings": {
+        "current": "ebf6db2c81cf0803f0ec1700e92987a175df4d60be453dc34b57edb9a236a90c",
+        "commit": "ebf6db2c81cf0803f0ec1700e92987a175df4d60be453dc34b57edb9a236a90c",
+        "snapshot26": "ebf6db2c81cf0803f0ec1700e92987a175df4d60be453dc34b57edb9a236a90c",
+        "snapshot24": "ebf6db2c81cf0803f0ec1700e92987a175df4d60be453dc34b57edb9a236a90c"
+      }
+    },
+    {
+      "path": "src/driven/vocabulary.ts",
+      "sha256": "8b6f9c4f666ba96d1deb61907d4c19cbffaf71b9241e15e2576980ec6eb8b781",
+      "mappings": {
+        "current": "8b6f9c4f666ba96d1deb61907d4c19cbffaf71b9241e15e2576980ec6eb8b781",
+        "commit": "8b6f9c4f666ba96d1deb61907d4c19cbffaf71b9241e15e2576980ec6eb8b781",
+        "snapshot26": "8b6f9c4f666ba96d1deb61907d4c19cbffaf71b9241e15e2576980ec6eb8b781",
+        "snapshot24": "8b6f9c4f666ba96d1deb61907d4c19cbffaf71b9241e15e2576980ec6eb8b781"
+      }
+    },
+    {
+      "path": "src/driven/candidates.ts",
+      "sha256": "486830dc9f526b7a0bb5dd448d4d788c1300ed1c825f0a24e37ba696b608ed60",
+      "mappings": {
+        "current": "486830dc9f526b7a0bb5dd448d4d788c1300ed1c825f0a24e37ba696b608ed60",
+        "commit": "486830dc9f526b7a0bb5dd448d4d788c1300ed1c825f0a24e37ba696b608ed60",
+        "snapshot26": "486830dc9f526b7a0bb5dd448d4d788c1300ed1c825f0a24e37ba696b608ed60",
+        "snapshot24": "486830dc9f526b7a0bb5dd448d4d788c1300ed1c825f0a24e37ba696b608ed60"
+      }
+    },
+    {
+      "path": "src/driven/step.ts",
+      "sha256": "ffa7d97ddbdfdabe7f6d9049f1ee5a2146c6438135954bafbb1d319d766a9d4c",
+      "mappings": {
+        "current": "ffa7d97ddbdfdabe7f6d9049f1ee5a2146c6438135954bafbb1d319d766a9d4c",
+        "commit": "ffa7d97ddbdfdabe7f6d9049f1ee5a2146c6438135954bafbb1d319d766a9d4c",
+        "snapshot26": "ffa7d97ddbdfdabe7f6d9049f1ee5a2146c6438135954bafbb1d319d766a9d4c",
+        "snapshot24": "ffa7d97ddbdfdabe7f6d9049f1ee5a2146c6438135954bafbb1d319d766a9d4c"
+      }
+    },
+    {
+      "path": "src/driven/decide.ts",
+      "sha256": "392b33542da85d13364a3b139e69af0ed21f27090829f23e3a8f5286ad2045f5",
+      "mappings": {
+        "current": "392b33542da85d13364a3b139e69af0ed21f27090829f23e3a8f5286ad2045f5",
+        "commit": "392b33542da85d13364a3b139e69af0ed21f27090829f23e3a8f5286ad2045f5",
+        "snapshot26": "392b33542da85d13364a3b139e69af0ed21f27090829f23e3a8f5286ad2045f5",
+        "snapshot24": "392b33542da85d13364a3b139e69af0ed21f27090829f23e3a8f5286ad2045f5"
+      }
+    },
+    {
+      "path": "src/driven/marker.ts",
+      "sha256": "7453680b38c8890edfc4698629874bb55b73b5e6cbc539e3c2add7b8b802ac23",
+      "mappings": {
+        "current": "7453680b38c8890edfc4698629874bb55b73b5e6cbc539e3c2add7b8b802ac23",
+        "commit": "7453680b38c8890edfc4698629874bb55b73b5e6cbc539e3c2add7b8b802ac23",
+        "snapshot26": "7453680b38c8890edfc4698629874bb55b73b5e6cbc539e3c2add7b8b802ac23",
+        "snapshot24": "7453680b38c8890edfc4698629874bb55b73b5e6cbc539e3c2add7b8b802ac23"
+      }
+    },
+    {
+      "path": "src/driven/policy.ts",
+      "sha256": "577f1695a728fdc48851c10902ce28a37aee1f9c7b665a396e9cb786b4114c9c",
+      "mappings": {
+        "current": "577f1695a728fdc48851c10902ce28a37aee1f9c7b665a396e9cb786b4114c9c",
+        "commit": "577f1695a728fdc48851c10902ce28a37aee1f9c7b665a396e9cb786b4114c9c",
+        "snapshot26": "577f1695a728fdc48851c10902ce28a37aee1f9c7b665a396e9cb786b4114c9c",
+        "snapshot24": "577f1695a728fdc48851c10902ce28a37aee1f9c7b665a396e9cb786b4114c9c"
+      }
+    },
+    {
+      "path": "src/driven/handback.ts",
+      "sha256": "198d06dd9f3b4d09f4abdec9b1c07d37f2881a597e958f60e4ccc2fd0f9a46c8",
+      "mappings": {
+        "current": "198d06dd9f3b4d09f4abdec9b1c07d37f2881a597e958f60e4ccc2fd0f9a46c8",
+        "commit": "198d06dd9f3b4d09f4abdec9b1c07d37f2881a597e958f60e4ccc2fd0f9a46c8",
+        "snapshot26": "198d06dd9f3b4d09f4abdec9b1c07d37f2881a597e958f60e4ccc2fd0f9a46c8",
+        "snapshot24": "198d06dd9f3b4d09f4abdec9b1c07d37f2881a597e958f60e4ccc2fd0f9a46c8"
+      }
+    },
+    {
+      "path": "src/contracts/index.ts",
+      "sha256": "2d1e497d56b13cbd948b2a0c350b60a0dc70aa706ee5d7ea3e7f33b3a2ec3ca6",
+      "mappings": {
+        "current": "2d1e497d56b13cbd948b2a0c350b60a0dc70aa706ee5d7ea3e7f33b3a2ec3ca6",
+        "commit": "2d1e497d56b13cbd948b2a0c350b60a0dc70aa706ee5d7ea3e7f33b3a2ec3ca6",
+        "snapshot26": "2d1e497d56b13cbd948b2a0c350b60a0dc70aa706ee5d7ea3e7f33b3a2ec3ca6",
+        "snapshot24": "2d1e497d56b13cbd948b2a0c350b60a0dc70aa706ee5d7ea3e7f33b3a2ec3ca6"
+      }
+    },
+    {
+      "path": "src/mcp/observed.ts",
+      "sha256": "5522cc1933d54d13cd8c72b7d8caa5ebf262272f9e0110c13fceb58dd8fcc51b",
+      "mappings": {
+        "current": "5522cc1933d54d13cd8c72b7d8caa5ebf262272f9e0110c13fceb58dd8fcc51b",
+        "commit": "5522cc1933d54d13cd8c72b7d8caa5ebf262272f9e0110c13fceb58dd8fcc51b",
+        "snapshot26": "5522cc1933d54d13cd8c72b7d8caa5ebf262272f9e0110c13fceb58dd8fcc51b",
+        "snapshot24": "5522cc1933d54d13cd8c72b7d8caa5ebf262272f9e0110c13fceb58dd8fcc51b"
+      }
+    },
+    {
+      "path": "src/mcp/index.ts",
+      "sha256": "48e531d304d19852d461eb1d3317fee5f953a15654f405c3393b04ff4a494c2a",
+      "mappings": {
+        "current": "48e531d304d19852d461eb1d3317fee5f953a15654f405c3393b04ff4a494c2a",
+        "commit": "48e531d304d19852d461eb1d3317fee5f953a15654f405c3393b04ff4a494c2a",
+        "snapshot26": "48e531d304d19852d461eb1d3317fee5f953a15654f405c3393b04ff4a494c2a",
+        "snapshot24": "48e531d304d19852d461eb1d3317fee5f953a15654f405c3393b04ff4a494c2a"
+      }
+    },
+    {
+      "path": "src/logpane/stream.ts",
+      "sha256": "ca1b2e6fb9be6317f23e65194c90a8726c16abef6f8f3791bad8cd2ef87a013c",
+      "mappings": {
+        "current": "ca1b2e6fb9be6317f23e65194c90a8726c16abef6f8f3791bad8cd2ef87a013c",
+        "commit": "ca1b2e6fb9be6317f23e65194c90a8726c16abef6f8f3791bad8cd2ef87a013c",
+        "snapshot26": "ca1b2e6fb9be6317f23e65194c90a8726c16abef6f8f3791bad8cd2ef87a013c",
+        "snapshot24": "ca1b2e6fb9be6317f23e65194c90a8726c16abef6f8f3791bad8cd2ef87a013c"
+      }
+    },
+    {
+      "path": "src/logpane/format.ts",
+      "sha256": "d00b7718f116fa83c4ba7834c1e94052aaaf5436b85f989bb9195c2505b4b88e",
+      "mappings": {
+        "current": "d00b7718f116fa83c4ba7834c1e94052aaaf5436b85f989bb9195c2505b4b88e",
+        "commit": "d00b7718f116fa83c4ba7834c1e94052aaaf5436b85f989bb9195c2505b4b88e",
+        "snapshot26": "d00b7718f116fa83c4ba7834c1e94052aaaf5436b85f989bb9195c2505b4b88e",
+        "snapshot24": "d00b7718f116fa83c4ba7834c1e94052aaaf5436b85f989bb9195c2505b4b88e"
+      }
+    },
+    {
+      "path": "src/logpane/attach.ts",
+      "sha256": "399d95de2004751f031e9639af5b8b7588efda7b1f815aaef3de32ca8ebf1c88",
+      "mappings": {
+        "current": "399d95de2004751f031e9639af5b8b7588efda7b1f815aaef3de32ca8ebf1c88",
+        "commit": "399d95de2004751f031e9639af5b8b7588efda7b1f815aaef3de32ca8ebf1c88",
+        "snapshot26": "399d95de2004751f031e9639af5b8b7588efda7b1f815aaef3de32ca8ebf1c88",
+        "snapshot24": "399d95de2004751f031e9639af5b8b7588efda7b1f815aaef3de32ca8ebf1c88"
+      }
+    },
+    {
+      "path": "src/logpane/window.ts",
+      "sha256": "8506e8734a69ccbc34256eae8fe69fe887ac4ef812af29e9e69627c22e49c3fd",
+      "mappings": {
+        "current": "8506e8734a69ccbc34256eae8fe69fe887ac4ef812af29e9e69627c22e49c3fd",
+        "commit": "8506e8734a69ccbc34256eae8fe69fe887ac4ef812af29e9e69627c22e49c3fd",
+        "snapshot26": "8506e8734a69ccbc34256eae8fe69fe887ac4ef812af29e9e69627c22e49c3fd",
+        "snapshot24": "8506e8734a69ccbc34256eae8fe69fe887ac4ef812af29e9e69627c22e49c3fd"
+      }
+    },
+    {
+      "path": "src/watch/index.ts",
+      "sha256": "112b31d8360c5dfc9d9b9b57557461218824f031d2fc0e3b6c26dc05b6959e3f",
+      "mappings": {
+        "current": "112b31d8360c5dfc9d9b9b57557461218824f031d2fc0e3b6c26dc05b6959e3f",
+        "commit": "112b31d8360c5dfc9d9b9b57557461218824f031d2fc0e3b6c26dc05b6959e3f",
+        "snapshot26": "112b31d8360c5dfc9d9b9b57557461218824f031d2fc0e3b6c26dc05b6959e3f",
+        "snapshot24": "112b31d8360c5dfc9d9b9b57557461218824f031d2fc0e3b6c26dc05b6959e3f"
+      }
+    },
+    {
+      "path": "src/log/index.ts",
+      "sha256": "bef9a52aba5090c73a631b242fd1051232ad0c4ee3e446787b36a79a3dc515c0",
+      "mappings": {
+        "current": "bef9a52aba5090c73a631b242fd1051232ad0c4ee3e446787b36a79a3dc515c0",
+        "commit": "bef9a52aba5090c73a631b242fd1051232ad0c4ee3e446787b36a79a3dc515c0",
+        "snapshot26": "bef9a52aba5090c73a631b242fd1051232ad0c4ee3e446787b36a79a3dc515c0",
+        "snapshot24": "bef9a52aba5090c73a631b242fd1051232ad0c4ee3e446787b36a79a3dc515c0"
+      }
+    },
+    {
+      "path": "src/device/image.ts",
+      "sha256": "2faa0839bac89a13e08e5e873e3da1e96b58e3a41adc096d1f2621aff26eb88a",
+      "mappings": {
+        "current": "2faa0839bac89a13e08e5e873e3da1e96b58e3a41adc096d1f2621aff26eb88a",
+        "commit": "2faa0839bac89a13e08e5e873e3da1e96b58e3a41adc096d1f2621aff26eb88a",
+        "snapshot26": "2faa0839bac89a13e08e5e873e3da1e96b58e3a41adc096d1f2621aff26eb88a",
+        "snapshot24": "2faa0839bac89a13e08e5e873e3da1e96b58e3a41adc096d1f2621aff26eb88a"
+      }
+    },
+    {
+      "path": "src/device/lease.ts",
+      "sha256": "d5587a7336c968560afb71ee2adcd00cd86118ad0b6266b2a0a1feac8f8b7f33",
+      "mappings": {
+        "current": "d5587a7336c968560afb71ee2adcd00cd86118ad0b6266b2a0a1feac8f8b7f33",
+        "commit": "d5587a7336c968560afb71ee2adcd00cd86118ad0b6266b2a0a1feac8f8b7f33",
+        "snapshot26": "d5587a7336c968560afb71ee2adcd00cd86118ad0b6266b2a0a1feac8f8b7f33",
+        "snapshot24": "d5587a7336c968560afb71ee2adcd00cd86118ad0b6266b2a0a1feac8f8b7f33"
+      }
+    },
+    {
+      "path": "src/device/admission.ts",
+      "sha256": "a0533274c6fbebecb227fa2dd7121a170ce2a2d9c84ddf73f4fad74a39569a91",
+      "mappings": {
+        "current": "a0533274c6fbebecb227fa2dd7121a170ce2a2d9c84ddf73f4fad74a39569a91",
+        "commit": "a0533274c6fbebecb227fa2dd7121a170ce2a2d9c84ddf73f4fad74a39569a91",
+        "snapshot26": "a0533274c6fbebecb227fa2dd7121a170ce2a2d9c84ddf73f4fad74a39569a91",
+        "snapshot24": "a0533274c6fbebecb227fa2dd7121a170ce2a2d9c84ddf73f4fad74a39569a91"
+      }
+    },
+    {
+      "path": "src/device/logs.ts",
+      "sha256": "25b9be6d7d99cae7fba3c46ffb3253050ee9ca3e27fe74e976392984109f5dc8",
+      "mappings": {
+        "current": "25b9be6d7d99cae7fba3c46ffb3253050ee9ca3e27fe74e976392984109f5dc8",
+        "commit": "25b9be6d7d99cae7fba3c46ffb3253050ee9ca3e27fe74e976392984109f5dc8",
+        "snapshot26": "25b9be6d7d99cae7fba3c46ffb3253050ee9ca3e27fe74e976392984109f5dc8",
+        "snapshot24": "25b9be6d7d99cae7fba3c46ffb3253050ee9ca3e27fe74e976392984109f5dc8"
+      }
+    },
+    {
+      "path": "src/device/admission-sqlite.ts",
+      "sha256": "209e311d610f77d172f6af15ac815ba24c79496d0e065e3ef25f410d0fb10856",
+      "mappings": {
+        "current": "209e311d610f77d172f6af15ac815ba24c79496d0e065e3ef25f410d0fb10856",
+        "commit": "209e311d610f77d172f6af15ac815ba24c79496d0e065e3ef25f410d0fb10856",
+        "snapshot26": "209e311d610f77d172f6af15ac815ba24c79496d0e065e3ef25f410d0fb10856",
+        "snapshot24": "209e311d610f77d172f6af15ac815ba24c79496d0e065e3ef25f410d0fb10856"
+      }
+    },
+    {
+      "path": "src/device/factory.ts",
+      "sha256": "a6c361f036ce7ead47d15b816a9220382eaa4b9d0d3fa4ae83885e74b4a94971",
+      "mappings": {
+        "current": "a6c361f036ce7ead47d15b816a9220382eaa4b9d0d3fa4ae83885e74b4a94971",
+        "commit": "a6c361f036ce7ead47d15b816a9220382eaa4b9d0d3fa4ae83885e74b4a94971",
+        "snapshot26": "a6c361f036ce7ead47d15b816a9220382eaa4b9d0d3fa4ae83885e74b4a94971",
+        "snapshot24": "a6c361f036ce7ead47d15b816a9220382eaa4b9d0d3fa4ae83885e74b4a94971"
+      }
+    },
+    {
+      "path": "src/device/attach.ts",
+      "sha256": "d4f4d81392d9a7fb5fee87f80d6fdbbdaa6bada789696d289c1198345432ed9e",
+      "mappings": {
+        "current": "d4f4d81392d9a7fb5fee87f80d6fdbbdaa6bada789696d289c1198345432ed9e",
+        "commit": "d4f4d81392d9a7fb5fee87f80d6fdbbdaa6bada789696d289c1198345432ed9e",
+        "snapshot26": "d4f4d81392d9a7fb5fee87f80d6fdbbdaa6bada789696d289c1198345432ed9e",
+        "snapshot24": "d4f4d81392d9a7fb5fee87f80d6fdbbdaa6bada789696d289c1198345432ed9e"
+      }
+    },
+    {
+      "path": "src/device/admission-migration.ts",
+      "sha256": "14e66ab6ed5a84a241275f7eda67202a6662aeb978942e55e6980078dbb6ee8b",
+      "mappings": {
+        "current": "14e66ab6ed5a84a241275f7eda67202a6662aeb978942e55e6980078dbb6ee8b",
+        "commit": "14e66ab6ed5a84a241275f7eda67202a6662aeb978942e55e6980078dbb6ee8b",
+        "snapshot26": "14e66ab6ed5a84a241275f7eda67202a6662aeb978942e55e6980078dbb6ee8b",
+        "snapshot24": "14e66ab6ed5a84a241275f7eda67202a6662aeb978942e55e6980078dbb6ee8b"
+      }
+    },
+    {
+      "path": "src/device/index.ts",
+      "sha256": "21e63907b028cd5eb84e61834aa79e6bd59d74c19f3be30b00c0dacb659b5604",
+      "mappings": {
+        "current": "21e63907b028cd5eb84e61834aa79e6bd59d74c19f3be30b00c0dacb659b5604",
+        "commit": "21e63907b028cd5eb84e61834aa79e6bd59d74c19f3be30b00c0dacb659b5604",
+        "snapshot26": "21e63907b028cd5eb84e61834aa79e6bd59d74c19f3be30b00c0dacb659b5604",
+        "snapshot24": "21e63907b028cd5eb84e61834aa79e6bd59d74c19f3be30b00c0dacb659b5604"
+      }
+    },
+    {
+      "path": "src/device/admission-allocation.ts",
+      "sha256": "7e75db8780fd24ace660701e23af6210dafbf9731920ece4cb71fa1d00414a5e",
+      "mappings": {
+        "current": "7e75db8780fd24ace660701e23af6210dafbf9731920ece4cb71fa1d00414a5e",
+        "commit": "7e75db8780fd24ace660701e23af6210dafbf9731920ece4cb71fa1d00414a5e",
+        "snapshot26": "7e75db8780fd24ace660701e23af6210dafbf9731920ece4cb71fa1d00414a5e",
+        "snapshot24": "7e75db8780fd24ace660701e23af6210dafbf9731920ece4cb71fa1d00414a5e"
+      }
+    },
+    {
+      "path": "src/device/admission-maintenance.ts",
+      "sha256": "908864b9c6df13805998b917f0ca1a3a7b430708548decdccb1abcb726e866a5",
+      "mappings": {
+        "current": "908864b9c6df13805998b917f0ca1a3a7b430708548decdccb1abcb726e866a5",
+        "commit": "908864b9c6df13805998b917f0ca1a3a7b430708548decdccb1abcb726e866a5",
+        "snapshot26": "908864b9c6df13805998b917f0ca1a3a7b430708548decdccb1abcb726e866a5",
+        "snapshot24": "908864b9c6df13805998b917f0ca1a3a7b430708548decdccb1abcb726e866a5"
+      }
+    },
+    {
+      "path": "src/observed/schema.ts",
+      "sha256": "7592d02055e8a1c65294b3660685d27a0a1f4c70e2b8283c71cd45a5bded6774",
+      "mappings": {
+        "current": "7592d02055e8a1c65294b3660685d27a0a1f4c70e2b8283c71cd45a5bded6774",
+        "commit": "7592d02055e8a1c65294b3660685d27a0a1f4c70e2b8283c71cd45a5bded6774",
+        "snapshot26": "7592d02055e8a1c65294b3660685d27a0a1f4c70e2b8283c71cd45a5bded6774",
+        "snapshot24": "7592d02055e8a1c65294b3660685d27a0a1f4c70e2b8283c71cd45a5bded6774"
+      }
+    },
+    {
+      "path": "src/observed/allocation-schema.ts",
+      "sha256": "f48809598c4db4f8609f565659d89bc5438370d1d68b6229f97e8e40a8e6b3ca",
+      "mappings": {
+        "current": "f48809598c4db4f8609f565659d89bc5438370d1d68b6229f97e8e40a8e6b3ca",
+        "commit": "f48809598c4db4f8609f565659d89bc5438370d1d68b6229f97e8e40a8e6b3ca",
+        "snapshot26": "f48809598c4db4f8609f565659d89bc5438370d1d68b6229f97e8e40a8e6b3ca",
+        "snapshot24": "f48809598c4db4f8609f565659d89bc5438370d1d68b6229f97e8e40a8e6b3ca"
+      }
+    },
+    {
+      "path": "src/observed/report.ts",
+      "sha256": "b137ebad4b582f652bea7e788101a717a094073b57f8461b243e4dc0897fd1ff",
+      "mappings": {
+        "current": "b137ebad4b582f652bea7e788101a717a094073b57f8461b243e4dc0897fd1ff",
+        "commit": "b137ebad4b582f652bea7e788101a717a094073b57f8461b243e4dc0897fd1ff",
+        "snapshot26": "b137ebad4b582f652bea7e788101a717a094073b57f8461b243e4dc0897fd1ff",
+        "snapshot24": "b137ebad4b582f652bea7e788101a717a094073b57f8461b243e4dc0897fd1ff"
+      }
+    },
+    {
+      "path": "src/observed/evidence.ts",
+      "sha256": "deeb65d7c95c84de1c3b559ec2a885da768a8203a2be79af700f3262717462fb",
+      "mappings": {
+        "current": "deeb65d7c95c84de1c3b559ec2a885da768a8203a2be79af700f3262717462fb",
+        "commit": "deeb65d7c95c84de1c3b559ec2a885da768a8203a2be79af700f3262717462fb",
+        "snapshot26": "deeb65d7c95c84de1c3b559ec2a885da768a8203a2be79af700f3262717462fb",
+        "snapshot24": "deeb65d7c95c84de1c3b559ec2a885da768a8203a2be79af700f3262717462fb"
+      }
+    },
+    {
+      "path": "src/observed/allocation.ts",
+      "sha256": "0233ea8d8d571761596287e9369f7801bd693edfe6d95c459a950e4c3b943041",
+      "mappings": {
+        "current": "0233ea8d8d571761596287e9369f7801bd693edfe6d95c459a950e4c3b943041",
+        "commit": "0233ea8d8d571761596287e9369f7801bd693edfe6d95c459a950e4c3b943041",
+        "snapshot26": "0233ea8d8d571761596287e9369f7801bd693edfe6d95c459a950e4c3b943041",
+        "snapshot24": "0233ea8d8d571761596287e9369f7801bd693edfe6d95c459a950e4c3b943041"
+      }
+    },
+    {
+      "path": "src/observed/cli.ts",
+      "sha256": "17ed826b608359a9f901012a82447fd1e06d1d2a65e5b8b477e1c0a0885f8e78",
+      "mappings": {
+        "current": "17ed826b608359a9f901012a82447fd1e06d1d2a65e5b8b477e1c0a0885f8e78",
+        "commit": "17ed826b608359a9f901012a82447fd1e06d1d2a65e5b8b477e1c0a0885f8e78",
+        "snapshot26": "17ed826b608359a9f901012a82447fd1e06d1d2a65e5b8b477e1c0a0885f8e78",
+        "snapshot24": "17ed826b608359a9f901012a82447fd1e06d1d2a65e5b8b477e1c0a0885f8e78"
+      }
+    },
+    {
+      "path": "src/observed/supplied-source.ts",
+      "sha256": "323105c489fae0823fc8c4674479f9e8c58e1e8ef500da8af043d8343badad64",
+      "mappings": {
+        "current": "323105c489fae0823fc8c4674479f9e8c58e1e8ef500da8af043d8343badad64",
+        "commit": "323105c489fae0823fc8c4674479f9e8c58e1e8ef500da8af043d8343badad64",
+        "snapshot26": "323105c489fae0823fc8c4674479f9e8c58e1e8ef500da8af043d8343badad64",
+        "snapshot24": "323105c489fae0823fc8c4674479f9e8c58e1e8ef500da8af043d8343badad64"
+      }
+    },
+    {
+      "path": "src/observed/artifact.ts",
+      "sha256": "5d861ffca7a15e9c078204aeccb533531cfe1de3fe8dcdfcc0ac3901a670b139",
+      "mappings": {
+        "current": "5d861ffca7a15e9c078204aeccb533531cfe1de3fe8dcdfcc0ac3901a670b139",
+        "commit": "5d861ffca7a15e9c078204aeccb533531cfe1de3fe8dcdfcc0ac3901a670b139",
+        "snapshot26": "5d861ffca7a15e9c078204aeccb533531cfe1de3fe8dcdfcc0ac3901a670b139",
+        "snapshot24": "5d861ffca7a15e9c078204aeccb533531cfe1de3fe8dcdfcc0ac3901a670b139"
+      }
+    },
+    {
+      "path": "src/observed/allocation-config.ts",
+      "sha256": "b6519649edbaf203e5323a15c80273321a42a5cb49850551297268e6ee1f5f0a",
+      "mappings": {
+        "current": "b6519649edbaf203e5323a15c80273321a42a5cb49850551297268e6ee1f5f0a",
+        "commit": "b6519649edbaf203e5323a15c80273321a42a5cb49850551297268e6ee1f5f0a",
+        "snapshot26": "b6519649edbaf203e5323a15c80273321a42a5cb49850551297268e6ee1f5f0a",
+        "snapshot24": "b6519649edbaf203e5323a15c80273321a42a5cb49850551297268e6ee1f5f0a"
+      }
+    },
+    {
+      "path": "src/observed/service.ts",
+      "sha256": "0c9e6cd6bfc1d7308bc6dcdb1cbf88b9179143084f9cb66d28af09cb6a9def6d",
+      "mappings": {
+        "current": "0c9e6cd6bfc1d7308bc6dcdb1cbf88b9179143084f9cb66d28af09cb6a9def6d",
+        "commit": "0c9e6cd6bfc1d7308bc6dcdb1cbf88b9179143084f9cb66d28af09cb6a9def6d",
+        "snapshot26": "0c9e6cd6bfc1d7308bc6dcdb1cbf88b9179143084f9cb66d28af09cb6a9def6d",
+        "snapshot24": "0c9e6cd6bfc1d7308bc6dcdb1cbf88b9179143084f9cb66d28af09cb6a9def6d"
+      }
+    },
+    {
+      "path": "src/observed/create-source.ts",
+      "sha256": "d13d6e4324be0b534ce32e0057dd0a1ca9654941976ce53dcf17bba530e258b1",
+      "mappings": {
+        "current": "d13d6e4324be0b534ce32e0057dd0a1ca9654941976ce53dcf17bba530e258b1",
+        "commit": "d13d6e4324be0b534ce32e0057dd0a1ca9654941976ce53dcf17bba530e258b1",
+        "snapshot26": "d13d6e4324be0b534ce32e0057dd0a1ca9654941976ce53dcf17bba530e258b1",
+        "snapshot24": "d13d6e4324be0b534ce32e0057dd0a1ca9654941976ce53dcf17bba530e258b1"
+      }
+    },
+    {
+      "path": "src/device/android/adb.ts",
+      "sha256": "0d9629f9696b5f79d9cc8f74cdcc420200a60ff4c679f62f14ba302457fdd144",
+      "mappings": {
+        "current": "0d9629f9696b5f79d9cc8f74cdcc420200a60ff4c679f62f14ba302457fdd144",
+        "commit": "0d9629f9696b5f79d9cc8f74cdcc420200a60ff4c679f62f14ba302457fdd144",
+        "snapshot26": "0d9629f9696b5f79d9cc8f74cdcc420200a60ff4c679f62f14ba302457fdd144",
+        "snapshot24": "0d9629f9696b5f79d9cc8f74cdcc420200a60ff4c679f62f14ba302457fdd144"
+      }
+    },
+    {
+      "path": "src/device/android/agent-supply.ts",
+      "sha256": "1bd4424293515d2e2e593e143b88a2133d6cbbc10bffa710a0d757944d35b0a2",
+      "mappings": {
+        "current": "1bd4424293515d2e2e593e143b88a2133d6cbbc10bffa710a0d757944d35b0a2",
+        "commit": "1bd4424293515d2e2e593e143b88a2133d6cbbc10bffa710a0d757944d35b0a2",
+        "snapshot26": "1bd4424293515d2e2e593e143b88a2133d6cbbc10bffa710a0d757944d35b0a2",
+        "snapshot24": "1bd4424293515d2e2e593e143b88a2133d6cbbc10bffa710a0d757944d35b0a2"
+      }
+    },
+    {
+      "path": "src/device/android/driver.ts",
+      "sha256": "ca188a7cf0a93fc1f955726101568a55aad924c981a04963a740b2fe31080c0a",
+      "mappings": {
+        "current": "ca188a7cf0a93fc1f955726101568a55aad924c981a04963a740b2fe31080c0a",
+        "commit": "ca188a7cf0a93fc1f955726101568a55aad924c981a04963a740b2fe31080c0a",
+        "snapshot26": "ca188a7cf0a93fc1f955726101568a55aad924c981a04963a740b2fe31080c0a",
+        "snapshot24": "ca188a7cf0a93fc1f955726101568a55aad924c981a04963a740b2fe31080c0a"
+      }
+    },
+    {
+      "path": "src/device/android/mapping.ts",
+      "sha256": "57fdd34407b1abd0542946af72e56377264a66516517aa0642418064da6a8585",
+      "mappings": {
+        "current": "57fdd34407b1abd0542946af72e56377264a66516517aa0642418064da6a8585",
+        "commit": "57fdd34407b1abd0542946af72e56377264a66516517aa0642418064da6a8585",
+        "snapshot26": "57fdd34407b1abd0542946af72e56377264a66516517aa0642418064da6a8585",
+        "snapshot24": "57fdd34407b1abd0542946af72e56377264a66516517aa0642418064da6a8585"
+      }
+    },
+    {
+      "path": "src/device/android/threadtime.ts",
+      "sha256": "26b03f0ba7a79bc778160c73beaec6e8c8537491ec83b6a0732c01bcb9a066e4",
+      "mappings": {
+        "current": "26b03f0ba7a79bc778160c73beaec6e8c8537491ec83b6a0732c01bcb9a066e4",
+        "commit": "26b03f0ba7a79bc778160c73beaec6e8c8537491ec83b6a0732c01bcb9a066e4",
+        "snapshot26": "26b03f0ba7a79bc778160c73beaec6e8c8537491ec83b6a0732c01bcb9a066e4",
+        "snapshot24": "26b03f0ba7a79bc778160c73beaec6e8c8537491ec83b6a0732c01bcb9a066e4"
+      }
+    },
+    {
+      "path": "src/device/android/ledger.ts",
+      "sha256": "8cfb098e5724db68234f7ce4f743d2c1857ba3041d7c4c20a484c81657c8eb77",
+      "mappings": {
+        "current": "8cfb098e5724db68234f7ce4f743d2c1857ba3041d7c4c20a484c81657c8eb77",
+        "commit": "8cfb098e5724db68234f7ce4f743d2c1857ba3041d7c4c20a484c81657c8eb77",
+        "snapshot26": "8cfb098e5724db68234f7ce4f743d2c1857ba3041d7c4c20a484c81657c8eb77",
+        "snapshot24": "8cfb098e5724db68234f7ce4f743d2c1857ba3041d7c4c20a484c81657c8eb77"
+      }
+    },
+    {
+      "path": "src/device/android/settle.ts",
+      "sha256": "659367ace0010cab3aeb002cb033ef65965bd5c0f78c4795af4ec5bbc57f09f3",
+      "mappings": {
+        "current": "659367ace0010cab3aeb002cb033ef65965bd5c0f78c4795af4ec5bbc57f09f3",
+        "commit": "659367ace0010cab3aeb002cb033ef65965bd5c0f78c4795af4ec5bbc57f09f3",
+        "snapshot26": "659367ace0010cab3aeb002cb033ef65965bd5c0f78c4795af4ec5bbc57f09f3",
+        "snapshot24": "659367ace0010cab3aeb002cb033ef65965bd5c0f78c4795af4ec5bbc57f09f3"
+      }
+    },
+    {
+      "path": "src/device/android/tools.ts",
+      "sha256": "9286ad5d386d03976ffd967a36ee83358e5c8db73440215c3d7657bfdca8e64a",
+      "mappings": {
+        "current": "9286ad5d386d03976ffd967a36ee83358e5c8db73440215c3d7657bfdca8e64a",
+        "commit": "9286ad5d386d03976ffd967a36ee83358e5c8db73440215c3d7657bfdca8e64a",
+        "snapshot26": "9286ad5d386d03976ffd967a36ee83358e5c8db73440215c3d7657bfdca8e64a",
+        "snapshot24": "9286ad5d386d03976ffd967a36ee83358e5c8db73440215c3d7657bfdca8e64a"
+      }
+    },
+    {
+      "path": "src/device/android/exit-watch.ts",
+      "sha256": "49580333ad22318b5dfcba345479cfba4a31a22f278a30a0b4020ef643467e50",
+      "mappings": {
+        "current": "49580333ad22318b5dfcba345479cfba4a31a22f278a30a0b4020ef643467e50",
+        "commit": "49580333ad22318b5dfcba345479cfba4a31a22f278a30a0b4020ef643467e50",
+        "snapshot26": "49580333ad22318b5dfcba345479cfba4a31a22f278a30a0b4020ef643467e50",
+        "snapshot24": "49580333ad22318b5dfcba345479cfba4a31a22f278a30a0b4020ef643467e50"
+      }
+    },
+    {
+      "path": "src/device/android/agent-client.ts",
+      "sha256": "4f6732361e72320047bd12939618057f00b8e6d2f0d4f4f8ce3bc4982ab7ea47",
+      "mappings": {
+        "current": "4f6732361e72320047bd12939618057f00b8e6d2f0d4f4f8ce3bc4982ab7ea47",
+        "commit": "4f6732361e72320047bd12939618057f00b8e6d2f0d4f4f8ce3bc4982ab7ea47",
+        "snapshot26": "4f6732361e72320047bd12939618057f00b8e6d2f0d4f4f8ce3bc4982ab7ea47",
+        "snapshot24": "4f6732361e72320047bd12939618057f00b8e6d2f0d4f4f8ce3bc4982ab7ea47"
+      }
+    },
+    {
+      "path": "src/device/android/logcat.ts",
+      "sha256": "001ef7c26418b80cf53d24427ad393612cb3cfe5f5dc66554b90eb92475be4b0",
+      "mappings": {
+        "current": "001ef7c26418b80cf53d24427ad393612cb3cfe5f5dc66554b90eb92475be4b0",
+        "commit": "001ef7c26418b80cf53d24427ad393612cb3cfe5f5dc66554b90eb92475be4b0",
+        "snapshot26": "001ef7c26418b80cf53d24427ad393612cb3cfe5f5dc66554b90eb92475be4b0",
+        "snapshot24": "001ef7c26418b80cf53d24427ad393612cb3cfe5f5dc66554b90eb92475be4b0"
+      }
+    },
+    {
+      "path": "package.json",
+      "sha256": "d2fffea3e28d6ea794536b2cb67337abe8ec75c46cf10c2944ca1b3cd0a3a3ea",
+      "mappings": {
+        "current": "d2fffea3e28d6ea794536b2cb67337abe8ec75c46cf10c2944ca1b3cd0a3a3ea",
+        "commit": "d2fffea3e28d6ea794536b2cb67337abe8ec75c46cf10c2944ca1b3cd0a3a3ea",
+        "snapshot26": "d2fffea3e28d6ea794536b2cb67337abe8ec75c46cf10c2944ca1b3cd0a3a3ea",
+        "snapshot24": "d2fffea3e28d6ea794536b2cb67337abe8ec75c46cf10c2944ca1b3cd0a3a3ea"
+      }
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "7982b0a2fc02a088ab03761b8332e6c15ad3d0d841f1134e9a4dd50b94364479",
+      "mappings": {
+        "current": "7982b0a2fc02a088ab03761b8332e6c15ad3d0d841f1134e9a4dd50b94364479",
+        "commit": "7982b0a2fc02a088ab03761b8332e6c15ad3d0d841f1134e9a4dd50b94364479",
+        "snapshot26": "7982b0a2fc02a088ab03761b8332e6c15ad3d0d841f1134e9a4dd50b94364479",
+        "snapshot24": "7982b0a2fc02a088ab03761b8332e6c15ad3d0d841f1134e9a4dd50b94364479"
+      }
+    },
+    {
+      "path": "README.md",
+      "sha256": "b5465ca95374299beb4e1be0bfd256d889d1edce214f681f7e5521461288dcb6",
+      "mappings": {
+        "current": "b5465ca95374299beb4e1be0bfd256d889d1edce214f681f7e5521461288dcb6",
+        "commit": "b5465ca95374299beb4e1be0bfd256d889d1edce214f681f7e5521461288dcb6",
+        "snapshot26": "b5465ca95374299beb4e1be0bfd256d889d1edce214f681f7e5521461288dcb6",
+        "snapshot24": "b5465ca95374299beb4e1be0bfd256d889d1edce214f681f7e5521461288dcb6"
+      }
+    }
+  ],
+  "compiled": [
+    {
+      "path": "dist/capture.js",
+      "mappings": {
+        "current": "c4a0a4776605a3b1c72b2795fd97f1230184bd9134f4c343ba58aaefea31974f",
+        "snapshot26": "c4a0a4776605a3b1c72b2795fd97f1230184bd9134f4c343ba58aaefea31974f",
+        "npm26": "c4a0a4776605a3b1c72b2795fd97f1230184bd9134f4c343ba58aaefea31974f",
+        "plugin26": "c4a0a4776605a3b1c72b2795fd97f1230184bd9134f4c343ba58aaefea31974f",
+        "snapshot24": "c4a0a4776605a3b1c72b2795fd97f1230184bd9134f4c343ba58aaefea31974f",
+        "npm24": "c4a0a4776605a3b1c72b2795fd97f1230184bd9134f4c343ba58aaefea31974f",
+        "plugin24": "c4a0a4776605a3b1c72b2795fd97f1230184bd9134f4c343ba58aaefea31974f"
+      }
+    },
+    {
+      "path": "dist/cli.js",
+      "mappings": {
+        "current": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+        "snapshot26": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+        "npm26": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+        "plugin26": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+        "snapshot24": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+        "npm24": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df",
+        "plugin24": "3f3d41ee2687846dc939f502e7df5ad8aca3ea473a6d291d5652a5230b8ae2df"
+      }
+    },
+    {
+      "path": "dist/contracts/index.js",
+      "mappings": {
+        "current": "dec6d2a8cea84e02493a041e74a15f36d80ce8f37e9dc6f43b82520570580864",
+        "snapshot26": "dec6d2a8cea84e02493a041e74a15f36d80ce8f37e9dc6f43b82520570580864",
+        "npm26": "dec6d2a8cea84e02493a041e74a15f36d80ce8f37e9dc6f43b82520570580864",
+        "plugin26": "dec6d2a8cea84e02493a041e74a15f36d80ce8f37e9dc6f43b82520570580864",
+        "snapshot24": "dec6d2a8cea84e02493a041e74a15f36d80ce8f37e9dc6f43b82520570580864",
+        "npm24": "dec6d2a8cea84e02493a041e74a15f36d80ce8f37e9dc6f43b82520570580864",
+        "plugin24": "dec6d2a8cea84e02493a041e74a15f36d80ce8f37e9dc6f43b82520570580864"
+      }
+    },
+    {
+      "path": "dist/device/admission-allocation.js",
+      "mappings": {
+        "current": "ba6f8ad883ec2d0edd08bbcbb216a02283eb13a74645a65e3cca94c7d1215c27",
+        "snapshot26": "ba6f8ad883ec2d0edd08bbcbb216a02283eb13a74645a65e3cca94c7d1215c27",
+        "npm26": "ba6f8ad883ec2d0edd08bbcbb216a02283eb13a74645a65e3cca94c7d1215c27",
+        "plugin26": "ba6f8ad883ec2d0edd08bbcbb216a02283eb13a74645a65e3cca94c7d1215c27",
+        "snapshot24": "ba6f8ad883ec2d0edd08bbcbb216a02283eb13a74645a65e3cca94c7d1215c27",
+        "npm24": "ba6f8ad883ec2d0edd08bbcbb216a02283eb13a74645a65e3cca94c7d1215c27",
+        "plugin24": "ba6f8ad883ec2d0edd08bbcbb216a02283eb13a74645a65e3cca94c7d1215c27"
+      }
+    },
+    {
+      "path": "dist/device/admission-maintenance.js",
+      "mappings": {
+        "current": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+        "snapshot26": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+        "npm26": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+        "plugin26": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+        "snapshot24": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+        "npm24": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965",
+        "plugin24": "c8d4451bb348ce01efc79ac9effc2bf0b83a545b4ca87edd4c12fbc46dc26965"
+      }
+    },
+    {
+      "path": "dist/device/admission-migration.js",
+      "mappings": {
+        "current": "e2a2e1fe7c40c2f37a7fb0b74399bddd97da6c81208eefae9d56a3879b7c1b39",
+        "snapshot26": "e2a2e1fe7c40c2f37a7fb0b74399bddd97da6c81208eefae9d56a3879b7c1b39",
+        "npm26": "e2a2e1fe7c40c2f37a7fb0b74399bddd97da6c81208eefae9d56a3879b7c1b39",
+        "plugin26": "e2a2e1fe7c40c2f37a7fb0b74399bddd97da6c81208eefae9d56a3879b7c1b39",
+        "snapshot24": "e2a2e1fe7c40c2f37a7fb0b74399bddd97da6c81208eefae9d56a3879b7c1b39",
+        "npm24": "e2a2e1fe7c40c2f37a7fb0b74399bddd97da6c81208eefae9d56a3879b7c1b39",
+        "plugin24": "e2a2e1fe7c40c2f37a7fb0b74399bddd97da6c81208eefae9d56a3879b7c1b39"
+      }
+    },
+    {
+      "path": "dist/device/admission-sqlite.js",
+      "mappings": {
+        "current": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1",
+        "snapshot26": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1",
+        "npm26": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1",
+        "plugin26": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1",
+        "snapshot24": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1",
+        "npm24": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1",
+        "plugin24": "de7f8337e7f043480270c8aa3653487c51abacca709410f79796a42bb26bf8b1"
+      }
+    },
+    {
+      "path": "dist/device/admission.js",
+      "mappings": {
+        "current": "9006f0d3c9328e6d75e7cf51af13dbcfea4db16525b7ac67b68f8230060e51ef",
+        "snapshot26": "9006f0d3c9328e6d75e7cf51af13dbcfea4db16525b7ac67b68f8230060e51ef",
+        "npm26": "9006f0d3c9328e6d75e7cf51af13dbcfea4db16525b7ac67b68f8230060e51ef",
+        "plugin26": "9006f0d3c9328e6d75e7cf51af13dbcfea4db16525b7ac67b68f8230060e51ef",
+        "snapshot24": "9006f0d3c9328e6d75e7cf51af13dbcfea4db16525b7ac67b68f8230060e51ef",
+        "npm24": "9006f0d3c9328e6d75e7cf51af13dbcfea4db16525b7ac67b68f8230060e51ef",
+        "plugin24": "9006f0d3c9328e6d75e7cf51af13dbcfea4db16525b7ac67b68f8230060e51ef"
+      }
+    },
+    {
+      "path": "dist/device/android/adb.js",
+      "mappings": {
+        "current": "3edec1e60b2605c8252164a94ebc089afec9e196a3383d1cb58359b2226e28d6",
+        "snapshot26": "3edec1e60b2605c8252164a94ebc089afec9e196a3383d1cb58359b2226e28d6",
+        "npm26": "3edec1e60b2605c8252164a94ebc089afec9e196a3383d1cb58359b2226e28d6",
+        "plugin26": "3edec1e60b2605c8252164a94ebc089afec9e196a3383d1cb58359b2226e28d6",
+        "snapshot24": "3edec1e60b2605c8252164a94ebc089afec9e196a3383d1cb58359b2226e28d6",
+        "npm24": "3edec1e60b2605c8252164a94ebc089afec9e196a3383d1cb58359b2226e28d6",
+        "plugin24": "3edec1e60b2605c8252164a94ebc089afec9e196a3383d1cb58359b2226e28d6"
+      }
+    },
+    {
+      "path": "dist/device/android/agent-client.js",
+      "mappings": {
+        "current": "1da4c9fa54388fa8456713f4186de58e2ecd7fd5f9ef4ea70616176668196947",
+        "snapshot26": "1da4c9fa54388fa8456713f4186de58e2ecd7fd5f9ef4ea70616176668196947",
+        "npm26": "1da4c9fa54388fa8456713f4186de58e2ecd7fd5f9ef4ea70616176668196947",
+        "plugin26": "1da4c9fa54388fa8456713f4186de58e2ecd7fd5f9ef4ea70616176668196947",
+        "snapshot24": "1da4c9fa54388fa8456713f4186de58e2ecd7fd5f9ef4ea70616176668196947",
+        "npm24": "1da4c9fa54388fa8456713f4186de58e2ecd7fd5f9ef4ea70616176668196947",
+        "plugin24": "1da4c9fa54388fa8456713f4186de58e2ecd7fd5f9ef4ea70616176668196947"
+      }
+    },
+    {
+      "path": "dist/device/android/agent-supply.js",
+      "mappings": {
+        "current": "7cef22170d1702b9b03e68cefe3060ef578643a47907dffc021debfd23b45330",
+        "snapshot26": "7cef22170d1702b9b03e68cefe3060ef578643a47907dffc021debfd23b45330",
+        "npm26": "7cef22170d1702b9b03e68cefe3060ef578643a47907dffc021debfd23b45330",
+        "plugin26": "7cef22170d1702b9b03e68cefe3060ef578643a47907dffc021debfd23b45330",
+        "snapshot24": "7cef22170d1702b9b03e68cefe3060ef578643a47907dffc021debfd23b45330",
+        "npm24": "7cef22170d1702b9b03e68cefe3060ef578643a47907dffc021debfd23b45330",
+        "plugin24": "7cef22170d1702b9b03e68cefe3060ef578643a47907dffc021debfd23b45330"
+      }
+    },
+    {
+      "path": "dist/device/android/driver.js",
+      "mappings": {
+        "current": "7ea0701ff8017904fc22ce7ffb056be8d9742df150b681daeae9559b06b35a14",
+        "snapshot26": "7ea0701ff8017904fc22ce7ffb056be8d9742df150b681daeae9559b06b35a14",
+        "npm26": "7ea0701ff8017904fc22ce7ffb056be8d9742df150b681daeae9559b06b35a14",
+        "plugin26": "7ea0701ff8017904fc22ce7ffb056be8d9742df150b681daeae9559b06b35a14",
+        "snapshot24": "7ea0701ff8017904fc22ce7ffb056be8d9742df150b681daeae9559b06b35a14",
+        "npm24": "7ea0701ff8017904fc22ce7ffb056be8d9742df150b681daeae9559b06b35a14",
+        "plugin24": "7ea0701ff8017904fc22ce7ffb056be8d9742df150b681daeae9559b06b35a14"
+      }
+    },
+    {
+      "path": "dist/device/android/exit-watch.js",
+      "mappings": {
+        "current": "9b312677a3b8c9d3eae677092837c6e86c49e4ed1d580ad87693efe92ba1faa6",
+        "snapshot26": "9b312677a3b8c9d3eae677092837c6e86c49e4ed1d580ad87693efe92ba1faa6",
+        "npm26": "9b312677a3b8c9d3eae677092837c6e86c49e4ed1d580ad87693efe92ba1faa6",
+        "plugin26": "9b312677a3b8c9d3eae677092837c6e86c49e4ed1d580ad87693efe92ba1faa6",
+        "snapshot24": "9b312677a3b8c9d3eae677092837c6e86c49e4ed1d580ad87693efe92ba1faa6",
+        "npm24": "9b312677a3b8c9d3eae677092837c6e86c49e4ed1d580ad87693efe92ba1faa6",
+        "plugin24": "9b312677a3b8c9d3eae677092837c6e86c49e4ed1d580ad87693efe92ba1faa6"
+      }
+    },
+    {
+      "path": "dist/device/android/ledger.js",
+      "mappings": {
+        "current": "113897aff0008ef044a6558f7463329c3a52a4d89bf5465d233a1833ec7ba049",
+        "snapshot26": "113897aff0008ef044a6558f7463329c3a52a4d89bf5465d233a1833ec7ba049",
+        "npm26": "113897aff0008ef044a6558f7463329c3a52a4d89bf5465d233a1833ec7ba049",
+        "plugin26": "113897aff0008ef044a6558f7463329c3a52a4d89bf5465d233a1833ec7ba049",
+        "snapshot24": "113897aff0008ef044a6558f7463329c3a52a4d89bf5465d233a1833ec7ba049",
+        "npm24": "113897aff0008ef044a6558f7463329c3a52a4d89bf5465d233a1833ec7ba049",
+        "plugin24": "113897aff0008ef044a6558f7463329c3a52a4d89bf5465d233a1833ec7ba049"
+      }
+    },
+    {
+      "path": "dist/device/android/logcat.js",
+      "mappings": {
+        "current": "1a70a5a6836886c48052586a7d27e26fb4e49c82c731e490bdb7861d85980761",
+        "snapshot26": "1a70a5a6836886c48052586a7d27e26fb4e49c82c731e490bdb7861d85980761",
+        "npm26": "1a70a5a6836886c48052586a7d27e26fb4e49c82c731e490bdb7861d85980761",
+        "plugin26": "1a70a5a6836886c48052586a7d27e26fb4e49c82c731e490bdb7861d85980761",
+        "snapshot24": "1a70a5a6836886c48052586a7d27e26fb4e49c82c731e490bdb7861d85980761",
+        "npm24": "1a70a5a6836886c48052586a7d27e26fb4e49c82c731e490bdb7861d85980761",
+        "plugin24": "1a70a5a6836886c48052586a7d27e26fb4e49c82c731e490bdb7861d85980761"
+      }
+    },
+    {
+      "path": "dist/device/android/mapping.js",
+      "mappings": {
+        "current": "fbc53c8e96fd1bdd0a3ef92e26a2a455c08720b8dcdc8be0bf8c976a2b5b4952",
+        "snapshot26": "fbc53c8e96fd1bdd0a3ef92e26a2a455c08720b8dcdc8be0bf8c976a2b5b4952",
+        "npm26": "fbc53c8e96fd1bdd0a3ef92e26a2a455c08720b8dcdc8be0bf8c976a2b5b4952",
+        "plugin26": "fbc53c8e96fd1bdd0a3ef92e26a2a455c08720b8dcdc8be0bf8c976a2b5b4952",
+        "snapshot24": "fbc53c8e96fd1bdd0a3ef92e26a2a455c08720b8dcdc8be0bf8c976a2b5b4952",
+        "npm24": "fbc53c8e96fd1bdd0a3ef92e26a2a455c08720b8dcdc8be0bf8c976a2b5b4952",
+        "plugin24": "fbc53c8e96fd1bdd0a3ef92e26a2a455c08720b8dcdc8be0bf8c976a2b5b4952"
+      }
+    },
+    {
+      "path": "dist/device/android/settle.js",
+      "mappings": {
+        "current": "6fad022c962493e735ea1198a8a83f24b5df4b1652b4308002051ca5afe61363",
+        "snapshot26": "6fad022c962493e735ea1198a8a83f24b5df4b1652b4308002051ca5afe61363",
+        "npm26": "6fad022c962493e735ea1198a8a83f24b5df4b1652b4308002051ca5afe61363",
+        "plugin26": "6fad022c962493e735ea1198a8a83f24b5df4b1652b4308002051ca5afe61363",
+        "snapshot24": "6fad022c962493e735ea1198a8a83f24b5df4b1652b4308002051ca5afe61363",
+        "npm24": "6fad022c962493e735ea1198a8a83f24b5df4b1652b4308002051ca5afe61363",
+        "plugin24": "6fad022c962493e735ea1198a8a83f24b5df4b1652b4308002051ca5afe61363"
+      }
+    },
+    {
+      "path": "dist/device/android/threadtime.js",
+      "mappings": {
+        "current": "be36c941425f1a87cc2d9c2dffe175fd07dd2a273e36a144bfa11e9415714feb",
+        "snapshot26": "be36c941425f1a87cc2d9c2dffe175fd07dd2a273e36a144bfa11e9415714feb",
+        "npm26": "be36c941425f1a87cc2d9c2dffe175fd07dd2a273e36a144bfa11e9415714feb",
+        "plugin26": "be36c941425f1a87cc2d9c2dffe175fd07dd2a273e36a144bfa11e9415714feb",
+        "snapshot24": "be36c941425f1a87cc2d9c2dffe175fd07dd2a273e36a144bfa11e9415714feb",
+        "npm24": "be36c941425f1a87cc2d9c2dffe175fd07dd2a273e36a144bfa11e9415714feb",
+        "plugin24": "be36c941425f1a87cc2d9c2dffe175fd07dd2a273e36a144bfa11e9415714feb"
+      }
+    },
+    {
+      "path": "dist/device/android/tools.js",
+      "mappings": {
+        "current": "38638379c79e1a4f9f22bc104dff7aefccd509ff9b822a7ef4d8db822d529774",
+        "snapshot26": "38638379c79e1a4f9f22bc104dff7aefccd509ff9b822a7ef4d8db822d529774",
+        "npm26": "38638379c79e1a4f9f22bc104dff7aefccd509ff9b822a7ef4d8db822d529774",
+        "plugin26": "38638379c79e1a4f9f22bc104dff7aefccd509ff9b822a7ef4d8db822d529774",
+        "snapshot24": "38638379c79e1a4f9f22bc104dff7aefccd509ff9b822a7ef4d8db822d529774",
+        "npm24": "38638379c79e1a4f9f22bc104dff7aefccd509ff9b822a7ef4d8db822d529774",
+        "plugin24": "38638379c79e1a4f9f22bc104dff7aefccd509ff9b822a7ef4d8db822d529774"
+      }
+    },
+    {
+      "path": "dist/device/attach.js",
+      "mappings": {
+        "current": "2e27df08bd5a975c4b061e0a8f707b70af53504f6415f03986ac25a1d1743bcf",
+        "snapshot26": "2e27df08bd5a975c4b061e0a8f707b70af53504f6415f03986ac25a1d1743bcf",
+        "npm26": "2e27df08bd5a975c4b061e0a8f707b70af53504f6415f03986ac25a1d1743bcf",
+        "plugin26": "2e27df08bd5a975c4b061e0a8f707b70af53504f6415f03986ac25a1d1743bcf",
+        "snapshot24": "2e27df08bd5a975c4b061e0a8f707b70af53504f6415f03986ac25a1d1743bcf",
+        "npm24": "2e27df08bd5a975c4b061e0a8f707b70af53504f6415f03986ac25a1d1743bcf",
+        "plugin24": "2e27df08bd5a975c4b061e0a8f707b70af53504f6415f03986ac25a1d1743bcf"
+      }
+    },
+    {
+      "path": "dist/device/factory.js",
+      "mappings": {
+        "current": "9b3961c796b3c6d57ddafd39fd7cb1ec3f67fbe223947ca11c8e63dc7895fe70",
+        "snapshot26": "9b3961c796b3c6d57ddafd39fd7cb1ec3f67fbe223947ca11c8e63dc7895fe70",
+        "npm26": "9b3961c796b3c6d57ddafd39fd7cb1ec3f67fbe223947ca11c8e63dc7895fe70",
+        "plugin26": "9b3961c796b3c6d57ddafd39fd7cb1ec3f67fbe223947ca11c8e63dc7895fe70",
+        "snapshot24": "9b3961c796b3c6d57ddafd39fd7cb1ec3f67fbe223947ca11c8e63dc7895fe70",
+        "npm24": "9b3961c796b3c6d57ddafd39fd7cb1ec3f67fbe223947ca11c8e63dc7895fe70",
+        "plugin24": "9b3961c796b3c6d57ddafd39fd7cb1ec3f67fbe223947ca11c8e63dc7895fe70"
+      }
+    },
+    {
+      "path": "dist/device/image.js",
+      "mappings": {
+        "current": "19f4e3dddab9f1d4fe5a57c44d7f25ee1ed9fcbc10f38878437ddd3db19fc846",
+        "snapshot26": "19f4e3dddab9f1d4fe5a57c44d7f25ee1ed9fcbc10f38878437ddd3db19fc846",
+        "npm26": "19f4e3dddab9f1d4fe5a57c44d7f25ee1ed9fcbc10f38878437ddd3db19fc846",
+        "plugin26": "19f4e3dddab9f1d4fe5a57c44d7f25ee1ed9fcbc10f38878437ddd3db19fc846",
+        "snapshot24": "19f4e3dddab9f1d4fe5a57c44d7f25ee1ed9fcbc10f38878437ddd3db19fc846",
+        "npm24": "19f4e3dddab9f1d4fe5a57c44d7f25ee1ed9fcbc10f38878437ddd3db19fc846",
+        "plugin24": "19f4e3dddab9f1d4fe5a57c44d7f25ee1ed9fcbc10f38878437ddd3db19fc846"
+      }
+    },
+    {
+      "path": "dist/device/index.js",
+      "mappings": {
+        "current": "0f0105e0777963fa8c196da19e1d0550929d07a4d74e163b3a65983778151ee7",
+        "snapshot26": "0f0105e0777963fa8c196da19e1d0550929d07a4d74e163b3a65983778151ee7",
+        "npm26": "0f0105e0777963fa8c196da19e1d0550929d07a4d74e163b3a65983778151ee7",
+        "plugin26": "0f0105e0777963fa8c196da19e1d0550929d07a4d74e163b3a65983778151ee7",
+        "snapshot24": "0f0105e0777963fa8c196da19e1d0550929d07a4d74e163b3a65983778151ee7",
+        "npm24": "0f0105e0777963fa8c196da19e1d0550929d07a4d74e163b3a65983778151ee7",
+        "plugin24": "0f0105e0777963fa8c196da19e1d0550929d07a4d74e163b3a65983778151ee7"
+      }
+    },
+    {
+      "path": "dist/device/lease.js",
+      "mappings": {
+        "current": "c54335efb2647f469c3e480e8b3036598e389ed41e56fc92b23cd669a9978523",
+        "snapshot26": "c54335efb2647f469c3e480e8b3036598e389ed41e56fc92b23cd669a9978523",
+        "npm26": "c54335efb2647f469c3e480e8b3036598e389ed41e56fc92b23cd669a9978523",
+        "plugin26": "c54335efb2647f469c3e480e8b3036598e389ed41e56fc92b23cd669a9978523",
+        "snapshot24": "c54335efb2647f469c3e480e8b3036598e389ed41e56fc92b23cd669a9978523",
+        "npm24": "c54335efb2647f469c3e480e8b3036598e389ed41e56fc92b23cd669a9978523",
+        "plugin24": "c54335efb2647f469c3e480e8b3036598e389ed41e56fc92b23cd669a9978523"
+      }
+    },
+    {
+      "path": "dist/device/logs.js",
+      "mappings": {
+        "current": "799e9719aaa336321fc3dd3ae17b6ec7e24eb4268dca4f0c55f22364ea945cba",
+        "snapshot26": "799e9719aaa336321fc3dd3ae17b6ec7e24eb4268dca4f0c55f22364ea945cba",
+        "npm26": "799e9719aaa336321fc3dd3ae17b6ec7e24eb4268dca4f0c55f22364ea945cba",
+        "plugin26": "799e9719aaa336321fc3dd3ae17b6ec7e24eb4268dca4f0c55f22364ea945cba",
+        "snapshot24": "799e9719aaa336321fc3dd3ae17b6ec7e24eb4268dca4f0c55f22364ea945cba",
+        "npm24": "799e9719aaa336321fc3dd3ae17b6ec7e24eb4268dca4f0c55f22364ea945cba",
+        "plugin24": "799e9719aaa336321fc3dd3ae17b6ec7e24eb4268dca4f0c55f22364ea945cba"
+      }
+    },
+    {
+      "path": "dist/driven/candidates.js",
+      "mappings": {
+        "current": "ed9da6235a0bed29b25dda9b7089b602306979f9f0753c5b736b9bbf847bd510",
+        "snapshot26": "ed9da6235a0bed29b25dda9b7089b602306979f9f0753c5b736b9bbf847bd510",
+        "npm26": "ed9da6235a0bed29b25dda9b7089b602306979f9f0753c5b736b9bbf847bd510",
+        "plugin26": "ed9da6235a0bed29b25dda9b7089b602306979f9f0753c5b736b9bbf847bd510",
+        "snapshot24": "ed9da6235a0bed29b25dda9b7089b602306979f9f0753c5b736b9bbf847bd510",
+        "npm24": "ed9da6235a0bed29b25dda9b7089b602306979f9f0753c5b736b9bbf847bd510",
+        "plugin24": "ed9da6235a0bed29b25dda9b7089b602306979f9f0753c5b736b9bbf847bd510"
+      }
+    },
+    {
+      "path": "dist/driven/decide.js",
+      "mappings": {
+        "current": "64197e257066a9072cf00cd5af8e7ade8b97e7a952e37ad8a3370020753b8a7d",
+        "snapshot26": "64197e257066a9072cf00cd5af8e7ade8b97e7a952e37ad8a3370020753b8a7d",
+        "npm26": "64197e257066a9072cf00cd5af8e7ade8b97e7a952e37ad8a3370020753b8a7d",
+        "plugin26": "64197e257066a9072cf00cd5af8e7ade8b97e7a952e37ad8a3370020753b8a7d",
+        "snapshot24": "64197e257066a9072cf00cd5af8e7ade8b97e7a952e37ad8a3370020753b8a7d",
+        "npm24": "64197e257066a9072cf00cd5af8e7ade8b97e7a952e37ad8a3370020753b8a7d",
+        "plugin24": "64197e257066a9072cf00cd5af8e7ade8b97e7a952e37ad8a3370020753b8a7d"
+      }
+    },
+    {
+      "path": "dist/driven/handback.js",
+      "mappings": {
+        "current": "d0be72d959d452efbb533cd5d7fad38aa805829025c28c7d4c0b1dc952176fd7",
+        "snapshot26": "d0be72d959d452efbb533cd5d7fad38aa805829025c28c7d4c0b1dc952176fd7",
+        "npm26": "d0be72d959d452efbb533cd5d7fad38aa805829025c28c7d4c0b1dc952176fd7",
+        "plugin26": "d0be72d959d452efbb533cd5d7fad38aa805829025c28c7d4c0b1dc952176fd7",
+        "snapshot24": "d0be72d959d452efbb533cd5d7fad38aa805829025c28c7d4c0b1dc952176fd7",
+        "npm24": "d0be72d959d452efbb533cd5d7fad38aa805829025c28c7d4c0b1dc952176fd7",
+        "plugin24": "d0be72d959d452efbb533cd5d7fad38aa805829025c28c7d4c0b1dc952176fd7"
+      }
+    },
+    {
+      "path": "dist/driven/marker.js",
+      "mappings": {
+        "current": "bb2bd3a84c2973d94495e923f0ab15538eb523a6c6764476fa137c95b889e7bf",
+        "snapshot26": "bb2bd3a84c2973d94495e923f0ab15538eb523a6c6764476fa137c95b889e7bf",
+        "npm26": "bb2bd3a84c2973d94495e923f0ab15538eb523a6c6764476fa137c95b889e7bf",
+        "plugin26": "bb2bd3a84c2973d94495e923f0ab15538eb523a6c6764476fa137c95b889e7bf",
+        "snapshot24": "bb2bd3a84c2973d94495e923f0ab15538eb523a6c6764476fa137c95b889e7bf",
+        "npm24": "bb2bd3a84c2973d94495e923f0ab15538eb523a6c6764476fa137c95b889e7bf",
+        "plugin24": "bb2bd3a84c2973d94495e923f0ab15538eb523a6c6764476fa137c95b889e7bf"
+      }
+    },
+    {
+      "path": "dist/driven/policy.js",
+      "mappings": {
+        "current": "0b37bd689843a69fb7980273e915f20af44ae365305f736471705b6dd1500e04",
+        "snapshot26": "0b37bd689843a69fb7980273e915f20af44ae365305f736471705b6dd1500e04",
+        "npm26": "0b37bd689843a69fb7980273e915f20af44ae365305f736471705b6dd1500e04",
+        "plugin26": "0b37bd689843a69fb7980273e915f20af44ae365305f736471705b6dd1500e04",
+        "snapshot24": "0b37bd689843a69fb7980273e915f20af44ae365305f736471705b6dd1500e04",
+        "npm24": "0b37bd689843a69fb7980273e915f20af44ae365305f736471705b6dd1500e04",
+        "plugin24": "0b37bd689843a69fb7980273e915f20af44ae365305f736471705b6dd1500e04"
+      }
+    },
+    {
+      "path": "dist/driven/project.js",
+      "mappings": {
+        "current": "1482a41c0041be0e971da386497b12557f91575d205e2c7bebab9222e494daa2",
+        "snapshot26": "1482a41c0041be0e971da386497b12557f91575d205e2c7bebab9222e494daa2",
+        "npm26": "1482a41c0041be0e971da386497b12557f91575d205e2c7bebab9222e494daa2",
+        "plugin26": "1482a41c0041be0e971da386497b12557f91575d205e2c7bebab9222e494daa2",
+        "snapshot24": "1482a41c0041be0e971da386497b12557f91575d205e2c7bebab9222e494daa2",
+        "npm24": "1482a41c0041be0e971da386497b12557f91575d205e2c7bebab9222e494daa2",
+        "plugin24": "1482a41c0041be0e971da386497b12557f91575d205e2c7bebab9222e494daa2"
+      }
+    },
+    {
+      "path": "dist/driven/step.js",
+      "mappings": {
+        "current": "669eef883b2ad9994310a62561100a05e25d1b183b9360cffce39b640d37c3ae",
+        "snapshot26": "669eef883b2ad9994310a62561100a05e25d1b183b9360cffce39b640d37c3ae",
+        "npm26": "669eef883b2ad9994310a62561100a05e25d1b183b9360cffce39b640d37c3ae",
+        "plugin26": "669eef883b2ad9994310a62561100a05e25d1b183b9360cffce39b640d37c3ae",
+        "snapshot24": "669eef883b2ad9994310a62561100a05e25d1b183b9360cffce39b640d37c3ae",
+        "npm24": "669eef883b2ad9994310a62561100a05e25d1b183b9360cffce39b640d37c3ae",
+        "plugin24": "669eef883b2ad9994310a62561100a05e25d1b183b9360cffce39b640d37c3ae"
+      }
+    },
+    {
+      "path": "dist/driven/vocabulary.js",
+      "mappings": {
+        "current": "81d171daef1f450ea866321b13f4ef22c2cade4a0e7dc0a384327be6f9a8524a",
+        "snapshot26": "81d171daef1f450ea866321b13f4ef22c2cade4a0e7dc0a384327be6f9a8524a",
+        "npm26": "81d171daef1f450ea866321b13f4ef22c2cade4a0e7dc0a384327be6f9a8524a",
+        "plugin26": "81d171daef1f450ea866321b13f4ef22c2cade4a0e7dc0a384327be6f9a8524a",
+        "snapshot24": "81d171daef1f450ea866321b13f4ef22c2cade4a0e7dc0a384327be6f9a8524a",
+        "npm24": "81d171daef1f450ea866321b13f4ef22c2cade4a0e7dc0a384327be6f9a8524a",
+        "plugin24": "81d171daef1f450ea866321b13f4ef22c2cade4a0e7dc0a384327be6f9a8524a"
+      }
+    },
+    {
+      "path": "dist/exit-codes.js",
+      "mappings": {
+        "current": "c85c3e5ccc50b25255f516d2680539b4c0ed1817144c40d927733a556e2e9f95",
+        "snapshot26": "c85c3e5ccc50b25255f516d2680539b4c0ed1817144c40d927733a556e2e9f95",
+        "npm26": "c85c3e5ccc50b25255f516d2680539b4c0ed1817144c40d927733a556e2e9f95",
+        "plugin26": "c85c3e5ccc50b25255f516d2680539b4c0ed1817144c40d927733a556e2e9f95",
+        "snapshot24": "c85c3e5ccc50b25255f516d2680539b4c0ed1817144c40d927733a556e2e9f95",
+        "npm24": "c85c3e5ccc50b25255f516d2680539b4c0ed1817144c40d927733a556e2e9f95",
+        "plugin24": "c85c3e5ccc50b25255f516d2680539b4c0ed1817144c40d927733a556e2e9f95"
+      }
+    },
+    {
+      "path": "dist/experimental/observed-journal.js",
+      "mappings": {
+        "current": "b57ab8f9cf69bc8f252626dd948bd7b60c149c104181b6013c37d8dc105ef6bd",
+        "snapshot26": "b57ab8f9cf69bc8f252626dd948bd7b60c149c104181b6013c37d8dc105ef6bd",
+        "npm26": "b57ab8f9cf69bc8f252626dd948bd7b60c149c104181b6013c37d8dc105ef6bd",
+        "plugin26": "b57ab8f9cf69bc8f252626dd948bd7b60c149c104181b6013c37d8dc105ef6bd",
+        "snapshot24": "b57ab8f9cf69bc8f252626dd948bd7b60c149c104181b6013c37d8dc105ef6bd",
+        "npm24": "b57ab8f9cf69bc8f252626dd948bd7b60c149c104181b6013c37d8dc105ef6bd",
+        "plugin24": "b57ab8f9cf69bc8f252626dd948bd7b60c149c104181b6013c37d8dc105ef6bd"
+      }
+    },
+    {
+      "path": "dist/experimental/observed-run.js",
+      "mappings": {
+        "current": "6ca67a307aed02f7cf9734558bdea7575b7661f4e060a410e0c81267ab491942",
+        "snapshot26": "6ca67a307aed02f7cf9734558bdea7575b7661f4e060a410e0c81267ab491942",
+        "npm26": "6ca67a307aed02f7cf9734558bdea7575b7661f4e060a410e0c81267ab491942",
+        "plugin26": "6ca67a307aed02f7cf9734558bdea7575b7661f4e060a410e0c81267ab491942",
+        "snapshot24": "6ca67a307aed02f7cf9734558bdea7575b7661f4e060a410e0c81267ab491942",
+        "npm24": "6ca67a307aed02f7cf9734558bdea7575b7661f4e060a410e0c81267ab491942",
+        "plugin24": "6ca67a307aed02f7cf9734558bdea7575b7661f4e060a410e0c81267ab491942"
+      }
+    },
+    {
+      "path": "dist/experimental/observed-tap.js",
+      "mappings": {
+        "current": "80e81478bb734ce2b1c35e4005fb975e40fad68b86de6fb07b021d7c1ab331d7",
+        "snapshot26": "80e81478bb734ce2b1c35e4005fb975e40fad68b86de6fb07b021d7c1ab331d7",
+        "npm26": "80e81478bb734ce2b1c35e4005fb975e40fad68b86de6fb07b021d7c1ab331d7",
+        "plugin26": "80e81478bb734ce2b1c35e4005fb975e40fad68b86de6fb07b021d7c1ab331d7",
+        "snapshot24": "80e81478bb734ce2b1c35e4005fb975e40fad68b86de6fb07b021d7c1ab331d7",
+        "npm24": "80e81478bb734ce2b1c35e4005fb975e40fad68b86de6fb07b021d7c1ab331d7",
+        "plugin24": "80e81478bb734ce2b1c35e4005fb975e40fad68b86de6fb07b021d7c1ab331d7"
+      }
+    },
+    {
+      "path": "dist/log/index.js",
+      "mappings": {
+        "current": "ead5f93a0fca9aeb3beec6e9f17ebb3c9a249501cf39be3b9fcfc0ecccb482b0",
+        "snapshot26": "ead5f93a0fca9aeb3beec6e9f17ebb3c9a249501cf39be3b9fcfc0ecccb482b0",
+        "npm26": "ead5f93a0fca9aeb3beec6e9f17ebb3c9a249501cf39be3b9fcfc0ecccb482b0",
+        "plugin26": "ead5f93a0fca9aeb3beec6e9f17ebb3c9a249501cf39be3b9fcfc0ecccb482b0",
+        "snapshot24": "ead5f93a0fca9aeb3beec6e9f17ebb3c9a249501cf39be3b9fcfc0ecccb482b0",
+        "npm24": "ead5f93a0fca9aeb3beec6e9f17ebb3c9a249501cf39be3b9fcfc0ecccb482b0",
+        "plugin24": "ead5f93a0fca9aeb3beec6e9f17ebb3c9a249501cf39be3b9fcfc0ecccb482b0"
+      }
+    },
+    {
+      "path": "dist/logpane/attach.js",
+      "mappings": {
+        "current": "7162850524252f2e640c64a12cf75f2aacfe37b148b3238f2b1c051b3e8106a6",
+        "snapshot26": "7162850524252f2e640c64a12cf75f2aacfe37b148b3238f2b1c051b3e8106a6",
+        "npm26": "7162850524252f2e640c64a12cf75f2aacfe37b148b3238f2b1c051b3e8106a6",
+        "plugin26": "7162850524252f2e640c64a12cf75f2aacfe37b148b3238f2b1c051b3e8106a6",
+        "snapshot24": "7162850524252f2e640c64a12cf75f2aacfe37b148b3238f2b1c051b3e8106a6",
+        "npm24": "7162850524252f2e640c64a12cf75f2aacfe37b148b3238f2b1c051b3e8106a6",
+        "plugin24": "7162850524252f2e640c64a12cf75f2aacfe37b148b3238f2b1c051b3e8106a6"
+      }
+    },
+    {
+      "path": "dist/logpane/format.js",
+      "mappings": {
+        "current": "8ebe92bb56509576e315b5e723f511f10347e0b83a9362d9d553aaaba32b8009",
+        "snapshot26": "8ebe92bb56509576e315b5e723f511f10347e0b83a9362d9d553aaaba32b8009",
+        "npm26": "8ebe92bb56509576e315b5e723f511f10347e0b83a9362d9d553aaaba32b8009",
+        "plugin26": "8ebe92bb56509576e315b5e723f511f10347e0b83a9362d9d553aaaba32b8009",
+        "snapshot24": "8ebe92bb56509576e315b5e723f511f10347e0b83a9362d9d553aaaba32b8009",
+        "npm24": "8ebe92bb56509576e315b5e723f511f10347e0b83a9362d9d553aaaba32b8009",
+        "plugin24": "8ebe92bb56509576e315b5e723f511f10347e0b83a9362d9d553aaaba32b8009"
+      }
+    },
+    {
+      "path": "dist/logpane/stream.js",
+      "mappings": {
+        "current": "adf4eabc21fc50188a8a2a966960ec22c824526b0d4b092513f40f0ce301f986",
+        "snapshot26": "adf4eabc21fc50188a8a2a966960ec22c824526b0d4b092513f40f0ce301f986",
+        "npm26": "adf4eabc21fc50188a8a2a966960ec22c824526b0d4b092513f40f0ce301f986",
+        "plugin26": "adf4eabc21fc50188a8a2a966960ec22c824526b0d4b092513f40f0ce301f986",
+        "snapshot24": "adf4eabc21fc50188a8a2a966960ec22c824526b0d4b092513f40f0ce301f986",
+        "npm24": "adf4eabc21fc50188a8a2a966960ec22c824526b0d4b092513f40f0ce301f986",
+        "plugin24": "adf4eabc21fc50188a8a2a966960ec22c824526b0d4b092513f40f0ce301f986"
+      }
+    },
+    {
+      "path": "dist/logpane/window.js",
+      "mappings": {
+        "current": "7297aca5f2f7b46d221ec0b754cb5ac4c30449c9485733ce1d8325d71d22ed6e",
+        "snapshot26": "7297aca5f2f7b46d221ec0b754cb5ac4c30449c9485733ce1d8325d71d22ed6e",
+        "npm26": "7297aca5f2f7b46d221ec0b754cb5ac4c30449c9485733ce1d8325d71d22ed6e",
+        "plugin26": "7297aca5f2f7b46d221ec0b754cb5ac4c30449c9485733ce1d8325d71d22ed6e",
+        "snapshot24": "7297aca5f2f7b46d221ec0b754cb5ac4c30449c9485733ce1d8325d71d22ed6e",
+        "npm24": "7297aca5f2f7b46d221ec0b754cb5ac4c30449c9485733ce1d8325d71d22ed6e",
+        "plugin24": "7297aca5f2f7b46d221ec0b754cb5ac4c30449c9485733ce1d8325d71d22ed6e"
+      }
+    },
+    {
+      "path": "dist/mcp/index.js",
+      "mappings": {
+        "current": "64b3bb0d3733a367dfc3576ffa8e8c7f28e61031e53a82fc73292243f51d99a3",
+        "snapshot26": "64b3bb0d3733a367dfc3576ffa8e8c7f28e61031e53a82fc73292243f51d99a3",
+        "npm26": "64b3bb0d3733a367dfc3576ffa8e8c7f28e61031e53a82fc73292243f51d99a3",
+        "plugin26": "64b3bb0d3733a367dfc3576ffa8e8c7f28e61031e53a82fc73292243f51d99a3",
+        "snapshot24": "64b3bb0d3733a367dfc3576ffa8e8c7f28e61031e53a82fc73292243f51d99a3",
+        "npm24": "64b3bb0d3733a367dfc3576ffa8e8c7f28e61031e53a82fc73292243f51d99a3",
+        "plugin24": "64b3bb0d3733a367dfc3576ffa8e8c7f28e61031e53a82fc73292243f51d99a3"
+      }
+    },
+    {
+      "path": "dist/mcp/observed.js",
+      "mappings": {
+        "current": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+        "snapshot26": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+        "npm26": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+        "plugin26": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+        "snapshot24": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+        "npm24": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674",
+        "plugin24": "7cb75f32d67867140bd63880ca566b4918de24d915cec641fa4b7a6771fbc674"
+      }
+    },
+    {
+      "path": "dist/observed/allocation-config.js",
+      "mappings": {
+        "current": "0926b7250a569f9f01d3557e528f4cb23ff2f702ae60cb1aba4f89ddfffa56e8",
+        "snapshot26": "0926b7250a569f9f01d3557e528f4cb23ff2f702ae60cb1aba4f89ddfffa56e8",
+        "npm26": "0926b7250a569f9f01d3557e528f4cb23ff2f702ae60cb1aba4f89ddfffa56e8",
+        "plugin26": "0926b7250a569f9f01d3557e528f4cb23ff2f702ae60cb1aba4f89ddfffa56e8",
+        "snapshot24": "0926b7250a569f9f01d3557e528f4cb23ff2f702ae60cb1aba4f89ddfffa56e8",
+        "npm24": "0926b7250a569f9f01d3557e528f4cb23ff2f702ae60cb1aba4f89ddfffa56e8",
+        "plugin24": "0926b7250a569f9f01d3557e528f4cb23ff2f702ae60cb1aba4f89ddfffa56e8"
+      }
+    },
+    {
+      "path": "dist/observed/allocation-schema.js",
+      "mappings": {
+        "current": "1f4af01e2bd7559ccd78439b57e22477d6e58a2ef00dd85cc7bf159d314fde36",
+        "snapshot26": "1f4af01e2bd7559ccd78439b57e22477d6e58a2ef00dd85cc7bf159d314fde36",
+        "npm26": "1f4af01e2bd7559ccd78439b57e22477d6e58a2ef00dd85cc7bf159d314fde36",
+        "plugin26": "1f4af01e2bd7559ccd78439b57e22477d6e58a2ef00dd85cc7bf159d314fde36",
+        "snapshot24": "1f4af01e2bd7559ccd78439b57e22477d6e58a2ef00dd85cc7bf159d314fde36",
+        "npm24": "1f4af01e2bd7559ccd78439b57e22477d6e58a2ef00dd85cc7bf159d314fde36",
+        "plugin24": "1f4af01e2bd7559ccd78439b57e22477d6e58a2ef00dd85cc7bf159d314fde36"
+      }
+    },
+    {
+      "path": "dist/observed/allocation.js",
+      "mappings": {
+        "current": "c78b4e2f37c3bf173afec88fa946ec3df094b8bc0719d137b387514a9ac29563",
+        "snapshot26": "c78b4e2f37c3bf173afec88fa946ec3df094b8bc0719d137b387514a9ac29563",
+        "npm26": "c78b4e2f37c3bf173afec88fa946ec3df094b8bc0719d137b387514a9ac29563",
+        "plugin26": "c78b4e2f37c3bf173afec88fa946ec3df094b8bc0719d137b387514a9ac29563",
+        "snapshot24": "c78b4e2f37c3bf173afec88fa946ec3df094b8bc0719d137b387514a9ac29563",
+        "npm24": "c78b4e2f37c3bf173afec88fa946ec3df094b8bc0719d137b387514a9ac29563",
+        "plugin24": "c78b4e2f37c3bf173afec88fa946ec3df094b8bc0719d137b387514a9ac29563"
+      }
+    },
+    {
+      "path": "dist/observed/artifact.js",
+      "mappings": {
+        "current": "71697e79851b3afc6e0157e6bf3f2116ffec6233b13996463a54c24b6465aea5",
+        "snapshot26": "71697e79851b3afc6e0157e6bf3f2116ffec6233b13996463a54c24b6465aea5",
+        "npm26": "71697e79851b3afc6e0157e6bf3f2116ffec6233b13996463a54c24b6465aea5",
+        "plugin26": "71697e79851b3afc6e0157e6bf3f2116ffec6233b13996463a54c24b6465aea5",
+        "snapshot24": "71697e79851b3afc6e0157e6bf3f2116ffec6233b13996463a54c24b6465aea5",
+        "npm24": "71697e79851b3afc6e0157e6bf3f2116ffec6233b13996463a54c24b6465aea5",
+        "plugin24": "71697e79851b3afc6e0157e6bf3f2116ffec6233b13996463a54c24b6465aea5"
+      }
+    },
+    {
+      "path": "dist/observed/cli.js",
+      "mappings": {
+        "current": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+        "snapshot26": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+        "npm26": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+        "plugin26": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+        "snapshot24": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+        "npm24": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2",
+        "plugin24": "14679c0c13fdd87361f677d2d946841034343629bdb84221d280ba556720e4f2"
+      }
+    },
+    {
+      "path": "dist/observed/create-source.js",
+      "mappings": {
+        "current": "1b3b13ab6dc55eb5f04f0f7a40b2b86a2d6fe46a96a7274bab1bf5cc81f5e8c3",
+        "snapshot26": "1b3b13ab6dc55eb5f04f0f7a40b2b86a2d6fe46a96a7274bab1bf5cc81f5e8c3",
+        "npm26": "1b3b13ab6dc55eb5f04f0f7a40b2b86a2d6fe46a96a7274bab1bf5cc81f5e8c3",
+        "plugin26": "1b3b13ab6dc55eb5f04f0f7a40b2b86a2d6fe46a96a7274bab1bf5cc81f5e8c3",
+        "snapshot24": "1b3b13ab6dc55eb5f04f0f7a40b2b86a2d6fe46a96a7274bab1bf5cc81f5e8c3",
+        "npm24": "1b3b13ab6dc55eb5f04f0f7a40b2b86a2d6fe46a96a7274bab1bf5cc81f5e8c3",
+        "plugin24": "1b3b13ab6dc55eb5f04f0f7a40b2b86a2d6fe46a96a7274bab1bf5cc81f5e8c3"
+      }
+    },
+    {
+      "path": "dist/observed/evidence.js",
+      "mappings": {
+        "current": "682e600b8dca6ef3cfa5d869dab60cd8dc2865aa677bc84947629783762d158e",
+        "snapshot26": "682e600b8dca6ef3cfa5d869dab60cd8dc2865aa677bc84947629783762d158e",
+        "npm26": "682e600b8dca6ef3cfa5d869dab60cd8dc2865aa677bc84947629783762d158e",
+        "plugin26": "682e600b8dca6ef3cfa5d869dab60cd8dc2865aa677bc84947629783762d158e",
+        "snapshot24": "682e600b8dca6ef3cfa5d869dab60cd8dc2865aa677bc84947629783762d158e",
+        "npm24": "682e600b8dca6ef3cfa5d869dab60cd8dc2865aa677bc84947629783762d158e",
+        "plugin24": "682e600b8dca6ef3cfa5d869dab60cd8dc2865aa677bc84947629783762d158e"
+      }
+    },
+    {
+      "path": "dist/observed/report.js",
+      "mappings": {
+        "current": "c843ab9d562e8299371e64c6d7380fd94ac574769562791ab2f66238a8393eee",
+        "snapshot26": "c843ab9d562e8299371e64c6d7380fd94ac574769562791ab2f66238a8393eee",
+        "npm26": "c843ab9d562e8299371e64c6d7380fd94ac574769562791ab2f66238a8393eee",
+        "plugin26": "c843ab9d562e8299371e64c6d7380fd94ac574769562791ab2f66238a8393eee",
+        "snapshot24": "c843ab9d562e8299371e64c6d7380fd94ac574769562791ab2f66238a8393eee",
+        "npm24": "c843ab9d562e8299371e64c6d7380fd94ac574769562791ab2f66238a8393eee",
+        "plugin24": "c843ab9d562e8299371e64c6d7380fd94ac574769562791ab2f66238a8393eee"
+      }
+    },
+    {
+      "path": "dist/observed/schema.js",
+      "mappings": {
+        "current": "4981a31d0bf83c38d69efd54589cb57b344713dab6bdb223c28533d937861f53",
+        "snapshot26": "4981a31d0bf83c38d69efd54589cb57b344713dab6bdb223c28533d937861f53",
+        "npm26": "4981a31d0bf83c38d69efd54589cb57b344713dab6bdb223c28533d937861f53",
+        "plugin26": "4981a31d0bf83c38d69efd54589cb57b344713dab6bdb223c28533d937861f53",
+        "snapshot24": "4981a31d0bf83c38d69efd54589cb57b344713dab6bdb223c28533d937861f53",
+        "npm24": "4981a31d0bf83c38d69efd54589cb57b344713dab6bdb223c28533d937861f53",
+        "plugin24": "4981a31d0bf83c38d69efd54589cb57b344713dab6bdb223c28533d937861f53"
+      }
+    },
+    {
+      "path": "dist/observed/service.js",
+      "mappings": {
+        "current": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+        "snapshot26": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+        "npm26": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+        "plugin26": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+        "snapshot24": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+        "npm24": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f",
+        "plugin24": "13ae2e47efcf6139b7460fce862173960d8a6e465ba7a989d3356b273b24ac9f"
+      }
+    },
+    {
+      "path": "dist/observed/supplied-source.js",
+      "mappings": {
+        "current": "74720e27069f89bf6e238cee90b8c804fd92783d6d0e82bdb23f7c9f75834c41",
+        "snapshot26": "74720e27069f89bf6e238cee90b8c804fd92783d6d0e82bdb23f7c9f75834c41",
+        "npm26": "74720e27069f89bf6e238cee90b8c804fd92783d6d0e82bdb23f7c9f75834c41",
+        "plugin26": "74720e27069f89bf6e238cee90b8c804fd92783d6d0e82bdb23f7c9f75834c41",
+        "snapshot24": "74720e27069f89bf6e238cee90b8c804fd92783d6d0e82bdb23f7c9f75834c41",
+        "npm24": "74720e27069f89bf6e238cee90b8c804fd92783d6d0e82bdb23f7c9f75834c41",
+        "plugin24": "74720e27069f89bf6e238cee90b8c804fd92783d6d0e82bdb23f7c9f75834c41"
+      }
+    },
+    {
+      "path": "dist/process.js",
+      "mappings": {
+        "current": "62963d4ae970d3dbb06811e2ae7b983ebb7502380f02053d7f0e08a3e8f958f3",
+        "snapshot26": "62963d4ae970d3dbb06811e2ae7b983ebb7502380f02053d7f0e08a3e8f958f3",
+        "npm26": "62963d4ae970d3dbb06811e2ae7b983ebb7502380f02053d7f0e08a3e8f958f3",
+        "plugin26": "62963d4ae970d3dbb06811e2ae7b983ebb7502380f02053d7f0e08a3e8f958f3",
+        "snapshot24": "62963d4ae970d3dbb06811e2ae7b983ebb7502380f02053d7f0e08a3e8f958f3",
+        "npm24": "62963d4ae970d3dbb06811e2ae7b983ebb7502380f02053d7f0e08a3e8f958f3",
+        "plugin24": "62963d4ae970d3dbb06811e2ae7b983ebb7502380f02053d7f0e08a3e8f958f3"
+      }
+    },
+    {
+      "path": "dist/scripted/contracts.js",
+      "mappings": {
+        "current": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+        "snapshot26": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+        "npm26": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+        "plugin26": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+        "snapshot24": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+        "npm24": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+        "plugin24": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      }
+    },
+    {
+      "path": "dist/scripted/jev.js",
+      "mappings": {
+        "current": "d227aff5eb07388becd0f5dea1a800823f1abcf1e23fb9e4f1f8542c7e6d414c",
+        "snapshot26": "d227aff5eb07388becd0f5dea1a800823f1abcf1e23fb9e4f1f8542c7e6d414c",
+        "npm26": "d227aff5eb07388becd0f5dea1a800823f1abcf1e23fb9e4f1f8542c7e6d414c",
+        "plugin26": "d227aff5eb07388becd0f5dea1a800823f1abcf1e23fb9e4f1f8542c7e6d414c",
+        "snapshot24": "d227aff5eb07388becd0f5dea1a800823f1abcf1e23fb9e4f1f8542c7e6d414c",
+        "npm24": "d227aff5eb07388becd0f5dea1a800823f1abcf1e23fb9e4f1f8542c7e6d414c",
+        "plugin24": "d227aff5eb07388becd0f5dea1a800823f1abcf1e23fb9e4f1f8542c7e6d414c"
+      }
+    },
+    {
+      "path": "dist/scripted/observe.js",
+      "mappings": {
+        "current": "db2c8e6df75acfb8be14d1668c355ca92d27b5caefc6bf2870d1bb90c6498c08",
+        "snapshot26": "db2c8e6df75acfb8be14d1668c355ca92d27b5caefc6bf2870d1bb90c6498c08",
+        "npm26": "db2c8e6df75acfb8be14d1668c355ca92d27b5caefc6bf2870d1bb90c6498c08",
+        "plugin26": "db2c8e6df75acfb8be14d1668c355ca92d27b5caefc6bf2870d1bb90c6498c08",
+        "snapshot24": "db2c8e6df75acfb8be14d1668c355ca92d27b5caefc6bf2870d1bb90c6498c08",
+        "npm24": "db2c8e6df75acfb8be14d1668c355ca92d27b5caefc6bf2870d1bb90c6498c08",
+        "plugin24": "db2c8e6df75acfb8be14d1668c355ca92d27b5caefc6bf2870d1bb90c6498c08"
+      }
+    },
+    {
+      "path": "dist/scripted/report-json.js",
+      "mappings": {
+        "current": "1bd59963d6d37331a98ed7d4e537415f2e902e1d861a2f1ea2405c0ff271ffdb",
+        "snapshot26": "1bd59963d6d37331a98ed7d4e537415f2e902e1d861a2f1ea2405c0ff271ffdb",
+        "npm26": "1bd59963d6d37331a98ed7d4e537415f2e902e1d861a2f1ea2405c0ff271ffdb",
+        "plugin26": "1bd59963d6d37331a98ed7d4e537415f2e902e1d861a2f1ea2405c0ff271ffdb",
+        "snapshot24": "1bd59963d6d37331a98ed7d4e537415f2e902e1d861a2f1ea2405c0ff271ffdb",
+        "npm24": "1bd59963d6d37331a98ed7d4e537415f2e902e1d861a2f1ea2405c0ff271ffdb",
+        "plugin24": "1bd59963d6d37331a98ed7d4e537415f2e902e1d861a2f1ea2405c0ff271ffdb"
+      }
+    },
+    {
+      "path": "dist/scripted/report.js",
+      "mappings": {
+        "current": "b5a6c25355dd73ecadb9cb048479adf81cc05237a5c92193cf17cd1d5c3c1886",
+        "snapshot26": "b5a6c25355dd73ecadb9cb048479adf81cc05237a5c92193cf17cd1d5c3c1886",
+        "npm26": "b5a6c25355dd73ecadb9cb048479adf81cc05237a5c92193cf17cd1d5c3c1886",
+        "plugin26": "b5a6c25355dd73ecadb9cb048479adf81cc05237a5c92193cf17cd1d5c3c1886",
+        "snapshot24": "b5a6c25355dd73ecadb9cb048479adf81cc05237a5c92193cf17cd1d5c3c1886",
+        "npm24": "b5a6c25355dd73ecadb9cb048479adf81cc05237a5c92193cf17cd1d5c3c1886",
+        "plugin24": "b5a6c25355dd73ecadb9cb048479adf81cc05237a5c92193cf17cd1d5c3c1886"
+      }
+    },
+    {
+      "path": "dist/scripted/run.js",
+      "mappings": {
+        "current": "bc33b4c81a5c0185eb316a8016de67e691418f5e736e318d4c6e5e03298d74ea",
+        "snapshot26": "bc33b4c81a5c0185eb316a8016de67e691418f5e736e318d4c6e5e03298d74ea",
+        "npm26": "bc33b4c81a5c0185eb316a8016de67e691418f5e736e318d4c6e5e03298d74ea",
+        "plugin26": "bc33b4c81a5c0185eb316a8016de67e691418f5e736e318d4c6e5e03298d74ea",
+        "snapshot24": "bc33b4c81a5c0185eb316a8016de67e691418f5e736e318d4c6e5e03298d74ea",
+        "npm24": "bc33b4c81a5c0185eb316a8016de67e691418f5e736e318d4c6e5e03298d74ea",
+        "plugin24": "bc33b4c81a5c0185eb316a8016de67e691418f5e736e318d4c6e5e03298d74ea"
+      }
+    },
+    {
+      "path": "dist/scripted/schema.js",
+      "mappings": {
+        "current": "85ce0c365ef5cead2899e7e8487c75a8c4a371768bb51f1b985028bc9922adb1",
+        "snapshot26": "85ce0c365ef5cead2899e7e8487c75a8c4a371768bb51f1b985028bc9922adb1",
+        "npm26": "85ce0c365ef5cead2899e7e8487c75a8c4a371768bb51f1b985028bc9922adb1",
+        "plugin26": "85ce0c365ef5cead2899e7e8487c75a8c4a371768bb51f1b985028bc9922adb1",
+        "snapshot24": "85ce0c365ef5cead2899e7e8487c75a8c4a371768bb51f1b985028bc9922adb1",
+        "npm24": "85ce0c365ef5cead2899e7e8487c75a8c4a371768bb51f1b985028bc9922adb1",
+        "plugin24": "85ce0c365ef5cead2899e7e8487c75a8c4a371768bb51f1b985028bc9922adb1"
+      }
+    },
+    {
+      "path": "dist/scripted/select.js",
+      "mappings": {
+        "current": "c2d364f7ef5aed1f219f9de21601a078376b23b1621eddce26578ea5a99b8d2a",
+        "snapshot26": "c2d364f7ef5aed1f219f9de21601a078376b23b1621eddce26578ea5a99b8d2a",
+        "npm26": "c2d364f7ef5aed1f219f9de21601a078376b23b1621eddce26578ea5a99b8d2a",
+        "plugin26": "c2d364f7ef5aed1f219f9de21601a078376b23b1621eddce26578ea5a99b8d2a",
+        "snapshot24": "c2d364f7ef5aed1f219f9de21601a078376b23b1621eddce26578ea5a99b8d2a",
+        "npm24": "c2d364f7ef5aed1f219f9de21601a078376b23b1621eddce26578ea5a99b8d2a",
+        "plugin24": "c2d364f7ef5aed1f219f9de21601a078376b23b1621eddce26578ea5a99b8d2a"
+      }
+    },
+    {
+      "path": "dist/scripted/vocabulary.js",
+      "mappings": {
+        "current": "3ff8fdb40f9e141281a3af9e73a779c64073f8bac98b91b04bd8edc340d40284",
+        "snapshot26": "3ff8fdb40f9e141281a3af9e73a779c64073f8bac98b91b04bd8edc340d40284",
+        "npm26": "3ff8fdb40f9e141281a3af9e73a779c64073f8bac98b91b04bd8edc340d40284",
+        "plugin26": "3ff8fdb40f9e141281a3af9e73a779c64073f8bac98b91b04bd8edc340d40284",
+        "snapshot24": "3ff8fdb40f9e141281a3af9e73a779c64073f8bac98b91b04bd8edc340d40284",
+        "npm24": "3ff8fdb40f9e141281a3af9e73a779c64073f8bac98b91b04bd8edc340d40284",
+        "plugin24": "3ff8fdb40f9e141281a3af9e73a779c64073f8bac98b91b04bd8edc340d40284"
+      }
+    },
+    {
+      "path": "dist/service.js",
+      "mappings": {
+        "current": "a2b3f70361ffd728711767933bf74cba7c8a30c41ce8d8e76eb9fdb7396ffafe",
+        "snapshot26": "a2b3f70361ffd728711767933bf74cba7c8a30c41ce8d8e76eb9fdb7396ffafe",
+        "npm26": "a2b3f70361ffd728711767933bf74cba7c8a30c41ce8d8e76eb9fdb7396ffafe",
+        "plugin26": "a2b3f70361ffd728711767933bf74cba7c8a30c41ce8d8e76eb9fdb7396ffafe",
+        "snapshot24": "a2b3f70361ffd728711767933bf74cba7c8a30c41ce8d8e76eb9fdb7396ffafe",
+        "npm24": "a2b3f70361ffd728711767933bf74cba7c8a30c41ce8d8e76eb9fdb7396ffafe",
+        "plugin24": "a2b3f70361ffd728711767933bf74cba7c8a30c41ce8d8e76eb9fdb7396ffafe"
+      }
+    },
+    {
+      "path": "dist/version.js",
+      "mappings": {
+        "current": "1f2780b5f9cc2737f99ad1de9598baed2af758754ab53f6577fcff5c8bc8a226",
+        "snapshot26": "1f2780b5f9cc2737f99ad1de9598baed2af758754ab53f6577fcff5c8bc8a226",
+        "npm26": "1f2780b5f9cc2737f99ad1de9598baed2af758754ab53f6577fcff5c8bc8a226",
+        "plugin26": "1f2780b5f9cc2737f99ad1de9598baed2af758754ab53f6577fcff5c8bc8a226",
+        "snapshot24": "1f2780b5f9cc2737f99ad1de9598baed2af758754ab53f6577fcff5c8bc8a226",
+        "npm24": "1f2780b5f9cc2737f99ad1de9598baed2af758754ab53f6577fcff5c8bc8a226",
+        "plugin24": "1f2780b5f9cc2737f99ad1de9598baed2af758754ab53f6577fcff5c8bc8a226"
+      }
+    },
+    {
+      "path": "dist/watch/index.js",
+      "mappings": {
+        "current": "f297ae862b9c13309e2ab56cc8bb7cc168c644f8342b0ee709245d82135a4a57",
+        "snapshot26": "f297ae862b9c13309e2ab56cc8bb7cc168c644f8342b0ee709245d82135a4a57",
+        "npm26": "f297ae862b9c13309e2ab56cc8bb7cc168c644f8342b0ee709245d82135a4a57",
+        "plugin26": "f297ae862b9c13309e2ab56cc8bb7cc168c644f8342b0ee709245d82135a4a57",
+        "snapshot24": "f297ae862b9c13309e2ab56cc8bb7cc168c644f8342b0ee709245d82135a4a57",
+        "npm24": "f297ae862b9c13309e2ab56cc8bb7cc168c644f8342b0ee709245d82135a4a57",
+        "plugin24": "f297ae862b9c13309e2ab56cc8bb7cc168c644f8342b0ee709245d82135a4a57"
+      }
+    }
+  ]
+}

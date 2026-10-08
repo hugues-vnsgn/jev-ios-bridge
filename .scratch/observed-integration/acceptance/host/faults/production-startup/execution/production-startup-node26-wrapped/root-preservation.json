@@ -1,0 +1,89 @@
+{
+  "source": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-run-vault/root-isolated-probes/production-startup-node26-wrapped",
+  "destination": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/faults/production-startup/execution/production-startup-node26-wrapped",
+  "fileCount": 16,
+  "bytes": 129128,
+  "files": [
+    {
+      "path": "execution/cli-action-guard.jsonl",
+      "sha256": "8ca5ed6102cf6575655b0014e6354b1c7eb2b0753c346246df78cc90d60b0202",
+      "bytes": 31
+    },
+    {
+      "path": "execution/cli-action.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "execution/cli-action.stdout",
+      "sha256": "49f79e0f5b6e48113ff085b943bdaeec515d09df82cfd55131976f3f739cb058",
+      "bytes": 180
+    },
+    {
+      "path": "execution/cli-allocation-guard.jsonl",
+      "sha256": "8ca5ed6102cf6575655b0014e6354b1c7eb2b0753c346246df78cc90d60b0202",
+      "bytes": 31
+    },
+    {
+      "path": "execution/cli-allocation.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "execution/cli-allocation.stdout",
+      "sha256": "00beff87177ec4f8c460fb2dea7962f94d2891e5a558f2a0fb3d0929c2af126e",
+      "bytes": 185
+    },
+    {
+      "path": "execution/commands.json",
+      "sha256": "1029bf7919c905a188d26335f1e239481aedc4158423972eba459f8cbdc8d619",
+      "bytes": 2782
+    },
+    {
+      "path": "execution/mcp-guard.jsonl",
+      "sha256": "8ca5ed6102cf6575655b0014e6354b1c7eb2b0753c346246df78cc90d60b0202",
+      "bytes": 31
+    },
+    {
+      "path": "execution/mcp-requests.jsonl",
+      "sha256": "4d283918ac0d8afddb4650e970981f60d5f578648ca5efc42c589b160e4cebed",
+      "bytes": 606
+    },
+    {
+      "path": "execution/mcp.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "execution/mcp.stdout",
+      "sha256": "e4e744e9fc080d3e8fa737f31c16d186dc057119a8142944c432e271b8e52193",
+      "bytes": 1314
+    },
+    {
+      "path": "execution/summary.json",
+      "sha256": "393d43f0cb9c7eb4fdaafd0bcabdfa31adb4378976865fb9482691ece2c5bba4",
+      "bytes": 1015
+    },
+    {
+      "path": "launch.json",
+      "sha256": "e996e5a8f4d6ad4bd2b08a6e9a0434657774e6bc15ba2bf848c98ca9b849b50e",
+      "bytes": 40895
+    },
+    {
+      "path": "result.json",
+      "sha256": "7dd21945e1fec1a678178afb3c4576bbd03da28dad599a6aeff216854b982e92",
+      "bytes": 81114
+    },
+    {
+      "path": "stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "stdout",
+      "sha256": "ee8262a60120b13272368c0848e515cace8550a107ff754eae1cd13aa81a4392",
+      "bytes": 944
+    }
+  ],
+  "selection": "Raw commands/logs/source/compiled/package artifacts and npm debug/timing logs; registry content and installed dependency trees excluded."
+}

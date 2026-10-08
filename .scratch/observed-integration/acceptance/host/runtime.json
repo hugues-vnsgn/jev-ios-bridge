@@ -1,18 +1,81 @@
 {
   "version": 1,
-  "status": "UNVERIFIED",
+  "status": "PASS",
   "rows": [
     "H09"
   ],
   "required": "Exact Node24.0.0 minimum and supported local runtimes without added SQLite flags; remote CI configuration and execution kept distinct.",
-  "productCommit": "538e5770d1a02b7ef92d2dd69cd3a8a9d692ec4a",
+  "productCommit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
   "acceptanceOwner": "Root",
-  "reason": "Tickets09/10 and complete row-level assertion mapping are pending.",
-  "cases": [],
-  "commands": [],
+  "reason": "Root accepts complete bounded host row evidence after independent corrected-map Spec PASS and current installed/startup raw correspondence PASS.",
+  "cases": [
+    {
+      "id": "H09.runtime.exact-minimum24",
+      "verdict": "PASS",
+      "node": "v24.0.0",
+      "oracle": "Actual full1675 tests plus typecheck/build and genuine37-command installed npm/plugin proof; no extra SQLite flags, three options/key variables removed.",
+      "evidence": "faults/integration/full-gates/composed-host-node24.json"
+    },
+    {
+      "id": "H09.runtime.current26",
+      "verdict": "PASS",
+      "node": "v26.8.1",
+      "oracle": "Actual full1675 tests plus typecheck/build and new genuine37-command installed npm/plugin proof; no extra SQLite flags.",
+      "evidence": "installed-workflow/integration/final-proofs/post-integration-installed-node26/summary.json"
+    },
+    {
+      "id": "H09.runtime.ci-configuration",
+      "verdict": "PASS",
+      "source": ".github/workflows/check.yml",
+      "sourceSha256": "983e0ea1cb4f955b7fa01c7638383325390e9be51ba3e12ba525a5b9b876bdaf",
+      "oracle": "Configured exact24.0.0 plus24/26 and mandatory clean installed proof. Remote CI not executed; only configuration/local major-version evidence asserted."
+    }
+  ],
+  "commands": {
+    "node26": {
+      "path": ".scratch/observed-integration/acceptance/host/faults/integration/full-gates/composed-host-node26.json",
+      "node": "v26.8.1",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exit": 0,
+      "counts": {
+        "tests": 1675,
+        "pass": 1675,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceUnchanged": true
+    },
+    "node24": {
+      "path": ".scratch/observed-integration/acceptance/host/faults/integration/full-gates/composed-host-node24.json",
+      "node": "v24.0.0",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exit": 0,
+      "counts": {
+        "tests": 1675,
+        "pass": 1675,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceUnchanged": true
+    }
+  },
   "limits": [
     "Accepted implementation subset checks do not establish complete H rows.",
     "Host fault injection does not establish live, real transport or native release."
-  ]
+  ],
+  "rawCorrespondenceReview": "installed-workflow/review/final-raw-correspondence/review.md",
+  "acceptanceReview": "faults/review/host-completeness/round2/review.md",
+  "acceptanceScope": "Host: isolated stores, fake backends and declared injection/installed-proof limits. No live/native/remote-CI/final-safety verdict."
 }
-

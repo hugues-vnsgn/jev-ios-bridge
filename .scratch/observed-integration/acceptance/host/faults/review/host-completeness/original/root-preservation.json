@@ -1,0 +1,181 @@
+{
+  "source": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/observed-host-faults/.scratch/host-matrix-completeness-b618",
+  "files": [
+    {
+      "path": "after-hashes.json",
+      "bytes": 1738,
+      "sha256": "0f6a935238736a2fcf19e83fccdde22d35d68ef4c14d8855c7b54768b4b01f7b"
+    },
+    {
+      "path": "appendix.md",
+      "bytes": 7034,
+      "sha256": "349f7f1be4ef277990bc298eeed889169abe511940c92152844d2e849d834565"
+    },
+    {
+      "path": "before-hashes.json",
+      "bytes": 1738,
+      "sha256": "0f6a935238736a2fcf19e83fccdde22d35d68ef4c14d8855c7b54768b4b01f7b"
+    },
+    {
+      "path": "gate-evidence/node24.json",
+      "bytes": 102375,
+      "sha256": "53eeeb47bb602d7b83f45a5e26d47a43ca36b3d9be72e65c6645fe60f86173bb"
+    },
+    {
+      "path": "gate-evidence/node24.log",
+      "bytes": 178106,
+      "sha256": "1dbe87a1af24e6ae496e515720f2876f18ca115093cebe0a768094b6237b271a"
+    },
+    {
+      "path": "gate-evidence/node26.json",
+      "bytes": 102344,
+      "sha256": "b096b6dc6c25e2133dae89fbf41d1a577d27ab54027655a12fe292a5834954d0"
+    },
+    {
+      "path": "gate-evidence/node26.log",
+      "bytes": 166964,
+      "sha256": "246a5e4b49e6e0542a768077be5a5e89e1e5a4d36b6d9be807ac9825d72d43c4"
+    },
+    {
+      "path": "installed-evidence/node24/commands.jsonl",
+      "bytes": 36987,
+      "sha256": "e28098cfeba5590e8136311ed47a11950c6c37734574999d1bedff7600efc1c1"
+    },
+    {
+      "path": "installed-evidence/node24/summary.json",
+      "bytes": 4472,
+      "sha256": "ed91ec372b848e0c179132858fd4c1c94ce7c3177e88f4967b91fa546691cd17"
+    },
+    {
+      "path": "installed-evidence/node26/commands.jsonl",
+      "bytes": 37013,
+      "sha256": "7dc063e21224797b418ea825638a2dd562e25a079701caf14b6468113f2102b0"
+    },
+    {
+      "path": "installed-evidence/node26/summary.json",
+      "bytes": 4496,
+      "sha256": "bf1d08762dc6dc3895babecf7e3a041bee7ec6c6c7dcf82a7cbd1f13d46b0fd4"
+    },
+    {
+      "path": "installed-proof-audit.json",
+      "bytes": 53415,
+      "sha256": "a5ffefb2cbe489ded0394826967eafd6338c4ac8cab2706c00fa4a5c9cd57d14"
+    },
+    {
+      "path": "mapped-association-audit.json",
+      "bytes": 346341,
+      "sha256": "39bff078a094e0eab7de760285862ab42f4cb9dc0d6063c986c7b6814d685ab8"
+    },
+    {
+      "path": "mapped-host-freeze.json",
+      "bytes": 1738,
+      "sha256": "0f6a935238736a2fcf19e83fccdde22d35d68ef4c14d8855c7b54768b4b01f7b"
+    },
+    {
+      "path": "review.md",
+      "bytes": 2884,
+      "sha256": "a2f753356975a41068c27c57bf440018f333746f0a4209f21ee10fd5bc723d8f"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/cancel.json",
+      "bytes": 84577,
+      "sha256": "037f900c3d9088f4e863c392a3317a3ff9e6a433daa7384bc8fd25241a201738"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/compatibility.json",
+      "bytes": 4736,
+      "sha256": "f8d1fdff009e42461ac186d3702482b8becea963419554720a04c76a4345f5e5"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/crash.json",
+      "bytes": 66055,
+      "sha256": "95a7ea49f034c68dbd0b2cf3b638b4932f022d4fe487dc63a49f5d26312e8d37"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/faults/artifact-groups.json",
+      "bytes": 533077,
+      "sha256": "9f7e06f8d8947377c647090c40bd2d1530d6e4dd09d415e5a9dca75263c0c088"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/identity.json",
+      "bytes": 162490,
+      "sha256": "3317611fd7fc818e60260b845c3c1a0e10e0070bf7e5833b4aa146a8085e8a6e"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/installed-workflow/integration/current-product-correspondence.json",
+      "bytes": 10180,
+      "sha256": "1e2740aa6a86c0578c8a9e979cb85530b8301879e773561fc788bb1ed7b9e7c2"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/migration.json",
+      "bytes": 28106,
+      "sha256": "dab57afbe1254705f09b51cb191c98ac68c4a2f9bddd160032af97c3d0781324"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/packaging.json",
+      "bytes": 3189,
+      "sha256": "082a49c277f4f5e2793ae78627cc22dab978e347a3fb9a6e51dc7b7ec15fb735"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/runtime.json",
+      "bytes": 2600,
+      "sha256": "4ecaf4be452fb375e0ae7ac6c2d2a091c74119c65393b4588ccd720dfedf90ac"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/schema.json",
+      "bytes": 194857,
+      "sha256": "434bc6471c26dfc3cf5f255aa2eda6f536aa2c80952e9e5f965d551fc47ffc89"
+    },
+    {
+      "path": "snapshot/.scratch/observed-integration/acceptance/host/storage.json",
+      "bytes": 26872,
+      "sha256": "09cc9b72ee6d9cc6e1505e28c054048bbdcdab52c35e1099b8d694a7c0e4113c"
+    },
+    {
+      "path": "startup-audit.json",
+      "bytes": 7493,
+      "sha256": "de7474721590cdf8bb7ed71bdc6492bb52f7fc8499bf53e6d21c92f34956d955"
+    },
+    {
+      "path": "startup-evidence/node24/launch.json",
+      "bytes": 40920,
+      "sha256": "fe83e68f5724c6e125560e88f2d17d052aa4de97197fe12b552fc8e0f48f0f96"
+    },
+    {
+      "path": "startup-evidence/node24/result.json",
+      "bytes": 81139,
+      "sha256": "9c26572dc0898dfb0b0d06a8dc51c3aa5529e25a679f6f58bc1ca88542fd5153"
+    },
+    {
+      "path": "startup-evidence/node24/summary.json",
+      "bytes": 1009,
+      "sha256": "b1c656b77070612ba32981a79539115f7d459d3327be0464b50bc16530539c47"
+    },
+    {
+      "path": "startup-evidence/node26/launch.json",
+      "bytes": 40895,
+      "sha256": "e996e5a8f4d6ad4bd2b08a6e9a0434657774e6bc15ba2bf848c98ca9b849b50e"
+    },
+    {
+      "path": "startup-evidence/node26/result.json",
+      "bytes": 81114,
+      "sha256": "7dd21945e1fec1a678178afb3c4576bbd03da28dad599a6aeff216854b982e92"
+    },
+    {
+      "path": "startup-evidence/node26/summary.json",
+      "bytes": 1015,
+      "sha256": "393d43f0cb9c7eb4fdaafd0bcabdfa31adb4378976865fb9482691ece2c5bba4"
+    },
+    {
+      "path": "supplement-mapping-gaps.json",
+      "bytes": 11950,
+      "sha256": "649c89ad1080dca17ed7f3a46fe4391519b3f9b94fb21c237d4b7748523bccc3"
+    },
+    {
+      "path": "supplement-source-hashes.json",
+      "bytes": 1057,
+      "sha256": "bf391a2aeb0eec007c16778ca9b2712629064795f44852c929cd43d9a0e0f8af"
+    }
+  ],
+  "scope": "Original BLOCKED completeness review, all regular files copied verbatim."
+}

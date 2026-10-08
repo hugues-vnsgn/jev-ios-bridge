@@ -1,0 +1,296 @@
+{
+  "cases": [
+    {
+      "runtime": "26",
+      "commandId": "017",
+      "flag": "0",
+      "observedNames": [
+        "cancel_observed_action",
+        "cancel_observed_allocation",
+        "get_observed_action",
+        "get_observed_allocation",
+        "retire_observed_allocation"
+      ],
+      "actualSchemaErrorReplies": 5,
+      "codes": [
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST"
+      ],
+      "exactGolden": true,
+      "rawSha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104"
+    },
+    {
+      "runtime": "26",
+      "commandId": "018",
+      "flag": "true",
+      "observedNames": [
+        "cancel_observed_action",
+        "cancel_observed_allocation",
+        "get_observed_action",
+        "get_observed_allocation",
+        "retire_observed_allocation"
+      ],
+      "actualSchemaErrorReplies": 5,
+      "codes": [
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST"
+      ],
+      "exactGolden": true,
+      "rawSha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104"
+    },
+    {
+      "runtime": "26",
+      "commandId": "019",
+      "flag": "1",
+      "observedNames": [
+        "cancel_observed_action",
+        "cancel_observed_allocation",
+        "get_observed_action",
+        "get_observed_allocation",
+        "prepare_observed_allocation",
+        "retire_observed_allocation",
+        "start_observed_action"
+      ],
+      "actualSchemaErrorReplies": 7,
+      "codes": [
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "UNSUPPORTED_VERSION"
+      ],
+      "exactGolden": true,
+      "rawSha256": "ae10dbd16f15963f6e1f752637090348dd337c3eadaf9b501cbd38ccc5dd1d3b"
+    },
+    {
+      "runtime": "26",
+      "commandId": "035",
+      "flag": "0",
+      "observedNames": [
+        "cancel_observed_action",
+        "cancel_observed_allocation",
+        "get_observed_action",
+        "get_observed_allocation",
+        "retire_observed_allocation"
+      ],
+      "actualSchemaErrorReplies": 5,
+      "codes": [
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST"
+      ],
+      "exactGolden": true,
+      "rawSha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104"
+    },
+    {
+      "runtime": "26",
+      "commandId": "036",
+      "flag": "true",
+      "observedNames": [
+        "cancel_observed_action",
+        "cancel_observed_allocation",
+        "get_observed_action",
+        "get_observed_allocation",
+        "retire_observed_allocation"
+      ],
+      "actualSchemaErrorReplies": 5,
+      "codes": [
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST"
+      ],
+      "exactGolden": true,
+      "rawSha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104"
+    },
+    {
+      "runtime": "26",
+      "commandId": "037",
+      "flag": "1",
+      "observedNames": [
+        "cancel_observed_action",
+        "cancel_observed_allocation",
+        "get_observed_action",
+        "get_observed_allocation",
+        "prepare_observed_allocation",
+        "retire_observed_allocation",
+        "start_observed_action"
+      ],
+      "actualSchemaErrorReplies": 7,
+      "codes": [
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "UNSUPPORTED_VERSION"
+      ],
+      "exactGolden": true,
+      "rawSha256": "ae10dbd16f15963f6e1f752637090348dd337c3eadaf9b501cbd38ccc5dd1d3b"
+    },
+    {
+      "runtime": "24",
+      "commandId": "017",
+      "flag": "0",
+      "observedNames": [
+        "cancel_observed_action",
+        "cancel_observed_allocation",
+        "get_observed_action",
+        "get_observed_allocation",
+        "retire_observed_allocation"
+      ],
+      "actualSchemaErrorReplies": 5,
+      "codes": [
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST"
+      ],
+      "exactGolden": true,
+      "rawSha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104"
+    },
+    {
+      "runtime": "24",
+      "commandId": "018",
+      "flag": "true",
+      "observedNames": [
+        "cancel_observed_action",
+        "cancel_observed_allocation",
+        "get_observed_action",
+        "get_observed_allocation",
+        "retire_observed_allocation"
+      ],
+      "actualSchemaErrorReplies": 5,
+      "codes": [
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST"
+      ],
+      "exactGolden": true,
+      "rawSha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104"
+    },
+    {
+      "runtime": "24",
+      "commandId": "019",
+      "flag": "1",
+      "observedNames": [
+        "cancel_observed_action",
+        "cancel_observed_allocation",
+        "get_observed_action",
+        "get_observed_allocation",
+        "prepare_observed_allocation",
+        "retire_observed_allocation",
+        "start_observed_action"
+      ],
+      "actualSchemaErrorReplies": 7,
+      "codes": [
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "UNSUPPORTED_VERSION"
+      ],
+      "exactGolden": true,
+      "rawSha256": "ae10dbd16f15963f6e1f752637090348dd337c3eadaf9b501cbd38ccc5dd1d3b"
+    },
+    {
+      "runtime": "24",
+      "commandId": "035",
+      "flag": "0",
+      "observedNames": [
+        "cancel_observed_action",
+        "cancel_observed_allocation",
+        "get_observed_action",
+        "get_observed_allocation",
+        "retire_observed_allocation"
+      ],
+      "actualSchemaErrorReplies": 5,
+      "codes": [
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST"
+      ],
+      "exactGolden": true,
+      "rawSha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104"
+    },
+    {
+      "runtime": "24",
+      "commandId": "036",
+      "flag": "true",
+      "observedNames": [
+        "cancel_observed_action",
+        "cancel_observed_allocation",
+        "get_observed_action",
+        "get_observed_allocation",
+        "retire_observed_allocation"
+      ],
+      "actualSchemaErrorReplies": 5,
+      "codes": [
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST"
+      ],
+      "exactGolden": true,
+      "rawSha256": "b20875d3fb9e8d432724381cde1edcad74cb069710a81cdf2cf4b96ecaf96104"
+    },
+    {
+      "runtime": "24",
+      "commandId": "037",
+      "flag": "1",
+      "observedNames": [
+        "cancel_observed_action",
+        "cancel_observed_allocation",
+        "get_observed_action",
+        "get_observed_allocation",
+        "prepare_observed_allocation",
+        "retire_observed_allocation",
+        "start_observed_action"
+      ],
+      "actualSchemaErrorReplies": 7,
+      "codes": [
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "INVALID_REQUEST",
+        "UNSUPPORTED_VERSION"
+      ],
+      "exactGolden": true,
+      "rawSha256": "ae10dbd16f15963f6e1f752637090348dd337c3eadaf9b501cbd38ccc5dd1d3b"
+    }
+  ],
+  "actualSchemaErrorCallsPerRuntime": 34,
+  "codesPerRuntime": {
+    "26": {
+      "INVALID_REQUEST": 32,
+      "UNSUPPORTED_VERSION": 2
+    },
+    "24": {
+      "INVALID_REQUEST": 32,
+      "UNSUPPORTED_VERSION": 2
+    }
+  },
+  "goldenSha256": "48dc6d413b8f272be845c03b0827f1429a053298676eab3812e568b90936a63b"
+}

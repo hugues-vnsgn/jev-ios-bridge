@@ -1,0 +1,1649 @@
+{
+  "version": 1,
+  "status": "UNVERIFIED",
+  "rows": [
+    "H06"
+  ],
+  "required": "Actual public owner kills at durable milestones, null receipt flags, ambiguous COMMIT, no replay or late promotion.",
+  "productCommit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
+  "acceptanceOwner": "Root",
+  "reason": "All mapped cases PASS with both integrated gates; whole-row completeness audit pending.",
+  "cases": [
+    {
+      "id": "H06.01.cli.reserveAllocation",
+      "hostRow": "H06",
+      "scenario": "killed real public preparation owner",
+      "variant": "reserveAllocation",
+      "transport": "cli",
+      "test": "tests/observed-crash.test.ts:13",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:19",
+        "tests/observed-crash.test.ts:20",
+        "tests/observed-crash.test.ts:23",
+        "tests/observed-crash.test.ts:24",
+        "tests/observed-crash.test.ts:26",
+        "tests/observed-crash.test.ts:28",
+        "tests/observed-crash.test.ts:31",
+        "tests/observed-crash.test.ts:32",
+        "tests/observed-crash.test.ts:33",
+        "tests/observed-crash.test.ts:34",
+        "tests/observed-crash.test.ts:35",
+        "tests/observed-crash.test.ts:36",
+        "tests/observed-crash.test.ts:38"
+      ],
+      "expected": "fresh public read preserves current state and bytes;explicit recovery only;unknown guard persists;parked kill permits other owner",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-aa8e1bedd3c45d8a8964"
+        ],
+        "added-node24": [
+          "group-8bed02422bd713f929d6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.01.cli.creation-authorized",
+      "hostRow": "H06",
+      "scenario": "killed real public preparation owner",
+      "variant": "creation-authorized",
+      "transport": "cli",
+      "test": "tests/observed-crash.test.ts:13",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:19",
+        "tests/observed-crash.test.ts:20",
+        "tests/observed-crash.test.ts:23",
+        "tests/observed-crash.test.ts:24",
+        "tests/observed-crash.test.ts:26",
+        "tests/observed-crash.test.ts:28",
+        "tests/observed-crash.test.ts:31",
+        "tests/observed-crash.test.ts:32",
+        "tests/observed-crash.test.ts:33",
+        "tests/observed-crash.test.ts:34",
+        "tests/observed-crash.test.ts:35",
+        "tests/observed-crash.test.ts:36",
+        "tests/observed-crash.test.ts:38"
+      ],
+      "expected": "fresh public read preserves current state and bytes;explicit recovery only;unknown guard persists;parked kill permits other owner",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-aa8e1bedd3c45d8a8964",
+          "group-dfa863829718de6f919d",
+          "group-a02990433bbb824e052a",
+          "group-45f07d9abecb2c3cc070",
+          "group-10ff73b7ef52613a7a56"
+        ],
+        "added-node24": [
+          "group-8bed02422bd713f929d6",
+          "group-9793b83389c143c0b2a8",
+          "group-1e2dcf1a9ed8a53a7447",
+          "group-ed41743e8c88e169e834",
+          "group-bd28a810df6a18d3875f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.01.cli.source-entered",
+      "hostRow": "H06",
+      "scenario": "killed real public preparation owner",
+      "variant": "source-entered",
+      "transport": "cli",
+      "test": "tests/observed-crash.test.ts:13",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:19",
+        "tests/observed-crash.test.ts:20",
+        "tests/observed-crash.test.ts:23",
+        "tests/observed-crash.test.ts:24",
+        "tests/observed-crash.test.ts:26",
+        "tests/observed-crash.test.ts:28",
+        "tests/observed-crash.test.ts:31",
+        "tests/observed-crash.test.ts:32",
+        "tests/observed-crash.test.ts:33",
+        "tests/observed-crash.test.ts:34",
+        "tests/observed-crash.test.ts:35",
+        "tests/observed-crash.test.ts:36",
+        "tests/observed-crash.test.ts:38"
+      ],
+      "expected": "fresh public read preserves current state and bytes;explicit recovery only;unknown guard persists;parked kill permits other owner",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-aa8e1bedd3c45d8a8964",
+          "group-dfa863829718de6f919d",
+          "group-a02990433bbb824e052a",
+          "group-45f07d9abecb2c3cc070",
+          "group-10ff73b7ef52613a7a56"
+        ],
+        "added-node24": [
+          "group-8bed02422bd713f929d6",
+          "group-9793b83389c143c0b2a8",
+          "group-1e2dcf1a9ed8a53a7447",
+          "group-ed41743e8c88e169e834",
+          "group-bd28a810df6a18d3875f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.01.cli.creation-receipt",
+      "hostRow": "H06",
+      "scenario": "killed real public preparation owner",
+      "variant": "creation-receipt",
+      "transport": "cli",
+      "test": "tests/observed-crash.test.ts:13",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:19",
+        "tests/observed-crash.test.ts:20",
+        "tests/observed-crash.test.ts:23",
+        "tests/observed-crash.test.ts:24",
+        "tests/observed-crash.test.ts:26",
+        "tests/observed-crash.test.ts:28",
+        "tests/observed-crash.test.ts:31",
+        "tests/observed-crash.test.ts:32",
+        "tests/observed-crash.test.ts:33",
+        "tests/observed-crash.test.ts:34",
+        "tests/observed-crash.test.ts:35",
+        "tests/observed-crash.test.ts:36",
+        "tests/observed-crash.test.ts:38"
+      ],
+      "expected": "fresh public read preserves current state and bytes;explicit recovery only;unknown guard persists;parked kill permits other owner",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-aa8e1bedd3c45d8a8964",
+          "group-dfa863829718de6f919d",
+          "group-a02990433bbb824e052a",
+          "group-45f07d9abecb2c3cc070",
+          "group-10ff73b7ef52613a7a56"
+        ],
+        "added-node24": [
+          "group-8bed02422bd713f929d6",
+          "group-9793b83389c143c0b2a8",
+          "group-1e2dcf1a9ed8a53a7447",
+          "group-ed41743e8c88e169e834",
+          "group-bd28a810df6a18d3875f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.01.cli.parked",
+      "hostRow": "H06",
+      "scenario": "killed real public preparation owner",
+      "variant": "parked",
+      "transport": "cli",
+      "test": "tests/observed-crash.test.ts:13",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:19",
+        "tests/observed-crash.test.ts:20",
+        "tests/observed-crash.test.ts:23",
+        "tests/observed-crash.test.ts:24",
+        "tests/observed-crash.test.ts:26",
+        "tests/observed-crash.test.ts:28",
+        "tests/observed-crash.test.ts:31",
+        "tests/observed-crash.test.ts:32",
+        "tests/observed-crash.test.ts:33",
+        "tests/observed-crash.test.ts:34",
+        "tests/observed-crash.test.ts:35",
+        "tests/observed-crash.test.ts:36",
+        "tests/observed-crash.test.ts:38"
+      ],
+      "expected": "fresh public read preserves current state and bytes;explicit recovery only;unknown guard persists;parked kill permits other owner",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-aa8e1bedd3c45d8a8964",
+          "group-dfa863829718de6f919d",
+          "group-a02990433bbb824e052a",
+          "group-45f07d9abecb2c3cc070",
+          "group-10ff73b7ef52613a7a56"
+        ],
+        "added-node24": [
+          "group-8bed02422bd713f929d6",
+          "group-9793b83389c143c0b2a8",
+          "group-1e2dcf1a9ed8a53a7447",
+          "group-ed41743e8c88e169e834",
+          "group-bd28a810df6a18d3875f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.01.mcp.reserveAllocation",
+      "hostRow": "H06",
+      "scenario": "killed real public preparation owner",
+      "variant": "reserveAllocation",
+      "transport": "mcp",
+      "test": "tests/observed-crash.test.ts:13",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:19",
+        "tests/observed-crash.test.ts:20",
+        "tests/observed-crash.test.ts:23",
+        "tests/observed-crash.test.ts:24",
+        "tests/observed-crash.test.ts:26",
+        "tests/observed-crash.test.ts:28",
+        "tests/observed-crash.test.ts:31",
+        "tests/observed-crash.test.ts:32",
+        "tests/observed-crash.test.ts:33",
+        "tests/observed-crash.test.ts:34",
+        "tests/observed-crash.test.ts:35",
+        "tests/observed-crash.test.ts:36",
+        "tests/observed-crash.test.ts:38"
+      ],
+      "expected": "fresh public read preserves current state and bytes;explicit recovery only;unknown guard persists;parked kill permits other owner",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-f0ef7ab3cd0391447e2b"
+        ],
+        "added-node24": [
+          "group-e101f88d39d6c60e0682"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.01.mcp.creation-authorized",
+      "hostRow": "H06",
+      "scenario": "killed real public preparation owner",
+      "variant": "creation-authorized",
+      "transport": "mcp",
+      "test": "tests/observed-crash.test.ts:13",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:19",
+        "tests/observed-crash.test.ts:20",
+        "tests/observed-crash.test.ts:23",
+        "tests/observed-crash.test.ts:24",
+        "tests/observed-crash.test.ts:26",
+        "tests/observed-crash.test.ts:28",
+        "tests/observed-crash.test.ts:31",
+        "tests/observed-crash.test.ts:32",
+        "tests/observed-crash.test.ts:33",
+        "tests/observed-crash.test.ts:34",
+        "tests/observed-crash.test.ts:35",
+        "tests/observed-crash.test.ts:36",
+        "tests/observed-crash.test.ts:38"
+      ],
+      "expected": "fresh public read preserves current state and bytes;explicit recovery only;unknown guard persists;parked kill permits other owner",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0dd60af27af8877126d9",
+          "group-70a60023555b82c8168b",
+          "group-dda02bec11b80a06f36d",
+          "group-f0ef7ab3cd0391447e2b",
+          "group-80960dede3d4fc0cf656"
+        ],
+        "added-node24": [
+          "group-fc9fe7af276f2c9f78fc",
+          "group-20e711b96bafa176d18c",
+          "group-80e06e8b1d3fab46ea1b",
+          "group-e101f88d39d6c60e0682",
+          "group-a3997b22b120f282572f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.01.mcp.source-entered",
+      "hostRow": "H06",
+      "scenario": "killed real public preparation owner",
+      "variant": "source-entered",
+      "transport": "mcp",
+      "test": "tests/observed-crash.test.ts:13",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:19",
+        "tests/observed-crash.test.ts:20",
+        "tests/observed-crash.test.ts:23",
+        "tests/observed-crash.test.ts:24",
+        "tests/observed-crash.test.ts:26",
+        "tests/observed-crash.test.ts:28",
+        "tests/observed-crash.test.ts:31",
+        "tests/observed-crash.test.ts:32",
+        "tests/observed-crash.test.ts:33",
+        "tests/observed-crash.test.ts:34",
+        "tests/observed-crash.test.ts:35",
+        "tests/observed-crash.test.ts:36",
+        "tests/observed-crash.test.ts:38"
+      ],
+      "expected": "fresh public read preserves current state and bytes;explicit recovery only;unknown guard persists;parked kill permits other owner",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0dd60af27af8877126d9",
+          "group-70a60023555b82c8168b",
+          "group-dda02bec11b80a06f36d",
+          "group-f0ef7ab3cd0391447e2b",
+          "group-80960dede3d4fc0cf656"
+        ],
+        "added-node24": [
+          "group-fc9fe7af276f2c9f78fc",
+          "group-20e711b96bafa176d18c",
+          "group-80e06e8b1d3fab46ea1b",
+          "group-e101f88d39d6c60e0682",
+          "group-a3997b22b120f282572f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.01.mcp.creation-receipt",
+      "hostRow": "H06",
+      "scenario": "killed real public preparation owner",
+      "variant": "creation-receipt",
+      "transport": "mcp",
+      "test": "tests/observed-crash.test.ts:13",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:19",
+        "tests/observed-crash.test.ts:20",
+        "tests/observed-crash.test.ts:23",
+        "tests/observed-crash.test.ts:24",
+        "tests/observed-crash.test.ts:26",
+        "tests/observed-crash.test.ts:28",
+        "tests/observed-crash.test.ts:31",
+        "tests/observed-crash.test.ts:32",
+        "tests/observed-crash.test.ts:33",
+        "tests/observed-crash.test.ts:34",
+        "tests/observed-crash.test.ts:35",
+        "tests/observed-crash.test.ts:36",
+        "tests/observed-crash.test.ts:38"
+      ],
+      "expected": "fresh public read preserves current state and bytes;explicit recovery only;unknown guard persists;parked kill permits other owner",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0dd60af27af8877126d9",
+          "group-70a60023555b82c8168b",
+          "group-dda02bec11b80a06f36d",
+          "group-f0ef7ab3cd0391447e2b",
+          "group-80960dede3d4fc0cf656"
+        ],
+        "added-node24": [
+          "group-fc9fe7af276f2c9f78fc",
+          "group-20e711b96bafa176d18c",
+          "group-80e06e8b1d3fab46ea1b",
+          "group-e101f88d39d6c60e0682",
+          "group-a3997b22b120f282572f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.01.mcp.parked",
+      "hostRow": "H06",
+      "scenario": "killed real public preparation owner",
+      "variant": "parked",
+      "transport": "mcp",
+      "test": "tests/observed-crash.test.ts:13",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:19",
+        "tests/observed-crash.test.ts:20",
+        "tests/observed-crash.test.ts:23",
+        "tests/observed-crash.test.ts:24",
+        "tests/observed-crash.test.ts:26",
+        "tests/observed-crash.test.ts:28",
+        "tests/observed-crash.test.ts:31",
+        "tests/observed-crash.test.ts:32",
+        "tests/observed-crash.test.ts:33",
+        "tests/observed-crash.test.ts:34",
+        "tests/observed-crash.test.ts:35",
+        "tests/observed-crash.test.ts:36",
+        "tests/observed-crash.test.ts:38"
+      ],
+      "expected": "fresh public read preserves current state and bytes;explicit recovery only;unknown guard persists;parked kill permits other owner",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0dd60af27af8877126d9",
+          "group-70a60023555b82c8168b",
+          "group-dda02bec11b80a06f36d",
+          "group-f0ef7ab3cd0391447e2b",
+          "group-80960dede3d4fc0cf656"
+        ],
+        "added-node24": [
+          "group-fc9fe7af276f2c9f78fc",
+          "group-20e711b96bafa176d18c",
+          "group-80e06e8b1d3fab46ea1b",
+          "group-e101f88d39d6c60e0682",
+          "group-a3997b22b120f282572f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.02.cli.action-bound",
+      "hostRow": "H06",
+      "scenario": "killed real public action owner",
+      "variant": "action-bound",
+      "transport": "cli",
+      "test": "tests/observed-crash.test.ts:50",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:55",
+        "tests/observed-crash.test.ts:56",
+        "tests/observed-crash.test.ts:59",
+        "tests/observed-crash.test.ts:60",
+        "tests/observed-crash.test.ts:61",
+        "tests/observed-crash.test.ts:62",
+        "tests/observed-crash.test.ts:63",
+        "tests/observed-crash.test.ts:65",
+        "tests/observed-crash.test.ts:66",
+        "tests/observed-crash.test.ts:69",
+        "tests/observed-crash.test.ts:70",
+        "tests/observed-crash.test.ts:71",
+        "tests/observed-crash.test.ts:73",
+        "tests/observed-crash.test.ts:75"
+      ],
+      "expected": "false/false or null/null or true/true persisted exactly;unresolved until explicit recovery except committed terminals;0/1 input;duplicates no replay",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-8b0e2b8e66c893b25d92",
+          "group-c59fe1f338a2c3e01255",
+          "group-aff2527e8277fd411dd8",
+          "group-26fcb69c89b86a145f46",
+          "group-f99fe2abcf226267db9a",
+          "group-774485049da1fb55f16a",
+          "group-ed4a85aff60e384a364e",
+          "group-d36b9aac61e5fd7cd1b4"
+        ],
+        "added-node24": [
+          "group-8492e36b45c8ee172496",
+          "group-d8de3eb632b1d7496d78",
+          "group-77fbe5affe3978b9e088",
+          "group-633dde2604e56c37e7dc",
+          "group-9cdbcbe484fb75311507",
+          "group-e43b5cddfbcc2f518cab",
+          "group-ce33bce0bac8b848cd8b",
+          "group-80acfa2daac1c9d5056d"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.02.cli.tap-authorized",
+      "hostRow": "H06",
+      "scenario": "killed real public action owner",
+      "variant": "tap-authorized",
+      "transport": "cli",
+      "test": "tests/observed-crash.test.ts:50",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:55",
+        "tests/observed-crash.test.ts:56",
+        "tests/observed-crash.test.ts:59",
+        "tests/observed-crash.test.ts:60",
+        "tests/observed-crash.test.ts:61",
+        "tests/observed-crash.test.ts:62",
+        "tests/observed-crash.test.ts:63",
+        "tests/observed-crash.test.ts:65",
+        "tests/observed-crash.test.ts:66",
+        "tests/observed-crash.test.ts:69",
+        "tests/observed-crash.test.ts:70",
+        "tests/observed-crash.test.ts:71",
+        "tests/observed-crash.test.ts:73",
+        "tests/observed-crash.test.ts:75"
+      ],
+      "expected": "false/false or null/null or true/true persisted exactly;unresolved until explicit recovery except committed terminals;0/1 input;duplicates no replay",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-f99fe2abcf226267db9a"
+        ],
+        "added-node24": [
+          "group-9cdbcbe484fb75311507"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.02.cli.touch-entered",
+      "hostRow": "H06",
+      "scenario": "killed real public action owner",
+      "variant": "touch-entered",
+      "transport": "cli",
+      "test": "tests/observed-crash.test.ts:50",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:55",
+        "tests/observed-crash.test.ts:56",
+        "tests/observed-crash.test.ts:59",
+        "tests/observed-crash.test.ts:60",
+        "tests/observed-crash.test.ts:61",
+        "tests/observed-crash.test.ts:62",
+        "tests/observed-crash.test.ts:63",
+        "tests/observed-crash.test.ts:65",
+        "tests/observed-crash.test.ts:66",
+        "tests/observed-crash.test.ts:69",
+        "tests/observed-crash.test.ts:70",
+        "tests/observed-crash.test.ts:71",
+        "tests/observed-crash.test.ts:73",
+        "tests/observed-crash.test.ts:75"
+      ],
+      "expected": "false/false or null/null or true/true persisted exactly;unresolved until explicit recovery except committed terminals;0/1 input;duplicates no replay",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-8b0e2b8e66c893b25d92",
+          "group-c59fe1f338a2c3e01255",
+          "group-aff2527e8277fd411dd8",
+          "group-26fcb69c89b86a145f46",
+          "group-f99fe2abcf226267db9a",
+          "group-774485049da1fb55f16a",
+          "group-ed4a85aff60e384a364e",
+          "group-d36b9aac61e5fd7cd1b4"
+        ],
+        "added-node24": [
+          "group-8492e36b45c8ee172496",
+          "group-d8de3eb632b1d7496d78",
+          "group-77fbe5affe3978b9e088",
+          "group-633dde2604e56c37e7dc",
+          "group-9cdbcbe484fb75311507",
+          "group-e43b5cddfbcc2f518cab",
+          "group-ce33bce0bac8b848cd8b",
+          "group-80acfa2daac1c9d5056d"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.02.cli.action-receipt",
+      "hostRow": "H06",
+      "scenario": "killed real public action owner",
+      "variant": "action-receipt",
+      "transport": "cli",
+      "test": "tests/observed-crash.test.ts:50",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:55",
+        "tests/observed-crash.test.ts:56",
+        "tests/observed-crash.test.ts:59",
+        "tests/observed-crash.test.ts:60",
+        "tests/observed-crash.test.ts:61",
+        "tests/observed-crash.test.ts:62",
+        "tests/observed-crash.test.ts:63",
+        "tests/observed-crash.test.ts:65",
+        "tests/observed-crash.test.ts:66",
+        "tests/observed-crash.test.ts:69",
+        "tests/observed-crash.test.ts:70",
+        "tests/observed-crash.test.ts:71",
+        "tests/observed-crash.test.ts:73",
+        "tests/observed-crash.test.ts:75"
+      ],
+      "expected": "false/false or null/null or true/true persisted exactly;unresolved until explicit recovery except committed terminals;0/1 input;duplicates no replay",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-8b0e2b8e66c893b25d92",
+          "group-c59fe1f338a2c3e01255",
+          "group-aff2527e8277fd411dd8",
+          "group-26fcb69c89b86a145f46",
+          "group-f99fe2abcf226267db9a",
+          "group-774485049da1fb55f16a",
+          "group-ed4a85aff60e384a364e",
+          "group-d36b9aac61e5fd7cd1b4"
+        ],
+        "added-node24": [
+          "group-8492e36b45c8ee172496",
+          "group-d8de3eb632b1d7496d78",
+          "group-77fbe5affe3978b9e088",
+          "group-633dde2604e56c37e7dc",
+          "group-9cdbcbe484fb75311507",
+          "group-e43b5cddfbcc2f518cab",
+          "group-ce33bce0bac8b848cd8b",
+          "group-80acfa2daac1c9d5056d"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.02.cli.before-finalize-commit",
+      "hostRow": "H06",
+      "scenario": "killed real public action owner",
+      "variant": "before-finalize-commit",
+      "transport": "cli",
+      "test": "tests/observed-crash.test.ts:50",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:55",
+        "tests/observed-crash.test.ts:56",
+        "tests/observed-crash.test.ts:59",
+        "tests/observed-crash.test.ts:60",
+        "tests/observed-crash.test.ts:61",
+        "tests/observed-crash.test.ts:62",
+        "tests/observed-crash.test.ts:63",
+        "tests/observed-crash.test.ts:65",
+        "tests/observed-crash.test.ts:66",
+        "tests/observed-crash.test.ts:69",
+        "tests/observed-crash.test.ts:70",
+        "tests/observed-crash.test.ts:71",
+        "tests/observed-crash.test.ts:73",
+        "tests/observed-crash.test.ts:75"
+      ],
+      "expected": "false/false or null/null or true/true persisted exactly;unresolved until explicit recovery except committed terminals;0/1 input;duplicates no replay",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-8b0e2b8e66c893b25d92",
+          "group-c59fe1f338a2c3e01255",
+          "group-aff2527e8277fd411dd8",
+          "group-26fcb69c89b86a145f46",
+          "group-f99fe2abcf226267db9a",
+          "group-774485049da1fb55f16a",
+          "group-ed4a85aff60e384a364e",
+          "group-d36b9aac61e5fd7cd1b4"
+        ],
+        "added-node24": [
+          "group-8492e36b45c8ee172496",
+          "group-d8de3eb632b1d7496d78",
+          "group-77fbe5affe3978b9e088",
+          "group-633dde2604e56c37e7dc",
+          "group-9cdbcbe484fb75311507",
+          "group-e43b5cddfbcc2f518cab",
+          "group-ce33bce0bac8b848cd8b",
+          "group-80acfa2daac1c9d5056d"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.02.cli.after-finalize-commit",
+      "hostRow": "H06",
+      "scenario": "killed real public action owner",
+      "variant": "after-finalize-commit",
+      "transport": "cli",
+      "test": "tests/observed-crash.test.ts:50",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:55",
+        "tests/observed-crash.test.ts:56",
+        "tests/observed-crash.test.ts:59",
+        "tests/observed-crash.test.ts:60",
+        "tests/observed-crash.test.ts:61",
+        "tests/observed-crash.test.ts:62",
+        "tests/observed-crash.test.ts:63",
+        "tests/observed-crash.test.ts:65",
+        "tests/observed-crash.test.ts:66",
+        "tests/observed-crash.test.ts:69",
+        "tests/observed-crash.test.ts:70",
+        "tests/observed-crash.test.ts:71",
+        "tests/observed-crash.test.ts:73",
+        "tests/observed-crash.test.ts:75"
+      ],
+      "expected": "false/false or null/null or true/true persisted exactly;unresolved until explicit recovery except committed terminals;0/1 input;duplicates no replay",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-8b0e2b8e66c893b25d92",
+          "group-c59fe1f338a2c3e01255",
+          "group-aff2527e8277fd411dd8",
+          "group-26fcb69c89b86a145f46",
+          "group-f99fe2abcf226267db9a",
+          "group-774485049da1fb55f16a",
+          "group-ed4a85aff60e384a364e",
+          "group-d36b9aac61e5fd7cd1b4"
+        ],
+        "added-node24": [
+          "group-8492e36b45c8ee172496",
+          "group-d8de3eb632b1d7496d78",
+          "group-77fbe5affe3978b9e088",
+          "group-633dde2604e56c37e7dc",
+          "group-9cdbcbe484fb75311507",
+          "group-e43b5cddfbcc2f518cab",
+          "group-ce33bce0bac8b848cd8b",
+          "group-80acfa2daac1c9d5056d"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.02.cli.before-export",
+      "hostRow": "H06",
+      "scenario": "killed real public action owner",
+      "variant": "before-export",
+      "transport": "cli",
+      "test": "tests/observed-crash.test.ts:50",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:55",
+        "tests/observed-crash.test.ts:56",
+        "tests/observed-crash.test.ts:59",
+        "tests/observed-crash.test.ts:60",
+        "tests/observed-crash.test.ts:61",
+        "tests/observed-crash.test.ts:62",
+        "tests/observed-crash.test.ts:63",
+        "tests/observed-crash.test.ts:65",
+        "tests/observed-crash.test.ts:66",
+        "tests/observed-crash.test.ts:69",
+        "tests/observed-crash.test.ts:70",
+        "tests/observed-crash.test.ts:71",
+        "tests/observed-crash.test.ts:73",
+        "tests/observed-crash.test.ts:75"
+      ],
+      "expected": "false/false or null/null or true/true persisted exactly;unresolved until explicit recovery except committed terminals;0/1 input;duplicates no replay",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-8b0e2b8e66c893b25d92",
+          "group-c59fe1f338a2c3e01255",
+          "group-aff2527e8277fd411dd8",
+          "group-26fcb69c89b86a145f46",
+          "group-f99fe2abcf226267db9a",
+          "group-774485049da1fb55f16a",
+          "group-ed4a85aff60e384a364e",
+          "group-d36b9aac61e5fd7cd1b4"
+        ],
+        "added-node24": [
+          "group-8492e36b45c8ee172496",
+          "group-d8de3eb632b1d7496d78",
+          "group-77fbe5affe3978b9e088",
+          "group-633dde2604e56c37e7dc",
+          "group-9cdbcbe484fb75311507",
+          "group-e43b5cddfbcc2f518cab",
+          "group-ce33bce0bac8b848cd8b",
+          "group-80acfa2daac1c9d5056d"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.02.cli.after-export",
+      "hostRow": "H06",
+      "scenario": "killed real public action owner",
+      "variant": "after-export",
+      "transport": "cli",
+      "test": "tests/observed-crash.test.ts:50",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:55",
+        "tests/observed-crash.test.ts:56",
+        "tests/observed-crash.test.ts:59",
+        "tests/observed-crash.test.ts:60",
+        "tests/observed-crash.test.ts:61",
+        "tests/observed-crash.test.ts:62",
+        "tests/observed-crash.test.ts:63",
+        "tests/observed-crash.test.ts:65",
+        "tests/observed-crash.test.ts:66",
+        "tests/observed-crash.test.ts:69",
+        "tests/observed-crash.test.ts:70",
+        "tests/observed-crash.test.ts:71",
+        "tests/observed-crash.test.ts:73",
+        "tests/observed-crash.test.ts:75"
+      ],
+      "expected": "false/false or null/null or true/true persisted exactly;unresolved until explicit recovery except committed terminals;0/1 input;duplicates no replay",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-8b0e2b8e66c893b25d92",
+          "group-c59fe1f338a2c3e01255",
+          "group-aff2527e8277fd411dd8",
+          "group-26fcb69c89b86a145f46",
+          "group-f99fe2abcf226267db9a",
+          "group-774485049da1fb55f16a",
+          "group-ed4a85aff60e384a364e",
+          "group-d36b9aac61e5fd7cd1b4"
+        ],
+        "added-node24": [
+          "group-8492e36b45c8ee172496",
+          "group-d8de3eb632b1d7496d78",
+          "group-77fbe5affe3978b9e088",
+          "group-633dde2604e56c37e7dc",
+          "group-9cdbcbe484fb75311507",
+          "group-e43b5cddfbcc2f518cab",
+          "group-ce33bce0bac8b848cd8b",
+          "group-80acfa2daac1c9d5056d"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.02.mcp.action-bound",
+      "hostRow": "H06",
+      "scenario": "killed real public action owner",
+      "variant": "action-bound",
+      "transport": "mcp",
+      "test": "tests/observed-crash.test.ts:50",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:55",
+        "tests/observed-crash.test.ts:56",
+        "tests/observed-crash.test.ts:59",
+        "tests/observed-crash.test.ts:60",
+        "tests/observed-crash.test.ts:61",
+        "tests/observed-crash.test.ts:62",
+        "tests/observed-crash.test.ts:63",
+        "tests/observed-crash.test.ts:65",
+        "tests/observed-crash.test.ts:66",
+        "tests/observed-crash.test.ts:69",
+        "tests/observed-crash.test.ts:70",
+        "tests/observed-crash.test.ts:71",
+        "tests/observed-crash.test.ts:73",
+        "tests/observed-crash.test.ts:75"
+      ],
+      "expected": "false/false or null/null or true/true persisted exactly;unresolved until explicit recovery except committed terminals;0/1 input;duplicates no replay",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0e6d26a3f32a44783765",
+          "group-d3f9497db102f5f5d14c",
+          "group-0f50b9bb060d9d081a37",
+          "group-d4c3261ce1ff6e1c6b2a",
+          "group-13fa4952b52468585caa",
+          "group-b2198510c1c224e8c311",
+          "group-a7719beb3a1bfe4e2ae2",
+          "group-ae6577705c028ff81e2a"
+        ],
+        "added-node24": [
+          "group-b5dc6929a4b7644c4492",
+          "group-f1a27e9d6aee640409fd",
+          "group-a8ce9c13252e2a02c292",
+          "group-19283a8b44b8a4317567",
+          "group-56ef1eaf331d43c0908e",
+          "group-613fbc2dfdd34754feff",
+          "group-6ceda7359548ce41165c",
+          "group-408eb7352d65e9317cf4"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.02.mcp.tap-authorized",
+      "hostRow": "H06",
+      "scenario": "killed real public action owner",
+      "variant": "tap-authorized",
+      "transport": "mcp",
+      "test": "tests/observed-crash.test.ts:50",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:55",
+        "tests/observed-crash.test.ts:56",
+        "tests/observed-crash.test.ts:59",
+        "tests/observed-crash.test.ts:60",
+        "tests/observed-crash.test.ts:61",
+        "tests/observed-crash.test.ts:62",
+        "tests/observed-crash.test.ts:63",
+        "tests/observed-crash.test.ts:65",
+        "tests/observed-crash.test.ts:66",
+        "tests/observed-crash.test.ts:69",
+        "tests/observed-crash.test.ts:70",
+        "tests/observed-crash.test.ts:71",
+        "tests/observed-crash.test.ts:73",
+        "tests/observed-crash.test.ts:75"
+      ],
+      "expected": "false/false or null/null or true/true persisted exactly;unresolved until explicit recovery except committed terminals;0/1 input;duplicates no replay",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-a7719beb3a1bfe4e2ae2"
+        ],
+        "added-node24": [
+          "group-6ceda7359548ce41165c"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.02.mcp.touch-entered",
+      "hostRow": "H06",
+      "scenario": "killed real public action owner",
+      "variant": "touch-entered",
+      "transport": "mcp",
+      "test": "tests/observed-crash.test.ts:50",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:55",
+        "tests/observed-crash.test.ts:56",
+        "tests/observed-crash.test.ts:59",
+        "tests/observed-crash.test.ts:60",
+        "tests/observed-crash.test.ts:61",
+        "tests/observed-crash.test.ts:62",
+        "tests/observed-crash.test.ts:63",
+        "tests/observed-crash.test.ts:65",
+        "tests/observed-crash.test.ts:66",
+        "tests/observed-crash.test.ts:69",
+        "tests/observed-crash.test.ts:70",
+        "tests/observed-crash.test.ts:71",
+        "tests/observed-crash.test.ts:73",
+        "tests/observed-crash.test.ts:75"
+      ],
+      "expected": "false/false or null/null or true/true persisted exactly;unresolved until explicit recovery except committed terminals;0/1 input;duplicates no replay",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0e6d26a3f32a44783765",
+          "group-d3f9497db102f5f5d14c",
+          "group-0f50b9bb060d9d081a37",
+          "group-d4c3261ce1ff6e1c6b2a",
+          "group-13fa4952b52468585caa",
+          "group-b2198510c1c224e8c311",
+          "group-a7719beb3a1bfe4e2ae2",
+          "group-ae6577705c028ff81e2a"
+        ],
+        "added-node24": [
+          "group-b5dc6929a4b7644c4492",
+          "group-f1a27e9d6aee640409fd",
+          "group-a8ce9c13252e2a02c292",
+          "group-19283a8b44b8a4317567",
+          "group-56ef1eaf331d43c0908e",
+          "group-613fbc2dfdd34754feff",
+          "group-6ceda7359548ce41165c",
+          "group-408eb7352d65e9317cf4"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.02.mcp.action-receipt",
+      "hostRow": "H06",
+      "scenario": "killed real public action owner",
+      "variant": "action-receipt",
+      "transport": "mcp",
+      "test": "tests/observed-crash.test.ts:50",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:55",
+        "tests/observed-crash.test.ts:56",
+        "tests/observed-crash.test.ts:59",
+        "tests/observed-crash.test.ts:60",
+        "tests/observed-crash.test.ts:61",
+        "tests/observed-crash.test.ts:62",
+        "tests/observed-crash.test.ts:63",
+        "tests/observed-crash.test.ts:65",
+        "tests/observed-crash.test.ts:66",
+        "tests/observed-crash.test.ts:69",
+        "tests/observed-crash.test.ts:70",
+        "tests/observed-crash.test.ts:71",
+        "tests/observed-crash.test.ts:73",
+        "tests/observed-crash.test.ts:75"
+      ],
+      "expected": "false/false or null/null or true/true persisted exactly;unresolved until explicit recovery except committed terminals;0/1 input;duplicates no replay",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0e6d26a3f32a44783765",
+          "group-d3f9497db102f5f5d14c",
+          "group-0f50b9bb060d9d081a37",
+          "group-d4c3261ce1ff6e1c6b2a",
+          "group-13fa4952b52468585caa",
+          "group-b2198510c1c224e8c311",
+          "group-a7719beb3a1bfe4e2ae2",
+          "group-ae6577705c028ff81e2a"
+        ],
+        "added-node24": [
+          "group-b5dc6929a4b7644c4492",
+          "group-f1a27e9d6aee640409fd",
+          "group-a8ce9c13252e2a02c292",
+          "group-19283a8b44b8a4317567",
+          "group-56ef1eaf331d43c0908e",
+          "group-613fbc2dfdd34754feff",
+          "group-6ceda7359548ce41165c",
+          "group-408eb7352d65e9317cf4"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.02.mcp.before-finalize-commit",
+      "hostRow": "H06",
+      "scenario": "killed real public action owner",
+      "variant": "before-finalize-commit",
+      "transport": "mcp",
+      "test": "tests/observed-crash.test.ts:50",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:55",
+        "tests/observed-crash.test.ts:56",
+        "tests/observed-crash.test.ts:59",
+        "tests/observed-crash.test.ts:60",
+        "tests/observed-crash.test.ts:61",
+        "tests/observed-crash.test.ts:62",
+        "tests/observed-crash.test.ts:63",
+        "tests/observed-crash.test.ts:65",
+        "tests/observed-crash.test.ts:66",
+        "tests/observed-crash.test.ts:69",
+        "tests/observed-crash.test.ts:70",
+        "tests/observed-crash.test.ts:71",
+        "tests/observed-crash.test.ts:73",
+        "tests/observed-crash.test.ts:75"
+      ],
+      "expected": "false/false or null/null or true/true persisted exactly;unresolved until explicit recovery except committed terminals;0/1 input;duplicates no replay",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0e6d26a3f32a44783765",
+          "group-d3f9497db102f5f5d14c",
+          "group-0f50b9bb060d9d081a37",
+          "group-d4c3261ce1ff6e1c6b2a",
+          "group-13fa4952b52468585caa",
+          "group-b2198510c1c224e8c311",
+          "group-a7719beb3a1bfe4e2ae2",
+          "group-ae6577705c028ff81e2a"
+        ],
+        "added-node24": [
+          "group-b5dc6929a4b7644c4492",
+          "group-f1a27e9d6aee640409fd",
+          "group-a8ce9c13252e2a02c292",
+          "group-19283a8b44b8a4317567",
+          "group-56ef1eaf331d43c0908e",
+          "group-613fbc2dfdd34754feff",
+          "group-6ceda7359548ce41165c",
+          "group-408eb7352d65e9317cf4"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.02.mcp.after-finalize-commit",
+      "hostRow": "H06",
+      "scenario": "killed real public action owner",
+      "variant": "after-finalize-commit",
+      "transport": "mcp",
+      "test": "tests/observed-crash.test.ts:50",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:55",
+        "tests/observed-crash.test.ts:56",
+        "tests/observed-crash.test.ts:59",
+        "tests/observed-crash.test.ts:60",
+        "tests/observed-crash.test.ts:61",
+        "tests/observed-crash.test.ts:62",
+        "tests/observed-crash.test.ts:63",
+        "tests/observed-crash.test.ts:65",
+        "tests/observed-crash.test.ts:66",
+        "tests/observed-crash.test.ts:69",
+        "tests/observed-crash.test.ts:70",
+        "tests/observed-crash.test.ts:71",
+        "tests/observed-crash.test.ts:73",
+        "tests/observed-crash.test.ts:75"
+      ],
+      "expected": "false/false or null/null or true/true persisted exactly;unresolved until explicit recovery except committed terminals;0/1 input;duplicates no replay",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0e6d26a3f32a44783765",
+          "group-d3f9497db102f5f5d14c",
+          "group-0f50b9bb060d9d081a37",
+          "group-d4c3261ce1ff6e1c6b2a",
+          "group-13fa4952b52468585caa",
+          "group-b2198510c1c224e8c311",
+          "group-a7719beb3a1bfe4e2ae2",
+          "group-ae6577705c028ff81e2a"
+        ],
+        "added-node24": [
+          "group-b5dc6929a4b7644c4492",
+          "group-f1a27e9d6aee640409fd",
+          "group-a8ce9c13252e2a02c292",
+          "group-19283a8b44b8a4317567",
+          "group-56ef1eaf331d43c0908e",
+          "group-613fbc2dfdd34754feff",
+          "group-6ceda7359548ce41165c",
+          "group-408eb7352d65e9317cf4"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.02.mcp.before-export",
+      "hostRow": "H06",
+      "scenario": "killed real public action owner",
+      "variant": "before-export",
+      "transport": "mcp",
+      "test": "tests/observed-crash.test.ts:50",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:55",
+        "tests/observed-crash.test.ts:56",
+        "tests/observed-crash.test.ts:59",
+        "tests/observed-crash.test.ts:60",
+        "tests/observed-crash.test.ts:61",
+        "tests/observed-crash.test.ts:62",
+        "tests/observed-crash.test.ts:63",
+        "tests/observed-crash.test.ts:65",
+        "tests/observed-crash.test.ts:66",
+        "tests/observed-crash.test.ts:69",
+        "tests/observed-crash.test.ts:70",
+        "tests/observed-crash.test.ts:71",
+        "tests/observed-crash.test.ts:73",
+        "tests/observed-crash.test.ts:75"
+      ],
+      "expected": "false/false or null/null or true/true persisted exactly;unresolved until explicit recovery except committed terminals;0/1 input;duplicates no replay",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0e6d26a3f32a44783765",
+          "group-d3f9497db102f5f5d14c",
+          "group-0f50b9bb060d9d081a37",
+          "group-d4c3261ce1ff6e1c6b2a",
+          "group-13fa4952b52468585caa",
+          "group-b2198510c1c224e8c311",
+          "group-a7719beb3a1bfe4e2ae2",
+          "group-ae6577705c028ff81e2a"
+        ],
+        "added-node24": [
+          "group-b5dc6929a4b7644c4492",
+          "group-f1a27e9d6aee640409fd",
+          "group-a8ce9c13252e2a02c292",
+          "group-19283a8b44b8a4317567",
+          "group-56ef1eaf331d43c0908e",
+          "group-613fbc2dfdd34754feff",
+          "group-6ceda7359548ce41165c",
+          "group-408eb7352d65e9317cf4"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.02.mcp.after-export",
+      "hostRow": "H06",
+      "scenario": "killed real public action owner",
+      "variant": "after-export",
+      "transport": "mcp",
+      "test": "tests/observed-crash.test.ts:50",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:55",
+        "tests/observed-crash.test.ts:56",
+        "tests/observed-crash.test.ts:59",
+        "tests/observed-crash.test.ts:60",
+        "tests/observed-crash.test.ts:61",
+        "tests/observed-crash.test.ts:62",
+        "tests/observed-crash.test.ts:63",
+        "tests/observed-crash.test.ts:65",
+        "tests/observed-crash.test.ts:66",
+        "tests/observed-crash.test.ts:69",
+        "tests/observed-crash.test.ts:70",
+        "tests/observed-crash.test.ts:71",
+        "tests/observed-crash.test.ts:73",
+        "tests/observed-crash.test.ts:75"
+      ],
+      "expected": "false/false or null/null or true/true persisted exactly;unresolved until explicit recovery except committed terminals;0/1 input;duplicates no replay",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0e6d26a3f32a44783765",
+          "group-d3f9497db102f5f5d14c",
+          "group-0f50b9bb060d9d081a37",
+          "group-d4c3261ce1ff6e1c6b2a",
+          "group-13fa4952b52468585caa",
+          "group-b2198510c1c224e8c311",
+          "group-a7719beb3a1bfe4e2ae2",
+          "group-ae6577705c028ff81e2a"
+        ],
+        "added-node24": [
+          "group-b5dc6929a4b7644c4492",
+          "group-f1a27e9d6aee640409fd",
+          "group-a8ce9c13252e2a02c292",
+          "group-19283a8b44b8a4317567",
+          "group-56ef1eaf331d43c0908e",
+          "group-613fbc2dfdd34754feff",
+          "group-6ceda7359548ce41165c",
+          "group-408eb7352d65e9317cf4"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.03.cli.beforeCommit",
+      "hostRow": "H06",
+      "scenario": "ambiguous finalization COMMIT response",
+      "variant": "beforeCommit",
+      "transport": "cli",
+      "test": "tests/observed-crash.test.ts:79",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:84",
+        "tests/observed-crash.test.ts:87",
+        "tests/observed-crash.test.ts:88",
+        "tests/observed-crash.test.ts:92",
+        "tests/observed-crash.test.ts:93",
+        "tests/observed-crash.test.ts:94"
+      ],
+      "expected": "Before COMMIT alive MCP finalizing/no result and read DB invariance; after actual exit fresh unresolved; after COMMIT committed result wins; one touch/no replay",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-b8c07dec5fe803e75c40"
+        ],
+        "added-node24": [
+          "group-9ab337e6485e6ddb1d8b"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.03.cli.afterCommit",
+      "hostRow": "H06",
+      "scenario": "ambiguous finalization COMMIT response",
+      "variant": "afterCommit",
+      "transport": "cli",
+      "test": "tests/observed-crash.test.ts:79",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:84",
+        "tests/observed-crash.test.ts:87",
+        "tests/observed-crash.test.ts:88",
+        "tests/observed-crash.test.ts:92",
+        "tests/observed-crash.test.ts:93",
+        "tests/observed-crash.test.ts:94"
+      ],
+      "expected": "Before COMMIT alive MCP finalizing/no result and read DB invariance; after actual exit fresh unresolved; after COMMIT committed result wins; one touch/no replay",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-b102006fd690ac9ec2ed"
+        ],
+        "added-node24": [
+          "group-2aefcf1f85c150bf344d"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.03.mcp.beforeCommit",
+      "hostRow": "H06",
+      "scenario": "ambiguous finalization COMMIT response",
+      "variant": "beforeCommit",
+      "transport": "mcp",
+      "test": "tests/observed-crash.test.ts:79",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:84",
+        "tests/observed-crash.test.ts:87",
+        "tests/observed-crash.test.ts:88",
+        "tests/observed-crash.test.ts:92",
+        "tests/observed-crash.test.ts:93",
+        "tests/observed-crash.test.ts:94"
+      ],
+      "expected": "Before COMMIT alive MCP finalizing/no result and read DB invariance; after actual exit fresh unresolved; after COMMIT committed result wins; one touch/no replay",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-3266cc9a7c4b0ed3fbb2"
+        ],
+        "added-node24": [
+          "group-a85bfafab0c10bf31eeb"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.03.mcp.afterCommit",
+      "hostRow": "H06",
+      "scenario": "ambiguous finalization COMMIT response",
+      "variant": "afterCommit",
+      "transport": "mcp",
+      "test": "tests/observed-crash.test.ts:79",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:84",
+        "tests/observed-crash.test.ts:87",
+        "tests/observed-crash.test.ts:88",
+        "tests/observed-crash.test.ts:92",
+        "tests/observed-crash.test.ts:93",
+        "tests/observed-crash.test.ts:94"
+      ],
+      "expected": "Before COMMIT alive MCP finalizing/no result and read DB invariance; after actual exit fresh unresolved; after COMMIT committed result wins; one touch/no replay",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-f5a3c7d83ae568fb2dc8"
+        ],
+        "added-node24": [
+          "group-7dab3230616132f4a6ee"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.04.primitive.duplicate-finalize",
+      "hostRow": "H06",
+      "scenario": "public owner duplicate/stale finalization",
+      "variant": "duplicate-finalize",
+      "transport": "primitive",
+      "test": "tests/observed-crash.test.ts:97",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:99",
+        "tests/observed-crash.test.ts:104",
+        "tests/observed-crash.test.ts:105",
+        "tests/observed-crash.test.ts:106",
+        "tests/observed-crash.test.ts:107"
+      ],
+      "expected": "use genuine public owner identity/terminal;bytes immutable;STALE_OWNER;1 input total",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-11203271c4edd2e6932c"
+        ],
+        "added-node24": [
+          "group-9e48d46f9653b12de820"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.04.primitive.stale-token",
+      "hostRow": "H06",
+      "scenario": "public owner duplicate/stale finalization",
+      "variant": "stale-token",
+      "transport": "primitive",
+      "test": "tests/observed-crash.test.ts:97",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:99",
+        "tests/observed-crash.test.ts:104",
+        "tests/observed-crash.test.ts:105",
+        "tests/observed-crash.test.ts:106",
+        "tests/observed-crash.test.ts:107"
+      ],
+      "expected": "use genuine public owner identity/terminal;bytes immutable;STALE_OWNER;1 input total",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-11203271c4edd2e6932c"
+        ],
+        "added-node24": [
+          "group-9e48d46f9653b12de820"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.04.primitive.stale-authorize",
+      "hostRow": "H06",
+      "scenario": "public owner duplicate/stale finalization",
+      "variant": "stale-authorize",
+      "transport": "primitive",
+      "test": "tests/observed-crash.test.ts:97",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:99",
+        "tests/observed-crash.test.ts:104",
+        "tests/observed-crash.test.ts:105",
+        "tests/observed-crash.test.ts:106",
+        "tests/observed-crash.test.ts:107"
+      ],
+      "expected": "use genuine public owner identity/terminal;bytes immutable;STALE_OWNER;1 input total",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-11203271c4edd2e6932c"
+        ],
+        "added-node24": [
+          "group-9e48d46f9653b12de820"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.05.mcp.late-touch-reply",
+      "hostRow": "H06",
+      "scenario": "late ignored-abort public MCP owner",
+      "variant": "late-touch-reply",
+      "transport": "mcp",
+      "test": "tests/observed-crash.test.ts:110",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:113",
+        "tests/observed-crash.test.ts:115",
+        "tests/observed-crash.test.ts:117",
+        "tests/observed-crash.test.ts:118",
+        "tests/observed-crash.test.ts:119",
+        "tests/observed-crash.test.ts:121",
+        "tests/observed-crash.test.ts:122",
+        "tests/observed-crash.test.ts:124",
+        "tests/observed-crash.test.ts:125"
+      ],
+      "expected": "Already-issued touch remains single; full prefix invariant across cancellation, late reply, fresh read, refused successor and actual MCP owner close",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-a0f9416c4926fd10cde1"
+        ],
+        "added-node24": [
+          "group-7146a56428cc008f5cae"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H06.06.cli.late-touch-reply",
+      "hostRow": "H06",
+      "scenario": "late ignored-abort public CLI owner",
+      "variant": "late-touch-reply",
+      "transport": "cli",
+      "test": "tests/observed-crash.test.ts:128",
+      "assertionLocations": [
+        "tests/observed-crash.test.ts:131",
+        "tests/observed-crash.test.ts:132",
+        "tests/observed-crash.test.ts:133",
+        "tests/observed-crash.test.ts:134",
+        "tests/observed-crash.test.ts:135",
+        "tests/observed-crash.test.ts:136",
+        "tests/observed-crash.test.ts:138",
+        "tests/observed-crash.test.ts:139",
+        "tests/observed-crash.test.ts:140"
+      ],
+      "expected": "Already-issued touch remains single; full prefix invariant across cancellation, late reply, actual CLI exit and fresh read",
+      "testSourceSha256": "3a5422f3f63baa67dd28c5cca50ccb23d2ddc9605ea22bd12693fc6b32b5c0ea",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-20b028a3e0438aae5d7c"
+        ],
+        "added-node24": [
+          "group-ada72707e16487420afb"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    }
+  ],
+  "commands": {
+    "node26": {
+      "record": ".scratch/observed-integration/acceptance/host/faults/integration/full-gates/composed-host-node26.json",
+      "sha256": "b096b6dc6c25e2133dae89fbf41d1a577d27ab54027655a12fe292a5834954d0",
+      "node": "v26.8.1",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "counts": {
+        "tests": 1675,
+        "pass": 1675,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "commit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433"
+    },
+    "node24": {
+      "record": ".scratch/observed-integration/acceptance/host/faults/integration/full-gates/composed-host-node24.json",
+      "sha256": "53eeeb47bb602d7b83f45a5e26d47a43ca36b3d9be72e65c6645fe60f86173bb",
+      "node": "v24.0.0",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "counts": {
+        "tests": 1675,
+        "pass": 1675,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "commit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433"
+    }
+  },
+  "limits": [
+    "Accepted implementation subset checks do not establish complete H rows.",
+    "Host fault injection does not establish live, real transport or native release."
+  ],
+  "artifactGroups": ".scratch/observed-integration/acceptance/host/faults/artifact-groups.json",
+  "sourceReviews": {
+    "spec": "faults/review/repair2/spec/review.md",
+    "standards": "faults/review/repair2/standards/review.md"
+  },
+  "preservedOriginalFailures": "faults/author/repair2/round2-report.md",
+  "inventoryScope": {
+    "ids": 396,
+    "testsPerAddedRuntime": 193,
+    "sharing": "Multiple variants can share one actual fixture execution and raw group."
+  }
+}

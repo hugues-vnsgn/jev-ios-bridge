@@ -1,4 +1,12 @@
-# Host-fault repair2 — source reviews PASS, composed gates pending
+# Host-fault repair2 — bounded integration PASS
+
+## Current composed result
+
+Root integrated original `08a9858` and focused child `d0c24bb` at `b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433`, alongside the separately accepted clock fixture `6610b136`. Both actual default `npm run check` commands pass **1675/1675**, typecheck and build, with zero failures, cancellations, skips or TODOs: Node26.8.1 in139.072s and exactNode24.0.0 in139.227s. [Raw logs and preservation receipt](faults/integration/full-gates/root-preservation.json) and [exact reviewed-source association](faults/integration/source-association.json) are inspectable. All audited source is unchanged before/after each command.
+
+This completes bounded ticket09 integration. H01–H09 now have [independent corrected-map PASS](faults/review/host-completeness/round2/review.md) and Root accepts their complete bounded host evidence. The historical pending statements below describe the earlier source-review checkpoint; its source and failures remain preserved.
+
+## Preserved source-review checkpoint
 
 Focused child `d0c24bbbef7961a9377d6338fcff140e7373244e`, exact parent `08a985805cb442a2404eb9561ae92f69748ae5e0`, has [Spec PASS](faults/review/repair2/spec/review.md) and [Standards PASS](faults/review/repair2/standards/review.md). Both final P2 proof findings are closed; six prior strong closures remain. Six changed paths are within the authorized ten-path scope. All current/frozen/committed hashes match. Standards records one nonblocking duplication advisory; no required refactor.
 

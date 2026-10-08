@@ -1,0 +1,2015 @@
+{
+  "version": 1,
+  "status": "UNVERIFIED",
+  "rows": [
+    "H05"
+  ],
+  "required": "Durable cancellation/authorization barriers, bounded finalization, actual signals, parked readiness and expiry/retire races.",
+  "productCommit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
+  "acceptanceOwner": "Root",
+  "reason": "All mapped cases PASS with both integrated gates; whole-row completeness audit pending.",
+  "cases": [
+    {
+      "id": "H05.01.cli.reserveAllocation",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "reserveAllocation",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-2979c5b4a9f4174dcce7"
+        ],
+        "added-node24": [
+          "group-03612421e44c900a8431"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.cli.stageAllocation",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "stageAllocation",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d3d67f3a2fc6a18c6b5d"
+        ],
+        "added-node24": [
+          "group-e939ceb3192d4a726deb"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.cli.startCreation",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "startCreation",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-b93d88b10669cb42cf35"
+        ],
+        "added-node24": [
+          "group-7ea77b797098346fbdb7"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.cli.recordCreation",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "recordCreation",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-c49805eb070f2dd987a7"
+        ],
+        "added-node24": [
+          "group-6259f865b6207e8061e1"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.cli.attach",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "attach",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-fed82d37f994dd1fc0cb"
+        ],
+        "added-node24": [
+          "group-6b81a068612eb41990b4"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.cli.boot",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "boot",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-b8e020f683bd0f9724e9"
+        ],
+        "added-node24": [
+          "group-3966cc0af5fbb290fbd8"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.cli.boot-list",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "boot-list",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-b8e020f683bd0f9724e9",
+          "group-2979c5b4a9f4174dcce7",
+          "group-fed82d37f994dd1fc0cb",
+          "group-6fa4ba8651f1530fa6e6",
+          "group-247d08559ef2634dac6d",
+          "group-c49805eb070f2dd987a7",
+          "group-b93d88b10669cb42cf35",
+          "group-92cfd1188879bc4ba3ae",
+          "group-c004de318f0bb400eaa6",
+          "group-d3d67f3a2fc6a18c6b5d",
+          "group-df04a52ae747361aebcc",
+          "group-7db20b53c0676e259a07"
+        ],
+        "added-node24": [
+          "group-3966cc0af5fbb290fbd8",
+          "group-03612421e44c900a8431",
+          "group-6b81a068612eb41990b4",
+          "group-58205f96ef6b020dbc25",
+          "group-77d6257d5e7b4ed65d02",
+          "group-6259f865b6207e8061e1",
+          "group-7ea77b797098346fbdb7",
+          "group-6c1b385e80fa2e44d2e0",
+          "group-023ff01829c9e069ce45",
+          "group-e939ceb3192d4a726deb",
+          "group-2dd9a6450ec5da1b0c24",
+          "group-b3db8f4745ee164bba07"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.cli.install",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "install",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-6fa4ba8651f1530fa6e6"
+        ],
+        "added-node24": [
+          "group-58205f96ef6b020dbc25"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.cli.launch",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "launch",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-247d08559ef2634dac6d"
+        ],
+        "added-node24": [
+          "group-77d6257d5e7b4ed65d02"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.cli.readiness-list",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "readiness-list",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-b8e020f683bd0f9724e9",
+          "group-2979c5b4a9f4174dcce7",
+          "group-fed82d37f994dd1fc0cb",
+          "group-6fa4ba8651f1530fa6e6",
+          "group-247d08559ef2634dac6d",
+          "group-c49805eb070f2dd987a7",
+          "group-b93d88b10669cb42cf35",
+          "group-92cfd1188879bc4ba3ae",
+          "group-c004de318f0bb400eaa6",
+          "group-d3d67f3a2fc6a18c6b5d",
+          "group-df04a52ae747361aebcc",
+          "group-7db20b53c0676e259a07"
+        ],
+        "added-node24": [
+          "group-3966cc0af5fbb290fbd8",
+          "group-03612421e44c900a8431",
+          "group-6b81a068612eb41990b4",
+          "group-58205f96ef6b020dbc25",
+          "group-77d6257d5e7b4ed65d02",
+          "group-6259f865b6207e8061e1",
+          "group-7ea77b797098346fbdb7",
+          "group-6c1b385e80fa2e44d2e0",
+          "group-023ff01829c9e069ce45",
+          "group-e939ceb3192d4a726deb",
+          "group-2dd9a6450ec5da1b0c24",
+          "group-b3db8f4745ee164bba07"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.cli.snapshot",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "snapshot",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-c004de318f0bb400eaa6"
+        ],
+        "added-node24": [
+          "group-023ff01829c9e069ce45"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.cli.screenshot",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "screenshot",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-92cfd1188879bc4ba3ae"
+        ],
+        "added-node24": [
+          "group-6c1b385e80fa2e44d2e0"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.mcp.reserveAllocation",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "reserveAllocation",
+      "transport": "mcp",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-93a22d3f6e191913a007"
+        ],
+        "added-node24": [
+          "group-af96e2201794dfcad72d"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.mcp.stageAllocation",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "stageAllocation",
+      "transport": "mcp",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-8516c09607556545321c"
+        ],
+        "added-node24": [
+          "group-834cdceaa4b0a611f2ad"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.mcp.startCreation",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "startCreation",
+      "transport": "mcp",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-99c7d2bb019c7e888aea"
+        ],
+        "added-node24": [
+          "group-e0d83e2a2b31631db290"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.mcp.recordCreation",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "recordCreation",
+      "transport": "mcp",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-58dabe1c425760fd6fcd"
+        ],
+        "added-node24": [
+          "group-b4f3e76f53e2ae5df4d8"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.mcp.attach",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "attach",
+      "transport": "mcp",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-5610eb785de641f40d1b"
+        ],
+        "added-node24": [
+          "group-e07b131b4d5d31eb8eb2"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.mcp.boot",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "boot",
+      "transport": "mcp",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-7d85108857592828daeb"
+        ],
+        "added-node24": [
+          "group-a1d330866d232dfaf809"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.mcp.boot-list",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "boot-list",
+      "transport": "mcp",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-8a4c63405c22b960d564",
+          "group-7c4913bb7ebbd5fec55d",
+          "group-7d85108857592828daeb",
+          "group-87f8535026dbdf4da35b",
+          "group-8516c09607556545321c",
+          "group-3c016d04e8523c041b1c",
+          "group-d755acd2d5a7742e00f4",
+          "group-58dabe1c425760fd6fcd",
+          "group-0b244e1f5fc224e21c8a",
+          "group-99c7d2bb019c7e888aea",
+          "group-93a22d3f6e191913a007",
+          "group-5610eb785de641f40d1b"
+        ],
+        "added-node24": [
+          "group-d2cad9c52b83041bc2fc",
+          "group-d773cf9e411c01b2d197",
+          "group-a1d330866d232dfaf809",
+          "group-cb2d24db415cbb45f96d",
+          "group-834cdceaa4b0a611f2ad",
+          "group-038fd0d38442c1254c22",
+          "group-cb29a2bc37dcedde8457",
+          "group-b4f3e76f53e2ae5df4d8",
+          "group-2044908f035debafa4c9",
+          "group-e0d83e2a2b31631db290",
+          "group-af96e2201794dfcad72d",
+          "group-e07b131b4d5d31eb8eb2"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.mcp.install",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "install",
+      "transport": "mcp",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-7c4913bb7ebbd5fec55d"
+        ],
+        "added-node24": [
+          "group-d773cf9e411c01b2d197"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.mcp.launch",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "launch",
+      "transport": "mcp",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-8a4c63405c22b960d564"
+        ],
+        "added-node24": [
+          "group-d2cad9c52b83041bc2fc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.mcp.readiness-list",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "readiness-list",
+      "transport": "mcp",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-8a4c63405c22b960d564",
+          "group-7c4913bb7ebbd5fec55d",
+          "group-7d85108857592828daeb",
+          "group-87f8535026dbdf4da35b",
+          "group-8516c09607556545321c",
+          "group-3c016d04e8523c041b1c",
+          "group-d755acd2d5a7742e00f4",
+          "group-58dabe1c425760fd6fcd",
+          "group-0b244e1f5fc224e21c8a",
+          "group-99c7d2bb019c7e888aea",
+          "group-93a22d3f6e191913a007",
+          "group-5610eb785de641f40d1b"
+        ],
+        "added-node24": [
+          "group-d2cad9c52b83041bc2fc",
+          "group-d773cf9e411c01b2d197",
+          "group-a1d330866d232dfaf809",
+          "group-cb2d24db415cbb45f96d",
+          "group-834cdceaa4b0a611f2ad",
+          "group-038fd0d38442c1254c22",
+          "group-cb29a2bc37dcedde8457",
+          "group-b4f3e76f53e2ae5df4d8",
+          "group-2044908f035debafa4c9",
+          "group-e0d83e2a2b31631db290",
+          "group-af96e2201794dfcad72d",
+          "group-e07b131b4d5d31eb8eb2"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.mcp.snapshot",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "snapshot",
+      "transport": "mcp",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-87f8535026dbdf4da35b"
+        ],
+        "added-node24": [
+          "group-cb2d24db415cbb45f96d"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.01.mcp.screenshot",
+      "hostRow": "H05",
+      "scenario": "external durable preparation cancel",
+      "variant": "screenshot",
+      "transport": "mcp",
+      "test": "tests/observed-public-races.test.ts:68",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:76",
+        "tests/observed-public-races.test.ts:77",
+        "tests/observed-public-races.test.ts:80",
+        "tests/observed-public-races.test.ts:81",
+        "tests/observed-public-races.test.ts:82",
+        "tests/observed-public-races.test.ts:83",
+        "tests/observed-public-races.test.ts:84",
+        "tests/observed-public-races.test.ts:85"
+      ],
+      "expected": "Complete backend prefix invariant through owner exit; only create at durable startCreation authorization may occur after barrier; no further plist/list/capture/screenshot/window/cleanup/successor calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-3c016d04e8523c041b1c"
+        ],
+        "added-node24": [
+          "group-038fd0d38442c1254c22"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.02.cli.consumeAllocation",
+      "hostRow": "H05",
+      "scenario": "external durable action cancel",
+      "variant": "consumeAllocation",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:89",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:96",
+        "tests/observed-public-races.test.ts:97",
+        "tests/observed-public-races.test.ts:100",
+        "tests/observed-public-races.test.ts:101",
+        "tests/observed-public-races.test.ts:103",
+        "tests/observed-public-races.test.ts:105",
+        "tests/observed-public-races.test.ts:107"
+      ],
+      "expected": "Complete backend prefix invariant through duplicate/owner exit; only touch already durably authorized at tap barrier may occur after it; backend-touch/provisional barriers allow no extra calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-40e24a45e590a97e81bf"
+        ],
+        "added-node24": [
+          "group-8a715408d475ddb9cfaf"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.02.cli.tap-authorized",
+      "hostRow": "H05",
+      "scenario": "external durable action cancel",
+      "variant": "tap-authorized",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:89",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:96",
+        "tests/observed-public-races.test.ts:97",
+        "tests/observed-public-races.test.ts:100",
+        "tests/observed-public-races.test.ts:101",
+        "tests/observed-public-races.test.ts:103",
+        "tests/observed-public-races.test.ts:105",
+        "tests/observed-public-races.test.ts:107"
+      ],
+      "expected": "Complete backend prefix invariant through duplicate/owner exit; only touch already durably authorized at tap barrier may occur after it; backend-touch/provisional barriers allow no extra calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-be94bae1f8017480f1a6"
+        ],
+        "added-node24": [
+          "group-0d8624d697e1962b9255"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.02.cli.backend-touch",
+      "hostRow": "H05",
+      "scenario": "external durable action cancel",
+      "variant": "backend-touch",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:89",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:96",
+        "tests/observed-public-races.test.ts:97",
+        "tests/observed-public-races.test.ts:100",
+        "tests/observed-public-races.test.ts:101",
+        "tests/observed-public-races.test.ts:103",
+        "tests/observed-public-races.test.ts:105",
+        "tests/observed-public-races.test.ts:107"
+      ],
+      "expected": "Complete backend prefix invariant through duplicate/owner exit; only touch already durably authorized at tap barrier may occur after it; backend-touch/provisional barriers allow no extra calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-448f0f61186c01d817de",
+          "group-40e24a45e590a97e81bf",
+          "group-c9a27986e6e8ee38c4d3",
+          "group-be94bae1f8017480f1a6"
+        ],
+        "added-node24": [
+          "group-854755f4e4fa21e4821f",
+          "group-8a715408d475ddb9cfaf",
+          "group-038258077c4ff98e2b2b",
+          "group-0d8624d697e1962b9255"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.02.cli.provisional",
+      "hostRow": "H05",
+      "scenario": "external durable action cancel",
+      "variant": "provisional",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:89",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:96",
+        "tests/observed-public-races.test.ts:97",
+        "tests/observed-public-races.test.ts:100",
+        "tests/observed-public-races.test.ts:101",
+        "tests/observed-public-races.test.ts:103",
+        "tests/observed-public-races.test.ts:105",
+        "tests/observed-public-races.test.ts:107"
+      ],
+      "expected": "Complete backend prefix invariant through duplicate/owner exit; only touch already durably authorized at tap barrier may occur after it; backend-touch/provisional barriers allow no extra calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-448f0f61186c01d817de"
+        ],
+        "added-node24": [
+          "group-854755f4e4fa21e4821f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.02.mcp.consumeAllocation",
+      "hostRow": "H05",
+      "scenario": "external durable action cancel",
+      "variant": "consumeAllocation",
+      "transport": "mcp",
+      "test": "tests/observed-public-races.test.ts:89",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:96",
+        "tests/observed-public-races.test.ts:97",
+        "tests/observed-public-races.test.ts:100",
+        "tests/observed-public-races.test.ts:101",
+        "tests/observed-public-races.test.ts:103",
+        "tests/observed-public-races.test.ts:105",
+        "tests/observed-public-races.test.ts:107"
+      ],
+      "expected": "Complete backend prefix invariant through duplicate/owner exit; only touch already durably authorized at tap barrier may occur after it; backend-touch/provisional barriers allow no extra calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-a71bd6b8cb46c093103b"
+        ],
+        "added-node24": [
+          "group-1f3579959aafe6c9d2c7"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.02.mcp.tap-authorized",
+      "hostRow": "H05",
+      "scenario": "external durable action cancel",
+      "variant": "tap-authorized",
+      "transport": "mcp",
+      "test": "tests/observed-public-races.test.ts:89",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:96",
+        "tests/observed-public-races.test.ts:97",
+        "tests/observed-public-races.test.ts:100",
+        "tests/observed-public-races.test.ts:101",
+        "tests/observed-public-races.test.ts:103",
+        "tests/observed-public-races.test.ts:105",
+        "tests/observed-public-races.test.ts:107"
+      ],
+      "expected": "Complete backend prefix invariant through duplicate/owner exit; only touch already durably authorized at tap barrier may occur after it; backend-touch/provisional barriers allow no extra calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-501ab5e6b01c74627acf"
+        ],
+        "added-node24": [
+          "group-1a48bfaa59e9acdaf0ef"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.02.mcp.backend-touch",
+      "hostRow": "H05",
+      "scenario": "external durable action cancel",
+      "variant": "backend-touch",
+      "transport": "mcp",
+      "test": "tests/observed-public-races.test.ts:89",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:96",
+        "tests/observed-public-races.test.ts:97",
+        "tests/observed-public-races.test.ts:100",
+        "tests/observed-public-races.test.ts:101",
+        "tests/observed-public-races.test.ts:103",
+        "tests/observed-public-races.test.ts:105",
+        "tests/observed-public-races.test.ts:107"
+      ],
+      "expected": "Complete backend prefix invariant through duplicate/owner exit; only touch already durably authorized at tap barrier may occur after it; backend-touch/provisional barriers allow no extra calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-664e938fcd20df398d8c",
+          "group-3d45fa7455dace1340e7",
+          "group-a71bd6b8cb46c093103b",
+          "group-501ab5e6b01c74627acf"
+        ],
+        "added-node24": [
+          "group-889f14321a4c1efe4d69",
+          "group-2df0276c8838640d14c9",
+          "group-1f3579959aafe6c9d2c7",
+          "group-1a48bfaa59e9acdaf0ef"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.02.mcp.provisional",
+      "hostRow": "H05",
+      "scenario": "external durable action cancel",
+      "variant": "provisional",
+      "transport": "mcp",
+      "test": "tests/observed-public-races.test.ts:89",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:96",
+        "tests/observed-public-races.test.ts:97",
+        "tests/observed-public-races.test.ts:100",
+        "tests/observed-public-races.test.ts:101",
+        "tests/observed-public-races.test.ts:103",
+        "tests/observed-public-races.test.ts:105",
+        "tests/observed-public-races.test.ts:107"
+      ],
+      "expected": "Complete backend prefix invariant through duplicate/owner exit; only touch already durably authorized at tap barrier may occur after it; backend-touch/provisional barriers allow no extra calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-3d45fa7455dace1340e7"
+        ],
+        "added-node24": [
+          "group-2df0276c8838640d14c9"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.03.cli.SIGINT",
+      "hostRow": "H05",
+      "scenario": "production signal shutdown",
+      "variant": "SIGINT",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:113",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:119",
+        "tests/observed-public-races.test.ts:122",
+        "tests/observed-public-races.test.ts:123",
+        "tests/observed-public-races.test.ts:124",
+        "tests/observed-public-races.test.ts:125"
+      ],
+      "expected": "Full trace unchanged from pending-resource barrier through production signal exit and fresh read; no further backend/presentation/cleanup calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-c1bb298a7891a09c603a"
+        ],
+        "added-node24": [
+          "group-f4538d954758e91021ec"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.03.cli.SIGTERM",
+      "hostRow": "H05",
+      "scenario": "production signal shutdown",
+      "variant": "SIGTERM",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:113",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:119",
+        "tests/observed-public-races.test.ts:122",
+        "tests/observed-public-races.test.ts:123",
+        "tests/observed-public-races.test.ts:124",
+        "tests/observed-public-races.test.ts:125"
+      ],
+      "expected": "Full trace unchanged from pending-resource barrier through production signal exit and fresh read; no further backend/presentation/cleanup calls",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-e9e209ccd6f32bfcd466"
+        ],
+        "added-node24": [
+          "group-fd039ecd398bfeeffa9b"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.04.cli.expiry-1",
+      "hostRow": "H05",
+      "scenario": "TTL/start boundary",
+      "variant": "expiry-1",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:364",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:371",
+        "tests/observed-host-fault.test.ts:372",
+        "tests/observed-host-fault.test.ts:373"
+      ],
+      "expected": "Before expiry binds once; at/after expiry public ALLOCATION_NOT_READY and persisted READY_EXPIRED/retired_unused/null binding; no backend calls or capacity release",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-68a938a891c83c0107c1",
+          "group-0f197b1625b3495409ee",
+          "group-e27bdf16aeed07ce3621"
+        ],
+        "added-node24": [
+          "group-c4aed14e41f60170a3b9",
+          "group-15224a80f101061ac0ac",
+          "group-63d11eadbb1bd256ced6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.04.cli.expiry",
+      "hostRow": "H05",
+      "scenario": "TTL/start boundary",
+      "variant": "expiry",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:364",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:371",
+        "tests/observed-host-fault.test.ts:372",
+        "tests/observed-host-fault.test.ts:373"
+      ],
+      "expected": "Before expiry binds once; at/after expiry public ALLOCATION_NOT_READY and persisted READY_EXPIRED/retired_unused/null binding; no backend calls or capacity release",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-68a938a891c83c0107c1",
+          "group-0f197b1625b3495409ee",
+          "group-e27bdf16aeed07ce3621"
+        ],
+        "added-node24": [
+          "group-c4aed14e41f60170a3b9",
+          "group-15224a80f101061ac0ac",
+          "group-63d11eadbb1bd256ced6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.04.cli.expiry+1",
+      "hostRow": "H05",
+      "scenario": "TTL/start boundary",
+      "variant": "expiry+1",
+      "transport": "cli",
+      "test": "tests/observed-host-fault.test.ts:364",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:371",
+        "tests/observed-host-fault.test.ts:372",
+        "tests/observed-host-fault.test.ts:373"
+      ],
+      "expected": "Before expiry binds once; at/after expiry public ALLOCATION_NOT_READY and persisted READY_EXPIRED/retired_unused/null binding; no backend calls or capacity release",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-68a938a891c83c0107c1",
+          "group-0f197b1625b3495409ee",
+          "group-e27bdf16aeed07ce3621"
+        ],
+        "added-node24": [
+          "group-c4aed14e41f60170a3b9",
+          "group-15224a80f101061ac0ac",
+          "group-63d11eadbb1bd256ced6"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.04.mcp.expiry-1",
+      "hostRow": "H05",
+      "scenario": "TTL/start boundary",
+      "variant": "expiry-1",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:364",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:371",
+        "tests/observed-host-fault.test.ts:372",
+        "tests/observed-host-fault.test.ts:373"
+      ],
+      "expected": "Before expiry binds once; at/after expiry public ALLOCATION_NOT_READY and persisted READY_EXPIRED/retired_unused/null binding; no backend calls or capacity release",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-639b603635c466fc21b0",
+          "group-9ae44cda014fca1e5eec",
+          "group-12ae964c708b26385aa1"
+        ],
+        "added-node24": [
+          "group-61e6feb8dfe73599714d",
+          "group-214a01cab0050265b34a",
+          "group-853d834fdf8936e2d5cc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.04.mcp.expiry",
+      "hostRow": "H05",
+      "scenario": "TTL/start boundary",
+      "variant": "expiry",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:364",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:371",
+        "tests/observed-host-fault.test.ts:372",
+        "tests/observed-host-fault.test.ts:373"
+      ],
+      "expected": "Before expiry binds once; at/after expiry public ALLOCATION_NOT_READY and persisted READY_EXPIRED/retired_unused/null binding; no backend calls or capacity release",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-639b603635c466fc21b0",
+          "group-9ae44cda014fca1e5eec",
+          "group-12ae964c708b26385aa1"
+        ],
+        "added-node24": [
+          "group-61e6feb8dfe73599714d",
+          "group-214a01cab0050265b34a",
+          "group-853d834fdf8936e2d5cc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.04.mcp.expiry+1",
+      "hostRow": "H05",
+      "scenario": "TTL/start boundary",
+      "variant": "expiry+1",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:364",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:371",
+        "tests/observed-host-fault.test.ts:372",
+        "tests/observed-host-fault.test.ts:373"
+      ],
+      "expected": "Before expiry binds once; at/after expiry public ALLOCATION_NOT_READY and persisted READY_EXPIRED/retired_unused/null binding; no backend calls or capacity release",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-639b603635c466fc21b0",
+          "group-9ae44cda014fca1e5eec",
+          "group-12ae964c708b26385aa1"
+        ],
+        "added-node24": [
+          "group-61e6feb8dfe73599714d",
+          "group-214a01cab0050265b34a",
+          "group-853d834fdf8936e2d5cc"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.05.cli.concurrent",
+      "hostRow": "H05",
+      "scenario": "cross-process start/retire",
+      "variant": "concurrent",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:129",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:133",
+        "tests/observed-public-races.test.ts:134",
+        "tests/observed-public-races.test.ts:135"
+      ],
+      "expected": "single durable winner;0/1 touches;no replay/cleanup;held capacity",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-a91266412646cbcd889e"
+        ],
+        "added-node24": [
+          "group-5e58712ef24cdaf730ba"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.06.cli.SIGINT",
+      "hostRow": "H05",
+      "scenario": "ready commit/signal race",
+      "variant": "SIGINT",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:190",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:197",
+        "tests/observed-public-races.test.ts:198",
+        "tests/observed-public-races.test.ts:199",
+        "tests/observed-public-races.test.ts:200"
+      ],
+      "expected": "Full trace unchanged from parked COMMIT through production signal/normal exit; ready parked ownership/database invariant",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-2f80b196a30abd9f9cd1"
+        ],
+        "added-node24": [
+          "group-43810379b52a30a79a6a"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.06.cli.SIGTERM",
+      "hostRow": "H05",
+      "scenario": "ready commit/signal race",
+      "variant": "SIGTERM",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:190",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:197",
+        "tests/observed-public-races.test.ts:198",
+        "tests/observed-public-races.test.ts:199",
+        "tests/observed-public-races.test.ts:200"
+      ],
+      "expected": "Full trace unchanged from parked COMMIT through production signal/normal exit; ready parked ownership/database invariant",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-e10e7fb794cb65632c70"
+        ],
+        "added-node24": [
+          "group-035de5eb3b7c2690fd63"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.07.cli.SIGINT",
+      "hostRow": "H05",
+      "scenario": "read signal vs cancel",
+      "variant": "SIGINT",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:203",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:208",
+        "tests/observed-public-races.test.ts:209",
+        "tests/observed-public-races.test.ts:210"
+      ],
+      "expected": "WAIT_CANCELLED130/143;active owner/logical state/bytes/calls unchanged",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-f3a6a84533b376b8d8e2"
+        ],
+        "added-node24": [
+          "group-8beaa159a46d717b1d63"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.07.cli.SIGTERM",
+      "hostRow": "H05",
+      "scenario": "read signal vs cancel",
+      "variant": "SIGTERM",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:203",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:208",
+        "tests/observed-public-races.test.ts:209",
+        "tests/observed-public-races.test.ts:210"
+      ],
+      "expected": "WAIT_CANCELLED130/143;active owner/logical state/bytes/calls unchanged",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-7b1c722dd31abdc80754"
+        ],
+        "added-node24": [
+          "group-2a6b2f6624d14cdf3083"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.08.mcp.transport-notification",
+      "hostRow": "H05",
+      "scenario": "MCP action wait cancellation",
+      "variant": "transport-notification",
+      "transport": "mcp",
+      "test": "tests/observed-public-races.test.ts:213",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:222",
+        "tests/observed-public-races.test.ts:223",
+        "tests/observed-public-races.test.ts:224"
+      ],
+      "expected": "Actual delegated public wait settles WAIT_CANCELLED with aborted signal before owner barrier released; SDK suppresses cancelled reply; owner still alive, DB bytes/snapshot/cancel flag/backend calls unchanged",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-6c6f7c0f68c3d48adeb8"
+        ],
+        "added-node24": [
+          "group-e550d273e46fbce94950"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.09.mcp.configuration",
+      "hostRow": "H05",
+      "scenario": "early preparation close",
+      "variant": "configuration",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:421",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:436",
+        "tests/observed-host-fault.test.ts:438",
+        "tests/observed-host-fault.test.ts:439",
+        "tests/observed-host-fault.test.ts:441"
+      ],
+      "expected": "ignored abort cannot prepare;0 device calls;no reservation before staging;pure staging hold released",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0c14340b72fd2965c75f"
+        ],
+        "added-node24": [
+          "group-d92a2fee7ce7ef9e47ef"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.09.mcp.host-proof",
+      "hostRow": "H05",
+      "scenario": "early preparation close",
+      "variant": "host-proof",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:421",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:436",
+        "tests/observed-host-fault.test.ts:438",
+        "tests/observed-host-fault.test.ts:439",
+        "tests/observed-host-fault.test.ts:441"
+      ],
+      "expected": "ignored abort cannot prepare;0 device calls;no reservation before staging;pure staging hold released",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-1b81cea5d7b61461ceee"
+        ],
+        "added-node24": [
+          "group-09e27e1f1776324383c1"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.09.mcp.artifact-inspection",
+      "hostRow": "H05",
+      "scenario": "early preparation close",
+      "variant": "artifact-inspection",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:421",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:436",
+        "tests/observed-host-fault.test.ts:438",
+        "tests/observed-host-fault.test.ts:439",
+        "tests/observed-host-fault.test.ts:441"
+      ],
+      "expected": "ignored abort cannot prepare;0 device calls;no reservation before staging;pure staging hold released",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-a0dbbec5a0e1b59faafd"
+        ],
+        "added-node24": [
+          "group-29f78f55d66bb97d93e7"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.09.mcp.artifact-staging",
+      "hostRow": "H05",
+      "scenario": "early preparation close",
+      "variant": "artifact-staging",
+      "transport": "mcp",
+      "test": "tests/observed-host-fault.test.ts:421",
+      "assertionLocations": [
+        "tests/observed-host-fault.test.ts:436",
+        "tests/observed-host-fault.test.ts:438",
+        "tests/observed-host-fault.test.ts:439",
+        "tests/observed-host-fault.test.ts:441"
+      ],
+      "expected": "ignored abort cannot prepare;0 device calls;no reservation before staging;pure staging hold released",
+      "testSourceSha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-6d34e3c8217030a09932"
+        ],
+        "added-node24": [
+          "group-fdadb1ba6f942b5b3bf5"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.10.mcp.transport-notification",
+      "hostRow": "H05",
+      "scenario": "MCP preparation wait cancellation",
+      "variant": "transport-notification",
+      "transport": "mcp",
+      "test": "tests/observed-public-races.test.ts:228",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:237",
+        "tests/observed-public-races.test.ts:238",
+        "tests/observed-public-races.test.ts:239",
+        "tests/observed-public-races.test.ts:240"
+      ],
+      "expected": "Actual delegated public wait settles WAIT_CANCELLED with aborted signal before owner barrier released; SDK suppresses cancelled reply; owner still alive, DB bytes/snapshot/cancel flag/backend calls unchanged",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-1a9233511ae512463d14"
+        ],
+        "added-node24": [
+          "group-9be36756466ad31a1d76"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.11.mcp.concurrent",
+      "hostRow": "H05",
+      "scenario": "MCP start/retire",
+      "variant": "concurrent",
+      "transport": "mcp",
+      "test": "tests/observed-public-races.test.ts:138",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:142",
+        "tests/observed-public-races.test.ts:143",
+        "tests/observed-public-races.test.ts:144"
+      ],
+      "expected": "one durable winner;0/1 touches;capacity remains held",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-0a8eadde6cc2856245fc"
+        ],
+        "added-node24": [
+          "group-083d8ff08eecbdd5f88f"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.12.cli.configuration",
+      "hostRow": "H05",
+      "scenario": "early public CLI signal",
+      "variant": "configuration",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:147",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:166",
+        "tests/observed-public-races.test.ts:168",
+        "tests/observed-public-races.test.ts:171",
+        "tests/observed-public-races.test.ts:173",
+        "tests/observed-public-races.test.ts:177",
+        "tests/observed-public-races.test.ts:178",
+        "tests/observed-public-races.test.ts:180",
+        "tests/observed-public-races.test.ts:181",
+        "tests/observed-public-races.test.ts:183",
+        "tests/observed-public-races.test.ts:185",
+        "tests/observed-public-races.test.ts:186",
+        "tests/observed-public-races.test.ts:187"
+      ],
+      "expected": "Initialized/fsynced delegated source/runner/window attempt trace complete through actual production exit143; final attempt prefix equals held-barrier prefix, only prebarrier plist attempts, actual PID/exit/errors retained",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-d8ac909619685de2ba49"
+        ],
+        "added-node24": [
+          "group-7ca08a15cd47081cea4c"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.12.cli.host-proof",
+      "hostRow": "H05",
+      "scenario": "early public CLI signal",
+      "variant": "host-proof",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:147",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:166",
+        "tests/observed-public-races.test.ts:168",
+        "tests/observed-public-races.test.ts:171",
+        "tests/observed-public-races.test.ts:173",
+        "tests/observed-public-races.test.ts:177",
+        "tests/observed-public-races.test.ts:178",
+        "tests/observed-public-races.test.ts:180",
+        "tests/observed-public-races.test.ts:181",
+        "tests/observed-public-races.test.ts:183",
+        "tests/observed-public-races.test.ts:185",
+        "tests/observed-public-races.test.ts:186",
+        "tests/observed-public-races.test.ts:187"
+      ],
+      "expected": "Initialized/fsynced delegated source/runner/window attempt trace complete through actual production exit143; final attempt prefix equals held-barrier prefix, only prebarrier plist attempts, actual PID/exit/errors retained",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-5f6d8ade92442f3c4bf1"
+        ],
+        "added-node24": [
+          "group-67afb753d2e968d50078"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.12.cli.artifact-inspection",
+      "hostRow": "H05",
+      "scenario": "early public CLI signal",
+      "variant": "artifact-inspection",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:147",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:166",
+        "tests/observed-public-races.test.ts:168",
+        "tests/observed-public-races.test.ts:171",
+        "tests/observed-public-races.test.ts:173",
+        "tests/observed-public-races.test.ts:177",
+        "tests/observed-public-races.test.ts:178",
+        "tests/observed-public-races.test.ts:180",
+        "tests/observed-public-races.test.ts:181",
+        "tests/observed-public-races.test.ts:183",
+        "tests/observed-public-races.test.ts:185",
+        "tests/observed-public-races.test.ts:186",
+        "tests/observed-public-races.test.ts:187"
+      ],
+      "expected": "Initialized/fsynced delegated source/runner/window attempt trace complete through actual production exit143; final attempt prefix equals held-barrier prefix, only prebarrier plist attempts, actual PID/exit/errors retained",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-2e9897a4772727ccb64c"
+        ],
+        "added-node24": [
+          "group-2569ca8af20e681a341a"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    },
+    {
+      "id": "H05.12.cli.artifact-staging",
+      "hostRow": "H05",
+      "scenario": "early public CLI signal",
+      "variant": "artifact-staging",
+      "transport": "cli",
+      "test": "tests/observed-public-races.test.ts:147",
+      "assertionLocations": [
+        "tests/observed-public-races.test.ts:166",
+        "tests/observed-public-races.test.ts:168",
+        "tests/observed-public-races.test.ts:171",
+        "tests/observed-public-races.test.ts:173",
+        "tests/observed-public-races.test.ts:177",
+        "tests/observed-public-races.test.ts:178",
+        "tests/observed-public-races.test.ts:180",
+        "tests/observed-public-races.test.ts:181",
+        "tests/observed-public-races.test.ts:183",
+        "tests/observed-public-races.test.ts:185",
+        "tests/observed-public-races.test.ts:186",
+        "tests/observed-public-races.test.ts:187"
+      ],
+      "expected": "Initialized/fsynced delegated source/runner/window attempt trace complete through actual production exit143; final attempt prefix equals held-barrier prefix, only prebarrier plist attempts, actual PID/exit/errors retained",
+      "testSourceSha256": "9e2187cb3ac5026827d7b9eb1130805a79ed3ba8dcf7ebce81157c12c656954e",
+      "verdict": "PASS",
+      "scope": "Mapped isolated host assertions;396 IDs share193 executions per runtime. Both Root integrated default gates execute the exact Source. Complete row coverage is separately audited.",
+      "artifactGroupRefs": {
+        "added-node26": [
+          "group-a39a177061dcf306a1bd"
+        ],
+        "added-node24": [
+          "group-808cbf5c0189417d19d9"
+        ]
+      },
+      "integratedGateRefs": [
+        "node26",
+        "node24"
+      ]
+    }
+  ],
+  "commands": {
+    "node26": {
+      "record": ".scratch/observed-integration/acceptance/host/faults/integration/full-gates/composed-host-node26.json",
+      "sha256": "b096b6dc6c25e2133dae89fbf41d1a577d27ab54027655a12fe292a5834954d0",
+      "node": "v26.8.1",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "counts": {
+        "tests": 1675,
+        "pass": 1675,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "commit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433"
+    },
+    "node24": {
+      "record": ".scratch/observed-integration/acceptance/host/faults/integration/full-gates/composed-host-node24.json",
+      "sha256": "53eeeb47bb602d7b83f45a5e26d47a43ca36b3d9be72e65c6645fe60f86173bb",
+      "node": "v24.0.0",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "counts": {
+        "tests": 1675,
+        "pass": 1675,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "commit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433"
+    }
+  },
+  "limits": [
+    "Accepted implementation subset checks do not establish complete H rows.",
+    "Host fault injection does not establish live, real transport or native release."
+  ],
+  "artifactGroups": ".scratch/observed-integration/acceptance/host/faults/artifact-groups.json",
+  "sourceReviews": {
+    "spec": "faults/review/repair2/spec/review.md",
+    "standards": "faults/review/repair2/standards/review.md"
+  },
+  "preservedOriginalFailures": "faults/author/repair2/round2-report.md",
+  "inventoryScope": {
+    "ids": 396,
+    "testsPerAddedRuntime": 193,
+    "sharing": "Multiple variants can share one actual fixture execution and raw group."
+  }
+}

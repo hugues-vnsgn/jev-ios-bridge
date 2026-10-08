@@ -1,0 +1,3780 @@
+{
+  "productCommit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
+  "status": "UNVERIFIED",
+  "reason": "Current added base01\u201308 Source/assertion and actual combined-gate correspondence; independent corrected-map audit pending.",
+  "cases": [
+    {
+      "id": "BASE.S1",
+      "hostRows": "H01/H02",
+      "manifest": "schema.json",
+      "verdict": "PASS",
+      "normative": "public-contract:30; seam-decision:83",
+      "oracle": "Ambiguous guards/target, disabled target, missing touch capability and expired capture must give their exact refusal reason with one capture/zero input.",
+      "evidenceClass": "Already executed source assertions in actual1675 gates; direct/shared-module supplements must not be labeled as new per-variant CLI/MCP raw executions.",
+      "transport": "Direct/shared-module and composition assertions; public per-variant traces remain in separate09 cases.",
+      "sourceAssertions": [
+        {
+          "path": "tests/observed-service.test.ts",
+          "sha256": "b80d5741d34f6cd1a0c350c5c6ddc50295f0483253eef0a111387476567222db",
+          "requestedReviewerLineRanges": [
+            [
+              336,
+              358
+            ]
+          ],
+          "lineRanges": [
+            [
+              336,
+              358
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 355,
+              "text": "assert.equal(result.outcome, 'refused'); assert.equal(result.actionAttempted, false); assert.equal(result.actionAcknowledged, false);"
+            },
+            {
+              "line": 358,
+              "text": "assert.equal(result.reason, reason); assert.deepEqual(calls, ['snapshot-ui']); await service.close();"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 336,
+              "title": "${scenario} refuses with settled capture and no input"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "${scenario} refuses with settled capture and no input",
+                "sourceLine": 336,
+                "actualPassingLines": [
+                  "\u2714 ambiguous-after refuses with settled capture and no input (681.037833ms)",
+                  "\u2714 ambiguous-target refuses with settled capture and no input (755.69175ms)",
+                  "\u2714 target-disabled refuses with settled capture and no input (998.558708ms)",
+                  "\u2714 missing-touch refuses with settled capture and no input (824.101334ms)",
+                  "\u2714 invalid-expiry refuses with settled capture and no input (805.808417ms)",
+                  "\u2714 absent-condition refuses with settled capture and no input (638.747334ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "${scenario} refuses with settled capture and no input",
+                "sourceLine": 336,
+                "actualPassingLines": [
+                  "\u2714 ambiguous-after refuses with settled capture and no input (715.168375ms)",
+                  "\u2714 ambiguous-target refuses with settled capture and no input (753.409292ms)",
+                  "\u2714 target-disabled refuses with settled capture and no input (1064.289041ms)",
+                  "\u2714 missing-touch refuses with settled capture and no input (908.2235ms)",
+                  "\u2714 invalid-expiry refuses with settled capture and no input (661.987708ms)",
+                  "\u2714 absent-condition refuses with settled capture and no input (678.150792ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/observed-service.test.ts"
+        },
+        {
+          "path": "tests/admission-driver.test.ts",
+          "sha256": "c43bcb5e5e35d65d197d41577890b43b536d54d90d5aa0806955305975ec2a69",
+          "requestedReviewerLineRanges": [
+            [
+              345,
+              382
+            ]
+          ],
+          "lineRanges": [
+            [
+              345,
+              382
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 355,
+              "text": "await assert.rejects(subject.tapOnce('one', touchSnapshot(), context, new AbortController().signal), /Tap already authorized/);"
+            },
+            {
+              "line": 356,
+              "text": "assert.deepEqual(calls, ['touch']);"
+            },
+            {
+              "line": 358,
+              "text": "assert.equal(admission.inspect(udid)?.state, 'active', 'Runtime still owns terminal publication');"
+            },
+            {
+              "line": 371,
+              "text": "const rejected = assert.rejects(tap); await started; cancel.abort(); await rejected;"
+            },
+            {
+              "line": 375,
+              "text": "await assert.rejects(subject.observe(new AbortController().signal));"
+            },
+            {
+              "line": 376,
+              "text": "await assert.rejects(subject.tapOnce('one', touchSnapshot(), context, new AbortController().signal));"
+            },
+            {
+              "line": 377,
+              "text": "await assert.rejects(subject.close(new AbortController().signal), /unknown/);"
+            },
+            {
+              "line": 378,
+              "text": "assert.deepEqual(calls, ['touch']); assert.equal(admission.inspect(udid)?.state, 'quarantined');"
+            },
+            {
+              "line": 379,
+              "text": "assert.equal(admission.readAllocation(c.allocation.allocationId)?.actionEvidence?.state, 'terminal');"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 345,
+              "title": "consumed observed ownership authorizes one touch even when the caller submits twice"
+            },
+            {
+              "line": 362,
+              "title": "observed late touch cannot authorize polling, fallback, cleanup or a second touch"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "consumed observed ownership authorizes one touch even when the caller submits twice",
+                "sourceLine": 345,
+                "actualPassingLines": [
+                  "\u2714 consumed observed ownership authorizes one touch even when the caller submits twice (845.324542ms)"
+                ]
+              },
+              {
+                "sourceTitle": "observed late touch cannot authorize polling, fallback, cleanup or a second touch",
+                "sourceLine": 362,
+                "actualPassingLines": [
+                  "\u2714 observed late touch cannot authorize polling, fallback, cleanup or a second touch (1270.119375ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "consumed observed ownership authorizes one touch even when the caller submits twice",
+                "sourceLine": 345,
+                "actualPassingLines": [
+                  "\u2714 consumed observed ownership authorizes one touch even when the caller submits twice (836.718709ms)"
+                ]
+              },
+              {
+                "sourceTitle": "observed late touch cannot authorize polling, fallback, cleanup or a second touch",
+                "sourceLine": 362,
+                "actualPassingLines": [
+                  "\u2714 observed late touch cannot authorize polling, fallback, cleanup or a second touch (1012.216292ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/admission-driver.test.ts"
+        }
+      ],
+      "primaryActualPassingLines": {
+        "node26": [
+          "\u2714 ambiguous-after refuses with settled capture and no input (681.037833ms)",
+          "\u2714 ambiguous-target refuses with settled capture and no input (755.69175ms)",
+          "\u2714 target-disabled refuses with settled capture and no input (998.558708ms)",
+          "\u2714 missing-touch refuses with settled capture and no input (824.101334ms)",
+          "\u2714 invalid-expiry refuses with settled capture and no input (805.808417ms)",
+          "\u2714 absent-condition refuses with settled capture and no input (638.747334ms)"
+        ],
+        "node24": [
+          "\u2714 ambiguous-after refuses with settled capture and no input (715.168375ms)",
+          "\u2714 ambiguous-target refuses with settled capture and no input (753.409292ms)",
+          "\u2714 target-disabled refuses with settled capture and no input (1064.289041ms)",
+          "\u2714 missing-touch refuses with settled capture and no input (908.2235ms)",
+          "\u2714 invalid-expiry refuses with settled capture and no input (661.987708ms)",
+          "\u2714 absent-condition refuses with settled capture and no input (678.150792ms)"
+        ]
+      },
+      "commands": {
+        "node26": "faults/integration/full-gates/composed-host-node26.json",
+        "node24": "faults/integration/full-gates/composed-host-node24.json"
+      },
+      "rawLogs": {
+        "node26": {
+          "path": "faults/integration/full-gates/composed-host-node26.log",
+          "sha256": "246a5e4b49e6e0542a768077be5a5e89e1e5a4d36b6d9be807ac9825d72d43c4"
+        },
+        "node24": {
+          "path": "faults/integration/full-gates/composed-host-node24.log",
+          "sha256": "1dbe87a1af24e6ae496e515720f2876f18ca115093cebe0a768094b6237b271a"
+        }
+      },
+      "backendCounts": null,
+      "countsProvenance": "Counts/state are the exact executed Source assertions above. No separate per-fixture base raw trace is claimed.",
+      "limit": "Family correspondence, not one new test or per-variant CLI/MCP execution; aggregate1675 includes every executed test, with no skips."
+    },
+    {
+      "id": "BASE.S2",
+      "hostRows": "H03",
+      "manifest": "identity.json",
+      "verdict": "PASS",
+      "normative": "public-contract:34; validation-matrix:30",
+      "oracle": "Configuration failure/retirement race must defer to immutable retrieval or authoritative ALLOCATION_NOT_READY without binding/effects.",
+      "evidenceClass": "Already executed source assertions in actual1675 gates; direct/shared-module supplements must not be labeled as new per-variant CLI/MCP raw executions.",
+      "transport": "Direct/shared-module and composition assertions; public per-variant traces remain in separate09 cases.",
+      "sourceAssertions": [
+        {
+          "path": "tests/observed-contract.test.ts",
+          "sha256": "583b0b8ab4b76358eb1e9a7f083ddd4302b7dbede3d0183210afa3fdc6ed21e3",
+          "requestedReviewerLineRanges": [
+            [
+              83,
+              127
+            ]
+          ],
+          "lineRanges": [
+            [
+              83,
+              127
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 89,
+              "text": "assert.equal(reads, 2); assert.equal(checks, 1);"
+            },
+            {
+              "line": 91,
+              "text": "await validateObservedStartConfiguration({ readAction: () => view as never }, request, async () => { assert.fail('No validation before retrieval/conflict'); });"
+            },
+            {
+              "line": 93,
+              "text": "await assert.rejects(validateObservedStartConfiguration({ readAction: () => { throw new Error('Private database'); } }, request, async () => {}), (error: unknown) => { const reply = observedError(error, 'action'); assert.equal(reply.code, 'STORE_UNAVAILABLE'); assert.equal(reply.acceptance, 'unknown'); return true; });"
+            },
+            {
+              "line": 95,
+              "text": "await assert.rejects(validateObservedStartConfiguration({ readAction: () => { if (++reads === 1) return ready as never; throw new Error('Private database'); } }, request, async () => { throw new Error('Private config'); }), { code: 'STORE_UNAVAILABLE' });"
+            },
+            {
+              "line": 96,
+              "text": "await assert.rejects(validateObservedStartConfiguration({ readAction: () => ready as never }, request, async () => { throw new Error('Private config'); }), { code: 'CONFIGURATION_ERROR' });"
+            },
+            {
+              "line": 105,
+              "text": "const rejection = assert.rejects(started, { code: 'SHUTTING_DOWN' });"
+            },
+            {
+              "line": 108,
+              "text": "await Promise.all([closing, rejection, module.close()]); assert.equal(starts, 0); assert.equal(closes, 1);"
+            },
+            {
+              "line": 119,
+              "text": "const allocation = await inner.prepareAllocation(fixture.request('one')); assert.ok(!('kind' in allocation));"
+            },
+            {
+              "line": 123,
+              "text": "assert.equal(admission.retireAllocation(allocation.allocationId).kind, 'retrieved'); retired = admission.readAction('one');"
+            },
+            {
+              "line": 126,
+              "text": "await assert.rejects(module.start(actionRequest(allocation.allocationId)), { code: 'ALLOCATION_NOT_READY' });"
+            },
+            {
+              "line": 127,
+              "text": "assert.deepEqual(admission.readAction('one'), retired); assert.equal(admission.readAllocation(allocation.allocationId)!.actionDigest, null);"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 83,
+              "title": "configuration validation preserves binding priority across a race and fails safely when authority is unavailable"
+            },
+            {
+              "line": 99,
+              "title": "composition close during lazy opening rejects new issuance and closes the resolved module once"
+            },
+            {
+              "line": 111,
+              "title": "durable retirement during failed config validation delegates to authoritative unready refusal"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "configuration validation preserves binding priority across a race and fails safely when authority is unavailable",
+                "sourceLine": 83,
+                "actualPassingLines": [
+                  "\u2714 configuration validation preserves binding priority across a race and fails safely when authority is unavailable (69.462958ms)"
+                ]
+              },
+              {
+                "sourceTitle": "composition close during lazy opening rejects new issuance and closes the resolved module once",
+                "sourceLine": 99,
+                "actualPassingLines": [
+                  "\u2714 composition close during lazy opening rejects new issuance and closes the resolved module once (1.104667ms)"
+                ]
+              },
+              {
+                "sourceTitle": "durable retirement during failed config validation delegates to authoritative unready refusal",
+                "sourceLine": 111,
+                "actualPassingLines": [
+                  "\u2714 durable retirement during failed config validation delegates to authoritative unready refusal (2099.874708ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "configuration validation preserves binding priority across a race and fails safely when authority is unavailable",
+                "sourceLine": 83,
+                "actualPassingLines": [
+                  "\u2714 configuration validation preserves binding priority across a race and fails safely when authority is unavailable (51.24375ms)"
+                ]
+              },
+              {
+                "sourceTitle": "composition close during lazy opening rejects new issuance and closes the resolved module once",
+                "sourceLine": 99,
+                "actualPassingLines": [
+                  "\u2714 composition close during lazy opening rejects new issuance and closes the resolved module once (1.514667ms)"
+                ]
+              },
+              {
+                "sourceTitle": "durable retirement during failed config validation delegates to authoritative unready refusal",
+                "sourceLine": 111,
+                "actualPassingLines": [
+                  "\u2714 durable retirement during failed config validation delegates to authoritative unready refusal (2221.545625ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/observed-contract.test.ts"
+        },
+        {
+          "path": "tests/observed-cli.test.ts",
+          "sha256": "754f0e747adcb181700f8d76a407c854b3f813f4e2c76ca712d8348d50194873",
+          "requestedReviewerLineRanges": [
+            [
+              69,
+              91
+            ]
+          ],
+          "lineRanges": [
+            [
+              69,
+              91
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 74,
+              "text": "assert.equal(blocked.reply.code, 'CONFIGURATION_ERROR'); assert.equal(blocked.reply.acceptance, 'no');"
+            },
+            {
+              "line": 75,
+              "text": "assert.deepEqual(fixtureCalls(f.root).filter(value => value !== 'open'), calls);"
+            },
+            {
+              "line": 76,
+              "text": "assert.equal((await childCommand(f.root, 'observed-allocation', f.allocationId).result).reply.state, 'ready');"
+            },
+            {
+              "line": 77,
+              "text": "const original = await readFile(join(f.home, 'Library/Application Support/jev-ios-bridge/allocation.json'), 'utf8'); assert.equal(original, '{bad');"
+            },
+            {
+              "line": 79,
+              "text": "const observed = await childCommand(f.root, 'observed-action', path, 'already').result; assert.equal(observed.reply.outcome, 'already_satisfied');"
+            },
+            {
+              "line": 81,
+              "text": "assert.equal((await childCommand(f.root, 'observed-action', path).result).reply.outcome, 'already_satisfied');"
+            },
+            {
+              "line": 83,
+              "text": "assert.equal((await childCommand(f.root, 'observed-action', path).result).reply.code, 'ACTION_ID_CONFLICT');"
+            },
+            {
+              "line": 84,
+              "text": "assert.equal((await childCommand(f.root, 'observed-cancel', 'one', 'observed', undefined, '0').result).reply.outcome, 'already_satisfied');"
+            },
+            {
+              "line": 85,
+              "text": "assert.equal((await childCommand(f.root, 'observed-retire', f.allocationId, 'observed', undefined, '0').result).reply.outcome, 'action_completed');"
+            },
+            {
+              "line": 90,
+              "text": "while(!fixtureCalls(root).slice(offset).includes(operation)) { assert.ok(Date.now()<end,'Missing fake milestone '+operation);await new Promise(done=>setTimeout(done,20)); }"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 69,
+              "title": "invalid config blocks fresh ready action but preserves immutable retrieval/conflict and reads"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "invalid config blocks fresh ready action but preserves immutable retrieval/conflict and reads",
+                "sourceLine": 69,
+                "actualPassingLines": [
+                  "\u2714 invalid config blocks fresh ready action but preserves immutable retrieval/conflict and reads (4144.73ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "invalid config blocks fresh ready action but preserves immutable retrieval/conflict and reads",
+                "sourceLine": 69,
+                "actualPassingLines": [
+                  "\u2714 invalid config blocks fresh ready action but preserves immutable retrieval/conflict and reads (4299.331833ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/observed-cli.test.ts"
+        },
+        {
+          "path": "tests/observed-mcp.test.ts",
+          "sha256": "1e2913228684ab79c51226553a39b0c30a2194b7b05201fd21a86411037718d5",
+          "requestedReviewerLineRanges": [
+            [
+              130,
+              139
+            ]
+          ],
+          "lineRanges": [
+            [
+              130,
+              139
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 132,
+              "text": "const allocation=await local.prepareAllocation(s.allocationRequest('one'));await local.close();assert.ok(!('kind' in allocation));"
+            },
+            {
+              "line": 134,
+              "text": "assert.equal(snapshot(await s.call('get_observed_action',{actionId:'one'})).code,'ACTION_NOT_STARTED');"
+            },
+            {
+              "line": 135,
+              "text": "assert.equal(snapshot(await s.call('cancel_observed_action',{actionId:'one'})).code,'ACTION_NOT_STARTED');"
+            },
+            {
+              "line": 136,
+              "text": "assert.equal(snapshot(await s.call('get_observed_allocation',{allocationId:allocation.allocationId})).state,'ready');"
+            },
+            {
+              "line": 137,
+              "text": "assert.equal(snapshot(await s.call('cancel_observed_allocation',{allocationId:allocation.allocationId})).outcome,'retired_unused');"
+            },
+            {
+              "line": 138,
+              "text": "assert.equal(snapshot(await s.call('retire_observed_allocation',{allocationId:allocation.allocationId})).outcome,'retired_unused');"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 130,
+              "title": "MCP disabled mode retains reads, cancellation and retirement under invalid configuration"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "MCP disabled mode retains reads, cancellation and retirement under invalid configuration",
+                "sourceLine": 130,
+                "actualPassingLines": [
+                  "\u2714 MCP disabled mode retains reads, cancellation and retirement under invalid configuration (2054.036542ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "MCP disabled mode retains reads, cancellation and retirement under invalid configuration",
+                "sourceLine": 130,
+                "actualPassingLines": [
+                  "\u2714 MCP disabled mode retains reads, cancellation and retirement under invalid configuration (1981.435959ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/observed-mcp.test.ts"
+        },
+        {
+          "path": "tests/observed-contract.test.ts",
+          "sha256": "583b0b8ab4b76358eb1e9a7f083ddd4302b7dbede3d0183210afa3fdc6ed21e3",
+          "requestedReviewerLineRanges": [
+            [
+              111,
+              128
+            ]
+          ],
+          "lineRanges": [
+            [
+              111,
+              128
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 119,
+              "text": "const allocation = await inner.prepareAllocation(fixture.request('one')); assert.ok(!('kind' in allocation));"
+            },
+            {
+              "line": 123,
+              "text": "assert.equal(admission.retireAllocation(allocation.allocationId).kind, 'retrieved'); retired = admission.readAction('one');"
+            },
+            {
+              "line": 126,
+              "text": "await assert.rejects(module.start(actionRequest(allocation.allocationId)), { code: 'ALLOCATION_NOT_READY' });"
+            },
+            {
+              "line": 127,
+              "text": "assert.deepEqual(admission.readAction('one'), retired); assert.equal(admission.readAllocation(allocation.allocationId)!.actionDigest, null);"
+            },
+            {
+              "line": 128,
+              "text": "assert.equal(admission.readAllocation(allocation.allocationId)!.state, 'retained'); assert.deepEqual(fixtureCalls(root), before);"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 111,
+              "title": "durable retirement during failed config validation delegates to authoritative unready refusal"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "durable retirement during failed config validation delegates to authoritative unready refusal",
+                "sourceLine": 111,
+                "actualPassingLines": [
+                  "\u2714 durable retirement during failed config validation delegates to authoritative unready refusal (2099.874708ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "durable retirement during failed config validation delegates to authoritative unready refusal",
+                "sourceLine": 111,
+                "actualPassingLines": [
+                  "\u2714 durable retirement during failed config validation delegates to authoritative unready refusal (2221.545625ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/observed-contract.test.ts"
+        }
+      ],
+      "primaryActualPassingLines": {
+        "node26": [
+          "\u2714 configuration validation preserves binding priority across a race and fails safely when authority is unavailable (69.462958ms)"
+        ],
+        "node24": [
+          "\u2714 configuration validation preserves binding priority across a race and fails safely when authority is unavailable (51.24375ms)"
+        ]
+      },
+      "commands": {
+        "node26": "faults/integration/full-gates/composed-host-node26.json",
+        "node24": "faults/integration/full-gates/composed-host-node24.json"
+      },
+      "rawLogs": {
+        "node26": {
+          "path": "faults/integration/full-gates/composed-host-node26.log",
+          "sha256": "246a5e4b49e6e0542a768077be5a5e89e1e5a4d36b6d9be807ac9825d72d43c4"
+        },
+        "node24": {
+          "path": "faults/integration/full-gates/composed-host-node24.log",
+          "sha256": "1dbe87a1af24e6ae496e515720f2876f18ca115093cebe0a768094b6237b271a"
+        }
+      },
+      "backendCounts": null,
+      "countsProvenance": "Counts/state are the exact executed Source assertions above. No separate per-fixture base raw trace is claimed.",
+      "limit": "Family correspondence, not one new test or per-variant CLI/MCP execution; aggregate1675 includes every executed test, with no skips."
+    },
+    {
+      "id": "BASE.S3",
+      "hostRows": "H03/H04",
+      "manifest": "identity.json",
+      "verdict": "PASS",
+      "normative": "allocation-contract:74,82,115",
+      "oracle": "Distinct concurrent reservations competing for the eighth byte/capacity slot allow one reserved/one BUDGET_EXHAUSTED; persisted capacity corruption/overflow cannot become partial or zero capacity.",
+      "evidenceClass": "Already executed source assertions in actual1675 gates; direct/shared-module supplements must not be labeled as new per-variant CLI/MCP raw executions.",
+      "transport": "Direct/shared-module and composition assertions; public per-variant traces remain in separate09 cases.",
+      "sourceAssertions": [
+        {
+          "path": "tests/admission-allocation.test.ts",
+          "sha256": "13eecf7dfd821fc3bb27c3bc4a9d826eb25bb493585f46c5615c2fed07675ada",
+          "requestedReviewerLineRanges": [
+            [
+              223,
+              235
+            ]
+          ],
+          "lineRanges": [
+            [
+              223,
+              235
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 227,
+              "text": "const r = admission.reserveAllocation(request); assert.equal(r.kind, 'reserved'); if (r.kind !== 'reserved') return;"
+            },
+            {
+              "line": 228,
+              "text": "r.reservation.stage(staged()); const a = r.reservation.admit(); assert.equal(a.kind, 'admitted'); if (a.kind !== 'admitted') return;"
+            },
+            {
+              "line": 233,
+              "text": "const results = await compete(t, requests); assert.deepEqual(results.map(r => r.kind).sort(), ['refused','reserved']);"
+            },
+            {
+              "line": 234,
+              "text": "assert.equal(results.find(r => r.kind === 'refused')?.reason, 'BUDGET_EXHAUSTED');"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 223,
+              "title": "concurrent byte/capacity boundary admits allocation eight and refuses nine"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "concurrent byte/capacity boundary admits allocation eight and refuses nine",
+                "sourceLine": 223,
+                "actualPassingLines": [
+                  "\u2714 concurrent byte/capacity boundary admits allocation eight and refuses nine (1374.734333ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "concurrent byte/capacity boundary admits allocation eight and refuses nine",
+                "sourceLine": 223,
+                "actualPassingLines": [
+                  "\u2714 concurrent byte/capacity boundary admits allocation eight and refuses nine (1405.429792ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/admission-allocation.test.ts"
+        },
+        {
+          "path": "tests/admission-allocation.test.ts",
+          "sha256": "13eecf7dfd821fc3bb27c3bc4a9d826eb25bb493585f46c5615c2fed07675ada",
+          "requestedReviewerLineRanges": [
+            [
+              441,
+              517
+            ]
+          ],
+          "lineRanges": [
+            [
+              441,
+              515
+            ]
+          ],
+          "rangeNote": "Reviewer context ending after EOF is explicitly clipped to current file length; Source bytes/hash unchanged.",
+          "assertionAnchors": [
+            {
+              "line": 443,
+              "text": "assert.deepEqual(admission.readAllocationCapacity(), { heldAllocations: 0, reservedBytes: 0 });"
+            },
+            {
+              "line": 463,
+              "text": "assert.deepEqual(reopened.readAllocationCapacity(), { heldAllocations: 5, reservedBytes: 4000 });"
+            },
+            {
+              "line": 464,
+              "text": "assert.deepEqual(admission.readAllocationCapacity(), { heldAllocations: 5, reservedBytes: 4000 });"
+            },
+            {
+              "line": 465,
+              "text": "assert.deepEqual(readFileSync(join(root, 'admission.sqlite')), bytes);"
+            },
+            {
+              "line": 473,
+              "text": "assert.equal(admission.reserveAllocation(next).kind, 'reserved');"
+            },
+            {
+              "line": 475,
+              "text": "assert.equal(admission.reserveAllocation(changed).kind, 'retrieved');"
+            },
+            {
+              "line": 476,
+              "text": "assert.deepEqual(admission.readAllocationCapacity(), { heldAllocations: 2, reservedBytes: 2000 });"
+            },
+            {
+              "line": 495,
+              "text": "assert.equal(admission.reserveAllocation(input()).kind, 'reserved');"
+            },
+            {
+              "line": 497,
+              "text": "assert.throws(() => admission.readAllocationCapacity(), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 501,
+              "text": "assert.equal(admission.reserveAllocation(input()).kind, 'reserved');"
+            },
+            {
+              "line": 503,
+              "text": "assert.throws(() => admission.readAllocationCapacity(), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 508,
+              "text": "assert.equal(admission.reserveAllocation(first).kind, 'reserved');"
+            },
+            {
+              "line": 510,
+              "text": "assert.equal(admission.reserveAllocation(second).kind, 'reserved');"
+            },
+            {
+              "line": 512,
+              "text": "assert.deepEqual(admission.readAllocationCapacity(), { heldAllocations: 2, reservedBytes: Number.MAX_SAFE_INTEGER });"
+            },
+            {
+              "line": 514,
+              "text": "assert.throws(() => admission.readAllocationCapacity(), { code: 'STATE_UNAVAILABLE' });"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 441,
+              "title": "allocation capacity includes held records across all states and excludes released capacity without mutating reads"
+            },
+            {
+              "line": 467,
+              "title": "allocation capacity sums persisted reservations after configuration changes"
+            },
+            {
+              "line": 493,
+              "title": "allocation capacity rejects corrupt ${field} ${JSON.stringify(value)}"
+            },
+            {
+              "line": 499,
+              "title": "allocation capacity rejects a corrupt checksum rather than returning an empty or partial count"
+            },
+            {
+              "line": 505,
+              "title": "allocation capacity accepts the exact safe integer limit and refuses aggregate overflow"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "allocation capacity includes held records across all states and excludes released capacity without mutating reads",
+                "sourceLine": 441,
+                "actualPassingLines": [
+                  "\u2714 allocation capacity includes held records across all states and excludes released capacity without mutating reads (2553.338333ms)"
+                ]
+              },
+              {
+                "sourceTitle": "allocation capacity sums persisted reservations after configuration changes",
+                "sourceLine": 467,
+                "actualPassingLines": [
+                  "\u2714 allocation capacity sums persisted reservations after configuration changes (260.900958ms)"
+                ]
+              },
+              {
+                "sourceTitle": "allocation capacity rejects corrupt ${field} ${JSON.stringify(value)}",
+                "sourceLine": 493,
+                "actualPassingLines": [
+                  "\u2714 allocation capacity rejects corrupt capacityHeld \"false\" (109.661625ms)",
+                  "\u2714 allocation capacity rejects corrupt capacityHeld null (77.015958ms)",
+                  "\u2714 allocation capacity rejects corrupt reservationBytes -1 (101.218417ms)",
+                  "\u2714 allocation capacity rejects corrupt reservationBytes 0 (162.940209ms)",
+                  "\u2714 allocation capacity rejects corrupt reservationBytes 1.5 (143.092375ms)",
+                  "\u2714 allocation capacity rejects corrupt reservationBytes \"800\" (144.001875ms)",
+                  "\u2714 allocation capacity rejects corrupt reservationBytes 9007199254740992 (114.914208ms)"
+                ]
+              },
+              {
+                "sourceTitle": "allocation capacity rejects a corrupt checksum rather than returning an empty or partial count",
+                "sourceLine": 499,
+                "actualPassingLines": [
+                  "\u2714 allocation capacity rejects a corrupt checksum rather than returning an empty or partial count (148.761625ms)"
+                ]
+              },
+              {
+                "sourceTitle": "allocation capacity accepts the exact safe integer limit and refuses aggregate overflow",
+                "sourceLine": 505,
+                "actualPassingLines": [
+                  "\u2714 allocation capacity accepts the exact safe integer limit and refuses aggregate overflow (200.115292ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "allocation capacity includes held records across all states and excludes released capacity without mutating reads",
+                "sourceLine": 441,
+                "actualPassingLines": [
+                  "\u2714 allocation capacity includes held records across all states and excludes released capacity without mutating reads (2561.436667ms)"
+                ]
+              },
+              {
+                "sourceTitle": "allocation capacity sums persisted reservations after configuration changes",
+                "sourceLine": 467,
+                "actualPassingLines": [
+                  "\u2714 allocation capacity sums persisted reservations after configuration changes (244.474834ms)"
+                ]
+              },
+              {
+                "sourceTitle": "allocation capacity rejects corrupt ${field} ${JSON.stringify(value)}",
+                "sourceLine": 493,
+                "actualPassingLines": [
+                  "\u2714 allocation capacity rejects corrupt capacityHeld \"false\" (80.237208ms)",
+                  "\u2714 allocation capacity rejects corrupt capacityHeld null (111.197166ms)",
+                  "\u2714 allocation capacity rejects corrupt reservationBytes -1 (93.713542ms)",
+                  "\u2714 allocation capacity rejects corrupt reservationBytes 0 (157.332584ms)",
+                  "\u2714 allocation capacity rejects corrupt reservationBytes 1.5 (152.677333ms)",
+                  "\u2714 allocation capacity rejects corrupt reservationBytes \"800\" (119.171666ms)",
+                  "\u2714 allocation capacity rejects corrupt reservationBytes 9007199254740992 (158.683792ms)"
+                ]
+              },
+              {
+                "sourceTitle": "allocation capacity rejects a corrupt checksum rather than returning an empty or partial count",
+                "sourceLine": 499,
+                "actualPassingLines": [
+                  "\u2714 allocation capacity rejects a corrupt checksum rather than returning an empty or partial count (148.979958ms)"
+                ]
+              },
+              {
+                "sourceTitle": "allocation capacity accepts the exact safe integer limit and refuses aggregate overflow",
+                "sourceLine": 505,
+                "actualPassingLines": [
+                  "\u2714 allocation capacity accepts the exact safe integer limit and refuses aggregate overflow (207.273584ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/admission-allocation.test.ts"
+        },
+        {
+          "path": "tests/observed-allocation.test.ts",
+          "sha256": "77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad",
+          "requestedReviewerLineRanges": [
+            [
+              511,
+              527
+            ],
+            [
+              663,
+              673
+            ]
+          ],
+          "lineRanges": [
+            [
+              511,
+              527
+            ],
+            [
+              663,
+              673
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 521,
+              "text": "assert.equal(reserved.kind, 'reserved'); assert.equal(f.admission.readAllocationCapacity().heldAllocations, 2);"
+            },
+            {
+              "line": 524,
+              "text": "try { const result = snapshot(await allocator.prepare(f.request())); assert.equal(added, true); assert.equal(result.reason, 'BUDGET_EXHAUSTED');"
+            },
+            {
+              "line": 525,
+              "text": "assert.equal(result.outcome, 'refused'); assert.ok(!deviceCalls(f.calls).includes(phase === 'before-create' ? 'create' : 'install'));"
+            },
+            {
+              "line": 667,
+              "text": "assert.equal(prior.kind, 'acquired'); const bytes = await fs.readFile(join(f.store, 'admission.sqlite'));"
+            },
+            {
+              "line": 669,
+              "text": "assert.deepEqual(f.calls, []); assert.deepEqual(await fs.readFile(join(f.store, 'admission.sqlite')), bytes);"
+            },
+            {
+              "line": 670,
+              "text": "assert.deepEqual(f.admission.readAllocationCapacity(), { heldAllocations: 0, reservedBytes: 0 });"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 511,
+              "title": "fresh authoritative held-capacity check ${phase} honors another config generation"
+            },
+            {
+              "line": 663,
+              "title": "global ${kind} identity conflicts before any allocation prerequisites"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "fresh authoritative held-capacity check ${phase} honors another config generation",
+                "sourceLine": 511,
+                "actualPassingLines": [
+                  "\u2714 fresh authoritative held-capacity check before-create honors another config generation (378.098666ms)",
+                  "\u2714 fresh authoritative held-capacity check before-install honors another config generation (646.213292ms)"
+                ]
+              },
+              {
+                "sourceTitle": "global ${kind} identity conflicts before any allocation prerequisites",
+                "sourceLine": 663,
+                "actualPassingLines": [
+                  "\u2714 global observed identity conflicts before any allocation prerequisites (104.49825ms)",
+                  "\u2714 global preparation identity conflicts before any allocation prerequisites (94.775541ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "fresh authoritative held-capacity check ${phase} honors another config generation",
+                "sourceLine": 511,
+                "actualPassingLines": [
+                  "\u2714 fresh authoritative held-capacity check before-create honors another config generation (563.592959ms)",
+                  "\u2714 fresh authoritative held-capacity check before-install honors another config generation (615.996167ms)"
+                ]
+              },
+              {
+                "sourceTitle": "global ${kind} identity conflicts before any allocation prerequisites",
+                "sourceLine": 663,
+                "actualPassingLines": [
+                  "\u2714 global observed identity conflicts before any allocation prerequisites (319.334708ms)",
+                  "\u2714 global preparation identity conflicts before any allocation prerequisites (274.686084ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/observed-allocation.test.ts"
+        }
+      ],
+      "primaryActualPassingLines": {
+        "node26": [
+          "\u2714 concurrent byte/capacity boundary admits allocation eight and refuses nine (1374.734333ms)"
+        ],
+        "node24": [
+          "\u2714 concurrent byte/capacity boundary admits allocation eight and refuses nine (1405.429792ms)"
+        ]
+      },
+      "commands": {
+        "node26": "faults/integration/full-gates/composed-host-node26.json",
+        "node24": "faults/integration/full-gates/composed-host-node24.json"
+      },
+      "rawLogs": {
+        "node26": {
+          "path": "faults/integration/full-gates/composed-host-node26.log",
+          "sha256": "246a5e4b49e6e0542a768077be5a5e89e1e5a4d36b6d9be807ac9825d72d43c4"
+        },
+        "node24": {
+          "path": "faults/integration/full-gates/composed-host-node24.log",
+          "sha256": "1dbe87a1af24e6ae496e515720f2876f18ca115093cebe0a768094b6237b271a"
+        }
+      },
+      "backendCounts": null,
+      "countsProvenance": "Counts/state are the exact executed Source assertions above. No separate per-fixture base raw trace is claimed.",
+      "limit": "Family correspondence, not one new test or per-variant CLI/MCP execution; aggregate1675 includes every executed test, with no skips."
+    },
+    {
+      "id": "BASE.S4",
+      "hostRows": "H04",
+      "manifest": "identity.json",
+      "verdict": "PASS",
+      "normative": "allocation-contract:76,78; inventory-decision:38,83",
+      "oracle": "Unavailable supplied identity yields INVENTORY_INELIGIBLE after only listing, no boot/create fallback; compatible installed metadata and immutable simulator binary checks must reject missing/incompatible variants.",
+      "evidenceClass": "Already executed source assertions in actual1675 gates; direct/shared-module supplements must not be labeled as new per-variant CLI/MCP raw executions.",
+      "transport": "Direct/shared-module and composition assertions; public per-variant traces remain in separate09 cases.",
+      "sourceAssertions": [
+        {
+          "path": "tests/observed-allocation.test.ts",
+          "sha256": "77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad",
+          "requestedReviewerLineRanges": [
+            [
+              65,
+              74
+            ]
+          ],
+          "lineRanges": [
+            [
+              65,
+              74
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 71,
+              "text": "assert.ok(!('kind' in result)); if ('kind' in result) assert.fail();"
+            },
+            {
+              "line": 72,
+              "text": "assert.equal(result.reason, 'INVENTORY_INELIGIBLE'); assert.equal(result.outcome, 'refused');"
+            },
+            {
+              "line": 73,
+              "text": "assert.deepEqual(deviceCalls(f.calls), ['list']); assert.equal(result.reservation.capacityHeld, true);"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 65,
+              "title": "unavailable supplied vendor identity refuses before boot and never switches to create"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "unavailable supplied vendor identity refuses before boot and never switches to create",
+                "sourceLine": 65,
+                "actualPassingLines": [
+                  "\u2714 unavailable supplied vendor identity refuses before boot and never switches to create (1241.150333ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "unavailable supplied vendor identity refuses before boot and never switches to create",
+                "sourceLine": 65,
+                "actualPassingLines": [
+                  "\u2714 unavailable supplied vendor identity refuses before boot and never switches to create (1111.369792ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/observed-allocation.test.ts"
+        },
+        {
+          "path": "tests/admission-driver.test.ts",
+          "sha256": "c43bcb5e5e35d65d197d41577890b43b536d54d90d5aa0806955305975ec2a69",
+          "requestedReviewerLineRanges": [
+            [
+              66,
+              197
+            ]
+          ],
+          "lineRanges": [
+            [
+              66,
+              197
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 78,
+              "text": "assert.deepEqual(await subject.inventoryStatus(new AbortController().signal), { state: 'Shutdown', isAvailable: true });"
+            },
+            {
+              "line": 79,
+              "text": "assert.deepEqual(calls, ['list']);"
+            },
+            {
+              "line": 81,
+              "text": "assert.deepEqual(calls, ['list']);"
+            },
+            {
+              "line": 98,
+              "text": "await assert.rejects(subject.inventoryStatus(new AbortController().signal),"
+            },
+            {
+              "line": 100,
+              "text": "await assert.rejects(subject.boot(new AbortController().signal));"
+            },
+            {
+              "line": 101,
+              "text": "await assert.rejects(subject.close(new AbortController().signal));"
+            },
+            {
+              "line": 102,
+              "text": "assert.deepEqual(calls, ['list']);"
+            },
+            {
+              "line": 103,
+              "text": "assert.ok(readFileSync(join(root, 'leases', `${udid}.lock`)));"
+            },
+            {
+              "line": 124,
+              "text": "assert.deepEqual(await subject.inventoryStatus(new AbortController().signal), expected);"
+            },
+            {
+              "line": 126,
+              "text": "assert.deepEqual(calls, ['list']);"
+            },
+            {
+              "line": 151,
+              "text": "await assert.rejects(subject.inventoryStatus(new AbortController().signal),"
+            },
+            {
+              "line": 153,
+              "text": "await assert.rejects(subject.boot(new AbortController().signal));"
+            },
+            {
+              "line": 154,
+              "text": "await assert.rejects(subject.close(new AbortController().signal));"
+            },
+            {
+              "line": 155,
+              "text": "assert.deepEqual(calls, ['list']);"
+            },
+            {
+              "line": 156,
+              "text": "assert.ok(readFileSync(join(root, 'leases', `${udid}.lock`)));"
+            },
+            {
+              "line": 170,
+              "text": "await assert.rejects(subject.inventoryStatus(new AbortController().signal));"
+            },
+            {
+              "line": 171,
+              "text": "await assert.rejects(subject.boot(new AbortController().signal));"
+            },
+            {
+              "line": 172,
+              "text": "assert.equal(calls, 0);"
+            },
+            {
+              "line": 186,
+              "text": "await assert.rejects(subject.inventoryStatus(new AbortController().signal, 5));"
+            },
+            {
+              "line": 187,
+              "text": "await assert.rejects(subject.boot(new AbortController().signal));"
+            },
+            {
+              "line": 188,
+              "text": "await assert.rejects(subject.close(new AbortController().signal));"
+            },
+            {
+              "line": 193,
+              "text": "await assert.rejects(subject.boot(new AbortController().signal));"
+            },
+            {
+              "line": 194,
+              "text": "assert.equal(readFileSync(path, 'utf8'), held);"
+            },
+            {
+              "line": 195,
+              "text": "assert.deepEqual(calls, ['list']);"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 66,
+              "title": "preparation inventory exposes selected availability without booting or presenting"
+            },
+            {
+              "line": 85,
+              "title": "malformed inventory error receipt cannot settle or authorize a later boot"
+            },
+            {
+              "line": 112,
+              "title": "preparation inventory reports ${name} without a device mutation"
+            },
+            {
+              "line": 139,
+              "title": "malformed inventory (${name}) retains uncertainty with no later boot"
+            },
+            {
+              "line": 161,
+              "title": "durable preparation cancellation prevents inventory dispatch"
+            },
+            {
+              "line": 176,
+              "title": "lost inventory reply fences boot and retains the lease after a late valid reply"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "preparation inventory exposes selected availability without booting or presenting",
+                "sourceLine": 66,
+                "actualPassingLines": [
+                  "\u2714 preparation inventory exposes selected availability without booting or presenting (380.841ms)"
+                ]
+              },
+              {
+                "sourceTitle": "malformed inventory error receipt cannot settle or authorize a later boot",
+                "sourceLine": 85,
+                "actualPassingLines": [
+                  "\u2714 malformed inventory error receipt cannot settle or authorize a later boot (410.262167ms)"
+                ]
+              },
+              {
+                "sourceTitle": "preparation inventory reports ${name} without a device mutation",
+                "sourceLine": 112,
+                "actualPassingLines": [
+                  "\u2714 preparation inventory reports unavailable selected identity without a device mutation (490.170791ms)",
+                  "\u2714 preparation inventory reports missing selected identity without a device mutation (589.226708ms)",
+                  "\u2714 preparation inventory reports empty inventory without a device mutation (628.273417ms)"
+                ]
+              },
+              {
+                "sourceTitle": "malformed inventory (${name}) retains uncertainty with no later boot",
+                "sourceLine": 139,
+                "actualPassingLines": [
+                  "\u2714 malformed inventory (missing availability) retains uncertainty with no later boot (662.739708ms)",
+                  "\u2714 malformed inventory (string availability) retains uncertainty with no later boot (594.857583ms)",
+                  "\u2714 malformed inventory (numeric availability) retains uncertainty with no later boot (638.155875ms)",
+                  "\u2714 malformed inventory (null availability) retains uncertainty with no later boot (558.5045ms)",
+                  "\u2714 malformed inventory (duplicate selected identity) retains uncertainty with no later boot (566.054042ms)"
+                ]
+              },
+              {
+                "sourceTitle": "durable preparation cancellation prevents inventory dispatch",
+                "sourceLine": 161,
+                "actualPassingLines": [
+                  "\u2714 durable preparation cancellation prevents inventory dispatch (472.758292ms)"
+                ]
+              },
+              {
+                "sourceTitle": "lost inventory reply fences boot and retains the lease after a late valid reply",
+                "sourceLine": 176,
+                "actualPassingLines": [
+                  "\u2714 lost inventory reply fences boot and retains the lease after a late valid reply (663.415292ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "preparation inventory exposes selected availability without booting or presenting",
+                "sourceLine": 66,
+                "actualPassingLines": [
+                  "\u2714 preparation inventory exposes selected availability without booting or presenting (437.688625ms)"
+                ]
+              },
+              {
+                "sourceTitle": "malformed inventory error receipt cannot settle or authorize a later boot",
+                "sourceLine": 85,
+                "actualPassingLines": [
+                  "\u2714 malformed inventory error receipt cannot settle or authorize a later boot (449.986333ms)"
+                ]
+              },
+              {
+                "sourceTitle": "preparation inventory reports ${name} without a device mutation",
+                "sourceLine": 112,
+                "actualPassingLines": [
+                  "\u2714 preparation inventory reports unavailable selected identity without a device mutation (441.710292ms)",
+                  "\u2714 preparation inventory reports missing selected identity without a device mutation (627.368125ms)",
+                  "\u2714 preparation inventory reports empty inventory without a device mutation (608.481ms)"
+                ]
+              },
+              {
+                "sourceTitle": "malformed inventory (${name}) retains uncertainty with no later boot",
+                "sourceLine": 139,
+                "actualPassingLines": [
+                  "\u2714 malformed inventory (missing availability) retains uncertainty with no later boot (598.14125ms)",
+                  "\u2714 malformed inventory (string availability) retains uncertainty with no later boot (614.4905ms)",
+                  "\u2714 malformed inventory (numeric availability) retains uncertainty with no later boot (557.389958ms)",
+                  "\u2714 malformed inventory (null availability) retains uncertainty with no later boot (553.6845ms)",
+                  "\u2714 malformed inventory (duplicate selected identity) retains uncertainty with no later boot (573.138625ms)"
+                ]
+              },
+              {
+                "sourceTitle": "durable preparation cancellation prevents inventory dispatch",
+                "sourceLine": 161,
+                "actualPassingLines": [
+                  "\u2714 durable preparation cancellation prevents inventory dispatch (466.056292ms)"
+                ]
+              },
+              {
+                "sourceTitle": "lost inventory reply fences boot and retains the lease after a late valid reply",
+                "sourceLine": 176,
+                "actualPassingLines": [
+                  "\u2714 lost inventory reply fences boot and retains the lease after a late valid reply (620.757917ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/admission-driver.test.ts"
+        },
+        {
+          "path": "tests/observed-allocation-config.test.ts",
+          "sha256": "cc46883cd5bd9bf344fe228b6b91b7b4b4745e262b2b4fe3108cf22b05123ab6",
+          "requestedReviewerLineRanges": [
+            [
+              51,
+              86
+            ],
+            [
+              123,
+              165
+            ]
+          ],
+          "lineRanges": [
+            [
+              51,
+              86
+            ],
+            [
+              123,
+              165
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 55,
+              "text": "assert.equal(proof.runtimeVersion, '27.0.1'); assert.equal(proof.architecture, 'arm64');"
+            },
+            {
+              "line": 56,
+              "text": "await assert.rejects(verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId: 'com.apple.CoreSimulator.SimRuntime.iOS-26-4' }, f.host, f.source, new AbortController().signal), /HOST_PREREQUISITE_MISSING/);"
+            },
+            {
+              "line": 58,
+              "text": "await assert.rejects(verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, f.source, new AbortController().signal), /HOST_PREREQUISITE_MISSING/);"
+            },
+            {
+              "line": 59,
+              "text": "assert.ok(!f.calls.includes('create'));"
+            },
+            {
+              "line": 71,
+              "text": "try { await assert.rejects(verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, f.source,"
+            },
+            {
+              "line": 144,
+              "text": "await assert.rejects(verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, f.source, new AbortController().signal), /HOST_PREREQUISITE_MISSING/);"
+            },
+            {
+              "line": 145,
+              "text": "assert.ok(!f.calls.includes('create'));"
+            },
+            {
+              "line": 156,
+              "text": "assert.equal((await verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, f.source, new AbortController().signal)).runtimeVersion, '27.0.1');"
+            },
+            {
+              "line": 161,
+              "text": "await assert.rejects(verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, f.source, new AbortController().signal), /HOST_PREREQUISITE_MISSING/);"
+            },
+            {
+              "line": 163,
+              "text": "assert.ok(!f.calls.includes('create'));"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 51,
+              "title": "installed proof uses exact IDs and RuntimeRoot OS, never internal bundle or newest runtime versions"
+            },
+            {
+              "line": 63,
+              "title": "installed metadata replacement during plutil cannot supply compatibility even with identical bytes"
+            },
+            {
+              "line": 141,
+              "title": "installed ${name} mismatch refuses without host effects"
+            },
+            {
+              "line": 149,
+              "title": "runtime mounted volume metadata is accepted while missing executable, unsafe metadata and excessive enumeration refuse"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "installed proof uses exact IDs and RuntimeRoot OS, never internal bundle or newest runtime versions",
+                "sourceLine": 51,
+                "actualPassingLines": [
+                  "\u2714 installed proof uses exact IDs and RuntimeRoot OS, never internal bundle or newest runtime versions (313.857458ms)"
+                ]
+              },
+              {
+                "sourceTitle": "installed metadata replacement during plutil cannot supply compatibility even with identical bytes",
+                "sourceLine": 63,
+                "actualPassingLines": [
+                  "\u2714 installed metadata replacement during plutil cannot supply compatibility even with identical bytes (502.434125ms)"
+                ]
+              },
+              {
+                "sourceTitle": "installed ${name} mismatch refuses without host effects",
+                "sourceLine": 141,
+                "actualPassingLines": [
+                  "\u2714 installed Xcode identity mismatch refuses without host effects (423.929959ms)",
+                  "\u2714 installed Xcode executable mismatch refuses without host effects (570.781917ms)",
+                  "\u2714 installed Xcode min host mismatch refuses without host effects (546.881042ms)",
+                  "\u2714 installed Xcode version mismatch refuses without host effects (556.819125ms)",
+                  "\u2714 installed Xcode build mismatch refuses without host effects (583.683042ms)",
+                  "\u2714 installed device architecture mismatch refuses without host effects (695.54825ms)",
+                  "\u2714 installed device family mismatch refuses without host effects (585.84625ms)",
+                  "\u2714 installed device min runtime mismatch refuses without host effects (648.875416ms)",
+                  "\u2714 installed device max runtime mismatch refuses without host effects (637.00925ms)",
+                  "\u2714 installed runtime platform mismatch refuses without host effects (607.738042ms)",
+                  "\u2714 installed runtime architecture mismatch refuses without host effects (717.039625ms)",
+                  "\u2714 installed runtime family mismatch refuses without host effects (580.803833ms)",
+                  "\u2714 installed runtime min host mismatch refuses without host effects (793.920542ms)",
+                  "\u2714 installed runtime declared OS mismatch refuses without host effects (788.084041ms)",
+                  "\u2714 installed runtime actual OS mismatch refuses without host effects (627.655792ms)",
+                  "\u2714 installed runtime build mismatch refuses without host effects (733.41775ms)"
+                ]
+              },
+              {
+                "sourceTitle": "runtime mounted volume metadata is accepted while missing executable, unsafe metadata and excessive enumeration refuse",
+                "sourceLine": 149,
+                "actualPassingLines": [
+                  "\u2714 runtime mounted volume metadata is accepted while missing executable, unsafe metadata and excessive enumeration refuse (2913.867917ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "installed proof uses exact IDs and RuntimeRoot OS, never internal bundle or newest runtime versions",
+                "sourceLine": 51,
+                "actualPassingLines": [
+                  "\u2714 installed proof uses exact IDs and RuntimeRoot OS, never internal bundle or newest runtime versions (431.16425ms)"
+                ]
+              },
+              {
+                "sourceTitle": "installed metadata replacement during plutil cannot supply compatibility even with identical bytes",
+                "sourceLine": 63,
+                "actualPassingLines": [
+                  "\u2714 installed metadata replacement during plutil cannot supply compatibility even with identical bytes (441.706709ms)"
+                ]
+              },
+              {
+                "sourceTitle": "installed ${name} mismatch refuses without host effects",
+                "sourceLine": 141,
+                "actualPassingLines": [
+                  "\u2714 installed Xcode identity mismatch refuses without host effects (302.196416ms)",
+                  "\u2714 installed Xcode executable mismatch refuses without host effects (654.423417ms)",
+                  "\u2714 installed Xcode min host mismatch refuses without host effects (775.132167ms)",
+                  "\u2714 installed Xcode version mismatch refuses without host effects (549.095333ms)",
+                  "\u2714 installed Xcode build mismatch refuses without host effects (679.676292ms)",
+                  "\u2714 installed device architecture mismatch refuses without host effects (519.330833ms)",
+                  "\u2714 installed device family mismatch refuses without host effects (490.348167ms)",
+                  "\u2714 installed device min runtime mismatch refuses without host effects (599.527458ms)",
+                  "\u2714 installed device max runtime mismatch refuses without host effects (678.336416ms)",
+                  "\u2714 installed runtime platform mismatch refuses without host effects (607.340542ms)",
+                  "\u2714 installed runtime architecture mismatch refuses without host effects (704.896375ms)",
+                  "\u2714 installed runtime family mismatch refuses without host effects (733.675125ms)",
+                  "\u2714 installed runtime min host mismatch refuses without host effects (712.617209ms)",
+                  "\u2714 installed runtime declared OS mismatch refuses without host effects (695.753042ms)",
+                  "\u2714 installed runtime actual OS mismatch refuses without host effects (691.907792ms)",
+                  "\u2714 installed runtime build mismatch refuses without host effects (619.154459ms)"
+                ]
+              },
+              {
+                "sourceTitle": "runtime mounted volume metadata is accepted while missing executable, unsafe metadata and excessive enumeration refuse",
+                "sourceLine": 149,
+                "actualPassingLines": [
+                  "\u2714 runtime mounted volume metadata is accepted while missing executable, unsafe metadata and excessive enumeration refuse (2665.841542ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/observed-allocation-config.test.ts"
+        },
+        {
+          "path": "tests/observed-artifact.test.ts",
+          "sha256": "c7adbe80a5ba58ab88c103066afcf4dbf9a26731b60f5ea0a1ad680f8d0aa0c3",
+          "requestedReviewerLineRanges": [
+            [
+              55,
+              100
+            ],
+            [
+              113,
+              122
+            ]
+          ],
+          "lineRanges": [
+            [
+              55,
+              100
+            ],
+            [
+              113,
+              122
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 59,
+              "text": "assert.equal(inspected.metadata.minimumOSVersion, '17.0');"
+            },
+            {
+              "line": 60,
+              "text": "assert.deepEqual(calls, [['/usr/bin/plutil', ['-convert', 'json', '-o', '-', '--', join(f.app, 'Info.plist')], false]]);"
+            },
+            {
+              "line": 61,
+              "text": "assert.deepEqual(await fs.readdir(f.stagingRoot), []);"
+            },
+            {
+              "line": 73,
+              "text": "try { await assert.rejects(stageArtifact(f.request, { process: async () => ({ exitCode: 0, stdout: JSON.stringify(value), stderr: '' }) }), { reason }); assert.deepEqual(await fs.readdir(f.stagingRoot), []); }"
+            },
+            {
+              "line": 84,
+              "text": "try { const b = binary(); mutate(b); await fs.writeFile(join(f.app, 'Fixture'), b); await assert.rejects(stageArtifact(f.request, f.dependencies), { reason }); }"
+            },
+            {
+              "line": 92,
+              "text": "const receipt = await stageArtifact(f.request, f.dependencies); assert.equal(await fs.readlink(join(receipt.stagedPath, 'data-link')), 'Resources/data'); await verifyStagedArtifact(receipt);"
+            },
+            {
+              "line": 94,
+              "text": "await assert.rejects(stageArtifact(f.request, f.dependencies), { reason: 'ARTIFACT_INVALID' });"
+            },
+            {
+              "line": 99,
+              "text": "try { await fs.writeFile(join(f.root, 'outside'), 'outside'); await fs.symlink('../outside', join(f.app, 'external')); await fs.symlink('external', join(f.app, 'chain')); await assert.rejects(stageArtifact(f.request, f.dependencies), { reason: 'ARTIFACT_INVALID' }); }"
+            },
+            {
+              "line": 122,
+              "text": "assert.equal(receipt.metadata.architecture, 'x86_64'); await verifyStagedArtifact(receipt);"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 55,
+              "title": "offline inspection reads explicit metadata with an argument array and has no staging effect"
+            },
+            {
+              "line": 71,
+              "title": "artifact refuses ${label}"
+            },
+            {
+              "line": 82,
+              "title": "artifact refuses ${label} despite a simulator plist"
+            },
+            {
+              "line": 87,
+              "title": "safe internal symlinks stay unchanged while escaping links refuse"
+            },
+            {
+              "line": 97,
+              "title": "symlink chains that leave the bundle refuse without a source fallback"
+            },
+            {
+              "line": 113,
+              "title": "universal executable accepts the declared host slice and simulator minimum OS"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "offline inspection reads explicit metadata with an argument array and has no staging effect",
+                "sourceLine": 55,
+                "actualPassingLines": [
+                  "\u2714 offline inspection reads explicit metadata with an argument array and has no staging effect (62.909959ms)"
+                ]
+              },
+              {
+                "sourceTitle": "artifact refuses ${label}",
+                "sourceLine": 71,
+                "actualPassingLines": [
+                  "\u2714 artifact refuses bundle identity mismatch (112.400041ms)",
+                  "\u2714 artifact refuses missing executable (124.748541ms)",
+                  "\u2714 artifact refuses path executable (116.077542ms)",
+                  "\u2714 artifact refuses missing minimum OS (122.66125ms)",
+                  "\u2714 artifact refuses future minimum OS (134.551875ms)",
+                  "\u2714 artifact refuses physical device platform (114.393041ms)",
+                  "\u2714 artifact refuses physical-device Mach-O despite a simulator plist (116.592417ms)",
+                  "\u2714 artifact refuses incompatible architecture despite a simulator plist (112.052625ms)",
+                  "\u2714 artifact refuses future executable OS despite a simulator plist (110.87075ms)",
+                  "\u2714 artifact refuses malformed load command despite a simulator plist (106.006209ms)",
+                  "\u2714 artifact refuses missing simulator metadata despite a simulator plist (128.216459ms)"
+                ]
+              },
+              {
+                "sourceTitle": "artifact refuses ${label} despite a simulator plist",
+                "sourceLine": 82,
+                "actualPassingLines": [
+                  "\u2714 artifact refuses physical-device Mach-O despite a simulator plist (116.592417ms)",
+                  "\u2714 artifact refuses incompatible architecture despite a simulator plist (112.052625ms)",
+                  "\u2714 artifact refuses future executable OS despite a simulator plist (110.87075ms)",
+                  "\u2714 artifact refuses malformed load command despite a simulator plist (106.006209ms)",
+                  "\u2714 artifact refuses missing simulator metadata despite a simulator plist (128.216459ms)"
+                ]
+              },
+              {
+                "sourceTitle": "safe internal symlinks stay unchanged while escaping links refuse",
+                "sourceLine": 87,
+                "actualPassingLines": [
+                  "\u2714 safe internal symlinks stay unchanged while escaping links refuse (202.714458ms)"
+                ]
+              },
+              {
+                "sourceTitle": "symlink chains that leave the bundle refuse without a source fallback",
+                "sourceLine": 97,
+                "actualPassingLines": [
+                  "\u2714 symlink chains that leave the bundle refuse without a source fallback (75.549416ms)"
+                ]
+              },
+              {
+                "sourceTitle": "universal executable accepts the declared host slice and simulator minimum OS",
+                "sourceLine": 113,
+                "actualPassingLines": [
+                  "\u2714 universal executable accepts the declared host slice and simulator minimum OS (184.546875ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "offline inspection reads explicit metadata with an argument array and has no staging effect",
+                "sourceLine": 55,
+                "actualPassingLines": [
+                  "\u2714 offline inspection reads explicit metadata with an argument array and has no staging effect (62.684ms)"
+                ]
+              },
+              {
+                "sourceTitle": "artifact refuses ${label}",
+                "sourceLine": 71,
+                "actualPassingLines": [
+                  "\u2714 artifact refuses bundle identity mismatch (118.766625ms)",
+                  "\u2714 artifact refuses missing executable (104.091ms)",
+                  "\u2714 artifact refuses path executable (107.912792ms)",
+                  "\u2714 artifact refuses missing minimum OS (85.009125ms)",
+                  "\u2714 artifact refuses future minimum OS (120.141042ms)",
+                  "\u2714 artifact refuses physical device platform (110.657292ms)",
+                  "\u2714 artifact refuses physical-device Mach-O despite a simulator plist (135.245125ms)",
+                  "\u2714 artifact refuses incompatible architecture despite a simulator plist (133.686917ms)",
+                  "\u2714 artifact refuses future executable OS despite a simulator plist (106.121583ms)",
+                  "\u2714 artifact refuses malformed load command despite a simulator plist (142.869458ms)",
+                  "\u2714 artifact refuses missing simulator metadata despite a simulator plist (129.985708ms)"
+                ]
+              },
+              {
+                "sourceTitle": "artifact refuses ${label} despite a simulator plist",
+                "sourceLine": 82,
+                "actualPassingLines": [
+                  "\u2714 artifact refuses physical-device Mach-O despite a simulator plist (135.245125ms)",
+                  "\u2714 artifact refuses incompatible architecture despite a simulator plist (133.686917ms)",
+                  "\u2714 artifact refuses future executable OS despite a simulator plist (106.121583ms)",
+                  "\u2714 artifact refuses malformed load command despite a simulator plist (142.869458ms)",
+                  "\u2714 artifact refuses missing simulator metadata despite a simulator plist (129.985708ms)"
+                ]
+              },
+              {
+                "sourceTitle": "safe internal symlinks stay unchanged while escaping links refuse",
+                "sourceLine": 87,
+                "actualPassingLines": [
+                  "\u2714 safe internal symlinks stay unchanged while escaping links refuse (181.848667ms)"
+                ]
+              },
+              {
+                "sourceTitle": "symlink chains that leave the bundle refuse without a source fallback",
+                "sourceLine": 97,
+                "actualPassingLines": [
+                  "\u2714 symlink chains that leave the bundle refuse without a source fallback (73.166167ms)"
+                ]
+              },
+              {
+                "sourceTitle": "universal executable accepts the declared host slice and simulator minimum OS",
+                "sourceLine": 113,
+                "actualPassingLines": [
+                  "\u2714 universal executable accepts the declared host slice and simulator minimum OS (145.01125ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/observed-artifact.test.ts"
+        }
+      ],
+      "primaryActualPassingLines": {
+        "node26": [
+          "\u2714 unavailable supplied vendor identity refuses before boot and never switches to create (1241.150333ms)"
+        ],
+        "node24": [
+          "\u2714 unavailable supplied vendor identity refuses before boot and never switches to create (1111.369792ms)"
+        ]
+      },
+      "commands": {
+        "node26": "faults/integration/full-gates/composed-host-node26.json",
+        "node24": "faults/integration/full-gates/composed-host-node24.json"
+      },
+      "rawLogs": {
+        "node26": {
+          "path": "faults/integration/full-gates/composed-host-node26.log",
+          "sha256": "246a5e4b49e6e0542a768077be5a5e89e1e5a4d36b6d9be807ac9825d72d43c4"
+        },
+        "node24": {
+          "path": "faults/integration/full-gates/composed-host-node24.log",
+          "sha256": "1dbe87a1af24e6ae496e515720f2876f18ca115093cebe0a768094b6237b271a"
+        }
+      },
+      "backendCounts": null,
+      "countsProvenance": "Counts/state are the exact executed Source assertions above. No separate per-fixture base raw trace is claimed.",
+      "limit": "Family correspondence, not one new test or per-variant CLI/MCP execution; aggregate1675 includes every executed test, with no skips."
+    },
+    {
+      "id": "BASE.S5",
+      "hostRows": "H05",
+      "manifest": "cancel.json",
+      "verdict": "PASS",
+      "normative": "allocation-contract:72,101,105; public-contract:30,77",
+      "oracle": "Shared boot/readiness/overall deadline and separate aggregate5000ms finalization; failed durable cancellation still revokes local issuance, targets only owned work, cannot become ready/success.",
+      "evidenceClass": "Already executed source assertions in actual1675 gates; direct/shared-module supplements must not be labeled as new per-variant CLI/MCP raw executions.",
+      "transport": "Direct/shared-module and composition assertions; public per-variant traces remain in separate09 cases.",
+      "sourceAssertions": [
+        {
+          "path": "tests/observed-allocation.test.ts",
+          "sha256": "77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad",
+          "requestedReviewerLineRanges": [
+            [
+              335,
+              405
+            ]
+          ],
+          "lineRanges": [
+            [
+              335,
+              405
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 341,
+              "text": "assert.ok(reached.reached, 'Target ' + phase + ' was not reached: ' + JSON.stringify('result' in reached ? reached.result : null));"
+            },
+            {
+              "line": 343,
+              "text": "assert.equal(result.state, 'quarantined'); assert.notEqual(result.outcome, 'prepared');"
+            },
+            {
+              "line": 344,
+              "text": "const before = [...f.calls]; release(); await new Promise(r => setImmediate(r)); assert.deepEqual(f.calls, before);"
+            },
+            {
+              "line": 345,
+              "text": "assert.equal(f.admission.readAllocation(result.allocationId)?.state, 'quarantined');"
+            },
+            {
+              "line": 354,
+              "text": "assert.throws(() => new ObservedAllocator({ admission: f.admission, runsDir: f.runsDir,"
+            },
+            {
+              "line": 356,
+              "text": "assert.throws(() => new ObservedAllocator({ admission: f.admission, runsDir: f.runsDir,"
+            },
+            {
+              "line": 358,
+              "text": "assert.deepEqual(f.calls, []);"
+            },
+            {
+              "line": 367,
+              "text": "assert.equal(unknown.reason, 'CREATE_UNCONFIRMED'); assert.equal(unknown.hostCreationBlocked, true); assert.equal(unknown.device, null);"
+            },
+            {
+              "line": 368,
+              "text": "assert.ok(unknown.evidenceRefs.includes(f.admission.readAllocation(unknown.allocationId)!.evidenceDirectory));"
+            },
+            {
+              "line": 369,
+              "text": "release(); await new Promise(r => setTimeout(r, 20)); assert.deepEqual(deviceCalls(f.calls), ['create']);"
+            },
+            {
+              "line": 370,
+              "text": "const persisted = f.admission.readAllocation(unknown.allocationId)!; assert.equal(persisted.hostCreationBlocked, true); assert.equal(persisted.device, null);"
+            },
+            {
+              "line": 371,
+              "text": "assert.equal(persisted.state, 'quarantined'); refused(await allocator.prepare(f.request('after-lost')), 'HOST_CREATION_UNRESOLVED');"
+            },
+            {
+              "line": 382,
+              "text": "try { const result = snapshot(await allocator.prepare(f.request())); assert.equal(result.state, 'quarantined');"
+            },
+            {
+              "line": 383,
+              "text": "assert.ok(!deviceCalls(f.calls).includes(phase === 'booting' ? 'install' : 'screenshot')); assert.notEqual(result.outcome, 'prepared');"
+            },
+            {
+              "line": 384,
+              "text": "await new Promise(r => setTimeout(r, 50)); assert.equal(f.admission.readAllocation(result.allocationId)?.state, 'quarantined');"
+            },
+            {
+              "line": 400,
+              "text": "t.mock.timers.tick(999); await new Promise<void>(resolve => setImmediate(resolve)); assert.equal(times.length, 1);"
+            },
+            {
+              "line": 402,
+              "text": "t.mock.timers.tick(100); const result = snapshot(await preparing); assert.notEqual(result.state, 'ready');"
+            },
+            {
+              "line": 403,
+              "text": "assert.equal(deviceCalls(f.calls).filter(op => op === 'boot').length, 1); assert.equal(times.length, 2); assert.ok(times[1]! - times[0]! >= 1000);"
+            },
+            {
+              "line": 404,
+              "text": "assert.ok(!deviceCalls(f.calls).includes('install'));"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 335,
+              "title": "one stage deadline bounds pending ${phase} and late receipt cannot continue or become ready"
+            },
+            {
+              "line": 351,
+              "title": "test authority rejects production window opener and production source composition at construction before any effects"
+            },
+            {
+              "line": 362,
+              "title": "lost creation reply times out with guard retained; eventual known UUID cannot bind or continue"
+            },
+            {
+              "line": 375,
+              "title": "aggregate ${phase} stage budget covers every internal call without resetting on a settled response"
+            },
+            {
+              "line": 388,
+              "title": "boot-state polling is no more frequent than once per second and boot is never retried"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "one stage deadline bounds pending ${phase} and late receipt cannot continue or become ready",
+                "sourceLine": 335,
+                "actualPassingLines": [
+                  "\u2714 one stage deadline bounds pending boot and late receipt cannot continue or become ready (630.146916ms)",
+                  "\u2714 one stage deadline bounds pending snapshot-ui and late receipt cannot continue or become ready (1003.053417ms)"
+                ]
+              },
+              {
+                "sourceTitle": "test authority rejects production window opener and production source composition at construction before any effects",
+                "sourceLine": 351,
+                "actualPassingLines": [
+                  "\u2714 test authority rejects production window opener and production source composition at construction before any effects (153.310834ms)"
+                ]
+              },
+              {
+                "sourceTitle": "lost creation reply times out with guard retained; eventual known UUID cannot bind or continue",
+                "sourceLine": 362,
+                "actualPassingLines": [
+                  "\u2714 lost creation reply times out with guard retained; eventual known UUID cannot bind or continue (465.593542ms)"
+                ]
+              },
+              {
+                "sourceTitle": "aggregate ${phase} stage budget covers every internal call without resetting on a settled response",
+                "sourceLine": 375,
+                "actualPassingLines": [
+                  "\u2714 aggregate booting stage budget covers every internal call without resetting on a settled response (685.184583ms)",
+                  "\u2714 aggregate readiness stage budget covers every internal call without resetting on a settled response (601.103458ms)"
+                ]
+              },
+              {
+                "sourceTitle": "boot-state polling is no more frequent than once per second and boot is never retried",
+                "sourceLine": 388,
+                "actualPassingLines": [
+                  "\u2714 boot-state polling is no more frequent than once per second and boot is never retried (517.487625ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "one stage deadline bounds pending ${phase} and late receipt cannot continue or become ready",
+                "sourceLine": 335,
+                "actualPassingLines": [
+                  "\u2714 one stage deadline bounds pending boot and late receipt cannot continue or become ready (631.057666ms)",
+                  "\u2714 one stage deadline bounds pending snapshot-ui and late receipt cannot continue or become ready (901.486708ms)"
+                ]
+              },
+              {
+                "sourceTitle": "test authority rejects production window opener and production source composition at construction before any effects",
+                "sourceLine": 351,
+                "actualPassingLines": [
+                  "\u2714 test authority rejects production window opener and production source composition at construction before any effects (89.143959ms)"
+                ]
+              },
+              {
+                "sourceTitle": "lost creation reply times out with guard retained; eventual known UUID cannot bind or continue",
+                "sourceLine": 362,
+                "actualPassingLines": [
+                  "\u2714 lost creation reply times out with guard retained; eventual known UUID cannot bind or continue (232.346584ms)"
+                ]
+              },
+              {
+                "sourceTitle": "aggregate ${phase} stage budget covers every internal call without resetting on a settled response",
+                "sourceLine": 375,
+                "actualPassingLines": [
+                  "\u2714 aggregate booting stage budget covers every internal call without resetting on a settled response (372.307ms)",
+                  "\u2714 aggregate readiness stage budget covers every internal call without resetting on a settled response (843.345542ms)"
+                ]
+              },
+              {
+                "sourceTitle": "boot-state polling is no more frequent than once per second and boot is never retried",
+                "sourceLine": 388,
+                "actualPassingLines": [
+                  "\u2714 boot-state polling is no more frequent than once per second and boot is never retried (238.356459ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/observed-allocation.test.ts"
+        },
+        {
+          "path": "tests/observed-allocation.test.ts",
+          "sha256": "77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad",
+          "requestedReviewerLineRanges": [
+            [
+              606,
+              660
+            ]
+          ],
+          "lineRanges": [
+            [
+              606,
+              660
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 613,
+              "text": "const cancelled = refused(await allocator.cancel(record.allocationId.toLowerCase()),'STORE_UNAVAILABLE'); assert.equal(cancelled.acceptance,'unknown');"
+            },
+            {
+              "line": 614,
+              "text": "assert.ok(!JSON.stringify(cancelled).includes(hostile)); f.admission.cancelAllocation=original; const before=[...f.calls]; release();"
+            },
+            {
+              "line": 615,
+              "text": "const result=snapshot(await preparing); assert.notEqual(result.state,'ready'); assert.equal(result.reservation.capacityHeld,true);"
+            },
+            {
+              "line": 616,
+              "text": "assert.deepEqual(f.calls,before); assert.deepEqual(deviceCalls(f.calls),['create','boot']);"
+            },
+            {
+              "line": 617,
+              "text": "const other=snapshot(await allocator.prepare(f.request('unrelated'))); assert.equal(other.state,'ready');"
+            },
+            {
+              "line": 618,
+              "text": "assert.equal(f.admission.readAllocation(result.allocationId)?.state,'quarantined');"
+            },
+            {
+              "line": 632,
+              "text": "releaseFirst();assert.equal(snapshot(await one).state,'quarantined');assert.deepEqual(f.admission.readAllocation(other.allocationId),other);"
+            },
+            {
+              "line": 633,
+              "text": "releaseSecond();assert.equal(snapshot(await two).state,'ready');assert.equal(f.admission.readAllocation(other.allocationId)?.cancellationRequested,false);"
+            },
+            {
+              "line": 648,
+              "text": "const reached=await Promise.race([installBegan.then(()=>true),preparing.then(()=>false)]);assert.equal(reached,true,'Known install failure milestone must be reached');"
+            },
+            {
+              "line": 650,
+              "text": "const elapsed=Date.now()-start;assert.notEqual(result,'finalization still pending');assert.ok(elapsed<=5500,'5000ms plus explicit500ms scheduling tolerance');"
+            },
+            {
+              "line": 651,
+              "text": "assert.equal(result.state,'quarantined');assert.equal(result.reservation.capacityHeld,true);assert.equal(result.device.udid,'ABCDEF00-0000-4000-8000-000000000001');"
+            },
+            {
+              "line": 652,
+              "text": "assert.equal(f.admission.inspect(result.device.udid).state,'quarantined');const stored=f.admission.readAllocation(result.allocationId);const calls=f.calls.filter(c=>c!=='plist');"
+            },
+            {
+              "line": 653,
+              "text": "assert.deepEqual(calls,['create','boot','list','install']);releaseFile();releaseLease();await allocator.close();"
+            },
+            {
+              "line": 654,
+              "text": "assert.deepEqual(f.admission.readAllocation(result.allocationId),stored);assert.equal(f.admission.inspect(result.device.udid).state,'quarantined');assert.deepEqual(f.calls.filter(c=>c!=='plist'),calls);"
+            },
+            {
+              "line": 655,
+              "text": "const diagnostic=await native.readFile(stored.evidenceDirectory+'/source-diagnostics.json','utf8');assert.ok(diagnostic.includes('private fixture'));assert.ok(diagnostic.includes('\\\"terminalAcknowledged\\\":true'));assert.ok(!result.evidenceRefs.includes(stored.evidenceDirectory+'/source-diagnostics.json'));"
+            },
+            {
+              "line": 659,
+              "text": "assert.equal(child.code,0,child.stderr);t.diagnostic(child.stdout.trim());const receipt=JSON.parse(child.stdout);assert.ok(receipt.elapsed<=5500);assert.equal(receipt.state,'quarantined');"
+            },
+            {
+              "line": 660,
+              "text": "assert.equal(receipt.capacityHeld,true);assert.deepEqual(receipt.calls,['create','boot','list','install']);"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 606,
+              "title": "cancel ${fail}-commit store error synchronously revokes only the known locally owned preparation"
+            },
+            {
+              "line": 622,
+              "title": "failed cancellation targets one owned allocation and preserves another live preparation"
+            },
+            {
+              "line": 637,
+              "title": "one failure finalization budget bounds private diagnostics and pending local driver close together without late promotion"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "cancel ${fail}-commit store error synchronously revokes only the known locally owned preparation",
+                "sourceLine": 606,
+                "actualPassingLines": [
+                  "\u2714 cancel before-commit store error synchronously revokes only the known locally owned preparation (983.908875ms)",
+                  "\u2714 cancel after-commit store error synchronously revokes only the known locally owned preparation (752.71525ms)"
+                ]
+              },
+              {
+                "sourceTitle": "failed cancellation targets one owned allocation and preserves another live preparation",
+                "sourceLine": 622,
+                "actualPassingLines": [
+                  "\u2714 failed cancellation targets one owned allocation and preserves another live preparation (1007.41225ms)"
+                ]
+              },
+              {
+                "sourceTitle": "one failure finalization budget bounds private diagnostics and pending local driver close together without late promotion",
+                "sourceLine": 637,
+                "actualPassingLines": [
+                  "\u2714 one failure finalization budget bounds private diagnostics and pending local driver close together without late promotion (5870.611ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "cancel ${fail}-commit store error synchronously revokes only the known locally owned preparation",
+                "sourceLine": 606,
+                "actualPassingLines": [
+                  "\u2714 cancel before-commit store error synchronously revokes only the known locally owned preparation (606.716166ms)",
+                  "\u2714 cancel after-commit store error synchronously revokes only the known locally owned preparation (1037.07525ms)"
+                ]
+              },
+              {
+                "sourceTitle": "failed cancellation targets one owned allocation and preserves another live preparation",
+                "sourceLine": 622,
+                "actualPassingLines": [
+                  "\u2714 failed cancellation targets one owned allocation and preserves another live preparation (814.084875ms)"
+                ]
+              },
+              {
+                "sourceTitle": "one failure finalization budget bounds private diagnostics and pending local driver close together without late promotion",
+                "sourceLine": 637,
+                "actualPassingLines": [
+                  "\u2714 one failure finalization budget bounds private diagnostics and pending local driver close together without late promotion (6012.732083ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/observed-allocation.test.ts"
+        },
+        {
+          "path": "tests/observed-service.test.ts",
+          "sha256": "b80d5741d34f6cd1a0c350c5c6ddc50295f0483253eef0a111387476567222db",
+          "requestedReviewerLineRanges": [
+            [
+              662,
+              769
+            ]
+          ],
+          "lineRanges": [
+            [
+              662,
+              769
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 676,
+              "text": "deviceWindow: async () => assert.fail('No window'), fakeBackend: { runner, window: undefined } });"
+            },
+            {
+              "line": 682,
+              "text": "assert.equal(revocations, 1, 'The owned local gate is revoked synchronously before cancellation awaits authority');"
+            },
+            {
+              "line": 683,
+              "text": "await assert.rejects(cancellation, { code: 'STORE_UNAVAILABLE' });"
+            },
+            {
+              "line": 689,
+              "text": "assert.deepEqual(calls, ['snapshot-ui'], 'Explicit local cancellation prevents follow-up input despite an unavailable initial read');"
+            },
+            {
+              "line": 690,
+              "text": "assert.equal(terminal.cancellationRequested, false, 'An unavailable cancellation read cannot invent durable cancellation');"
+            },
+            {
+              "line": 691,
+              "text": "assert.equal(terminal.actionAttempted, false); assert.equal(terminal.actionAcknowledged, false);"
+            },
+            {
+              "line": 692,
+              "text": "assert.equal(terminal.observations, 0); assert.deepEqual(terminal.evidence.observations, []);"
+            },
+            {
+              "line": 693,
+              "text": "assert.equal(terminal.state, 'unresolved'); assert.equal(terminal.authority, 'unconfirmed');"
+            },
+            {
+              "line": 694,
+              "text": "assert.equal(terminal.outcome, null); assert.equal(terminal.reason, 'FINALIZATION_UNCONFIRMED');"
+            },
+            {
+              "line": 708,
+              "text": "deviceWindow: async () => assert.fail('No window'), fakeBackend: { runner, window: undefined } });"
+            },
+            {
+              "line": 711,
+              "text": "await service.close(); assert.equal(terminal.outcome, 'already_satisfied');"
+            },
+            {
+              "line": 712,
+              "text": "assert.equal(terminal.authority, 'committed'); assert.equal(terminal.reason, null);"
+            },
+            {
+              "line": 713,
+              "text": "assert.equal(terminal.actionAttempted, false); assert.equal(terminal.actionAcknowledged, false);"
+            },
+            {
+              "line": 714,
+              "text": "assert.equal(terminal.observations, 1); assert.deepEqual(calls, ['snapshot-ui']);"
+            },
+            {
+              "line": 715,
+              "text": "assert.equal(terminal.cancellationRequested, false); assert.equal(terminal.admission, 'available');"
+            },
+            {
+              "line": 716,
+              "text": "assert.equal(terminal.evidence.exportStatus, 'complete');"
+            },
+            {
+              "line": 717,
+              "text": "assert.ok(observedAt - began < raw.timeoutMs, 'Observation settled within its action deadline');"
+            },
+            {
+              "line": 718,
+              "text": "assert.ok(closedAt - began > raw.timeoutMs, 'Local close outlasted the observation deadline');"
+            },
+            {
+              "line": 719,
+              "text": "assert.ok(closedAt - observedAt < 5000, 'Confirmed local close settled within its separate finalization budget');"
+            },
+            {
+              "line": 743,
+              "text": "deviceWindow: async () => assert.fail('No window'), fakeBackend: { runner, window: undefined } });"
+            },
+            {
+              "line": 747,
+              "text": "await assert.rejects(service.cancel('one'), { code: 'STORE_UNAVAILABLE' });"
+            },
+            {
+              "line": 748,
+              "text": "assert.equal((await service.inspect('one')).cancellationRequested, false);"
+            },
+            {
+              "line": 750,
+              "text": "assert.equal(terminal.authority, 'committed'); assert.equal(terminal.outcome, 'inconclusive');"
+            },
+            {
+              "line": 751,
+              "text": "assert.equal(terminal.reason, 'CANCELLED');"
+            },
+            {
+              "line": 752,
+              "text": "assert.equal(terminal.cancellationRequested, true, 'The verified joint finalization commits the claim cancellation flag');"
+            },
+            {
+              "line": 753,
+              "text": "assert.equal(terminal.actionAttempted, false); assert.equal(terminal.actionAcknowledged, false);"
+            },
+            {
+              "line": 754,
+              "text": "assert.equal(terminal.admission, 'quarantined'); assert.equal(terminal.observations, 1);"
+            },
+            {
+              "line": 755,
+              "text": "assert.deepEqual(calls, ['snapshot-ui']); await service.close();"
+            },
+            {
+              "line": 765,
+              "text": "assert.equal(reserved.kind, 'reserved'); if (reserved.kind !== 'reserved') throw new Error('Fixture reservation refused');"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 662,
+              "title": "local cancel fences continuation even when initial authoritative read fails"
+            },
+            {
+              "line": 697,
+              "title": "settled close within finalization budget does not consume action observation budget"
+            },
+            {
+              "line": 723,
+              "title": "local cancellation with a failed durable write during prolonged ${phase} cannot commit computed success"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "local cancel fences continuation even when initial authoritative read fails",
+                "sourceLine": 662,
+                "actualPassingLines": [
+                  "\u2714 local cancel fences continuation even when initial authoritative read fails (490.66475ms)"
+                ]
+              },
+              {
+                "sourceTitle": "settled close within finalization budget does not consume action observation budget",
+                "sourceLine": 697,
+                "actualPassingLines": [
+                  "\u2714 settled close within finalization budget does not consume action observation budget (1469.347167ms)"
+                ]
+              },
+              {
+                "sourceTitle": "local cancellation with a failed durable write during prolonged ${phase} cannot commit computed success",
+                "sourceLine": 723,
+                "actualPassingLines": [
+                  "\u2714 local cancellation with a failed durable write during prolonged close cannot commit computed success (1278.652167ms)",
+                  "\u2714 local cancellation with a failed durable write during prolonged provisional cannot commit computed success (1431.9055ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "local cancel fences continuation even when initial authoritative read fails",
+                "sourceLine": 662,
+                "actualPassingLines": [
+                  "\u2714 local cancel fences continuation even when initial authoritative read fails (455.194834ms)"
+                ]
+              },
+              {
+                "sourceTitle": "settled close within finalization budget does not consume action observation budget",
+                "sourceLine": 697,
+                "actualPassingLines": [
+                  "\u2714 settled close within finalization budget does not consume action observation budget (1272.323125ms)"
+                ]
+              },
+              {
+                "sourceTitle": "local cancellation with a failed durable write during prolonged ${phase} cannot commit computed success",
+                "sourceLine": 723,
+                "actualPassingLines": [
+                  "\u2714 local cancellation with a failed durable write during prolonged close cannot commit computed success (1371.8975ms)",
+                  "\u2714 local cancellation with a failed durable write during prolonged provisional cannot commit computed success (1485.220541ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/observed-service.test.ts"
+        }
+      ],
+      "primaryActualPassingLines": {
+        "node26": [
+          "\u2714 aggregate booting stage budget covers every internal call without resetting on a settled response (685.184583ms)",
+          "\u2714 aggregate readiness stage budget covers every internal call without resetting on a settled response (601.103458ms)"
+        ],
+        "node24": [
+          "\u2714 aggregate booting stage budget covers every internal call without resetting on a settled response (372.307ms)",
+          "\u2714 aggregate readiness stage budget covers every internal call without resetting on a settled response (843.345542ms)"
+        ]
+      },
+      "commands": {
+        "node26": "faults/integration/full-gates/composed-host-node26.json",
+        "node24": "faults/integration/full-gates/composed-host-node24.json"
+      },
+      "rawLogs": {
+        "node26": {
+          "path": "faults/integration/full-gates/composed-host-node26.log",
+          "sha256": "246a5e4b49e6e0542a768077be5a5e89e1e5a4d36b6d9be807ac9825d72d43c4"
+        },
+        "node24": {
+          "path": "faults/integration/full-gates/composed-host-node24.log",
+          "sha256": "1dbe87a1af24e6ae496e515720f2876f18ca115093cebe0a768094b6237b271a"
+        }
+      },
+      "backendCounts": null,
+      "countsProvenance": "Counts/state are the exact executed Source assertions above. No separate per-fixture base raw trace is claimed.",
+      "limit": "Family correspondence, not one new test or per-variant CLI/MCP execution; aggregate1675 includes every executed test, with no skips."
+    },
+    {
+      "id": "BASE.S6",
+      "hostRows": "H06",
+      "manifest": "crash.json",
+      "verdict": "PASS",
+      "normative": "allocation-contract:107; admission-decision:155",
+      "oracle": "Lost preparation reserve/stage/create-start/receipt/park and consume COMMIT replies resolve only from fresh durable authority, never replay or attach falsely.",
+      "evidenceClass": "Already executed source assertions in actual1675 gates; direct/shared-module supplements must not be labeled as new per-variant CLI/MCP raw executions.",
+      "transport": "Direct/shared-module and composition assertions; public per-variant traces remain in separate09 cases.",
+      "sourceAssertions": [
+        {
+          "path": "tests/observed-allocation.test.ts",
+          "sha256": "77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad",
+          "requestedReviewerLineRanges": [
+            [
+              492,
+              508
+            ]
+          ],
+          "lineRanges": [
+            [
+              492,
+              508
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 494,
+              "text": "try { const result = snapshot(await allocator.prepare(f.request())); assert.equal(fired, true);"
+            },
+            {
+              "line": 495,
+              "text": "assert.equal(result.authority, 'committed'); assert.equal(result.state === 'ready', operation === 'parkAllocation');"
+            },
+            {
+              "line": 496,
+              "text": "assert.ok(!JSON.stringify(result).includes(hostile)); const before = [...f.calls]; assert.deepEqual(await allocator.prepare(f.request()), result); assert.deepEqual(f.calls, before);"
+            },
+            {
+              "line": 497,
+              "text": "assert.equal(deviceCalls(f.calls).filter(c => c === 'create').length <= 1, true);"
+            },
+            {
+              "line": 498,
+              "text": "if (operation === 'startCreation') { assert.equal(result.hostCreationBlocked, true); assert.deepEqual(deviceCalls(f.calls), []); }"
+            },
+            {
+              "line": 499,
+              "text": "if (operation === 'recordCreation') assert.ok(!deviceCalls(f.calls).includes('boot'));"
+            },
+            {
+              "line": 505,
+              "text": "try { const result = snapshot(await allocator.prepare(f.request())); assert.equal(result.authority, 'committed'); assert.equal(result.state, 'preparing');"
+            },
+            {
+              "line": 506,
+              "text": "assert.equal(f.admission.readAllocationForAction('allocate-one')?.allocationId, result.allocationId); assert.deepEqual(deviceCalls(f.calls), []);"
+            },
+            {
+              "line": 507,
+              "text": "const before = [...f.calls]; assert.deepEqual(await allocator.prepare(f.request()), result); assert.deepEqual(f.calls, before);"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 492,
+              "title": "lost ${operation} commit response uses fresh durable state and never replays"
+            },
+            {
+              "line": 503,
+              "title": "lost reservation commit reply returns only fresh accepted authority, never false no-acceptance or a replay"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "lost ${operation} commit response uses fresh durable state and never replays",
+                "sourceLine": 492,
+                "actualPassingLines": [
+                  "\u2714 lost stageAllocation commit response uses fresh durable state and never replays (459.677375ms)",
+                  "\u2714 lost startCreation commit response uses fresh durable state and never replays (351.416625ms)",
+                  "\u2714 lost recordCreation commit response uses fresh durable state and never replays (372.625625ms)",
+                  "\u2714 lost parkAllocation commit response uses fresh durable state and never replays (904.167333ms)"
+                ]
+              },
+              {
+                "sourceTitle": "lost reservation commit reply returns only fresh accepted authority, never false no-acceptance or a replay",
+                "sourceLine": 503,
+                "actualPassingLines": [
+                  "\u2714 lost reservation commit reply returns only fresh accepted authority, never false no-acceptance or a replay (229.424125ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "lost ${operation} commit response uses fresh durable state and never replays",
+                "sourceLine": 492,
+                "actualPassingLines": [
+                  "\u2714 lost stageAllocation commit response uses fresh durable state and never replays (446.4405ms)",
+                  "\u2714 lost startCreation commit response uses fresh durable state and never replays (312.476708ms)",
+                  "\u2714 lost recordCreation commit response uses fresh durable state and never replays (353.59625ms)",
+                  "\u2714 lost parkAllocation commit response uses fresh durable state and never replays (956.972542ms)"
+                ]
+              },
+              {
+                "sourceTitle": "lost reservation commit reply returns only fresh accepted authority, never false no-acceptance or a replay",
+                "sourceLine": 503,
+                "actualPassingLines": [
+                  "\u2714 lost reservation commit reply returns only fresh accepted authority, never false no-acceptance or a replay (280.1885ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/observed-allocation.test.ts"
+        },
+        {
+          "path": "tests/observed-service.test.ts",
+          "sha256": "b80d5741d34f6cd1a0c350c5c6ddc50295f0483253eef0a111387476567222db",
+          "requestedReviewerLineRanges": [
+            [
+              589,
+              606
+            ]
+          ],
+          "lineRanges": [
+            [
+              589,
+              606
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 590,
+              "text": "const { admission, service } = fixture(t, async () => assert.fail('No backend'), {}, {"
+            },
+            {
+              "line": 595,
+              "text": "await assert.rejects(service.start(raw), error => {"
+            },
+            {
+              "line": 596,
+              "text": "assert.equal((error as { code: string }).code, 'STORE_UNAVAILABLE');"
+            },
+            {
+              "line": 597,
+              "text": "assert.equal((error as { toJSON(): { acceptance: string } }).toJSON().acceptance, 'unknown'); return true;"
+            },
+            {
+              "line": 599,
+              "text": "await assert.rejects(service.inspect('one'), { code: 'ACTION_NOT_STARTED' });"
+            },
+            {
+              "line": 601,
+              "text": "const result = await service.start(raw); assert.equal(result.disposition, 'retrieved');"
+            },
+            {
+              "line": 602,
+              "text": "assert.equal(result.state, 'running'); assert.equal(result.authority, 'none'); assert.equal(result.outcome, null);"
+            },
+            {
+              "line": 603,
+              "text": "assert.equal((await service.start(raw)).disposition, 'retrieved');"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 589,
+              "title": "consume ${point} failure resolves authoritatively without attaching or rebinding"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "consume ${point} failure resolves authoritatively without attaching or rebinding",
+                "sourceLine": 589,
+                "actualPassingLines": [
+                  "\u2714 consume beforeCommit failure resolves authoritatively without attaching or rebinding (362.062458ms)",
+                  "\u2714 consume afterCommit failure resolves authoritatively without attaching or rebinding (398.008458ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "consume ${point} failure resolves authoritatively without attaching or rebinding",
+                "sourceLine": 589,
+                "actualPassingLines": [
+                  "\u2714 consume beforeCommit failure resolves authoritatively without attaching or rebinding (332.376458ms)",
+                  "\u2714 consume afterCommit failure resolves authoritatively without attaching or rebinding (369.744667ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/observed-service.test.ts"
+        },
+        {
+          "path": "tests/admission-allocation.test.ts",
+          "sha256": "13eecf7dfd821fc3bb27c3bc4a9d826eb25bb493585f46c5615c2fed07675ada",
+          "requestedReviewerLineRanges": [
+            [
+              260,
+              280
+            ],
+            [
+              388,
+              419
+            ]
+          ],
+          "lineRanges": [
+            [
+              260,
+              280
+            ],
+            [
+              388,
+              419
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 264,
+              "text": "assert.equal(exited.signal, 'SIGKILL', JSON.stringify(exited)); assert.match(exited.stdout, new RegExp(operation));"
+            },
+            {
+              "line": 266,
+              "text": "if (operation === 'reserveAllocation' && point === 'beforeCommit') { assert.equal(record, undefined); return; }"
+            },
+            {
+              "line": 267,
+              "text": "assert.ok(record); assert.equal(admission.reserveAllocation(input()).kind, 'retrieved');"
+            },
+            {
+              "line": 268,
+              "text": "const view = admission.readAction('one'); assert.equal(view?.kind, 'allocation'); if (view?.kind !== 'allocation') return;"
+            },
+            {
+              "line": 270,
+              "text": "assert.equal(view.attempt?.state, 'terminal'); assert.equal(record.state, 'retained'); assert.equal(record.actionEvidence?.state, 'terminal');"
+            },
+            {
+              "line": 271,
+              "text": "} else { assert.notEqual(view.attempt?.state, 'terminal'); assert.notEqual(record.outcome, 'action_completed'); }"
+            },
+            {
+              "line": 273,
+              "text": "assert.equal(record.hostCreationBlocked, true);"
+            },
+            {
+              "line": 274,
+              "text": "assert.equal(admission.acquire({ device: uuid, attempt: { kind: 'legacy', id: 'late' }, digest, intent: {} }).kind, 'refused');"
+            },
+            {
+              "line": 277,
+              "text": "assert.equal(admission.quarantineAbandonedAllocation(record.owner), true);"
+            },
+            {
+              "line": 278,
+              "text": "assert.equal(admission.readAllocation(record.allocationId)?.state, 'quarantined');"
+            },
+            {
+              "line": 392,
+              "text": "await assert.rejects(r.reservation.create(async () => { effects++; return created(r.reservation.identity.allocationId); }));"
+            },
+            {
+              "line": 393,
+              "text": "assert.throws(() => r.reservation.admit());"
+            },
+            {
+              "line": 394,
+              "text": "await assert.rejects(r.reservation.create(async () => { effects++; return created(r.reservation.identity.allocationId); }));"
+            },
+            {
+              "line": 395,
+              "text": "assert.equal(effects, 1);"
+            },
+            {
+              "line": 396,
+              "text": "assert.equal(admission.reserveAllocation(input()).kind, 'retrieved');"
+            },
+            {
+              "line": 397,
+              "text": "assert.equal(admission.readAllocation(r.reservation.identity.allocationId)?.hostCreationBlocked, point === 'beforeCommit');"
+            },
+            {
+              "line": 404,
+              "text": "assert.throws(() => r.claim.recordObservation(['/isolated/before.json'])); fail = false;"
+            },
+            {
+              "line": 405,
+              "text": "let effects = 0; assert.throws(() => driver.dispatch('tap', async () => { effects++; })); assert.equal(effects, 0);"
+            },
+            {
+              "line": 406,
+              "text": "assert.equal(r.claim.finalize({ outcome: 'inconclusive', disposition: 'quarantined', payload: { outcome: 'inconclusive', reason: 'RESULT_EVIDENCE_UNCONFIRMED' }, evidenceRefs: [] }).authority, 'committed');"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 261,
+              "title": "real owner death at ${operation}/${point} cannot replay or split terminal authority"
+            },
+            {
+              "line": 388,
+              "title": "creation receipt ${point} failure revokes the local reservation without replay"
+            },
+            {
+              "line": 399,
+              "title": "failed capture evidence persistence revokes action dispatch before storage recovers"
+            },
+            {
+              "line": 409,
+              "title": "revoked preparation cannot park after failed ${closure} persistence"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "real owner death at ${operation}/${point} cannot replay or split terminal authority",
+                "sourceLine": 261,
+                "actualPassingLines": [
+                  "\u2714 real owner death at reserveAllocation/beforeCommit cannot replay or split terminal authority (230.726041ms)",
+                  "\u2714 real owner death at reserveAllocation/afterCommit cannot replay or split terminal authority (342.526834ms)",
+                  "\u2714 real owner death at startCreation/beforeCommit cannot replay or split terminal authority (387.102375ms)",
+                  "\u2714 real owner death at startCreation/afterCommit cannot replay or split terminal authority (426.523666ms)",
+                  "\u2714 real owner death at recordCreation/beforeCommit cannot replay or split terminal authority (420.61825ms)",
+                  "\u2714 real owner death at recordCreation/afterCommit cannot replay or split terminal authority (532.421667ms)",
+                  "\u2714 real owner death at admitAllocation/beforeCommit cannot replay or split terminal authority (550.973583ms)",
+                  "\u2714 real owner death at admitAllocation/afterCommit cannot replay or split terminal authority (531.569875ms)",
+                  "\u2714 real owner death at parkAllocation/beforeCommit cannot replay or split terminal authority (1245.204541ms)",
+                  "\u2714 real owner death at parkAllocation/afterCommit cannot replay or split terminal authority (1219.0365ms)",
+                  "\u2714 real owner death at consumeAllocation/beforeCommit cannot replay or split terminal authority (1395.591208ms)",
+                  "\u2714 real owner death at consumeAllocation/afterCommit cannot replay or split terminal authority (1473.790042ms)",
+                  "\u2714 real owner death at finalize/beforeCommit cannot replay or split terminal authority (1869.7ms)",
+                  "\u2714 real owner death at finalize/afterCommit cannot replay or split terminal authority (1793.545875ms)",
+                  "\u2714 real owner death at recordActionExport/beforeCommit cannot replay or split terminal authority (1671.266667ms)",
+                  "\u2714 real owner death at recordActionExport/afterCommit cannot replay or split terminal authority (1745.364584ms)"
+                ]
+              },
+              {
+                "sourceTitle": "creation receipt ${point} failure revokes the local reservation without replay",
+                "sourceLine": 388,
+                "actualPassingLines": [
+                  "\u2714 creation receipt beforeCommit failure revokes the local reservation without replay (320.101167ms)",
+                  "\u2714 creation receipt afterCommit failure revokes the local reservation without replay (326.334583ms)"
+                ]
+              },
+              {
+                "sourceTitle": "failed capture evidence persistence revokes action dispatch before storage recovers",
+                "sourceLine": 399,
+                "actualPassingLines": [
+                  "\u2714 failed capture evidence persistence revokes action dispatch before storage recovers (980.8445ms)"
+                ]
+              },
+              {
+                "sourceTitle": "revoked preparation cannot park after failed ${closure} persistence",
+                "sourceLine": 409,
+                "actualPassingLines": [
+                  "\u2714 revoked preparation cannot park after failed cancel persistence (839.848917ms)",
+                  "\u2714 revoked preparation cannot park after failed failAllocation persistence (769.039709ms)",
+                  "\u2714 revoked preparation cannot park after failed finalize persistence (633.146125ms)",
+                  "\u2714 revoked preparation cannot park after failed parkAllocation persistence (601.27675ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "real owner death at ${operation}/${point} cannot replay or split terminal authority",
+                "sourceLine": 261,
+                "actualPassingLines": [
+                  "\u2714 real owner death at reserveAllocation/beforeCommit cannot replay or split terminal authority (263.920083ms)",
+                  "\u2714 real owner death at reserveAllocation/afterCommit cannot replay or split terminal authority (420.230417ms)",
+                  "\u2714 real owner death at startCreation/beforeCommit cannot replay or split terminal authority (476.824ms)",
+                  "\u2714 real owner death at startCreation/afterCommit cannot replay or split terminal authority (510.900792ms)",
+                  "\u2714 real owner death at recordCreation/beforeCommit cannot replay or split terminal authority (444.705333ms)",
+                  "\u2714 real owner death at recordCreation/afterCommit cannot replay or split terminal authority (531.313ms)",
+                  "\u2714 real owner death at admitAllocation/beforeCommit cannot replay or split terminal authority (551.830917ms)",
+                  "\u2714 real owner death at admitAllocation/afterCommit cannot replay or split terminal authority (536.919375ms)",
+                  "\u2714 real owner death at parkAllocation/beforeCommit cannot replay or split terminal authority (1083.830375ms)",
+                  "\u2714 real owner death at parkAllocation/afterCommit cannot replay or split terminal authority (1202.492458ms)",
+                  "\u2714 real owner death at consumeAllocation/beforeCommit cannot replay or split terminal authority (1367.022041ms)",
+                  "\u2714 real owner death at consumeAllocation/afterCommit cannot replay or split terminal authority (1469.564166ms)",
+                  "\u2714 real owner death at finalize/beforeCommit cannot replay or split terminal authority (1658.066958ms)",
+                  "\u2714 real owner death at finalize/afterCommit cannot replay or split terminal authority (1684.67175ms)",
+                  "\u2714 real owner death at recordActionExport/beforeCommit cannot replay or split terminal authority (1679.033ms)",
+                  "\u2714 real owner death at recordActionExport/afterCommit cannot replay or split terminal authority (1748.023042ms)"
+                ]
+              },
+              {
+                "sourceTitle": "creation receipt ${point} failure revokes the local reservation without replay",
+                "sourceLine": 388,
+                "actualPassingLines": [
+                  "\u2714 creation receipt beforeCommit failure revokes the local reservation without replay (352.520833ms)",
+                  "\u2714 creation receipt afterCommit failure revokes the local reservation without replay (347.83425ms)"
+                ]
+              },
+              {
+                "sourceTitle": "failed capture evidence persistence revokes action dispatch before storage recovers",
+                "sourceLine": 399,
+                "actualPassingLines": [
+                  "\u2714 failed capture evidence persistence revokes action dispatch before storage recovers (1231.315292ms)"
+                ]
+              },
+              {
+                "sourceTitle": "revoked preparation cannot park after failed ${closure} persistence",
+                "sourceLine": 409,
+                "actualPassingLines": [
+                  "\u2714 revoked preparation cannot park after failed cancel persistence (780.924667ms)",
+                  "\u2714 revoked preparation cannot park after failed failAllocation persistence (805.074667ms)",
+                  "\u2714 revoked preparation cannot park after failed finalize persistence (588.830417ms)",
+                  "\u2714 revoked preparation cannot park after failed parkAllocation persistence (738.783375ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/admission-allocation.test.ts"
+        }
+      ],
+      "primaryActualPassingLines": {
+        "node26": [
+          "\u2714 lost stageAllocation commit response uses fresh durable state and never replays (459.677375ms)",
+          "\u2714 lost startCreation commit response uses fresh durable state and never replays (351.416625ms)",
+          "\u2714 lost recordCreation commit response uses fresh durable state and never replays (372.625625ms)",
+          "\u2714 lost parkAllocation commit response uses fresh durable state and never replays (904.167333ms)",
+          "\u2714 lost reservation commit reply returns only fresh accepted authority, never false no-acceptance or a replay (229.424125ms)"
+        ],
+        "node24": [
+          "\u2714 lost stageAllocation commit response uses fresh durable state and never replays (446.4405ms)",
+          "\u2714 lost startCreation commit response uses fresh durable state and never replays (312.476708ms)",
+          "\u2714 lost recordCreation commit response uses fresh durable state and never replays (353.59625ms)",
+          "\u2714 lost parkAllocation commit response uses fresh durable state and never replays (956.972542ms)",
+          "\u2714 lost reservation commit reply returns only fresh accepted authority, never false no-acceptance or a replay (280.1885ms)"
+        ]
+      },
+      "commands": {
+        "node26": "faults/integration/full-gates/composed-host-node26.json",
+        "node24": "faults/integration/full-gates/composed-host-node24.json"
+      },
+      "rawLogs": {
+        "node26": {
+          "path": "faults/integration/full-gates/composed-host-node26.log",
+          "sha256": "246a5e4b49e6e0542a768077be5a5e89e1e5a4d36b6d9be807ac9825d72d43c4"
+        },
+        "node24": {
+          "path": "faults/integration/full-gates/composed-host-node24.log",
+          "sha256": "1dbe87a1af24e6ae496e515720f2876f18ca115093cebe0a768094b6237b271a"
+        }
+      },
+      "backendCounts": null,
+      "countsProvenance": "Counts/state are the exact executed Source assertions above. No separate per-fixture base raw trace is claimed.",
+      "limit": "Family correspondence, not one new test or per-variant CLI/MCP execution; aggregate1675 includes every executed test, with no skips."
+    },
+    {
+      "id": "BASE.S7",
+      "hostRows": "H07",
+      "manifest": "storage.json",
+      "verdict": "PASS",
+      "normative": "allocation-contract:101; admission-decision:155",
+      "oracle": "Preparation evidence publication/readiness screenshot failure must quarantine without parking or claiming nonexistent evidence; actual corrupt capacity/manifest/unsafe permissions fail closed.",
+      "evidenceClass": "Already executed source assertions in actual1675 gates; direct/shared-module supplements must not be labeled as new per-variant CLI/MCP raw executions.",
+      "transport": "Direct/shared-module and composition assertions; public per-variant traces remain in separate09 cases.",
+      "sourceAssertions": [
+        {
+          "path": "tests/observed-allocation.test.ts",
+          "sha256": "77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad",
+          "requestedReviewerLineRanges": [
+            [
+              696,
+              708
+            ]
+          ],
+          "lineRanges": [
+            [
+              696,
+              708
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 702,
+              "text": "const result = snapshot(await allocator.prepare(f.request())); assert.equal(result.state, 'quarantined'); assert.equal(result.outcome, 'uncertain');"
+            },
+            {
+              "line": 703,
+              "text": "assert.equal(result.reason, 'PREPARATION_UNCONFIRMED'); assert.equal(result.authority, 'committed'); assert.equal(result.reservation.capacityHeld, true);"
+            },
+            {
+              "line": 704,
+              "text": "assert.equal(result.device?.udid, 'ABCDEF00-0000-4000-8000-000000000001'); assert.equal(JSON.stringify(result).includes(hostile), false);"
+            },
+            {
+              "line": 705,
+              "text": "assert.ok(!result.evidenceRefs.some(ref => ref.endsWith('/source-diagnostics.json'))); assert.deepEqual(deviceCalls(f.calls), ['create', 'boot', 'list', 'install']);"
+            },
+            {
+              "line": 707,
+              "text": "await allocator.close(); assert.deepEqual(f.admission.readAllocation(result.allocationId), stored); assert.deepEqual(await allocator.get(result.allocationId), result);"
+            },
+            {
+              "line": 708,
+              "text": "assert.deepEqual(deviceCalls(f.calls), ['create', 'boot', 'list', 'install']); assert.equal(f.admission.inspect(result.device!.udid)?.state, 'quarantined');"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 696,
+              "title": "required diagnostic publication failure quarantines a settled known install refusal"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "required diagnostic publication failure quarantines a settled known install refusal",
+                "sourceLine": 696,
+                "actualPassingLines": [
+                  "\u2714 required diagnostic publication failure quarantines a settled known install refusal (607.679833ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "required diagnostic publication failure quarantines a settled known install refusal",
+                "sourceLine": 696,
+                "actualPassingLines": [
+                  "\u2714 required diagnostic publication failure quarantines a settled known install refusal (545.728375ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/observed-allocation.test.ts"
+        },
+        {
+          "path": "tests/observed-allocation.test.ts",
+          "sha256": "77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad",
+          "requestedReviewerLineRanges": [
+            [
+              478,
+              490
+            ],
+            [
+              529,
+              534
+            ]
+          ],
+          "lineRanges": [
+            [
+              478,
+              490
+            ],
+            [
+              529,
+              534
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 484,
+              "text": "if (evidence === 'copy') { assert.equal(result.state, 'ready'); assert.equal(result.readinessEvidence.length, 2);"
+            },
+            {
+              "line": 485,
+              "text": "const copied = result.readinessEvidence.find(ref => ref.endsWith('.jpg'))!; assert.notEqual(copied, path);"
+            },
+            {
+              "line": 486,
+              "text": "assert.deepEqual(await fs.readFile(copied), await fs.readFile(path)); assert.equal((await fs.stat(copied)).mode & 0o777, 0o600);"
+            },
+            {
+              "line": 487,
+              "text": "} else { assert.equal(result.state, 'quarantined'); assert.equal(result.reason, 'READINESS_FAILED'); assert.notEqual(result.outcome, 'prepared'); }"
+            },
+            {
+              "line": 488,
+              "text": "assert.equal(deviceCalls(f.calls).at(-1), 'screenshot');"
+            },
+            {
+              "line": 531,
+              "text": "try { await fs.chmod(path, 0o444); refused(await allocator.prepare(f.request()), 'STORE_UNAVAILABLE'); assert.deepEqual(f.calls, []); }"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 478,
+              "title": "readiness screenshot ${evidence} is persisted privately or refuses without parking"
+            },
+            {
+              "line": 529,
+              "title": "unsafe ${mode} store permissions fail closed before prerequisites and never choose another root"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "readiness screenshot ${evidence} is persisted privately or refuses without parking",
+                "sourceLine": 478,
+                "actualPassingLines": [
+                  "\u2714 readiness screenshot copy is persisted privately or refuses without parking (752.593417ms)",
+                  "\u2714 readiness screenshot missing is persisted privately or refuses without parking (605.668042ms)",
+                  "\u2714 readiness screenshot symlink is persisted privately or refuses without parking (469.56075ms)",
+                  "\u2714 readiness screenshot relative is persisted privately or refuses without parking (1004.394625ms)"
+                ]
+              },
+              {
+                "sourceTitle": "unsafe ${mode} store permissions fail closed before prerequisites and never choose another root",
+                "sourceLine": 529,
+                "actualPassingLines": [
+                  "\u2714 unsafe file store permissions fail closed before prerequisites and never choose another root (82.160917ms)",
+                  "\u2714 unsafe directory store permissions fail closed before prerequisites and never choose another root (87.190125ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "readiness screenshot ${evidence} is persisted privately or refuses without parking",
+                "sourceLine": 478,
+                "actualPassingLines": [
+                  "\u2714 readiness screenshot copy is persisted privately or refuses without parking (703.870125ms)",
+                  "\u2714 readiness screenshot missing is persisted privately or refuses without parking (862.866334ms)",
+                  "\u2714 readiness screenshot symlink is persisted privately or refuses without parking (1031.676167ms)",
+                  "\u2714 readiness screenshot relative is persisted privately or refuses without parking (970.384125ms)"
+                ]
+              },
+              {
+                "sourceTitle": "unsafe ${mode} store permissions fail closed before prerequisites and never choose another root",
+                "sourceLine": 529,
+                "actualPassingLines": [
+                  "\u2714 unsafe file store permissions fail closed before prerequisites and never choose another root (235.772459ms)",
+                  "\u2714 unsafe directory store permissions fail closed before prerequisites and never choose another root (129.971959ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/observed-allocation.test.ts"
+        },
+        {
+          "path": "tests/admission-allocation.test.ts",
+          "sha256": "13eecf7dfd821fc3bb27c3bc4a9d826eb25bb493585f46c5615c2fed07675ada",
+          "requestedReviewerLineRanges": [
+            [
+              493,
+              517
+            ]
+          ],
+          "lineRanges": [
+            [
+              493,
+              515
+            ]
+          ],
+          "rangeNote": "Reviewer context ending after EOF is explicitly clipped to current file length; Source bytes/hash unchanged.",
+          "assertionAnchors": [
+            {
+              "line": 495,
+              "text": "assert.equal(admission.reserveAllocation(input()).kind, 'reserved');"
+            },
+            {
+              "line": 497,
+              "text": "assert.throws(() => admission.readAllocationCapacity(), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 501,
+              "text": "assert.equal(admission.reserveAllocation(input()).kind, 'reserved');"
+            },
+            {
+              "line": 503,
+              "text": "assert.throws(() => admission.readAllocationCapacity(), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 508,
+              "text": "assert.equal(admission.reserveAllocation(first).kind, 'reserved');"
+            },
+            {
+              "line": 510,
+              "text": "assert.equal(admission.reserveAllocation(second).kind, 'reserved');"
+            },
+            {
+              "line": 512,
+              "text": "assert.deepEqual(admission.readAllocationCapacity(), { heldAllocations: 2, reservedBytes: Number.MAX_SAFE_INTEGER });"
+            },
+            {
+              "line": 514,
+              "text": "assert.throws(() => admission.readAllocationCapacity(), { code: 'STATE_UNAVAILABLE' });"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 493,
+              "title": "allocation capacity rejects corrupt ${field} ${JSON.stringify(value)}"
+            },
+            {
+              "line": 499,
+              "title": "allocation capacity rejects a corrupt checksum rather than returning an empty or partial count"
+            },
+            {
+              "line": 505,
+              "title": "allocation capacity accepts the exact safe integer limit and refuses aggregate overflow"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "allocation capacity rejects corrupt ${field} ${JSON.stringify(value)}",
+                "sourceLine": 493,
+                "actualPassingLines": [
+                  "\u2714 allocation capacity rejects corrupt capacityHeld \"false\" (109.661625ms)",
+                  "\u2714 allocation capacity rejects corrupt capacityHeld null (77.015958ms)",
+                  "\u2714 allocation capacity rejects corrupt reservationBytes -1 (101.218417ms)",
+                  "\u2714 allocation capacity rejects corrupt reservationBytes 0 (162.940209ms)",
+                  "\u2714 allocation capacity rejects corrupt reservationBytes 1.5 (143.092375ms)",
+                  "\u2714 allocation capacity rejects corrupt reservationBytes \"800\" (144.001875ms)",
+                  "\u2714 allocation capacity rejects corrupt reservationBytes 9007199254740992 (114.914208ms)"
+                ]
+              },
+              {
+                "sourceTitle": "allocation capacity rejects a corrupt checksum rather than returning an empty or partial count",
+                "sourceLine": 499,
+                "actualPassingLines": [
+                  "\u2714 allocation capacity rejects a corrupt checksum rather than returning an empty or partial count (148.761625ms)"
+                ]
+              },
+              {
+                "sourceTitle": "allocation capacity accepts the exact safe integer limit and refuses aggregate overflow",
+                "sourceLine": 505,
+                "actualPassingLines": [
+                  "\u2714 allocation capacity accepts the exact safe integer limit and refuses aggregate overflow (200.115292ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "allocation capacity rejects corrupt ${field} ${JSON.stringify(value)}",
+                "sourceLine": 493,
+                "actualPassingLines": [
+                  "\u2714 allocation capacity rejects corrupt capacityHeld \"false\" (80.237208ms)",
+                  "\u2714 allocation capacity rejects corrupt capacityHeld null (111.197166ms)",
+                  "\u2714 allocation capacity rejects corrupt reservationBytes -1 (93.713542ms)",
+                  "\u2714 allocation capacity rejects corrupt reservationBytes 0 (157.332584ms)",
+                  "\u2714 allocation capacity rejects corrupt reservationBytes 1.5 (152.677333ms)",
+                  "\u2714 allocation capacity rejects corrupt reservationBytes \"800\" (119.171666ms)",
+                  "\u2714 allocation capacity rejects corrupt reservationBytes 9007199254740992 (158.683792ms)"
+                ]
+              },
+              {
+                "sourceTitle": "allocation capacity rejects a corrupt checksum rather than returning an empty or partial count",
+                "sourceLine": 499,
+                "actualPassingLines": [
+                  "\u2714 allocation capacity rejects a corrupt checksum rather than returning an empty or partial count (148.979958ms)"
+                ]
+              },
+              {
+                "sourceTitle": "allocation capacity accepts the exact safe integer limit and refuses aggregate overflow",
+                "sourceLine": 505,
+                "actualPassingLines": [
+                  "\u2714 allocation capacity accepts the exact safe integer limit and refuses aggregate overflow (207.273584ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/admission-allocation.test.ts"
+        },
+        {
+          "path": "tests/admission-migration.test.ts",
+          "sha256": "ad508ff49805eb79ea929b920f7748324d65c5111f4e5771a6c17a42060877e7",
+          "requestedReviewerLineRanges": [
+            [
+              242,
+              253
+            ]
+          ],
+          "lineRanges": [
+            [
+              242,
+              253
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 248,
+              "text": "assert.throws(() => admission.acquire({ attempt: { kind: 'legacy', id: 'bad-manifest' }, device, digest: 'one', intent: {} }), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 249,
+              "text": "assert.throws(() => admission.inspect(device), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 250,
+              "text": "assert.throws(f.open, { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 252,
+              "text": "assert.throws(() => migrateAdmissionForTesting(declaration, f.options), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 253,
+              "text": "assert.equal(existsSync(join(f.root, 'admission.sqlite')), false);"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 242,
+              "title": "activation revalidates persisted manifest and rejects missing initialized storage on every operation"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "activation revalidates persisted manifest and rejects missing initialized storage on every operation",
+                "sourceLine": 242,
+                "actualPassingLines": [
+                  "\u2714 activation revalidates persisted manifest and rejects missing initialized storage on every operation (196.439833ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "activation revalidates persisted manifest and rejects missing initialized storage on every operation",
+                "sourceLine": 242,
+                "actualPassingLines": [
+                  "\u2714 activation revalidates persisted manifest and rejects missing initialized storage on every operation (191.331333ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/admission-migration.test.ts"
+        }
+      ],
+      "primaryActualPassingLines": {
+        "node26": [
+          "\u2714 required diagnostic publication failure quarantines a settled known install refusal (607.679833ms)"
+        ],
+        "node24": [
+          "\u2714 required diagnostic publication failure quarantines a settled known install refusal (545.728375ms)"
+        ]
+      },
+      "commands": {
+        "node26": "faults/integration/full-gates/composed-host-node26.json",
+        "node24": "faults/integration/full-gates/composed-host-node24.json"
+      },
+      "rawLogs": {
+        "node26": {
+          "path": "faults/integration/full-gates/composed-host-node26.log",
+          "sha256": "246a5e4b49e6e0542a768077be5a5e89e1e5a4d36b6d9be807ac9825d72d43c4"
+        },
+        "node24": {
+          "path": "faults/integration/full-gates/composed-host-node24.log",
+          "sha256": "1dbe87a1af24e6ae496e515720f2876f18ca115093cebe0a768094b6237b271a"
+        }
+      },
+      "backendCounts": null,
+      "countsProvenance": "Counts/state are the exact executed Source assertions above. No separate per-fixture base raw trace is claimed.",
+      "limit": "Family correspondence, not one new test or per-variant CLI/MCP execution; aggregate1675 includes every executed test, with no skips."
+    },
+    {
+      "id": "BASE.S8",
+      "hostRows": "H08",
+      "manifest": "migration.json",
+      "verdict": "PASS",
+      "normative": "admission-decision:161; allocation-contract:52,107; validation-matrix:35",
+      "oracle": "Migration guard must block existing handles/new readers/dispatch, interruption cannot recreate authority, activation revalidates manifest; historical read-only projection remains immutable under current disposition.",
+      "evidenceClass": "Already executed source assertions in actual1675 gates; direct/shared-module supplements must not be labeled as new per-variant CLI/MCP raw executions.",
+      "transport": "Direct/shared-module and composition assertions; public per-variant traces remain in separate09 cases.",
+      "sourceAssertions": [
+        {
+          "path": "tests/admission-migration.test.ts",
+          "sha256": "ad508ff49805eb79ea929b920f7748324d65c5111f4e5771a6c17a42060877e7",
+          "requestedReviewerLineRanges": [
+            [
+              201,
+              252
+            ]
+          ],
+          "lineRanges": [
+            [
+              201,
+              252
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 206,
+              "text": "assert.equal(acquired.kind, 'acquired');"
+            },
+            {
+              "line": 212,
+              "text": "assert.throws(() => admission.inspect(device), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 213,
+              "text": "assert.throws(() => admission.activation(), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 214,
+              "text": "assert.throws(() => session.dispatch('launch', async () => { calls++; }), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 215,
+              "text": "assert.throws(() => migrateAdmissionForTesting(declaration, f.options), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 218,
+              "text": "assert.equal(child.status, 0, child.stderr);"
+            },
+            {
+              "line": 220,
+              "text": "assert.equal(calls, 0);"
+            },
+            {
+              "line": 221,
+              "text": "assert.equal(admission.inspect(device)?.state, 'active');"
+            },
+            {
+              "line": 224,
+              "text": "assert.throws(() => migrateAdmissionForTesting(declaration, f.options), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 225,
+              "text": "assert.equal(readFileSync(guard, 'utf8'), JSON.stringify({ token: 'crashed-importer' }));"
+            },
+            {
+              "line": 231,
+              "text": "assert.throws(() => migrateAdmissionForTesting(declaration, { ...f.options, checkpoint(point) { if (point === failure) throw new Error('injected'); } }), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 234,
+              "text": "assert.deepEqual(migrateAdmissionForTesting(declaration, f.options), receipt);"
+            },
+            {
+              "line": 236,
+              "text": "assert.throws(f.open, { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 237,
+              "text": "assert.throws(() => migrateAdmissionForTesting(declaration, f.options), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 248,
+              "text": "assert.throws(() => admission.acquire({ attempt: { kind: 'legacy', id: 'bad-manifest' }, device, digest: 'one', intent: {} }), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 249,
+              "text": "assert.throws(() => admission.inspect(device), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 250,
+              "text": "assert.throws(f.open, { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 252,
+              "text": "assert.throws(() => migrateAdmissionForTesting(declaration, f.options), { code: 'STATE_UNAVAILABLE' });"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 201,
+              "title": "migration guard blocks existing handles and independent readers; a stranded guard is never reclaimed"
+            },
+            {
+              "line": 229,
+              "title": "interrupted ${failure} installation never recreates missing authority"
+            },
+            {
+              "line": 242,
+              "title": "activation revalidates persisted manifest and rejects missing initialized storage on every operation"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "migration guard blocks existing handles and independent readers; a stranded guard is never reclaimed",
+                "sourceLine": 201,
+                "actualPassingLines": [
+                  "\u2714 migration guard blocks existing handles and independent readers; a stranded guard is never reclaimed (410.403208ms)"
+                ]
+              },
+              {
+                "sourceTitle": "interrupted ${failure} installation never recreates missing authority",
+                "sourceLine": 229,
+                "actualPassingLines": [
+                  "\u2714 interrupted markerWritten installation never recreates missing authority (92.316709ms)",
+                  "\u2714 interrupted beforeCommit installation never recreates missing authority (106.975125ms)",
+                  "\u2714 interrupted afterCommit installation never recreates missing authority (228.850291ms)"
+                ]
+              },
+              {
+                "sourceTitle": "activation revalidates persisted manifest and rejects missing initialized storage on every operation",
+                "sourceLine": 242,
+                "actualPassingLines": [
+                  "\u2714 activation revalidates persisted manifest and rejects missing initialized storage on every operation (196.439833ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "migration guard blocks existing handles and independent readers; a stranded guard is never reclaimed",
+                "sourceLine": 201,
+                "actualPassingLines": [
+                  "\u2714 migration guard blocks existing handles and independent readers; a stranded guard is never reclaimed (408.109ms)"
+                ]
+              },
+              {
+                "sourceTitle": "interrupted ${failure} installation never recreates missing authority",
+                "sourceLine": 229,
+                "actualPassingLines": [
+                  "\u2714 interrupted markerWritten installation never recreates missing authority (100.715417ms)",
+                  "\u2714 interrupted beforeCommit installation never recreates missing authority (131.220125ms)",
+                  "\u2714 interrupted afterCommit installation never recreates missing authority (162.542458ms)"
+                ]
+              },
+              {
+                "sourceTitle": "activation revalidates persisted manifest and rejects missing initialized storage on every operation",
+                "sourceLine": 242,
+                "actualPassingLines": [
+                  "\u2714 activation revalidates persisted manifest and rejects missing initialized storage on every operation (191.331333ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/admission-migration.test.ts"
+        },
+        {
+          "path": "tests/admission-migration.test.ts",
+          "sha256": "ad508ff49805eb79ea929b920f7748324d65c5111f4e5771a6c17a42060877e7",
+          "requestedReviewerLineRanges": [
+            [
+              228,
+              253
+            ]
+          ],
+          "lineRanges": [
+            [
+              228,
+              253
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 231,
+              "text": "assert.throws(() => migrateAdmissionForTesting(declaration, { ...f.options, checkpoint(point) { if (point === failure) throw new Error('injected'); } }), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 234,
+              "text": "assert.deepEqual(migrateAdmissionForTesting(declaration, f.options), receipt);"
+            },
+            {
+              "line": 236,
+              "text": "assert.throws(f.open, { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 237,
+              "text": "assert.throws(() => migrateAdmissionForTesting(declaration, f.options), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 248,
+              "text": "assert.throws(() => admission.acquire({ attempt: { kind: 'legacy', id: 'bad-manifest' }, device, digest: 'one', intent: {} }), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 249,
+              "text": "assert.throws(() => admission.inspect(device), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 250,
+              "text": "assert.throws(f.open, { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 252,
+              "text": "assert.throws(() => migrateAdmissionForTesting(declaration, f.options), { code: 'STATE_UNAVAILABLE' });"
+            },
+            {
+              "line": 253,
+              "text": "assert.equal(existsSync(join(f.root, 'admission.sqlite')), false);"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 229,
+              "title": "interrupted ${failure} installation never recreates missing authority"
+            },
+            {
+              "line": 242,
+              "title": "activation revalidates persisted manifest and rejects missing initialized storage on every operation"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "interrupted ${failure} installation never recreates missing authority",
+                "sourceLine": 229,
+                "actualPassingLines": [
+                  "\u2714 interrupted markerWritten installation never recreates missing authority (92.316709ms)",
+                  "\u2714 interrupted beforeCommit installation never recreates missing authority (106.975125ms)",
+                  "\u2714 interrupted afterCommit installation never recreates missing authority (228.850291ms)"
+                ]
+              },
+              {
+                "sourceTitle": "activation revalidates persisted manifest and rejects missing initialized storage on every operation",
+                "sourceLine": 242,
+                "actualPassingLines": [
+                  "\u2714 activation revalidates persisted manifest and rejects missing initialized storage on every operation (196.439833ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "interrupted ${failure} installation never recreates missing authority",
+                "sourceLine": 229,
+                "actualPassingLines": [
+                  "\u2714 interrupted markerWritten installation never recreates missing authority (100.715417ms)",
+                  "\u2714 interrupted beforeCommit installation never recreates missing authority (131.220125ms)",
+                  "\u2714 interrupted afterCommit installation never recreates missing authority (162.542458ms)"
+                ]
+              },
+              {
+                "sourceTitle": "activation revalidates persisted manifest and rejects missing initialized storage on every operation",
+                "sourceLine": 242,
+                "actualPassingLines": [
+                  "\u2714 activation revalidates persisted manifest and rejects missing initialized storage on every operation (191.331333ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/admission-migration.test.ts"
+        },
+        {
+          "path": "tests/observed-allocation.test.ts",
+          "sha256": "77afc9f5ab9f06435c72e34eb6b3e431a9b563905a6cd0609405205a73cafcad",
+          "requestedReviewerLineRanges": [
+            [
+              738,
+              837
+            ]
+          ],
+          "lineRanges": [
+            [
+              738,
+              837
+            ]
+          ],
+          "rangeNote": null,
+          "assertionAnchors": [
+            {
+              "line": 743,
+              "text": "assert.equal(result.allocationId, h.imported.allocationId); assert.equal(result.actionId, h.imported.actionId); assert.equal(result.device!.udid, h.imported.device);"
+            },
+            {
+              "line": 744,
+              "text": "assert.equal((result as unknown as { readOnly: boolean }).readOnly, true); assert.equal((result as unknown as { historicalOutcome: string }).historicalOutcome, outcome);"
+            },
+            {
+              "line": 745,
+              "text": "assert.equal(result.phase, 'terminal'); assert.equal(result.state, outcome === 'inconclusive' ? 'quarantined' : 'retained');"
+            },
+            {
+              "line": 746,
+              "text": "assert.equal(result.outcome, outcome === 'inconclusive' ? 'uncertain' : outcome === 'refused' ? 'refused' : 'action_completed'); assert.equal(result.reason, null);"
+            },
+            {
+              "line": 747,
+              "text": "assert.equal(result.authority, 'committed'); assert.equal(result.cancellationRequested, false); assert.equal(result.hostCreationBlocked, false);"
+            },
+            {
+              "line": 748,
+              "text": "assert.deepEqual(result.reservation, { bytes: 0, capacityHeld: false }); assert.deepEqual(result.readinessEvidence, []);"
+            },
+            {
+              "line": 749,
+              "text": "assert.deepEqual(result.evidenceRefs, h.imported.records.map(record => record.path));"
+            },
+            {
+              "line": 750,
+              "text": "assert.deepEqual(await h.allocator.cancel(result.allocationId), result); assert.deepEqual(await h.allocator.retire(result.allocationId), result);"
+            },
+            {
+              "line": 751,
+              "text": "assert.deepEqual(await h.allocator.get(result.allocationId, { waitMs: 1 }), result); assert.deepEqual(f.calls, []);"
+            },
+            {
+              "line": 753,
+              "text": "assert.deepEqual(await fs.readFile(join(h.store, 'admission.sqlite')), bytes); assert.deepEqual(await Promise.all(h.paths.map(path => fs.readFile(path))), originals);"
+            },
+            {
+              "line": 754,
+              "text": "f.configure({ version: 2 }); refused(await h.allocator.prepare(f.request('historical')), 'ACTION_ID_CONFLICT'); assert.deepEqual(f.calls, []);"
+            },
+            {
+              "line": 755,
+              "text": "const consumed = h.allocator.consume(binding({ allocationId: result.allocationId, actionId: result.actionId }, f)); assert.equal(consumed.kind, 'refused');"
+            },
+            {
+              "line": 756,
+              "text": "assert.deepEqual(await fs.readFile(join(h.store, 'admission.sqlite')), bytes);"
+            },
+            {
+              "line": 763,
+              "text": "assert.equal(h.imported.outcome, 'outcome_observed'); const bytes = await fs.readFile(join(h.store, 'admission.sqlite'));"
+            },
+            {
+              "line": 764,
+              "text": "const result = snapshot(await h.allocator.get(h.imported.allocationId)); assert.equal(result.state, 'quarantined'); assert.equal(result.outcome, 'uncertain');"
+            },
+            {
+              "line": 765,
+              "text": "assert.equal(result.readOnly, true); assert.equal(result.historicalOutcome, 'outcome_observed'); assert.equal(result.reason, null);"
+            },
+            {
+              "line": 766,
+              "text": "assert.deepEqual(result.reservation, { bytes: 0, capacityHeld: false }); assert.deepEqual(h.admission.readAllocationCapacity(), { heldAllocations: 0, reservedBytes: 0 });"
+            },
+            {
+              "line": 767,
+              "text": "assert.deepEqual(await h.allocator.cancel(result.allocationId), result); assert.deepEqual(await h.allocator.retire(result.allocationId), result);"
+            },
+            {
+              "line": 768,
+              "text": "assert.deepEqual(await fs.readFile(join(h.store, 'admission.sqlite')), bytes);"
+            },
+            {
+              "line": 770,
+              "text": "assert.equal(denied.kind, 'refused'); if (denied.kind !== 'refused') assert.fail(); assert.equal(denied.reason, 'DEVICE_QUARANTINED');"
+            },
+            {
+              "line": 771,
+              "text": "assert.deepEqual(f.calls, []); assert.deepEqual(await fs.readFile(join(h.store, 'admission.sqlite')), bytes);"
+            },
+            {
+              "line": 779,
+              "text": "assert.equal(acquired.kind, 'acquired'); if (acquired.kind !== 'acquired') assert.fail();"
+            },
+            {
+              "line": 780,
+              "text": "if (current === 'quarantined') assert.equal(acquired.claim.finalize({ outcome: 'inconclusive', disposition: 'quarantined', payload: {}, evidenceRefs: [] }).authority, 'committed');"
+            },
+            {
+              "line": 782,
+              "text": "assert.equal((result as unknown as { historicalOutcome: string }).historicalOutcome, 'outcome_observed');"
+            },
+            {
+              "line": 783,
+              "text": "assert.equal(result.state, current === 'quarantined' ? 'quarantined' : 'retained'); assert.equal(result.outcome, current === 'quarantined' ? 'uncertain' : 'action_completed');"
+            },
+            {
+              "line": 784,
+              "text": "assert.equal(result.reason, null); assert.deepEqual(await h.allocator.cancel(result.allocationId), result); assert.deepEqual(await h.allocator.retire(result.allocationId), result);"
+            },
+            {
+              "line": 785,
+              "text": "assert.deepEqual(await fs.readFile(join(h.store, 'admission.sqlite')), bytes); assert.deepEqual(f.calls, []);"
+            },
+            {
+              "line": 798,
+              "text": "try{const result=await a.get(id);assert.deepEqual(await a.cancel(id),result);assert.deepEqual(await a.retire(id),result);assert.deepEqual(f.calls,[]);console.log(JSON.stringify(result));}finally{await a.close();await f.cleanup();}"
+            },
+            {
+              "line": 800,
+              "text": "assert.equal(child.code, 0, child.stderr); assert.deepEqual(JSON.parse(child.stdout), result); assert.deepEqual(await fs.readFile(join(h.store, 'admission.sqlite')), bytes); assert.deepEqual(f.calls, []);"
+            },
+            {
+              "line": 808,
+              "text": "const view = read(id)!; if (view.kind !== 'imported') assert.fail();"
+            },
+            {
+              "line": 819,
+              "text": "for (const operation of ['get', 'cancel', 'retire'] as const) { const error = refused(await h.allocator[operation](h.imported.allocationId), 'STORE_UNAVAILABLE'); assert.equal(error.acceptance, 'unknown'); assert.equal(JSON.stringify(error).includes(hostile), false); }"
+            },
+            {
+              "line": 820,
+              "text": "assert.deepEqual(f.calls, []); assert.deepEqual(await fs.readFile(join(h.store, 'admission.sqlite')), bytes);"
+            },
+            {
+              "line": 827,
+              "text": "const ready = snapshot(await allocator.prepare(f.request())); assert.equal(allocator.consume(binding({ allocationId: ready.allocationId, actionId: ready.actionId }, f)).kind, 'consumed');"
+            },
+            {
+              "line": 835,
+              "text": "try { const result = refused(await allocator.cancel(ready.allocationId), 'STORE_UNAVAILABLE'); assert.equal(result.acceptance, 'unknown'); assert.equal(result.actionId, undefined); assert.equal(JSON.stringify(result).includes(hostile), false); }"
+            },
+            {
+              "line": 837,
+              "text": "assert.deepEqual(await fs.readFile(join(f.store, 'admission.sqlite')), bytes); assert.deepEqual(f.calls, calls); assert.equal(read(ready.allocationId)!.state, 'executing');"
+            }
+          ],
+          "testDefinitions": [
+            {
+              "line": 738,
+              "title": "historical ${outcome} allocation get cancel retire is immutable read-only retrieval"
+            },
+            {
+              "line": 760,
+              "title": "historical exclusion retains current quarantine independently of zero new allocation capacity"
+            },
+            {
+              "line": 775,
+              "title": "historical original success preserves outcome with current ${current} disposition"
+            },
+            {
+              "line": 789,
+              "title": "historical allocation retrieval survives a fresh process and changed cwd without effects or mutations"
+            },
+            {
+              "line": 804,
+              "title": "historical ${mode} consistent disposition refuses without invented committed authority"
+            },
+            {
+              "line": 824,
+              "title": "busy ${mode} context cannot fabricate an action cancellation target"
+            }
+          ],
+          "actualPassingMatches": {
+            "node26": [
+              {
+                "sourceTitle": "historical ${outcome} allocation get cancel retire is immutable read-only retrieval",
+                "sourceLine": 738,
+                "actualPassingLines": [
+                  "\u2714 historical outcome_observed allocation get cancel retire is immutable read-only retrieval (266.016375ms)",
+                  "\u2714 historical already_satisfied allocation get cancel retire is immutable read-only retrieval (70.876917ms)",
+                  "\u2714 historical refused allocation get cancel retire is immutable read-only retrieval (84.652458ms)",
+                  "\u2714 historical inconclusive allocation get cancel retire is immutable read-only retrieval (252.332125ms)"
+                ]
+              },
+              {
+                "sourceTitle": "historical exclusion retains current quarantine independently of zero new allocation capacity",
+                "sourceLine": 760,
+                "actualPassingLines": [
+                  "\u2714 historical exclusion retains current quarantine independently of zero new allocation capacity (410.852916ms)"
+                ]
+              },
+              {
+                "sourceTitle": "historical original success preserves outcome with current ${current} disposition",
+                "sourceLine": 775,
+                "actualPassingLines": [
+                  "\u2714 historical original success preserves outcome with current active disposition (210.6595ms)",
+                  "\u2714 historical original success preserves outcome with current quarantined disposition (170.985375ms)"
+                ]
+              },
+              {
+                "sourceTitle": "historical allocation retrieval survives a fresh process and changed cwd without effects or mutations",
+                "sourceLine": 789,
+                "actualPassingLines": [
+                  "\u2714 historical allocation retrieval survives a fresh process and changed cwd without effects or mutations (318.886375ms)"
+                ]
+              },
+              {
+                "sourceTitle": "historical ${mode} consistent disposition refuses without invented committed authority",
+                "sourceLine": 804,
+                "actualPassingLines": [
+                  "\u2714 historical unavailable consistent disposition refuses without invented committed authority (182.401542ms)",
+                  "\u2714 historical missing consistent disposition refuses without invented committed authority (138.853625ms)",
+                  "\u2714 historical wrong-identity consistent disposition refuses without invented committed authority (268.933667ms)",
+                  "\u2714 historical missing-disposition consistent disposition refuses without invented committed authority (381.165875ms)",
+                  "\u2714 historical relative-evidence consistent disposition refuses without invented committed authority (267.803459ms)",
+                  "\u2714 historical invalid-device consistent disposition refuses without invented committed authority (102.706416ms)",
+                  "\u2714 historical wrong-disposition-device consistent disposition refuses without invented committed authority (202.974875ms)",
+                  "\u2714 historical invalid-disposition consistent disposition refuses without invented committed authority (283.88125ms)",
+                  "\u2714 historical not-read-only consistent disposition refuses without invented committed authority (132.761792ms)",
+                  "\u2714 historical invalid-outcome consistent disposition refuses without invented committed authority (159.620208ms)",
+                  "\u2714 historical empty-evidence consistent disposition refuses without invented committed authority (126.72475ms)"
+                ]
+              },
+              {
+                "sourceTitle": "busy ${mode} context cannot fabricate an action cancellation target",
+                "sourceLine": 824,
+                "actualPassingLines": [
+                  "\u2714 busy unavailable context cannot fabricate an action cancellation target (955.585416ms)",
+                  "\u2714 busy missing context cannot fabricate an action cancellation target (617.742125ms)",
+                  "\u2714 busy wrong-identity context cannot fabricate an action cancellation target (626.420084ms)",
+                  "\u2714 busy wrong-state context cannot fabricate an action cancellation target (723.180041ms)",
+                  "\u2714 busy preparing-state context cannot fabricate an action cancellation target (777.612625ms)",
+                  "\u2714 busy invalid-action context cannot fabricate an action cancellation target (774.602334ms)",
+                  "\u2714 busy relative-evidence context cannot fabricate an action cancellation target (671.524333ms)"
+                ]
+              }
+            ],
+            "node24": [
+              {
+                "sourceTitle": "historical ${outcome} allocation get cancel retire is immutable read-only retrieval",
+                "sourceLine": 738,
+                "actualPassingLines": [
+                  "\u2714 historical outcome_observed allocation get cancel retire is immutable read-only retrieval (133.855709ms)",
+                  "\u2714 historical already_satisfied allocation get cancel retire is immutable read-only retrieval (152.972292ms)",
+                  "\u2714 historical refused allocation get cancel retire is immutable read-only retrieval (173.840958ms)",
+                  "\u2714 historical inconclusive allocation get cancel retire is immutable read-only retrieval (145.067333ms)"
+                ]
+              },
+              {
+                "sourceTitle": "historical exclusion retains current quarantine independently of zero new allocation capacity",
+                "sourceLine": 760,
+                "actualPassingLines": [
+                  "\u2714 historical exclusion retains current quarantine independently of zero new allocation capacity (182.032375ms)"
+                ]
+              },
+              {
+                "sourceTitle": "historical original success preserves outcome with current ${current} disposition",
+                "sourceLine": 775,
+                "actualPassingLines": [
+                  "\u2714 historical original success preserves outcome with current active disposition (177.680167ms)",
+                  "\u2714 historical original success preserves outcome with current quarantined disposition (310.396416ms)"
+                ]
+              },
+              {
+                "sourceTitle": "historical allocation retrieval survives a fresh process and changed cwd without effects or mutations",
+                "sourceLine": 789,
+                "actualPassingLines": [
+                  "\u2714 historical allocation retrieval survives a fresh process and changed cwd without effects or mutations (585.724958ms)"
+                ]
+              },
+              {
+                "sourceTitle": "historical ${mode} consistent disposition refuses without invented committed authority",
+                "sourceLine": 804,
+                "actualPassingLines": [
+                  "\u2714 historical unavailable consistent disposition refuses without invented committed authority (229.076334ms)",
+                  "\u2714 historical missing consistent disposition refuses without invented committed authority (311.250875ms)",
+                  "\u2714 historical wrong-identity consistent disposition refuses without invented committed authority (148.517333ms)",
+                  "\u2714 historical missing-disposition consistent disposition refuses without invented committed authority (186.041291ms)",
+                  "\u2714 historical relative-evidence consistent disposition refuses without invented committed authority (131.493292ms)",
+                  "\u2714 historical invalid-device consistent disposition refuses without invented committed authority (164.639667ms)",
+                  "\u2714 historical wrong-disposition-device consistent disposition refuses without invented committed authority (241.68675ms)",
+                  "\u2714 historical invalid-disposition consistent disposition refuses without invented committed authority (357.971542ms)",
+                  "\u2714 historical not-read-only consistent disposition refuses without invented committed authority (321.181209ms)",
+                  "\u2714 historical invalid-outcome consistent disposition refuses without invented committed authority (223.92325ms)",
+                  "\u2714 historical empty-evidence consistent disposition refuses without invented committed authority (71.272875ms)"
+                ]
+              },
+              {
+                "sourceTitle": "busy ${mode} context cannot fabricate an action cancellation target",
+                "sourceLine": 824,
+                "actualPassingLines": [
+                  "\u2714 busy unavailable context cannot fabricate an action cancellation target (626.803833ms)",
+                  "\u2714 busy missing context cannot fabricate an action cancellation target (689.753416ms)",
+                  "\u2714 busy wrong-identity context cannot fabricate an action cancellation target (745.431625ms)",
+                  "\u2714 busy wrong-state context cannot fabricate an action cancellation target (931.584666ms)",
+                  "\u2714 busy preparing-state context cannot fabricate an action cancellation target (633.519542ms)",
+                  "\u2714 busy invalid-action context cannot fabricate an action cancellation target (735.937417ms)",
+                  "\u2714 busy relative-evidence context cannot fabricate an action cancellation target (898.387458ms)"
+                ]
+              }
+            ]
+          },
+          "sourceSnapshot": "base-supplements/source/tests/observed-allocation.test.ts"
+        }
+      ],
+      "primaryActualPassingLines": {
+        "node26": [
+          "\u2714 migration guard blocks existing handles and independent readers; a stranded guard is never reclaimed (410.403208ms)"
+        ],
+        "node24": [
+          "\u2714 migration guard blocks existing handles and independent readers; a stranded guard is never reclaimed (408.109ms)"
+        ]
+      },
+      "commands": {
+        "node26": "faults/integration/full-gates/composed-host-node26.json",
+        "node24": "faults/integration/full-gates/composed-host-node24.json"
+      },
+      "rawLogs": {
+        "node26": {
+          "path": "faults/integration/full-gates/composed-host-node26.log",
+          "sha256": "246a5e4b49e6e0542a768077be5a5e89e1e5a4d36b6d9be807ac9825d72d43c4"
+        },
+        "node24": {
+          "path": "faults/integration/full-gates/composed-host-node24.log",
+          "sha256": "1dbe87a1af24e6ae496e515720f2876f18ca115093cebe0a768094b6237b271a"
+        }
+      },
+      "backendCounts": null,
+      "countsProvenance": "Counts/state are the exact executed Source assertions above. No separate per-fixture base raw trace is claimed.",
+      "limit": "Family correspondence, not one new test or per-variant CLI/MCP execution; aggregate1675 includes every executed test, with no skips."
+    }
+  ],
+  "familyCount": 8,
+  "newExecutions": 0,
+  "wholeHostVerdict": "UNVERIFIED"
+}

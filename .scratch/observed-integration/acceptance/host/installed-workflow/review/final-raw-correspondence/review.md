@@ -1,0 +1,13 @@
+# Final installed/startup raw correspondence: PASS
+
+Root `b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433`. Static raw/source audit only; no tests, builds, npm, device, environment/key or admission-store commands executed.
+
+**Current correspondence PASS:** all71 source/package/lock/README files match Root’s commit/current bytes and both genuine proof build snapshots; all68 compiled JavaScript files match current output, both snapshots and both actual npm/plugin installations. Before/after audit inputs remain unchanged.
+
+Read all37 command/raw pairs per runtime. Genuine fresh Node26.8.1 proof exits0 in18.351s; genuine Node24.0.0 proof exits0 in21.514s. Normal npm tarball install/plugin npm ci receipts retain disclosed ignore-scripts/no-audit/no-fund flags. Projects/caches have distinct fresh proof paths; build compilation alone links checkout dependencies. Installed dependencies are not linked/copied from checkout. Raw CLI seven-operation envelopes/exits, MCP0/true/1 inventory and34 invalid tool calls per proof match accepted scope; guard logs remain empty. Package/plugin archive and installed hashes match their summaries. Counts do not certify unrelated host requirements.
+
+**Both wrapped startup probes PASS:** launch/result352-path maps are equal and match current frozen source, including helper `bf3b8b89…`, guard `000c1943…` and runner `42dedbf1…` (full hashes in receipts). Exact runtime matches its completed install proof. Each wrapper exits0 without timeout/error/cleanup uncertainty. Actual two CLI reads exit3; three MCP reads in one server return safe STORE_UNAVAILABLE/unknown, correct two text blocks/isError, and server exits0. Each CLI guard records one Admission.open; MCP records one total memoized failure and zero other SDK/driver/child effects. The unchanged guard throws at Admission.open’s first statement before account-root access; the genuine installed production factory maps that exception.
+
+These new contemporaneous launch/after receipts close the current helper-provenance gap. The original Node24 retrospective receipt remains historical and is not rewritten. Two earlier Node26 install attempts still fail after90s at003/SIGKILL; empty raw install outputs leave lower-level cause UNVERIFIED. Separate diagnostics retrieve identical9,615,980-byte archives SHA256 `caf15f8e7e7f5775efbcdd7f788bc129439f2921ba57a6ee010b204761a4f7e8` using distinct caches; they neither warmed nor substitute for the fresh proofs.
+
+Injected factory translation is not physical missing/corrupt account-store proof; isolated Ticket09 faults remain separate. This audit does not grant Ticket12, final safety, native or live acceptance. Earlier reviews/failures remain unchanged.
