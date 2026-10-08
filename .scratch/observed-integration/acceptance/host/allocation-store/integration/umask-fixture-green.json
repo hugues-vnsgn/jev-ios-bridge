@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/usr/bin/env",
+    "-u",
+    "TYPESAFE_API_KEY",
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-name-pattern",
+    "unsafe SQLite.*permissions|root separation",
+    "tests/admission-core.test.ts",
+    "tests/admission-migration.test.ts"
+  ],
+  "exit": 0,
+  "seconds": 0.24676299095153809,
+  "childUmask": "0022",
+  "evidenceUmask": "0077"
+}

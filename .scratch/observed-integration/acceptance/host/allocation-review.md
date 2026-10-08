@@ -33,3 +33,11 @@ Independent Standards re-review: PASS, no remaining findings. Helper reuse prese
 Independent Spec re-review: PASS, P1 closed. Eight independent before/after-COMMIT cases for cancel, reservation failure, finalization and parking pass, plus6/6 focused tests. Revoked claims cannot transfer authority or dispatch effects; conservative finalization still quarantines. A genuinely committed park survives lost reply and permits normal transfer. [Fresh re-review evidence](allocation-store/review/spec-rereview-report.md) preserves the distinction.
 
 Both axes accept the bounded repair. Root integration and combined checks are next; full public/live acceptance is not claimed.
+
+## Integration acceptance
+
+Root integrated the candidate and repair as `009a798` and `a49abb710f47a8b5dd2daf24ae1e6e06f5b34f29`. Combined `npm run check` exits0:1144/1144 tests, zero skips, typecheck/build passed. Exact Node24.0.0 combined admission/migration/allocation/artifact/source suites exit0:179/179, zero skips. [Raw commands, exits and output](allocation-store/integration/) pin the integrated SHA.
+
+The initial Root wrapper used umask0077 for evidence and unintentionally passed it to children. That changed deliberately unsafe0644/0755 fixtures into private files/directories, producing four expected-refusal assertion failures on both runtimes. A filesystem probe confirmed the masking; the unchanged four tests pass4/4 with child umask0022. Corrected complete runs pass, with evidence still private. Initial failures remain inspectable; no product code or assertion was changed for this harness error.
+
+Ticket03's bounded store seam is accepted. Store ownership and typed capabilities may now be consumed by ticket05. H01–H09 public/installed gates, live acceptance and final safety review remain pending; no production state or device was operated.

@@ -1,0 +1,12 @@
+✔ unsafe SQLite -journal permissions is refused before SQLite can consume or rewrite it (41.196958ms)
+✔ unsafe SQLite -wal permissions is refused before SQLite can consume or rewrite it (37.079875ms)
+✔ unsafe SQLite -shm permissions is refused before SQLite can consume or rewrite it (18.90475ms)
+✔ root separation and destination safety refuse without placing a guard inside a source or unsafe directory (74.944417ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 211.411209

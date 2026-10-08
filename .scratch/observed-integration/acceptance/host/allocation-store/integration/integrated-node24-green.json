@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/usr/bin/env",
+    "-u",
+    "TYPESAFE_API_KEY",
+    "npx",
+    "--yes",
+    "--package=node@24.0.0",
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "tests/admission-core.test.ts",
+    "tests/admission-migration.test.ts",
+    "tests/admission-allocation.test.ts",
+    "tests/observed-artifact.test.ts",
+    "tests/observed-sources.test.ts"
+  ],
+  "exit": 0,
+  "seconds": 25.55416703224182,
+  "integrated": "a49abb710f47a8b5dd2daf24ae1e6e06f5b34f29",
+  "childUmask": "0022",
+  "evidenceUmask": "0077"
+}

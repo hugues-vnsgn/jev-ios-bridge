@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/usr/bin/env",
+    "-u",
+    "TYPESAFE_API_KEY",
+    "npm",
+    "run",
+    "check"
+  ],
+  "exit": 0,
+  "seconds": 25.613380908966064,
+  "integrated": "a49abb710f47a8b5dd2daf24ae1e6e06f5b34f29",
+  "childUmask": "0022",
+  "evidenceUmask": "0077"
+}

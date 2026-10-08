@@ -2,7 +2,7 @@
 
 Type: task
 Status: ready-for-agent
-Execution: implemented-awaiting-review
+Execution: integrated
 Claimed by: allocation-store implementer
 Mode: AFK
 Blocked by: 02

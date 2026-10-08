@@ -1,0 +1,266 @@
+(node:98318) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ reservation globally binds identity; duplicates are pure retrieval and capacity refuses without consuming identity (166.315667ms)
+✔ creation guard fences all new admissions and receipt binding is write-once; existing owner can finish (710.797708ms)
+✔ park revokes preparation, consume transfers one fresh attachment, success retains allocation and evidence authority (1724.940291ms)
+✔ cancellation fences reservation and action commands; parked readiness survives reads and expiry only transitions on consume (1129.832167ms)
+✔ cancelled dispatched preparation and abandoned creation retain uncertainty and capacity (301.92475ms)
+✔ all protected UUIDs and duplicate inventory assignments are excluded independently of host admission availability (209.968167ms)
+✔ budget prerequisite boundary maxReservedBytes=799 does not reserve identity (79.454917ms)
+✔ budget prerequisite boundary simulatorFreeBytes=2799 does not reserve identity (76.275667ms)
+✔ budget prerequisite boundary stagingFreeBytes=2899 does not reserve identity (92.5895ms)
+✔ budget prerequisite boundary artifactBytes=201 does not reserve identity (113.284417ms)
+✔ exact free-space boundary accepts and stored configuration/content binding is immutable (238.870208ms)
+✔ creation unknown receipt retains host guard and capacity (277.983083ms)
+✔ creation malformed receipt retains host guard and capacity (283.015375ms)
+✔ creation collision receipt retains host guard and capacity (287.0045ms)
+✔ unknown creation blocks ready consumption but exact action duplicate remains retrieval (1091.098292ms)
+✔ owner recovery is explicit, monotonic and preserves parked readiness (1017.542583ms)
+✔ active allocation retirement is busy; explicit ready cancellation consumes stock without device effects (1154.757209ms)
+✔ independent processes reserve one global identity and one remaining capacity slot (491.670833ms)
+✔ concurrent byte/capacity boundary admits allocation eight and refuses nine (1784.400334ms)
+✔ parked preparation exits normally then two new processes yield one action driver attachment (905.285292ms)
+✔ ready cancellation versus start is transactionally ordered across processes (485.762042ms)
+✔ TTL boundary versus early start grants at most one owner across processes (505.891375ms)
+✔ real owner death at reserveAllocation/beforeCommit cannot replay or split terminal authority (152.32825ms)
+✔ real owner death at reserveAllocation/afterCommit cannot replay or split terminal authority (155.16075ms)
+✔ real owner death at startCreation/beforeCommit cannot replay or split terminal authority (181.504958ms)
+✔ real owner death at startCreation/afterCommit cannot replay or split terminal authority (209.100791ms)
+✔ real owner death at recordCreation/beforeCommit cannot replay or split terminal authority (228.888042ms)
+✔ real owner death at recordCreation/afterCommit cannot replay or split terminal authority (258.1725ms)
+✔ real owner death at admitAllocation/beforeCommit cannot replay or split terminal authority (267.180917ms)
+✔ real owner death at admitAllocation/afterCommit cannot replay or split terminal authority (277.010917ms)
+✔ real owner death at parkAllocation/beforeCommit cannot replay or split terminal authority (481.485583ms)
+✔ real owner death at parkAllocation/afterCommit cannot replay or split terminal authority (458.667375ms)
+✔ real owner death at consumeAllocation/beforeCommit cannot replay or split terminal authority (483.727542ms)
+✔ real owner death at consumeAllocation/afterCommit cannot replay or split terminal authority (538.84075ms)
+✔ real owner death at finalize/beforeCommit cannot replay or split terminal authority (657.102083ms)
+✔ real owner death at finalize/afterCommit cannot replay or split terminal authority (697.532042ms)
+✔ real owner death at recordActionExport/beforeCommit cannot replay or split terminal authority (661.206416ms)
+✔ real owner death at recordActionExport/afterCommit cannot replay or split terminal authority (705.87325ms)
+✔ duplicate known-device admission cannot retire or disturb the live preparation owner (178.678208ms)
+✔ observed success cannot contradict persisted dispatch flags or skip captures (427.525125ms)
+✔ failed preparation terminal write still revokes its attached driver locally (137.87675ms)
+✔ preparation cannot park after its overall deadline even when commands settled (340.897291ms)
+✔ startup lists active owners without mutating, resuming or recovering parked and cancelled work (447.46125ms)
+✔ restart projects capture counts, nullable dispatch flags, finalization and immutable export independently (628.886792ms)
+✔ action cancellation during pending tap retains unknown flags and late settlement cannot promote terminal (510.53975ms)
+✔ already satisfied commits only a captured no-input result; conflicting action bindings never mutate it (519.850584ms)
+✔ creation receipt beforeCommit failure revokes the local reservation without replay (116.873ms)
+✔ creation receipt afterCommit failure revokes the local reservation without replay (122.021208ms)
+✔ failed capture evidence persistence revokes action dispatch before storage recovers (446.157375ms)
+✔ revoked preparation cannot park after failed cancel persistence (333.744667ms)
+✔ revoked preparation cannot park after failed failAllocation persistence (267.8975ms)
+✔ revoked preparation cannot park after failed finalize persistence (181.037208ms)
+✔ revoked preparation cannot park after failed parkAllocation persistence (175.821125ms)
+(node:98327) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ atomic admission canonicalizes identity; competing readers preserve the owner and terminal is authoritative (231.832709ms)
+✔ recovery checks the full recorded process incarnation, preserving a live independent owner (159.426167ms)
+✔ failed underlying work closes further authorization even when its caller catches the rejection (401.570959ms)
+✔ same identity cannot smuggle changed intent under a reused digest (246.522125ms)
+✔ foreign cancellation persists and prevents dispatch, while an already authorized late result cannot promote quarantine (516.402459ms)
+✔ cancel before acquisition, pre-effect cancellation, and exactly one tap are enforced (630.000792ms)
+✔ terminal beforeCommit failure never publishes its candidate and fresh reads resolve the whole transaction (275.76125ms)
+✔ terminal afterCommit failure never publishes its candidate and fresh reads resolve the whole transaction (305.487125ms)
+✔ independent observed and competing owner serialize acquisition without sabotaging the winner (454.890375ms)
+✔ independent legacy and competing owner serialize acquisition without sabotaging the winner (383.801458ms)
+✔ real dead child remains busy on reads; explicit owner-aware recovery quarantines it without reclaiming (389.199209ms)
+✔ child death acquire beforeCommit leaves only atomic authority (232.685875ms)
+✔ child death acquire afterCommit leaves only atomic authority (288.893167ms)
+✔ child death finalize beforeCommit leaves only atomic authority (316.571ms)
+✔ child death finalize afterCommit leaves only atomic authority (318.415458ms)
+✔ status is physically read-only and duplicate retrieval does not change the active store (134.969083ms)
+✔ initialized store missing its database cannot silently recreate or resolve a terminal (162.902ms)
+✔ unsafe schema storage fails closed (138.257791ms)
+✔ unsafe inactive storage fails closed (139.979041ms)
+✔ unsafe marker storage fails closed (111.598667ms)
+✔ unsafe database storage fails closed (124.779333ms)
+✔ unsafe permissions storage fails closed (122.953542ms)
+✔ unsafe symlink storage fails closed (157.904834ms)
+✔ bounded SQLite contention refuses acquisition while preserving the incumbent (424.076667ms)
+✔ ambiguous dispatch authorization revokes the local session before a caller can issue a follow-up (245.086416ms)
+✔ late owner and stale fencing cannot overwrite a successor or change immutable terminals (309.219125ms)
+✔ unknown liveness remains busy; quarantine on one device does not prevent independent admission (326.40425ms)
+✔ test capability is refused by real backend attachment and device aliases are rejected (188.28975ms)
+✔ legacy scripted attempts retain multiple taps while observed attempts remain single submission (505.571708ms)
+✔ opening a store with a changed journal policy refuses rather than silently rewriting it (257.220458ms)
+✔ signal cancellation survives a beforeCommit cancellation write failure and late tap settlement (376.129792ms)
+✔ signal cancellation survives a afterCommit cancellation write failure and late tap settlement (368.011166ms)
+✖ unsafe SQLite -journal permissions is refused before SQLite can consume or rewrite it (102.121334ms)
+✔ unsafe SQLite -journal symlink is refused before SQLite can consume or rewrite it (139.52975ms)
+✔ unsafe SQLite -journal directory is refused before SQLite can consume or rewrite it (162.918375ms)
+✖ unsafe SQLite -wal permissions is refused before SQLite can consume or rewrite it (234.080375ms)
+✔ unsafe SQLite -wal symlink is refused before SQLite can consume or rewrite it (112.279166ms)
+✔ unsafe SQLite -wal directory is refused before SQLite can consume or rewrite it (119.445833ms)
+✖ unsafe SQLite -shm permissions is refused before SQLite can consume or rewrite it (128.172792ms)
+✔ unsafe SQLite -shm symlink is refused before SQLite can consume or rewrite it (148.017041ms)
+✔ unsafe SQLite -shm directory is refused before SQLite can consume or rewrite it (160.734542ms)
+✔ SQLite creates its transaction journal with private permissions (183.433375ms)
+(node:98330) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ explicit offline initialization enables admission and persists its operator declaration (214.68525ms)
+✔ completed historical actions retain original records and one read-only allocation identity without replay (352.384541ms)
+✔ quarantine in a casing alias overrides apparent completion without changing sources (486.488959ms)
+✔ claim in a casing alias overrides apparent completion without changing sources (483.650333ms)
+✔ unfinished in a casing alias overrides apparent completion without changing sources (484.702083ms)
+✔ temporary in a casing alias overrides apparent completion without changing sources (459.353ms)
+✔ well-formed case aliases consolidate clean completion and conflicting device bindings refuse activation (856.1945ms)
+✔ dead legacy iOS lease is never reclaimed and cannot authorize effects (210.685958ms)
+✔ malformed legacy iOS lease is never reclaimed and cannot authorize effects (170.447709ms)
+✔ temporary legacy iOS lease is never reclaimed and cannot authorize effects (151.858041ms)
+✔ live legacy iOS lease is never reclaimed and cannot authorize effects (79.811625ms)
+✔ matching non-UUID lease records remain untouched without becoming iOS claims; unattributable records close activation (218.968ms)
+✔ protected study devices and declared exclusions remain unavailable even with no historical files (151.803167ms)
+✔ unquiesced or incomplete root declarations refuse before installation; explicit missing roots are not empty (60.702917ms)
+✔ migration guard blocks existing handles and independent readers; a stranded guard is never reclaimed (428.931ms)
+✔ interrupted markerWritten installation never recreates missing authority (119.630125ms)
+✔ interrupted beforeCommit installation never recreates missing authority (144.277875ms)
+✔ interrupted afterCommit installation never recreates missing authority (171.793125ms)
+✔ activation revalidates persisted manifest and rejects missing initialized storage on every operation (211.014458ms)
+✔ changed historical sources on a rerun retain the migration guard and block previously activated handles (246.096333ms)
+✔ migration refuses an admission root inside a source before changing source bytes (15.098917ms)
+✔ invalid-json historical input refuses activation with source bytes unchanged (181.677917ms)
+✔ wrong-hash historical input refuses activation with source bytes unchanged (236.1405ms)
+✔ symbolic-link historical input refuses activation with source bytes unchanged (200.503917ms)
+✔ unexpected-file historical input refuses activation with source bytes unchanged (176.379042ms)
+✔ empty-directory historical input refuses activation with source bytes unchanged (179.961625ms)
+✔ explicit additional roots are imported, deduplicated and recorded without weakening defaults (321.685125ms)
+✔ an unsafe source file cannot be bypassed by a malformed default root declaration (70.149625ms)
+✔ offline maintenance accepts only an explicit declaration file and emits a persisted receipt (217.344333ms)
+✔ unreadable source and permissive or mismatched initialized storage remain closed (376.10875ms)
+✔ conflicting attributable historical results cannot establish an observed outcome (486.082666ms)
+✔ a completed casing alias cannot finish the same action intent in another historical directory (401.593292ms)
+✔ real importer death at markerWritten retains its guard instead of authorizing a replacement (168.344291ms)
+✔ real importer death at beforeCommit retains its guard instead of authorizing a replacement (226.102542ms)
+✔ real importer death at afterCommit retains its guard instead of authorizing a replacement (302.329084ms)
+✔ initialized admission stays closed after unsafe-root prevents an offline rerun (157.723125ms)
+✔ initialized admission stays closed after dangling-root prevents an offline rerun (188.69225ms)
+✔ initialized admission stays closed after missing-declared-root prevents an offline rerun (206.129791ms)
+✔ initialized admission stays closed after unreadable-root prevents an offline rerun (191.390625ms)
+✔ a recognized lease FIFO refuses within the child deadline without reading a device or retaining a fresh guard (192.991125ms)
+✖ root separation and destination safety refuse without placing a guard inside a source or unsafe directory (340.667667ms)
+✔ an inaccessible ancestor of a declared source closes initialized admission on rerun (228.552708ms)
+✔ a readable source overlap still prevents guard writes when another declared source is inaccessible (152.947334ms)
+✔ staging binds unchanged bytes to a private immutable simulator artifact (186.935375ms)
+✔ verification refuses staging made writable even before content is changed (167.794042ms)
+✔ source mutation before staging completion refuses the copy (190.088292ms)
+✔ offline inspection reads explicit metadata with an argument array and has no staging effect (98.2995ms)
+✔ artifact refuses bundle identity mismatch (155.566292ms)
+✔ artifact refuses missing executable (225.0135ms)
+✔ artifact refuses path executable (153.655875ms)
+✔ artifact refuses missing minimum OS (167.079ms)
+✔ artifact refuses future minimum OS (170.71475ms)
+✔ artifact refuses physical device platform (191.795958ms)
+✔ artifact refuses physical-device Mach-O despite a simulator plist (184.91425ms)
+✔ artifact refuses incompatible architecture despite a simulator plist (196.515958ms)
+✔ artifact refuses future executable OS despite a simulator plist (209.745667ms)
+✔ artifact refuses malformed load command despite a simulator plist (212.74975ms)
+✔ artifact refuses missing simulator metadata despite a simulator plist (207.725709ms)
+✔ safe internal symlinks stay unchanged while escaping links refuse (261.849083ms)
+✔ symlink chains that leave the bundle refuse without a source fallback (118.578333ms)
+✔ artifact and staging filesystem errors are bounded private failures (335.564041ms)
+✔ universal executable accepts the declared host slice and simulator minimum OS (188.781083ms)
+✔ verification catches added files (222.533417ms)
+✔ metadata cancellation refuses even when its process ignores the abort (83.269167ms)
+✔ injected clock bounds an abort-ignoring metadata process (47.923209ms)
+✔ the filesystem seam detects source mutation during bounded copying (153.84825ms)
+✔ verification refuses an opened staged file made writable after the path stat (158.614292ms)
+✔ staging closes its source descriptor when opening the output fails with ENOSPC (91.4985ms)
+✔ staging attempts the output close even when the source close rejects (112.943583ms)
+✔ creation needs internal authorization and returns only one valid UUID receipt (1.79075ms)
+✔ supplied source requires configured creation provenance and a fresh exclusive attestation (0.51875ms)
+✔ creation retains uncertainty for missing UUID without retry (0.145792ms)
+✔ creation retains uncertainty for extra output without retry (0.132833ms)
+✔ creation retains uncertainty for two UUIDs without retry (0.064875ms)
+✔ creation retains uncertainty for nonzero exit without retry (0.050625ms)
+✔ creation retains uncertainty for lost exit status without retry (0.095334ms)
+✔ lost process reply and failed dispatch cannot manufacture a creation receipt (0.269583ms)
+✔ abort ignoring process stays tracked and cannot promote a late successful receipt (0.279375ms)
+✔ timeout without authorization closes issuance before a late callback (3.541458ms)
+✔ timeout after starting keeps unknown creation without waiting for an ignoring runner (1.496708ms)
+✔ invalid explicit identifiers and pre-cancellation never start creation (0.133875ms)
+✔ a second authorized callback cannot start a second creation (0.112958ms)
+✔ duplicate supplied inventory UUIDs and missing attestation are ineligible (0.117167ms)
+✔ injected clock bounds creation while leaving its underlying operation pending (0.074917ms)
+ℹ tests 179
+ℹ suites 0
+ℹ pass 175
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24674.189292
+
+✖ failing tests:
+
+test at tests/admission-core.test.ts:1:19318
+✖ unsafe SQLite -journal permissions is refused before SQLite can consume or rewrite it (102.121334ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/admission-core.test.ts:338:14)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1062:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+      at Test.postRun (node:internal/test_runner/test:1191:19)
+      at Test.run (node:internal/test_runner/test:1119:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws'
+  }
+
+test at tests/admission-core.test.ts:1:19318
+✖ unsafe SQLite -wal permissions is refused before SQLite can consume or rewrite it (234.080375ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/admission-core.test.ts:339:14)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1062:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+      at Test.postRun (node:internal/test_runner/test:1191:19)
+      at Test.run (node:internal/test_runner/test:1119:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws'
+  }
+
+test at tests/admission-core.test.ts:1:19318
+✖ unsafe SQLite -shm permissions is refused before SQLite can consume or rewrite it (128.172792ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/admission-core.test.ts:338:14)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1062:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+      at Test.postRun (node:internal/test_runner/test:1191:19)
+      at Test.run (node:internal/test_runner/test:1119:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws'
+  }
+
+test at tests/admission-migration.test.ts:3:573
+✖ root separation and destination safety refuse without placing a guard inside a source or unsafe directory (340.667667ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/admission-migration.test.ts:418:10)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1062:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+      at Test.postRun (node:internal/test_runner/test:1191:19)
+      at Test.run (node:internal/test_runner/test:1119:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws'
+  }

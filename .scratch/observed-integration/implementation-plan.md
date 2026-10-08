@@ -23,7 +23,7 @@ Each worker is one named role in one isolated worktree and owns its ticket's exa
 
 ## Phases and dependency graph
 
-Current execution: waves A/B integrated and independently reviewed; wave C is being dispatched. Waves D–I await their dependencies. [Execution ledger](../observed-action-rollout/progress.md) records current commits and evidence; the table below defines prerequisites.
+Current execution: waves A/B/C integrated and independently reviewed; wave D is being dispatched. Waves E–I await their dependencies. [Execution ledger](../observed-action-rollout/progress.md) records current commits and evidence; the table below defines prerequisites.
 
 | Wave | Tickets | Integration prerequisite |
 | --- | --- | --- |
