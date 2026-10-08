@@ -1,0 +1,108 @@
+✖ unsafe SQLite -journal permissions is refused before SQLite can consume or rewrite it (21.260625ms)
+✔ unsafe SQLite -journal symlink is refused before SQLite can consume or rewrite it (16.519375ms)
+✔ unsafe SQLite -journal directory is refused before SQLite can consume or rewrite it (16.391708ms)
+✖ unsafe SQLite -wal permissions is refused before SQLite can consume or rewrite it (30.628667ms)
+✔ unsafe SQLite -wal symlink is refused before SQLite can consume or rewrite it (18.57175ms)
+✔ unsafe SQLite -wal directory is refused before SQLite can consume or rewrite it (15.668208ms)
+✖ unsafe SQLite -shm permissions is refused before SQLite can consume or rewrite it (18.21975ms)
+✖ unsafe SQLite -shm symlink is refused before SQLite can consume or rewrite it (14.89325ms)
+✖ unsafe SQLite -shm directory is refused before SQLite can consume or rewrite it (16.929584ms)
+✔ SQLite creates its transaction journal with private permissions (26.574833ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 5
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 305.696958
+
+✖ failing tests:
+
+test at tests/admission-core.test.ts:1:19318
+✖ unsafe SQLite -journal permissions is refused before SQLite can consume or rewrite it (21.260625ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-admission-core/tests/admission-core.test.ts:338:14)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/admission-core.test.ts:1:19318
+✖ unsafe SQLite -wal permissions is refused before SQLite can consume or rewrite it (30.628667ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-admission-core/tests/admission-core.test.ts:339:14)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/admission-core.test.ts:1:19318
+✖ unsafe SQLite -shm permissions is refused before SQLite can consume or rewrite it (18.21975ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-admission-core/tests/admission-core.test.ts:338:14)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/admission-core.test.ts:1:19318
+✖ unsafe SQLite -shm symlink is refused before SQLite can consume or rewrite it (14.89325ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-admission-core/tests/admission-core.test.ts:338:14)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/admission-core.test.ts:1:19318
+✖ unsafe SQLite -shm directory is refused before SQLite can consume or rewrite it (16.929584ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-admission-core/tests/admission-core.test.ts:338:14)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'STATE_UNAVAILABLE' },
+    operator: 'throws',
+    diff: 'simple'
+  }

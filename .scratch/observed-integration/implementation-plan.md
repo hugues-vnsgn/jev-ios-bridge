@@ -1,6 +1,6 @@
 ---
 status: ready-for-agent
-mode: planning-only
+mode: implementation
 created: 2026-10-08
 ---
 # Observed-action implementation handoff
@@ -9,7 +9,7 @@ created: 2026-10-08
 
 This handoff partitions implementation of the [accepted specification](spec.md). The specification is the normative index; its linked decisions own data shapes, lifecycle rules, defaults and limitations. This plan owns execution order and file ownership. [Rollout tickets](../observed-action-rollout/issues/) are executable briefs, separate from this effort's resolved planning questions.
 
-Creating these briefs authorizes planning only. Product edits, host checks, migration, simulator operation and integration start only on Root’s explicit rollout-ticket dispatch with the pinned base and satisfied dependencies. Publishing remains outside rollout scope. All acceptance rows remain UNVERIFIED. The earlier experimental live results and 965-test check are baseline evidence, not acceptance of this implementation.
+Creating these briefs initially authorized planning only. The owner authorized rollout execution on 2026-10-08. Product edits, host checks, migration, simulator operation and integration start only on Root’s explicit rollout-ticket dispatch with the pinned base and satisfied dependencies. Publishing remains outside rollout scope. Full host/live acceptance rows remain UNVERIFIED until the required evidence is complete. The earlier experimental live results and 965-test check are baseline evidence, not acceptance of this implementation.
 
 The final planning commit is pinned by the local immutable tag `plan/observed-action-rollout-2026-10-08`. At dispatch, Root resolves the pinned ref and supplies the full base SHA, ticket path, isolated worktree, branch and dependency integration SHAs. Agents verify them before editing. No ticket invents a future hash or branches from an unintegrated sibling.
 
@@ -23,7 +23,7 @@ Each worker is one named role in one isolated worktree and owns its ticket's exa
 
 ## Phases and dependency graph
 
-Status of every phase: ready for future dispatch, not executed.
+Current execution: wave A integrated and independently reviewed; wave B dispatched. Waves C–I await their dependencies. [Execution ledger](../observed-action-rollout/progress.md) records current commits and evidence; the table below defines prerequisites.
 
 | Wave | Tickets | Integration prerequisite |
 | --- | --- | --- |

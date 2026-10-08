@@ -1,0 +1,13 @@
+✔ verification refuses staging made writable even before content is changed (17.991291ms)
+✔ source mutation before staging completion refuses the copy (13.161583ms)
+✔ verification refuses an opened staged file made writable after the path stat (12.065583ms)
+✔ staging closes its source descriptor when opening the output fails with ENOSPC (3.118833ms)
+✔ staging attempts the output close even when the source close rejects (5.8865ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 113.295042

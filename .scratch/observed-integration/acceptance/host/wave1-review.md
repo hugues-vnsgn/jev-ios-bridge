@@ -28,3 +28,9 @@ Spec: three confirmed defects, worst P1, plus one test-evidence correction.
 Reviewers independently reran admission30/30 and adapters38/38 targeted tests. Passing suites did not cover the reproduced defects. Their inspection confirmed reported minimum-runtime/typecheck logs. Earlier full checks predate final refinements and do not establish final combined acceptance.
 
 Root returned the findings to each original author for diagnosing-bugs, TDD and do-test in parallel. Re-review and combined checks are required before integration acceptance. Migration remains dependent on accepted admission core; read-only migration preparation is allowed meanwhile.
+
+## Resolution
+
+Core repair `aa4c652de8234e16de0132af7536ee7e850a4060` and adapter repair `717b902184c818cc99832baa7dee0acfc1b910cd` were independently re-reviewed: all four findings resolved. Core reviewer independently passed16 focused assertions; adapter reviewer independently passed41 tests and typecheck. Genuine red/green pairs were inspected; corrected historical evidence explicitly retains its limitation. [Archived report/logs](wave1/) preserve the raw bytes.
+
+Root integrated core as `2e0e3a0`/`9911710` and adapters as `b557e9d`/`448a026`. At combined `448a026`, `npm run check` exited0:1048 tests passed, zero skips, typecheck/build passed. Node24.0.0 `--import tsx --test tests/admission-core.test.ts tests/observed-artifact.test.ts tests/observed-sources.test.ts` exited0:83 tests passed, zero skips. These checks accept bounded tickets01/04, not the deferred public/live workflow. Ticket02 was dispatched from `8d8c5a0`, containing accepted core plus migration guidance; it has no adapter dependency.

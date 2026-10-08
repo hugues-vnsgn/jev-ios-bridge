@@ -1,0 +1,20 @@
+✖ staging binds unchanged bytes to a private immutable simulator artifact (23.743666ms)
+✖ verification refuses staging made writable even before content is changed (11.110833ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 141.750542
+
+✖ failing tests:
+
+test at tests/observed-artifact.test.ts:1:1536
+✖ staging binds unchanged bytes to a private immutable simulator artifact (23.743666ms)
+  [Error: EACCES: permission denied, unlink '/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-artifact-BsO5Za/staging/artifact-gEkNuX/Fixture.app/Fixture'] { errno: -13, code: 'EACCES', syscall: 'unlink', path: '/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-artifact-BsO5Za/staging/artifact-gEkNuX/Fixture.app/Fixture' }
+
+test at tests/observed-artifact.test.ts:1:2387
+✖ verification refuses staging made writable even before content is changed (11.110833ms)
+  [Error: EACCES: permission denied, unlink '/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-artifact-amuZhN/staging/artifact-hIYpCb/Fixture.app/Fixture'] { errno: -13, code: 'EACCES', syscall: 'unlink', path: '/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-artifact-amuZhN/staging/artifact-hIYpCb/Fixture.app/Fixture' }

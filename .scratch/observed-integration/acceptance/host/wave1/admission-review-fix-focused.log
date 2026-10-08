@@ -1,0 +1,24 @@
+✔ cancel before acquisition, pre-effect cancellation, and exactly one tap are enforced (106.684125ms)
+✔ terminal beforeCommit failure never publishes its candidate and fresh reads resolve the whole transaction (27.619083ms)
+✔ terminal afterCommit failure never publishes its candidate and fresh reads resolve the whole transaction (41.438834ms)
+✔ late owner and stale fencing cannot overwrite a successor or change immutable terminals (50.031875ms)
+✔ signal cancellation survives a beforeCommit cancellation write failure and late tap settlement (79.302ms)
+✔ signal cancellation survives a afterCommit cancellation write failure and late tap settlement (93.700583ms)
+✔ unsafe SQLite -journal permissions is refused before SQLite can consume or rewrite it (18.889375ms)
+✔ unsafe SQLite -journal symlink is refused before SQLite can consume or rewrite it (20.126ms)
+✔ unsafe SQLite -journal directory is refused before SQLite can consume or rewrite it (18.831834ms)
+✔ unsafe SQLite -wal permissions is refused before SQLite can consume or rewrite it (20.09025ms)
+✔ unsafe SQLite -wal symlink is refused before SQLite can consume or rewrite it (17.145709ms)
+✔ unsafe SQLite -wal directory is refused before SQLite can consume or rewrite it (18.481708ms)
+✔ unsafe SQLite -shm permissions is refused before SQLite can consume or rewrite it (19.0655ms)
+✔ unsafe SQLite -shm symlink is refused before SQLite can consume or rewrite it (17.175084ms)
+✔ unsafe SQLite -shm directory is refused before SQLite can consume or rewrite it (20.665833ms)
+✔ SQLite creates its transaction journal with private permissions (31.554125ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 680.728625

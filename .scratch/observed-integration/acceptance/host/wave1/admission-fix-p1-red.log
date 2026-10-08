@@ -1,0 +1,26 @@
+✖ signal cancellation survives a beforeCommit cancellation write failure and late tap settlement (82.370375ms)
+✔ signal cancellation survives a afterCommit cancellation write failure and late tap settlement (87.418834ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 264.37125
+
+✖ failing tests:
+
+test at tests/admission-core.test.ts:1:17753
+✖ signal cancellation survives a beforeCommit cancellation write failure and late tap settlement (82.370375ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-admission-core/tests/admission-core.test.ts:316:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'OPERATIONS_UNSETTLED' },
+    operator: 'throws',
+    diff: 'simple'
+  }

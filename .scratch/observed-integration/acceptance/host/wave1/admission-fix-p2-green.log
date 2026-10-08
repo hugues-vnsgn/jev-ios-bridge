@@ -1,0 +1,18 @@
+✔ unsafe SQLite -journal permissions is refused before SQLite can consume or rewrite it (21.666541ms)
+✔ unsafe SQLite -journal symlink is refused before SQLite can consume or rewrite it (16.725834ms)
+✔ unsafe SQLite -journal directory is refused before SQLite can consume or rewrite it (16.868875ms)
+✔ unsafe SQLite -wal permissions is refused before SQLite can consume or rewrite it (18.044ms)
+✔ unsafe SQLite -wal symlink is refused before SQLite can consume or rewrite it (18.083292ms)
+✔ unsafe SQLite -wal directory is refused before SQLite can consume or rewrite it (15.855917ms)
+✔ unsafe SQLite -shm permissions is refused before SQLite can consume or rewrite it (15.097084ms)
+✔ unsafe SQLite -shm symlink is refused before SQLite can consume or rewrite it (17.046375ms)
+✔ unsafe SQLite -shm directory is refused before SQLite can consume or rewrite it (16.858208ms)
+✔ SQLite creates its transaction journal with private permissions (29.523959ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 289.620209
