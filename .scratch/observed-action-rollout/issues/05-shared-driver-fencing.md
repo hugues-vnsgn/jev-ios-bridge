@@ -40,6 +40,10 @@ Completion: Root integrates the real typed session interface before dispatching 
 
 ## Comments
 
+### Root bounded capability follow-up — 2026-10-08
+
+Ticket07 identified that `bootState` omits explicit vendor availability, leaving supplied-source eligibility unprovable before boot. Root owns a separate `feat/observed-inventory-status` worktree at `fd9b3c0d19284b9fc22c4bb5e3a3fd4bb0d3b181`, limited to `src/device/index.ts` and `tests/admission-driver.test.ts`. Add typed `inventoryStatus(signal,timeoutMs?)` for the admitted selected identity through the existing fenced vendor simulator listing. Validate state, UUID, unambiguous selected identity and boolean availability before settling successful or error receipts. Preserve legacy listing behavior. No real backend, device operation, extra direct command or source fallback belongs to this follow-up. Independent review and Node24/26 host checks precede integration; original ticket05 acceptance remains bounded to its recorded commits.
+
 ### Root acceptance: 2026-10-08
 
 Integrated candidate `2ec78bd` and repair `6f0ad209` as `b3eb5ea`/`bd5d524`. Both independent review axes closed all findings. Root's integrated check passed1196/1196 plus typecheck/build; exact Node24.0.0 combined suites410/410, zero skips. The final checked blobs match the repair. [Review, original failures and integrated evidence](../../observed-integration/acceptance/host/shared-driver-review.md). Shared driver ownership now belongs to Root; tickets06/07 receive the accepted typed interfaces. Historical unintended baseline side effects remain UNVERIFIED, with no cleanup/probe used to resolve them.

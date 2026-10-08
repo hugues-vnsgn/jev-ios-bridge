@@ -1,0 +1,96 @@
+{
+  "capturedAt": "2026-10-08T05:14:38.477836+00:00",
+  "method": "Python plistlib fixed filesystem metadata reads; no device or vendor process invocation",
+  "hostArchitecture": "arm64",
+  "purpose": "allocator compatibility fixture shape; installed metadata does not certify live acceptance",
+  "records": [
+    {
+      "path": "/Applications/Xcode.app/Contents/Info.plist",
+      "sha256": "537783b4c639af6ee31208fe2ec12a40bacbb0fc8f5dd2820f54e03063c4dbe8",
+      "metadata": {
+        "CFBundleIdentifier": "com.apple.dt.Xcode",
+        "CFBundleExecutable": "Xcode",
+        "LSMinimumSystemVersion": "26.6"
+      },
+      "absentKeys": []
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/version.plist",
+      "sha256": "99aa0f4ffa738d03c9d86b273745d4a3945c7cdc7462221033fb807463d895e9",
+      "metadata": {
+        "CFBundleShortVersionString": "27.0",
+        "ProductBuildVersion": "27A266a"
+      },
+      "absentKeys": []
+    },
+    {
+      "path": "/System/Library/CoreServices/SystemVersion.plist",
+      "sha256": "bd61e19dd67dd97ce9a27c79a2148d42cc9685a71c6f17ff27d62b819f39f983",
+      "metadata": {
+        "ProductVersion": "27.0.1",
+        "ProductBuildVersion": "26A434"
+      },
+      "absentKeys": []
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist",
+      "sha256": "7b919f007de487c548592a348a98f78f9cf8e48bffbc0a12ad1cc37e97422e1d",
+      "metadata": {
+        "CFBundleIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17"
+      },
+      "absentKeys": []
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist",
+      "sha256": "098e2080d544facbecaae8ec5eebc8b99de6581f02107ce753b80eba21597318",
+      "metadata": {
+        "minRuntimeVersion": "26.0",
+        "supportedArchs": [
+          "arm64",
+          "x86_64"
+        ],
+        "supportedProductFamilyIDs": [
+          1
+        ]
+      },
+      "absentKeys": [
+        "maxRuntimeVersion"
+      ]
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Info.plist",
+      "sha256": "f2954bb6959978b4fad1ac92cd2cac67420b706c4764b9c9df6f09630b8a744f",
+      "metadata": {
+        "CFBundleIdentifier": "com.apple.CoreSimulator.SimRuntime.iOS-26-4"
+      },
+      "absentKeys": []
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/profile.plist",
+      "sha256": "86da650705fc97671a8a558bdb77d6e768831b39f6de996876a8d4042fb307a9",
+      "metadata": {
+        "defaultVersionString": "26.4",
+        "minHostVersion": "14.0.0",
+        "platformIdentifier": "com.apple.platform.iphonesimulator",
+        "supportedArchs": [
+          "arm64",
+          "x86_64"
+        ],
+        "supportedProductFamilyIDs": [
+          2,
+          1
+        ]
+      },
+      "absentKeys": []
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist",
+      "sha256": "36cd266147300d81b549c50b9f0b06517a507675e14f89c43f9e7c1fe52b0a07",
+      "metadata": {
+        "ProductVersion": "26.4.1",
+        "ProductBuildVersion": "23E254a"
+      },
+      "absentKeys": []
+    }
+  ]
+}

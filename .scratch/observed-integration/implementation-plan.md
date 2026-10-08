@@ -23,7 +23,7 @@ Each worker is one named role in one isolated worktree and owns its ticket's exa
 
 ## Phases and dependency graph
 
-Current execution: waves A through D and the bounded ticket03 capacity-read repair are integrated and independently reviewed. Wave E is ready for dispatch; waves F through I await their dependencies. [Execution ledger](../observed-action-rollout/progress.md) records current commits and evidence; the table below defines prerequisites.
+Current execution: waves A through D and the bounded ticket03 capacity-read repair are integrated and independently reviewed. Wave E is implementing from `fd9b3c0d19284b9fc22c4bb5e3a3fd4bb0d3b181`; waves F through I await their dependencies. Root owns a bounded ticket05 follow-up exposing admitted selected-device inventory availability, required by ticket07's supplied source. Its write set is `src/device/index.ts` and `tests/admission-driver.test.ts` in a separate worktree; independent review precedes integration. [Execution ledger](../observed-action-rollout/progress.md) records current commits and evidence; the table below defines prerequisites.
 
 | Wave | Tickets | Integration prerequisite |
 | --- | --- | --- |
