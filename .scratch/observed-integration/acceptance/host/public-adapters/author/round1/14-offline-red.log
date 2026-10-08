@@ -1,0 +1,41 @@
+✔ observed composition is lazy and disabled mutations refuse before opening authority (0.585708ms)
+✔ composition memoizes authority and leaves reads available with enablement off (0.298125ms)
+✖ enabled invalid preparation is rejected offline before authority opens (0.814583ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 130.983333
+
+✖ failing tests:
+
+test at tests/observed-contract.test.ts:1:1836
+✖ enabled invalid preparation is rejected offline before authority opens (0.814583ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + Comparison {}
+  - Comparison {
+  -   code: 'UNSUPPORTED_VERSION'
+  - }
+  
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-contract.test.ts:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Never open
+        at create (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-contract.test.ts:35:92)
+        at async Object.prepareAllocation (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/src/observed/cli.ts:38:79)
+        at async waitForActual (node:assert:615:5)
+        at async strict.rejects (node:assert:738:25)
+        at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-contract.test.ts:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'UNSUPPORTED_VERSION' },
+    operator: 'rejects',
+    diff: 'simple'
+  }

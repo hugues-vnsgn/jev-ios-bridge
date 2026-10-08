@@ -1,0 +1,137 @@
+
+> jev-ios-bridge@1.3.1 typecheck
+> tsc --noEmit
+
+✖ separate allocation/action CLI processes render observed with exact exit and no relaunch (819.18425ms)
+✖ separate allocation/action CLI processes render already with exact exit and no relaunch (819.685458ms)
+✖ separate allocation/action CLI processes render refused with exact exit and no relaunch (840.894959ms)
+✖ separate allocation/action CLI processes render inconclusive with exact exit and no relaunch (837.929541ms)
+✖ separate allocation/action CLI processes render unresolved with exact exit and no relaunch (805.542333ms)
+✔ disabled CLI refuses new effects, retains ready reads/cancel/retire, and uses exact flag (1644.438667ms)
+✖ invalid config blocks fresh ready action but preserves immutable retrieval/conflict and reads (1147.459125ms)
+✔ observed composition is lazy and disabled mutations refuse before opening authority (0.861625ms)
+✔ composition memoizes authority and leaves reads available with enablement off (0.3335ms)
+✔ enabled invalid preparation is rejected offline before authority opens (0.868333ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 4
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7149.284959
+
+✖ failing tests:
+
+test at tests/observed-cli.test.ts:1:2149
+✖ separate allocation/action CLI processes render observed with exact exit and no relaunch (819.18425ms)
+  AssertionError [ERR_ASSERTION]: {"version":1,"kind":"observed-action","actionId":"one","allocationId":"9F3F4FBD-6E0D-4366-A526-11969ED5C3FC","device":{"platform":"ios-simulator","udid":"ABCDEF00-0000-4000-8000-000000000001"},"bridgeVersion":"fixture","state":"terminal","authority":"committed","disposition":"retrieved","cancellationRequested":false,"actionAttempted":false,"actionAcknowledged":false,"observations":0,"outcome":"inconclusive","reason":"RESULT_EVIDENCE_UNCONFIRMED","admission":"quarantined","allocationState":"quarantined","evidence":{"directory":"/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-kEjC7e/runs/observed/one","request":"/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-kEjC7e/runs/observed/one/request.json","observations":[],"terminal":"/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-kEjC7e/runs/observed/one/terminal.json","exportStatus":"complete"}}
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:37:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-cli.test.ts:1:2149
+✖ separate allocation/action CLI processes render already with exact exit and no relaunch (819.685458ms)
+  AssertionError [ERR_ASSERTION]: {"version":1,"kind":"observed-action","actionId":"one","allocationId":"F4BED72D-E512-4C31-AE9E-0A30642C0E3E","device":{"platform":"ios-simulator","udid":"ABCDEF00-0000-4000-8000-000000000001"},"bridgeVersion":"fixture","state":"terminal","authority":"committed","disposition":"retrieved","cancellationRequested":false,"actionAttempted":false,"actionAcknowledged":false,"observations":0,"outcome":"inconclusive","reason":"RESULT_EVIDENCE_UNCONFIRMED","admission":"quarantined","allocationState":"quarantined","evidence":{"directory":"/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-sgQQqD/runs/observed/one","request":"/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-sgQQqD/runs/observed/one/request.json","observations":[],"terminal":"/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-sgQQqD/runs/observed/one/terminal.json","exportStatus":"complete"}}
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:37:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-cli.test.ts:1:2149
+✖ separate allocation/action CLI processes render refused with exact exit and no relaunch (840.894959ms)
+  AssertionError [ERR_ASSERTION]: {"version":1,"kind":"observed-action","actionId":"one","allocationId":"E2548438-E612-4E11-A840-AB040F05DDC5","device":{"platform":"ios-simulator","udid":"ABCDEF00-0000-4000-8000-000000000001"},"bridgeVersion":"fixture","state":"terminal","authority":"committed","disposition":"retrieved","cancellationRequested":false,"actionAttempted":false,"actionAcknowledged":false,"observations":0,"outcome":"inconclusive","reason":"RESULT_EVIDENCE_UNCONFIRMED","admission":"quarantined","allocationState":"quarantined","evidence":{"directory":"/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-o33tQM/runs/observed/one","request":"/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-o33tQM/runs/observed/one/request.json","observations":[],"terminal":"/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-o33tQM/runs/observed/one/terminal.json","exportStatus":"complete"}}
+  
+  
+  2 !== 3
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:37:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-cli.test.ts:1:2149
+✖ separate allocation/action CLI processes render inconclusive with exact exit and no relaunch (837.929541ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:40:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-cli.test.ts:1:2149
+✖ separate allocation/action CLI processes render unresolved with exact exit and no relaunch (805.542333ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:40:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-cli.test.ts:1:4684
+✖ invalid config blocks fresh ready action but preserves immutable retrieval/conflict and reads (1147.459125ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'inconclusive'
+  - 'already_satisfied'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:77:98)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'inconclusive',
+    expected: 'already_satisfied',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

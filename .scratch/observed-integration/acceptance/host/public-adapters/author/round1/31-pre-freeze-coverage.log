@@ -1,0 +1,81 @@
+✔ contract: role, reason-code, exit-code, and version vocabularies (3.760709ms)
+✔ contract: accepted and rejected scripts, with exact messages (9.091708ms)
+✔ contract: start_scenario accepts every script the scripts golden accepts, iOS and Android (685.241334ms)
+✔ contract: report.json shape for passed, failed, and device-error runs (99.223125ms)
+✔ contract: report.json shape for an Android run (37.462041ms)
+✔ contract: evidence folder names, JSONL envelope, event types, and verdict event (28.224125ms)
+✔ contract: MCP tool names, input schemas, and the start_scenario reply (489.727ms)
+✔ contract: CLI exit codes for every outcome and start failure (6419.77875ms)
+✔ contract: the driver translates unknown vendor roles to other and keeps known ones (0.358709ms)
+✔ contract: the CLI prints the release version (263.931708ms)
+✔ contract: the CLI prints the schema message for an unversioned script (237.894667ms)
+✔ contract: the CLI names the missing or malformed Android device, and the Android driver's refusal once one is chosen (1237.285042ms)
+✔ contract: --help names JEV_ANDROID_DEVICE (242.895208ms)
+✔ contract: --help lists capture and its options (229.955459ms)
+✔ contract: capture refusals print the reason code on stderr and need no TYPESAFE_API_KEY (712.506208ms)
+✔ stdio server negotiates and exposes start/report/cancel without a key (217.887708ms)
+✔ start_scenario's description names both iOS and Android (244.663667ms)
+✔ the MCP server starts and lists its tools with both device settings empty (240.281167ms)
+✔ an Android script reaches the Android driver, whose refusal get_report shows: ANDROID_TOOLS_UNAVAILABLE without adb (270.402042ms)
+✔ running MCP reports hide screen evidence and bounded waiting returns the final report (903.336667ms)
+✔ start_scenario rejects an invalid iOS script with the same validation text as 1.1 (246.565917ms)
+✔ separate allocation/action CLI processes render observed with exact exit and no relaunch (1656.446041ms)
+✔ separate allocation/action CLI processes render already with exact exit and no relaunch (1583.063833ms)
+✔ separate allocation/action CLI processes render refused with exact exit and no relaunch (1565.081917ms)
+✔ separate allocation/action CLI processes render inconclusive with exact exit and no relaunch (1630.705125ms)
+✔ separate allocation/action CLI processes render unresolved with exact exit and no relaunch (1177.049625ms)
+✔ disabled CLI refuses new effects, retains ready reads/cancel/retire, and uses exact flag (2304.357375ms)
+✔ invalid config blocks fresh ready action but preserves immutable retrieval/conflict and reads (2554.582459ms)
+✔ CLI SIGINT revokes owned action and returns 130 without late input (1247.554541ms)
+✔ CLI SIGINT stops only a read wait with 130 (1878.554125ms)
+✔ CLI SIGTERM revokes owned action and returns 143 without late input (1247.811ms)
+✔ CLI SIGTERM stops only a read wait with 143 (1872.951416ms)
+✔ CLI shutdown cancels only owned active preparation and leaves ready parked stock intact (732.797167ms)
+✔ actual CLI offline invalid/disabled argument errors are one safe JSON record without a key (1164.062083ms)
+✔ legacy command arguments named like observed commands retain legacy error rendering (234.071875ms)
+✔ concurrent preparation and action CLI retries share one durable owner and no repeated backend work (1916.891458ms)
+✔ CLI strict request files reject malformed, versioned, extra and oversized inputs without opening authority (995.969ms)
+✔ observed composition is lazy and disabled mutations refuse before opening authority (0.903084ms)
+✔ composition memoizes authority and leaves reads available with enablement off (0.444333ms)
+✔ enabled invalid preparation is rejected offline before authority opens (1.045ms)
+✔ versioned reply goldens freeze exact outcome exits and preserve historical/busy optional fields (3.160417ms)
+✔ safe operation errors preserve accepted metadata and never expose unknown exceptions (0.106916ms)
+✔ typed allocation configuration errors retain their shared safe preparation code (0.202042ms)
+✔ configuration validation preserves binding priority across a race and fails safely when authority is unavailable (129.547ms)
+✔ composition close during lazy opening rejects new issuance and closes the resolved module once (1.287583ms)
+✔ actual key-free CLI MCP startup publishes exact observed gate 0 (293.541416ms)
+✔ actual key-free CLI MCP startup publishes exact observed gate true (285.2935ms)
+✔ actual key-free CLI MCP startup publishes exact observed gate 1 (279.066084ms)
+✔ strict MCP input errors use two safe text blocks and do not open authority (326.566416ms)
+✔ MCP shared authority renders observed, preserves evidence and exact-once retrieval (989.368125ms)
+✔ MCP shared authority renders already, preserves evidence and exact-once retrieval (768.593291ms)
+✔ MCP shared authority renders refused, preserves evidence and exact-once retrieval (869.391584ms)
+✔ MCP shared authority renders inconclusive, preserves evidence and exact-once retrieval (881.755083ms)
+✔ MCP shared authority renders unresolved, preserves evidence and exact-once retrieval (933.102041ms)
+✔ MCP counts original UTF-8 request bytes before filling guard defaults (297.094292ms)
+✔ MCP transport cancellation stops only the wait; busy executing allocation directs action cancellation (883.175959ms)
+✔ MCP disabled mode retains reads, cancellation and retirement under invalid configuration (627.209125ms)
+✔ observed MCP v1 golden advertises exact strict schemas independently of legacy tools (295.680541ms)
+ℹ tests 58
+ℹ suites 0
+ℹ pass 58
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 45711.193375
+ℹ start of coverage report
+ℹ -----------------------------------------------------------------
+ℹ file          | line % | branch % | funcs % | uncovered lines
+ℹ -----------------------------------------------------------------
+ℹ src           |        |          |         | 
+ℹ  cli.ts       |  98.01 |    52.08 |   80.00 | 72 119 158 178-179
+ℹ  mcp          |        |          |         | 
+ℹ   index.ts    |  92.41 |    66.67 |   75.00 | 51 54-58
+ℹ   observed.ts |  96.08 |    91.67 |  100.00 | 13-14
+ℹ  observed     |        |          |         | 
+ℹ   cli.ts      |  87.50 |    91.92 |   89.66 | 52-72
+ℹ -----------------------------------------------------------------
+ℹ all files     |  93.81 |    79.78 |   86.42 | 
+ℹ -----------------------------------------------------------------
+ℹ end of coverage report

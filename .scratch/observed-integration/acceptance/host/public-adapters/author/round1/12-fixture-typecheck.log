@@ -1,0 +1,9 @@
+
+> jev-ios-bridge@1.3.1 typecheck
+> tsc --noEmit
+
+tests/fixtures/observed-cli-server.ts(36,15): error TS2352: Conversion of type '() => Promise<{ type: number; bsize: number; blocks: number; bfree: number; bavail: number; files: number; ffree: number; }>' to type '{ (path: PathLike, opts?: (StatFsOptions & { bigint?: false | undefined; }) | undefined): Promise<StatsFs>; (path: PathLike, opts: StatFsOptions & { ...; }): Promise<...>; (path: PathLike, opts?: StatFsOptions | undefined): Promise<...>; }' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type 'Promise<{ type: number; bsize: number; blocks: number; bfree: number; bavail: number; files: number; ffree: number; }>' is not comparable to type 'Promise<BigIntStatsFs>'.
+    Type '{ type: number; bsize: number; blocks: number; bfree: number; bavail: number; files: number; ffree: number; }' is not comparable to type 'BigIntStatsFs'.
+      Types of property 'type' are incompatible.
+        Type 'number' is not comparable to type 'bigint'.

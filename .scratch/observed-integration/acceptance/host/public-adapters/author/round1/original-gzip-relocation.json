@@ -1,0 +1,7 @@
+{
+  "originalReceipt": "preservation.json",
+  "preservedAbsolutePath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-observed-evidence-overlap/.scratch/observed-integration/acceptance/host/public-adapters-archives/round1-evidence.tar.gz",
+  "sha256": "78ec53cfb293bec55ce9c5c059c36a4e7458ec2b08ddd09e0a4b794899d1e5cf",
+  "verified": true,
+  "reason": "Keep the original verified gzip bytes outside the integration Git tree; the smaller verified xz archive contains all identical evidence members."
+}

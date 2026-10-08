@@ -1,0 +1,97 @@
+(node:70387) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ contract: role, reason-code, exit-code, and version vocabularies (4.782958ms)
+✔ contract: accepted and rejected scripts, with exact messages (16.359833ms)
+✔ contract: start_scenario accepts every script the scripts golden accepts, iOS and Android (544.484625ms)
+✔ contract: report.json shape for passed, failed, and device-error runs (108.100917ms)
+✔ contract: report.json shape for an Android run (36.994875ms)
+✔ contract: evidence folder names, JSONL envelope, event types, and verdict event (40.505708ms)
+✔ contract: MCP tool names, input schemas, and the start_scenario reply (432.43825ms)
+✔ contract: CLI exit codes for every outcome and start failure (4404.938959ms)
+✔ contract: the driver translates unknown vendor roles to other and keeps known ones (0.514375ms)
+✔ contract: the CLI prints the release version (159.263375ms)
+✔ contract: the CLI prints the schema message for an unversioned script (163.216541ms)
+✔ contract: the CLI names the missing or malformed Android device, and the Android driver's refusal once one is chosen (977.113042ms)
+✔ contract: --help names JEV_ANDROID_DEVICE (162.903209ms)
+✔ contract: --help lists capture and its options (151.171583ms)
+✖ contract: capture refusals print the reason code on stderr and need no TYPESAFE_API_KEY (150.641916ms)
+✔ stdio server negotiates and exposes start/report/cancel without a key (149.70325ms)
+✔ start_scenario's description names both iOS and Android (156.981875ms)
+✔ the MCP server starts and lists its tools with both device settings empty (153.016458ms)
+✔ an Android script reaches the Android driver, whose refusal get_report shows: ANDROID_TOOLS_UNAVAILABLE without adb (174.077208ms)
+✔ running MCP reports hide screen evidence and bounded waiting returns the final report (802.493292ms)
+✔ start_scenario rejects an invalid iOS script with the same validation text as 1.1 (174.005666ms)
+(node:70889) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ separate allocation/action CLI processes render observed with exact exit and no relaunch (1289.88675ms)
+✔ separate allocation/action CLI processes render already with exact exit and no relaunch (1261.20725ms)
+✔ separate allocation/action CLI processes render refused with exact exit and no relaunch (1201.690041ms)
+✔ separate allocation/action CLI processes render inconclusive with exact exit and no relaunch (1278.93425ms)
+✔ separate allocation/action CLI processes render unresolved with exact exit and no relaunch (989.003416ms)
+✔ disabled CLI refuses new effects, retains ready reads/cancel/retire, and uses exact flag (1635.218084ms)
+✔ invalid config blocks fresh ready action but preserves immutable retrieval/conflict and reads (1852.094292ms)
+✔ CLI SIGINT revokes owned action and returns 130 without late input (1009.280958ms)
+✔ CLI SIGINT stops only a read wait with 130 (1503.436833ms)
+✔ CLI SIGTERM revokes owned action and returns 143 without late input (981.827916ms)
+✔ CLI SIGTERM stops only a read wait with 143 (1643.978292ms)
+✔ CLI shutdown cancels only owned active preparation and leaves ready parked stock intact (534.9755ms)
+✔ actual CLI offline invalid/disabled argument errors are one safe JSON record without a key (788.678959ms)
+✔ legacy command arguments named like observed commands retain legacy error rendering (153.867916ms)
+✔ concurrent preparation and action CLI retries share one durable owner and no repeated backend work (1509.072042ms)
+✔ CLI strict request files reject malformed, versioned, extra and oversized inputs without opening authority (818.657458ms)
+✔ CLI executes through a bin symlink and its internal import remains inert (412.359542ms)
+✔ observed composition is lazy and disabled mutations refuse before opening authority (0.652917ms)
+✔ composition memoizes authority and leaves reads available with enablement off (0.297292ms)
+✔ enabled invalid preparation is rejected offline before authority opens (0.924792ms)
+✔ versioned reply goldens freeze exact outcome exits and preserve historical/busy optional fields (5.842875ms)
+✔ safe operation errors preserve accepted metadata and never expose unknown exceptions (0.134958ms)
+✔ typed allocation configuration errors retain their shared safe preparation code (4.9565ms)
+(node:71696) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ configuration validation preserves binding priority across a race and fails safely when authority is unavailable (90.294833ms)
+✔ composition close during lazy opening rejects new issuance and closes the resolved module once (1.804833ms)
+(node:71699) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ actual key-free CLI MCP startup publishes exact observed gate 0 (356.257ms)
+✔ actual key-free CLI MCP startup publishes exact observed gate true (231.044334ms)
+✔ actual key-free CLI MCP startup publishes exact observed gate 1 (221.933667ms)
+✔ strict MCP input errors use two safe text blocks and do not open authority (254.433875ms)
+✔ MCP shared authority renders observed, preserves evidence and exact-once retrieval (838.305459ms)
+✔ MCP shared authority renders already, preserves evidence and exact-once retrieval (862.626708ms)
+✔ MCP shared authority renders refused, preserves evidence and exact-once retrieval (826.962917ms)
+✔ MCP shared authority renders inconclusive, preserves evidence and exact-once retrieval (817.971333ms)
+✔ MCP shared authority renders unresolved, preserves evidence and exact-once retrieval (876.406375ms)
+✔ MCP counts original UTF-8 request bytes before filling guard defaults (213.48125ms)
+✔ MCP transport cancellation stops only the wait; busy executing allocation directs action cancellation (820.546833ms)
+✔ MCP disabled mode retains reads, cancellation and retirement under invalid configuration (542.692583ms)
+✔ observed MCP v1 golden advertises exact strict schemas independently of legacy tools (206.705167ms)
+✔ MCP preparing busy guidance and allocation wait cancellation preserve the active preparation (674.530375ms)
+ℹ tests 60
+ℹ suites 0
+ℹ pass 59
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 36707.052583
+
+✖ failing tests:
+
+test at tests/contract.test.ts:1:25626
+✖ contract: capture refusals print the reason code on stderr and need no TYPESAFE_API_KEY (150.641916ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /^NO_DEVICE: \S/. Input:
+  
+  '(node:70859) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n' +
+    '(Use `node --trace-warnings ...` to show where the warning was created)\n' +
+    'NO_DEVICE: Pass --serial or --avd, or set JEV_ANDROID_DEVICE\n'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/contract.test.ts:532:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '(node:70859) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\nNO_DEVICE: Pass --serial or --avd, or set JEV_ANDROID_DEVICE\n',
+    expected: /^NO_DEVICE: \S/,
+    operator: 'match'
+  }

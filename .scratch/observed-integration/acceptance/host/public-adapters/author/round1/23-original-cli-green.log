@@ -1,0 +1,15 @@
+✔ separate allocation/action CLI processes render observed with exact exit and no relaunch (1402.912792ms)
+✔ separate allocation/action CLI processes render already with exact exit and no relaunch (1232.081167ms)
+✔ separate allocation/action CLI processes render refused with exact exit and no relaunch (1248.914084ms)
+✔ separate allocation/action CLI processes render inconclusive with exact exit and no relaunch (1287.163042ms)
+✔ separate allocation/action CLI processes render unresolved with exact exit and no relaunch (971.488708ms)
+✔ disabled CLI refuses new effects, retains ready reads/cancel/retire, and uses exact flag (1740.111417ms)
+✔ invalid config blocks fresh ready action but preserves immutable retrieval/conflict and reads (1912.764292ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10078.058583

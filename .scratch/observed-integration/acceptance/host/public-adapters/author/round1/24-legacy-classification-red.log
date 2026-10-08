@@ -1,0 +1,31 @@
+✖ legacy command arguments named like observed commands retain legacy error rendering (152.279083ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 414.159584
+
+✖ failing tests:
+
+test at tests/observed-cli.test.ts:1:11464
+✖ legacy command arguments named like observed commands retain legacy error rendering (152.279083ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '{"version":1,"kind":"observed-operation-error","code":"INVALID_REQUEST","message":"Invalid observed command arguments","acceptance":"no","acceptanceKind":"action"}\n'
+  - ''
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:148:33)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '{"version":1,"kind":"observed-operation-error","code":"INVALID_REQUEST","message":"Invalid observed command arguments","acceptance":"no","acceptanceKind":"action"}\n',
+    expected: '',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,20 @@
+{
+  "HEAD": "6ef2690fbb990e86fc57603c952304167d8c39b8",
+  "files": {
+    "src/observed/evidence.ts": "f4187d8328f8db8a8ab3e42a8dde3ea5917d92484753faea1475ba99a4cf945d",
+    "src/observed/service.ts": "0c9e6cd6bfc1d7308bc6dcdb1cbf88b9179143084f9cb66d28af09cb6a9def6d",
+    "src/observed/allocation.ts": "0233ea8d8d571761596287e9369f7801bd693edfe6d95c459a950e4c3b943041",
+    "src/cli.ts": "47ab28827a25d46febd81b4a8e76e055040ae2ccedb0a71ac3e9428a13e374c7",
+    "src/mcp/index.ts": "48e531d304d19852d461eb1d3317fee5f953a15654f405c3393b04ff4a494c2a",
+    "src/mcp/observed.ts": "d4cd1dd7f18c6d841be6c979cf85a80b47845869168363f8b4622016a4453565",
+    "src/observed/cli.ts": "3f63a5610a012d69d335cf7e4498ecbbeb202bedb2a11c56bc5484f8fb516c21",
+    "tests/observed-cli.test.ts": "fe9addd0760b83460950d01ac7c671950487a56f6c1fccada6121cd041a6f025",
+    "tests/observed-contract.test.ts": "a36afebeaca4d1a5233caac4bd33a43d01d016c6dc4060dad0c055463e484f45",
+    "tests/fixtures/observed-cli-server.ts": "491b897ea4372220ee3a8b401632fdd2cc2095064b34fe846c71aa07853928ae"
+  },
+  "logs": [
+    "13-cli-first.log (fixture root-shadow error)",
+    "15-offline-fixture-green.log (protected overlap genuine failure)",
+    "evidence-overlap-repro.log (minimal genuine exit1)"
+  ]
+}

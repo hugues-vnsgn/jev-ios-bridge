@@ -1,0 +1,41 @@
+✔ separate allocation/action CLI processes render observed with exact exit and no relaunch (1306.543167ms)
+✔ separate allocation/action CLI processes render already with exact exit and no relaunch (1248.679666ms)
+✔ separate allocation/action CLI processes render refused with exact exit and no relaunch (1215.025875ms)
+✔ separate allocation/action CLI processes render inconclusive with exact exit and no relaunch (1314.281625ms)
+✔ separate allocation/action CLI processes render unresolved with exact exit and no relaunch (1016.509541ms)
+✔ disabled CLI refuses new effects, retains ready reads/cancel/retire, and uses exact flag (1641.108292ms)
+✔ invalid config blocks fresh ready action but preserves immutable retrieval/conflict and reads (1917.482333ms)
+✔ CLI SIGINT revokes owned action and returns 130 without late input (1028.513209ms)
+✔ CLI SIGINT stops only a read wait with 130 (1540.858584ms)
+✔ CLI SIGTERM revokes owned action and returns 143 without late input (1067.566583ms)
+✔ CLI SIGTERM stops only a read wait with 143 (1548.356833ms)
+✔ CLI shutdown cancels only owned active preparation and leaves ready parked stock intact (539.988333ms)
+✔ actual CLI offline invalid/disabled argument errors are one safe JSON record without a key (772.779083ms)
+✔ legacy command arguments named like observed commands retain legacy error rendering (159.61375ms)
+✔ observed composition is lazy and disabled mutations refuse before opening authority (0.6415ms)
+✔ composition memoizes authority and leaves reads available with enablement off (0.340333ms)
+✔ enabled invalid preparation is rejected offline before authority opens (0.921459ms)
+✔ versioned reply goldens freeze exact outcome exits and preserve historical/busy optional fields (3.311209ms)
+✔ safe operation errors preserve accepted metadata and never expose unknown exceptions (0.221333ms)
+✔ typed allocation configuration errors retain their shared safe preparation code (0.230875ms)
+✔ actual key-free CLI MCP startup publishes exact observed gate 0 (208.87175ms)
+✔ actual key-free CLI MCP startup publishes exact observed gate true (189.304792ms)
+✔ actual key-free CLI MCP startup publishes exact observed gate 1 (199.028083ms)
+✔ strict MCP input errors use two safe text blocks and do not open authority (200.654125ms)
+✔ MCP shared authority renders observed, preserves evidence and exact-once retrieval (848.831125ms)
+✔ MCP shared authority renders already, preserves evidence and exact-once retrieval (743.547042ms)
+✔ MCP shared authority renders refused, preserves evidence and exact-once retrieval (761.442833ms)
+✔ MCP shared authority renders inconclusive, preserves evidence and exact-once retrieval (842.656833ms)
+✔ MCP shared authority renders unresolved, preserves evidence and exact-once retrieval (848.894125ms)
+✔ MCP counts original UTF-8 request bytes before filling guard defaults (211.992583ms)
+✔ MCP transport cancellation stops only the wait; busy executing allocation directs action cancellation (794.729666ms)
+✔ MCP disabled mode retains reads, cancellation and retirement under invalid configuration (556.263625ms)
+✔ observed MCP v1 golden advertises exact strict schemas independently of legacy tools (207.988667ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23438.680625

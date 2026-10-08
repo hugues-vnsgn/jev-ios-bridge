@@ -1,0 +1,29 @@
+✔ observed composition is lazy and disabled mutations refuse before opening authority (0.5365ms)
+✖ composition memoizes authority and leaves reads available with enablement off (0.940167ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 182.135833
+
+✖ failing tests:
+
+test at tests/observed-contract.test.ts:1:716
+✖ composition memoizes authority and leaves reads available with enablement off (0.940167ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-contract.test.ts:30:34)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

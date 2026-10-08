@@ -1,0 +1,9 @@
+
+> jev-ios-bridge@1.3.1 typecheck
+> tsc --noEmit
+
+src/mcp/observed.ts(12,67): error TS7006: Parameter 'context' implicitly has an 'any' type.
+src/observed/cli.ts(80,45): error TS2379: Argument of type '{ cwd: string; admission: Admission; deviceWindow: DeviceWindowOpener | undefined; }' is not assignable to parameter of type 'MobileBuildMcpDriverOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'deviceWindow' are incompatible.
+    Type 'DeviceWindowOpener | undefined' is not assignable to type 'DeviceWindowOpener'.
+      Type 'undefined' is not assignable to type 'DeviceWindowOpener'.

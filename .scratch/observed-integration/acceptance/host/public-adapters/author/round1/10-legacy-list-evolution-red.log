@@ -1,0 +1,68 @@
+✖ stdio server negotiates and exposes start/report/cancel without a key (239.531ms)
+✖ the MCP server starts and lists its tools with both device settings empty (158.80525ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 461.698958
+
+✖ failing tests:
+
+test at tests/mcp.test.ts:1:420
+✖ stdio server negotiates and exposes start/report/cancel without a key (239.531ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   'cancel_observed_action',
+  +   'cancel_observed_allocation',
+      'cancel_run',
+  +   'get_observed_action',
+  +   'get_observed_allocation',
+      'get_report',
+  +   'retire_observed_allocation',
+      'start_scenario'
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/mcp.test.ts:29:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'cancel_observed_action', 'cancel_observed_allocation', 'cancel_run', 'get_observed_action', 'get_observed_allocation', 'get_report', 'retire_observed_allocation', 'start_scenario' ],
+    expected: [ 'cancel_run', 'get_report', 'start_scenario' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/mcp.test.ts:1:2300
+✖ the MCP server starts and lists its tools with both device settings empty (158.80525ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   'cancel_observed_action',
+  +   'cancel_observed_allocation',
+      'cancel_run',
+  +   'get_observed_action',
+  +   'get_observed_allocation',
+      'get_report',
+  +   'retire_observed_allocation',
+      'start_scenario'
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/mcp.test.ts:55:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'cancel_observed_action', 'cancel_observed_allocation', 'cancel_run', 'get_observed_action', 'get_observed_allocation', 'get_report', 'retire_observed_allocation', 'start_scenario' ],
+    expected: [ 'cancel_run', 'get_report', 'start_scenario' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

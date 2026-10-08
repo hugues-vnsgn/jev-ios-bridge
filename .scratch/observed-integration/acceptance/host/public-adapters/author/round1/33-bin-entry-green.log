@@ -1,0 +1,11 @@
+✔ actual CLI offline invalid/disabled argument errors are one safe JSON record without a key (755.174084ms)
+✔ legacy command arguments named like observed commands retain legacy error rendering (149.62775ms)
+✔ CLI executes through a bin symlink and its internal import remains inert (295.521208ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1389.580375

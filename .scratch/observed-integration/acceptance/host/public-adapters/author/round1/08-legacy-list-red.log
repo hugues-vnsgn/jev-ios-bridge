@@ -1,0 +1,29 @@
+✖ stdio server negotiates and exposes start/report/cancel without a key (257.546333ms)
+✖ the MCP server starts and lists its tools with both device settings empty (154.706875ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 523.693208
+
+✖ failing tests:
+
+test at tests/mcp.test.ts:1:420
+✖ stdio server negotiates and exposes start/report/cancel without a key (257.546333ms)
+  TypeError: Cannot read properties of undefined (reading 'tools')
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/mcp.test.ts:29:34)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/mcp.test.ts:1:2300
+✖ the MCP server starts and lists its tools with both device settings empty (154.706875ms)
+  TypeError: Cannot read properties of undefined (reading 'tools')
+      at Object.listTools (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/fixtures/mcp-session.ts:64:73)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/mcp.test.ts:54:19)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

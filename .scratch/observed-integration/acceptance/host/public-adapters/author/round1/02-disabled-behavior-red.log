@@ -1,0 +1,40 @@
+✖ observed composition is lazy and disabled mutations refuse before opening authority (1.435583ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 124.154291
+
+✖ failing tests:
+
+test at tests/observed-contract.test.ts:1:244
+✖ observed composition is lazy and disabled mutations refuse before opening authority (1.435583ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + Comparison {}
+  - Comparison {
+  -   code: 'OBSERVED_DISABLED'
+  - }
+  
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-contract.test.ts:9:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Never open
+        at Object.create (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-contract.test.ts:7:99)
+        at get (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/src/observed/cli.ts:6:40)
+        at Object.start (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/src/observed/cli.ts:8:31)
+        at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-contract.test.ts:9:37)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.start (node:internal/test_runner/test:1262:17)
+        at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17),
+    expected: { code: 'OBSERVED_DISABLED' },
+    operator: 'rejects',
+    diff: 'simple'
+  }

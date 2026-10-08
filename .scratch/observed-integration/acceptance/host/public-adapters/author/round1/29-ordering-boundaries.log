@@ -1,0 +1,39 @@
+✔ concurrent preparation and action CLI retries share one durable owner and no repeated backend work (1506.510583ms)
+✔ CLI strict request files reject malformed, versioned, extra and oversized inputs without opening authority (649.972417ms)
+✖ configuration validation preserves binding priority across a race and fails safely when authority is unavailable (66.142083ms)
+✔ composition close during lazy opening rejects new issuance and closes the resolved module once (1.842792ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2608.581417
+
+✖ failing tests:
+
+test at tests/observed-contract.test.ts:1:5679
+✖ configuration validation preserves binding priority across a race and fails safely when authority is unavailable (66.142083ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  -   acceptance: 'unknown',
+      code: 'STORE_UNAVAILABLE'
+    }
+  
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-contract.test.ts:89:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: ObservedOperationError: Authoritative action state is unavailable
+        at validateObservedStartConfiguration (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/src/observed/cli.ts:64:45)
+        at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-contract.test.ts:89:24)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3),
+    expected: { code: 'STORE_UNAVAILABLE', acceptance: 'unknown' },
+    operator: 'rejects',
+    diff: 'simple'
+  }

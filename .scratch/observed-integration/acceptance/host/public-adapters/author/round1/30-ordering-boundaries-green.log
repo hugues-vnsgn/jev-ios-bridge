@@ -1,0 +1,16 @@
+
+> jev-ios-bridge@1.3.1 typecheck
+> tsc --noEmit
+
+✔ concurrent preparation and action CLI retries share one durable owner and no repeated backend work (1491.949083ms)
+✔ CLI strict request files reject malformed, versioned, extra and oversized inputs without opening authority (664.943542ms)
+✔ configuration validation preserves binding priority across a race and fails safely when authority is unavailable (66.2565ms)
+✔ composition close during lazy opening rejects new issuance and closes the resolved module once (1.807959ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2601.172084

@@ -1,0 +1,241 @@
+✖ separate allocation/action CLI processes render observed with exact exit and no relaunch (152.05ms)
+✖ separate allocation/action CLI processes render already with exact exit and no relaunch (140.684833ms)
+✖ separate allocation/action CLI processes render refused with exact exit and no relaunch (136.747791ms)
+✖ separate allocation/action CLI processes render inconclusive with exact exit and no relaunch (142.720125ms)
+✖ separate allocation/action CLI processes render unresolved with exact exit and no relaunch (151.183667ms)
+✖ disabled CLI refuses new effects, retains ready reads/cancel/retire, and uses exact flag (136.766208ms)
+✖ invalid config blocks fresh ready action but preserves immutable retrieval/conflict and reads (138.540084ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 0
+ℹ fail 7
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1201.3445
+
+✖ failing tests:
+
+test at tests/observed-cli.test.ts:1:2124
+✖ separate allocation/action CLI processes render observed with exact exit and no relaunch (152.05ms)
+  AssertionError [ERR_ASSERTION]: {"version":1,"kind":"observed-operation-error","code":"INTERNAL_ERROR","message":"Observed operation failed","acceptance":"unknown","acceptanceKind":"preparation"}
+  node:internal/modules/run_main:107
+      triggerUncaughtException(
+      ^
+  
+  [Error: ENOENT: no such file or directory, open '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-8Xx6mP/fixture.json'] {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-8Xx6mP/fixture.json'
+  }
+  
+  Node.js v26.8.1
+  
+  
+  1 !== 0
+  
+      at prepare (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:28:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:33:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-cli.test.ts:1:2124
+✖ separate allocation/action CLI processes render already with exact exit and no relaunch (140.684833ms)
+  AssertionError [ERR_ASSERTION]: {"version":1,"kind":"observed-operation-error","code":"INTERNAL_ERROR","message":"Observed operation failed","acceptance":"unknown","acceptanceKind":"preparation"}
+  node:internal/modules/run_main:107
+      triggerUncaughtException(
+      ^
+  
+  [Error: ENOENT: no such file or directory, open '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-zN20xb/fixture.json'] {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-zN20xb/fixture.json'
+  }
+  
+  Node.js v26.8.1
+  
+  
+  1 !== 0
+  
+      at prepare (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:28:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:33:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-cli.test.ts:1:2124
+✖ separate allocation/action CLI processes render refused with exact exit and no relaunch (136.747791ms)
+  AssertionError [ERR_ASSERTION]: {"version":1,"kind":"observed-operation-error","code":"INTERNAL_ERROR","message":"Observed operation failed","acceptance":"unknown","acceptanceKind":"preparation"}
+  node:internal/modules/run_main:107
+      triggerUncaughtException(
+      ^
+  
+  [Error: ENOENT: no such file or directory, open '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-HoQnhQ/fixture.json'] {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-HoQnhQ/fixture.json'
+  }
+  
+  Node.js v26.8.1
+  
+  
+  1 !== 0
+  
+      at prepare (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:28:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:33:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-cli.test.ts:1:2124
+✖ separate allocation/action CLI processes render inconclusive with exact exit and no relaunch (142.720125ms)
+  AssertionError [ERR_ASSERTION]: {"version":1,"kind":"observed-operation-error","code":"INTERNAL_ERROR","message":"Observed operation failed","acceptance":"unknown","acceptanceKind":"preparation"}
+  node:internal/modules/run_main:107
+      triggerUncaughtException(
+      ^
+  
+  [Error: ENOENT: no such file or directory, open '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-BaSzC0/fixture.json'] {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-BaSzC0/fixture.json'
+  }
+  
+  Node.js v26.8.1
+  
+  
+  1 !== 0
+  
+      at prepare (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:28:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:33:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-cli.test.ts:1:2124
+✖ separate allocation/action CLI processes render unresolved with exact exit and no relaunch (151.183667ms)
+  AssertionError [ERR_ASSERTION]: {"version":1,"kind":"observed-operation-error","code":"INTERNAL_ERROR","message":"Observed operation failed","acceptance":"unknown","acceptanceKind":"preparation"}
+  node:internal/modules/run_main:107
+      triggerUncaughtException(
+      ^
+  
+  [Error: ENOENT: no such file or directory, open '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-q9zRWL/fixture.json'] {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-q9zRWL/fixture.json'
+  }
+  
+  Node.js v26.8.1
+  
+  
+  1 !== 0
+  
+      at prepare (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:28:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:33:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-cli.test.ts:1:3782
+✖ disabled CLI refuses new effects, retains ready reads/cancel/retire, and uses exact flag (136.766208ms)
+  AssertionError [ERR_ASSERTION]: {"version":1,"kind":"observed-operation-error","code":"INTERNAL_ERROR","message":"Observed operation failed","acceptance":"unknown","acceptanceKind":"preparation"}
+  node:internal/modules/run_main:107
+      triggerUncaughtException(
+      ^
+  
+  [Error: ENOENT: no such file or directory, open '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-tCYPaZ/fixture.json'] {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-tCYPaZ/fixture.json'
+  }
+  
+  Node.js v26.8.1
+  
+  
+  1 !== 0
+  
+      at prepare (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:28:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:55:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/observed-cli.test.ts:1:4659
+✖ invalid config blocks fresh ready action but preserves immutable retrieval/conflict and reads (138.540084ms)
+  AssertionError [ERR_ASSERTION]: {"version":1,"kind":"observed-operation-error","code":"INTERNAL_ERROR","message":"Observed operation failed","acceptance":"unknown","acceptanceKind":"preparation"}
+  node:internal/modules/run_main:107
+      triggerUncaughtException(
+      ^
+  
+  [Error: ENOENT: no such file or directory, open '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-EUJrI0/fixture.json'] {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-EUJrI0/fixture.json'
+  }
+  
+  Node.js v26.8.1
+  
+  
+  1 !== 0
+  
+      at prepare (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:28:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-public-adapters/tests/observed-cli.test.ts:68:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
