@@ -2,6 +2,8 @@
 
 Type: task
 Status: ready-for-agent
+Execution: implemented
+Claimed by: observed_host_faults (Root dispatch, 2026-10-08)
 Mode: AFK
 Blocked by: 08
 Owner: Host-verification implementer
@@ -36,3 +38,13 @@ Completion: Every required host fault row has evidence or a named UNVERIFIED blo
 
 ## Comments
 
+
+### 2026-10-08 — Host candidate ready for Root review
+
+Implemented only the assigned host tests/fixtures and this metadata. Base: `75d7618167729b9b9a5547eaa468e37eb12b2504`; original dispatch base and all original freezes remain preserved. Accepted maintenance dependency mapping is explicit in the case matrix.
+
+Final added suites: 193/193 on Node26.8.1 and exact24.0.0, zero skips. Actual default `npm run check` on each runtime: typecheck, 1668/1668 tests, zero skips, build; both exit0. No timing/serial fallback. Matrix: original362 IDs preserved plus34 honest additions =396 bounded inventory IDs, distinct from193 executed tests. Each row records exact assertion locations, source hash and both-runtime command/raw archive associations. The six independent completeness findings are closed by explicit owned assertions; all earlier193/178 greens remain associated with their older freezes and cannot substitute for these final proofs.
+
+Evidence/report: `/tmp/jev-observed-ticket09-evidence/report.md`; owned mapping: `tests/fixtures/observed-host/case-matrix.json`; six-gap association: `/tmp/jev-observed-ticket09-evidence/six-family-closure.json`. Original failing oracles/source/logs and dependency before/after mapping are retained. No product source fix was required; first failures were fixture setup/oracle/proof gaps, not product reds.
+
+Limits: startup STORE_UNAVAILABLE wrapper proves fixture composition parity only; unchanged production translation is cited separately. SQLITE_FULL is injected, not a physically full volume; readonly is an actual isolated mode500 directory. Primitive alias/migration/stale-token adjuncts do not substitute for genuine public owner kills. The original transient partial JSONL bytes were not captured; its raw error/completed archive are preserved, future suffixes retained and final traces required complete. No real device/store, credentials, SDK judgment, migration activation, release or publication claim. Root H01–H09/live acceptance and final independent candidate review remain Root-owned.
