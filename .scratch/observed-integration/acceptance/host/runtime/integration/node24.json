@@ -1,0 +1,30 @@
+{
+  "command": [
+    "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-concurrency=1",
+    "tests/observed-service.test.ts",
+    "tests/observed-schema.test.ts",
+    "tests/observed-evidence.test.ts",
+    "tests/observed-journal.test.ts",
+    "tests/observed-tap.test.ts",
+    "tests/observed-run.test.ts",
+    "tests/admission-migration.test.ts"
+  ],
+  "integratedCommit": "b284c361f74c2d7c8df53448f8f30c3d478f6150",
+  "candidate": "a898e80bf3d0d5af7b17618f9fcec56695174289",
+  "exit": 0,
+  "seconds": 31.75,
+  "counts": {
+    "tests": 136,
+    "pass": 136,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "runtime": "v24.0.0",
+  "log": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime/integration/node24.log"
+}

@@ -1,6 +1,6 @@
 # Observed runtime review
 
-Verdict: PASS for separate independent review; Root integration checks pending. Original candidate `c751a73df7931107af23619c350d2ca406ac55db`, dependency base `98f7de41baa316f47a65a7bc2160128a72051f3e`; repaired candidate `a898e80bf3d0d5af7b17618f9fcec56695174289` has that original as parent. Root has integrated neither product commit.
+Verdict: PASS for bounded ticket06 behavior after independent review and Root integration checks. Original candidate `c751a73df7931107af23619c350d2ca406ac55db`, dependency base `98f7de41baa316f47a65a7bc2160128a72051f3e`; repaired candidate `a898e80bf3d0d5af7b17618f9fcec56695174289` has that original as parent. Root integrated the original as `2167d15` and the repair as `b284c361f74c2d7c8df53448f8f30c3d478f6150`.
 
 ## Spec axis
 
@@ -28,5 +28,7 @@ PASS, no documented breaches or new repair smell. One optional possible Duplicat
 The first original Node24 focused run failed125/126 because a disabled-spike fixture parsed an SQLite ExperimentalWarning as JSON. Its one-line warning handling correction, original raw run and reconstructed original manifest mapping are retained; the original manifest was repinned before its preservation was requested. The repair also replaced an owned synthetic guard fixture's nonexistent blocker with a real isolated unresolved creator; its failing fixture run remains separate from product regression evidence.
 
 ## Limits
+
+Root's integrated focused checks pass 136/136 on Node26.8.1 and exact24.0.0, zero skips. Full `npm run check` passes 1268/1268 plus typecheck/build. All 15 source/test hashes match the repaired candidate before and after the gates. [Raw integrated commands, counts and audits](runtime/integration/).
 
 All runtime verification used isolated stores and explicit fake transports. Enabled spike production-store composition remains host-unexecuted. Complete H01–H09, public adapters, packaged/plugin behavior, live acceptance and final safety review are pending. No runtime check certifies the effects of the earlier unintended driver-baseline real invocation; those effects remain UNVERIFIED.
