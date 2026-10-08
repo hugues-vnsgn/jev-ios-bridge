@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { userInfo } from 'node:os';
 import { join } from 'node:path';
 import { AdmissionError, AdmissionSqlite, type StoreOptions } from './admission-sqlite.js';
+import type { ImportedObservedAction, MigrationReceipt } from './admission-migration.js';
 
 export type AttemptIdentity = { kind: 'observed' | 'legacy' | 'preparation'; id: string };
 export type OwnerProcess = { pid: number; incarnation: string };
@@ -16,6 +17,7 @@ export type AdmissionFault = 'beforeCommit' | 'afterCommit';
 export type AdmissionDependencies = { now?: () => number; process?: OwnerProcess; ownerLiveness?: (owner: OwnerProcess) => 'alive' | 'dead' | 'unknown'; fault?: (point: AdmissionFault, operation: string) => void };
 const incarnation = randomUUID();
 export { AdmissionError } from './admission-sqlite.js';
+export function admissionRoot(): string { return join(userInfo().homedir, 'Library/Application Support/jev-ios-bridge/admission'); }
 export function canonicalDevice(input: string): string {
   if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(input)) throw new AdmissionError('INVALID_REQUEST', 'Expected a simulator UUID');
   return input.toUpperCase();
@@ -32,7 +34,7 @@ export class Admission {
     this.store = new AdmissionSqlite(options);
   }
   static open(): Admission {
-    return new Admission({ root: join(userInfo().homedir, 'Library/Application Support/jev-ios-bridge/admission'), mode: 'production' }, {});
+    return new Admission({ root: admissionRoot(), mode: 'production' }, {});
   }
   static forTesting(options: { root: string; backend: 'fake'; initialize?: boolean } & AdmissionDependencies): Admission {
     if (options.backend !== 'fake') throw new AdmissionError('INVALID_REQUEST', 'Test admission requires a fake backend');
@@ -42,6 +44,12 @@ export class Admission {
   assertBackend(backend: 'real' | 'fake'): void {
     if (backend === 'real' && this.mode !== 'production') throw new AdmissionError('STATE_UNAVAILABLE', 'A real backend cannot use a test store');
   }
+  activation(): MigrationReceipt { return this.store.activation(); }
+  readImportedAction(actionId: string): ImportedObservedAction | undefined {
+    if (!actionId.length || actionId.length > 1024) throw new AdmissionError('INVALID_REQUEST', 'Invalid historical action identity');
+    return this.store.readImportedAction(actionId);
+  }
+  readImportedAllocation(allocationId: string): ImportedObservedAction | undefined { return this.store.readImportedAllocation(canonicalDevice(allocationId)); }
   acquire(request: AdmissionRequest): AdmissionResult {
     validateAttempt(request.attempt);
     const device = canonicalDevice(request.device);
