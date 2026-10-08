@@ -1,0 +1,10 @@
+{
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "/tmp/jev-allocator-spec-review-boonbrr6/evidence-failure.test.ts"
+  ],
+  "exit": 1
+}

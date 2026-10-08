@@ -1,0 +1,278 @@
+
+final-focused-node26.log
+✔ malformed simulator entry (selected state is null) fences launch, presentation and cleanup (551.046791ms)
+✔ malformed simulator entry (selected state is empty) fences launch, presentation and cleanup (496.957333ms)
+✔ malformed simulator entry (selected state is blank) fences launch, presentation and cleanup (529.897708ms)
+✔ malformed simulator entry (identity is numeric) fences launch, presentation and cleanup (470.316541ms)
+✔ malformed simulator entry (identity is missing) fences launch, presentation and cleanup (481.200292ms)
+✔ malformed simulator entry (identity is malformed) fences launch, presentation and cleanup (424.411875ms)
+✔ malformed simulator entry (list is missing) fences launch, presentation and cleanup (394.800917ms)
+✔ malformed simulator entry (list is null) fences launch, presentation and cleanup (379.848083ms)
+✔ malformed simulator entry (list is not an array) fences launch, presentation and cleanup (397.855291ms)
+✔ malformed simulator entry (entry is null) fences launch, presentation and cleanup (408.990166ms)
+✔ malformed simulator entry (entry is an array) fences launch, presentation and cleanup (420.118ms)
+✔ malformed simulator entry (entry is a string) fences launch, presentation and cleanup (459.877542ms)
+✔ malformed simulator entry (unselected entry is malformed) fences launch, presentation and cleanup (391.9785ms)
+✔ a valid empty simulator list keeps missing-identity warning and acknowledged launch behavior (662.540416ms)
+✔ a malformed simulator-list error receipt cannot acknowledge settlement or authorize cleanup (400.229ms)
+ℹ tests 516
+ℹ suites 0
+ℹ pass 516
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 40190.087959
+
+EXIT 0 ELAPSED 40.23s
+
+final-focused-node24.log
+✔ malformed simulator entry (selected state is null) fences launch, presentation and cleanup (548.661542ms)
+✔ malformed simulator entry (selected state is empty) fences launch, presentation and cleanup (392.248417ms)
+✔ malformed simulator entry (selected state is blank) fences launch, presentation and cleanup (510.953ms)
+✔ malformed simulator entry (identity is numeric) fences launch, presentation and cleanup (479.493209ms)
+✔ malformed simulator entry (identity is missing) fences launch, presentation and cleanup (440.506625ms)
+✔ malformed simulator entry (identity is malformed) fences launch, presentation and cleanup (383.658584ms)
+✔ malformed simulator entry (list is missing) fences launch, presentation and cleanup (338.304125ms)
+✔ malformed simulator entry (list is null) fences launch, presentation and cleanup (349.59325ms)
+✔ malformed simulator entry (list is not an array) fences launch, presentation and cleanup (413.908667ms)
+✔ malformed simulator entry (entry is null) fences launch, presentation and cleanup (363.461666ms)
+✔ malformed simulator entry (entry is an array) fences launch, presentation and cleanup (394.789416ms)
+✔ malformed simulator entry (entry is a string) fences launch, presentation and cleanup (390.677584ms)
+✔ malformed simulator entry (unselected entry is malformed) fences launch, presentation and cleanup (386.121125ms)
+✔ a valid empty simulator list keeps missing-identity warning and acknowledged launch behavior (560.362458ms)
+✔ a malformed simulator-list error receipt cannot acknowledge settlement or authorize cleanup (337.454667ms)
+ℹ tests 516
+ℹ suites 0
+ℹ pass 516
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 39563.6985
+
+EXIT 0 ELAPSED 40.24s
+
+cancel-store-repro.log
+COMMAND ["node", "--import", "tsx", "--input-type=module", "-e", "\nimport assert from \"node:assert/strict\";\nimport { allocationFixture } from \"./tests/fixtures/observed-allocation-backend.ts\";\nimport { ObservedAllocator } from \"./src/observed/allocation.ts\";\nconst f=await allocationFixture();const allocator=new ObservedAllocator({admission:f.admission,runsDir:f.runsDir,fakeBackend:{process:f.source,runner:f.runner,window:f.window,host:f.host}});\nlet begin,release;const began=new Promise(r=>begin=r);const pending=new Promise(r=>release=r);f.setBefore(async op=>{if(op===\"boot\"){begin();await pending;}});\ntry { const preparing=allocator.prepare(f.request());await began;const record=f.admission.readAllocationForAction(\"allocate-one\");const original=f.admission.cancelAllocation;\nf.admission.cancelAllocation=()=>{throw new Error(\"isolated store failure\");};const cancelled=await allocator.cancel(record.allocationId);f.admission.cancelAllocation=original;\nrelease();const result=await preparing;console.log(JSON.stringify({cancelled,result,calls:f.calls.filter(c=>c!==\"plist\")}));assert.notEqual(result.state,\"ready\"); }\nfinally{release();await allocator.close();await f.cleanup();}\n"]
+{"cancelled":{"version":1,"kind":"observed-operation-error","code":"STORE_UNAVAILABLE","message":"Allocation operation refused: STORE_UNAVAILABLE.","allocationId":"A1262643-501A-443F-852A-A4024AE11EFB","acceptance":"unknown","acceptanceKind":"preparation"},"result":{"version":1,"allocationId":"A1262643-501A-443F-852A-A4024AE11EFB","actionId":"allocate-one","state":"ready","phase":"parked","device":{"platform":"ios-simulator","udid":"ABCDEF00-0000-4000-8000-000000000001"},"reason":null,"outcome":"prepared","authority":"committed","readinessEvidence":["/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-RpQN7N/runs/observed/allocate-one/allocation/readiness-1.json"],"evidenceRefs":["/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-RpQN7N/runs/observed/allocate-one/allocation","/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-RpQN7N/runs/observed/allocate-one/allocation/host-prerequisites.json","/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-RpQN7N/runs/observed/allocate-one/allocation/preparation-request.json","/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-RpQN7N/runs/observed/allocate-one/allocation/source-diagnostics.json","/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-RpQN7N/runs/observed/allocate-one/allocation/readiness-1.json"],"reservation":{"bytes":1000,"capacityHeld":true},"hostCreationBlocked":false,"cancellationRequested":false},"calls":["create","boot","list","install","launch-app","list","snapshot-ui","screenshot"]}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected "actual" to be strictly unequal to:
+
+'ready'
+    at file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/[eval1]:9:132 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'ready',
+  expected: 'ready',
+  operator: 'notStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.8.1
+
+EXIT 1 ELAPSED 0.47s
+
+finalization-known-fs-repro.log
+COMMAND ["node", "--import", "tsx", "--input-type=module", "-e", "\nimport assert from \"node:assert/strict\";import native from \"node:fs/promises\";import {syncBuiltinESMExports} from \"node:module\";\nimport {allocationFixture} from \"./tests/fixtures/observed-allocation-backend.ts\";import {ObservedAllocator} from \"./src/observed/allocation.ts\";\nconst f=await allocationFixture();const allocator=new ObservedAllocator({admission:f.admission,runsDir:f.runsDir,fakeBackend:{process:f.source,runner:f.runner,window:f.window,host:f.host}});\nf.setCommandResult(\"install\",{exitCode:1,stderr:\"private fixture\",stdout:JSON.stringify({schema:\"mobilebuildmcp.output.install-result\",schemaVersion:\"2\",didError:true,error:{code:\"PRIVATE\",message:\"private fixture\"},data:{artifacts:{simulatorId:\"ABCDEF00-0000-4000-8000-000000000001\"}}})});\nlet start,releaseFile;const pendingFile=new Promise(r=>releaseFile=r);f.setBefore(async op=>{if(op===\"install\")start=Date.now();});const open=native.open,unlink=native.unlink;\nnative.open=async(...args)=>{if(String(args[0]).endsWith(\"/source-diagnostics.json\"))await pendingFile;return open(...args);};\nnative.unlink=async path=>{if(String(path).startsWith(f.runsDir+\"/leases/\"))await new Promise(r=>setTimeout(r,5100));return unlink(path);};syncBuiltinESMExports();\ntry{const result=await allocator.prepare(f.request());const elapsed=Date.now()-start;console.log(JSON.stringify({elapsed,result,calls:f.calls.filter(c=>c!==\"plist\")}));assert.ok(elapsed<5500,\"one finalization budget must bound diagnostics and local driver settlement together\");}\nfinally{releaseFile();native.open=open;native.unlink=unlink;syncBuiltinESMExports();await allocator.close();await f.cleanup();}\n"]
+{"elapsed":10141,"result":{"version":1,"allocationId":"1B63DCD6-1524-4CB7-804C-8F36AC3E7BB9","actionId":"allocate-one","state":"retained","phase":"terminal","device":{"platform":"ios-simulator","udid":"ABCDEF00-0000-4000-8000-000000000001"},"reason":"INSTALL_FAILED","outcome":"refused","authority":"committed","readinessEvidence":[],"evidenceRefs":["/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-7hpIWH/runs/observed/allocate-one/allocation","/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-7hpIWH/runs/observed/allocate-one/allocation/host-prerequisites.json","/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-7hpIWH/runs/observed/allocate-one/allocation/preparation-request.json"],"reservation":{"bytes":1000,"capacityHeld":true},"hostCreationBlocked":false,"cancellationRequested":false},"calls":["create","boot","list","install"]}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: one finalization budget must bound diagnostics and local driver settlement together
+    at file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-allocator/[eval1]:9:176 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v26.8.1
+
+EXIT 1 ELAPSED 10.53s
+
+final-coverage-node26.log
+ℹ fail 0
+ℹ cancelled 1
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 267793.398167
+ℹ start of coverage report
+ℹ -----------------------------------------------------------------------
+ℹ file                   | line % | branch % | funcs % | uncovered lines
+ℹ -----------------------------------------------------------------------
+ℹ src                    |        |          |         | 
+ℹ  observed              |        |          |         | 
+ℹ   allocation-config.ts |  97.01 |    86.14 |   76.19 | 55 89 183-187
+ℹ   allocation-schema.ts |  88.24 |   100.00 |   78.57 | 37-43 46
+ℹ -----------------------------------------------------------------------
+ℹ all files              |  95.03 |    87.83 |   76.79 | 
+ℹ -----------------------------------------------------------------------
+ℹ end of coverage report
+
+✖ failing tests:
+
+test at tests/observed-allocation.test.ts:1:1
+✖ tests/observed-allocation.test.ts (267788.686583ms)
+  'Promise resolution is still pending but the event loop has already resolved'
+
+EXIT 1 ELAPSED 267.85s
+
+repair-pinned-bounded-green.log
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "one failure finalization budget|cancel .*commit store error|failed cancellation targets one|one stage deadline|known acknowledged", "tests/observed-allocation.test.ts"]
+✔ one stage deadline bounds pending boot and late receipt cannot continue or become ready (233.788916ms)
+✔ one stage deadline bounds pending snapshot-ui and late receipt cannot continue or become ready (331.849333ms)
+✔ known acknowledged boot failure is a stable stage refusal with no retry or follow-up (183.426083ms)
+✔ known acknowledged install failure is a stable stage refusal with no retry or follow-up (243.444375ms)
+✔ known acknowledged launch-app failure is a stable stage refusal with no retry or follow-up (249.577958ms)
+✔ cancel before-commit store error synchronously revokes only the known locally owned preparation (508.940708ms)
+✔ cancel after-commit store error synchronously revokes only the known locally owned preparation (514.468417ms)
+✔ failed cancellation targets one owned allocation and preserves another live preparation (499.007ms)
+✔ one failure finalization budget bounds private diagnostics and pending local driver close together without late promotion (5812.320125ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8785.767208
+
+EXIT 0 ELAPSED 8.82s
+
+repair-finalization-diagnostic-green.log
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern", "one failure finalization budget|known acknowledged|public", "tests/observed-allocation.test.ts"]
+✔ public config errors discard credential-looking diagnostics and supplied values (43.104875ms)
+✔ public metadata errors discard credential-looking diagnostics and supplied values (33.114042ms)
+✔ public artifact errors discard credential-looking diagnostics and supplied values (32.498458ms)
+✔ public create errors discard credential-looking diagnostics and supplied values (122.046958ms)
+✔ public boot errors discard credential-looking diagnostics and supplied values (209.234917ms)
+✔ reserved failure retains bounded private raw source diagnostics while public envelopes expose only truthful references (119.999417ms)
+✔ known acknowledged boot failure is a stable stage refusal with no retry or follow-up (173.979625ms)
+✔ known acknowledged install failure is a stable stage refusal with no retry or follow-up (226.19275ms)
+✔ known acknowledged launch-app failure is a stable stage refusal with no retry or follow-up (251.057ms)
+✔ one failure finalization budget bounds private diagnostics and pending local driver close together without late promotion (5670.980625ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7053.819959
+
+EXIT 0 ELAPSED 7.09s
+
+repair-final-focused-node26.log
+✔ malformed simulator entry (selected state is null) fences launch, presentation and cleanup (449.11425ms)
+✔ malformed simulator entry (selected state is empty) fences launch, presentation and cleanup (527.971166ms)
+✔ malformed simulator entry (selected state is blank) fences launch, presentation and cleanup (487.12675ms)
+✔ malformed simulator entry (identity is numeric) fences launch, presentation and cleanup (449.603875ms)
+✔ malformed simulator entry (identity is missing) fences launch, presentation and cleanup (525.790208ms)
+✔ malformed simulator entry (identity is malformed) fences launch, presentation and cleanup (428.690917ms)
+✔ malformed simulator entry (list is missing) fences launch, presentation and cleanup (393.556334ms)
+✔ malformed simulator entry (list is null) fences launch, presentation and cleanup (393.643167ms)
+✔ malformed simulator entry (list is not an array) fences launch, presentation and cleanup (369.936625ms)
+✔ malformed simulator entry (entry is null) fences launch, presentation and cleanup (450.981125ms)
+✔ malformed simulator entry (entry is an array) fences launch, presentation and cleanup (442.332875ms)
+✔ malformed simulator entry (entry is a string) fences launch, presentation and cleanup (382.533375ms)
+✔ malformed simulator entry (unselected entry is malformed) fences launch, presentation and cleanup (624.230458ms)
+✔ a valid empty simulator list keeps missing-identity warning and acknowledged launch behavior (645.878917ms)
+✔ a malformed simulator-list error receipt cannot acknowledge settlement or authorize cleanup (418.111583ms)
+ℹ tests 520
+ℹ suites 0
+ℹ pass 520
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 46938.705625
+
+EXIT 0 ELAPSED 46.98s
+
+repair-final-focused-node24.log
+✔ malformed simulator entry (selected state is null) fences launch, presentation and cleanup (510.296875ms)
+✔ malformed simulator entry (selected state is empty) fences launch, presentation and cleanup (465.838084ms)
+✔ malformed simulator entry (selected state is blank) fences launch, presentation and cleanup (407.40275ms)
+✔ malformed simulator entry (identity is numeric) fences launch, presentation and cleanup (484.38ms)
+✔ malformed simulator entry (identity is missing) fences launch, presentation and cleanup (493.374625ms)
+✔ malformed simulator entry (identity is malformed) fences launch, presentation and cleanup (429.258666ms)
+✔ malformed simulator entry (list is missing) fences launch, presentation and cleanup (336.287416ms)
+✔ malformed simulator entry (list is null) fences launch, presentation and cleanup (332.151833ms)
+✔ malformed simulator entry (list is not an array) fences launch, presentation and cleanup (397.844708ms)
+✔ malformed simulator entry (entry is null) fences launch, presentation and cleanup (345.775417ms)
+✔ malformed simulator entry (entry is an array) fences launch, presentation and cleanup (362.975625ms)
+✔ malformed simulator entry (entry is a string) fences launch, presentation and cleanup (377.435083ms)
+✔ malformed simulator entry (unselected entry is malformed) fences launch, presentation and cleanup (362.748375ms)
+✔ a valid empty simulator list keeps missing-identity warning and acknowledged launch behavior (530.163125ms)
+✔ a malformed simulator-list error receipt cannot acknowledge settlement or authorize cleanup (430.807792ms)
+ℹ tests 520
+ℹ suites 0
+ℹ pass 520
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 46662.972125
+
+EXIT 0 ELAPSED 47.29s
+
+repair-final-full-check.log
+✔ android: the service types the variable's value; driver and run see only resolved strings (186.49625ms)
+✔ a missing variable fails start with MISSING_VALUE before any driver is built or evidence written (5.004166ms)
+✔ a fromEnv value never appears in the script, run.jsonl, report.json, the watch page, the log pane or the reports (3425.197458ms)
+✔ over MCP, a fromEnv value is read from the server's environment, typed and shown, and never appears in tool output (338.026416ms)
+✔ start_scenario's description tells Claude about fromEnv (167.907083ms)
+✔ over MCP, a missing variable is an error naming the variable and MISSING_VALUE (159.4665ms)
+✔ the CLI pre-check fails a missing variable with exit 3, naming it, before asking for an API key or a device (182.364542ms)
+✔ the CLI pre-check reports a resolved value that breaks the platform rule, without printing it (171.548625ms)
+✔ a paused driven run shows its decisions, search, hand-back, and that it waits for Claude (156.337625ms)
+✔ an answered hand-back shows Claude's answer kind and wait, and each action who decided it (99.338292ms)
+✔ a version 1 run's actions read as before, with no decider (42.243125ms)
+ℹ tests 1319
+ℹ suites 0
+ℹ pass 1319
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 51837.411666
+
+> jev-ios-bridge@1.3.1 build
+> rm -rf dist && tsc -p tsconfig.build.json
+
+
+EXIT 0 ELAPSED 52.95s
+
+repair-final-coverage-node26.log
+✔ one failure finalization budget bounds private diagnostics and pending local driver close together without late promotion (5877.9885ms)
+ℹ {"elapsed":5030,"state":"quarantined","capacityHeld":true,"device":"ABCDEF00-0000-4000-8000-000000000001","calls":["create","boot","list","install"]}
+ℹ tests 111
+ℹ suites 0
+ℹ pass 111
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27389.541667
+ℹ start of coverage report
+ℹ -----------------------------------------------------------------------
+ℹ file                   | line % | branch % | funcs % | uncovered lines
+ℹ -----------------------------------------------------------------------
+ℹ src                    |        |          |         | 
+ℹ  observed              |        |          |         | 
+ℹ   allocation-config.ts |  99.57 |    88.24 |   95.35 | 89
+ℹ   allocation-schema.ts | 100.00 |   100.00 |  100.00 | 
+ℹ   allocation.ts        |  98.44 |    88.11 |   91.94 | 104-105 196-198
+ℹ -----------------------------------------------------------------------
+ℹ all files              |  99.04 |    88.98 |   94.12 | 
+ℹ -----------------------------------------------------------------------
+ℹ end of coverage report
+
+EXIT 0 ELAPSED 27.46s

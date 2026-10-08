@@ -1,0 +1,1640 @@
+diff --git a/src/observed/allocation-config.ts b/src/observed/allocation-config.ts
+new file mode 100644
+index 0000000..e7c72a2
+--- /dev/null
++++ b/src/observed/allocation-config.ts
+@@ -0,0 +1,234 @@
++import * as nativeFs from 'node:fs/promises';
++import { constants, type Stats } from 'node:fs';
++import { userInfo, arch, platform } from 'node:os';
++import { join, isAbsolute, basename, resolve } from 'node:path';
++import { spawn, type ChildProcess } from 'node:child_process';
++import type { SourceProcess } from './create-source.js';
++import { createHash } from 'node:crypto';
++import { z } from 'zod/v4';
++import { allocationBudgetsSchema, type AllocationBudgets, type AllocationSource } from '../device/admission-allocation.js';
++import { canonicalJson } from './allocation-schema.js';
++import { simulatorUuid, validSimulatorIdentifiers } from './create-source.js';
++
++export class AllocationPrerequisiteError extends Error {
++  constructor(readonly reason: 'CONFIG_INVALID' | 'HOST_PREREQUISITE_MISSING' | 'STORAGE_UNAVAILABLE') { super(reason); }
++}
++export type AllocationAccount = { homedir: string; uid: number };
++export const allocationDefaults: AllocationBudgets = Object.freeze({ maxRetainedAllocations: 8, maxConcurrentPreparations: 1,
++  reservationBytesPerAllocation: 8 * 1024 ** 3, maxReservedBytes: 64 * 1024 ** 3,
++  minFreeBytes: 20 * 1024 ** 3, maxArtifactBytes: 2 * 1024 ** 3, createTimeoutMs: 60000, bootTimeoutMs: 120000,
++  installTimeoutMs: 120000, launchTimeoutMs: 30000, readinessTimeoutMs: 30000, readyTtlMs: 300000, timeoutMs: 360000 });
++const text = z.string().min(1).max(500).refine(s => !!s.trim() && !s.includes('\0'));
++const inventorySchema = z.strictObject({ inventoryId: text, udid: z.string().regex(simulatorUuid).transform(s => s.toUpperCase()),
++  deviceTypeId: text, runtimeId: text, creation: z.strictObject({ createdAt: text.refine(s => Number.isFinite(Date.parse(s))),
++    origin: text, evidenceRef: z.string().min(1).max(4096).refine(s => s.startsWith('/') && !s.includes('\0')) }),
++  attestation: z.strictObject({ freshUnused: z.literal(true), exclusive: z.literal(true) })
++}).refine(s => validSimulatorIdentifiers(s.deviceTypeId, s.runtimeId));
++const configSchema = z.strictObject({ version: z.literal(1), ...allocationBudgetsSchema.shape,
++  inventory: z.array(inventorySchema).max(1000) }).omit({ timeoutMs: true }).partial().required({ version: true });
++export type AllocationConfig = { version: 1; digest: string; budgets: AllocationBudgets; inventory: Extract<AllocationSource, {kind: 'supplied'}>[] };
++const stamp = (s: Stats) => `${s.dev}:${s.ino}:${s.size}:${s.mtimeMs}:${s.ctimeMs}:${s.mode}:${s.uid}:${s.nlink}`;
++/** File handles and before/after path checks keep unsafe aliases or concurrent replacement from supplying metadata. */
++export async function stableFile(path: string, fs: typeof nativeFs, maxBytes = 65536): Promise<Buffer> {
++  const before = await fs.lstat(path);
++  if (!before.isFile() || before.isSymbolicLink() || before.nlink !== 1 || before.size > maxBytes) throw new Error('Unsafe metadata file');
++  const handle = await fs.open(path, constants.O_RDONLY | constants.O_NOFOLLOW);
++  try {
++    if (stamp(before) !== stamp(await handle.stat())) throw new Error('Metadata replaced');
++    const chunks: Buffer[] = []; let count = 0;
++    while (true) {
++      const chunk = Buffer.alloc(65536); const read = await handle.read(chunk, 0, chunk.length, null); if (!read.bytesRead) break;
++      count += read.bytesRead; if (count > maxBytes) throw new Error('Metadata too large'); chunks.push(chunk.subarray(0, read.bytesRead));
++    }
++    if (stamp(before) !== stamp(await handle.stat()) || stamp(before) !== stamp(await fs.lstat(path))) throw new Error('Metadata changed');
++    return Buffer.concat(chunks);
++  } finally { await handle.close(); }
++}
++export async function readAllocationConfig(deps: { account?: AllocationAccount; fs?: typeof nativeFs } = {}): Promise<AllocationConfig> {
++  const fs = deps.fs ?? nativeFs; const account = deps.account ?? userInfo();
++  try {
++    let raw: unknown = { version: 1 };
++    const directory = join(account.homedir, 'Library/Application Support/jev-ios-bridge');
++    const path = join(directory, 'allocation.json');
++    let missing = false;
++    for (const part of [account.homedir, join(account.homedir, 'Library'), join(account.homedir, 'Library/Application Support'), directory]) {
++      try {
++        const s = await fs.lstat(part);
++        if (!s.isDirectory() || s.isSymbolicLink() || s.uid !== account.uid || (s.mode & 0o022) || (part === directory && (s.mode & 0o777) !== 0o700)) throw new Error();
++      } catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT' && part !== account.homedir) { missing = true; break; } throw error; }
++    }
++    if (!missing) {
++      try {
++        const s = await fs.lstat(path);
++        if (s.uid !== account.uid || (s.mode & 0o777) !== 0o600) throw new Error();
++        const bytes = await stableFile(path, fs);
++        if (stamp(s) !== stamp(await fs.lstat(path))) throw new Error('Configuration changed');
++        raw = JSON.parse(bytes.toString('utf8'));
++      } catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; }
++    }
++    const parsed = configSchema.parse(raw); const { version: _version, inventory = [], ...settings } = parsed;
++    const budgets = allocationBudgetsSchema.parse({ ...allocationDefaults, ...settings });
++    const effective = { version: 1 as const, ...budgets, inventory };
++    return { version: 1, digest: createHash('sha256').update(canonicalJson(effective)).digest('hex'), budgets,
++      inventory: inventory.map(entry => ({ kind: 'supplied' as const, ...entry })) };
++  } catch { throw new AllocationPrerequisiteError('CONFIG_INVALID'); }
++}
++
++export type InstalledHost = { fs: typeof nativeFs; account: AllocationAccount; platform: string; architecture: 'arm64' | 'x86_64' };
++export function installedHost(): InstalledHost {
++  return { fs: nativeFs, account: userInfo(), platform: ['arm64', 'x64'].includes(arch()) ? platform() : 'unsupported', architecture: arch() === 'arm64' ? 'arm64' : 'x86_64' };
++}
++export const developerDirectory = '/Applications/Xcode.app/Contents/Developer';
++const productionProcesses = new WeakSet<SourceProcess>();
++export const isProductionSourceProcess = (process: SourceProcess): boolean => productionProcesses.has(process);
++/** Production composition: only fixed executables and validated argument arrays; no inherited loader/credential overrides. */
++export function allocationSourceProcess(host: InstalledHost, allowedArtifactRoots: readonly string[] = [],
++  launch: typeof spawn = spawn): SourceProcess {
++  const process: SourceProcess = async (executable, args, options) => {
++    const create = executable === '/usr/bin/xcrun' && args.length === 5 && args[0] === 'simctl' && args[1] === 'create'
++      && args[2]!.startsWith('jev-observed-') && simulatorUuid.test(args[2]!.slice('jev-observed-'.length))
++      && args[2] === args[2]!.toUpperCase().replace('JEV-OBSERVED-', 'jev-observed-') && validSimulatorIdentifiers(args[3]!, args[4]!);
++    const path = args[5];
++    const metadata = path !== undefined && isAbsolute(path) && resolve(path) === path && !path.includes('\0') && path.length <= 4096 &&
++      (path === '/Applications/Xcode.app/Contents/Info.plist' || path === '/Applications/Xcode.app/Contents/version.plist'
++        || path === '/System/Library/CoreServices/SystemVersion.plist'
++        || /^\/Library\/Developer\/CoreSimulator\/Profiles\/DeviceTypes\/[^/]+\.simdevicetype\/Contents\/(?:Info\.plist|Resources\/profile\.plist)$/.test(path)
++        || /^\/Library\/Developer\/CoreSimulator\/(?:Profiles\/Runtimes|Volumes\/[^/]+\/Library\/Developer\/CoreSimulator\/Profiles\/Runtimes)\/[^/]+\.simruntime\/Contents\/(?:Info\.plist|Resources\/profile\.plist|Resources\/RuntimeRoot\/System\/Library\/CoreServices\/SystemVersion\.plist)$/.test(path)
++        || allowedArtifactRoots.some(root => path.startsWith(resolve(root) + '/') && basename(path) === 'Info.plist'));
++    const plist = executable === '/usr/bin/plutil' && args.length === 6 && args.slice(0, 5).join('\0') === '-convert\0json\0-o\0-\0--' && metadata;
++    if ((!create && !plist) || options.shell !== false || options.signal.aborted || !Number.isSafeInteger(options.timeoutMs)
++      || options.timeoutMs < 1 || options.timeoutMs > 900000 || !Number.isSafeInteger(options.maxOutputBytes) || options.maxOutputBytes < 1 || options.maxOutputBytes > 65536) throw new Error('Host process is not authorized');
++    if (plist) {
++      const stat = await host.fs.lstat(path!);
++      if (!stat.isFile() || stat.isSymbolicLink() || stat.nlink !== 1 || ![0, host.account.uid].includes(stat.uid) || (stat.mode & 0o022)) throw new Error('Host process is not authorized');
++      if (!allowedArtifactRoots.some(root => path!.startsWith(resolve(root) + '/'))) await trustedPath(path!, host);
++      await stableFile(path!, host.fs); options.signal.throwIfAborted();
++    }
++    await trustedPath(developerDirectory, host, true);
++    if (!((await trustedPath(executable, host)).mode & 0o111)) throw new Error('Host process is not authorized');
++    options.signal.throwIfAborted();
++    return new Promise((done, fail) => {
++      let child: ChildProcess;
++      try { child = launch(executable, [...args], { shell: false, env: { HOME: host.account.homedir,
++        PATH: '/usr/bin:/bin:/usr/sbin:/sbin', LANG: 'C', LC_ALL: 'C', DEVELOPER_DIR: developerDirectory }, stdio: ['ignore', 'pipe', 'pipe'] }); }
++      catch (error) { fail(error); return; }
++      const out: Buffer[] = []; const err: Buffer[] = []; let bytes = 0; let overflow = false; let stopped = false; let childError: unknown;
++      const stop = () => { stopped = true; try { child.kill('SIGTERM'); } catch (error) { childError = error; } };
++      const timer = setTimeout(stop, options.timeoutMs);
++      options.signal.addEventListener('abort', stop, { once: true });
++      const capture = (chunks: Buffer[]) => (chunk: Buffer) => {
++        bytes += chunk.length;
++        if (bytes > options.maxOutputBytes) { overflow = true; stop(); return; }
++        chunks.push(chunk);
++      };
++      child.stdout?.on('data', capture(out)); child.stderr?.on('data', capture(err));
++      const cleanup = () => { clearTimeout(timer); options.signal.removeEventListener('abort', stop); };
++      child.on('error', error => { childError = error; });
++      child.once('close', (code, signal) => { cleanup(); if (childError) { fail(childError); return; } done({ exitCode: stopped || overflow || signal ? null : code,
++        stdout: Buffer.concat(out).toString('utf8'), stderr: Buffer.concat(err).toString('utf8') }); });
++      if (options.signal.aborted) stop();
++    });
++  };
++  productionProcesses.add(process); return process;
++}
++async function trustedPath(path: string, host: InstalledHost, directory = false): Promise<Stats> {
++  const parts = path.split('/').filter(Boolean); let current = '/';
++  for (let i = 0; i < parts.length; i++) {
++    current = join(current, parts[i]!); const s = await host.fs.lstat(current);
++    if (s.isSymbolicLink() || ![0, host.account.uid].includes(s.uid) || (s.mode & 0o022)
++      || (i < parts.length - 1 && !s.isDirectory())) throw new Error('Untrusted installed path');
++  }
++  const s = await host.fs.lstat(path);
++  if (directory ? !s.isDirectory() : !s.isFile()) throw new Error('Missing installed path');
++  return s;
++}
++async function installedPlist(path: string, host: InstalledHost, process: SourceProcess, signal: AbortSignal): Promise<Record<string, unknown>> {
++  signal.throwIfAborted(); const beforeStat = await trustedPath(path, host);
++  const before = await stableFile(path, host.fs);
++  const result = await process('/usr/bin/plutil', ['-convert', 'json', '-o', '-', '--', path],
++    { signal, timeoutMs: 10000, maxOutputBytes: 65536, shell: false });
++  signal.throwIfAborted();
++  if (result.exitCode !== 0 || Buffer.byteLength(result.stdout) > 65536 || Buffer.byteLength(result.stderr) > 65536
++    || stamp(beforeStat) !== stamp(await trustedPath(path, host)) || !before.equals(await stableFile(path, host.fs))) throw new Error('Unconfirmed installed metadata');
++  const value: unknown = JSON.parse(result.stdout);
++  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('Invalid installed metadata');
++  return value as Record<string, unknown>;
++}
++const osVersion = (v: unknown): number[] => { if (typeof v !== 'string' || !/^\d{1,3}\.\d{1,3}(?:\.\d{1,3})?$/.test(v)) throw new Error('Missing OS metadata'); return v.split('.').map(Number); };
++const compareVersions = (a: number[], b: number[]) => { for (let i = 0; i < 3; i++) { const d = (a[i] ?? 0) - (b[i] ?? 0); if (d) return d; } return 0; };
++const named = (value: unknown): value is string => typeof value === 'string' && value.trim().length > 0 && value.length <= 500 && !value.includes('\0');
++const architectures = (value: unknown, architecture: string) => Array.isArray(value) && value.length > 0
++  && value.every(x => x === 'arm64' || x === 'x86_64') && value.includes(architecture);
++const families = (value: unknown): number[] => { if (!Array.isArray(value) || !value.length || !value.every(x => Number.isSafeInteger(x) && x > 0)) throw new Error('Missing families'); return value as number[]; };
++async function bundles(root: string, suffix: string, host: InstalledHost): Promise<string[]> {
++  try {
++    await trustedPath(root, host, true); const entries = await host.fs.readdir(root);
++    if (entries.length > 1000) throw new Error('Enumeration limit exceeded');
++    return entries.filter(n => /^[^/\0]{1,255}$/.test(n) && n.endsWith(suffix)).sort().map(n => join(root, n));
++  } catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') return []; throw error; }
++}
++export type InstalledCompatibility = { architecture: 'arm64' | 'x86_64'; runtimeVersion: string; hostVersion: string; xcodeVersion: string; xcodeBuild: string; runtimeBuild: string };
++/** Bounded immediate bundle enumeration; never chooses a newer runtime or uses vendor listing as installed proof. */
++export async function verifyInstalledCompatibility(source: { deviceTypeId: string; runtimeId: string }, host: InstalledHost,
++  process: SourceProcess, signal: AbortSignal): Promise<InstalledCompatibility> {
++  try {
++    if (host.platform !== 'darwin' || !['arm64', 'x86_64'].includes(host.architecture)
++      || !validSimulatorIdentifiers(source.deviceTypeId, source.runtimeId)) throw new Error();
++    const info = await installedPlist('/Applications/Xcode.app/Contents/Info.plist', host, process, signal);
++    const xcode = await installedPlist('/Applications/Xcode.app/Contents/version.plist', host, process, signal);
++    const system = await installedPlist('/System/Library/CoreServices/SystemVersion.plist', host, process, signal);
++    const hostVersion = osVersion(system.ProductVersion);
++    if (info.CFBundleIdentifier !== 'com.apple.dt.Xcode' || info.CFBundleExecutable !== 'Xcode'
++      || compareVersions(osVersion(info.LSMinimumSystemVersion), hostVersion) > 0
++      || !named(xcode.ProductBuildVersion)) throw new Error();
++    osVersion(xcode.CFBundleShortVersionString);
++    for (const path of ['/Applications/Xcode.app/Contents/MacOS/Xcode', developerDirectory + '/usr/bin/simctl', '/usr/bin/xcrun', '/usr/bin/plutil']) {
++      if (!((await trustedPath(path, host)).mode & 0o111)) throw new Error();
++    }
++    await trustedPath(developerDirectory + '/Platforms/iPhoneSimulator.platform', host, true);
++    const matching: string[] = [];
++    for (const bundle of await bundles('/Library/Developer/CoreSimulator/Profiles/DeviceTypes', '.simdevicetype', host)) {
++      if ((await installedPlist(join(bundle, 'Contents/Info.plist'), host, process, signal)).CFBundleIdentifier === source.deviceTypeId) matching.push(bundle);
++    }
++    if (matching.length !== 1) throw new Error();
++    const device = await installedPlist(join(matching[0]!, 'Contents/Resources/profile.plist'), host, process, signal);
++    if (!architectures(device.supportedArchs, host.architecture)) throw new Error();
++    const deviceFamilies = families(device.supportedProductFamilyIDs);
++    const runtimeRoots = ['/Library/Developer/CoreSimulator/Profiles/Runtimes'];
++    const volumes = '/Library/Developer/CoreSimulator/Volumes';
++    try {
++      await trustedPath(volumes, host, true); const entries = await host.fs.readdir(volumes);
++      if (entries.length > 1000) throw new Error();
++      for (const name of entries) {
++        if (!/^[A-Za-z0-9_-]{1,255}$/.test(name)) throw new Error();
++        runtimeRoots.push(join(volumes, name, 'Library/Developer/CoreSimulator/Profiles/Runtimes'));
++      }
++    } catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; }
++    const runtimes: string[] = [];
++    for (const root of runtimeRoots) for (const bundle of await bundles(root, '.simruntime', host)) {
++      if ((await installedPlist(join(bundle, 'Contents/Info.plist'), host, process, signal)).CFBundleIdentifier === source.runtimeId) runtimes.push(bundle);
++    }
++    if (runtimes.length !== 1) throw new Error();
++    const runtime = await installedPlist(join(runtimes[0]!, 'Contents/Resources/profile.plist'), host, process, signal);
++    const actual = await installedPlist(join(runtimes[0]!, 'Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'), host, process, signal);
++    const runtimeVersion = osVersion(actual.ProductVersion); const declared = osVersion(runtime.defaultVersionString);
++    const identifier = source.runtimeId.slice('com.apple.CoreSimulator.SimRuntime.iOS-'.length).split('-').map(Number);
++    if (runtime.platformIdentifier !== 'com.apple.platform.iphonesimulator' || !architectures(runtime.supportedArchs, host.architecture)
++      || !deviceFamilies.every(f => families(runtime.supportedProductFamilyIDs).includes(f))
++      || compareVersions(osVersion(runtime.minHostVersion), hostVersion) > 0
++      || compareVersions(osVersion(device.minRuntimeVersion), runtimeVersion) > 0
++      || (device.maxRuntimeVersion !== undefined && compareVersions(osVersion(device.maxRuntimeVersion), runtimeVersion) < 0)
++      || declared[0] !== runtimeVersion[0] || declared[1] !== runtimeVersion[1]
++      || identifier.some((v, i) => v !== declared[i]) || !named(actual.ProductBuildVersion)) throw new Error();
++    return { architecture: host.architecture, runtimeVersion: actual.ProductVersion as string, hostVersion: system.ProductVersion as string,
++      xcodeVersion: xcode.CFBundleShortVersionString as string, xcodeBuild: xcode.ProductBuildVersion, runtimeBuild: actual.ProductBuildVersion };
++  } catch { throw new AllocationPrerequisiteError('HOST_PREREQUISITE_MISSING'); }
++}
++export async function allocationStorage(host: InstalledHost, stagingVolume: string): Promise<{ simulatorFreeBytes: number; stagingFreeBytes: number }> {
++  try {
++    const simulator = await host.fs.statfs(join(host.account.homedir, 'Library/Developer/CoreSimulator'));
++    const staging = await host.fs.statfs(stagingVolume);
++    const free = (s: Awaited<ReturnType<typeof nativeFs.statfs>>) => { const n = Number(s.bavail) * Number(s.bsize); if (!Number.isSafeInteger(n) || n < 0) throw new Error(); return n; };
++    return { simulatorFreeBytes: free(simulator), stagingFreeBytes: free(staging) };
++  } catch { throw new AllocationPrerequisiteError('STORAGE_UNAVAILABLE'); }
++}
+diff --git a/src/observed/allocation-schema.ts b/src/observed/allocation-schema.ts
+new file mode 100644
+index 0000000..b4ded43
+--- /dev/null
++++ b/src/observed/allocation-schema.ts
+@@ -0,0 +1,68 @@
++import { createHash } from 'node:crypto';
++import { isAbsolute } from 'node:path';
++import { z } from 'zod/v4';
++import type { AllocationRecord, AllocationReason } from '../device/admission-allocation.js';
++import { simulatorUuid, validSimulatorIdentifiers } from './create-source.js';
++
++const text = z.string().min(1).max(500).refine(s => !!s.trim() && !s.includes('\0'));
++export const allocationIdSchema = z.string().regex(simulatorUuid).transform(s => s.toUpperCase());
++export const allocationActionIdSchema = z.string().regex(/^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$/);
++export const prepareAllocationSchema = z.strictObject({
++  version: z.literal(1), actionId: allocationActionIdSchema,
++  source: z.discriminatedUnion('kind', [
++    z.strictObject({ kind: z.literal('create'), deviceTypeId: text, runtimeId: text })
++      .refine(s => validSimulatorIdentifiers(s.deviceTypeId, s.runtimeId)),
++    z.strictObject({ kind: z.literal('supplied'), inventoryId: text }),
++  ]),
++  app: z.strictObject({ artifactPath: z.string().min(1).max(4096).refine(p => isAbsolute(p) && !p.includes('\0')),
++    bundleId: z.string().max(500).regex(/^[A-Za-z0-9][A-Za-z0-9.-]*$/),
++    build: z.strictObject({ id: text, origin: text }) }),
++  timeoutMs: z.number().int().min(1000).max(900000).default(360000),
++});
++export type PrepareAllocationRequest = z.infer<typeof prepareAllocationSchema>;
++export type AllocationOperationCode = AllocationReason | 'UNSUPPORTED_VERSION' | 'STORE_UNAVAILABLE' | 'MIGRATION_REQUIRED'
++  | 'SHUTTING_DOWN' | 'WAIT_CANCELLED' | 'INTERNAL_ERROR';
++export class AllocationInputError extends Error {
++  constructor(readonly code: AllocationOperationCode) { super('Invalid allocation request'); }
++}
++export function parsePrepareAllocation(raw: unknown): PrepareAllocationRequest {
++  try { if (Buffer.byteLength(JSON.stringify(raw)) > 65536) throw new Error(); }
++  catch { throw new AllocationInputError('INVALID_REQUEST'); }
++  if (raw && typeof raw === 'object' && 'version' in raw && raw.version !== 1) throw new AllocationInputError('UNSUPPORTED_VERSION');
++  const parsed = prepareAllocationSchema.safeParse(raw);
++  if (!parsed.success) throw new AllocationInputError('INVALID_REQUEST');
++  return parsed.data;
++}
++export function canonicalJson(value: unknown): string {
++  if (Array.isArray(value)) return '[' + value.map(canonicalJson).join(',') + ']';
++  if (value && typeof value === 'object') return '{' + Object.keys(value).sort()
++    .map(key => JSON.stringify(key) + ':' + canonicalJson((value as Record<string, unknown>)[key])).join(',') + '}';
++  return JSON.stringify(value);
++}
++export function preparationDigest(request: PrepareAllocationRequest): string { return createHash('sha256').update(canonicalJson(request)).digest('hex'); }
++export type AllocationSnapshotV1 = {
++  version: 1; allocationId: string; actionId: string; state: AllocationRecord['state']; phase: AllocationRecord['phase'];
++  device: { platform: 'ios-simulator'; udid: string } | null; reason: AllocationReason | null;
++  outcome: AllocationRecord['outcome']; authority: 'committed' | 'unconfirmed'; readinessEvidence: string[]; evidenceRefs: string[];
++  reservation: { bytes: number; capacityHeld: boolean }; hostCreationBlocked: boolean; cancellationRequested: boolean;
++};
++export type AllocationOperationError = {
++  version: 1; kind: 'observed-operation-error'; code: AllocationOperationCode; message: string;
++  actionId?: string; allocationId?: string; acceptance: 'no' | 'yes' | 'unknown'; acceptanceKind: 'preparation';
++  blockingAllocationId?: string; evidenceDirectory?: string;
++};
++export type AllocationResult = AllocationSnapshotV1 | AllocationOperationError;
++export function allocationSnapshot(record: AllocationRecord, authority: 'committed' | 'unconfirmed' = 'committed'): AllocationSnapshotV1 {
++  return { version: 1, allocationId: record.allocationId, actionId: record.actionId, state: record.state, phase: record.phase,
++    device: record.device ? { platform: 'ios-simulator', udid: record.device } : null, reason: record.reason,
++    outcome: authority === 'committed' ? record.outcome : null, authority,
++    readinessEvidence: [...record.readinessEvidence], evidenceRefs: [...new Set([record.evidenceDirectory, ...record.evidenceRefs])],
++    reservation: { bytes: record.reservationBytes, capacityHeld: record.capacityHeld },
++    hostCreationBlocked: record.hostCreationBlocked, cancellationRequested: record.cancellationRequested };
++}
++export function allocationError(code: AllocationOperationCode, identity: {
++  actionId?: string; allocationId?: string; evidenceDirectory?: string; blockingAllocationId?: string;
++} = {}, acceptance: AllocationOperationError['acceptance'] = 'no'): AllocationOperationError {
++  return { version: 1, kind: 'observed-operation-error', code, message: `Allocation operation refused: ${code}.`,
++    ...identity, acceptance, acceptanceKind: 'preparation' };
++}
+diff --git a/src/observed/allocation.ts b/src/observed/allocation.ts
+new file mode 100644
+index 0000000..344b2fc
+--- /dev/null
++++ b/src/observed/allocation.ts
+@@ -0,0 +1,320 @@
++import * as fs from 'node:fs/promises';
++import { isAbsolute, join, dirname, resolve } from 'node:path';
++import { Admission, AdmissionError } from '../device/admission.js';
++import type { ActionBinding, AllocationRecord, AllocationReservation, AllocationReason, ConsumeAllocationResult } from '../device/admission-allocation.js';
++import { DeviceCliError, deviceWindowOpener, type CliRunner, type DeviceWindowOpener, type IosPreparationDriver } from '../device/index.js';
++import { createPreparationDriver } from '../device/factory.js';
++import { inspectArtifact, stageArtifact, verifyStagedArtifact, ArtifactError, type ArtifactRequest } from './artifact.js';
++import { createSimulator, type SourceProcess } from './create-source.js';
++import { selectSuppliedSource } from './supplied-source.js';
++import { readAllocationConfig, installedHost, allocationSourceProcess, allocationStorage, verifyInstalledCompatibility,
++  AllocationPrerequisiteError, stableFile, isProductionSourceProcess, type InstalledHost } from './allocation-config.js';
++import { allocationSnapshot, allocationError, allocationIdSchema, AllocationInputError, parsePrepareAllocation, preparationDigest,
++  type PrepareAllocationRequest, type AllocationResult, type AllocationOperationCode } from './allocation-schema.js';
++export type { AllocationSnapshotV1, AllocationOperationError, AllocationResult } from './allocation-schema.js';
++
++export type AllocatorOptions = {
++  runsDir: string; admission?: Admission;
++  fakeBackend?: { process: SourceProcess; runner: CliRunner; window: DeviceWindowOpener | undefined; host: InstalledHost };
++};
++type Job = { actionId: string; digest: string; controller: AbortController; deadline: number;
++  reservation?: AllocationReservation; reservationAttempted?: boolean; driver?: IosPreparationDriver; phase: AllocationRecord['phase']; evidence: string[]; diagnostics: string[]; diagnosticsClosed: boolean;
++  promise?: Promise<AllocationResult> };
++const stageReasons: Partial<Record<AllocationRecord['phase'], AllocationReason>> = { booting: 'BOOT_FAILED', installing: 'INSTALL_FAILED', launching: 'LAUNCH_FAILED', readiness: 'READINESS_FAILED' };
++class PreparationFailure extends Error { constructor(readonly reason: AllocationReason) { super(reason); } }
++function abortable<T>(promise: Promise<T>, signal: AbortSignal): Promise<T> {
++  if (signal.aborted) return Promise.reject(signal.reason);
++  return new Promise((done, fail) => {
++    const cancel = () => fail(signal.reason); signal.addEventListener('abort', cancel, { once: true });
++    promise.then(done, fail).finally(() => signal.removeEventListener('abort', cancel)).catch(() => {});
++    if (signal.aborted) cancel();
++  });
++}
++async function pause(ms: number, signal: AbortSignal): Promise<void> {
++  await new Promise<void>((done, fail) => {
++    const timer = setTimeout(() => { signal.removeEventListener('abort', cancel); done(); }, ms);
++    const cancel = () => { clearTimeout(timer); signal.removeEventListener('abort', cancel); fail(signal.reason); };
++    signal.addEventListener('abort', cancel, { once: true }); if (signal.aborted) cancel();
++  });
++}
++/** The store owns identity and authority. This module owns only preparation scheduling and bounded local operations. */
++export class ObservedAllocator {
++  private readonly admission: Admission;
++  private readonly host: InstalledHost;
++  private readonly jobs = new Map<string, Job>();
++  private readonly pending = new Set<Promise<unknown>>();
++  private closed = false;
++  private closing: Promise<void> | undefined;
++  constructor(private readonly options: AllocatorOptions) {
++    if (!isAbsolute(options.runsDir) || options.runsDir.includes('\0') || options.runsDir.length > 4096) throw new AllocationInputError('CONFIG_INVALID');
++    if (options.fakeBackend && (!options.admission || !Object.hasOwn(options.fakeBackend, 'window')
++      || typeof options.fakeBackend.process !== 'function' || typeof options.fakeBackend.runner !== 'function'
++      || isProductionSourceProcess(options.fakeBackend.process) || (options.fakeBackend.window !== undefined && options.fakeBackend.window === deviceWindowOpener(false, {})))) throw new AllocationInputError('CONFIG_INVALID');
++    this.admission = options.admission ?? Admission.open();
++    this.admission.assertBackend(options.fakeBackend ? 'fake' : 'real');
++    this.host = options.fakeBackend?.host ?? installedHost();
++  }
++  private track<T>(promise: Promise<T>): Promise<T> {
++    this.pending.add(promise); promise.then(() => this.pending.delete(promise), () => this.pending.delete(promise)); return promise;
++  }
++  private local<T>(job: Job, promise: Promise<T>, signal = job.controller.signal): Promise<T> {
++    return abortable(this.track(promise), signal);
++  }
++  async prepare(raw: unknown): Promise<AllocationResult> {
++    let request: PrepareAllocationRequest;
++    try { request = parsePrepareAllocation(raw); } catch (error) { return allocationError(error instanceof AllocationInputError ? error.code : 'INVALID_REQUEST'); }
++    const digest = preparationDigest(request);
++    try {
++      const existing = this.admission.readAllocationForAction(request.actionId);
++      if (existing) return existing.preparationDigest === digest ? allocationSnapshot(existing)
++        : allocationError('ACTION_ID_CONFLICT', this.identity(existing), 'yes');
++    } catch { return allocationError('STORE_UNAVAILABLE', { actionId: request.actionId }, 'unknown'); }
++    if (this.closed) return allocationError('SHUTTING_DOWN', { actionId: request.actionId });
++    const running = this.jobs.get(request.actionId);
++    if (running) return running.digest === digest ? running.promise! : allocationError('ACTION_ID_CONFLICT', { actionId: request.actionId });
++    const job: Job = { actionId: request.actionId, digest, controller: new AbortController(), deadline: Date.now() + request.timeoutMs,
++      phase: 'reserved', evidence: [], diagnostics: [], diagnosticsClosed: false };
++    this.jobs.set(request.actionId, job);
++    job.promise = this.execute(job, request).finally(() => { if (this.jobs.get(job.actionId) === job) this.jobs.delete(job.actionId); });
++    return job.promise;
++  }
++  private identity(record: AllocationRecord) { return { actionId: record.actionId, allocationId: record.allocationId, evidenceDirectory: record.evidenceDirectory }; }
++  private check(job: Job): void {
++    job.controller.signal.throwIfAborted();
++    if (Date.now() >= job.deadline) throw new PreparationFailure(job.phase === 'readiness' ? 'READINESS_FAILED' : 'PREPARATION_UNCONFIRMED');
++    if (job.reservation) {
++      const record = this.admission.readAllocation(job.reservation.identity.allocationId);
++      if (!record || record.cancellationRequested || record.state !== 'preparing') throw new PreparationFailure('CANCELLED');
++    }
++  }
++  private async stage<T>(job: Job, limit: number, effect: (signal: AbortSignal, remaining: () => number) => Promise<T>): Promise<T> {
++    this.check(job); const deadline = Math.min(job.deadline, Date.now() + limit); const controller = new AbortController();
++    const signal = AbortSignal.any([controller.signal, job.controller.signal]);
++    const remaining = () => { signal.throwIfAborted(); this.check(job); const left = deadline - Date.now();
++      if (left <= 0) throw new PreparationFailure(job.phase === 'readiness' ? 'READINESS_FAILED' : 'PREPARATION_UNCONFIRMED'); return left; };
++    const timer = setTimeout(() => controller.abort(new PreparationFailure(job.phase === 'readiness' ? 'READINESS_FAILED' : 'PREPARATION_UNCONFIRMED')), Math.max(1, deadline - Date.now()));
++    try { return await this.local(job, effect(signal, remaining), signal); }
++    finally { clearTimeout(timer); }
++  }
++  private async directory(path: string): Promise<void> {
++    const normalized = resolve(path); if (normalized !== path) throw new Error('Evidence directory must be canonical');
++    const parts = normalized.split('/').filter(Boolean); let cursor = '/';
++    for (let i = 0; i < parts.length; i++) {
++      cursor = join(cursor, parts[i]!);
++      let s;
++      try { s = await fs.lstat(cursor); }
++      catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; await fs.mkdir(cursor, { mode: 0o700 }); s = await fs.lstat(cursor); }
++      if (s.isSymbolicLink() || !s.isDirectory()) throw new Error('Unsafe evidence directory');
++      if (cursor === normalized && (s.uid !== this.host.account.uid || (s.mode & 0o777) !== 0o700)) throw new Error('Evidence root must be private');
++    }
++  }
++  private async write(path: string, content: string | Buffer, signal: AbortSignal): Promise<void> {
++    signal.throwIfAborted(); const file = await fs.open(path, 'wx', 0o600);
++    try { await file.writeFile(content); await file.sync(); signal.throwIfAborted(); }
++    finally { await file.close(); }
++  }
++  private diagnostic(job: Job, operation: string, outcome: unknown): void {
++    if (job.diagnosticsClosed || job.controller.signal.aborted) return;
++    try {
++      const bounded = (value: string) => Buffer.from(value).subarray(0, 16384).toString('utf8');
++      const value = outcome instanceof Error ? { operation, error: bounded(outcome.message), ...(outcome instanceof DeviceCliError ? { code: bounded(outcome.code), terminalAcknowledged: outcome.terminalAcknowledged } : {}) }
++        : { operation, exitCode: (outcome as { exitCode: number | null }).exitCode,
++          stdout: bounded((outcome as { stdout: string }).stdout), stderr: bounded((outcome as { stderr: string }).stderr) };
++      const entry = JSON.stringify(value);
++      if (Buffer.byteLength('[' + [...job.diagnostics, entry].join(',') + ']') <= 65536) job.diagnostics.push(entry);
++    } catch { /* Private diagnostics never authorize work or replace the original outcome. */ }
++  }
++  private async persistDiagnostics(job: Job, signal: AbortSignal): Promise<void> {
++    job.diagnosticsClosed = true; if (!job.reservation || !job.diagnostics.length) return;
++    const path = join(job.reservation.snapshot.evidenceDirectory, 'source-diagnostics.json');
++    if (job.evidence.includes(path)) return;
++    await abortable(this.track(this.write(path, '[' + job.diagnostics.join(',') + ']', signal)), signal); job.evidence.push(path);
++  }
++  private async storage(job: Job, staging: string, artifactBytes: number, signal = job.controller.signal): Promise<void> {
++    this.check(job); const record = this.admission.readAllocation(job.reservation!.identity.allocationId)!;
++    const capacity = this.admission.readAllocationCapacity(); const storage = await this.local(job, allocationStorage(this.host, staging), signal); this.check(job);
++    const b = record.budgets;
++    if (capacity.heldAllocations > b.maxRetainedAllocations || capacity.reservedBytes > b.maxReservedBytes) throw new PreparationFailure('BUDGET_EXHAUSTED');
++    if (storage.simulatorFreeBytes - capacity.reservedBytes < b.minFreeBytes
++      || storage.stagingFreeBytes - capacity.reservedBytes - artifactBytes < b.minFreeBytes) throw new PreparationFailure('STORAGE_UNAVAILABLE');
++  }
++  private async execute(job: Job, request: PrepareAllocationRequest): Promise<AllocationResult> {
++    const overall = setTimeout(() => job.controller.abort(new PreparationFailure(job.phase === 'readiness' ? 'READINESS_FAILED' : 'PREPARATION_UNCONFIRMED')), request.timeoutMs);
++    const monitor = setInterval(() => { if (job.reservation) {
++      try { const record = this.admission.readAllocation(job.reservation.identity.allocationId);
++        if (!record || record.cancellationRequested) job.controller.abort(new PreparationFailure('CANCELLED')); }
++      catch { job.controller.abort(new PreparationFailure('STATE_UNAVAILABLE')); }
++    } }, 100);
++    try {
++      const config = await this.local(job, readAllocationConfig({ account: this.host.account, fs: this.host.fs })); this.check(job);
++      const selected = request.source.kind === 'create' ? { status: 'selected' as const, source: request.source }
++        : selectSuppliedSource(request.source.inventoryId, config.inventory);
++      if (selected.status !== 'selected') throw new PreparationFailure(selected.reason);
++      const source = { ...selected.source, kind: request.source.kind } as AllocationRecord['source'];
++      const evidenceDirectory = join(resolve(this.options.runsDir), 'observed', request.actionId, 'allocation');
++      const stagingRoot = join(evidenceDirectory, 'staging');
++      const process = this.options.fakeBackend?.process ?? allocationSourceProcess(this.host, [request.app.artifactPath, stagingRoot]);
++      const trackedProcess: SourceProcess = (file, args, options) => this.track(Promise.resolve().then(() => { options.signal.throwIfAborted(); return process(file, args, options); }).then(
++        receipt => { this.diagnostic(job, file, receipt); return receipt; }, error => { this.diagnostic(job, file, error); throw error; }));
++      const proof = await this.stage(job, 10000, signal => verifyInstalledCompatibility(source, this.host, trackedProcess, signal));
++      const artifactRequest: ArtifactRequest = { ...request.app, target: proof, maxBytes: config.budgets.maxArtifactBytes, stagingRoot };
++      const inspected = await this.stage(job, Math.max(1, job.deadline - Date.now()), signal => inspectArtifact(artifactRequest, { process: trackedProcess, signal }));
++      await this.local(job, this.directory(resolve(this.options.runsDir))); this.check(job);
++      const storage = await this.local(job, allocationStorage(this.host, resolve(this.options.runsDir))); this.check(job);
++      job.reservationAttempted = true;
++      const reserved = this.admission.reserveAllocation({ actionId: request.actionId, preparationDigest: job.digest, preparation: request,
++        appBundleId: request.app.bundleId, source, inspectedContentDigest: inspected.contentDigest, artifactBytes: inspected.bytes,
++        configVersion: config.version, configDigest: config.digest, budgets: { ...config.budgets, timeoutMs: request.timeoutMs }, storage, evidenceDirectory });
++      if (reserved.kind === 'retrieved') return allocationSnapshot(reserved.allocation);
++      if (reserved.kind === 'refused') return allocationError(reserved.reason, { actionId: request.actionId,
++        ...(reserved.blockingAllocationId ? { blockingAllocationId: reserved.blockingAllocationId } : {}) });
++      job.reservation = reserved.reservation; this.check(job);
++      await this.local(job, this.directory(dirname(evidenceDirectory))); await this.local(job, fs.mkdir(evidenceDirectory, { mode: 0o700 })); await this.local(job, fs.mkdir(stagingRoot, { mode: 0o700 }));
++      const proofPath = join(evidenceDirectory, 'host-prerequisites.json');
++      await this.local(job, this.write(proofPath, JSON.stringify(proof), job.controller.signal)); job.evidence.push(proofPath);
++      const requestPath = join(evidenceDirectory, 'preparation-request.json'); await this.local(job, this.write(requestPath, JSON.stringify(request), job.controller.signal)); job.evidence.push(requestPath);
++      const staged = await this.stage(job, Math.max(1, job.deadline - Date.now()), signal => stageArtifact(artifactRequest, { process: trackedProcess, signal }));
++      if (staged.contentDigest !== inspected.contentDigest || staged.bytes !== inspected.bytes) throw new PreparationFailure('ARTIFACT_INVALID');
++      job.reservation.stage(staged);
++      await this.local(job, verifyStagedArtifact(staged, { signal: job.controller.signal })); await this.storage(job, stagingRoot, staged.bytes);
++      if (source.kind === 'create') {
++        job.phase = 'creating';
++        const receipt = await createSimulator({ allocationId: job.reservation.identity.allocationId, deviceTypeId: source.deviceTypeId,
++          runtimeId: source.runtimeId, timeoutMs: Math.max(1, Math.min(config.budgets.createTimeoutMs, job.deadline - Date.now())) },
++        { process: trackedProcess, signal: job.controller.signal, dispatch: operation => job.reservation!.create(operation) });
++        if (receipt.status !== 'created') throw new PreparationFailure(receipt.status === 'unknown' ? 'CREATE_UNCONFIRMED' : receipt.reason);
++      }
++      this.check(job); job.phase = 'admitting'; const admitted = job.reservation.admit();
++      if (admitted.kind !== 'admitted') throw new PreparationFailure(admitted.reason);
++      job.driver = createPreparationDriver({ cwd: evidenceDirectory, admission: this.admission, capture: 'full', screenshots: true,
++        ...(this.options.fakeBackend ? { runner: this.options.fakeBackend.runner, deviceWindow: this.options.fakeBackend.window ?? (async () => {}),
++          fakeBackend: { runner: this.options.fakeBackend.runner, window: this.options.fakeBackend.window }, lockRoot: join(this.options.runsDir, 'leases') } : {}) });
++      await job.driver.attachPreparation(admitted.claim, { app: { bundleId: request.app.bundleId } }, job.controller.signal);
++      // Supplied availability is verified through the admitted driver capability, never a bare runner.
++      if (source.kind === 'supplied') {
++        const status = await this.stage(job, config.budgets.bootTimeoutMs, (signal, remaining) => job.driver!.inventoryStatus(signal, remaining()));
++        if (!status?.isAvailable) throw new PreparationFailure('INVENTORY_INELIGIBLE');
++      }
++      job.phase = 'booting';
++      await this.stage(job, config.budgets.bootTimeoutMs, async (signal, remaining) => {
++        await job.driver!.boot(signal, remaining());
++        while (await job.driver!.bootState(signal, remaining()) !== 'Booted') await pause(1000, signal);
++      });
++      job.phase = 'installing';
++      await this.stage(job, config.budgets.installTimeoutMs, async (signal, remaining) => {
++        await this.local(job, verifyStagedArtifact(staged, { signal }), signal); await this.storage(job, stagingRoot, staged.bytes, signal);
++        await job.driver!.install(staged.stagedPath, signal, remaining());
++      });
++      job.phase = 'launching'; await this.stage(job, config.budgets.launchTimeoutMs, (signal, remaining) => job.driver!.launch(signal, remaining()));
++      job.phase = 'readiness';
++      const refs = await this.stage(job, config.budgets.readinessTimeoutMs, async (signal, remaining) => {
++        let observation;
++        while (true) {
++          try { observation = await job.driver!.readiness(signal, remaining()); break; }
++          catch (error) { if (!(error instanceof DeviceCliError && error.terminalAcknowledged && error.code === 'READINESS_FAILED')) throw error; await pause(1000, signal); }
++        }
++        const refs: string[] = []; this.check(job); signal.throwIfAborted();
++        if (observation.screenshotPath) {
++          if (!isAbsolute(observation.screenshotPath)) throw new Error('Screenshot path is invalid');
++          const screenshot = await this.local(job, stableFile(observation.screenshotPath, fs, 10 * 1024 ** 2), signal);
++          const path = join(evidenceDirectory, 'readiness-1.jpg'); await this.local(job, this.write(path, screenshot, signal), signal); refs.push(path); observation = { ...observation, screenshotPath: path };
++        }
++        const path = join(evidenceDirectory, 'readiness-1.json'); await this.local(job, this.write(path, JSON.stringify(observation), signal), signal); refs.unshift(path); return refs;
++      });
++      await this.persistDiagnostics(job, job.controller.signal); this.check(job); const commit = await job.driver.park(refs, job.evidence, job.controller.signal);
++      if (commit.authority !== 'committed') throw new PreparationFailure('STATE_UNAVAILABLE');
++      this.jobs.delete(job.actionId); return allocationSnapshot(commit.allocation);
++    } catch (error) {
++      this.diagnostic(job, 'preparation/' + job.phase, error); job.diagnosticsClosed = true;
++      const reason = error instanceof PreparationFailure ? error.reason : error instanceof AllocationPrerequisiteError ? error.reason
++        : error instanceof ArtifactError ? error.reason : error instanceof DeviceCliError && error.terminalAcknowledged
++          ? stageReasons[job.phase] ?? 'ADMISSION_REFUSED'
++          : job.controller.signal.aborted && job.controller.signal.reason instanceof PreparationFailure ? job.controller.signal.reason.reason
++          : error instanceof AdmissionError ? 'STATE_UNAVAILABLE' : job.phase === 'readiness' ? 'READINESS_FAILED' : 'PREPARATION_UNCONFIRMED';
++      if (!job.reservation) {
++        if (job.reservationAttempted) {
++          try { const accepted = this.admission.readAllocationForAction(request.actionId);
++            if (accepted) return accepted.preparationDigest === job.digest ? allocationSnapshot(accepted)
++              : allocationError('ACTION_ID_CONFLICT', this.identity(accepted), 'yes');
++          } catch { return allocationError('STORE_UNAVAILABLE', { actionId: request.actionId }, 'unknown'); }
++        }
++        return allocationError(reason as AllocationOperationCode, { actionId: request.actionId });
++      }
++      job.driver?.revokeIssuance();
++      const finalizationSignal = AbortSignal.timeout(5000);
++      const finalized = await Promise.allSettled([
++        this.persistDiagnostics(job, finalizationSignal),
++        job.driver ? abortable(this.track(job.driver.close(finalizationSignal)), finalizationSignal) : Promise.resolve(),
++      ]);
++      // A deadline wrapper is not proof that the underlying local close settled.
++      const alreadyUncertain = ['PREPARATION_UNCONFIRMED', 'CREATE_UNCONFIRMED', 'READINESS_FAILED', 'CANCELLED'].includes(reason);
++      const terminalReason = finalized[1]!.status === 'rejected' && !alreadyUncertain ? 'PREPARATION_UNCONFIRMED' : reason;
++      try {
++        const before = this.admission.readAllocation(job.reservation.identity.allocationId);
++        if (before && before.state !== 'preparing') return allocationSnapshot(before);
++        const commit = job.reservation.fail(terminalReason, job.evidence);
++        if (commit.authority === 'committed') return allocationSnapshot(commit.allocation);
++      } catch { /* Fresh authoritative retrieval is the only remaining authority path. */ }
++      try { const record = this.admission.readAllocation(job.reservation.identity.allocationId); if (record) return allocationSnapshot(record); } catch { /* No alternate storage. */ }
++      return allocationError('STORE_UNAVAILABLE', { actionId: request.actionId, allocationId: job.reservation.identity.allocationId }, 'unknown');
++    } finally { clearInterval(monitor); clearTimeout(overall); }
++  }
++  async get(id: string, options: { waitMs?: number; signal?: AbortSignal } = {}): Promise<AllocationResult> {
++    const parsed = allocationIdSchema.safeParse(id); const wait = options.waitMs ?? 0;
++    if (!parsed.success || !Number.isSafeInteger(wait) || wait < 0 || wait > 45000) return allocationError('INVALID_REQUEST');
++    const deadline = Date.now() + wait;
++    try {
++      while (true) {
++        if (options.signal?.aborted) return allocationError('WAIT_CANCELLED', { allocationId: parsed.data }, 'unknown');
++        const record = this.admission.readAllocation(parsed.data);
++        if (!record) return allocationError('ALLOCATION_NOT_FOUND', { allocationId: parsed.data });
++        if (record.state !== 'preparing' || Date.now() >= deadline) return allocationSnapshot(record);
++        await pause(Math.min(100, deadline - Date.now()), options.signal ?? new AbortController().signal);
++      }
++    } catch { return allocationError(options.signal?.aborted ? 'WAIT_CANCELLED' : 'STORE_UNAVAILABLE', { allocationId: parsed.data }, 'unknown'); }
++  }
++  private async change(id: string, operation: 'cancel' | 'retire'): Promise<AllocationResult> {
++    const parsed = allocationIdSchema.safeParse(id); if (!parsed.success) return allocationError('INVALID_REQUEST');
++    // A stored claim identifies our local job without relying on a fallible store read.
++    const owned = operation === 'cancel' ? [...this.jobs.values()].find(job => job.reservation?.identity.allocationId === parsed.data) : undefined;
++    const revokeOwned = () => { owned?.controller.abort(new PreparationFailure('CANCELLED')); owned?.driver?.revokeIssuance(); };
++    try {
++      const changed = operation === 'cancel' ? this.admission.cancelAllocation(parsed.data) : this.admission.retireAllocation(parsed.data);
++      if (changed.kind === 'refused') return allocationError(changed.reason, { allocationId: parsed.data }, changed.reason === 'ALLOCATION_NOT_FOUND' ? 'no' : 'yes');
++      const job = this.jobs.get(changed.allocation.actionId);
++      if (operation === 'cancel' && job && changed.allocation.state === 'preparing') {
++        job.controller.abort(new PreparationFailure('CANCELLED')); job.driver?.revokeIssuance();
++        await abortable(job.promise!, AbortSignal.timeout(5000)).catch(() => {});
++      }
++      return await this.get(parsed.data);
++    } catch { revokeOwned(); return allocationError('STORE_UNAVAILABLE', { allocationId: parsed.data }, 'unknown'); }
++  }
++  cancel(id: string): Promise<AllocationResult> { return this.change(id, 'cancel'); }
++  retire(id: string): Promise<AllocationResult> { return this.change(id, 'retire'); }
++  consume(binding: ActionBinding): ConsumeAllocationResult { return this.admission.consumeAllocation(binding); }
++  /** Explicit startup maintenance only. Reads never recover or take over another owner. */
++  recoverAbandoned(): number {
++    let recovered = 0;
++    for (const allocation of this.admission.listActiveAllocations()) {
++      if (allocation.state === 'preparing' && this.admission.quarantineAbandonedAllocation(allocation.owner)) recovered++;
++    }
++    return recovered;
++  }
++  close(): Promise<void> {
++    if (this.closing) return this.closing;
++    this.closed = true;
++    const work: Promise<unknown>[] = [];
++    for (const job of this.jobs.values()) {
++      if (job.reservation) {
++        try { const record = this.admission.readAllocation(job.reservation.identity.allocationId);
++          if (record && record.state !== 'preparing') { this.jobs.delete(job.actionId); continue; }
++          this.admission.cancelAllocation(job.reservation.identity.allocationId);
++        } catch { /* Close local issuance even when authority is unavailable. */ }
++      }
++      job.controller.abort(new PreparationFailure('CANCELLED')); job.driver?.revokeIssuance();
++      if (job.promise) work.push(job.promise);
++    }
++    this.closing = abortable(Promise.allSettled([...work, ...this.pending]), AbortSignal.timeout(5000)).then(() => {}, () => {});
++    return this.closing;
++  }
++}
+diff --git a/tests/fixtures/observed-allocation-backend.ts b/tests/fixtures/observed-allocation-backend.ts
+new file mode 100644
+index 0000000..9332732
+--- /dev/null
++++ b/tests/fixtures/observed-allocation-backend.ts
+@@ -0,0 +1,106 @@
++import * as fs from 'node:fs/promises';
++import { mkdtempSync, mkdirSync, realpathSync, writeFileSync } from 'node:fs';
++import { tmpdir } from 'node:os';
++import { join } from 'node:path';
++import { fileURLToPath } from 'node:url';
++import { Admission } from '../../src/device/admission.js';
++import type { InstalledHost } from '../../src/observed/allocation-config.js';
++import type { SourceProcess } from '../../src/observed/create-source.js';
++import type { CliRunner } from '../../src/device/index.js';
++
++export const typeId = 'com.apple.CoreSimulator.SimDeviceType.iPhone-17';
++export const runtimeId = 'com.apple.CoreSimulator.SimRuntime.iOS-27-0';
++export const fixtureDevice = 'ABCDEF00-0000-4000-8000-000000000001';
++export const xcodeInfoPath = '/Applications/Xcode.app/Contents/Info.plist';
++export const deviceProfilePath = '/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist';
++export const runtimeBundle = '/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime';
++export const runtimeProfilePath = runtimeBundle + '/Contents/Resources/profile.plist';
++export const runtimeSystemPath = runtimeBundle + '/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist';
++export const fixtureBudgets = { maxRetainedAllocations: 8, maxConcurrentPreparations: 1,
++  reservationBytesPerAllocation: 1000, maxReservedBytes: 8000, minFreeBytes: 2000, maxArtifactBytes: 1024,
++  createTimeoutMs: 10000, bootTimeoutMs: 10000, installTimeoutMs: 10000, launchTimeoutMs: 10000,
++  readinessTimeoutMs: 10000, readyTtlMs: 300000 };
++export async function allocationFixture(options: { now?: () => number; fault?: NonNullable<Parameters<typeof Admission.forTesting>[0]['fault']> } = {}) {
++  const root = realpathSync(mkdtempSync(join(tmpdir(), 'observed-allocator-')));
++  await fs.chmod(root, 0o700); const home = join(root, 'home'); const runsDir = join(root, 'runs');
++  mkdirSync(home, { mode: 0o700 }); mkdirSync(runsDir, { mode: 0o700 });
++  mkdirSync(join(home, 'Library/Developer/CoreSimulator'), { recursive: true, mode: 0o700 });
++  const store = join(root, 'store'); mkdirSync(store, { mode: 0o700 });
++  const admission = Admission.forTesting({ root: store, backend: 'fake', ...options });
++  const configDirectory = join(home, 'Library/Application Support/jev-ios-bridge'); mkdirSync(configDirectory, { recursive: true, mode: 0o700 });
++  const configPath = join(configDirectory, 'allocation.json');
++  const configure = (settings: Record<string, unknown> = {}) => writeFileSync(configPath, JSON.stringify({ version: 1, ...fixtureBudgets, inventory: [], ...settings }), { mode: 0o600 });
++  configure();
++  const map = (path: string) => /^\/(?:Applications|Library|System|usr)(?:\/|$)/.test(path) ? join(root, 'host', path) : path;
++  const write = (path: string, value: unknown, mode = 0o644) => {
++    const target = map(path); mkdirSync(join(target, '..'), { recursive: true, mode: 0o700 });
++    writeFileSync(target, typeof value === 'string' ? value : JSON.stringify(value), { mode });
++  };
++  write(xcodeInfoPath, { CFBundleIdentifier: 'com.apple.dt.Xcode', CFBundleExecutable: 'Xcode', LSMinimumSystemVersion: '26.6' });
++  write('/Applications/Xcode.app/Contents/version.plist', { CFBundleShortVersionString: '27.0', ProductBuildVersion: '27A-fixture' });
++  write('/System/Library/CoreServices/SystemVersion.plist', { ProductVersion: '27.0.1', ProductBuildVersion: '27-fixture' });
++  for (const p of ['/Applications/Xcode.app/Contents/MacOS/Xcode', '/Applications/Xcode.app/Contents/Developer/usr/bin/simctl', '/usr/bin/xcrun', '/usr/bin/plutil']) write(p, 'fake executable', 0o755);
++  mkdirSync(map('/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform'), { recursive: true, mode: 0o700 });
++  write('/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist', { CFBundleIdentifier: typeId });
++  write(deviceProfilePath, { supportedProductFamilyIDs: [1], minRuntimeVersion: '26.0', supportedArchs: ['arm64', 'x86_64'] });
++  write(runtimeBundle + '/Contents/Info.plist', { CFBundleIdentifier: runtimeId, CFBundleShortVersionString: '384', DTPlatformVersion: '14.0' });
++  write(runtimeProfilePath, { platformIdentifier: 'com.apple.platform.iphonesimulator', minHostVersion: '14.0.0',
++    supportedArchs: ['arm64', 'x86_64'], supportedProductFamilyIDs: [2, 1], defaultVersionString: '27.0' });
++  write(runtimeSystemPath, { ProductVersion: '27.0.1', ProductBuildVersion: '27A-fixture' });
++  let simulatorFreeBytes = 100000; let stagingFreeBytes = 100000;
++  const fakeFs = { ...fs,
++    lstat: ((p: string, ...rest: []) => fs.lstat(map(p), ...rest)) as typeof fs.lstat,
++    open: ((p: string, ...rest: [number, number?]) => fs.open(map(p), ...rest)) as typeof fs.open,
++    readdir: ((p: string, ...rest: []) => fs.readdir(map(p), ...rest)) as typeof fs.readdir,
++    statfs: (async (p: string) => ({ type: 0, bsize: 1, blocks: 1000000, bfree: 1000000,
++      bavail: p.includes('Library/Developer/CoreSimulator') ? simulatorFreeBytes : stagingFreeBytes, files: 100000, ffree: 100000 })) as typeof fs.statfs,
++  };
++  const host: InstalledHost = { fs: fakeFs, account: { homedir: home, uid: process.getuid!() }, platform: 'darwin', architecture: 'arm64' };
++  const app = join(root, 'Fixture.app'); await fs.cp(fileURLToPath(new URL('./observed-artifacts/Fixture.app', import.meta.url)), app, { recursive: true });
++  const calls: string[] = []; let serial = 0; let currentDevice = fixtureDevice;
++  let before: ((operation: string, path?: string) => Promise<void>) | undefined;
++  let createResult: { exitCode: number | null; stdout: string; stderr: string } | undefined;
++  let state = 'Booted'; let available = true; let screenshotPath: string | undefined;
++  const commandResults = new Map<string, Awaited<ReturnType<CliRunner>>>();
++  const source: SourceProcess = async (executable, args, options) => {
++    if (options.shell !== false || options.signal.aborted || options.timeoutMs <= 0 || options.maxOutputBytes > 65536) assertNever('Unsafe fake source options');
++    if (executable === '/usr/bin/plutil') {
++      if (args.length !== 6 || args.slice(0, 5).join('\0') !== '-convert\0json\0-o\0-\0--' || !(args[5]!.startsWith('/Applications/Xcode.app/Contents/') || args[5] === '/System/Library/CoreServices/SystemVersion.plist' || args[5]!.startsWith('/Library/Developer/CoreSimulator/') || args[5]!.startsWith(root + '/'))) assertNever('Unexpected fake plist command');
++      const p = args[5]!; calls.push('plist'); await before?.('plist', p);
++      return { stdout: p.endsWith('.app/Info.plist') ? JSON.stringify({ CFBundleIdentifier: 'org.example.fixture', CFBundleExecutable: 'Fixture',
++        CFBundlePackageType: 'APPL', CFBundleSupportedPlatforms: ['iPhoneSimulator'], MinimumOSVersion: '17.0' })
++        : await fs.readFile(map(p), 'utf8'), stderr: '', exitCode: 0 };
++    }
++    if (executable !== '/usr/bin/xcrun' || args[0] !== 'simctl' || args[1] !== 'create' || args.length !== 5 || !/^jev-observed-[A-F0-9-]{36}$/.test(args[2]!) || args[3] !== typeId || args[4] !== runtimeId) assertNever('Unexpected source command');
++    calls.push('create'); await before?.('create'); serial++;
++    currentDevice = `ABCDEF00-0000-4000-8000-${String(serial).padStart(12, '0')}`;
++    return createResult ?? { stdout: currentDevice + '\n', stderr: '', exitCode: 0 };
++  };
++  const runner: CliRunner = async args => {
++    const op = args[1]!; calls.push(op); await before?.(op);
++    const override = commandResults.get(op); if (override) return override;
++    if (op === 'list') return { stdout: JSON.stringify({ schema: 'mobilebuildmcp.output.simulator-list', schemaVersion: '2', didError: false,
++      data: { simulators: [{ simulatorId: currentDevice, state, isAvailable: available }] } }), stderr: '', exitCode: 0 };
++    const schema = op === 'boot' ? 'simulator-action-result' : op === 'install' ? 'install-result' : op === 'launch-app' ? 'launch-result' : 'capture-result';
++    if (!['boot', 'install', 'launch-app', 'snapshot-ui', 'screenshot'].includes(op)) assertNever('No cleanup/retry source command');
++    return { stdout: JSON.stringify({ schema: 'mobilebuildmcp.output.' + schema, schemaVersion: '2', didError: false,
++      data: { artifacts: { simulatorId: currentDevice, ...(op === 'screenshot' && screenshotPath ? { screenshotPath } : {}) }, capture: { type: 'runtime-snapshot', rs: '1', count: 0, targets: [] } } }), stderr: '', exitCode: 0 };
++  };
++  const window = async () => { calls.push('window'); assertNever('Preparation attachment must not present'); };
++  const request = (actionId = 'allocate-one') => ({ version: 1, actionId, source: { kind: 'create', deviceTypeId: typeId, runtimeId },
++    app: { artifactPath: app, bundleId: 'org.example.fixture', build: { id: 'fixture', origin: 'host' } } });
++  const inventory = (udid = fixtureDevice, inventoryId = 'stock-one') => [{ inventoryId, udid, deviceTypeId: typeId, runtimeId,
++    creation: { createdAt: '2026-10-08T00:00:00Z', origin: 'fixture', evidenceRef: join(root, 'creation.json') }, attestation: { freshUnused: true as const, exclusive: true as const } }];
++  return { root, home, runsDir, store, admission, host, source, runner, window, app, calls, map, write, configPath, configure, request, inventory,
++    setBefore(fn: typeof before) { before = fn; }, setCreateResult(result: typeof createResult) { createResult = result; },
++    setStorage(simulator: number, staging = simulator) { simulatorFreeBytes = simulator; stagingFreeBytes = staging; },
++    setCommandResult(op: string, result: Awaited<ReturnType<CliRunner>>) { commandResults.set(op, result); },
++    setScreenshotPath(path: string) { screenshotPath = path; },
++    setState(value: string) { state = value; }, setAvailable(value: boolean) { available = value; },
++    async cleanup() {
++      async function writable(path: string): Promise<void> { const s = await fs.lstat(path); if (!s.isDirectory() || s.isSymbolicLink()) return;
++        await fs.chmod(path, 0o700); for (const name of await fs.readdir(path)) await writable(join(path, name)); }
++      await writable(root); await fs.rm(root, { recursive: true, force: true });
++    } };
++}
++function assertNever(message: string): never { throw new Error(message); }
+diff --git a/tests/observed-allocation-config.test.ts b/tests/observed-allocation-config.test.ts
+new file mode 100644
+index 0000000..b97b3e6
+--- /dev/null
++++ b/tests/observed-allocation-config.test.ts
+@@ -0,0 +1,228 @@
++import assert from 'node:assert/strict';
++import { test } from 'node:test';
++import { parsePrepareAllocation, preparationDigest } from '../src/observed/allocation-schema.js';
++
++const request = { version: 1, actionId: 'allocate-one', source: { kind: 'create',
++  deviceTypeId: 'com.apple.CoreSimulator.SimDeviceType.iPhone-17', runtimeId: 'com.apple.CoreSimulator.SimRuntime.iOS-27-0' },
++  app: { artifactPath: '/isolated/Fixture.app', bundleId: 'dev.fixture', build: { id: 'fixture', origin: 'host' } } };
++
++test('strict preparation parsing fills only the overall default and canonicalizes object order', () => {
++  const parsed = parsePrepareAllocation(request);
++  assert.equal(parsed.timeoutMs, 360000);
++  assert.equal(preparationDigest(parsed), preparationDigest(parsePrepareAllocation({ timeoutMs: 360000,
++    app: request.app, source: request.source, actionId: request.actionId, version: 1 })));
++  for (const raw of [{ ...request, extra: true }, { ...request, device: 'raw' }, { ...request, version: 2 },
++    { ...request, actionId: '-bad' }, { ...request, timeoutMs: 999 }, { ...request, timeoutMs: 900001 },
++    { ...request, app: { ...request.app, artifactPath: 'relative.app' } }]) assert.throws(() => parsePrepareAllocation(raw));
++  assert.throws(() => parsePrepareAllocation({ ...request, app: { ...request.app, artifactPath: '/' + 'x'.repeat(4096) } }));
++  assert.throws(() => parsePrepareAllocation({ ...request, extra: 'x'.repeat(65536) }));
++  assert.equal(parsePrepareAllocation({ ...request, timeoutMs: 1000 }).timeoutMs, 1000);
++  assert.equal(parsePrepareAllocation({ ...request, timeoutMs: 900000 }).timeoutMs, 900000);
++});
++
++import { mkdtempSync, mkdirSync, writeFileSync, rmSync, chmodSync } from 'node:fs';
++import { tmpdir } from 'node:os';
++import { join } from 'node:path';
++import { readAllocationConfig, allocationDefaults } from '../src/observed/allocation-config.js';
++
++test('private fixed account configuration uses defaults and refuses unsafe or malformed settings', async () => {
++  const home = mkdtempSync(join(tmpdir(), 'allocation-config-')); chmodSync(home, 0o700);
++  const account = { homedir: home, uid: process.getuid!() };
++  const directory = join(home, 'Library/Application Support/jev-ios-bridge'); const file = join(directory, 'allocation.json');
++  try {
++    assert.deepEqual((await readAllocationConfig({ account })).budgets, allocationDefaults);
++    mkdirSync(directory, { recursive: true, mode: 0o700 });
++    writeFileSync(file, JSON.stringify({ version: 1, maxRetainedAllocations: 9, inventory: [] }), { mode: 0o600 });
++    const configured = await readAllocationConfig({ account }); assert.equal(configured.budgets.maxRetainedAllocations, 9);
++    for (const raw of [{ version: 2 }, { version: 1, extra: true }, { version: 1, maxReservedBytes: 1 },
++      { version: 1, maxConcurrentPreparations: 9 }, { version: 1, bootTimeoutMs: 900001 }, { version: 1, minFreeBytes: 0 }]) {
++      writeFileSync(file, JSON.stringify(raw)); await assert.rejects(readAllocationConfig({ account }), /CONFIG_INVALID/);
++    }
++    writeFileSync(file, '{"version":1}'); chmodSync(file, 0o644);
++    await assert.rejects(readAllocationConfig({ account }), /CONFIG_INVALID/);
++    chmodSync(file, 0o600); chmodSync(directory, 0o755);
++    await assert.rejects(readAllocationConfig({ account }), /CONFIG_INVALID/);
++  } finally { rmSync(home, { recursive: true, force: true }); }
++});
++
++import { verifyInstalledCompatibility } from '../src/observed/allocation-config.js';
++import { allocationFixture, typeId, runtimeId, runtimeProfilePath, runtimeSystemPath } from './fixtures/observed-allocation-backend.js';
++
++test('installed proof uses exact IDs and RuntimeRoot OS, never internal bundle or newest runtime versions', async () => {
++  const f = await allocationFixture();
++  try {
++    const proof = await verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, f.source, new AbortController().signal);
++    assert.equal(proof.runtimeVersion, '27.0.1'); assert.equal(proof.architecture, 'arm64');
++    await assert.rejects(verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId: 'com.apple.CoreSimulator.SimRuntime.iOS-26-4' }, f.host, f.source, new AbortController().signal), /HOST_PREREQUISITE_MISSING/);
++    f.write(runtimeSystemPath, { ProductVersion: '26.4.1', ProductBuildVersion: '26-fixture' });
++    await assert.rejects(verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, f.source, new AbortController().signal), /HOST_PREREQUISITE_MISSING/);
++    assert.ok(!f.calls.includes('create'));
++  } finally { await f.cleanup(); }
++});
++
++test('installed metadata replacement during plutil cannot supply compatibility even with identical bytes', async () => {
++  const f = await allocationFixture();
++  f.setBefore(async (operation, path) => {
++    if (operation === 'plist' && path === runtimeProfilePath) {
++      const original = await import('node:fs/promises'); const target = f.map(path); const data = await original.readFile(target);
++      await original.writeFile(target + '.replacement', data, { mode: 0o644 }); await original.rename(target + '.replacement', target);
++    }
++  });
++  try { await assert.rejects(verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, f.source,
++    new AbortController().signal), /HOST_PREREQUISITE_MISSING/); }
++  finally { await f.cleanup(); }
++});
++
++import { EventEmitter } from 'node:events';
++import { PassThrough } from 'node:stream';
++import type { spawn } from 'node:child_process';
++import { allocationSourceProcess, developerDirectory } from '../src/observed/allocation-config.js';
++
++function childHarness() {
++  const child = Object.assign(new EventEmitter(), { stdout: new PassThrough(), stderr: new PassThrough(),
++    killed: 0, kill() { this.killed++; return true; } });
++  const invocations: unknown[][] = []; let began!: () => void; const started = new Promise<void>(r => { began = r; });
++  const launch = ((...args: unknown[]) => { invocations.push(args); began(); return child; }) as unknown as typeof spawn;
++  return { child, invocations, launch, started };
++}
++
++test('production process composition allows only exact create and trusted fixed plist conversion with sanitized environment', async () => {
++  const f = await allocationFixture(); const h = childHarness(); const source = allocationSourceProcess(f.host, [f.app], h.launch);
++  const options = { shell: false as const, signal: new AbortController().signal, timeoutMs: 1000, maxOutputBytes: 1024 };
++  const create = ['simctl', 'create', 'jev-observed-ABCDEF00-0000-4000-8000-000000000001', typeId, runtimeId];
++  try {
++    const rejectLaunch = ((...args: unknown[]) => { h.invocations.push(args); queueMicrotask(() => h.child.emit('close', 0, null)); return h.child; }) as unknown as typeof spawn;
++    const refusedSource = allocationSourceProcess(f.host, [f.app], rejectLaunch);
++    for (const [exe, args] of [['/bin/sh', ['-c', 'x']], ['/usr/bin/xcrun', ['simctl', 'list']],
++      ['/usr/bin/xcrun', [...create, 'extra']], ['/usr/bin/xcrun', ['simctl', 'create', 'jev-observed-' + '-'.repeat(36), typeId, runtimeId]],
++      ['/usr/bin/plutil', ['-convert', 'json', '-o', '-', '--', '/tmp/foreign/Info.plist']],
++      ['/usr/bin/plutil', ['-convert', 'json', '-o', '-', '--', '/Library/Developer/CoreSimulator/Profiles/Runtimes/missing.simruntime/Contents/Info.plist']]] as [string, string[]][]) {
++      await assert.rejects(refusedSource(exe, args, options));
++    }
++    assert.equal(h.invocations.length, 0);
++    const pending = source('/usr/bin/xcrun', create, options); await h.started;
++    assert.equal(h.invocations.length, 1);
++    assert.deepEqual((h.invocations[0]![2] as {env: unknown}).env, { HOME: f.home, PATH: '/usr/bin:/bin:/usr/sbin:/sbin', LANG: 'C', LC_ALL: 'C', DEVELOPER_DIR: developerDirectory });
++    h.child.stdout.write('receipt'); h.child.emit('close', 0, null); assert.deepEqual(await pending, { exitCode: 0, stdout: 'receipt', stderr: '' });
++  } finally { await f.cleanup(); }
++});
++
++test('production child cancellation and capped output do not claim settlement until the actual child closes', async () => {
++  const f = await allocationFixture(); const h = childHarness(); const source = allocationSourceProcess(f.host, [], h.launch);
++  const controller = new AbortController(); let settled = false;
++  try {
++    const pending = source('/usr/bin/xcrun', ['simctl', 'create', 'jev-observed-ABCDEF00-0000-4000-8000-000000000001', typeId, runtimeId],
++      { shell: false, signal: controller.signal, timeoutMs: 1000, maxOutputBytes: 4 }).finally(() => { settled = true; });
++    await h.started; controller.abort(); h.child.stdout.write('too much output');
++    await new Promise(r => setImmediate(r)); assert.equal(settled, false); assert.ok(h.child.killed > 0);
++    h.child.emit('close', 0, null); assert.equal((await pending).exitCode, null); assert.equal(settled, true);
++  } finally { await f.cleanup(); }
++});
++
++import { xcodeInfoPath, deviceProfilePath, runtimeBundle } from './fixtures/observed-allocation-backend.js';
++const installedMutations: [string, string, Record<string, unknown>][] = [
++  ['Xcode identity', xcodeInfoPath, { CFBundleIdentifier: 'foreign.Xcode' }],
++  ['Xcode executable', xcodeInfoPath, { CFBundleExecutable: 'foreign' }],
++  ['Xcode min host', xcodeInfoPath, { LSMinimumSystemVersion: '28.0' }],
++  ['Xcode version', '/Applications/Xcode.app/Contents/version.plist', { CFBundleShortVersionString: '384' }],
++  ['Xcode build', '/Applications/Xcode.app/Contents/version.plist', { ProductBuildVersion: '' }],
++  ['device architecture', deviceProfilePath, { supportedArchs: ['x86_64'] }],
++  ['device family', deviceProfilePath, { supportedProductFamilyIDs: [99] }],
++  ['device min runtime', deviceProfilePath, { minRuntimeVersion: '28.0' }],
++  ['device max runtime', deviceProfilePath, { maxRuntimeVersion: '26.9' }],
++  ['runtime platform', runtimeProfilePath, { platformIdentifier: 'com.apple.platform.iphoneos' }],
++  ['runtime architecture', runtimeProfilePath, { supportedArchs: ['x86_64'] }],
++  ['runtime family', runtimeProfilePath, { supportedProductFamilyIDs: [2] }],
++  ['runtime min host', runtimeProfilePath, { minHostVersion: '28.0' }],
++  ['runtime declared OS', runtimeProfilePath, { defaultVersionString: '26.4' }],
++  ['runtime actual OS', runtimeSystemPath, { ProductVersion: '26.4.1' }],
++  ['runtime build', runtimeSystemPath, { ProductBuildVersion: '' }],
++];
++for (const [name, path, value] of installedMutations) test(`installed ${name} mismatch refuses without host effects`, async () => {
++  const f = await allocationFixture();
++  try { const native = await import('node:fs/promises'); const old = JSON.parse(await native.readFile(f.map(path), 'utf8')); f.write(path, { ...old, ...value });
++    await assert.rejects(verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, f.source, new AbortController().signal), /HOST_PREREQUISITE_MISSING/);
++    assert.ok(!f.calls.includes('create'));
++  } finally { await f.cleanup(); }
++});
++
++test('runtime mounted volume metadata is accepted while missing executable, unsafe metadata and excessive enumeration refuse', async () => {
++  const fs = await import('node:fs/promises');
++  for (const mode of ['volume', 'executable', 'unsafe', 'enumeration'] as const) {
++    const f = await allocationFixture();
++    try {
++      if (mode === 'volume') { const mounted = '/Library/Developer/CoreSimulator/Volumes/iOS_fixture/Library/Developer/CoreSimulator/Profiles/Runtimes';
++        await fs.mkdir(f.map(mounted), { recursive: true, mode: 0o700 }); await fs.rename(f.map(runtimeBundle), join(f.map(mounted), 'iOS 27.0.simruntime'));
++        assert.equal((await verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, f.source, new AbortController().signal)).runtimeVersion, '27.0.1');
++      } else {
++        if (mode === 'executable') await fs.chmod(f.map('/Applications/Xcode.app/Contents/Developer/usr/bin/simctl'), 0o644);
++        if (mode === 'unsafe') await fs.chmod(f.map(runtimeProfilePath), 0o666);
++        if (mode === 'enumeration') { const original = f.host.fs.readdir; f.host.fs.readdir = (async (p: string) => p.endsWith('/DeviceTypes') ? Array.from({ length: 1001 }, (_, i) => 'entry' + i) : original(p)) as typeof original; }
++        await assert.rejects(verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, f.source, new AbortController().signal), /HOST_PREREQUISITE_MISSING/);
++      }
++      assert.ok(!f.calls.includes('create'));
++    } finally { await f.cleanup(); }
++  }
++});
++
++test('config becoming public between permission validation and stable read refuses', async () => {
++  const f = await allocationFixture(); const original = f.host.fs.lstat; let reads = 0;
++  f.host.fs.lstat = (async (...args: Parameters<typeof original>) => {
++    if (String(args[0]) === f.configPath && ++reads === 2) await (await import('node:fs/promises')).chmod(f.configPath, 0o644);
++    return original(...args);
++  }) as typeof original;
++  try { await assert.rejects(readAllocationConfig({ account: f.host.account, fs: f.host.fs }), /CONFIG_INVALID/); }
++  finally { await f.cleanup(); }
++});
++
++test('child error alone is not process settlement: a potentially live child stays tracked until close', async () => {
++  const f = await allocationFixture(); const h = childHarness(); const source = allocationSourceProcess(f.host, [], h.launch); let settled = false;
++  try { const pending = source('/usr/bin/xcrun', ['simctl', 'create', 'jev-observed-ABCDEF00-0000-4000-8000-000000000001', typeId, runtimeId],
++    { shell: false, signal: new AbortController().signal, timeoutMs: 1000, maxOutputBytes: 1024 }).then(() => { settled = true; }, () => { settled = true; });
++    await h.started; h.child.emit('error', new Error('isolated kill error')); await new Promise(r => setImmediate(r));
++    assert.equal(settled, false); h.child.emit('close', null, 'SIGTERM'); await pending; assert.equal(settled, true);
++  } finally { h.child.emit('close', null, 'SIGTERM'); await f.cleanup(); }
++});
++
++test('private config rejects symlink, hardlink and overlong file without consulting alternate roots', async () => {
++  const fs = await import('node:fs/promises');
++  for (const mode of ['symlink', 'hardlink', 'size'] as const) {
++    const f = await allocationFixture();
++    try { if (mode === 'symlink') { await fs.rename(f.configPath, f.configPath + '.target'); await fs.symlink(f.configPath + '.target', f.configPath); }
++      if (mode === 'hardlink') await fs.link(f.configPath, f.configPath + '.alias');
++      if (mode === 'size') await fs.writeFile(f.configPath, '{"version":1,"unused":"' + 'x'.repeat(65536) + '"}');
++      await assert.rejects(readAllocationConfig({ account: f.host.account, fs: f.host.fs }), /CONFIG_INVALID/); assert.deepEqual(f.calls, []);
++    } finally { await f.cleanup(); }
++  }
++});
++
++test('canonical digest keeps build and supplied source immutable while invalid non-JSON requests stay safe', () => {
++  assert.notEqual(preparationDigest(parsePrepareAllocation(request)), preparationDigest(parsePrepareAllocation({ ...request,
++    app: { ...request.app, build: { ...request.app.build, id: 'different' } } })));
++  const supplied = parsePrepareAllocation({ ...request, source: { kind: 'supplied', inventoryId: 'stock' } }); assert.equal(supplied.source.kind, 'supplied');
++  assert.throws(() => parsePrepareAllocation(undefined)); assert.throws(() => parsePrepareAllocation(1n));
++  const circular: Record<string, unknown> = {}; circular.self = circular; assert.throws(() => parsePrepareAllocation(circular));
++});
++
++for (const stop of ['abort', 'deadline'] as const) test(`child ${stop} never reports a successful receipt even when its eventual close code is zero`, async () => {
++  const f = await allocationFixture(); const h = childHarness(); const source = allocationSourceProcess(f.host, [], h.launch); const controller = new AbortController();
++  try { const pending = source('/usr/bin/xcrun', ['simctl', 'create', 'jev-observed-ABCDEF00-0000-4000-8000-000000000001', typeId, runtimeId],
++    { shell:false, signal:controller.signal, timeoutMs:stop === 'deadline' ? 5 : 1000, maxOutputBytes:1024 });
++    await h.started; if (stop === 'abort') controller.abort(); else await new Promise(r => setTimeout(r, 15));
++    assert.ok(h.child.killed > 0); h.child.emit('close', 0, null); assert.equal((await pending).exitCode, null);
++  } finally { h.child.emit('close', null, 'SIGTERM'); await f.cleanup(); }
++});
++
++test('plist allowlist distinguishes device profiles from runtime OS metadata and rejects every invalid process option', async () => {
++  const f = await allocationFixture(); const h = childHarness();
++  const forbidden = '/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist';
++  f.write(forbidden, {});
++  const launch = ((...args: unknown[]) => { h.invocations.push(args); queueMicrotask(() => h.child.emit('close', 0, null)); return h.child; }) as unknown as typeof spawn;
++  const source = allocationSourceProcess(f.host, [], launch);
++  const options = { shell:false as const, signal:new AbortController().signal, timeoutMs:1000, maxOutputBytes:1024 };
++  try { await assert.rejects(source('/usr/bin/plutil', ['-convert','json','-o','-','--',forbidden], options));
++    for (const invalid of [{ timeoutMs:0 }, { timeoutMs:900001 }, { maxOutputBytes:0 }, { maxOutputBytes:65537 }, { shell:true },
++      { signal:AbortSignal.abort() }]) await assert.rejects(source('/usr/bin/xcrun', ['simctl','create','jev-observed-ABCDEF00-0000-4000-8000-000000000001',typeId,runtimeId], { ...options, ...invalid } as never));
++    assert.equal(h.invocations.length, 0);
++  } finally { await f.cleanup(); }
++});
+diff --git a/tests/observed-allocation.test.ts b/tests/observed-allocation.test.ts
+new file mode 100644
+index 0000000..f3f070a
+--- /dev/null
++++ b/tests/observed-allocation.test.ts
+@@ -0,0 +1,648 @@
++import assert from 'node:assert/strict';
++import { test } from 'node:test';
++import * as fs from 'node:fs/promises';
++import { join } from 'node:path';
++import { ObservedAllocator } from '../src/observed/allocation.js';
++import { allocationFixture } from './fixtures/observed-allocation-backend.js';
++
++const deviceCalls = (calls: string[]) => calls.filter(c => c !== 'plist');
++test('one fresh allocation reserves and stages before create, prepares once and parks for a fresh action', async () => {
++  const f = await allocationFixture();
++  const allocator = new ObservedAllocator({ admission: f.admission, runsDir: f.runsDir,
++    fakeBackend: { process: f.source, runner: f.runner, window: f.window, host: f.host } });
++  f.setBefore(async operation => {
++    if (operation === 'create') {
++      const record = f.admission.readAllocationForAction('allocate-one');
++      assert.equal(record?.phase, 'creating'); assert.equal(record?.hostCreationBlocked, true);
++      assert.ok(record?.staged); assert.equal(record?.inspectedContentDigest, record?.staged?.contentDigest);
++    }
++  });
++  try {
++    const ready = await allocator.prepare(f.request());
++    assert.ok(!('kind' in ready), JSON.stringify(ready)); if ('kind' in ready) assert.fail(JSON.stringify(ready));
++    assert.equal(ready.state, 'ready'); assert.equal(ready.outcome, 'prepared'); assert.equal(ready.authority, 'committed');
++    assert.deepEqual(deviceCalls(f.calls), ['create', 'boot', 'list', 'install', 'launch-app', 'list', 'snapshot-ui', 'screenshot']);
++    assert.equal(ready.readinessEvidence.length, 1); assert.ok((await fs.readFile(ready.readinessEvidence[0]!, 'utf8')).includes('capturedAt'));
++    const before = [...f.calls]; f.configure({ version: 2 });
++    assert.deepEqual(await allocator.prepare(f.request()), ready, 'Retrieval must precede config/artifact/source probes');
++    assert.deepEqual(f.calls, before);
++    await allocator.close(); assert.equal(f.admission.readAllocation(ready.allocationId)?.state, 'ready');
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++test('shutdown during a pending configuration read returns promptly with no reservation or backend continuation', async () => {
++  const f = await allocationFixture(); const original = f.host.fs.lstat;
++  let started!: () => void; let release!: () => void;
++  const began = new Promise<void>(r => { started = r; }); const pending = new Promise<void>(r => { release = r; });
++  f.host.fs.lstat = (async (...args: Parameters<typeof original>) => {
++    if (String(args[0]) === f.configPath) { started(); await pending; } return original(...args);
++  }) as typeof original;
++  const allocator = new ObservedAllocator({ admission: f.admission, runsDir: f.runsDir,
++    fakeBackend: { process: f.source, runner: f.runner, window: f.window, host: f.host } });
++  try {
++    const preparing = allocator.prepare(f.request()); await began; const closing = allocator.close();
++    const result = await Promise.race([preparing, new Promise<string>(r => setTimeout(() => r('still pending'), 100))]);
++    assert.notEqual(result, 'still pending'); assert.ok(typeof result === 'object' && 'kind' in result && result.code === 'CANCELLED');
++    assert.equal(f.admission.readAllocationForAction('allocate-one'), undefined); assert.deepEqual(f.calls, []);
++    release(); await closing;
++  } finally { release(); f.host.fs.lstat = original; await allocator.close(); await f.cleanup(); }
++});
++
++test('supplied inventory is reserved and admitted before availability, then prepares without create or source fallback', async () => {
++  const f = await allocationFixture(); f.configure({ inventory: f.inventory() });
++  const allocator = new ObservedAllocator({ admission: f.admission, runsDir: f.runsDir,
++    fakeBackend: { process: f.source, runner: f.runner, window: f.window, host: f.host } });
++  try {
++    const ready = await allocator.prepare({ ...f.request(), source: { kind: 'supplied', inventoryId: 'stock-one' } });
++    assert.ok(!('kind' in ready), JSON.stringify(ready)); if ('kind' in ready) assert.fail();
++    assert.equal(ready.state, 'ready'); assert.deepEqual(deviceCalls(f.calls), ['list', 'boot', 'list', 'install', 'launch-app', 'list', 'snapshot-ui', 'screenshot']);
++    const before = [...f.calls]; await allocator.close(); assert.equal(f.admission.readAllocation(ready.allocationId)?.state, 'ready'); assert.deepEqual(f.calls, before);
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++test('unavailable supplied vendor identity refuses before boot and never switches to create', async () => {
++  const f = await allocationFixture(); f.configure({ inventory: f.inventory() }); f.setAvailable(false);
++  const allocator = new ObservedAllocator({ admission: f.admission, runsDir: f.runsDir,
++    fakeBackend: { process: f.source, runner: f.runner, window: f.window, host: f.host } });
++  try {
++    const result = await allocator.prepare({ ...f.request(), source: { kind: 'supplied', inventoryId: 'stock-one' } });
++    assert.ok(!('kind' in result)); if ('kind' in result) assert.fail();
++    assert.equal(result.reason, 'INVENTORY_INELIGIBLE'); assert.equal(result.outcome, 'refused');
++    assert.deepEqual(deviceCalls(f.calls), ['list']); assert.equal(result.reservation.capacityHeld, true);
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++function subject(f: Awaited<ReturnType<typeof allocationFixture>>) {
++  return new ObservedAllocator({ admission: f.admission, runsDir: f.runsDir,
++    fakeBackend: { process: f.source, runner: f.runner, window: f.window, host: f.host } });
++}
++function snapshot(result: Awaited<ReturnType<ObservedAllocator['prepare']>>) {
++  assert.ok(!('kind' in result), JSON.stringify(result)); if ('kind' in result) assert.fail(); return result;
++}
++function refused(result: Awaited<ReturnType<ObservedAllocator['prepare']>>, code: string) {
++  assert.ok('kind' in result, JSON.stringify(result)); if (!('kind' in result)) assert.fail(); assert.equal(result.code, code); return result;
++}
++
++test('eight retained allocations hold capacity, ninth refuses and changed config counts persisted reservation bytes', async () => {
++  const f = await allocationFixture(); const allocator = subject(f);
++  try {
++    for (let i = 1; i <= 8; i++) {
++      assert.equal(snapshot(await allocator.prepare(f.request('allocation-' + i))).state, 'ready');
++      assert.deepEqual(f.admission.readAllocationCapacity(), { heldAllocations: i, reservedBytes: i * 1000 });
++    }
++    const before = deviceCalls(f.calls); refused(await allocator.prepare(f.request('allocation-9')), 'BUDGET_EXHAUSTED');
++    assert.deepEqual(deviceCalls(f.calls), before);
++    f.configure({ maxRetainedAllocations: 10, reservationBytesPerAllocation: 500, maxReservedBytes: 8500 });
++    assert.equal(snapshot(await allocator.prepare(f.request('allocation-9'))).state, 'ready');
++    assert.deepEqual(f.admission.readAllocationCapacity(), { heldAllocations: 9, reservedBytes: 8500 });
++    const held = deviceCalls(f.calls); refused(await allocator.prepare(f.request('allocation-10')), 'BUDGET_EXHAUSTED');
++    assert.deepEqual(deviceCalls(f.calls), held);
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++for (const [name, storage, expected] of [['simulator below boundary', 2999, 'STORAGE_UNAVAILABLE'],
++  ['unreadable storage', NaN, 'STORAGE_UNAVAILABLE']] as const) test(`storage ${name} refuses before reservation and effects`, async () => {
++  const f = await allocationFixture(); f.setStorage(storage); const allocator = subject(f);
++  try { refused(await allocator.prepare(f.request()), expected); assert.equal(f.admission.readAllocationForAction('allocate-one'), undefined); assert.deepEqual(deviceCalls(f.calls), []); }
++  finally { await allocator.close(); await f.cleanup(); }
++});
++
++test('fresh storage check after staging holds all persisted reservations and prevents creation', async () => {
++  const f = await allocationFixture(); const allocator = subject(f);
++  f.setBefore(async (operation, path) => { if (operation === 'plist' && path?.includes('/staging/')) f.setStorage(2999); });
++  try {
++    const result = snapshot(await allocator.prepare(f.request()));
++    assert.equal(result.reason, 'STORAGE_UNAVAILABLE'); assert.equal(result.outcome, 'refused');
++    assert.equal(result.reservation.capacityHeld, false); assert.deepEqual(deviceCalls(f.calls), []);
++    assert.equal(f.admission.readAllocationForAction('allocate-one')?.staged?.metadata.bundleId, 'org.example.fixture');
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++test('free-space equality and exact artifact byte ceiling are accepted', async () => {
++  const f = await allocationFixture(); const allocator = subject(f);
++  const files = await Promise.all(['Fixture', 'Info.plist'].map(name => fs.stat(join(f.app, name))));
++  const bytes = files.reduce((n, s) => n + s.size, 0); f.configure({ maxArtifactBytes: bytes }); f.setStorage(3000, 3000 + bytes);
++  try { assert.equal(snapshot(await allocator.prepare(f.request())).state, 'ready'); }
++  finally { await allocator.close(); await f.cleanup(); }
++});
++
++test('artifact size, source mutation and staged mutation refuse without install or rebuilding', async () => {
++  for (const mode of ['size', 'source', 'staged'] as const) {
++    const f = await allocationFixture(); const allocator = subject(f);
++    if (mode === 'size') f.configure({ maxArtifactBytes: 1 });
++    if (mode === 'source') f.setBefore(async (operation, path) => { if (operation === 'plist' && path?.includes('/staging/')) await fs.appendFile(join(f.app, 'Info.plist'), 'changed'); });
++    if (mode === 'staged') f.setBefore(async operation => { if (operation === 'list') {
++      const staged = f.admission.readAllocationForAction('allocate-one')!.staged!.stagedPath;
++      await fs.chmod(join(staged, 'Fixture'), 0o700); await fs.appendFile(join(staged, 'Fixture'), 'changed');
++    } });
++    try {
++      const result = await allocator.prepare(f.request());
++      if (mode === 'size') refused(result, 'ARTIFACT_INVALID'); else assert.equal(snapshot(result).reason, 'ARTIFACT_INVALID');
++      assert.ok(!deviceCalls(f.calls).includes('install')); assert.equal(deviceCalls(f.calls).filter(x => x === 'create').length, mode === 'staged' ? 1 : 0);
++    } finally { await allocator.close(); await f.cleanup(); }
++  }
++});
++
++for (const receipt of [
++  { exitCode: 0, stdout: 'not a UUID', stderr: '' }, { exitCode: 1, stdout: 'ABCDEF00-0000-4000-8000-000000000001', stderr: 'vendor refused' },
++  { exitCode: null, stdout: '', stderr: '' }, { exitCode: 0, stdout: 'x'.repeat(65537), stderr: '' },
++]) test(`unknown creation (${receipt.exitCode}/${receipt.stdout.length}) holds capacity and global guard without retry`, async () => {
++  const f = await allocationFixture(); const allocator = subject(f); f.setCreateResult(receipt);
++  try {
++    const result = snapshot(await allocator.prepare(f.request())); assert.equal(result.state, 'quarantined'); assert.equal(result.reason, 'CREATE_UNCONFIRMED');
++    assert.equal(result.hostCreationBlocked, true); assert.equal(result.device, null); assert.equal(result.reservation.capacityHeld, true);
++    assert.ok(result.evidenceRefs.includes(f.admission.readAllocation(result.allocationId)!.evidenceDirectory));
++    assert.deepEqual(deviceCalls(f.calls), ['create']); const before = [...f.calls];
++    assert.deepEqual(await allocator.prepare(f.request()), result); assert.deepEqual(f.calls, before);
++    refused(await allocator.prepare(f.request('another')), 'HOST_CREATION_UNRESOLVED'); assert.deepEqual(deviceCalls(f.calls), ['create']);
++    const legacy = f.admission.acquire({ device: 'ABCDEF00-0000-4000-8000-000000000009', attempt: { kind: 'legacy', id: 'blocked' }, digest: 'blocked', intent: {} });
++    assert.equal(legacy.kind, 'refused'); if (legacy.kind === 'refused') assert.equal(legacy.reason, 'HOST_CREATION_UNRESOLVED');
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++for (const protectedDevice of ['73997430-DB8A-48C8-8146-12320CE6AEFE', '2FE383F2-2D0F-4286-8797-D3ACEFCD6220',
++  '6A8C5F93-F59A-456B-B157-10642209B734', '0E42FDE2-5E09-42D3-9876-9EF0037FCBE7']) test(`protected receipt ${protectedDevice} is never admitted or prepared`, async () => {
++  const f = await allocationFixture(); const allocator = subject(f); f.setCreateResult({ exitCode: 0, stdout: protectedDevice, stderr: '' });
++  try { const result = snapshot(await allocator.prepare(f.request())); assert.equal(result.state, 'quarantined'); assert.equal(result.hostCreationBlocked, true);
++    assert.deepEqual(deviceCalls(f.calls), ['create']); assert.equal(f.admission.inspect(protectedDevice), undefined); }
++  finally { await allocator.close(); await f.cleanup(); }
++});
++
++for (const phase of ['staging', 'create', 'boot', 'boot-state', 'install', 'launch-app', 'readiness-list', 'snapshot-ui', 'screenshot'] as const) {
++  test(`cancel during ${phase} prevents every later dispatch and late completion cannot park`, async () => {
++    const f = await allocationFixture(); const allocator = subject(f); let begin!: () => void; let release!: () => void; let lists = 0;
++    const started = new Promise<void>(r => { begin = r; }); const pending = new Promise<void>(r => { release = r; });
++    f.setBefore(async (operation, path) => {
++      if (operation === 'list') lists++;
++      const match = phase === 'staging' ? operation === 'plist' && !!path?.includes('/staging/')
++        : phase === 'boot-state' ? operation === 'list' && lists === 1 : phase === 'readiness-list' ? operation === 'list' && lists === 2 : operation === phase;
++      if (match) { begin(); await pending; }
++    });
++    try {
++      const preparing = allocator.prepare(f.request()); await started;
++      const record = f.admission.readAllocationForAction('allocate-one')!; assert.equal(record.state, 'preparing');
++      const cancelled = snapshot(await allocator.cancel(record.allocationId)); assert.equal(cancelled.cancellationRequested, true);
++      assert.notEqual(cancelled.state, 'ready'); const result = snapshot(await preparing); assert.notEqual(result.outcome, 'prepared');
++      const before = [...f.calls]; release(); await new Promise(r => setImmediate(r));
++      assert.deepEqual(f.calls, before); assert.notEqual(f.admission.readAllocation(record.allocationId)?.state, 'ready');
++      assert.equal(deviceCalls(f.calls).filter(c => c === 'boot').length <= 1, true);
++    } finally { release(); await new Promise(r => setImmediate(r)); await allocator.close(); await f.cleanup(); }
++  });
++}
++
++test('status wait abortion is a pure read and concurrent IDs retain immutable identity before any new effect', async () => {
++  const f = await allocationFixture(); const allocator = subject(f); let begin!: () => void; let release!: () => void;
++  const started = new Promise<void>(r => { begin = r; }); const pending = new Promise<void>(r => { release = r; });
++  f.setBefore(async op => { if (op === 'boot') { begin(); await pending; } });
++  try {
++    const preparing = allocator.prepare(f.request()); await started; const record = f.admission.readAllocationForAction('allocate-one')!;
++    const before = [...f.calls]; assert.equal(snapshot(await allocator.prepare(f.request())).state, 'preparing');
++    refused(await allocator.prepare({ ...f.request(), timeoutMs: 2000 }), 'ACTION_ID_CONFLICT'); assert.deepEqual(f.calls, before);
++    refused(await allocator.prepare(f.request('competing')), 'BUDGET_EXHAUSTED'); assert.deepEqual(deviceCalls(f.calls), ['create', 'boot']);
++    const saved = f.admission.readAllocation(record.allocationId); const controller = new AbortController();
++    const waiting = allocator.get(record.allocationId.toLowerCase(), { waitMs: 45000, signal: controller.signal }); controller.abort();
++    refused(await waiting, 'WAIT_CANCELLED'); assert.deepEqual(f.admission.readAllocation(record.allocationId), saved);
++    await allocator.cancel(record.allocationId); release(); await preparing;
++  } finally { release(); await new Promise(r => setImmediate(r)); await allocator.close(); await f.cleanup(); }
++});
++
++function binding(record: { allocationId: string; actionId: string }, f: { root: string }) {
++  return { ...record, actionDigest: 'b'.repeat(64), request: { version: 1 }, appBundleId: 'org.example.fixture',
++    evidence: { bridgeVersion: 'fixture', directory: join(f.root, 'action'), request: join(f.root, 'action/request.json') } };
++}
++
++test('pure ready reads do not expire TTL; only first consume expires or transfers, terminal retirement is bookkeeping', async () => {
++  let now = Date.now(); const f = await allocationFixture({ now: () => now }); const allocator = subject(f);
++  try {
++    const ready = snapshot(await allocator.prepare(f.request())); const record = f.admission.readAllocation(ready.allocationId)!;
++    now = record.expiresAt!; assert.equal(snapshot(await allocator.get(ready.allocationId)).state, 'ready');
++    assert.deepEqual(f.admission.readAllocation(ready.allocationId), record);
++    const before = [...f.calls]; const consumed = allocator.consume(binding({ allocationId: ready.allocationId, actionId: ready.actionId }, f));
++    assert.equal(consumed.kind, 'refused'); if (consumed.kind === 'refused') assert.equal(consumed.reason, 'READY_EXPIRED');
++    const retired = snapshot(await allocator.retire(ready.allocationId)); assert.equal(retired.outcome, 'retired_unused'); assert.equal(retired.reason, 'READY_EXPIRED');
++    assert.deepEqual(f.calls, before); assert.equal(retired.reservation.capacityHeld, true);
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++test('explicit ready cancellation retires stock while executing allocation cancellation is busy', async () => {
++  const f = await allocationFixture(); const allocator = subject(f);
++  try {
++    const first = snapshot(await allocator.prepare(f.request('ready-cancel'))); const before = [...f.calls];
++    const cancelled = snapshot(await allocator.cancel(first.allocationId)); assert.equal(cancelled.outcome, 'retired_unused'); assert.equal(cancelled.cancellationRequested, true);
++    assert.deepEqual(f.calls, before);
++    const second = snapshot(await allocator.prepare(f.request('executing'))); const consumed = allocator.consume(binding({ allocationId: second.allocationId, actionId: second.actionId }, f));
++    assert.equal(consumed.kind, 'consumed'); const active = [...f.calls]; refused(await allocator.cancel(second.allocationId), 'ALLOCATION_BUSY');
++    refused(await allocator.retire(second.allocationId), 'ALLOCATION_BUSY'); assert.deepEqual(f.calls, active);
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++test('normal shutdown racing the committed park leaves ready ownership intact', async () => {
++  let allocator!: ObservedAllocator; let closing: Promise<void> | undefined;
++  const f = await allocationFixture({ fault(point, operation) { if (point === 'afterCommit' && operation === 'parkAllocation') closing = allocator.close(); } }); allocator = subject(f);
++  try { const ready = snapshot(await allocator.prepare(f.request())); await closing; assert.equal(ready.state, 'ready');
++    assert.equal(f.admission.readAllocation(ready.allocationId)?.state, 'ready'); assert.equal(ready.cancellationRequested, false); }
++  finally { await allocator.close(); await f.cleanup(); }
++});
++
++for (const corruption of ['missing', 'corrupt'] as const) test(`${corruption} initialized store refuses before config/source probes with no alternate root`, async () => {
++  const f = await allocationFixture(); const allocator = subject(f);
++  if (corruption === 'missing') await fs.rm(join(f.store, 'admission.sqlite')); else await fs.writeFile(join(f.store, 'admission.sqlite'), 'corrupt');
++  try { refused(await allocator.prepare(f.request()), 'STORE_UNAVAILABLE'); assert.deepEqual(f.calls, []); }
++  finally { await allocator.close(); await f.cleanup(); }
++});
++
++const hostile = 'TYPESAFE_API_KEY=sk-private-fixture vendor stderr /private/supplied-fixture';
++for (const failure of ['config', 'metadata', 'artifact', 'create', 'boot'] as const) test(`public ${failure} errors discard credential-looking diagnostics and supplied values`, async () => {
++  const f = await allocationFixture(); const allocator = subject(f);
++  if (failure === 'config') f.configure({ unexpected: hostile });
++  if (failure === 'create') f.setCreateResult({ exitCode: 1, stdout: hostile, stderr: hostile });
++  f.setBefore(async (op, path) => {
++    if ((failure === 'metadata' && op === 'plist' && path?.startsWith('/Applications/'))
++      || (failure === 'artifact' && op === 'plist' && path === join(f.app, 'Info.plist'))
++      || (failure === 'boot' && op === 'boot')) throw new Error(hostile);
++  });
++  try { const result = await allocator.prepare(f.request()); const text = JSON.stringify(result);
++    assert.ok(!text.includes(hostile)); assert.ok(!text.includes('sk-private-fixture')); assert.ok(!text.includes('vendor stderr'));
++    assert.ok('kind' in result || result.state !== 'ready');
++    if (!('kind' in result)) assert.ok(!JSON.stringify(await allocator.get(result.allocationId)).includes('sk-private-fixture'));
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++test('borrowed admission survives memoized module close; closed module retrieves ready stock before checking shutdown', async () => {
++  const f = await allocationFixture(); const allocator = subject(f);
++  try { const ready = snapshot(await allocator.prepare(f.request())); const before = [...f.calls];
++    const closing = allocator.close(); assert.equal(allocator.close(), closing); await closing;
++    assert.equal(f.admission.readAllocation(ready.allocationId)?.state, 'ready');
++    assert.deepEqual(await allocator.prepare(f.request()), ready); refused(await allocator.prepare(f.request('closed-new')), 'SHUTTING_DOWN');
++    assert.deepEqual(f.calls, before);
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++test('production composition refuses a test store before any fake source, runner or opener can execute', async () => {
++  const f = await allocationFixture();
++  try { assert.throws(() => new ObservedAllocator({ runsDir: f.runsDir, admission: f.admission }), /production|fake|test/i);
++    assert.throws(() => new ObservedAllocator({ runsDir: f.runsDir, admission: f.admission,
++      fakeBackend: { process: f.source, runner: f.runner, host: f.host } as never })); assert.deepEqual(f.calls, []);
++  } finally { await f.cleanup(); }
++});
++
++for (const stock of ['unknown', 'protected', 'duplicate', 'used'] as const) test(`supplied ${stock} stock refuses without creation fallback`, async () => {
++  const f = await allocationFixture(); const allocator = subject(f);
++  if (stock === 'protected') f.configure({ inventory: f.inventory('73997430-DB8A-48C8-8146-12320CE6AEFE') });
++  else if (stock === 'duplicate') f.configure({ inventory: [...f.inventory(), ...f.inventory()] });
++  else if (stock === 'used') f.configure({ inventory: f.inventory().map(entry => ({ ...entry, attestation: { freshUnused: false, exclusive: true } })) });
++  try { const result = await allocator.prepare({ ...f.request(), source: { kind: 'supplied', inventoryId: 'stock-one' } });
++    assert.ok('kind' in result || result.state !== 'ready'); assert.deepEqual(deviceCalls(f.calls), []);
++    assert.equal(f.admission.readAllocationForAction('allocate-one'), undefined);
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++test('supplied identity is transactionally exhausted after ready and cannot be prepared twice', async () => {
++  const f = await allocationFixture(); f.configure({ inventory: f.inventory() }); const allocator = subject(f);
++  const request = (id: string) => ({ ...f.request(id), source: { kind: 'supplied', inventoryId: 'stock-one' } });
++  try { assert.equal(snapshot(await allocator.prepare(request('supplied-first'))).state, 'ready'); const before = [...deviceCalls(f.calls)];
++    refused(await allocator.prepare(request('supplied-second')), 'INVENTORY_INELIGIBLE'); assert.deepEqual(deviceCalls(f.calls), before);
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++import { spawn as spawnChild } from 'node:child_process';
++import { fileURLToPath } from 'node:url';
++function isolatedChild(script: string, args: string[]): Promise<{code: number | null; stdout: string; stderr: string}> {
++  return new Promise((done, fail) => {
++    const child = spawnChild(process.execPath, ['--import', 'tsx', '--input-type=module', '-e', script, ...args], {
++      cwd: fileURLToPath(new URL('..', import.meta.url)), env: { PATH: process.env.PATH, LANG: 'C', LC_ALL: 'C' }, stdio: ['ignore', 'pipe', 'pipe'] });
++    let stdout = ''; let stderr = ''; child.stdout.on('data', b => { stdout += b; }); child.stderr.on('data', b => { stderr += b; });
++    child.once('error', fail); child.once('close', code => done({ code, stdout, stderr }));
++  });
++}
++
++test('independent process consumes parked stock after owner closes, exactly once with the full action binding and zero preparation effects', async () => {
++  const f = await allocationFixture(); const allocator = subject(f);
++  try { const ready = snapshot(await allocator.prepare(f.request())); await allocator.close(); const before = [...f.calls];
++    const child = await isolatedChild(`
++      import { Admission } from './src/device/admission.ts';
++      const [root, raw] = process.argv.slice(1); const admission = Admission.forTesting({ root, backend:'fake' });
++      const binding = JSON.parse(raw); const first = admission.consumeAllocation(binding); const second = admission.consumeAllocation(binding);
++      console.log(JSON.stringify({ first:first.kind, second:second.kind, state:admission.readAllocation(binding.allocationId).state }));
++    `, [f.store, JSON.stringify(binding({ allocationId: ready.allocationId, actionId: ready.actionId }, f))]);
++    assert.equal(child.code, 0, child.stderr); assert.deepEqual(JSON.parse(child.stdout), { first: 'consumed', second: 'retrieved', state: 'executing' });
++    assert.deepEqual(f.calls, before); assert.equal(f.admission.readAllocation(ready.allocationId)?.state, 'executing');
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++for (const phase of ['boot', 'snapshot-ui'] as const) test(`one stage deadline bounds pending ${phase} and late receipt cannot continue or become ready`, async () => {
++  const f = await allocationFixture(); f.configure(phase === 'boot' ? { bootTimeoutMs: 30 } : { readinessTimeoutMs: 30 }); const allocator = subject(f);
++  let begin!: () => void; let release!: () => void; const began = new Promise<void>(r => { begin = r; }); const pending = new Promise<void>(r => { release = r; });
++  f.setBefore(async op => { if (op === phase) { begin(); await pending; } });
++  try { const preparing = allocator.prepare(f.request());
++    const reached = await Promise.race([began.then(() => ({ reached: true as const })), preparing.then(result => ({ reached: false as const, result }))]);
++    assert.ok(reached.reached, 'Target ' + phase + ' was not reached: ' + JSON.stringify('result' in reached ? reached.result : null));
++    const result = snapshot(await preparing);
++    assert.equal(result.state, 'quarantined'); assert.notEqual(result.outcome, 'prepared');
++    const before = [...f.calls]; release(); await new Promise(r => setImmediate(r)); assert.deepEqual(f.calls, before);
++    assert.equal(f.admission.readAllocation(result.allocationId)?.state, 'quarantined');
++  } finally { release(); await new Promise(r => setImmediate(r)); await allocator.close(); await f.cleanup(); }
++});
++
++import { deviceWindowOpener } from '../src/device/index.js';
++import { allocationSourceProcess } from '../src/observed/allocation-config.js';
++test('test authority rejects production window opener and production source composition at construction before any effects', async () => {
++  const f = await allocationFixture();
++  try {
++    assert.throws(() => new ObservedAllocator({ admission: f.admission, runsDir: f.runsDir,
++      fakeBackend: { process: f.source, runner: f.runner, window: deviceWindowOpener(false, {}), host: f.host } }));
++    assert.throws(() => new ObservedAllocator({ admission: f.admission, runsDir: f.runsDir,
++      fakeBackend: { process: allocationSourceProcess(f.host), runner: f.runner, window: f.window, host: f.host } }));
++    assert.deepEqual(f.calls, []);
++  } finally { await f.cleanup(); }
++});
++
++test('lost creation reply times out with guard retained; eventual known UUID cannot bind or continue', async () => {
++  const f = await allocationFixture(); f.configure({ createTimeoutMs: 30 }); const allocator = subject(f);
++  let begin!: () => void; let release!: () => void; const began = new Promise<void>(r => { begin = r; }); const pending = new Promise<void>(r => { release = r; });
++  f.setBefore(async op => { if (op === 'create') { begin(); await pending; } });
++  try { const preparing = allocator.prepare(f.request()); await began; const unknown = snapshot(await preparing);
++    assert.equal(unknown.reason, 'CREATE_UNCONFIRMED'); assert.equal(unknown.hostCreationBlocked, true); assert.equal(unknown.device, null);
++    assert.ok(unknown.evidenceRefs.includes(f.admission.readAllocation(unknown.allocationId)!.evidenceDirectory));
++    release(); await new Promise(r => setTimeout(r, 20)); assert.deepEqual(deviceCalls(f.calls), ['create']);
++    const persisted = f.admission.readAllocation(unknown.allocationId)!; assert.equal(persisted.hostCreationBlocked, true); assert.equal(persisted.device, null);
++    assert.equal(persisted.state, 'quarantined'); refused(await allocator.prepare(f.request('after-lost')), 'HOST_CREATION_UNRESOLVED');
++  } finally { release(); await new Promise(r => setImmediate(r)); await allocator.close(); await f.cleanup(); }
++});
++
++for (const phase of ['booting', 'readiness'] as const) test(`aggregate ${phase} stage budget covers every internal call without resetting on a settled response`, async () => {
++  const f = await allocationFixture(); f.configure({ bootTimeoutMs: phase === 'booting' ? 70 : 10000, readinessTimeoutMs: 70 }); const allocator = subject(f); let lists = 0;
++  f.setBefore(async op => {
++    if (op === 'list') lists++;
++    if ((phase === 'booting' && (op === 'boot' || (op === 'list' && lists === 1)))
++      || (phase === 'readiness' && ((op === 'list' && lists === 2) || op === 'snapshot-ui'))) await new Promise(r => setTimeout(r, 45));
++  });
++  try { const result = snapshot(await allocator.prepare(f.request())); assert.equal(result.state, 'quarantined');
++    assert.ok(!deviceCalls(f.calls).includes(phase === 'booting' ? 'install' : 'screenshot')); assert.notEqual(result.outcome, 'prepared');
++    await new Promise(r => setTimeout(r, 50)); assert.equal(f.admission.readAllocation(result.allocationId)?.state, 'quarantined');
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++test('boot-state polling is no more frequent than once per second and boot is never retried', async () => {
++  const f = await allocationFixture(); f.configure({ bootTimeoutMs: 1100 }); f.setState('Booting'); const allocator = subject(f); const times: number[] = [];
++  f.setBefore(async op => { if (op === 'list') times.push(Date.now()); });
++  try { const result = snapshot(await allocator.prepare(f.request())); assert.notEqual(result.state, 'ready');
++    assert.equal(deviceCalls(f.calls).filter(op => op === 'boot').length, 1); assert.equal(times.length, 2); assert.ok(times[1]! - times[0]! >= 1000);
++    assert.ok(!deviceCalls(f.calls).includes('install'));
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++import { Admission } from '../src/device/admission.js';
++test('retrieval and construction never recover missing local jobs; explicit recovery only uses conservative dead owner proof', async () => {
++  const f = await allocationFixture(); const allocator = subject(f); let begin!: () => void; let release!: () => void;
++  const began = new Promise<void>(r => { begin = r; }); const pending = new Promise<void>(r => { release = r; });
++  f.setBefore(async op => { if (op === 'create') { begin(); await pending; } });
++  let proof: 'alive' | 'dead' | 'unknown' = 'alive';
++  const independentAdmission = Admission.forTesting({ root: f.store, backend: 'fake', ownerLiveness: () => proof });
++  const reader = new ObservedAllocator({ admission: independentAdmission, runsDir: f.runsDir,
++    fakeBackend: { process: f.source, runner: f.runner, window: f.window, host: f.host } });
++  try { const preparing = allocator.prepare(f.request()); await began; const stored = f.admission.readAllocationForAction('allocate-one')!;
++    assert.equal(snapshot(await reader.get(stored.allocationId)).state, 'preparing'); assert.deepEqual(f.admission.readAllocation(stored.allocationId), stored);
++    assert.equal(reader.recoverAbandoned(), 0); proof = 'unknown'; assert.equal(reader.recoverAbandoned(), 0);
++    proof = 'dead'; assert.equal(reader.recoverAbandoned(), 1); assert.equal(reader.recoverAbandoned(), 0);
++    const recovered = f.admission.readAllocation(stored.allocationId)!; assert.equal(recovered.state, 'quarantined');
++    assert.equal(recovered.hostCreationBlocked, true); assert.equal(recovered.capacityHeld, true);
++    release(); await preparing; assert.equal(f.admission.readAllocation(stored.allocationId)?.state, 'quarantined'); assert.deepEqual(deviceCalls(f.calls), ['create']);
++  } finally { release(); await new Promise(r => setImmediate(r)); await allocator.close(); await reader.close(); await f.cleanup(); }
++});
++
++test('dead independent preparation process is unchanged by get, then explicit recovery quarantines without clearing unknown-create stock', async () => {
++  const f = await allocationFixture(); let workerRoot: string | undefined;
++  const child = spawnChild(process.execPath, ['--import', 'tsx', '--input-type=module', '-e', `
++    import { allocationFixture } from './tests/fixtures/observed-allocation-backend.ts';
++    import { ObservedAllocator } from './src/observed/allocation.ts';
++    const f = await allocationFixture();
++    const allocator = new ObservedAllocator({admission:f.admission,runsDir:f.runsDir,fakeBackend:{process:f.source,runner:f.runner,window:f.window,host:f.host}});
++    f.setBefore(async op => { if(op==='create') { console.log(JSON.stringify({root:f.root,store:f.store,record:f.admission.readAllocationForAction('allocate-one')})); await new Promise(()=>{}); } });
++    setInterval(()=>{},1000); void allocator.prepare(f.request());
++  `], { cwd: fileURLToPath(new URL('..', import.meta.url)), env: { PATH: process.env.PATH, LANG: 'C', LC_ALL: 'C' }, stdio: ['ignore', 'pipe', 'pipe'] });
++  let stderr = ''; child.stderr.on('data', b => { stderr += b; });
++  const exited = new Promise<void>(r => child.once('close', () => r()));
++  let reader: ObservedAllocator | undefined;
++  try {
++    const raw = await new Promise<string>((done, fail) => { let text = ''; child.stdout.on('data', b => { text += b; if(text.includes('\n')) done(text.split('\n')[0]!); });
++      child.once('error', fail); child.once('close', () => fail(new Error(stderr))); });
++    const receipt = JSON.parse(raw) as {root:string;store:string;record:{allocationId:string;owner:{process:{pid:number}}}}; workerRoot = receipt.root;
++    assert.equal(receipt.record.owner.process.pid, child.pid); child.kill('SIGTERM'); await exited;
++    const admission = Admission.forTesting({ root: receipt.store, backend: 'fake', initialize: false });
++    reader = new ObservedAllocator({ admission, runsDir: f.runsDir, fakeBackend: { process: f.source, runner: f.runner, window: f.window, host: f.host } });
++    const stored = admission.readAllocation(receipt.record.allocationId)!; assert.equal(snapshot(await reader.get(stored.allocationId)).state, 'preparing');
++    assert.deepEqual(admission.readAllocation(stored.allocationId), stored); assert.equal(reader.recoverAbandoned(), 1);
++    const recovered = admission.readAllocation(stored.allocationId)!; assert.equal(recovered.state, 'quarantined'); assert.equal(recovered.capacityHeld, true);
++    assert.equal(recovered.hostCreationBlocked, true); assert.equal(recovered.device, null); assert.deepEqual(f.calls, []);
++  } finally { child.kill('SIGTERM'); await exited; await reader?.close(); await f.cleanup();
++    if (workerRoot) { async function writable(path: string): Promise<void> { const s = await fs.lstat(path); if (!s.isDirectory() || s.isSymbolicLink()) return;
++      await fs.chmod(path, 0o700); for (const entry of await fs.readdir(path)) await writable(join(path, entry)); }
++      await writable(workerRoot); await fs.rm(workerRoot, { recursive:true, force:true }); }
++  }
++});
++
++test('reserved failure retains bounded private raw source diagnostics while public envelopes expose only truthful references', async () => {
++  const f = await allocationFixture(); const allocator = subject(f); f.setCreateResult({ exitCode: 1, stdout: '', stderr: hostile + 'x'.repeat(70000) });
++  try { const result = snapshot(await allocator.prepare(f.request())); const directory = f.admission.readAllocation(result.allocationId)!.evidenceDirectory;
++    assert.ok(result.evidenceRefs.includes(directory)); const diagnostic = join(directory, 'source-diagnostics.json');
++    assert.ok(!result.evidenceRefs.includes(diagnostic), 'Directory authority does not fabricate a per-file receipt'); const stat = await fs.stat(diagnostic); assert.equal(stat.mode & 0o777, 0o600); assert.ok(stat.size <= 65536);
++    assert.ok((await fs.readFile(diagnostic, 'utf8')).includes('sk-private-fixture')); assert.ok(!JSON.stringify(result).includes('sk-private-fixture'));
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++for (const [operation, schema, reason] of [['boot', 'simulator-action-result', 'BOOT_FAILED'], ['install', 'install-result', 'INSTALL_FAILED'],
++  ['launch-app', 'launch-result', 'LAUNCH_FAILED']] as const) test(`known acknowledged ${operation} failure is a stable stage refusal with no retry or follow-up`, async () => {
++  const f = await allocationFixture(); const allocator = subject(f); f.setCommandResult(operation, { exitCode: 1, stderr: hostile,
++    stdout: JSON.stringify({ schema: 'mobilebuildmcp.output.' + schema, schemaVersion: '2', didError: true,
++      error: { code: 'VENDOR_PRIVATE', message: hostile }, data: { artifacts: { simulatorId: 'ABCDEF00-0000-4000-8000-000000000001' } } }) });
++  try { const result = snapshot(await allocator.prepare(f.request())); assert.equal(result.reason, reason); assert.equal(result.state, 'retained');
++    assert.equal(result.outcome, 'refused'); assert.equal(deviceCalls(f.calls).at(-1), operation); assert.equal(deviceCalls(f.calls).filter(c => c === operation).length, 1);
++    assert.ok(!JSON.stringify(result).includes('sk-private-fixture')); assert.equal(result.reservation.capacityHeld, true);
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++for (const evidence of ['copy', 'missing', 'symlink', 'relative'] as const) test(`readiness screenshot ${evidence} is persisted privately or refuses without parking`, async () => {
++  const f = await allocationFixture(); const allocator = subject(f); const path = join(f.root, 'shot.jpg');
++  if (evidence === 'copy') await fs.writeFile(path, Buffer.from([0xff, 0xd8, 0xff, 0xd9]), { mode: 0o600 });
++  if (evidence === 'symlink') { await fs.writeFile(path + '.target', 'fixture'); await fs.symlink(path + '.target', path); }
++  f.setScreenshotPath(evidence === 'relative' ? 'shot.jpg' : path);
++  try { const result = snapshot(await allocator.prepare(f.request()));
++    if (evidence === 'copy') { assert.equal(result.state, 'ready'); assert.equal(result.readinessEvidence.length, 2);
++      const copied = result.readinessEvidence.find(ref => ref.endsWith('.jpg'))!; assert.notEqual(copied, path);
++      assert.deepEqual(await fs.readFile(copied), await fs.readFile(path)); assert.equal((await fs.stat(copied)).mode & 0o777, 0o600);
++    } else { assert.equal(result.state, 'quarantined'); assert.equal(result.reason, 'READINESS_FAILED'); assert.notEqual(result.outcome, 'prepared'); }
++    assert.equal(deviceCalls(f.calls).at(-1), 'screenshot');
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++for (const operation of ['stageAllocation', 'startCreation', 'recordCreation', 'parkAllocation'] as const) test(`lost ${operation} commit response uses fresh durable state and never replays`, async () => {
++  let fired = false; const f = await allocationFixture({ fault(point, op) { if (point === 'afterCommit' && op === operation && !fired) { fired = true; throw new Error(hostile); } } }); const allocator = subject(f);
++  try { const result = snapshot(await allocator.prepare(f.request())); assert.equal(fired, true);
++    assert.equal(result.authority, 'committed'); assert.equal(result.state === 'ready', operation === 'parkAllocation');
++    assert.ok(!JSON.stringify(result).includes(hostile)); const before = [...f.calls]; assert.deepEqual(await allocator.prepare(f.request()), result); assert.deepEqual(f.calls, before);
++    assert.equal(deviceCalls(f.calls).filter(c => c === 'create').length <= 1, true);
++    if (operation === 'startCreation') { assert.equal(result.hostCreationBlocked, true); assert.deepEqual(deviceCalls(f.calls), []); }
++    if (operation === 'recordCreation') assert.ok(!deviceCalls(f.calls).includes('boot'));
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++test('lost reservation commit reply returns only fresh accepted authority, never false no-acceptance or a replay', async () => {
++  let fired = false; const f = await allocationFixture({ fault(point, op) { if (point === 'afterCommit' && op === 'reserveAllocation' && !fired) { fired = true; throw new Error(hostile); } } }); const allocator = subject(f);
++  try { const result = snapshot(await allocator.prepare(f.request())); assert.equal(result.authority, 'committed'); assert.equal(result.state, 'preparing');
++    assert.equal(f.admission.readAllocationForAction('allocate-one')?.allocationId, result.allocationId); assert.deepEqual(deviceCalls(f.calls), []);
++    const before = [...f.calls]; assert.deepEqual(await allocator.prepare(f.request()), result); assert.deepEqual(f.calls, before);
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++for (const phase of ['before-create', 'before-install'] as const) test(`fresh authoritative held-capacity check ${phase} honors another config generation`, async () => {
++  const f = await allocationFixture(); f.configure({ maxRetainedAllocations: 1 }); const allocator = subject(f); let added = false;
++  f.setBefore(async (op, path) => {
++    if (!added && (phase === 'before-create' ? op === 'plist' && !!path?.includes('/staging/') : op === 'list')) {
++      const record = f.admission.readAllocationForAction('allocate-one')!; added = true;
++      const reserved = f.admission.reserveAllocation({ actionId: 'other-config-generation', preparationDigest: 'c'.repeat(64), preparation: {},
++        appBundleId: record.appBundleId, source: { kind: 'supplied', ...f.inventory('ABCDEF00-0000-4000-8000-000000000009')[0]! },
++        inspectedContentDigest: record.inspectedContentDigest, artifactBytes: record.artifactBytes, configVersion: 1, configDigest: 'd'.repeat(64),
++        budgets: { ...record.budgets, maxRetainedAllocations: 2, maxConcurrentPreparations: 2 },
++        storage: { simulatorFreeBytes: 100000, stagingFreeBytes: 100000 }, evidenceDirectory: join(f.runsDir, 'other') });
++      assert.equal(reserved.kind, 'reserved'); assert.equal(f.admission.readAllocationCapacity().heldAllocations, 2);
++    }
++  });
++  try { const result = snapshot(await allocator.prepare(f.request())); assert.equal(added, true); assert.equal(result.reason, 'BUDGET_EXHAUSTED');
++    assert.equal(result.outcome, 'refused'); assert.ok(!deviceCalls(f.calls).includes(phase === 'before-create' ? 'create' : 'install'));
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++for (const mode of ['file', 'directory'] as const) test(`unsafe ${mode} store permissions fail closed before prerequisites and never choose another root`, async () => {
++  const f = await allocationFixture(); const allocator = subject(f); const path = mode === 'file' ? join(f.store, 'admission.sqlite') : f.store;
++  try { await fs.chmod(path, 0o444); refused(await allocator.prepare(f.request()), 'STORE_UNAVAILABLE'); assert.deepEqual(f.calls, []); }
++  finally { await fs.chmod(path, mode === 'file' ? 0o600 : 0o700); await allocator.close(); await f.cleanup(); }
++});
++
++test('external cancellation commits before an abort-ignoring boot settles and prevents immediate next dispatch without relying on the monitor', async () => {
++  const f = await allocationFixture(); const allocator = subject(f); let begin!: () => void; let release!: () => void;
++  const began = new Promise<void>(r => { begin = r; }); const pending = new Promise<void>(r => { release = r; });
++  f.setBefore(async op => { if (op === 'boot') { begin(); await pending; } });
++  try { const preparing = allocator.prepare(f.request()); await began; const record = f.admission.readAllocationForAction('allocate-one')!;
++    const other = Admission.forTesting({ root:f.store, backend:'fake', initialize:false }); const cancelled = other.cancelAllocation(record.allocationId);
++    assert.equal(cancelled.kind, 'retrieved'); assert.equal(other.readAllocation(record.allocationId)?.cancellationRequested, true);
++    release(); const result = snapshot(await preparing); assert.notEqual(result.state, 'ready'); assert.deepEqual(deviceCalls(f.calls), ['create', 'boot']);
++  } finally { release(); await new Promise(r => setImmediate(r)); await allocator.close(); await f.cleanup(); }
++});
++
++test('unknown creator directory pointer survives a fresh process and changed cwd with zero probes and unchanged durable state', async () => {
++  const f = await allocationFixture(); const allocator = subject(f); f.setCreateResult({ exitCode: 1, stdout: '', stderr: hostile });
++  try { const result = snapshot(await allocator.prepare(f.request())); const stored = f.admission.readAllocation(result.allocationId)!;
++    const before = [...f.calls]; await allocator.close(); const child = await isolatedChild(`
++      import { Admission } from './src/device/admission.ts';
++      import { ObservedAllocator } from './src/observed/allocation.ts';
++      import { allocationFixture } from './tests/fixtures/observed-allocation-backend.ts';
++      const [root,id] = process.argv.slice(1); const f=await allocationFixture();
++      const admission=Admission.forTesting({root,backend:'fake',initialize:false});
++      const allocator=new ObservedAllocator({admission,runsDir:f.runsDir,fakeBackend:{process:f.source,runner:f.runner,window:f.window,host:f.host}});
++      process.chdir(f.root); const before=admission.readAllocation(id); const result=await allocator.get(id.toLowerCase());
++      console.log(JSON.stringify({result,unchanged:JSON.stringify(before)===JSON.stringify(admission.readAllocation(id)),calls:f.calls}));
++      await allocator.close(); await f.cleanup();
++    `, [f.store, result.allocationId]);
++    assert.equal(child.code, 0, child.stderr); const receipt = JSON.parse(child.stdout); assert.deepEqual(receipt.result, result);
++    assert.equal(receipt.unchanged, true); assert.deepEqual(receipt.calls, []); assert.deepEqual(f.calls, before);
++    assert.deepEqual(f.admission.readAllocation(result.allocationId), stored); assert.ok(result.evidenceRefs.includes(stored.evidenceDirectory));
++    assert.equal(new Set(result.evidenceRefs).size, result.evidenceRefs.length);
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++import { allocationSnapshot, canonicalJson } from '../src/observed/allocation-schema.js';
++test('wire snapshots omit internal ownership and return copied references; unconfirmed projection cannot claim prepared outcome', async () => {
++  const f = await allocationFixture(); const allocator = subject(f);
++  try { const ready = snapshot(await allocator.prepare(f.request())); const stored = f.admission.readAllocation(ready.allocationId)!;
++    assert.deepEqual(Object.keys(ready).sort(), ['version','allocationId','actionId','state','phase','device','reason','outcome','authority',
++      'readinessEvidence','evidenceRefs','reservation','hostCreationBlocked','cancellationRequested'].sort());
++    const uncertain = allocationSnapshot(stored, 'unconfirmed'); assert.equal(uncertain.outcome, null); assert.equal(uncertain.authority, 'unconfirmed');
++    ready.readinessEvidence.push('caller mutation'); ready.evidenceRefs.push('caller mutation'); assert.deepEqual(f.admission.readAllocation(ready.allocationId), stored);
++    assert.equal(canonicalJson({ z:[2,1], a:1 }), '{"a":1,"z":[2,1]}');
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++test('invalid lifecycle IDs and waits refuse with zero probes and no accepted allocation', async () => {
++  const f = await allocationFixture(); const allocator = subject(f);
++  try { for (const id of ['', 'raw-device', '/absolute/path']) { refused(await allocator.get(id), 'INVALID_REQUEST');
++      refused(await allocator.cancel(id), 'INVALID_REQUEST'); refused(await allocator.retire(id), 'INVALID_REQUEST'); }
++    for (const waitMs of [-1, 45001, 0.5, Infinity]) refused(await allocator.get('ABCDEF00-0000-4000-8000-000000000009', {waitMs}), 'INVALID_REQUEST');
++    refused(await allocator.get('ABCDEF00-0000-4000-8000-000000000009'), 'ALLOCATION_NOT_FOUND');
++    refused(await allocator.cancel('ABCDEF00-0000-4000-8000-000000000009'), 'ALLOCATION_NOT_FOUND');
++    refused(await allocator.retire('ABCDEF00-0000-4000-8000-000000000009'), 'ALLOCATION_NOT_FOUND');
++    refused(await allocator.prepare({ version:2 }), 'UNSUPPORTED_VERSION'); refused(await allocator.prepare({ version:1 }), 'INVALID_REQUEST');
++    assert.deepEqual(f.calls, []); assert.equal(f.admission.listActiveAllocations().length, 0);
++  } finally { await allocator.close(); await f.cleanup(); }
++});
++
++test('identical concurrent preflight shares one executor while conflicting digest refuses without a second probe', async () => {
++  const f = await allocationFixture(); const original = f.host.fs.lstat; let reads = 0; let begin!: () => void; let release!: () => void;
++  const began = new Promise<void>(r => { begin = r; }); const pending = new Promise<void>(r => { release = r; });
++  f.host.fs.lstat = (async (...args: Parameters<typeof original>) => {
++    if (String(args[0]) === f.configPath && ++reads === 1) { begin(); await pending; } return original(...args);
++  }) as typeof original;
++  const allocator = subject(f);
++  try { const first = allocator.prepare(f.request()); await began; const duplicate = allocator.prepare(f.request());
++    refused(await allocator.prepare({ ...f.request(), timeoutMs: 2000 }), 'ACTION_ID_CONFLICT'); assert.equal(reads, 1);
++    release(); const [one,two] = await Promise.all([first,duplicate]); assert.deepEqual(one,two); assert.equal(snapshot(one).state,'ready');
++    assert.equal(deviceCalls(f.calls).filter(c => c === 'create').length, 1); assert.equal(f.admission.readAllocationCapacity().heldAllocations, 1);
++  } finally { release(); await allocator.close(); await f.cleanup(); }
++});
++
++for (const fail of ['before', 'after'] as const) test(`cancel ${fail}-commit store error synchronously revokes only the known locally owned preparation`, async () => {
++  const f = await allocationFixture(); f.configure({maxConcurrentPreparations:2}); const allocator = subject(f);
++  let begin!: () => void; let release!: () => void; const began = new Promise<void>(r => { begin = r; }); const pending = new Promise<void>(r => { release = r; });
++  let firstBoot = true; f.setBefore(async op => { if(op==='boot' && firstBoot) { firstBoot=false; begin(); await pending; } });
++  const original = f.admission.cancelAllocation;
++  try { const preparing = allocator.prepare(f.request()); await began; const record = f.admission.readAllocationForAction('allocate-one')!;
++    f.admission.cancelAllocation = id => { if(fail==='after') original.call(f.admission,id); throw new Error(hostile); };
++    const cancelled = refused(await allocator.cancel(record.allocationId.toLowerCase()),'STORE_UNAVAILABLE'); assert.equal(cancelled.acceptance,'unknown');
++    assert.ok(!JSON.stringify(cancelled).includes(hostile)); f.admission.cancelAllocation=original; const before=[...f.calls]; release();
++    const result=snapshot(await preparing); assert.notEqual(result.state,'ready'); assert.equal(result.reservation.capacityHeld,true);
++    assert.deepEqual(f.calls,before); assert.deepEqual(deviceCalls(f.calls),['create','boot']);
++    const other=snapshot(await allocator.prepare(f.request('unrelated'))); assert.equal(other.state,'ready');
++    assert.equal(f.admission.readAllocation(result.allocationId)?.state,'quarantined');
++  } finally { f.admission.cancelAllocation=original;release();await new Promise(r=>setImmediate(r));await allocator.close();await f.cleanup(); }
++});
++
++test('failed cancellation targets one owned allocation and preserves another live preparation', async () => {
++  const f=await allocationFixture();f.configure({maxConcurrentPreparations:2});const allocator=subject(f);
++  let first!:()=>void,second!:()=>void,releaseFirst!:()=>void,releaseSecond!:()=>void;let boot=0;
++  const firstBegan=new Promise<void>(r=>{first=r;});const secondBegan=new Promise<void>(r=>{second=r;});
++  const firstPending=new Promise<void>(r=>{releaseFirst=r;});const secondPending=new Promise<void>(r=>{releaseSecond=r;});
++  f.setBefore(async op=>{if(op==='boot' && ++boot===1){first();await firstPending;}if(op==='install'){second();await secondPending;}});
++  const original=f.admission.cancelAllocation;
++  try{const one=allocator.prepare(f.request('cancel-target'));await firstBegan;const two=allocator.prepare(f.request('other-live'));await secondBegan;
++    const target=f.admission.readAllocationForAction('cancel-target')!;const other=f.admission.readAllocationForAction('other-live')!;
++    f.admission.cancelAllocation=()=>{throw new Error(hostile);};refused(await allocator.cancel(target.allocationId),'STORE_UNAVAILABLE');f.admission.cancelAllocation=original;
++    releaseFirst();assert.equal(snapshot(await one).state,'quarantined');assert.deepEqual(f.admission.readAllocation(other.allocationId),other);
++    releaseSecond();assert.equal(snapshot(await two).state,'ready');assert.equal(f.admission.readAllocation(other.allocationId)?.cancellationRequested,false);
++  }finally{f.admission.cancelAllocation=original;releaseFirst();releaseSecond();await new Promise(r=>setImmediate(r));await allocator.close();await f.cleanup();}
++});
++
++test('one failure finalization budget bounds private diagnostics and pending local driver close together without late promotion', async t => {
++  const child=await isolatedChild(`
++    import assert from 'node:assert/strict';import native from 'node:fs/promises';import {syncBuiltinESMExports} from 'node:module';
++    import {allocationFixture} from './tests/fixtures/observed-allocation-backend.ts';import {ObservedAllocator} from './src/observed/allocation.ts';
++    const f=await allocationFixture();const allocator=new ObservedAllocator({admission:f.admission,runsDir:f.runsDir,fakeBackend:{process:f.source,runner:f.runner,window:f.window,host:f.host}});
++    f.setCommandResult('install',{exitCode:1,stderr:'private fixture',stdout:JSON.stringify({schema:'mobilebuildmcp.output.install-result',schemaVersion:'2',didError:true,error:{code:'PRIVATE',message:'private fixture'},data:{artifacts:{simulatorId:'ABCDEF00-0000-4000-8000-000000000001'}}})});
++    let start,beginInstall,releaseFile,releaseLease;const installBegan=new Promise(r=>beginInstall=r);const pendingFile=new Promise(r=>releaseFile=r);const pendingLease=new Promise(r=>releaseLease=r);
++    f.setBefore(async op=>{if(op==='install'){start=Date.now();beginInstall();}});const open=native.open,unlink=native.unlink;
++    native.open=async(...args)=>{if(String(args[0]).endsWith('/source-diagnostics.json'))await pendingFile;return open(...args);};
++    native.unlink=async path=>{if(String(path).startsWith(f.runsDir+'/leases/'))await pendingLease;return unlink(path);};syncBuiltinESMExports();
++    try{const preparing=allocator.prepare(f.request());
++      const reached=await Promise.race([installBegan.then(()=>true),preparing.then(()=>false)]);assert.equal(reached,true,'Known install failure milestone must be reached');
++      const result=await Promise.race([preparing,new Promise(r=>setTimeout(()=>r('finalization still pending'),5500))]);
++      const elapsed=Date.now()-start;assert.notEqual(result,'finalization still pending');assert.ok(elapsed<=5500,'5000ms plus explicit500ms scheduling tolerance');
++      assert.equal(result.state,'quarantined');assert.equal(result.reservation.capacityHeld,true);assert.equal(result.device.udid,'ABCDEF00-0000-4000-8000-000000000001');
++      assert.equal(f.admission.inspect(result.device.udid).state,'quarantined');const stored=f.admission.readAllocation(result.allocationId);const calls=f.calls.filter(c=>c!=='plist');
++      assert.deepEqual(calls,['create','boot','list','install']);releaseFile();releaseLease();await allocator.close();
++      assert.deepEqual(f.admission.readAllocation(result.allocationId),stored);assert.equal(f.admission.inspect(result.device.udid).state,'quarantined');assert.deepEqual(f.calls.filter(c=>c!=='plist'),calls);
++      const diagnostic=await native.readFile(stored.evidenceDirectory+'/source-diagnostics.json','utf8');assert.ok(diagnostic.includes('private fixture'));assert.ok(diagnostic.includes('\"terminalAcknowledged\":true'));assert.ok(!result.evidenceRefs.includes(stored.evidenceDirectory+'/source-diagnostics.json'));
++      console.log(JSON.stringify({elapsed,state:result.state,capacityHeld:result.reservation.capacityHeld,device:result.device.udid,calls}));
++    }finally{releaseFile();releaseLease();native.open=open;native.unlink=unlink;syncBuiltinESMExports();await allocator.close();await f.cleanup();}
++  `,[]);
++  assert.equal(child.code,0,child.stderr);t.diagnostic(child.stdout.trim());const receipt=JSON.parse(child.stdout);assert.ok(receipt.elapsed<=5500);assert.equal(receipt.state,'quarantined');
++  assert.equal(receipt.capacityHeld,true);assert.deepEqual(receipt.calls,['create','boot','list','install']);
++});

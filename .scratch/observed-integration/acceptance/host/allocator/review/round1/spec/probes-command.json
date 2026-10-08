@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "/tmp/jev-allocator-spec-review-boonbrr6/probes.test.ts"
+  ],
+  "exit": 1,
+  "node": "v26.8.1"
+}

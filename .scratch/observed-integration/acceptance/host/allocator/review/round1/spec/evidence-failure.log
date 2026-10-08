@@ -1,0 +1,31 @@
+{"case":"diagnostic-write-failure","result":{"version":1,"allocationId":"C0AC9370-68DE-4E19-B575-F23853EA5792","actionId":"allocate-one","state":"retained","phase":"terminal","device":{"platform":"ios-simulator","udid":"ABCDEF00-0000-4000-8000-000000000001"},"reason":"INSTALL_FAILED","outcome":"refused","authority":"committed","readinessEvidence":[],"evidenceRefs":["/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-XlGx9V/runs/observed/allocate-one/allocation","/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-XlGx9V/runs/observed/allocate-one/allocation/host-prerequisites.json","/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-XlGx9V/runs/observed/allocate-one/allocation/preparation-request.json"],"reservation":{"bytes":1000,"capacityHeld":true},"hostCreationBlocked":false,"cancellationRequested":false},"calls":["plist","plist","plist","plist","plist","plist","plist","plist","plist","plist","create","boot","list","install"]}
+✖ failure to persist required diagnostic evidence cannot finalize a known refusal (1391.843958ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1621.329792
+
+✖ failing tests:
+
+test at ../../../../../../private/tmp/jev-allocator-spec-review-boonbrr6/evidence-failure.test.ts:2:1263
+✖ failure to persist required diagnostic evidence cannot finalize a known refusal (1391.843958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'retained'
+  - 'quarantined'
+  
+      at TestContext.<anonymous> (/private/tmp/jev-allocator-spec-review-boonbrr6/evidence-failure.test.ts:8:211)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'retained',
+    expected: 'quarantined',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

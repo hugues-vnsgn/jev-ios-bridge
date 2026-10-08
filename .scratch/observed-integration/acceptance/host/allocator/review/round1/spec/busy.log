@@ -1,0 +1,31 @@
+{"case":"busy-cancel","result":{"version":1,"kind":"observed-operation-error","code":"ALLOCATION_BUSY","message":"Allocation operation refused: ALLOCATION_BUSY.","allocationId":"B0D94073-AFA7-4F25-A51B-F7FB10FB17FA","acceptance":"yes","acceptanceKind":"preparation"}}
+✖ executing cancellation identifies the action to cancel (696.356166ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 875.029959
+
+✖ failing tests:
+
+test at ../../../../../../private/tmp/jev-allocator-spec-review-boonbrr6/busy.test.ts:2:1219
+✖ executing cancellation identifies the action to cancel (696.356166ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'allocate-one'
+  
+      at TestContext.<anonymous> (/private/tmp/jev-allocator-spec-review-boonbrr6/busy.test.ts:6:605)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'allocate-one',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
