@@ -10,8 +10,8 @@ Execution authorized by the owner on 2026-10-08. Planning base: `b8c4a50942551bd
 | Held allocation capacity read | integrated | allocation_store / gpt-6-astra / high | Integrated `dd43313`; independent Spec/Standards PASS; combined190/190 on Node26 and exact Node24, zero skips |
 | Creation and artifact adapters | integrated | source_adapters / gpt-6.1-sol / high | Integrated `448a026`; independent fix review PASS; 41 focused tests Node24/26 |
 | Shared iOS driver | integrated | shared_driver / gpt-6.1-sol / high | Integrated `b3eb5ea`/`bd5d524`; independent repair re-reviews PASS; full1196/1196+typecheck/build; Node24 combined410/410, zero skips |
-| Observed runtime (06) | implementing | observed_runtime / gpt-6.1-sol / high | Dispatched at `fd9b3c0`; isolated exact write set; no acceptance claimed |
-| Allocator orchestration (07) | implementing | shared_driver reassigned / gpt-6.1-sol / high | Dispatched at `fd9b3c0`; isolated exact write set; supplied availability slice awaits narrow Root driver follow-up |
+| Observed runtime (06) | implementing | observed_runtime / gpt-6.1-sol / high | Dispatched at `fd9b3c0`, dependency base advanced by Root to `98f7de4`; isolated exact write set plus authorized historical migration fixtures; no acceptance claimed |
+| Allocator orchestration (07) | implementing | shared_driver reassigned / gpt-6.1-sol / high | Dispatched at `fd9b3c0`, dependency base advanced by Root to `98f7de4`; supplied slice uses accepted inventory capability; no acceptance claimed |
 | Selected inventory availability | integrated | Root | Integrated `f6ab330`; independent Spec/Standards PASS; full1208/1208+typecheck/build, exact24combined422/422; integrated affected65/65 each Node26/24, zero skips |
 | Remaining packages | waiting for dependencies | Assigned in implementation handoff | No acceptance claimed |
 

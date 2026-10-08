@@ -23,7 +23,7 @@ Each worker is one named role in one isolated worktree and owns its ticket's exa
 
 ## Phases and dependency graph
 
-Current execution: waves A through D and the bounded ticket03 capacity-read repair are integrated and independently reviewed. Wave E is implementing from `fd9b3c0d19284b9fc22c4bb5e3a3fd4bb0d3b181`; waves F through I await their dependencies. The bounded ticket05 follow-up exposing admitted selected-device inventory availability is accepted at `f6ab3304288f730d1dbb02c6185239b6a600c66c` after independent review and Node24/26 checks. It changed only `src/device/index.ts` and `tests/admission-driver.test.ts`; Root retains their ownership. [Execution ledger](../observed-action-rollout/progress.md) records current commits and evidence; the table below defines prerequisites.
+Current execution: waves A through D and the bounded ticket03 capacity-read repair are integrated and independently reviewed. Wave E was dispatched at `fd9b3c0d19284b9fc22c4bb5e3a3fd4bb0d3b181`; Root safely advanced both paused workers to dependency base `98f7de41baa316f47a65a7bc2160128a72051f3e`, preserving their uncommitted owned work. Waves F through I await their dependencies. The bounded ticket05 follow-up exposing admitted selected-device inventory availability is accepted at `f6ab3304288f730d1dbb02c6185239b6a600c66c` after independent review and Node24/26 checks. It changed only `src/device/index.ts` and `tests/admission-driver.test.ts`; Root retains their ownership. [Execution ledger](../observed-action-rollout/progress.md) records current commits and evidence; the table below defines prerequisites.
 
 | Wave | Tickets | Integration prerequisite |
 | --- | --- | --- |
