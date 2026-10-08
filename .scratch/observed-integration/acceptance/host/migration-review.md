@@ -26,3 +26,9 @@ Spec reviewer independently passed77/77 existing core/migration tests, zero skip
 A newly saved repeated FIFO reproduction is `/tmp/jev-migration-fifo-review-NNyLJ4/reproduce.mjs` with `reproduction.log`: pinned candidate, Node26.8.1, deadline2000ms, elapsed2011ms, SIGKILL, stdout `entered`, no stderr, guard retained. Temporary source/store fixtures were removed; evidence files retained. This was a fresh repetition, not a claim that the earlier diagnostic run had been saved.
 
 Root assigned both fixes to the original author with diagnosing-bugs, TDD and do-test. Re-review and combined integration checks remain required before ticket03 receives store ownership. No human intervention is required for these implementation defects.
+
+## First repair re-review
+
+Repair `04c57c3b74586e52556a567c32dab189cae8ada6` passed83 core/migration tests on Node24/26, typecheck and build. The FIFO finding is closed: nonblocking/no-follow open plus descriptor validation returns the expected refusal promptly. Spec re-review passed14 focused tests, including the originally reported root-level failures.
+
+Standards re-review reproduced a remaining P1 variant: `canonicalLocation(source)` still touches ancestors before guard acquisition. After successful initialization with an additional journal root, making that root's parent inaccessible causes re-import to fail without retaining a guard; an existing admission handle still acquires. Raw repeated evidence: `/tmp/jev-migration-ancestor-review-R3MqcG/reproduce.mjs` and `reproduction.log`. The author is fixing the complete source-access ordering while preserving source/destination separation. The candidate remains unintegrated; the narrower passing re-review is not acceptance of this remaining case.
