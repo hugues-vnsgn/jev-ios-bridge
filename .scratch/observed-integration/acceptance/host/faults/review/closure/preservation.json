@@ -1,0 +1,178 @@
+{
+  "source": "/tmp/jev-ticket09-spec-closure-b184gvsk",
+  "allSourceFiles": true,
+  "files": {
+    "associated-after-hashes.json": {
+      "sha256": "1e1718e33d3fce18575e458ea6bf217dbd6027ed1c70745d2bc5fca020945c67",
+      "bytes": 1839
+    },
+    "associated-before-hashes.json": {
+      "sha256": "d5ce6c5b2fec426d803dfc8ae69656d5056a26003e0f923f2223c8c48c6aba12",
+      "bytes": 1721
+    },
+    "associated-snapshot/.scratch/observed-action-rollout/issues/09-host-fault-suite.md": {
+      "sha256": "8a3bc340cc76c08d30bdd2015b08911c3dc43891ce9cdd0a44c22c69ad1a3d48",
+      "bytes": 3359
+    },
+    "associated-snapshot/tests/fixtures/observed-host/allocator-public.ts": {
+      "sha256": "4362eb422c0213918d9e37e0d43c04644ae9429322be39bed82b0ce98d1228e1",
+      "bytes": 5468
+    },
+    "associated-snapshot/tests/fixtures/observed-host/case-matrix.json": {
+      "sha256": "fe79db6d29c3befae983fda986fbfe69894f2fd81e7e0831a71c7eacb4058e70",
+      "bytes": 2516842
+    },
+    "associated-snapshot/tests/fixtures/observed-host/early-cli.ts": {
+      "sha256": "e6ae1ef16fc2f5f2b4340aae835f720f88403b1d6722db8cc78f2266dbe572e1",
+      "bytes": 2654
+    },
+    "associated-snapshot/tests/fixtures/observed-host/harness.ts": {
+      "sha256": "463d7f5feb7eedc32ac5d688d2bcb57c87460875fd14b7de3f5864da29f893a1",
+      "bytes": 7961
+    },
+    "associated-snapshot/tests/fixtures/observed-host/owner.ts": {
+      "sha256": "b9a379c00645a1c3cc0704ad2986572b0c62ef0bbd3586d659649ecf160f941a",
+      "bytes": 6091
+    },
+    "associated-snapshot/tests/observed-crash.test.ts": {
+      "sha256": "9a708bfeb740e48ca0e7e676a2dca2c0e95d96d58a6286248880a7a066361d57",
+      "bytes": 11154
+    },
+    "associated-snapshot/tests/observed-host-fault.test.ts": {
+      "sha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "bytes": 51424
+    },
+    "associated-snapshot/tests/observed-public-races.test.ts": {
+      "sha256": "2bc50ea42e2e5d4d06fa088c3874295f90eebffd0d0792d6def5e8a4eefd8223",
+      "bytes": 22535
+    },
+    "before-hashes.json": {
+      "sha256": "ef162a1424950b562bcd7a487aebb4caf5c9f91e8a1275f77eeac42c4f0a5b0d",
+      "bytes": 25496
+    },
+    "final-before-hashes.json": {
+      "sha256": "0118a37834cb2369d75c516bd77ec46e79ed2cecf0b04a05f08e0061152dc023",
+      "bytes": 1856
+    },
+    "final-snapshot/.scratch/observed-action-rollout/issues/09-host-fault-suite.md": {
+      "sha256": "8a3bc340cc76c08d30bdd2015b08911c3dc43891ce9cdd0a44c22c69ad1a3d48",
+      "bytes": 3359
+    },
+    "final-snapshot/tests/fixtures/observed-host/allocator-public.ts": {
+      "sha256": "4362eb422c0213918d9e37e0d43c04644ae9429322be39bed82b0ce98d1228e1",
+      "bytes": 5468
+    },
+    "final-snapshot/tests/fixtures/observed-host/case-matrix.json": {
+      "sha256": "7d3be24e3c370a1efaeec9e808d549557da0935e36529c6ba7bb00be3e8d6509",
+      "bytes": 328713
+    },
+    "final-snapshot/tests/fixtures/observed-host/early-cli.ts": {
+      "sha256": "e6ae1ef16fc2f5f2b4340aae835f720f88403b1d6722db8cc78f2266dbe572e1",
+      "bytes": 2654
+    },
+    "final-snapshot/tests/fixtures/observed-host/harness.ts": {
+      "sha256": "463d7f5feb7eedc32ac5d688d2bcb57c87460875fd14b7de3f5864da29f893a1",
+      "bytes": 7961
+    },
+    "final-snapshot/tests/fixtures/observed-host/owner.ts": {
+      "sha256": "b9a379c00645a1c3cc0704ad2986572b0c62ef0bbd3586d659649ecf160f941a",
+      "bytes": 6091
+    },
+    "final-snapshot/tests/observed-crash.test.ts": {
+      "sha256": "9a708bfeb740e48ca0e7e676a2dca2c0e95d96d58a6286248880a7a066361d57",
+      "bytes": 11154
+    },
+    "final-snapshot/tests/observed-host-fault.test.ts": {
+      "sha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "bytes": 51424
+    },
+    "final-snapshot/tests/observed-public-races.test.ts": {
+      "sha256": "2bc50ea42e2e5d4d06fa088c3874295f90eebffd0d0792d6def5e8a4eefd8223",
+      "bytes": 22535
+    },
+    "gate-snapshot/.scratch/observed-action-rollout/issues/09-host-fault-suite.md": {
+      "sha256": "8a3bc340cc76c08d30bdd2015b08911c3dc43891ce9cdd0a44c22c69ad1a3d48",
+      "bytes": 3359
+    },
+    "gate-snapshot/tests/fixtures/observed-host/early-cli.ts": {
+      "sha256": "e6ae1ef16fc2f5f2b4340aae835f720f88403b1d6722db8cc78f2266dbe572e1",
+      "bytes": 2654
+    },
+    "latest-association-audit.json": {
+      "sha256": "7dd6cf63f2160260859e1c2140fc62e309fa38bebf1bf8885da8a4f9633f02c1",
+      "bytes": 14438
+    },
+    "matrix-second-mismatch.json": {
+      "sha256": "fe79db6d29c3befae983fda986fbfe69894f2fd81e7e0831a71c7eacb4058e70",
+      "bytes": 2516842
+    },
+    "metadata-delta-audit.json": {
+      "sha256": "c7d6c058fa0957f7efc3a5fc5b6a67c11dcba07d21af5cf096197b43edf07e26",
+      "bytes": 415
+    },
+    "owned-before-full-check-freeze.json": {
+      "sha256": "725a1c4c25093b17b403d9342d8c0e773707d7bd31d2aa67d9cbb81b180df92c",
+      "bytes": 1236
+    },
+    "owned-final-gate-freeze.json": {
+      "sha256": "7ee779a6bc3b8fcc280d0fb9095690bd6eceaa0fbbd512e706d364c4141ce0ee",
+      "bytes": 1236
+    },
+    "owned-final-suppression-freeze.json": {
+      "sha256": "33cdb9456c292619463b611d1f82d22f408c75ad349facaf4eaceaaae5a82f39",
+      "bytes": 1236
+    },
+    "owned-post-audit-freeze.json": {
+      "sha256": "0dff671d89d944f8e15c9dfc9a1a1ac1416e4ae6213340f6026a56678cd86eac",
+      "bytes": 1236
+    },
+    "protected-post-audit-freeze.json": {
+      "sha256": "81b772823675016c9296759b5fe6b2b14c5c82ff30cacfaa852321946a51821c",
+      "bytes": 32501
+    },
+    "review.md": {
+      "sha256": "192faf710a6cd364c0b03b549432451b4b9fbb0fe885caba387156ee4c529d7d",
+      "bytes": 2488
+    },
+    "snapshot/.scratch/observed-action-rollout/issues/09-host-fault-suite.md": {
+      "sha256": "8a3bc340cc76c08d30bdd2015b08911c3dc43891ce9cdd0a44c22c69ad1a3d48",
+      "bytes": 3359
+    },
+    "snapshot/tests/fixtures/observed-host/allocator-public.ts": {
+      "sha256": "4362eb422c0213918d9e37e0d43c04644ae9429322be39bed82b0ce98d1228e1",
+      "bytes": 5468
+    },
+    "snapshot/tests/fixtures/observed-host/case-matrix.json": {
+      "sha256": "7d3be24e3c370a1efaeec9e808d549557da0935e36529c6ba7bb00be3e8d6509",
+      "bytes": 328713
+    },
+    "snapshot/tests/fixtures/observed-host/early-cli.ts": {
+      "sha256": "e6ae1ef16fc2f5f2b4340aae835f720f88403b1d6722db8cc78f2266dbe572e1",
+      "bytes": 2654
+    },
+    "snapshot/tests/fixtures/observed-host/harness.ts": {
+      "sha256": "463d7f5feb7eedc32ac5d688d2bcb57c87460875fd14b7de3f5864da29f893a1",
+      "bytes": 7961
+    },
+    "snapshot/tests/fixtures/observed-host/owner.ts": {
+      "sha256": "b9a379c00645a1c3cc0704ad2986572b0c62ef0bbd3586d659649ecf160f941a",
+      "bytes": 6091
+    },
+    "snapshot/tests/observed-crash.test.ts": {
+      "sha256": "9a708bfeb740e48ca0e7e676a2dca2c0e95d96d58a6286248880a7a066361d57",
+      "bytes": 11154
+    },
+    "snapshot/tests/observed-host-fault.test.ts": {
+      "sha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+      "bytes": 51424
+    },
+    "snapshot/tests/observed-public-races.test.ts": {
+      "sha256": "a33653feeaf87496ed07d56086d120206ec0b018461bdb48803b5589cb3a614f",
+      "bytes": 22285
+    },
+    "source-appendix.md": {
+      "sha256": "5782d34658bd98a486a746e7458177048b7db55703dd47ced9f75a7a828e8a33",
+      "bytes": 2363
+    }
+  }
+}

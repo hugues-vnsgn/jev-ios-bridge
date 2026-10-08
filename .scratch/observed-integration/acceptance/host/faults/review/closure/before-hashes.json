@@ -1,0 +1,599 @@
+[
+  {
+    "kind": "owned",
+    "count": 9,
+    "files": [
+      {
+        "path": ".scratch/observed-action-rollout/issues/09-host-fault-suite.md",
+        "sha256": "8a3bc340cc76c08d30bdd2015b08911c3dc43891ce9cdd0a44c22c69ad1a3d48",
+        "gitBlob": "772377125957a4ad669215f3e5e452fdc21dfda4"
+      },
+      {
+        "path": "tests/fixtures/observed-host/early-cli.ts",
+        "sha256": "e6ae1ef16fc2f5f2b4340aae835f720f88403b1d6722db8cc78f2266dbe572e1",
+        "gitBlob": "66af67f966cb58c6ee4fbd52f1723490a291447d"
+      },
+      {
+        "path": "tests/fixtures/observed-host/case-matrix.json",
+        "sha256": "7d3be24e3c370a1efaeec9e808d549557da0935e36529c6ba7bb00be3e8d6509",
+        "gitBlob": "a705651f3182ebcfa3120953af97e39be4e54823"
+      },
+      {
+        "path": "tests/fixtures/observed-host/allocator-public.ts",
+        "sha256": "4362eb422c0213918d9e37e0d43c04644ae9429322be39bed82b0ce98d1228e1",
+        "gitBlob": "b32bc9595b88419d658f739124b6305461af1dbb"
+      },
+      {
+        "path": "tests/fixtures/observed-host/owner.ts",
+        "sha256": "b9a379c00645a1c3cc0704ad2986572b0c62ef0bbd3586d659649ecf160f941a",
+        "gitBlob": "5b7a4eaffbf6043bb127fdc9c2d5accfeafdf00a"
+      },
+      {
+        "path": "tests/fixtures/observed-host/harness.ts",
+        "sha256": "463d7f5feb7eedc32ac5d688d2bcb57c87460875fd14b7de3f5864da29f893a1",
+        "gitBlob": "38d67168574a97e625a5c261ab84f8eb049a1716"
+      },
+      {
+        "path": "tests/observed-host-fault.test.ts",
+        "sha256": "e7ca2c244ad2f4eff64d9314b05cf8fc6f1fe5def61c64c31b6381cc315d2a9a",
+        "gitBlob": "84a7f2042bf09c3d26784088c99c63ced623a507"
+      },
+      {
+        "path": "tests/observed-public-races.test.ts",
+        "sha256": "a33653feeaf87496ed07d56086d120206ec0b018461bdb48803b5589cb3a614f",
+        "gitBlob": "327934a360de86890fb811f492a6b4c7f54dbb60"
+      },
+      {
+        "path": "tests/observed-crash.test.ts",
+        "sha256": "9a708bfeb740e48ca0e7e676a2dca2c0e95d96d58a6286248880a7a066361d57",
+        "gitBlob": "5871d17f28141adb567ff986c9327b7fd57dea13"
+      }
+    ]
+  },
+  {
+    "kind": "protected",
+    "count": 108,
+    "files": [
+      {
+        "path": ".scratch/observed-integration/evidence/admission-audit.md",
+        "sha256": "e811f2531b60421770737fc60b5d88e29be53967211ea8455ed7a657519ce3a6",
+        "gitBlob": "30d112256df1b1d91d012d10bdd08a95944248b0"
+      },
+      {
+        "path": ".scratch/observed-integration/evidence/admission-decision.md",
+        "sha256": "1f667b5a8828033c367fe733de8907f7b6ff6c2c860e0da63e0032a9f76547a2",
+        "gitBlob": "3a49a53e40de8c7f62ef72aff5e3ba964bcc0fd9"
+      },
+      {
+        "path": ".scratch/observed-integration/evidence/admission-review.md",
+        "sha256": "7e92f0d82e49f712e2b202c566977e01a64201f96faf83aa7f15142da0f14ee2",
+        "gitBlob": "7b4e6c3a2c613384b26ab6055e8b20c2dc0cc680"
+      },
+      {
+        "path": ".scratch/observed-integration/evidence/allocation-contract.md",
+        "sha256": "1fd9e0b33d628bfde345ef0329e35e211f18ab12c96af79de29333c412588ead",
+        "gitBlob": "a4226d705dc8ebb3d8943b0cc69f2f1680c9a5c8"
+      },
+      {
+        "path": ".scratch/observed-integration/evidence/handoff-review.md",
+        "sha256": "7fb935f298b7a59f739ee81e60f9dd2715d2fff1edc4a85288ad1924a65e0742",
+        "gitBlob": "aba0d56cd728eb172e07d77e5aae20f5920bd327"
+      },
+      {
+        "path": ".scratch/observed-integration/evidence/integration-audit.md",
+        "sha256": "6b3bf8be9cf3683fc0549b1715d5a2fefeab585c3a29260ecd3ca78291846213",
+        "gitBlob": "37c59b2d7ec06c7c6b9cd084e85517d90360bad3"
+      },
+      {
+        "path": ".scratch/observed-integration/evidence/inventory-decision.md",
+        "sha256": "6a06472ebddc173bfe0f92feb3400ae0ba8527e384550ab8e3e68cee15befac2",
+        "gitBlob": "642cc2042de0987dae3ab2f082f4488562592371"
+      },
+      {
+        "path": ".scratch/observed-integration/evidence/provisioning.md",
+        "sha256": "627e4d6407aea5e818028c2f8ed7f66c785fd3be76743ab4d8c7b864d14320cc",
+        "gitBlob": "9ae235a20d7e34ed757e48b815d49f4bf7b091c7"
+      },
+      {
+        "path": ".scratch/observed-integration/evidence/public-contract.md",
+        "sha256": "2ff2a37284771567bb05765a1e6b7bd9b945435c62327eeed106f03251153e40",
+        "gitBlob": "23d5d137472c224b48c63c11298c76ec2f4f81dc"
+      },
+      {
+        "path": ".scratch/observed-integration/evidence/seam-decision.md",
+        "sha256": "da5a8ee2b12f9fcefd56f736ac19e0a4072520b230ae10c4a831f5c327c9a79d",
+        "gitBlob": "955e8d65a7754d68b9c9ea746587fedee5c291bf"
+      },
+      {
+        "path": ".scratch/observed-integration/evidence/validation-matrix.md",
+        "sha256": "7da9780964f8331e2422850a6dfba0e4e8313457d83db9a31d552498df7a272f",
+        "gitBlob": "34f059c5bf167f6d68e320235a8ca1752eec6f00"
+      },
+      {
+        "path": "AGENTS.md",
+        "sha256": "86d3e5e2ccba32103401ab95af6b6488fc439d090913b028a7961d07f79a1c47",
+        "gitBlob": "388339258603aca10ef2fd3299d2f1376856a3ae"
+      },
+      {
+        "path": "GLOSSARY.md",
+        "sha256": "a246e0082a15dfd2fa74138473607b9a3c5e3426460f1d43d1d9d154f87ec1c5",
+        "gitBlob": "71145d6e76f35e84f2731d4fe748c1cab772a47d"
+      },
+      {
+        "path": "docs/adr/0001-bridge-perceives-and-acts-jev-decides.md",
+        "sha256": "cff98f9a271e38257b39fd7cec36796942c3bc98f36b3a87213dcb986938a90c",
+        "gitBlob": "397c3de7932b46ac1a9f202fe89abcf298178bc4"
+      },
+      {
+        "path": "docs/adr/0002-mobilebuildmcp-as-device-layer.md",
+        "sha256": "00da2cbba873223976b22b0a26314a6b351b769b4c3f899a97f95334a565abe1",
+        "gitBlob": "53a6ee330080da6d1cccb10d4faca5745814a339"
+      },
+      {
+        "path": "docs/adr/0003-explicit-scripts-with-jev-assertions.md",
+        "sha256": "20bacdcf19d87497b662078d9eb9905e19fc96d63c50358e80b72b32f7920d54",
+        "gitBlob": "18101f5e94eb03e5952dd1a41e2bf50f839937c0"
+      },
+      {
+        "path": "docs/adr/0004-fixed-assertion-bounds-single-judgment.md",
+        "sha256": "f1aeebbd30f6140856481ec68393730b80ff8a4aacfdb1cb33ed3201fac63643",
+        "gitBlob": "7eb173171f1b0f0b35be7133046bebaf920a159c"
+      },
+      {
+        "path": "docs/adr/0005-the-1-0-stability-contract.md",
+        "sha256": "fe61fd90fda45b661b183162062d500c3cb87517afc0b2aee37ccbb154f3f04b",
+        "gitBlob": "cdee18b2f88162f9a211c875e0fc3167b55eff4a"
+      },
+      {
+        "path": "docs/adr/0006-mobilecli-device-agent-as-android-device-layer.md",
+        "sha256": "609d25b0de8d3b813d58d99969a9f3c90938709e13f649ab72485bf97d6a9ff5",
+        "gitBlob": "21b255b25e36625d2e936d8c4f538ed50e63dd2d"
+      },
+      {
+        "path": "docs/adr/0007-simulator-presentation-and-a-bounded-ios-point-tap-exception.md",
+        "sha256": "05f09cb8c30602b489b3fca212fae6edb1a9ba6e6beeb1a31cd418c40bcabb20",
+        "gitBlob": "177330a351a26b805f6fd480851e4074fd0d0417"
+      },
+      {
+        "path": "docs/adr/0008-durable-ios-admission.md",
+        "sha256": "53d1111c4dd1e2f36635c89d5695a6356a72e054810d7e3f3e7faf4be194d501",
+        "gitBlob": "f7c77ea8cf3290bb339a4b65d4994994174e0493"
+      },
+      {
+        "path": "docs/adr/0009-bounded-simulator-creation.md",
+        "sha256": "f60dae7177255f92e1263c29c6a4433216b80d17ce83bc91dd8a444f687ed384",
+        "gitBlob": "1e8fc5f0babb19e6d9ae2e7d356164ff06885a6a"
+      },
+      {
+        "path": "src/capture.ts",
+        "sha256": "ad7c7d9227fd865e381e7b7feebd980443d074ad2dc7d1e9609ddb1bacd737e7",
+        "gitBlob": "aac121a3777a2cba65f7d70cc75255a880ff2b22"
+      },
+      {
+        "path": "src/cli.ts",
+        "sha256": "137b42ef8cdc34a3e143461cf762c659d4bc0a8da768f320ad8b0232e200d7de",
+        "gitBlob": "7a57df7c448e158dd9285fbb480ee7668076b2ee"
+      },
+      {
+        "path": "src/contracts/index.ts",
+        "sha256": "2d1e497d56b13cbd948b2a0c350b60a0dc70aa706ee5d7ea3e7f33b3a2ec3ca6",
+        "gitBlob": "d87677d92bb3135a9cc8bdf784389a8ffc445fc0"
+      },
+      {
+        "path": "src/device/admission-allocation.ts",
+        "sha256": "7e75db8780fd24ace660701e23af6210dafbf9731920ece4cb71fa1d00414a5e",
+        "gitBlob": "112bc999dfcddd527488f81671dda7ad98bec379"
+      },
+      {
+        "path": "src/device/admission-maintenance.ts",
+        "sha256": "908864b9c6df13805998b917f0ca1a3a7b430708548decdccb1abcb726e866a5",
+        "gitBlob": "1fee5d62045b87efa9dc17976133771c57dc07d0"
+      },
+      {
+        "path": "src/device/admission-migration.ts",
+        "sha256": "14e66ab6ed5a84a241275f7eda67202a6662aeb978942e55e6980078dbb6ee8b",
+        "gitBlob": "62086abb42c26e67b8ddb062f7a712e9c9669807"
+      },
+      {
+        "path": "src/device/admission-sqlite.ts",
+        "sha256": "209e311d610f77d172f6af15ac815ba24c79496d0e065e3ef25f410d0fb10856",
+        "gitBlob": "435d7480cefab6a5dc69d43dd6d96644a43df5ea"
+      },
+      {
+        "path": "src/device/admission.ts",
+        "sha256": "a0533274c6fbebecb227fa2dd7121a170ce2a2d9c84ddf73f4fad74a39569a91",
+        "gitBlob": "8952b8d15f7fa0bb594e0a5cfe8c6e7d568789e3"
+      },
+      {
+        "path": "src/device/android/adb.ts",
+        "sha256": "0d9629f9696b5f79d9cc8f74cdcc420200a60ff4c679f62f14ba302457fdd144",
+        "gitBlob": "acb78aeedc78f4a12e1e3e38c0ac710388a7c478"
+      },
+      {
+        "path": "src/device/android/agent-client.ts",
+        "sha256": "4f6732361e72320047bd12939618057f00b8e6d2f0d4f4f8ce3bc4982ab7ea47",
+        "gitBlob": "9203dea080c8e741cedc73410dd6b5e2c20af56f"
+      },
+      {
+        "path": "src/device/android/agent-supply.ts",
+        "sha256": "1bd4424293515d2e2e593e143b88a2133d6cbbc10bffa710a0d757944d35b0a2",
+        "gitBlob": "1ef59fbd09460c904e81bf2ddad5031d2c198ccd"
+      },
+      {
+        "path": "src/device/android/driver.ts",
+        "sha256": "ca188a7cf0a93fc1f955726101568a55aad924c981a04963a740b2fe31080c0a",
+        "gitBlob": "2d8a83cc68920b5ae82f6ba69fdce6acde232e81"
+      },
+      {
+        "path": "src/device/android/exit-watch.ts",
+        "sha256": "49580333ad22318b5dfcba345479cfba4a31a22f278a30a0b4020ef643467e50",
+        "gitBlob": "09bf0bf622a09874d647b79b48df2ae8d2e6fef9"
+      },
+      {
+        "path": "src/device/android/ledger.ts",
+        "sha256": "8cfb098e5724db68234f7ce4f743d2c1857ba3041d7c4c20a484c81657c8eb77",
+        "gitBlob": "a651f7f61f39eb05f87f68cb92a45fd95c02d629"
+      },
+      {
+        "path": "src/device/android/logcat.ts",
+        "sha256": "001ef7c26418b80cf53d24427ad393612cb3cfe5f5dc66554b90eb92475be4b0",
+        "gitBlob": "2766b69484c1eb8672b39d2d634aee9c8ad9d4e8"
+      },
+      {
+        "path": "src/device/android/mapping.ts",
+        "sha256": "57fdd34407b1abd0542946af72e56377264a66516517aa0642418064da6a8585",
+        "gitBlob": "a14efbcfa261a57e50ca66e689dbb7a9feea1a88"
+      },
+      {
+        "path": "src/device/android/settle.ts",
+        "sha256": "659367ace0010cab3aeb002cb033ef65965bd5c0f78c4795af4ec5bbc57f09f3",
+        "gitBlob": "314edc80c4b041c199f54e5cf3231a92a5cffc37"
+      },
+      {
+        "path": "src/device/android/threadtime.ts",
+        "sha256": "26b03f0ba7a79bc778160c73beaec6e8c8537491ec83b6a0732c01bcb9a066e4",
+        "gitBlob": "a9f9d6fc41a7e527adf90e7fda1bd9d2c2b281e7"
+      },
+      {
+        "path": "src/device/android/tools.ts",
+        "sha256": "9286ad5d386d03976ffd967a36ee83358e5c8db73440215c3d7657bfdca8e64a",
+        "gitBlob": "89fb2a1f3305697b718ffafd3a84f54c910834fe"
+      },
+      {
+        "path": "src/device/attach.ts",
+        "sha256": "d4f4d81392d9a7fb5fee87f80d6fdbbdaa6bada789696d289c1198345432ed9e",
+        "gitBlob": "cdf774e6cbf1791033c1cb56998ad6e3ee57c522"
+      },
+      {
+        "path": "src/device/factory.ts",
+        "sha256": "a6c361f036ce7ead47d15b816a9220382eaa4b9d0d3fa4ae83885e74b4a94971",
+        "gitBlob": "4bdb3f6af5cfc1d6558b2e16cf60d4fa7e27b1d6"
+      },
+      {
+        "path": "src/device/image.ts",
+        "sha256": "2faa0839bac89a13e08e5e873e3da1e96b58e3a41adc096d1f2621aff26eb88a",
+        "gitBlob": "a2265cc30e7555e5d5dade10a51417dfd7a74b9f"
+      },
+      {
+        "path": "src/device/index.ts",
+        "sha256": "21e63907b028cd5eb84e61834aa79e6bd59d74c19f3be30b00c0dacb659b5604",
+        "gitBlob": "6b16582f82f8c054025468d42017222f64cfa206"
+      },
+      {
+        "path": "src/device/lease.ts",
+        "sha256": "d5587a7336c968560afb71ee2adcd00cd86118ad0b6266b2a0a1feac8f8b7f33",
+        "gitBlob": "c537ff2f726c8eb3463fea89b8434f5e183905bc"
+      },
+      {
+        "path": "src/device/logs.ts",
+        "sha256": "25b9be6d7d99cae7fba3c46ffb3253050ee9ca3e27fe74e976392984109f5dc8",
+        "gitBlob": "dbd68e27a79bf1e0f1865447ab7c9588f39c7d6d"
+      },
+      {
+        "path": "src/driven/candidates.ts",
+        "sha256": "486830dc9f526b7a0bb5dd448d4d788c1300ed1c825f0a24e37ba696b608ed60",
+        "gitBlob": "641bc49e91972b12310bf719b67ee01e98277511"
+      },
+      {
+        "path": "src/driven/decide.ts",
+        "sha256": "392b33542da85d13364a3b139e69af0ed21f27090829f23e3a8f5286ad2045f5",
+        "gitBlob": "27b5aa56335046d1e85bd0c2e22e1edcea64b95c"
+      },
+      {
+        "path": "src/driven/handback.ts",
+        "sha256": "198d06dd9f3b4d09f4abdec9b1c07d37f2881a597e958f60e4ccc2fd0f9a46c8",
+        "gitBlob": "854f0dfc0c5c8fba607a5ebfe69a68c1349f0c18"
+      },
+      {
+        "path": "src/driven/marker.ts",
+        "sha256": "7453680b38c8890edfc4698629874bb55b73b5e6cbc539e3c2add7b8b802ac23",
+        "gitBlob": "22a549d3243dae2eed5cb9b4a7ece07a50dfa478"
+      },
+      {
+        "path": "src/driven/policy.ts",
+        "sha256": "577f1695a728fdc48851c10902ce28a37aee1f9c7b665a396e9cb786b4114c9c",
+        "gitBlob": "21652ca8ea91a1715f9a8bcf70ae3608ae2e0888"
+      },
+      {
+        "path": "src/driven/project.ts",
+        "sha256": "ebf6db2c81cf0803f0ec1700e92987a175df4d60be453dc34b57edb9a236a90c",
+        "gitBlob": "e269317a60b9be22b75e8056b69d30119c099b6c"
+      },
+      {
+        "path": "src/driven/step.ts",
+        "sha256": "ffa7d97ddbdfdabe7f6d9049f1ee5a2146c6438135954bafbb1d319d766a9d4c",
+        "gitBlob": "afed8187f97a7c60522fa6a31ffdebd8bfe7dbfa"
+      },
+      {
+        "path": "src/driven/vocabulary.ts",
+        "sha256": "8b6f9c4f666ba96d1deb61907d4c19cbffaf71b9241e15e2576980ec6eb8b781",
+        "gitBlob": "50df69e481467e3fcf12d854945c8e367ebc5dbb"
+      },
+      {
+        "path": "src/exit-codes.ts",
+        "sha256": "9d5cddb455145ffcc8993f6b693a14bdbc279a1da1fd93e8c4fdb293dcca3b62",
+        "gitBlob": "096d8a6cb67d04551640b517864cd914144526b1"
+      },
+      {
+        "path": "src/experimental/observed-journal.ts",
+        "sha256": "f7e5c57268175d09f7483f863b0c6bf7019a24d34d0649df94442d8341be88a7",
+        "gitBlob": "f9bb0af054a30cdaaebe4f7e68511a63acd6663d"
+      },
+      {
+        "path": "src/experimental/observed-run.ts",
+        "sha256": "567e16ed1f9229cfa21eddb761f24208123806593a8ec0c61eb250f6e79736bb",
+        "gitBlob": "776a6a12862204ca0df4c03f927c4840c440cde0"
+      },
+      {
+        "path": "src/experimental/observed-tap.ts",
+        "sha256": "db81880287f5635f7d0d66b390f4937e88434fcf06f4dc3b63ab243a11ad313b",
+        "gitBlob": "0bcca2a45acd3a1e5ea6998978e768060168a758"
+      },
+      {
+        "path": "src/log/index.ts",
+        "sha256": "bef9a52aba5090c73a631b242fd1051232ad0c4ee3e446787b36a79a3dc515c0",
+        "gitBlob": "798ff3b3fa30b942becc7adffeca34d6c6e56e5f"
+      },
+      {
+        "path": "src/logpane/attach.ts",
+        "sha256": "399d95de2004751f031e9639af5b8b7588efda7b1f815aaef3de32ca8ebf1c88",
+        "gitBlob": "739684ad622d43eb37d4ef1a92b93b6f678c50f3"
+      },
+      {
+        "path": "src/logpane/format.ts",
+        "sha256": "d00b7718f116fa83c4ba7834c1e94052aaaf5436b85f989bb9195c2505b4b88e",
+        "gitBlob": "04a536ecafe3f38de1b6ad2bcaa97c00aac032ad"
+      },
+      {
+        "path": "src/logpane/stream.ts",
+        "sha256": "ca1b2e6fb9be6317f23e65194c90a8726c16abef6f8f3791bad8cd2ef87a013c",
+        "gitBlob": "c77fa256fc0cfde3ac4836d218557a633cfabfff"
+      },
+      {
+        "path": "src/logpane/window.ts",
+        "sha256": "8506e8734a69ccbc34256eae8fe69fe887ac4ef812af29e9e69627c22e49c3fd",
+        "gitBlob": "7b4abf27ac0ef80f571d2b9b0bb8f7612204d30f"
+      },
+      {
+        "path": "src/mcp/index.ts",
+        "sha256": "48e531d304d19852d461eb1d3317fee5f953a15654f405c3393b04ff4a494c2a",
+        "gitBlob": "76cc20be10d26f79c46a07132144c7575e38423f"
+      },
+      {
+        "path": "src/mcp/observed.ts",
+        "sha256": "5522cc1933d54d13cd8c72b7d8caa5ebf262272f9e0110c13fceb58dd8fcc51b",
+        "gitBlob": "ba1f95c0a6384e538f2e72249ee9285b7abfd566"
+      },
+      {
+        "path": "src/observed/allocation-config.ts",
+        "sha256": "b6519649edbaf203e5323a15c80273321a42a5cb49850551297268e6ee1f5f0a",
+        "gitBlob": "e7c72a20932ca9ea63747d58b6ca2ff9f2cd137c"
+      },
+      {
+        "path": "src/observed/allocation-schema.ts",
+        "sha256": "f48809598c4db4f8609f565659d89bc5438370d1d68b6229f97e8e40a8e6b3ca",
+        "gitBlob": "31fece6fc2cde32e8a55a6c323163573186be3af"
+      },
+      {
+        "path": "src/observed/allocation.ts",
+        "sha256": "0233ea8d8d571761596287e9369f7801bd693edfe6d95c459a950e4c3b943041",
+        "gitBlob": "972dd0468cfc9361feac2aef327db6a2fc0f0b4c"
+      },
+      {
+        "path": "src/observed/artifact.ts",
+        "sha256": "5d861ffca7a15e9c078204aeccb533531cfe1de3fe8dcdfcc0ac3901a670b139",
+        "gitBlob": "18bbc5c604d0890b106266ed5efd43c842d05f4c"
+      },
+      {
+        "path": "src/observed/cli.ts",
+        "sha256": "17ed826b608359a9f901012a82447fd1e06d1d2a65e5b8b477e1c0a0885f8e78",
+        "gitBlob": "ae212d436af807f6fc9d4c519d03bebad0eecd9d"
+      },
+      {
+        "path": "src/observed/create-source.ts",
+        "sha256": "d13d6e4324be0b534ce32e0057dd0a1ca9654941976ce53dcf17bba530e258b1",
+        "gitBlob": "6000d020ea52b2d047eb879d2cd166992cc389c9"
+      },
+      {
+        "path": "src/observed/evidence.ts",
+        "sha256": "deeb65d7c95c84de1c3b559ec2a885da768a8203a2be79af700f3262717462fb",
+        "gitBlob": "b444ea949d6b40976f452c29536f8e695a652f90"
+      },
+      {
+        "path": "src/observed/report.ts",
+        "sha256": "b137ebad4b582f652bea7e788101a717a094073b57f8461b243e4dc0897fd1ff",
+        "gitBlob": "38f954eefdb9b145b9b5f9c49cac1c78725d452c"
+      },
+      {
+        "path": "src/observed/schema.ts",
+        "sha256": "7592d02055e8a1c65294b3660685d27a0a1f4c70e2b8283c71cd45a5bded6774",
+        "gitBlob": "daf5ba2a9b2a0dbc65cc951a120567f95f0db54d"
+      },
+      {
+        "path": "src/observed/service.ts",
+        "sha256": "0c9e6cd6bfc1d7308bc6dcdb1cbf88b9179143084f9cb66d28af09cb6a9def6d",
+        "gitBlob": "4ba1a61ae47f4ea6f8479cafb08e570b653c45c4"
+      },
+      {
+        "path": "src/observed/supplied-source.ts",
+        "sha256": "323105c489fae0823fc8c4674479f9e8c58e1e8ef500da8af043d8343badad64",
+        "gitBlob": "47386465cc12baa87ae14c4f33caaf6ddd29ba8b"
+      },
+      {
+        "path": "src/process.ts",
+        "sha256": "f1b2d73512bed07afbaf05aa6d4712243c8b39ea93b37b70c45ef56580174303",
+        "gitBlob": "54f22cd0d28c20e55fc3493f299034b96b91589e"
+      },
+      {
+        "path": "src/scripted/contracts.ts",
+        "sha256": "8482d44dc73d522342a6a4db3ff29884f6bd26d44b4a3d8859d308fdaa43a21b",
+        "gitBlob": "3d11da43b7210fc87c9af98ff2efe9621bc141c7"
+      },
+      {
+        "path": "src/scripted/jev.ts",
+        "sha256": "b75b1004dd4bc68334a38a1ef775296168a9695f8822e087d88cb214695a29db",
+        "gitBlob": "36c43bfbcb0f358f2f0a975fbaf9dc9b325cbb4c"
+      },
+      {
+        "path": "src/scripted/observe.ts",
+        "sha256": "926734786ae1c64911788270cc8b4a562c848d0a6cd7cde4db537fd0f219eadf",
+        "gitBlob": "60d384a7761e06b1a0e73d31defb47adef2473f1"
+      },
+      {
+        "path": "src/scripted/report-json.ts",
+        "sha256": "f819d75eed65ba9295d19e4a69f402b702c8e606bf9dfefbe122cb26c06aa720",
+        "gitBlob": "577ed4a3a6756fb7087439d1543dd2744dbf75dd"
+      },
+      {
+        "path": "src/scripted/report.ts",
+        "sha256": "b6d9c8d559ed156d85d986e75c23b66db2a8fed00f8a1f5bc7e228fde0b02f24",
+        "gitBlob": "6dd7eea7651f02f9d71c90eecc6543401b773711"
+      },
+      {
+        "path": "src/scripted/run.ts",
+        "sha256": "fdbb7f9c2485cb5e522efb8c134a7a482d0d881c8a009072838a0a852464c9bb",
+        "gitBlob": "929cd214b094867b82a8258c833f23de477c2468"
+      },
+      {
+        "path": "src/scripted/schema.ts",
+        "sha256": "a944a877e63eff9d4a05e234cb0572a937afe268508baed224f5f98ead8934a0",
+        "gitBlob": "e8c798379bb1a0e45ef34eb37e0dd95038a49388"
+      },
+      {
+        "path": "src/scripted/select.ts",
+        "sha256": "7059fd5613a2ee054064dbfa1dcbc8b0c9deba1e10b91e0e20dcfb371817c3b4",
+        "gitBlob": "92dddd1f3c189cc553097d1afb049f10b861a6a9"
+      },
+      {
+        "path": "src/scripted/vocabulary.ts",
+        "sha256": "490a617c1c21781df9677c978cd336fec2fab6179f50c8819754cfa38abbae4f",
+        "gitBlob": "0e6751d902bb41b8a7aabe64d65f24fe8a5de049"
+      },
+      {
+        "path": "src/service.ts",
+        "sha256": "9e028d3d7e2ee63ea52289d5cadbc142df6fa277da93d1462450960c7af60326",
+        "gitBlob": "0bf4a782a292a51ade6932b40ca5892517087f07"
+      },
+      {
+        "path": "src/version.ts",
+        "sha256": "cbef0bb4b74e2b0d0113f24a67cd0a75e888d1684a081cd04abbb181b241968a",
+        "gitBlob": "71661f6b69c0b9ab870fd0dc6362fca5a152d123"
+      },
+      {
+        "path": "src/watch/index.ts",
+        "sha256": "112b31d8360c5dfc9d9b9b57557461218824f031d2fc0e3b6c26dc05b6959e3f",
+        "gitBlob": "a217f84c9438290616f9284b93f792edf7b34f85"
+      },
+      {
+        "path": "tests/admission-maintenance-entry.test.ts",
+        "sha256": "992a918bfa26edfcecdd7fee0b6265261d5f7270a758968ca42ee14d2a131420",
+        "gitBlob": "a4c4fd949b3cb7d47e2b82320c0b7cb69ee2a7ae"
+      },
+      {
+        "path": "tests/fixtures/observed-allocation-backend.ts",
+        "sha256": "82761f545831ccb2418936c5370e25b8970e972ddedf3879827d6c4c30df3814",
+        "gitBlob": "9332732d8399517748e21a8c49b5c10f2c36299b"
+      },
+      {
+        "path": "tests/fixtures/observed-cli-server.ts",
+        "sha256": "50d02a4f919b6bf162f5e0b89992a5f0fe37158c0667c565f24bb997b713bfcb",
+        "gitBlob": "00585578e3e568196b4a3e0b2785830483678c08"
+      },
+      {
+        "path": "tests/golden/android-capture.json",
+        "sha256": "2d1d7c7435fe35b36a75637048c373bae414f2afa9cdb2f691aeab83424fcdba",
+        "gitBlob": "15ab9b7d373f46758e4fb4493c34d18b5191844c"
+      },
+      {
+        "path": "tests/golden/android-elements.json",
+        "sha256": "35d5c060cd85cdba27b6f96fb33a91eb497a9be9bc388e6991ebb0c22b4222e5",
+        "gitBlob": "836ee048af2e4996893b3ba2b42edf2670c2c7dc"
+      },
+      {
+        "path": "tests/golden/android-render.json",
+        "sha256": "609fd79d528f8c681deab7ab55e61055866e9427d8be928d3ba5844cee35a367",
+        "gitBlob": "0e4dd27633e4030d4caec526dfd47f175d47ee9b"
+      },
+      {
+        "path": "tests/golden/cli-exit-codes.json",
+        "sha256": "2ae6bf0deb86b74063d0e3b9d3260b72322d5416ae053281abb92afe0cfaae37",
+        "gitBlob": "9d633fe429a8030c2a4898e4571345b3495b6fcc"
+      },
+      {
+        "path": "tests/golden/evidence-layout.json",
+        "sha256": "ac49e9b6433e71636364e707a691c89817b1c8404b582e809a47a3b70d52f880",
+        "gitBlob": "6724098f0cb3e584600a0b674af7cd8cb00050a1"
+      },
+      {
+        "path": "tests/golden/mcp.json",
+        "sha256": "4f69fcd0c1414dbd392f1b223de9d83709b761e80fef299300930c57d2bfed41",
+        "gitBlob": "dd3ea9ea844d454502129f75b8991eb2d08a2eef"
+      },
+      {
+        "path": "tests/golden/observed-mcp-v1.json",
+        "sha256": "48dc6d413b8f272be845c03b0827f1429a053298676eab3812e568b90936a63b",
+        "gitBlob": "8c37604adc7c546f5779a1e224476f1a3becde17"
+      },
+      {
+        "path": "tests/golden/observed-replies-v1.json",
+        "sha256": "cdbfbfe4b8ac3f93bebd0e7f8cc5243cc90d3549bc20bdbea97bdd670dc0602b",
+        "gitBlob": "0e11c9a3e55d162e559e2e7d237a14fa50e9d190"
+      },
+      {
+        "path": "tests/golden/report-json-android.json",
+        "sha256": "67db1d463d3b0fea60e7e81cbd9a969fe4a61fd429e7b57f04d19b313cf12912",
+        "gitBlob": "955ee0b64ffba0dde12aa7e27eaef95b1020fd62"
+      },
+      {
+        "path": "tests/golden/report-json-driven.json",
+        "sha256": "08c65ce98a15888f6adb6b877c9237350585abb7c030c00f0426db747c858996",
+        "gitBlob": "74a75d1e1ae51d1b9f2dbb228cdae932d8ae6396"
+      },
+      {
+        "path": "tests/golden/report-json.json",
+        "sha256": "f1bab04f2dbe8e96eb85f23b12777cb429ae042d14fe10e6585977b6d751e036",
+        "gitBlob": "ed529c04490343db190a4d00851d12dd99f04b05"
+      },
+      {
+        "path": "tests/golden/report-text-driven.json",
+        "sha256": "1dd527e603948f1b430eadd3e926f23a8514432b405a04f3e80059f98169cb86",
+        "gitBlob": "51aa66b27aaaefe73056955e8d6c2f4221eed6a2"
+      },
+      {
+        "path": "tests/golden/scripts.json",
+        "sha256": "de152f8d69050614d0504f3818255c65d8a3972861e169e803a5ec59b465cb77",
+        "gitBlob": "384ac3318454c57c2fa167171b224e2c2b7beea9"
+      },
+      {
+        "path": "tests/golden/vocabulary.json",
+        "sha256": "d9b39682a2f836b05938cd1abe80c452112d013f1425fa24409131b5ae9e984f",
+        "gitBlob": "25348a45ce8fbe2939970aedac1c8473e8301bdd"
+      },
+      {
+        "path": "tests/integration-edge.test.ts",
+        "sha256": "96ee8f46f3dc86a4546a6e934ecc1e26f9d331fb36472ac097ea86d6bc62120f",
+        "gitBlob": "157301d4b63e122c78f6ce8e37aa66fa8ff5e405"
+      }
+    ]
+  }
+]
