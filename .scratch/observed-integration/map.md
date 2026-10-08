@@ -32,6 +32,9 @@ An implementation-ready plan for exposing the validated observed-action runner t
 
 - [Audit admission and quarantine across runners](issues/03-admission-boundary.md): transactional shared admission, non-mutating status, and atomic terminal authority; host diagnosis reproduced both integration hazards.
 
+- [Choose the observed-action public contract](issues/04-public-contract.md): additive versioned allocation/action APIs with key-free execution, authoritative retrieval and explicit cancellation.
+- [Define allocation and uncertain-device lifecycle](issues/05-allocation-contract.md): durable bounded creation, single-use allocation, parked handoff, retained uncertainty and a host-wide unknown-create guard.
+
 ## Route
 
 <!-- route:start -->
@@ -57,9 +60,9 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T03,T08 resolved
-    class T04,T05 claimed
-    class T06,T07 blocked
+    class T01,T02,T03,T04,T05,T08 resolved
+    class T06 claimed
+    class T07 blocked
 ```
 <!-- route:end -->
 

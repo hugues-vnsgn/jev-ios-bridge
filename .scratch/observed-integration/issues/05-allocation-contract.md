@@ -4,7 +4,7 @@ Parent: [Observed actions from live experiment to agent workflow](../map.md)
 Label: wayfinder:task
 Type: task
 Mode: AFK
-Status: claimed
+Status: resolved
 Claimed by: allocation-lifecycle
 Triage: ready-for-agent
 Blocked by: 03, 08
@@ -28,3 +28,11 @@ The answer cites inspectable evidence, distinguishes facts from recommendations,
 ## Comments
 
 Created during charting. No implementation authorization is implied by this planning ticket.
+
+## Answer
+
+Resolved 2026-10-08 by allocation-lifecycle. [Allocation contract](../evidence/allocation-contract.md) defines the allocator interface, exact preparation request/snapshot, shared durable records, budget defaults and per-user configuration, fresh creation and supplied inventory, readiness, cross-process admission transfer, crash handling and permanent single-use retention. It aligns with the public-contract owner on MCP/CLI names and separate immutable preparation/action digests. Global action reservation precedes creation; a fresh device cannot replay that declared action ID.
+
+A creation with an unknown UDID retains capacity and a transactional host-wide guard: every new updated iOS admission refuses with `HOST_CREATION_UNRESOLVED`; existing admitted owners may finish. No automatic reconciliation, source substitution or capacity refund follows uncertainty. Installed compatible runtimes and unchanged simulator artifacts remain explicit host prerequisites. All four protected devices and their claims remain excluded.
+
+No design question remains unresolved. Implementation, fault tests and fresh public-interface live validation remain acceptance gates, not evidence supplied by this planning answer. Native proof, broad cleanup/reclamation and external-tool fencing are outside scope. The coordinator owns map/domain/ADR consolidation; only this ticket and its assigned evidence were edited.

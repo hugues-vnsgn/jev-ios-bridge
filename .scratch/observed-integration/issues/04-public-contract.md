@@ -4,7 +4,7 @@ Parent: [Observed actions from live experiment to agent workflow](../map.md)
 Label: wayfinder:task
 Type: task
 Mode: AFK
-Status: claimed
+Status: resolved
 Claimed by: public-contract
 Triage: ready-for-agent
 Blocked by: 01, 03
@@ -28,3 +28,12 @@ The answer cites inspectable evidence, distinguishes facts from recommendations,
 ## Comments
 
 Created during charting. No implementation authorization is implied by this planning ticket.
+
+
+## Answer
+
+Resolved 2026-10-08 by `public-contract`: choose additive version-1 observed interfaces through shared `ObservedActionService`, with exact request/snapshot/error schemas, MCP names, CLI names/exits, key-free startup/enablement, read-only polling, authoritative terminal retrieval, durable cancellation and restart rules in [public contract](../evidence/public-contract.md). The decision cites actual CLI/MCP/service and experimental executor behavior plus ADR-0005; scenario/script/verdict/report meanings remain frozen.
+
+Declare actionId globally during preparation, reserve allocationId separately, and bind immutable preparation/action digests in the transactional store. Identical submissions retrieve; changed input/allocation/device conflicts; lost replies, crash, cancellation and uncertain creation never allocate a replacement or replay. Coordinated [allocation contract](../evidence/allocation-contract.md) supplies exact preparation/state/outcome schemas, retained inventory, parked ownership transfer and host-wide unknown-create guard. Explicit action and allocation cancellation avoid polymorphic results and remain available when feature enablement is off.
+
+Committed outcomes are distinct from unresolved authority and provisional files; attempted/acknowledged flags can remain unknown. Four outcomes are visible evidence, never Jev verdicts or native receipts. Exact schemas and bounded interfaces are decided; downstream implementation/fault/live gates and migration/external-operator prerequisites remain explicit. No product implementation, tests, device operations or owner scope change occurred. Coordinator owns shared map/spec/domain/ADR integration.
