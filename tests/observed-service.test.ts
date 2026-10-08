@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test, { type TestContext } from 'node:test';
-import { mkdtempSync, mkdirSync, realpathSync, rmSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, realpathSync, rmSync, readFileSync, writeFileSync, renameSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
@@ -606,18 +606,21 @@ for (const point of ['beforeCommit', 'afterCommit'] as const) {
   });
 }
 test('retrieved consume and host creation refusal invoke zero driver or probe calls', async t => {
-  let admission!: Admission; let consumed = false;
+  let admission!: Admission; let consumed = false; let blockerId = '';
   const allocator: ObservedAllocator = { async prepare() {}, async get() {}, async cancel() {}, async retire() {}, async close() {},
     consume(binding) {
-      if (consumed) return { kind: 'refused', reason: 'HOST_CREATION_UNRESOLVED', blockingAllocationId: 'ABCDEF00-0000-4000-8000-000000000099' };
+      if (consumed) return { kind: 'refused', reason: 'HOST_CREATION_UNRESOLVED', blockingAllocationId: blockerId };
       consumed = true; const result = admission.consumeAllocation(binding); assert.equal(result.kind, 'consumed');
       if (result.kind !== 'consumed') throw new Error('fixture'); return { kind: 'retrieved', allocation: result.allocation };
     } };
   const f = fixture(t, async () => assert.fail('No backend'), { allocator, createDriver: () => assert.fail('No attachment') }); admission = f.admission;
-  assert.equal((await f.service.start(request(await ready(admission)))).disposition, 'retrieved');
+  const allocationId = await ready(admission);
+  assert.equal((await f.service.start(request(allocationId))).disposition, 'retrieved');
+  blockerId = await unresolvedCreator(admission, allocationId);
   await assert.rejects(f.service.start(request('ABCDEF00-0000-4000-8000-000000000098', 'other')), error => {
-    const value = error as { code: string; toJSON(): { blockingAllocationId: string; acceptance: string } };
-    assert.equal(value.code, 'HOST_CREATION_UNRESOLVED'); assert.equal(value.toJSON().blockingAllocationId, 'ABCDEF00-0000-4000-8000-000000000099');
+    const value = error as { code: string; toJSON(): { blockingAllocationId: string; acceptance: string; evidenceDirectory: string } };
+    assert.equal(value.code, 'HOST_CREATION_UNRESOLVED'); assert.equal(value.toJSON().blockingAllocationId, blockerId);
+    assert.equal(value.toJSON().evidenceDirectory, '/isolated/blocker-evidence');
     assert.equal(value.toJSON().acceptance, 'no'); return true;
   });
   await f.service.close();
@@ -655,3 +658,157 @@ test('explicit startup recovery quarantines only the proven abandoned expected o
   const committed = readFileSync(join(root, 'store', 'admission.sqlite')); await service.start(raw); await service.close();
   assert.deepEqual(readFileSync(join(root, 'store', 'admission.sqlite')), committed);
 });
+
+test('local cancel fences continuation even when initial authoritative read fails', async t => {
+  const entered = deferred<void>(); const pending = deferred<ReturnType<typeof reply>>();
+  const calls: string[] = []; let driver!: ReturnType<typeof createObservedDriver>; let revocations = 0;
+  const runner: CliRunner = async args => {
+    calls.push(args[1]!);
+    if (calls.length === 1) { entered.resolve(); return pending.promise; }
+    return reply(true, args[1] === 'touch');
+  };
+  const { root, admission, service } = fixture(t, runner, { createDriver: () => ({
+    attachObserved: (...args) => driver.attachObserved(...args), observe: (...args) => driver.observe(...args),
+    tapOnce: (...args) => driver.tapOnce(...args), revokeIssuance() { revocations++; driver.revokeIssuance(); },
+    close: signal => driver.close(signal),
+  }) });
+  driver = createObservedDriver({ cwd: root, admission, lockRoot: join(root, 'leases'), runner,
+    deviceWindow: async () => assert.fail('No window'), fakeBackend: { runner, window: undefined } });
+  await service.start(request(await ready(admission))); await entered.promise;
+  const db = join(root, 'store', 'admission.sqlite');
+  renameSync(db, db + '.temporarily-unavailable');
+  try {
+    const cancellation = service.cancel('one');
+    assert.equal(revocations, 1, 'The owned local gate is revoked synchronously before cancellation awaits authority');
+    await assert.rejects(cancellation, { code: 'STORE_UNAVAILABLE' });
+  }
+  finally { renameSync(db + '.temporarily-unavailable', db); }
+  pending.resolve(reply(false));
+  const terminal = await service.inspect('one', { waitMs: 3000 });
+  await service.close();
+  assert.deepEqual(calls, ['snapshot-ui'], 'Explicit local cancellation prevents follow-up input despite an unavailable initial read');
+  assert.equal(terminal.cancellationRequested, false, 'An unavailable cancellation read cannot invent durable cancellation');
+  assert.equal(terminal.actionAttempted, false); assert.equal(terminal.actionAcknowledged, false);
+  assert.equal(terminal.observations, 0); assert.deepEqual(terminal.evidence.observations, []);
+  assert.equal(terminal.state, 'unresolved'); assert.equal(terminal.authority, 'unconfirmed');
+  assert.equal(terminal.outcome, null); assert.equal(terminal.reason, 'FINALIZATION_UNCONFIRMED');
+});
+
+test('settled close within finalization budget does not consume action observation budget', async t => {
+  let driver!: ReturnType<typeof createObservedDriver>; let closedAt = 0; let observedAt = 0;
+  const calls: string[] = [];
+  const runner: CliRunner = async args => { calls.push(args[1]!); return reply(true); };
+  const { root, admission, service } = fixture(t, runner, { createDriver: () => ({
+    attachObserved: (...args) => driver.attachObserved(...args),
+    observe: async (...args) => { const value = await driver.observe(...args); observedAt = Date.now(); return value; },
+    tapOnce: (...args) => driver.tapOnce(...args), revokeIssuance: () => driver.revokeIssuance(),
+    close: async signal => { await driver.close(signal); await new Promise(resolve => setTimeout(resolve, 650)); closedAt = Date.now(); },
+  }) });
+  driver = createObservedDriver({ cwd: root, admission, lockRoot: join(root, 'leases'), runner,
+    deviceWindow: async () => assert.fail('No window'), fakeBackend: { runner, window: undefined } });
+  const raw = request(await ready(admission)); raw.timeoutMs = 500;
+  const began = Date.now(); await service.start(raw); const terminal = await service.inspect('one', { waitMs: 3000 });
+  await service.close(); assert.equal(terminal.outcome, 'already_satisfied');
+  assert.equal(terminal.authority, 'committed'); assert.equal(terminal.reason, null);
+  assert.equal(terminal.actionAttempted, false); assert.equal(terminal.actionAcknowledged, false);
+  assert.equal(terminal.observations, 1); assert.deepEqual(calls, ['snapshot-ui']);
+  assert.equal(terminal.cancellationRequested, false); assert.equal(terminal.admission, 'available');
+  assert.equal(terminal.evidence.exportStatus, 'complete');
+  assert.ok(observedAt - began < raw.timeoutMs, 'Observation settled within its action deadline');
+  assert.ok(closedAt - began > raw.timeoutMs, 'Local close outlasted the observation deadline');
+  assert.ok(closedAt - observedAt < 5000, 'Confirmed local close settled within its separate finalization budget');
+});
+
+for (const phase of ['close', 'provisional'] as const) {
+  test(`local cancellation with a failed durable write during prolonged ${phase} cannot commit computed success`, async t => {
+    let driver!: ReturnType<typeof createObservedDriver>; let failing = false;
+    const entered = deferred<void>(); const release = deferred<void>(); const files = new FileObservedEvidence();
+    const calls: string[] = [];
+    const runner: CliRunner = async args => { calls.push(args[1]!); return reply(true); };
+    const evidence: ObservedEvidenceStore = {
+      prepare: (...args) => files.prepare(...args), observation: (...args) => files.observation(...args),
+      async provisional(directory, result) {
+        if (phase === 'provisional') { entered.resolve(); await release.promise; }
+        await files.provisional(directory, result);
+      }, terminal: (...args) => files.terminal(...args),
+    };
+    const { root, admission, service } = fixture(t, runner, { evidence, createDriver: () => ({
+      attachObserved: (...args) => driver.attachObserved(...args), observe: (...args) => driver.observe(...args),
+      tapOnce: (...args) => driver.tapOnce(...args), revokeIssuance: () => driver.revokeIssuance(),
+      async close(signal) { await driver.close(signal); if (phase === 'close') { entered.resolve(); await release.promise; } },
+    }) }, { fault: (point, operation) => {
+      if (failing && point === 'beforeCommit' && operation === 'cancel') throw new Error('Injected cancellation write failure');
+    } });
+    driver = createObservedDriver({ cwd: root, admission, lockRoot: join(root, 'leases'), runner,
+      deviceWindow: async () => assert.fail('No window'), fakeBackend: { runner, window: undefined } });
+    const raw = request(await ready(admission)); raw.timeoutMs = 500;
+    await service.start(raw); await entered.promise; await new Promise(resolve => setTimeout(resolve, 650));
+    failing = true;
+    await assert.rejects(service.cancel('one'), { code: 'STORE_UNAVAILABLE' });
+    assert.equal((await service.inspect('one')).cancellationRequested, false);
+    release.resolve(); const terminal = await service.inspect('one', { waitMs: 3000 });
+    assert.equal(terminal.authority, 'committed'); assert.equal(terminal.outcome, 'inconclusive');
+    assert.equal(terminal.reason, 'CANCELLED');
+    assert.equal(terminal.cancellationRequested, true, 'The verified joint finalization commits the claim cancellation flag');
+    assert.equal(terminal.actionAttempted, false); assert.equal(terminal.actionAcknowledged, false);
+    assert.equal(terminal.admission, 'quarantined'); assert.equal(terminal.observations, 1);
+    assert.deepEqual(calls, ['snapshot-ui']); await service.close();
+  });
+}
+
+async function unresolvedCreator(admission: Admission, readyId: string) {
+  const record = admission.readAllocation(readyId)!;
+  const reserved = admission.reserveAllocation({ actionId: 'blocker', preparationDigest: digest, preparation: {}, appBundleId: 'dev.fixture',
+    source: { kind: 'create', deviceTypeId: 'device', runtimeId: 'runtime' }, inspectedContentDigest: digest, artifactBytes: 100,
+    configVersion: 1, configDigest: digest, evidenceDirectory: '/isolated/blocker-evidence', budgets: record.budgets,
+    storage: { simulatorFreeBytes: 10000, stagingFreeBytes: 10000 } });
+  assert.equal(reserved.kind, 'reserved'); if (reserved.kind !== 'reserved') throw new Error('Fixture reservation refused');
+  reserved.reservation.stage(record.staged!);
+  await reserved.reservation.create(async () => ({ status: 'unknown', reason: 'CREATE_UNCONFIRMED' }));
+  return reserved.reservation.identity.allocationId;
+}
+
+test('host creation refusal exposes persisted blocking allocation evidence', async t => {
+  const { root, admission, service } = fixture(t, async () => assert.fail('No backend'), { createDriver: () => assert.fail('No attachment') });
+  const id = await ready(admission); const blocker = await unresolvedCreator(admission, id);
+  const before = readFileSync(join(root, 'store', 'admission.sqlite')); const capacity = admission.readAllocationCapacity();
+  let result!: Record<string, unknown>;
+  try { await service.start(request(id)); }
+  catch (error) { result = (error as { toJSON(): Record<string, unknown> }).toJSON(); }
+  assert.equal(result.code, 'HOST_CREATION_UNRESOLVED'); assert.equal(result.evidenceDirectory, '/isolated/blocker-evidence');
+  assert.equal(result.acceptance, 'no'); assert.equal(result.allocationId, id); assert.equal(result.actionId, 'one');
+  assert.equal(result.blockingAllocationId, blocker);
+  assert.equal(admission.readAllocation(id)!.state, 'ready'); assert.equal(admission.readAllocation(id)!.actionDigest, null);
+  assert.equal(admission.readAllocation(blocker)!.hostCreationBlocked, true);
+  assert.deepEqual(admission.readAllocationCapacity(), capacity);
+  assert.deepEqual(readFileSync(join(root, 'store', 'admission.sqlite')), before); await service.close();
+});
+
+for (const mode of ['unavailable', 'missing', 'relative', 'wrong-identity', 'not-blocking'] as const) {
+  test(`unverified ${mode} blocker evidence refuses safely without attaching or consuming`, async t => {
+    const { root, admission, service } = fixture(t, async () => assert.fail('No backend'), { createDriver: () => assert.fail('No attachment') });
+    const id = await ready(admission); const blocker = await unresolvedCreator(admission, id);
+    const read = admission.readAllocation.bind(admission);
+    const before = readFileSync(join(root, 'store', 'admission.sqlite')); const capacity = admission.readAllocationCapacity();
+    // Fault only the borrowed allocation-read capability after the real store commits the host guard.
+    admission.readAllocation = allocationId => {
+      assert.equal(allocationId, blocker);
+      if (mode === 'unavailable') throw new Error('Injected read failure');
+      if (mode === 'missing') return undefined;
+      const record = read(allocationId)!;
+      return { ...record, ...(mode === 'relative' ? { evidenceDirectory: 'relative/path' } :
+        mode === 'wrong-identity' ? { allocationId: id } : { hostCreationBlocked: false }) };
+    };
+    try {
+      await assert.rejects(service.start(request(id)), (error: unknown) => {
+        const result = (error as { toJSON(): Record<string, unknown> }).toJSON();
+        assert.equal(result.code, 'STORE_UNAVAILABLE'); assert.equal(result.acceptance, 'no');
+        assert.equal(result.actionId, 'one'); assert.equal(result.allocationId, id); assert.equal(result.blockingAllocationId, blocker);
+        assert.equal(result.evidenceDirectory, undefined); return true;
+      });
+    } finally { admission.readAllocation = read; }
+    assert.equal(read(id)!.state, 'ready'); assert.equal(read(id)!.actionDigest, null); assert.equal(read(blocker)!.hostCreationBlocked, true);
+    assert.deepEqual(admission.readAllocationCapacity(), capacity);
+    assert.deepEqual(readFileSync(join(root, 'store', 'admission.sqlite')), before); await service.close();
+  });
+}

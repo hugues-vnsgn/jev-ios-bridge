@@ -1,4 +1,4 @@
-import { join, resolve } from 'node:path';
+import { isAbsolute, join, resolve } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 import { Admission, AdmissionError, type OwnerProcess } from '../device/admission.js';
 import type { ActionBinding, ConsumeAllocationResult, ObservedClaim, AllocationRecord, ActionRecordView } from '../device/admission-allocation.js';
@@ -88,8 +88,23 @@ export class ObservedActionService<Result = unknown> {
     if (result.kind === 'refused') {
       const code = result.reason === 'ACTION_ID_CONFLICT' ? 'ACTION_ID_CONFLICT' : result.reason === 'ALLOCATION_NOT_FOUND' ? 'ALLOCATION_NOT_FOUND'
         : result.reason === 'HOST_CREATION_UNRESOLVED' ? 'HOST_CREATION_UNRESOLVED' : 'ALLOCATION_NOT_READY';
+      let evidenceDirectory: string | undefined;
+      if (code === 'HOST_CREATION_UNRESOLVED') {
+        try {
+          const blocker = result.blockingAllocationId ? this.options.admission.readAllocation(result.blockingAllocationId) : undefined;
+          if (!blocker || blocker.allocationId !== result.blockingAllocationId || !blocker.hostCreationBlocked || !isAbsolute(blocker.evidenceDirectory)) {
+            throw new Error('Unverified blocker evidence');
+          }
+          evidenceDirectory = blocker.evidenceDirectory;
+        } catch {
+          throw new ObservedOperationError('STORE_UNAVAILABLE', 'Blocking allocation evidence is unavailable', {
+            actionId: request.actionId, allocationId: request.allocationId,
+            ...(result.blockingAllocationId ? { blockingAllocationId: result.blockingAllocationId } : {}) });
+        }
+      }
       throw new ObservedOperationError(code, 'Prepared allocation cannot be consumed', { actionId: request.actionId, allocationId: request.allocationId,
-        ...(result.blockingAllocationId ? { blockingAllocationId: result.blockingAllocationId } : {}) });
+        ...(result.blockingAllocationId ? { blockingAllocationId: result.blockingAllocationId } : {}),
+        ...(evidenceDirectory ? { evidenceDirectory } : {}) });
     }
     if (result.kind === 'retrieved') return this.snapshot(request.actionId);
     const job: ActionJob = { claim: result.claim, controller: new AbortController(), driver: undefined, done: Promise.resolve() };
@@ -144,9 +159,9 @@ export class ObservedActionService<Result = unknown> {
         actionAttempted: progress?.actionAttempted ?? null, actionAcknowledged: progress?.actionAcknowledged ?? null,
         observations: progress?.observationCount ?? 0 };
     } finally { clearInterval(monitor); job.driver?.revokeIssuance(); }
-    await this.finish(request, directory, job, result, signal);
+    await this.finish(request, directory, job, result);
   }
-  private async finish(request: ObservedActionRequest, directory: string, job: ActionJob, result: ObservedTapResult, signal: AbortSignal): Promise<void> {
+  private async finish(request: ObservedActionRequest, directory: string, job: ActionJob, result: ObservedTapResult): Promise<void> {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(new Error('FINISH_UNCONFIRMED')), 5000);
     const finalization = controller.signal;
@@ -160,11 +175,12 @@ export class ObservedActionService<Result = unknown> {
         catch { if (result.status !== 'inconclusive') result = { ...result, status: 'inconclusive', reason: 'FINISH_UNCONFIRMED' }; }
       }
       if (!began) return;
-      if (signal.aborted && result.status !== 'inconclusive') result = { ...result, status: 'inconclusive', reason: job.controller.signal.aborted ? 'CANCELLED' : 'DEADLINE_EXCEEDED' };
+      // Observation has completed; cancellation remains live throughout the separate finalization budget.
+      if (job.controller.signal.aborted && result.status !== 'inconclusive') result = { ...result, status: 'inconclusive', reason: 'CANCELLED' };
       try { await boundedObserved(() => this.evidence.provisional(directory, result), finalization); }
       catch { if (result.status !== 'inconclusive') result = { ...result, status: 'inconclusive', reason: 'RESULT_EVIDENCE_UNCONFIRMED' }; }
       const finalView = this.view(request.actionId);
-      if (finalView?.kind === 'allocation' && finalView.attempt?.cancellationRequested && result.status !== 'inconclusive') {
+      if ((job.controller.signal.aborted || (finalView?.kind === 'allocation' && finalView.attempt?.cancellationRequested)) && result.status !== 'inconclusive') {
         result = { ...result, status: 'inconclusive', reason: 'CANCELLED' };
       }
       const evidenceRefs = finalView?.kind === 'allocation' ? finalView.allocation.actionEvidence?.observations ?? [] : [];
@@ -207,9 +223,12 @@ export class ObservedActionService<Result = unknown> {
     }
   }
   async cancel(actionId: string): Promise<ObservedActionSnapshot> {
+    if (!observedActionIdSchema.safeParse(actionId).success) throw new ObservedOperationError('INVALID_REQUEST', 'Invalid action identity');
+    const job = this.jobs.get(actionId);
+    // Explicit cancellation closes this owner's dispatch gate even when the authoritative read fails.
+    if (job) { job.driver?.revokeIssuance(); job.controller.abort(new Error('CANCELLED')); }
     const prior = await this.inspect(actionId);
     if (prior.state === 'terminal') return prior;
-    const job = this.jobs.get(actionId);
     let durable = true;
     try { this.options.admission.cancel({ kind: 'observed', id: actionId }); }
     catch { durable = false; }
