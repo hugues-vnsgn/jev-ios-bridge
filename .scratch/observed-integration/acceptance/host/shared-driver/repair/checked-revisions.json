@@ -1,0 +1,17 @@
+{
+  "parent": "2ec78bdcc01a6f5a809022a921faf3fc2766e445",
+  "originalBase": "b70a7ab3883dfb1530918f16cc39324b1662f91e",
+  "checkedBlobs": {
+    "src/device/index.ts": "5a95c306a9a9444c16e156ac4cab238bb6aee291",
+    "src/device/lease.ts": "c537ff2f726c8eb3463fea89b8434f5e183905bc",
+    "src/device/factory.ts": "4bdb3f6af5cfc1d6558b2e16cf60d4fa7e27b1d6",
+    "tests/admission-driver.test.ts": "7cc3c380872dce229421f1ba8970785ea136bf90",
+    "tests/simulator-window.test.ts": "7ca98ced53c457c9fbced0ce421bb55887d7edce"
+  },
+  "reviewOriginalSha256": {
+    "review-spec-original.mjs": "972218e82ea6860483b6fc0ae63316a625ddca8affca97ad85bda8c882aeba20",
+    "review-spec-original.log": "8292646ab4230a7fb26636faf7dba77964b5ab11e26c9aa294ce329056f09021",
+    "review-standards-original.log": "5279f82cbcaeb6082b9f41250f06655591a49911db216eb513df4cfd9f0a609c"
+  },
+  "commit": "6f0ad209d4255713d36da52ccc6b278c2ebac98a"
+}

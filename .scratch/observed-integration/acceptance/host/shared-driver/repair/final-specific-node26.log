@@ -1,0 +1,32 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern=a separate process consumes|preparation parks|close removes attach listeners|malformed simulator|valid empty simulator list", "tests/admission-driver.test.ts", "tests/simulator-window.test.ts"]
+✔ preparation parks settled ownership and a consumed action attaches without relaunch or window (573.644958ms)
+✔ a separate process consumes parked driver readiness without preparation or presentation (763.379875ms)
+✔ uncertain preparation close removes attach listeners while retaining the pending operation and lease (250.194ms)
+✔ uncertain observed close removes attach listeners while retaining the pending operation and lease (470.461625ms)
+✔ malformed simulator entry (selected state is numeric) fences launch, presentation and cleanup (185.36375ms)
+✔ malformed simulator entry (selected state is missing) fences launch, presentation and cleanup (189.150667ms)
+✔ malformed simulator entry (selected state is null) fences launch, presentation and cleanup (177.103791ms)
+✔ malformed simulator entry (selected state is empty) fences launch, presentation and cleanup (172.302792ms)
+✔ malformed simulator entry (selected state is blank) fences launch, presentation and cleanup (205.949041ms)
+✔ malformed simulator entry (identity is numeric) fences launch, presentation and cleanup (135.336584ms)
+✔ malformed simulator entry (identity is missing) fences launch, presentation and cleanup (98.059667ms)
+✔ malformed simulator entry (identity is malformed) fences launch, presentation and cleanup (169.05175ms)
+✔ malformed simulator entry (list is missing) fences launch, presentation and cleanup (173.162209ms)
+✔ malformed simulator entry (list is null) fences launch, presentation and cleanup (183.806291ms)
+✔ malformed simulator entry (list is not an array) fences launch, presentation and cleanup (188.569333ms)
+✔ malformed simulator entry (entry is null) fences launch, presentation and cleanup (174.557959ms)
+✔ malformed simulator entry (entry is an array) fences launch, presentation and cleanup (87.335042ms)
+✔ malformed simulator entry (entry is a string) fences launch, presentation and cleanup (90.163458ms)
+✔ malformed simulator entry (unselected entry is malformed) fences launch, presentation and cleanup (85.545666ms)
+✔ a valid empty simulator list keeps missing-identity warning and acknowledged launch behavior (140.360958ms)
+✔ a malformed simulator-list error receipt cannot acknowledge settlement or authorize cleanup (99.311584ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2757.645709
+
+EXIT 0 ELAPSED 2.80s

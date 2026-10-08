@@ -1,0 +1,19 @@
+{"root":"/private/tmp/jev-driver-spec-review-store-FCQ5nT","calls":["list","launch-app"],"rejected":false,"warnings":["Simulator window not opened: the simulator's state could not be read."],"admission":"active"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Malformed selected-device state must close dispatch before launch
+
+true !== false
+
+    at file:///private/tmp/jev-driver-spec-review-0Bt64I/repro.mjs:21:8 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: true,
+  expected: false,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.8.1

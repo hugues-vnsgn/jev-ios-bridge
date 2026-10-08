@@ -1,0 +1,28 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern=malformed simulator entry|valid empty simulator list|simulator is booted|state unreadable|window that fails", "tests/simulator-window.test.ts"]
+✔ with the window on, prepare checks the simulator is booted, brings its window forward, then launches (167.924084ms)
+✔ a window that fails to open is a warning, never a failure (159.115167ms)
+✔ with the window on and the state unreadable, the window stays closed with a warning and the app still launches (137.2745ms)
+✔ a launch failure on a booted simulator, or with the state unreadable, keeps its own error (366.419541ms)
+✔ malformed simulator entry (selected state is numeric) fences launch, presentation and cleanup (113.648958ms)
+✔ malformed simulator entry (selected state is missing) fences launch, presentation and cleanup (106.055333ms)
+✔ malformed simulator entry (selected state is null) fences launch, presentation and cleanup (116.274792ms)
+✔ malformed simulator entry (selected state is empty) fences launch, presentation and cleanup (112.818042ms)
+✔ malformed simulator entry (selected state is blank) fences launch, presentation and cleanup (89.11975ms)
+✔ malformed simulator entry (identity is numeric) fences launch, presentation and cleanup (92.845375ms)
+✔ malformed simulator entry (identity is missing) fences launch, presentation and cleanup (99.939583ms)
+✔ malformed simulator entry (identity is malformed) fences launch, presentation and cleanup (100.602833ms)
+✔ malformed simulator entry (entry is null) fences launch, presentation and cleanup (101.406375ms)
+✔ malformed simulator entry (entry is an array) fences launch, presentation and cleanup (96.713958ms)
+✔ malformed simulator entry (entry is a string) fences launch, presentation and cleanup (88.550167ms)
+✔ malformed simulator entry (unselected entry is malformed) fences launch, presentation and cleanup (88.687709ms)
+✔ a valid empty simulator list keeps missing-identity warning and acknowledged launch behavior (122.02425ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2306.647
+
+EXIT 0 ELAPSED 2.34s

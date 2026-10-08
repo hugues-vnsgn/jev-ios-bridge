@@ -1,0 +1,10 @@
+COMMAND ["python3", "-c", "import json,subprocess; from pathlib import Path; d=json.loads(Path(\".scratch/observed-integration/acceptance/host/shared-driver/repair/checked-revisions.json\").read_text()); actual={p:subprocess.check_output([\"git\",\"hash-object\",p],text=True).strip() for p in d[\"checkedBlobs\"]}; assert actual==d[\"checkedBlobs\"],(actual,d); print(json.dumps(actual,indent=2))"]
+{
+  "src/device/index.ts": "5a95c306a9a9444c16e156ac4cab238bb6aee291",
+  "src/device/lease.ts": "c537ff2f726c8eb3463fea89b8434f5e183905bc",
+  "src/device/factory.ts": "4bdb3f6af5cfc1d6558b2e16cf60d4fa7e27b1d6",
+  "tests/admission-driver.test.ts": "7cc3c380872dce229421f1ba8970785ea136bf90",
+  "tests/simulator-window.test.ts": "7ca98ced53c457c9fbced0ce421bb55887d7edce"
+}
+
+EXIT 0 ELAPSED 0.06s

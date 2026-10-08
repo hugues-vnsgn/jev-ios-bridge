@@ -1,0 +1,222 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern=malformed simulator entry", "tests/simulator-window.test.ts"]
+✖ malformed simulator entry (selected state is numeric) fences launch, presentation and cleanup (143.461083ms)
+✖ malformed simulator entry (selected state is missing) fences launch, presentation and cleanup (137.090833ms)
+✖ malformed simulator entry (selected state is null) fences launch, presentation and cleanup (145.982542ms)
+✖ malformed simulator entry (selected state is empty) fences launch, presentation and cleanup (93.28575ms)
+✖ malformed simulator entry (selected state is blank) fences launch, presentation and cleanup (85.838334ms)
+✖ malformed simulator entry (identity is numeric) fences launch, presentation and cleanup (134.207791ms)
+✖ malformed simulator entry (identity is missing) fences launch, presentation and cleanup (128.718ms)
+✖ malformed simulator entry (identity is malformed) fences launch, presentation and cleanup (129.486834ms)
+✖ malformed simulator entry (entry is null) fences launch, presentation and cleanup (136.723166ms)
+✖ malformed simulator entry (entry is an array) fences launch, presentation and cleanup (153.979291ms)
+✖ malformed simulator entry (entry is a string) fences launch, presentation and cleanup (149.154625ms)
+✖ malformed simulator entry (unselected entry is malformed) fences launch, presentation and cleanup (115.316708ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 0
+ℹ fail 12
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1696.074125
+
+✖ failing tests:
+
+test at tests/simulator-window.test.ts:1:12141
+✖ malformed simulator entry (selected state is numeric) fences launch, presentation and cleanup (143.461083ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:265:7)
+      at async withDriver (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:67:9)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:264:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/simulator-window.test.ts:1:12141
+✖ malformed simulator entry (selected state is missing) fences launch, presentation and cleanup (137.090833ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:265:7)
+      at async withDriver (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:67:9)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:264:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/simulator-window.test.ts:1:12141
+✖ malformed simulator entry (selected state is null) fences launch, presentation and cleanup (145.982542ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:265:7)
+      at async withDriver (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:67:9)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:264:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/simulator-window.test.ts:1:12141
+✖ malformed simulator entry (selected state is empty) fences launch, presentation and cleanup (93.28575ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  DeviceReasonError: Simulator ABCDEF00-0000-4000-8000-000000000001 is not booted (state: ). Boot it with `xcrun simctl boot ABCDEF00-0000-4000-8000-000000000001` or from Simulator, then run again.
+      at async <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:265:7)
+      at async withDriver (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:67:9)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:264:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: DeviceReasonError: Simulator ABCDEF00-0000-4000-8000-000000000001 is not booted (state: ). Boot it with `xcrun simctl boot ABCDEF00-0000-4000-8000-000000000001` or from Simulator, then run again.
+        at notBootedError (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/src/device/index.ts:450:10)
+        at MobileBuildMcpDriver.prepareIssued (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/src/device/index.ts:780:37),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/simulator-window.test.ts:1:12141
+✖ malformed simulator entry (selected state is blank) fences launch, presentation and cleanup (85.838334ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  DeviceReasonError: Simulator ABCDEF00-0000-4000-8000-000000000001 is not booted (state:    ). Boot it with `xcrun simctl boot ABCDEF00-0000-4000-8000-000000000001` or from Simulator, then run again.
+      at async <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:265:7)
+      at async withDriver (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:67:9)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:264:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: DeviceReasonError: Simulator ABCDEF00-0000-4000-8000-000000000001 is not booted (state:    ). Boot it with `xcrun simctl boot ABCDEF00-0000-4000-8000-000000000001` or from Simulator, then run again.
+        at notBootedError (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/src/device/index.ts:450:10)
+        at MobileBuildMcpDriver.prepareIssued (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/src/device/index.ts:780:37),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/simulator-window.test.ts:1:12141
+✖ malformed simulator entry (identity is numeric) fences launch, presentation and cleanup (134.207791ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:265:7)
+      at async withDriver (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:67:9)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:264:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/simulator-window.test.ts:1:12141
+✖ malformed simulator entry (identity is missing) fences launch, presentation and cleanup (128.718ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:265:7)
+      at async withDriver (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:67:9)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:264:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/simulator-window.test.ts:1:12141
+✖ malformed simulator entry (identity is malformed) fences launch, presentation and cleanup (129.486834ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:265:7)
+      at async withDriver (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:67:9)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:264:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/simulator-window.test.ts:1:12141
+✖ malformed simulator entry (entry is null) fences launch, presentation and cleanup (136.723166ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:265:7)
+      at async withDriver (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:67:9)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:264:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/simulator-window.test.ts:1:12141
+✖ malformed simulator entry (entry is an array) fences launch, presentation and cleanup (153.979291ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:265:7)
+      at async withDriver (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:67:9)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:264:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/simulator-window.test.ts:1:12141
+✖ malformed simulator entry (entry is a string) fences launch, presentation and cleanup (149.154625ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:265:7)
+      at async withDriver (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:67:9)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:264:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/simulator-window.test.ts:1:12141
+✖ malformed simulator entry (unselected entry is malformed) fences launch, presentation and cleanup (115.316708ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  AdmissionError: Window outcome is unknown
+      at async <anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:265:7)
+      at async withDriver (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:67:9)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/tests/simulator-window.test.ts:264:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: AdmissionError: Window outcome is unknown
+        at MobileBuildMcpDriver.prepareIssued (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-observed-shared-driver/src/device/index.ts:785:79),
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+EXIT 1 ELAPSED 1.73s

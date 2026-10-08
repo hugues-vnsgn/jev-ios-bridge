@@ -1,0 +1,12 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern=a separate process consumes", "tests/admission-driver.test.ts"]
+✔ a separate process consumes parked driver readiness without preparation or presentation (556.4905ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 813.92275
+
+EXIT 0 ELAPSED 0.86s

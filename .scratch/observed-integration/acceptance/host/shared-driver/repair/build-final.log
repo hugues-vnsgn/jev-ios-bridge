@@ -1,0 +1,7 @@
+COMMAND ["npm", "run", "build"]
+
+> jev-ios-bridge@1.3.1 build
+> rm -rf dist && tsc -p tsconfig.build.json
+
+
+EXIT 0 ELAPSED 0.29s

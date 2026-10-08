@@ -1,0 +1,14 @@
+(node:41309) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ preparation parks settled ownership and a consumed action attaches without relaunch or window (572.172416ms)
+✔ a separate process consumes parked driver readiness without preparation or presentation (531.887417ms)
+✔ uncertain preparation close removes attach listeners while retaining the pending operation and lease (135.814667ms)
+✔ uncertain observed close removes attach listeners while retaining the pending operation and lease (269.376084ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1690.663292

@@ -1,6 +1,8 @@
 # Shared driver independent review
 
-Verdict: BLOCKED at first review. Candidate `2ec78bdcc01a6f5a809022a921faf3fc2766e445` has not been integrated. Base: `b70a7ab3883dfb1530918f16cc39324b1662f91e`. [Author evidence](shared-driver/report.md) and [source metadata](shared-driver/author-source.json) preserve the original checks and final-test drift.
+Verdict: PASS after repair, independent re-review and Root integration checks. Candidate `2ec78bdcc01a6f5a809022a921faf3fc2766e445` and repair `6f0ad209d4255713d36da52ccc6b278c2ebac98a` are integrated as `b3eb5ea` and `bd5d524`. Base: `b70a7ab3883dfb1530918f16cc39324b1662f91e`. [Original author evidence](shared-driver/report.md) and [source metadata](shared-driver/author-source.json) preserve the earlier checks, failures and final-test drift.
+
+Root's exact integrated revision `bd5d5247421b78dde2a6a741f1f4769c673669fc` passed `npm run check`: typecheck,1196/1196 tests, zero skips and build. Exact Node24.0.0 combined store/adapter/driver suites passed410/410, zero skips. Checked source/test blobs match the repaired candidate. [Commands, raw output and hashes](shared-driver/integration/).
 
 ## Standards
 
@@ -29,3 +31,25 @@ Root returned only `src/device/index.ts`, `tests/admission-driver.test.ts`, `tes
 The initial old-constructor real launch/list incident on a synthetic UUID remains UNVERIFIED for side effects because raw vendor output was not retained. Its original log and disclosure stay unchanged; no cleanup or diagnostic device call was used to resolve it. Fixed-candidate host assertions cannot certify that historical event.
 
 Summary: Standards0 documented breaches,1 confirmed test regression,1 possible resource-lifetime smell; Spec1 P1 finding.
+
+## Standards re-review
+
+PASS at repair `6f0ad209`, against parent `2ec78bd` and original base `b70a7ab`. No hard documented breaches; four authorized files only.
+
+R1 closed: the unused child import is removed and the module import remains. The reviewer independently reran the exact separate-process transfer test on Node26.8.1 and exact Node24.0.0:1/1 each, zero skips. [Node26](shared-driver/review/standards-transfer26-green.log), [Node24](shared-driver/review/standards-transfer24-green.log).
+
+C1 closed: `clearSignalListeners()` runs independently of claim ownership, including failed close and parking. Independent uncertain-close and normal park/close checks passed4/4 on each runtime, zero skips, preserving pending backend work, unchanged lease bytes after late settlement and zero follow-up commands. [Node26](shared-driver/review/standards-listeners26-green.log), [Node24](shared-driver/review/standards-listeners24-green.log).
+
+No remaining named smells/regressions in the bounded repair. The reviewer read final220/220 focused checks on both runtimes, full1185/1185 plus typecheck/build, coverage220/220 and the matching final hash manifest. Broader gates were inspected, not independently repeated. No source or production/device operations. Simplify did not run. The historical incident remains separately UNVERIFIED.
+
+## Spec re-review
+
+PASS: R2 closed; no remaining bounded-repair findings. Original/fix HEAD and checked blobs match repair evidence.
+
+The original numeric-state reproduction now exits0 with only `list`, rejection and quarantine. Validation precedes admitted settlement; malformed/missing list fields and error receipts reject, while valid empty/missing-selected behavior remains. [Original reproduction on fixed source](shared-driver/review/spec-list-green.log).
+
+Independent admission-driver/simulator-window suites passed53/53, zero skips, including cross-process transfer and external uncertain close. [Raw affected suite](shared-driver/review/spec-affected-green.log). The helper removes listeners while preserving uncertainty, retained lease, external finalization ownership and underlying tracking. R1 removes only the erroneous child import.
+
+The reviewer read final focused220/220 on both exact runtimes, full1185/1185 plus typecheck/build, coverage220/220, checked hashes and diff formatting. Full/minimum-runtime suites were inspected rather than independently rerun. No product edits or production/device calls. Aggregate readiness deadlines remain allocator-owned through a shared stage signal. The historical incident remains UNVERIFIED.
+
+Current summary: Standards0 remaining findings; Spec0 remaining findings. [Corrective author report](shared-driver/repair/report.md). Complete H01–H09 and live acceptance remain pending.

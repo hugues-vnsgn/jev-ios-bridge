@@ -2,6 +2,8 @@
 
 Type: task
 Status: ready-for-agent
+Execution: integrated
+Claimed by: shared_driver
 Mode: AFK
 Blocked by: 03
 Owner: Shared-driver implementer
@@ -37,6 +39,10 @@ H03/H04/H05/H06/H08 driver subsets: races against observed/preparation/legacy, g
 Completion: Root integrates the real typed session interface before dispatching 06/07. Shared src/device/index.ts ownership ends here and transfers to Root; downstream workers cannot patch it. Return the handoff's fixed-format report with full commit/base SHA, files, commands/results, evidence, limitations and unresolved dependencies. A missing required assertion stays UNVERIFIED; a confirmed defect is BLOCKED until Root assigns its fix. No live operations, merge or publish belong to this ticket.
 
 ## Comments
+
+### Root acceptance: 2026-10-08
+
+Integrated candidate `2ec78bd` and repair `6f0ad209` as `b3eb5ea`/`bd5d524`. Both independent review axes closed all findings. Root's integrated check passed1196/1196 plus typecheck/build; exact Node24.0.0 combined suites410/410, zero skips. The final checked blobs match the repair. [Review, original failures and integrated evidence](../../observed-integration/acceptance/host/shared-driver-review.md). Shared driver ownership now belongs to Root; tickets06/07 receive the accepted typed interfaces. Historical unintended baseline side effects remain UNVERIFIED, with no cleanup/probe used to resolve them.
 
 ### Root integration guidance — 2026-10-08
 

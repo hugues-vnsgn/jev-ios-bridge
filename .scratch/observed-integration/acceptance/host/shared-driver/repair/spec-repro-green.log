@@ -1,0 +1,4 @@
+COMMAND ["node", "--import", "tsx", ".scratch/observed-integration/acceptance/host/shared-driver/repair/spec-repro.mjs"]
+{"root":"/private/tmp/jev-driver-spec-review-store-41ZA1i","calls":["list"],"rejected":true,"warnings":[],"admission":"quarantined"}
+
+EXIT 0 ELAPSED 0.19s

@@ -1,0 +1,14 @@
+COMMAND ["npx", "--yes", "--package=node@24.0.0", "node", "--import", "tsx", "--test", "--test-name-pattern=a separate process consumes", "tests/admission-driver.test.ts"]
+(node:16957) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ a separate process consumes parked driver readiness without preparation or presentation (496.041541ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 681.254416
+
+EXIT 0 ELAPSED 1.60s

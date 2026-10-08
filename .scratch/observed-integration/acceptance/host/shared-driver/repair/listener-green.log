@@ -1,0 +1,13 @@
+COMMAND ["node", "--import", "tsx", "--test", "--test-name-pattern=close removes attach listeners", "tests/admission-driver.test.ts"]
+✔ uncertain preparation close removes attach listeners while retaining the pending operation and lease (191.022333ms)
+✔ uncertain observed close removes attach listeners while retaining the pending operation and lease (278.703084ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 632.817083
+
+EXIT 0 ELAPSED 0.67s
