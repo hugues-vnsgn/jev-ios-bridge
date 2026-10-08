@@ -30,6 +30,8 @@ An implementation-ready plan for exposing the validated observed-action runner t
 
 - [Locate the MCP and reporting integration seam](issues/01-integration-seam.md): one observed-action service shared by additive CLI/MCP adapters; scenario semantics remain separate.
 
+- [Audit admission and quarantine across runners](issues/03-admission-boundary.md): transactional shared admission, non-mutating status, and atomic terminal authority; host diagnosis reproduced both integration hazards.
+
 ## Route
 
 <!-- route:start -->
@@ -55,9 +57,9 @@ flowchart LR
     classDef claimed fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
     classDef frontier fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
     classDef blocked fill:#ffffff,stroke:#a1a1aa,color:#18181b
-    class T01,T02,T08 resolved
-    class T03 claimed
-    class T04,T05,T06,T07 blocked
+    class T01,T02,T03,T08 resolved
+    class T04,T05 claimed
+    class T06,T07 blocked
 ```
 <!-- route:end -->
 

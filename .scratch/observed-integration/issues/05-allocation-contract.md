@@ -4,7 +4,8 @@ Parent: [Observed actions from live experiment to agent workflow](../map.md)
 Label: wayfinder:task
 Type: task
 Mode: AFK
-Status: open
+Status: claimed
+Claimed by: allocation-lifecycle
 Triage: ready-for-agent
 Blocked by: 03, 08
 Agent role: lifecycle-designer

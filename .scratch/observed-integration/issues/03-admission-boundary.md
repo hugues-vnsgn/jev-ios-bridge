@@ -4,7 +4,8 @@ Parent: [Observed actions from live experiment to agent workflow](../map.md)
 Label: wayfinder:task
 Type: task
 Mode: AFK
-Status: open
+Status: resolved
+Claimed by: admission-decision
 Triage: ready-for-agent
 Blocked by: none
 Agent role: admission-auditor
@@ -29,3 +30,11 @@ The answer cites inspectable evidence, distinguishes facts from recommendations,
 Created during charting. No implementation authorization is implied by this planning ticket.
 
 Read-only charting audit returned [preliminary findings](../evidence/admission-audit.md). Claim released after bounded inspection. The ticket stays open: its accepted recommendation and complete decision inputs still require a working session.
+
+## Answer
+
+Resolved by admission-decision on 2026-10-08. [Admission decision](../evidence/admission-decision.md) specifies the shared iOS admission module, transactional SQLite storage, canonical per-user identity/root, read-only status, ownership tokens, atomic terminal/disposition commit, monotonic quarantine and late-command prevention. A host-only temporary-directory harness reproduced both dead-PID legacy quarantine bypass and active-claim mutation by reads; no device operations or product edits occurred.
+
+All updated observed and legacy paths must acquire before preparation; compatibility lease files provide only best-effort exclusion of old live processes. Prior writers must be quiescent for conservative journal migration. Older binaries and external tools remain outside enforcement and require exclusive dedicated-device operation. Node 24.0.0 documents the chosen built-in SQLite interface as active development; minimum-runtime and fault tests are explicit implementation gates. Observed outcomes remain visible evidence, never native release or Jev verdict certification.
+
+The evidence defines interfaces, state transitions, migration/corruption behavior, authoritative readers and the regression matrix for downstream public-contract/allocation/handoff work. No weaker guarantees, app changes or transport expansion are proposed. Coordinator owns the map update and future ADR/spec edits.
