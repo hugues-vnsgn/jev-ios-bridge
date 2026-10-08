@@ -2,6 +2,8 @@
 
 Type: task
 Status: ready-for-agent
+Execution: implemented-awaiting-review
+Claimed by: source-adapters
 Mode: AFK
 Blocked by: None
 Owner: Source/artifact implementer
@@ -36,3 +38,12 @@ Completion: Adapters are testable without admission mocks granting real devices,
 
 ## Comments
 
+### 2026-10-08 — Source/artifact implementation handoff
+
+Implemented the exact owned adapter/test files from base `b8c4a50942551bdf95d00036a6d2f7bb6142ff43`; independent review belongs to Root. Loaded Cook (reviewed-plan autonomous dispatch), TDD, codebase-design, do-test, project-organization, use-git-worktree, diagnosing-bugs, and code-review instructions. Root controls shared docs/journal and independent review; no nested agents. Simplify is unavailable and Root assigned maintainability review.
+
+Creation requires an injected durable dispatch callback and process runner, closes issuance after return/cancellation, performs one exact argument-array create, validates a single UUID receipt and treats every started failure as unknown. The authorized operation remains pending until its runner settles. Supplied selection requires explicit configured provenance and a fresh/exclusive attestation; reservation, protected-device exclusions and vendor availability remain allocator responsibilities. Artifact inspection/staging validates plist plus modern Mach-O simulator/architecture/minimum OS metadata, bounded streamed content, relative contained symlinks, stable source snapshots, private 0500/0400 staging and a canonical digest. Verification refuses changed bytes, permissions, links or additions.
+
+Evidence: final targeted tests 38/38 PASS with no skips on Node 26.8.1 and Node 24.0.0; final typecheck PASS. Full `npm run check` passed 1002/1002 with build before the final added fs-fault test and private diagnostic/cleanup refinements; affected targeted/typecheck checks passed again. Raw logs/report: `/tmp/observed-adapters-targeted-final.log`, `/tmp/observed-adapters-node24-final.log`, `/tmp/observed-adapters-typecheck-final.log`, `/tmp/observed-adapters-full-check.log`, `/tmp/observed-adapters-test-report.md`. Meaningful red/green proofs include source mutation during staging, writable-stage verification and an abort-ignoring metadata process; red log paths are in the report.
+
+Bounded adapter subset PASS; combined H04 and installed/live acceptance remain UNVERIFIED until Root integration. Unsupported legacy/non-64-bit Mach-O metadata and absolute symlinks refuse; valid relative internal links are supported. Simulator prerequisite discovery, authority/store integration and installation are outside this write set. No real device commands, keys, shared files, merge or publishing were used.
