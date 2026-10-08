@@ -36,3 +36,8 @@ Completion: Both adapters can use one service implementation; imported/spike pat
 
 ## Comments
 
+### Root fixture and behavior authorization — 2026-10-08
+
+Read-only readiness identified old tests requiring mutating journal reads, healthy-owner quarantine, retained-device reuse and cross-device action-ID reuse. These behaviors conflict with the accepted public/admission/allocation contracts. The runtime owner may update its owned journal/runner/tap tests to assert non-mutating reads, global immutable action identity, retained-device exclusion and bound ready-allocation consumption. Preserve equivalent uncertainty, provisional-evidence, one-input and restart assertions; do not weaken or skip them. Existing golden files remain protected. Ticket05 owns the preceding isolated-store conversion of `observed-touch-integration.test.ts`; any later repair there returns to Root.
+
+All runtime fixtures use explicit isolated admission stores and fake backends. No test may infer production storage from a lock/evidence root or operate a real device. The integrated store and driver interfaces govern implementation; request any missing capability from Root instead of writing shared device files.
