@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test, type TestContext } from 'node:test';
-import { mkdtempSync, rmSync, realpathSync, readFileSync, statSync, chmodSync, symlinkSync, writeFileSync, unlinkSync } from 'node:fs';
+import { mkdtempSync, rmSync, realpathSync, mkdirSync, lstatSync, readFileSync, statSync, chmodSync, symlinkSync, writeFileSync, unlinkSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawn, type ChildProcess } from 'node:child_process';
@@ -296,4 +296,68 @@ test('opening a store with a changed journal policy refuses rather than silently
   const db = new DatabaseSync(join(root, 'admission.sqlite'));
   db.exec('PRAGMA journal_mode=WAL'); db.close();
   assert.throws(() => admission.inspect(device), { code: 'STATE_UNAVAILABLE' });
+});
+
+for (const point of ['beforeCommit', 'afterCommit'] as const) {
+  test(`signal cancellation survives a ${point} cancellation write failure and late tap settlement`, async t => {
+    const { root, admission } = fixture(t);
+    const controller = new AbortController();
+    const faulty = Admission.forTesting({ root, backend: 'fake', fault(at, operation) {
+      if (at === point && operation === 'cancel') throw new Error('cancel persistence failed');
+    } });
+    const acquired = faulty.acquire({ ...request('cancel-persistence'), signal: controller.signal });
+    if (acquired.kind !== 'acquired') assert.fail('Expected acquisition');
+    const session = acquired.claim.bindDriver('fake');
+    let settle!: () => void;
+    const pending = session.dispatch('tap', () => new Promise<void>(resolve => { settle = resolve; }));
+    controller.abort();
+    assert.throws(() => session.dispatch('capture', async () => {}), { code: 'DISPATCH_CLOSED' });
+    settle(); await pending;
+    assert.throws(() => acquired.claim.finalize(success), { code: 'OPERATIONS_UNSETTLED' });
+    assert.equal(admission.inspect(device)?.state, 'active');
+    assert.equal(admission.readAttempt(request('cancel-persistence').attempt)?.terminal, null);
+    const cancelled = { outcome: 'inconclusive' as const, disposition: 'quarantined' as const, payload: { reason: 'cancelled' }, evidenceRefs: [] };
+    assert.equal(acquired.claim.finalize(cancelled).authority, 'committed');
+    assert.equal(admission.inspect(device)?.state, 'quarantined');
+    assert.equal(admission.readAttempt(request('cancel-persistence').attempt)?.cancellationRequested, true);
+    assert.deepEqual(admission.readAttempt(request('cancel-persistence').attempt)?.terminal, cancelled);
+  });
+}
+
+for (const suffix of ['-journal', '-wal', '-shm']) {
+  for (const unsafeKind of ['permissions', 'symlink', 'directory']) {
+    test(`unsafe SQLite ${suffix} ${unsafeKind} is refused before SQLite can consume or rewrite it`, t => {
+      const { root, admission } = fixture(t);
+      const path = join(root, `admission.sqlite${suffix}`);
+      const target = join(root, 'sidecar-target');
+      const bytes = Buffer.alloc(512, 0);
+      if (unsafeKind === 'permissions') { writeFileSync(path, bytes, { mode: 0o644 }); }
+      else if (unsafeKind === 'symlink') { writeFileSync(target, bytes, { mode: 0o600 }); symlinkSync(target, path); }
+      else { mkdirSync(path, { mode: 0o700 }); }
+      const before = lstatSync(path);
+      assert.throws(() => admission.inspect(device), { code: 'STATE_UNAVAILABLE' });
+      assert.throws(() => admission.acquire(request('unsafe-sidecar')), { code: 'STATE_UNAVAILABLE' });
+      const after = lstatSync(path);
+      assert.equal(after.ino, before.ino);
+      assert.equal(after.mode, before.mode);
+      if (unsafeKind !== 'directory') assert.deepEqual(readFileSync(path), bytes);
+    });
+  }
+}
+
+test('SQLite creates its transaction journal with private permissions', t => {
+  const { root } = fixture(t);
+  let witnessedJournal = false;
+  const admission = Admission.forTesting({ root, backend: 'fake', fault(point, operation) {
+    if (point === 'beforeCommit' && operation === 'acquire') {
+      const journal = lstatSync(join(root, 'admission.sqlite-journal'));
+      assert.equal(journal.mode & 0o777, 0o600);
+      assert.equal(journal.uid, process.getuid!());
+      assert.equal(journal.isFile(), true);
+      assert.equal(journal.isSymbolicLink(), false);
+      witnessedJournal = true;
+    }
+  } });
+  assert.equal(admission.acquire(request('private-journal')).kind, 'acquired');
+  assert.equal(witnessedJournal, true);
 });

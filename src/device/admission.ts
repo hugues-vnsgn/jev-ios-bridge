@@ -81,6 +81,7 @@ export interface AdmissionClaim {
 }
 class OwnedClaim implements AdmissionClaim {
   private closed = false;
+  private cancellationRequested = false;
   private attached = false;
   private closers: (() => void)[] = [];
   readonly identity: OwnerIdentity;
@@ -95,10 +96,15 @@ class OwnedClaim implements AdmissionClaim {
     this.attached = true;
     return new OwnedSession(this.store, this.identity, () => this.closed);
   }
-  cancel(): AttemptView | undefined { this.close(); return this.store.cancel(this.identity.attempt, this.identity); }
+  cancel(): AttemptView | undefined {
+    // Cancellation remains authoritative for this handle even if its write fails.
+    this.cancellationRequested = true;
+    this.close();
+    return this.store.cancel(this.identity.attempt, this.identity);
+  }
   finalize(candidate: TerminalCandidate): Finalization {
     this.close();
-    try { return { authority: 'committed', attempt: this.store.finalize(this.identity, candidate) }; }
+    try { return { authority: 'committed', attempt: this.store.finalize(this.identity, candidate, this.cancellationRequested) }; }
     catch (error) {
       if (error instanceof AdmissionError && error.code !== 'STATE_UNAVAILABLE') throw error;
       // Even a verified lost COMMIT reply is retrieval, never candidate publication.

@@ -85,3 +85,24 @@ Commands/evidence:
 Transfer both admission source files to ticket 02, then 03 as planned. The internal `AdmissionSqlite` is the typed storage extension seam: add concrete migration/allocation operations alongside existing transaction methods and schema; no SQL executor/callback escapes to allocator orchestration. Metadata contains nullable migration manifest plus schema/root/installation/mode fields. 02 must implement offline initialization/import/activation and migration exclusion; 03 must add reservation, host creation guard, inventory eligibility, parking/transfer and joint allocation terminal policy in the same authority. No advance implementation of those policies is included.
 
 Limitations: no actual backend/device/model operations; no real filesystem exhaustion experiment; no public adapter/legacy-driver integration, migration or allocation policy yet. Those belong to dependent tickets and Root's acceptance matrix. SQLite crash tests establish host transaction behavior, not native release or durability under faulty hardware. OS PID reuse conservatively remains busy unless a supplied liveness adapter can establish the recorded incarnation is dead. Older binaries/external operators remain outside enforcement.
+
+### Independent-review fixes — 2026-10-08
+
+Bounded verdict: PASS, pending Root's re-review. Applied diagnosing-bugs, TDD and do-test within the existing Cook workflow; no subagents or live/default-store operations. Base for this repair: `03fcbe43332fea1272570dd9224808079d0329b3`.
+
+P1 confirmed: a cancellation write rolled back before COMMIT, while the handle only remembered closed issuance. After a late tap settled, terminal validation saw no durable cancellation and accepted observed/available. A per-claim cancellation latch now sets synchronously before persistence; finalization passes it into the same fenced terminal transaction. That transaction validates cancellation even after a failed earlier write and persists the cancellation flag with a safe terminal. Success/available is refused after dispatched cancelled work; explicit inconclusive/quarantine remains possible. After-COMMIT cancellation ambiguity was already conservative and remains covered.
+
+P2 confirmed: existing SQLite sidecars were outside root/database/marker permission validation. `secureSidecars` now applies the same ownership, regular-file, symlink and private-mode checks to `-journal`, `-wal` and `-shm` before SQLite can open/consume them, including fixture initialization. Missing sidecars are normal. Unsafe sidecars are refused without rewriting/removing them. A before-COMMIT witness verifies SQLite's newly created rollback journal is a regular, owned 0600 file.
+
+| Regression / blast radius | Evidence | Verdict |
+| --- | --- | --- |
+| Signal abort, failed cancellation write before COMMIT, late tap settlement, attempted observed/available | `/tmp/admission-fix-p1-red.log`: exact regression fails before fix (1 failed, after-COMMIT control passes); `/tmp/admission-fix-p1-green.log`: both pass after fix | PASS |
+| Safe terminal after cancellation persistence failure | Inconclusive/quarantine committed with cancellation flag; no successful terminal or available device after unsafe candidate | PASS |
+| Sidecar permissions/symlink/directory across journal/WAL/SHM; new journal0600 | `/tmp/admission-fix-p2-red.log`: 5 failed/5 passed before fix; `/tmp/admission-fix-p2-green.log`: 10/10 pass after fix | PASS |
+| Existing ownership, cancellation, crash, transaction and storage cases | `node --import tsx --test tests/admission-core.test.ts`: 42/42, no skips, `/tmp/admission-fix-node26.log` | PASS |
+| Minimum supported runtime, including child-process owners | Root-provided Node24.0.0 `--import tsx --test tests/admission-core.test.ts`: 42/42, no skips, `/tmp/admission-fix-node24.log` | PASS |
+| Type compatibility | `npm run typecheck`, exit 0, `/tmp/admission-fix-typecheck.log` | PASS |
+
+The original reviewer diagnostic was rerun: its unsafe-success assertions now stop with `OPERATIONS_UNSETTLED` (`/tmp/admission-fix-original-cancel.log`). Its unsafe-journal scenario, isolated without changing its body, now stops with `STATE_UNAVAILABLE` (`/tmp/admission-fix-original-journal.log`). These diagnostics intentionally exit 1 because they assert the prior defect; the retained regression tests assert safe behavior and pass.
+
+Limits unchanged: host-only tests, no device/native-release certification or actual disk-full experiment. Foreign-UID sidecar creation was not exercised; ownership uses the existing shared UID validator. Root owns the combined full repository gate and independent re-review.

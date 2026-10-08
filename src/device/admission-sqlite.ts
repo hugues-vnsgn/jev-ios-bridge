@@ -29,6 +29,16 @@ function secure(path: string, directory: boolean): void {
   const stat = lstatSync(path);
   if (stat.isSymbolicLink() || (directory ? !stat.isDirectory() : !stat.isFile()) || (stat.mode & 0o077) !== 0 || (stat.uid !== process.getuid?.())) throw new AdmissionError('STATE_UNAVAILABLE', 'Unsafe admission path');
 }
+function secureSidecars(databasePath: string): void {
+  // SQLite may recover, truncate or delete a journal while opening/reading the
+  // database. Refuse unsafe existing files before allowing that consumption.
+  for (const suffix of ['-journal', '-wal', '-shm']) {
+    try { secure(`${databasePath}${suffix}`, false); }
+    catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
+    }
+  }
+}
 function rootPath(root: string): string {
   if (!isAbsolute(root) || resolve(root) !== root || realpathSync(root) !== root) throw new AdmissionError('STATE_UNAVAILABLE', 'Admission root must be a canonical absolute path');
   secure(root, true); return root;
@@ -57,6 +67,7 @@ export class AdmissionSqlite {
       try { lstatSync(marker); return; } catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; }
       const installationId = randomUUID();
       const path = join(root, 'admission.sqlite');
+      secureSidecars(path);
       const fd = openSync(path, constants.O_CREAT | constants.O_EXCL | constants.O_WRONLY, 0o600); closeSync(fd);
       const db = new DatabaseSync(path);
       try {
@@ -72,6 +83,7 @@ export class AdmissionSqlite {
     rootPath(this.root);
     const markerPath = join(this.root, 'installation.json'); const path = join(this.root, 'admission.sqlite');
     secure(markerPath, false); secure(path, false);
+    secureSidecars(path);
     const db = new DatabaseSync(path);
     try {
       configure(db);
@@ -161,11 +173,16 @@ export class AdmissionSqlite {
       this.event(db, expected.attempt, 'settled', { command, success });
     });
   }
-  finalize(expected: OwnerIdentity, candidate: TerminalCandidate): AttemptView {
+  finalize(expected: OwnerIdentity, candidate: TerminalCandidate, cancellationRequested = false): AttemptView {
     return this.write('finalize', db => {
       const existing = db.prepare('SELECT * FROM attempts WHERE kind=? AND id=?').get(...key(expected.attempt)) as Row | undefined;
       if (existing?.state === 'terminal' && existing.token === expected.token && existing.generation === expected.generation && existing.terminal === JSON.stringify(candidate)) return view(existing);
       const row = this.owned(db, expected);
+      if (cancellationRequested && !row.cancelled) {
+        db.prepare('UPDATE attempts SET cancelled=1 WHERE kind=? AND id=?').run(...key(expected.attempt));
+        this.event(db, expected.attempt, 'cancelled');
+        row.cancelled = 1;
+      }
       const unfinished = db.prepare("SELECT id FROM commands WHERE kind=? AND attempt_id=? AND state!='settled'").get(...key(expected.attempt));
       const dispatched = db.prepare('SELECT id FROM commands WHERE kind=? AND attempt_id=?').get(...key(expected.attempt));
       if (candidate.disposition === 'available' && (unfinished || candidate.outcome === 'inconclusive' || (row.cancelled && (dispatched || candidate.outcome !== 'refused')))) throw new AdmissionError('OPERATIONS_UNSETTLED', 'Cannot make uncertain or cancelled work available');
