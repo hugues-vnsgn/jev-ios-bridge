@@ -38,7 +38,7 @@ Completion: Preparation can park safely and action transfer can attach exactly o
 
 ## Comments
 
-Root acceptance: candidate `bfa73591673fb931d58df8e46f343700aae8a68a` integrated as `6d5536a551df853dd92fdf63253c1bacc244263f` after separate Spec/Standards PASS and six unchanged probes on Node26/exact24. Combined657/657 each runtime, full1423/1423 plus typecheck/build and all21 runtime/allocator hashes pass; zero skips. [Review and evidence](../../observed-integration/acceptance/host/allocator-review.md). This accepts bounded implementation, not the complete public/host/live matrix. Source ownership returns to Root.
+Root acceptance: candidate `bfa73591673fb931d58df8e46f343700aae8a68a` integrated as `6d5536a551df853dd92fdf63253c1bacc244263f` after separate Spec/Standards PASS and six unchanged probes on Node26/exact24. Combined 657/657 each runtime, full 1423/1423 plus typecheck/build and all 21 runtime/allocator hashes pass; zero skips. [Review and evidence](../../observed-integration/acceptance/host/allocator-review.md). This accepts bounded implementation, not the complete public/host/live matrix. Source ownership returns to Root.
 
 
 ### Execution — 2026-10-08
