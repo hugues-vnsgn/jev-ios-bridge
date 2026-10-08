@@ -1,5 +1,4 @@
-import { lstatSync, readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { lstatSync, readFileSync, realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { AdmissionError } from './admission-sqlite.js';
 import { migrateAdmission, migrateAdmissionForTesting, type MigrationTestOptions } from './admission-migration.js';
@@ -49,6 +48,9 @@ export function runAdmissionMaintenance(argv: string[], output: { write(value: s
   }
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+let directEntry = false;
+try { directEntry = !!process.argv[1] && realpathSync(fileURLToPath(import.meta.url)) === realpathSync(process.argv[1]); }
+catch { /* An importing host may have no filesystem entrypoint. */ }
+if (directEntry) {
   process.exitCode = runAdmissionMaintenance(process.argv.slice(2), { write: value => { process.stdout.write(value); } });
 }
