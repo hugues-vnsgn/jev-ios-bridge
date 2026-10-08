@@ -403,3 +403,36 @@ test('failed capture evidence persistence revokes action dispatch before storage
   let effects = 0; assert.throws(() => driver.dispatch('tap', async () => { effects++; })); assert.equal(effects, 0);
   assert.equal(r.claim.finalize({ outcome: 'inconclusive', disposition: 'quarantined', payload: { outcome: 'inconclusive', reason: 'RESULT_EVIDENCE_UNCONFIRMED' }, evidenceRefs: [] }).authority, 'committed');
 });
+for (const closure of ['cancel', 'failAllocation', 'finalize', 'parkAllocation'] as const) {
+  test(`revoked preparation cannot park after failed ${closure} persistence`, async t => {
+    let failing = false;
+    const { admission } = fixture(t, { fault: (point, operation) => {
+      if (failing && point === 'beforeCommit' && operation === closure) throw new Error('Injected closure write failure');
+    } });
+    const r = admission.reserveAllocation(supplied()); if (r.kind !== 'reserved') throw new Error('reserve');
+    r.reservation.stage(staged()); const a = r.reservation.admit(); if (a.kind !== 'admitted') throw new Error('admit');
+    const driver = a.claim.bindDriver('fake');
+    for (const kind of ['boot', 'install', 'launch', 'readiness']) await driver.dispatch(kind, async () => true);
+    const uncertain = { outcome: 'inconclusive' as const, disposition: 'quarantined' as const,
+      payload: { reason: 'PREPARATION_UNCONFIRMED' }, evidenceRefs: [] };
+    failing = true;
+    if (closure === 'cancel') assert.throws(() => a.claim.cancel(), /Injected closure write failure/);
+    if (closure === 'failAllocation') assert.equal(r.reservation.fail('PREPARATION_UNCONFIRMED').authority, 'unconfirmed');
+    if (closure === 'finalize') assert.equal(a.claim.finalize(uncertain).authority, 'unconfirmed');
+    if (closure === 'parkAllocation') assert.equal(a.claim.park(['/isolated/readiness.json']).authority, 'unconfirmed');
+    failing = false;
+    assert.equal(admission.readAllocation(r.reservation.identity.allocationId)?.state, 'preparing');
+    let laterEffects = 0;
+    assert.throws(() => driver.dispatch('capture', async () => { laterEffects++; }));
+    let parkCode: string | undefined;
+    try { a.claim.park(['/isolated/readiness.json']); }
+    catch (error) { parkCode = (error as { code?: string }).code; }
+    const consumed = admission.consumeAllocation(binding(r.reservation.identity.allocationId));
+    if (consumed.kind === 'consumed') await consumed.claim.bindDriver('fake').dispatch('tap', async () => { laterEffects++; });
+    assert.deepEqual({ parkCode, consume: consumed.kind, reason: consumed.kind === 'refused' ? consumed.reason : null, laterEffects },
+      { parkCode: 'DISPATCH_CLOSED', consume: 'refused', reason: 'ALLOCATION_NOT_READY', laterEffects: 0 });
+    assert.equal(admission.readAllocation(r.reservation.identity.allocationId)?.state, 'preparing');
+    assert.equal(a.claim.finalize(uncertain).authority, 'committed');
+    assert.equal(admission.readAllocation(r.reservation.identity.allocationId)?.state, 'quarantined');
+  });
+}

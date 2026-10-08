@@ -535,8 +535,7 @@ export class AdmissionSqlite {
       }
       if (db.prepare('SELECT id FROM imported_actions WHERE id=?').get(input.actionId)
         || db.prepare("SELECT id FROM attempts WHERE kind!='legacy' AND id=?").get(input.actionId)) return { kind: 'refused', reason: 'ACTION_ID_CONFLICT' };
-      const guard = db.prepare('SELECT allocation_id FROM unknown_creation WHERE singleton=1').get();
-      if (guard) return { kind: 'refused', reason: 'HOST_CREATION_UNRESOLVED', blockingAllocationId: guard.allocation_id as string };
+      const guard = this.creationGuard(db); if (guard) return guard;
       if (input.source.kind === 'supplied') {
         if (protectedDevices.has(input.source.udid) || db.prepare('SELECT id FROM allocations WHERE inventory_id=? OR device=?').get(input.source.inventoryId, input.source.udid)
           || db.prepare('SELECT device FROM devices WHERE device=?').get(input.source.udid)) return { kind: 'refused', reason: 'INVENTORY_INELIGIBLE' };
@@ -562,14 +561,7 @@ export class AdmissionSqlite {
       return { kind: 'reserved', allocation };
     });
   }
-  inspect(device: string): DeviceView | undefined {
-    return this.read(db => {
-      const row = db.prepare('SELECT * FROM devices WHERE device=?').get(device) as Row | undefined;
-      if (!row) return undefined;
-      const attempt = row.token ? db.prepare('SELECT * FROM attempts WHERE kind=? AND id=?').get(row.kind, row.attempt_id) as Row | undefined : undefined;
-      return { device, state: row.state, generation: row.generation, owner: attempt ? owner(attempt) : null, reason: row.reason };
-    });
-  }
+  inspect(device: string): DeviceView | undefined { return this.read(db => this.deviceView(db, device) ?? undefined); }
   readAttempt(identity: AttemptIdentity): AttemptView | undefined { return this.read(db => { const row = db.prepare('SELECT * FROM attempts WHERE kind=? AND id=?').get(...key(identity)) as Row | undefined; return row ? view(row) : undefined; }); }
   attach(expected: OwnerIdentity, backend: 'real' | 'fake'): void {
     if (backend === 'real' && this.options.mode === 'test') throw new AdmissionError('STATE_UNAVAILABLE', 'Real backend cannot attach a test store');

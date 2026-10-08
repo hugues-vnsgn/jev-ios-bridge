@@ -127,6 +127,7 @@ class OwnedClaim implements AdmissionClaim {
     return new OwnedSession(this.store, this.identity, () => this.closed || this.parentClosed());
   }
   park(readinessEvidence: string[], evidenceRefs: string[] = []): AllocationCommit {
+    if (this.closed || this.cancellationRequested || this.parentClosed()) throw new AdmissionError('DISPATCH_CLOSED', 'Claim is closed');
     this.close();
     try { return { authority: 'committed', allocation: this.store.parkAllocation(this.identity, readinessEvidence, evidenceRefs) }; }
     catch (error) { if (!(error instanceof AdmissionError) || error.code === 'STATE_UNAVAILABLE') return { authority: 'unconfirmed', reason: 'STATE_UNAVAILABLE' }; throw error; }
