@@ -5,7 +5,7 @@ Status: ready-for-agent
 Mode: AFK
 Blocked by: 09, 10
 Owner: Existing sole Orca live operator
-Pane: b0e5a4b6-106b-4dab-a49a-b3933445d4ef:1b178e31-086e-40c9-b4e2-b9a3dd45ad90
+Pane: b0e5a4b6-106b-4dab-a49a-b3933445d4ef:f8633393-2114-4b9e-a4d7-6a85e0f16db3
 Model: gpt-6-luna
 Effort: high
 Skills: do-test, orca-cli, diagnosing-bugs
@@ -32,3 +32,7 @@ Acceptance: each L01–L05 oracle and effect count in the matrix passes; all fiv
 Return PASS/BLOCKED/UNVERIFIED, full integrated/base and evidence-commit SHAs, changed evidence files, raw command/count links, per-row verdicts, limitations and unresolved prerequisites. Root integrates evidence. A synthetic lost reply is not real transport severance or native certification.
 
 ## Comments
+
+### Root operator binding: 2026-10-08
+
+The owner approved the idle sibling pane with `gpt-6-luna` high after the restart placed Root in the original live pane. The bound tab/leaf is listed above; the current terminal handle is `term_fc9bbfd1-cc30-42e2-875d-121b8bce21ec`. Refresh and verify that identity before dispatch. Root remains the coordinator. H01–H09 and live prerequisites must pass before this operator receives any device work.

@@ -23,7 +23,7 @@ Each worker is one named role in one isolated worktree and owns its ticket's exa
 
 ## Phases and dependency graph
 
-Current execution: waves A/B/C integrated and independently reviewed; wave D is being dispatched. Waves E–I await their dependencies. [Execution ledger](../observed-action-rollout/progress.md) records current commits and evidence; the table below defines prerequisites.
+Current execution: waves A/B/C integrated and independently reviewed; wave D is implementing. A bounded ticket03 capacity-read repair is also dispatched for wave E's second storage checks. Waves E through I await their dependencies. [Execution ledger](../observed-action-rollout/progress.md) records current commits and evidence; the table below defines prerequisites.
 
 | Wave | Tickets | Integration prerequisite |
 | --- | --- | --- |
@@ -73,7 +73,7 @@ Each implementation ticket ends with one focused commit. Report: outcome (PASS/B
 
 Root runs H01–H09 from the [validation matrix](evidence/validation-matrix.md), including Node 24.0.0, compatibility, clean packed install and plugin checks. Ticket checks establish only their bounded host behavior; Root publishes `acceptance/host/report.md` and the matrix's raw artifacts. H01–H09 must pass before real allocation starts.
 
-Live execution belongs exclusively to Orca pane `b0e5a4b6-106b-4dab-a49a-b3933445d4ef:1b178e31-086e-40c9-b4e2-b9a3dd45ad90`, `gpt-6-luna` high. Root sends the integrated SHA, private effective configuration, migration/host results and unchanged artifact manifests; Root watches/fixes and never becomes another device operator. The operator records L01–L05 serially under the matrix's `acceptance/live/` paths, counts every command and retains all five allocations. Missing prerequisites or uncertain work ends that attempt; a replacement ID/device never supplies acceptance.
+Live execution belongs exclusively to Orca pane `b0e5a4b6-106b-4dab-a49a-b3933445d4ef:f8633393-2114-4b9e-a4d7-6a85e0f16db3`, `gpt-6-luna` high. The owner approved this sibling binding on 2026-10-08 after the restart placed Root in the original live pane. Root sends the integrated SHA, private effective configuration, migration/host results and unchanged artifact manifests; Root watches/fixes and never becomes another device operator. The operator records L01–L05 serially under the matrix's `acceptance/live/` paths, counts every command and retains all five allocations. Missing prerequisites or uncertain work ends that attempt; a replacement ID/device never supplies acceptance.
 
 An independent `gpt-6-astra` high reviewer using `code-review` and `do-test`, who authored no implementation, audits the integrated changes and host/live evidence, writing `acceptance/safety-review.md`. Root fixes findings and reruns affected gates. Final readiness requires H01–H09, L01–L05 and safety review PASS, with visible outcomes and explicit residual limits. A skipped row is UNVERIFIED. Root returns a merge-ready verdict; this plan authorizes no automatic merge, release or publish.
 
