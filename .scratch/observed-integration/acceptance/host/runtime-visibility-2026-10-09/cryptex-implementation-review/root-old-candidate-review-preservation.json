@@ -1,0 +1,235 @@
+{
+  "atUtc": "2026-10-09T05:30:24.102675+00:00",
+  "candidate": "dadde33a36440db6d9414adf84f80916caa9d2b3",
+  "oldSpecVerdict": "FAIL: P1 fixture namespace escape/default regression",
+  "oldStandardsStaticVerdict": "PASS:0 documented/material breaches",
+  "hostGateVerdict": "FAILED26/held24",
+  "scope": "Root rehash of independently sealed old candidate reviews; no new host/native/live acceptance",
+  "checks": [
+    {
+      "axis": "spec/dadde33a",
+      "path": "audit.py",
+      "sha256": "2c77f0119f3dc5626797c64cf564189bc1ea3f5329e0e21a4e0a712f5c2d807d",
+      "expected": "2c77f0119f3dc5626797c64cf564189bc1ea3f5329e0e21a4e0a712f5c2d807d",
+      "matches": true
+    },
+    {
+      "axis": "spec/dadde33a",
+      "path": "candidate.diff",
+      "sha256": "db36bba604d76b1eedef3a0da7d11d27343d833fe6458e21d92eca85e7d1b5aa",
+      "expected": "db36bba604d76b1eedef3a0da7d11d27343d833fe6458e21d92eca85e7d1b5aa",
+      "matches": true
+    },
+    {
+      "axis": "spec/dadde33a",
+      "path": "clause-correspondence.md",
+      "sha256": "d86524ab1afe2d8cdfd83ca54e1a3ec039c0bb4bcf73fa766cb8508d57088067",
+      "expected": "d86524ab1afe2d8cdfd83ca54e1a3ec039c0bb4bcf73fa766cb8508d57088067",
+      "matches": true
+    },
+    {
+      "axis": "spec/dadde33a",
+      "path": "evidence-audit.md",
+      "sha256": "51b378ad5819e1974c4cb1e5bc935127331431c84096731f32672407f56f4071",
+      "expected": "51b378ad5819e1974c4cb1e5bc935127331431c84096731f32672407f56f4071",
+      "matches": true
+    },
+    {
+      "axis": "spec/dadde33a",
+      "path": "input-manifest.json",
+      "sha256": "f2df7b9df171f6361708a31f9748c857d954b28678c65787aad5e680108658ab",
+      "expected": "f2df7b9df171f6361708a31f9748c857d954b28678c65787aad5e680108658ab",
+      "matches": true
+    },
+    {
+      "axis": "spec/dadde33a",
+      "path": "post-audit-authorization.json",
+      "sha256": "3d448105e1b58fc0deca10467c17bbdf8b4b4173d08d9288d3903a3df139fec0",
+      "expected": "3d448105e1b58fc0deca10467c17bbdf8b4b4173d08d9288d3903a3df139fec0",
+      "matches": true
+    },
+    {
+      "axis": "spec/dadde33a",
+      "path": "receipt-audit.json",
+      "sha256": "2c772d044032eccb151d2dbcb0817b32d4d16e3e37c19a401b9017c74ad45d09",
+      "expected": "2c772d044032eccb151d2dbcb0817b32d4d16e3e37c19a401b9017c74ad45d09",
+      "matches": true
+    },
+    {
+      "axis": "spec/dadde33a",
+      "path": "report.md",
+      "sha256": "dd2118c1d886f2e8f55a0e92f9462b6f7e4a8d1cdb94660c4dc148742456e5a5",
+      "expected": "dd2118c1d886f2e8f55a0e92f9462b6f7e4a8d1cdb94660c4dc148742456e5a5",
+      "matches": true
+    },
+    {
+      "axis": "spec/dadde33a",
+      "path": "snapshots/.scratch/observed-action-rollout/cryptex-implementation-review.md",
+      "sha256": "d9fc9a10aae2a859515025c9e1dad28e82122e636d70ee7bd2c93a61ad57d1e4",
+      "expected": "d9fc9a10aae2a859515025c9e1dad28e82122e636d70ee7bd2c93a61ad57d1e4",
+      "matches": true
+    },
+    {
+      "axis": "spec/dadde33a",
+      "path": "snapshots/.scratch/observed-action-rollout/installed-cryptex-repair.md",
+      "sha256": "1f4fd7b16bac14ba19d590a052e927e6ef51ce044058abafad4169cf5a42f1ca",
+      "expected": "1f4fd7b16bac14ba19d590a052e927e6ef51ce044058abafad4169cf5a42f1ca",
+      "matches": true
+    },
+    {
+      "axis": "spec/dadde33a",
+      "path": "snapshots/src/observed/allocation-config.ts",
+      "sha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "expected": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "matches": true
+    },
+    {
+      "axis": "spec/dadde33a",
+      "path": "snapshots/tests/fixtures/observed-allocation-backend.ts",
+      "sha256": "021a93e539ebb56ffb3cac8b15d2b77b8ce838f3fb77f9e9ef31ff3ed3fa894a",
+      "expected": "021a93e539ebb56ffb3cac8b15d2b77b8ce838f3fb77f9e9ef31ff3ed3fa894a",
+      "matches": true
+    },
+    {
+      "axis": "spec/dadde33a",
+      "path": "snapshots/tests/fixtures/observed-cli-server.ts",
+      "sha256": "e0bffe3dfe1b0ee90aed64b7fd2493ddb91faf73cf8c1c9e418338fc55f811d1",
+      "expected": "e0bffe3dfe1b0ee90aed64b7fd2493ddb91faf73cf8c1c9e418338fc55f811d1",
+      "matches": true
+    },
+    {
+      "axis": "spec/dadde33a",
+      "path": "snapshots/tests/fixtures/observed-cryptex-runtime.ts",
+      "sha256": "a4fda3b5fbdd0addef8b4b12892ad66b9b454e765c35a8eff89c7ff8999a8da6",
+      "expected": "a4fda3b5fbdd0addef8b4b12892ad66b9b454e765c35a8eff89c7ff8999a8da6",
+      "matches": true
+    },
+    {
+      "axis": "spec/dadde33a",
+      "path": "snapshots/tests/observed-cryptex-runtime.test.ts",
+      "sha256": "4e18d0de58b5fa6940fbe1c11650731b69d87c560ab7b414e407756c078580dc",
+      "expected": "4e18d0de58b5fa6940fbe1c11650731b69d87c560ab7b414e407756c078580dc",
+      "matches": true
+    },
+    {
+      "axis": "spec/dadde33a",
+      "path": "source-audit.json",
+      "sha256": "67712ba6fab84417411227221924fbf0baf0e0c2a8594ea6b8153fe91fe3c8c8",
+      "expected": "67712ba6fab84417411227221924fbf0baf0e0c2a8594ea6b8153fe91fe3c8c8",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "report.md",
+      "sha256": "7b64a1372af91e1ded8a103f7c22bbf3f94d4480cf6e3d8b719551a09bacaa1b",
+      "expected": "7b64a1372af91e1ded8a103f7c22bbf3f94d4480cf6e3d8b719551a09bacaa1b",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "diff.txt",
+      "sha256": "2e98ed33a35117ca1ef331e2168231836acb160812acc2625ccf509cfcffaf41",
+      "expected": "2e98ed33a35117ca1ef331e2168231836acb160812acc2625ccf509cfcffaf41",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "static-audit.json",
+      "sha256": "8f581ec9fcd4ee056e2f5ab44505e404a33fa902175ed4d04b022c21e6dcf508",
+      "expected": "8f581ec9fcd4ee056e2f5ab44505e404a33fa902175ed4d04b022c21e6dcf508",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/installed-cryptex-repair.md",
+      "sha256": "1f4fd7b16bac14ba19d590a052e927e6ef51ce044058abafad4169cf5a42f1ca",
+      "expected": "1f4fd7b16bac14ba19d590a052e927e6ef51ce044058abafad4169cf5a42f1ca",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/cryptex-fixture-map-ownership.json",
+      "sha256": "65f3ea9716b5121ee825943549f3eaf74ef408f94d1fb2b9d5ffef686434c230",
+      "expected": "65f3ea9716b5121ee825943549f3eaf74ef408f94d1fb2b9d5ffef686434c230",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/oracle-inputs.json",
+      "sha256": "0029e953208cb3531bf44709b41807ee1abc0568dd03f78cc3d1fc550433b40a",
+      "expected": "0029e953208cb3531bf44709b41807ee1abc0568dd03f78cc3d1fc550433b40a",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/root-xcode-integration.json",
+      "sha256": "b4d88597c41d20da1f0905b573badb58f016b8fc663a0a25ede9343867426a6b",
+      "expected": "b4d88597c41d20da1f0905b573badb58f016b8fc663a0a25ede9343867426a6b",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/cryptex-implementation-review.md",
+      "sha256": "d9fc9a10aae2a859515025c9e1dad28e82122e636d70ee7bd2c93a61ad57d1e4",
+      "expected": "d9fc9a10aae2a859515025c9e1dad28e82122e636d70ee7bd2c93a61ad57d1e4",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/root-phase5-retained-mount-derivation.json",
+      "sha256": "8260a10fc574d9408078104f348522fa4f50ddc5279dfe16ecf916c1e57b098e",
+      "expected": "8260a10fc574d9408078104f348522fa4f50ddc5279dfe16ecf916c1e57b098e",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/cryptex-policy-proposal.md",
+      "sha256": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13",
+      "expected": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/candidate-context.json",
+      "sha256": "570b8bf4b484143845f70e69d63e594123857043b271c4b654148db35bfa193b",
+      "expected": "570b8bf4b484143845f70e69d63e594123857043b271c4b654148db35bfa193b",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/owner-cryptex-trust-decision.json",
+      "sha256": "0b1bc876713d68cd9001dcd27a41bfa3e7f53aa96f8e1698f214e65dcca16c74",
+      "expected": "0b1bc876713d68cd9001dcd27a41bfa3e7f53aa96f8e1698f214e65dcca16c74",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/product/tests/observed-cryptex-runtime.test.ts",
+      "sha256": "4e18d0de58b5fa6940fbe1c11650731b69d87c560ab7b414e407756c078580dc",
+      "expected": "4e18d0de58b5fa6940fbe1c11650731b69d87c560ab7b414e407756c078580dc",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/product/src/observed/allocation-config.ts",
+      "sha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "expected": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/product/tests/fixtures/observed-allocation-backend.ts",
+      "sha256": "021a93e539ebb56ffb3cac8b15d2b77b8ce838f3fb77f9e9ef31ff3ed3fa894a",
+      "expected": "021a93e539ebb56ffb3cac8b15d2b77b8ce838f3fb77f9e9ef31ff3ed3fa894a",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/product/tests/fixtures/observed-cryptex-runtime.ts",
+      "sha256": "a4fda3b5fbdd0addef8b4b12892ad66b9b454e765c35a8eff89c7ff8999a8da6",
+      "expected": "a4fda3b5fbdd0addef8b4b12892ad66b9b454e765c35a8eff89c7ff8999a8da6",
+      "matches": true
+    }
+  ],
+  "privateModes": "all700/600"
+}

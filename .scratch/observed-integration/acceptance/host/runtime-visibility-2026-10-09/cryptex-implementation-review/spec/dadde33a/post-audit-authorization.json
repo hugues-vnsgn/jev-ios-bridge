@@ -1,0 +1,29 @@
+{
+  "reason": "Root authorized a fifth-file fixture delta after the completed dadde33a source/hash audit; changed working paths do not rewrite this failed candidate. Source seven-d SHA remains unchanged. Handoff documents updated after review; original bytes retained below. No old input is silently replaced.",
+  "bindings": {
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-action-rollout/cryptex-implementation-review.md": {
+      "retainedPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-implementation-review/spec/dadde33a/snapshots/.scratch/observed-action-rollout/cryptex-implementation-review.md",
+      "sha256": "d9fc9a10aae2a859515025c9e1dad28e82122e636d70ee7bd2c93a61ad57d1e4",
+      "matchesInspection": true,
+      "source": "integration commit360dd8fa blob"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-action-rollout/installed-cryptex-repair.md": {
+      "retainedPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-implementation-review/spec/dadde33a/snapshots/.scratch/observed-action-rollout/installed-cryptex-repair.md",
+      "sha256": "1f4fd7b16bac14ba19d590a052e927e6ef51ce044058abafad4169cf5a42f1ca",
+      "matchesInspection": true,
+      "source": "integration commit360dd8fa blob"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/fixtures/observed-cli-server.ts": {
+      "retainedPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-implementation-review/spec/dadde33a/snapshots/tests/fixtures/observed-cli-server.ts",
+      "sha256": "e0bffe3dfe1b0ee90aed64b7fd2493ddb91faf73cf8c1c9e418338fc55f811d1",
+      "matchesInspection": true,
+      "source": "candidate dadde33a blob"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-cryptex-runtime.test.ts": {
+      "retainedPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-implementation-review/spec/dadde33a/snapshots/tests/observed-cryptex-runtime.test.ts",
+      "sha256": "4e18d0de58b5fa6940fbe1c11650731b69d87c560ab7b414e407756c078580dc",
+      "matchesInspection": true,
+      "source": "candidate dadde33a blob"
+    }
+  }
+}

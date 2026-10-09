@@ -1,0 +1,40 @@
+{
+  "atUtc": "2026-10-09T04:43:44.499920+00:00",
+  "status": "Prepared review oracle only; candidate SHA and final gates await freeze.",
+  "base": "38aa879c3954c9d7742ef04059cad4d2fc824c87",
+  "inputs": {
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal.md": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/owner-cryptex-trust-decision.json": "0b1bc876713d68cd9001dcd27a41bfa3e7f53aa96f8e1698f214e65dcca16c74",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-fixture-map-ownership.json": "65f3ea9716b5121ee825943549f3eaf74ef408f94d1fb2b9d5ffef686434c230",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-phase5-retained-mount-derivation.json": "8260a10fc574d9408078104f348522fa4f50ddc5279dfe16ecf916c1e57b098e",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-xcode-integration.json": "b4d88597c41d20da1f0905b573badb58f016b8fc663a0a25ede9343867426a6b",
+    ".scratch/observed-action-rollout/installed-cryptex-repair.md": "1f4fd7b16bac14ba19d590a052e927e6ef51ce044058abafad4169cf5a42f1ca",
+    ".scratch/observed-action-rollout/cryptex-implementation-review.md": "d9fc9a10aae2a859515025c9e1dad28e82122e636d70ee7bd2c93a61ad57d1e4"
+  },
+  "reviewers": {
+    "spec": "/root/xcode_parser_spec_review",
+    "standards": "/root/installed_path_standards_review"
+  },
+  "ownedProductPaths": [
+    "src/observed/allocation-config.ts",
+    "tests/fixtures/observed-allocation-backend.ts",
+    "tests/observed-cryptex-runtime.test.ts",
+    "tests/fixtures/observed-cryptex-runtime.ts"
+  ],
+  "baselineSourceCount": 439,
+  "protectedSourceCount": 437,
+  "candidateSourceCount": 441,
+  "compiledJavascriptCount": 69,
+  "liveOperatorDispatched": false,
+  "priorPreparedInputs": {
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal.md": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/owner-cryptex-trust-decision.json": "0b1bc876713d68cd9001dcd27a41bfa3e7f53aa96f8e1698f214e65dcca16c74",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-fixture-map-ownership.json": "2bbc07f139b07d970833083b26faca5780df67c8fe04b69cc0976a1a1b833326",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-phase5-retained-mount-derivation.json": "8260a10fc574d9408078104f348522fa4f50ddc5279dfe16ecf916c1e57b098e",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-xcode-integration.json": "b4d88597c41d20da1f0905b573badb58f016b8fc663a0a25ede9343867426a6b",
+    ".scratch/observed-action-rollout/installed-cryptex-repair.md": "1c8bfb07277b546a85613bbf1e88409b0526f71530f29beec5886e4af2e37343",
+    ".scratch/observed-action-rollout/cryptex-implementation-review.md": "50d18b1bd2bf8486d15c2d45cdfec8dcc9f49f0b02015f534fe26efa744986b6"
+  },
+  "preparedOracleUpdatedAt": "2026-10-09T04:47:20.869484+00:00",
+  "scopeAmendment": "Only narrow shared temporary-root identity branch and bounded two owned fake-test tree termination. Proposal/owner trust decision unchanged; candidate remains unfrozen."
+}

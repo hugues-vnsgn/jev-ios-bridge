@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-09",
+  "source": "Owner asynchronous answer in current coordinator conversation",
+  "questionItemId": "[\"request_user_input_async\",\"call_8c287c45d31a4bad9f48f8dc2803cb43\",0]",
+  "exactAnswer": "Approve the bounded Cryptex trust policy (Recommended)",
+  "proposalPath": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal.md",
+  "proposalSha256": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13",
+  "trustAssumption": "Trust root and daemon-group actors managing and replacing entries in exactly /private/var/run, solely to reach com.apple.security.cryptexd/mnt and bounded SimulatorRuntime mounts. Accept only uid0/gid1/exact0775 nonsymlink directory for that writable ancestor. Preserve all v3 bounds, fresh exact unwritable mount proofs and strict checks outside the exceptions.",
+  "separateApplicationsAuthorizationPersists": true,
+  "aclLimit": "Mode-based policy; ACLs not inspected, no unsafe ACL observed, no exhaustive effective writer inventory or atomic ancestor binding certified.",
+  "authorized": "Prepare, regress, independently review and integrate bounded runtime support; actual compatibility/installed/operational/live gates still required.",
+  "hostPermissionMutation": false,
+  "runtimeFallbackOrInstall": false
+}

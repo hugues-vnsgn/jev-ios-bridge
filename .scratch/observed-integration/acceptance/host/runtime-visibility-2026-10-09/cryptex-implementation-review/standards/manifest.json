@@ -1,0 +1,24 @@
+{
+  "base": "38aa879c3954c9d7742ef04059cad4d2fc824c87",
+  "candidate": "dadde33a36440db6d9414adf84f80916caa9d2b3",
+  "staticVerdict": "PASS bounded delta",
+  "hostGateVerdict": "FAILED26/held24",
+  "files": {
+    "report.md": "7b64a1372af91e1ded8a103f7c22bbf3f94d4480cf6e3d8b719551a09bacaa1b",
+    "diff.txt": "2e98ed33a35117ca1ef331e2168231836acb160812acc2625ccf509cfcffaf41",
+    "static-audit.json": "8f581ec9fcd4ee056e2f5ab44505e404a33fa902175ed4d04b022c21e6dcf508",
+    "inputs/installed-cryptex-repair.md": "1f4fd7b16bac14ba19d590a052e927e6ef51ce044058abafad4169cf5a42f1ca",
+    "inputs/cryptex-fixture-map-ownership.json": "65f3ea9716b5121ee825943549f3eaf74ef408f94d1fb2b9d5ffef686434c230",
+    "inputs/oracle-inputs.json": "0029e953208cb3531bf44709b41807ee1abc0568dd03f78cc3d1fc550433b40a",
+    "inputs/root-xcode-integration.json": "b4d88597c41d20da1f0905b573badb58f016b8fc663a0a25ede9343867426a6b",
+    "inputs/cryptex-implementation-review.md": "d9fc9a10aae2a859515025c9e1dad28e82122e636d70ee7bd2c93a61ad57d1e4",
+    "inputs/root-phase5-retained-mount-derivation.json": "8260a10fc574d9408078104f348522fa4f50ddc5279dfe16ecf916c1e57b098e",
+    "inputs/cryptex-policy-proposal.md": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13",
+    "inputs/candidate-context.json": "570b8bf4b484143845f70e69d63e594123857043b271c4b654148db35bfa193b",
+    "inputs/owner-cryptex-trust-decision.json": "0b1bc876713d68cd9001dcd27a41bfa3e7f53aa96f8e1698f214e65dcca16c74",
+    "inputs/product/tests/observed-cryptex-runtime.test.ts": "4e18d0de58b5fa6940fbe1c11650731b69d87c560ab7b414e407756c078580dc",
+    "inputs/product/src/observed/allocation-config.ts": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+    "inputs/product/tests/fixtures/observed-allocation-backend.ts": "021a93e539ebb56ffb3cac8b15d2b77b8ce838f3fb77f9e9ef31ff3ed3fa894a",
+    "inputs/product/tests/fixtures/observed-cryptex-runtime.ts": "a4fda3b5fbdd0addef8b4b12892ad66b9b454e765c35a8eff89c7ff8999a8da6"
+  }
+}

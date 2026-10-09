@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-09T04:08:33.169613+00:00",
+  "integrationHead": "5505f80349b552b4d0120fcd3a13ace1f3111750",
+  "candidate": "38aa879c3954c9d7742ef04059cad4d2fc824c87",
+  "source439AllMatch": true,
+  "ownedFiles": {
+    "src/observed/allocation-config.ts": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+    "src/observed/installed-plist.ts": "c74ddcafaef4e244bd1183695cade8fe4858f609bc6f20a1b86727801bc8b896",
+    "tests/fixtures/observed-allocation-backend.ts": "5b8c6b14a463ee8ec312ac33655f18c0efc931c2c900784840342f7aeb0e3d80",
+    "tests/installed-plist.test.ts": "c383636a717b8220905f3814d9123ce9ee78cbb1b5dfeb0d82bdf8e80a1aa02c",
+    "tests/observed-allocation-config.test.ts": "1ae9db02cb08814a874d9b94ea872105ec2a88fe75d56e0f7263116698dbc4ad"
+  },
+  "protectedOriginal434AllMatch": true,
+  "compiled69AllMatchReviewedBothNodeBuilds": true,
+  "rootActualBuild": "root-xcode-integration-build/command.json",
+  "original15HostArtifactsPreserved": true,
+  "scope": "Accepted output+unwired parser delta; combined author defaults1819 bothNodes and independent Spec/Standards PASS. Current integration actual build and exact Source/compiled association. Clean installed/runtime compatibility and live gates remain pending Cryptex support."
+}

@@ -1,0 +1,86 @@
+{
+  "actualDefaultNode24": "HELD by Root after Node26 failure",
+  "actualDefaultNode26": "1985/1858/127/0/0/0 exit1; build skipped after test failure",
+  "base": "38aa879c3954c9d7742ef04059cad4d2fc824c87",
+  "candidate": "dadde33a36440db6d9414adf84f80916caa9d2b3",
+  "findings": {
+    "incorrectProductionBehavior": [],
+    "partialRequirement": [
+      {
+        "finding": "public fixture namespace escape/default regression",
+        "severity": "P1"
+      }
+    ],
+    "scopeAdditions": []
+  },
+  "frozenAtUtc": "2026-10-09T05:25:28.562973+00:00",
+  "limitations": "Retained static review; no live/installed/ticket12 acceptance; historical test/fixture reconstructions labeled; Source contemporaneous; authorized post-audit changes use retained old blobs.",
+  "outputs": {
+    "audit.py": {
+      "bytes": 8373,
+      "sha256": "2c77f0119f3dc5626797c64cf564189bc1ea3f5329e0e21a4e0a712f5c2d807d"
+    },
+    "candidate.diff": {
+      "bytes": 64283,
+      "sha256": "db36bba604d76b1eedef3a0da7d11d27343d833fe6458e21d92eca85e7d1b5aa"
+    },
+    "clause-correspondence.md": {
+      "bytes": 12272,
+      "sha256": "d86524ab1afe2d8cdfd83ca54e1a3ec039c0bb4bcf73fa766cb8508d57088067"
+    },
+    "evidence-audit.md": {
+      "bytes": 9098,
+      "sha256": "51b378ad5819e1974c4cb1e5bc935127331431c84096731f32672407f56f4071"
+    },
+    "input-manifest.json": {
+      "bytes": 211288,
+      "sha256": "f2df7b9df171f6361708a31f9748c857d954b28678c65787aad5e680108658ab"
+    },
+    "post-audit-authorization.json": {
+      "bytes": 2729,
+      "sha256": "3d448105e1b58fc0deca10467c17bbdf8b4b4173d08d9288d3903a3df139fec0"
+    },
+    "receipt-audit.json": {
+      "bytes": 262011,
+      "sha256": "2c772d044032eccb151d2dbcb0817b32d4d16e3e37c19a401b9017c74ad45d09"
+    },
+    "report.md": {
+      "bytes": 2246,
+      "sha256": "dd2118c1d886f2e8f55a0e92f9462b6f7e4a8d1cdb94660c4dc148742456e5a5"
+    },
+    "snapshots/.scratch/observed-action-rollout/cryptex-implementation-review.md": {
+      "bytes": 4314,
+      "sha256": "d9fc9a10aae2a859515025c9e1dad28e82122e636d70ee7bd2c93a61ad57d1e4"
+    },
+    "snapshots/.scratch/observed-action-rollout/installed-cryptex-repair.md": {
+      "bytes": 9292,
+      "sha256": "1f4fd7b16bac14ba19d590a052e927e6ef51ce044058abafad4169cf5a42f1ca"
+    },
+    "snapshots/src/observed/allocation-config.ts": {
+      "bytes": 31610,
+      "sha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62"
+    },
+    "snapshots/tests/fixtures/observed-allocation-backend.ts": {
+      "bytes": 10534,
+      "sha256": "021a93e539ebb56ffb3cac8b15d2b77b8ce838f3fb77f9e9ef31ff3ed3fa894a"
+    },
+    "snapshots/tests/fixtures/observed-cli-server.ts": {
+      "bytes": 8300,
+      "sha256": "e0bffe3dfe1b0ee90aed64b7fd2493ddb91faf73cf8c1c9e418338fc55f811d1"
+    },
+    "snapshots/tests/fixtures/observed-cryptex-runtime.ts": {
+      "bytes": 9511,
+      "sha256": "a4fda3b5fbdd0addef8b4b12892ad66b9b454e765c35a8eff89c7ff8999a8da6"
+    },
+    "snapshots/tests/observed-cryptex-runtime.test.ts": {
+      "bytes": 29775,
+      "sha256": "4e18d0de58b5fa6940fbe1c11650731b69d87c560ab7b414e407756c078580dc"
+    },
+    "source-audit.json": {
+      "bytes": 98645,
+      "sha256": "67712ba6fab84417411227221924fbf0baf0e0c2a8594ea6b8153fe91fe3c8c8"
+    }
+  },
+  "permissions": "directories700/files600",
+  "verdict": "FAIL"
+}
