@@ -1,0 +1,119 @@
+{
+  "id": "83d2ae9a-017d-416e-81db-72aee21e3cdc",
+  "ok": true,
+  "result": {
+    "worktree": {
+      "id": "ff805bee-c159-433e-aef6-f01b9d93ed59::/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding",
+      "identity": {
+        "key": "wt2:local:e175bb95-503d-49ee-ad02-0600ae19c941",
+        "executionHostId": "local",
+        "instanceId": "e175bb95-503d-49ee-ad02-0600ae19c941"
+      },
+      "instanceId": "e175bb95-503d-49ee-ad02-0600ae19c941",
+      "repoId": "ff805bee-c159-433e-aef6-f01b9d93ed59",
+      "projectId": "github:hugues-vnsgn/jev-ios-bridge",
+      "hostId": "local",
+      "projectHostSetupId": "ff805bee-c159-433e-aef6-f01b9d93ed59",
+      "creatorProvenance": {
+        "kind": "host"
+      },
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding",
+      "head": "4fa9cc99a94ebb8c79e6d1fe347ccb83745da13d",
+      "branch": "refs/heads/osxsystem/fix-installed-legacy-binding",
+      "isBare": false,
+      "isMainWorktree": false,
+      "displayName": "fix-installed-legacy-binding",
+      "displayNameMode": "fixed",
+      "comment": "Correct frozen legacy Spec P1/P2; original review checkout preserved",
+      "linkedIssue": null,
+      "linkedPR": null,
+      "linkedLinearIssue": null,
+      "linkedLinearIssueWorkspaceId": null,
+      "linkedLinearIssueOrganizationUrlKey": null,
+      "linkedGitLabMR": null,
+      "linkedGitLabIssue": null,
+      "linkedBitbucketPR": null,
+      "linkedAzureDevOpsPR": null,
+      "linkedGiteaPR": null,
+      "linkedWorkItem": null,
+      "linkedTaskSourceContext": null,
+      "isArchived": false,
+      "isUnread": false,
+      "isPinned": false,
+      "sortOrder": 1791540312721,
+      "lastActivityAt": 1791540317781,
+      "createdAt": 1791540317781,
+      "cliProvenance": {
+        "kind": "created-by-cli",
+        "createdAt": 1791540311634
+      },
+      "baseRef": "4fa9cc99a94ebb8c79e6d1fe347ccb83745da13d",
+      "workspaceStatus": "in-progress",
+      "parentWorktreeId": "ff805bee-c159-433e-aef6-f01b9d93ed59::/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+      "childWorktreeIds": [],
+      "lineage": {
+        "worktreeId": "ff805bee-c159-433e-aef6-f01b9d93ed59::/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding",
+        "worktreeInstanceId": "e175bb95-503d-49ee-ad02-0600ae19c941",
+        "parentWorktreeId": "ff805bee-c159-433e-aef6-f01b9d93ed59::/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+        "parentWorktreeInstanceId": "91662fe5-632f-46bc-ae69-094cbdcee10e",
+        "origin": "cli",
+        "capture": {
+          "source": "explicit-cli-flag",
+          "confidence": "explicit"
+        },
+        "createdAt": 1791540317781
+      },
+      "workspaceLineage": {
+        "childWorkspaceKey": "worktree:ff805bee-c159-433e-aef6-f01b9d93ed59::/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding",
+        "childInstanceId": "e175bb95-503d-49ee-ad02-0600ae19c941",
+        "parentWorkspaceKey": "worktree:ff805bee-c159-433e-aef6-f01b9d93ed59::/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+        "parentInstanceId": "91662fe5-632f-46bc-ae69-094cbdcee10e",
+        "origin": "cli",
+        "capture": {
+          "source": "explicit-cli-flag",
+          "confidence": "explicit"
+        },
+        "createdAt": 1791540317781
+      },
+      "git": {
+        "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding",
+        "head": "4fa9cc99a94ebb8c79e6d1fe347ccb83745da13d",
+        "branch": "refs/heads/osxsystem/fix-installed-legacy-binding",
+        "isBare": false,
+        "isMainWorktree": false
+      }
+    },
+    "lineage": {
+      "worktreeId": "ff805bee-c159-433e-aef6-f01b9d93ed59::/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding",
+      "worktreeInstanceId": "e175bb95-503d-49ee-ad02-0600ae19c941",
+      "parentWorktreeId": "ff805bee-c159-433e-aef6-f01b9d93ed59::/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+      "parentWorktreeInstanceId": "91662fe5-632f-46bc-ae69-094cbdcee10e",
+      "origin": "cli",
+      "capture": {
+        "source": "explicit-cli-flag",
+        "confidence": "explicit"
+      },
+      "createdAt": 1791540317781
+    },
+    "workspaceLineage": {
+      "childWorkspaceKey": "worktree:ff805bee-c159-433e-aef6-f01b9d93ed59::/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding",
+      "childInstanceId": "e175bb95-503d-49ee-ad02-0600ae19c941",
+      "parentWorkspaceKey": "worktree:ff805bee-c159-433e-aef6-f01b9d93ed59::/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+      "parentInstanceId": "91662fe5-632f-46bc-ae69-094cbdcee10e",
+      "origin": "cli",
+      "capture": {
+        "source": "explicit-cli-flag",
+        "confidence": "explicit"
+      },
+      "createdAt": 1791540317781
+    },
+    "warnings": [],
+    "catalogVersion": {
+      "epoch": "3bbbd399-c298-4de2-ad54-29b957d0395b",
+      "sequence": 69
+    }
+  },
+  "_meta": {
+    "runtimeId": "5f433f83-b0b5-4579-b844-952323951016"
+  }
+}

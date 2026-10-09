@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "/usr/local/bin/orca",
+    "worktree",
+    "create",
+    "--repo",
+    "id:ff805bee-c159-433e-aef6-f01b9d93ed59",
+    "--name",
+    "fix-installed-legacy-binding",
+    "--parent-worktree",
+    "id:ff805bee-c159-433e-aef6-f01b9d93ed59::/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+    "--base-branch",
+    "4fa9cc99a94ebb8c79e6d1fe347ccb83745da13d",
+    "--setup",
+    "skip",
+    "--comment",
+    "Correct frozen legacy Spec P1/P2; original review checkout preserved",
+    "--json"
+  ],
+  "exit": 0,
+  "stdoutSha256": "0bbb9c0e200278ef0e9b7e6f89963cc14fd287d381a69c3c2969186bb5e7dce5",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
