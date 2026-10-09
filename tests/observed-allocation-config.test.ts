@@ -76,6 +76,7 @@ test('installed metadata replacement during plutil cannot supply compatibility e
 import { EventEmitter } from 'node:events';
 import { PassThrough } from 'node:stream';
 import type { spawn } from 'node:child_process';
+import type { Stats } from 'node:fs';
 import { allocationSourceProcess, developerDirectory } from '../src/observed/allocation-config.js';
 
 function childHarness() {
@@ -224,5 +225,181 @@ test('plist allowlist distinguishes device profiles from runtime OS metadata and
     for (const invalid of [{ timeoutMs:0 }, { timeoutMs:900001 }, { maxOutputBytes:0 }, { maxOutputBytes:65537 }, { shell:true },
       { signal:AbortSignal.abort() }]) await assert.rejects(source('/usr/bin/xcrun', ['simctl','create','jev-observed-ABCDEF00-0000-4000-8000-000000000001',typeId,runtimeId], { ...options, ...invalid } as never));
     assert.equal(h.invocations.length, 0);
+  } finally { await f.cleanup(); }
+});
+
+type AllocationFixture = Awaited<ReturnType<typeof allocationFixture>>;
+function overrideInstalledStats(f: AllocationFixture, change: (path: string, stat: Stats, read: number) => Stats) {
+  const original = f.host.fs.lstat; const reads = new Map<string, number>();
+  f.host.fs.lstat = (async (path: string) => {
+    const stat = await original(path); const read = (reads.get(path) ?? 0) + 1; reads.set(path, read);
+    return change(path, stat, read);
+  }) as typeof original;
+}
+const applicationsStats = (stat: Stats) => Object.assign(stat, { uid: 0, gid: 80, mode: 0o040775 });
+const exactCreate = ['simctl', 'create', 'jev-observed-ABCDEF00-0000-4000-8000-000000000001', typeId, runtimeId];
+const processOptions = () => ({ shell: false as const, signal: new AbortController().signal, timeoutMs: 1000, maxOutputBytes: 65536 });
+function installedProcessFixture(f: AllocationFixture) {
+  const invocations: unknown[][] = [];
+  const launch = ((executable: string, args: string[], options: unknown) => {
+    invocations.push([executable, args, options]); const { child } = childHarness();
+    queueMicrotask(() => { void (async () => {
+      try {
+        const output = executable === '/usr/bin/plutil'
+          ? await (await import('node:fs/promises')).readFile(f.map(args[5]!), 'utf8')
+          : 'ABCDEF00-0000-4000-8000-000000000001\n';
+        child.stdout.write(output); child.emit('close', 0, null);
+      } catch (error) { child.emit('error', error); child.emit('close', 1, null); }
+    })(); });
+    return child;
+  }) as unknown as typeof spawn;
+  return { source: allocationSourceProcess(f.host, [], launch), invocations };
+}
+
+test('installed Xcode ancestor policy accepts strict paths and the exact root admin Applications exception', async () => {
+  for (const exception of [false, true]) {
+    const f = await allocationFixture();
+    if (exception) overrideInstalledStats(f, (path, stat) => path === '/Applications' ? applicationsStats(stat) : stat);
+    const process = installedProcessFixture(f);
+    try {
+      const proof = await verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, process.source, new AbortController().signal);
+      assert.equal(proof.runtimeVersion, '27.0.1'); assert.equal(proof.xcodeBuild, '27A-fixture');
+      assert.ok(process.invocations.length > 0); assert.ok(process.invocations.every(call => call[0] === '/usr/bin/plutil'));
+      assert.deepEqual(await process.source('/usr/bin/xcrun', exactCreate, processOptions()),
+        { exitCode: 0, stdout: 'ABCDEF00-0000-4000-8000-000000000001\n', stderr: '' });
+      assert.equal(process.invocations.filter(call => call[0] === '/usr/bin/xcrun').length, 1);
+      for (const call of process.invocations) assert.deepEqual((call[2] as { env: unknown }).env,
+        { HOME: f.home, PATH: '/usr/bin:/bin:/usr/sbin:/sbin', LANG: 'C', LC_ALL: 'C', DEVELOPER_DIR: developerDirectory });
+      assert.deepEqual(f.calls, []);
+    } finally { await f.cleanup(); }
+  }
+});
+
+for (const surface of ['compatibility', 'process'] as const) for (const change of ['owner', 'group-write', 'other-write', 'symlink', 'type'] as const) {
+  test(`installed fresh leaf ${change} refuses at the ${surface} interface`, async () => {
+    const f = await allocationFixture(); const process = installedProcessFixture(f);
+    const target = surface === 'compatibility' ? '/Applications/Xcode.app/Contents/MacOS/Xcode' : developerDirectory;
+    overrideInstalledStats(f, (path, stat, read) => {
+      if (path !== target || read !== 2) return stat;
+      if (change === 'owner') return Object.assign(stat, { uid: f.host.account.uid + 10000 });
+      if (change === 'group-write') return Object.assign(stat, { mode: stat.mode | 0o020 });
+      if (change === 'other-write') return Object.assign(stat, { mode: stat.mode | 0o002 });
+      return Object.assign(stat, { mode: (stat.mode & 0o7777) | (change === 'symlink' ? 0o120000 : surface === 'compatibility' ? 0o040000 : 0o100000) });
+    });
+    try {
+      if (surface === 'compatibility') {
+        await assert.rejects(verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, process.source,
+          new AbortController().signal), /HOST_PREREQUISITE_MISSING/);
+        assert.ok(process.invocations.every(call => call[0] === '/usr/bin/plutil'));
+      } else {
+        await assert.rejects(process.source('/usr/bin/xcrun', exactCreate, processOptions()));
+        assert.deepEqual(process.invocations, []);
+      }
+      assert.deepEqual(f.calls, []);
+    } finally { await f.cleanup(); }
+  });
+}
+
+const unsafeApplications: [string, (stat: Stats, f: AllocationFixture) => Stats][] = [
+  ['account owner', (stat, f) => { const uid = f.host.account.uid || 501; f.host.account.uid = uid; return Object.assign(stat, { uid }); }],
+  ['foreign owner', (stat, f) => Object.assign(stat, { uid: f.host.account.uid + 10000 })],
+  ['foreign group', stat => Object.assign(stat, { gid: 20 })],
+  ['world write', stat => Object.assign(stat, { mode: 0o040777 })],
+  ['other write without group write', stat => Object.assign(stat, { mode: 0o040757 })],
+  ['different group permissions', stat => Object.assign(stat, { mode: 0o040735 })],
+  ['sticky bit', stat => Object.assign(stat, { mode: 0o041775 })],
+  ['setgid bit', stat => Object.assign(stat, { mode: 0o042775 })],
+  ['setuid bit', stat => Object.assign(stat, { mode: 0o044775 })],
+  ['symlink', stat => Object.assign(stat, { mode: 0o120775 })],
+  ['file', stat => Object.assign(stat, { mode: 0o100775 })],
+];
+for (const [name, change] of unsafeApplications) test(`installed Applications exception refuses ${name} without dispatch`, async () => {
+  const f = await allocationFixture(); const process = installedProcessFixture(f);
+  overrideInstalledStats(f, (path, stat) => path === '/Applications' ? change(applicationsStats(stat), f) : stat);
+  try {
+    await assert.rejects(verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, process.source,
+      new AbortController().signal), /HOST_PREREQUISITE_MISSING/);
+    await assert.rejects(process.source('/usr/bin/plutil', ['-convert', 'json', '-o', '-', '--', xcodeInfoPath], processOptions()));
+    await assert.rejects(process.source('/usr/bin/xcrun', exactCreate, processOptions()));
+    assert.deepEqual(process.invocations, []); assert.deepEqual(f.calls, []);
+  } finally { await f.cleanup(); }
+});
+
+const strictInstalledPaths = ['/Applications/Xcode.app', '/Applications/Xcode.app/Contents', developerDirectory,
+  xcodeInfoPath, runtimeProfilePath, '/Library', '/usr'];
+for (const target of strictInstalledPaths) for (const change of ['group-write', 'foreign-owner', 'symlink'] as const) {
+  test(`installed Applications exception keeps ${target} strict for ${change}`, async () => {
+    const f = await allocationFixture(); const process = installedProcessFixture(f);
+    overrideInstalledStats(f, (path, stat) => {
+      if (path === '/Applications') return applicationsStats(stat);
+      if (path !== target) return stat;
+      if (change === 'foreign-owner') return Object.assign(stat, { uid: f.host.account.uid + 10000 });
+      if (change === 'group-write') return Object.assign(stat, { uid: 0, gid: 80, mode: stat.mode | 0o020 });
+      return Object.assign(stat, { mode: (stat.mode & 0o7777) | 0o120000 });
+    });
+    try {
+      await assert.rejects(verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, process.source,
+        new AbortController().signal), /HOST_PREREQUISITE_MISSING/);
+      assert.ok(process.invocations.every(call => call[0] === '/usr/bin/plutil'));
+      const before = process.invocations.length;
+      const plist = target === xcodeInfoPath || target === runtimeProfilePath || target === '/Library';
+      await assert.rejects(process.source(plist ? '/usr/bin/plutil' : '/usr/bin/xcrun',
+        plist ? ['-convert', 'json', '-o', '-', '--', target === xcodeInfoPath ? xcodeInfoPath : runtimeProfilePath] : exactCreate, processOptions()));
+      assert.equal(process.invocations.length, before); assert.deepEqual(f.calls, []);
+    } finally { await f.cleanup(); }
+  });
+}
+
+test('installed Applications exception permits no alternate or noncanonical Xcode metadata command', async () => {
+  const f = await allocationFixture(); const process = installedProcessFixture(f);
+  overrideInstalledStats(f, (path, stat) => path === '/Applications' ? applicationsStats(stat) : stat);
+  try {
+    for (const path of ['/Applications/Info.plist', '/Applications/Other.app/Contents/Info.plist',
+      '/Applications/Xcode.app-old/Contents/Info.plist', '/applications/Xcode.app/Contents/Info.plist',
+      '/Applications//Xcode.app/Contents/Info.plist', '/Applications/Xcode.app/../Xcode.app/Contents/Info.plist']) {
+      await assert.rejects(process.source('/usr/bin/plutil', ['-convert', 'json', '-o', '-', '--', path], processOptions()));
+    }
+    assert.deepEqual(process.invocations, []); assert.deepEqual(f.calls, []);
+  } finally { await f.cleanup(); }
+});
+
+for (const change of ['hardlink', 'size'] as const) test(`installed Applications exception preserves metadata ${change} refusal`, async () => {
+  const f = await allocationFixture(); const process = installedProcessFixture(f); const fs = await import('node:fs/promises');
+  overrideInstalledStats(f, (path, stat) => path === '/Applications' ? applicationsStats(stat) : stat);
+  try {
+    if (change === 'hardlink') await fs.link(f.map(xcodeInfoPath), f.map(xcodeInfoPath + '.alias'));
+    else await fs.writeFile(f.map(xcodeInfoPath), ' '.repeat(65537));
+    await assert.rejects(verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, process.source,
+      new AbortController().signal), /HOST_PREREQUISITE_MISSING/);
+    await assert.rejects(process.source('/usr/bin/plutil', ['-convert', 'json', '-o', '-', '--', xcodeInfoPath], processOptions()));
+    assert.deepEqual(process.invocations, []); assert.deepEqual(f.calls, []);
+  } finally { await f.cleanup(); }
+});
+
+test('installed Applications policy rechecks unsafe ancestor changes after metadata conversion', async () => {
+  const f = await allocationFixture(); const process = installedProcessFixture(f); let changed = false;
+  overrideInstalledStats(f, (path, stat) => path === '/Applications'
+    ? Object.assign(applicationsStats(stat), changed ? { mode: 0o040777 } : {}) : stat);
+  const source: typeof f.source = async (...args) => { const result = await process.source(...args); changed = true; return result; };
+  try {
+    await assert.rejects(verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, source,
+      new AbortController().signal), /HOST_PREREQUISITE_MISSING/);
+    assert.equal(process.invocations.length, 1); assert.equal(process.invocations[0]![0], '/usr/bin/plutil');
+    await assert.rejects(process.source('/usr/bin/xcrun', exactCreate, processOptions()));
+    assert.equal(process.invocations.length, 1); assert.deepEqual(f.calls, []);
+  } finally { await f.cleanup(); }
+});
+
+test('installed Applications policy checks permission trust without certifying ancestor identity stability', async () => {
+  const f = await allocationFixture(); const process = installedProcessFixture(f); const identities = new Set<number>();
+  overrideInstalledStats(f, (path, stat, read) => {
+    if (path !== '/Applications') return stat;
+    const result = Object.assign(applicationsStats(stat), { ino: stat.ino + read }); identities.add(result.ino); return result;
+  });
+  try {
+    assert.equal((await verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, process.source,
+      new AbortController().signal)).runtimeVersion, '27.0.1');
+    assert.ok(identities.size > 1); assert.ok(process.invocations.every(call => call[0] === '/usr/bin/plutil'));
+    assert.deepEqual(f.calls, []);
   } finally { await f.cleanup(); }
 });

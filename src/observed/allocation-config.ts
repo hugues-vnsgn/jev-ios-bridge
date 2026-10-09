@@ -133,12 +133,17 @@ export function allocationSourceProcess(host: InstalledHost, allowedArtifactRoot
 }
 async function trustedPath(path: string, host: InstalledHost, directory = false): Promise<Stats> {
   const parts = path.split('/').filter(Boolean); let current = '/';
+  const installedXcode = resolve(path) === path && (path === '/Applications/Xcode.app' || path.startsWith('/Applications/Xcode.app/'));
   for (let i = 0; i < parts.length; i++) {
     current = join(current, parts[i]!); const s = await host.fs.lstat(current);
-    if (s.isSymbolicLink() || ![0, host.account.uid].includes(s.uid) || (s.mode & 0o022)
+    // Trust local administrators only for this canonical parent of the fixed Xcode tree.
+    const applications = installedXcode && current === '/Applications' && i < parts.length - 1 && s.isDirectory()
+      && s.uid === 0 && s.gid === 80 && (s.mode & 0o7777) === 0o775;
+    if (s.isSymbolicLink() || ![0, host.account.uid].includes(s.uid) || ((s.mode & 0o022) && !applications)
       || (i < parts.length - 1 && !s.isDirectory())) throw new Error('Untrusted installed path');
   }
   const s = await host.fs.lstat(path);
+  if (s.isSymbolicLink() || ![0, host.account.uid].includes(s.uid) || (s.mode & 0o022)) throw new Error('Untrusted installed path');
   if (directory ? !s.isDirectory() : !s.isFile()) throw new Error('Missing installed path');
   return s;
 }
