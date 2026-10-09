@@ -1,0 +1,199 @@
+{
+  "axis": "Standards/design conditional proposal",
+  "revision": 3,
+  "atUtc": "2026-10-09T07:07:17.097046+00:00",
+  "inputProposalSHA256": {
+    "revision2": "88e1b5d650bcf393647b67c9043e811e7d7e7d99891296261be060d64dbc959c",
+    "revision3": "14dd5566f99845a4ee6562404c16610c732795f311b7df1e95ecb306dd599492"
+  },
+  "matrix": [
+    {
+      "line": 3,
+      "subject": "Status preservation",
+      "quote": "Revision3. Owner approval pending. Revisions1 and2 remain preserved with their Spec findings. No Source change is authorized by this proposal.",
+      "assessment": "Prior draft/review outputs retained; owner pending and no Source authority. Native facts updated only in this separate revision.",
+      "rule": "ADR0008 decision is not implementation/acceptance",
+      "documentedBreaches": [],
+      "materialProposalHeuristicFindings": []
+    },
+    {
+      "line": 9,
+      "subject": "Native factual scope and qualification",
+      "quote": "The approved Cryptex v3 policy explicitly preserved strict default and Volumes checks. Its approval does not authorize this extension. Names `iOS_22G86` and `iOS_23E254a` were observed in a bounded immediate listing; neither name proves a metadata identifier or read-only status. The sole operator completed a separate manual diagnosis: both exact mount responses report typed Writable/WritableMedia/WritableVolume=false, and legacy namespace/runtime component modes fit the sets below. No runtime file bytes or metadata identifiers were read; runtime bundle basenames remain names only. Some system executable-ancestor inode values were recorded as unsafe Node Numbers, so their exact integer identity is uncertain. This qualification does not invalidate the two typed read-only XML responses or the safely represented legacy mount/runtime identities. See the retained operator-legacy-volume-diagnosis evidence and Root audit. Future production proofs must satisfy the lossless-or-refuse rule below; the manual snapshots are not reusable authorization. Owner approval will be requested only after independent design reviews and the Root evidence audit are retained.",
+      "assessment": "Two exact required typed-false XML responses/32 fitting mounted component patterns are hash-bound; zero runtime opens/plutil/lookup. Three unsafe system inode fields qualified, not certified. Manual snapshots cannot authorize later reads.",
+      "rule": "allocation-contract.md:76,80; mode-based v3 uncertainty limits",
+      "documentedBreaches": [],
+      "materialProposalHeuristicFindings": []
+    },
+    {
+      "line": 23,
+      "subject": "Lossless identity and timestamp precision",
+      "quote": "Use lossless identity values for snapshots and opened-file comparisons, or refuse values that cannot be safely and exactly represented. Never convert bigint dev/ino to Number or compare rounded numeric strings. Preserve timestamp precision supplied by the chosen stat representation, without millisecond truncation or Number coercion of bigint nanosecond fields. Numeric integer identity fields must be safe integers; uncertain identity representation refuses the proof. Compare full before/opened/final/after identity including path, dev/ino, uid/gid, type/full mode, size/nlink and ctime/mtime for every component; compare exact metadata bytes before and after conversion. Each proof must match the mount identity in the full path snapshot. Check the caller's shared signal at every bounded stage; wait for actual child close. Preserve64KiB input and ordinary combined output, exact Xcode Info131072 output exception,10s mount deadlines and mount-only SIGTERM\u2192250ms SIGKILL escalation. Other child termination behavior is unchanged.",
+      "assessment": "Requires lossless-or-refuse both path snapshots and opened file comparisons; unsafe Number integer identities and bigint-to-Number coercion cannot authorize proof. Preserve chosen representation timestamp precision and refuse uncertain representation. Centralize these checks with shared mounted identity helper.",
+      "rule": "approved v3 full identity requirement; private module depth/locality",
+      "documentedBreaches": [],
+      "materialProposalHeuristicFindings": []
+    },
+    {
+      "line": 27,
+      "subject": "Connected enumeration capture",
+      "quote": "Before and after the immediate Volumes listing, compare full canonical namespace/ancestor identity snapshots under the existing strict rule. Capture each recognized candidate's mount-root/ancestor identity within that stable enumeration window and bind it to subsequent proofs. Before accepting compatibility, take a final namespace snapshot and bounded immediate listing: require the namespace identity and complete sorted entry set to match the initial enumeration, and every recognized candidate's identity to match its captured identity. Refuse an observed namespace, entry-set or candidate change; do not repair or silently skip it. No privileged atomic-pinning claim is made.",
+      "assessment": "Lossless comparison must apply to initial/final namespace/entry/candidate snapshots and subsequent proof binding, with existing finite limits. No alternate rounded comparator for discovery.",
+      "rule": "proposal-v3.md:23,27,29",
+      "documentedBreaches": [],
+      "materialProposalHeuristicFindings": []
+    },
+    {
+      "line": 35,
+      "subject": "Shared module and preservation",
+      "quote": "Extend the existing private mounted-metadata boundary to represent the two exact namespace classes. Share mount identity, read-only proof, bounded byte reads and conversion checks; namespace ancestry rules remain explicit. Avoid another copy of the read/proof/convert algorithm or a public configurable trust abstraction. No broader allocator, device or admission change is included.",
+      "assessment": "One common mounted identity/proof/read/conversion module implements exact representation and namespace-specific ancestry. No duplicated comparator or broader strict-branch refactor justified.",
+      "rule": "codebase-design depth/locality; ADR0005 stable meanings; proposal-v3.md:13,15,35",
+      "documentedBreaches": [],
+      "materialProposalHeuristicFindings": []
+    },
+    {
+      "line": 37,
+      "subject": "Required genuine regressions",
+      "quote": "Before repair add genuine failing regressions for the observed0775 legacy layout and typed read-only proof. Preserve all prior cases and assertions. Cover both exact name examples; name/path escape; missing/mismatched/writable/changed/uncertain proof; each owner/group/mode/type/symlink/hardlink/input/byte/identity/device failure; artifact-prefix bypass; duplicate identifiers across roots; distinct large dev/ino identities that collide after Number coercion and timestamp-only changes at the supplied precision; namespace/candidate-set changes during enumeration and later conversions; enumeration/dispatch/deadline/abort/overflow; actual mount-child close and escalation. Preserve Applications/Cryptex behavior, existing strict legacy fixture and all other budgets. Then focused tests, actual unmodified defaults/typecheck/build on exact26.8.1 and24.0.0, independent Spec/Standards reviews, Source/compiled binding, clean installed proofs and wrapped startup precede integration and one new actual compatibility lookup.",
+      "assessment": "Adjacent large dev/ino coercion collisions and timestamp-only changes at supplied precision are explicit red requirements; Source/tests do not exist here, so no behavioral PASS inferred.",
+      "rule": "approved v3 regression-before-repair evidence rule",
+      "documentedBreaches": [],
+      "materialProposalHeuristicFindings": []
+    },
+    {
+      "line": 19,
+      "subject": "Modes and fresh checks",
+      "quote": "Within the confirmed mount, require every component to be on the mount root's device, nonsymlink, uid0 and gid0 or80. Directories allow only0755/0775; additionally01775 is allowed only at the exact `<root>/Library/Developer/CoreSimulator/Profiles/Runtimes/<bundle>.simruntime/Contents/Resources/RuntimeRoot`. Metadata leaves allow only0444/0644/0664, regular file, nlink1, at most65536 bytes. Reject other modes, setuid/setgid, world write, different owner/group/type, aliases and nested-device transitions. The actual modes remain to be measured; unsupported observations do not silently expand these sets.",
+      "assessment": "Observed native modes fit existing finite sets; unchanged sentence about measurement must be understood as future fresh production checks, not denial of separately retained manual observations. No mode-set expansion.",
+      "rule": "proposal-v3.md:9,17,19; approved v3 freshness",
+      "documentedBreaches": [],
+      "materialProposalHeuristicFindings": []
+    },
+    {
+      "line": 43,
+      "subject": "Owner/operational separation",
+      "quote": "The owner decision would amend strict checks only for this exact freshly confirmed legacy read-only mount class. Existing Applications/Cryptex approvals persist. Until approval, compatibility and operational entry remain refused/unverified; L01\u2013L05 and ticket12 remain unstarted.",
+      "assessment": "Trust decision remains pending; fresh implementation gates, production lookup and live/ticket12 acceptance separate from factual diagnosis/design review.",
+      "rule": "allocation-contract.md:80,119 / ADR0008",
+      "documentedBreaches": [],
+      "materialProposalHeuristicFindings": []
+    }
+  ],
+  "documentedBreaches": [],
+  "materialProposalHeuristicFindings": [],
+  "fowlerBaselineConsidered": [
+    "Mysterious Name",
+    "Duplicated Code",
+    "Feature Envy",
+    "Data Clumps",
+    "Primitive Obsession",
+    "Repeated Switches",
+    "Shotgun Surgery",
+    "Divergent Change",
+    "Speculative Generality",
+    "Message Chains",
+    "Middle Man",
+    "Refused Bequest"
+  ],
+  "futureJudgments": "Avoid Duplicated Code/Repeated Switches across identity comparators and class validation; keep lossless identity as one private meaningful descriptor/helper (Primitive Obsession/Data Clumps). No public policy hooks or pass-through layer (Speculative Generality/Middle Man). No current absent-code findings.",
+  "verdict": "PASS conditional proposal Standards/design only",
+  "ownerDecision": "PENDING",
+  "inputs": {
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision2/inputs/proposal-revision2.md": {
+      "sha256": "88e1b5d650bcf393647b67c9043e811e7d7e7d99891296261be060d64dbc959c",
+      "bytes": 8185,
+      "retained": "inputs/proposal-v2.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-proposal-v3.md": {
+      "sha256": "14dd5566f99845a4ee6562404c16610c732795f311b7df1e95ecb306dd599492",
+      "bytes": 9519,
+      "retained": "inputs/proposal-v3.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision2/manifest.json": {
+      "sha256": "8edc835efda7361552c224cf085af8340702400a4c004b00d3136745b7306f05",
+      "bytes": 3539,
+      "retained": "inputs/revision2/manifest.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision2/matrix.json": {
+      "sha256": "d65c5a11893a81a8a09f8bbe9a2c611548f020b8aa6b5440c27efc8263ed5172",
+      "bytes": 8907,
+      "retained": "inputs/revision2/matrix.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision2/report.md": {
+      "sha256": "e8afc94b205d4d96bdc2e0b4f5c5e332a928d25501d5cfab8811b7d68339673d",
+      "bytes": 2408,
+      "retained": "inputs/revision2/report.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/manifest.json": {
+      "sha256": "0d2d997b1d6839ecfbfbfa6e5974c6cb9e05d042c1a7262d95f73f64383d8dc7",
+      "bytes": 13659,
+      "retained": "inputs/revision1/manifest.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-legacy-volume-evidence-audit.json": {
+      "sha256": "f6399bfaff67ccdb8642ecc1111fe4680d7d0589b03cc632529e3533ee25f1ea",
+      "bytes": 696435,
+      "retained": "inputs/root-legacy-volume-evidence-audit.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/artifact-hashes.json": {
+      "sha256": "1c88098c93de02f24e1b813cb1fedf9e92fe18abb28547cc0a005b1648865893",
+      "bytes": 4863,
+      "retained": "inputs/operator/artifact-hashes.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/summary.json": {
+      "sha256": "371d9479efedc9644736a656c1c9bdfd2c3bf6a18b03d0b68f03848a1681deab",
+      "bytes": 2178,
+      "retained": "inputs/operator/summary.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/child-receipts.json": {
+      "sha256": "6394242db457bdc32e9c4a86d6782e79886fad4cfcd01aaad1b379cc61ad3023",
+      "bytes": 4614,
+      "retained": "inputs/operator/child-receipts.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/permission-patterns.json": {
+      "sha256": "569ef6740ac115a6a400127ebfbab257ca3f2ead492de66abcca7e79358dfc36",
+      "bytes": 15505,
+      "retained": "inputs/operator/permission-patterns.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/identity-precision-audit.json": {
+      "sha256": "b93f89eb378ad7916d201c6e93e2f19ee2a0c89f635a0aed174d43fa376eb9ed",
+      "bytes": 2432,
+      "retained": "inputs/operator/identity-precision-audit.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/diagnostic-report.md": {
+      "sha256": "bd8abd7b73ad59ea29298c0fb52d66ba7de1079f9212e9f847e5eb940bde32e7",
+      "bytes": 3158,
+      "retained": "inputs/operator/diagnostic-report.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/permission-summary.json": {
+      "sha256": "2752ec9ae43a772e54668a7c93eb087b449cfe07feb831aedbe560905a71d20a",
+      "bytes": 7751,
+      "retained": "inputs/operator/permission-summary.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/mount-proofs.json": {
+      "sha256": "c8b6cadb1bbce9fb7a1c8551ddd588b1f3500ba965e581d97ae3be1f49319982",
+      "bytes": 101051,
+      "retained": "inputs/operator/mount-proofs.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/children/00.stdout.bin": {
+      "sha256": "5d81401ba0057d2d78d563e58c1afd4f00661c7f5cec8a77675f18353cfafe35",
+      "bytes": 3092,
+      "retained": "inputs/operator/children/00.stdout.bin"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/children/00.stderr.bin": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/operator/children/00.stderr.bin"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/children/01.stdout.bin": {
+      "sha256": "24062b3bce8b10d6824c7fbf62d9a2ba8e9e290177bd374aa7f6921e6ef8cef6",
+      "bytes": 3093,
+      "retained": "inputs/operator/children/01.stdout.bin"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/children/01.stderr.bin": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/operator/children/01.stderr.bin"
+    }
+  }
+}

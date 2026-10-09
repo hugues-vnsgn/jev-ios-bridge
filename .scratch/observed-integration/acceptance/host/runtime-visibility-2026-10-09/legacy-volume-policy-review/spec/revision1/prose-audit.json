@@ -1,0 +1,35 @@
+{
+  "skills": [
+    "code-review Spec axis",
+    "writing-for-agents",
+    "unslop"
+  ],
+  "register": "Reference",
+  "firstChecker": {
+    "reportWords": 290,
+    "matrixWords": 1413,
+    "strictHits": 44,
+    "candidates": 0
+  },
+  "fixed": [
+    "Use straight quote marks around exact quoted proposal clauses.",
+    "Replace title/finding separators with colons; use ordinary hyphens for source line ranges.",
+    "Space numbers in the human-facing report."
+  ],
+  "leftAlone": [
+    "Exact quoted proposal clauses and all code-shaped paths, identifiers and hashes.",
+    "Frozen proposal bytes and diff remain exact."
+  ],
+  "flaggedNotChanged": [
+    "P2 immediate Volumes enumeration stability; owner revision remains separate."
+  ],
+  "limitations": [
+    "Static prose checker is not an implementation test."
+  ],
+  "finalChecker": {
+    "strictHits": 0,
+    "candidates": 0,
+    "reportWords": 294,
+    "matrixWords": 1413
+  }
+}

@@ -1,0 +1,512 @@
+{
+  "scope": "Bounded revision3 companion/hash audit; prior frozen audits reused, no Source/test/native execution",
+  "checks": [
+    {
+      "name": "v1 exact announced hash",
+      "pass": true
+    },
+    {
+      "name": "v2 exact announced hash",
+      "pass": true
+    },
+    {
+      "name": "v3 exact announced hash",
+      "pass": true
+    },
+    {
+      "name": "revision1 immutable FAIL freeze",
+      "pass": true
+    },
+    {
+      "name": "revision1 frozen output audit.py",
+      "pass": true
+    },
+    {
+      "name": "revision1 frozen output clause-matrix.md",
+      "pass": true
+    },
+    {
+      "name": "revision1 frozen output evidence-audit.json",
+      "pass": true
+    },
+    {
+      "name": "revision1 frozen output inputs-manifest.json",
+      "pass": true
+    },
+    {
+      "name": "revision1 frozen output proposal-frozen.md",
+      "pass": true
+    },
+    {
+      "name": "revision1 frozen output proposal.diff",
+      "pass": true
+    },
+    {
+      "name": "revision1 frozen output prose-audit.json",
+      "pass": true
+    },
+    {
+      "name": "revision1 frozen output report.md",
+      "pass": true
+    },
+    {
+      "name": "revision2 immutable FAIL freeze",
+      "pass": true
+    },
+    {
+      "name": "revision2 frozen output audit.py",
+      "pass": true
+    },
+    {
+      "name": "revision2 frozen output clause-matrix.md",
+      "pass": true
+    },
+    {
+      "name": "revision2 frozen output evidence-audit.json",
+      "pass": true
+    },
+    {
+      "name": "revision2 frozen output inputs-manifest.json",
+      "pass": true
+    },
+    {
+      "name": "revision2 frozen output proposal-v1-frozen.md",
+      "pass": true
+    },
+    {
+      "name": "revision2 frozen output proposal-v2-frozen.md",
+      "pass": true
+    },
+    {
+      "name": "revision2 frozen output prose-audit.json",
+      "pass": true
+    },
+    {
+      "name": "revision2 frozen output report.md",
+      "pass": true
+    },
+    {
+      "name": "revision2 frozen output v1-v2.diff",
+      "pass": true
+    },
+    {
+      "name": "Source7d unchanged",
+      "pass": true
+    },
+    {
+      "name": "approved Cryptex proposal unchanged",
+      "pass": true
+    },
+    {
+      "name": "exact Root final native companion hash",
+      "pass": true
+    },
+    {
+      "name": "Root4185 successful retained checks",
+      "pass": true
+    },
+    {
+      "name": "Root final artifact manifest hash/27 files",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact child-receipts.json",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact children/00.stderr.bin",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact children/00.stdout.bin",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact children/01.stderr.bin",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact children/01.stdout.bin",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact command.json",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact common.mjs",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact context.json",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact diagnostic-report.md",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact filesystem-identities.json",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact head-after.json",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact identity-precision-audit.json",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact mount-proofs.json",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact permission-patterns.json",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact permission-summary.json",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact preservation-after.json",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact preservation-before.json",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact preservation-completion.json",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact preservation-references.json",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact probe.mjs",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact report.md",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact result.json",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact run.mjs",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact stderr.txt",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact stdout.txt",
+      "pass": true
+    },
+    {
+      "name": "final diagnostic artifact summary.json",
+      "pass": true
+    },
+    {
+      "name": "reuse sealed v2 raw audit, no repeat gates",
+      "pass": true
+    },
+    {
+      "name": "Root exact two typed proof correspondence",
+      "pass": true
+    },
+    {
+      "name": "unsafe system inode fields qualified, not exact PASS",
+      "pass": true
+    },
+    {
+      "name": "Root32 inspected mounted paths safe integer identities",
+      "pass": true
+    },
+    {
+      "name": "manual-only retained counters and prior refusal",
+      "pass": true
+    },
+    {
+      "name": "child0 raw stdout binding",
+      "pass": true
+    },
+    {
+      "name": "child0 raw stderr binding",
+      "pass": true
+    },
+    {
+      "name": "child0 successful actual close fixed query",
+      "pass": true
+    },
+    {
+      "name": "child1 raw stdout binding",
+      "pass": true
+    },
+    {
+      "name": "child1 raw stderr binding",
+      "pass": true
+    },
+    {
+      "name": "child1 successful actual close fixed query",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-proposal.md",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-proposal-v2.md",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-proposal-v3.md",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/freeze.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/audit.py",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/clause-matrix.md",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/evidence-audit.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/inputs-manifest.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/proposal-frozen.md",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/proposal.diff",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/prose-audit.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/report.md",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/freeze.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/audit.py",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/clause-matrix.md",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/evidence-audit.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/inputs-manifest.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/proposal-v1-frozen.md",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/proposal-v2-frozen.md",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/prose-audit.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/report.md",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/v1-v2.diff",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck src/observed/allocation-config.ts",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal.md",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/owner-cryptex-trust-decision.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-legacy-volume-evidence-audit.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/artifact-hashes.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/child-receipts.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/children/00.stderr.bin",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/children/00.stdout.bin",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/children/01.stderr.bin",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/children/01.stdout.bin",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/command.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/common.mjs",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/context.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/diagnostic-report.md",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/filesystem-identities.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/head-after.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/identity-precision-audit.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/mount-proofs.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/permission-patterns.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/permission-summary.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/preservation-after.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/preservation-before.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/preservation-completion.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/preservation-references.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/probe.mjs",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/report.md",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/result.json",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/run.mjs",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/stderr.txt",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/stdout.txt",
+      "pass": true
+    },
+    {
+      "name": "bounded final input recheck .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/summary.json",
+      "pass": true
+    }
+  ],
+  "counts": {
+    "checks": 117,
+    "pass": 117,
+    "fail": 0,
+    "boundedInputs": 53,
+    "reusedRevision2Checks": 1546,
+    "RootRetainedChecks": 4185,
+    "nativeArtifacts": 27,
+    "rawChildBytes": [
+      3092,
+      3093
+    ]
+  },
+  "qualifiedSystemIdentityFields": [
+    {
+      "path": "/usr",
+      "fields": [
+        "ino"
+      ]
+    },
+    {
+      "path": "/usr/sbin",
+      "fields": [
+        "ino"
+      ]
+    },
+    {
+      "path": "/usr/sbin/diskutil",
+      "fields": [
+        "ino"
+      ]
+    }
+  ],
+  "limitations": [
+    "Exact original system inode integers not certified or recoverable.",
+    "Manual typed RO proof is factual; production fresh pre/post proof, runtime identifier and compatibility not established.",
+    "Lossless identity/timestamp rules are proposed requirements, not implemented behavior.",
+    "Stable missing Volumes preserves old behavior; presence changes must be represented and compared under v3:13/27/37."
+  ]
+}

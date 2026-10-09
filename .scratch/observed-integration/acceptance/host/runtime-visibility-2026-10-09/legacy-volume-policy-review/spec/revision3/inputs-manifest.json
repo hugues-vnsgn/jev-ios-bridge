@@ -1,0 +1,217 @@
+{
+  "scope": "Only bounded successor inputs; no full previous input/gate rerun",
+  "files": {
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-proposal.md": {
+      "bytes": 7184,
+      "sha256": "94ab01cb03679e8f92008a874e90cddaaa970e509799bb3c380fbe060f6a028a"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-proposal-v2.md": {
+      "bytes": 8185,
+      "sha256": "88e1b5d650bcf393647b67c9043e811e7d7e7d99891296261be060d64dbc959c"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-proposal-v3.md": {
+      "bytes": 9519,
+      "sha256": "14dd5566f99845a4ee6562404c16610c732795f311b7df1e95ecb306dd599492"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/freeze.json": {
+      "bytes": 2445,
+      "sha256": "556fa47d7203d570ea05fcc4879f899ed8d4ead19e24dedf387523128115b83c"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/audit.py": {
+      "bytes": 11155,
+      "sha256": "bba8d2b69c2ce0fcb432cdddb8319d4a87b8e64bb29b447cfa9e5b969cf93457"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/clause-matrix.md": {
+      "bytes": 11336,
+      "sha256": "903e8e9b4c58c3f31978b1dda3f4ef988c0221dbe3c2ee5df841434b01af6afb"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/evidence-audit.json": {
+      "bytes": 314321,
+      "sha256": "65c909638c022128a6279d982c809172aa0ed870fd30945faeae4593a0831595"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/inputs-manifest.json": {
+      "bytes": 284193,
+      "sha256": "22f512b0c8d3edc073b4385101a330c341bdeed9bf45e69a8ed920ee016374ad"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/proposal-frozen.md": {
+      "bytes": 7184,
+      "sha256": "94ab01cb03679e8f92008a874e90cddaaa970e509799bb3c380fbe060f6a028a"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/proposal.diff": {
+      "bytes": 7650,
+      "sha256": "3c7d0ddb23d66616c74454bc44c86b82b207bcf8e3293c02ac74b90cc2fdeab3"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/prose-audit.json": {
+      "bytes": 938,
+      "sha256": "55d766b5f052e607cc962dcc06f1dcbcf8ce317c8503e365c7c6877513c0a0d9"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/report.md": {
+      "bytes": 2535,
+      "sha256": "3c4548eec7c1f9cce834fc1b4328215bd4e8b11fc3fa4514c686b44ed30b0603"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/freeze.json": {
+      "bytes": 2372,
+      "sha256": "b168521916c46327a58a91017426b81a168830fa4e94d0f662a2f17b852864e8"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/audit.py": {
+      "bytes": 8820,
+      "sha256": "acd88dc1439c5ac04d4cc43cca4ee108763f192fb01c12e1dcc854cdc06525b6"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/clause-matrix.md": {
+      "bytes": 6277,
+      "sha256": "4a40224b56d446af0d076b35c6308b9b2c929c10c568db33d5d8930d53596cdd"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/evidence-audit.json": {
+      "bytes": 242803,
+      "sha256": "a2558f6417e7b64603a18f16a6d0713b2d17df3b5f099e1c4d133cced0535621"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/inputs-manifest.json": {
+      "bytes": 294168,
+      "sha256": "8f7146df607ed107431890864fccb8aff174a4f6dc98179ae4e28bdc5242c5f4"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/proposal-v1-frozen.md": {
+      "bytes": 7184,
+      "sha256": "94ab01cb03679e8f92008a874e90cddaaa970e509799bb3c380fbe060f6a028a"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/proposal-v2-frozen.md": {
+      "bytes": 8185,
+      "sha256": "88e1b5d650bcf393647b67c9043e811e7d7e7d99891296261be060d64dbc959c"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/prose-audit.json": {
+      "bytes": 617,
+      "sha256": "d7e6ca14399f055b4f215385a9aa1cf68cdc827b6f77614c3433504251e13f4d"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/report.md": {
+      "bytes": 2449,
+      "sha256": "2fab62669c553f05a4d37a4264019c115e480134edf9ed4ebbc2dcf7719a3a9c"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/v1-v2.diff": {
+      "bytes": 6414,
+      "sha256": "4cc1e05b7ca2d137f6692bc32ae1ea986855814f75665affc9975c29f281dc09"
+    },
+    "src/observed/allocation-config.ts": {
+      "bytes": 31610,
+      "sha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal.md": {
+      "bytes": 7557,
+      "sha256": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/owner-cryptex-trust-decision.json": {
+      "bytes": 1327,
+      "sha256": "0b1bc876713d68cd9001dcd27a41bfa3e7f53aa96f8e1698f214e65dcca16c74"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-legacy-volume-evidence-audit.json": {
+      "bytes": 696435,
+      "sha256": "f6399bfaff67ccdb8642ecc1111fe4680d7d0589b03cc632529e3533ee25f1ea"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/artifact-hashes.json": {
+      "bytes": 4863,
+      "sha256": "1c88098c93de02f24e1b813cb1fedf9e92fe18abb28547cc0a005b1648865893"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/child-receipts.json": {
+      "bytes": 4614,
+      "sha256": "6394242db457bdc32e9c4a86d6782e79886fad4cfcd01aaad1b379cc61ad3023"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/children/00.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/children/00.stdout.bin": {
+      "bytes": 3092,
+      "sha256": "5d81401ba0057d2d78d563e58c1afd4f00661c7f5cec8a77675f18353cfafe35"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/children/01.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/children/01.stdout.bin": {
+      "bytes": 3093,
+      "sha256": "24062b3bce8b10d6824c7fbf62d9a2ba8e9e290177bd374aa7f6921e6ef8cef6"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/command.json": {
+      "bytes": 2211,
+      "sha256": "5e32b3145b20b4290d14f5c7f9576e6779bc1ef3c4bbe4c79c95ac6ea127c451"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/common.mjs": {
+      "bytes": 6836,
+      "sha256": "3b9b38d5427191ed0b6377745567d6180a8459cd9431f77888bd35d15579cdcf"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/context.json": {
+      "bytes": 6899,
+      "sha256": "7a3ff839ac5cb44456ef6b115040c1908fdcbf15389f27041bce3e567138139f"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/diagnostic-report.md": {
+      "bytes": 3158,
+      "sha256": "bd8abd7b73ad59ea29298c0fb52d66ba7de1079f9212e9f847e5eb940bde32e7"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/filesystem-identities.json": {
+      "bytes": 115782,
+      "sha256": "e2c7944b7585e8416838d34a733e0bd0ba33acdc3a6a4135c0db0467ddb08d26"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/head-after.json": {
+      "bytes": 335,
+      "sha256": "6d04eb45903eb440b345e2b4b979e93f12306d09f0a10b05ffede8ce90efb344"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/identity-precision-audit.json": {
+      "bytes": 2432,
+      "sha256": "b93f89eb378ad7916d201c6e93e2f19ee2a0c89f635a0aed174d43fa376eb9ed"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/mount-proofs.json": {
+      "bytes": 101051,
+      "sha256": "c8b6cadb1bbce9fb7a1c8551ddd588b1f3500ba965e581d97ae3be1f49319982"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/permission-patterns.json": {
+      "bytes": 15505,
+      "sha256": "569ef6740ac115a6a400127ebfbab257ca3f2ead492de66abcca7e79358dfc36"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/permission-summary.json": {
+      "bytes": 7751,
+      "sha256": "2752ec9ae43a772e54668a7c93eb087b449cfe07feb831aedbe560905a71d20a"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/preservation-after.json": {
+      "bytes": 506905,
+      "sha256": "6b58100e4cab7e5397cf04adb63ebdc6cf974609150050ea50720b1805590412"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/preservation-before.json": {
+      "bytes": 506905,
+      "sha256": "e0c4eb4357e1c2f0add42c82f59f299d5b7777fdb31d0163a65ad32b0b6b04b5"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/preservation-completion.json": {
+      "bytes": 506905,
+      "sha256": "45f664aba57164e0456ca7300e01c2295ed333ac4799e5d1ea734308685aa00e"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/preservation-references.json": {
+      "bytes": 227460,
+      "sha256": "5294f1a65f7309505966c8cd0cca0605b8881717954e5c081bbf37bc529b840c"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/probe.mjs": {
+      "bytes": 13339,
+      "sha256": "765c4bbca1d2c12c18f1a17701f7d22d22e979b6429b7af465890ee026b63fab"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/report.md": {
+      "bytes": 3926,
+      "sha256": "302dc0b2ca179da46a069ef9bbe0766c2381b7bba19c95b3b25f64b68dc83281"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/result.json": {
+      "bytes": 264115,
+      "sha256": "9f8e05ff16d52d015d2c473070e5c90d92b2fd73050f50b8077769fc6def95a4"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/run.mjs": {
+      "bytes": 7252,
+      "sha256": "41086d0711f4ab6dc739eda4d8ab2e6017ec9aea6e6f4b67b0d9fd00d12d7ba8"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/stdout.txt": {
+      "bytes": 264115,
+      "sha256": "9f8e05ff16d52d015d2c473070e5c90d92b2fd73050f50b8077769fc6def95a4"
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/summary.json": {
+      "bytes": 2178,
+      "sha256": "371d9479efedc9644736a656c1c9bdfd2c3bf6a18b03d0b68f03848a1681deab"
+    }
+  }
+}

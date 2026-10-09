@@ -1,0 +1,275 @@
+{
+  "axis": "Standards/design proposal review",
+  "revision": 1,
+  "base": "e971d3312b595a5d841b1d70288302c40f7a5b70",
+  "candidate": "91084c0c065373a978c8437f8f8362c4f5e4dbc9",
+  "productSourceCommit": "3edf247ab44d3332bc4bab5f3a43104536d84ce9",
+  "proposalSha256": "94ab01cb03679e8f92008a874e90cddaaa970e509799bb3c380fbe060f6a028a",
+  "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+  "verdict": "PASS for proposal Standards/design only",
+  "inputHashes": {
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-proposal.md": {
+      "sha256": "94ab01cb03679e8f92008a874e90cddaaa970e509799bb3c380fbe060f6a028a",
+      "bytes": 7184,
+      "retained": "inputs/legacy-volume-policy-proposal.md"
+    },
+    "git:3edf247ab44d3332bc4bab5f3a43104536d84ce9:src/observed/allocation-config.ts": {
+      "sha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "bytes": 31610,
+      "retained": "inputs/src/observed/allocation-config.ts"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:AGENTS.md": {
+      "sha256": "86d3e5e2ccba32103401ab95af6b6488fc439d090913b028a7961d07f79a1c47",
+      "bytes": 1542,
+      "retained": "inputs/AGENTS.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:CONTEXT.md": {
+      "sha256": "da9d367b1b911c13afc06331be6c0908b56a2c2cd3833936d3f9fa3d218d95f2",
+      "bytes": 140,
+      "retained": "inputs/CONTEXT.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:GLOSSARY.md": {
+      "sha256": "a246e0082a15dfd2fa74138473607b9a3c5e3426460f1d43d1d9d154f87ec1c5",
+      "bytes": 5818,
+      "retained": "inputs/GLOSSARY.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:docs/agents/domain.md": {
+      "sha256": "edc6d6131fdffc4b7135704f5262124fc43355c95f61b7399dc5a4db643e28ca",
+      "bytes": 2033,
+      "retained": "inputs/docs/agents/domain.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:docs/agents/issue-tracker.md": {
+      "sha256": "bef53bbef5e5f758759305a856233a6ec7db25ed81781b9c72bca1b04a8fd225",
+      "bytes": 2375,
+      "retained": "inputs/docs/agents/issue-tracker.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:docs/domain-boundaries.md": {
+      "sha256": "a347aa7ddc28498e57c25da3daceb5621d29a548397bd3e4b1b175e60c6c159f",
+      "bytes": 6152,
+      "retained": "inputs/docs/domain-boundaries.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:docs/adr/0002-mobilebuildmcp-as-device-layer.md": {
+      "sha256": "00da2cbba873223976b22b0a26314a6b351b769b4c3f899a97f95334a565abe1",
+      "bytes": 4571,
+      "retained": "inputs/docs/adr/0002-mobilebuildmcp-as-device-layer.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:docs/adr/0005-the-1-0-stability-contract.md": {
+      "sha256": "fe61fd90fda45b661b183162062d500c3cb87517afc0b2aee37ccbb154f3f04b",
+      "bytes": 2850,
+      "retained": "inputs/docs/adr/0005-the-1-0-stability-contract.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:docs/adr/0008-durable-ios-admission.md": {
+      "sha256": "53d1111c4dd1e2f36635c89d5695a6356a72e054810d7e3f3e7faf4be194d501",
+      "bytes": 1625,
+      "retained": "inputs/docs/adr/0008-durable-ios-admission.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:docs/adr/0009-bounded-simulator-creation.md": {
+      "sha256": "f60dae7177255f92e1263c29c6a4433216b80d17ce83bc91dd8a444f687ed384",
+      "bytes": 1691,
+      "retained": "inputs/docs/adr/0009-bounded-simulator-creation.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:.scratch/v1-release/map.md": {
+      "sha256": "b154b9cb08454aa8433f1e8e917e4bef948db48d72b247f60f5b58d837daebaa",
+      "bytes": 12421,
+      "retained": "inputs/.scratch/v1-release/map.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:.scratch/observed-integration/evidence/allocation-contract.md": {
+      "sha256": "b12157b52fe4e2c2b9bfb1e2b740806e52ff3890a7623c083f6075a3344402f1",
+      "bytes": 18376,
+      "retained": "inputs/.scratch/observed-integration/evidence/allocation-contract.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:src/observed/installed-plist.ts": {
+      "sha256": "c74ddcafaef4e244bd1183695cade8fe4858f609bc6f20a1b86727801bc8b896",
+      "bytes": 6019,
+      "retained": "inputs/src/observed/installed-plist.ts"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:.agents/skills/code-review/SKILL.md": {
+      "sha256": "ed0b678a53b58ea0baa391eb2c93c1b374baf1c6ea6b8180ad9bc71ee0f99aaa",
+      "bytes": 6587,
+      "retained": "inputs/.agents/skills/code-review/SKILL.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:.agents/skills/codebase-design/SKILL.md": {
+      "sha256": "2c20617f87ec8af6a434859f381b2f061a69b530444e74eb39e78bb016a6d1e2",
+      "bytes": 6446,
+      "retained": "inputs/.agents/skills/codebase-design/SKILL.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal.md": {
+      "sha256": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13",
+      "bytes": 7557,
+      "retained": "inputs/cryptex-policy-proposal.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/owner-cryptex-trust-decision.json": {
+      "sha256": "0b1bc876713d68cd9001dcd27a41bfa3e7f53aa96f8e1698f214e65dcca16c74",
+      "bytes": 1327,
+      "retained": "inputs/owner-cryptex-trust-decision.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-repaired-compatibility-audit.json": {
+      "sha256": "f8d36b0dca6c59023ed255d3905460308b452c3cec453745f73fb9a27350bcbd",
+      "bytes": 305496,
+      "retained": "inputs/root-repaired-compatibility-audit.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/refusal-report.md": {
+      "sha256": "57aa25d715bb7f020ad7f99fa0b358c48b490208cf285acaf3bb206a06a0c52a",
+      "bytes": 3069,
+      "retained": "inputs/operator/refusal-report.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/summary.json": {
+      "sha256": "f77f920c83446aac5400c51b67699539059b8674fac75d70a1d326732ee9906b",
+      "bytes": 568,
+      "retained": "inputs/operator/summary.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/first-confirmed-refusal.json": {
+      "sha256": "dbf3ed7a93be9056434f21ffd863ac645f892775cf597924995f88debd696687",
+      "bytes": 7417,
+      "retained": "inputs/operator/first-confirmed-refusal.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/guard-audit.json": {
+      "sha256": "9b468898dec2ecd2c08f06748d6fe0c2453d309458f4b390693ba074877b23d9",
+      "bytes": 594,
+      "retained": "inputs/operator/guard-audit.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/context.json": {
+      "sha256": "a50bd1c427ee53090ff570729bf6b6970897ffb5602a3724953b9727fedc1e70",
+      "bytes": 3815,
+      "retained": "inputs/operator/context.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/child-receipts.json": {
+      "sha256": "bc4123e06d2c2fadd8786f3705c3c2514db974c864f929eadbbd349e70819441",
+      "bytes": 533844,
+      "retained": "inputs/operator/child-receipts.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/filesystem-trace.json": {
+      "sha256": "1b36600d2b9a336264c7271eadd4c3731c8d9876142e43082dba4ffa2edc0e31",
+      "bytes": 11683955,
+      "retained": "inputs/operator/filesystem-trace.json"
+    }
+  },
+  "files": {
+    "clause-audit.json": {
+      "sha256": "5bb2cff903ace521e94330725f056ce6c64ae531473d5acba0ca24bc83d5f7fa",
+      "bytes": 25786
+    },
+    "commits.txt": {
+      "sha256": "79e5fb0f969d9438f596753d75a4a676bbcbd163594bed18212ed96774edd0a3",
+      "bytes": 90
+    },
+    "diff.txt": {
+      "sha256": "3c7d0ddb23d66616c74454bc44c86b82b207bcf8e3293c02ac74b90cc2fdeab3",
+      "bytes": 7650
+    },
+    "inputs/.agents/skills/code-review/SKILL.md": {
+      "sha256": "ed0b678a53b58ea0baa391eb2c93c1b374baf1c6ea6b8180ad9bc71ee0f99aaa",
+      "bytes": 6587
+    },
+    "inputs/.agents/skills/codebase-design/SKILL.md": {
+      "sha256": "2c20617f87ec8af6a434859f381b2f061a69b530444e74eb39e78bb016a6d1e2",
+      "bytes": 6446
+    },
+    "inputs/.scratch/observed-integration/evidence/allocation-contract.md": {
+      "sha256": "b12157b52fe4e2c2b9bfb1e2b740806e52ff3890a7623c083f6075a3344402f1",
+      "bytes": 18376
+    },
+    "inputs/.scratch/v1-release/map.md": {
+      "sha256": "b154b9cb08454aa8433f1e8e917e4bef948db48d72b247f60f5b58d837daebaa",
+      "bytes": 12421
+    },
+    "inputs/AGENTS.md": {
+      "sha256": "86d3e5e2ccba32103401ab95af6b6488fc439d090913b028a7961d07f79a1c47",
+      "bytes": 1542
+    },
+    "inputs/CONTEXT.md": {
+      "sha256": "da9d367b1b911c13afc06331be6c0908b56a2c2cd3833936d3f9fa3d218d95f2",
+      "bytes": 140
+    },
+    "inputs/GLOSSARY.md": {
+      "sha256": "a246e0082a15dfd2fa74138473607b9a3c5e3426460f1d43d1d9d154f87ec1c5",
+      "bytes": 5818
+    },
+    "inputs/cryptex-policy-proposal.md": {
+      "sha256": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13",
+      "bytes": 7557
+    },
+    "inputs/docs/adr/0002-mobilebuildmcp-as-device-layer.md": {
+      "sha256": "00da2cbba873223976b22b0a26314a6b351b769b4c3f899a97f95334a565abe1",
+      "bytes": 4571
+    },
+    "inputs/docs/adr/0005-the-1-0-stability-contract.md": {
+      "sha256": "fe61fd90fda45b661b183162062d500c3cb87517afc0b2aee37ccbb154f3f04b",
+      "bytes": 2850
+    },
+    "inputs/docs/adr/0008-durable-ios-admission.md": {
+      "sha256": "53d1111c4dd1e2f36635c89d5695a6356a72e054810d7e3f3e7faf4be194d501",
+      "bytes": 1625
+    },
+    "inputs/docs/adr/0009-bounded-simulator-creation.md": {
+      "sha256": "f60dae7177255f92e1263c29c6a4433216b80d17ce83bc91dd8a444f687ed384",
+      "bytes": 1691
+    },
+    "inputs/docs/agents/domain.md": {
+      "sha256": "edc6d6131fdffc4b7135704f5262124fc43355c95f61b7399dc5a4db643e28ca",
+      "bytes": 2033
+    },
+    "inputs/docs/agents/issue-tracker.md": {
+      "sha256": "bef53bbef5e5f758759305a856233a6ec7db25ed81781b9c72bca1b04a8fd225",
+      "bytes": 2375
+    },
+    "inputs/docs/domain-boundaries.md": {
+      "sha256": "a347aa7ddc28498e57c25da3daceb5621d29a548397bd3e4b1b175e60c6c159f",
+      "bytes": 6152
+    },
+    "inputs/legacy-volume-policy-proposal.md": {
+      "sha256": "94ab01cb03679e8f92008a874e90cddaaa970e509799bb3c380fbe060f6a028a",
+      "bytes": 7184
+    },
+    "inputs/operator/child-receipts.json": {
+      "sha256": "bc4123e06d2c2fadd8786f3705c3c2514db974c864f929eadbbd349e70819441",
+      "bytes": 533844
+    },
+    "inputs/operator/context.json": {
+      "sha256": "a50bd1c427ee53090ff570729bf6b6970897ffb5602a3724953b9727fedc1e70",
+      "bytes": 3815
+    },
+    "inputs/operator/filesystem-trace.json": {
+      "sha256": "1b36600d2b9a336264c7271eadd4c3731c8d9876142e43082dba4ffa2edc0e31",
+      "bytes": 11683955
+    },
+    "inputs/operator/first-confirmed-refusal.json": {
+      "sha256": "dbf3ed7a93be9056434f21ffd863ac645f892775cf597924995f88debd696687",
+      "bytes": 7417
+    },
+    "inputs/operator/guard-audit.json": {
+      "sha256": "9b468898dec2ecd2c08f06748d6fe0c2453d309458f4b390693ba074877b23d9",
+      "bytes": 594
+    },
+    "inputs/operator/refusal-report.md": {
+      "sha256": "57aa25d715bb7f020ad7f99fa0b358c48b490208cf285acaf3bb206a06a0c52a",
+      "bytes": 3069
+    },
+    "inputs/operator/summary.json": {
+      "sha256": "f77f920c83446aac5400c51b67699539059b8674fac75d70a1d326732ee9906b",
+      "bytes": 568
+    },
+    "inputs/owner-cryptex-trust-decision.json": {
+      "sha256": "0b1bc876713d68cd9001dcd27a41bfa3e7f53aa96f8e1698f214e65dcca16c74",
+      "bytes": 1327
+    },
+    "inputs/root-repaired-compatibility-audit.json": {
+      "sha256": "f8d36b0dca6c59023ed255d3905460308b452c3cec453745f73fb9a27350bcbd",
+      "bytes": 305496
+    },
+    "inputs/src/observed/allocation-config.ts": {
+      "sha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "bytes": 31610
+    },
+    "inputs/src/observed/installed-plist.ts": {
+      "sha256": "c74ddcafaef4e244bd1183695cade8fe4858f609bc6f20a1b86727801bc8b896",
+      "bytes": 6019
+    },
+    "report.md": {
+      "sha256": "ba91fb9c1a0cc4b30a79b6096f5c55b67d3c34b17f5be9600e2adf6db56c24ac",
+      "bytes": 2760
+    }
+  },
+  "nativeProof": "PENDING",
+  "ownerDecision": "PENDING"
+}

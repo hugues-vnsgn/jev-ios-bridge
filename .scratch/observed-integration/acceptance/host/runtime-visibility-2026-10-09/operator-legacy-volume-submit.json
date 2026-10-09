@@ -1,0 +1,39 @@
+{
+  "exitCode": 0,
+  "promptBytes": 2143,
+  "promptSha256": "74b544d5091a81525f6b159a0abee96d497ea984670b0f2991977bb4945ea668",
+  "stdoutBytes": 858,
+  "stderrBytes": 0,
+  "receipt": {
+    "id": "6f4602ea-6d0b-487e-9d53-1f6ee09675c1",
+    "ok": true,
+    "result": {
+      "send": {
+        "handle": "term_19640861-824c-4f24-8789-3f584723bc5a",
+        "accepted": true,
+        "bytesWritten": 2156,
+        "prompt": {
+          "requestId": "e2fa600a-4edc-4bdd-a09e-2602864bd3fb",
+          "stages": [
+            "input_accepted",
+            "turn_started"
+          ],
+          "provider": "codex",
+          "observation": "supported",
+          "processIncarnation": "56f3d85a-3500-4750-a17f-a8d69dd290a7",
+          "generation": 1,
+          "baselineWorkingSequence": 8,
+          "baselineExplicitWorkingStartedAt": null,
+          "baselinePermissionSequence": 0
+        }
+      },
+      "mutation": {
+        "requestId": "e2fa600a-4edc-4bdd-a09e-2602864bd3fb",
+        "replayed": false
+      }
+    },
+    "_meta": {
+      "runtimeId": "5f433f83-b0b5-4579-b844-952323951016"
+    }
+  }
+}

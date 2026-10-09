@@ -1,0 +1,242 @@
+[
+  {
+    "root": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86",
+    "mountProof": {
+      "MountPoint": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86",
+      "Writable": false,
+      "WritableMedia": false,
+      "WritableVolume": false
+    },
+    "bundleBasenames": [
+      "iOS 18.6.simruntime"
+    ],
+    "observedDev": 16777251,
+    "allObservedMountedPathsSameDev": true,
+    "allNonsymlink": true,
+    "allUid0": true,
+    "allMountedGroups0Or80": true,
+    "runtimeRoot": {
+      "path": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.6.simruntime/Contents/Resources/RuntimeRoot",
+      "dev": 16777251,
+      "ino": 27,
+      "uid": 0,
+      "gid": 0,
+      "mode": 16877,
+      "permissions": "0755",
+      "nlink": 14,
+      "size": 448,
+      "mtimeMs": 1753442559000,
+      "ctimeMs": 1753442559000,
+      "type": "directory",
+      "isSymbolicLink": false
+    },
+    "leaves": [
+      {
+        "path": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.6.simruntime/Contents/Info.plist",
+        "dev": 16777251,
+        "ino": 23,
+        "uid": 0,
+        "gid": 80,
+        "mode": 33204,
+        "permissions": "0664",
+        "nlink": 1,
+        "size": 887,
+        "mtimeMs": 1753442559000,
+        "ctimeMs": 1753442559000,
+        "type": "file",
+        "isSymbolicLink": false
+      },
+      {
+        "path": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.6.simruntime/Contents/Resources/profile.plist",
+        "dev": 16777251,
+        "ino": 679934,
+        "uid": 0,
+        "gid": 80,
+        "mode": 33204,
+        "permissions": "0664",
+        "nlink": 1,
+        "size": 2332,
+        "mtimeMs": 1753442559000,
+        "ctimeMs": 1753442559000,
+        "type": "file",
+        "isSymbolicLink": false
+      },
+      {
+        "path": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.6.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist",
+        "dev": 16777251,
+        "ino": 205250,
+        "uid": 0,
+        "gid": 0,
+        "mode": 33060,
+        "permissions": "0444",
+        "nlink": 1,
+        "size": 570,
+        "mtimeMs": 1753442559000,
+        "ctimeMs": 1753442559000,
+        "type": "file",
+        "isSymbolicLink": false
+      }
+    ],
+    "groupWritableDirectories": [
+      {
+        "path": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles",
+        "uid": 0,
+        "gid": 80,
+        "permissions": "0775"
+      },
+      {
+        "path": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes",
+        "uid": 0,
+        "gid": 80,
+        "permissions": "0775"
+      },
+      {
+        "path": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.6.simruntime",
+        "uid": 0,
+        "gid": 80,
+        "permissions": "0775"
+      },
+      {
+        "path": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.6.simruntime/Contents",
+        "uid": 0,
+        "gid": 80,
+        "permissions": "0775"
+      },
+      {
+        "path": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.6.simruntime/Contents/Resources",
+        "uid": 0,
+        "gid": 80,
+        "permissions": "0775"
+      }
+    ],
+    "stability": [
+      {
+        "basename": "iOS 18.6.simruntime",
+        "stable": true
+      }
+    ]
+  },
+  {
+    "root": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a",
+    "mountProof": {
+      "MountPoint": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a",
+      "Writable": false,
+      "WritableMedia": false,
+      "WritableVolume": false
+    },
+    "bundleBasenames": [
+      "iOS 26.4.simruntime"
+    ],
+    "observedDev": 16777239,
+    "allObservedMountedPathsSameDev": true,
+    "allNonsymlink": true,
+    "allUid0": true,
+    "allMountedGroups0Or80": true,
+    "runtimeRoot": {
+      "path": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot",
+      "dev": 16777239,
+      "ino": 27,
+      "uid": 0,
+      "gid": 80,
+      "mode": 17405,
+      "permissions": "1775",
+      "nlink": 14,
+      "size": 448,
+      "mtimeMs": 1775721081000,
+      "ctimeMs": 1775721081000,
+      "type": "directory",
+      "isSymbolicLink": false
+    },
+    "leaves": [
+      {
+        "path": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Info.plist",
+        "dev": 16777239,
+        "ino": 23,
+        "uid": 0,
+        "gid": 80,
+        "mode": 33204,
+        "permissions": "0664",
+        "nlink": 1,
+        "size": 886,
+        "mtimeMs": 1775721081000,
+        "ctimeMs": 1775721081000,
+        "type": "file",
+        "isSymbolicLink": false
+      },
+      {
+        "path": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/profile.plist",
+        "dev": 16777239,
+        "ino": 758570,
+        "uid": 0,
+        "gid": 80,
+        "mode": 33204,
+        "permissions": "0664",
+        "nlink": 1,
+        "size": 2424,
+        "mtimeMs": 1775721081000,
+        "ctimeMs": 1775721081000,
+        "type": "file",
+        "isSymbolicLink": false
+      },
+      {
+        "path": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist",
+        "dev": 16777239,
+        "ino": 223615,
+        "uid": 0,
+        "gid": 0,
+        "mode": 33060,
+        "permissions": "0444",
+        "nlink": 1,
+        "size": 574,
+        "mtimeMs": 1775721081000,
+        "ctimeMs": 1775721081000,
+        "type": "file",
+        "isSymbolicLink": false
+      }
+    ],
+    "groupWritableDirectories": [
+      {
+        "path": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles",
+        "uid": 0,
+        "gid": 80,
+        "permissions": "0775"
+      },
+      {
+        "path": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes",
+        "uid": 0,
+        "gid": 80,
+        "permissions": "0775"
+      },
+      {
+        "path": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime",
+        "uid": 0,
+        "gid": 80,
+        "permissions": "0775"
+      },
+      {
+        "path": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents",
+        "uid": 0,
+        "gid": 80,
+        "permissions": "0775"
+      },
+      {
+        "path": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources",
+        "uid": 0,
+        "gid": 80,
+        "permissions": "0775"
+      },
+      {
+        "path": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot",
+        "uid": 0,
+        "gid": 80,
+        "permissions": "1775"
+      }
+    ],
+    "stability": [
+      {
+        "basename": "iOS 26.4.simruntime",
+        "stable": true
+      }
+    ]
+  }
+]

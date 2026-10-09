@@ -1,0 +1,395 @@
+{
+  "atUtc": "2026-10-09T07:14:38.281833+00:00",
+  "scope": "Sealed proposal reviews only; final Spec and Standards PASS0; owner and implementation pending",
+  "proposalSha256": "14dd5566f99845a4ee6562404c16610c732795f311b7df1e95ecb306dd599492",
+  "reviewOutputsRehashed": 87,
+  "allMatch": true,
+  "seals": [
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/manifest.json",
+      "sha256": "0d2d997b1d6839ecfbfbfa6e5974c6cb9e05d042c1a7262d95f73f64383d8dc7",
+      "verdict": "PASS for proposal Standards/design only"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision2/manifest.json",
+      "sha256": "8edc835efda7361552c224cf085af8340702400a4c004b00d3136745b7306f05",
+      "verdict": "PASS conditional proposal Standards/design only"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/manifest.json",
+      "sha256": "2fc0c24e92118757bdea407a01c5ca690eb0b52254ac36daca56b5c1e721597e",
+      "verdict": "PASS conditional proposal Standards/design only"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/freeze.json",
+      "sha256": "556fa47d7203d570ea05fcc4879f899ed8d4ead19e24dedf387523128115b83c",
+      "verdict": "FAIL"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/freeze.json",
+      "sha256": "b168521916c46327a58a91017426b81a168830fa4e94d0f662a2f17b852864e8",
+      "verdict": "FAIL"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision3/freeze.json",
+      "sha256": "d3d41dbf67f00b77ce20e0b0b5f2efedbeadedd6bee55d4764bae6b8e940c2a8",
+      "verdict": "PASS"
+    }
+  ],
+  "files": [
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/clause-audit.json",
+      "sha256": "5bb2cff903ace521e94330725f056ce6c64ae531473d5acba0ca24bc83d5f7fa"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/commits.txt",
+      "sha256": "79e5fb0f969d9438f596753d75a4a676bbcbd163594bed18212ed96774edd0a3"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/diff.txt",
+      "sha256": "3c7d0ddb23d66616c74454bc44c86b82b207bcf8e3293c02ac74b90cc2fdeab3"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/.agents/skills/code-review/SKILL.md",
+      "sha256": "ed0b678a53b58ea0baa391eb2c93c1b374baf1c6ea6b8180ad9bc71ee0f99aaa"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/.agents/skills/codebase-design/SKILL.md",
+      "sha256": "2c20617f87ec8af6a434859f381b2f061a69b530444e74eb39e78bb016a6d1e2"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/.scratch/observed-integration/evidence/allocation-contract.md",
+      "sha256": "b12157b52fe4e2c2b9bfb1e2b740806e52ff3890a7623c083f6075a3344402f1"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/.scratch/v1-release/map.md",
+      "sha256": "b154b9cb08454aa8433f1e8e917e4bef948db48d72b247f60f5b58d837daebaa"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/AGENTS.md",
+      "sha256": "86d3e5e2ccba32103401ab95af6b6488fc439d090913b028a7961d07f79a1c47"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/CONTEXT.md",
+      "sha256": "da9d367b1b911c13afc06331be6c0908b56a2c2cd3833936d3f9fa3d218d95f2"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/GLOSSARY.md",
+      "sha256": "a246e0082a15dfd2fa74138473607b9a3c5e3426460f1d43d1d9d154f87ec1c5"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/cryptex-policy-proposal.md",
+      "sha256": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/docs/adr/0002-mobilebuildmcp-as-device-layer.md",
+      "sha256": "00da2cbba873223976b22b0a26314a6b351b769b4c3f899a97f95334a565abe1"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/docs/adr/0005-the-1-0-stability-contract.md",
+      "sha256": "fe61fd90fda45b661b183162062d500c3cb87517afc0b2aee37ccbb154f3f04b"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/docs/adr/0008-durable-ios-admission.md",
+      "sha256": "53d1111c4dd1e2f36635c89d5695a6356a72e054810d7e3f3e7faf4be194d501"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/docs/adr/0009-bounded-simulator-creation.md",
+      "sha256": "f60dae7177255f92e1263c29c6a4433216b80d17ce83bc91dd8a444f687ed384"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/docs/agents/domain.md",
+      "sha256": "edc6d6131fdffc4b7135704f5262124fc43355c95f61b7399dc5a4db643e28ca"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/docs/agents/issue-tracker.md",
+      "sha256": "bef53bbef5e5f758759305a856233a6ec7db25ed81781b9c72bca1b04a8fd225"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/docs/domain-boundaries.md",
+      "sha256": "a347aa7ddc28498e57c25da3daceb5621d29a548397bd3e4b1b175e60c6c159f"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/legacy-volume-policy-proposal.md",
+      "sha256": "94ab01cb03679e8f92008a874e90cddaaa970e509799bb3c380fbe060f6a028a"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/operator/child-receipts.json",
+      "sha256": "bc4123e06d2c2fadd8786f3705c3c2514db974c864f929eadbbd349e70819441"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/operator/context.json",
+      "sha256": "a50bd1c427ee53090ff570729bf6b6970897ffb5602a3724953b9727fedc1e70"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/operator/filesystem-trace.json",
+      "sha256": "1b36600d2b9a336264c7271eadd4c3731c8d9876142e43082dba4ffa2edc0e31"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/operator/first-confirmed-refusal.json",
+      "sha256": "dbf3ed7a93be9056434f21ffd863ac645f892775cf597924995f88debd696687"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/operator/guard-audit.json",
+      "sha256": "9b468898dec2ecd2c08f06748d6fe0c2453d309458f4b390693ba074877b23d9"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/operator/refusal-report.md",
+      "sha256": "57aa25d715bb7f020ad7f99fa0b358c48b490208cf285acaf3bb206a06a0c52a"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/operator/summary.json",
+      "sha256": "f77f920c83446aac5400c51b67699539059b8674fac75d70a1d326732ee9906b"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/owner-cryptex-trust-decision.json",
+      "sha256": "0b1bc876713d68cd9001dcd27a41bfa3e7f53aa96f8e1698f214e65dcca16c74"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/root-repaired-compatibility-audit.json",
+      "sha256": "f8d36b0dca6c59023ed255d3905460308b452c3cec453745f73fb9a27350bcbd"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/src/observed/allocation-config.ts",
+      "sha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/src/observed/installed-plist.ts",
+      "sha256": "c74ddcafaef4e244bd1183695cade8fe4858f609bc6f20a1b86727801bc8b896"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/report.md",
+      "sha256": "ba91fb9c1a0cc4b30a79b6096f5c55b67d3c34b17f5be9600e2adf6db56c24ac"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision2/diff.txt",
+      "sha256": "4cc1e05b7ca2d137f6692bc32ae1ea986855814f75665affc9975c29f281dc09"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision2/inputs/proposal-revision1.md",
+      "sha256": "94ab01cb03679e8f92008a874e90cddaaa970e509799bb3c380fbe060f6a028a"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision2/inputs/proposal-revision2.md",
+      "sha256": "88e1b5d650bcf393647b67c9043e811e7d7e7d99891296261be060d64dbc959c"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision2/inputs/revision1/clause-audit.json",
+      "sha256": "5bb2cff903ace521e94330725f056ce6c64ae531473d5acba0ca24bc83d5f7fa"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision2/inputs/revision1/manifest.json",
+      "sha256": "0d2d997b1d6839ecfbfbfa6e5974c6cb9e05d042c1a7262d95f73f64383d8dc7"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision2/inputs/revision1/report.md",
+      "sha256": "ba91fb9c1a0cc4b30a79b6096f5c55b67d3c34b17f5be9600e2adf6db56c24ac"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision2/matrix.json",
+      "sha256": "d65c5a11893a81a8a09f8bbe9a2c611548f020b8aa6b5440c27efc8263ed5172"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision2/report.md",
+      "sha256": "e8afc94b205d4d96bdc2e0b4f5c5e332a928d25501d5cfab8811b7d68339673d"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/diff.txt",
+      "sha256": "297d71ab5b2e45c2706446fe96d92cef513b2baecf9f3f7e4c604f2a913323fb"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/factual-addendum.json",
+      "sha256": "52580dbbd8b1d1723f4bf22bec7ed5a1927d0e22e6bd22df95ddf4fa047defe4"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/inputs/operator/artifact-hashes.json",
+      "sha256": "1c88098c93de02f24e1b813cb1fedf9e92fe18abb28547cc0a005b1648865893"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/inputs/operator/child-receipts.json",
+      "sha256": "6394242db457bdc32e9c4a86d6782e79886fad4cfcd01aaad1b379cc61ad3023"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/inputs/operator/children/00.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/inputs/operator/children/00.stdout.bin",
+      "sha256": "5d81401ba0057d2d78d563e58c1afd4f00661c7f5cec8a77675f18353cfafe35"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/inputs/operator/children/01.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/inputs/operator/children/01.stdout.bin",
+      "sha256": "24062b3bce8b10d6824c7fbf62d9a2ba8e9e290177bd374aa7f6921e6ef8cef6"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/inputs/operator/diagnostic-report.md",
+      "sha256": "bd8abd7b73ad59ea29298c0fb52d66ba7de1079f9212e9f847e5eb940bde32e7"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/inputs/operator/identity-precision-audit.json",
+      "sha256": "b93f89eb378ad7916d201c6e93e2f19ee2a0c89f635a0aed174d43fa376eb9ed"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/inputs/operator/mount-proofs.json",
+      "sha256": "c8b6cadb1bbce9fb7a1c8551ddd588b1f3500ba965e581d97ae3be1f49319982"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/inputs/operator/permission-patterns.json",
+      "sha256": "569ef6740ac115a6a400127ebfbab257ca3f2ead492de66abcca7e79358dfc36"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/inputs/operator/permission-summary.json",
+      "sha256": "2752ec9ae43a772e54668a7c93eb087b449cfe07feb831aedbe560905a71d20a"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/inputs/operator/summary.json",
+      "sha256": "371d9479efedc9644736a656c1c9bdfd2c3bf6a18b03d0b68f03848a1681deab"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/inputs/proposal-v2.md",
+      "sha256": "88e1b5d650bcf393647b67c9043e811e7d7e7d99891296261be060d64dbc959c"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/inputs/proposal-v3.md",
+      "sha256": "14dd5566f99845a4ee6562404c16610c732795f311b7df1e95ecb306dd599492"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/inputs/revision1/manifest.json",
+      "sha256": "0d2d997b1d6839ecfbfbfa6e5974c6cb9e05d042c1a7262d95f73f64383d8dc7"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/inputs/revision2/manifest.json",
+      "sha256": "8edc835efda7361552c224cf085af8340702400a4c004b00d3136745b7306f05"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/inputs/revision2/matrix.json",
+      "sha256": "d65c5a11893a81a8a09f8bbe9a2c611548f020b8aa6b5440c27efc8263ed5172"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/inputs/revision2/report.md",
+      "sha256": "e8afc94b205d4d96bdc2e0b4f5c5e332a928d25501d5cfab8811b7d68339673d"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/inputs/root-legacy-volume-evidence-audit.json",
+      "sha256": "f6399bfaff67ccdb8642ecc1111fe4680d7d0589b03cc632529e3533ee25f1ea"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/matrix.json",
+      "sha256": "da3437deca919de4c4203fdb01241b9907af57393ab3994c5360013ff6870271"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision3/report.md",
+      "sha256": "9d54053f1761307ab2e5de700e3d3294090c875b786b2b835b4b8e5cc4dcd013"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/audit.py",
+      "sha256": "bba8d2b69c2ce0fcb432cdddb8319d4a87b8e64bb29b447cfa9e5b969cf93457"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/clause-matrix.md",
+      "sha256": "903e8e9b4c58c3f31978b1dda3f4ef988c0221dbe3c2ee5df841434b01af6afb"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/evidence-audit.json",
+      "sha256": "65c909638c022128a6279d982c809172aa0ed870fd30945faeae4593a0831595"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/inputs-manifest.json",
+      "sha256": "22f512b0c8d3edc073b4385101a330c341bdeed9bf45e69a8ed920ee016374ad"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/proposal-frozen.md",
+      "sha256": "94ab01cb03679e8f92008a874e90cddaaa970e509799bb3c380fbe060f6a028a"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/proposal.diff",
+      "sha256": "3c7d0ddb23d66616c74454bc44c86b82b207bcf8e3293c02ac74b90cc2fdeab3"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/prose-audit.json",
+      "sha256": "55d766b5f052e607cc962dcc06f1dcbcf8ce317c8503e365c7c6877513c0a0d9"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision1/report.md",
+      "sha256": "3c4548eec7c1f9cce834fc1b4328215bd4e8b11fc3fa4514c686b44ed30b0603"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/audit.py",
+      "sha256": "acd88dc1439c5ac04d4cc43cca4ee108763f192fb01c12e1dcc854cdc06525b6"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/clause-matrix.md",
+      "sha256": "4a40224b56d446af0d076b35c6308b9b2c929c10c568db33d5d8930d53596cdd"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/evidence-audit.json",
+      "sha256": "a2558f6417e7b64603a18f16a6d0713b2d17df3b5f099e1c4d133cced0535621"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/inputs-manifest.json",
+      "sha256": "8f7146df607ed107431890864fccb8aff174a4f6dc98179ae4e28bdc5242c5f4"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/proposal-v1-frozen.md",
+      "sha256": "94ab01cb03679e8f92008a874e90cddaaa970e509799bb3c380fbe060f6a028a"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/proposal-v2-frozen.md",
+      "sha256": "88e1b5d650bcf393647b67c9043e811e7d7e7d99891296261be060d64dbc959c"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/prose-audit.json",
+      "sha256": "d7e6ca14399f055b4f215385a9aa1cf68cdc827b6f77614c3433504251e13f4d"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/report.md",
+      "sha256": "2fab62669c553f05a4d37a4264019c115e480134edf9ed4ebbc2dcf7719a3a9c"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision2/v1-v2.diff",
+      "sha256": "4cc1e05b7ca2d137f6692bc32ae1ea986855814f75665affc9975c29f281dc09"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision3/audit.py",
+      "sha256": "0b8bbf52140a8f765961394e5d83867ebc7c395db81c166c7396a8daa6e60d44"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision3/clause-matrix.md",
+      "sha256": "a92d4c6580073453ba417dd56ffcb298b8944dd987fc5e95507d10c6135f9b57"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision3/evidence-audit.json",
+      "sha256": "f57ed948199b18ea13354cf4ebd1136b3d993e518b797f9a561a44314eb1f9fc"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision3/inputs-manifest.json",
+      "sha256": "65b1caac5d3ea01cece0e55e64f3630a103700502919439de2fd0ee1273e2f58"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision3/proposal-v3-frozen.md",
+      "sha256": "14dd5566f99845a4ee6562404c16610c732795f311b7df1e95ecb306dd599492"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision3/prose-audit.json",
+      "sha256": "946d47bf2cd635f3dfcd80acabfa8731471b9d081ade1e3b781b86f3f2c6a7f3"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision3/report.md",
+      "sha256": "99f2bb0d8c73903edf9c5adb49f5ebc601f2eb84021275fa205921b606371d72"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/spec/revision3/v2-v3.diff",
+      "sha256": "297d71ab5b2e45c2706446fe96d92cef513b2baecf9f3f7e4c604f2a913323fb"
+    }
+  ],
+  "initialRootAuditAttempt": "Stopped before output on exact PASS label assumption; Standards actual label is PASS conditional proposal Standards/design only. No artifact mismatch or Source/gate/native action. Corrected accepted label now matches exact sealed scope.",
+  "oldSpecFailures": "revision1 enumeration P2 and revision2 lossless identity P2 preserved",
+  "nativeAuditSha256": "f6399bfaff67ccdb8642ecc1111fe4680d7d0589b03cc632529e3533ee25f1ea",
+  "qualified": "Three system inode integers not certified; typed RO responses valid",
+  "SourceImplementation": "UNSTARTED",
+  "liveAcceptance": "L01-L05 UNVERIFIED"
+}

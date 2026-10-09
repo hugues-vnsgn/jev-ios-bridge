@@ -1,0 +1,124 @@
+{
+  "capturedAtUtc": "2026-10-09T06:54:31.606Z",
+  "actualCwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "fullHead": "91084c0c065373a978c8437f8f8362c4f5e4dbc9",
+  "productSource": "3edf247ab44d3332bc4bab5f3a43104536d84ce9",
+  "soleOperatorModel": "GPT-6.1-Sol xhigh",
+  "rootBinding": {
+    "version": 1,
+    "fullHead": "91084c0c065373a978c8437f8f8362c4f5e4dbc9",
+    "productSource": "3edf247ab44d3332bc4bab5f3a43104536d84ce9",
+    "soleOperatorModel": "GPT-6.1-Sol xhigh",
+    "actualCwdRequired": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+    "purpose": "Separate bounded two-volume read-only manual diagnosis; no production compatibility/device work",
+    "ownerPaneOwnershipDiscrepancyDisclosed": true,
+    "show": {
+      "id": "c48382ff-f04d-43d7-ad98-7ba91fb4f8bf",
+      "ok": true,
+      "result": {
+        "terminal": {
+          "handle": "term_19640861-824c-4f24-8789-3f584723bc5a",
+          "ptyId": "ff805bee-c159-433e-aef6-f01b9d93ed59::/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge@@dbe60b95",
+          "incarnationId": "56f3d85a-3500-4750-a17f-a8d69dd290a7",
+          "orphaned": false,
+          "worktreeId": "ff805bee-c159-433e-aef6-f01b9d93ed59::/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge",
+          "worktreePath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge",
+          "branch": "refs/heads/main",
+          "tabId": "b0e5a4b6-106b-4dab-a49a-b3933445d4ef",
+          "leafId": "abe2d20e-837b-4e76-bb65-0288efa467bf",
+          "title": "Recheck iOS27.0 prerequisites | feat-native-callback-...",
+          "connected": true,
+          "writable": true,
+          "lastOutputAt": 1791527080477,
+          "preview": "thing\nGPT-6.1-Sol xhigh · ~/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic · feat/native-callback-diagnostic · Context 52% left · 258K w…\n? for shortcuts                                                                                                           ⚠ 1 warning · f2 to view",
+          "executionHostId": "local",
+          "agentIdentity": "codex",
+          "paneRuntimeId": 2,
+          "rendererGraphEpoch": 0,
+          "agentWait": null
+        }
+      },
+      "_meta": {
+        "runtimeId": "5f433f83-b0b5-4579-b844-952323951016"
+      }
+    },
+    "read": {
+      "id": "a76659e3-c190-4d5c-802a-73a6adceea4d",
+      "ok": true,
+      "result": {
+        "terminal": {
+          "handle": "term_19640861-824c-4f24-8789-3f584723bc5a",
+          "status": "running",
+          "tail": [
+            "› Root dispatch: the repaired host and installed gates are accepted. Execute only the once guarded metadata compatibility task in .scratch/observed…",
+            "      \"metadataReadCount\": 402",
+            "    }",
+            "    + 137 lines (⌃t to expand)",
+            "• Explored",
+            "  └ Read allocation-config.ts",
+            "    + Show details",
+            "• Ran env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node --input-type=module <<'NODE' …",
+            "  └ {\"status\":\"STRICT_LEGACY_VOLUME_ANCESTOR_TRUST_REFUSAL\",\"lookupCalls\":1,\"guardFailures\":0,\"children\":134,\"firstRefusalPath\":\"/Library/Developer/…",
+            "    + 1 line (⌃t to expand)",
+            "• Executed once: HOST_PREREQUISITE_MISSING, exit 3, no guard mismatch.",
+            "  First confirmed refusal: /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles is uid0/gid80/mode0775,",
+            "  rejected by the production strict ancestor check. Cryptex discovery was not reached.",
+            "  All 134 metadata children closed successfully. Source441, dist69, original host15, and prior evidence hashes remained unchanged.",
+            "  Private evidence report (.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/refusal-",
+            "  report.md)",
+            "  L01–L05 remain UNVERIFIED. No second lookup or device/store work. Idle.",
+            "  Worked for 10m 11s • 1:24 PM",
+            "› Ask Codex to do anything",
+            "  GPT-6.1-Sol xhigh · ~/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic · feat/native-callback-diagnostic · Context 52% left · 258K w…",
+            "  ? for shortcuts                                                                                                           ⚠ 1 warning · f2 to view"
+          ],
+          "truncated": true,
+          "limited": false,
+          "oldestCursor": "0",
+          "nextCursor": "31",
+          "latestCursor": "31",
+          "returnedLineCount": 21,
+          "source": "screen"
+        }
+      },
+      "_meta": {
+        "runtimeId": "5f433f83-b0b5-4579-b844-952323951016"
+      }
+    }
+  },
+  "freshTerminalShow": {
+    "id": "86aff2e5-75d8-4817-8651-47a2803fac11",
+    "ok": true,
+    "result": {
+      "terminal": {
+        "handle": "term_19640861-824c-4f24-8789-3f584723bc5a",
+        "ptyId": "ff805bee-c159-433e-aef6-f01b9d93ed59::/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge@@dbe60b95",
+        "incarnationId": "56f3d85a-3500-4750-a17f-a8d69dd290a7",
+        "orphaned": false,
+        "worktreeId": "ff805bee-c159-433e-aef6-f01b9d93ed59::/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge",
+        "worktreePath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge",
+        "branch": "refs/heads/main",
+        "tabId": "b0e5a4b6-106b-4dab-a49a-b3933445d4ef",
+        "leafId": "abe2d20e-837b-4e76-bb65-0288efa467bf",
+        "title": "⠏ Recheck iOS27.0 prerequisites | feat-native-callback-...",
+        "connected": true,
+        "writable": true,
+        "lastOutputAt": 1791528402591,
+        "preview": "thing\nGPT-6.1-Sol xhigh · ~/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic · feat/native-callback-diagnostic · Context 52% left · 258K w…\n? for shortcuts                                                                                                           ⚠ 1 warning · f2 to view",
+        "executionHostId": "local",
+        "agentIdentity": "codex",
+        "paneRuntimeId": 2,
+        "rendererGraphEpoch": 0,
+        "agentWait": null
+      }
+    },
+    "_meta": {
+      "runtimeId": "5f433f83-b0b5-4579-b844-952323951016"
+    }
+  },
+  "rootBindingFile": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-binding.json",
+  "mainOwnershipDiscrepancy": "Historical Orca worktree metadata reports main; all execution explicitly uses actual integration CWD. No main working-tree operations.",
+  "nativeTrialCalls": 0,
+  "productionCompatibilityCalls": 0,
+  "scope": "Only separate finite two legacy mount manual metadata diagnosis; only new private evidence writes."
+}

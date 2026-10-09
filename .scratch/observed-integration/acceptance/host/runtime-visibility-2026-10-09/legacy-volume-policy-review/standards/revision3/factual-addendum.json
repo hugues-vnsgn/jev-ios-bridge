@@ -1,0 +1,327 @@
+{
+  "scope": "Bounded factual companion at final revision3 time; prior revision1/2 pending-status records unchanged.",
+  "rootAuditSHA256": "f6399bfaff67ccdb8642ecc1111fe4680d7d0589b03cc632529e3533ee25f1ea",
+  "operatorArtifactManifestSHA256": "1c88098c93de02f24e1b813cb1fedf9e92fe18abb28547cc0a005b1648865893",
+  "checks": [
+    {
+      "name": "proposal-v2.md frozen hash",
+      "pass": true
+    },
+    {
+      "name": "proposal-v3.md frozen hash",
+      "pass": true
+    },
+    {
+      "name": "revision2/manifest.json frozen hash",
+      "pass": true
+    },
+    {
+      "name": "revision1/manifest.json frozen hash",
+      "pass": true
+    },
+    {
+      "name": "root-legacy-volume-evidence-audit.json frozen hash",
+      "pass": true
+    },
+    {
+      "name": "operator/artifact-hashes.json frozen hash",
+      "pass": true
+    },
+    {
+      "name": "Root4185/27 provenance audit qualified",
+      "pass": true
+    },
+    {
+      "name": "operator sealed child-receipts.json",
+      "pass": true
+    },
+    {
+      "name": "operator sealed children/00.stderr.bin",
+      "pass": true
+    },
+    {
+      "name": "operator sealed children/00.stdout.bin",
+      "pass": true
+    },
+    {
+      "name": "operator sealed children/01.stderr.bin",
+      "pass": true
+    },
+    {
+      "name": "operator sealed children/01.stdout.bin",
+      "pass": true
+    },
+    {
+      "name": "operator sealed command.json",
+      "pass": true
+    },
+    {
+      "name": "operator sealed common.mjs",
+      "pass": true
+    },
+    {
+      "name": "operator sealed context.json",
+      "pass": true
+    },
+    {
+      "name": "operator sealed diagnostic-report.md",
+      "pass": true
+    },
+    {
+      "name": "operator sealed filesystem-identities.json",
+      "pass": true
+    },
+    {
+      "name": "operator sealed head-after.json",
+      "pass": true
+    },
+    {
+      "name": "operator sealed identity-precision-audit.json",
+      "pass": true
+    },
+    {
+      "name": "operator sealed mount-proofs.json",
+      "pass": true
+    },
+    {
+      "name": "operator sealed permission-patterns.json",
+      "pass": true
+    },
+    {
+      "name": "operator sealed permission-summary.json",
+      "pass": true
+    },
+    {
+      "name": "operator sealed preservation-after.json",
+      "pass": true
+    },
+    {
+      "name": "operator sealed preservation-before.json",
+      "pass": true
+    },
+    {
+      "name": "operator sealed preservation-completion.json",
+      "pass": true
+    },
+    {
+      "name": "operator sealed preservation-references.json",
+      "pass": true
+    },
+    {
+      "name": "operator sealed probe.mjs",
+      "pass": true
+    },
+    {
+      "name": "operator sealed report.md",
+      "pass": true
+    },
+    {
+      "name": "operator sealed result.json",
+      "pass": true
+    },
+    {
+      "name": "operator sealed run.mjs",
+      "pass": true
+    },
+    {
+      "name": "operator sealed stderr.txt",
+      "pass": true
+    },
+    {
+      "name": "operator sealed stdout.txt",
+      "pass": true
+    },
+    {
+      "name": "operator sealed summary.json",
+      "pass": true
+    },
+    {
+      "name": "only two closed fixed native diagnostic children",
+      "pass": true
+    },
+    {
+      "name": "0 complete output bindings",
+      "pass": true
+    },
+    {
+      "name": "0 exact typed required XML fields",
+      "pass": true
+    },
+    {
+      "name": "1 complete output bindings",
+      "pass": true
+    },
+    {
+      "name": "1 exact typed required XML fields",
+      "pass": true
+    },
+    {
+      "name": "no metadata reads/conversion/compatibility",
+      "pass": true
+    },
+    {
+      "name": "32 mounted components recorded",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_22G86",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.6.simruntime",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.6.simruntime/Contents",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.6.simruntime/Contents/Info.plist",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.6.simruntime/Contents/Resources",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.6.simruntime/Contents/Resources/profile.plist",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.6.simruntime/Contents/Resources/RuntimeRoot",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.6.simruntime/Contents/Resources/RuntimeRoot/System",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.6.simruntime/Contents/Resources/RuntimeRoot/System/Library",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.6.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.6.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_23E254a",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Info.plist",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/profile.plist",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices",
+      "pass": true
+    },
+    {
+      "name": "mounted pattern /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist",
+      "pass": true
+    },
+    {
+      "name": "three unsafe system inode fields remain qualified",
+      "pass": true
+    }
+  ],
+  "proofs": [
+    {
+      "MountPoint": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86",
+      "Writable": false,
+      "WritableMedia": false,
+      "WritableVolume": false,
+      "rawSHA256": "5d81401ba0057d2d78d563e58c1afd4f00661c7f5cec8a77675f18353cfafe35",
+      "bytes": 3092
+    },
+    {
+      "MountPoint": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a",
+      "Writable": false,
+      "WritableMedia": false,
+      "WritableVolume": false,
+      "rawSHA256": "24062b3bce8b10d6824c7fbf62d9a2ba8e9e290177bd374aa7f6921e6ef8cef6",
+      "bytes": 3093
+    }
+  ],
+  "mountedComponents": 32,
+  "qualifiedSystemInodes": [
+    "/usr",
+    "/usr/sbin",
+    "/usr/sbin/diskutil"
+  ],
+  "timestampLimit": "Native diagnostic recorded chosen default Number Stats timestamp values; no unrecorded kernel nanosecond precision certified. Future proof uses required lossless-or-refuse identity and preserves chosen supplied timestamp precision.",
+  "noReusableAuthorization": true,
+  "currentCompatibility": "REFUSED at prior once lookup; not rerun",
+  "nativeCompatibilityOrLiveAcceptance": false
+}

@@ -1,0 +1,29 @@
+{
+  "skills": [
+    "code-review Spec axis",
+    "writing-for-agents",
+    "unslop"
+  ],
+  "register": "Reference",
+  "fixed": [
+    "Replace checker candidate fragment triad with one sentence."
+  ],
+  "leftAlone": [
+    "Exact quoted clauses, paths, identifiers and hashes."
+  ],
+  "flaggedNotChanged": [
+    "Lossless identity P2; original diagnostics and post-run qualification preserved."
+  ],
+  "firstChecker": {
+    "strict": 0,
+    "candidate": 1,
+    "reportWords": 276,
+    "matrixWords": 791
+  },
+  "finalChecker": {
+    "strict": 0,
+    "candidate": 0,
+    "reportWords": 285,
+    "matrixWords": 791
+  }
+}

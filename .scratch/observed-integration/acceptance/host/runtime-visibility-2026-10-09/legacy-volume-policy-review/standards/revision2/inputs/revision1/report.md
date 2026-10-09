@@ -1,0 +1,13 @@
+# Revision 1 Standards/design review: PASS
+
+Reviewed the sole 41-line proposal hunk from `e971d3312b595a5d841b1d70288302c40f7a5b70` to `91084c0c065373a978c8437f8f8362c4f5e4dbc9`. Proposal SHA256: `94ab01cb03679e8f92008a874e90cddaaa970e509799bb3c380fbe060f6a028a`. Current product `3edf247ab44d3332bc4bab5f3a43104536d84ce9` allocation Source SHA256: `7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62`; no implementation delta exists.
+
+**Documented breaches: none.** Lines 3/9/41 correctly leave new trust authorization pending. Lines 13/29 preserve published meaning and explicit-runtime selection (ADR0005; allocation-contract.md:76,78,80). Device/admission responsibilities remain unchanged (ADR0002/0008/0009).
+
+Lines 15–23 define a finite canonical mount class, strict ancestors, fresh exact typed read-only proof, permitted modes/leaves, identity/byte stability, and artifact-prefix precedence. Bootstrap inspection cannot recursively authorize itself. Existing parser, fixed process authorization, cancellation/output/time limits, mount-only escalation and actual close remain required. Lines 27–29 preserve aggregate enumeration/dispatch limits and refuse absent/duplicate explicit identifiers. These are reviewable requirements, not verified implementation claims.
+
+**Material proposal smells: none.** Line 33, “Share mount identity, read-only proof, bounded byte reads and conversion checks,” gives the second concrete namespace class a private module while keeping ancestry rules explicit. It avoids another proof algorithm or configurable public trust layer; this fits codebase-design depth/locality.
+
+Future implementation judgments, not absent-code defects: possible **Duplicated Code/Repeated Switches** if class dispatch and proof algorithms are copied; **Mysterious Name/Data Clumps/Primitive Obsession** if shared helpers retain Cryptex-only names or transport loose class/mount tuples; **Speculative Generality/Middle Man** if generalized public hooks or pass-through layers appear. Keep one closed private descriptor, shared proof/read/conversion logic, and both existing authorization call paths. All twelve Fowler baseline smells considered; repository rules override them, and tooling-enforced matters are excluded.
+
+Retained trace 9002 confirms uid0/gid80/0775 strict refusal. All 134 children are closed successful plutil conversions; no diskutil child ran. Root's 2,169 provenance checks establish evidence association, not read-only volumes or compatibility. Native legacy proof and measured modes remain pending; owner approval follows those observations and fresh bounded review. No tests, native calls, Source edits or new agents occurred. Implementation and L01–L05/Ticket12 acceptance remain unverified.

@@ -1,0 +1,80 @@
+{
+  "outerShellCommand": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/run.mjs",
+  "argv": [
+    "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/probe.mjs"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "node": "v26.8.1",
+  "environment": {
+    "HOME": "/Users/hugues_mini",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+  },
+  "outerEnvironmentNames": [
+    "ANTHROPIC_DEFAULT_OPUS_MODEL",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL",
+    "API_TIMEOUT_MS",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC",
+    "CODEX_CI",
+    "CODEX_SESSION_ID",
+    "CODEX_THREAD_ID",
+    "CODEX_VERSION",
+    "COLORTERM",
+    "DISABLE_TELEMETRY",
+    "FPATH",
+    "GH_PAGER",
+    "GIT_PAGER",
+    "HOME",
+    "HOMEBREW_CELLAR",
+    "HOMEBREW_PREFIX",
+    "HOMEBREW_REPOSITORY",
+    "INFOPATH",
+    "LANG",
+    "LC_ALL",
+    "LC_CTYPE",
+    "LOGNAME",
+    "NO_COLOR",
+    "OLDPWD",
+    "PAGER",
+    "PATH",
+    "PWD",
+    "SHELL",
+    "SHLVL",
+    "TERM",
+    "TMPDIR",
+    "USER",
+    "_",
+    "__CF_USER_TEXT_ENCODING"
+  ],
+  "scrubbed": [
+    "TYPESAFE_API_KEY",
+    "NODE_OPTIONS",
+    "NODE_NO_WARNINGS"
+  ],
+  "startedAtUtc": "2026-10-09T06:54:39.036Z",
+  "events": [
+    {
+      "atUtc": "2026-10-09T06:54:39.374Z",
+      "event": "exit",
+      "code": 0,
+      "signal": null
+    },
+    {
+      "atUtc": "2026-10-09T06:54:39.374Z",
+      "event": "close",
+      "code": 0,
+      "signal": null
+    }
+  ],
+  "captureLimit": 536870912,
+  "outerSignalPolicy": "No added outer signals; diagnostic shared60s, child10s and mount-only250ms escalation, settlement on close.",
+  "pid": 2128,
+  "code": 0,
+  "signal": null,
+  "closedAtUtc": "2026-10-09T06:54:39.374Z",
+  "outputBytes": 264115,
+  "captureComplete": true
+}

@@ -1,0 +1,71 @@
+{
+  "sealedAtUtc": "2026-10-09T07:12:19.252995+00:00",
+  "scope": "Bounded revision3 Spec proposal review; no owner/implementation/installed/live acceptance",
+  "verdict": "PASS",
+  "findings": [],
+  "missingPartialFindings": 0,
+  "wrongBehaviorFindings": 0,
+  "unaskedBehaviorFindings": 0,
+  "priorFindings": {
+    "revision1EnumerationP2": "RESOLVED by v2/v3:27/37; old FAIL unchanged",
+    "revision2LosslessIdentityP2": "RESOLVED by v3:23/37; old FAIL unchanged"
+  },
+  "proposalSha256": "14dd5566f99845a4ee6562404c16610c732795f311b7df1e95ecb306dd599492",
+  "predecessorSha256": "88e1b5d650bcf393647b67c9043e811e7d7e7d99891296261be060d64dbc959c",
+  "product": "3edf247ab44d3332bc4bab5f3a43104536d84ce9",
+  "SourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+  "boundedEvidenceAuditChecks": 117,
+  "boundedEvidenceAuditFailures": 0,
+  "boundedInputsRechecked": 53,
+  "RootFinalNativeAuditSha256": "f6399bfaff67ccdb8642ecc1111fe4680d7d0589b03cc632529e3533ee25f1ea",
+  "rootRetainedChecks": 4185,
+  "qualifications": [
+    "Exact original system inode integer identities remain unknown; raw typed two-mount proof remains valid.",
+    "ENOENT is a presence state distinct from empty present listing; stable absence preserves default/Cryptex behavior, appearance/disappearance refuses before return.",
+    "No atomic ancestry/exhaustive-writer certificate.",
+    "Implementation/regressions/owner/installed compatibility/operational/live/ticket12 gates pending."
+  ],
+  "outputs": {
+    "audit.py": {
+      "bytes": 6812,
+      "sha256": "0b8bbf52140a8f765961394e5d83867ebc7c395db81c166c7396a8daa6e60d44",
+      "mode": "0600"
+    },
+    "clause-matrix.md": {
+      "bytes": 6788,
+      "sha256": "a92d4c6580073453ba417dd56ffcb298b8944dd987fc5e95507d10c6135f9b57",
+      "mode": "0600"
+    },
+    "evidence-audit.json": {
+      "bytes": 17624,
+      "sha256": "f57ed948199b18ea13354cf4ebd1136b3d993e518b797f9a561a44314eb1f9fc",
+      "mode": "0600"
+    },
+    "inputs-manifest.json": {
+      "bytes": 13190,
+      "sha256": "65b1caac5d3ea01cece0e55e64f3630a103700502919439de2fd0ee1273e2f58",
+      "mode": "0600"
+    },
+    "proposal-v3-frozen.md": {
+      "bytes": 9519,
+      "sha256": "14dd5566f99845a4ee6562404c16610c732795f311b7df1e95ecb306dd599492",
+      "mode": "0600"
+    },
+    "prose-audit.json": {
+      "bytes": 704,
+      "sha256": "946d47bf2cd635f3dfcd80acabfa8731471b9d081ade1e3b781b86f3f2c6a7f3",
+      "mode": "0600"
+    },
+    "report.md": {
+      "bytes": 2168,
+      "sha256": "99f2bb0d8c73903edf9c5adb49f5ebc601f2eb84021275fa205921b606371d72",
+      "mode": "0600"
+    },
+    "v2-v3.diff": {
+      "bytes": 7044,
+      "sha256": "297d71ab5b2e45c2706446fe96d92cef513b2baecf9f3f7e4c604f2a913323fb",
+      "mode": "0600"
+    }
+  },
+  "permissions": "owned new dirs0700/files0600"
+}

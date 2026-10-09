@@ -1,0 +1,73 @@
+{
+  "sealedAtUtc": "2026-10-09T07:05:17.134749+00:00",
+  "scope": "Bounded revision2 Spec proposal review; no implementation/owner/live approval",
+  "verdict": "FAIL",
+  "revision1EnumerationP2": "RESOLVED BY V2:27/37",
+  "findings": [
+    {
+      "severity": "P2",
+      "category": "missing/partial",
+      "name": "Lossless numeric full identity handling unspecified",
+      "proposalLines": [
+        23,
+        27,
+        37
+      ]
+    }
+  ],
+  "wrongBehaviorFindings": 0,
+  "unaskedBehaviorFindings": 0,
+  "v1Sha256": "94ab01cb03679e8f92008a874e90cddaaa970e509799bb3c380fbe060f6a028a",
+  "v2Sha256": "88e1b5d650bcf393647b67c9043e811e7d7e7d99891296261be060d64dbc959c",
+  "inputsRechecked": 1384,
+  "evidenceChecks": 1546,
+  "evidenceFailures": 0,
+  "factualQualification": "Exact /usr system inode integers remain unknown; typed two-mount RO proofs valid. Root final audit will be read separately for revision3.",
+  "outputs": {
+    "audit.py": {
+      "bytes": 8820,
+      "sha256": "acd88dc1439c5ac04d4cc43cca4ee108763f192fb01c12e1dcc854cdc06525b6",
+      "mode": "0600"
+    },
+    "clause-matrix.md": {
+      "bytes": 6277,
+      "sha256": "4a40224b56d446af0d076b35c6308b9b2c929c10c568db33d5d8930d53596cdd",
+      "mode": "0600"
+    },
+    "evidence-audit.json": {
+      "bytes": 242803,
+      "sha256": "a2558f6417e7b64603a18f16a6d0713b2d17df3b5f099e1c4d133cced0535621",
+      "mode": "0600"
+    },
+    "inputs-manifest.json": {
+      "bytes": 294168,
+      "sha256": "8f7146df607ed107431890864fccb8aff174a4f6dc98179ae4e28bdc5242c5f4",
+      "mode": "0600"
+    },
+    "proposal-v1-frozen.md": {
+      "bytes": 7184,
+      "sha256": "94ab01cb03679e8f92008a874e90cddaaa970e509799bb3c380fbe060f6a028a",
+      "mode": "0600"
+    },
+    "proposal-v2-frozen.md": {
+      "bytes": 8185,
+      "sha256": "88e1b5d650bcf393647b67c9043e811e7d7e7d99891296261be060d64dbc959c",
+      "mode": "0600"
+    },
+    "prose-audit.json": {
+      "bytes": 617,
+      "sha256": "d7e6ca14399f055b4f215385a9aa1cf68cdc827b6f77614c3433504251e13f4d",
+      "mode": "0600"
+    },
+    "report.md": {
+      "bytes": 2449,
+      "sha256": "2fab62669c553f05a4d37a4264019c115e480134edf9ed4ebbc2dcf7719a3a9c",
+      "mode": "0600"
+    },
+    "v1-v2.diff": {
+      "bytes": 6414,
+      "sha256": "4cc1e05b7ca2d137f6692bc32ae1ea986855814f75665affc9975c29f281dc09",
+      "mode": "0600"
+    }
+  }
+}

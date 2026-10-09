@@ -1,0 +1,15 @@
+{
+  "scope": "Pure guard predicates only; zero installed-path calls and zero native children before lookup.",
+  "productionSourceReadRequest": 65536,
+  "productionDistReadRequest": 65536,
+  "productionInputCap": 65536,
+  "sentinel65537Allowed": true,
+  "ordinary65536Allowed": true,
+  "over65537Denied": true,
+  "positionalReadDenied": true,
+  "writesDenied": true,
+  "allReturnedBytesDelegatedUnchanged": true,
+  "rootAncestorPermitted": true,
+  "discovery": "Only immediate installed listings used by pinned code, finite candidates; no prerecorded installed lookup.",
+  "guardFailures": []
+}

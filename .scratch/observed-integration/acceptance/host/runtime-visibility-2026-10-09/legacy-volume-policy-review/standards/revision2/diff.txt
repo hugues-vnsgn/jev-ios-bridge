@@ -1,0 +1,37 @@
+--- revision1
++++ revision2
+@@ -1,6 +1,6 @@
+ # Proposed read-only legacy runtime-volume policy
+ 
+-Revision1. Owner approval pending. No Source change is authorized by this proposal.
++Revision2. Owner approval pending. Revision1 remains preserved with its Spec finding. No Source change is authorized by this proposal.
+ 
+ ## Confirmed blocker
+ 
+@@ -12,7 +12,7 @@
+ 
+ Keep `/Library/Developer/CoreSimulator/Profiles/Runtimes` and every unrecognized legacy-volume name under the original strict policy. Keep the approved Applications and Cryptex semantics and all public signatures unchanged.
+ 
+-Add one private recognized mount class: canonical immediate directories under exactly `/Library/Developer/CoreSimulator/Volumes`, with full basename grammar `^iOS_[0-9]{1,3}[A-Z]{1,3}[0-9]{1,6}[a-z]?$`. Names only classify a namespace; they never select, order or infer a runtime. Preserve the existing immediate-name validation for all Volumes entries. Strict ancestors from `/` through the fixed Volumes namespace must be nonsymlink directories, uid0 and not group/other writable. There is no writable-ancestor exception above these mounts.
++Add one private recognized mount class: canonical immediate directories under exactly `/Library/Developer/CoreSimulator/Volumes`, with full basename grammar `^iOS_[0-9]{1,3}[A-Z]{1,3}[0-9]{1,6}[a-z]?$`. Names only classify a namespace; they never select, order or infer a runtime. Preserve the existing immediate-name validation for all Volumes entries. For this recognized mount class, strict ancestors from `/` through the fixed Volumes namespace must be nonsymlink directories, uid0 and not group/other writable. There is no writable-ancestor exception above these mounts. Unrecognized names keep the original strict ownership rule, including its account-owner allowance; the new uid0 requirement is not applied to their old branch.
+ 
+ Require a fresh bounded `/usr/sbin/diskutil info -plist <exact canonical mount root>` before and after every metadata conversion and every runtime listing. Require exact MountPoint and actual boolean Writable=false, WritableMedia=false and WritableVolume=false. Use the already shipped bounded XML parser, fixed executable/argv/environment and strict executable/Xcode validation. Bootstrap inspects only the finite namespace/mount-root chain and does not read runtime metadata or recursively ask its own verifier for a mount proof. Refuse missing, writable, mismatched, malformed, changed or uncertain proof. No cached mount proof authorizes a later read.
+ 
+@@ -24,6 +24,8 @@
+ 
+ ## Enumeration and explicit runtime identity
+ 
++Before and after the immediate Volumes listing, compare full canonical namespace/ancestor identity snapshots under the existing strict rule. Capture each recognized candidate's mount-root/ancestor identity within that stable enumeration window and bind it to subsequent proofs. Before accepting compatibility, take a final namespace snapshot and bounded immediate listing: require the namespace identity and complete sorted entry set to match the initial enumeration, and every recognized candidate's identity to match its captured identity. Refuse an observed namespace, entry-set or candidate change; do not repair or silently skip it. No privileged atomic-pinning claim is made.
++
+ Keep at most1000 immediate Volumes entries, at most64 recognized mount candidates in this namespace, at most1000 entries in any runtime listing, and at most1000 runtime bundles across default, legacy and Cryptex roots together. Keep8192 dispatched/actual children and the shared lookup deadline. Preserve existing Cryptex64-candidate bounds separately. Validate canonical paths up to4096 and basenames up to255.
+ 
+ Inspect all supported roots and match only the caller's explicit CFBundleIdentifier; missing or duplicate matches refuse. Do not skip an older recognized mount merely because its name differs from the requested identifier. Recognized mounts must satisfy the new proof even if their permissions would also satisfy the old rule. Unrecognized valid legacy names retain the strict old branch; `iOS_fixture` therefore retains its existing accepted regression. No newest-runtime selection, runtime fallback, runtime download or public path override.
+@@ -32,7 +34,7 @@
+ 
+ Extend the existing private mounted-metadata boundary to represent the two exact namespace classes. Share mount identity, read-only proof, bounded byte reads and conversion checks; namespace ancestry rules remain explicit. Avoid another copy of the read/proof/convert algorithm or a public configurable trust abstraction. No broader allocator, device or admission change is included.
+ 
+-Before repair add genuine failing regressions for the observed0775 legacy layout and typed read-only proof. Preserve all prior cases and assertions. Cover both exact name examples; name/path escape; missing/mismatched/writable/changed/uncertain proof; each owner/group/mode/type/symlink/hardlink/input/byte/identity/device failure; artifact-prefix bypass; duplicate identifiers across roots; enumeration/dispatch/deadline/abort/overflow; actual mount-child close and escalation. Preserve Applications/Cryptex behavior, existing strict legacy fixture and all other budgets. Then focused tests, actual unmodified defaults/typecheck/build on exact26.8.1 and24.0.0, independent Spec/Standards reviews, Source/compiled binding, clean installed proofs and wrapped startup precede integration and one new actual compatibility lookup.
++Before repair add genuine failing regressions for the observed0775 legacy layout and typed read-only proof. Preserve all prior cases and assertions. Cover both exact name examples; name/path escape; missing/mismatched/writable/changed/uncertain proof; each owner/group/mode/type/symlink/hardlink/input/byte/identity/device failure; artifact-prefix bypass; duplicate identifiers across roots; namespace/candidate-set changes during enumeration and later conversions; enumeration/dispatch/deadline/abort/overflow; actual mount-child close and escalation. Preserve Applications/Cryptex behavior, existing strict legacy fixture and all other budgets. Then focused tests, actual unmodified defaults/typecheck/build on exact26.8.1 and24.0.0, independent Spec/Standards reviews, Source/compiled binding, clean installed proofs and wrapped startup precede integration and one new actual compatibility lookup.
+ 
+ ## Limits of the decision
+ 

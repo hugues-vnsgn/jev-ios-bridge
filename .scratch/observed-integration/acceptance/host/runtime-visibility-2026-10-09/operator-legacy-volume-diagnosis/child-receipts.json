@@ -1,0 +1,152 @@
+[
+  {
+    "sequence": 16,
+    "atUtc": "2026-10-09T06:54:39.091Z",
+    "index": 0,
+    "root": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86",
+    "argv": [
+      "/usr/sbin/diskutil",
+      "info",
+      "-plist",
+      "/Library/Developer/CoreSimulator/Volumes/iOS_22G86"
+    ],
+    "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+    "shell": false,
+    "environment": {
+      "HOME": "/Users/hugues_mini",
+      "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "timeoutMs": 10000,
+    "maxCombinedOutputBytes": 65536,
+    "sharedDeadlineMs": 60000,
+    "events": [
+      {
+        "sequence": 17,
+        "atUtc": "2026-10-09T06:54:39.094Z",
+        "event": "spawn"
+      },
+      {
+        "sequence": 18,
+        "atUtc": "2026-10-09T06:54:39.219Z",
+        "event": "stdout-data",
+        "bytes": 3092,
+        "sha256": "5d81401ba0057d2d78d563e58c1afd4f00661c7f5cec8a77675f18353cfafe35",
+        "retainedBytes": 3092
+      },
+      {
+        "sequence": 19,
+        "atUtc": "2026-10-09T06:54:39.219Z",
+        "event": "exit",
+        "code": 0,
+        "signal": null
+      },
+      {
+        "sequence": 20,
+        "atUtc": "2026-10-09T06:54:39.220Z",
+        "event": "close",
+        "code": 0,
+        "signal": null
+      }
+    ],
+    "stdoutOriginalBytes": 3092,
+    "stderrOriginalBytes": 0,
+    "retainedCombinedBytes": 3092,
+    "stopReason": null,
+    "closed": true,
+    "pid": 2129,
+    "exitCode": 0,
+    "signal": null,
+    "closedAtUtc": "2026-10-09T06:54:39.220Z",
+    "stdoutOriginalSha256": "5d81401ba0057d2d78d563e58c1afd4f00661c7f5cec8a77675f18353cfafe35",
+    "stderrOriginalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "captureComplete": true,
+    "rawFiles": {
+      "stdout": "children/00.stdout.bin",
+      "stderr": "children/00.stderr.bin",
+      "stdoutRetainedBytes": 3092,
+      "stderrRetainedBytes": 0,
+      "stdoutRetainedSha256": "5d81401ba0057d2d78d563e58c1afd4f00661c7f5cec8a77675f18353cfafe35",
+      "stderrRetainedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redaction": "none",
+      "complete": true
+    }
+  },
+  {
+    "sequence": 127,
+    "atUtc": "2026-10-09T06:54:39.262Z",
+    "index": 1,
+    "root": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a",
+    "argv": [
+      "/usr/sbin/diskutil",
+      "info",
+      "-plist",
+      "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a"
+    ],
+    "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+    "shell": false,
+    "environment": {
+      "HOME": "/Users/hugues_mini",
+      "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "timeoutMs": 10000,
+    "maxCombinedOutputBytes": 65536,
+    "sharedDeadlineMs": 60000,
+    "events": [
+      {
+        "sequence": 128,
+        "atUtc": "2026-10-09T06:54:39.262Z",
+        "event": "spawn"
+      },
+      {
+        "sequence": 129,
+        "atUtc": "2026-10-09T06:54:39.354Z",
+        "event": "stdout-data",
+        "bytes": 3093,
+        "sha256": "24062b3bce8b10d6824c7fbf62d9a2ba8e9e290177bd374aa7f6921e6ef8cef6",
+        "retainedBytes": 3093
+      },
+      {
+        "sequence": 130,
+        "atUtc": "2026-10-09T06:54:39.354Z",
+        "event": "exit",
+        "code": 0,
+        "signal": null
+      },
+      {
+        "sequence": 131,
+        "atUtc": "2026-10-09T06:54:39.354Z",
+        "event": "close",
+        "code": 0,
+        "signal": null
+      }
+    ],
+    "stdoutOriginalBytes": 3093,
+    "stderrOriginalBytes": 0,
+    "retainedCombinedBytes": 3093,
+    "stopReason": null,
+    "closed": true,
+    "pid": 2130,
+    "exitCode": 0,
+    "signal": null,
+    "closedAtUtc": "2026-10-09T06:54:39.354Z",
+    "stdoutOriginalSha256": "24062b3bce8b10d6824c7fbf62d9a2ba8e9e290177bd374aa7f6921e6ef8cef6",
+    "stderrOriginalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "captureComplete": true,
+    "rawFiles": {
+      "stdout": "children/01.stdout.bin",
+      "stderr": "children/01.stderr.bin",
+      "stdoutRetainedBytes": 3093,
+      "stderrRetainedBytes": 0,
+      "stdoutRetainedSha256": "24062b3bce8b10d6824c7fbf62d9a2ba8e9e290177bd374aa7f6921e6ef8cef6",
+      "stderrRetainedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redaction": "none",
+      "complete": true
+    }
+  }
+]

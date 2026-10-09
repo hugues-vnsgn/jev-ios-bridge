@@ -1,0 +1,203 @@
+{
+  "revision": 3,
+  "axis": "Standards/design conditional proposal",
+  "proposalSHA256": {
+    "revision2": "88e1b5d650bcf393647b67c9043e811e7d7e7d99891296261be060d64dbc959c",
+    "revision3": "14dd5566f99845a4ee6562404c16610c732795f311b7df1e95ecb306dd599492"
+  },
+  "inputHashes": {
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision2/inputs/proposal-revision2.md": {
+      "sha256": "88e1b5d650bcf393647b67c9043e811e7d7e7d99891296261be060d64dbc959c",
+      "bytes": 8185,
+      "retained": "inputs/proposal-v2.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-proposal-v3.md": {
+      "sha256": "14dd5566f99845a4ee6562404c16610c732795f311b7df1e95ecb306dd599492",
+      "bytes": 9519,
+      "retained": "inputs/proposal-v3.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision2/manifest.json": {
+      "sha256": "8edc835efda7361552c224cf085af8340702400a4c004b00d3136745b7306f05",
+      "bytes": 3539,
+      "retained": "inputs/revision2/manifest.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision2/matrix.json": {
+      "sha256": "d65c5a11893a81a8a09f8bbe9a2c611548f020b8aa6b5440c27efc8263ed5172",
+      "bytes": 8907,
+      "retained": "inputs/revision2/matrix.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision2/report.md": {
+      "sha256": "e8afc94b205d4d96bdc2e0b4f5c5e332a928d25501d5cfab8811b7d68339673d",
+      "bytes": 2408,
+      "retained": "inputs/revision2/report.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/manifest.json": {
+      "sha256": "0d2d997b1d6839ecfbfbfa6e5974c6cb9e05d042c1a7262d95f73f64383d8dc7",
+      "bytes": 13659,
+      "retained": "inputs/revision1/manifest.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-legacy-volume-evidence-audit.json": {
+      "sha256": "f6399bfaff67ccdb8642ecc1111fe4680d7d0589b03cc632529e3533ee25f1ea",
+      "bytes": 696435,
+      "retained": "inputs/root-legacy-volume-evidence-audit.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/artifact-hashes.json": {
+      "sha256": "1c88098c93de02f24e1b813cb1fedf9e92fe18abb28547cc0a005b1648865893",
+      "bytes": 4863,
+      "retained": "inputs/operator/artifact-hashes.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/summary.json": {
+      "sha256": "371d9479efedc9644736a656c1c9bdfd2c3bf6a18b03d0b68f03848a1681deab",
+      "bytes": 2178,
+      "retained": "inputs/operator/summary.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/child-receipts.json": {
+      "sha256": "6394242db457bdc32e9c4a86d6782e79886fad4cfcd01aaad1b379cc61ad3023",
+      "bytes": 4614,
+      "retained": "inputs/operator/child-receipts.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/permission-patterns.json": {
+      "sha256": "569ef6740ac115a6a400127ebfbab257ca3f2ead492de66abcca7e79358dfc36",
+      "bytes": 15505,
+      "retained": "inputs/operator/permission-patterns.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/identity-precision-audit.json": {
+      "sha256": "b93f89eb378ad7916d201c6e93e2f19ee2a0c89f635a0aed174d43fa376eb9ed",
+      "bytes": 2432,
+      "retained": "inputs/operator/identity-precision-audit.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/diagnostic-report.md": {
+      "sha256": "bd8abd7b73ad59ea29298c0fb52d66ba7de1079f9212e9f847e5eb940bde32e7",
+      "bytes": 3158,
+      "retained": "inputs/operator/diagnostic-report.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/permission-summary.json": {
+      "sha256": "2752ec9ae43a772e54668a7c93eb087b449cfe07feb831aedbe560905a71d20a",
+      "bytes": 7751,
+      "retained": "inputs/operator/permission-summary.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/mount-proofs.json": {
+      "sha256": "c8b6cadb1bbce9fb7a1c8551ddd588b1f3500ba965e581d97ae3be1f49319982",
+      "bytes": 101051,
+      "retained": "inputs/operator/mount-proofs.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/children/00.stdout.bin": {
+      "sha256": "5d81401ba0057d2d78d563e58c1afd4f00661c7f5cec8a77675f18353cfafe35",
+      "bytes": 3092,
+      "retained": "inputs/operator/children/00.stdout.bin"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/children/00.stderr.bin": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/operator/children/00.stderr.bin"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/children/01.stdout.bin": {
+      "sha256": "24062b3bce8b10d6824c7fbf62d9a2ba8e9e290177bd374aa7f6921e6ef8cef6",
+      "bytes": 3093,
+      "retained": "inputs/operator/children/01.stdout.bin"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-legacy-volume-diagnosis/children/01.stderr.bin": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/operator/children/01.stderr.bin"
+    }
+  },
+  "files": {
+    "diff.txt": {
+      "sha256": "297d71ab5b2e45c2706446fe96d92cef513b2baecf9f3f7e4c604f2a913323fb",
+      "bytes": 7044
+    },
+    "factual-addendum.json": {
+      "sha256": "52580dbbd8b1d1723f4bf22bec7ed5a1927d0e22e6bd22df95ddf4fa047defe4",
+      "bytes": 11013
+    },
+    "inputs/operator/artifact-hashes.json": {
+      "sha256": "1c88098c93de02f24e1b813cb1fedf9e92fe18abb28547cc0a005b1648865893",
+      "bytes": 4863
+    },
+    "inputs/operator/child-receipts.json": {
+      "sha256": "6394242db457bdc32e9c4a86d6782e79886fad4cfcd01aaad1b379cc61ad3023",
+      "bytes": 4614
+    },
+    "inputs/operator/children/00.stderr.bin": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "inputs/operator/children/00.stdout.bin": {
+      "sha256": "5d81401ba0057d2d78d563e58c1afd4f00661c7f5cec8a77675f18353cfafe35",
+      "bytes": 3092
+    },
+    "inputs/operator/children/01.stderr.bin": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "inputs/operator/children/01.stdout.bin": {
+      "sha256": "24062b3bce8b10d6824c7fbf62d9a2ba8e9e290177bd374aa7f6921e6ef8cef6",
+      "bytes": 3093
+    },
+    "inputs/operator/diagnostic-report.md": {
+      "sha256": "bd8abd7b73ad59ea29298c0fb52d66ba7de1079f9212e9f847e5eb940bde32e7",
+      "bytes": 3158
+    },
+    "inputs/operator/identity-precision-audit.json": {
+      "sha256": "b93f89eb378ad7916d201c6e93e2f19ee2a0c89f635a0aed174d43fa376eb9ed",
+      "bytes": 2432
+    },
+    "inputs/operator/mount-proofs.json": {
+      "sha256": "c8b6cadb1bbce9fb7a1c8551ddd588b1f3500ba965e581d97ae3be1f49319982",
+      "bytes": 101051
+    },
+    "inputs/operator/permission-patterns.json": {
+      "sha256": "569ef6740ac115a6a400127ebfbab257ca3f2ead492de66abcca7e79358dfc36",
+      "bytes": 15505
+    },
+    "inputs/operator/permission-summary.json": {
+      "sha256": "2752ec9ae43a772e54668a7c93eb087b449cfe07feb831aedbe560905a71d20a",
+      "bytes": 7751
+    },
+    "inputs/operator/summary.json": {
+      "sha256": "371d9479efedc9644736a656c1c9bdfd2c3bf6a18b03d0b68f03848a1681deab",
+      "bytes": 2178
+    },
+    "inputs/proposal-v2.md": {
+      "sha256": "88e1b5d650bcf393647b67c9043e811e7d7e7d99891296261be060d64dbc959c",
+      "bytes": 8185
+    },
+    "inputs/proposal-v3.md": {
+      "sha256": "14dd5566f99845a4ee6562404c16610c732795f311b7df1e95ecb306dd599492",
+      "bytes": 9519
+    },
+    "inputs/revision1/manifest.json": {
+      "sha256": "0d2d997b1d6839ecfbfbfa6e5974c6cb9e05d042c1a7262d95f73f64383d8dc7",
+      "bytes": 13659
+    },
+    "inputs/revision2/manifest.json": {
+      "sha256": "8edc835efda7361552c224cf085af8340702400a4c004b00d3136745b7306f05",
+      "bytes": 3539
+    },
+    "inputs/revision2/matrix.json": {
+      "sha256": "d65c5a11893a81a8a09f8bbe9a2c611548f020b8aa6b5440c27efc8263ed5172",
+      "bytes": 8907
+    },
+    "inputs/revision2/report.md": {
+      "sha256": "e8afc94b205d4d96bdc2e0b4f5c5e332a928d25501d5cfab8811b7d68339673d",
+      "bytes": 2408
+    },
+    "inputs/root-legacy-volume-evidence-audit.json": {
+      "sha256": "f6399bfaff67ccdb8642ecc1111fe4680d7d0589b03cc632529e3533ee25f1ea",
+      "bytes": 696435
+    },
+    "matrix.json": {
+      "sha256": "da3437deca919de4c4203fdb01241b9907af57393ab3994c5360013ff6870271",
+      "bytes": 17678
+    },
+    "report.md": {
+      "sha256": "9d54053f1761307ab2e5de700e3d3294090c875b786b2b835b4b8e5cc4dcd013",
+      "bytes": 2763
+    }
+  },
+  "verdict": "PASS conditional proposal Standards/design only",
+  "nativeFactualAuditSHA256": "f6399bfaff67ccdb8642ecc1111fe4680d7d0589b03cc632529e3533ee25f1ea",
+  "ownerDecision": "PENDING",
+  "noImplementationOrLiveAcceptance": true
+}

@@ -1,0 +1,51 @@
+{
+  "capturedAtUtc": "2026-10-09T06:57:50.975Z",
+  "scope": "Pure audit of retained repository result only; no installed metadata call.",
+  "observations": [
+    {
+      "path": "/usr",
+      "field": "ino",
+      "recordedNodeNumber": 1152921500312607500,
+      "qualification": "Node default Stats returned a number outside the exact-integer range; original64-bit integer not recoverable from retained numeric evidence. No extra native lstat or retry performed."
+    },
+    {
+      "path": "/usr/sbin",
+      "field": "ino",
+      "recordedNodeNumber": 1152921500312611800,
+      "qualification": "Node default Stats returned a number outside the exact-integer range; original64-bit integer not recoverable from retained numeric evidence. No extra native lstat or retry performed."
+    },
+    {
+      "path": "/usr/sbin/diskutil",
+      "field": "ino",
+      "recordedNodeNumber": 1152921500312612000,
+      "qualification": "Node default Stats returned a number outside the exact-integer range; original64-bit integer not recoverable from retained numeric evidence. No extra native lstat or retry performed."
+    }
+  ],
+  "exactIntegerPrecisionConfirmed": false,
+  "affectedScope": "Fixed /usr executable ancestor inode fields. All inspected legacy-volume chains and runtime component inode/device fields are safe integers.",
+  "nativeQueriesAlreadyCompleted": 2,
+  "shippedParserMountProofs": [
+    {
+      "root": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86",
+      "exactTypedProof": {
+        "MountPoint": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86",
+        "Writable": false,
+        "WritableMedia": false,
+        "WritableVolume": false
+      },
+      "conclusion": "EXACT_MOUNT_REPORTS_UNWRITABLE"
+    },
+    {
+      "root": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a",
+      "exactTypedProof": {
+        "MountPoint": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a",
+        "Writable": false,
+        "WritableMedia": false,
+        "WritableVolume": false
+      },
+      "conclusion": "EXACT_MOUNT_REPORTS_UNWRITABLE"
+    }
+  ],
+  "qualification": "Both complete exact mount proofs are retained. Before/after comparisons used actual Node Stats values; full exact64-bit identity comparison for the three system inode fields is uncertain. Original result/receipts remain untouched.",
+  "followup": "No additional native work, retries or compatibility lookup under this dispatch."
+}

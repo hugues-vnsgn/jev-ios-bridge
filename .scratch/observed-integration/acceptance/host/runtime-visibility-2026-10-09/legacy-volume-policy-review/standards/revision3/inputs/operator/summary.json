@@ -1,0 +1,82 @@
+{
+  "status": "COMPLETE_TWO_MOUNT_DIAGNOSIS",
+  "uncertainty": null,
+  "nativeChildren": 2,
+  "perRootQueryCounts": {
+    "/Library/Developer/CoreSimulator/Volumes/iOS_22G86": 1,
+    "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a": 1
+  },
+  "mountProofs": [
+    {
+      "root": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86",
+      "readOnlyConclusion": "EXACT_MOUNT_REPORTS_UNWRITABLE",
+      "proof": {
+        "MountPoint": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86",
+        "Writable": false,
+        "WritableMedia": false,
+        "WritableVolume": false
+      },
+      "queryStable": true,
+      "runtimeListingStable": true,
+      "runtimeEntries": 1,
+      "runtimeBundleBasenames": [
+        "iOS 18.6.simruntime"
+      ],
+      "bundleIdentityStability": [
+        {
+          "basename": "iOS 18.6.simruntime",
+          "stable": true
+        }
+      ]
+    },
+    {
+      "root": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a",
+      "readOnlyConclusion": "EXACT_MOUNT_REPORTS_UNWRITABLE",
+      "proof": {
+        "MountPoint": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a",
+        "Writable": false,
+        "WritableMedia": false,
+        "WritableVolume": false
+      },
+      "queryStable": true,
+      "runtimeListingStable": true,
+      "runtimeEntries": 1,
+      "runtimeBundleBasenames": [
+        "iOS 26.4.simruntime"
+      ],
+      "bundleIdentityStability": [
+        {
+          "basename": "iOS 26.4.simruntime",
+          "stable": true
+        }
+      ]
+    }
+  ],
+  "exitCode": 0,
+  "signal": null,
+  "allChildrenClosed": true,
+  "allRawOutputsComplete": true,
+  "allChildrenExit0": true,
+  "lstatEvents": 210,
+  "runtimeFileOpenCount": 0,
+  "plutilCount": 0,
+  "compatibilityLookupCount": 0,
+  "preservationBefore": true,
+  "preservationAfter": true,
+  "preservationCounts": {
+    "source441": 441,
+    "compiled69": 69,
+    "originalHost15": 15,
+    "priorCompatibility693": 693,
+    "rootRecords": 15,
+    "priorExplicit121": 121,
+    "newScripts": 4
+  },
+  "liveRows": {
+    "L01": "UNVERIFIED",
+    "L02": "UNVERIFIED",
+    "L03": "UNVERIFIED",
+    "L04": "UNVERIFIED",
+    "L05": "UNVERIFIED"
+  }
+}

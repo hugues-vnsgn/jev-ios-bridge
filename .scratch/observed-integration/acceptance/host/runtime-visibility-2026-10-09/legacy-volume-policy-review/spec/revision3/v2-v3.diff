@@ -1,0 +1,35 @@
+--- revision2
++++ revision3
+@@ -1,12 +1,12 @@
+ # Proposed read-only legacy runtime-volume policy
+ 
+-Revision2. Owner approval pending. Revision1 remains preserved with its Spec finding. No Source change is authorized by this proposal.
++Revision3. Owner approval pending. Revisions1 and2 remain preserved with their Spec findings. No Source change is authorized by this proposal.
+ 
+ ## Confirmed blocker
+ 
+ The repaired product passed both1999-test default/typecheck/build gates, both37-command installed npm/plugin proofs and wrapped startup. The once actual compatibility lookup at full HEAD `e971d3312b595a5d841b1d70288302c40f7a5b70` then refused `/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles`: nonsymlink directory uid0/gid80/exact0775. It ran134 successful plutil children and no diskutil children; it stopped before Cryptex discovery. [Refusal](operator-repaired-compatibility/refusal-report.md), [Root provenance audit](root-repaired-compatibility-audit.json).
+ 
+-The approved Cryptex v3 policy explicitly preserved strict default and Volumes checks. Its approval does not authorize this extension. Names `iOS_22G86` and `iOS_23E254a` were observed in a bounded immediate listing; neither name proves a metadata identifier or read-only status. The sole operator's new manual diagnosis is pending. Owner approval will be requested only after its evidence and independent design reviews are retained.
++The approved Cryptex v3 policy explicitly preserved strict default and Volumes checks. Its approval does not authorize this extension. Names `iOS_22G86` and `iOS_23E254a` were observed in a bounded immediate listing; neither name proves a metadata identifier or read-only status. The sole operator completed a separate manual diagnosis: both exact mount responses report typed Writable/WritableMedia/WritableVolume=false, and legacy namespace/runtime component modes fit the sets below. No runtime file bytes or metadata identifiers were read; runtime bundle basenames remain names only. Some system executable-ancestor inode values were recorded as unsafe Node Numbers, so their exact integer identity is uncertain. This qualification does not invalidate the two typed read-only XML responses or the safely represented legacy mount/runtime identities. See the retained operator-legacy-volume-diagnosis evidence and Root audit. Future production proofs must satisfy the lossless-or-refuse rule below; the manual snapshots are not reusable authorization. Owner approval will be requested only after independent design reviews and the Root evidence audit are retained.
+ 
+ ## Proposed trust boundary
+ 
+@@ -20,7 +20,7 @@
+ 
+ Support only the fixed Runtimes suffix and the three already supported Info/profile/SystemVersion plist leaf forms. Classify recognized mounted namespaces before allowedArtifactRoots so an artifact prefix cannot downgrade their trust. Invalid targets within a recognized namespace refuse rather than fall through to ordinary artifact authorization.
+ 
+-Compare full before/opened/final/after identity including path, dev/ino, uid/gid, type/full mode, size/nlink and ctime/mtime for every component; compare exact metadata bytes before and after conversion. Each proof must match the mount identity in the full path snapshot. Check the caller's shared signal at every bounded stage; wait for actual child close. Preserve64KiB input and ordinary combined output, exact Xcode Info131072 output exception,10s mount deadlines and mount-only SIGTERM→250ms SIGKILL escalation. Other child termination behavior is unchanged.
++Use lossless identity values for snapshots and opened-file comparisons, or refuse values that cannot be safely and exactly represented. Never convert bigint dev/ino to Number or compare rounded numeric strings. Preserve timestamp precision supplied by the chosen stat representation, without millisecond truncation or Number coercion of bigint nanosecond fields. Numeric integer identity fields must be safe integers; uncertain identity representation refuses the proof. Compare full before/opened/final/after identity including path, dev/ino, uid/gid, type/full mode, size/nlink and ctime/mtime for every component; compare exact metadata bytes before and after conversion. Each proof must match the mount identity in the full path snapshot. Check the caller's shared signal at every bounded stage; wait for actual child close. Preserve64KiB input and ordinary combined output, exact Xcode Info131072 output exception,10s mount deadlines and mount-only SIGTERM→250ms SIGKILL escalation. Other child termination behavior is unchanged.
+ 
+ ## Enumeration and explicit runtime identity
+ 
+@@ -34,7 +34,7 @@
+ 
+ Extend the existing private mounted-metadata boundary to represent the two exact namespace classes. Share mount identity, read-only proof, bounded byte reads and conversion checks; namespace ancestry rules remain explicit. Avoid another copy of the read/proof/convert algorithm or a public configurable trust abstraction. No broader allocator, device or admission change is included.
+ 
+-Before repair add genuine failing regressions for the observed0775 legacy layout and typed read-only proof. Preserve all prior cases and assertions. Cover both exact name examples; name/path escape; missing/mismatched/writable/changed/uncertain proof; each owner/group/mode/type/symlink/hardlink/input/byte/identity/device failure; artifact-prefix bypass; duplicate identifiers across roots; namespace/candidate-set changes during enumeration and later conversions; enumeration/dispatch/deadline/abort/overflow; actual mount-child close and escalation. Preserve Applications/Cryptex behavior, existing strict legacy fixture and all other budgets. Then focused tests, actual unmodified defaults/typecheck/build on exact26.8.1 and24.0.0, independent Spec/Standards reviews, Source/compiled binding, clean installed proofs and wrapped startup precede integration and one new actual compatibility lookup.
++Before repair add genuine failing regressions for the observed0775 legacy layout and typed read-only proof. Preserve all prior cases and assertions. Cover both exact name examples; name/path escape; missing/mismatched/writable/changed/uncertain proof; each owner/group/mode/type/symlink/hardlink/input/byte/identity/device failure; artifact-prefix bypass; duplicate identifiers across roots; distinct large dev/ino identities that collide after Number coercion and timestamp-only changes at the supplied precision; namespace/candidate-set changes during enumeration and later conversions; enumeration/dispatch/deadline/abort/overflow; actual mount-child close and escalation. Preserve Applications/Cryptex behavior, existing strict legacy fixture and all other budgets. Then focused tests, actual unmodified defaults/typecheck/build on exact26.8.1 and24.0.0, independent Spec/Standards reviews, Source/compiled binding, clean installed proofs and wrapped startup precede integration and one new actual compatibility lookup.
+ 
+ ## Limits of the decision
+ 

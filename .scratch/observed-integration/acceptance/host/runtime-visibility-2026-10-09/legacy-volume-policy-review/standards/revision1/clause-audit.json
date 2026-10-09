@@ -1,0 +1,391 @@
+{
+  "axis": "Standards/design proposal review",
+  "atUtc": "2026-10-09T06:50:55.307262+00:00",
+  "revision": 1,
+  "base": "e971d3312b595a5d841b1d70288302c40f7a5b70",
+  "candidate": "91084c0c065373a978c8437f8f8362c4f5e4dbc9",
+  "productSourceCommit": "3edf247ab44d3332bc4bab5f3a43104536d84ce9",
+  "proposalPath": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-proposal.md",
+  "proposalSha256": "94ab01cb03679e8f92008a874e90cddaaa970e509799bb3c380fbe060f6a028a",
+  "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+  "diffHunks": 1,
+  "clauseAudit": [
+    {
+      "line": 3,
+      "clause": "Status and authority",
+      "quote": "Revision1. Owner approval pending. No Source change is authorized by this proposal.",
+      "assessment": "No implementation authority claimed; owner decision remains pending.",
+      "ruleSources": "allocation-contract.md:78,80 / owner-cryptex-trust-decision.json",
+      "documentedBreaches": []
+    },
+    {
+      "line": 7,
+      "clause": "Confirmed blocker",
+      "quote": "The repaired product passed both1999-test default/typecheck/build gates, both37-command installed npm/plugin proofs and wrapped startup. The once actual compatibility lookup at full HEAD `e971d3312b595a5d841b1d70288302c40f7a5b70` then refused `/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles`: nonsymlink directory uid0/gid80/exact0775. It ran134 successful plutil children and no diskutil children; it stopped before Cryptex discovery. [Refusal](operator-repaired-compatibility/refusal-report.md), [Root provenance audit](root-repaired-compatibility-audit.json).",
+      "assessment": "Refusal/caller trace identity and 134 successful plutil children match retained evidence; prior1999/installed37/startup claims read as historical Root gates, not independently rerun.",
+      "ruleSources": "docs/domain-boundaries.md: consistency/evidence ownership",
+      "documentedBreaches": []
+    },
+    {
+      "line": 9,
+      "clause": "Evidence and owner sequence",
+      "quote": "The approved Cryptex v3 policy explicitly preserved strict default and Volumes checks. Its approval does not authorize this extension. Names `iOS_22G86` and `iOS_23E254a` were observed in a bounded immediate listing; neither name proves a metadata identifier or read-only status. The sole operator's new manual diagnosis is pending. Owner approval will be requested only after its evidence and independent design reviews are retained.",
+      "assessment": "Names are namespace evidence only; mount status and metadata identity explicitly pending; prior owner approval is not extended.",
+      "ruleSources": "allocation-contract.md:76,80",
+      "documentedBreaches": []
+    },
+    {
+      "line": 13,
+      "clause": "Preserved branches",
+      "quote": "Keep `/Library/Developer/CoreSimulator/Profiles/Runtimes` and every unrecognized legacy-volume name under the original strict policy. Keep the approved Applications and Cryptex semantics and all public signatures unchanged.",
+      "assessment": "Default/unrecognized strict paths, Applications/Cryptex approvals and public interface preserved.",
+      "ruleSources": "ADR0005 stable public meanings; approved v3 policy",
+      "documentedBreaches": []
+    },
+    {
+      "line": 15,
+      "clause": "Closed classification and ancestry",
+      "quote": "Add one private recognized mount class: canonical immediate directories under exactly `/Library/Developer/CoreSimulator/Volumes`, with full basename grammar `^iOS_[0-9]{1,3}[A-Z]{1,3}[0-9]{1,6}[a-z]?$`. Names only classify a namespace; they never select, order or infer a runtime. Preserve the existing immediate-name validation for all Volumes entries. Strict ancestors from `/` through the fixed Volumes namespace must be nonsymlink directories, uid0 and not group/other writable. There is no writable-ancestor exception above these mounts.",
+      "assessment": "Exact fixed namespace/full grammar, canonical immediate names, strict root-owned ancestors. Real second class justifies private variation; no public arbitrary path policy.",
+      "ruleSources": "codebase-design: two actual variations; v3 finite ancestry rules",
+      "documentedBreaches": []
+    },
+    {
+      "line": 17,
+      "clause": "Fresh read-only proof and bootstrap",
+      "quote": "Require a fresh bounded `/usr/sbin/diskutil info -plist <exact canonical mount root>` before and after every metadata conversion and every runtime listing. Require exact MountPoint and actual boolean Writable=false, WritableMedia=false and WritableVolume=false. Use the already shipped bounded XML parser, fixed executable/argv/environment and strict executable/Xcode validation. Bootstrap inspects only the finite namespace/mount-root chain and does not read runtime metadata or recursively ask its own verifier for a mount proof. Refuse missing, writable, mismatched, malformed, changed or uncertain proof. No cached mount proof authorizes a later read.",
+      "assessment": "Required exact mount point/typedfalse flags; finite bootstrap does not recursively prove itself or authorize metadata before proof; existing bounded parser/process authorization reused.",
+      "ruleSources": "approved v3 proof/parser/bootstrap rules",
+      "documentedBreaches": []
+    },
+    {
+      "line": 19,
+      "clause": "Exact mounted permissions",
+      "quote": "Within the confirmed mount, require every component to be on the mount root's device, nonsymlink, uid0 and gid0 or80. Directories allow only0755/0775; additionally01775 is allowed only at the exact `<root>/Library/Developer/CoreSimulator/Profiles/Runtimes/<bundle>.simruntime/Contents/Resources/RuntimeRoot`. Metadata leaves allow only0444/0644/0664, regular file, nlink1, at most65536 bytes. Reject other modes, setuid/setgid, world write, different owner/group/type, aliases and nested-device transitions. The actual modes remain to be measured; unsupported observations do not silently expand these sets.",
+      "assessment": "Finite descendant modes/group/device/type/link/size rules; RuntimeRoot exception exact; unsupported native observations cannot enlarge policy automatically.",
+      "ruleSources": "approved v3 mode and same-device policy",
+      "documentedBreaches": []
+    },
+    {
+      "line": 21,
+      "clause": "Targets and artifact authority",
+      "quote": "Support only the fixed Runtimes suffix and the three already supported Info/profile/SystemVersion plist leaf forms. Classify recognized mounted namespaces before allowedArtifactRoots so an artifact prefix cannot downgrade their trust. Invalid targets within a recognized namespace refuse rather than fall through to ordinary artifact authorization.",
+      "assessment": "Only existing three leaf forms; recognized namespace checked before artifact paths; invalid recognized targets refuse.",
+      "ruleSources": "approved v3 command/target authorization",
+      "documentedBreaches": []
+    },
+    {
+      "line": 23,
+      "clause": "Identity bytes cancellation and termination",
+      "quote": "Compare full before/opened/final/after identity including path, dev/ino, uid/gid, type/full mode, size/nlink and ctime/mtime for every component; compare exact metadata bytes before and after conversion. Each proof must match the mount identity in the full path snapshot. Check the caller's shared signal at every bounded stage; wait for actual child close. Preserve64KiB input and ordinary combined output, exact Xcode Info131072 output exception,10s mount deadlines and mount-only SIGTERM\u2192250ms SIGKILL escalation. Other child termination behavior is unchanged.",
+      "assessment": "Full path/handle identity, exact bytes and mount binding required; existing budgets and mount-only escalation retained. These are proposed requirements, not tested guarantees.",
+      "ruleSources": "v3 stability/termination rules; allocation-contract.md:72",
+      "documentedBreaches": []
+    },
+    {
+      "line": 27,
+      "clause": "Finite enumeration/dispatch",
+      "quote": "Keep at most1000 immediate Volumes entries, at most64 recognized mount candidates in this namespace, at most1000 entries in any runtime listing, and at most1000 runtime bundles across default, legacy and Cryptex roots together. Keep8192 dispatched/actual children and the shared lookup deadline. Preserve existing Cryptex64-candidate bounds separately. Validate canonical paths up to4096 and basenames up to255.",
+      "assessment": "Separate64 legacy/Cryptex caps and aggregate1000 runtime bundles,8192children,shared signal/deadline and fixed canonical limits preserved.",
+      "ruleSources": "approved v3 bounds; allocation-contract.md:72",
+      "documentedBreaches": []
+    },
+    {
+      "line": 29,
+      "clause": "Explicit identity and strict legacy",
+      "quote": "Inspect all supported roots and match only the caller's explicit CFBundleIdentifier; missing or duplicate matches refuse. Do not skip an older recognized mount merely because its name differs from the requested identifier. Recognized mounts must satisfy the new proof even if their permissions would also satisfy the old rule. Unrecognized valid legacy names retain the strict old branch; `iOS_fixture` therefore retains its existing accepted regression. No newest-runtime selection, runtime fallback, runtime download or public path override.",
+      "assessment": "All supported roots inspected; explicit unique metadata match only; existing iOS_fixture strict branch retained without newest/fallback/download.",
+      "ruleSources": "allocation-contract.md:76; ADR0009 explicit creation identity/no runtime download",
+      "documentedBreaches": []
+    },
+    {
+      "line": 33,
+      "clause": "Shared private module shape",
+      "quote": "Extend the existing private mounted-metadata boundary to represent the two exact namespace classes. Share mount identity, read-only proof, bounded byte reads and conversion checks; namespace ancestry rules remain explicit. Avoid another copy of the read/proof/convert algorithm or a public configurable trust abstraction. No broader allocator, device or admission change is included.",
+      "assessment": "One common identity/proof/bytes/conversion module; ancestry classification explicit and closed. No duplicate algorithm or public configurable trust seam.",
+      "ruleSources": "codebase-design: depth/locality/internal seams; Fowler future Duplicated Code/Repeated Switches/Speculative Generality guardrails",
+      "documentedBreaches": []
+    },
+    {
+      "line": 35,
+      "clause": "Evidence gates",
+      "quote": "Before repair add genuine failing regressions for the observed0775 legacy layout and typed read-only proof. Preserve all prior cases and assertions. Cover both exact name examples; name/path escape; missing/mismatched/writable/changed/uncertain proof; each owner/group/mode/type/symlink/hardlink/input/byte/identity/device failure; artifact-prefix bypass; duplicate identifiers across roots; enumeration/dispatch/deadline/abort/overflow; actual mount-child close and escalation. Preserve Applications/Cryptex behavior, existing strict legacy fixture and all other budgets. Then focused tests, actual unmodified defaults/typecheck/build on exact26.8.1 and24.0.0, independent Spec/Standards reviews, Source/compiled binding, clean installed proofs and wrapped startup precede integration and one new actual compatibility lookup.",
+      "assessment": "Genuine observed-layout reds before implementation; previous cases/assertions/budgets and public guards retained; actual Node defaults/reviews/source compiled installed and one lookup sequenced before acceptance. Native proof still pending.",
+      "ruleSources": "approved v3 required checks; ADR0005 contract tests; ADR0008 acceptance distinct from decisions",
+      "documentedBreaches": []
+    },
+    {
+      "line": 39,
+      "clause": "Trust limitations",
+      "quote": "Read-only proof explains why mounted group-write mode bits cannot write the currently observed volume. This remains a mode-based policy trusting host namespace managers: it does not attest ACLs, exclusive writers, atomic ancestor pinning or immunity to privileged concurrent replacement. Before/after identity and bytes detect observed changes. No filesystem mode repair, mount change, cleanup or device operation is proposed.",
+      "assessment": "Explicitly disclaims ACL/exclusive-writer/atomic-pinning guarantee; observed changes detection does not imply exhaustive concurrency immunity.",
+      "ruleSources": "approved v3 mode-based limits; allocation-contract.md:78,80",
+      "documentedBreaches": []
+    },
+    {
+      "line": 41,
+      "clause": "Decision and live limits",
+      "quote": "The owner decision would amend strict checks only for this exact freshly confirmed legacy read-only mount class. Existing Applications/Cryptex approvals persist. Until approval, compatibility and operational entry remain refused/unverified; L01\u2013L05 and ticket12 remain unstarted.",
+      "assessment": "Only exact newly approved freshly proved class would change; prior approvals persist; native compatibility/live/ticket12 stay unstarted/unverified.",
+      "ruleSources": "ADR0008 not native release; allocation-contract.md:119",
+      "documentedBreaches": []
+    }
+  ],
+  "checks": [
+    {
+      "name": "proposal revision1 exactly41lines",
+      "pass": true
+    },
+    {
+      "name": "fixed base and candidate resolve",
+      "pass": true
+    },
+    {
+      "name": "fixed nonempty diff only proposal",
+      "pass": true
+    },
+    {
+      "name": "current Source and both fixed refs equal frozen product",
+      "pass": true
+    },
+    {
+      "name": "current allocation Source expectedSHA",
+      "pass": true
+    },
+    {
+      "name": "approved v3 policy exact hash",
+      "pass": true
+    },
+    {
+      "name": "owner binds v3 only",
+      "pass": true
+    },
+    {
+      "name": "Root evidence hash refusal-report.md",
+      "pass": true
+    },
+    {
+      "name": "Root evidence hash summary.json",
+      "pass": true
+    },
+    {
+      "name": "Root evidence hash first-confirmed-refusal.json",
+      "pass": true
+    },
+    {
+      "name": "Root evidence hash guard-audit.json",
+      "pass": true
+    },
+    {
+      "name": "Root evidence hash context.json",
+      "pass": true
+    },
+    {
+      "name": "Root evidence hash child-receipts.json",
+      "pass": true
+    },
+    {
+      "name": "Root evidence hash filesystem-trace.json",
+      "pass": true
+    },
+    {
+      "name": "retained real refusal event",
+      "pass": true
+    },
+    {
+      "name": "134 exact plutil closed children no diskutil",
+      "pass": true
+    },
+    {
+      "name": "once refusal and no compatibility result",
+      "pass": true
+    },
+    {
+      "name": "Root provenance audit2169PASS not nativePASS",
+      "pass": true
+    }
+  ],
+  "documentedStandardBreaches": [],
+  "materialProposalHeuristicFindings": [],
+  "futureImplementationHeuristics": [
+    {
+      "heuristic": "Duplicated Code / Repeated Switches",
+      "proposalLine": 33,
+      "quote": "Share mount identity, read-only proof, bounded byte reads and conversion checks; namespace ancestry rules remain explicit.",
+      "judgment": "Future implementation risk only: use one closed mount descriptor and one shared proof/read/convert module; do not copy the Cryptex algorithm or distribute repeated class tests across callers."
+    },
+    {
+      "heuristic": "Mysterious Name / Data Clumps / Primitive Obsession",
+      "proposalLine": 33,
+      "quote": "represent the two exact namespace classes",
+      "judgment": "Future implementation risk only: shared helpers should have honest mounted-metadata names and one private descriptor for the class/mount identity; keep namespace-specific ancestry explicit."
+    },
+    {
+      "heuristic": "Speculative Generality / Middle Man",
+      "proposalLine": 33,
+      "quote": "or a public configurable trust abstraction",
+      "judgment": "Future implementation risk only: no open policy registry/public hooks or pass-through layer; two actual mount classes justify only a private module."
+    }
+  ],
+  "fowlerBaselineConsidered": [
+    "Mysterious Name",
+    "Duplicated Code",
+    "Feature Envy",
+    "Data Clumps",
+    "Primitive Obsession",
+    "Repeated Switches",
+    "Shotgun Surgery",
+    "Divergent Change",
+    "Speculative Generality",
+    "Message Chains",
+    "Middle Man",
+    "Refused Bequest"
+  ],
+  "method": "Repo standards override baseline; smells are judgment calls. Tooling-enforced matters skipped. No Source implementation exists; future risks are not findings against absent code.",
+  "verdict": "PASS for proposal Standards/design only",
+  "nativeLegacyReadonlyProof": "PENDING",
+  "ownerLegacyTrustDecision": "PENDING",
+  "limits": [
+    "All operations read repository bytes/Git history or write only new private reviewer evidence; no tests/build/native/hostmetadata/device/account/store/config commands or agents.",
+    "Retained refusal/hash/selected raw child/filesystem correspondence inspected; Root broader2169provenance audit is retained and its PASS does not establish native compatibility.",
+    "Existing implementation checks/tests/installed37/startup facts are historical associated evidence; no native or future implementation PASS is claimed.",
+    "Integrated compatibility remains refused; L01-L05/Ticket12 unstarted/unverified."
+  ],
+  "inputs": {
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-proposal.md": {
+      "sha256": "94ab01cb03679e8f92008a874e90cddaaa970e509799bb3c380fbe060f6a028a",
+      "bytes": 7184,
+      "retained": "inputs/legacy-volume-policy-proposal.md"
+    },
+    "git:3edf247ab44d3332bc4bab5f3a43104536d84ce9:src/observed/allocation-config.ts": {
+      "sha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "bytes": 31610,
+      "retained": "inputs/src/observed/allocation-config.ts"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:AGENTS.md": {
+      "sha256": "86d3e5e2ccba32103401ab95af6b6488fc439d090913b028a7961d07f79a1c47",
+      "bytes": 1542,
+      "retained": "inputs/AGENTS.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:CONTEXT.md": {
+      "sha256": "da9d367b1b911c13afc06331be6c0908b56a2c2cd3833936d3f9fa3d218d95f2",
+      "bytes": 140,
+      "retained": "inputs/CONTEXT.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:GLOSSARY.md": {
+      "sha256": "a246e0082a15dfd2fa74138473607b9a3c5e3426460f1d43d1d9d154f87ec1c5",
+      "bytes": 5818,
+      "retained": "inputs/GLOSSARY.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:docs/agents/domain.md": {
+      "sha256": "edc6d6131fdffc4b7135704f5262124fc43355c95f61b7399dc5a4db643e28ca",
+      "bytes": 2033,
+      "retained": "inputs/docs/agents/domain.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:docs/agents/issue-tracker.md": {
+      "sha256": "bef53bbef5e5f758759305a856233a6ec7db25ed81781b9c72bca1b04a8fd225",
+      "bytes": 2375,
+      "retained": "inputs/docs/agents/issue-tracker.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:docs/domain-boundaries.md": {
+      "sha256": "a347aa7ddc28498e57c25da3daceb5621d29a548397bd3e4b1b175e60c6c159f",
+      "bytes": 6152,
+      "retained": "inputs/docs/domain-boundaries.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:docs/adr/0002-mobilebuildmcp-as-device-layer.md": {
+      "sha256": "00da2cbba873223976b22b0a26314a6b351b769b4c3f899a97f95334a565abe1",
+      "bytes": 4571,
+      "retained": "inputs/docs/adr/0002-mobilebuildmcp-as-device-layer.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:docs/adr/0005-the-1-0-stability-contract.md": {
+      "sha256": "fe61fd90fda45b661b183162062d500c3cb87517afc0b2aee37ccbb154f3f04b",
+      "bytes": 2850,
+      "retained": "inputs/docs/adr/0005-the-1-0-stability-contract.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:docs/adr/0008-durable-ios-admission.md": {
+      "sha256": "53d1111c4dd1e2f36635c89d5695a6356a72e054810d7e3f3e7faf4be194d501",
+      "bytes": 1625,
+      "retained": "inputs/docs/adr/0008-durable-ios-admission.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:docs/adr/0009-bounded-simulator-creation.md": {
+      "sha256": "f60dae7177255f92e1263c29c6a4433216b80d17ce83bc91dd8a444f687ed384",
+      "bytes": 1691,
+      "retained": "inputs/docs/adr/0009-bounded-simulator-creation.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:.scratch/v1-release/map.md": {
+      "sha256": "b154b9cb08454aa8433f1e8e917e4bef948db48d72b247f60f5b58d837daebaa",
+      "bytes": 12421,
+      "retained": "inputs/.scratch/v1-release/map.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:.scratch/observed-integration/evidence/allocation-contract.md": {
+      "sha256": "b12157b52fe4e2c2b9bfb1e2b740806e52ff3890a7623c083f6075a3344402f1",
+      "bytes": 18376,
+      "retained": "inputs/.scratch/observed-integration/evidence/allocation-contract.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:src/observed/installed-plist.ts": {
+      "sha256": "c74ddcafaef4e244bd1183695cade8fe4858f609bc6f20a1b86727801bc8b896",
+      "bytes": 6019,
+      "retained": "inputs/src/observed/installed-plist.ts"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:.agents/skills/code-review/SKILL.md": {
+      "sha256": "ed0b678a53b58ea0baa391eb2c93c1b374baf1c6ea6b8180ad9bc71ee0f99aaa",
+      "bytes": 6587,
+      "retained": "inputs/.agents/skills/code-review/SKILL.md"
+    },
+    "git:91084c0c065373a978c8437f8f8362c4f5e4dbc9:.agents/skills/codebase-design/SKILL.md": {
+      "sha256": "2c20617f87ec8af6a434859f381b2f061a69b530444e74eb39e78bb016a6d1e2",
+      "bytes": 6446,
+      "retained": "inputs/.agents/skills/codebase-design/SKILL.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal.md": {
+      "sha256": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13",
+      "bytes": 7557,
+      "retained": "inputs/cryptex-policy-proposal.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/owner-cryptex-trust-decision.json": {
+      "sha256": "0b1bc876713d68cd9001dcd27a41bfa3e7f53aa96f8e1698f214e65dcca16c74",
+      "bytes": 1327,
+      "retained": "inputs/owner-cryptex-trust-decision.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-repaired-compatibility-audit.json": {
+      "sha256": "f8d36b0dca6c59023ed255d3905460308b452c3cec453745f73fb9a27350bcbd",
+      "bytes": 305496,
+      "retained": "inputs/root-repaired-compatibility-audit.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/refusal-report.md": {
+      "sha256": "57aa25d715bb7f020ad7f99fa0b358c48b490208cf285acaf3bb206a06a0c52a",
+      "bytes": 3069,
+      "retained": "inputs/operator/refusal-report.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/summary.json": {
+      "sha256": "f77f920c83446aac5400c51b67699539059b8674fac75d70a1d326732ee9906b",
+      "bytes": 568,
+      "retained": "inputs/operator/summary.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/first-confirmed-refusal.json": {
+      "sha256": "dbf3ed7a93be9056434f21ffd863ac645f892775cf597924995f88debd696687",
+      "bytes": 7417,
+      "retained": "inputs/operator/first-confirmed-refusal.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/guard-audit.json": {
+      "sha256": "9b468898dec2ecd2c08f06748d6fe0c2453d309458f4b390693ba074877b23d9",
+      "bytes": 594,
+      "retained": "inputs/operator/guard-audit.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/context.json": {
+      "sha256": "a50bd1c427ee53090ff570729bf6b6970897ffb5602a3724953b9727fedc1e70",
+      "bytes": 3815,
+      "retained": "inputs/operator/context.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/child-receipts.json": {
+      "sha256": "bc4123e06d2c2fadd8786f3705c3c2514db974c864f929eadbbd349e70819441",
+      "bytes": 533844,
+      "retained": "inputs/operator/child-receipts.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/filesystem-trace.json": {
+      "sha256": "1b36600d2b9a336264c7271eadd4c3731c8d9876142e43082dba4ffa2edc0e31",
+      "bytes": 11683955,
+      "retained": "inputs/operator/filesystem-trace.json"
+    }
+  }
+}

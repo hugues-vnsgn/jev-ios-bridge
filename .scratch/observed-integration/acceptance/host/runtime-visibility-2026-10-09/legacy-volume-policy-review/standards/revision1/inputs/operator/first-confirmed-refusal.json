@@ -1,0 +1,126 @@
+{
+  "capturedAtUtc": "2026-10-09T06:24:22.352Z",
+  "actualResult": {
+    "status": "HOST_PREREQUISITE_MISSING",
+    "error": {
+      "name": "Error",
+      "message": "HOST_PREREQUISITE_MISSING",
+      "code": null,
+      "reason": "HOST_PREREQUISITE_MISSING",
+      "stack": "Error: HOST_PREREQUISITE_MISSING\n    at verifyInstalledCompatibility (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/dist/observed/allocation-config.js:563:15)\n    at async file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/probe.mjs:156:36"
+    }
+  },
+  "lookupCalls": 1,
+  "guardMismatch": false,
+  "classification": "STRICT_LEGACY_VOLUME_ANCESTOR_TRUST_REFUSAL",
+  "firstConfirmedCause": {
+    "path": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles",
+    "filesystemTraceSequence": 9002,
+    "filesystemTraceMethod": "lstat",
+    "identity": {
+      "dev": 16777251,
+      "ino": 19,
+      "uid": 0,
+      "gid": 80,
+      "mode": 16893,
+      "permissions": "0775",
+      "nlink": 3,
+      "size": 96,
+      "atimeMs": 1753442559000,
+      "mtimeMs": 1753442559000,
+      "ctimeMs": 1753442559000,
+      "birthtimeMs": 1753442559000,
+      "type": "directory",
+      "isSymbolicLink": false
+    },
+    "callStack": "Error\n    at Proxy.lstat (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/probe.mjs:52:61)\n    at trustedPath (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/dist/observed/allocation-config.js:363:33)\n    at async bundles (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/dist/observed/allocation-config.js:415:9)\n    at async verifyInstalledCompatibility (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/dist/observed/allocation-config.js:533:36)\n    at async file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/probe.mjs:156:36",
+    "sourceAnchor": "src/observed/allocation-config.ts:250",
+    "compiledAnchor": "dist/observed/allocation-config.js:369",
+    "derivation": {
+      "groupOrOtherWritableMask": 16,
+      "octalMask": "20",
+      "installedXcode": false,
+      "ApplicationsException": false,
+      "symlink": false,
+      "ownerAllowed": true,
+      "intermediateDirectory": true,
+      "strictTrustRejects": true
+    },
+    "qualification": "Production catches inner errors and returns HOST_PREREQUISITE_MISSING. Deterministic refusal derived from the final genuine lstat identity, recorded trustedPath/bundles caller stack, and pinned Source/dist predicate; no instrumentation changed production code."
+  },
+  "earlierToleratedMissingPath": {
+    "sequence": 8993,
+    "atUtc": "2026-10-09T06:22:10.971Z",
+    "method": "lstat",
+    "path": "/Library/Developer/CoreSimulator/Profiles/Runtimes",
+    "callerStack": "Error\n    at Proxy.lstat (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/probe.mjs:52:61)\n    at trustedPath (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/dist/observed/allocation-config.js:363:33)\n    at async bundles (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/dist/observed/allocation-config.js:415:9)\n    at async verifyInstalledCompatibility (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/dist/observed/allocation-config.js:533:36)\n    at async file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/probe.mjs:156:36",
+    "ok": false,
+    "error": {
+      "name": "Error",
+      "message": "ENOENT: no such file or directory, lstat '/Library/Developer/CoreSimulator/Profiles/Runtimes'",
+      "code": "ENOENT",
+      "reason": null,
+      "stack": "Error: ENOENT: no such file or directory, lstat '/Library/Developer/CoreSimulator/Profiles/Runtimes'\n    at async Module.lstat (node:internal/fs/promises:1797:18)\n    at async Proxy.lstat (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/probe.mjs:53:15)\n    at async trustedPath (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/dist/observed/allocation-config.js:363:19)\n    at async bundles (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/dist/observed/allocation-config.js:415:9)\n    at async verifyInstalledCompatibility (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/dist/observed/allocation-config.js:533:36)\n    at async file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/probe.mjs:156:36"
+    }
+  },
+  "notReached": {
+    "cryptexDiscovery": true,
+    "mountProofQueries": true,
+    "runtimeBundleEnumeration": true,
+    "runtimeCompatibilityFields": true
+  },
+  "observedChildren": {
+    "count": 134,
+    "allPlutil": true,
+    "allExit0": true,
+    "allConfirmedClosed": true,
+    "allRawCaptureComplete": true,
+    "killCalls": 0
+  },
+  "freshMetadata": {
+    "architecture": "arm64",
+    "hostVersion": "27.0.1",
+    "hostBuild": "26A434",
+    "xcodeVersion": "27.0",
+    "xcodeBuild": "27A266a",
+    "xcodeInfoOutputBytes": 77555,
+    "xcodeInfoOutputSha256": "3b78d94ef7ee6f9ab11db94a9b3aa2513c77668ff00fa3227a7a12186ac32d33",
+    "requestedDeviceTypeUniqueMatch": "iPhone 17",
+    "qualification": "Fresh installed metadata read in this attempt; not a returned InstalledCompatibility result. iOS27.0 runtime metadata was not reached."
+  },
+  "preservation": {
+    "status": "HOST_PREREQUISITE_MISSING",
+    "compatibility": null,
+    "lookupCalls": 1,
+    "guardFailures": 0,
+    "childCount": 134,
+    "childrenClosed": true,
+    "diskutilChildren": 0,
+    "exitCode": 3,
+    "signal": null,
+    "preservationBefore": true,
+    "preservationAfter": true,
+    "counts": {
+      "source441": 441,
+      "compiled69": 69,
+      "originalHost15": 15,
+      "priorEvidence": 121
+    },
+    "outerCaptureComplete": true,
+    "liveRows": {
+      "L01": "UNVERIFIED",
+      "L02": "UNVERIFIED",
+      "L03": "UNVERIFIED",
+      "L04": "UNVERIFIED",
+      "L05": "UNVERIFIED"
+    }
+  },
+  "liveRows": {
+    "L01": "UNVERIFIED",
+    "L02": "UNVERIFIED",
+    "L03": "UNVERIFIED",
+    "L04": "UNVERIFIED",
+    "L05": "UNVERIFIED"
+  },
+  "followup": "None executed. No second lookup, permission extension, mount metadata fallback, runtime download, config/account/store/device/build/live/cleanup/claim change."
+}

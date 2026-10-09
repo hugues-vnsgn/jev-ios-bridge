@@ -1,0 +1,73 @@
+{
+  "sealedAtUtc": "2026-10-09T06:57:13.762013+00:00",
+  "scope": "Independent revision1 proposal Spec review, no Source implementation or installed/live acceptance",
+  "verdict": "FAIL",
+  "findings": [
+    {
+      "category": "missing/partial",
+      "severity": "P2",
+      "proposalLines": [
+        17,
+        23,
+        27,
+        29
+      ],
+      "name": "Immediate Volumes enumeration identity and candidate binding unspecified"
+    }
+  ],
+  "wrongBehaviorFindings": 0,
+  "unaskedBehaviorFindings": 0,
+  "proposalCommit": "91084c0c065373a978c8437f8f8362c4f5e4dbc9",
+  "diffBase": "e971d3312b595a5d841b1d70288302c40f7a5b70",
+  "product": "3edf247ab44d3332bc4bab5f3a43104536d84ce9",
+  "proposalSha256": "94ab01cb03679e8f92008a874e90cddaaa970e509799bb3c380fbe060f6a028a",
+  "inputsRechecked": 1345,
+  "inputRecheckFailures": [],
+  "evidenceAuditChecks": 3130,
+  "evidenceAuditFailures": 0,
+  "outputs": {
+    "audit.py": {
+      "bytes": 11155,
+      "sha256": "bba8d2b69c2ce0fcb432cdddb8319d4a87b8e64bb29b447cfa9e5b969cf93457",
+      "mode": "0600"
+    },
+    "clause-matrix.md": {
+      "bytes": 11336,
+      "sha256": "903e8e9b4c58c3f31978b1dda3f4ef988c0221dbe3c2ee5df841434b01af6afb",
+      "mode": "0600"
+    },
+    "evidence-audit.json": {
+      "bytes": 314321,
+      "sha256": "65c909638c022128a6279d982c809172aa0ed870fd30945faeae4593a0831595",
+      "mode": "0600"
+    },
+    "inputs-manifest.json": {
+      "bytes": 284193,
+      "sha256": "22f512b0c8d3edc073b4385101a330c341bdeed9bf45e69a8ed920ee016374ad",
+      "mode": "0600"
+    },
+    "proposal-frozen.md": {
+      "bytes": 7184,
+      "sha256": "94ab01cb03679e8f92008a874e90cddaaa970e509799bb3c380fbe060f6a028a",
+      "mode": "0600"
+    },
+    "proposal.diff": {
+      "bytes": 7650,
+      "sha256": "3c7d0ddb23d66616c74454bc44c86b82b207bcf8e3293c02ac74b90cc2fdeab3",
+      "mode": "0600"
+    },
+    "prose-audit.json": {
+      "bytes": 938,
+      "sha256": "55d766b5f052e607cc962dcc06f1dcbcf8ce317c8503e365c7c6877513c0a0d9",
+      "mode": "0600"
+    },
+    "report.md": {
+      "bytes": 2535,
+      "sha256": "3c4548eec7c1f9cce834fc1b4328215bd4e8b11fc3fa4514c686b44ed30b0603",
+      "mode": "0600"
+    }
+  },
+  "permissions": "new owned directories0700/files0600",
+  "factualGates": "legacy mount proof/full modes/owner approval/implementation/installed/live unverified",
+  "successor": "Separate v2 was announced by Root; not read or included in revision1 review."
+}

@@ -1,0 +1,172 @@
+{
+  "capturedAtUtc": "2026-10-09T06:57:51.298Z",
+  "directories": [
+    {
+      "path": ".",
+      "mode": "0700"
+    },
+    {
+      "path": "children",
+      "mode": "0700"
+    }
+  ],
+  "files": [
+    {
+      "path": "child-receipts.json",
+      "bytes": 4614,
+      "mode": "0600",
+      "sha256": "6394242db457bdc32e9c4a86d6782e79886fad4cfcd01aaad1b379cc61ad3023"
+    },
+    {
+      "path": "children/00.stderr.bin",
+      "bytes": 0,
+      "mode": "0600",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "children/00.stdout.bin",
+      "bytes": 3092,
+      "mode": "0600",
+      "sha256": "5d81401ba0057d2d78d563e58c1afd4f00661c7f5cec8a77675f18353cfafe35"
+    },
+    {
+      "path": "children/01.stderr.bin",
+      "bytes": 0,
+      "mode": "0600",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "children/01.stdout.bin",
+      "bytes": 3093,
+      "mode": "0600",
+      "sha256": "24062b3bce8b10d6824c7fbf62d9a2ba8e9e290177bd374aa7f6921e6ef8cef6"
+    },
+    {
+      "path": "command.json",
+      "bytes": 2211,
+      "mode": "0600",
+      "sha256": "5e32b3145b20b4290d14f5c7f9576e6779bc1ef3c4bbe4c79c95ac6ea127c451"
+    },
+    {
+      "path": "common.mjs",
+      "bytes": 6836,
+      "mode": "0600",
+      "sha256": "3b9b38d5427191ed0b6377745567d6180a8459cd9431f77888bd35d15579cdcf"
+    },
+    {
+      "path": "context.json",
+      "bytes": 6899,
+      "mode": "0600",
+      "sha256": "7a3ff839ac5cb44456ef6b115040c1908fdcbf15389f27041bce3e567138139f"
+    },
+    {
+      "path": "diagnostic-report.md",
+      "bytes": 3158,
+      "mode": "0600",
+      "sha256": "bd8abd7b73ad59ea29298c0fb52d66ba7de1079f9212e9f847e5eb940bde32e7"
+    },
+    {
+      "path": "filesystem-identities.json",
+      "bytes": 115782,
+      "mode": "0600",
+      "sha256": "e2c7944b7585e8416838d34a733e0bd0ba33acdc3a6a4135c0db0467ddb08d26"
+    },
+    {
+      "path": "head-after.json",
+      "bytes": 335,
+      "mode": "0600",
+      "sha256": "6d04eb45903eb440b345e2b4b979e93f12306d09f0a10b05ffede8ce90efb344"
+    },
+    {
+      "path": "identity-precision-audit.json",
+      "bytes": 2432,
+      "mode": "0600",
+      "sha256": "b93f89eb378ad7916d201c6e93e2f19ee2a0c89f635a0aed174d43fa376eb9ed"
+    },
+    {
+      "path": "mount-proofs.json",
+      "bytes": 101051,
+      "mode": "0600",
+      "sha256": "c8b6cadb1bbce9fb7a1c8551ddd588b1f3500ba965e581d97ae3be1f49319982"
+    },
+    {
+      "path": "permission-patterns.json",
+      "bytes": 15505,
+      "mode": "0600",
+      "sha256": "569ef6740ac115a6a400127ebfbab257ca3f2ead492de66abcca7e79358dfc36"
+    },
+    {
+      "path": "permission-summary.json",
+      "bytes": 7751,
+      "mode": "0600",
+      "sha256": "2752ec9ae43a772e54668a7c93eb087b449cfe07feb831aedbe560905a71d20a"
+    },
+    {
+      "path": "preservation-after.json",
+      "bytes": 506905,
+      "mode": "0600",
+      "sha256": "6b58100e4cab7e5397cf04adb63ebdc6cf974609150050ea50720b1805590412"
+    },
+    {
+      "path": "preservation-before.json",
+      "bytes": 506905,
+      "mode": "0600",
+      "sha256": "e0c4eb4357e1c2f0add42c82f59f299d5b7777fdb31d0163a65ad32b0b6b04b5"
+    },
+    {
+      "path": "preservation-completion.json",
+      "bytes": 506905,
+      "mode": "0600",
+      "sha256": "45f664aba57164e0456ca7300e01c2295ed333ac4799e5d1ea734308685aa00e"
+    },
+    {
+      "path": "preservation-references.json",
+      "bytes": 227460,
+      "mode": "0600",
+      "sha256": "5294f1a65f7309505966c8cd0cca0605b8881717954e5c081bbf37bc529b840c"
+    },
+    {
+      "path": "probe.mjs",
+      "bytes": 13339,
+      "mode": "0600",
+      "sha256": "765c4bbca1d2c12c18f1a17701f7d22d22e979b6429b7af465890ee026b63fab"
+    },
+    {
+      "path": "report.md",
+      "bytes": 3926,
+      "mode": "0600",
+      "sha256": "302dc0b2ca179da46a069ef9bbe0766c2381b7bba19c95b3b25f64b68dc83281"
+    },
+    {
+      "path": "result.json",
+      "bytes": 264115,
+      "mode": "0600",
+      "sha256": "9f8e05ff16d52d015d2c473070e5c90d92b2fd73050f50b8077769fc6def95a4"
+    },
+    {
+      "path": "run.mjs",
+      "bytes": 7252,
+      "mode": "0600",
+      "sha256": "41086d0711f4ab6dc739eda4d8ab2e6017ec9aea6e6f4b67b0d9fd00d12d7ba8"
+    },
+    {
+      "path": "stderr.txt",
+      "bytes": 0,
+      "mode": "0600",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "stdout.txt",
+      "bytes": 264115,
+      "mode": "0600",
+      "sha256": "9f8e05ff16d52d015d2c473070e5c90d92b2fd73050f50b8077769fc6def95a4"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 2178,
+      "mode": "0600",
+      "sha256": "371d9479efedc9644736a656c1c9bdfd2c3bf6a18b03d0b68f03848a1681deab"
+    }
+  ],
+  "scope": "All new private artifacts except self manifest; all prior evidence preserved; no cleanup."
+}

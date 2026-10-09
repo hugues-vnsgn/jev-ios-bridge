@@ -1,0 +1,97 @@
+{
+  "axis": "Standards/design conditional proposal",
+  "revision": 2,
+  "atUtc": "2026-10-09T07:02:41.535847+00:00",
+  "inputProposalSHA256": {
+    "revision1": "94ab01cb03679e8f92008a874e90cddaaa970e509799bb3c380fbe060f6a028a",
+    "revision2": "88e1b5d650bcf393647b67c9043e811e7d7e7d99891296261be060d64dbc959c"
+  },
+  "scope": "Only ownership clarification, namespace/candidate snapshot requirement and connected regression/status clauses; initial broader review reused with exact SHA binding.",
+  "matrix": [
+    {
+      "line": 3,
+      "subject": "Revision/status",
+      "assessment": "Revision1 preserved; owner pending; no implementation authorized. No Standards breach.",
+      "quote": "Revision2. Owner approval pending. Revision1 remains preserved with its Spec finding. No Source change is authorized by this proposal.",
+      "documentedBreaches": [],
+      "materialProposalHeuristicFindings": []
+    },
+    {
+      "line": 15,
+      "subject": "Ownership branch separation",
+      "assessment": "uid0 ancestry requirement applies only recognized mounted class; unrecognized strict branch explicitly retains account-owner allowance. Clarifies preservation without weakening recognized proof.",
+      "rule": "allocation-contract.md:78,80 / ADR0005 published meaning",
+      "quote": "Add one private recognized mount class: canonical immediate directories under exactly `/Library/Developer/CoreSimulator/Volumes`, with full basename grammar `^iOS_[0-9]{1,3}[A-Z]{1,3}[0-9]{1,6}[a-z]?$`. Names only classify a namespace; they never select, order or infer a runtime. Preserve the existing immediate-name validation for all Volumes entries. For this recognized mount class, strict ancestors from `/` through the fixed Volumes namespace must be nonsymlink directories, uid0 and not group/other writable. There is no writable-ancestor exception above these mounts. Unrecognized names keep the original strict ownership rule, including its account-owner allowance; the new uid0 requirement is not applied to their old branch.",
+      "documentedBreaches": [],
+      "materialProposalHeuristicFindings": []
+    },
+    {
+      "line": 27,
+      "subject": "Enumeration and final acceptance snapshots",
+      "assessment": "Initial before/after namespace ancestry, complete sorted entry set, candidate capture and later proof/final acceptance binding close observed drift paths. Read the listing bracketing requirement consistently for initial and final listing. All field comparison uses line23 full identity; refusal remains observational, not atomic.",
+      "rule": "v3 fresh identity/finite discovery / proposal-v2.md:23,29,31,41",
+      "quote": "Before and after the immediate Volumes listing, compare full canonical namespace/ancestor identity snapshots under the existing strict rule. Capture each recognized candidate's mount-root/ancestor identity within that stable enumeration window and bind it to subsequent proofs. Before accepting compatibility, take a final namespace snapshot and bounded immediate listing: require the namespace identity and complete sorted entry set to match the initial enumeration, and every recognized candidate's identity to match its captured identity. Refuse an observed namespace, entry-set or candidate change; do not repair or silently skip it. No privileged atomic-pinning claim is made.",
+      "documentedBreaches": [],
+      "materialProposalHeuristicFindings": []
+    },
+    {
+      "line": 37,
+      "subject": "New regressions",
+      "assessment": "Explicit namespace/candidate-set changes during enumeration/later conversions connect the added invariant to genuine regressions. No test executed or implementation claim.",
+      "quote": "Before repair add genuine failing regressions for the observed0775 legacy layout and typed read-only proof. Preserve all prior cases and assertions. Cover both exact name examples; name/path escape; missing/mismatched/writable/changed/uncertain proof; each owner/group/mode/type/symlink/hardlink/input/byte/identity/device failure; artifact-prefix bypass; duplicate identifiers across roots; namespace/candidate-set changes during enumeration and later conversions; enumeration/dispatch/deadline/abort/overflow; actual mount-child close and escalation. Preserve Applications/Cryptex behavior, existing strict legacy fixture and all other budgets. Then focused tests, actual unmodified defaults/typecheck/build on exact26.8.1 and24.0.0, independent Spec/Standards reviews, Source/compiled binding, clean installed proofs and wrapped startup precede integration and one new actual compatibility lookup.",
+      "documentedBreaches": [],
+      "materialProposalHeuristicFindings": []
+    },
+    {
+      "line": 35,
+      "subject": "Shared module connected clause",
+      "assessment": "One private shared classification/identity/proof/read/conversion module remains appropriate; no algorithm copy or public configuration added.",
+      "rule": "codebase-design depth/locality; future Duplicated Code/Data Clumps/Repeated Switches heuristics",
+      "quote": "Extend the existing private mounted-metadata boundary to represent the two exact namespace classes. Share mount identity, read-only proof, bounded byte reads and conversion checks; namespace ancestry rules remain explicit. Avoid another copy of the read/proof/convert algorithm or a public configurable trust abstraction. No broader allocator, device or admission change is included.",
+      "documentedBreaches": [],
+      "materialProposalHeuristicFindings": []
+    },
+    {
+      "line": 43,
+      "subject": "Decision/acceptance limits",
+      "assessment": "Native factual diagnosis and owner approval pending at draft/review scope; compatibility and L01-L05/Ticket12 remain unverified. Later evidence must be a separate bounded successor/addendum.",
+      "quote": "The owner decision would amend strict checks only for this exact freshly confirmed legacy read-only mount class. Existing Applications/Cryptex approvals persist. Until approval, compatibility and operational entry remain refused/unverified; L01\u2013L05 and ticket12 remain unstarted.",
+      "documentedBreaches": [],
+      "materialProposalHeuristicFindings": []
+    }
+  ],
+  "documentedBreaches": [],
+  "materialProposalHeuristicFindings": [],
+  "baseline": "All12Fowler heuristics retained from revision1; repo overrides; tooling-enforced matters skipped; future implementation risks remain judgments rather than absent-code findings.",
+  "futureImplementationGuardrail": "Keep initial/final enumeration and candidate/proof binding inside one private mounted-metadata module, with closed namespace descriptor and common identity comparison; preserve both existing authorization paths and old strict branch.",
+  "nativeStatusAtDraft": "PENDING; later operator evidence not represented as draft-time proof",
+  "ownerStatus": "PENDING",
+  "verdict": "PASS conditional proposal Standards/design only",
+  "inputs": {
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/inputs/legacy-volume-policy-proposal.md": {
+      "sha256": "94ab01cb03679e8f92008a874e90cddaaa970e509799bb3c380fbe060f6a028a",
+      "bytes": 7184,
+      "retained": "inputs/proposal-revision1.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-proposal-v2.md": {
+      "sha256": "88e1b5d650bcf393647b67c9043e811e7d7e7d99891296261be060d64dbc959c",
+      "bytes": 8185,
+      "retained": "inputs/proposal-revision2.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/report.md": {
+      "sha256": "ba91fb9c1a0cc4b30a79b6096f5c55b67d3c34b17f5be9600e2adf6db56c24ac",
+      "bytes": 2760,
+      "retained": "inputs/revision1/report.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/clause-audit.json": {
+      "sha256": "5bb2cff903ace521e94330725f056ce6c64ae531473d5acba0ca24bc83d5f7fa",
+      "bytes": 25786,
+      "retained": "inputs/revision1/clause-audit.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-review/standards/revision1/manifest.json": {
+      "sha256": "0d2d997b1d6839ecfbfbfa6e5974c6cb9e05d042c1a7262d95f73f64383d8dc7",
+      "bytes": 13659,
+      "retained": "inputs/revision1/manifest.json"
+    }
+  }
+}
