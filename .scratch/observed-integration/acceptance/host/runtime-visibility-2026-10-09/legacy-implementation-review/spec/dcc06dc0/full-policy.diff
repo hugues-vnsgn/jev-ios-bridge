@@ -1,0 +1,1051 @@
+diff --git a/src/observed/allocation-config.ts b/src/observed/allocation-config.ts
+index fce034fc..73e7580e 100644
+--- a/src/observed/allocation-config.ts
++++ b/src/observed/allocation-config.ts
+@@ -1,5 +1,5 @@
+ import * as nativeFs from 'node:fs/promises';
+-import { constants, type Stats } from 'node:fs';
++import { constants, type Stats, type BigIntStats } from 'node:fs';
+ import { userInfo, arch, platform } from 'node:os';
+ import { join, isAbsolute, basename, resolve } from 'node:path';
+ import { spawn, type ChildProcess } from 'node:child_process';
+@@ -83,90 +83,150 @@ export const developerDirectory = '/Applications/Xcode.app/Contents/Developer';
+ const installedPlistOutputLimit = (path: string) => path === '/Applications/Xcode.app/Contents/Info.plist' ? 131072 : 65536;
+ const cryptexDirectory = '/private/var/run/com.apple.security.cryptexd/mnt';
+ const cryptexMountName = /^com\.apple\.iPhoneOS\.SimulatorRuntime-v[0-9]{1,3}(?:\.[0-9]{1,5}){2,3}\.[A-Za-z0-9]{1,64}$/;
++const legacyDirectory = '/Library/Developer/CoreSimulator/Volumes';
++const legacyMountName = /^iOS_[0-9]{1,3}[A-Z]{1,3}[0-9]{1,6}[a-z]?$/;
+ const runtimeSuffix = '/Library/Developer/CoreSimulator/Profiles/Runtimes';
+ const childLimit = 8192;
+ const canonicalInstalledPath = (path: string) => isAbsolute(path) && resolve(path) === path && !path.includes('\0')
+   && path.length <= 4096 && path.split('/').every(part => part.length <= 255);
+-const cryptexNamespace = (path: string) => path === cryptexDirectory || path.startsWith(cryptexDirectory + '/');
+-function cryptexMount(path: string): string | undefined {
+-  if (!canonicalInstalledPath(path) || !path.startsWith(cryptexDirectory + '/')) return;
+-  const name = path.slice(cryptexDirectory.length + 1).split('/')[0]!;
+-  return cryptexMountName.test(name) ? cryptexDirectory + '/' + name : undefined;
++type MountClass = 'cryptex' | 'legacy';
++const mountNamespace = (kind: MountClass) => kind === 'cryptex' ? cryptexDirectory : legacyDirectory;
++const mountName = (kind: MountClass) => kind === 'cryptex' ? cryptexMountName : legacyMountName;
++function mountedNamespace(path: string): MountClass | undefined {
++  if (path === cryptexDirectory || path.startsWith(cryptexDirectory + '/')) return 'cryptex';
++  if (path === legacyDirectory || (path.startsWith(legacyDirectory + '/')
++    && legacyMountName.test(path.slice(legacyDirectory.length + 1).split('/')[0]!))) return 'legacy';
+ }
+-function cryptexMetadataMount(path: string): string | undefined {
+-  const mount = cryptexMount(path); if (!mount) return;
++function mountedRoot(path: string): string | undefined {
++  const kind = mountedNamespace(path); if (!kind || !canonicalInstalledPath(path)) return;
++  const namespace = mountNamespace(kind); if (!path.startsWith(namespace + '/')) return;
++  const name = path.slice(namespace.length + 1).split('/')[0]!;
++  return mountName(kind).test(name) ? namespace + '/' + name : undefined;
++}
++function mountedMetadataRoot(path: string): string | undefined {
++  const mount = mountedRoot(path); if (!mount) return;
+   const relative = path.slice((mount + runtimeSuffix).length);
+   return path.startsWith(mount + runtimeSuffix + '/') && /^\/[^/\0]{1,255}\.simruntime\/Contents\/(?:Info\.plist|Resources\/profile\.plist|Resources\/RuntimeRoot\/System\/Library\/CoreServices\/SystemVersion\.plist)$/.test(relative) ? mount : undefined;
+ }
+-// Include the group and type: the legacy file stamp is insufficient for this conditional trust proof.
+-const cryptexIdentity = (path: string, s: Stats) => `${path}:${s.dev}:${s.ino}:${s.uid}:${s.gid}:${s.mode & 0o170000}:${s.mode}:${s.size}:${s.ctimeMs}:${s.mtimeMs}:${s.nlink}`;
+-type CryptexSnapshot = { identities: string[]; leaf: Stats };
++type ExactTime = { unit: 'ns'; value: bigint } | { unit: 'ms'; value: number };
++type MountedIdentity = { path: string; dev: bigint; ino: bigint; uid: bigint; gid: bigint; mode: bigint;
++  size: bigint; nlink: bigint; type: 'file' | 'directory'; ctime: ExactTime; mtime: ExactTime };
++function exactInteger(value: unknown, nonnegative = true): bigint {
++  // BigInt cannot restore the original value of an already-rounded Number.
++  if ((typeof value !== 'bigint' && (typeof value !== 'number' || !Number.isSafeInteger(value)))
++    || (nonnegative && value < 0)) throw new Error('Uncertain installed identity');
++  return typeof value === 'bigint' ? value : BigInt(value as number);
++}
++function exactTime(ms: number | bigint, ns: unknown): ExactTime {
++  if (ns !== undefined) return { unit: 'ns', value: exactInteger(ns, false) };
++  if (typeof ms !== 'number' || !Number.isFinite(ms) || (Number.isInteger(ms) && !Number.isSafeInteger(ms))) throw new Error('Uncertain installed timestamp');
++  return { unit: 'ms', value: ms };
++}
++function mountedIdentity(path: string, s: Stats | BigIntStats): MountedIdentity {
++  const mode = exactInteger(s.mode); const type = s.isFile() ? 'file' : s.isDirectory() ? 'directory' : undefined;
++  if (s.isSymbolicLink() || !type || (mode & ~0o177777n) !== 0n
++    || (mode & 0o170000n) !== (type === 'file' ? 0o100000n : 0o40000n)) throw new Error('Untrusted installed type');
++  const ns = s as BigIntStats;
++  if ((ns.ctimeNs === undefined) !== (ns.mtimeNs === undefined)) throw new Error('Uncertain installed timestamp representation');
++  return { path, dev: exactInteger(s.dev), ino: exactInteger(s.ino), uid: exactInteger(s.uid), gid: exactInteger(s.gid), mode,
++    size: exactInteger(s.size), nlink: exactInteger(s.nlink), type, ctime: exactTime(s.ctimeMs, ns.ctimeNs), mtime: exactTime(s.mtimeMs, ns.mtimeNs) };
++}
++const sameMountedIdentity = (a: MountedIdentity, b: MountedIdentity) =>
++  (['path', 'dev', 'ino', 'uid', 'gid', 'mode', 'size', 'nlink', 'type'] as const).every(key => a[key] === b[key])
++  && a.ctime.unit === b.ctime.unit && a.ctime.value === b.ctime.value && a.mtime.unit === b.mtime.unit && a.mtime.value === b.mtime.value;
++type MountedSnapshot = { identities: MountedIdentity[]; leaf?: MountedIdentity; missing?: string };
++type InstalledExpectation = { readonly mount: MountedSnapshot; readonly path?: MountedSnapshot };
++type InstalledProcess = (executable: string, args: readonly string[], options: Parameters<SourceProcess>[2],
++  expected?: InstalledExpectation) => ReturnType<SourceProcess>;
++// Context travels with each invocation. The public factory never accepts trust
++// overrides, and a captured identity never substitutes for a fresh mount proof.
++const productionInvokers = new WeakMap<SourceProcess, InstalledProcess>();
+ /** Mode-based namespace trust, scoped to one read; this is not a kernel pin or an ACL attestation. */
+-async function cryptexSnapshot(path: string, host: InstalledHost, signal: AbortSignal, leafFile = false): Promise<CryptexSnapshot> {
+-  if (!canonicalInstalledPath(path) || !cryptexNamespace(path)) throw new Error('Untrusted Cryptex path');
+-  const mount = cryptexMount(path); const paths = ['/']; let current = '/';
++async function mountedSnapshot(path: string, host: InstalledHost, signal: AbortSignal, leafFile = false, allowMissing = false,
++  expected?: MountedSnapshot): Promise<MountedSnapshot> {
++  const kind = mountedNamespace(path);
++  if (!canonicalInstalledPath(path) || !kind) throw new Error('Untrusted mounted path');
++  const mount = mountedRoot(path); const paths = ['/']; let current = '/';
+   for (const part of path.split('/').filter(Boolean)) { current = join(current, part); paths.push(current); }
+-  const identities: string[] = []; let mountDevice: number | undefined; let leaf: Stats | undefined;
++  const identities: MountedIdentity[] = []; let mountDevice: bigint | undefined;
+   for (const component of paths) {
+-    signal.throwIfAborted(); const s = await host.fs.lstat(component); const file = leafFile && component === path;
+-    if (s.isSymbolicLink() || (file ? !s.isFile() : !s.isDirectory())) throw new Error('Untrusted Cryptex type');
++    signal.throwIfAborted(); let raw: BigIntStats;
++    try { raw = await host.fs.lstat(component, { bigint: true }); }
++    catch (error) { if (allowMissing && !expected && (error as NodeJS.ErrnoException).code === 'ENOENT') return { identities, missing: component }; throw error; }
++    signal.throwIfAborted(); const s = mountedIdentity(component, raw); const file = leafFile && component === path;
++    const captured = expected?.identities[identities.length];
++    if (captured && !sameMountedIdentity(captured, s)) throw new Error('Mounted candidate changed');
++    if (s.type !== (file ? 'file' : 'directory')) throw new Error('Untrusted mounted type');
+     if (mount && (component === mount || component.startsWith(mount + '/'))) {
+       if (component === mount) mountDevice = s.dev;
+       const runtimeRoot = component.endsWith('.simruntime/Contents/Resources/RuntimeRoot')
+         && component.startsWith(mount + runtimeSuffix + '/');
+-      const modes = file ? [0o444, 0o644, 0o664] : runtimeRoot ? [0o755, 0o775, 0o1775] : [0o755, 0o775];
+-      if (s.uid !== 0 || ![0, 80].includes(s.gid) || !modes.includes(s.mode & 0o7777) || s.dev !== mountDevice
+-        || (file && (s.nlink !== 1 || s.size > 65536))) throw new Error('Untrusted mounted metadata');
++      const modes = file ? [0o444n, 0o644n, 0o664n] : runtimeRoot ? [0o755n, 0o775n, 0o1775n] : [0o755n, 0o775n];
++      if (s.uid !== 0n || ![0n, 80n].includes(s.gid) || !modes.includes(s.mode & 0o7777n) || s.dev !== mountDevice
++        || (file && (s.nlink !== 1n || s.size > 65536n))) throw new Error('Untrusted mounted metadata');
+     } else {
+-      const run = component === '/private/var/run' && s.uid === 0 && s.gid === 1 && (s.mode & 0o7777) === 0o775;
++      const run = kind === 'cryptex' && component === '/private/var/run' && s.uid === 0n && s.gid === 1n && (s.mode & 0o7777n) === 0o775n;
+       const managed = component === '/private/var/run/com.apple.security.cryptexd' || component === cryptexDirectory;
+-      if (!([0, host.account.uid].includes(s.uid)) || (managed && s.uid !== 0) || ((s.mode & 0o022) && !run)) throw new Error('Untrusted Cryptex namespace');
++      const rootOwned = (kind === 'legacy' && mount !== undefined) || (kind === 'cryptex' && managed);
++      if ((rootOwned ? s.uid !== 0n : ![0n, exactInteger(host.account.uid)].includes(s.uid))
++        || ((s.mode & 0o022n) !== 0n && !run)) throw new Error('Untrusted mounted namespace');
+     }
+-    identities.push(cryptexIdentity(component, s)); leaf = s;
++    identities.push(s);
+   }
+-  return { identities, leaf: leaf! };
++  const snapshot = { identities, leaf: identities.at(-1)! };
++  if (expected && !mountedPrefixMatches(expected, snapshot)) throw new Error('Mounted candidate changed');
++  return snapshot;
+ }
+-const sameCryptexSnapshot = (a: CryptexSnapshot, b: CryptexSnapshot) => a.identities.length === b.identities.length
+-  && a.identities.every((identity, index) => identity === b.identities[index]);
+-async function readonlyCryptexMount(mount: string, host: InstalledHost, process: SourceProcess, signal: AbortSignal): Promise<CryptexSnapshot> {
+-  if (cryptexMount(mount) !== mount) throw new Error('Invalid Cryptex mount');
+-  const before = await cryptexSnapshot(mount, host, signal);
++const mountedPrefixMatches = (prefix: MountedSnapshot, path: MountedSnapshot) => !prefix.missing && !path.missing
++  && prefix.identities.length <= path.identities.length && prefix.identities.every((identity, index) => sameMountedIdentity(identity, path.identities[index]!));
++const sameMountedSnapshot = (a: MountedSnapshot, b: MountedSnapshot) => a.missing === b.missing && a.identities.length === b.identities.length
++  && a.identities.every((identity, index) => sameMountedIdentity(identity, b.identities[index]!));
++async function readonlyMountedRoot(mount: string, host: InstalledHost, process: InstalledProcess, signal: AbortSignal,
++  expected?: MountedSnapshot): Promise<MountedSnapshot> {
++  if (mountedRoot(mount) !== mount) throw new Error('Invalid mounted root');
++  const before = await mountedSnapshot(mount, host, signal, false, false, expected);
+   signal.throwIfAborted();
+-  const result = await process('/usr/sbin/diskutil', ['info', '-plist', mount], { signal, timeoutMs: 10000, maxOutputBytes: 65536, shell: false });
++  const result = await process('/usr/sbin/diskutil', ['info', '-plist', mount],
++    { signal, timeoutMs: 10000, maxOutputBytes: 65536, shell: false }, { mount: expected ?? before });
+   signal.throwIfAborted();
+   if (result.exitCode !== 0 || Buffer.byteLength(result.stdout) + Buffer.byteLength(result.stderr) > 65536
+-    || !sameCryptexSnapshot(before, await cryptexSnapshot(mount, host, signal))) throw new Error('Unconfirmed Cryptex mount');
++    || !sameMountedSnapshot(before, await mountedSnapshot(mount, host, signal, false, false, expected))) throw new Error('Unconfirmed mounted root');
+   parseReadonlyMountMetadata(result.stdout, mount); return before;
+ }
+-async function cryptexBytes(path: string, host: InstalledHost, signal: AbortSignal, snapshot: CryptexSnapshot): Promise<Buffer> {
++async function mountedBytes(path: string, host: InstalledHost, signal: AbortSignal, snapshot: MountedSnapshot): Promise<Buffer> {
+   signal.throwIfAborted(); const handle = await host.fs.open(path, constants.O_RDONLY | constants.O_NOFOLLOW);
+-  const expected = cryptexIdentity(path, snapshot.leaf);
++  const expected = snapshot.leaf!;
+   try {
+-    if (cryptexIdentity(path, await handle.stat()) !== expected) throw new Error('Cryptex metadata replaced');
++    signal.throwIfAborted(); const opened = await handle.stat({ bigint: true }); signal.throwIfAborted();
++    if (!sameMountedIdentity(mountedIdentity(path, opened), expected)) throw new Error('Mounted metadata replaced');
+     const chunks: Buffer[] = []; let count = 0;
+     while (true) {
+       signal.throwIfAborted(); const chunk = Buffer.alloc(65536); const read = await handle.read(chunk, 0, chunk.length, null);
+-      if (!read.bytesRead) break; count += read.bytesRead; if (count > 65536) throw new Error('Cryptex metadata too large');
++      signal.throwIfAborted();
++      if (!read.bytesRead) break; count += read.bytesRead; if (count > 65536) throw new Error('Mounted metadata too large');
+       chunks.push(chunk.subarray(0, read.bytesRead));
+     }
+-    if (cryptexIdentity(path, await handle.stat()) !== expected
+-      || !sameCryptexSnapshot(snapshot, await cryptexSnapshot(path, host, signal, true))) throw new Error('Cryptex metadata changed');
++    signal.throwIfAborted(); const final = await handle.stat({ bigint: true }); signal.throwIfAborted();
++    if (!sameMountedIdentity(mountedIdentity(path, final), expected)
++      || !sameMountedSnapshot(snapshot, await mountedSnapshot(path, host, signal, true, false, snapshot))) throw new Error('Mounted metadata changed');
+     return Buffer.concat(chunks);
+   } finally { await handle.close(); }
+ }
+-async function convertCryptex(path: string, host: InstalledHost, process: SourceProcess, signal: AbortSignal,
+-  convert: () => ReturnType<SourceProcess>): ReturnType<SourceProcess> {
+-  const mount = cryptexMetadataMount(path); if (!mount) throw new Error('Untrusted Cryptex metadata target');
+-  const beforeMount = await readonlyCryptexMount(mount, host, process, signal);
+-  const before = await cryptexSnapshot(path, host, signal, true);
+-  if (!beforeMount.identities.every((identity, i) => identity === before.identities[i])) throw new Error('Cryptex mount changed');
+-  const bytes = await cryptexBytes(path, host, signal, before); signal.throwIfAborted();
+-  const result = await convert(); signal.throwIfAborted();
+-  const afterMount = await readonlyCryptexMount(mount, host, process, signal);
+-  const after = await cryptexSnapshot(path, host, signal, true);
++async function convertMounted(path: string, host: InstalledHost, process: InstalledProcess, signal: AbortSignal,
++  convert: (expected: InstalledExpectation) => ReturnType<SourceProcess>, expected?: InstalledExpectation): ReturnType<SourceProcess> {
++  const mount = mountedMetadataRoot(path); if (!mount) throw new Error('Untrusted mounted metadata target');
++  const beforeMount = await readonlyMountedRoot(mount, host, process, signal, expected?.mount);
++  const before = await mountedSnapshot(path, host, signal, true, false, expected?.path ?? expected?.mount);
++  if (!mountedPrefixMatches(beforeMount, before)) throw new Error('Mounted root changed');
++  const bytes = await mountedBytes(path, host, signal, before); signal.throwIfAborted();
++  const context: InstalledExpectation = { mount: expected?.mount ?? beforeMount, path: before };
++  const result = await convert(context); signal.throwIfAborted();
++  const afterMount = await readonlyMountedRoot(mount, host, process, signal, context.mount);
++  const after = await mountedSnapshot(path, host, signal, true, false, before);
+   if (result.exitCode !== 0 || Buffer.byteLength(result.stdout) + Buffer.byteLength(result.stderr) > 65536
+-    || !sameCryptexSnapshot(beforeMount, afterMount) || !sameCryptexSnapshot(before, after)
+-    || !bytes.equals(await cryptexBytes(path, host, signal, after))) throw new Error('Unconfirmed Cryptex metadata');
++    || !mountedPrefixMatches(afterMount, after) || !sameMountedSnapshot(beforeMount, afterMount) || !sameMountedSnapshot(before, after)) throw new Error('Unconfirmed mounted metadata');
++  const confirmedBytes = await mountedBytes(path, host, signal, after); signal.throwIfAborted();
++  if (!bytes.equals(confirmedBytes)) throw new Error('Unconfirmed mounted metadata');
+   return result;
+ }
+ const productionProcesses = new WeakSet<SourceProcess>();
+@@ -175,14 +235,14 @@ export const isProductionSourceProcess = (process: SourceProcess): boolean => pr
+ export function allocationSourceProcess(host: InstalledHost, allowedArtifactRoots: readonly string[] = [],
+   launch: typeof spawn = spawn): SourceProcess {
+   let children = 0;
+-  const process: SourceProcess = async (executable, args, options) => {
++  const invoke: InstalledProcess = async (executable, args, options, expected) => {
+     const create = executable === '/usr/bin/xcrun' && args.length === 5 && args[0] === 'simctl' && args[1] === 'create'
+       && args[2]!.startsWith('jev-observed-') && simulatorUuid.test(args[2]!.slice('jev-observed-'.length))
+       && args[2] === args[2]!.toUpperCase().replace('JEV-OBSERVED-', 'jev-observed-') && validSimulatorIdentifiers(args[3]!, args[4]!);
+     const path = args[5];
+-    const cryptex = path === undefined ? undefined : cryptexMetadataMount(path);
+-    // An artifact prefix cannot authorize another path inside the installed Cryptex namespace.
+-    const metadata = path !== undefined && canonicalInstalledPath(path) && (cryptexNamespace(path) ? !!cryptex :
++    const mounted = path === undefined ? undefined : mountedMetadataRoot(path);
++    // Classify fixed mounted namespaces before considering any artifact prefix.
++    const metadata = path !== undefined && canonicalInstalledPath(path) && (mountedNamespace(path) ? !!mounted :
+       (path === '/Applications/Xcode.app/Contents/Info.plist' || path === '/Applications/Xcode.app/Contents/version.plist'
+         || path === '/System/Library/CoreServices/SystemVersion.plist'
+         || /^\/Library\/Developer\/CoreSimulator\/Profiles\/DeviceTypes\/[^/]+\.simdevicetype\/Contents\/(?:Info\.plist|Resources\/profile\.plist)$/.test(path)
+@@ -190,12 +250,12 @@ export function allocationSourceProcess(host: InstalledHost, allowedArtifactRoot
+         || allowedArtifactRoots.some(root => path.startsWith(resolve(root) + '/') && basename(path) === 'Info.plist')));
+     const plist = executable === '/usr/bin/plutil' && args.length === 6 && args.slice(0, 5).join('\0') === '-convert\0json\0-o\0-\0--' && metadata;
+     const mount = executable === '/usr/sbin/diskutil' && args.length === 3 && args[0] === 'info' && args[1] === '-plist'
+-      && args[2] !== undefined && cryptexMount(args[2]) === args[2] ? args[2] : undefined;
++      && args[2] !== undefined && mountedRoot(args[2]) === args[2] ? args[2] : undefined;
+     if ((!create && !plist && !mount) || options.shell !== false || options.signal.aborted || !Number.isSafeInteger(options.timeoutMs)
+-      || options.timeoutMs < 1 || options.timeoutMs > (mount || cryptex ? 10000 : 900000) || !Number.isSafeInteger(options.maxOutputBytes) || options.maxOutputBytes < 1
++      || options.timeoutMs < 1 || options.timeoutMs > (mount || mounted ? 10000 : 900000) || !Number.isSafeInteger(options.maxOutputBytes) || options.maxOutputBytes < 1
+       || options.maxOutputBytes > (plist ? installedPlistOutputLimit(path!) : 65536)) throw new Error('Host process is not authorized');
+-    const mountBefore = mount ? await cryptexSnapshot(mount, host, options.signal) : undefined;
+-    if (plist && !cryptex) {
++    const mountBefore = mount ? await mountedSnapshot(mount, host, options.signal, false, false, expected?.mount) : undefined;
++    if (plist && !mounted) {
+       const stat = await host.fs.lstat(path!);
+       if (!stat.isFile() || stat.isSymbolicLink() || stat.nlink !== 1 || ![0, host.account.uid].includes(stat.uid) || (stat.mode & 0o022)) throw new Error('Host process is not authorized');
+       if (!allowedArtifactRoots.some(root => path!.startsWith(resolve(root) + '/'))) await trustedPath(path!, host);
+@@ -233,11 +293,13 @@ export function allocationSourceProcess(host: InstalledHost, allowedArtifactRoot
+         stdout: Buffer.concat(out).toString('utf8'), stderr: Buffer.concat(err).toString('utf8') }); });
+       if (options.signal.aborted) stop();
+     });
+-    const result = plist && cryptex ? await convertCryptex(path!, host, process, options.signal, run) : await run();
+-    if (mount && (!mountBefore || !sameCryptexSnapshot(mountBefore, await cryptexSnapshot(mount, host, options.signal)))) throw new Error('Cryptex mount changed');
++    const result = plist && mounted ? await convertMounted(path!, host, invoke, options.signal, run, expected) : await run();
++    if (mount && (!mountBefore || !sameMountedSnapshot(mountBefore,
++      await mountedSnapshot(mount, host, options.signal, false, false, expected?.mount)))) throw new Error('Mounted root changed');
+     return result;
+   };
+-  productionProcesses.add(process); return process;
++  const process: SourceProcess = (executable, args, options) => invoke(executable, args, options);
++  productionInvokers.set(process, invoke); productionProcesses.add(process); return process;
+ }
+ async function trustedPath(path: string, host: InstalledHost, directory = false): Promise<Stats> {
+   const parts = path.split('/').filter(Boolean); let current = '/';
+@@ -255,10 +317,11 @@ async function trustedPath(path: string, host: InstalledHost, directory = false)
+   if (directory ? !s.isDirectory() : !s.isFile()) throw new Error('Missing installed path');
+   return s;
+ }
+-async function installedPlist(path: string, host: InstalledHost, process: SourceProcess, signal: AbortSignal): Promise<Record<string, unknown>> {
+-  if (cryptexNamespace(path)) {
+-    const result = await convertCryptex(path, host, process, signal, () => process('/usr/bin/plutil', ['-convert', 'json', '-o', '-', '--', path],
+-      { signal, timeoutMs: 10000, maxOutputBytes: 65536, shell: false }));
++async function installedPlist(path: string, host: InstalledHost, process: InstalledProcess, signal: AbortSignal,
++  expected?: MountedSnapshot): Promise<Record<string, unknown>> {
++  if (mountedNamespace(path)) {
++    const result = await convertMounted(path, host, process, signal, context => process('/usr/bin/plutil', ['-convert', 'json', '-o', '-', '--', path],
++      { signal, timeoutMs: 10000, maxOutputBytes: 65536, shell: false }, context), expected ? { mount: expected } : undefined);
+     const value: unknown = JSON.parse(result.stdout);
+     if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('Invalid installed metadata');
+     return value as Record<string, unknown>;
+@@ -289,24 +352,50 @@ async function bundles(root: string, suffix: string, host: InstalledHost, signal
+     return entries.filter(n => /^[^/\0]{1,255}$/.test(n) && n.endsWith(suffix)).sort().map(n => join(root, n));
+   } catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') return []; throw error; }
+ }
+-async function cryptexBundles(host: InstalledHost, process: SourceProcess, signal: AbortSignal): Promise<string[]> {
+-  let before: CryptexSnapshot;
+-  try { before = await cryptexSnapshot(cryptexDirectory, host, signal); }
+-  catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') return []; throw error; }
+-  signal.throwIfAborted(); const entries = await host.fs.readdir(cryptexDirectory); signal.throwIfAborted();
+-  if (entries.length > 1000 || entries.some(name => !/^[^/\0]{1,255}$/.test(name))
+-    || !sameCryptexSnapshot(before, await cryptexSnapshot(cryptexDirectory, host, signal))) throw new Error('Unconfirmed Cryptex listing');
+-  const mounts = entries.filter(name => cryptexMountName.test(name)).sort().map(name => join(cryptexDirectory, name));
+-  if (mounts.length > 64) throw new Error('Cryptex mount limit exceeded');
+-  const result: string[] = [];
++type MountedEnumeration = { kind: MountClass; snapshot: MountedSnapshot; entries: string[]; candidates: Map<string, MountedSnapshot> };
++async function mountedEntries(path: string, kind: MountClass, host: InstalledHost, signal: AbortSignal): Promise<string[]> {
++  signal.throwIfAborted(); const entries = await host.fs.readdir(path); signal.throwIfAborted();
++  const valid = kind === 'legacy' ? /^[A-Za-z0-9_-]{1,255}$/ : /^[^/\0]{1,255}$/;
++  if (entries.length > 1000 || entries.some(name => !valid.test(name)) || new Set(entries).size !== entries.length) throw new Error('Mounted enumeration limit or name refused');
++  return [...entries].sort();
++}
++async function enumerateMountedNamespace(kind: MountClass, host: InstalledHost, signal: AbortSignal): Promise<MountedEnumeration> {
++  const namespace = mountNamespace(kind); const snapshot = await mountedSnapshot(namespace, host, signal, false, true);
++  const candidates = new Map<string, MountedSnapshot>();
++  if (snapshot.missing) return { kind, snapshot, entries: [], candidates };
++  const entries = await mountedEntries(namespace, kind, host, signal);
++  const mounts = entries.filter(name => mountName(kind).test(name)).map(name => join(namespace, name));
++  if (mounts.length > 64) throw new Error('Mounted candidate limit exceeded');
+   for (const mount of mounts) {
+-    signal.throwIfAborted(); const proof = await readonlyCryptexMount(mount, host, process, signal);
+-    const root = mount + runtimeSuffix; const snapshot = await cryptexSnapshot(root, host, signal);
+-    if (!proof.identities.every((identity, i) => identity === snapshot.identities[i])) throw new Error('Cryptex mount changed');
++    const candidate = await mountedSnapshot(mount, host, signal);
++    if (!mountedPrefixMatches(snapshot, candidate)) throw new Error('Mounted candidate ancestry changed');
++    candidates.set(mount, candidate);
++  }
++  if (!sameMountedSnapshot(snapshot, await mountedSnapshot(namespace, host, signal))) throw new Error('Mounted namespace changed during enumeration');
++  return { kind, snapshot, entries, candidates };
++}
++async function confirmMountedEnumeration(state: MountedEnumeration, host: InstalledHost, signal: AbortSignal): Promise<void> {
++  const namespace = mountNamespace(state.kind); const before = await mountedSnapshot(namespace, host, signal, false, true);
++  if (!sameMountedSnapshot(state.snapshot, before)) throw new Error('Mounted namespace presence or identity changed');
++  if (before.missing) return;
++  const entries = await mountedEntries(namespace, state.kind, host, signal);
++  if (entries.length !== state.entries.length || entries.some((entry, i) => entry !== state.entries[i])) throw new Error('Mounted namespace entries changed');
++  for (const [mount, candidate] of state.candidates) {
++    if (!sameMountedSnapshot(candidate, await mountedSnapshot(mount, host, signal))) throw new Error('Mounted candidate changed after lookup');
++  }
++  if (!sameMountedSnapshot(before, await mountedSnapshot(namespace, host, signal))) throw new Error('Mounted namespace changed after final listing');
++}
++async function mountedBundles(state: MountedEnumeration, host: InstalledHost, process: InstalledProcess, signal: AbortSignal): Promise<string[]> {
++  const result: string[] = [];
++  for (const [mount, candidate] of state.candidates) {
++    signal.throwIfAborted(); const proof = await readonlyMountedRoot(mount, host, process, signal, candidate);
++    if (!sameMountedSnapshot(candidate, proof)) throw new Error('Mounted candidate changed before runtime listing');
++    const root = mount + runtimeSuffix; const snapshot = await mountedSnapshot(root, host, signal, false, false, candidate);
++    if (!mountedPrefixMatches(proof, snapshot)) throw new Error('Mounted root changed');
+     signal.throwIfAborted(); const names = await host.fs.readdir(root); signal.throwIfAborted();
+     if (names.length > 1000 || names.some(name => !/^[^/\0]{1,255}$/.test(name))
+-      || !sameCryptexSnapshot(snapshot, await cryptexSnapshot(root, host, signal))
+-      || !sameCryptexSnapshot(proof, await readonlyCryptexMount(mount, host, process, signal))) throw new Error('Unconfirmed Cryptex runtime listing');
++      || new Set(names).size !== names.length || !sameMountedSnapshot(snapshot, await mountedSnapshot(root, host, signal, false, false, candidate))
++      || !sameMountedSnapshot(proof, await readonlyMountedRoot(mount, host, process, signal, candidate))) throw new Error('Unconfirmed mounted runtime listing');
+     result.push(...names.filter(name => name.endsWith('.simruntime')).sort().map(name => join(root, name)));
+     if (result.length > 1000) throw new Error('Runtime enumeration limit exceeded');
+   }
+@@ -317,18 +406,20 @@ export type InstalledCompatibility = { architecture: 'arm64' | 'x86_64'; runtime
+ export async function verifyInstalledCompatibility(source: { deviceTypeId: string; runtimeId: string }, host: InstalledHost,
+   process: SourceProcess, signal: AbortSignal): Promise<InstalledCompatibility> {
+   try {
+-    let dispatches = 0; const originalProcess = process;
+-    process = (executable, args, options) => {
++    let dispatches = 0;
++    const originalProcess: InstalledProcess = productionInvokers.get(process)
++      ?? ((executable, args, options) => process(executable, args, options));
++    const boundedProcess: InstalledProcess = (executable, args, options, expected) => {
+       signal.throwIfAborted(); options.signal.throwIfAborted();
+       if (++dispatches > childLimit) throw new Error('Host child budget exhausted');
+-      return originalProcess(executable, args, options);
++      return originalProcess(executable, args, options, expected);
+     };
+     signal.throwIfAborted();
+     if (host.platform !== 'darwin' || !['arm64', 'x86_64'].includes(host.architecture)
+       || !validSimulatorIdentifiers(source.deviceTypeId, source.runtimeId)) throw new Error();
+-    const info = await installedPlist('/Applications/Xcode.app/Contents/Info.plist', host, process, signal);
+-    const xcode = await installedPlist('/Applications/Xcode.app/Contents/version.plist', host, process, signal);
+-    const system = await installedPlist('/System/Library/CoreServices/SystemVersion.plist', host, process, signal);
++    const info = await installedPlist('/Applications/Xcode.app/Contents/Info.plist', host, boundedProcess, signal);
++    const xcode = await installedPlist('/Applications/Xcode.app/Contents/version.plist', host, boundedProcess, signal);
++    const system = await installedPlist('/System/Library/CoreServices/SystemVersion.plist', host, boundedProcess, signal);
+     const hostVersion = osVersion(system.ProductVersion);
+     if (info.CFBundleIdentifier !== 'com.apple.dt.Xcode' || info.CFBundleExecutable !== 'Xcode'
+       || compareVersions(osVersion(info.LSMinimumSystemVersion), hostVersion) > 0
+@@ -340,37 +431,39 @@ export async function verifyInstalledCompatibility(source: { deviceTypeId: strin
+     await trustedPath(developerDirectory + '/Platforms/iPhoneSimulator.platform', host, true);
+     const matching: string[] = [];
+     for (const bundle of await bundles('/Library/Developer/CoreSimulator/Profiles/DeviceTypes', '.simdevicetype', host, signal)) {
+-      if ((await installedPlist(join(bundle, 'Contents/Info.plist'), host, process, signal)).CFBundleIdentifier === source.deviceTypeId) matching.push(bundle);
++      if ((await installedPlist(join(bundle, 'Contents/Info.plist'), host, boundedProcess, signal)).CFBundleIdentifier === source.deviceTypeId) matching.push(bundle);
+     }
+     if (matching.length !== 1) throw new Error();
+-    const device = await installedPlist(join(matching[0]!, 'Contents/Resources/profile.plist'), host, process, signal);
++    const device = await installedPlist(join(matching[0]!, 'Contents/Resources/profile.plist'), host, boundedProcess, signal);
+     if (!architectures(device.supportedArchs, host.architecture)) throw new Error();
+     const deviceFamilies = families(device.supportedProductFamilyIDs);
+-    const runtimeRoots = ['/Library/Developer/CoreSimulator/Profiles/Runtimes'];
+-    const volumes = '/Library/Developer/CoreSimulator/Volumes';
+-    try {
+-      signal.throwIfAborted(); await trustedPath(volumes, host, true); signal.throwIfAborted(); const entries = await host.fs.readdir(volumes);
+-      signal.throwIfAborted();
+-      if (entries.length > 1000) throw new Error();
+-      for (const name of entries) {
+-        if (!/^[A-Za-z0-9_-]{1,255}$/.test(name)) throw new Error();
+-        runtimeRoots.push(join(volumes, name, 'Library/Developer/CoreSimulator/Profiles/Runtimes'));
+-      }
+-    } catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; }
++    const legacy = await enumerateMountedNamespace('legacy', host, signal);
++    const cryptex = await enumerateMountedNamespace('cryptex', host, signal);
++    const candidates = new Map([...legacy.candidates, ...cryptex.candidates]);
++    const capturedCandidate = (bundle: string) => {
++      const mount = mountedRoot(bundle); if (!mount) return;
++      const candidate = candidates.get(mount); if (!candidate) throw new Error('Missing enumerated mounted candidate');
++      return candidate;
++    };
++    const runtimeRoots = ['/Library/Developer/CoreSimulator/Profiles/Runtimes',
++      ...legacy.entries.filter(name => !legacyMountName.test(name)).map(name => join(legacyDirectory, name) + runtimeSuffix)];
+     const runtimes: string[] = [];
+     const runtimeBundles: string[] = [];
+     for (const root of runtimeRoots) {
+       runtimeBundles.push(...await bundles(root, '.simruntime', host, signal));
+       if (runtimeBundles.length > 1000) throw new Error('Runtime enumeration limit exceeded');
+     }
+-    runtimeBundles.push(...await cryptexBundles(host, process, signal));
++    runtimeBundles.push(...await mountedBundles(legacy, host, boundedProcess, signal));
++    if (runtimeBundles.length > 1000) throw new Error('Runtime enumeration limit exceeded');
++    runtimeBundles.push(...await mountedBundles(cryptex, host, boundedProcess, signal));
+     if (runtimeBundles.length > 1000) throw new Error('Runtime enumeration limit exceeded');
+     for (const bundle of runtimeBundles) {
+-      if ((await installedPlist(join(bundle, 'Contents/Info.plist'), host, process, signal)).CFBundleIdentifier === source.runtimeId) runtimes.push(bundle);
++      if ((await installedPlist(join(bundle, 'Contents/Info.plist'), host, boundedProcess, signal, capturedCandidate(bundle))).CFBundleIdentifier === source.runtimeId) runtimes.push(bundle);
+     }
+     if (runtimes.length !== 1) throw new Error();
+-    const runtime = await installedPlist(join(runtimes[0]!, 'Contents/Resources/profile.plist'), host, process, signal);
+-    const actual = await installedPlist(join(runtimes[0]!, 'Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'), host, process, signal);
++    const candidate = capturedCandidate(runtimes[0]!);
++    const runtime = await installedPlist(join(runtimes[0]!, 'Contents/Resources/profile.plist'), host, boundedProcess, signal, candidate);
++    const actual = await installedPlist(join(runtimes[0]!, 'Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'), host, boundedProcess, signal, candidate);
+     const runtimeVersion = osVersion(actual.ProductVersion); const declared = osVersion(runtime.defaultVersionString);
+     const identifier = source.runtimeId.slice('com.apple.CoreSimulator.SimRuntime.iOS-'.length).split('-').map(Number);
+     if (runtime.platformIdentifier !== 'com.apple.platform.iphonesimulator' || !architectures(runtime.supportedArchs, host.architecture)
+@@ -380,6 +473,8 @@ export async function verifyInstalledCompatibility(source: { deviceTypeId: strin
+       || (device.maxRuntimeVersion !== undefined && compareVersions(osVersion(device.maxRuntimeVersion), runtimeVersion) < 0)
+       || declared[0] !== runtimeVersion[0] || declared[1] !== runtimeVersion[1]
+       || identifier.some((v, i) => v !== declared[i]) || !named(actual.ProductBuildVersion)) throw new Error();
++    await confirmMountedEnumeration(legacy, host, signal); await confirmMountedEnumeration(cryptex, host, signal);
++    signal.throwIfAborted();
+     return { architecture: host.architecture, runtimeVersion: actual.ProductVersion as string, hostVersion: system.ProductVersion as string,
+       xcodeVersion: xcode.CFBundleShortVersionString as string, xcodeBuild: xcode.ProductBuildVersion, runtimeBuild: actual.ProductBuildVersion };
+   } catch { throw new AllocationPrerequisiteError('HOST_PREREQUISITE_MISSING'); }
+diff --git a/tests/fixtures/observed-legacy-volume-runtime.ts b/tests/fixtures/observed-legacy-volume-runtime.ts
+new file mode 100644
+index 00000000..b5db74a1
+--- /dev/null
++++ b/tests/fixtures/observed-legacy-volume-runtime.ts
+@@ -0,0 +1,158 @@
++import * as fs from 'node:fs/promises';
++import { mkdirSync, writeFileSync, type Stats, type BigIntStats } from 'node:fs';
++import { join, resolve } from 'node:path';
++import { EventEmitter } from 'node:events';
++import { PassThrough } from 'node:stream';
++import type { spawn } from 'node:child_process';
++import type { SourceProcess } from '../../src/observed/create-source.js';
++import { allocationFixture, runtimeId, runtimeBundle } from './observed-allocation-backend.js';
++import { cryptexDirectory, cryptexMount, cryptexRuntimes, cryptexBundle, cryptexRuntimeRoot } from './observed-cryptex-runtime.js';
++
++export const legacyDirectory = '/Library/Developer/CoreSimulator/Volumes';
++export const legacyMount = legacyDirectory + '/iOS_22G86';
++export const legacyRuntimes = legacyMount + '/Library/Developer/CoreSimulator/Profiles/Runtimes';
++export const legacyBundle = legacyRuntimes + '/iOS 27.0.simruntime';
++export const legacyInfo = legacyBundle + '/Contents/Info.plist';
++export const legacyProfile = legacyBundle + '/Contents/Resources/profile.plist';
++export const legacyRuntimeRoot = legacyBundle + '/Contents/Resources/RuntimeRoot';
++export const legacySystem = legacyRuntimeRoot + '/System/Library/CoreServices/SystemVersion.plist';
++export const readonlyXml = (mount: string) => '<?xml version="1.0" encoding="UTF-8"?>\n'
++  + '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n'
++  + '<plist version="1.0"><dict><key>MountPoint</key><string>' + mount + '</string>'
++  + '<key>Writable</key><false/><key>WritableMedia</key><false/><key>WritableVolume</key><false/></dict></plist>\n';
++
++/** Pure mapping: every permitted installed path is temporary; unknown paths refuse. */
++export function mapLegacyFixturePath(root: string, path: string): string {
++  if (resolve(path) !== path || path.includes('\0')) throw new Error('Noncanonical fixture path');
++  if (path === root || path.startsWith(root + '/')) return path;
++  if (path === '/' || /^\/(?:Applications|Library|System|usr|private)(?:\/|$)/.test(path)) return join(root, 'host', path);
++  throw new Error('Path outside the temporary fixture');
++}
++type Receipt = Awaited<ReturnType<SourceProcess>>;
++type Hook = (operation: string, path: string) => void | Promise<void>;
++type Child = EventEmitter & { stdout: PassThrough; stderr: PassThrough; signals: string[]; kill(signal?: string): boolean };
++
++export async function legacyFixture(options: { strictModes?: boolean; absent?: boolean; defaultVisible?: boolean; name?: string } = {}) {
++  const base = await allocationFixture();
++  const map = (path: string) => mapLegacyFixturePath(base.root, path);
++  const overrides = new Map<string, Record<string, unknown>>();
++  const listings = new Map<string, string[]>();
++  const missing = new Set<string>();
++  const mounts = new Set<string>();
++  const mountResults = new Map<string, Receipt>();
++  const convertedResults = new Map<string, Receipt>();
++  let before: Hook | undefined;
++  let defaultVisible = options.defaultVisible ?? false;
++  const write = (path: string, value: unknown) => {
++    const target = map(path); mkdirSync(join(target, '..'), { recursive: true, mode: 0o700 });
++    writeFileSync(target, typeof value === 'string' ? value : JSON.stringify(value), { mode: 0o600 });
++  };
++  const addMount = (name: string, identifier = runtimeId) => {
++    const mount = join(legacyDirectory, name); mounts.add(mount);
++    const bundle = mount + '/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime';
++    write(bundle + '/Contents/Info.plist', { CFBundleIdentifier: identifier });
++    write(bundle + '/Contents/Resources/profile.plist', { platformIdentifier: 'com.apple.platform.iphonesimulator', minHostVersion: '14.0.0',
++      supportedArchs: ['arm64', 'x86_64'], supportedProductFamilyIDs: [2, 1], defaultVersionString: '27.0' });
++    write(bundle + '/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist', { ProductVersion: '27.0', ProductBuildVersion: 'legacy-fixture' });
++    return mount;
++  };
++  if (!options.absent) addMount(options.name ?? 'iOS_22G86');
++  write('/usr/sbin/diskutil', 'fake executable');
++  const view = (path: string, raw: Stats | BigIntStats): Stats | BigIntStats => {
++    const big = typeof raw.dev === 'bigint';
++    const integer = (value: number) => big ? BigInt(value) : value;
++    const fields: Record<string, unknown> = {};
++    if (path === '/' || /^\/(?:Applications|Library|System|usr|private)(?:\/|$)/.test(path)) {
++      fields.uid = integer(0); fields.gid = integer(0);
++      const mounted = [...mounts].find(mount => path === mount || path.startsWith(mount + '/'))
++        ?? (path === cryptexMount || path.startsWith(cryptexMount + '/') ? cryptexMount : undefined);
++      fields.dev = integer(mounted ? 16777243 : 16777231);
++      let permissions = raw.isDirectory() ? 0o755 : typeof raw.mode === 'bigint' ? Number(raw.mode & 0o7777n) : raw.mode & 0o7777;
++      if (mounted && options.strictModes) permissions = raw.isDirectory() ? 0o755 : 0o644;
++      if (mounted && !options.strictModes) {
++        permissions = raw.isDirectory() ? 0o775 : 0o664; fields.gid = integer(80);
++        if (path.endsWith('.simruntime/Contents/Resources/RuntimeRoot')) permissions = 0o1775;
++        if (path.endsWith('/SystemVersion.plist')) permissions = 0o444;
++      }
++      if (path === '/private/var/run') { fields.gid = integer(1); permissions = 0o775; }
++      if (path === '/private/var/run/com.apple.security.cryptexd') { fields.gid = integer(1); permissions = 0o705; }
++      if (path === cryptexDirectory) fields.gid = integer(1);
++      if (path === '/usr/sbin/diskutil') permissions = 0o755;
++      const type = typeof raw.mode === 'bigint' ? Number(raw.mode & 0o170000n) : raw.mode & 0o170000;
++      fields.mode = integer(type | permissions);
++    }
++    Object.assign(fields, overrides.get(path));
++    return new Proxy(raw, { get(target, key) {
++      if (Object.hasOwn(fields, key)) return Reflect.get(fields, key);
++      const value = Reflect.get(target, key); return typeof value === 'function' ? value.bind(target) : value;
++    } });
++  };
++  const reads: { operation: string; path: string }[] = [];
++  const identities: { operation: string; path: string; ino: string }[] = [];
++  const observed = (operation: string, path: string, raw: Stats | BigIntStats) => {
++    const value = view(path, raw); identities.push({ operation, path, ino: String(value.ino) }); return value;
++  };
++  const checked = async (operation: string, path: string) => {
++    const target = map(path); reads.push({ operation, path }); await before?.(operation, path);
++    if (missing.has(path)) throw Object.assign(new Error('Missing temporary fixture path'), { code: 'ENOENT' });
++    return target;
++  };
++  const fakeFs = { ...base.host.fs,
++    lstat: (async (path: string, options?: { bigint?: boolean }) => observed('lstat', path, await fs.lstat(await checked('lstat', path), options))) as typeof fs.lstat,
++    open: (async (path: string, flags: number, mode?: number) => {
++      const handle = await fs.open(await checked('open', path), flags, mode);
++      await checked('open-result', path);
++      return new Proxy(handle, { get(target, key) {
++        if (key === 'stat') return async (options?: { bigint?: boolean }) => { await checked('opened-stat', path); return observed('opened-stat', path, await target.stat(options)); };
++        if (key === 'read') return async (buffer: Buffer, offset: number, length: number, position: number | null) => {
++          await checked('opened-read', path); const result = await target.read(buffer, offset, length, position);
++          await checked(result.bytesRead ? 'opened-read-result' : 'eof-read-result', path); return result;
++        };
++        if (key === 'close') return async () => { reads.push({ operation: 'close', path }); await before?.('close', path); await target.close(); };
++        const value = Reflect.get(target, key); return typeof value === 'function' ? value.bind(target) : value;
++      } });
++    }) as typeof fs.open,
++    readdir: (async (path: string) => { const target = await checked('readdir', path);
++      if (listings.has(path)) return listings.get(path)!;
++      if (!defaultVisible && path === runtimeBundle.slice(0, runtimeBundle.lastIndexOf('/'))) return [];
++      return fs.readdir(target);
++    }) as typeof fs.readdir,
++  };
++  const host = { ...base.host, fs: fakeFs };
++  const effects: { executable: string; args: readonly string[] }[] = [];
++  const source: SourceProcess = async (executable, args, options) => {
++    effects.push({ executable, args: [...args] }); await before?.(executable === '/usr/sbin/diskutil' ? 'mount' : 'convert', args[5] ?? args[2] ?? '');
++    if (executable === '/usr/sbin/diskutil') {
++      if (args.length !== 3 || args[0] !== 'info' || args[1] !== '-plist' || !mounts.has(args[2]!)
++        || options.shell !== false || options.signal.aborted || options.timeoutMs < 1 || options.timeoutMs > 10000
++        || options.maxOutputBytes < 1 || options.maxOutputBytes > 65536) throw new Error('Unexpected fake mount command');
++      return mountResults.get(args[2]!) ?? { exitCode: 0, stdout: readonlyXml(args[2]!), stderr: '' };
++    }
++    if (executable === '/usr/bin/plutil' && ([...mounts].some(mount => args[5]?.startsWith(mount + '/')) || args[5]?.startsWith(cryptexMount + '/'))) {
++      if (args.length !== 6 || args.slice(0, 5).join('\0') !== '-convert\0json\0-o\0-\0--'
++        || !/\/Contents\/(?:Info\.plist|Resources\/profile\.plist|Resources\/RuntimeRoot\/System\/Library\/CoreServices\/SystemVersion\.plist)$/.test(args[5]!)
++        || options.shell !== false || options.signal.aborted || options.timeoutMs < 1 || options.timeoutMs > 10000 || options.maxOutputBytes > 65536) throw new Error('Unexpected fake mounted conversion');
++      return convertedResults.get(args[5]!) ?? { exitCode: 0, stdout: await fs.readFile(map(args[5]!), 'utf8'), stderr: '' };
++    }
++    return base.source(executable, args, options);
++  };
++  const launches: { executable: string; args: readonly string[]; options: Record<string, unknown>; child: Child }[] = [];
++  const launch = ((executable: string, args: readonly string[], options: Record<string, unknown>) => {
++    const child: Child = Object.assign(new EventEmitter(), { stdout: new PassThrough(), stderr: new PassThrough(), signals: [] as string[],
++      kill(signal = 'SIGTERM') { this.signals.push(signal); return true; } });
++    launches.push({ executable, args: [...args], options, child });
++    queueMicrotask(async () => {
++      try { const result = await source(executable, args, { shell: false, signal: new AbortController().signal, timeoutMs: 10000,
++        maxOutputBytes: args[5] === '/Applications/Xcode.app/Contents/Info.plist' ? 131072 : 65536 });
++        child.stdout.write(result.stdout); child.stderr.write(result.stderr); child.emit('close', result.exitCode, null);
++      } catch (error) { child.emit('error', error); child.emit('close', null, null); }
++    });
++    return child;
++  }) as unknown as typeof spawn;
++  return { ...base, host, source, launch, launches, map, write, addMount, mounts, overrides, listings, missing, mountResults, convertedResults, reads, identities, effects,
++    setBefore(hook?: Hook) { before = hook; }, setDefaultVisible(value: boolean) { defaultVisible = value; },
++    addCryptex() { mounts.add(cryptexMount); write(cryptexBundle + '/Contents/Info.plist', { CFBundleIdentifier: runtimeId });
++      write(cryptexBundle + '/Contents/Resources/profile.plist', { platformIdentifier: 'com.apple.platform.iphonesimulator', minHostVersion: '14.0.0', supportedArchs: ['arm64'], supportedProductFamilyIDs: [1], defaultVersionString: '27.0' });
++      write(cryptexRuntimeRoot + '/System/Library/CoreServices/SystemVersion.plist', { ProductVersion: '27.0', ProductBuildVersion: 'cryptex-fixture' }); },
++  };
++}
+diff --git a/tests/observed-legacy-volume-runtime.test.ts b/tests/observed-legacy-volume-runtime.test.ts
+new file mode 100644
+index 00000000..601059c5
+--- /dev/null
++++ b/tests/observed-legacy-volume-runtime.test.ts
+@@ -0,0 +1,443 @@
++import assert from 'node:assert/strict';
++import { test } from 'node:test';
++import { join } from 'node:path';
++import { EventEmitter } from 'node:events';
++import { PassThrough } from 'node:stream';
++import { setImmediate as nextTurn } from 'node:timers/promises';
++import type { spawn } from 'node:child_process';
++import { allocationSourceProcess, verifyInstalledCompatibility } from '../src/observed/allocation-config.js';
++import { typeId, runtimeId, runtimeBundle } from './fixtures/observed-allocation-backend.js';
++import { mapPublicFixturePath } from './fixtures/observed-cli-server.js';
++import { cryptexMount, cryptexBundle } from './fixtures/observed-cryptex-runtime.js';
++import { legacyFixture, mapLegacyFixturePath, legacyDirectory, legacyMount, legacyRuntimes, legacyBundle,
++  legacyInfo, legacyProfile, legacyRuntimeRoot, legacySystem, readonlyXml } from './fixtures/observed-legacy-volume-runtime.js';
++
++const pureRoot = '/private/tmp/legacy-pure-fixture';
++for (const path of ['/', '/Library', legacyDirectory, legacyMount, legacyInfo, '/private', '/usr/sbin/diskutil']) {
++  test(`pure legacy and public fixture maps isolate ${path}`, () => {
++    assert.equal(mapLegacyFixturePath(pureRoot, path), join(pureRoot, 'host', path));
++    assert.equal(mapPublicFixturePath(pureRoot, path), join(pureRoot, 'host', path));
++  });
++}
++for (const path of [pureRoot, join(pureRoot, 'home'), join(pureRoot, 'owned', 'Info.plist')]) {
++  test(`pure legacy map preserves owned temporary ${path}`, () => { assert.equal(mapLegacyFixturePath(pureRoot, path), path); });
++}
++for (const path of ['/opt/outside', 'relative', '/Library/../usr', '/Library\0bad']) {
++  test(`pure legacy map refuses unsupported ${JSON.stringify(path)}`, () => { assert.throws(() => mapLegacyFixturePath(pureRoot, path)); });
++}
++
++type Fixture = Awaited<ReturnType<typeof legacyFixture>>;
++const compatibility = (f: Fixture, production = false, signal = new AbortController().signal) =>
++  verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host,
++    production ? allocationSourceProcess(f.host, [], f.launch) : f.source, signal);
++const convert = (f: Fixture, path = legacyInfo, roots: string[] = [], signal = new AbortController().signal) =>
++  allocationSourceProcess(f.host, roots, f.launch)('/usr/bin/plutil', ['-convert', 'json', '-o', '-', '--', path],
++    { shell: false, signal, timeoutMs: 10000, maxOutputBytes: 65536 });
++async function refuses(f: Fixture, mutate: () => void | Promise<void>, production = false) {
++  await compatibility(f, production); await mutate();
++  await assert.rejects(compatibility(f, production), { reason: 'HOST_PREREQUISITE_MISSING' });
++}
++
++for (const name of ['iOS_22G86', 'iOS_23E254a']) for (const production of [false, true]) {
++  test(`${production ? 'production' : 'injected'} observed legacy group modes accept exact ${name} after fresh proofs`, async () => {
++    const f = await legacyFixture({ name });
++    try {
++      const proof = await compatibility(f, production); assert.equal(proof.runtimeVersion, '27.0'); assert.equal(proof.runtimeBuild, 'legacy-fixture');
++      const mount = join(legacyDirectory, name); const queries = f.effects.filter(e => e.executable === '/usr/sbin/diskutil');
++      assert.equal(queries.length, production ? 14 : 8); assert.ok(queries.every(e => e.args.join('\0') === ['info', '-plist', mount].join('\0')));
++      assert.ok(f.effects.every(e => e.executable !== '/usr/bin/xcrun'));
++    } finally { await f.cleanup(); }
++  });
++}
++test('recognized strict-mode legacy mounts still require readonly proof and never use the strict fallback', async () => {
++  const f = await legacyFixture({ strictModes: true });
++  try { await compatibility(f); assert.equal(f.effects.filter(e => e.executable === '/usr/sbin/diskutil').length, 8); }
++  finally { await f.cleanup(); }
++});
++for (const [label, xml] of [
++  ['Writable true', readonlyXml(legacyMount).replace('<key>Writable</key><false/>', '<key>Writable</key><true/>')],
++  ['WritableMedia true', readonlyXml(legacyMount).replace('<key>WritableMedia</key><false/>', '<key>WritableMedia</key><true/>')],
++  ['WritableVolume true', readonlyXml(legacyMount).replace('<key>WritableVolume</key><false/>', '<key>WritableVolume</key><true/>')],
++  ['string false', readonlyXml(legacyMount).replace('<key>Writable</key><false/>', '<key>Writable</key><string>false</string>')],
++  ['wrong mount point', readonlyXml(legacyMount + '-other')],
++  ['missing field', readonlyXml(legacyMount).replace('<key>WritableVolume</key><false/>', '')],
++  ['duplicate field', readonlyXml(legacyMount).replace('</dict>', '<key>Writable</key><false/></dict>')],
++  ['malformed XML', '<plist><dict>'],
++  ['oversized output', 'x'.repeat(65537)],
++] as const) {
++  test(`recognized strict-mode legacy refuses ${label} proof`, async () => {
++    const f = await legacyFixture({ strictModes: true });
++    try { f.mountResults.set(legacyMount, { exitCode: 0, stdout: xml, stderr: '' }); await assert.rejects(compatibility(f), { reason: 'HOST_PREREQUISITE_MISSING' }); }
++    finally { await f.cleanup(); }
++  });
++}
++for (const code of [1, null]) test(`recognized strict-mode legacy refuses mount exit ${code}`, async () => {
++  const f = await legacyFixture({ strictModes: true });
++  try { f.mountResults.set(legacyMount, { exitCode: code, stdout: readonlyXml(legacyMount), stderr: '' }); await assert.rejects(compatibility(f)); }
++  finally { await f.cleanup(); }
++});
++
++const badStats: [string, string, Record<string, unknown>][] = [
++  ['root uid', '/', { uid: 501 }], ['Library uid', '/Library', { uid: 501 }],
++  ['namespace uid', legacyDirectory, { uid: 501 }], ['namespace group write', legacyDirectory, { mode: 0o40775 }],
++  ['ancestor group write', '/Library/Developer', { mode: 0o40775 }], ['ancestor symlink', '/Library', { isSymbolicLink: () => true }],
++  ['mount uid', legacyMount, { uid: 501 }], ['mount gid', legacyMount, { gid: 1 }],
++  ['mount world write', legacyMount, { mode: 0o40777 }], ['mount setgid', legacyMount, { mode: 0o42775 }],
++  ['mount symlink', legacyMount, { isSymbolicLink: () => true }], ['mount type', legacyMount, { mode: 0o100755 }],
++  ['inner directory uid', legacyRuntimes, { uid: 501 }], ['inner directory gid', legacyRuntimes, { gid: 1 }],
++  ['inner directory world write', legacyRuntimes, { mode: 0o40777 }], ['inner directory sticky', legacyRuntimes, { mode: 0o41775 }],
++  ['RuntimeRoot setgid', legacyRuntimeRoot, { mode: 0o43775 }], ['leaf sticky', legacyInfo, { mode: 0o101664 }],
++  ['leaf uid', legacyInfo, { uid: 501 }], ['leaf gid', legacyInfo, { gid: 1 }],
++  ['leaf world write', legacyInfo, { mode: 0o100666 }], ['leaf setuid', legacyInfo, { mode: 0o104664 }],
++  ['leaf executable', legacyInfo, { mode: 0o100755 }], ['leaf symlink', legacyInfo, { isSymbolicLink: () => true }],
++  ['leaf wrong type', legacyInfo, { mode: 0o40664 }], ['hardlink', legacyInfo, { nlink: 2 }],
++  ['large file', legacyInfo, { size: 65537 }], ['negative size', legacyInfo, { size: -1 }],
++  ['nested directory device', legacyRuntimes, { dev: 9 }], ['leaf device', legacyInfo, { dev: 9 }],
++];
++for (const [label, path, value] of badStats) for (const production of [false, true]) {
++  test(`${production ? 'production' : 'injected'} legacy refuses ${label} without weakening the valid mounted precondition`, async () => {
++    const f = await legacyFixture();
++    try { await refuses(f, () => { f.overrides.set(path, value); }, production); }
++    finally { await f.cleanup(); }
++  });
++}
++for (const field of ['dev', 'ino', 'uid', 'gid', 'mode', 'size', 'nlink']) {
++  test(`legacy refuses unsafe numeric ${field} rather than recovering rounded identity`, async () => {
++    const f = await legacyFixture({ strictModes: true });
++    try { f.overrides.set(legacyInfo, { [field]: Number(2n ** 54n + 1n) }); await assert.rejects(compatibility(f)); }
++    finally { await f.cleanup(); }
++  });
++}
++test('distinct large integer identities colliding under Number remain distinguishable', async () => {
++  const f = await legacyFixture({ strictModes: true }); const a = 2n ** 54n; const b = a + 1n;
++  try {
++    assert.equal(Number(a), Number(b)); f.overrides.set(legacyInfo, { ino: Number(a) });
++    f.setBefore((operation, path) => { if (operation === 'convert' && path === legacyInfo) f.overrides.set(legacyInfo, { ino: Number(b) }); });
++    await assert.rejects(compatibility(f));
++  } finally { await f.cleanup(); }
++});
++test('legacy accepts exact large bigint identity and detects its one-unit replacement', async () => {
++  const f = await legacyFixture(); const a = 2n ** 54n;
++  try { f.overrides.set(legacyInfo, { ino: a }); await compatibility(f);
++    f.setBefore((operation, path) => { if (operation === 'convert' && path === legacyInfo) f.overrides.set(legacyInfo, { ino: a + 1n }); });
++    await assert.rejects(compatibility(f));
++  } finally { await f.cleanup(); }
++});
++for (const field of ['ctimeNs', 'mtimeNs']) test(`legacy detects ${field} changes below supplied millisecond precision`, async () => {
++  const f = await legacyFixture({ strictModes: true });
++  try { f.overrides.set(legacyInfo, { [field]: 1800000000000000000n });
++    f.setBefore((operation, path) => { if (operation === 'convert' && path === legacyInfo) f.overrides.set(legacyInfo, { [field]: 1800000000000000001n }); });
++    await assert.rejects(compatibility(f));
++  } finally { await f.cleanup(); }
++});
++for (const [label, mutate] of [
++  ['namespace appearance', (f: Fixture) => { f.addMount('iOS_22G86'); }],
++  ['namespace disappearance', (f: Fixture) => { f.missing.add(legacyDirectory); }],
++  ['entry addition', (f: Fixture) => { f.listings.set(legacyDirectory, ['iOS_22G86', 'iOS_23E254a']); }],
++  ['entry removal', (f: Fixture) => { f.listings.set(legacyDirectory, []); }],
++  ['candidate replacement', (f: Fixture) => { f.overrides.set(legacyMount, { ino: 999999n }); }],
++  ['namespace replacement', (f: Fixture) => { f.overrides.set(legacyDirectory, { ino: 999998n }); }],
++] as const) test(`legacy final binding refuses ${label}`, async () => {
++  const absent = label === 'namespace appearance'; const f = await legacyFixture({ absent, strictModes: true, defaultVisible: absent || label === 'namespace disappearance' });
++  try {
++    if (label === 'namespace disappearance') { f.listings.set(legacyDirectory, []); }
++    f.setBefore((operation, path) => { if (operation === 'convert' && path.endsWith('/Contents/Resources/profile.plist') && !path.includes('DeviceTypes')) mutate(f); });
++    await assert.rejects(compatibility(f));
++  } finally { await f.cleanup(); }
++});
++test('stable absent legacy namespace preserves the ordinary explicit runtime proof', async () => {
++  const f = await legacyFixture({ absent: true, defaultVisible: true });
++  try { const proof = await compatibility(f); assert.equal(proof.runtimeBuild, '27A-fixture'); assert.equal(f.effects.filter(e => e.executable === '/usr/sbin/diskutil').length, 0); }
++  finally { await f.cleanup(); }
++});
++for (const name of ['iOS_22G86', 'iOS_23E254a']) test(`an older recognized ${name} cannot be skipped for a different identifier`, async () => {
++  const f = await legacyFixture({ name, strictModes: true, defaultVisible: true });
++  try { f.write(join(legacyDirectory, name, 'Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'), { CFBundleIdentifier: 'com.apple.CoreSimulator.SimRuntime.iOS-26-4' });
++    f.mountResults.set(join(legacyDirectory, name), { exitCode: 0, stdout: readonlyXml(join(legacyDirectory, name)).replace('<key>Writable</key><false/>', '<key>Writable</key><true/>'), stderr: '' });
++    await assert.rejects(compatibility(f));
++  } finally { await f.cleanup(); }
++});
++for (const other of ['default', 'legacy', 'cryptex']) test(`duplicate explicit identifiers across legacy and ${other} refuse`, async () => {
++  const f = await legacyFixture();
++  try { if (other === 'default') f.setDefaultVisible(true); else if (other === 'legacy') f.addMount('iOS_23E254a'); else f.addCryptex(); await assert.rejects(compatibility(f)); }
++  finally { await f.cleanup(); }
++});
++for (const target of [legacyMount + '/arbitrary/Info.plist', legacyMount + '/Contents/Info.plist', legacyInfo.replace('/Contents/', '/../Contents/')]) {
++  test(`artifact roots cannot authorize an invalid recognized legacy target ${target}`, async () => {
++    const f = await legacyFixture();
++    try { await assert.rejects(convert(f, target, [legacyDirectory, legacyMount])); assert.equal(f.launches.length, 0); }
++    finally { await f.cleanup(); }
++  });
++}
++test('legacy refuses more than 64 recognized immediate candidates before any mount query', async () => {
++  const f = await legacyFixture({ strictModes: true, defaultVisible: true });
++  try { f.listings.set(legacyDirectory, Array.from({ length: 65 }, (_, i) => 'iOS_22G' + (i + 1))); await assert.rejects(compatibility(f)); assert.equal(f.effects.filter(e => e.executable === '/usr/sbin/diskutil').length, 0); }
++  finally { await f.cleanup(); }
++});
++for (const [path, names] of [[legacyDirectory, Array.from({ length: 1001 }, (_, i) => 'ignored_' + i)], [legacyRuntimes, Array.from({ length: 1001 }, (_, i) => i + '.simruntime')], [legacyDirectory, ['../escape']], [legacyRuntimes, ['../escape.simruntime']], [legacyDirectory, ['x'.repeat(256)]]] as const) {
++  test(`legacy bounded listing refuses ${path} with ${names.length} entries and invalid/overflow names`, async () => {
++    const f = await legacyFixture();
++    try { await refuses(f, () => { f.listings.set(path, [...names]); }); }
++    finally { await f.cleanup(); }
++  });
++}
++test('legacy shared abort dispatches no filesystem or source effect', async () => {
++  const f = await legacyFixture(); const abort = new AbortController(); abort.abort();
++  try { await assert.rejects(compatibility(f, true, abort.signal)); assert.equal(f.reads.length, 0); assert.equal(f.effects.length, 0); assert.equal(f.launches.length, 0); }
++  finally { await f.cleanup(); }
++});
++test('legacy metadata bytes are checked again after conversion', async () => {
++  const f = await legacyFixture();
++  try { await refuses(f, () => f.setBefore((operation, path) => { if (operation === 'convert' && path === legacyInfo) f.write(legacyInfo, { CFBundleIdentifier: runtimeId, replaced: true }); })); }
++  finally { await f.cleanup(); }
++});
++test('legacy readonly proof can change during a metadata conversion only by refusing the result', async () => {
++  const f = await legacyFixture({ strictModes: true });
++  try { f.setBefore((operation, path) => { if (operation === 'convert' && path === legacyInfo) f.mountResults.set(legacyMount, { exitCode: 0, stdout: readonlyXml(legacyMount).replace('<key>Writable</key><false/>', '<key>Writable</key><true/>'), stderr: '' }); }); await assert.rejects(compatibility(f)); }
++  finally { await f.cleanup(); }
++});
++test('legacy initial entry set cannot be aliased by an injected mutable listing array', async () => {
++  const f = await legacyFixture({ strictModes: true }); const entries = ['iOS_22G86'];
++  try { f.listings.set(legacyDirectory, entries);
++    f.setBefore((operation, path) => { if (operation === 'convert' && path === legacyProfile) entries.push('iOS_23E254a'); });
++    await assert.rejects(compatibility(f));
++  } finally { await f.cleanup(); }
++});
++for (const field of ['ino', 'gid', 'mode', 'size', 'nlink', 'ctimeNs', 'mtimeNs']) for (const stage of ['convert', 'opened-stat', 'final-opened-stat']) {
++  test(`legacy full identity detects ${field} at ${stage}`, async () => {
++    const f = await legacyFixture(); let opened = 0;
++    try { await compatibility(f);
++      f.setBefore((operation, path) => {
++        if (path !== legacyInfo) return;
++        if (operation === 'opened-stat') opened++;
++        if (operation !== (stage === 'convert' ? 'convert' : 'opened-stat') || (stage === 'final-opened-stat' && opened !== 2)) return;
++        f.overrides.set(path, { [field]: ({ ino: 999999n, gid: 0n, mode: 0o100644n, size: 1n, nlink: 2n,
++          ctimeNs: 1800000000000000001n, mtimeNs: 1800000000000000001n } as Record<string, bigint>)[field] });
++      });
++      await assert.rejects(compatibility(f));
++    } finally { await f.cleanup(); }
++  });
++}
++for (const field of ['ino', 'gid', 'mode', 'mtimeNs', 'ctimeNs']) test(`legacy candidate binding detects allowed-value mount ${field} replacement`, async () => {
++  const f = await legacyFixture(); let reads = 0;
++  try { f.setBefore((operation, path) => {
++    if (operation === 'lstat' && path === legacyMount && ++reads === 2) f.overrides.set(path, { [field]: ({ ino: 999991n, gid: 0n, mode: 0o40755n,
++      mtimeNs: 1800000000000000001n, ctimeNs: 1800000000000000001n } as Record<string, bigint>)[field] });
++  }); await assert.rejects(compatibility(f)); }
++  finally { await f.cleanup(); }
++});
++for (const path of [legacyDirectory, legacyRuntimes]) test(`legacy detects identity change during ${path} listing`, async () => {
++  const f = await legacyFixture();
++  try { f.setBefore((operation, p) => { if (operation === 'readdir' && p === path) f.overrides.set(path, { ino: 999999n }); }); await assert.rejects(compatibility(f)); }
++  finally { await f.cleanup(); }
++});
++for (const [label, fields] of [
++  ['numeric nanosecond rounding', { ctimeNs: Number(1800000000000000001n) }],
++  ['mixed precision', { ctimeNs: undefined }],
++  ['nonfinite milliseconds', { ctimeNs: undefined, mtimeNs: undefined, ctimeMs: NaN, mtimeMs: 17.25 }],
++  ['unsafe millisecond integer', { ctimeNs: undefined, mtimeNs: undefined, ctimeMs: Number.MAX_SAFE_INTEGER + 1, mtimeMs: 17.25 }],
++  ['numeric string integer', { ino: '16777243' }],
++  ['fractional identity', { ino: 17.25 }],
++] as const) test(`legacy refuses uncertain ${label}`, async () => {
++  const f = await legacyFixture();
++  try { await refuses(f, () => { f.overrides.set(legacyInfo, { ...fields }); }); }
++  finally { await f.cleanup(); }
++});
++test('legacy preserves fractional safe millisecond timestamps supplied by an injected stat adapter', async () => {
++  const f = await legacyFixture();
++  try { f.overrides.set(legacyInfo, { ctimeNs: undefined, mtimeNs: undefined, ctimeMs: 17.25, mtimeMs: 19.125 }); await compatibility(f);
++    f.setBefore((operation, path) => { if (operation === 'convert' && path === legacyInfo) f.overrides.set(path, { ctimeNs: undefined, mtimeNs: undefined, ctimeMs: 17.2501, mtimeMs: 19.125 }); });
++    await assert.rejects(compatibility(f));
++  } finally { await f.cleanup(); }
++});
++for (const gid of [0n, 80n]) for (const mode of [0o100444n, 0o100644n, 0o100664n]) test(`legacy accepts exact leaf group ${gid} mode ${mode.toString(8)}`, async () => {
++  const f = await legacyFixture();
++  try { for (const path of [legacyInfo, legacyProfile, legacySystem]) f.overrides.set(path, { gid, mode }); await compatibility(f, true); }
++  finally { await f.cleanup(); }
++});
++for (const result of [{ exitCode: 1, stdout: '{}', stderr: '' }, { exitCode: 0, stdout: 'x'.repeat(65537), stderr: '' },
++  { exitCode: 0, stdout: '{}', stderr: 'x'.repeat(65535) }, { exitCode: 0, stdout: '[]', stderr: '' }, { exitCode: 0, stdout: 'null', stderr: '' }] as const) {
++  test(`legacy refuses conversion exit/output/shape ${result.exitCode}/${result.stdout.length}/${result.stderr.length}`, async () => {
++    const f = await legacyFixture();
++    try { await refuses(f, () => { f.convertedResults.set(legacyInfo, result); }); }
++    finally { await f.cleanup(); }
++  });
++}
++test('legacy actual byte input cannot escape 64KiB through an understated stat size', async () => {
++  const f = await legacyFixture();
++  try { await refuses(f, () => { f.write(legacyInfo, 'x'.repeat(65537)); f.overrides.set(legacyInfo, { size: 1n }); }); }
++  finally { await f.cleanup(); }
++});
++for (const target of [legacyInfo, legacyMount]) test(`legacy fixed command bounds reject ${target} options before launch`, async () => {
++  const f = await legacyFixture(); const source = allocationSourceProcess(f.host, [legacyDirectory], f.launch);
++  try { const mount = target === legacyMount; await assert.rejects(source(mount ? '/usr/sbin/diskutil' : '/usr/bin/plutil',
++    mount ? ['info', '-plist', target] : ['-convert', 'json', '-o', '-', '--', target],
++    { shell: false, signal: new AbortController().signal, timeoutMs: 10001, maxOutputBytes: 65536 })); assert.equal(f.launches.length, 0); }
++  finally { await f.cleanup(); }
++});
++test('legacy total runtime bundles share the 1000 bound with ordinary roots', async () => {
++  const f = await legacyFixture({ defaultVisible: true });
++  try { f.listings.set(legacyRuntimes, Array.from({ length: 1000 }, (_, i) => i + '.simruntime')); await assert.rejects(compatibility(f));
++    assert.ok(f.effects.every(e => e.args[5] !== legacyInfo)); }
++  finally { await f.cleanup(); }
++});
++test('legacy refuses duplicate namespace entry aliases', async () => {
++  const f = await legacyFixture();
++  try { f.listings.set(legacyDirectory, ['iOS_22G86', 'iOS_22G86']); await assert.rejects(compatibility(f)); }
++  finally { await f.cleanup(); }
++});
++test('legacy recognized mount grammar does not infer a runtime from a build name', async () => {
++  const f = await legacyFixture({ name: 'iOS_23E254a' });
++  try { const older = f.addMount('iOS_22G86', 'com.apple.CoreSimulator.SimRuntime.iOS-26-4'); const proof = await compatibility(f);
++    assert.equal(proof.runtimeVersion, '27.0'); assert.ok(f.effects.some(e => e.executable === '/usr/sbin/diskutil' && e.args[2] === older)); }
++  finally { await f.cleanup(); }
++});
++for (const production of [false, true]) test(`unrecognized iOS_fixture retains strict account ownership allowance ${production}`, async () => {
++  const f = await legacyFixture({ name: 'iOS_fixture', strictModes: true });
++  try {
++    for (const path of ['/', '/Library', '/Library/Developer', '/Library/Developer/CoreSimulator', legacyDirectory]) f.overrides.set(path, { uid: f.host.account.uid });
++    assert.equal((await compatibility(f, production)).runtimeVersion, '27.0');
++    assert.equal(f.effects.filter(effect => effect.executable === '/usr/sbin/diskutil').length, 0);
++  } finally { await f.cleanup(); }
++});
++test('stable empty legacy presence remains distinct from stable absence and preserves default lookup', async () => {
++  const f = await legacyFixture({ defaultVisible: true });
++  try { f.listings.set(legacyDirectory, []); assert.equal((await compatibility(f)).runtimeBuild, '27A-fixture'); }
++  finally { await f.cleanup(); }
++});
++test('absent legacy namespace still binds the identity of its observed existing ancestor prefix', async () => {
++  const f = await legacyFixture({ absent: true, defaultVisible: true });
++  try { f.setBefore((operation, path) => { if (operation === 'convert' && path === runtimeBundle + '/Contents/Resources/profile.plist') f.overrides.set('/Library/Developer/CoreSimulator', { ino: 888888n }); });
++    await assert.rejects(compatibility(f)); }
++  finally { await f.cleanup(); }
++});
++for (const field of ['dev', 'ino']) for (const path of ['/', '/Library', legacyMount]) test(`legacy refuses unsafe numeric ${field} in ancestor ${path}`, async () => {
++  const f = await legacyFixture();
++  try { await refuses(f, () => { f.overrides.set(path, { [field]: Number(2n ** 54n) }); }); }
++  finally { await f.cleanup(); }
++});
++for (const stage of ['convert', 'opened-stat']) test(`legacy checks shared cancellation at ${stage} without a later conversion`, async () => {
++  const f = await legacyFixture(); const abort = new AbortController();
++  try { f.setBefore((operation, path) => { if (operation === stage && path === legacyInfo) abort.abort(); });
++    await assert.rejects(compatibility(f, false, abort.signal));
++    const index = f.reads.findIndex(read => read.operation === 'opened-stat' && read.path === legacyInfo);
++    if (stage === 'opened-stat') { assert.ok(index >= 0); assert.equal(f.effects.filter(effect => effect.args[5] === legacyInfo).length, 0); }
++  } finally { await f.cleanup(); }
++});
++for (const name of ['iOS_1A1', 'iOS_999ZZZ999999z']) test(`legacy recognizes only bounded exact build grammar ${name}`, async () => {
++  const f = await legacyFixture({ name });
++  try { assert.equal((await compatibility(f)).runtimeVersion, '27.0'); assert.equal(f.effects.filter(e => e.executable === '/usr/sbin/diskutil').length, 8); }
++  finally { await f.cleanup(); }
++});
++for (const name of ['iOS_1000A1', 'iOS_1AAAA1', 'iOS_1A1000000', 'iOS_1A1zz', 'iOS_1a1', 'prefix_iOS_22G86']) {
++  test(`unrecognized ${name} retains strict permissions and receives no mounted exception`, async () => {
++    const f = await legacyFixture({ name });
++    try { await assert.rejects(compatibility(f)); assert.equal(f.effects.filter(e => e.executable === '/usr/sbin/diskutil').length, 0); }
++    finally { await f.cleanup(); }
++  });
++}
++test('legacy mount termination waits for actual close after deadline and bounded escalation', async t => {
++  const f = await legacyFixture(); t.mock.timers.enable({ apis: ['setTimeout'] });
++  const child = Object.assign(new EventEmitter(), { stdout: new PassThrough(), stderr: new PassThrough(), signals: [] as string[], kill(signal: string) { this.signals.push(signal); return true; } });
++  let launched = false; let settled = false;
++  const launch = (() => { launched = true; return child; }) as unknown as typeof spawn;
++  const source = allocationSourceProcess(f.host, [], launch);
++  const pending = source('/usr/sbin/diskutil', ['info', '-plist', legacyMount], { shell: false, signal: new AbortController().signal, timeoutMs: 10000, maxOutputBytes: 65536 }).then(value => { settled = true; return value; }, error => { settled = true; throw error; });
++  pending.catch(() => {});
++  try {
++    for (let i = 0; i < 20 && !launched && !settled; i++) await nextTurn(); assert.equal(launched, true);
++    t.mock.timers.tick(10000); assert.deepEqual(child.signals, ['SIGTERM']); assert.equal(settled, false);
++    t.mock.timers.tick(250); assert.deepEqual(child.signals, ['SIGTERM', 'SIGKILL']); assert.equal(settled, false);
++    child.emit('close', null, 'SIGKILL'); assert.equal((await pending).exitCode, null);
++  } finally { if (launched && !settled) child.emit('close', null, 'SIGKILL'); await pending.catch(() => {}); await f.cleanup(); }
++});
++
++const correctionLeaves = ['Contents/Info.plist', 'Contents/Resources/profile.plist',
++  'Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'] as const;
++async function correctionFixture(kind: 'legacy' | 'cryptex') {
++  const fixture = await legacyFixture({ absent: kind === 'cryptex' });
++  if (kind === 'cryptex') fixture.addCryptex();
++  const mount = kind === 'legacy' ? legacyMount : cryptexMount;
++  const bundle = kind === 'legacy' ? legacyBundle : cryptexBundle;
++  fixture.overrides.set(mount, { ino: 101n });
++  return { fixture, mount, bundle };
++}
++function clearCorrectionLog(f: Fixture) {
++  f.reads.length = 0; f.identities.length = 0; f.effects.length = 0; f.launches.length = 0;
++}
++for (const kind of ['legacy', 'cryptex'] as const) for (const leaf of correctionLeaves) {
++  for (const layer of ['caller', 'factory conversion', 'factory bootstrap'] as const) {
++    test(`review correction ${kind} binds ${leaf} during restored ${layer} identity`, async t => {
++      const { fixture: f, mount, bundle } = await correctionFixture(kind); const path = join(bundle, leaf);
++      const production = layer !== 'caller'; let changed = false; let restored = false;
++      try {
++        assert.equal((await compatibility(f, production)).runtimeVersion, '27.0');
++        // Derive the injected window from its actual successful filesystem log.
++        const firstOpen = f.reads.findIndex(read => read.operation === 'open' && read.path === path);
++        const lastClose = f.reads.findLastIndex(read => read.operation === 'close' && read.path === path);
++        assert.ok(firstOpen >= 0 && lastClose > firstOpen);
++        const initialMountReads = f.reads.slice(0, firstOpen).filter(read => read.operation === 'lstat' && read.path === mount).length;
++        const finalMountReads = f.reads.slice(0, lastClose).filter(read => read.operation === 'lstat' && read.path === mount).length;
++        clearCorrectionLog(f); let bootstrapStart: number | undefined;
++        f.setBefore((operation, target) => {
++          const mountReads = f.reads.filter(read => read.operation === 'lstat' && read.path === mount).length;
++          const closes = f.reads.filter(read => read.operation === 'close' && read.path === path).length;
++          const change = () => { f.overrides.set(mount, { ino: 202n }); changed = true; };
++          const restore = () => { f.overrides.set(mount, { ino: 101n }); restored = true; };
++          if (layer === 'caller' && operation === 'lstat' && target === mount) {
++            if (mountReads === initialMountReads - 2) change();
++            if (mountReads === finalMountReads + 1) restore();
++          }
++          // Production windows use only this fixture's real open/close log, not
++          // the injected layer's observation counts.
++          if (layer === 'factory conversion' && operation === 'close' && target === path) {
++            if (closes === 1) change();
++            if (closes === 3) restore();
++          }
++          if (layer === 'factory bootstrap') {
++            if (operation === 'close' && target === path && closes === 1) bootstrapStart = mountReads;
++            if (operation === 'lstat' && target === mount && bootstrapStart !== undefined) {
++              if (mountReads === bootstrapStart + 2) change();
++              if (mountReads === bootstrapStart + 4) restore();
++            }
++          }
++        });
++        const outcome = await compatibility(f, production).then(value => ({ value, error: undefined }),
++          error => ({ value: undefined, error }));
++        const observed = f.identities.filter(identity => identity.operation === 'lstat' && identity.path === mount);
++        t.diagnostic(JSON.stringify({ kind, leaf, layer, changed, restored, accepted: !!outcome.value,
++          mountObservations: observed.map((identity, index) => ({ ordinal: index + 1, ino: identity.ino })),
++          metadataConversions: f.effects.filter(effect => effect.args[5] === path).length,
++          fixtureLaunches: f.launches.length, readonlyXmlUnchanged: !f.mountResults.size }));
++        assert.equal(changed, true, 'The valid mounted fixture must enter the mismatch window');
++        assert.ok(observed.some(identity => identity.ino === '202'), 'The verifier must actually observe the changed mount');
++        if (outcome.value) assert.equal(restored, true, 'The original accepting trace restores identity before final validation');
++        assert.equal(outcome.error?.reason, 'HOST_PREREQUISITE_MISSING', 'Observed identity restoration must refuse compatibility');
++        assert.equal(f.effects.filter(effect => effect.args[5] === path).length, 0, 'No mismatching metadata conversion may launch');
++      } finally { await f.cleanup(); }
++    });
++  }
++  for (const production of [false, true]) for (const stage of ['open-result', 'eof-read-result'] as const) {
++    test(`review correction ${kind} ${production ? 'factory' : 'caller'} ${leaf} abort at ${stage} permits close only`, async t => {
++      const { fixture: f, bundle } = await correctionFixture(kind); const path = join(bundle, leaf);
++      const abort = new AbortController(); let abortIndex = -1; let effectsAtAbort = -1; let launchesAtAbort = -1;
++      try {
++        assert.equal((await compatibility(f, production)).runtimeVersion, '27.0'); clearCorrectionLog(f);
++        f.setBefore((operation, target) => {
++          const opens = f.reads.filter(read => read.operation === 'open' && read.path === path).length;
++          if (!abort.signal.aborted && operation === stage && target === path && opens === (production ? 2 : 1)) {
++            abortIndex = f.reads.length; effectsAtAbort = f.effects.length; launchesAtAbort = f.launches.length; abort.abort();
++          }
++        });
++        await assert.rejects(compatibility(f, production, abort.signal), { reason: 'HOST_PREREQUISITE_MISSING' });
++        const later = f.reads.slice(abortIndex);
++        t.diagnostic(JSON.stringify({ kind, leaf, layer: production ? 'factory' : 'caller', stage,
++          abortObserved: abort.signal.aborted, postAbort: later, newEffects: f.effects.length - effectsAtAbort,
++          newFixtureLaunches: f.launches.length - launchesAtAbort }));
++        assert.ok(abortIndex >= 0, 'Cancellation must occur inside the requested awaited file stage');
++        assert.deepEqual(later, [{ operation: 'close', path }], 'After shared abort only one handle close may dispatch');
++        assert.equal(f.effects.length, effectsAtAbort); assert.equal(f.launches.length, launchesAtAbort);
++      } finally { await f.cleanup(); }
++    });
++  }
++}

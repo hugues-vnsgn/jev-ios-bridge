@@ -1,0 +1,119 @@
+{
+  "approvedPolicySha256": "14dd5566f99845a4ee6562404c16610c732795f311b7df1e95ecb306dd599492",
+  "auditChecks": 2479,
+  "auditFailures": 0,
+  "axis": "Spec implementation correction",
+  "candidate": "dcc06dc0939d73d860cae9e03d4f1f47bacbd279",
+  "correctionBase": "4fa9cc99a94ebb8c79e6d1fe347ccb83745da13d",
+  "findings": [
+    {
+      "category": "partial requirement / apparently implemented but incorrect production path",
+      "id": "P1",
+      "policyLine": 27,
+      "severity": "P1",
+      "source": [
+        "src/observed/allocation.ts:177",
+        "src/observed/allocation.ts:178",
+        "src/observed/allocation.ts:180",
+        "src/observed/allocation-config.ts:410",
+        "src/observed/allocation-config.ts:411",
+        "src/observed/allocation-config.ts:294"
+      ],
+      "summary": "Real allocator passes an unregistered tracking wrapper, dropping private candidate/full-path context before factory inner conversion."
+    }
+  ],
+  "fullApprovedPolicyBaseline": "720cb380d07102d72b20a6a4f5f7787a0ab88f2b",
+  "fullArchiveReliance": {
+    "dependencyCachesNotRetraversed": true,
+    "manifestSha256": "0dd519569eedfbbc5d7a4125a0d439b4bddd87fd005944cfd9be8d7593927bc0",
+    "preservationIndexSha256": "2d75dd17bc285104b39c8a913cc81e0bc7af02d67731785fa5ca0ab630aac88f",
+    "recordedLinks10NotFollowedByReviewer": true,
+    "retainedRegular12913": true,
+    "rootAuditSha256": "0507512d037a5e0daf0735a305b7191f2253eb6f4932c60ff8c75d26535d5a55",
+    "sealSha256": "a02a96e9f650a650d4898340a2a2141ee340b88ddaa25ccd87caeeb2d6bdc842"
+  },
+  "gateCountsBothExactNodes": {
+    "corrective": 42,
+    "coverage": 595,
+    "focused": 746,
+    "officialDefault": 2240,
+    "typecheckAndBuild": "exit0 actual close"
+  },
+  "outputs": {
+    "audit.json": {
+      "bytes": 264591,
+      "mode": "0600",
+      "sha256": "5a1ecadfc7e7d6a2ed1ced5e0caeb183e6de1ba46361d8c6aae421e7584c979c"
+    },
+    "audit.py": {
+      "bytes": 12903,
+      "mode": "0600",
+      "sha256": "e8038f40841eb1807219260d355a18db825d70de7209809eceb8ffc6c4870ac4"
+    },
+    "clause-correspondence.md": {
+      "bytes": 7833,
+      "mode": "0600",
+      "sha256": "5b8af9ebde3b722569a0433ad429624ba43b2198ddb6533404ee2472f7d21f3c"
+    },
+    "commit-list.txt": {
+      "bytes": 96,
+      "mode": "0600",
+      "sha256": "4f12f9462fa2e900d6b58eaea04d0f6fd7cff5166e9fea96422bb8a8459f280b"
+    },
+    "correction.diff": {
+      "bytes": 33992,
+      "mode": "0600",
+      "sha256": "7acf7c26477ecc7dceb1c37a574a49430b07e71c5a6c0c1d94541de0c4a3c62d"
+    },
+    "full-policy.diff": {
+      "bytes": 83209,
+      "mode": "0600",
+      "sha256": "f2799d7101fa73c8eb87c8f53dc948de23a4d72adc3b4f1e1f6c86cae4bf559c"
+    },
+    "input-manifest.json": {
+      "bytes": 191880,
+      "mode": "0600",
+      "sha256": "7f3a135daf18efd7f47dee3a16bef0ba4f32fc48908fe868a4b4b66ea75a5919"
+    },
+    "production-call-trace.md": {
+      "bytes": 4617,
+      "mode": "0600",
+      "sha256": "bb0240c24f8b14668a8aaba263393e8d16818c23f0be9045a4c2980753783f54"
+    },
+    "prose-audit.json": {
+      "bytes": 553,
+      "mode": "0600",
+      "sha256": "23345e5232a11bae4afc5e29616d8116f7cb0fe2d58fcba3b08e9656f5d99217"
+    },
+    "prose-check.txt": {
+      "bytes": 947,
+      "mode": "0600",
+      "sha256": "955a4d82e0ed2893de3b869d10e4b27f8d40fb33dbf234c7edec67bc38db035c"
+    },
+    "report.md": {
+      "bytes": 2617,
+      "mode": "0600",
+      "sha256": "13539096f9e47bdce966a8b1e7367637f88b58724eaffd972ad8ebf1ef7b1d17"
+    }
+  },
+  "pending": [
+    "P1 actual allocator private invocation propagation/regression",
+    "Clause37 candidate clean installed/startup proofs BEFORE integration",
+    "Fresh integrated/native/live/L01-L05/ticket12 acceptance"
+  ],
+  "permissions": "directory0700/files0600",
+  "qualifications": [
+    "No Source edits/tests/builds/native operations by reviewer.",
+    "Wrapped dcc mismatch/restoration trace is static and unexecuted; direct-factory raw42 diagnostics are genuine historical/red-green evidence.",
+    "Prepared direct-factory operator note does not repair actual allocator wrapper.",
+    "Original4fa FAIL and Node24 unresolved lower cause remain immutable."
+  ],
+  "reliedInputFiles": 673,
+  "reportWords": 263,
+  "resolvedFinding": "P2; direct registered factory P1 paths pass but actual allocator P1 remains",
+  "sealedAtUtc": "2026-10-09T11:16:47.129349+00:00",
+  "selfExclusion": "freeze.json SHA256 returned to Root",
+  "source443Protected440Compiled69": "PASS exact Git/working/protected and final build/default correspondence",
+  "unaskedBehaviorFindings": 0,
+  "verdict": "FAIL"
+}

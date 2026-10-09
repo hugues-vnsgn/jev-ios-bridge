@@ -1,0 +1,179 @@
+{
+  "candidateCommit": "dcc06dc0939d73d860cae9e03d4f1f47bacbd279",
+  "candidateContextSha256": "0f4dfabdfb9d8059fa6b992c9f35eeca7880f2fb354c12340b78053866ef67fb",
+  "verdict": "AUTHOR VALIDATION PASS; independent reviews and installed/startup remain pending",
+  "checks": [
+    {
+      "name": "Source443 are regular nonalias files",
+      "pass": true
+    },
+    {
+      "name": "Compiled dist contains no symlinks or nonregular leaves",
+      "pass": true
+    },
+    {
+      "name": "Current443 match frozen candidate",
+      "pass": true
+    },
+    {
+      "name": "Current69 compiled match frozen candidate",
+      "pass": true
+    },
+    {
+      "name": "HEAD remains corrected frozen candidate",
+      "pass": true
+    },
+    {
+      "name": "Every final predefault gate binds current Source",
+      "pass": true
+    },
+    {
+      "name": "Node26 official unchanged default actual close exit0",
+      "pass": true
+    },
+    {
+      "name": "Node26 complete2240 counts",
+      "pass": true
+    },
+    {
+      "name": "Node26 raw stdout/stderr hashes and result binding",
+      "pass": true
+    },
+    {
+      "name": "Node26 Source443 and compiled69 unchanged",
+      "pass": true
+    },
+    {
+      "name": "Node26 all3 contemporaneous owned Source archives",
+      "pass": true
+    },
+    {
+      "name": "Node26 all69 compiled bytes retained",
+      "pass": true
+    },
+    {
+      "name": "Node26 keys/loaders/warning suppression absent",
+      "pass": true
+    },
+    {
+      "name": "Node26 exact raw final build command marker",
+      "pass": true
+    },
+    {
+      "name": "Node24 official unchanged default actual close exit0",
+      "pass": true
+    },
+    {
+      "name": "Node24 complete2240 counts",
+      "pass": true
+    },
+    {
+      "name": "Node24 raw stdout/stderr hashes and result binding",
+      "pass": true
+    },
+    {
+      "name": "Node24 Source443 and compiled69 unchanged",
+      "pass": true
+    },
+    {
+      "name": "Node24 all3 contemporaneous owned Source archives",
+      "pass": true
+    },
+    {
+      "name": "Node24 all69 compiled bytes retained",
+      "pass": true
+    },
+    {
+      "name": "Node24 keys/loaders/warning suppression absent",
+      "pass": true
+    },
+    {
+      "name": "Node24 exact raw final build command marker",
+      "pass": true
+    },
+    {
+      "name": "Official defaults strictly serial after natural close",
+      "pass": true
+    }
+  ],
+  "predefaultAuditSha256": "3819ca2d668fb7e8162f0df4c9c307d4522524e1e482d25ff75590858e7e105b",
+  "regressionMatrixSha256": "7ec6d36cce34b074ef8c40b0300e1d5a0c30d43d2a39a719ab1bd52083b705ed",
+  "defaults": {
+    "26": {
+      "command.json": {
+        "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/actual-default-node26/command.json",
+        "sha256": "6219fc49ea52cf6d9dfcac9e93868b9b7ed1375ae070b4bce5cde36247e24c63"
+      },
+      "launch.json": {
+        "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/actual-default-node26/launch.json",
+        "sha256": "54291fea48393653edbd4184f05c78df847d3879b51d4e98de34d89d8feeae28"
+      },
+      "result.json": {
+        "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/actual-default-node26/result.json",
+        "sha256": "0b71fd149053d0fac03efb17276fbf880f2215f7625c7c72ba04b22cde6d484d"
+      },
+      "stdout.txt": {
+        "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/actual-default-node26/stdout.txt",
+        "sha256": "4a56d6b64b8ec3f14d3684dcccb9acd14a0b7a9dca387d58dfca62840e9f3245"
+      },
+      "stderr.txt": {
+        "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/actual-default-node26/stderr.txt",
+        "sha256": "e49b794cae6663ada86efea1579a0381251a5d4d1ff9b0cefed3e5622b21317d"
+      },
+      "before.json": {
+        "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/actual-default-node26/before.json",
+        "sha256": "1522a1990f956a206ad4ee43def00f035373f98e3e4c63611526fefa1c7e7a14"
+      },
+      "compiled-manifest.json": {
+        "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/actual-default-node26/compiled-manifest.json",
+        "sha256": "09ff0790c03fc180602c48408e71e1e46614744afe6de328b567574d267a42b1"
+      },
+      "version.json": {
+        "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/actual-default-node26/version.json",
+        "sha256": "60f7ecd43a2684a150baaa3d3d7b84ccbece50c662d39fa94c9f43d34ce22c9e"
+      },
+      "derivedBuildProof": {
+        "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/actual-default-node26-derived-build-proof.json",
+        "sha256": "03e6d5666a7af6a215a9cb09263a09e1b7659ac650937c662f17b1ee681a657e"
+      }
+    },
+    "24": {
+      "command.json": {
+        "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/actual-default-node24/command.json",
+        "sha256": "cb46a7f20c27dbc206662622509f2a9a8e6115de1015f8a2069e630f7341041b"
+      },
+      "launch.json": {
+        "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/actual-default-node24/launch.json",
+        "sha256": "c7c3965b698a3b1c6653a09d124544b35999973bdcc91795565c132aab1cf4fb"
+      },
+      "result.json": {
+        "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/actual-default-node24/result.json",
+        "sha256": "96bc68c8c44ede61b431fb75113aed32b79ae69aea8b95d0124230ac63cf67a1"
+      },
+      "stdout.txt": {
+        "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/actual-default-node24/stdout.txt",
+        "sha256": "dcfa7cb89bcb97fca3bb487ffebc825b71d77a476a55b0a49e2bc6f4cf585300"
+      },
+      "stderr.txt": {
+        "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/actual-default-node24/stderr.txt",
+        "sha256": "edd8ec36d2c86fec158798a728482d81342ce87a826046c8d1792ee86a8273f9"
+      },
+      "before.json": {
+        "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/actual-default-node24/before.json",
+        "sha256": "1522a1990f956a206ad4ee43def00f035373f98e3e4c63611526fefa1c7e7a14"
+      },
+      "compiled-manifest.json": {
+        "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/actual-default-node24/compiled-manifest.json",
+        "sha256": "09ff0790c03fc180602c48408e71e1e46614744afe6de328b567574d267a42b1"
+      },
+      "version.json": {
+        "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/actual-default-node24/version.json",
+        "sha256": "bb8c97c49b1506d4865dc20665d98a1540bf08339f4567544d9411379aafc3b7"
+      },
+      "derivedBuildProof": {
+        "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/actual-default-node24-derived-build-proof.json",
+        "sha256": "c4202c35c86d57789d449fecdbb7c600c25bedf750fc9e471d274753ebe4ac24"
+      }
+    }
+  }
+}

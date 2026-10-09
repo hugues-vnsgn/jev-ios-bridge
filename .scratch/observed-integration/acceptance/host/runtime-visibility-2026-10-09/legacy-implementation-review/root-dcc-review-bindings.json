@@ -1,0 +1,34 @@
+{
+  "atUtc": "2026-10-09T11:22:37.025655+00:00",
+  "candidate": "dcc06dc0939d73d860cae9e03d4f1f47bacbd279",
+  "correctionBase": "4fa9cc99a94ebb8c79e6d1fe347ccb83745da13d",
+  "finding": "Real allocation.ts trackedProcess wrapper hides the private registered factory invoker. Direct-only tests omit the production composition seam.",
+  "held": [
+    "Candidate clean package/startup",
+    "Source integration",
+    "Native compatibility",
+    "Operational entry",
+    "L01-L05",
+    "Ticket12"
+  ],
+  "readerQualification": "An earlier shape-inspection tool call queried nonexistent Standards failed; actual key failedChecks was inspected before this audit. Tool transcript retains that KeyError; no product/reviewer inputs or assertion weakened.",
+  "scope": "Root rehashed exact relied-on inputs/outputs and positive correspondence checks; no Source, test, build or native execution.",
+  "scriptSha256": "b65a0b337a2539dfc15a86e7b26ae76b73394f8ccf5b2aa3cca84d74e81746a1",
+  "spec": {
+    "checksPassing": 2479,
+    "freezeSha256": "5b026b33e79fed06d0d791f72159a04e9f7c3807c98a1604b41e027bcd369da8",
+    "inputsRehashed": 673,
+    "outputsIncludingFreezeRehashed": 12,
+    "reportSha256": "13539096f9e47bdce966a8b1e7367637f88b58724eaffd972ad8ebf1ef7b1d17",
+    "verdict": "FAIL remaining P1; P2 resolved"
+  },
+  "standards": {
+    "checksPassing": 2337,
+    "inputsRehashed": 606,
+    "manifestSha256": "c524626f207156b759e03fa7fc6037b7a744b4c7f7c31c55bf3f8f94364efbec",
+    "outputsIncludingManifestRehashed": 91,
+    "reportSha256": "317c489f0e887544c952b428f1ee061c6180328e3cac49fc8aff076bb71262a4",
+    "verdict": "FAIL one material design judgment D1; zero hard documented breaches/Fowler-baseline findings"
+  },
+  "status": "PASS review provenance; implementation FAIL"
+}

@@ -1,0 +1,1 @@
+Root notified this reviewer: independent corrected Spec found remaining P1 at allocation.ts:177–180. The tracked SourceProcess wrapper hides productionInvokers registration and drops the caller expectation before inner/bootstrap invocation. Spec seal pending at notification time. This reviewer independently inspected the frozen Source call chain without executing it.

@@ -1,0 +1,175 @@
+{
+  "base": "720cb380d07102d72b20a6a4f5f7787a0ab88f2b",
+  "candidate": "4fa9cc99a94ebb8c79e6d1fe347ccb83745da13d",
+  "hunks": [
+    {
+      "file": "src/observed/allocation-config.ts",
+      "header": "@@ -1,5 +1,5 @@",
+      "documentedBreach": null,
+      "materialHeuristicFinding": null,
+      "documentedRulesConsidered": [
+        "docs/agents/domain.md:41-45 (use glossary vocabulary)",
+        "docs/adr/0005-the-1-0-stability-contract.md:8-17 (stable public surfaces and bridge-owned reason codes)",
+        "docs/adr/0009-bounded-simulator-creation.md:8-12 (explicit runtime and finite allocation budgets)",
+        "docs/domain-boundaries.md:9-20 (one context; private modules sufficient)"
+      ],
+      "reasoning": "BigIntStats is a native type-only import; no dependency or public signature expansion.",
+      "verdict": "PASS Standards axis only"
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "header": "@@ -83,90 +83,132 @@ export const developerDirectory = '/Applications/Xcode.app/Contents/Developer';",
+      "documentedBreach": null,
+      "materialHeuristicFinding": null,
+      "documentedRulesConsidered": [
+        "docs/agents/domain.md:41-45 (use glossary vocabulary)",
+        "docs/adr/0005-the-1-0-stability-contract.md:8-17 (stable public surfaces and bridge-owned reason codes)",
+        "docs/adr/0009-bounded-simulator-creation.md:8-12 (explicit runtime and finite allocation budgets)",
+        "docs/domain-boundaries.md:9-20 (one context; private modules sufficient)"
+      ],
+      "reasoning": "MountedIdentity/ExactTime represent domain proof data; private shared snapshot, mount proof, bytes, and conversion functions avoid duplicate Cryptex/legacy algorithms. Two closed class selectors are not a material Repeated Switches smell. Policy correctness remains Spec-owned.",
+      "verdict": "PASS Standards axis only"
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "header": "@@ -180,9 +222,9 @@ export function allocationSourceProcess(host: InstalledHost, allowedArtifactRoot",
+      "documentedBreach": null,
+      "materialHeuristicFinding": null,
+      "documentedRulesConsidered": [
+        "docs/agents/domain.md:41-45 (use glossary vocabulary)",
+        "docs/adr/0005-the-1-0-stability-contract.md:8-17 (stable public surfaces and bridge-owned reason codes)",
+        "docs/adr/0009-bounded-simulator-creation.md:8-12 (explicit runtime and finite allocation budgets)",
+        "docs/domain-boundaries.md:9-20 (one context; private modules sufficient)"
+      ],
+      "reasoning": "Classifies fixed namespaces before artifact authorization; existing public runner interface retained.",
+      "verdict": "PASS Standards axis only"
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "header": "@@ -190,12 +232,12 @@ export function allocationSourceProcess(host: InstalledHost, allowedArtifactRoot",
+      "documentedBreach": null,
+      "materialHeuristicFinding": null,
+      "documentedRulesConsidered": [
+        "docs/agents/domain.md:41-45 (use glossary vocabulary)",
+        "docs/adr/0005-the-1-0-stability-contract.md:8-17 (stable public surfaces and bridge-owned reason codes)",
+        "docs/adr/0009-bounded-simulator-creation.md:8-12 (explicit runtime and finite allocation budgets)",
+        "docs/domain-boundaries.md:9-20 (one context; private modules sufficient)"
+      ],
+      "reasoning": "Uses shared mounted recognition with fixed argument and launch boundaries; ordinary path trust behavior stays protected.",
+      "verdict": "PASS Standards axis only"
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "header": "@@ -233,8 +275,8 @@ export function allocationSourceProcess(host: InstalledHost, allowedArtifactRoot",
+      "documentedBreach": null,
+      "materialHeuristicFinding": null,
+      "documentedRulesConsidered": [
+        "docs/agents/domain.md:41-45 (use glossary vocabulary)",
+        "docs/adr/0005-the-1-0-stability-contract.md:8-17 (stable public surfaces and bridge-owned reason codes)",
+        "docs/adr/0009-bounded-simulator-creation.md:8-12 (explicit runtime and finite allocation budgets)",
+        "docs/domain-boundaries.md:9-20 (one context; private modules sufficient)"
+      ],
+      "reasoning": "Delegates mounted conversion to the same private algorithm; intentional fresh proof layers, not duplicate code.",
+      "verdict": "PASS Standards axis only"
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "header": "@@ -256,8 +298,8 @@ async function trustedPath(path: string, host: InstalledHost, directory = false)",
+      "documentedBreach": null,
+      "materialHeuristicFinding": null,
+      "documentedRulesConsidered": [
+        "docs/agents/domain.md:41-45 (use glossary vocabulary)",
+        "docs/adr/0005-the-1-0-stability-contract.md:8-17 (stable public surfaces and bridge-owned reason codes)",
+        "docs/adr/0009-bounded-simulator-creation.md:8-12 (explicit runtime and finite allocation budgets)",
+        "docs/domain-boundaries.md:9-20 (one context; private modules sufficient)"
+      ],
+      "reasoning": "Routes mounted plist reads to the shared conversion helper; ordinary stableFile branch remains protected.",
+      "verdict": "PASS Standards axis only"
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "header": "@@ -289,24 +331,50 @@ async function bundles(root: string, suffix: string, host: InstalledHost, signal",
+      "documentedBreach": null,
+      "materialHeuristicFinding": null,
+      "documentedRulesConsidered": [
+        "docs/agents/domain.md:41-45 (use glossary vocabulary)",
+        "docs/adr/0005-the-1-0-stability-contract.md:8-17 (stable public surfaces and bridge-owned reason codes)",
+        "docs/adr/0009-bounded-simulator-creation.md:8-12 (explicit runtime and finite allocation budgets)",
+        "docs/domain-boundaries.md:9-20 (one context; private modules sufficient)"
+      ],
+      "reasoning": "MountedEnumeration groups identity, entry set, and candidate map; one discovery responsibility. Copy/sort protects fixture array identity. No unrelated module reason added.",
+      "verdict": "PASS Standards axis only"
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "header": "@@ -346,24 +414,19 @@ export async function verifyInstalledCompatibility(source: { deviceTypeId: strin",
+      "documentedBreach": null,
+      "materialHeuristicFinding": null,
+      "documentedRulesConsidered": [
+        "docs/agents/domain.md:41-45 (use glossary vocabulary)",
+        "docs/adr/0005-the-1-0-stability-contract.md:8-17 (stable public surfaces and bridge-owned reason codes)",
+        "docs/adr/0009-bounded-simulator-creation.md:8-12 (explicit runtime and finite allocation budgets)",
+        "docs/domain-boundaries.md:9-20 (one context; private modules sufficient)"
+      ],
+      "reasoning": "Legacy and Cryptex discovery consume one private mountedBundles algorithm; explicit selected runtime and existing aggregate caps/errors retained.",
+      "verdict": "PASS Standards axis only"
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "header": "@@ -380,6 +443,8 @@ export async function verifyInstalledCompatibility(source: { deviceTypeId: strin",
+      "documentedBreach": null,
+      "materialHeuristicFinding": null,
+      "documentedRulesConsidered": [
+        "docs/agents/domain.md:41-45 (use glossary vocabulary)",
+        "docs/adr/0005-the-1-0-stability-contract.md:8-17 (stable public surfaces and bridge-owned reason codes)",
+        "docs/adr/0009-bounded-simulator-creation.md:8-12 (explicit runtime and finite allocation budgets)",
+        "docs/domain-boundaries.md:9-20 (one context; private modules sufficient)"
+      ],
+      "reasoning": "Final namespace checks use shared confirmation helpers; no public return surface or reason-code change. This observation does not resolve Spec P1.",
+      "verdict": "PASS Standards axis only"
+    },
+    {
+      "file": "tests/fixtures/observed-legacy-volume-runtime.ts",
+      "header": "@@ -0,0 +1,148 @@",
+      "documentedBreach": null,
+      "materialHeuristicFinding": null,
+      "documentedRulesConsidered": [
+        "docs/agents/domain.md:41-45 (use glossary vocabulary)",
+        "docs/adr/0005-the-1-0-stability-contract.md:8-17 (stable public surfaces and bridge-owned reason codes)",
+        "docs/adr/0009-bounded-simulator-creation.md:8-12 (explicit runtime and finite allocation budgets)",
+        "docs/domain-boundaries.md:9-20 (one context; private modules sufficient)"
+      ],
+      "reasoning": "Canonical temp-root mapper refuses unknown paths; overrides form one hermetic fixture responsibility. Native filesystem delegation maps first; fake process emitter does not launch a child.",
+      "verdict": "PASS Standards axis only"
+    },
+    {
+      "file": "tests/observed-legacy-volume-runtime.test.ts",
+      "header": "@@ -0,0 +1,353 @@",
+      "documentedBreach": null,
+      "materialHeuristicFinding": null,
+      "documentedRulesConsidered": [
+        "docs/agents/domain.md:41-45 (use glossary vocabulary)",
+        "docs/adr/0005-the-1-0-stability-contract.md:8-17 (stable public surfaces and bridge-owned reason codes)",
+        "docs/adr/0009-bounded-simulator-creation.md:8-12 (explicit runtime and finite allocation budgets)",
+        "docs/domain-boundaries.md:9-20 (one context; private modules sufficient)"
+      ],
+      "reasoning": "All 353 lines inspected, including parameterized identity/mount/discovery/cancellation controls and cleanup. Similar test setup follows existing fixture pattern; no material extraction or inheritance finding.",
+      "verdict": "PASS Standards axis only"
+    }
+  ],
+  "baseline": {
+    "Mysterious Name": "Inspected; no material finding. Repository documented rules take precedence; tooling-enforced style omitted.",
+    "Duplicated Code": "Inspected; no material finding. Repository documented rules take precedence; tooling-enforced style omitted.",
+    "Feature Envy": "Inspected; no material finding. Repository documented rules take precedence; tooling-enforced style omitted.",
+    "Data Clumps": "Inspected; no material finding. Repository documented rules take precedence; tooling-enforced style omitted.",
+    "Primitive Obsession": "Inspected; no material finding. Repository documented rules take precedence; tooling-enforced style omitted.",
+    "Repeated Switches": "Inspected; no material finding. Repository documented rules take precedence; tooling-enforced style omitted.",
+    "Shotgun Surgery": "Inspected; no material finding. Repository documented rules take precedence; tooling-enforced style omitted.",
+    "Divergent Change": "Inspected; no material finding. Repository documented rules take precedence; tooling-enforced style omitted.",
+    "Speculative Generality": "Inspected; no material finding. Repository documented rules take precedence; tooling-enforced style omitted.",
+    "Message Chains": "Inspected; no material finding. Repository documented rules take precedence; tooling-enforced style omitted.",
+    "Middle Man": "Inspected; no material finding. Repository documented rules take precedence; tooling-enforced style omitted.",
+    "Refused Bequest": "Inspected; no material finding. Repository documented rules take precedence; tooling-enforced style omitted."
+  },
+  "findingPolicy": "Documented hard breaches separate from heuristic judgments; repo rules override; tooling-enforced matters omitted. Spec findings retained separately."
+}
