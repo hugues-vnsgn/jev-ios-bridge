@@ -1,0 +1,226 @@
+{
+  "atUtc": "2026-10-09T09:31:18.537052+00:00",
+  "status": "PASS evidence correspondence; fresh Node24 official comparison PASS",
+  "candidate": "4fa9cc99a94ebb8c79e6d1fe347ccb83745da13d",
+  "records": {
+    "baseline": {
+      "counts": {
+        "tests": 1999,
+        "pass": 1999,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "actualExit": 0,
+      "actualCloseUtc": "2026-10-09T08:56:44.162587+00:00",
+      "receiptSha256": "0ccbb1fbf272337a598606de6d43ebd931e16d8a5a6988bd294f9a75403e6b44",
+      "stdoutSha256": "cc264d1f73f45777d218930c1e8bea8cafd0fd6f028923f8364aebbc5b0f9263",
+      "stderrSha256": "edd8ec36d2c86fec158798a728482d81342ce87a826046c8d1792ee86a8273f9",
+      "buildReachedRawDerived": true,
+      "originalReceiptBuildField": false,
+      "SourceCount": 441,
+      "compiledCount": 69
+    },
+    "candidate": {
+      "counts": {
+        "tests": 2198,
+        "pass": 2198,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "actualExit": 0,
+      "actualCloseUtc": "2026-10-09T08:59:47.233225+00:00",
+      "receiptSha256": "6b16582fdb2b42cb231339f93008f95fe0e79ca6f25ade16d0ae19e54285d5f6",
+      "stdoutSha256": "7fe0d99579d106132585bace056dcef4100b7e71588ff8a8d8ed3eb0f5d9b831",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "buildReachedRawDerived": true,
+      "originalReceiptBuildField": false,
+      "SourceCount": 443,
+      "compiledCount": 69
+    }
+  },
+  "checks": [
+    {
+      "name": "exact author whole-tree seal",
+      "pass": true
+    },
+    {
+      "name": "12482 regular files and ten recorded links",
+      "pass": true
+    },
+    {
+      "name": "only manifest self excluded",
+      "pass": true
+    },
+    {
+      "name": "Root destination fresh or qualified validated copy resume",
+      "pass": true
+    },
+    {
+      "name": "complete nonfollow inventory",
+      "pass": true
+    },
+    {
+      "name": "recorded link target candidate/host-evidence/jev-host-fault-qwt1BS/public/store-link",
+      "pass": true
+    },
+    {
+      "name": "recorded link target candidate/host-evidence/observed-allocator-XMsTWf/backend/Fixture.app/Fixture",
+      "pass": true
+    },
+    {
+      "name": "recorded link target candidate/host-evidence/jev-host-fault-eKwddc/public/alias",
+      "pass": true
+    },
+    {
+      "name": "recorded link target candidate/host-evidence/jev-host-fault-I57Ysz/public/alias",
+      "pass": true
+    },
+    {
+      "name": "recorded link target candidate/host-evidence/observed-allocator-yV8eR3/backend/Fixture.app/Fixture",
+      "pass": true
+    },
+    {
+      "name": "recorded link target baseline/host-evidence/observed-allocator-xbFVdG/backend/Fixture.app/Fixture",
+      "pass": true
+    },
+    {
+      "name": "recorded link target baseline/host-evidence/jev-host-fault-QwcFTC/public/store-link",
+      "pass": true
+    },
+    {
+      "name": "recorded link target baseline/host-evidence/jev-host-fault-U91Qcm/public/alias",
+      "pass": true
+    },
+    {
+      "name": "recorded link target baseline/host-evidence/observed-allocator-t2mKXn/backend/Fixture.app/Fixture",
+      "pass": true
+    },
+    {
+      "name": "recorded link target baseline/host-evidence/jev-host-fault-zKeJiX/public/alias",
+      "pass": true
+    },
+    {
+      "name": "all regular evidence independently rehashed and copied",
+      "pass": true
+    },
+    {
+      "name": "exact fresh Node24",
+      "pass": true
+    },
+    {
+      "name": "baseline exact unmodified official argv and cwd",
+      "pass": true
+    },
+    {
+      "name": "baseline command/raw/aggregate hashes",
+      "pass": true
+    },
+    {
+      "name": "baseline actual closed exit and serial order",
+      "pass": true
+    },
+    {
+      "name": "baseline raw counts and unchanged expectations",
+      "pass": true
+    },
+    {
+      "name": "baseline before/after exact Source and compiled vectors",
+      "pass": true
+    },
+    {
+      "name": "baseline current Source and compiled correspondence",
+      "pass": true
+    },
+    {
+      "name": "baseline retained scrubbed environment",
+      "pass": true
+    },
+    {
+      "name": "baseline no source/timeout/concurrency repair or author signal",
+      "pass": true
+    },
+    {
+      "name": "baseline truthful preserved original false build field",
+      "pass": true
+    },
+    {
+      "name": "baseline actual raw build reached",
+      "pass": true
+    },
+    {
+      "name": "baseline aggregate derived build proof bound",
+      "pass": true
+    },
+    {
+      "name": "candidate exact unmodified official argv and cwd",
+      "pass": true
+    },
+    {
+      "name": "candidate command/raw/aggregate hashes",
+      "pass": true
+    },
+    {
+      "name": "candidate actual closed exit and serial order",
+      "pass": true
+    },
+    {
+      "name": "candidate raw counts and unchanged expectations",
+      "pass": true
+    },
+    {
+      "name": "candidate before/after exact Source and compiled vectors",
+      "pass": true
+    },
+    {
+      "name": "candidate current Source and compiled correspondence",
+      "pass": true
+    },
+    {
+      "name": "candidate retained scrubbed environment",
+      "pass": true
+    },
+    {
+      "name": "candidate no source/timeout/concurrency repair or author signal",
+      "pass": true
+    },
+    {
+      "name": "candidate truthful preserved original false build field",
+      "pass": true
+    },
+    {
+      "name": "candidate actual raw build reached",
+      "pass": true
+    },
+    {
+      "name": "candidate aggregate derived build proof bound",
+      "pass": true
+    },
+    {
+      "name": "failed default remains historically retained and cause unresolved",
+      "pass": true
+    },
+    {
+      "name": "prior immutable parent preserved final-evidence-manifest.json",
+      "pass": true
+    },
+    {
+      "name": "prior immutable parent preserved diagnostics/isolated-node24/evidence-manifest.json",
+      "pass": true
+    },
+    {
+      "name": "prior immutable parent preserved diagnostics/parallel-three-cases/evidence-manifest.json",
+      "pass": true
+    },
+    {
+      "name": "author seal still unchanged after copy",
+      "pass": true
+    }
+  ],
+  "preservationIndexSha256": "c2eb294502a65ac093b3ee365a03466f4aeb3795d07c749b317a6e3adca3f084",
+  "scope": "Full diagnostic comparison only. Original failed default retained; lower cause unresolved. No native acceptance.",
+  "rootIntegrationSourceUnchanged": true
+}

@@ -1,0 +1,140 @@
+{
+  "captureKind": "post hoc copied tool result and diagnosis, not process recorder",
+  "originalScriptSha256": "c7855098d84b999cbcfaf1c25946f45a1b0ded74581c176cb19ff5418c589522",
+  "error": "AssertionError at line38 assert regular(context)",
+  "toolResult": {
+    "chunk_id": "833c48",
+    "wall_time_seconds": 0.273673625,
+    "exit_code": 1,
+    "original_token_count": 101
+  },
+  "firstCause": "Existing full-suite archives include layouts without test-context.json; preserve them without inventing a test name.",
+  "missingContextArchives": [
+    {
+      "cohort": "baseline",
+      "archive": "early-artifact-inspection",
+      "topEntries": [
+        "backend",
+        "public"
+      ],
+      "publicEntries": [
+        "request.json",
+        "backend-attempts.jsonl",
+        "milestone.jsonl",
+        "public-result.json",
+        "context.json"
+      ]
+    },
+    {
+      "cohort": "baseline",
+      "archive": "early-artifact-staging",
+      "topEntries": [
+        "backend",
+        "public"
+      ],
+      "publicEntries": [
+        "request.json",
+        "backend-attempts.jsonl",
+        "milestone.jsonl",
+        "public-result.json",
+        "context.json"
+      ]
+    },
+    {
+      "cohort": "baseline",
+      "archive": "early-configuration",
+      "topEntries": [
+        "backend",
+        "public"
+      ],
+      "publicEntries": [
+        "request.json",
+        "backend-attempts.jsonl",
+        "milestone.jsonl",
+        "public-result.json",
+        "context.json"
+      ]
+    },
+    {
+      "cohort": "baseline",
+      "archive": "early-host-proof",
+      "topEntries": [
+        "backend",
+        "public"
+      ],
+      "publicEntries": [
+        "request.json",
+        "backend-attempts.jsonl",
+        "milestone.jsonl",
+        "public-result.json",
+        "context.json"
+      ]
+    },
+    {
+      "cohort": "candidate",
+      "archive": "early-artifact-inspection",
+      "topEntries": [
+        "backend",
+        "public"
+      ],
+      "publicEntries": [
+        "request.json",
+        "backend-attempts.jsonl",
+        "milestone.jsonl",
+        "public-result.json",
+        "context.json"
+      ]
+    },
+    {
+      "cohort": "candidate",
+      "archive": "early-artifact-staging",
+      "topEntries": [
+        "backend",
+        "public"
+      ],
+      "publicEntries": [
+        "request.json",
+        "backend-attempts.jsonl",
+        "milestone.jsonl",
+        "public-result.json",
+        "context.json"
+      ]
+    },
+    {
+      "cohort": "candidate",
+      "archive": "early-configuration",
+      "topEntries": [
+        "backend",
+        "public"
+      ],
+      "publicEntries": [
+        "request.json",
+        "backend-attempts.jsonl",
+        "milestone.jsonl",
+        "public-result.json",
+        "context.json"
+      ]
+    },
+    {
+      "cohort": "candidate",
+      "archive": "early-host-proof",
+      "topEntries": [
+        "backend",
+        "public"
+      ],
+      "publicEntries": [
+        "request.json",
+        "backend-attempts.jsonl",
+        "milestone.jsonl",
+        "public-result.json",
+        "context.json"
+      ]
+    }
+  ],
+  "currentNoFollowCounts": {
+    "regular": 12477,
+    "symlinks": 10,
+    "directories": 18899
+  },
+  "productOrTestOrGateChanges": false
+}

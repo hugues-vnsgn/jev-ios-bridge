@@ -1,0 +1,16 @@
+{
+  "rawStdoutSha256": "7fe0d99579d106132585bace056dcef4100b7e71588ff8a8d8ed3eb0f5d9b831",
+  "actualRawBuildLines": [
+    {
+      "line": 2357,
+      "text": "> jev-ios-bridge@1.3.1 build"
+    },
+    {
+      "line": 2358,
+      "text": "> rm -rf dist && tsc -p tsconfig.build.json"
+    }
+  ],
+  "buildReached": true,
+  "originalReceiptBuildField": false,
+  "qualification": "Original matcher assumed plain > tsc; actual unchanged build is rm -rf dist && tsc -p tsconfig.build.json. Original receipt and compiled-after manifest fields remain immutable; this raw-line derivation supplies the correction."
+}

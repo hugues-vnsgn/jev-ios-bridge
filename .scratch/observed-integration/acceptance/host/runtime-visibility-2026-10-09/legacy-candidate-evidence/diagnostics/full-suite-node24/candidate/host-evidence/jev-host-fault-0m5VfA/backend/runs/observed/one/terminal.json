@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "kind": "observed-action",
+  "actionId": "one",
+  "allocationId": "CFD455AB-2046-473A-B68D-FBE5821D60C0",
+  "device": {
+    "platform": "ios-simulator",
+    "udid": "ABCDEF00-0000-4000-8000-000000000001"
+  },
+  "bridgeVersion": "fixture",
+  "state": "terminal",
+  "authority": "committed",
+  "disposition": "retrieved",
+  "cancellationRequested": false,
+  "actionAttempted": false,
+  "actionAcknowledged": false,
+  "observations": 1,
+  "outcome": "already_satisfied",
+  "reason": null,
+  "admission": "available",
+  "allocationState": "retained",
+  "evidence": {
+    "directory": "/private/tmp/observed-allocator-dLQnd2/runs/observed/one",
+    "request": "/private/tmp/observed-allocator-dLQnd2/runs/observed/one/request.json",
+    "observations": [
+      "/private/tmp/observed-allocator-dLQnd2/runs/observed/one/observation-1.json"
+    ],
+    "terminal": null,
+    "exportStatus": "pending"
+  }
+}
