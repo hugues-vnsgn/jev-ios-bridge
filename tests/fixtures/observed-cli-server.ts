@@ -16,6 +16,10 @@ import type { ObservedEvidenceStore } from '../../src/observed/evidence.js';
 import { createObservedComposition, isObservedCommand, validateObservedStartConfiguration } from '../../src/observed/cli.js';
 import { allocationFixture, fixtureDevice } from './observed-allocation-backend.js';
 
+export const mapPublicFixturePath = (root: string, path: string) =>
+  path === root || path.startsWith(root + '/') ? path
+    : path === '/' || /^\/(?:Applications|Library|System|usr|private)(?:\/|$)/.test(path) ? join(root, 'host', path) : path;
+
 export async function setupPublicFixture(root: string) {
   const fixture = await allocationFixture();
   const context = { root: fixture.root, home: fixture.home, store: fixture.store, runsDir: fixture.runsDir, app: fixture.app };
@@ -32,7 +36,7 @@ export function fixtureObserved(root: string, enabled = true, mode = 'observed',
     admission = Admission.forTesting({ root: context.store, backend: 'fake', initialize: false,
       ...(hooks.fault ? { fault: hooks.fault } : {}),
       ...(mode === 'unresolved' ? { fault(point, operation) { if (point === 'beforeCommit' && operation === 'finalize') throw new Error('Fixture finalization fault'); } } : {}) });
-    const map = (path: string) => /^\/(?:Applications|Library|System|usr)(?:\/|$)/.test(path) ? join(context.root, 'host', path) : path;
+    const map = (path: string) => mapPublicFixturePath(context.root, path);
     const fakeFs = { ...fs,
       lstat: ((p: string, ...args: []) => fs.lstat(map(p), ...args)) as typeof fs.lstat,
       open: ((p: string, ...args: [number, number?]) => fs.open(map(p), ...args)) as typeof fs.open,

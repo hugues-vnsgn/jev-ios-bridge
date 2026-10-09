@@ -10,8 +10,31 @@ import type { Stats } from 'node:fs';
 import type { SourceProcess } from '../src/observed/create-source.js';
 import { allocationSourceProcess, developerDirectory, verifyInstalledCompatibility } from '../src/observed/allocation-config.js';
 import { allocationFixture, typeId, runtimeId, runtimeBundle } from './fixtures/observed-allocation-backend.js';
+import { mapPublicFixturePath } from './fixtures/observed-cli-server.js';
 import { cryptexFixture, cryptexDirectory, cryptexMount, cryptexRuntimes, cryptexBundle, cryptexInfo,
   cryptexProfile, cryptexSystem, cryptexRuntimeRoot, readonlyMountXml } from './fixtures/observed-cryptex-runtime.js';
+
+const purePublicRoot = '/private/tmp/jev-public-pure-fixture';
+for (const path of ['/', '/private', cryptexInfo]) {
+  test(`the pure public fixture maps ${path} into its temporary host tree`, () => {
+    assert.equal(mapPublicFixturePath(purePublicRoot, path), join(purePublicRoot, 'host', path));
+  });
+}
+for (const path of [purePublicRoot, join(purePublicRoot, 'home'), join(purePublicRoot, 'runs', 'owned.json')]) {
+  test(`the pure public fixture preserves its owned temporary path ${path}`, () => {
+    assert.equal(mapPublicFixturePath(purePublicRoot, path), path);
+  });
+}
+for (const path of ['/Applications/Xcode.app', '/Library/Developer', '/System/Library', '/usr/bin/plutil']) {
+  test(`the pure public fixture preserves installed mapping for ${path}`, () => {
+    assert.equal(mapPublicFixturePath(purePublicRoot, path), join(purePublicRoot, 'host', path));
+  });
+}
+for (const path of ['/private-other', '/Applications-other', '/opt/fixture', 'relative/fixture']) {
+  test(`the pure public fixture preserves unrelated mapping for ${path}`, () => {
+    assert.equal(mapPublicFixturePath(purePublicRoot, path), path);
+  });
+}
 
 for (const path of ['/', '/private', cryptexInfo]) {
   test(`the installed fixture maps ${path} into its temporary host tree`, async () => {
