@@ -1,0 +1,40 @@
+{
+  "observedAtUtc": "2026-10-09T00:53:35.994416+00:00",
+  "preContinuationHead": "6c97a90c0ec8ba68d801fcbcb721bd6d725eb8f5",
+  "productCommit": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
+  "acceptedHostChecks": {
+    "acceptedHost": {
+      "count": 15,
+      "mismatches": []
+    },
+    "productAndTests": {
+      "count": 437,
+      "mismatches": []
+    }
+  },
+  "runtimeOrTestSourceDelta": 0,
+  "scope": "Metadata evidence and coordinator handoff only; no acceptance execution",
+  "files": {
+    ".scratch/observed-action-rollout/issues/11-live-acceptance.md": "955d75177ab0d3032715e355ae28ac38b7e784fc21535204b62dc5870772894f",
+    ".scratch/observed-action-rollout/live-preflight-recheck-2026-10-09.md": "c216331040c88d91d7064c40fc3716162b4eab7ab5c6bb8c8e7b3e8989efac56",
+    ".scratch/observed-action-rollout/next-work.md": "06fc1f9fba77506bb3bdbd61d776e85f8ccaccb89982f429535aaaaf88e2811b",
+    ".scratch/observed-action-rollout/progress.md": "8eab64d194059f8e34300d4495e285c9d2bf04bb10a371f9b6fed048e011fc95",
+    ".scratch/observed-integration/acceptance/host/live-entry-prerequisites.md": "dea7eff8229365a947e4557feeaabd015276fd5bfc15c43503dbf5b2212cd360",
+    ".scratch/observed-integration/acceptance/host/live-entry-state.json": "6ec7fb28ffab4f9fe5a3a3db17c18cbe001ba24b73793d2434022145df7000f4",
+    ".scratch/observed-integration/acceptance/host/operator-preflight/recheck-2026-10-09/canonical-promotion.json": "3ea6651c8fa5fb007f1c1bf003aa6221ff0dd62e6fb87fff47fe926470ab366c",
+    ".scratch/observed-integration/acceptance/host/operator-preflight/recheck-2026-10-09/context-clarification-submit.json": "509c2ac0ccd4b7c46411d3570df04253c38631b0db2d38a2a244b96e1bbc2297",
+    ".scratch/observed-integration/acceptance/host/operator-preflight/recheck-2026-10-09/operator-binding.json": "9dfff3a04730afca1a136106a873ced5cd43d96dce3978ce351f2a202e702d0b",
+    ".scratch/observed-integration/acceptance/host/operator-preflight/recheck-2026-10-09/previous-inputs.json": "cd31d43b514fea6ee0e53d606d7c22dfb2230f8f461a6c9634e59934c9631513",
+    ".scratch/observed-integration/acceptance/host/operator-preflight/recheck-2026-10-09/previous/report.md": "f1d6105b57567f79edc1c68cc797cf6a18f2f6043b2ce4a9797e463deea03ca1",
+    ".scratch/observed-integration/acceptance/host/operator-preflight/recheck-2026-10-09/previous/versions.json": "bb7424dd82da8be0c70716c70afa4f5e6350e87bfe6eaf23b211c49bfc12f509",
+    ".scratch/observed-integration/acceptance/host/operator-preflight/recheck-2026-10-09/root-audit.json": "155fa37a1f96dcffcdbd22c497e198b5630a7a69fe69ff92f57a30be0051e4c8",
+    ".scratch/observed-integration/acceptance/host/operator-preflight/recheck-2026-10-09/root-static-correspondence.json": "e09ab7a8844c0f6fc494bdeb053d52ac76f28cce585fa7ba52a69cc4ccf559c7",
+    ".scratch/observed-integration/acceptance/host/operator-preflight/recheck-2026-10-09/submit.json": "f448c6517423b66ae930d9b0dfd45955cda6cc7cd0d151c73212154dfa448756",
+    ".scratch/observed-integration/acceptance/live/preflight-2026-10-09/report.md": "5a4f8a835d443626934735edb59870f27ef87c1d10cd4c338e27add96f465f39",
+    ".scratch/observed-integration/acceptance/live/preflight-2026-10-09/versions.json": "9dbe0f698f28b5c9b5983b36381b7e3ff2fa61e8db09026a1d539a64a2c2cad8",
+    ".scratch/observed-integration/acceptance/live/report.md": "5a4f8a835d443626934735edb59870f27ef87c1d10cd4c338e27add96f465f39",
+    ".scratch/observed-integration/acceptance/live/versions.json": "9dbe0f698f28b5c9b5983b36381b7e3ff2fa61e8db09026a1d539a64a2c2cad8",
+    ".scratch/observed-integration/evidence/validation-matrix.md": "a63594156e6692f01005bf29c9829103f3e3f3bab537287362d74a0ce2244a19",
+    ".scratch/observed-integration/implementation-plan.md": "934f053cd415161605ce1cc8f90c6d509e01b756740ee427f5bf6e6809b09102"
+  }
+}

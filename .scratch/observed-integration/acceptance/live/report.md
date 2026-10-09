@@ -1,19 +1,22 @@
-# Live acceptance preflight — UNVERIFIED
+# Live acceptance prerequisite recheck — UNVERIFIED
 
-Read-only runtime and host metadata preflight only. No L01–L05 work was performed. The accepted host gate remains PASS for H01–H09 at product commit b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433. Current HEAD is 087efc19103479391da8bf2d91fc5f1bcc04d7ae; the accepted host evidence commit 38698fbfd1c3048c8eb09706eb3cecf58f006509 is its ancestor. All 15 files listed in accepted-host-freeze.json match their recorded hashes. Root separately reports that 437 current product/test/doc/package paths match the passing gate in .scratch/observed-integration/acceptance/host/post-handoff-source-correspondence.json; this preflight did not execute that 437-path check.
+Captured 2026-10-09. Bounded read-only metadata queries only.
 
-## Runtime prerequisite
+## iOS 27.0 runtime
 
-**No iOS 27.0 runtime bundle is inspectable in the allocator’s supported metadata roots.** The runtime ID required by the current compatibility test fixture is com.apple.CoreSimulator.SimRuntime.iOS-27-0; no bundle under /Library/Developer/CoreSimulator/Profiles/Runtimes or the enumerated per-volume runtime roots was found, so no exact runtime build can be reported. This says nothing about unmounted archive or image catalogs. No simctl command was run.
+No iOS 27.0 .simruntime bundle was found in the allocator-supported metadata roots. The default root query returned a scoped missing-root/empty result; the per-volume runtime-root and bundle searches found no iOS 27.0 bundle. This is a scoped negative only and says nothing about unmounted archives or image catalogs.
 
-The iPhone 17 device-type metadata is present and identifies com.apple.CoreSimulator.SimDeviceType.iPhone-17. Its profile declares minRuntimeVersion 26.0 and a default creation range of 26.0–99.99, so the device type metadata includes iOS 27.0 in its declared compatibility range. Actual runtime-side compatibility remains unverified because no iOS 27.0 runtime profile is inspectable in the allocator’s supported metadata roots.
+- Required runtime identifier: `com.apple.CoreSimulator.SimRuntime.iOS-27-0`.
+- Exact runtime version/build and runtime profile compatibility: **UNVERIFIED**; no matching runtime plist was available to inspect.
+- iPhone 17 metadata is present. Its profile declares minimum runtime 26.0 and default range 26.0–99.99, so device-type metadata includes 27.0; runtime-side compatibility remains **UNVERIFIED**.
+- Host metadata: macOS 27.0.1 (26A434), Xcode 27.0 (27A266a), arm64, Node v26.8.1.
 
-The current CoreSimulator dyld cache names identify iOS 18.6 (22G86, com.apple.CoreSimulator.SimRuntime.iOS-18-6) and iOS 26.4 (23E254a, com.apple.CoreSimulator.SimRuntime.iOS-26-4), but cache entries alone do not establish installed runtimes. An earlier read-only metadata capture recorded iOS 26.4.1 build 23E254a with runtime ID com.apple.CoreSimulator.SimRuntime.iOS-26-4; its runtime bundle paths are absent in this inspection. The machine currently reports macOS 27.0.1 (26A434), Xcode 27.0 (27A266a), arm64, and Node v26.8.1. Installed package metadata reports MobileBuildMCP 2.7.1 and MobileCLI 1.0.14.
+## Live rows and scope
 
-## Verdict and remaining work
+L01–L05 remain **UNVERIFIED**. No tests, builds, device backend, simulator listing, runtime download/install/update, production configuration/store/journal/lease access, migration, allocation, launch, capture, input, or cleanup was performed. No fallback was used.
 
-Runtime prerequisite: **UNVERIFIED in the allocator-supported metadata roots**. Stop here as directed. No fallback, installation, download, or update was attempted. Rows L01–L05 remain **UNVERIFIED**.
+Operational old-writer quiescence and historical journal/lease root declarations or exclusions remain pending, as do production migration/configuration/capacity/storage and fresh app builds.
 
-Operational old-writer quiescence and historical journal/lease root declarations or exclusions are still pending. Even after iOS 27.0 is installed and verified, those facts and Root’s remaining gates are required before any live dispatch.
+## Evidence
 
-Exact argv/cwd/exit/stdout/stderr receipts, metadata input hashes and projections, source hashes, host evidence hashes, and paths are in versions.json. This report and that file are private mode 600 under a mode 700 live/ directory. No commit was made.
+Exact argv, cwd, timestamps, exit status, stdout, stderr, plist hashes, and projections are in `versions.json`. The query environment removed TYPESAFE_API_KEY, NODE_OPTIONS, and NODE_NO_WARNINGS without reading or printing their values.

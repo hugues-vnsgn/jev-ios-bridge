@@ -1,0 +1,23 @@
+{
+  "kind": "Second restart restoration of persistently approved sole operator role",
+  "observedAtUtc": "2026-10-09T00:47:25.249396+00:00",
+  "priorBindingReceipt": ".scratch/observed-integration/acceptance/host/operator-binding-restored.json",
+  "priorTabLeaf": "b0e5a4b6-106b-4dab-a49a-b3933445d4ef:363f3109-5b98-4014-a35c-44287d46a1df",
+  "absenceInventoryRequestId": "bfbbc824-2694-4e9f-9e03-52348e08c915",
+  "absenceInventoryTotalCount": 2,
+  "absenceInventoryTruncated": false,
+  "runtimeId": "b42de811-e8af-40c8-a96c-a825f7bc5f48",
+  "currentTabLeaf": "b0e5a4b6-106b-4dab-a49a-b3933445d4ef:abe2d20e-837b-4e76-bb65-0288efa467bf",
+  "terminalHandle": "term_19640861-824c-4f24-8789-3f584723bc5a",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "workingDirectory": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "startupScreenVerified": true,
+  "idleWaitRequestId": "4a0e627a-d051-4e12-a5c1-0dbd2e4de2bc",
+  "idleWaitSatisfied": true,
+  "codexVersion": "0.161.0",
+  "updatePrompt": "skipped; no update performed",
+  "authorizedNow": "Read-only metadata recheck only",
+  "RootRole": "Coordinator; no device operations",
+  "liveMutationDispatch": "not started"
+}

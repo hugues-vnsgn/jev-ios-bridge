@@ -1,0 +1,114 @@
+{
+  "observedAtUtc": "2026-10-09T00:52:00.696631+00:00",
+  "verdict": "PASS for bounded metadata provenance only",
+  "runtimePrerequisite": "UNVERIFIED; no27.0 bundle in inspected supported roots",
+  "liveRows": {
+    "L01": "UNVERIFIED",
+    "L02": "UNVERIFIED",
+    "L03": "UNVERIFIED",
+    "L04": "UNVERIFIED",
+    "L05": "UNVERIFIED"
+  },
+  "queryReceiptCount": 20,
+  "samePriorArgvCount": 18,
+  "queryChanges": [
+    {
+      "index": 3,
+      "priorArgv": [
+        "ls",
+        "-la",
+        "/Library/Developer/CoreSimulator/Volumes/iOS_22G86",
+        "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a"
+      ],
+      "newArgv": [
+        "find",
+        "/Library/Developer/CoreSimulator/Volumes",
+        "-type",
+        "d",
+        "-path",
+        "*/Library/Developer/CoreSimulator/Profiles/Runtimes",
+        "-print"
+      ]
+    },
+    {
+      "index": 4,
+      "priorArgv": [
+        "find",
+        "/Library/Developer/CoreSimulator/Caches/dyld/26A434",
+        "-maxdepth",
+        "1",
+        "-type",
+        "d",
+        "-print"
+      ],
+      "newArgv": [
+        "find",
+        "/Library/Developer/CoreSimulator/Volumes",
+        "-type",
+        "d",
+        "-path",
+        "*/Library/Developer/CoreSimulator/Profiles/Runtimes/*.simruntime",
+        "-print"
+      ]
+    }
+  ],
+  "queryChangeAssessment": "Two allowed volume runtime-root/bundle queries replace prior explicit volume-directory and cache-directory lists. Second bundle query duplicates existing search; not independent installation proof.",
+  "initialRootComparison": "Initial exact20-argv comparison stopped at these2 differences; corrected scoped comparison recorded here. No mutation or acceptance execution resulted.",
+  "allReceiptsFreshAfterRestoration": true,
+  "expectedScopedMissingDefaultRootExit": 1,
+  "metadataInputs": [
+    {
+      "path": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist",
+      "currentHashMatches": true,
+      "receiptIndexes": [
+        6,
+        8
+      ]
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist",
+      "currentHashMatches": true,
+      "receiptIndexes": [
+        7,
+        9
+      ]
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/version.plist",
+      "currentHashMatches": true,
+      "receiptIndexes": [
+        10,
+        11
+      ]
+    },
+    {
+      "path": "/System/Library/CoreServices/SystemVersion.plist",
+      "currentHashMatches": true,
+      "receiptIndexes": [
+        12,
+        13
+      ]
+    }
+  ],
+  "previousCanonicalFilesPreservedBeforePromotion": {
+    "report.md": true,
+    "versions.json": true
+  },
+  "newFileHashes": {
+    "report.md": "5a4f8a835d443626934735edb59870f27ef87c1d10cd4c338e27add96f465f39",
+    "versions.json": "9dbe0f698f28b5c9b5983b36381b7e3ff2fa61e8db09026a1d539a64a2c2cad8"
+  },
+  "permissions": {
+    "directory": "0o700",
+    "files": {
+      "report.md": "0o600",
+      "versions.json": "0o600"
+    }
+  },
+  "anomalies": [],
+  "operatorCompletionScreenRequestId": "35be251b-e4ea-4ab3-bd56-ae026db7e418",
+  "operatorReportedIdle": true,
+  "coordinationSupplement": "Input accepted; completion screen proves clarification consumed. No independent turn start was observed in supplemental send receipt.",
+  "productionStoreOrDeviceWork": "not dispatched; no such execution in metadata receipts",
+  "limits": "No acceptance tests rerun or live/native/runtime certification. Installed metadata inputs only; no claim about unmounted images/catalogs."
+}

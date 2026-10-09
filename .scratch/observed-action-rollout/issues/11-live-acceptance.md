@@ -5,7 +5,7 @@ Status: ready-for-agent
 Mode: AFK
 Blocked by: 09, 10
 Owner: Existing sole Orca live operator
-Pane: b0e5a4b6-106b-4dab-a49a-b3933445d4ef:363f3109-5b98-4014-a35c-44287d46a1df
+Pane: b0e5a4b6-106b-4dab-a49a-b3933445d4ef:abe2d20e-837b-4e76-bb65-0288efa467bf
 Model: gpt-6-luna
 Effort: high
 Skills: do-test, orca-cli, diagnosing-bugs
@@ -42,3 +42,7 @@ The owner chose to retain the explicit iOS27.0 target and wait for its installat
 ### Restored sole-operator binding
 
 After the next Orca restart, the previously approved sibling leaf was absent from the complete read-only inventory. Root restored that same authorized role beside its existing coordinator pane, with `gpt-6-luna` high and the integration worktree as working directory. Current tab/leaf is `b0e5a4b6-106b-4dab-a49a-b3933445d4ef:363f3109-5b98-4014-a35c-44287d46a1df`, terminal `term_30a0ed61-18e7-49e6-a206-824d107293aa`. Startup screen confirms model/effort and idle readiness. Historical inventory and the old binding remain in acceptance evidence. Host H01–H09 PASS is committed at `38698fbfd1c3048c8eb09706eb3cecf58f006509`. Only read-only runtime/host metadata preflight is dispatched now; production migration/allocation/action/build effects remain gated. Root remains coordinator.
+
+### Sole operator restored after the 2026-10-09 restart
+
+The complete current Orca inventory contained only Root in this repo; the prior sibling was absent. Root restored the persistently approved `gpt-6-luna` high role at tab/leaf `b0e5a4b6-106b-4dab-a49a-b3933445d4ef:abe2d20e-837b-4e76-bb65-0288efa467bf`, terminal `term_19640861-824c-4f24-8789-3f584723bc5a`. Startup screen and satisfied idle wait verify model, effort and integration working directory. The earlier bindings above are historical. All15 accepted host hashes and 437 passing-product/test hashes still match. Only a fresh read-only runtime metadata recheck is authorized; operational facts remain pending and L01–L05 remain UNVERIFIED. Evidence: `acceptance/host/operator-preflight/recheck-2026-10-09/operator-binding.json` relative to `.scratch/observed-integration/`. Root remains coordinator.
