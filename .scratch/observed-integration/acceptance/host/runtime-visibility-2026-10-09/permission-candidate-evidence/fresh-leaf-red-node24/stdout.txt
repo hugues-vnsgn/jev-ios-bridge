@@ -1,0 +1,135 @@
+TAP version 13
+# (node:68002) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: installed fresh leaf owner refuses at the compatibility interface
+not ok 1 - installed fresh leaf owner refuses at the compatibility interface
+  ---
+  duration_ms: 56.531042
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/observed-allocation-config.test.ts:1:18561'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/observed-allocation-config.test.ts:291:9)
+    async Test.run (node:internal/test_runner/test:1069:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:332:3)
+  ...
+# Subtest: installed fresh leaf group-write refuses at the compatibility interface
+not ok 2 - installed fresh leaf group-write refuses at the compatibility interface
+  ---
+  duration_ms: 39.077333
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/observed-allocation-config.test.ts:1:18561'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/observed-allocation-config.test.ts:291:9)
+    async Test.run (node:internal/test_runner/test:1069:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: installed fresh leaf other-write refuses at the compatibility interface
+not ok 3 - installed fresh leaf other-write refuses at the compatibility interface
+  ---
+  duration_ms: 39.608875
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/observed-allocation-config.test.ts:1:18561'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/observed-allocation-config.test.ts:291:9)
+    async Test.run (node:internal/test_runner/test:1069:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: installed fresh leaf symlink refuses at the compatibility interface
+ok 4 - installed fresh leaf symlink refuses at the compatibility interface
+  ---
+  duration_ms: 32.8675
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf type refuses at the compatibility interface
+ok 5 - installed fresh leaf type refuses at the compatibility interface
+  ---
+  duration_ms: 28.490958
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf owner refuses at the process interface
+not ok 6 - installed fresh leaf owner refuses at the process interface
+  ---
+  duration_ms: 26.252292
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/observed-allocation-config.test.ts:1:18561'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/observed-allocation-config.test.ts:295:9)
+    async Test.run (node:internal/test_runner/test:1069:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: installed fresh leaf group-write refuses at the process interface
+not ok 7 - installed fresh leaf group-write refuses at the process interface
+  ---
+  duration_ms: 27.961209
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/observed-allocation-config.test.ts:1:18561'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/observed-allocation-config.test.ts:295:9)
+    async Test.run (node:internal/test_runner/test:1069:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: installed fresh leaf other-write refuses at the process interface
+not ok 8 - installed fresh leaf other-write refuses at the process interface
+  ---
+  duration_ms: 25.3465
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/observed-allocation-config.test.ts:1:18561'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/observed-allocation-config.test.ts:295:9)
+    async Test.run (node:internal/test_runner/test:1069:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: installed fresh leaf symlink refuses at the process interface
+ok 9 - installed fresh leaf symlink refuses at the process interface
+  ---
+  duration_ms: 29.559916
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf type refuses at the process interface
+ok 10 - installed fresh leaf type refuses at the process interface
+  ---
+  duration_ms: 29.997084
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 4
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 492.970666

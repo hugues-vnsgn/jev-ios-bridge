@@ -1,0 +1,21 @@
+{
+  "capturedAtUtc": "2026-10-09T02:29:08.790Z",
+  "hypotheses": [
+    {
+      "rank": 2,
+      "verdict": "STILL_UNKNOWN",
+      "claim": "The iOS27 runtime image lacks a currently exposed usable bundle.",
+      "evidence": "The stable images catalog binds the expected CoreSimulator identifier/build24A434/arm64 to an exact private cryptexd runtime-bundle path. Permitted image-root mnt inventories were empty; the asset AssetData contains only an immediate Restore directory.",
+      "limit": "The catalog path was not followed. State5 was recorded numerically without interpreting its meaning. Catalog location is not current mounted/bundle/compatibility proof."
+    },
+    {
+      "rank": 3,
+      "verdict": "SUPPORTED",
+      "evidenceLevel": "CATALOG_REPORTED_LOCATION_ONLY",
+      "claim": "The iOS27 catalog location is outside production hardcoded runtime search roots.",
+      "evidence": "runtimeInfo.bundlePath references /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime; production searches only the default Profiles/Runtimes and CoreSimulator Volumes/<name>/.../Profiles/Runtimes roots.",
+      "limit": "Direct bundle existence, canonical path/no-symlink chain, identifier/profile/SystemVersion and actual compatible availability remain UNVERIFIED."
+    }
+  ],
+  "acceptanceEvidence": false
+}

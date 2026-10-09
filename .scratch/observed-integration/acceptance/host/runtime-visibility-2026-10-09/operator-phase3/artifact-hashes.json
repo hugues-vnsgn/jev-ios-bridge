@@ -1,0 +1,115 @@
+{
+  "capturedAtUtc": "2026-10-09T02:29:08.794Z",
+  "directoryMode": "0700",
+  "files": [
+    {
+      "path": "candidate-paths.json",
+      "bytes": 10976,
+      "mode": "0600",
+      "sha256": "8ac7edcc956f5cfdcbf3e511b776434699dacfd229f7d0bfbe2108dd831bd29d"
+    },
+    {
+      "path": "catalog.json",
+      "bytes": 30584,
+      "mode": "0600",
+      "sha256": "9eb9df2ee598242ec1f9dd65acd6d9b07083c6317fac9f3163b34d07c8563e4c"
+    },
+    {
+      "path": "child-receipts.json",
+      "bytes": 19464,
+      "mode": "0600",
+      "sha256": "8f534b300eb5726ebea961632d666f905f5beea6a1be81107519fd0f30562823"
+    },
+    {
+      "path": "command.json",
+      "bytes": 111562,
+      "mode": "0600",
+      "sha256": "abd6abbd674252b3b3e848db32bd6e959d1eb610e207134fea0f51717c319c45"
+    },
+    {
+      "path": "context.json",
+      "bytes": 1293,
+      "mode": "0600",
+      "sha256": "ac50d1bc9830132887002b3a86127fe97f66ac1f4bac7bb7353ef11a4d94bd00"
+    },
+    {
+      "path": "hypothesis-results.json",
+      "bytes": 1435,
+      "mode": "0600",
+      "sha256": "3faf4e2b8ae38095193a36e077af09f86704da8b64af1372249db511e13ba1fb"
+    },
+    {
+      "path": "metadata-input-hashes.json",
+      "bytes": 2924,
+      "mode": "0600",
+      "sha256": "fd47edecd91f391c24b94601b2ef371b95656b259b9e37214fbd9425d8e01557"
+    },
+    {
+      "path": "parse-images.py",
+      "bytes": 5728,
+      "mode": "0600",
+      "sha256": "5981d038ddfeb4c48438c79bcd723c9b6a8bccc341c73d1515fa5c733e9d3164"
+    },
+    {
+      "path": "prior-evidence-reference.json",
+      "bytes": 7912,
+      "mode": "0600",
+      "sha256": "35049aefacc4503d7a990eac0690d54f390614b2511f4df07c871565f90d4a8d"
+    },
+    {
+      "path": "probe.mjs",
+      "bytes": 18078,
+      "mode": "0600",
+      "sha256": "53934b98f4e3ef996f7d1bab494527602ccb61daa852fa9ae27127e3092a98d9"
+    },
+    {
+      "path": "report.md",
+      "bytes": 9244,
+      "mode": "0600",
+      "sha256": "c14f3931e15097d1743a3cc62bdfc331706971cf32c102fa30fd8ba96cf0b280"
+    },
+    {
+      "path": "required-repair-and-next-scope.json",
+      "bytes": 2648,
+      "mode": "0600",
+      "sha256": "1e7ae9bd58c17bd1c3403da841db65892b43daa2b6fb7ca455fe030ab1b8b186"
+    },
+    {
+      "path": "result.json",
+      "bytes": 99697,
+      "mode": "0600",
+      "sha256": "2eddca487b522551ba34c7e418fdd7da2de0511203da4b9925404d79eb3673a7"
+    },
+    {
+      "path": "run.mjs",
+      "bytes": 5486,
+      "mode": "0600",
+      "sha256": "919c79c324711a171fa8243505e55e429a2270eb798c3ef7370dcf47b25fd434"
+    },
+    {
+      "path": "source-hashes-after.json",
+      "bytes": 164550,
+      "mode": "0600",
+      "sha256": "c14b62af19fe10df717fd85b62e8dda05646161aaf7942a1a1c62f197f9617a7"
+    },
+    {
+      "path": "source-hashes-before.json",
+      "bytes": 164550,
+      "mode": "0600",
+      "sha256": "f80b82e3916ce8e8168dce260e2ed846f356be4d4e7f0d9e444af3590ec13a3f"
+    },
+    {
+      "path": "stderr.txt",
+      "bytes": 0,
+      "mode": "0600",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "stdout.txt",
+      "bytes": 99697,
+      "mode": "0600",
+      "sha256": "2eddca487b522551ba34c7e418fdd7da2de0511203da4b9925404d79eb3673a7"
+    }
+  ],
+  "scope": "All new phase3 artifacts except this manifest; no batch rerun."
+}

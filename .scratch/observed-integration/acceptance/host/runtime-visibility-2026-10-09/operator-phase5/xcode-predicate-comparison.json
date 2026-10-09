@@ -1,0 +1,43 @@
+{
+  "capturedAtUtc": "2026-10-09T03:12:50.104Z",
+  "status": "COMPLETE_STABLE_METADATA_MATCH",
+  "predicates": [
+    {
+      "id": "CFBundleIdentifier",
+      "verdict": "MATCH",
+      "actual": "com.apple.dt.Xcode",
+      "expected": "com.apple.dt.Xcode",
+      "sourceAnchor": "src/observed/allocation-config.ts:181"
+    },
+    {
+      "id": "CFBundleExecutable",
+      "verdict": "MATCH",
+      "actual": "Xcode",
+      "expected": "Xcode",
+      "sourceAnchor": "src/observed/allocation-config.ts:181"
+    },
+    {
+      "id": "LSMinimumSystemVersion",
+      "verdict": "MATCH",
+      "actual": "26.6",
+      "hostVersion": "27.0.1",
+      "hostVersionBasis": "Accepted phase4 host SystemVersion; not reread phase5.",
+      "sourceAnchor": "src/observed/allocation-config.ts:182"
+    }
+  ],
+  "phase4PreviouslyUnknownGroupsNowMatching": [
+    "xcode_bundle_identifier_and_executable",
+    "xcode_minimum_host_version"
+  ],
+  "completeOriginalJSONBytes": 77555,
+  "completeOriginalJSONSha256": "3b78d94ef7ee6f9ab11db94a9b3aa2513c77668ff00fa3227a7a12186ac32d33",
+  "productionOutputLimitBytes": 65536,
+  "bytesOverProductionLimit": 12019,
+  "productionLimitChanged": false,
+  "acceptanceEvidence": false,
+  "limitations": [
+    "Pure comparison of recorded metadata; no production compatibility/process guard call.",
+    "Host27.0.1 is accepted phase4 metadata; current host plist was not part of phase5.",
+    "Metadata comparison cannot certify runtime discovery, path trust, executable guards, actual runtime operability or acceptance."
+  ]
+}

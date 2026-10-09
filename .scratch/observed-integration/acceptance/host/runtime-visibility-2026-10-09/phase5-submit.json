@@ -1,0 +1,52 @@
+{
+  "atUtc": "2026-10-09T03:03:19.205825+00:00",
+  "argv": [
+    "/usr/local/bin/orca",
+    "terminal",
+    "send",
+    "--terminal",
+    "term_19640861-824c-4f24-8789-3f584723bc5a",
+    "--text",
+    "Root: phase4 bounded provenance accepted. Read .scratch/observed-action-rollout/runtime-visibility-phase5-2026-10-09.md and execute its one finite metadata-only batch as the same sole operator in integration cwd. Owner confirmed GPT-6.1-Sol xhigh. Current production Source remains unchanged; no candidate repair is integrated. Ranked hypotheses and exact diskutil-info/stat/Xcode-plutil paths/budgets are in the brief. Write only new private operator-phase5 evidence, retain all allocations, preserve15+437+68 and phase1-4 hashes. No device/store/config/migration/build/test effects. Return report and idle.",
+    "--enter",
+    "--wait-submit",
+    "10",
+    "--json"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "exitCode": 0,
+  "stdout": {
+    "id": "c3cfcc0f-21c1-42ae-9d4e-c009e6f2c34f",
+    "ok": true,
+    "result": {
+      "send": {
+        "handle": "term_19640861-824c-4f24-8789-3f584723bc5a",
+        "accepted": true,
+        "bytesWritten": 621,
+        "prompt": {
+          "requestId": "541aee3f-6d89-4196-9238-6cb31d56bf3e",
+          "stages": [
+            "input_accepted",
+            "turn_started"
+          ],
+          "provider": "codex",
+          "observation": "supported",
+          "processIncarnation": "56f3d85a-3500-4750-a17f-a8d69dd290a7",
+          "generation": 1,
+          "baselineWorkingSequence": 3,
+          "baselineExplicitWorkingStartedAt": null,
+          "baselinePermissionSequence": 0
+        }
+      },
+      "mutation": {
+        "requestId": "541aee3f-6d89-4196-9238-6cb31d56bf3e",
+        "replayed": false
+      }
+    },
+    "_meta": {
+      "runtimeId": "5f433f83-b0b5-4579-b844-952323951016"
+    }
+  },
+  "stderr": "",
+  "idleEvidence": "Prior terminal read confirmed phase4 Worked for7m40s and idle prompt; show confirmed same connected nonorphaned handle/incarnation and GPT-6.1-Sol xhigh integration cwd."
+}

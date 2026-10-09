@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: installed fresh leaf owner refuses at the compatibility interface
+ok 1 - installed fresh leaf owner refuses at the compatibility interface
+  ---
+  duration_ms: 39.021666
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf group-write refuses at the compatibility interface
+ok 2 - installed fresh leaf group-write refuses at the compatibility interface
+  ---
+  duration_ms: 28.39075
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf other-write refuses at the compatibility interface
+ok 3 - installed fresh leaf other-write refuses at the compatibility interface
+  ---
+  duration_ms: 28.706709
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf symlink refuses at the compatibility interface
+ok 4 - installed fresh leaf symlink refuses at the compatibility interface
+  ---
+  duration_ms: 28.438334
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf type refuses at the compatibility interface
+ok 5 - installed fresh leaf type refuses at the compatibility interface
+  ---
+  duration_ms: 24.9795
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf owner refuses at the process interface
+ok 6 - installed fresh leaf owner refuses at the process interface
+  ---
+  duration_ms: 23.730833
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf group-write refuses at the process interface
+ok 7 - installed fresh leaf group-write refuses at the process interface
+  ---
+  duration_ms: 26.008041
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf other-write refuses at the process interface
+ok 8 - installed fresh leaf other-write refuses at the process interface
+  ---
+  duration_ms: 24.370459
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf symlink refuses at the process interface
+ok 9 - installed fresh leaf symlink refuses at the process interface
+  ---
+  duration_ms: 24.860208
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf type refuses at the process interface
+ok 10 - installed fresh leaf type refuses at the process interface
+  ---
+  duration_ms: 31.628417
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 394.6805

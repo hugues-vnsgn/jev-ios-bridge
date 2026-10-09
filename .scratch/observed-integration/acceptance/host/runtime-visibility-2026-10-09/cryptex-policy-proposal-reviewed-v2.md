@@ -1,0 +1,31 @@
+# Proposed bounded Cryptex runtime support
+
+Status: proposal for independent review; no implementation or owner extension yet.
+
+## Evidence and boundary
+
+The runtime bundle directly confirms iOS 27.0/build24A434. Retained diskutil output names its exact Cryptex mount and reports `Writable=false`, `WritableMedia=false`, `WritableVolume=false`. Root parsed this 3,108-byte XML from repository evidence, verified against the complete original-output hash. [Derivation](root-phase5-retained-mount-derivation.json).
+
+All seven sampled BSD flag values are zero. `/private/var/run` is root-owned, daemon-group, mode0775; its child `com.apple.security.cryptexd` is root/daemon/mode0705 and `mnt` is root/daemon/mode0755. The read-only volume explains ineffective write bits within the mounted runtime, but does not establish immutable ancestry. The owner has approved only the Applications exception so far.
+
+## Proposed policy
+
+Accept the OS-managed Cryptex namespace only under this additional explicit trust assumption: all actors with root or daemon-group authority may replace entries in the exact `/private/var/run` namespace, including the cryptexd directory itself. Limit its writable-ancestor exception to a nonsymlink directory with uid0/gid1/exact0775, used only to reach the fixed `com.apple.security.cryptexd/mnt` subtree. Require those two following directories to be root-owned, nonsymlink and not group/other writable. Do not accept arbitrary daemon-owned or writable paths.
+
+Enumerate only immediate mount-root directories under that fixed subtree, with at most64 Cryptex mount candidates, paths at most4096 characters, and a strict SimulatorRuntime name pattern. Enumerate only the fixed `Library/Developer/CoreSimulator/Profiles/Runtimes` suffix within a confirmed mount. Match the caller's explicit runtime identifier against stable bundle metadata across all supported roots; refuse missing or ambiguous matches. Never interpret a runtime version from the mount name or choose the newest runtime.
+
+For each candidate, require bounded `diskutil info -plist <canonical exact mount root>` output with exact MountPoint and boolean `WritableVolume=false`, `WritableMedia=false`, `Writable=false`. Require a fresh mount query before and after each runtime conversion, stable root/ancestor identities around those queries and stable metadata reads, and every component below the mount on the mount root's device. Reject nested device transitions. Within that confirmed read-only volume, require uid0 and gid0 or80. Permit only directory modes0755/0775, plus01775 only at the exact RuntimeRoot directory; metadata leaves permit only0444/0644/0664, nlink1 and the existing size cap. Reject other-write and setuid/setgid bits, wrong types/owners/groups, aliases and special bits outside that stated exception. Refuse writable, mismatched, missing, changed or uncertain mount metadata. Preserve the original strict policy outside these explicitly bounded paths.
+
+Keep fixed executable/argv/environment authorization, input/output/time budgets, before/opened/final/after metadata identity and byte checks. No host permission changes, runtime downloads, mount operations, direct simulator listing, fallback, native cleanup or new public path override. Authorize the mount-info bootstrap as a distinct exact command class: fixed diskutil executable, exact info/-plist argv, validated canonical mount-root syntax, finite lstat namespace chain and strict executable/Xcode checks. Its bootstrap may inspect the stated namespace before the read-only proof exists; no plutil/runtime byte read is authorized by that inspection alone. The mount query must not call a runtime path verifier that recursively requests another mount query. Keep mount proofs private, scoped to the current read, and refuse their reuse after any observed identity change. XML parsing must be bounded, reject malformed/duplicate fields and external-entity resolution, and interpret the actual boolean Writable* properties without coercion.
+
+## Separate Xcode conversion change
+
+The same stable 34,501-byte Xcode Info plist produces 77,555 bytes of JSON; required fields match. Propose a128KiB combined stdout/stderr budget only for this fixed Xcode Info conversion target, while preserving the64KiB input cap. An implementer may propose bounded field extraction instead if its exact fixed commands and equivalent stability checks are independently reviewed. Keep every other command's current output budget and all input/stability checks. Review the chosen form and genuine regressions before integration.
+
+## Required checks and limits
+
+Add genuine failing regressions before repair for the observed layout; negative cases for every exception, unsafe owner/group/mode/type/symlink, wrong or writable mount, alias/change, output overflow, command/env substitution, enumeration bounds, duplicate explicit-runtime matches and cancellation. Run focused, typecheck/build and actual default gates on both approved Node versions, independent Spec/Standards reviews and clean installed proofs.
+
+This policy trusts OS namespace managers and does not certify atomic safety against their concurrent path replacement. Mount and file before/after checks detect observed changes; they are not a kernel capability pinning every ancestor. Apple documents separate SIP flags and entitlement controls, and XNU defines restricted and no-unlink flags; neither was observed on the seven sampled paths. [Apple filesystem protections](https://developer.apple.com/library/archive/documentation/Security/Conceptual/System_Integrity_Protection_Guide/FileSystemProtections/FileSystemProtections.html), [Apple XNU flag definitions](https://github.com/apple-oss-distributions/xnu/blob/main/bsd/sys/stat.h). Node's documented StatFs fields do not expose mount read-only flags, so the existing storage probe cannot establish this property. [Node24 StatFs](https://nodejs.org/docs/latest-v24.x/api/fs.html#class-fsstatfs).
+
+After independent design review, Root asks only for the additional daemon-namespace trust decision needed by this proposal. Existing Applications authorization persists. Other authorized repair/review work continues while that decision is pending. Actual compatibility, operational entry and L01-L05 remain unverified.

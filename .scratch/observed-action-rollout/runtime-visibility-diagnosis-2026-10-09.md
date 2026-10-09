@@ -1,0 +1,19 @@
+# Runtime visibility diagnosis: first reproduce the production lookup
+
+## Binding and context
+
+Owner explicitly replied “Keep GPT-6.1-Sol xhigh” for the existing sole operator pane. Preserve that model/effort and same terminal `term_19640861-824c-4f24-8789-3f584723bc5a`, tab/leaf `b0e5a4b6-106b-4dab-a49a-b3933445d4ef:abe2d20e-837b-4e76-bb65-0288efa467bf`. Root is coordinator, not a device operator. Work in `/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic`; current HEAD `4004ece782fc9448607605bfe3a54702f8622bb0`, product `b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433`. Root scratch dispatch edits only. Existing host15+Source437 hash correspondence remains required before work.
+
+User screenshot shows Xcode Components/Platform Support iOS27.0,8.07GB, lastused1dayago, no Get button for iOS. Read preserved `acceptance/host/runtime-visibility-2026-10-09/user-evidence-and-binding.json` relative to `.scratch/observed-integration/`. The screenshot proves displayed component state, not exact runtime usable compatibility. Operational ownerfacts and private declaration are already confirmed/prepared; no migration is dispatched.
+
+Read AGENTS.md, `docs/agents/domain.md`, GLOSSARY.md, ADR0009, and `.scratch/observed-integration/evidence/allocation-contract.md`. Apply diagnosing-bugs from `/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge/.agents/skills/diagnosing-bugs/SKILL.md`, plus current do-test/orca-cli context for truthful evidence.
+
+## Phase1 task only
+
+Build and run one small deterministic READ-ONLY probe that calls the ACTUAL unchanged compiled `verifyInstalledCompatibility` exported by `dist/observed/allocation-config.js` for iPhone17 / `com.apple.CoreSimulator.SimRuntime.iOS-27-0`. Use installedHost() and a recording wrapper around the reviewed allocationSourceProcess() ONLY for `/usr/bin/plutil` metadata conversions. Inspect actual signatures first. Allow no simctl/xcrun/device/create or bridge/MCP/SDK calls, even if the process wrapper can allow create. It should produce exact HOST_PREREQUISITE_MISSING vs compatibility-success and a minimal read-only metadata/FS/child trace showing where the production lookup stops. Keep every probe read on approved installed Xcode/OS/runtime/device-type metadata, not production admission/config/journal/lease or simulator Devices roots. You may wrap fs methods to record path/type/uid/mode/nlink and failure code; do not read unrelated app/user files or secrets. Reads open only installed plist files; executable paths are lstat-only. Default metadata path list is in the actual function.
+
+Capture exact argv/cwd/timestamp/exit/signal/stdout/stderr, current Source/compiled hash correspondence and any touched metadata input hashes. Guard child execution so only exact plutil read-only metadata argv is possible, with no real key/options/warning-suppression env values. Never load .env. No test suite, source edits/builds, production store access or live action is allowed. This is a diagnostic probe, not live or host acceptance certification.
+
+Write only NEW files under `.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase1/` (private700/files600), including probe script, command/result records, before/after Source hashes and a report. Root-owned parent receipt/screenshot and other acceptance artifacts are read-only. No commit or shared doc edits. Preserve prior evidence and all claims/devices.
+
+Stop after actual lookup reproduces/refuses or succeeds. Return the one-command invocation, exact result, last successful lookup/first failure, evidence paths, and3–5 falsifiable hypotheses for the next metadata probe; do not test hypotheses yet. Root will state the ranked list before a new bounded dispatch. Stay idle. If a read-only reproduction cannot be formed, return the exact missing seam/access and attempts, without starting device or store work.

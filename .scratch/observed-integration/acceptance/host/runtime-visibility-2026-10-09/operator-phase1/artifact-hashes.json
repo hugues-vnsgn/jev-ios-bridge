@@ -1,0 +1,73 @@
+{
+  "capturedAtUtc": "2026-10-09T02:09:43.707Z",
+  "directoryMode": "0700",
+  "files": [
+    {
+      "path": "command.json",
+      "bytes": 3348,
+      "mode": "0600",
+      "sha256": "f0e6d4a77b65e57783f60542ec230ca70847a95521e11857d2e8e790ba7e2d2d"
+    },
+    {
+      "path": "context.json",
+      "bytes": 946,
+      "mode": "0600",
+      "sha256": "9a2f125d43f70a23b720de7a959dadadc5ebccd1c0d0827ff912a623a8f8ecbb"
+    },
+    {
+      "path": "hypotheses.json",
+      "bytes": 3169,
+      "mode": "0600",
+      "sha256": "c193c24fb3aa58eb292561c19a94fb1ecd86651242578e210921609aaea4718d"
+    },
+    {
+      "path": "probe.mjs",
+      "bytes": 10316,
+      "mode": "0600",
+      "sha256": "ef5f93ce36da3e99e1c97a63484a2cabe60fd3875638e7ec10d9b867b3d69afb"
+    },
+    {
+      "path": "report.md",
+      "bytes": 6895,
+      "mode": "0600",
+      "sha256": "96f53668ee05e9843fb49cc9681a24654925e3affba8fa9b5a599d3c39be2952"
+    },
+    {
+      "path": "result.json",
+      "bytes": 2422,
+      "mode": "0600",
+      "sha256": "9a1cb6f8e560a75ad6f6847d3bb2fd8e247991dfa2f58e77596cb837277c8c6b"
+    },
+    {
+      "path": "run.mjs",
+      "bytes": 4723,
+      "mode": "0600",
+      "sha256": "62c228b867c1b782b6202cdeede18fe778468693af9f6f532672cc9c4116d489"
+    },
+    {
+      "path": "source-hashes-after.json",
+      "bytes": 152726,
+      "mode": "0600",
+      "sha256": "76e0cf5d3d1a3ee8d25cea06d60000bfc4ccbdb90c90cc69fa4317a1b4029ba6"
+    },
+    {
+      "path": "source-hashes-before.json",
+      "bytes": 152726,
+      "mode": "0600",
+      "sha256": "3d50c3562d06e321faab2d43e8d346deacf93871822a317082cd3d891bd4b444"
+    },
+    {
+      "path": "stderr.txt",
+      "bytes": 0,
+      "mode": "0600",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "stdout.txt",
+      "bytes": 2422,
+      "mode": "0600",
+      "sha256": "9a1cb6f8e560a75ad6f6847d3bb2fd8e247991dfa2f58e77596cb837277c8c6b"
+    }
+  ],
+  "scope": "Retrospective hashes of phase1 artifacts; Source/compiled before/after hashes are separately contemporaneous."
+}

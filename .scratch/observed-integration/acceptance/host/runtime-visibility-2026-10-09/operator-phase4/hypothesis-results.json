@@ -1,0 +1,25 @@
+{
+  "capturedAtUtc": "2026-10-09T02:52:38.262Z",
+  "acceptanceEvidence": false,
+  "hypotheses": [
+    {
+      "rank": 2,
+      "verdict": "PARTIALLY_FALSIFIED_USABILITY_UNRESOLVED",
+      "claim": "The expected iOS27 runtime has no currently exposed usable bundle.",
+      "evidence": "No-exposed-bundle portion is falsified at the one approved exact Cryptex candidate: all three runtime metadata plists are stable, regular, single-link and reached through nonsymlink directory ancestors; exact identifier, 27.0 and 24A434 match.",
+      "limit": "Usable production compatibility remains UNVERIFIED. No mount-status/global-supported-root inventory, payload completeness or device operation was tested."
+    },
+    {
+      "rank": 3,
+      "verdict": "SUPPORTED",
+      "evidenceLevel": "DIRECT_STABLE_BUNDLE_METADATA",
+      "claim": "The actual expected .simruntime bundle is outside production hardcoded runtime roots.",
+      "evidence": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime",
+      "limit": "Production discovery and process allowlist still exclude this path. Metadata diagnosis does not certify production compatibility."
+    }
+  ],
+  "newObservedBlockers": [
+    "Xcode Info.plist JSON output exceeds the unchanged 65536-byte production process/capture ceiling.",
+    "The new Cryptex ancestor/metadata scope contains additional group-writable directories and files. The owner trust decision covers only /Applications."
+  ]
+}

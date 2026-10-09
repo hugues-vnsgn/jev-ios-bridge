@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: unsafe SQLite -journal permissions is refused before SQLite can consume or rewrite it
+not ok 1 - unsafe SQLite -journal permissions is refused before SQLite can consume or rewrite it
+  ---
+  duration_ms: 40.272708
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/admission-core.test.ts:1:19318'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    code: 'STATE_UNAVAILABLE'
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/admission-core.test.ts:338:14)
+    Test.runInAsyncScope (node:async_hooks:226:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.start (node:internal/test_runner/test:1262:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: unsafe SQLite -wal permissions is refused before SQLite can consume or rewrite it
+not ok 2 - unsafe SQLite -wal permissions is refused before SQLite can consume or rewrite it
+  ---
+  duration_ms: 69.81525
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/admission-core.test.ts:1:19318'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    code: 'STATE_UNAVAILABLE'
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/admission-core.test.ts:339:14)
+    Test.runInAsyncScope (node:async_hooks:226:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+  ...
+# Subtest: unsafe SQLite -shm permissions is refused before SQLite can consume or rewrite it
+not ok 3 - unsafe SQLite -shm permissions is refused before SQLite can consume or rewrite it
+  ---
+  duration_ms: 16.749166
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/admission-core.test.ts:1:19318'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    code: 'STATE_UNAVAILABLE'
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/admission-core.test.ts:338:14)
+    Test.runInAsyncScope (node:async_hooks:226:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+  ...
+# Subtest: root separation and destination safety refuse without placing a guard inside a source or unsafe directory
+not ok 4 - root separation and destination safety refuse without placing a guard inside a source or unsafe directory
+  ---
+  duration_ms: 119.874667
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/admission-migration.test.ts:3:573'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    code: 'STATE_UNAVAILABLE'
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/admission-migration.test.ts:437:10)
+    Test.runInAsyncScope (node:async_hooks:226:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.start (node:internal/test_runner/test:1262:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 0
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 229.87725

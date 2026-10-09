@@ -1,0 +1,33 @@
+{
+  "createdAtUtc": "2026-10-09T03:08:21.769424+00:00",
+  "candidateWorktree": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+  "integrationWorktree": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "base": "4004ece782fc9448607605bfe3a54702f8622bb0",
+  "candidate": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+  "diffCommand": "git diff 4004ece782fc9448607605bfe3a54702f8622bb0...a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+  "commits": [
+    "a0e68917 fix: trust canonical Applications ancestor for installed Xcode"
+  ],
+  "sourceFreeze": {
+    "src/observed/allocation-config.ts": "cbf94978d97a8e1b2c9413f83a7fa75decdf9c2f40a325ee77b5c2c895fce69d",
+    "tests/observed-allocation-config.test.ts": "f92cd1d0e9ddd93e3c8b1dc04de7ffd4f84fd2c9f65f3055858210fd2949fb66"
+  },
+  "normativeSpec": [
+    "integration .scratch/observed-integration/evidence/allocation-contract.md current owner decision at line78",
+    "integration .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/owner-trust-decision.json",
+    "candidate .scratch/installed-xcode-path-policy/plan.md"
+  ],
+  "scope": "Only exact canonical Applications ancestor for fixed Xcode tree: uid0/gid80/nonsymlink directory/mode&07777===0775; strict Xcode descendants/leaves and unchanged other installed paths/child allowlist/environment/budgets/identity. Also fresh final leaf owner/write/symlink/type revalidation as bounded discovered defect. No Cryptex/discovery/output-limit changes.",
+  "limits": "Local administrator/trusted account namespace management remains trusted; no atomic hostile-admin certificate. Original host acceptance remains associated with b618116 until full repaired integration/installed proofs. Initial default26 failure must stay disclosed as harness umask cause, not hidden.",
+  "standardsSources": [
+    "AGENTS.md",
+    "GLOSSARY.md",
+    "docs/agents/domain.md",
+    "docs/adr/0002-mobilebuildmcp-as-device-layer.md",
+    "docs/adr/0005-the-1-0-stability-contract.md",
+    "docs/adr/0008-durable-ios-admission.md",
+    "docs/adr/0009-bounded-simulator-creation.md",
+    ".scratch/observed-integration/implementation-plan.md"
+  ],
+  "reviewOwnership": "Read-only candidate and integration source; each nonauthor reviewer writes only new private review/spec/ or review/standards/ under this directory; no commands touching native/device/stores/secrets/tests/builds. Root owns integration and shared docs."
+}

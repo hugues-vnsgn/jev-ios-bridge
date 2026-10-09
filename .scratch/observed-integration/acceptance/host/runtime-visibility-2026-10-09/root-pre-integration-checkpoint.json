@@ -1,0 +1,25 @@
+{
+  "at": "2026-10-09T03:41:26.686549+00:00",
+  "integrationHeadBeforeRepair": "4004ece782fc9448607605bfe3a54702f8622bb0",
+  "checks": [
+    {
+      "manifest": ".scratch/observed-integration/acceptance/host/accepted-host-freeze.json",
+      "count": 15,
+      "allMatch": true
+    },
+    {
+      "manifest": ".scratch/observed-integration/acceptance/host/post-handoff-source-correspondence.json",
+      "count": 437,
+      "allMatch": true
+    },
+    {
+      "compiledCount": 68,
+      "allMatch": true
+    }
+  ],
+  "runtimeEvidenceFiles": 237,
+  "runtimeEvidenceBytes": 11116973,
+  "noSymlinksOrEnvFiles": true,
+  "operator": "Same GPT-6.1-Sol xhigh final screen idle after phase5; Root terminal read only, no dispatch.",
+  "ownerDecision": "Bounded Cryptex v3 approved; native operational/live gates remain pending."
+}

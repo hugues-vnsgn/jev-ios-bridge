@@ -1,0 +1,9 @@
+{
+  "atUtc": "2026-10-09T02:44:15.022981+00:00",
+  "userAnswer": "Trust local admins for this one path; prepare the narrow repair (Recommended)",
+  "question": "The allocation contract leaves local administrator trust unspecified. Independent review proposes accepting only the root-owned, admin-group /Applications directory at exactly0775, while keeping strict checks on the Xcode tree. Which host policy should the bridge use?",
+  "policy": "Allow only canonical /Applications as ancestor of fixed /Applications/Xcode.app tree; rootuid0/admingid80/exact0775/directory/no symlink. Preserve strict descendants/leaves, process/metadata guards.",
+  "scope": "Prepare reviewed product repair in isolated checkout; no chmod or live-entry bypass. Runtime diagnosis continues independently.",
+  "reviewRole": "/root/installed_path_policy_review (read-only design assessment; final safety12 not dispatched)",
+  "remainingRequirement": "Regression/gate evidence and independent review before integration/actual compatibility certification."
+}

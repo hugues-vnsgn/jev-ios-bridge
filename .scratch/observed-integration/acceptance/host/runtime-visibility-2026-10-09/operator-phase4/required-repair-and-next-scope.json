@@ -1,0 +1,163 @@
+{
+  "capturedAtUtc": "2026-10-09T02:52:38.262Z",
+  "acceptanceEvidence": false,
+  "repairsPerformed": false,
+  "rankedBlockers": [
+    {
+      "rank": 1,
+      "id": "UNCHANGED_APPLICATIONS_TRUST_CUTOFF",
+      "status": "CONFIRMED_EXISTING",
+      "path": "/Applications",
+      "observed": {
+        "uid": 0,
+        "gid": 80,
+        "mode": "0775"
+      },
+      "repairScope": "Root separately prepares the owner-authorized narrow exception; no repair source is used or integrated by phase4.",
+      "anchor": "src/observed/allocation-config.ts:138"
+    },
+    {
+      "rank": 2,
+      "id": "XCODE_INFO_JSON_OUTPUT_CEILING",
+      "status": "CONFIRMED_DIAGNOSTIC_OUTPUT_OVERFLOW",
+      "path": "/Applications/Xcode.app/Contents/Info.plist",
+      "observed": {
+        "inputBytes": 34501,
+        "inputSha256": "537783b4c639af6ee31208fe2ec12a40bacbb0fc8f5dd2820f54e03063c4dbe8",
+        "exitCode": 0,
+        "signal": null,
+        "stderr": "",
+        "overflow": true,
+        "captureLimitBytes": 65536,
+        "capturedBytes": 65536,
+        "completeOutputSize": null
+      },
+      "repairScope": "A separately reviewed bounded metadata conversion/extraction or output-budget change is required. The same 65536 ceiling is enforced by allocationSourceProcess and installedPlist. Do not expand it or rerun under this dispatch.",
+      "anchors": [
+        "src/observed/allocation-config.ts:99",
+        "src/observed/allocation-config.ts:121",
+        "src/observed/allocation-config.ts:150"
+      ]
+    },
+    {
+      "rank": 3,
+      "id": "CRYPtex_RUNTIME_DISCOVERY_AND_PROCESS_ALLOWLIST",
+      "status": "CONFIRMED_COVERAGE_GAP",
+      "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime",
+      "repairScope": "A separately reviewed finite discovery and exact metadata-child authorization change must cover this expected candidate. Adding a root alone cannot satisfy the existing process allowlist or path trust predicate.",
+      "anchors": [
+        "src/observed/allocation-config.ts:93",
+        "src/observed/allocation-config.ts:197"
+      ]
+    },
+    {
+      "rank": 4,
+      "id": "CRYPtex_ADDITIONAL_GROUP_WRITE_TRUST",
+      "status": "CONFIRMED_ORIGINAL_PREDICATE_REJECTIONS",
+      "paths": [
+        {
+          "path": "/private/var/run",
+          "type": "directory",
+          "uid": 0,
+          "gid": 1,
+          "mode": "0775",
+          "nlink": 36,
+          "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+        },
+        {
+          "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator",
+          "type": "directory",
+          "uid": 0,
+          "gid": 80,
+          "mode": "0775",
+          "nlink": 3,
+          "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+        },
+        {
+          "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles",
+          "type": "directory",
+          "uid": 0,
+          "gid": 80,
+          "mode": "0775",
+          "nlink": 3,
+          "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+        },
+        {
+          "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes",
+          "type": "directory",
+          "uid": 0,
+          "gid": 80,
+          "mode": "0775",
+          "nlink": 3,
+          "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+        },
+        {
+          "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime",
+          "type": "directory",
+          "uid": 0,
+          "gid": 80,
+          "mode": "0775",
+          "nlink": 3,
+          "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+        },
+        {
+          "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents",
+          "type": "directory",
+          "uid": 0,
+          "gid": 80,
+          "mode": "0775",
+          "nlink": 6,
+          "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+        },
+        {
+          "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist",
+          "type": "file",
+          "uid": 0,
+          "gid": 80,
+          "mode": "0664",
+          "nlink": 1,
+          "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+        },
+        {
+          "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources",
+          "type": "directory",
+          "uid": 0,
+          "gid": 80,
+          "mode": "0775",
+          "nlink": 9,
+          "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+        },
+        {
+          "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist",
+          "type": "file",
+          "uid": 0,
+          "gid": 80,
+          "mode": "0664",
+          "nlink": 1,
+          "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+        },
+        {
+          "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot",
+          "type": "directory",
+          "uid": 0,
+          "gid": 80,
+          "mode": "01775",
+          "nlink": 14,
+          "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+        }
+      ],
+      "repairScope": "Owner trust for /Applications does not authorize these paths or metadata leaves. A distinct reviewed trust strategy/decision is required; no permission change or generic group-write allowance was applied.",
+      "anchors": [
+        "src/observed/allocation-config.ts:103",
+        "src/observed/allocation-config.ts:138"
+      ]
+    }
+  ],
+  "exactNextCandidate": {
+    "path": "/Applications/Xcode.app/Contents/Info.plist",
+    "reason": "Only unparsed input among eight; stable hash available. Complete JSON conversion/predicate fields require separately bounded authorization or reviewed product repair.",
+    "followedInPhase4": true,
+    "rerunPerformed": false
+  },
+  "rootRequirement": "Review permission/process/discovery/output-budget design and revalidate host gates before any actual entry. L01-L05 remain UNVERIFIED."
+}

@@ -1,0 +1,131 @@
+{
+  "reviewer": "/root/installed_path_standards_review",
+  "role": "independent nonauthor Standards only",
+  "atUtc": "2026-10-09T03:27:38.542406+00:00",
+  "candidateWorktree": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+  "base": "4004ece782fc9448607605bfe3a54702f8622bb0",
+  "candidate": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+  "diffCommand": "git diff 4004ece782fc9448607605bfe3a54702f8622bb0...a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+  "ownedHashes": {
+    "src/observed/allocation-config.ts": "cbf94978d97a8e1b2c9413f83a7fa75decdf9c2f40a325ee77b5c2c895fce69d",
+    "tests/observed-allocation-config.test.ts": "f92cd1d0e9ddd93e3c8b1dc04de7ffd4f84fd2c9f65f3055858210fd2949fb66"
+  },
+  "committedHashes": {
+    "src/observed/allocation-config.ts": "cbf94978d97a8e1b2c9413f83a7fa75decdf9c2f40a325ee77b5c2c895fce69d",
+    "tests/observed-allocation-config.test.ts": "f92cd1d0e9ddd93e3c8b1dc04de7ffd4f84fd2c9f65f3055858210fd2949fb66"
+  },
+  "findings": {
+    "documentedBreaches": 0,
+    "materialHeuristics": 0
+  },
+  "selectedEvidenceChecks": {
+    "focused-candidate-node26": {
+      "artifactHashes": {
+        "command.json": "6733aaa43bfc22b95779620150e68289a47770e6b0dbee2fb2c94de051ec3106",
+        "stdout.txt": "221f147f36da1a9172ed2d1939f50659cc4585cdc2f76a8d0cba2c9b29c5d8e9",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "allMatchAuthorLedger": true,
+      "exitCode": 0,
+      "counts": {
+        "tests": 78,
+        "pass": 78,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "frozen-focused-node26": {
+      "artifactHashes": {
+        "command.json": "e200bcd7ded05b9451f487b07b798e20b2f0de12f4aef09afb844afd415adc5c",
+        "stdout.txt": "a17ba4a4e626f15780881b7b102b00c453a2ab226be268820b45f21eafbfb2b1",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "allMatchAuthorLedger": true,
+      "exitCode": 0,
+      "counts": {
+        "tests": 78,
+        "pass": 78,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "frozen-focused-node24": {
+      "artifactHashes": {
+        "command.json": "58d012eef471626622d5588069f43dda8df32ef26242111147102f8defd80b93",
+        "stdout.txt": "65c0828c110e17067bfd8d34435c1dd676efdb0ce489f0a46bbe9f7eb5074c41",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "allMatchAuthorLedger": true,
+      "exitCode": 0,
+      "counts": {
+        "tests": 78,
+        "pass": 78,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "focused-commit": {
+      "artifactHashes": {
+        "command.json": "8e07b5babe1e37f987d4325b6f469e90b44ad04d613af680d0d707ad32c7cac7",
+        "stdout.txt": "76d34335295038d256a5260f01f2cfb1000886233d62cc43c63660e3b11fb980",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "allMatchAuthorLedger": true,
+      "exitCode": 0,
+      "counts": {
+        "tests": null,
+        "pass": null,
+        "fail": null,
+        "cancelled": null,
+        "skipped": null,
+        "todo": null
+      }
+    },
+    "full-check-node26-umask022": {
+      "artifactHashes": {
+        "command.json": "793ebda5d3eaa2942de414393b7d1162abd80e486926ee42dcba34958fcba403",
+        "stdout.txt": "f5b7f545e1fcca9a195fc9eb98e25436e06f16a9598a46ab0a839293a3fd8ef6",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "allMatchAuthorLedger": true,
+      "exitCode": 0,
+      "counts": {
+        "tests": 1723,
+        "pass": 1723,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "full-check-node24-umask022-recheck": {
+      "artifactHashes": {
+        "command.json": "3c9bd4c182dd930b91fa2a5dacb0276bed370cf34af938d7fed774610eebac37",
+        "stdout.txt": "067a145dbd44489246d17adce169e56d0e6e9c88b14b8b2a14b9b056a13dde6b",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "allMatchAuthorLedger": true,
+      "exitCode": 0,
+      "counts": {
+        "tests": 1723,
+        "pass": 1723,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    }
+  },
+  "limitations": [
+    "Static bounded delta review only; no new tests/builds/probes",
+    "Earlier exact Node24 failure cause remains unconfirmed",
+    "No integrated installed-host, native, live or ticket12 acceptance"
+  ],
+  "reportWordCount": 276
+}

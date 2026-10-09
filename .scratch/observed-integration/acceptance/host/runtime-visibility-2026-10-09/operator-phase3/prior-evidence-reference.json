@@ -1,0 +1,142 @@
+{
+  "capturedAtUtc": "2026-10-09T02:26:54.939Z",
+  "files": [
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase1/command.json",
+      "expectedSha256": "f0e6d4a77b65e57783f60542ec230ca70847a95521e11857d2e8e790ba7e2d2d"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase1/context.json",
+      "expectedSha256": "9a2f125d43f70a23b720de7a959dadadc5ebccd1c0d0827ff912a623a8f8ecbb"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase1/hypotheses.json",
+      "expectedSha256": "c193c24fb3aa58eb292561c19a94fb1ecd86651242578e210921609aaea4718d"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase1/probe.mjs",
+      "expectedSha256": "ef5f93ce36da3e99e1c97a63484a2cabe60fd3875638e7ec10d9b867b3d69afb"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase1/report.md",
+      "expectedSha256": "96f53668ee05e9843fb49cc9681a24654925e3affba8fa9b5a599d3c39be2952"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase1/result.json",
+      "expectedSha256": "9a1cb6f8e560a75ad6f6847d3bb2fd8e247991dfa2f58e77596cb837277c8c6b"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase1/run.mjs",
+      "expectedSha256": "62c228b867c1b782b6202cdeede18fe778468693af9f6f532672cc9c4116d489"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase1/source-hashes-after.json",
+      "expectedSha256": "76e0cf5d3d1a3ee8d25cea06d60000bfc4ccbdb90c90cc69fa4317a1b4029ba6"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase1/source-hashes-before.json",
+      "expectedSha256": "3d50c3562d06e321faab2d43e8d346deacf93871822a317082cd3d891bd4b444"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase1/stderr.txt",
+      "expectedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase1/stdout.txt",
+      "expectedSha256": "9a1cb6f8e560a75ad6f6847d3bb2fd8e247991dfa2f58e77596cb837277c8c6b"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase1/artifact-hashes.json",
+      "expectedSha256": "a02eb5b10bb2b0828710dcf6c90797e2aaf1694b8769b1bc82c64e74fefbd988"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-phase1-audit.json",
+      "expectedSha256": "58e75f038849387d8383a1d5ae05761d58370ec04d9eb20cf2e57e077962821d"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/user-evidence-and-binding.json",
+      "expectedSha256": "d4613fa55aeab8350e593e883d43f02dee3bbeb2b340da638b9da0ab5b1972e4"
+    },
+    {
+      "path": ".scratch/observed-action-rollout/runtime-visibility-phase2-2026-10-09.md",
+      "expectedSha256": "be1e50c382f18a4df74cb4ab2282d9aec413f85a0b35d3cf9b08b384756efd12"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase2/candidate-paths.json",
+      "expectedSha256": "9d5297fd21d7df5a335e69e0f4026a574e47947cafc4b29d571862f63fd8bd3f"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase2/child-receipts.json",
+      "expectedSha256": "9f1ab692fb984e10e3ca9c2d2a1c4aea8d31f06be14f2968bf4fb9e6d29ac81e"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase2/command.json",
+      "expectedSha256": "3a1cf687f0e520f29c1e9c8818f28829fb77718c16e8ff11090475173e4b8bc2"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase2/context.json",
+      "expectedSha256": "f3d28663a921d5e3166f7f40b5edd1e8c0126909042e1140a527695128a66ad4"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase2/hypothesis-results.json",
+      "expectedSha256": "fafaf3456ffb581f23143b633813b3c4a4753ce2894c2b96dcf3f4ec4ce3c303"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase2/metadata-input-hashes.json",
+      "expectedSha256": "1d4411baef31f6f7e100eac591b6b91f269d20515bbee42e61d8d68969cd73af"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase2/prior-evidence-reference.json",
+      "expectedSha256": "af74688ec8efbcc84df4f036e2cb6b10feaa7116f28f334e65f9db3d96b86012"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase2/probe.mjs",
+      "expectedSha256": "787d5afc0c468aaf99ea3c0dc3bf6afb8754d5b32b02cabc11faccc64124f5d0"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase2/report.md",
+      "expectedSha256": "ffed2cbc9dd632132ce2f8084ff3f1c0fef30c64b1e076e28083de337c011664"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase2/result.json",
+      "expectedSha256": "a17c238acc01be4e2ff1dbc6f8564d988091bcfb5eed4808195368770a64b4a6"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase2/run.mjs",
+      "expectedSha256": "a4f1727ad65f2cb97de4e44ccc96a16d146ba12c65241b78a040d3b9f6ea5cb7"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase2/source-hashes-after.json",
+      "expectedSha256": "a9ef58468cdbe8980cf43974a5e86896c012875feac1a147c1d9a81254273d33"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase2/source-hashes-before.json",
+      "expectedSha256": "d1a0ae4ff3d7068eb1de7315869bfac0c144f74fc8f807f8974c7604719d8d8b"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase2/stderr.txt",
+      "expectedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase2/stdout.txt",
+      "expectedSha256": "a17c238acc01be4e2ff1dbc6f8564d988091bcfb5eed4808195368770a64b4a6"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase2/artifact-hashes.json",
+      "expectedSha256": "de708b64ac5bb7c68535731b347632ecdab87c9ab6ebe8431e3480d2037c526d"
+    },
+    {
+      "path": ".scratch/observed-action-rollout/runtime-visibility-phase3-2026-10-09.md",
+      "expectedSha256": "249119c230c36365637f6db808660483a6db09b5431931065b1d14682bf5003c"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase3/probe.mjs",
+      "expectedSha256": "53934b98f4e3ef996f7d1bab494527602ccb61daa852fa9ae27127e3092a98d9"
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase3/parse-images.py",
+      "expectedSha256": "5981d038ddfeb4c48438c79bcd723c9b6a8bccc341c73d1515fa5c733e9d3164"
+    }
+  ],
+  "scope": "Immutable phase1/2 artifacts, consumed parent receipts/briefs, current phase3 brief and exact probe/parser script bytes."
+}

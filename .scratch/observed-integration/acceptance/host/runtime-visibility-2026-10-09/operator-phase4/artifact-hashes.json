@@ -1,0 +1,115 @@
+{
+  "capturedAtUtc": "2026-10-09T02:52:38.266Z",
+  "directoryMode": "0700",
+  "files": [
+    {
+      "path": "ancestor-stats.json",
+      "bytes": 25497,
+      "mode": "0600",
+      "sha256": "d34de8ab4d2f5984860ccab94ff055e51ee5e633b5f61a448e501b990127e773"
+    },
+    {
+      "path": "candidate-paths.json",
+      "bytes": 1761,
+      "mode": "0600",
+      "sha256": "abb3b7e52184a934fc60a30c4106ef24dfa6516e0d8983b1c31401346fc57080"
+    },
+    {
+      "path": "child-receipts.json",
+      "bytes": 30785,
+      "mode": "0600",
+      "sha256": "12526412b61c7a0000ee12912a03eba3f2a8e8c1736f85dcbe31300a4a2c2387"
+    },
+    {
+      "path": "command.json",
+      "bytes": 529123,
+      "mode": "0600",
+      "sha256": "8389f8013c5359545e7053a31071a8fb999f5f63801e21240ed921179e8c3095"
+    },
+    {
+      "path": "context.json",
+      "bytes": 1609,
+      "mode": "0600",
+      "sha256": "119046c12adfeb4d8acb497067cbaf644b3d5d90aa2b706f966812a1ecf3cd81"
+    },
+    {
+      "path": "hypothesis-results.json",
+      "bytes": 1570,
+      "mode": "0600",
+      "sha256": "b4d6bbaa08f08fab692b424f3e0e82ae3a246210e482ccbdbb23690e03e427f3"
+    },
+    {
+      "path": "metadata-input-hashes.json",
+      "bytes": 13648,
+      "mode": "0600",
+      "sha256": "96f778afaeadd0164980726a4be38ada0e03b0f48b30dc12c443ce725dec19ff"
+    },
+    {
+      "path": "metadata-predicate-comparison.json",
+      "bytes": 9968,
+      "mode": "0600",
+      "sha256": "397976fef454b7c8719edbce8aaecb38041527151d03390b8aeb1b4bb128b325"
+    },
+    {
+      "path": "prior-evidence-reference.json",
+      "bytes": 12965,
+      "mode": "0600",
+      "sha256": "40579b7ff28d953a604faf588fd9af7c9cb6a8c5048d5ee6ae71835b6de60c17"
+    },
+    {
+      "path": "probe.mjs",
+      "bytes": 12467,
+      "mode": "0600",
+      "sha256": "185cc4e7a375e6329fef04b2190a03ec7e2414e034693480032bc332b8fef9ba"
+    },
+    {
+      "path": "report.md",
+      "bytes": 14516,
+      "mode": "0600",
+      "sha256": "958a1b508f0ecf7ac00026709d462aeb70179704cb2ab380d5235c3eda8e1ed3"
+    },
+    {
+      "path": "required-repair-and-next-scope.json",
+      "bytes": 7337,
+      "mode": "0600",
+      "sha256": "dd79cdd0d74a5bcd5ef2f61b86e800fa86ea28ae34f937ee8c599dc5549b972d"
+    },
+    {
+      "path": "result.json",
+      "bytes": 473657,
+      "mode": "0600",
+      "sha256": "acc2e7a0186b762f9c9bd041c003218376af9025790c0f56f7163d56b4b6345f"
+    },
+    {
+      "path": "run.mjs",
+      "bytes": 5195,
+      "mode": "0600",
+      "sha256": "934ee99c13276a26365508471619ebf8a417074baa9225e99d7a1b39aa3f2d0c"
+    },
+    {
+      "path": "source-hashes-after.json",
+      "bytes": 172197,
+      "mode": "0600",
+      "sha256": "a313ae60b324ca2166c14bec651f82448111b51d5fad20fa570e5106ace22f7b"
+    },
+    {
+      "path": "source-hashes-before.json",
+      "bytes": 172197,
+      "mode": "0600",
+      "sha256": "2e56831475b6831db18377af12e3a2a5b40237f1b1468353b31e9918a27dcbf5"
+    },
+    {
+      "path": "stderr.txt",
+      "bytes": 0,
+      "mode": "0600",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "stdout.txt",
+      "bytes": 473657,
+      "mode": "0600",
+      "sha256": "acc2e7a0186b762f9c9bd041c003218376af9025790c0f56f7163d56b4b6345f"
+    }
+  ],
+  "scope": "All new phase4 files except this manifest. One bounded installed-metadata batch; no rerun."
+}

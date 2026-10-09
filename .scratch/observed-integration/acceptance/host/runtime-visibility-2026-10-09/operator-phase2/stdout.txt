@@ -1,0 +1,3795 @@
+{
+  "schemaVersion": 1,
+  "scope": "Phase2 once-only installed metadata batch. No production compatibility rerun; no catalog-reported path followed.",
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "startedAt": "2026-10-09T02:18:01.237Z",
+  "completedAt": "2026-10-09T02:18:01.268Z",
+  "hostAccountUid": 501,
+  "fixedTrustTargets": [
+    {
+      "path": "/Applications/Xcode.app/Contents/Info.plist",
+      "type": "file"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/version.plist",
+      "type": "file"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/MacOS/Xcode",
+      "type": "file"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer",
+      "type": "directory"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/usr/bin/simctl",
+      "type": "file"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform",
+      "type": "directory"
+    },
+    {
+      "path": "/System/Library/CoreServices/SystemVersion.plist",
+      "type": "file"
+    },
+    {
+      "path": "/usr/bin/xcrun",
+      "type": "file"
+    },
+    {
+      "path": "/usr/bin/plutil",
+      "type": "file"
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes",
+      "type": "directory"
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Profiles/Runtimes",
+      "type": "directory"
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Volumes",
+      "type": "directory"
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Images",
+      "type": "directory"
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Cryptex",
+      "type": "directory"
+    }
+  ],
+  "ancestorStats": [
+    {
+      "path": "/",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 23,
+      "size": 736,
+      "dev": 16777231,
+      "ino": 2,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "path": "/Applications",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 80,
+      "mode": "0775",
+      "modeBits": 16893,
+      "nlink": 41,
+      "size": 1312,
+      "dev": 16777231,
+      "ino": 121903578,
+      "mtimeMs": 1791511343964.2007,
+      "ctimeMs": 1791511343964.2007
+    },
+    {
+      "path": "/Applications/Xcode.app",
+      "ok": true,
+      "type": "directory",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 3,
+      "size": 96,
+      "dev": 16777231,
+      "ino": 122200455,
+      "mtimeMs": 1788438105000,
+      "ctimeMs": 1791214461924.288
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents",
+      "ok": true,
+      "type": "directory",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 15,
+      "size": 480,
+      "dev": 16777231,
+      "ino": 122200456,
+      "mtimeMs": 1788438069000,
+      "ctimeMs": 1791214423222.7183
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Info.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 34501,
+      "dev": 16777231,
+      "ino": 122273017,
+      "mtimeMs": 1788426977000,
+      "ctimeMs": 1791214388288.9666
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/version.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 530,
+      "dev": 16777231,
+      "ino": 122381919,
+      "mtimeMs": 1788429526000,
+      "ctimeMs": 1791214419808.644
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/MacOS",
+      "ok": true,
+      "type": "directory",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 3,
+      "size": 96,
+      "dev": 16777231,
+      "ino": 122227347,
+      "mtimeMs": 1791214398515.3574,
+      "ctimeMs": 1791214398515.3574
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/MacOS/Xcode",
+      "ok": true,
+      "type": "file",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "modeBits": 33261,
+      "nlink": 1,
+      "size": 79472,
+      "dev": 16777231,
+      "ino": 122312738,
+      "mtimeMs": 1788503680000,
+      "ctimeMs": 1791214398515.3574
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer",
+      "ok": true,
+      "type": "directory",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 8,
+      "size": 256,
+      "dev": 16777231,
+      "ino": 122201011,
+      "mtimeMs": 1788111593000,
+      "ctimeMs": 1791214376446.1582
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/usr",
+      "ok": true,
+      "type": "directory",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 7,
+      "size": 224,
+      "dev": 16777231,
+      "ino": 122226844,
+      "mtimeMs": 1788438051000,
+      "ctimeMs": 1791214376446.1333
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/usr/bin",
+      "ok": true,
+      "type": "directory",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 116,
+      "size": 3712,
+      "dev": 16777231,
+      "ino": 122226845,
+      "mtimeMs": 1791214424094.505,
+      "ctimeMs": 1791214424094.505
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/usr/bin/simctl",
+      "ok": true,
+      "type": "file",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "modeBits": 33261,
+      "nlink": 1,
+      "size": 1357,
+      "dev": 16777231,
+      "ino": 122374053,
+      "mtimeMs": 1787536121000,
+      "ctimeMs": 1791214417423.9167
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms",
+      "ok": true,
+      "type": "directory",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 12,
+      "size": 384,
+      "dev": 16777231,
+      "ino": 122202068,
+      "mtimeMs": 1788111594000,
+      "ctimeMs": 1791214376255.415
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform",
+      "ok": true,
+      "type": "directory",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 9,
+      "size": 288,
+      "dev": 16777231,
+      "ino": 122223195,
+      "mtimeMs": 1791214419846.368,
+      "ctimeMs": 1791214419846.368
+    },
+    {
+      "path": "/System",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 12,
+      "size": 384,
+      "dev": 16777231,
+      "ino": 1152921500311879700,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "path": "/System/Library",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 166,
+      "size": 5312,
+      "dev": 16777231,
+      "ino": 1152921500311918300,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "path": "/System/Library/CoreServices",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 218,
+      "size": 6976,
+      "dev": 16777231,
+      "ino": 1152921500312080600,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "path": "/System/Library/CoreServices/SystemVersion.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0444",
+      "modeBits": 33060,
+      "nlink": 1,
+      "size": 604,
+      "dev": 16777231,
+      "ino": 1152921500312109400,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "path": "/usr",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 11,
+      "size": 352,
+      "dev": 16777231,
+      "ino": 1152921500312607500,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "path": "/usr/bin",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 934,
+      "size": 29888,
+      "dev": 16777231,
+      "ino": 1152921500312607500,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "path": "/usr/bin/xcrun",
+      "ok": true,
+      "type": "file",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 33261,
+      "nlink": 1,
+      "size": 199024,
+      "dev": 16777231,
+      "ino": 1152921500312609000,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "path": "/usr/bin/plutil",
+      "ok": true,
+      "type": "file",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 33261,
+      "nlink": 1,
+      "size": 1023712,
+      "dev": 16777231,
+      "ino": 1152921500312608500,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "path": "/Library",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 69,
+      "size": 2208,
+      "dev": 16777231,
+      "ino": 121899901,
+      "mtimeMs": 1791339607192.8103,
+      "ctimeMs": 1791339607192.8103
+    },
+    {
+      "path": "/Library/Developer",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 8,
+      "size": 256,
+      "dev": 16777231,
+      "ino": 678336,
+      "mtimeMs": 1791212757672.2527,
+      "ctimeMs": 1791212757672.2527
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 7,
+      "size": 224,
+      "dev": 16777231,
+      "ino": 678351,
+      "mtimeMs": 1778208951628.6755,
+      "ctimeMs": 1778208951628.6755
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Profiles",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 3,
+      "size": 96,
+      "dev": 16777231,
+      "ino": 678352,
+      "mtimeMs": 1764688585000,
+      "ctimeMs": 1769353130520.055
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 132,
+      "size": 4224,
+      "dev": 16777231,
+      "ino": 678353,
+      "mtimeMs": 1791212748702.9885,
+      "ctimeMs": 1791212748702.9885
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Profiles/Runtimes",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/Library/Developer/CoreSimulator/Profiles/Runtimes'"
+      }
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Volumes",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 4,
+      "size": 128,
+      "dev": 16777231,
+      "ino": 681957,
+      "mtimeMs": 1791259686662.6653,
+      "ctimeMs": 1791259686662.6653
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Images",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 32052143,
+      "mtimeMs": 1791510760877.9177,
+      "ctimeMs": 1791510760877.9177
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Cryptex",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 32052147,
+      "mtimeMs": 1778212364574.0059,
+      "ctimeMs": 1778212364574.0059
+    },
+    {
+      "path": "/System/Library/AssetsV2",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 104,
+      "size": 3328,
+      "dev": 16777231,
+      "ino": 121902277,
+      "mtimeMs": 1791506456660.4082,
+      "ctimeMs": 1791506456660.4082
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 6,
+      "size": 192,
+      "dev": 16777231,
+      "ino": 121919045,
+      "mtimeMs": 1791259687801.878,
+      "ctimeMs": 1791259687801.878
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset",
+      "ok": true,
+      "type": "directory",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 122957647,
+      "mtimeMs": 1791254814214.9993,
+      "ctimeMs": 1791255152735.3357
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset",
+      "ok": true,
+      "type": "directory",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 42307527,
+      "mtimeMs": 1781004184529.1282,
+      "ctimeMs": 1791211428214.8008
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset",
+      "ok": true,
+      "type": "directory",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 32052419,
+      "mtimeMs": 1778209509428.6187,
+      "ctimeMs": 1791211428214.4502
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/com_apple_MobileAsset_iOSSimulatorRuntime.xml",
+      "ok": true,
+      "type": "file",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 2147,
+      "dev": 16777231,
+      "ino": 122957630,
+      "mtimeMs": 1791254475448.3142,
+      "ctimeMs": 1791254475448.433
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Images/images.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 3929,
+      "dev": 16777231,
+      "ino": 143205214,
+      "mtimeMs": 1791510760877.6472,
+      "ctimeMs": 1791510760878.4644
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetInfo.plist",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetInfo.plist'"
+      }
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/Info.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 875,
+      "dev": 16777231,
+      "ino": 122968428,
+      "mtimeMs": 1791254814214.5637,
+      "ctimeMs": 1791254814214.5637
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/AssetInfo.plist",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/AssetInfo.plist'"
+      }
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/Info.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 800,
+      "dev": 16777231,
+      "ino": 42309180,
+      "mtimeMs": 1781004184528.9348,
+      "ctimeMs": 1781004184528.9348
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/AssetInfo.plist",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/AssetInfo.plist'"
+      }
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/Info.plist",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/Info.plist'"
+      }
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetInfo.plist",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetInfo.plist'"
+      }
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/Info.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 878,
+      "dev": 16777231,
+      "ino": 32054028,
+      "mtimeMs": 1778209509428.472,
+      "ctimeMs": 1778209509428.472
+    }
+  ],
+  "trustDiagnostics": [
+    {
+      "path": "/Applications/Xcode.app/Contents/Info.plist",
+      "expectedType": "file",
+      "inspection": "COMPLETE",
+      "firstProductionPredicateFailure": {
+        "path": "/Applications",
+        "ok": true,
+        "failures": [
+          "GROUP_OR_OTHER_WRITABLE"
+        ]
+      },
+      "allObservedFailures": [
+        {
+          "path": "/Applications",
+          "ok": true,
+          "failures": [
+            "GROUP_OR_OTHER_WRITABLE"
+          ]
+        }
+      ],
+      "originalPredicateWouldPass": false
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/version.plist",
+      "expectedType": "file",
+      "inspection": "COMPLETE",
+      "firstProductionPredicateFailure": {
+        "path": "/Applications",
+        "ok": true,
+        "failures": [
+          "GROUP_OR_OTHER_WRITABLE"
+        ]
+      },
+      "allObservedFailures": [
+        {
+          "path": "/Applications",
+          "ok": true,
+          "failures": [
+            "GROUP_OR_OTHER_WRITABLE"
+          ]
+        }
+      ],
+      "originalPredicateWouldPass": false
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/MacOS/Xcode",
+      "expectedType": "file",
+      "inspection": "COMPLETE",
+      "firstProductionPredicateFailure": {
+        "path": "/Applications",
+        "ok": true,
+        "failures": [
+          "GROUP_OR_OTHER_WRITABLE"
+        ]
+      },
+      "allObservedFailures": [
+        {
+          "path": "/Applications",
+          "ok": true,
+          "failures": [
+            "GROUP_OR_OTHER_WRITABLE"
+          ]
+        }
+      ],
+      "originalPredicateWouldPass": false
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer",
+      "expectedType": "directory",
+      "inspection": "COMPLETE",
+      "firstProductionPredicateFailure": {
+        "path": "/Applications",
+        "ok": true,
+        "failures": [
+          "GROUP_OR_OTHER_WRITABLE"
+        ]
+      },
+      "allObservedFailures": [
+        {
+          "path": "/Applications",
+          "ok": true,
+          "failures": [
+            "GROUP_OR_OTHER_WRITABLE"
+          ]
+        }
+      ],
+      "originalPredicateWouldPass": false
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/usr/bin/simctl",
+      "expectedType": "file",
+      "inspection": "COMPLETE",
+      "firstProductionPredicateFailure": {
+        "path": "/Applications",
+        "ok": true,
+        "failures": [
+          "GROUP_OR_OTHER_WRITABLE"
+        ]
+      },
+      "allObservedFailures": [
+        {
+          "path": "/Applications",
+          "ok": true,
+          "failures": [
+            "GROUP_OR_OTHER_WRITABLE"
+          ]
+        }
+      ],
+      "originalPredicateWouldPass": false
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform",
+      "expectedType": "directory",
+      "inspection": "COMPLETE",
+      "firstProductionPredicateFailure": {
+        "path": "/Applications",
+        "ok": true,
+        "failures": [
+          "GROUP_OR_OTHER_WRITABLE"
+        ]
+      },
+      "allObservedFailures": [
+        {
+          "path": "/Applications",
+          "ok": true,
+          "failures": [
+            "GROUP_OR_OTHER_WRITABLE"
+          ]
+        }
+      ],
+      "originalPredicateWouldPass": false
+    },
+    {
+      "path": "/System/Library/CoreServices/SystemVersion.plist",
+      "expectedType": "file",
+      "inspection": "COMPLETE",
+      "firstProductionPredicateFailure": null,
+      "allObservedFailures": [],
+      "originalPredicateWouldPass": true
+    },
+    {
+      "path": "/usr/bin/xcrun",
+      "expectedType": "file",
+      "inspection": "COMPLETE",
+      "firstProductionPredicateFailure": null,
+      "allObservedFailures": [],
+      "originalPredicateWouldPass": true
+    },
+    {
+      "path": "/usr/bin/plutil",
+      "expectedType": "file",
+      "inspection": "COMPLETE",
+      "firstProductionPredicateFailure": null,
+      "allObservedFailures": [],
+      "originalPredicateWouldPass": true
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes",
+      "expectedType": "directory",
+      "inspection": "COMPLETE",
+      "firstProductionPredicateFailure": null,
+      "allObservedFailures": [],
+      "originalPredicateWouldPass": true
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Profiles/Runtimes",
+      "expectedType": "directory",
+      "inspection": "BOUNDED_STOP",
+      "firstProductionPredicateFailure": {
+        "path": "/Library/Developer/CoreSimulator/Profiles/Runtimes",
+        "ok": false,
+        "failures": [
+          "LSTAT_ENOENT"
+        ]
+      },
+      "allObservedFailures": [
+        {
+          "path": "/Library/Developer/CoreSimulator/Profiles/Runtimes",
+          "ok": false,
+          "failures": [
+            "LSTAT_ENOENT"
+          ]
+        }
+      ],
+      "originalPredicateWouldPass": false
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Volumes",
+      "expectedType": "directory",
+      "inspection": "COMPLETE",
+      "firstProductionPredicateFailure": null,
+      "allObservedFailures": [],
+      "originalPredicateWouldPass": true
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Images",
+      "expectedType": "directory",
+      "inspection": "COMPLETE",
+      "firstProductionPredicateFailure": null,
+      "allObservedFailures": [],
+      "originalPredicateWouldPass": true
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Cryptex",
+      "expectedType": "directory",
+      "inspection": "COMPLETE",
+      "firstProductionPredicateFailure": null,
+      "allObservedFailures": [],
+      "originalPredicateWouldPass": true
+    }
+  ],
+  "inventories": [
+    {
+      "root": "/Library/Developer/CoreSimulator/Images",
+      "status": "COMPLETE",
+      "reason": null,
+      "count": 3,
+      "names": [
+        "Inbox",
+        "images.plist",
+        "mnt"
+      ],
+      "before": {
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 5,
+        "size": 160,
+        "dev": 16777231,
+        "ino": 32052143,
+        "mtimeMs": 1791510760877.9177,
+        "ctimeMs": 1791510760877.9177
+      },
+      "after": {
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 5,
+        "size": 160,
+        "dev": 16777231,
+        "ino": 32052143,
+        "mtimeMs": 1791510760877.9177,
+        "ctimeMs": 1791510760877.9177
+      }
+    },
+    {
+      "root": "/Library/Developer/CoreSimulator/Cryptex",
+      "status": "COMPLETE",
+      "reason": null,
+      "count": 3,
+      "names": [
+        "Caches",
+        "Images",
+        "Personalization"
+      ],
+      "before": {
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 5,
+        "size": 160,
+        "dev": 16777231,
+        "ino": 32052147,
+        "mtimeMs": 1778212364574.0059,
+        "ctimeMs": 1778212364574.0059
+      },
+      "after": {
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 5,
+        "size": 160,
+        "dev": 16777231,
+        "ino": 32052147,
+        "mtimeMs": 1778212364574.0059,
+        "ctimeMs": 1778212364574.0059
+      }
+    },
+    {
+      "root": "/Library/Developer/CoreSimulator/Volumes",
+      "status": "COMPLETE",
+      "reason": null,
+      "count": 2,
+      "names": [
+        "iOS_22G86",
+        "iOS_23E254a"
+      ],
+      "before": {
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 4,
+        "size": 128,
+        "dev": 16777231,
+        "ino": 681957,
+        "mtimeMs": 1791259686662.6653,
+        "ctimeMs": 1791259686662.6653
+      },
+      "after": {
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 4,
+        "size": 128,
+        "dev": 16777231,
+        "ino": 681957,
+        "mtimeMs": 1791259686662.6653,
+        "ctimeMs": 1791259686662.6653
+      }
+    },
+    {
+      "root": "/Library/Developer/CoreSimulator/Profiles/Runtimes",
+      "status": "BOUNDED_STOP",
+      "reason": "ENOENT",
+      "blockedAt": "/Library/Developer/CoreSimulator/Profiles/Runtimes",
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/Library/Developer/CoreSimulator/Profiles/Runtimes'"
+      }
+    },
+    {
+      "root": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime",
+      "status": "COMPLETE",
+      "reason": null,
+      "count": 4,
+      "names": [
+        "3e800c38767f9f2c5fc86acdad7adf44565e051a.asset",
+        "7fd8477b73d7b67a321fff7d87723eed3c628424.asset",
+        "c060853b459625d7878fd533de79c966fb98d31b.asset",
+        "com_apple_MobileAsset_iOSSimulatorRuntime.xml"
+      ],
+      "before": {
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 6,
+        "size": 192,
+        "dev": 16777231,
+        "ino": 121919045,
+        "mtimeMs": 1791259687801.878,
+        "ctimeMs": 1791259687801.878
+      },
+      "after": {
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 6,
+        "size": 192,
+        "dev": 16777231,
+        "ino": 121919045,
+        "mtimeMs": 1791259687801.878,
+        "ctimeMs": 1791259687801.878
+      }
+    }
+  ],
+  "assetChildInspections": [
+    {
+      "name": "3e800c38767f9f2c5fc86acdad7adf44565e051a.asset",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset",
+      "status": "directory",
+      "reason": null
+    },
+    {
+      "name": "7fd8477b73d7b67a321fff7d87723eed3c628424.asset",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset",
+      "status": "directory",
+      "reason": null
+    },
+    {
+      "name": "c060853b459625d7878fd533de79c966fb98d31b.asset",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset",
+      "status": "directory",
+      "reason": null
+    },
+    {
+      "name": "com_apple_MobileAsset_iOSSimulatorRuntime.xml",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/com_apple_MobileAsset_iOSSimulatorRuntime.xml",
+      "status": "file",
+      "reason": null
+    }
+  ],
+  "metadata": [
+    {
+      "path": "/Library/Developer/CoreSimulator/Images/images.plist",
+      "startedAt": "2026-10-09T02:18:01.243Z",
+      "before": {
+        "bytes": 3929,
+        "sha256": "08fca67bd717824e0d532b373eabfc2b7aa8329453c7ca7272040c425bc196d1",
+        "stamp": "16777231:143205214:3929:1791510760877.6472:1791510760878.4644:33188:0:0:1",
+        "before": {
+          "type": "file",
+          "uid": 0,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 3929,
+          "dev": 16777231,
+          "ino": 143205214,
+          "mtimeMs": 1791510760877.6472,
+          "ctimeMs": 1791510760878.4644
+        },
+        "opened": {
+          "type": "file",
+          "uid": 0,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 3929,
+          "dev": 16777231,
+          "ino": 143205214,
+          "mtimeMs": 1791510760877.6472,
+          "ctimeMs": 1791510760878.4644
+        },
+        "finalHandle": {
+          "type": "file",
+          "uid": 0,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 3929,
+          "dev": 16777231,
+          "ino": 143205214,
+          "mtimeMs": 1791510760877.6472,
+          "ctimeMs": 1791510760878.4644
+        },
+        "after": {
+          "type": "file",
+          "uid": 0,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 3929,
+          "dev": 16777231,
+          "ino": 143205214,
+          "mtimeMs": 1791510760877.6472,
+          "ctimeMs": 1791510760878.4644
+        }
+      },
+      "conversionIndex": 0,
+      "after": {
+        "bytes": 3929,
+        "sha256": "08fca67bd717824e0d532b373eabfc2b7aa8329453c7ca7272040c425bc196d1",
+        "stamp": "16777231:143205214:3929:1791510760877.6472:1791510760878.4644:33188:0:0:1",
+        "before": {
+          "type": "file",
+          "uid": 0,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 3929,
+          "dev": 16777231,
+          "ino": 143205214,
+          "mtimeMs": 1791510760877.6472,
+          "ctimeMs": 1791510760878.4644
+        },
+        "opened": {
+          "type": "file",
+          "uid": 0,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 3929,
+          "dev": 16777231,
+          "ino": 143205214,
+          "mtimeMs": 1791510760877.6472,
+          "ctimeMs": 1791510760878.4644
+        },
+        "finalHandle": {
+          "type": "file",
+          "uid": 0,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 3929,
+          "dev": 16777231,
+          "ino": 143205214,
+          "mtimeMs": 1791510760877.6472,
+          "ctimeMs": 1791510760878.4644
+        },
+        "after": {
+          "type": "file",
+          "uid": 0,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 3929,
+          "dev": 16777231,
+          "ino": 143205214,
+          "mtimeMs": 1791510760877.6472,
+          "ctimeMs": 1791510760878.4644
+        }
+      },
+      "stableAcrossConversion": true,
+      "status": "BOUNDED_STOP",
+      "reason": "CONVERSION_FAILED",
+      "error": {
+        "code": "CONVERSION_FAILED",
+        "syscall": null,
+        "message": "Bounded metadata conversion failed"
+      },
+      "blockedAt": null,
+      "completedAt": "2026-10-09T02:18:01.252Z"
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetInfo.plist",
+      "startedAt": "2026-10-09T02:18:01.252Z",
+      "status": "BOUNDED_STOP",
+      "reason": "ENOENT",
+      "error": {
+        "code": "ENOENT",
+        "syscall": null,
+        "message": "Metadata chain inspection stopped"
+      },
+      "blockedAt": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetInfo.plist",
+      "completedAt": "2026-10-09T02:18:01.252Z"
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/Info.plist",
+      "startedAt": "2026-10-09T02:18:01.252Z",
+      "before": {
+        "bytes": 875,
+        "sha256": "9c132a7b98c399f764873f4c70ade83e8e44ee2ee9356135a13f49d15c921243",
+        "stamp": "16777231:122968428:875:1791254814214.5637:1791254814214.5637:33188:242:0:1",
+        "before": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 875,
+          "dev": 16777231,
+          "ino": 122968428,
+          "mtimeMs": 1791254814214.5637,
+          "ctimeMs": 1791254814214.5637
+        },
+        "opened": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 875,
+          "dev": 16777231,
+          "ino": 122968428,
+          "mtimeMs": 1791254814214.5637,
+          "ctimeMs": 1791254814214.5637
+        },
+        "finalHandle": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 875,
+          "dev": 16777231,
+          "ino": 122968428,
+          "mtimeMs": 1791254814214.5637,
+          "ctimeMs": 1791254814214.5637
+        },
+        "after": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 875,
+          "dev": 16777231,
+          "ino": 122968428,
+          "mtimeMs": 1791254814214.5637,
+          "ctimeMs": 1791254814214.5637
+        }
+      },
+      "conversionIndex": 1,
+      "after": {
+        "bytes": 875,
+        "sha256": "9c132a7b98c399f764873f4c70ade83e8e44ee2ee9356135a13f49d15c921243",
+        "stamp": "16777231:122968428:875:1791254814214.5637:1791254814214.5637:33188:242:0:1",
+        "before": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 875,
+          "dev": 16777231,
+          "ino": 122968428,
+          "mtimeMs": 1791254814214.5637,
+          "ctimeMs": 1791254814214.5637
+        },
+        "opened": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 875,
+          "dev": 16777231,
+          "ino": 122968428,
+          "mtimeMs": 1791254814214.5637,
+          "ctimeMs": 1791254814214.5637
+        },
+        "finalHandle": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 875,
+          "dev": 16777231,
+          "ino": 122968428,
+          "mtimeMs": 1791254814214.5637,
+          "ctimeMs": 1791254814214.5637
+        },
+        "after": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 875,
+          "dev": 16777231,
+          "ino": 122968428,
+          "mtimeMs": 1791254814214.5637,
+          "ctimeMs": 1791254814214.5637
+        }
+      },
+      "stableAcrossConversion": true,
+      "status": "READ_STABLE_CONVERTED",
+      "sanitizedValue": {
+        "CFBundleShortVersionString": "1.0.0",
+        "CFBundleIdentifier": "com.apple.MobileAsset.iOSSimulatorRuntime",
+        "MobileAssetProperties": {
+          "__AssetDefaultGarbageCollectionBehavior": "NeverCollected",
+          "Build": "24A434",
+          "SimulatorVersion": "27.0",
+          "Architectures": [
+            "arm64"
+          ]
+        },
+        "CFBundleName": "SimulatorRuntimeAsset",
+        "CFBundleInfoDictionaryVersion": "1",
+        "CFBundleVersion": "1.0",
+        "_DisableAFSCCompression": true
+      },
+      "fields": [
+        {
+          "field": "CFBundleShortVersionString",
+          "value": "1.0.0"
+        },
+        {
+          "field": "CFBundleIdentifier",
+          "value": "com.apple.MobileAsset.iOSSimulatorRuntime"
+        },
+        {
+          "field": "MobileAssetProperties.__AssetDefaultGarbageCollectionBehavior",
+          "value": "NeverCollected"
+        },
+        {
+          "field": "MobileAssetProperties.Build",
+          "value": "24A434"
+        },
+        {
+          "field": "MobileAssetProperties.SimulatorVersion",
+          "value": "27.0"
+        },
+        {
+          "field": "MobileAssetProperties.Architectures.0",
+          "value": "arm64"
+        },
+        {
+          "field": "CFBundleName",
+          "value": "SimulatorRuntimeAsset"
+        },
+        {
+          "field": "CFBundleInfoDictionaryVersion",
+          "value": "1"
+        },
+        {
+          "field": "CFBundleVersion",
+          "value": "1.0"
+        }
+      ],
+      "candidatePaths": [],
+      "fieldCapReached": false,
+      "completedAt": "2026-10-09T02:18:01.258Z"
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/AssetInfo.plist",
+      "startedAt": "2026-10-09T02:18:01.258Z",
+      "status": "BOUNDED_STOP",
+      "reason": "ENOENT",
+      "error": {
+        "code": "ENOENT",
+        "syscall": null,
+        "message": "Metadata chain inspection stopped"
+      },
+      "blockedAt": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/AssetInfo.plist",
+      "completedAt": "2026-10-09T02:18:01.258Z"
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/Info.plist",
+      "startedAt": "2026-10-09T02:18:01.258Z",
+      "before": {
+        "bytes": 800,
+        "sha256": "ad87a756b1a7eeef133b5bde25d0b105466d5be6d6f0e69f2a2d39df2958cd22",
+        "stamp": "16777231:42309180:800:1781004184528.9348:1781004184528.9348:33188:242:0:1",
+        "before": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 800,
+          "dev": 16777231,
+          "ino": 42309180,
+          "mtimeMs": 1781004184528.9348,
+          "ctimeMs": 1781004184528.9348
+        },
+        "opened": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 800,
+          "dev": 16777231,
+          "ino": 42309180,
+          "mtimeMs": 1781004184528.9348,
+          "ctimeMs": 1781004184528.9348
+        },
+        "finalHandle": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 800,
+          "dev": 16777231,
+          "ino": 42309180,
+          "mtimeMs": 1781004184528.9348,
+          "ctimeMs": 1781004184528.9348
+        },
+        "after": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 800,
+          "dev": 16777231,
+          "ino": 42309180,
+          "mtimeMs": 1781004184528.9348,
+          "ctimeMs": 1781004184528.9348
+        }
+      },
+      "conversionIndex": 2,
+      "after": {
+        "bytes": 800,
+        "sha256": "ad87a756b1a7eeef133b5bde25d0b105466d5be6d6f0e69f2a2d39df2958cd22",
+        "stamp": "16777231:42309180:800:1781004184528.9348:1781004184528.9348:33188:242:0:1",
+        "before": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 800,
+          "dev": 16777231,
+          "ino": 42309180,
+          "mtimeMs": 1781004184528.9348,
+          "ctimeMs": 1781004184528.9348
+        },
+        "opened": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 800,
+          "dev": 16777231,
+          "ino": 42309180,
+          "mtimeMs": 1781004184528.9348,
+          "ctimeMs": 1781004184528.9348
+        },
+        "finalHandle": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 800,
+          "dev": 16777231,
+          "ino": 42309180,
+          "mtimeMs": 1781004184528.9348,
+          "ctimeMs": 1781004184528.9348
+        },
+        "after": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 800,
+          "dev": 16777231,
+          "ino": 42309180,
+          "mtimeMs": 1781004184528.9348,
+          "ctimeMs": 1781004184528.9348
+        }
+      },
+      "stableAcrossConversion": true,
+      "status": "READ_STABLE_CONVERTED",
+      "sanitizedValue": {
+        "CFBundleShortVersionString": "1.0.0",
+        "CFBundleIdentifier": "com.apple.MobileAsset.iOSSimulatorRuntime",
+        "MobileAssetProperties": {
+          "Build": "22G86",
+          "__AssetDefaultGarbageCollectionBehavior": "NeverCollected",
+          "SimulatorVersion": "18.6"
+        },
+        "CFBundleName": "SimulatorRuntimeAsset",
+        "CFBundleInfoDictionaryVersion": "1",
+        "CFBundleVersion": "1.0",
+        "_DisableAFSCCompression": true
+      },
+      "fields": [
+        {
+          "field": "CFBundleShortVersionString",
+          "value": "1.0.0"
+        },
+        {
+          "field": "CFBundleIdentifier",
+          "value": "com.apple.MobileAsset.iOSSimulatorRuntime"
+        },
+        {
+          "field": "MobileAssetProperties.Build",
+          "value": "22G86"
+        },
+        {
+          "field": "MobileAssetProperties.__AssetDefaultGarbageCollectionBehavior",
+          "value": "NeverCollected"
+        },
+        {
+          "field": "MobileAssetProperties.SimulatorVersion",
+          "value": "18.6"
+        },
+        {
+          "field": "CFBundleName",
+          "value": "SimulatorRuntimeAsset"
+        },
+        {
+          "field": "CFBundleInfoDictionaryVersion",
+          "value": "1"
+        },
+        {
+          "field": "CFBundleVersion",
+          "value": "1.0"
+        }
+      ],
+      "candidatePaths": [],
+      "fieldCapReached": false,
+      "completedAt": "2026-10-09T02:18:01.263Z"
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/AssetInfo.plist",
+      "startedAt": "2026-10-09T02:18:01.263Z",
+      "status": "BOUNDED_STOP",
+      "reason": "ENOENT",
+      "error": {
+        "code": "ENOENT",
+        "syscall": null,
+        "message": "Metadata chain inspection stopped"
+      },
+      "blockedAt": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/AssetInfo.plist",
+      "completedAt": "2026-10-09T02:18:01.264Z"
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/Info.plist",
+      "startedAt": "2026-10-09T02:18:01.264Z",
+      "status": "BOUNDED_STOP",
+      "reason": "ENOENT",
+      "error": {
+        "code": "ENOENT",
+        "syscall": null,
+        "message": "Metadata chain inspection stopped"
+      },
+      "blockedAt": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/Info.plist",
+      "completedAt": "2026-10-09T02:18:01.264Z"
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetInfo.plist",
+      "startedAt": "2026-10-09T02:18:01.264Z",
+      "status": "BOUNDED_STOP",
+      "reason": "ENOENT",
+      "error": {
+        "code": "ENOENT",
+        "syscall": null,
+        "message": "Metadata chain inspection stopped"
+      },
+      "blockedAt": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetInfo.plist",
+      "completedAt": "2026-10-09T02:18:01.264Z"
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/Info.plist",
+      "startedAt": "2026-10-09T02:18:01.264Z",
+      "before": {
+        "bytes": 878,
+        "sha256": "32584490825a9332559fee2235551fb9595cdd8e1d1d4501b976de4bd12d9913",
+        "stamp": "16777231:32054028:878:1778209509428.472:1778209509428.472:33188:242:0:1",
+        "before": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 878,
+          "dev": 16777231,
+          "ino": 32054028,
+          "mtimeMs": 1778209509428.472,
+          "ctimeMs": 1778209509428.472
+        },
+        "opened": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 878,
+          "dev": 16777231,
+          "ino": 32054028,
+          "mtimeMs": 1778209509428.472,
+          "ctimeMs": 1778209509428.472
+        },
+        "finalHandle": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 878,
+          "dev": 16777231,
+          "ino": 32054028,
+          "mtimeMs": 1778209509428.472,
+          "ctimeMs": 1778209509428.472
+        },
+        "after": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 878,
+          "dev": 16777231,
+          "ino": 32054028,
+          "mtimeMs": 1778209509428.472,
+          "ctimeMs": 1778209509428.472
+        }
+      },
+      "conversionIndex": 3,
+      "after": {
+        "bytes": 878,
+        "sha256": "32584490825a9332559fee2235551fb9595cdd8e1d1d4501b976de4bd12d9913",
+        "stamp": "16777231:32054028:878:1778209509428.472:1778209509428.472:33188:242:0:1",
+        "before": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 878,
+          "dev": 16777231,
+          "ino": 32054028,
+          "mtimeMs": 1778209509428.472,
+          "ctimeMs": 1778209509428.472
+        },
+        "opened": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 878,
+          "dev": 16777231,
+          "ino": 32054028,
+          "mtimeMs": 1778209509428.472,
+          "ctimeMs": 1778209509428.472
+        },
+        "finalHandle": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 878,
+          "dev": 16777231,
+          "ino": 32054028,
+          "mtimeMs": 1778209509428.472,
+          "ctimeMs": 1778209509428.472
+        },
+        "after": {
+          "type": "file",
+          "uid": 242,
+          "gid": 0,
+          "mode": "0644",
+          "modeBits": 33188,
+          "nlink": 1,
+          "size": 878,
+          "dev": 16777231,
+          "ino": 32054028,
+          "mtimeMs": 1778209509428.472,
+          "ctimeMs": 1778209509428.472
+        }
+      },
+      "stableAcrossConversion": true,
+      "status": "READ_STABLE_CONVERTED",
+      "sanitizedValue": {
+        "CFBundleShortVersionString": "1.0.0",
+        "CFBundleIdentifier": "com.apple.MobileAsset.iOSSimulatorRuntime",
+        "MobileAssetProperties": {
+          "__AssetDefaultGarbageCollectionBehavior": "NeverCollected",
+          "Build": "23E254a",
+          "SimulatorVersion": "26.4.1",
+          "Architectures": [
+            "arm64"
+          ]
+        },
+        "CFBundleName": "SimulatorRuntimeAsset",
+        "CFBundleInfoDictionaryVersion": "1",
+        "CFBundleVersion": "1.0",
+        "_DisableAFSCCompression": true
+      },
+      "fields": [
+        {
+          "field": "CFBundleShortVersionString",
+          "value": "1.0.0"
+        },
+        {
+          "field": "CFBundleIdentifier",
+          "value": "com.apple.MobileAsset.iOSSimulatorRuntime"
+        },
+        {
+          "field": "MobileAssetProperties.__AssetDefaultGarbageCollectionBehavior",
+          "value": "NeverCollected"
+        },
+        {
+          "field": "MobileAssetProperties.Build",
+          "value": "23E254a"
+        },
+        {
+          "field": "MobileAssetProperties.SimulatorVersion",
+          "value": "26.4.1"
+        },
+        {
+          "field": "MobileAssetProperties.Architectures.0",
+          "value": "arm64"
+        },
+        {
+          "field": "CFBundleName",
+          "value": "SimulatorRuntimeAsset"
+        },
+        {
+          "field": "CFBundleInfoDictionaryVersion",
+          "value": "1"
+        },
+        {
+          "field": "CFBundleVersion",
+          "value": "1.0"
+        }
+      ],
+      "candidatePaths": [],
+      "fieldCapReached": false,
+      "completedAt": "2026-10-09T02:18:01.268Z"
+    }
+  ],
+  "children": [
+    {
+      "argv": [
+        "/usr/bin/plutil",
+        "-convert",
+        "json",
+        "-o",
+        "-",
+        "--",
+        "/Library/Developer/CoreSimulator/Images/images.plist"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+      "startedAt": "2026-10-09T02:18:01.244Z",
+      "environment": {
+        "HOME": "/Users/hugues_mini",
+        "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "shell": false,
+      "stdin": "ignored",
+      "exitCode": 1,
+      "signal": null,
+      "completedAt": "2026-10-09T02:18:01.252Z",
+      "timedOut": false,
+      "overflow": false,
+      "error": null,
+      "stdout": "",
+      "stderr": "<REDACTED_NONEMPTY_STDERR>",
+      "stdoutOriginalBytes": 0,
+      "stderrOriginalBytes": 94,
+      "stdoutOriginalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrOriginalSha256": "236d02c41551d326d5f398257254398e8186acfd6b9d8f131ef8a648e751e47b",
+      "redaction": "Credential/token/auth/session fields and credential-bearing URL parts redacted recursively; unparsed stdout/nonempty stderr withheld."
+    },
+    {
+      "argv": [
+        "/usr/bin/plutil",
+        "-convert",
+        "json",
+        "-o",
+        "-",
+        "--",
+        "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/Info.plist"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+      "startedAt": "2026-10-09T02:18:01.253Z",
+      "environment": {
+        "HOME": "/Users/hugues_mini",
+        "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "shell": false,
+      "stdin": "ignored",
+      "exitCode": 0,
+      "signal": null,
+      "completedAt": "2026-10-09T02:18:01.257Z",
+      "timedOut": false,
+      "overflow": false,
+      "error": null,
+      "stdout": "{\n  \"CFBundleShortVersionString\": \"1.0.0\",\n  \"CFBundleIdentifier\": \"com.apple.MobileAsset.iOSSimulatorRuntime\",\n  \"MobileAssetProperties\": {\n    \"__AssetDefaultGarbageCollectionBehavior\": \"NeverCollected\",\n    \"Build\": \"24A434\",\n    \"SimulatorVersion\": \"27.0\",\n    \"Architectures\": [\n      \"arm64\"\n    ]\n  },\n  \"CFBundleName\": \"SimulatorRuntimeAsset\",\n  \"CFBundleInfoDictionaryVersion\": \"1\",\n  \"CFBundleVersion\": \"1.0\",\n  \"_DisableAFSCCompression\": true\n}\n",
+      "stderr": "",
+      "stdoutOriginalBytes": 387,
+      "stderrOriginalBytes": 0,
+      "stdoutOriginalSha256": "d731ff8b3c49ad667e03797661208ad87f17f23121b9338570a39568de3f63aa",
+      "stderrOriginalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redaction": "Credential/token/auth/session fields and credential-bearing URL parts redacted recursively; unparsed stdout/nonempty stderr withheld."
+    },
+    {
+      "argv": [
+        "/usr/bin/plutil",
+        "-convert",
+        "json",
+        "-o",
+        "-",
+        "--",
+        "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/Info.plist"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+      "startedAt": "2026-10-09T02:18:01.259Z",
+      "environment": {
+        "HOME": "/Users/hugues_mini",
+        "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "shell": false,
+      "stdin": "ignored",
+      "exitCode": 0,
+      "signal": null,
+      "completedAt": "2026-10-09T02:18:01.263Z",
+      "timedOut": false,
+      "overflow": false,
+      "error": null,
+      "stdout": "{\n  \"CFBundleShortVersionString\": \"1.0.0\",\n  \"CFBundleIdentifier\": \"com.apple.MobileAsset.iOSSimulatorRuntime\",\n  \"MobileAssetProperties\": {\n    \"Build\": \"22G86\",\n    \"__AssetDefaultGarbageCollectionBehavior\": \"NeverCollected\",\n    \"SimulatorVersion\": \"18.6\"\n  },\n  \"CFBundleName\": \"SimulatorRuntimeAsset\",\n  \"CFBundleInfoDictionaryVersion\": \"1\",\n  \"CFBundleVersion\": \"1.0\",\n  \"_DisableAFSCCompression\": true\n}\n",
+      "stderr": "",
+      "stdoutOriginalBytes": 360,
+      "stderrOriginalBytes": 0,
+      "stdoutOriginalSha256": "56aee134b606923e5d40a5a643058f466c516d2e1b318a00f64668086d7b812f",
+      "stderrOriginalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redaction": "Credential/token/auth/session fields and credential-bearing URL parts redacted recursively; unparsed stdout/nonempty stderr withheld."
+    },
+    {
+      "argv": [
+        "/usr/bin/plutil",
+        "-convert",
+        "json",
+        "-o",
+        "-",
+        "--",
+        "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/Info.plist"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+      "startedAt": "2026-10-09T02:18:01.264Z",
+      "environment": {
+        "HOME": "/Users/hugues_mini",
+        "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "shell": false,
+      "stdin": "ignored",
+      "exitCode": 0,
+      "signal": null,
+      "completedAt": "2026-10-09T02:18:01.268Z",
+      "timedOut": false,
+      "overflow": false,
+      "error": null,
+      "stdout": "{\n  \"CFBundleShortVersionString\": \"1.0.0\",\n  \"CFBundleIdentifier\": \"com.apple.MobileAsset.iOSSimulatorRuntime\",\n  \"MobileAssetProperties\": {\n    \"__AssetDefaultGarbageCollectionBehavior\": \"NeverCollected\",\n    \"Build\": \"23E254a\",\n    \"SimulatorVersion\": \"26.4.1\",\n    \"Architectures\": [\n      \"arm64\"\n    ]\n  },\n  \"CFBundleName\": \"SimulatorRuntimeAsset\",\n  \"CFBundleInfoDictionaryVersion\": \"1\",\n  \"CFBundleVersion\": \"1.0\",\n  \"_DisableAFSCCompression\": true\n}\n",
+      "stderr": "",
+      "stdoutOriginalBytes": 390,
+      "stderrOriginalBytes": 0,
+      "stdoutOriginalSha256": "8b8bfd00b04f615c3577ffe6665199ffd82284b9dc4dd4cb517b2d85357785bd",
+      "stderrOriginalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redaction": "Credential/token/auth/session fields and credential-bearing URL parts redacted recursively; unparsed stdout/nonempty stderr withheld."
+    }
+  ],
+  "limits": [],
+  "trace": [
+    {
+      "sequence": 1,
+      "atUtc": "2026-10-09T02:18:01.238Z",
+      "method": "lstat",
+      "path": "/",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 23,
+      "size": 736,
+      "dev": 16777231,
+      "ino": 2,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "sequence": 2,
+      "atUtc": "2026-10-09T02:18:01.238Z",
+      "method": "lstat",
+      "path": "/Applications",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 80,
+      "mode": "0775",
+      "modeBits": 16893,
+      "nlink": 41,
+      "size": 1312,
+      "dev": 16777231,
+      "ino": 121903578,
+      "mtimeMs": 1791511343964.2007,
+      "ctimeMs": 1791511343964.2007
+    },
+    {
+      "sequence": 3,
+      "atUtc": "2026-10-09T02:18:01.238Z",
+      "method": "lstat",
+      "path": "/Applications/Xcode.app",
+      "ok": true,
+      "type": "directory",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 3,
+      "size": 96,
+      "dev": 16777231,
+      "ino": 122200455,
+      "mtimeMs": 1788438105000,
+      "ctimeMs": 1791214461924.288
+    },
+    {
+      "sequence": 4,
+      "atUtc": "2026-10-09T02:18:01.238Z",
+      "method": "lstat",
+      "path": "/Applications/Xcode.app/Contents",
+      "ok": true,
+      "type": "directory",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 15,
+      "size": 480,
+      "dev": 16777231,
+      "ino": 122200456,
+      "mtimeMs": 1788438069000,
+      "ctimeMs": 1791214423222.7183
+    },
+    {
+      "sequence": 5,
+      "atUtc": "2026-10-09T02:18:01.238Z",
+      "method": "lstat",
+      "path": "/Applications/Xcode.app/Contents/Info.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 34501,
+      "dev": 16777231,
+      "ino": 122273017,
+      "mtimeMs": 1788426977000,
+      "ctimeMs": 1791214388288.9666
+    },
+    {
+      "sequence": 6,
+      "atUtc": "2026-10-09T02:18:01.239Z",
+      "method": "lstat",
+      "path": "/Applications/Xcode.app/Contents/version.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 530,
+      "dev": 16777231,
+      "ino": 122381919,
+      "mtimeMs": 1788429526000,
+      "ctimeMs": 1791214419808.644
+    },
+    {
+      "sequence": 7,
+      "atUtc": "2026-10-09T02:18:01.239Z",
+      "method": "lstat",
+      "path": "/Applications/Xcode.app/Contents/MacOS",
+      "ok": true,
+      "type": "directory",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 3,
+      "size": 96,
+      "dev": 16777231,
+      "ino": 122227347,
+      "mtimeMs": 1791214398515.3574,
+      "ctimeMs": 1791214398515.3574
+    },
+    {
+      "sequence": 8,
+      "atUtc": "2026-10-09T02:18:01.239Z",
+      "method": "lstat",
+      "path": "/Applications/Xcode.app/Contents/MacOS/Xcode",
+      "ok": true,
+      "type": "file",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "modeBits": 33261,
+      "nlink": 1,
+      "size": 79472,
+      "dev": 16777231,
+      "ino": 122312738,
+      "mtimeMs": 1788503680000,
+      "ctimeMs": 1791214398515.3574
+    },
+    {
+      "sequence": 9,
+      "atUtc": "2026-10-09T02:18:01.239Z",
+      "method": "lstat",
+      "path": "/Applications/Xcode.app/Contents/Developer",
+      "ok": true,
+      "type": "directory",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 8,
+      "size": 256,
+      "dev": 16777231,
+      "ino": 122201011,
+      "mtimeMs": 1788111593000,
+      "ctimeMs": 1791214376446.1582
+    },
+    {
+      "sequence": 10,
+      "atUtc": "2026-10-09T02:18:01.239Z",
+      "method": "lstat",
+      "path": "/Applications/Xcode.app/Contents/Developer/usr",
+      "ok": true,
+      "type": "directory",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 7,
+      "size": 224,
+      "dev": 16777231,
+      "ino": 122226844,
+      "mtimeMs": 1788438051000,
+      "ctimeMs": 1791214376446.1333
+    },
+    {
+      "sequence": 11,
+      "atUtc": "2026-10-09T02:18:01.239Z",
+      "method": "lstat",
+      "path": "/Applications/Xcode.app/Contents/Developer/usr/bin",
+      "ok": true,
+      "type": "directory",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 116,
+      "size": 3712,
+      "dev": 16777231,
+      "ino": 122226845,
+      "mtimeMs": 1791214424094.505,
+      "ctimeMs": 1791214424094.505
+    },
+    {
+      "sequence": 12,
+      "atUtc": "2026-10-09T02:18:01.240Z",
+      "method": "lstat",
+      "path": "/Applications/Xcode.app/Contents/Developer/usr/bin/simctl",
+      "ok": true,
+      "type": "file",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "modeBits": 33261,
+      "nlink": 1,
+      "size": 1357,
+      "dev": 16777231,
+      "ino": 122374053,
+      "mtimeMs": 1787536121000,
+      "ctimeMs": 1791214417423.9167
+    },
+    {
+      "sequence": 13,
+      "atUtc": "2026-10-09T02:18:01.240Z",
+      "method": "lstat",
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms",
+      "ok": true,
+      "type": "directory",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 12,
+      "size": 384,
+      "dev": 16777231,
+      "ino": 122202068,
+      "mtimeMs": 1788111594000,
+      "ctimeMs": 1791214376255.415
+    },
+    {
+      "sequence": 14,
+      "atUtc": "2026-10-09T02:18:01.240Z",
+      "method": "lstat",
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform",
+      "ok": true,
+      "type": "directory",
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 9,
+      "size": 288,
+      "dev": 16777231,
+      "ino": 122223195,
+      "mtimeMs": 1791214419846.368,
+      "ctimeMs": 1791214419846.368
+    },
+    {
+      "sequence": 15,
+      "atUtc": "2026-10-09T02:18:01.240Z",
+      "method": "lstat",
+      "path": "/System",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 12,
+      "size": 384,
+      "dev": 16777231,
+      "ino": 1152921500311879700,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "sequence": 16,
+      "atUtc": "2026-10-09T02:18:01.240Z",
+      "method": "lstat",
+      "path": "/System/Library",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 166,
+      "size": 5312,
+      "dev": 16777231,
+      "ino": 1152921500311918300,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "sequence": 17,
+      "atUtc": "2026-10-09T02:18:01.240Z",
+      "method": "lstat",
+      "path": "/System/Library/CoreServices",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 218,
+      "size": 6976,
+      "dev": 16777231,
+      "ino": 1152921500312080600,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "sequence": 18,
+      "atUtc": "2026-10-09T02:18:01.240Z",
+      "method": "lstat",
+      "path": "/System/Library/CoreServices/SystemVersion.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0444",
+      "modeBits": 33060,
+      "nlink": 1,
+      "size": 604,
+      "dev": 16777231,
+      "ino": 1152921500312109400,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "sequence": 19,
+      "atUtc": "2026-10-09T02:18:01.240Z",
+      "method": "lstat",
+      "path": "/usr",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 11,
+      "size": 352,
+      "dev": 16777231,
+      "ino": 1152921500312607500,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "sequence": 20,
+      "atUtc": "2026-10-09T02:18:01.240Z",
+      "method": "lstat",
+      "path": "/usr/bin",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 934,
+      "size": 29888,
+      "dev": 16777231,
+      "ino": 1152921500312607500,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "sequence": 21,
+      "atUtc": "2026-10-09T02:18:01.240Z",
+      "method": "lstat",
+      "path": "/usr/bin/xcrun",
+      "ok": true,
+      "type": "file",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 33261,
+      "nlink": 1,
+      "size": 199024,
+      "dev": 16777231,
+      "ino": 1152921500312609000,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "sequence": 22,
+      "atUtc": "2026-10-09T02:18:01.241Z",
+      "method": "lstat",
+      "path": "/usr/bin/plutil",
+      "ok": true,
+      "type": "file",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 33261,
+      "nlink": 1,
+      "size": 1023712,
+      "dev": 16777231,
+      "ino": 1152921500312608500,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "sequence": 23,
+      "atUtc": "2026-10-09T02:18:01.241Z",
+      "method": "lstat",
+      "path": "/Library",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 69,
+      "size": 2208,
+      "dev": 16777231,
+      "ino": 121899901,
+      "mtimeMs": 1791339607192.8103,
+      "ctimeMs": 1791339607192.8103
+    },
+    {
+      "sequence": 24,
+      "atUtc": "2026-10-09T02:18:01.241Z",
+      "method": "lstat",
+      "path": "/Library/Developer",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 8,
+      "size": 256,
+      "dev": 16777231,
+      "ino": 678336,
+      "mtimeMs": 1791212757672.2527,
+      "ctimeMs": 1791212757672.2527
+    },
+    {
+      "sequence": 25,
+      "atUtc": "2026-10-09T02:18:01.241Z",
+      "method": "lstat",
+      "path": "/Library/Developer/CoreSimulator",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 7,
+      "size": 224,
+      "dev": 16777231,
+      "ino": 678351,
+      "mtimeMs": 1778208951628.6755,
+      "ctimeMs": 1778208951628.6755
+    },
+    {
+      "sequence": 26,
+      "atUtc": "2026-10-09T02:18:01.241Z",
+      "method": "lstat",
+      "path": "/Library/Developer/CoreSimulator/Profiles",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 3,
+      "size": 96,
+      "dev": 16777231,
+      "ino": 678352,
+      "mtimeMs": 1764688585000,
+      "ctimeMs": 1769353130520.055
+    },
+    {
+      "sequence": 27,
+      "atUtc": "2026-10-09T02:18:01.241Z",
+      "method": "lstat",
+      "path": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 132,
+      "size": 4224,
+      "dev": 16777231,
+      "ino": 678353,
+      "mtimeMs": 1791212748702.9885,
+      "ctimeMs": 1791212748702.9885
+    },
+    {
+      "sequence": 28,
+      "atUtc": "2026-10-09T02:18:01.241Z",
+      "method": "lstat",
+      "path": "/Library/Developer/CoreSimulator/Profiles/Runtimes",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/Library/Developer/CoreSimulator/Profiles/Runtimes'"
+      }
+    },
+    {
+      "sequence": 29,
+      "atUtc": "2026-10-09T02:18:01.241Z",
+      "method": "lstat",
+      "path": "/Library/Developer/CoreSimulator/Volumes",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 4,
+      "size": 128,
+      "dev": 16777231,
+      "ino": 681957,
+      "mtimeMs": 1791259686662.6653,
+      "ctimeMs": 1791259686662.6653
+    },
+    {
+      "sequence": 30,
+      "atUtc": "2026-10-09T02:18:01.242Z",
+      "method": "lstat",
+      "path": "/Library/Developer/CoreSimulator/Images",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 32052143,
+      "mtimeMs": 1791510760877.9177,
+      "ctimeMs": 1791510760877.9177
+    },
+    {
+      "sequence": 31,
+      "atUtc": "2026-10-09T02:18:01.242Z",
+      "method": "lstat",
+      "path": "/Library/Developer/CoreSimulator/Cryptex",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 32052147,
+      "mtimeMs": 1778212364574.0059,
+      "ctimeMs": 1778212364574.0059
+    },
+    {
+      "sequence": 32,
+      "atUtc": "2026-10-09T02:18:01.242Z",
+      "method": "inventory.lstat.before",
+      "path": "/Library/Developer/CoreSimulator/Images",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 32052143,
+      "mtimeMs": 1791510760877.9177,
+      "ctimeMs": 1791510760877.9177
+    },
+    {
+      "sequence": 33,
+      "atUtc": "2026-10-09T02:18:01.242Z",
+      "method": "opendir",
+      "path": "/Library/Developer/CoreSimulator/Images",
+      "ok": true
+    },
+    {
+      "sequence": 34,
+      "atUtc": "2026-10-09T02:18:01.242Z",
+      "method": "inventory.lstat.after",
+      "path": "/Library/Developer/CoreSimulator/Images",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 32052143,
+      "mtimeMs": 1791510760877.9177,
+      "ctimeMs": 1791510760877.9177
+    },
+    {
+      "sequence": 35,
+      "atUtc": "2026-10-09T02:18:01.242Z",
+      "method": "immediate-directory-inventory",
+      "path": "/Library/Developer/CoreSimulator/Images",
+      "ok": true,
+      "count": 3,
+      "names": [
+        "Inbox",
+        "images.plist",
+        "mnt"
+      ]
+    },
+    {
+      "sequence": 36,
+      "atUtc": "2026-10-09T02:18:01.242Z",
+      "method": "inventory.lstat.before",
+      "path": "/Library/Developer/CoreSimulator/Cryptex",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 32052147,
+      "mtimeMs": 1778212364574.0059,
+      "ctimeMs": 1778212364574.0059
+    },
+    {
+      "sequence": 37,
+      "atUtc": "2026-10-09T02:18:01.242Z",
+      "method": "opendir",
+      "path": "/Library/Developer/CoreSimulator/Cryptex",
+      "ok": true
+    },
+    {
+      "sequence": 38,
+      "atUtc": "2026-10-09T02:18:01.242Z",
+      "method": "inventory.lstat.after",
+      "path": "/Library/Developer/CoreSimulator/Cryptex",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 32052147,
+      "mtimeMs": 1778212364574.0059,
+      "ctimeMs": 1778212364574.0059
+    },
+    {
+      "sequence": 39,
+      "atUtc": "2026-10-09T02:18:01.242Z",
+      "method": "immediate-directory-inventory",
+      "path": "/Library/Developer/CoreSimulator/Cryptex",
+      "ok": true,
+      "count": 3,
+      "names": [
+        "Caches",
+        "Images",
+        "Personalization"
+      ]
+    },
+    {
+      "sequence": 40,
+      "atUtc": "2026-10-09T02:18:01.242Z",
+      "method": "inventory.lstat.before",
+      "path": "/Library/Developer/CoreSimulator/Volumes",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 4,
+      "size": 128,
+      "dev": 16777231,
+      "ino": 681957,
+      "mtimeMs": 1791259686662.6653,
+      "ctimeMs": 1791259686662.6653
+    },
+    {
+      "sequence": 41,
+      "atUtc": "2026-10-09T02:18:01.242Z",
+      "method": "opendir",
+      "path": "/Library/Developer/CoreSimulator/Volumes",
+      "ok": true
+    },
+    {
+      "sequence": 42,
+      "atUtc": "2026-10-09T02:18:01.243Z",
+      "method": "inventory.lstat.after",
+      "path": "/Library/Developer/CoreSimulator/Volumes",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 4,
+      "size": 128,
+      "dev": 16777231,
+      "ino": 681957,
+      "mtimeMs": 1791259686662.6653,
+      "ctimeMs": 1791259686662.6653
+    },
+    {
+      "sequence": 43,
+      "atUtc": "2026-10-09T02:18:01.243Z",
+      "method": "immediate-directory-inventory",
+      "path": "/Library/Developer/CoreSimulator/Volumes",
+      "ok": true,
+      "count": 2,
+      "names": [
+        "iOS_22G86",
+        "iOS_23E254a"
+      ]
+    },
+    {
+      "sequence": 44,
+      "atUtc": "2026-10-09T02:18:01.243Z",
+      "method": "lstat",
+      "path": "/System/Library/AssetsV2",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 104,
+      "size": 3328,
+      "dev": 16777231,
+      "ino": 121902277,
+      "mtimeMs": 1791506456660.4082,
+      "ctimeMs": 1791506456660.4082
+    },
+    {
+      "sequence": 45,
+      "atUtc": "2026-10-09T02:18:01.243Z",
+      "method": "lstat",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 6,
+      "size": 192,
+      "dev": 16777231,
+      "ino": 121919045,
+      "mtimeMs": 1791259687801.878,
+      "ctimeMs": 1791259687801.878
+    },
+    {
+      "sequence": 46,
+      "atUtc": "2026-10-09T02:18:01.243Z",
+      "method": "inventory.lstat.before",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 6,
+      "size": 192,
+      "dev": 16777231,
+      "ino": 121919045,
+      "mtimeMs": 1791259687801.878,
+      "ctimeMs": 1791259687801.878
+    },
+    {
+      "sequence": 47,
+      "atUtc": "2026-10-09T02:18:01.243Z",
+      "method": "opendir",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime",
+      "ok": true
+    },
+    {
+      "sequence": 48,
+      "atUtc": "2026-10-09T02:18:01.243Z",
+      "method": "inventory.lstat.after",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 6,
+      "size": 192,
+      "dev": 16777231,
+      "ino": 121919045,
+      "mtimeMs": 1791259687801.878,
+      "ctimeMs": 1791259687801.878
+    },
+    {
+      "sequence": 49,
+      "atUtc": "2026-10-09T02:18:01.243Z",
+      "method": "immediate-directory-inventory",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime",
+      "ok": true,
+      "count": 4,
+      "names": [
+        "3e800c38767f9f2c5fc86acdad7adf44565e051a.asset",
+        "7fd8477b73d7b67a321fff7d87723eed3c628424.asset",
+        "c060853b459625d7878fd533de79c966fb98d31b.asset",
+        "com_apple_MobileAsset_iOSSimulatorRuntime.xml"
+      ]
+    },
+    {
+      "sequence": 50,
+      "atUtc": "2026-10-09T02:18:01.243Z",
+      "method": "lstat",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset",
+      "ok": true,
+      "type": "directory",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 122957647,
+      "mtimeMs": 1791254814214.9993,
+      "ctimeMs": 1791255152735.3357
+    },
+    {
+      "sequence": 51,
+      "atUtc": "2026-10-09T02:18:01.243Z",
+      "method": "lstat",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset",
+      "ok": true,
+      "type": "directory",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 42307527,
+      "mtimeMs": 1781004184529.1282,
+      "ctimeMs": 1791211428214.8008
+    },
+    {
+      "sequence": 52,
+      "atUtc": "2026-10-09T02:18:01.243Z",
+      "method": "lstat",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset",
+      "ok": true,
+      "type": "directory",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 32052419,
+      "mtimeMs": 1778209509428.6187,
+      "ctimeMs": 1791211428214.4502
+    },
+    {
+      "sequence": 53,
+      "atUtc": "2026-10-09T02:18:01.243Z",
+      "method": "lstat",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/com_apple_MobileAsset_iOSSimulatorRuntime.xml",
+      "ok": true,
+      "type": "file",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 2147,
+      "dev": 16777231,
+      "ino": 122957630,
+      "mtimeMs": 1791254475448.3142,
+      "ctimeMs": 1791254475448.433
+    },
+    {
+      "sequence": 54,
+      "atUtc": "2026-10-09T02:18:01.244Z",
+      "method": "lstat",
+      "path": "/Library/Developer/CoreSimulator/Images/images.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 3929,
+      "dev": 16777231,
+      "ino": 143205214,
+      "mtimeMs": 1791510760877.6472,
+      "ctimeMs": 1791510760878.4644
+    },
+    {
+      "sequence": 55,
+      "atUtc": "2026-10-09T02:18:01.244Z",
+      "method": "metadata.lstat.before",
+      "path": "/Library/Developer/CoreSimulator/Images/images.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 3929,
+      "dev": 16777231,
+      "ino": 143205214,
+      "mtimeMs": 1791510760877.6472,
+      "ctimeMs": 1791510760878.4644
+    },
+    {
+      "sequence": 56,
+      "atUtc": "2026-10-09T02:18:01.244Z",
+      "method": "open-readonly-nofollow",
+      "path": "/Library/Developer/CoreSimulator/Images/images.plist",
+      "ok": true,
+      "flags": 256
+    },
+    {
+      "sequence": 57,
+      "atUtc": "2026-10-09T02:18:01.244Z",
+      "method": "stable-read-hash",
+      "path": "/Library/Developer/CoreSimulator/Images/images.plist",
+      "ok": true,
+      "bytes": 3929,
+      "sha256": "08fca67bd717824e0d532b373eabfc2b7aa8329453c7ca7272040c425bc196d1",
+      "stamp": "16777231:143205214:3929:1791510760877.6472:1791510760878.4644:33188:0:0:1",
+      "before": {
+        "type": "file",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 3929,
+        "dev": 16777231,
+        "ino": 143205214,
+        "mtimeMs": 1791510760877.6472,
+        "ctimeMs": 1791510760878.4644
+      },
+      "opened": {
+        "type": "file",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 3929,
+        "dev": 16777231,
+        "ino": 143205214,
+        "mtimeMs": 1791510760877.6472,
+        "ctimeMs": 1791510760878.4644
+      },
+      "finalHandle": {
+        "type": "file",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 3929,
+        "dev": 16777231,
+        "ino": 143205214,
+        "mtimeMs": 1791510760877.6472,
+        "ctimeMs": 1791510760878.4644
+      },
+      "after": {
+        "type": "file",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 3929,
+        "dev": 16777231,
+        "ino": 143205214,
+        "mtimeMs": 1791510760877.6472,
+        "ctimeMs": 1791510760878.4644
+      }
+    },
+    {
+      "sequence": 58,
+      "atUtc": "2026-10-09T02:18:01.252Z",
+      "method": "metadata.lstat.before",
+      "path": "/Library/Developer/CoreSimulator/Images/images.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 3929,
+      "dev": 16777231,
+      "ino": 143205214,
+      "mtimeMs": 1791510760877.6472,
+      "ctimeMs": 1791510760878.4644
+    },
+    {
+      "sequence": 59,
+      "atUtc": "2026-10-09T02:18:01.252Z",
+      "method": "open-readonly-nofollow",
+      "path": "/Library/Developer/CoreSimulator/Images/images.plist",
+      "ok": true,
+      "flags": 256
+    },
+    {
+      "sequence": 60,
+      "atUtc": "2026-10-09T02:18:01.252Z",
+      "method": "stable-read-hash",
+      "path": "/Library/Developer/CoreSimulator/Images/images.plist",
+      "ok": true,
+      "bytes": 3929,
+      "sha256": "08fca67bd717824e0d532b373eabfc2b7aa8329453c7ca7272040c425bc196d1",
+      "stamp": "16777231:143205214:3929:1791510760877.6472:1791510760878.4644:33188:0:0:1",
+      "before": {
+        "type": "file",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 3929,
+        "dev": 16777231,
+        "ino": 143205214,
+        "mtimeMs": 1791510760877.6472,
+        "ctimeMs": 1791510760878.4644
+      },
+      "opened": {
+        "type": "file",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 3929,
+        "dev": 16777231,
+        "ino": 143205214,
+        "mtimeMs": 1791510760877.6472,
+        "ctimeMs": 1791510760878.4644
+      },
+      "finalHandle": {
+        "type": "file",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 3929,
+        "dev": 16777231,
+        "ino": 143205214,
+        "mtimeMs": 1791510760877.6472,
+        "ctimeMs": 1791510760878.4644
+      },
+      "after": {
+        "type": "file",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 3929,
+        "dev": 16777231,
+        "ino": 143205214,
+        "mtimeMs": 1791510760877.6472,
+        "ctimeMs": 1791510760878.4644
+      }
+    },
+    {
+      "sequence": 61,
+      "atUtc": "2026-10-09T02:18:01.252Z",
+      "method": "metadata-subprobe-stop",
+      "path": "/Library/Developer/CoreSimulator/Images/images.plist",
+      "ok": false,
+      "error": {
+        "code": "CONVERSION_FAILED",
+        "syscall": null,
+        "message": "Bounded metadata conversion failed"
+      },
+      "blockedAt": null
+    },
+    {
+      "sequence": 62,
+      "atUtc": "2026-10-09T02:18:01.252Z",
+      "method": "lstat",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetInfo.plist",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetInfo.plist'"
+      }
+    },
+    {
+      "sequence": 63,
+      "atUtc": "2026-10-09T02:18:01.252Z",
+      "method": "metadata-subprobe-stop",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetInfo.plist",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": null,
+        "message": "Metadata chain inspection stopped"
+      },
+      "blockedAt": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetInfo.plist"
+    },
+    {
+      "sequence": 64,
+      "atUtc": "2026-10-09T02:18:01.253Z",
+      "method": "lstat",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/Info.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 875,
+      "dev": 16777231,
+      "ino": 122968428,
+      "mtimeMs": 1791254814214.5637,
+      "ctimeMs": 1791254814214.5637
+    },
+    {
+      "sequence": 65,
+      "atUtc": "2026-10-09T02:18:01.253Z",
+      "method": "metadata.lstat.before",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/Info.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 875,
+      "dev": 16777231,
+      "ino": 122968428,
+      "mtimeMs": 1791254814214.5637,
+      "ctimeMs": 1791254814214.5637
+    },
+    {
+      "sequence": 66,
+      "atUtc": "2026-10-09T02:18:01.253Z",
+      "method": "open-readonly-nofollow",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/Info.plist",
+      "ok": true,
+      "flags": 256
+    },
+    {
+      "sequence": 67,
+      "atUtc": "2026-10-09T02:18:01.253Z",
+      "method": "stable-read-hash",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/Info.plist",
+      "ok": true,
+      "bytes": 875,
+      "sha256": "9c132a7b98c399f764873f4c70ade83e8e44ee2ee9356135a13f49d15c921243",
+      "stamp": "16777231:122968428:875:1791254814214.5637:1791254814214.5637:33188:242:0:1",
+      "before": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 875,
+        "dev": 16777231,
+        "ino": 122968428,
+        "mtimeMs": 1791254814214.5637,
+        "ctimeMs": 1791254814214.5637
+      },
+      "opened": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 875,
+        "dev": 16777231,
+        "ino": 122968428,
+        "mtimeMs": 1791254814214.5637,
+        "ctimeMs": 1791254814214.5637
+      },
+      "finalHandle": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 875,
+        "dev": 16777231,
+        "ino": 122968428,
+        "mtimeMs": 1791254814214.5637,
+        "ctimeMs": 1791254814214.5637
+      },
+      "after": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 875,
+        "dev": 16777231,
+        "ino": 122968428,
+        "mtimeMs": 1791254814214.5637,
+        "ctimeMs": 1791254814214.5637
+      }
+    },
+    {
+      "sequence": 68,
+      "atUtc": "2026-10-09T02:18:01.257Z",
+      "method": "metadata.lstat.before",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/Info.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 875,
+      "dev": 16777231,
+      "ino": 122968428,
+      "mtimeMs": 1791254814214.5637,
+      "ctimeMs": 1791254814214.5637
+    },
+    {
+      "sequence": 69,
+      "atUtc": "2026-10-09T02:18:01.257Z",
+      "method": "open-readonly-nofollow",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/Info.plist",
+      "ok": true,
+      "flags": 256
+    },
+    {
+      "sequence": 70,
+      "atUtc": "2026-10-09T02:18:01.258Z",
+      "method": "stable-read-hash",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/Info.plist",
+      "ok": true,
+      "bytes": 875,
+      "sha256": "9c132a7b98c399f764873f4c70ade83e8e44ee2ee9356135a13f49d15c921243",
+      "stamp": "16777231:122968428:875:1791254814214.5637:1791254814214.5637:33188:242:0:1",
+      "before": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 875,
+        "dev": 16777231,
+        "ino": 122968428,
+        "mtimeMs": 1791254814214.5637,
+        "ctimeMs": 1791254814214.5637
+      },
+      "opened": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 875,
+        "dev": 16777231,
+        "ino": 122968428,
+        "mtimeMs": 1791254814214.5637,
+        "ctimeMs": 1791254814214.5637
+      },
+      "finalHandle": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 875,
+        "dev": 16777231,
+        "ino": 122968428,
+        "mtimeMs": 1791254814214.5637,
+        "ctimeMs": 1791254814214.5637
+      },
+      "after": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 875,
+        "dev": 16777231,
+        "ino": 122968428,
+        "mtimeMs": 1791254814214.5637,
+        "ctimeMs": 1791254814214.5637
+      }
+    },
+    {
+      "sequence": 71,
+      "atUtc": "2026-10-09T02:18:01.258Z",
+      "method": "lstat",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/AssetInfo.plist",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/AssetInfo.plist'"
+      }
+    },
+    {
+      "sequence": 72,
+      "atUtc": "2026-10-09T02:18:01.258Z",
+      "method": "metadata-subprobe-stop",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/AssetInfo.plist",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": null,
+        "message": "Metadata chain inspection stopped"
+      },
+      "blockedAt": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/AssetInfo.plist"
+    },
+    {
+      "sequence": 73,
+      "atUtc": "2026-10-09T02:18:01.259Z",
+      "method": "lstat",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/Info.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 800,
+      "dev": 16777231,
+      "ino": 42309180,
+      "mtimeMs": 1781004184528.9348,
+      "ctimeMs": 1781004184528.9348
+    },
+    {
+      "sequence": 74,
+      "atUtc": "2026-10-09T02:18:01.259Z",
+      "method": "metadata.lstat.before",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/Info.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 800,
+      "dev": 16777231,
+      "ino": 42309180,
+      "mtimeMs": 1781004184528.9348,
+      "ctimeMs": 1781004184528.9348
+    },
+    {
+      "sequence": 75,
+      "atUtc": "2026-10-09T02:18:01.259Z",
+      "method": "open-readonly-nofollow",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/Info.plist",
+      "ok": true,
+      "flags": 256
+    },
+    {
+      "sequence": 76,
+      "atUtc": "2026-10-09T02:18:01.259Z",
+      "method": "stable-read-hash",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/Info.plist",
+      "ok": true,
+      "bytes": 800,
+      "sha256": "ad87a756b1a7eeef133b5bde25d0b105466d5be6d6f0e69f2a2d39df2958cd22",
+      "stamp": "16777231:42309180:800:1781004184528.9348:1781004184528.9348:33188:242:0:1",
+      "before": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 800,
+        "dev": 16777231,
+        "ino": 42309180,
+        "mtimeMs": 1781004184528.9348,
+        "ctimeMs": 1781004184528.9348
+      },
+      "opened": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 800,
+        "dev": 16777231,
+        "ino": 42309180,
+        "mtimeMs": 1781004184528.9348,
+        "ctimeMs": 1781004184528.9348
+      },
+      "finalHandle": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 800,
+        "dev": 16777231,
+        "ino": 42309180,
+        "mtimeMs": 1781004184528.9348,
+        "ctimeMs": 1781004184528.9348
+      },
+      "after": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 800,
+        "dev": 16777231,
+        "ino": 42309180,
+        "mtimeMs": 1781004184528.9348,
+        "ctimeMs": 1781004184528.9348
+      }
+    },
+    {
+      "sequence": 77,
+      "atUtc": "2026-10-09T02:18:01.263Z",
+      "method": "metadata.lstat.before",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/Info.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 800,
+      "dev": 16777231,
+      "ino": 42309180,
+      "mtimeMs": 1781004184528.9348,
+      "ctimeMs": 1781004184528.9348
+    },
+    {
+      "sequence": 78,
+      "atUtc": "2026-10-09T02:18:01.263Z",
+      "method": "open-readonly-nofollow",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/Info.plist",
+      "ok": true,
+      "flags": 256
+    },
+    {
+      "sequence": 79,
+      "atUtc": "2026-10-09T02:18:01.263Z",
+      "method": "stable-read-hash",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/Info.plist",
+      "ok": true,
+      "bytes": 800,
+      "sha256": "ad87a756b1a7eeef133b5bde25d0b105466d5be6d6f0e69f2a2d39df2958cd22",
+      "stamp": "16777231:42309180:800:1781004184528.9348:1781004184528.9348:33188:242:0:1",
+      "before": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 800,
+        "dev": 16777231,
+        "ino": 42309180,
+        "mtimeMs": 1781004184528.9348,
+        "ctimeMs": 1781004184528.9348
+      },
+      "opened": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 800,
+        "dev": 16777231,
+        "ino": 42309180,
+        "mtimeMs": 1781004184528.9348,
+        "ctimeMs": 1781004184528.9348
+      },
+      "finalHandle": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 800,
+        "dev": 16777231,
+        "ino": 42309180,
+        "mtimeMs": 1781004184528.9348,
+        "ctimeMs": 1781004184528.9348
+      },
+      "after": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 800,
+        "dev": 16777231,
+        "ino": 42309180,
+        "mtimeMs": 1781004184528.9348,
+        "ctimeMs": 1781004184528.9348
+      }
+    },
+    {
+      "sequence": 80,
+      "atUtc": "2026-10-09T02:18:01.264Z",
+      "method": "lstat",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/AssetInfo.plist",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/AssetInfo.plist'"
+      }
+    },
+    {
+      "sequence": 81,
+      "atUtc": "2026-10-09T02:18:01.264Z",
+      "method": "metadata-subprobe-stop",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/AssetInfo.plist",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": null,
+        "message": "Metadata chain inspection stopped"
+      },
+      "blockedAt": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/AssetInfo.plist"
+    },
+    {
+      "sequence": 82,
+      "atUtc": "2026-10-09T02:18:01.264Z",
+      "method": "lstat",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/Info.plist",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/Info.plist'"
+      }
+    },
+    {
+      "sequence": 83,
+      "atUtc": "2026-10-09T02:18:01.264Z",
+      "method": "metadata-subprobe-stop",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/Info.plist",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": null,
+        "message": "Metadata chain inspection stopped"
+      },
+      "blockedAt": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/Info.plist"
+    },
+    {
+      "sequence": 84,
+      "atUtc": "2026-10-09T02:18:01.264Z",
+      "method": "lstat",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetInfo.plist",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetInfo.plist'"
+      }
+    },
+    {
+      "sequence": 85,
+      "atUtc": "2026-10-09T02:18:01.264Z",
+      "method": "metadata-subprobe-stop",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetInfo.plist",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": null,
+        "message": "Metadata chain inspection stopped"
+      },
+      "blockedAt": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetInfo.plist"
+    },
+    {
+      "sequence": 86,
+      "atUtc": "2026-10-09T02:18:01.264Z",
+      "method": "lstat",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/Info.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 878,
+      "dev": 16777231,
+      "ino": 32054028,
+      "mtimeMs": 1778209509428.472,
+      "ctimeMs": 1778209509428.472
+    },
+    {
+      "sequence": 87,
+      "atUtc": "2026-10-09T02:18:01.264Z",
+      "method": "metadata.lstat.before",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/Info.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 878,
+      "dev": 16777231,
+      "ino": 32054028,
+      "mtimeMs": 1778209509428.472,
+      "ctimeMs": 1778209509428.472
+    },
+    {
+      "sequence": 88,
+      "atUtc": "2026-10-09T02:18:01.264Z",
+      "method": "open-readonly-nofollow",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/Info.plist",
+      "ok": true,
+      "flags": 256
+    },
+    {
+      "sequence": 89,
+      "atUtc": "2026-10-09T02:18:01.264Z",
+      "method": "stable-read-hash",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/Info.plist",
+      "ok": true,
+      "bytes": 878,
+      "sha256": "32584490825a9332559fee2235551fb9595cdd8e1d1d4501b976de4bd12d9913",
+      "stamp": "16777231:32054028:878:1778209509428.472:1778209509428.472:33188:242:0:1",
+      "before": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 878,
+        "dev": 16777231,
+        "ino": 32054028,
+        "mtimeMs": 1778209509428.472,
+        "ctimeMs": 1778209509428.472
+      },
+      "opened": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 878,
+        "dev": 16777231,
+        "ino": 32054028,
+        "mtimeMs": 1778209509428.472,
+        "ctimeMs": 1778209509428.472
+      },
+      "finalHandle": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 878,
+        "dev": 16777231,
+        "ino": 32054028,
+        "mtimeMs": 1778209509428.472,
+        "ctimeMs": 1778209509428.472
+      },
+      "after": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 878,
+        "dev": 16777231,
+        "ino": 32054028,
+        "mtimeMs": 1778209509428.472,
+        "ctimeMs": 1778209509428.472
+      }
+    },
+    {
+      "sequence": 90,
+      "atUtc": "2026-10-09T02:18:01.268Z",
+      "method": "metadata.lstat.before",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/Info.plist",
+      "ok": true,
+      "type": "file",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0644",
+      "modeBits": 33188,
+      "nlink": 1,
+      "size": 878,
+      "dev": 16777231,
+      "ino": 32054028,
+      "mtimeMs": 1778209509428.472,
+      "ctimeMs": 1778209509428.472
+    },
+    {
+      "sequence": 91,
+      "atUtc": "2026-10-09T02:18:01.268Z",
+      "method": "open-readonly-nofollow",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/Info.plist",
+      "ok": true,
+      "flags": 256
+    },
+    {
+      "sequence": 92,
+      "atUtc": "2026-10-09T02:18:01.268Z",
+      "method": "stable-read-hash",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/Info.plist",
+      "ok": true,
+      "bytes": 878,
+      "sha256": "32584490825a9332559fee2235551fb9595cdd8e1d1d4501b976de4bd12d9913",
+      "stamp": "16777231:32054028:878:1778209509428.472:1778209509428.472:33188:242:0:1",
+      "before": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 878,
+        "dev": 16777231,
+        "ino": 32054028,
+        "mtimeMs": 1778209509428.472,
+        "ctimeMs": 1778209509428.472
+      },
+      "opened": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 878,
+        "dev": 16777231,
+        "ino": 32054028,
+        "mtimeMs": 1778209509428.472,
+        "ctimeMs": 1778209509428.472
+      },
+      "finalHandle": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 878,
+        "dev": 16777231,
+        "ino": 32054028,
+        "mtimeMs": 1778209509428.472,
+        "ctimeMs": 1778209509428.472
+      },
+      "after": {
+        "type": "file",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0644",
+        "modeBits": 33188,
+        "nlink": 1,
+        "size": 878,
+        "dev": 16777231,
+        "ino": 32054028,
+        "mtimeMs": 1778209509428.472,
+        "ctimeMs": 1778209509428.472
+      }
+    }
+  ],
+  "candidatePaths": [],
+  "liveRows": {
+    "L01": "UNVERIFIED",
+    "L02": "UNVERIFIED",
+    "L03": "UNVERIFIED",
+    "L04": "UNVERIFIED",
+    "L05": "UNVERIFIED"
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "capturedAtUtc": "2026-10-09T02:29:08.791Z",
+  "priorityRuntimeBundle": {
+    "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime",
+    "catalogURL": "file:///private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2027.0.simruntime/",
+    "followed": false,
+    "existence": "UNVERIFIED"
+  },
+  "priorityMetadataFiles": [
+    {
+      "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist",
+      "basis": "Derived exact metadata suffix from catalog-reported iOS27 Cryptex bundle location.",
+      "followed": false,
+      "existence": "UNVERIFIED",
+      "requiresNewRootDispatch": true
+    },
+    {
+      "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist",
+      "basis": "Derived exact metadata suffix from catalog-reported iOS27 Cryptex bundle location.",
+      "followed": false,
+      "existence": "UNVERIFIED",
+      "requiresNewRootDispatch": true
+    },
+    {
+      "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist",
+      "basis": "Derived exact metadata suffix from catalog-reported iOS27 Cryptex bundle location.",
+      "followed": false,
+      "existence": "UNVERIFIED",
+      "requiresNewRootDispatch": true
+    }
+  ],
+  "otherObservedImmediateCandidates": [
+    {
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-295A47AD-585D-4F25-875F-CD9B5078FE66",
+      "basis": "Exact observed immediate child name; not inventoried/stat-followed in this batch.",
+      "followed": false,
+      "requiresNewRootDispatch": true
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F",
+      "basis": "Exact observed immediate child name; not inventoried/stat-followed in this batch.",
+      "followed": false,
+      "requiresNewRootDispatch": true
+    }
+  ],
+  "capturedNamesAndCatalogLocations": [
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/Restore",
+      "basis": "AssetData immediate name/stat only; payload/image bytes not opened.",
+      "kind": "IMMEDIATE_NAME_STAT_ONLY",
+      "followed": false
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/Info.plist",
+      "basis": "Approved asset immediate name only; metadata/payload contents not read in phase3.",
+      "kind": "IMMEDIATE_NAME_ONLY",
+      "followed": false
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/version.plist",
+      "basis": "Approved asset immediate name only; metadata/payload contents not read in phase3.",
+      "kind": "IMMEDIATE_NAME_ONLY",
+      "followed": false
+    },
+    {
+      "field": "images.0.sourceURL.relative",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg",
+      "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.0.path.relative",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg",
+      "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.0.sourceParentBundleMountURL.relative",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/",
+      "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.0.runtimeInfo.bundlePath.relative",
+      "path": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/",
+      "sourceValue": "file:///Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2026.4.simruntime/",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.1.sourceURL.relative",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/",
+      "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.1.path.relative",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/",
+      "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.1.sourceParentBundleMountURL.relative",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/",
+      "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.1.runtimeInfo.bundlePath.relative",
+      "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/",
+      "sourceValue": "file:///private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2027.0.simruntime/",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.1.cryptexPersonalizationManifestURL.relative",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Personalization/com_apple_MobileAsset_iOSSimulatorRuntime__3e800c38767f9f2c5fc86acdad7adf44565e051a.asset-24A434-Arm64Only-Customer-Simulator-Runtime.manifest",
+      "sourceValue": "file:///Library/Developer/CoreSimulator/Cryptex/Personalization/com_apple_MobileAsset_iOSSimulatorRuntime__3e800c38767f9f2c5fc86acdad7adf44565e051a.asset-24A434-Arm64Only-Customer-Simulator-Runtime.manifest",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.2.sourceURL.relative",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/Restore/043-19278-100.dmg",
+      "sourceValue": "file:///Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/Restore/043-19278-100.dmg",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.2.path.relative",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/Restore/043-19278-100.dmg",
+      "sourceValue": "file:///Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/Restore/043-19278-100.dmg",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.2.sourceParentBundleImageURL.relative",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/AssetData/043-18670-100.dmg",
+      "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/AssetData/043-18670-100.dmg",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.2.sourceParentBundleMountURL.relative",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/",
+      "sourceValue": "file:///Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.2.runtimeInfo.bundlePath.relative",
+      "path": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.6.simruntime/",
+      "sourceValue": "file:///Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2018.6.simruntime/",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    }
+  ],
+  "note": "Reported image/dmg/personalization locations are preserved metadata only, not proposed byte reads. No arbitrary catalog path was followed."
+}

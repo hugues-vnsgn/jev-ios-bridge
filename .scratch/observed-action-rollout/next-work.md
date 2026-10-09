@@ -2,54 +2,52 @@
 
 ## Latest result
 
-Tickets01–10 and bounded repairs are integrated at `b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433` in the protected integration worktree. Actual default checks pass **1675/1675**, typecheck and build on Node26.8.1 and exactNode24.0.0; zero failures/cancellations/skips/TODOs and unchanged audited source. [Host report and raw gates](../observed-integration/acceptance/host/report.md).
+Tickets 01 through 10 and H01 through H09 are accepted for the original product `b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433`: actual default checks passed 1,675 tests, typecheck and build on Node 26.8.1 and exact Node 24.0.0. Clean npm/plugin proofs passed 37 commands per runtime. [Accepted host report](../observed-integration/acceptance/host/report.md).
 
-Ticket09 original `08a9858` and focused child `d0c24bb` have scoped Spec/Standards PASS and are physically integrated with Root's separately accepted clock fixture `6610b136`. The fixture preserves the1100ms budget and original polling/call assertions. Both earlier full26 failures remain preserved. [09 acceptance](../observed-integration/acceptance/host/faults-repair2-review.md).
+The current prerequisite diagnosis is complete. Stable direct metadata confirms installed iOS 27.0/build `24A434` in the exact Cryptex bundle. All required Xcode identity and minimum-host fields match. The retained exact mount response reports `Writable`, `WritableMedia` and `WritableVolume` false; seven sampled BSD flags are zero. [Root phase5 audit](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-phase5-audit.json), [retained mount derivation](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-phase5-retained-mount-derivation.json).
 
-Ticket10 is accepted. Current genuine clean npm/plugin proofs pass37 commands each runtime: Node26 in18.351s and exact24 in21.514s, associated with current71 source/package/lock/README and68 compiled-file hashes. Both installed-production startup probes pass with contemporaneous launch hashes. The earlier2Node26 install timeouts, initial startup provenance gap and unknown lower cause remain historical limitations. [Installed ledger](../observed-integration/acceptance/host/installed-workflow/integration/fresh-proofs/report.md).
+The unchanged bridge refused `/Applications` mode0775 before reading runtime metadata. Its discovery also excludes the Cryptex path, and the stable 34,501-byte Xcode plist expands to 77,555 JSON bytes, beyond its 64KiB output limit. These findings supersede the earlier installation-only advice. Actual production compatibility remains UNVERIFIED.
 
-## Next work in order
+## Execution order
 
-| Order | Work | Owner | Required result |
-| --- | --- | --- | --- |
-| Complete | H01–H09 assertion/evidence completeness | Root; both independent completeness/raw audits PASS | All eight omissions closed, twelve reviewed map hashes unchanged, actual combined gates and installed proofs PASS. [Acceptance receipt](../observed-integration/acceptance/host/host-acceptance.json). |
-| 2 — waiting on prerequisites | Operational live entry | Current restored sibling `gpt-6-luna` high; Root coordinates | Latest recheck after operational confirmation complete: no iOS27.0 bundle inspectable in supported roots. Owner confirmed old-writer/root facts and Root prepared the private declaration. Await iOS27.0 availability, then verify private configuration/migration, capacity/storage and unchanged artifacts. |
-| 3 | [11 serial live acceptance](issues/11-live-acceptance.md) | Sole sibling operator after all entry gates | Execute all5 cases below on fresh create-source iPhone17/iOS27.0 allocations; retain allocations and raw evidence. |
-| 4 | [12 independent safety review](issues/12-independent-review.md) | gpt-6-astra high reviewer who authored no implementation | Audit final diff/all H/L rows; Root fixes findings and obtains bounded re-review. |
-| 5 | Final readiness report | Root | Merge-ready only when host, live and independent safety review all PASS. Merge/push/release remain outside authorization. |
-
-### 1. Complete the host maps
-
-The first frozen maps enumerate396 ticket09 inventory IDs sharing193 actual executions per runtime,386 deduplicated runtime artifact groups,2 installed startup supplements and H09 runtime/packing/14-golden evidence. The audit checked the matrix/contract clauses against executed Source assertions. Eight initial correspondence omissions, including supplied availability, preparation deadlines and ambiguous COMMIT replies, are closed. Original BLOCKED evidence remains preserved; no new execution or product defect was inferred.
-
-Root has added all eight supplement families:26 Source anchors,302 assertion-line annotations and70 in-range test-title definitions matched to actual passing logs on BOTH runtimes. [Supplement index](../observed-integration/acceptance/host/base-supplements/correspondence.json). The [corrected twelve-file freeze](../observed-integration/acceptance/host/mapped-host-freeze-round2.json) has [independent PASS](../observed-integration/acceptance/host/faults/review/host-completeness/round2/review.md). Root has published H01–H09 PASS, with post-review status annotations recorded separately. Counts from shared fixture traces are not represented as individual inventory-case counts. Missing trace counts remain null where Source assertions supply the oracle. The original BLOCKED audit and first frozen maps remain inspectable.
-
-### 2. Verify entry prerequisites
-
-The owner selected iOS27.0 and chose to wait for installation. The latest [read-only runtime recheck](../observed-integration/acceptance/live/report.md) finds no27.0 bundle in the allocator supported metadata roots. Five fresh sanitized runtime/evidence query receipts are [preserved](../observed-integration/acceptance/live/versions.json). Host/iPhone17 metadata is referenced by the exact prior path/hash, not represented as freshly queried; runtime compatibility/build remain UNVERIFIED. Cache names18.6/26.4 are not current installed-runtime proof. No fallback or installation occurred; all L01–L05 remain UNVERIFIED.
-
-The approved role is `gpt-6-luna` high. Two later Orca restarts removed its sibling pane; earlier bindings are historical. Current tab/leaf is `b0e5a4b6-106b-4dab-a49a-b3933445d4ef:abe2d20e-837b-4e76-bb65-0288efa467bf`, terminal `term_19640861-824c-4f24-8789-3f584723bc5a`. Startup model/effort, integration working directory and initial idle readiness are verified in the [current binding receipt](../observed-integration/acceptance/host/operator-preflight/recheck-2026-10-09/operator-binding.json). Root reverified all 15 accepted host files and 437 product/test/docs hashes at the 2026-10-09 continuation; no source delta or test rerun. The sole operator completed a fresh [metadata preflight](../observed-integration/acceptance/live/preflight-2026-10-09/report.md) with [20 query receipts](../observed-integration/acceptance/live/preflight-2026-10-09/versions.json) and returned idle. Root accepted [bounded provenance](../observed-integration/acceptance/host/operator-preflight/recheck-2026-10-09/root-audit.json); the runtime prerequisite remains UNVERIFIED. Root never operates devices.
-
-Operational activation requires all older/external writers stopped and every historical root declared or affected devices excluded. The owner replied “confirm” on 2026-10-09, confirming stopped old/external writers and no additional historical roots or additional exclusions. Root recorded the [operational assertion](../observed-integration/acceptance/host/operational-confirmation-2026-10-09/owner-confirmation.json) and prepared the private [declaration](../observed-integration/acceptance/host/operational-confirmation-2026-10-09/declaration.json). This is owner evidence, not independent process quiescence or native-release certification. The default admission/config/journal roots come from the OS account home, with legacy leases under the relevant TMPDIR. Root prepares a concrete declaration; the sole operator performs authorized migration only after entry facts pass. Preserve all source roots/claims. No actual account-store activation has occurred.
-
-### 3. Execute L01–L05 serially
-
-The operator first builds the unchanged fixture and Weather apps with generic simulator destinations in isolated DerivedData, verifies Info.plist/platform/architecture/minimumOS and source/app hashes, and records exact host/Xcode/runtime/vendor versions. Initial readiness checks use initial selectors; later postconditions and L03's deliberately absent precondition are action oracles.
-
-| Case | Public sequence | Required outcome and effects |
+| Order | Work and owner | Completion evidence |
 | --- | --- | --- |
-| L01 | CLI allocate → CLI action → MCP get | Fixture Home→Details; outcome_observed; attempted/acknowledged true;1touch,0semantic tap,0relaunch;N≥2captures. |
-| L02 | MCP prepare → MCP start → CLI report | Home already satisfied; both flagsfalse;0input,1capture. |
-| L03 | CLI allocate → MCP start → CLI report | Details precondition absent; refused/PRECONDITION_NOT_MET;false flags;0input,1capture;retain allocation. |
-| L04 | MCP recording harness prepare/start → fresh CLI report/repeat/conflict and legacy successor | Withhold1successful real touch reply before acknowledgement; inconclusive/UI_ACTION_UNCONFIRMED+quarantine;attemptedtrue/ackfalse;raw success retained;retrieval/conflict/successors0calls. Synthetic loss is not native/real transport certification. |
-| L05 | MCP prepare → separate CLI action → MCP get | Unchanged Weather opens Settings sheet; outcome_observed;1touch,0relaunch,N≥2;JPEG/snapshot visibly agree. |
+| 1 | Root integrates the independently accepted Applications repair | Candidate `a0e68917`; exact two-file overlay, preserved raw gates, Spec and Standards PASS. |
+| 2 (active) | Isolated host author repairs fixed Xcode output and implements bounded XML mount parser | Genuine failing regressions; fixed Xcode conversion128KiB combined output only, all inputs64KiB; parser64KiB/depth32/8192nodes, typed exact mount and three false writable fields. Both Node gates and independent reviews. |
+| 3 | Cryptex author implements the owner-approved bounded v3 policy on the frozen parser candidate | Finite exact-namespace discovery, explicit-runtime uniqueness, fresh mount proofs around each conversion, stable same-device paths, exact permissions and guarded metadata child termination. No native probes in author worktrees. |
+| 4 | Root revalidates the repaired product and installed distribution | Actual default gates on both Node versions, typecheck/build, independent Spec/Standards reviews, clean npm/plugin proofs, current Source/compiled/install association. Original product acceptance does not automatically cover repair deltas. |
+| 5 | Same sole operator completes operational entry | Actual installed compatibility; private account config/default digest; reviewed migration; held capacity at most8; storage reservations; unchanged fixture and Weather builds in isolated DerivedData. |
+| 6 | Same sole operator runs L01 through L05 serially | Fresh create-source iPhone17/iOS27.0 allocation per case, public cross-process interfaces, exact effects, visible outcomes, retained raw evidence and all five allocations. |
+| 7 | Independent nonauthor gpt-6-astra high reviewer completes ticket12; Root reports readiness | All H/L rows and safety review PASS; bounded re-review after fixes. No automatic merge, push or release. |
 
-Each case uses1create/boot/install/launch, unique declared identities and a fresh iPhone17/iOS27.0 allocation. Count existing held allocations before starting; the maximum remains8. Retain all5 cases, including refused/quarantined outcomes. Stop on unknown creation, uncertainty, missing prerequisites, unexpected selectors/counts or exhausted capacity; no replay, cleanup or replacement.
+## Approved trust boundaries and current work
 
-### 4. Audit final readiness
+The owner approved only canonical root0/admin80/exact0775 `/Applications` as an ancestor of fixed `/Applications/Xcode.app`, with strict checks below it. The focused candidate passed 78 tests on both Node versions and final actual default gates1723/1723 with typecheck/build. [Preserved candidate evidence](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/permission-candidate-evidence/root-preservation-index.json), [independent Spec](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/permission-candidate-review/spec/report.md), [Standards](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/permission-candidate-review/standards/report.md).
 
-Ticket12 starts only with complete live evidence. The nonauthor reviewer audits shared authority, identity/migration/cancellation/crash/late-owner/capacity/atomic-terminal invariants, installed minimum runtime/legacy compatibility, exact live counts and unchanged sources/artifacts. Missing proof is UNVERIFIED; confirmed defects block readiness. Root returns the final verdict without automatically merging or publishing.
+Earlier full26 permission-fixture failures were caused by child umask077, confirmed by controlled unchanged cases; private evidence stays077 and tests use normal child022. The first full24 run had three lock/milestone failures; those three unchanged cases and one identical full rerun passed. The lower cause of the first24 failure remains unconfirmed. All raw failures and their scope remain recorded.
 
-## Latest operational checkpoint
+The owner separately approved the [bounded Cryptex v3 policy](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal.md). [Exact answer and frozen proposal hash](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/owner-cryptex-trust-decision.json). It trusts root/daemon namespace managers only in the stated fixed subtree and requires fresh exact unwritable mount evidence. This is a mode-based policy, without an inspected ACL inventory or atomic ancestor pin. Independent proposal review found no remaining scoped defect; implementation regressions and reviews are still required.
 
-Owner writer/root facts are confirmed and the private strict declaration is prepared, with no actual migration. The sole operator completed a new [runtime-only recheck](../observed-integration/acceptance/live/runtime-confirmation-2026-10-09/report.md) and returned idle. Root audited all5 exact query receipts, the prior metadata hash, declaration hash and private permissions. All L01–L05 remain UNVERIFIED. Next: wait for explicit27.0 availability, then verify runtime/private config, perform reviewed migration, check held capacity/storage and build unchanged artifacts before any fresh live case.
+The Xcode/parser author owns one narrow existing fixture extension: its fake SourceProcess may accept128KiB only for the exact fixed Xcode Info conversion command. All other commands retain64KiB. No input-size heuristic or existing assertion relaxation is authorized.
+
+## Operational entry
+
+The owner confirmed older/external writers are stopped and no additional historical roots or exclusions are declared. The private strict [migration declaration](../observed-integration/acceptance/host/operational-confirmation-2026-10-09/declaration.json) is prepared and unexecuted. Preserve all default sources, claims and protected UUIDs. The reviewed command is `node dist/device/admission-maintenance.js migrate <private-declaration.json>`; only the sole operator may execute it after host gates and actual compatibility pass.
+
+The owner-confirmed GPT-6.1-Sol xhigh operator remains in the same sibling pane, terminal `term_19640861-824c-4f24-8789-3f584723bc5a`. It is idle after phase5. Root coordinates, integrates and audits; Root never operates a device. [Binding](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/user-evidence-and-binding.json).
+
+Before allocation, verify private effective config/store authority, default digest, capacity and conservative storage. Never clear an unknown-create guard or increase capacity to finish acceptance. Build unchanged apps with generic simulator destinations in isolated DerivedData; inspect bundle identity, platform, architecture, minimumOS and source/app hashes. Record host/Xcode/runtime/Node/vendor versions.
+
+## Five serial live cases
+
+| Case | Public sequence | Required action outcome |
+| --- | --- | --- |
+| L01 | CLI prepare → CLI action → MCP get | Fixture Home to Details; outcome_observed; attempted/acknowledged true;1touch,0relaunch,N≥2captures. |
+| L02 | MCP prepare/start → CLI report | Home already satisfied; flagsfalse;0input,1capture. |
+| L03 | CLI prepare → MCP start → CLI report | Absent Details precondition; PRECONDITION_NOT_MET; flagsfalse;0input,1capture; retain allocation. |
+| L04 | Recording MCP harness prepare/start → fresh CLI retrieval/conflict and legacy successor | Withhold one successful real touch reply before acknowledgement; UI_ACTION_UNCONFIRMED, attemptedtrue/ackfalse, quarantine; raw success retained; successors/retrieval/conflict0backend calls. Synthetic loss has only that scope. |
+| L05 | MCP prepare → separate CLI action → MCP get | Unchanged Weather Settings sheet; outcome_observed;1touch,0relaunch,N≥2; snapshot and JPEG agree. |
+
+Each preparation uses exactly one create, boot, install and launch, with fresh unique declared IDs. Count actual listing/readiness/action captures and all backend calls. Retain five devices, including refusal and quarantine, within eight held allocations. Stop on uncertainty, unknown creation, exhausted capacity or unexplained effects; no replay, replacement, erase, delete, shutdown or reset.
+
+All L01 through L05 remain UNVERIFIED. Ticket12 is not dispatched. No production config/store activation, migration, app build or live device action has occurred in this diagnosis. Runtime fallback, downloads, host permission changes, cleanup, merge, push and publication remain outside this execution.

@@ -1,0 +1,50 @@
+{
+  "capturedAtUtc": "2026-10-09T02:20:26.837Z",
+  "catalogReportedLocationPaths": [],
+  "exactNextCandidates": [
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset",
+      "basis": "Observed immediate AssetsV2 child; directory lstat-confirmed; Info.plist identifies iOS27.0 build24A434 arm64.",
+      "nextBoundedMetadataAction": "Root may approve immediate names plus specifically selected payload metadata; no image bytes or mounting.",
+      "visitedInPhase2": "Directory lstat and Info.plist only; no child inventory/payload read."
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/com_apple_MobileAsset_iOSSimulatorRuntime.xml",
+      "basis": "Observed immediate asset-root name; lstat says regular file. Contents not read.",
+      "nextBoundedMetadataAction": "Root may approve a size-capped stable read and safe in-memory metadata parse.",
+      "visitedInPhase2": "Name and lstat only."
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Images/images.plist",
+      "basis": "Stable3929-byte catalog; exact allowed plutil JSON conversion exited1, stdoutempty, stderr94bytes redacted.",
+      "nextBoundedMetadataAction": "Root may approve a different explicitly bounded read-only decoder; current phase authorized no fallback.",
+      "visitedInPhase2": "Stable read/hash before and after one conversion attempt."
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Images/mnt",
+      "basis": "Exact immediate name under approved Images root; child type/content not inspected.",
+      "nextBoundedMetadataAction": "Root may approve lstat plus bounded immediate names only.",
+      "visitedInPhase2": "Name only."
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images",
+      "basis": "Exact immediate name under approved Cryptex root; child type/content not inspected.",
+      "nextBoundedMetadataAction": "Root may approve lstat plus bounded immediate names only; no image bytes.",
+      "visitedInPhase2": "Name only."
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes",
+      "basis": "Derived production search path from an observed immediate Volumes name; full path existence not checked in phase2.",
+      "nextBoundedMetadataAction": "Root may approve no-symlink lstat chain and bounded immediate runtime-bundle metadata.",
+      "visitedInPhase2": "Volume name only; derived full path not followed."
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes",
+      "basis": "Derived production search path from an observed immediate Volumes name; full path existence not checked in phase2.",
+      "nextBoundedMetadataAction": "Root may approve no-symlink lstat chain and bounded immediate runtime-bundle metadata.",
+      "visitedInPhase2": "Volume name only; derived full path not followed."
+    }
+  ],
+  "allRequireNextRootDispatch": true,
+  "noCandidateExpansionRun": true
+}

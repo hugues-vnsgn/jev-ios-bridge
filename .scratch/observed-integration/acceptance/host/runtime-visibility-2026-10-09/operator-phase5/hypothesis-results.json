@@ -1,0 +1,66 @@
+{
+  "capturedAtUtc": "2026-10-09T03:12:50.104Z",
+  "hypotheses": [
+    {
+      "rank": 1,
+      "verdict": "UNKNOWN_PARSER_UNAVAILABLE",
+      "claim": "The exact Cryptex mount is read-only, making group-write bits ineffective inside its volume.",
+      "evidence": "Exact diskutil info invocation succeeded, complete3108-byte XML output was preserved with stable nonsymlink target chain; installed plist package is MODULE_NOT_FOUND.",
+      "mountPointCorrespondence": "UNVERIFIED_BY_APPROVED_PARSER",
+      "readOnlyConclusion": "UNKNOWN",
+      "limit": "No alternate parser, diskutil verb, returned-device/path query or mount substitution. Literal XML remains available for Root review; no automated exact-MountPoint/readonly conclusion."
+    },
+    {
+      "rank": 2,
+      "verdict": "UNSUPPORTED_BY_RECORDED_FLAGS",
+      "claim": "The exact Cryptex namespace has system protection flags sufficient to justify a bounded trust design.",
+      "evidence": "All seven exact stat observations match lstat device/inode/owner/mode before/after and report numeric flags0/text-.",
+      "limit": "Raw values only. No flag constants guessed, no inference of policy sufficiency or global absence of protection. Different device numbers do not establish read-only status or atomic protection."
+    },
+    {
+      "rank": 3,
+      "verdict": "SUPPORTED_METADATA_ONLY",
+      "claim": "Stable Xcode Info JSON fits a finite1MiB output budget and supplies matching identity/executable/min-host fields.",
+      "evidence": {
+        "inputBytes": 34501,
+        "inputSha256": "537783b4c639af6ee31208fe2ec12a40bacbb0fc8f5dd2820f54e03063c4dbe8",
+        "completeJSONBytes": 77555,
+        "completeJSONSha256": "3b78d94ef7ee6f9ab11db94a9b3aa2513c77668ff00fa3227a7a12186ac32d33",
+        "stableAcrossConversion": true,
+        "predicates": [
+          {
+            "id": "CFBundleIdentifier",
+            "verdict": "MATCH",
+            "actual": "com.apple.dt.Xcode",
+            "expected": "com.apple.dt.Xcode",
+            "sourceAnchor": "src/observed/allocation-config.ts:181"
+          },
+          {
+            "id": "CFBundleExecutable",
+            "verdict": "MATCH",
+            "actual": "Xcode",
+            "expected": "Xcode",
+            "sourceAnchor": "src/observed/allocation-config.ts:181"
+          },
+          {
+            "id": "LSMinimumSystemVersion",
+            "verdict": "MATCH",
+            "actual": "26.6",
+            "hostVersion": "27.0.1",
+            "hostVersionBasis": "Accepted phase4 host SystemVersion; not reread phase5.",
+            "sourceAnchor": "src/observed/allocation-config.ts:182"
+          }
+        ]
+      },
+      "limit": "Only diagnostic budget was1MiB. Production source/caps remain unchanged. Host27.0.1 comes from accepted phase4 evidence; no current host/SystemVersion reread."
+    }
+  ],
+  "acceptanceEvidence": false,
+  "liveRows": {
+    "L01": "UNVERIFIED",
+    "L02": "UNVERIFIED",
+    "L03": "UNVERIFIED",
+    "L04": "UNVERIFIED",
+    "L05": "UNVERIFIED"
+  }
+}

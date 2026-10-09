@@ -1,0 +1,19 @@
+# Runtime visibility phase 2: bounded installed metadata
+
+Root accepted phase1 provenance and showed the four ranked hypotheses to the owner before this dispatch. Same sole terminal term_19640861-824c-4f24-8789-3f584723bc5a, same integration checkout, owner-confirmed GPT-6.1-Sol xhigh. Root remains coordinator. HEAD4004ece; unchanged accepted product b618116d. Owner operational facts/declaration already confirmed. No migration/live activation granted.
+
+Read phase1 report/hypotheses and root-phase1-audit under `.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/`. Actual first cutoff: trustedPath rejects /Applications0775; no plist/runtime query was reached. This phase tests ranked hypotheses1–4 using installed metadata only. No product/test/build change, acceptance test, permission change, filesystem simulation, mounted-image change or actual compatibility rerun is granted.
+
+## Reads
+
+1. Hypothesis1: finite lstat-only ancestor inspection for the fixed Xcode Info/version/executable/developer/platform paths, OS SystemVersion and /usr/bin/{xcrun,plutil}, /Library/Developer/CoreSimulator/{Profiles/DeviceTypes,Profiles/Runtimes,Volumes,Images,Cryptex}. Enumerate each ancestor once, record path/type/uid/gid/mode/nlink and exact error; do not read executable bytes or follow symlinks. Evaluate original trustedPath predicate separately as diagnostic analysis.
+2. Hypotheses2–4: bounded immediate directory-name inventories only for `/Library/Developer/CoreSimulator/Images`, `/Library/Developer/CoreSimulator/Cryptex`, `/Library/Developer/CoreSimulator/Volumes`, `/Library/Developer/CoreSimulator/Profiles/Runtimes`, and `/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime`. Maximum1000 names/root. Do not recursively search or read image/dmg bytes. No Devices or user/account/Apple-account/cache directories.
+3. Read only known metadata `/Library/Developer/CoreSimulator/Images/images.plist`, plus immediate asset-child `Info.plist` and `AssetInfo.plist` under the named AssetsV2 root, at most50 children (conservative single-component names, lstat confirms directory and no symlink); also root `Info.plist`/`AssetInfo.plist` if present. File size max1MiB, O_RDONLY/O_NOFOLLOW, stable stat/hash before and after. Guarded child may execute only `/usr/bin/plutil -convert json -o - -- <one approved plist>` with no shell, fixed narrow environment HOME/account + PATH/LANG/LC_ALL/DEVELOPER_DIR, no inherited key/loader options. Capture exact sanitized receipt/stdout/stderr/exit/signal, hashes and selected fields identifying runtime27.0/build/image/platform/availability/location. Redact any credential/token field before storing raw conversion output. Do not follow any catalog-reported location yet; return exact candidate paths for Root's next bounded approval.
+
+If a named root is missing, record scoped ENOENT only. If symlink/access/size/entry cap prevents a read, record the limit and stop that subprobe. No simctl/xcrun command, SDK/backend/MCP, store/config/journal/lease, process scan, mounts, downloads/install, boot/launch/capture/input, cleanup, root override or fallback. No .env. Retain every device/claim.
+
+## Evidence / stop
+
+Before and after, verify the same15 host+437 source+68 compiled reference hashes as phase1. Write only NEW private700/600 files in `acceptance/host/runtime-visibility-2026-10-09/operator-phase2/` relative to `.scratch/observed-integration`. Do not modify phase1, parent docs, other evidence or commit. Capture script/argv/cwd/time/exits/inputs/output, clear hypothesis verdicts (supported/falsified/still unknown), limitations and exact next candidate metadata paths. No plain artifact value is acceptance evidence. L01–L05 remain UNVERIFIED.
+
+Run the bounded metadata batch once; return a concise report and stay idle. If it cannot be guarded, return the specific unavailable seam without expanding access. Keep the same GPT-6.1-Sol xhigh model.

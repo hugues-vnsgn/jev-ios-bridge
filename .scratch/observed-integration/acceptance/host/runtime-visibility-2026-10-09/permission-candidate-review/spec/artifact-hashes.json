@@ -1,0 +1,13 @@
+{
+  "files": {
+    "report.md": "1e9da0934475d60bf1efcdec4475e75ee097c56094c7dd4b4bf13e907aec64e2",
+    "review-inputs.json": "af218bf42ed034be2487d8c497e3a34447a4d96cb46dee7d1ad6e434d31b16de",
+    "evidence-audit.json": "6710901258bba1cac3b24c9309805c6165bd589e941acb88499b21eca4e33f33",
+    "evidence-audit-corrected.json": "8c78539875596dc95b5807c9439012e2907447ceadce91dc5ba4fdafd13f7277"
+  },
+  "modes": {
+    "directory": "0700",
+    "files": "0600"
+  },
+  "invalidSupersededArtifact": "evidence-audit.json; corrected inventory accounting is authoritative"
+}

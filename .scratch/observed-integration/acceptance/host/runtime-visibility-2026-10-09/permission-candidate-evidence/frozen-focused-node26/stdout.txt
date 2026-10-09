@@ -1,0 +1,478 @@
+TAP version 13
+# Subtest: strict preparation parsing fills only the overall default and canonicalizes object order
+ok 1 - strict preparation parsing fills only the overall default and canonicalizes object order
+  ---
+  duration_ms: 3.0945
+  type: 'test'
+  ...
+# Subtest: private fixed account configuration uses defaults and refuses unsafe or malformed settings
+ok 2 - private fixed account configuration uses defaults and refuses unsafe or malformed settings
+  ---
+  duration_ms: 10.125209
+  type: 'test'
+  ...
+# Subtest: installed proof uses exact IDs and RuntimeRoot OS, never internal bundle or newest runtime versions
+ok 3 - installed proof uses exact IDs and RuntimeRoot OS, never internal bundle or newest runtime versions
+  ---
+  duration_ms: 41.313625
+  type: 'test'
+  ...
+# Subtest: installed metadata replacement during plutil cannot supply compatibility even with identical bytes
+ok 4 - installed metadata replacement during plutil cannot supply compatibility even with identical bytes
+  ---
+  duration_ms: 29.269208
+  type: 'test'
+  ...
+# Subtest: production process composition allows only exact create and trusted fixed plist conversion with sanitized environment
+ok 5 - production process composition allows only exact create and trusted fixed plist conversion with sanitized environment
+  ---
+  duration_ms: 26.607083
+  type: 'test'
+  ...
+# Subtest: production child cancellation and capped output do not claim settlement until the actual child closes
+ok 6 - production child cancellation and capped output do not claim settlement until the actual child closes
+  ---
+  duration_ms: 26.854792
+  type: 'test'
+  ...
+# Subtest: installed Xcode identity mismatch refuses without host effects
+ok 7 - installed Xcode identity mismatch refuses without host effects
+  ---
+  duration_ms: 27.507125
+  type: 'test'
+  ...
+# Subtest: installed Xcode executable mismatch refuses without host effects
+ok 8 - installed Xcode executable mismatch refuses without host effects
+  ---
+  duration_ms: 28.126209
+  type: 'test'
+  ...
+# Subtest: installed Xcode min host mismatch refuses without host effects
+ok 9 - installed Xcode min host mismatch refuses without host effects
+  ---
+  duration_ms: 25.870709
+  type: 'test'
+  ...
+# Subtest: installed Xcode version mismatch refuses without host effects
+ok 10 - installed Xcode version mismatch refuses without host effects
+  ---
+  duration_ms: 27.654167
+  type: 'test'
+  ...
+# Subtest: installed Xcode build mismatch refuses without host effects
+ok 11 - installed Xcode build mismatch refuses without host effects
+  ---
+  duration_ms: 27.139708
+  type: 'test'
+  ...
+# Subtest: installed device architecture mismatch refuses without host effects
+ok 12 - installed device architecture mismatch refuses without host effects
+  ---
+  duration_ms: 28.72025
+  type: 'test'
+  ...
+# Subtest: installed device family mismatch refuses without host effects
+ok 13 - installed device family mismatch refuses without host effects
+  ---
+  duration_ms: 29.7125
+  type: 'test'
+  ...
+# Subtest: installed device min runtime mismatch refuses without host effects
+ok 14 - installed device min runtime mismatch refuses without host effects
+  ---
+  duration_ms: 27.461875
+  type: 'test'
+  ...
+# Subtest: installed device max runtime mismatch refuses without host effects
+ok 15 - installed device max runtime mismatch refuses without host effects
+  ---
+  duration_ms: 29.950125
+  type: 'test'
+  ...
+# Subtest: installed runtime platform mismatch refuses without host effects
+ok 16 - installed runtime platform mismatch refuses without host effects
+  ---
+  duration_ms: 32.424333
+  type: 'test'
+  ...
+# Subtest: installed runtime architecture mismatch refuses without host effects
+ok 17 - installed runtime architecture mismatch refuses without host effects
+  ---
+  duration_ms: 28.796375
+  type: 'test'
+  ...
+# Subtest: installed runtime family mismatch refuses without host effects
+ok 18 - installed runtime family mismatch refuses without host effects
+  ---
+  duration_ms: 28.229583
+  type: 'test'
+  ...
+# Subtest: installed runtime min host mismatch refuses without host effects
+ok 19 - installed runtime min host mismatch refuses without host effects
+  ---
+  duration_ms: 28.093583
+  type: 'test'
+  ...
+# Subtest: installed runtime declared OS mismatch refuses without host effects
+ok 20 - installed runtime declared OS mismatch refuses without host effects
+  ---
+  duration_ms: 27.729875
+  type: 'test'
+  ...
+# Subtest: installed runtime actual OS mismatch refuses without host effects
+ok 21 - installed runtime actual OS mismatch refuses without host effects
+  ---
+  duration_ms: 27.336917
+  type: 'test'
+  ...
+# Subtest: installed runtime build mismatch refuses without host effects
+ok 22 - installed runtime build mismatch refuses without host effects
+  ---
+  duration_ms: 37.609208
+  type: 'test'
+  ...
+# Subtest: runtime mounted volume metadata is accepted while missing executable, unsafe metadata and excessive enumeration refuse
+ok 23 - runtime mounted volume metadata is accepted while missing executable, unsafe metadata and excessive enumeration refuse
+  ---
+  duration_ms: 111.682042
+  type: 'test'
+  ...
+# Subtest: config becoming public between permission validation and stable read refuses
+ok 24 - config becoming public between permission validation and stable read refuses
+  ---
+  duration_ms: 26.072666
+  type: 'test'
+  ...
+# Subtest: child error alone is not process settlement: a potentially live child stays tracked until close
+ok 25 - child error alone is not process settlement: a potentially live child stays tracked until close
+  ---
+  duration_ms: 27.43625
+  type: 'test'
+  ...
+# Subtest: private config rejects symlink, hardlink and overlong file without consulting alternate roots
+ok 26 - private config rejects symlink, hardlink and overlong file without consulting alternate roots
+  ---
+  duration_ms: 75.933667
+  type: 'test'
+  ...
+# Subtest: canonical digest keeps build and supplied source immutable while invalid non-JSON requests stay safe
+ok 27 - canonical digest keeps build and supplied source immutable while invalid non-JSON requests stay safe
+  ---
+  duration_ms: 3.566125
+  type: 'test'
+  ...
+# Subtest: child abort never reports a successful receipt even when its eventual close code is zero
+ok 28 - child abort never reports a successful receipt even when its eventual close code is zero
+  ---
+  duration_ms: 28.618708
+  type: 'test'
+  ...
+# Subtest: child deadline never reports a successful receipt even when its eventual close code is zero
+ok 29 - child deadline never reports a successful receipt even when its eventual close code is zero
+  ---
+  duration_ms: 42.678042
+  type: 'test'
+  ...
+# Subtest: plist allowlist distinguishes device profiles from runtime OS metadata and rejects every invalid process option
+ok 30 - plist allowlist distinguishes device profiles from runtime OS metadata and rejects every invalid process option
+  ---
+  duration_ms: 28.023916
+  type: 'test'
+  ...
+# Subtest: installed Xcode ancestor policy accepts strict paths and the exact root admin Applications exception
+ok 31 - installed Xcode ancestor policy accepts strict paths and the exact root admin Applications exception
+  ---
+  duration_ms: 69.245792
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf owner refuses at the compatibility interface
+ok 32 - installed fresh leaf owner refuses at the compatibility interface
+  ---
+  duration_ms: 29.458542
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf group-write refuses at the compatibility interface
+ok 33 - installed fresh leaf group-write refuses at the compatibility interface
+  ---
+  duration_ms: 28.127083
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf other-write refuses at the compatibility interface
+ok 34 - installed fresh leaf other-write refuses at the compatibility interface
+  ---
+  duration_ms: 26.891416
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf symlink refuses at the compatibility interface
+ok 35 - installed fresh leaf symlink refuses at the compatibility interface
+  ---
+  duration_ms: 33.881166
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf type refuses at the compatibility interface
+ok 36 - installed fresh leaf type refuses at the compatibility interface
+  ---
+  duration_ms: 25.87025
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf owner refuses at the process interface
+ok 37 - installed fresh leaf owner refuses at the process interface
+  ---
+  duration_ms: 25.5755
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf group-write refuses at the process interface
+ok 38 - installed fresh leaf group-write refuses at the process interface
+  ---
+  duration_ms: 24.454959
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf other-write refuses at the process interface
+ok 39 - installed fresh leaf other-write refuses at the process interface
+  ---
+  duration_ms: 24.911875
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf symlink refuses at the process interface
+ok 40 - installed fresh leaf symlink refuses at the process interface
+  ---
+  duration_ms: 23.906917
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf type refuses at the process interface
+ok 41 - installed fresh leaf type refuses at the process interface
+  ---
+  duration_ms: 26.217834
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses account owner without dispatch
+ok 42 - installed Applications exception refuses account owner without dispatch
+  ---
+  duration_ms: 29.615584
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses foreign owner without dispatch
+ok 43 - installed Applications exception refuses foreign owner without dispatch
+  ---
+  duration_ms: 29.804667
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses foreign group without dispatch
+ok 44 - installed Applications exception refuses foreign group without dispatch
+  ---
+  duration_ms: 22.561791
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses world write without dispatch
+ok 45 - installed Applications exception refuses world write without dispatch
+  ---
+  duration_ms: 22.921625
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses other write without group write without dispatch
+ok 46 - installed Applications exception refuses other write without group write without dispatch
+  ---
+  duration_ms: 28.90425
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses different group permissions without dispatch
+ok 47 - installed Applications exception refuses different group permissions without dispatch
+  ---
+  duration_ms: 28.092875
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses sticky bit without dispatch
+ok 48 - installed Applications exception refuses sticky bit without dispatch
+  ---
+  duration_ms: 26.915625
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses setgid bit without dispatch
+ok 49 - installed Applications exception refuses setgid bit without dispatch
+  ---
+  duration_ms: 28.614125
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses setuid bit without dispatch
+ok 50 - installed Applications exception refuses setuid bit without dispatch
+  ---
+  duration_ms: 25.709875
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses symlink without dispatch
+ok 51 - installed Applications exception refuses symlink without dispatch
+  ---
+  duration_ms: 24.359875
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses file without dispatch
+ok 52 - installed Applications exception refuses file without dispatch
+  ---
+  duration_ms: 27.097042
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app strict for group-write
+ok 53 - installed Applications exception keeps /Applications/Xcode.app strict for group-write
+  ---
+  duration_ms: 24.511042
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app strict for foreign-owner
+ok 54 - installed Applications exception keeps /Applications/Xcode.app strict for foreign-owner
+  ---
+  duration_ms: 26.088583
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app strict for symlink
+ok 55 - installed Applications exception keeps /Applications/Xcode.app strict for symlink
+  ---
+  duration_ms: 25.781917
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app/Contents strict for group-write
+ok 56 - installed Applications exception keeps /Applications/Xcode.app/Contents strict for group-write
+  ---
+  duration_ms: 24.42875
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app/Contents strict for foreign-owner
+ok 57 - installed Applications exception keeps /Applications/Xcode.app/Contents strict for foreign-owner
+  ---
+  duration_ms: 25.644416
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app/Contents strict for symlink
+ok 58 - installed Applications exception keeps /Applications/Xcode.app/Contents strict for symlink
+  ---
+  duration_ms: 28.978625
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app/Contents/Developer strict for group-write
+ok 59 - installed Applications exception keeps /Applications/Xcode.app/Contents/Developer strict for group-write
+  ---
+  duration_ms: 24.882541
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app/Contents/Developer strict for foreign-owner
+ok 60 - installed Applications exception keeps /Applications/Xcode.app/Contents/Developer strict for foreign-owner
+  ---
+  duration_ms: 27.2015
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app/Contents/Developer strict for symlink
+ok 61 - installed Applications exception keeps /Applications/Xcode.app/Contents/Developer strict for symlink
+  ---
+  duration_ms: 27.349042
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app/Contents/Info.plist strict for group-write
+ok 62 - installed Applications exception keeps /Applications/Xcode.app/Contents/Info.plist strict for group-write
+  ---
+  duration_ms: 25.747833
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app/Contents/Info.plist strict for foreign-owner
+ok 63 - installed Applications exception keeps /Applications/Xcode.app/Contents/Info.plist strict for foreign-owner
+  ---
+  duration_ms: 24.923958
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app/Contents/Info.plist strict for symlink
+ok 64 - installed Applications exception keeps /Applications/Xcode.app/Contents/Info.plist strict for symlink
+  ---
+  duration_ms: 25.946875
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist strict for group-write
+ok 65 - installed Applications exception keeps /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist strict for group-write
+  ---
+  duration_ms: 33.356625
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist strict for foreign-owner
+ok 66 - installed Applications exception keeps /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist strict for foreign-owner
+  ---
+  duration_ms: 28.739333
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist strict for symlink
+ok 67 - installed Applications exception keeps /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist strict for symlink
+  ---
+  duration_ms: 31.117667
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Library strict for group-write
+ok 68 - installed Applications exception keeps /Library strict for group-write
+  ---
+  duration_ms: 27.666625
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Library strict for foreign-owner
+ok 69 - installed Applications exception keeps /Library strict for foreign-owner
+  ---
+  duration_ms: 30.133042
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Library strict for symlink
+ok 70 - installed Applications exception keeps /Library strict for symlink
+  ---
+  duration_ms: 29.209833
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /usr strict for group-write
+ok 71 - installed Applications exception keeps /usr strict for group-write
+  ---
+  duration_ms: 30.056875
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /usr strict for foreign-owner
+ok 72 - installed Applications exception keeps /usr strict for foreign-owner
+  ---
+  duration_ms: 25.623959
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /usr strict for symlink
+ok 73 - installed Applications exception keeps /usr strict for symlink
+  ---
+  duration_ms: 30.786667
+  type: 'test'
+  ...
+# Subtest: installed Applications exception permits no alternate or noncanonical Xcode metadata command
+ok 74 - installed Applications exception permits no alternate or noncanonical Xcode metadata command
+  ---
+  duration_ms: 25.565542
+  type: 'test'
+  ...
+# Subtest: installed Applications exception preserves metadata hardlink refusal
+ok 75 - installed Applications exception preserves metadata hardlink refusal
+  ---
+  duration_ms: 25.11875
+  type: 'test'
+  ...
+# Subtest: installed Applications exception preserves metadata size refusal
+ok 76 - installed Applications exception preserves metadata size refusal
+  ---
+  duration_ms: 26.528667
+  type: 'test'
+  ...
+# Subtest: installed Applications policy rechecks unsafe ancestor changes after metadata conversion
+ok 77 - installed Applications policy rechecks unsafe ancestor changes after metadata conversion
+  ---
+  duration_ms: 25.870584
+  type: 'test'
+  ...
+# Subtest: installed Applications policy checks permission trust without certifying ancestor identity stability
+ok 78 - installed Applications policy checks permission trust without certifying ancestor identity stability
+  ---
+  duration_ms: 33.728333
+  type: 'test'
+  ...
+1..78
+# tests 78
+# suites 0
+# pass 78
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2413.3825

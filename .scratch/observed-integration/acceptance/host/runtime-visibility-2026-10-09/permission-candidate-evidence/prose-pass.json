@@ -1,0 +1,18 @@
+{
+  "beforeWords": 1145,
+  "afterWords": 1075,
+  "fixed": [
+    "Reduced repeated conclusions and dense spacing",
+    "Removed prose dash connectors"
+  ],
+  "leftAlone": [
+    "Exact owner quotation, commands, paths, failures and counts",
+    "UNCONFIRMED cause and explicit trust/ancestor-binding limits"
+  ],
+  "flaggedNotChanged": [
+    "Original exact24 failure cause remains unresolved; no baseline or timing proof"
+  ],
+  "checker": "0 strict,0 candidate",
+  "reportSha256": "a8d6925c86a1818dfe5614f6b0836efdcd86b12d44a4160082e1d5cf1e04298b",
+  "ledgerSha256": "06e08b920311716360e8ef89ef8731a9bbf29205836be93c83d7479c954bbaa9"
+}

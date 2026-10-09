@@ -1,0 +1,37 @@
+{
+  "inputs": [
+    {
+      "path": "/Library/Developer/CoreSimulator/Images/images.plist",
+      "bytes": 3929,
+      "beforeSha256": "08fca67bd717824e0d532b373eabfc2b7aa8329453c7ca7272040c425bc196d1",
+      "afterSha256": "08fca67bd717824e0d532b373eabfc2b7aa8329453c7ca7272040c425bc196d1",
+      "stableAcrossConversion": true,
+      "status": "BOUNDED_STOP"
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/Info.plist",
+      "bytes": 875,
+      "beforeSha256": "9c132a7b98c399f764873f4c70ade83e8e44ee2ee9356135a13f49d15c921243",
+      "afterSha256": "9c132a7b98c399f764873f4c70ade83e8e44ee2ee9356135a13f49d15c921243",
+      "stableAcrossConversion": true,
+      "status": "READ_STABLE_CONVERTED"
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/Info.plist",
+      "bytes": 800,
+      "beforeSha256": "ad87a756b1a7eeef133b5bde25d0b105466d5be6d6f0e69f2a2d39df2958cd22",
+      "afterSha256": "ad87a756b1a7eeef133b5bde25d0b105466d5be6d6f0e69f2a2d39df2958cd22",
+      "stableAcrossConversion": true,
+      "status": "READ_STABLE_CONVERTED"
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/Info.plist",
+      "bytes": 878,
+      "beforeSha256": "32584490825a9332559fee2235551fb9595cdd8e1d1d4501b976de4bd12d9913",
+      "afterSha256": "32584490825a9332559fee2235551fb9595cdd8e1d1d4501b976de4bd12d9913",
+      "stableAcrossConversion": true,
+      "status": "READ_STABLE_CONVERTED"
+    }
+  ],
+  "allAcquiredInputsStable": true
+}

@@ -1,0 +1,19 @@
+{
+  "atUtc": "2026-10-09T02:15:49.615965+00:00",
+  "groups": {
+    "acceptedHost": {
+      "count": 15,
+      "mismatches": []
+    },
+    "source": {
+      "count": 437,
+      "mismatches": []
+    },
+    "compiled": {
+      "count": 68,
+      "mismatches": []
+    }
+  },
+  "verdict": "PASS_UNCHANGED",
+  "scope": "Root independent byte correspondence only; no tests/builds or installed lookup."
+}

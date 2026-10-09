@@ -1,0 +1,18 @@
+{
+  "invocation": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS node .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase1/run.mjs",
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+  "product": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
+  "operator": {
+    "terminal": "term_19640861-824c-4f24-8789-3f584723bc5a",
+    "tab": "b0e5a4b6-106b-4dab-a49a-b3933445d4ef",
+    "leaf": "abe2d20e-837b-4e76-bb65-0288efa467bf",
+    "model": "gpt-6.1-sol",
+    "effort": "xhigh",
+    "verification": "Read-only Orca terminal show preview reported GPT-6.1-Sol xhigh and integration CWD."
+  },
+  "parentEvidence": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/user-evidence-and-binding.json",
+  "lookupCount": 1,
+  "sourceBeforeMatches": true,
+  "sourceAfterMatches": true
+}

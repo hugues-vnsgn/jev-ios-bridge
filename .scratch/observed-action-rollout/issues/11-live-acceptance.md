@@ -6,8 +6,8 @@ Mode: AFK
 Blocked by: 09, 10
 Owner: Existing sole Orca live operator
 Pane: b0e5a4b6-106b-4dab-a49a-b3933445d4ef:abe2d20e-837b-4e76-bb65-0288efa467bf
-Model: gpt-6-luna
-Effort: high
+Model: gpt-6.1-sol
+Effort: xhigh
 Skills: do-test, orca-cli, diagnosing-bugs
 Expected commit: `test: record observed public-interface live acceptance`
 
@@ -50,3 +50,7 @@ The complete current Orca inventory contained only Root in this repo; the prior 
 ### Owner operational confirmation
 
 The owner replied “confirm” to the pending writer/root facts. Root recorded that all older/external bridge writers are stopped and there are no additional historical journal/lease roots or additional device exclusions, and prepared the strict private declaration. Receipt/declaration: `.scratch/observed-integration/acceptance/host/operational-confirmation-2026-10-09/`. The four built-in protected UUID exclusions and all claims remain preserved. This is an operational assertion, not independent quiescence/native evidence. The same sole operator is rechecking only runtime metadata; ticket11 live execution remains gated on explicit iOS27.0 and the other entry prerequisites.
+
+### Current model and runtime-visibility diagnosis
+
+The owner supplied the Xcode Components screenshot showing iOS27.0/8.07GB/last-used1dayago and explicitly selected “Keep GPT-6.1-Sol xhigh” for the same sole operator pane. Current model is `gpt-6.1-sol` xhigh; prior lunahigh bindings above are historical. The tab/leaf and terminal handle are unchanged. Current scope is one guarded read-only production compatibility-lookup reproduction, then return findings before further probes. Screenshot/model receipt: `.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/user-evidence-and-binding.json`. The screenshot establishes displayed installed component state; runtime build/profile compatibility remains unverified. Owner migration facts remain confirmed and declaration prepared. No live migration/store/device dispatch has begun. Root remains coordinator.

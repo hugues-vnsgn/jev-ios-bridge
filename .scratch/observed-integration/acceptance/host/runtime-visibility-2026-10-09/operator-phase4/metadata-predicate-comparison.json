@@ -1,0 +1,303 @@
+{
+  "capturedAtUtc": "2026-10-09T02:52:38.262Z",
+  "verdict": "PARTIAL_METADATA_MATCH_XCODE_INFO_FIELDS_UNVERIFIED",
+  "acceptanceEvidence": false,
+  "productionCompatibilityCalled": false,
+  "allEightRawInputsStable": true,
+  "parsedInputCount": 7,
+  "checks": [
+    {
+      "id": "host_platform_and_architecture",
+      "verdict": "MATCH",
+      "actual": {
+        "platform": "darwin",
+        "architecture": "arm64"
+      },
+      "sourceAnchor": "src/observed/allocation-config.ts:175"
+    },
+    {
+      "id": "host_os_version_shape",
+      "verdict": "MATCH",
+      "actual": {
+        "ProductVersion": "27.0.1",
+        "ProductBuildVersion": "26A434"
+      },
+      "sourceAnchor": "src/observed/allocation-config.ts:180"
+    },
+    {
+      "id": "xcode_bundle_identifier_and_executable",
+      "verdict": "UNVERIFIED",
+      "actual": {
+        "required": {
+          "CFBundleIdentifier": "com.apple.dt.Xcode",
+          "CFBundleExecutable": "Xcode"
+        },
+        "reason": "Xcode Info.plist JSON output exceeded the diagnostic 65536-byte cap; no parsed fields retained."
+      },
+      "sourceAnchor": "src/observed/allocation-config.ts:181"
+    },
+    {
+      "id": "xcode_minimum_host_version",
+      "verdict": "UNVERIFIED",
+      "actual": {
+        "required": "LSMinimumSystemVersion <= host ProductVersion",
+        "reason": "Same bounded Xcode Info.plist conversion stop."
+      },
+      "sourceAnchor": "src/observed/allocation-config.ts:182"
+    },
+    {
+      "id": "xcode_version_and_build",
+      "verdict": "MATCH",
+      "actual": {
+        "CFBundleShortVersionString": "27.0",
+        "ProductBuildVersion": "27A266a"
+      },
+      "sourceAnchor": "src/observed/allocation-config.ts:183"
+    },
+    {
+      "id": "device_identifier",
+      "verdict": "MATCH",
+      "actual": {
+        "CFBundleIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17"
+      },
+      "sourceAnchor": "src/observed/allocation-config.ts:191"
+    },
+    {
+      "id": "device_supported_architectures",
+      "verdict": "MATCH",
+      "actual": {
+        "supportedArchs": [
+          "arm64",
+          "x86_64"
+        ],
+        "hostArchitecture": "arm64"
+      },
+      "sourceAnchor": "src/observed/allocation-config.ts:195"
+    },
+    {
+      "id": "device_families_shape",
+      "verdict": "MATCH",
+      "actual": {
+        "supportedProductFamilyIDs": [
+          1
+        ]
+      },
+      "sourceAnchor": "src/observed/allocation-config.ts:196"
+    },
+    {
+      "id": "runtime_identifier",
+      "verdict": "MATCH",
+      "actual": {
+        "CFBundleIdentifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-0"
+      },
+      "sourceAnchor": "src/observed/allocation-config.ts:209"
+    },
+    {
+      "id": "runtime_platform_and_architectures",
+      "verdict": "MATCH",
+      "actual": {
+        "platformIdentifier": "com.apple.platform.iphonesimulator",
+        "supportedArchs": [
+          "arm64",
+          "x86_64"
+        ],
+        "hostArchitecture": "arm64"
+      },
+      "sourceAnchor": "src/observed/allocation-config.ts:216"
+    },
+    {
+      "id": "runtime_family_inclusion",
+      "verdict": "MATCH",
+      "actual": {
+        "deviceFamilies": [
+          1
+        ],
+        "runtimeFamilies": [
+          2,
+          1
+        ]
+      },
+      "sourceAnchor": "src/observed/allocation-config.ts:217"
+    },
+    {
+      "id": "runtime_minimum_host",
+      "verdict": "MATCH",
+      "actual": {
+        "minHostVersion": "14.0.0",
+        "hostVersion": "27.0.1"
+      },
+      "sourceAnchor": "src/observed/allocation-config.ts:218"
+    },
+    {
+      "id": "device_minimum_runtime",
+      "verdict": "MATCH",
+      "actual": {
+        "minRuntimeVersion": "26.0",
+        "runtimeVersion": "27.0"
+      },
+      "sourceAnchor": "src/observed/allocation-config.ts:219"
+    },
+    {
+      "id": "device_maximum_runtime",
+      "verdict": "MATCH",
+      "actual": {
+        "maxRuntimeVersion": null,
+        "absentIsAllowedByPredicate": true,
+        "defaultCreationRange": {
+          "versionMax": "99.99",
+          "versionMin": "26.0"
+        },
+        "defaultPairingRange": {
+          "versionMax": "99.99",
+          "versionMin": "26.0"
+        }
+      },
+      "sourceAnchor": "src/observed/allocation-config.ts:220"
+    },
+    {
+      "id": "runtime_declared_and_actual_version",
+      "verdict": "MATCH",
+      "actual": {
+        "actual": "27.0",
+        "declared": "27.0"
+      },
+      "sourceAnchor": "src/observed/allocation-config.ts:221"
+    },
+    {
+      "id": "runtime_identifier_version_and_build",
+      "verdict": "MATCH",
+      "actual": {
+        "runtimeId": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+        "declared": "27.0",
+        "ProductBuildVersion": "24A434"
+      },
+      "sourceAnchor": "src/observed/allocation-config.ts:222"
+    }
+  ],
+  "matchCount": 14,
+  "discrepancyCount": 0,
+  "unverifiedCount": 2,
+  "additionalCatalogCorrespondence": {
+    "bundleIdentifierMatches": true,
+    "actualBuild": "24A434",
+    "catalogBuild": "24A434",
+    "buildMatches": true,
+    "catalogArchitectureSubsetOfProfile": true
+  },
+  "strictPathViolations": [
+    {
+      "path": "/private/var/run",
+      "type": "directory",
+      "uid": 0,
+      "gid": 1,
+      "mode": "0775",
+      "nlink": 36,
+      "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+    },
+    {
+      "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator",
+      "type": "directory",
+      "uid": 0,
+      "gid": 80,
+      "mode": "0775",
+      "nlink": 3,
+      "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+    },
+    {
+      "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles",
+      "type": "directory",
+      "uid": 0,
+      "gid": 80,
+      "mode": "0775",
+      "nlink": 3,
+      "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+    },
+    {
+      "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes",
+      "type": "directory",
+      "uid": 0,
+      "gid": 80,
+      "mode": "0775",
+      "nlink": 3,
+      "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+    },
+    {
+      "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime",
+      "type": "directory",
+      "uid": 0,
+      "gid": 80,
+      "mode": "0775",
+      "nlink": 3,
+      "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+    },
+    {
+      "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents",
+      "type": "directory",
+      "uid": 0,
+      "gid": 80,
+      "mode": "0775",
+      "nlink": 6,
+      "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+    },
+    {
+      "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist",
+      "type": "file",
+      "uid": 0,
+      "gid": 80,
+      "mode": "0664",
+      "nlink": 1,
+      "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+    },
+    {
+      "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources",
+      "type": "directory",
+      "uid": 0,
+      "gid": 80,
+      "mode": "0775",
+      "nlink": 9,
+      "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+    },
+    {
+      "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist",
+      "type": "file",
+      "uid": 0,
+      "gid": 80,
+      "mode": "0664",
+      "nlink": 1,
+      "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+    },
+    {
+      "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot",
+      "type": "directory",
+      "uid": 0,
+      "gid": 80,
+      "mode": "01775",
+      "nlink": 14,
+      "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+    },
+    {
+      "path": "/Applications",
+      "type": "directory",
+      "uid": 0,
+      "gid": 80,
+      "mode": "0775",
+      "nlink": 41,
+      "reason": "Original trustedPath rejects group/other write bits (mode & 0022)."
+    }
+  ],
+  "limitations": [
+    "No actual verifyInstalledCompatibility call or process guard call.",
+    "Xcode Info.plist identity/executable/min-host fields are UNVERIFIED after output cap; no fallback or rerun.",
+    "No inventory: exactly-one matching device/runtime across production search results remains UNVERIFIED.",
+    "Xcode executable, simctl, xcrun and iPhoneSimulator.platform checks were outside phase4 stat schedule and were not performed.",
+    "RuntimeRoot completeness, device operability, storage/capacity/store/config prerequisites and live rows remain UNVERIFIED.",
+    "Catalog state5 has no interpreted meaning; no mount operation or mount-status probe."
+  ],
+  "liveRows": {
+    "L01": "UNVERIFIED",
+    "L02": "UNVERIFIED",
+    "L03": "UNVERIFIED",
+    "L04": "UNVERIFIED",
+    "L05": "UNVERIFIED"
+  }
+}

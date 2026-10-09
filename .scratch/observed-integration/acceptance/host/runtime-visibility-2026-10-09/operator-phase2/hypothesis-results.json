@@ -1,0 +1,34 @@
+{
+  "capturedAtUtc": "2026-10-09T02:20:26.836Z",
+  "hypotheses": [
+    {
+      "rank": 1,
+      "verdict": "FALSIFIED",
+      "boundedClaim": "Additional fixed installed ancestors also violate the original owner/write/symlink trust predicate.",
+      "evidence": "Only /Applications (uid0,gid80,0775) violates those checks across the inspected fixed paths. The missing default Profiles/Runtimes is scoped ENOENT, not an additional permission violation.",
+      "limit": "Finite dispatched ancestor set only; no broader filesystem claim."
+    },
+    {
+      "rank": 2,
+      "verdict": "STILL_UNKNOWN",
+      "boundedClaim": "The iOS27 component is a runtime image without a currently exposed bundle in production-supported roots.",
+      "evidence": "Stable local SimulatorRuntimeAsset Info.plist declares SimulatorVersion27.0, Build24A434, arm64. The default runtime root is ENOENT; immediate Volumes names are iOS_22G86 and iOS_23E254a. These observations support runtime-asset presence.",
+      "limit": "No image bytes, asset payload, image catalog fields, mount mapping or per-volume bundle inventory was obtained. Current exposure of a matching .simruntime is unresolved."
+    },
+    {
+      "rank": 3,
+      "verdict": "STILL_UNKNOWN",
+      "boundedClaim": "The actual matching .simruntime bundle lies outside production hardcoded roots.",
+      "evidence": "The iOS27 MobileAsset metadata resides under AssetsV2, outside production bundle-search roots.",
+      "limit": "A MobileAsset directory is not proof of a .simruntime bundle. No catalog location was recovered; no reported or derived candidate path was followed."
+    },
+    {
+      "rank": 4,
+      "verdict": "FALSIFIED",
+      "boundedClaim": "No iOS27 simulator-runtime component metadata exists; installed evidence is platform/SDK-only.",
+      "evidence": "CFBundleIdentifier=com.apple.MobileAsset.iOSSimulatorRuntime and CFBundleName=SimulatorRuntimeAsset explicitly identify local SimulatorVersion27.0 metadata.",
+      "limit": "This falsifies the SDK-only absence explanation at metadata level. The screenshot-to-asset binding, actual payload completeness, exact com.apple.CoreSimulator.SimRuntime.iOS-27-0 bundle identity, availability and production compatibility remain unverified."
+    }
+  ],
+  "acceptanceEvidence": false
+}

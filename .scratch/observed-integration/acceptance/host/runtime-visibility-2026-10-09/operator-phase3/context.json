@@ -1,0 +1,36 @@
+{
+  "capturedAtUtc": "2026-10-09T02:26:54.940Z",
+  "brief": ".scratch/observed-action-rollout/runtime-visibility-phase3-2026-10-09.md",
+  "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+  "product": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
+  "model": "gpt-6.1-sol",
+  "effort": "xhigh",
+  "modelEvidence": "Read-only Orca terminal show preview displays GPT-6.1-Sol xhigh with integration cwd; handle/tab/leaf match owner binding.",
+  "terminalHandle": "term_19640861-824c-4f24-8789-3f584723bc5a",
+  "tabId": "b0e5a4b6-106b-4dab-a49a-b3933445d4ef",
+  "leafId": "abe2d20e-837b-4e76-bb65-0288efa467bf",
+  "terminalCreatedOrInputSent": false,
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "productionCompatibilityRerun": false,
+  "allowedChildArgv": [
+    [
+      "/usr/bin/python3",
+      "-I",
+      "-S",
+      "-B",
+      "<exact operator-phase3/parse-images.py>",
+      "/Library/Developer/CoreSimulator/Images/images.plist"
+    ],
+    [
+      "/usr/bin/plutil",
+      "-convert",
+      "json",
+      "-o",
+      "-",
+      "--",
+      "<one approved bundle metadata plist>"
+    ]
+  ],
+  "pythonBytecodeWritesDisabled": true,
+  "scope": "Once-only finite metadata schedule; no arbitrary catalog-location read or prohibited effects."
+}

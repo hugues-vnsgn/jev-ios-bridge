@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "scope": "One actual unchanged compiled read-only compatibility lookup; no stores/devices or acceptance certification.",
+  "compiledModule": "dist/observed/allocation-config.js",
+  "processFactory": "allocationSourceProcess",
+  "briefSymbolDiscrepancy": "installedHostProcess is not exported; allocationSourceProcess is the actual reviewed installed-host process factory.",
+  "request": {
+    "deviceTypeId": "com.apple.CoreSimulator.SimDeviceType.iPhone-17",
+    "runtimeId": "com.apple.CoreSimulator.SimRuntime.iOS-27-0"
+  },
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "startedAt": "2026-10-09T02:06:04.201Z",
+  "completedAt": "2026-10-09T02:06:04.202Z",
+  "host": {
+    "platform": "darwin",
+    "architecture": "arm64",
+    "uid": 501
+  },
+  "exactResult": {
+    "status": "HOST_PREREQUISITE_MISSING",
+    "errorName": "Error",
+    "errorMessage": "HOST_PREREQUISITE_MISSING"
+  },
+  "exitCode": 3,
+  "fsTrace": [
+    {
+      "sequence": 1,
+      "atUtc": "2026-10-09T02:06:04.202Z",
+      "method": "lstat",
+      "path": "/Applications",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 80,
+      "mode": "0775",
+      "nlink": 41,
+      "size": 1312,
+      "trustFlags": {
+        "symlink": false,
+        "unexpectedOwner": false,
+        "groupOrOtherWritable": true
+      }
+    }
+  ],
+  "processTrace": [],
+  "children": [],
+  "metadataInputs": [],
+  "lastSuccessfulLookup": {
+    "sequence": 1,
+    "atUtc": "2026-10-09T02:06:04.202Z",
+    "method": "lstat",
+    "path": "/Applications",
+    "ok": true,
+    "type": "directory",
+    "uid": 0,
+    "gid": 80,
+    "mode": "0775",
+    "nlink": 41,
+    "size": 1312,
+    "trustFlags": {
+      "symlink": false,
+      "unexpectedOwner": false,
+      "groupOrOtherWritable": true
+    }
+  },
+  "firstFilesystemFailure": null,
+  "lastTrustFailureCandidate": {
+    "sequence": 1,
+    "atUtc": "2026-10-09T02:06:04.202Z",
+    "method": "lstat",
+    "path": "/Applications",
+    "ok": true,
+    "type": "directory",
+    "uid": 0,
+    "gid": 80,
+    "mode": "0775",
+    "nlink": 41,
+    "size": 1312,
+    "trustFlags": {
+      "symlink": false,
+      "unexpectedOwner": false,
+      "groupOrOtherWritable": true
+    }
+  },
+  "liveRows": {
+    "L01": "UNVERIFIED",
+    "L02": "UNVERIFIED",
+    "L03": "UNVERIFIED",
+    "L04": "UNVERIFIED",
+    "L05": "UNVERIFIED"
+  }
+}

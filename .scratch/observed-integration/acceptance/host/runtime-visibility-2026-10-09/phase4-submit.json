@@ -1,0 +1,18 @@
+{
+  "requestId": "4f6e2eb2-7ef2-4e59-b85e-4b6fcb207360",
+  "accepted": true,
+  "stages": [
+    "input_accepted",
+    "turn_started"
+  ],
+  "initialStages": [
+    "input_accepted"
+  ],
+  "retryReceiptReplayed": true,
+  "terminalHandle": "term_19640861-824c-4f24-8789-3f584723bc5a",
+  "processIncarnation": "56f3d85a-3500-4750-a17f-a8d69dd290a7",
+  "generation": 1,
+  "runtimeId": "5f433f83-b0b5-4579-b844-952323951016",
+  "source": "Fields copied from actual send and exact retry-request receipts. Same request observed; no duplicate prompt sent.",
+  "brief": ".scratch/observed-action-rollout/runtime-visibility-phase4-2026-10-09.md"
+}

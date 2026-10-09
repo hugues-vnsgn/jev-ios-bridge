@@ -1,0 +1,657 @@
+{
+  "atUtc": "2026-10-09T03:32:53.295273+00:00",
+  "candidate": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+  "base": "4004ece782fc9448607605bfe3a54702f8622bb0",
+  "files": [
+    {
+      "path": "accepted-protected-audit.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/accepted-protected-audit.json",
+      "bytes": 50829,
+      "sha256": "0d97ef303a8aac2db4ebaaafc816b926e01dcfe729a754c52267504351ee1eec"
+    },
+    {
+      "path": "accepted-source437.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/accepted-source437.json",
+      "bytes": 50927,
+      "sha256": "0b2fddf25decfb855b275881d2f196f551f2dfd751d7ca03ab4c15ea487950f5"
+    },
+    {
+      "path": "base/allocation-config.ts",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/base/allocation-config.ts",
+      "bytes": 19148,
+      "sha256": "b6519649edbaf203e5323a15c80273321a42a5cb49850551297268e6ee1f5f0a"
+    },
+    {
+      "path": "base/observed-allocation-config.test.ts",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/base/observed-allocation-config.test.ts",
+      "bytes": 17694,
+      "sha256": "cc46883cd5bd9bf344fe228b6b91b7b4b4745e262b2b4fe3108cf22b05123ab6"
+    },
+    {
+      "path": "base.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/base.json",
+      "bytes": 50114,
+      "sha256": "769d24e7e90d6fee45d7b659d323a719e6276f67d802304f9339852419d772de"
+    },
+    {
+      "path": "candidate-allocation-config.ts",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/candidate-allocation-config.ts",
+      "bytes": 19709,
+      "sha256": "cbf94978d97a8e1b2c9413f83a7fa75decdf9c2f40a325ee77b5c2c895fce69d"
+    },
+    {
+      "path": "candidate-observed-allocation-config.test.ts",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/candidate-observed-allocation-config.test.ts",
+      "bytes": 29570,
+      "sha256": "f92cd1d0e9ddd93e3c8b1dc04de7ffd4f84fd2c9f65f3055858210fd2949fb66"
+    },
+    {
+      "path": "candidate-source.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/candidate-source.json",
+      "bytes": 50419,
+      "sha256": "6520c56113ada3330c4ee1864901d505fe42feafaf5f5a9ffdcd2e70411c866e"
+    },
+    {
+      "path": "compiled-after-full-node24.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/compiled-after-full-node24.json",
+      "bytes": 6717,
+      "sha256": "bf20ed727ce69f3243d1ae3ada91f694a28cc3106e37df0c468718e3f1d32a71"
+    },
+    {
+      "path": "compiled-after-full-node26.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/compiled-after-full-node26.json",
+      "bytes": 6916,
+      "sha256": "89ac166ee7e46ceb6bbfc972c378372471ceab30d0562af2a5be51f4fc57ac43"
+    },
+    {
+      "path": "compiled-node24.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/compiled-node24.json",
+      "bytes": 6717,
+      "sha256": "bf20ed727ce69f3243d1ae3ada91f694a28cc3106e37df0c468718e3f1d32a71"
+    },
+    {
+      "path": "compiled-node26.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/compiled-node26.json",
+      "bytes": 6717,
+      "sha256": "bf20ed727ce69f3243d1ae3ada91f694a28cc3106e37df0c468718e3f1d32a71"
+    },
+    {
+      "path": "final-ledger.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/final-ledger.json",
+      "bytes": 86657,
+      "sha256": "06e08b920311716360e8ef89ef8731a9bbf29205836be93c83d7479c954bbaa9"
+    },
+    {
+      "path": "finalize-evidence.py",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/finalize-evidence.py",
+      "bytes": 14606,
+      "sha256": "19e5bd6b92af33925b789369067890fb43e1abd6385d014b43355ffa37e9af7f"
+    },
+    {
+      "path": "focused-candidate-node26/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/focused-candidate-node26/command.json",
+      "bytes": 100743,
+      "sha256": "6733aaa43bfc22b95779620150e68289a47770e6b0dbee2fb2c94de051ec3106"
+    },
+    {
+      "path": "focused-candidate-node26/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/focused-candidate-node26/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "focused-candidate-node26/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/focused-candidate-node26/stdout.txt",
+      "bytes": 18551,
+      "sha256": "221f147f36da1a9172ed2d1939f50659cc4585cdc2f76a8d0cba2c9b29c5d8e9"
+    },
+    {
+      "path": "focused-commit/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/focused-commit/command.json",
+      "bytes": 102137,
+      "sha256": "8e07b5babe1e37f987d4325b6f469e90b44ad04d613af680d0d707ad32c7cac7"
+    },
+    {
+      "path": "focused-commit/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/focused-commit/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "focused-commit/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/focused-commit/stdout.txt",
+      "bytes": 157,
+      "sha256": "76d34335295038d256a5260f01f2cfb1000886233d62cc43c63660e3b11fb980"
+    },
+    {
+      "path": "fresh-leaf-green-node26/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/fresh-leaf-green-node26/command.json",
+      "bytes": 100791,
+      "sha256": "3e92715daf363813c3c23b7c192b5ff061340a063d63065812afe5170194217e"
+    },
+    {
+      "path": "fresh-leaf-green-node26/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/fresh-leaf-green-node26/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fresh-leaf-green-node26/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/fresh-leaf-green-node26/stdout.txt",
+      "bytes": 2130,
+      "sha256": "1b40df2f704143d587b09983564ae82f461022c156f5d78dd9d75a5b334e8ed9"
+    },
+    {
+      "path": "fresh-leaf-red-node24/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/fresh-leaf-red-node24/command.json",
+      "bytes": 100821,
+      "sha256": "b799c0b10fc093802f3f91109eef47356bfebcdde4135e6cd24abef4e4da5127"
+    },
+    {
+      "path": "fresh-leaf-red-node24/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/fresh-leaf-red-node24/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fresh-leaf-red-node24/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/fresh-leaf-red-node24/stdout.txt",
+      "bytes": 5971,
+      "sha256": "99c48fac7f86ff231ac3f6bd3fa641085a17fb93ed31f43af64942a317bec29c"
+    },
+    {
+      "path": "fresh-leaf-red-node26/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/fresh-leaf-red-node26/command.json",
+      "bytes": 100790,
+      "sha256": "1ba66f4c1e209a6bf06ed56f2a0635833c08ad3c1dce8aaeab12aa2513839bf3"
+    },
+    {
+      "path": "fresh-leaf-red-node26/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/fresh-leaf-red-node26/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fresh-leaf-red-node26/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/fresh-leaf-red-node26/stdout.txt",
+      "bytes": 5796,
+      "sha256": "dc1e4d896ed8986f086e3122aed101e3bb87ec3590645393b989edc719913950"
+    },
+    {
+      "path": "frozen-build-node24/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/frozen-build-node24/command.json",
+      "bytes": 100724,
+      "sha256": "232a3bb46f61afe8dc5764c55a368308d96ebde2f269ebb3f26d7f7a4fad13fd"
+    },
+    {
+      "path": "frozen-build-node24/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/frozen-build-node24/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "frozen-build-node24/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/frozen-build-node24/stdout.txt",
+      "bytes": 75,
+      "sha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a"
+    },
+    {
+      "path": "frozen-build-node26/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/frozen-build-node26/command.json",
+      "bytes": 100693,
+      "sha256": "75ab19927d559b0063f92538398ea5aaf0ec5af4a043617a029e7d49d73006c4"
+    },
+    {
+      "path": "frozen-build-node26/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/frozen-build-node26/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "frozen-build-node26/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/frozen-build-node26/stdout.txt",
+      "bytes": 75,
+      "sha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a"
+    },
+    {
+      "path": "frozen-focused-node24/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/frozen-focused-node24/command.json",
+      "bytes": 100774,
+      "sha256": "58d012eef471626622d5588069f43dda8df32ef26242111147102f8defd80b93"
+    },
+    {
+      "path": "frozen-focused-node24/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/frozen-focused-node24/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "frozen-focused-node24/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/frozen-focused-node24/stdout.txt",
+      "bytes": 18718,
+      "sha256": "65c0828c110e17067bfd8d34435c1dd676efdb0ce489f0a46bbe9f7eb5074c41"
+    },
+    {
+      "path": "frozen-focused-node26/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/frozen-focused-node26/command.json",
+      "bytes": 100743,
+      "sha256": "e200bcd7ded05b9451f487b07b798e20b2f0de12f4aef09afb844afd415adc5c"
+    },
+    {
+      "path": "frozen-focused-node26/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/frozen-focused-node26/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "frozen-focused-node26/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/frozen-focused-node26/stdout.txt",
+      "bytes": 18555,
+      "sha256": "a17ba4a4e626f15780881b7b102b00c453a2ab226be268820b45f21eafbfb2b1"
+    },
+    {
+      "path": "frozen-typecheck-node24/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/frozen-typecheck-node24/command.json",
+      "bytes": 100728,
+      "sha256": "d65945f94fb45b43c1773e52844c0bb7a26fa46b68349f236e9efa867db03a1f"
+    },
+    {
+      "path": "frozen-typecheck-node24/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/frozen-typecheck-node24/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "frozen-typecheck-node24/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/frozen-typecheck-node24/stdout.txt",
+      "bytes": 50,
+      "sha256": "a5f26a123d51067a484f97018e93e9514bb2902f7ffbcecb9d2baba69d5b928a"
+    },
+    {
+      "path": "frozen-typecheck-node26/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/frozen-typecheck-node26/command.json",
+      "bytes": 100697,
+      "sha256": "421b83c59652f4f9ca8d96c0ae37fae057563a6d04e011d1fac52572cac9de18"
+    },
+    {
+      "path": "frozen-typecheck-node26/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/frozen-typecheck-node26/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "frozen-typecheck-node26/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/frozen-typecheck-node26/stdout.txt",
+      "bytes": 50,
+      "sha256": "a5f26a123d51067a484f97018e93e9514bb2902f7ffbcecb9d2baba69d5b928a"
+    },
+    {
+      "path": "full-check-node24-umask022/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/full-check-node24-umask022/command.json",
+      "bytes": 102205,
+      "sha256": "3483c8bda8833048a12c3d9ff24058187601f4c9178680b8641165e41f6a71aa"
+    },
+    {
+      "path": "full-check-node24-umask022/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/full-check-node24-umask022/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "full-check-node24-umask022/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/full-check-node24-umask022/stdout.txt",
+      "bytes": 185712,
+      "sha256": "def1d3e496d03bc34fb188dce9250ecb142047a89f0e4546044e8f370f7d0d8d"
+    },
+    {
+      "path": "full-check-node24-umask022-recheck/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/full-check-node24-umask022-recheck/command.json",
+      "bytes": 102205,
+      "sha256": "3c9bd4c182dd930b91fa2a5dacb0276bed370cf34af938d7fed774610eebac37"
+    },
+    {
+      "path": "full-check-node24-umask022-recheck/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/full-check-node24-umask022-recheck/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "full-check-node24-umask022-recheck/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/full-check-node24-umask022-recheck/stdout.txt",
+      "bytes": 183054,
+      "sha256": "067a145dbd44489246d17adce169e56d0e6e9c88b14b8b2a14b9b056a13dde6b"
+    },
+    {
+      "path": "full-check-node26/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/full-check-node26/command.json",
+      "bytes": 102137,
+      "sha256": "47a1a6fa671307cf3ed4c43b3008a0bf6b6fb89e018d72a6bb9be20a1dcf913e"
+    },
+    {
+      "path": "full-check-node26/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/full-check-node26/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "full-check-node26/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/full-check-node26/stdout.txt",
+      "bytes": 175878,
+      "sha256": "8f51839ec9a0fb410605933051edc9457c8667e65122392150c1e02aa9219039"
+    },
+    {
+      "path": "full-check-node26-umask022/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/full-check-node26-umask022/command.json",
+      "bytes": 102174,
+      "sha256": "793ebda5d3eaa2942de414393b7d1162abd80e486926ee42dcba34958fcba403"
+    },
+    {
+      "path": "full-check-node26-umask022/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/full-check-node26-umask022/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "full-check-node26-umask022/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/full-check-node26-umask022/stdout.txt",
+      "bytes": 171913,
+      "sha256": "f5b7f545e1fcca9a195fc9eb98e25436e06f16a9598a46ab0a839293a3fd8ef6"
+    },
+    {
+      "path": "ledger-before-authorized-recheck.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/ledger-before-authorized-recheck.json",
+      "bytes": 85420,
+      "sha256": "b8a2dd2536c50a0d35a0f253d4c7147349b413908d1574486275b35e8185f8ee"
+    },
+    {
+      "path": "node24-version/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/node24-version/command.json",
+      "bytes": 100687,
+      "sha256": "a48d3a9efc2dd2f1e9119bdf13e048a66d50b3a03e8f5a4827f8777e8cd03193"
+    },
+    {
+      "path": "node24-version/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/node24-version/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "node24-version/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/node24-version/stdout.txt",
+      "bytes": 8,
+      "sha256": "b988e13140652de941a9a3fab325102625f646ec6fde3a7b8a8af63496a74061"
+    },
+    {
+      "path": "node26-version/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/node26-version/command.json",
+      "bytes": 100656,
+      "sha256": "581b7db8081dad168128fc4cb1482944944cc14848e82efe78f9991f5c90734d"
+    },
+    {
+      "path": "node26-version/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/node26-version/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "node26-version/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/node26-version/stdout.txt",
+      "bytes": 8,
+      "sha256": "bd17489adcddbc8ed526bf6dedb22de2e677bbae176b977aa7f7c0408999248c"
+    },
+    {
+      "path": "npm-version/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/npm-version/command.json",
+      "bytes": 100618,
+      "sha256": "ea57c9cf097d33181fd08998dbed456234aa1642b3de8e3db0f8a8461f0d298e"
+    },
+    {
+      "path": "npm-version/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/npm-version/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "npm-version/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/npm-version/stdout.txt",
+      "bytes": 8,
+      "sha256": "005206ab803f8881d8227540b7980b37e723b69a8849edb31734a90b7e7964e2"
+    },
+    {
+      "path": "owned-coverage-node26/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/owned-coverage-node26/command.json",
+      "bytes": 102287,
+      "sha256": "b7b6869fdf2698bbe78e99c424ec520c01f211121f7dd168e0f57b3ec076bf7e"
+    },
+    {
+      "path": "owned-coverage-node26/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/owned-coverage-node26/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "owned-coverage-node26/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/owned-coverage-node26/stdout.txt",
+      "bytes": 19217,
+      "sha256": "922cf319220a7972561049b847b64a7d50608386b6f9ffec34a83e7a3ab45a67"
+    },
+    {
+      "path": "plan.md",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/plan.md",
+      "bytes": 3558,
+      "sha256": "70b5d1699a49085c331752ddb5e5b22a2cf65f280752f448bd77407da91f0e34"
+    },
+    {
+      "path": "policy-green-node26/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/policy-green-node26/command.json",
+      "bytes": 100807,
+      "sha256": "ef9dcd7fd80025e7be9b78cac742634e435ee760a51fbf653cdaa816323c18e4"
+    },
+    {
+      "path": "policy-green-node26/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/policy-green-node26/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "policy-green-node26/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/policy-green-node26/stdout.txt",
+      "bytes": 391,
+      "sha256": "11b2640060734533150fe32c791b9b91cbc17e5fc3f65f407c57d5611beffa4c"
+    },
+    {
+      "path": "policy-only-source.ts",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/policy-only-source.ts",
+      "bytes": 19576,
+      "sha256": "54ca6484f458fd1e8e28b52b549a9690382304872912925ffde49d158517f2fd"
+    },
+    {
+      "path": "policy-red-node24/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/policy-red-node24/command.json",
+      "bytes": 100839,
+      "sha256": "ab148844c5a9755b1b76cb3580b20bcc8304bf94196e9c5bf5337203e0c0d851"
+    },
+    {
+      "path": "policy-red-node24/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/policy-red-node24/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "policy-red-node24/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/policy-red-node24/stdout.txt",
+      "bytes": 1284,
+      "sha256": "c1d911d4c92006c23958b200b83ac4b84b7e87b138524eebbabf9c4e0ee9b799"
+    },
+    {
+      "path": "policy-red-node26/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/policy-red-node26/command.json",
+      "bytes": 100808,
+      "sha256": "9b39476a7db6c3b3b7082319ee451ff8e0731e8176316377b2a90891dd205056"
+    },
+    {
+      "path": "policy-red-node26/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/policy-red-node26/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "policy-red-node26/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/policy-red-node26/stdout.txt",
+      "bytes": 1109,
+      "sha256": "9a609f65ec8162008dcd6b33a4d7016eb42123f2756dc3d53a4e113e97350000"
+    },
+    {
+      "path": "prose-pass.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/prose-pass.json",
+      "bytes": 636,
+      "sha256": "957e8f602d947851f160c22f8a4d1c9cf2c9a023beecf1d6e63315521d06a153"
+    },
+    {
+      "path": "red-regressions.test.ts",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/red-regressions.test.ts",
+      "bytes": 22292,
+      "sha256": "c126441faf989dcc49b9c7b51e371c536ac89bf291c9671b9179e9e8d39a01a7"
+    },
+    {
+      "path": "report-before-authorized-recheck.md",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/report-before-authorized-recheck.md",
+      "bytes": 8802,
+      "sha256": "12c5be33adefa53d13a0ea7f835b01d4a64aab9453fb4f8edaecafed57f764a8"
+    },
+    {
+      "path": "report-before-prose-pass.md",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/report-before-prose-pass.md",
+      "bytes": 9344,
+      "sha256": "76fc07df6e3f39e775fe70dc917184ef9caa55a94620bee6fb86b9d536d224f0"
+    },
+    {
+      "path": "report.md",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/report.md",
+      "bytes": 8041,
+      "sha256": "a8d6925c86a1818dfe5614f6b0836efdcd86b12d44a4160082e1d5cf1e04298b"
+    },
+    {
+      "path": "run-trace.py",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/run-trace.py",
+      "bytes": 2568,
+      "sha256": "6927b55a00ab49284a51ae33dcdfa25f2e08a8a719522ef7b5e687bfe5e1972e"
+    },
+    {
+      "path": "run-umask022.py",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/run-umask022.py",
+      "bytes": 2501,
+      "sha256": "7410707c3ad4de728c694ba10d4e0bce65ac174bbcb8b6b4669ef14ec5dc0b0e"
+    },
+    {
+      "path": "run.py",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/run.py",
+      "bytes": 2447,
+      "sha256": "0586e94d1585b04e8962a49b4086d441e6ca4039425316ecbb62a559b77cd49a"
+    },
+    {
+      "path": "setup-npm-ci/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/setup-npm-ci/command.json",
+      "bytes": 100779,
+      "sha256": "adabbdddce41fb2aa9737e14dab04e019d47b526ef05d9bf3d36798e9f2ce7f1"
+    },
+    {
+      "path": "setup-npm-ci/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/setup-npm-ci/stderr.txt",
+      "bytes": 117,
+      "sha256": "250e369d730a46c4d41df37449a5c58c169b4b1d2ab546951a8bed0285805a95"
+    },
+    {
+      "path": "setup-npm-ci/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/setup-npm-ci/stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "setup-npm-ci-retry/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/setup-npm-ci-retry/command.json",
+      "bytes": 100866,
+      "sha256": "fee1b134382439cf24d838fd02e2593f3231a9054339f4db219b5d06fcd17421"
+    },
+    {
+      "path": "setup-npm-ci-retry/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/setup-npm-ci-retry/stderr.txt",
+      "bytes": 209,
+      "sha256": "e49b794cae6663ada86efea1579a0381251a5d4d1ff9b0cefed3e5622b21317d"
+    },
+    {
+      "path": "setup-npm-ci-retry/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/setup-npm-ci-retry/stdout.txt",
+      "bytes": 26,
+      "sha256": "f872b59adcee32839892dba71882b03705ffde94eafa0a23bb88f656ffe384b0"
+    },
+    {
+      "path": "three-failures-node24/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/three-failures-node24/command.json",
+      "bytes": 102631,
+      "sha256": "01e2220e8b41aefe0105a638e8b68ce166bab4449913e971bb90c92e19a2b2fb"
+    },
+    {
+      "path": "three-failures-node24/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/three-failures-node24/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "three-failures-node24/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/three-failures-node24/stdout.txt",
+      "bytes": 1326,
+      "sha256": "332ecdcce529b083675fd224ce8da38f186731aab70f2b5a582568169168df66"
+    },
+    {
+      "path": "umask022-repro-node26/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/umask022-repro-node26/command.json",
+      "bytes": 102351,
+      "sha256": "f5aa7fdde9d32e398ac264bc47609b9ac4022e8ae41c393b421d34f3dd4eaf69"
+    },
+    {
+      "path": "umask022-repro-node26/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/umask022-repro-node26/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "umask022-repro-node26/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/umask022-repro-node26/stdout.txt",
+      "bytes": 1109,
+      "sha256": "84250509e85cb637528344a70352a9040b9a775568e9ec760d14e1f24705c5c2"
+    },
+    {
+      "path": "umask077-repro-node26/command.json",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/umask077-repro-node26/command.json",
+      "bytes": 102302,
+      "sha256": "36a90ed08b18a0286648ddfb19fe947d1b1e1885f6ee37906d580aa45b31670b"
+    },
+    {
+      "path": "umask077-repro-node26/stderr.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/umask077-repro-node26/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "umask077-repro-node26/stdout.txt",
+      "originalPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/umask077-repro-node26/stdout.txt",
+      "bytes": 3866,
+      "sha256": "4f0aba77da0fd13095a4f74ca9659dcafaed047294586f2ebd4df2d44f3f24e7"
+    }
+  ],
+  "copiedFiles": 106,
+  "copiedBytes": 4131281,
+  "scope": "Exact reports/ledgers/wrappers/source snapshots/base originals and27 command/stdout/stderr triplets. Dependency caches and fixture archive trees remain in original private worktree; their paths/provenance stay recorded. Copied bytes match originals; copied evidence is700/600.",
+  "rootAudit": {
+    "ownedHashes": {
+      "src/observed/allocation-config.ts": "cbf94978d97a8e1b2c9413f83a7fa75decdf9c2f40a325ee77b5c2c895fce69d",
+      "tests/observed-allocation-config.test.ts": "f92cd1d0e9ddd93e3c8b1dc04de7ffd4f84fd2c9f65f3055858210fd2949fb66"
+    },
+    "protected435Match": true,
+    "compiled68Match": true,
+    "independentSpec": "PASS bounded delta",
+    "independentStandards": "PASS bounded delta"
+  },
+  "limits": "Original Node24 lowercauseUNCONFIRMED. No installed/live certification, integration build or native probe yet."
+}

@@ -1,0 +1,2608 @@
+{
+  "schemaVersion": 1,
+  "scope": "Once-only phase3 finite installed-metadata schedule; no production compatibility call/bypass; no arbitrary catalog path followed.",
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "startedAt": "2026-10-09T02:27:02.080Z",
+  "completedAt": "2026-10-09T02:27:03.306Z",
+  "imageRoots": [
+    "/Library/Developer/CoreSimulator/Cryptex/Images",
+    "/Library/Developer/CoreSimulator/Images/mnt"
+  ],
+  "asset": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset",
+  "assetData": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData",
+  "ancestorStats": [
+    {
+      "path": "/",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 23,
+      "size": 736,
+      "dev": 16777231,
+      "ino": 2,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "path": "/Library",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 69,
+      "size": 2208,
+      "dev": 16777231,
+      "ino": 121899901,
+      "mtimeMs": 1791339607192.8103,
+      "ctimeMs": 1791339607192.8103
+    },
+    {
+      "path": "/Library/Developer",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 8,
+      "size": 256,
+      "dev": 16777231,
+      "ino": 678336,
+      "mtimeMs": 1791212757672.2527,
+      "ctimeMs": 1791212757672.2527
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 7,
+      "size": 224,
+      "dev": 16777231,
+      "ino": 678351,
+      "mtimeMs": 1778208951628.6755,
+      "ctimeMs": 1778208951628.6755
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Cryptex",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 32052147,
+      "mtimeMs": 1778212364574.0059,
+      "ctimeMs": 1778212364574.0059
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 32052148,
+      "mtimeMs": 1778208951629.3062,
+      "ctimeMs": 1778208951706.9924
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Images",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 32052143,
+      "mtimeMs": 1791510760877.9177,
+      "ctimeMs": 1791510760877.9177
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Images/mnt",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 2,
+      "size": 64,
+      "dev": 16777231,
+      "ino": 32052145,
+      "mtimeMs": 1790687894040.7896,
+      "ctimeMs": 1790687894040.7896
+    },
+    {
+      "path": "/System",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 12,
+      "size": 384,
+      "dev": 16777231,
+      "ino": 1152921500311879700,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "path": "/System/Library",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 166,
+      "size": 5312,
+      "dev": 16777231,
+      "ino": 1152921500311918300,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "path": "/System/Library/AssetsV2",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 104,
+      "size": 3328,
+      "dev": 16777231,
+      "ino": 121902277,
+      "mtimeMs": 1791506456660.4082,
+      "ctimeMs": 1791506456660.4082
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 6,
+      "size": 192,
+      "dev": 16777231,
+      "ino": 121919045,
+      "mtimeMs": 1791259687801.878,
+      "ctimeMs": 1791259687801.878
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset",
+      "ok": true,
+      "type": "directory",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 122957647,
+      "mtimeMs": 1791254814214.9993,
+      "ctimeMs": 1791255152735.3357
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData",
+      "ok": true,
+      "type": "directory",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 3,
+      "size": 96,
+      "dev": 16777231,
+      "ino": 122957649,
+      "mtimeMs": 1791254477331.523,
+      "ctimeMs": 1791254477331.523
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 4,
+      "size": 128,
+      "dev": 16777231,
+      "ino": 32052150,
+      "mtimeMs": 1791259687155.0815,
+      "ctimeMs": 1791259687155.0815
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle/Library",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/Library/Developer/CoreSimulator/Cryptex/Images/bundle/Library'"
+      }
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/Inbox",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 2,
+      "size": 64,
+      "dev": 16777231,
+      "ino": 32052149,
+      "mtimeMs": 1781004447214.7104,
+      "ctimeMs": 1781004447214.7104
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/Inbox/Library",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/Library/Developer/CoreSimulator/Cryptex/Images/Inbox/Library'"
+      }
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/mnt",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 2,
+      "size": 64,
+      "dev": 16777231,
+      "ino": 32052151,
+      "mtimeMs": 1790687887707.864,
+      "ctimeMs": 1790687887707.864
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/mnt/Library",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/Library/Developer/CoreSimulator/Cryptex/Images/mnt/Library'"
+      }
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/Restore",
+      "ok": true,
+      "type": "directory",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 6,
+      "size": 192,
+      "dev": 16777231,
+      "ino": 122957650,
+      "mtimeMs": 1791254814213.5217,
+      "ctimeMs": 1791254814213.5217
+    },
+    {
+      "path": "/usr",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 11,
+      "size": 352,
+      "dev": 16777231,
+      "ino": 1152921500312607500,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "path": "/usr/bin",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 934,
+      "size": 29888,
+      "dev": 16777231,
+      "ino": 1152921500312607500,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "path": "/usr/bin/python3",
+      "ok": true,
+      "type": "file",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 33261,
+      "nlink": 78,
+      "size": 200560,
+      "dev": 16777231,
+      "ino": 1152921500312607500,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    }
+  ],
+  "inventories": [
+    {
+      "root": "/Library/Developer/CoreSimulator/Cryptex/Images",
+      "status": "COMPLETE",
+      "reason": null,
+      "count": 3,
+      "names": [
+        "Inbox",
+        "bundle",
+        "mnt"
+      ],
+      "entries": [
+        {
+          "name": "bundle",
+          "type": "directory"
+        },
+        {
+          "name": "Inbox",
+          "type": "directory"
+        },
+        {
+          "name": "mnt",
+          "type": "directory"
+        }
+      ],
+      "before": {
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 5,
+        "size": 160,
+        "dev": 16777231,
+        "ino": 32052148,
+        "mtimeMs": 1778208951629.3062,
+        "ctimeMs": 1778208951706.9924
+      },
+      "after": {
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 5,
+        "size": 160,
+        "dev": 16777231,
+        "ino": 32052148,
+        "mtimeMs": 1778208951629.3062,
+        "ctimeMs": 1778208951706.9924
+      }
+    },
+    {
+      "root": "/Library/Developer/CoreSimulator/Images/mnt",
+      "status": "COMPLETE",
+      "reason": null,
+      "count": 0,
+      "names": [],
+      "entries": [],
+      "before": {
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 2,
+        "size": 64,
+        "dev": 16777231,
+        "ino": 32052145,
+        "mtimeMs": 1790687894040.7896,
+        "ctimeMs": 1790687894040.7896
+      },
+      "after": {
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 2,
+        "size": 64,
+        "dev": 16777231,
+        "ino": 32052145,
+        "mtimeMs": 1790687894040.7896,
+        "ctimeMs": 1790687894040.7896
+      }
+    },
+    {
+      "root": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset",
+      "status": "COMPLETE",
+      "reason": null,
+      "count": 3,
+      "names": [
+        "AssetData",
+        "Info.plist",
+        "version.plist"
+      ],
+      "entries": [
+        {
+          "name": "AssetData",
+          "type": "directory"
+        },
+        {
+          "name": "Info.plist",
+          "type": "file"
+        },
+        {
+          "name": "version.plist",
+          "type": "file"
+        }
+      ],
+      "before": {
+        "type": "directory",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 5,
+        "size": 160,
+        "dev": 16777231,
+        "ino": 122957647,
+        "mtimeMs": 1791254814214.9993,
+        "ctimeMs": 1791255152735.3357
+      },
+      "after": {
+        "type": "directory",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 5,
+        "size": 160,
+        "dev": 16777231,
+        "ino": 122957647,
+        "mtimeMs": 1791254814214.9993,
+        "ctimeMs": 1791255152735.3357
+      }
+    },
+    {
+      "root": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData",
+      "status": "COMPLETE",
+      "reason": null,
+      "count": 1,
+      "names": [
+        "Restore"
+      ],
+      "entries": [
+        {
+          "name": "Restore",
+          "type": "directory"
+        }
+      ],
+      "before": {
+        "type": "directory",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 3,
+        "size": 96,
+        "dev": 16777231,
+        "ino": 122957649,
+        "mtimeMs": 1791254477331.523,
+        "ctimeMs": 1791254477331.523
+      },
+      "after": {
+        "type": "directory",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 3,
+        "size": 96,
+        "dev": 16777231,
+        "ino": 122957649,
+        "mtimeMs": 1791254477331.523,
+        "ctimeMs": 1791254477331.523
+      }
+    },
+    {
+      "root": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle",
+      "status": "COMPLETE",
+      "reason": null,
+      "count": 2,
+      "names": [
+        "SimRuntimeBundle-295A47AD-585D-4F25-875F-CD9B5078FE66",
+        "SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F"
+      ],
+      "entries": [
+        {
+          "name": "SimRuntimeBundle-295A47AD-585D-4F25-875F-CD9B5078FE66",
+          "type": "directory"
+        },
+        {
+          "name": "SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F",
+          "type": "directory"
+        }
+      ],
+      "before": {
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 4,
+        "size": 128,
+        "dev": 16777231,
+        "ino": 32052150,
+        "mtimeMs": 1791259687155.0815,
+        "ctimeMs": 1791259687155.0815
+      },
+      "after": {
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 4,
+        "size": 128,
+        "dev": 16777231,
+        "ino": 32052150,
+        "mtimeMs": 1791259687155.0815,
+        "ctimeMs": 1791259687155.0815
+      }
+    },
+    {
+      "root": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle/Library/Developer/CoreSimulator/Profiles/Runtimes",
+      "status": "BOUNDED_STOP",
+      "reason": "ENOENT",
+      "blockedAt": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle/Library",
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/Library/Developer/CoreSimulator/Cryptex/Images/bundle/Library'"
+      }
+    },
+    {
+      "root": "/Library/Developer/CoreSimulator/Cryptex/Images/Inbox",
+      "status": "COMPLETE",
+      "reason": null,
+      "count": 0,
+      "names": [],
+      "entries": [],
+      "before": {
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 2,
+        "size": 64,
+        "dev": 16777231,
+        "ino": 32052149,
+        "mtimeMs": 1781004447214.7104,
+        "ctimeMs": 1781004447214.7104
+      },
+      "after": {
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 2,
+        "size": 64,
+        "dev": 16777231,
+        "ino": 32052149,
+        "mtimeMs": 1781004447214.7104,
+        "ctimeMs": 1781004447214.7104
+      }
+    },
+    {
+      "root": "/Library/Developer/CoreSimulator/Cryptex/Images/Inbox/Library/Developer/CoreSimulator/Profiles/Runtimes",
+      "status": "BOUNDED_STOP",
+      "reason": "ENOENT",
+      "blockedAt": "/Library/Developer/CoreSimulator/Cryptex/Images/Inbox/Library",
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/Library/Developer/CoreSimulator/Cryptex/Images/Inbox/Library'"
+      }
+    },
+    {
+      "root": "/Library/Developer/CoreSimulator/Cryptex/Images/mnt",
+      "status": "COMPLETE",
+      "reason": null,
+      "count": 0,
+      "names": [],
+      "entries": [],
+      "before": {
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 2,
+        "size": 64,
+        "dev": 16777231,
+        "ino": 32052151,
+        "mtimeMs": 1790687887707.864,
+        "ctimeMs": 1790687887707.864
+      },
+      "after": {
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 2,
+        "size": 64,
+        "dev": 16777231,
+        "ino": 32052151,
+        "mtimeMs": 1790687887707.864,
+        "ctimeMs": 1790687887707.864
+      }
+    },
+    {
+      "root": "/Library/Developer/CoreSimulator/Cryptex/Images/mnt/Library/Developer/CoreSimulator/Profiles/Runtimes",
+      "status": "BOUNDED_STOP",
+      "reason": "ENOENT",
+      "blockedAt": "/Library/Developer/CoreSimulator/Cryptex/Images/mnt/Library",
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/Library/Developer/CoreSimulator/Cryptex/Images/mnt/Library'"
+      }
+    }
+  ],
+  "childInspections": [
+    {
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle",
+      "status": "directory",
+      "reason": null
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/Inbox",
+      "status": "directory",
+      "reason": null
+    },
+    {
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/mnt",
+      "status": "directory",
+      "reason": null
+    }
+  ],
+  "assetDataStats": [
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/Restore",
+      "status": "directory",
+      "reason": null,
+      "stat": {
+        "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/Restore",
+        "ok": true,
+        "type": "directory",
+        "uid": 242,
+        "gid": 0,
+        "mode": "0755",
+        "modeBits": 16877,
+        "nlink": 6,
+        "size": 192,
+        "dev": 16777231,
+        "ino": 122957650,
+        "mtimeMs": 1791254814213.5217,
+        "ctimeMs": 1791254814213.5217
+      }
+    }
+  ],
+  "bundles": [],
+  "metadata": [],
+  "catalog": {
+    "status": "PARSED_STABLE",
+    "receiptIndex": 0,
+    "schemaVersion": 1,
+    "input": "/Library/Developer/CoreSimulator/Images/images.plist",
+    "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+    "startedAt": "2026-10-09T02:27:03.301151+00:00",
+    "pythonVersion": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]",
+    "parser": "Python standard-library plistlib.loads",
+    "trace": [
+      {
+        "method": "lstat-chain",
+        "path": "/Library",
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "nlink": 69,
+        "size": 2208,
+        "dev": 16777231,
+        "ino": 121899901,
+        "mtimeNs": 1791339607192810500,
+        "ctimeNs": 1791339607192810500
+      },
+      {
+        "method": "lstat-chain",
+        "path": "/Library/Developer",
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "nlink": 8,
+        "size": 256,
+        "dev": 16777231,
+        "ino": 678336,
+        "mtimeNs": 1791212757672252700,
+        "ctimeNs": 1791212757672252700
+      },
+      {
+        "method": "lstat-chain",
+        "path": "/Library/Developer/CoreSimulator",
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "nlink": 7,
+        "size": 224,
+        "dev": 16777231,
+        "ino": 678351,
+        "mtimeNs": 1778208951628675600,
+        "ctimeNs": 1778208951628675600
+      },
+      {
+        "method": "lstat-chain",
+        "path": "/Library/Developer/CoreSimulator/Images",
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "nlink": 5,
+        "size": 160,
+        "dev": 16777231,
+        "ino": 32052143,
+        "mtimeNs": 1791510760877917700,
+        "ctimeNs": 1791510760877917700
+      },
+      {
+        "method": "lstat-chain",
+        "path": "/Library/Developer/CoreSimulator/Images/images.plist",
+        "type": "file",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "nlink": 1,
+        "size": 3929,
+        "dev": 16777231,
+        "ino": 143205214,
+        "mtimeNs": 1791510760877647000,
+        "ctimeNs": 1791510760878464500
+      },
+      {
+        "method": "stable-read-hash",
+        "path": "/Library/Developer/CoreSimulator/Images/images.plist",
+        "bytes": 3929,
+        "sha256": "08fca67bd717824e0d532b373eabfc2b7aa8329453c7ca7272040c425bc196d1",
+        "before": {
+          "type": "file",
+          "uid": 0,
+          "gid": 0,
+          "mode": "0644",
+          "nlink": 1,
+          "size": 3929,
+          "dev": 16777231,
+          "ino": 143205214,
+          "mtimeNs": 1791510760877647000,
+          "ctimeNs": 1791510760878464500
+        },
+        "opened": {
+          "type": "file",
+          "uid": 0,
+          "gid": 0,
+          "mode": "0644",
+          "nlink": 1,
+          "size": 3929,
+          "dev": 16777231,
+          "ino": 143205214,
+          "mtimeNs": 1791510760877647000,
+          "ctimeNs": 1791510760878464500
+        },
+        "finalHandle": {
+          "type": "file",
+          "uid": 0,
+          "gid": 0,
+          "mode": "0644",
+          "nlink": 1,
+          "size": 3929,
+          "dev": 16777231,
+          "ino": 143205214,
+          "mtimeNs": 1791510760877647000,
+          "ctimeNs": 1791510760878464500
+        },
+        "after": {
+          "type": "file",
+          "uid": 0,
+          "gid": 0,
+          "mode": "0644",
+          "nlink": 1,
+          "size": 3929,
+          "dev": 16777231,
+          "ino": 143205214,
+          "mtimeNs": 1791510760877647000,
+          "ctimeNs": 1791510760878464500
+        },
+        "openFlags": 256
+      },
+      {
+        "method": "lstat-chain",
+        "path": "/Library",
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "nlink": 69,
+        "size": 2208,
+        "dev": 16777231,
+        "ino": 121899901,
+        "mtimeNs": 1791339607192810500,
+        "ctimeNs": 1791339607192810500
+      },
+      {
+        "method": "lstat-chain",
+        "path": "/Library/Developer",
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "nlink": 8,
+        "size": 256,
+        "dev": 16777231,
+        "ino": 678336,
+        "mtimeNs": 1791212757672252700,
+        "ctimeNs": 1791212757672252700
+      },
+      {
+        "method": "lstat-chain",
+        "path": "/Library/Developer/CoreSimulator",
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "nlink": 7,
+        "size": 224,
+        "dev": 16777231,
+        "ino": 678351,
+        "mtimeNs": 1778208951628675600,
+        "ctimeNs": 1778208951628675600
+      },
+      {
+        "method": "lstat-chain",
+        "path": "/Library/Developer/CoreSimulator/Images",
+        "type": "directory",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "nlink": 5,
+        "size": 160,
+        "dev": 16777231,
+        "ino": 32052143,
+        "mtimeNs": 1791510760877917700,
+        "ctimeNs": 1791510760877917700
+      },
+      {
+        "method": "lstat-chain",
+        "path": "/Library/Developer/CoreSimulator/Images/images.plist",
+        "type": "file",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "nlink": 1,
+        "size": 3929,
+        "dev": 16777231,
+        "ino": 143205214,
+        "mtimeNs": 1791510760877647000,
+        "ctimeNs": 1791510760878464500
+      },
+      {
+        "method": "stable-read-hash",
+        "path": "/Library/Developer/CoreSimulator/Images/images.plist",
+        "bytes": 3929,
+        "sha256": "08fca67bd717824e0d532b373eabfc2b7aa8329453c7ca7272040c425bc196d1",
+        "before": {
+          "type": "file",
+          "uid": 0,
+          "gid": 0,
+          "mode": "0644",
+          "nlink": 1,
+          "size": 3929,
+          "dev": 16777231,
+          "ino": 143205214,
+          "mtimeNs": 1791510760877647000,
+          "ctimeNs": 1791510760878464500
+        },
+        "opened": {
+          "type": "file",
+          "uid": 0,
+          "gid": 0,
+          "mode": "0644",
+          "nlink": 1,
+          "size": 3929,
+          "dev": 16777231,
+          "ino": 143205214,
+          "mtimeNs": 1791510760877647000,
+          "ctimeNs": 1791510760878464500
+        },
+        "finalHandle": {
+          "type": "file",
+          "uid": 0,
+          "gid": 0,
+          "mode": "0644",
+          "nlink": 1,
+          "size": 3929,
+          "dev": 16777231,
+          "ino": 143205214,
+          "mtimeNs": 1791510760877647000,
+          "ctimeNs": 1791510760878464500
+        },
+        "after": {
+          "type": "file",
+          "uid": 0,
+          "gid": 0,
+          "mode": "0644",
+          "nlink": 1,
+          "size": 3929,
+          "dev": 16777231,
+          "ino": 143205214,
+          "mtimeNs": 1791510760877647000,
+          "ctimeNs": 1791510760878464500
+        },
+        "openFlags": 256
+      }
+    ],
+    "before": {
+      "path": "/Library/Developer/CoreSimulator/Images/images.plist",
+      "bytes": 3929,
+      "sha256": "08fca67bd717824e0d532b373eabfc2b7aa8329453c7ca7272040c425bc196d1",
+      "before": {
+        "type": "file",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "nlink": 1,
+        "size": 3929,
+        "dev": 16777231,
+        "ino": 143205214,
+        "mtimeNs": 1791510760877647000,
+        "ctimeNs": 1791510760878464500
+      },
+      "opened": {
+        "type": "file",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "nlink": 1,
+        "size": 3929,
+        "dev": 16777231,
+        "ino": 143205214,
+        "mtimeNs": 1791510760877647000,
+        "ctimeNs": 1791510760878464500
+      },
+      "finalHandle": {
+        "type": "file",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "nlink": 1,
+        "size": 3929,
+        "dev": 16777231,
+        "ino": 143205214,
+        "mtimeNs": 1791510760877647000,
+        "ctimeNs": 1791510760878464500
+      },
+      "after": {
+        "type": "file",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "nlink": 1,
+        "size": 3929,
+        "dev": 16777231,
+        "ino": 143205214,
+        "mtimeNs": 1791510760877647000,
+        "ctimeNs": 1791510760878464500
+      },
+      "openFlags": 256
+    },
+    "after": {
+      "path": "/Library/Developer/CoreSimulator/Images/images.plist",
+      "bytes": 3929,
+      "sha256": "08fca67bd717824e0d532b373eabfc2b7aa8329453c7ca7272040c425bc196d1",
+      "before": {
+        "type": "file",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "nlink": 1,
+        "size": 3929,
+        "dev": 16777231,
+        "ino": 143205214,
+        "mtimeNs": 1791510760877647000,
+        "ctimeNs": 1791510760878464500
+      },
+      "opened": {
+        "type": "file",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "nlink": 1,
+        "size": 3929,
+        "dev": 16777231,
+        "ino": 143205214,
+        "mtimeNs": 1791510760877647000,
+        "ctimeNs": 1791510760878464500
+      },
+      "finalHandle": {
+        "type": "file",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "nlink": 1,
+        "size": 3929,
+        "dev": 16777231,
+        "ino": 143205214,
+        "mtimeNs": 1791510760877647000,
+        "ctimeNs": 1791510760878464500
+      },
+      "after": {
+        "type": "file",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "nlink": 1,
+        "size": 3929,
+        "dev": 16777231,
+        "ino": 143205214,
+        "mtimeNs": 1791510760877647000,
+        "ctimeNs": 1791510760878464500
+      },
+      "openFlags": 256
+    },
+    "stableAcrossParse": true,
+    "sanitizedValue": {
+      "images": [
+        {
+          "uuid": "018DF92A-C039-47C1-A12B-0EBA4E11CE14",
+          "sourceURL": {
+            "relative": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg"
+          },
+          "path": {
+            "relative": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg"
+          },
+          "sourceParentBundleMountURL": {
+            "relative": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/"
+          },
+          "state": 5,
+          "runtimeInfo": {
+            "bundleIdentifier": "com.apple.CoreSimulator.SimRuntime.iOS-26-4",
+            "bundlePath": {
+              "relative": "file:///Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2026.4.simruntime/"
+            },
+            "platformIdentifier": "com.apple.platform.iphonesimulator",
+            "version": 1704961,
+            "build": "23E254a",
+            "isInternal": false,
+            "supportedArchitectures": [
+              "arm64"
+            ]
+          },
+          "userInfoData": {
+            "$type": "data",
+            "byteCount": 307,
+            "sha256": "acc2bba498d7f48c35935d9ce5afe0cccc13a4d7757469e8a4be01de6f8e5cac"
+          },
+          "signatureState": {
+            "verified": {}
+          },
+          "format": {
+            "normal": {}
+          },
+          "mountingMode": {
+            "mountAsDMG": {}
+          },
+          "mountPolicy": {
+            "automatic": {}
+          },
+          "writePolicy": {
+            "readOnly": {}
+          },
+          "lastUsedAt": {
+            "$type": "datetime",
+            "iso": "2026-10-07T15:05:51.190007",
+            "timezoneDeclared": false
+          },
+          "lastStateChangeAt": {
+            "$type": "datetime",
+            "iso": "2026-05-08T03:05:24.010446",
+            "timezoneDeclared": false
+          }
+        },
+        {
+          "uuid": "8BD8CF0F-622F-4F00-84B2-D803DD15EDE1",
+          "sourceURL": {
+            "relative": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/"
+          },
+          "path": {
+            "relative": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/"
+          },
+          "sourceParentBundleMountURL": {
+            "relative": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/"
+          },
+          "state": 5,
+          "runtimeInfo": {
+            "bundleIdentifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+            "bundlePath": {
+              "relative": "file:///private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2027.0.simruntime/"
+            },
+            "platformIdentifier": "com.apple.platform.iphonesimulator",
+            "version": 1769472,
+            "build": "24A434",
+            "isInternal": false,
+            "supportedArchitectures": [
+              "arm64"
+            ]
+          },
+          "cryptexVariant": "Arm64Only Customer Simulator Runtime",
+          "cryptexPersonalizationManifestURL": {
+            "relative": "file:///Library/Developer/CoreSimulator/Cryptex/Personalization/com_apple_MobileAsset_iOSSimulatorRuntime__3e800c38767f9f2c5fc86acdad7adf44565e051a.asset-24A434-Arm64Only-Customer-Simulator-Runtime.manifest"
+          },
+          "userInfoData": {
+            "$type": "data",
+            "byteCount": 291,
+            "sha256": "121f96edffcf889463adf5da4f65db2b16e974b1d4ab6fb4475e98cc98384cbd"
+          },
+          "format": {
+            "normal": {}
+          },
+          "mountingMode": {
+            "personalizeAndMountAsCryptex": {}
+          },
+          "mountPolicy": {
+            "automatic": {}
+          },
+          "writePolicy": {
+            "readOnly": {}
+          },
+          "lastUsedAt": {
+            "$type": "datetime",
+            "iso": "2026-10-08T01:07:19.428302",
+            "timezoneDeclared": false
+          },
+          "lastStateChangeAt": {
+            "$type": "datetime",
+            "iso": "2026-10-06T02:47:24.731188",
+            "timezoneDeclared": false
+          }
+        },
+        {
+          "uuid": "B1EB81C5-BB60-439D-894A-AB1C0241E942",
+          "sourceURL": {
+            "relative": "file:///Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/Restore/043-19278-100.dmg"
+          },
+          "path": {
+            "relative": "file:///Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/Restore/043-19278-100.dmg"
+          },
+          "sourceParentUUID": "DEC29122-A7BB-4891-827C-AD42F1979D7F",
+          "sourceParentBundleImageURL": {
+            "relative": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/AssetData/043-18670-100.dmg"
+          },
+          "sourceParentBundleMountURL": {
+            "relative": "file:///Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/"
+          },
+          "state": 5,
+          "runtimeInfo": {
+            "bundleIdentifier": "com.apple.CoreSimulator.SimRuntime.iOS-18-6",
+            "bundlePath": {
+              "relative": "file:///Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2018.6.simruntime/"
+            },
+            "platformIdentifier": "com.apple.platform.iphonesimulator",
+            "version": 1181184,
+            "build": "22G86",
+            "isInternal": false,
+            "supportedArchitectures": [
+              "x86_64",
+              "arm64"
+            ]
+          },
+          "userInfoData": {
+            "$type": "data",
+            "byteCount": 292,
+            "sha256": "69789077b38cf1d37cad2885ca1bff233a1c93e14c9013f2a309e3283d8bed03"
+          },
+          "signatureState": {
+            "verified": {}
+          },
+          "format": {
+            "normal": {}
+          },
+          "mountingMode": {
+            "mountAsDMG": {}
+          },
+          "mountPolicy": {
+            "automatic": {}
+          },
+          "writePolicy": {
+            "readOnly": {}
+          },
+          "lastUsedAt": {
+            "$type": "datetime",
+            "iso": "2026-10-05T09:04:18.596447",
+            "timezoneDeclared": false
+          },
+          "lastStateChangeAt": {
+            "$type": "datetime",
+            "iso": "2026-06-09T11:23:24.925872",
+            "timezoneDeclared": false
+          }
+        }
+      ],
+      "standaloneBundles": []
+    },
+    "parsingException": null,
+    "completedAt": "2026-10-09T02:27:03.302088+00:00",
+    "redaction": "Recursive credential/token/auth/session keys and URL credentials redacted; datetime/UID/data types preserved as tags; data bytes never stored.",
+    "fields": [
+      {
+        "field": "images.0.uuid",
+        "value": "018DF92A-C039-47C1-A12B-0EBA4E11CE14"
+      },
+      {
+        "field": "images.0.sourceURL.relative",
+        "value": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg"
+      },
+      {
+        "field": "images.0.path.relative",
+        "value": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg"
+      },
+      {
+        "field": "images.0.sourceParentBundleMountURL.relative",
+        "value": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/"
+      },
+      {
+        "field": "images.0.state",
+        "value": 5
+      },
+      {
+        "field": "images.0.runtimeInfo.bundleIdentifier",
+        "value": "com.apple.CoreSimulator.SimRuntime.iOS-26-4"
+      },
+      {
+        "field": "images.0.runtimeInfo.bundlePath.relative",
+        "value": "file:///Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2026.4.simruntime/"
+      },
+      {
+        "field": "images.0.runtimeInfo.platformIdentifier",
+        "value": "com.apple.platform.iphonesimulator"
+      },
+      {
+        "field": "images.0.runtimeInfo.version",
+        "value": 1704961
+      },
+      {
+        "field": "images.0.runtimeInfo.build",
+        "value": "23E254a"
+      },
+      {
+        "field": "images.0.runtimeInfo.isInternal",
+        "value": false
+      },
+      {
+        "field": "images.0.runtimeInfo.supportedArchitectures.0",
+        "value": "arm64"
+      },
+      {
+        "field": "images.0.userInfoData.$type",
+        "value": "data"
+      },
+      {
+        "field": "images.0.userInfoData.byteCount",
+        "value": 307
+      },
+      {
+        "field": "images.0.userInfoData.sha256",
+        "value": "acc2bba498d7f48c35935d9ce5afe0cccc13a4d7757469e8a4be01de6f8e5cac"
+      },
+      {
+        "field": "images.0.lastUsedAt.$type",
+        "value": "datetime"
+      },
+      {
+        "field": "images.0.lastUsedAt.iso",
+        "value": "2026-10-07T15:05:51.190007"
+      },
+      {
+        "field": "images.0.lastUsedAt.timezoneDeclared",
+        "value": false
+      },
+      {
+        "field": "images.0.lastStateChangeAt.$type",
+        "value": "datetime"
+      },
+      {
+        "field": "images.0.lastStateChangeAt.iso",
+        "value": "2026-05-08T03:05:24.010446"
+      },
+      {
+        "field": "images.0.lastStateChangeAt.timezoneDeclared",
+        "value": false
+      },
+      {
+        "field": "images.1.uuid",
+        "value": "8BD8CF0F-622F-4F00-84B2-D803DD15EDE1"
+      },
+      {
+        "field": "images.1.sourceURL.relative",
+        "value": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/"
+      },
+      {
+        "field": "images.1.path.relative",
+        "value": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/"
+      },
+      {
+        "field": "images.1.sourceParentBundleMountURL.relative",
+        "value": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/"
+      },
+      {
+        "field": "images.1.state",
+        "value": 5
+      },
+      {
+        "field": "images.1.runtimeInfo.bundleIdentifier",
+        "value": "com.apple.CoreSimulator.SimRuntime.iOS-27-0"
+      },
+      {
+        "field": "images.1.runtimeInfo.bundlePath.relative",
+        "value": "file:///private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2027.0.simruntime/"
+      },
+      {
+        "field": "images.1.runtimeInfo.platformIdentifier",
+        "value": "com.apple.platform.iphonesimulator"
+      },
+      {
+        "field": "images.1.runtimeInfo.version",
+        "value": 1769472
+      },
+      {
+        "field": "images.1.runtimeInfo.build",
+        "value": "24A434"
+      },
+      {
+        "field": "images.1.runtimeInfo.isInternal",
+        "value": false
+      },
+      {
+        "field": "images.1.runtimeInfo.supportedArchitectures.0",
+        "value": "arm64"
+      },
+      {
+        "field": "images.1.cryptexVariant",
+        "value": "Arm64Only Customer Simulator Runtime"
+      },
+      {
+        "field": "images.1.cryptexPersonalizationManifestURL.relative",
+        "value": "file:///Library/Developer/CoreSimulator/Cryptex/Personalization/com_apple_MobileAsset_iOSSimulatorRuntime__3e800c38767f9f2c5fc86acdad7adf44565e051a.asset-24A434-Arm64Only-Customer-Simulator-Runtime.manifest"
+      },
+      {
+        "field": "images.1.userInfoData.$type",
+        "value": "data"
+      },
+      {
+        "field": "images.1.userInfoData.byteCount",
+        "value": 291
+      },
+      {
+        "field": "images.1.userInfoData.sha256",
+        "value": "121f96edffcf889463adf5da4f65db2b16e974b1d4ab6fb4475e98cc98384cbd"
+      },
+      {
+        "field": "images.1.lastUsedAt.$type",
+        "value": "datetime"
+      },
+      {
+        "field": "images.1.lastUsedAt.iso",
+        "value": "2026-10-08T01:07:19.428302"
+      },
+      {
+        "field": "images.1.lastUsedAt.timezoneDeclared",
+        "value": false
+      },
+      {
+        "field": "images.1.lastStateChangeAt.$type",
+        "value": "datetime"
+      },
+      {
+        "field": "images.1.lastStateChangeAt.iso",
+        "value": "2026-10-06T02:47:24.731188"
+      },
+      {
+        "field": "images.1.lastStateChangeAt.timezoneDeclared",
+        "value": false
+      },
+      {
+        "field": "images.2.uuid",
+        "value": "B1EB81C5-BB60-439D-894A-AB1C0241E942"
+      },
+      {
+        "field": "images.2.sourceURL.relative",
+        "value": "file:///Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/Restore/043-19278-100.dmg"
+      },
+      {
+        "field": "images.2.path.relative",
+        "value": "file:///Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/Restore/043-19278-100.dmg"
+      },
+      {
+        "field": "images.2.sourceParentUUID",
+        "value": "DEC29122-A7BB-4891-827C-AD42F1979D7F"
+      },
+      {
+        "field": "images.2.sourceParentBundleImageURL.relative",
+        "value": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/AssetData/043-18670-100.dmg"
+      },
+      {
+        "field": "images.2.sourceParentBundleMountURL.relative",
+        "value": "file:///Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/"
+      },
+      {
+        "field": "images.2.state",
+        "value": 5
+      },
+      {
+        "field": "images.2.runtimeInfo.bundleIdentifier",
+        "value": "com.apple.CoreSimulator.SimRuntime.iOS-18-6"
+      },
+      {
+        "field": "images.2.runtimeInfo.bundlePath.relative",
+        "value": "file:///Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2018.6.simruntime/"
+      },
+      {
+        "field": "images.2.runtimeInfo.platformIdentifier",
+        "value": "com.apple.platform.iphonesimulator"
+      },
+      {
+        "field": "images.2.runtimeInfo.version",
+        "value": 1181184
+      },
+      {
+        "field": "images.2.runtimeInfo.build",
+        "value": "22G86"
+      },
+      {
+        "field": "images.2.runtimeInfo.isInternal",
+        "value": false
+      },
+      {
+        "field": "images.2.runtimeInfo.supportedArchitectures.0",
+        "value": "x86_64"
+      },
+      {
+        "field": "images.2.runtimeInfo.supportedArchitectures.1",
+        "value": "arm64"
+      },
+      {
+        "field": "images.2.userInfoData.$type",
+        "value": "data"
+      },
+      {
+        "field": "images.2.userInfoData.byteCount",
+        "value": 292
+      },
+      {
+        "field": "images.2.userInfoData.sha256",
+        "value": "69789077b38cf1d37cad2885ca1bff233a1c93e14c9013f2a309e3283d8bed03"
+      },
+      {
+        "field": "images.2.lastUsedAt.$type",
+        "value": "datetime"
+      },
+      {
+        "field": "images.2.lastUsedAt.iso",
+        "value": "2026-10-05T09:04:18.596447"
+      },
+      {
+        "field": "images.2.lastUsedAt.timezoneDeclared",
+        "value": false
+      },
+      {
+        "field": "images.2.lastStateChangeAt.$type",
+        "value": "datetime"
+      },
+      {
+        "field": "images.2.lastStateChangeAt.iso",
+        "value": "2026-06-09T11:23:24.925872"
+      },
+      {
+        "field": "images.2.lastStateChangeAt.timezoneDeclared",
+        "value": false
+      }
+    ],
+    "candidatePaths": [
+      {
+        "field": "images.0.sourceURL.relative",
+        "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg",
+        "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg",
+        "followed": false
+      },
+      {
+        "field": "images.0.path.relative",
+        "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg",
+        "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg",
+        "followed": false
+      },
+      {
+        "field": "images.0.sourceParentBundleMountURL.relative",
+        "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/",
+        "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/",
+        "followed": false
+      },
+      {
+        "field": "images.0.runtimeInfo.bundlePath.relative",
+        "path": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/",
+        "sourceValue": "file:///Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2026.4.simruntime/",
+        "followed": false
+      },
+      {
+        "field": "images.1.sourceURL.relative",
+        "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/",
+        "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/",
+        "followed": false
+      },
+      {
+        "field": "images.1.path.relative",
+        "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/",
+        "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/",
+        "followed": false
+      },
+      {
+        "field": "images.1.sourceParentBundleMountURL.relative",
+        "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/",
+        "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/",
+        "followed": false
+      },
+      {
+        "field": "images.1.runtimeInfo.bundlePath.relative",
+        "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/",
+        "sourceValue": "file:///private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2027.0.simruntime/",
+        "followed": false
+      },
+      {
+        "field": "images.1.cryptexPersonalizationManifestURL.relative",
+        "path": "/Library/Developer/CoreSimulator/Cryptex/Personalization/com_apple_MobileAsset_iOSSimulatorRuntime__3e800c38767f9f2c5fc86acdad7adf44565e051a.asset-24A434-Arm64Only-Customer-Simulator-Runtime.manifest",
+        "sourceValue": "file:///Library/Developer/CoreSimulator/Cryptex/Personalization/com_apple_MobileAsset_iOSSimulatorRuntime__3e800c38767f9f2c5fc86acdad7adf44565e051a.asset-24A434-Arm64Only-Customer-Simulator-Runtime.manifest",
+        "followed": false
+      },
+      {
+        "field": "images.2.sourceURL.relative",
+        "path": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/Restore/043-19278-100.dmg",
+        "sourceValue": "file:///Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/Restore/043-19278-100.dmg",
+        "followed": false
+      },
+      {
+        "field": "images.2.path.relative",
+        "path": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/Restore/043-19278-100.dmg",
+        "sourceValue": "file:///Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/Restore/043-19278-100.dmg",
+        "followed": false
+      },
+      {
+        "field": "images.2.sourceParentBundleImageURL.relative",
+        "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/AssetData/043-18670-100.dmg",
+        "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/AssetData/043-18670-100.dmg",
+        "followed": false
+      },
+      {
+        "field": "images.2.sourceParentBundleMountURL.relative",
+        "path": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/",
+        "sourceValue": "file:///Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/",
+        "followed": false
+      },
+      {
+        "field": "images.2.runtimeInfo.bundlePath.relative",
+        "path": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.6.simruntime/",
+        "sourceValue": "file:///Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2018.6.simruntime/",
+        "followed": false
+      }
+    ],
+    "fieldCapReached": false
+  },
+  "children": [
+    {
+      "kind": "PYTHON_STANDARD_LIBRARY_PLISTLIB",
+      "argv": [
+        "/usr/bin/python3",
+        "-I",
+        "-S",
+        "-B",
+        "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase3/parse-images.py",
+        "/Library/Developer/CoreSimulator/Images/images.plist"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+      "startedAt": "2026-10-09T02:27:02.092Z",
+      "environment": {
+        "HOME": "/Users/hugues_mini",
+        "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "shell": false,
+      "stdin": "ignored",
+      "exitCode": 0,
+      "signal": null,
+      "completedAt": "2026-10-09T02:27:03.305Z",
+      "timedOut": false,
+      "overflow": false,
+      "error": null,
+      "stdout": "{\n  \"schemaVersion\": 1,\n  \"input\": \"/Library/Developer/CoreSimulator/Images/images.plist\",\n  \"cwd\": \"/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic\",\n  \"startedAt\": \"2026-10-09T02:27:03.301151+00:00\",\n  \"pythonVersion\": \"3.9.6 (default, Aug 25 2026, 21:26:21) \\n[Clang 21.0.0 (clang-2100.3.34.2)]\",\n  \"parser\": \"Python standard-library plistlib.loads\",\n  \"trace\": [\n    {\n      \"method\": \"lstat-chain\",\n      \"path\": \"/Library\",\n      \"type\": \"directory\",\n      \"uid\": 0,\n      \"gid\": 0,\n      \"mode\": \"0755\",\n      \"nlink\": 69,\n      \"size\": 2208,\n      \"dev\": 16777231,\n      \"ino\": 121899901,\n      \"mtimeNs\": 1791339607192810500,\n      \"ctimeNs\": 1791339607192810500\n    },\n    {\n      \"method\": \"lstat-chain\",\n      \"path\": \"/Library/Developer\",\n      \"type\": \"directory\",\n      \"uid\": 0,\n      \"gid\": 0,\n      \"mode\": \"0755\",\n      \"nlink\": 8,\n      \"size\": 256,\n      \"dev\": 16777231,\n      \"ino\": 678336,\n      \"mtimeNs\": 1791212757672252700,\n      \"ctimeNs\": 1791212757672252700\n    },\n    {\n      \"method\": \"lstat-chain\",\n      \"path\": \"/Library/Developer/CoreSimulator\",\n      \"type\": \"directory\",\n      \"uid\": 0,\n      \"gid\": 0,\n      \"mode\": \"0755\",\n      \"nlink\": 7,\n      \"size\": 224,\n      \"dev\": 16777231,\n      \"ino\": 678351,\n      \"mtimeNs\": 1778208951628675600,\n      \"ctimeNs\": 1778208951628675600\n    },\n    {\n      \"method\": \"lstat-chain\",\n      \"path\": \"/Library/Developer/CoreSimulator/Images\",\n      \"type\": \"directory\",\n      \"uid\": 0,\n      \"gid\": 0,\n      \"mode\": \"0755\",\n      \"nlink\": 5,\n      \"size\": 160,\n      \"dev\": 16777231,\n      \"ino\": 32052143,\n      \"mtimeNs\": 1791510760877917700,\n      \"ctimeNs\": 1791510760877917700\n    },\n    {\n      \"method\": \"lstat-chain\",\n      \"path\": \"/Library/Developer/CoreSimulator/Images/images.plist\",\n      \"type\": \"file\",\n      \"uid\": 0,\n      \"gid\": 0,\n      \"mode\": \"0644\",\n      \"nlink\": 1,\n      \"size\": 3929,\n      \"dev\": 16777231,\n      \"ino\": 143205214,\n      \"mtimeNs\": 1791510760877647000,\n      \"ctimeNs\": 1791510760878464500\n    },\n    {\n      \"method\": \"stable-read-hash\",\n      \"path\": \"/Library/Developer/CoreSimulator/Images/images.plist\",\n      \"bytes\": 3929,\n      \"sha256\": \"08fca67bd717824e0d532b373eabfc2b7aa8329453c7ca7272040c425bc196d1\",\n      \"before\": {\n        \"type\": \"file\",\n        \"uid\": 0,\n        \"gid\": 0,\n        \"mode\": \"0644\",\n        \"nlink\": 1,\n        \"size\": 3929,\n        \"dev\": 16777231,\n        \"ino\": 143205214,\n        \"mtimeNs\": 1791510760877647000,\n        \"ctimeNs\": 1791510760878464500\n      },\n      \"opened\": {\n        \"type\": \"file\",\n        \"uid\": 0,\n        \"gid\": 0,\n        \"mode\": \"0644\",\n        \"nlink\": 1,\n        \"size\": 3929,\n        \"dev\": 16777231,\n        \"ino\": 143205214,\n        \"mtimeNs\": 1791510760877647000,\n        \"ctimeNs\": 1791510760878464500\n      },\n      \"finalHandle\": {\n        \"type\": \"file\",\n        \"uid\": 0,\n        \"gid\": 0,\n        \"mode\": \"0644\",\n        \"nlink\": 1,\n        \"size\": 3929,\n        \"dev\": 16777231,\n        \"ino\": 143205214,\n        \"mtimeNs\": 1791510760877647000,\n        \"ctimeNs\": 1791510760878464500\n      },\n      \"after\": {\n        \"type\": \"file\",\n        \"uid\": 0,\n        \"gid\": 0,\n        \"mode\": \"0644\",\n        \"nlink\": 1,\n        \"size\": 3929,\n        \"dev\": 16777231,\n        \"ino\": 143205214,\n        \"mtimeNs\": 1791510760877647000,\n        \"ctimeNs\": 1791510760878464500\n      },\n      \"openFlags\": 256\n    },\n    {\n      \"method\": \"lstat-chain\",\n      \"path\": \"/Library\",\n      \"type\": \"directory\",\n      \"uid\": 0,\n      \"gid\": 0,\n      \"mode\": \"0755\",\n      \"nlink\": 69,\n      \"size\": 2208,\n      \"dev\": 16777231,\n      \"ino\": 121899901,\n      \"mtimeNs\": 1791339607192810500,\n      \"ctimeNs\": 1791339607192810500\n    },\n    {\n      \"method\": \"lstat-chain\",\n      \"path\": \"/Library/Developer\",\n      \"type\": \"directory\",\n      \"uid\": 0,\n      \"gid\": 0,\n      \"mode\": \"0755\",\n      \"nlink\": 8,\n      \"size\": 256,\n      \"dev\": 16777231,\n      \"ino\": 678336,\n      \"mtimeNs\": 1791212757672252700,\n      \"ctimeNs\": 1791212757672252700\n    },\n    {\n      \"method\": \"lstat-chain\",\n      \"path\": \"/Library/Developer/CoreSimulator\",\n      \"type\": \"directory\",\n      \"uid\": 0,\n      \"gid\": 0,\n      \"mode\": \"0755\",\n      \"nlink\": 7,\n      \"size\": 224,\n      \"dev\": 16777231,\n      \"ino\": 678351,\n      \"mtimeNs\": 1778208951628675600,\n      \"ctimeNs\": 1778208951628675600\n    },\n    {\n      \"method\": \"lstat-chain\",\n      \"path\": \"/Library/Developer/CoreSimulator/Images\",\n      \"type\": \"directory\",\n      \"uid\": 0,\n      \"gid\": 0,\n      \"mode\": \"0755\",\n      \"nlink\": 5,\n      \"size\": 160,\n      \"dev\": 16777231,\n      \"ino\": 32052143,\n      \"mtimeNs\": 1791510760877917700,\n      \"ctimeNs\": 1791510760877917700\n    },\n    {\n      \"method\": \"lstat-chain\",\n      \"path\": \"/Library/Developer/CoreSimulator/Images/images.plist\",\n      \"type\": \"file\",\n      \"uid\": 0,\n      \"gid\": 0,\n      \"mode\": \"0644\",\n      \"nlink\": 1,\n      \"size\": 3929,\n      \"dev\": 16777231,\n      \"ino\": 143205214,\n      \"mtimeNs\": 1791510760877647000,\n      \"ctimeNs\": 1791510760878464500\n    },\n    {\n      \"method\": \"stable-read-hash\",\n      \"path\": \"/Library/Developer/CoreSimulator/Images/images.plist\",\n      \"bytes\": 3929,\n      \"sha256\": \"08fca67bd717824e0d532b373eabfc2b7aa8329453c7ca7272040c425bc196d1\",\n      \"before\": {\n        \"type\": \"file\",\n        \"uid\": 0,\n        \"gid\": 0,\n        \"mode\": \"0644\",\n        \"nlink\": 1,\n        \"size\": 3929,\n        \"dev\": 16777231,\n        \"ino\": 143205214,\n        \"mtimeNs\": 1791510760877647000,\n        \"ctimeNs\": 1791510760878464500\n      },\n      \"opened\": {\n        \"type\": \"file\",\n        \"uid\": 0,\n        \"gid\": 0,\n        \"mode\": \"0644\",\n        \"nlink\": 1,\n        \"size\": 3929,\n        \"dev\": 16777231,\n        \"ino\": 143205214,\n        \"mtimeNs\": 1791510760877647000,\n        \"ctimeNs\": 1791510760878464500\n      },\n      \"finalHandle\": {\n        \"type\": \"file\",\n        \"uid\": 0,\n        \"gid\": 0,\n        \"mode\": \"0644\",\n        \"nlink\": 1,\n        \"size\": 3929,\n        \"dev\": 16777231,\n        \"ino\": 143205214,\n        \"mtimeNs\": 1791510760877647000,\n        \"ctimeNs\": 1791510760878464500\n      },\n      \"after\": {\n        \"type\": \"file\",\n        \"uid\": 0,\n        \"gid\": 0,\n        \"mode\": \"0644\",\n        \"nlink\": 1,\n        \"size\": 3929,\n        \"dev\": 16777231,\n        \"ino\": 143205214,\n        \"mtimeNs\": 1791510760877647000,\n        \"ctimeNs\": 1791510760878464500\n      },\n      \"openFlags\": 256\n    }\n  ],\n  \"before\": {\n    \"path\": \"/Library/Developer/CoreSimulator/Images/images.plist\",\n    \"bytes\": 3929,\n    \"sha256\": \"08fca67bd717824e0d532b373eabfc2b7aa8329453c7ca7272040c425bc196d1\",\n    \"before\": {\n      \"type\": \"file\",\n      \"uid\": 0,\n      \"gid\": 0,\n      \"mode\": \"0644\",\n      \"nlink\": 1,\n      \"size\": 3929,\n      \"dev\": 16777231,\n      \"ino\": 143205214,\n      \"mtimeNs\": 1791510760877647000,\n      \"ctimeNs\": 1791510760878464500\n    },\n    \"opened\": {\n      \"type\": \"file\",\n      \"uid\": 0,\n      \"gid\": 0,\n      \"mode\": \"0644\",\n      \"nlink\": 1,\n      \"size\": 3929,\n      \"dev\": 16777231,\n      \"ino\": 143205214,\n      \"mtimeNs\": 1791510760877647000,\n      \"ctimeNs\": 1791510760878464500\n    },\n    \"finalHandle\": {\n      \"type\": \"file\",\n      \"uid\": 0,\n      \"gid\": 0,\n      \"mode\": \"0644\",\n      \"nlink\": 1,\n      \"size\": 3929,\n      \"dev\": 16777231,\n      \"ino\": 143205214,\n      \"mtimeNs\": 1791510760877647000,\n      \"ctimeNs\": 1791510760878464500\n    },\n    \"after\": {\n      \"type\": \"file\",\n      \"uid\": 0,\n      \"gid\": 0,\n      \"mode\": \"0644\",\n      \"nlink\": 1,\n      \"size\": 3929,\n      \"dev\": 16777231,\n      \"ino\": 143205214,\n      \"mtimeNs\": 1791510760877647000,\n      \"ctimeNs\": 1791510760878464500\n    },\n    \"openFlags\": 256\n  },\n  \"after\": {\n    \"path\": \"/Library/Developer/CoreSimulator/Images/images.plist\",\n    \"bytes\": 3929,\n    \"sha256\": \"08fca67bd717824e0d532b373eabfc2b7aa8329453c7ca7272040c425bc196d1\",\n    \"before\": {\n      \"type\": \"file\",\n      \"uid\": 0,\n      \"gid\": 0,\n      \"mode\": \"0644\",\n      \"nlink\": 1,\n      \"size\": 3929,\n      \"dev\": 16777231,\n      \"ino\": 143205214,\n      \"mtimeNs\": 1791510760877647000,\n      \"ctimeNs\": 1791510760878464500\n    },\n    \"opened\": {\n      \"type\": \"file\",\n      \"uid\": 0,\n      \"gid\": 0,\n      \"mode\": \"0644\",\n      \"nlink\": 1,\n      \"size\": 3929,\n      \"dev\": 16777231,\n      \"ino\": 143205214,\n      \"mtimeNs\": 1791510760877647000,\n      \"ctimeNs\": 1791510760878464500\n    },\n    \"finalHandle\": {\n      \"type\": \"file\",\n      \"uid\": 0,\n      \"gid\": 0,\n      \"mode\": \"0644\",\n      \"nlink\": 1,\n      \"size\": 3929,\n      \"dev\": 16777231,\n      \"ino\": 143205214,\n      \"mtimeNs\": 1791510760877647000,\n      \"ctimeNs\": 1791510760878464500\n    },\n    \"after\": {\n      \"type\": \"file\",\n      \"uid\": 0,\n      \"gid\": 0,\n      \"mode\": \"0644\",\n      \"nlink\": 1,\n      \"size\": 3929,\n      \"dev\": 16777231,\n      \"ino\": 143205214,\n      \"mtimeNs\": 1791510760877647000,\n      \"ctimeNs\": 1791510760878464500\n    },\n    \"openFlags\": 256\n  },\n  \"stableAcrossParse\": true,\n  \"status\": \"PARSED_STABLE\",\n  \"sanitizedValue\": {\n    \"images\": [\n      {\n        \"uuid\": \"018DF92A-C039-47C1-A12B-0EBA4E11CE14\",\n        \"sourceURL\": {\n          \"relative\": \"file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg\"\n        },\n        \"path\": {\n          \"relative\": \"file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg\"\n        },\n        \"sourceParentBundleMountURL\": {\n          \"relative\": \"file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/\"\n        },\n        \"state\": 5,\n        \"runtimeInfo\": {\n          \"bundleIdentifier\": \"com.apple.CoreSimulator.SimRuntime.iOS-26-4\",\n          \"bundlePath\": {\n            \"relative\": \"file:///Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2026.4.simruntime/\"\n          },\n          \"platformIdentifier\": \"com.apple.platform.iphonesimulator\",\n          \"version\": 1704961,\n          \"build\": \"23E254a\",\n          \"isInternal\": false,\n          \"supportedArchitectures\": [\n            \"arm64\"\n          ]\n        },\n        \"userInfoData\": {\n          \"$type\": \"data\",\n          \"byteCount\": 307,\n          \"sha256\": \"acc2bba498d7f48c35935d9ce5afe0cccc13a4d7757469e8a4be01de6f8e5cac\"\n        },\n        \"signatureState\": {\n          \"verified\": {}\n        },\n        \"format\": {\n          \"normal\": {}\n        },\n        \"mountingMode\": {\n          \"mountAsDMG\": {}\n        },\n        \"mountPolicy\": {\n          \"automatic\": {}\n        },\n        \"writePolicy\": {\n          \"readOnly\": {}\n        },\n        \"lastUsedAt\": {\n          \"$type\": \"datetime\",\n          \"iso\": \"2026-10-07T15:05:51.190007\",\n          \"timezoneDeclared\": false\n        },\n        \"lastStateChangeAt\": {\n          \"$type\": \"datetime\",\n          \"iso\": \"2026-05-08T03:05:24.010446\",\n          \"timezoneDeclared\": false\n        }\n      },\n      {\n        \"uuid\": \"8BD8CF0F-622F-4F00-84B2-D803DD15EDE1\",\n        \"sourceURL\": {\n          \"relative\": \"file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/\"\n        },\n        \"path\": {\n          \"relative\": \"file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/\"\n        },\n        \"sourceParentBundleMountURL\": {\n          \"relative\": \"file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/\"\n        },\n        \"state\": 5,\n        \"runtimeInfo\": {\n          \"bundleIdentifier\": \"com.apple.CoreSimulator.SimRuntime.iOS-27-0\",\n          \"bundlePath\": {\n            \"relative\": \"file:///private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2027.0.simruntime/\"\n          },\n          \"platformIdentifier\": \"com.apple.platform.iphonesimulator\",\n          \"version\": 1769472,\n          \"build\": \"24A434\",\n          \"isInternal\": false,\n          \"supportedArchitectures\": [\n            \"arm64\"\n          ]\n        },\n        \"cryptexVariant\": \"Arm64Only Customer Simulator Runtime\",\n        \"cryptexPersonalizationManifestURL\": {\n          \"relative\": \"file:///Library/Developer/CoreSimulator/Cryptex/Personalization/com_apple_MobileAsset_iOSSimulatorRuntime__3e800c38767f9f2c5fc86acdad7adf44565e051a.asset-24A434-Arm64Only-Customer-Simulator-Runtime.manifest\"\n        },\n        \"userInfoData\": {\n          \"$type\": \"data\",\n          \"byteCount\": 291,\n          \"sha256\": \"121f96edffcf889463adf5da4f65db2b16e974b1d4ab6fb4475e98cc98384cbd\"\n        },\n        \"format\": {\n          \"normal\": {}\n        },\n        \"mountingMode\": {\n          \"personalizeAndMountAsCryptex\": {}\n        },\n        \"mountPolicy\": {\n          \"automatic\": {}\n        },\n        \"writePolicy\": {\n          \"readOnly\": {}\n        },\n        \"lastUsedAt\": {\n          \"$type\": \"datetime\",\n          \"iso\": \"2026-10-08T01:07:19.428302\",\n          \"timezoneDeclared\": false\n        },\n        \"lastStateChangeAt\": {\n          \"$type\": \"datetime\",\n          \"iso\": \"2026-10-06T02:47:24.731188\",\n          \"timezoneDeclared\": false\n        }\n      },\n      {\n        \"uuid\": \"B1EB81C5-BB60-439D-894A-AB1C0241E942\",\n        \"sourceURL\": {\n          \"relative\": \"file:///Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/Restore/043-19278-100.dmg\"\n        },\n        \"path\": {\n          \"relative\": \"file:///Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/Restore/043-19278-100.dmg\"\n        },\n        \"sourceParentUUID\": \"DEC29122-A7BB-4891-827C-AD42F1979D7F\",\n        \"sourceParentBundleImageURL\": {\n          \"relative\": \"file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/AssetData/043-18670-100.dmg\"\n        },\n        \"sourceParentBundleMountURL\": {\n          \"relative\": \"file:///Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/\"\n        },\n        \"state\": 5,\n        \"runtimeInfo\": {\n          \"bundleIdentifier\": \"com.apple.CoreSimulator.SimRuntime.iOS-18-6\",\n          \"bundlePath\": {\n            \"relative\": \"file:///Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2018.6.simruntime/\"\n          },\n          \"platformIdentifier\": \"com.apple.platform.iphonesimulator\",\n          \"version\": 1181184,\n          \"build\": \"22G86\",\n          \"isInternal\": false,\n          \"supportedArchitectures\": [\n            \"x86_64\",\n            \"arm64\"\n          ]\n        },\n        \"userInfoData\": {\n          \"$type\": \"data\",\n          \"byteCount\": 292,\n          \"sha256\": \"69789077b38cf1d37cad2885ca1bff233a1c93e14c9013f2a309e3283d8bed03\"\n        },\n        \"signatureState\": {\n          \"verified\": {}\n        },\n        \"format\": {\n          \"normal\": {}\n        },\n        \"mountingMode\": {\n          \"mountAsDMG\": {}\n        },\n        \"mountPolicy\": {\n          \"automatic\": {}\n        },\n        \"writePolicy\": {\n          \"readOnly\": {}\n        },\n        \"lastUsedAt\": {\n          \"$type\": \"datetime\",\n          \"iso\": \"2026-10-05T09:04:18.596447\",\n          \"timezoneDeclared\": false\n        },\n        \"lastStateChangeAt\": {\n          \"$type\": \"datetime\",\n          \"iso\": \"2026-06-09T11:23:24.925872\",\n          \"timezoneDeclared\": false\n        }\n      }\n    ],\n    \"standaloneBundles\": []\n  },\n  \"parsingException\": null,\n  \"completedAt\": \"2026-10-09T02:27:03.302088+00:00\",\n  \"redaction\": \"Recursive credential/token/auth/session keys and URL credentials redacted; datetime/UID/data types preserved as tags; data bytes never stored.\"\n}\n",
+      "stderr": "",
+      "stdoutOriginalBytes": 16085,
+      "stderrOriginalBytes": 0,
+      "stdoutOriginalSha256": "0f1f489f8608fab8f1851461d82634a78deb88681b8009e23068d52f5a9b571f",
+      "stderrOriginalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redaction": "Structured key/URL redaction; unparsed stdout withheld; stderr credential assignments/bearer values redacted."
+    }
+  ],
+  "limits": [],
+  "trace": [
+    {
+      "sequence": 1,
+      "atUtc": "2026-10-09T02:27:02.080Z",
+      "method": "lstat",
+      "path": "/",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 23,
+      "size": 736,
+      "dev": 16777231,
+      "ino": 2,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "sequence": 2,
+      "atUtc": "2026-10-09T02:27:02.081Z",
+      "method": "lstat",
+      "path": "/Library",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 69,
+      "size": 2208,
+      "dev": 16777231,
+      "ino": 121899901,
+      "mtimeMs": 1791339607192.8103,
+      "ctimeMs": 1791339607192.8103
+    },
+    {
+      "sequence": 3,
+      "atUtc": "2026-10-09T02:27:02.081Z",
+      "method": "lstat",
+      "path": "/Library/Developer",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 8,
+      "size": 256,
+      "dev": 16777231,
+      "ino": 678336,
+      "mtimeMs": 1791212757672.2527,
+      "ctimeMs": 1791212757672.2527
+    },
+    {
+      "sequence": 4,
+      "atUtc": "2026-10-09T02:27:02.081Z",
+      "method": "lstat",
+      "path": "/Library/Developer/CoreSimulator",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 7,
+      "size": 224,
+      "dev": 16777231,
+      "ino": 678351,
+      "mtimeMs": 1778208951628.6755,
+      "ctimeMs": 1778208951628.6755
+    },
+    {
+      "sequence": 5,
+      "atUtc": "2026-10-09T02:27:02.081Z",
+      "method": "lstat",
+      "path": "/Library/Developer/CoreSimulator/Cryptex",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 32052147,
+      "mtimeMs": 1778212364574.0059,
+      "ctimeMs": 1778212364574.0059
+    },
+    {
+      "sequence": 6,
+      "atUtc": "2026-10-09T02:27:02.081Z",
+      "method": "lstat",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 32052148,
+      "mtimeMs": 1778208951629.3062,
+      "ctimeMs": 1778208951706.9924
+    },
+    {
+      "sequence": 7,
+      "atUtc": "2026-10-09T02:27:02.081Z",
+      "method": "inventory.lstat.before",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 32052148,
+      "mtimeMs": 1778208951629.3062,
+      "ctimeMs": 1778208951706.9924
+    },
+    {
+      "sequence": 8,
+      "atUtc": "2026-10-09T02:27:02.081Z",
+      "method": "opendir",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images",
+      "ok": true
+    },
+    {
+      "sequence": 9,
+      "atUtc": "2026-10-09T02:27:02.081Z",
+      "method": "inventory.lstat.after",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 32052148,
+      "mtimeMs": 1778208951629.3062,
+      "ctimeMs": 1778208951706.9924
+    },
+    {
+      "sequence": 10,
+      "atUtc": "2026-10-09T02:27:02.089Z",
+      "method": "immediate-directory-inventory",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images",
+      "ok": true,
+      "count": 3,
+      "names": [
+        "Inbox",
+        "bundle",
+        "mnt"
+      ]
+    },
+    {
+      "sequence": 11,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "lstat",
+      "path": "/Library/Developer/CoreSimulator/Images",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 32052143,
+      "mtimeMs": 1791510760877.9177,
+      "ctimeMs": 1791510760877.9177
+    },
+    {
+      "sequence": 12,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "lstat",
+      "path": "/Library/Developer/CoreSimulator/Images/mnt",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 2,
+      "size": 64,
+      "dev": 16777231,
+      "ino": 32052145,
+      "mtimeMs": 1790687894040.7896,
+      "ctimeMs": 1790687894040.7896
+    },
+    {
+      "sequence": 13,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "inventory.lstat.before",
+      "path": "/Library/Developer/CoreSimulator/Images/mnt",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 2,
+      "size": 64,
+      "dev": 16777231,
+      "ino": 32052145,
+      "mtimeMs": 1790687894040.7896,
+      "ctimeMs": 1790687894040.7896
+    },
+    {
+      "sequence": 14,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "opendir",
+      "path": "/Library/Developer/CoreSimulator/Images/mnt",
+      "ok": true
+    },
+    {
+      "sequence": 15,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "inventory.lstat.after",
+      "path": "/Library/Developer/CoreSimulator/Images/mnt",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 2,
+      "size": 64,
+      "dev": 16777231,
+      "ino": 32052145,
+      "mtimeMs": 1790687894040.7896,
+      "ctimeMs": 1790687894040.7896
+    },
+    {
+      "sequence": 16,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "immediate-directory-inventory",
+      "path": "/Library/Developer/CoreSimulator/Images/mnt",
+      "ok": true,
+      "count": 0,
+      "names": []
+    },
+    {
+      "sequence": 17,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "lstat",
+      "path": "/System",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 12,
+      "size": 384,
+      "dev": 16777231,
+      "ino": 1152921500311879700,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "sequence": 18,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "lstat",
+      "path": "/System/Library",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 166,
+      "size": 5312,
+      "dev": 16777231,
+      "ino": 1152921500311918300,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "sequence": 19,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "lstat",
+      "path": "/System/Library/AssetsV2",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 104,
+      "size": 3328,
+      "dev": 16777231,
+      "ino": 121902277,
+      "mtimeMs": 1791506456660.4082,
+      "ctimeMs": 1791506456660.4082
+    },
+    {
+      "sequence": 20,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "lstat",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 6,
+      "size": 192,
+      "dev": 16777231,
+      "ino": 121919045,
+      "mtimeMs": 1791259687801.878,
+      "ctimeMs": 1791259687801.878
+    },
+    {
+      "sequence": 21,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "lstat",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset",
+      "ok": true,
+      "type": "directory",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 122957647,
+      "mtimeMs": 1791254814214.9993,
+      "ctimeMs": 1791255152735.3357
+    },
+    {
+      "sequence": 22,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "inventory.lstat.before",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset",
+      "ok": true,
+      "type": "directory",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 122957647,
+      "mtimeMs": 1791254814214.9993,
+      "ctimeMs": 1791255152735.3357
+    },
+    {
+      "sequence": 23,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "opendir",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset",
+      "ok": true
+    },
+    {
+      "sequence": 24,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "inventory.lstat.after",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset",
+      "ok": true,
+      "type": "directory",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 5,
+      "size": 160,
+      "dev": 16777231,
+      "ino": 122957647,
+      "mtimeMs": 1791254814214.9993,
+      "ctimeMs": 1791255152735.3357
+    },
+    {
+      "sequence": 25,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "immediate-directory-inventory",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset",
+      "ok": true,
+      "count": 3,
+      "names": [
+        "AssetData",
+        "Info.plist",
+        "version.plist"
+      ]
+    },
+    {
+      "sequence": 26,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "lstat",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData",
+      "ok": true,
+      "type": "directory",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 3,
+      "size": 96,
+      "dev": 16777231,
+      "ino": 122957649,
+      "mtimeMs": 1791254477331.523,
+      "ctimeMs": 1791254477331.523
+    },
+    {
+      "sequence": 27,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "inventory.lstat.before",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData",
+      "ok": true,
+      "type": "directory",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 3,
+      "size": 96,
+      "dev": 16777231,
+      "ino": 122957649,
+      "mtimeMs": 1791254477331.523,
+      "ctimeMs": 1791254477331.523
+    },
+    {
+      "sequence": 28,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "opendir",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData",
+      "ok": true
+    },
+    {
+      "sequence": 29,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "inventory.lstat.after",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData",
+      "ok": true,
+      "type": "directory",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 3,
+      "size": 96,
+      "dev": 16777231,
+      "ino": 122957649,
+      "mtimeMs": 1791254477331.523,
+      "ctimeMs": 1791254477331.523
+    },
+    {
+      "sequence": 30,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "immediate-directory-inventory",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData",
+      "ok": true,
+      "count": 1,
+      "names": [
+        "Restore"
+      ]
+    },
+    {
+      "sequence": 31,
+      "atUtc": "2026-10-09T02:27:02.090Z",
+      "method": "lstat",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 4,
+      "size": 128,
+      "dev": 16777231,
+      "ino": 32052150,
+      "mtimeMs": 1791259687155.0815,
+      "ctimeMs": 1791259687155.0815
+    },
+    {
+      "sequence": 32,
+      "atUtc": "2026-10-09T02:27:02.091Z",
+      "method": "inventory.lstat.before",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 4,
+      "size": 128,
+      "dev": 16777231,
+      "ino": 32052150,
+      "mtimeMs": 1791259687155.0815,
+      "ctimeMs": 1791259687155.0815
+    },
+    {
+      "sequence": 33,
+      "atUtc": "2026-10-09T02:27:02.091Z",
+      "method": "opendir",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle",
+      "ok": true
+    },
+    {
+      "sequence": 34,
+      "atUtc": "2026-10-09T02:27:02.091Z",
+      "method": "inventory.lstat.after",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 4,
+      "size": 128,
+      "dev": 16777231,
+      "ino": 32052150,
+      "mtimeMs": 1791259687155.0815,
+      "ctimeMs": 1791259687155.0815
+    },
+    {
+      "sequence": 35,
+      "atUtc": "2026-10-09T02:27:02.091Z",
+      "method": "immediate-directory-inventory",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle",
+      "ok": true,
+      "count": 2,
+      "names": [
+        "SimRuntimeBundle-295A47AD-585D-4F25-875F-CD9B5078FE66",
+        "SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F"
+      ]
+    },
+    {
+      "sequence": 36,
+      "atUtc": "2026-10-09T02:27:02.091Z",
+      "method": "lstat",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle/Library",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/Library/Developer/CoreSimulator/Cryptex/Images/bundle/Library'"
+      }
+    },
+    {
+      "sequence": 37,
+      "atUtc": "2026-10-09T02:27:02.091Z",
+      "method": "lstat",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/Inbox",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 2,
+      "size": 64,
+      "dev": 16777231,
+      "ino": 32052149,
+      "mtimeMs": 1781004447214.7104,
+      "ctimeMs": 1781004447214.7104
+    },
+    {
+      "sequence": 38,
+      "atUtc": "2026-10-09T02:27:02.091Z",
+      "method": "inventory.lstat.before",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/Inbox",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 2,
+      "size": 64,
+      "dev": 16777231,
+      "ino": 32052149,
+      "mtimeMs": 1781004447214.7104,
+      "ctimeMs": 1781004447214.7104
+    },
+    {
+      "sequence": 39,
+      "atUtc": "2026-10-09T02:27:02.091Z",
+      "method": "opendir",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/Inbox",
+      "ok": true
+    },
+    {
+      "sequence": 40,
+      "atUtc": "2026-10-09T02:27:02.091Z",
+      "method": "inventory.lstat.after",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/Inbox",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 2,
+      "size": 64,
+      "dev": 16777231,
+      "ino": 32052149,
+      "mtimeMs": 1781004447214.7104,
+      "ctimeMs": 1781004447214.7104
+    },
+    {
+      "sequence": 41,
+      "atUtc": "2026-10-09T02:27:02.091Z",
+      "method": "immediate-directory-inventory",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/Inbox",
+      "ok": true,
+      "count": 0,
+      "names": []
+    },
+    {
+      "sequence": 42,
+      "atUtc": "2026-10-09T02:27:02.091Z",
+      "method": "lstat",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/Inbox/Library",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/Library/Developer/CoreSimulator/Cryptex/Images/Inbox/Library'"
+      }
+    },
+    {
+      "sequence": 43,
+      "atUtc": "2026-10-09T02:27:02.091Z",
+      "method": "lstat",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/mnt",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 2,
+      "size": 64,
+      "dev": 16777231,
+      "ino": 32052151,
+      "mtimeMs": 1790687887707.864,
+      "ctimeMs": 1790687887707.864
+    },
+    {
+      "sequence": 44,
+      "atUtc": "2026-10-09T02:27:02.091Z",
+      "method": "inventory.lstat.before",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/mnt",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 2,
+      "size": 64,
+      "dev": 16777231,
+      "ino": 32052151,
+      "mtimeMs": 1790687887707.864,
+      "ctimeMs": 1790687887707.864
+    },
+    {
+      "sequence": 45,
+      "atUtc": "2026-10-09T02:27:02.091Z",
+      "method": "opendir",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/mnt",
+      "ok": true
+    },
+    {
+      "sequence": 46,
+      "atUtc": "2026-10-09T02:27:02.091Z",
+      "method": "inventory.lstat.after",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/mnt",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 2,
+      "size": 64,
+      "dev": 16777231,
+      "ino": 32052151,
+      "mtimeMs": 1790687887707.864,
+      "ctimeMs": 1790687887707.864
+    },
+    {
+      "sequence": 47,
+      "atUtc": "2026-10-09T02:27:02.091Z",
+      "method": "immediate-directory-inventory",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/mnt",
+      "ok": true,
+      "count": 0,
+      "names": []
+    },
+    {
+      "sequence": 48,
+      "atUtc": "2026-10-09T02:27:02.091Z",
+      "method": "lstat",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/mnt/Library",
+      "ok": false,
+      "error": {
+        "code": "ENOENT",
+        "syscall": "lstat",
+        "message": "ENOENT: no such file or directory, lstat '/Library/Developer/CoreSimulator/Cryptex/Images/mnt/Library'"
+      }
+    },
+    {
+      "sequence": 49,
+      "atUtc": "2026-10-09T02:27:02.091Z",
+      "method": "lstat",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/Restore",
+      "ok": true,
+      "type": "directory",
+      "uid": 242,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 6,
+      "size": 192,
+      "dev": 16777231,
+      "ino": 122957650,
+      "mtimeMs": 1791254814213.5217,
+      "ctimeMs": 1791254814213.5217
+    },
+    {
+      "sequence": 50,
+      "atUtc": "2026-10-09T02:27:02.092Z",
+      "method": "lstat",
+      "path": "/usr",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 11,
+      "size": 352,
+      "dev": 16777231,
+      "ino": 1152921500312607500,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "sequence": 51,
+      "atUtc": "2026-10-09T02:27:02.092Z",
+      "method": "lstat",
+      "path": "/usr/bin",
+      "ok": true,
+      "type": "directory",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 16877,
+      "nlink": 934,
+      "size": 29888,
+      "dev": 16777231,
+      "ino": 1152921500312607500,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    },
+    {
+      "sequence": 52,
+      "atUtc": "2026-10-09T02:27:02.092Z",
+      "method": "lstat",
+      "path": "/usr/bin/python3",
+      "ok": true,
+      "type": "file",
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "modeBits": 33261,
+      "nlink": 78,
+      "size": 200560,
+      "dev": 16777231,
+      "ino": 1152921500312607500,
+      "mtimeMs": 1790233837000,
+      "ctimeMs": 1790233837000
+    }
+  ],
+  "candidatePaths": [
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/Restore",
+      "basis": "AssetData immediate name/stat only; payload/image bytes not opened.",
+      "kind": "IMMEDIATE_NAME_STAT_ONLY",
+      "followed": false
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/Info.plist",
+      "basis": "Approved asset immediate name only; metadata/payload contents not read in phase3.",
+      "kind": "IMMEDIATE_NAME_ONLY",
+      "followed": false
+    },
+    {
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/version.plist",
+      "basis": "Approved asset immediate name only; metadata/payload contents not read in phase3.",
+      "kind": "IMMEDIATE_NAME_ONLY",
+      "followed": false
+    },
+    {
+      "field": "images.0.sourceURL.relative",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg",
+      "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.0.path.relative",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg",
+      "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/Restore/094-99015-001.dmg",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.0.sourceParentBundleMountURL.relative",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/",
+      "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/AssetData/",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.0.runtimeInfo.bundlePath.relative",
+      "path": "/Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/",
+      "sourceValue": "file:///Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2026.4.simruntime/",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.1.sourceURL.relative",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/",
+      "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.1.path.relative",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/",
+      "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.1.sourceParentBundleMountURL.relative",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/",
+      "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/AssetData/",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.1.runtimeInfo.bundlePath.relative",
+      "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/",
+      "sourceValue": "file:///private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2027.0.simruntime/",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.1.cryptexPersonalizationManifestURL.relative",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Personalization/com_apple_MobileAsset_iOSSimulatorRuntime__3e800c38767f9f2c5fc86acdad7adf44565e051a.asset-24A434-Arm64Only-Customer-Simulator-Runtime.manifest",
+      "sourceValue": "file:///Library/Developer/CoreSimulator/Cryptex/Personalization/com_apple_MobileAsset_iOSSimulatorRuntime__3e800c38767f9f2c5fc86acdad7adf44565e051a.asset-24A434-Arm64Only-Customer-Simulator-Runtime.manifest",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.2.sourceURL.relative",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/Restore/043-19278-100.dmg",
+      "sourceValue": "file:///Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/Restore/043-19278-100.dmg",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.2.path.relative",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/Restore/043-19278-100.dmg",
+      "sourceValue": "file:///Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/Restore/043-19278-100.dmg",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.2.sourceParentBundleImageURL.relative",
+      "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/AssetData/043-18670-100.dmg",
+      "sourceValue": "file:///System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/AssetData/043-18670-100.dmg",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.2.sourceParentBundleMountURL.relative",
+      "path": "/Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/",
+      "sourceValue": "file:///Library/Developer/CoreSimulator/Cryptex/Images/bundle/SimRuntimeBundle-DEC29122-A7BB-4891-827C-AD42F1979D7F/",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    },
+    {
+      "field": "images.2.runtimeInfo.bundlePath.relative",
+      "path": "/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.6.simruntime/",
+      "sourceValue": "file:///Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2018.6.simruntime/",
+      "followed": false,
+      "basis": "Catalog-reported location; not followed.",
+      "kind": "CATALOG_REPORTED_UNVISITED"
+    }
+  ],
+  "liveRows": {
+    "L01": "UNVERIFIED",
+    "L02": "UNVERIFIED",
+    "L03": "UNVERIFIED",
+    "L04": "UNVERIFIED",
+    "L05": "UNVERIFIED"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "observedAtUtc": "2026-10-09T01:58:42.045624+00:00",
+  "userImagePath": "/Users/hugues_mini/Desktop/ScreenShots/Screenshot 2026-10-09 at 8.54.43\u202fAM.png",
+  "preservedImagePath": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/xcode-components.png",
+  "imageSha256": "9345cdb884a2e8c5026ae0a1683449ab35a462f0872583091995e32fc724702c",
+  "visibleFacts": {
+    "section": "Xcode Settings > Components > Platform Support",
+    "entry": "iOS27.0",
+    "size": "8.07GB",
+    "lastUsed": "1day ago",
+    "getButtonShownForIos": false
+  },
+  "boundedInterpretation": "Xcode displays an installed iOS27.0 platform component; this screenshot alone does not establish executable runtime bundle/profile compatibility. Earlier metadata-root negatives cannot be treated as global absence.",
+  "ownerModelReply": "Keep GPT-6.1-Sol xhigh",
+  "soleOperatorTabLeaf": "b0e5a4b6-106b-4dab-a49a-b3933445d4ef:abe2d20e-837b-4e76-bb65-0288efa467bf",
+  "terminalHandle": "term_19640861-824c-4f24-8789-3f584723bc5a",
+  "model": "gpt-6.1-sol",
+  "effort": "xhigh",
+  "RootRole": "coordinator; no device operations",
+  "scope": "Read-only runtime visibility diagnosis; no migration/activation/device dispatch"
+}

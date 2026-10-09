@@ -1,0 +1,202 @@
+{
+  "at": "2026-10-09T03:39:05.679692+00:00",
+  "verdict": "PASS_BOUNDED_PROPOSAL_REVIEW_PROVENANCE",
+  "checks": [
+    {
+      "path": "AGENTS.md",
+      "expected": "86d3e5e2ccba32103401ab95af6b6488fc439d090913b028a7961d07f79a1c47",
+      "actual": "86d3e5e2ccba32103401ab95af6b6488fc439d090913b028a7961d07f79a1c47",
+      "matches": true
+    },
+    {
+      "path": ".scratch/v1-release/map.md",
+      "expected": "b154b9cb08454aa8433f1e8e917e4bef948db48d72b247f60f5b58d837daebaa",
+      "actual": "b154b9cb08454aa8433f1e8e917e4bef948db48d72b247f60f5b58d837daebaa",
+      "matches": true
+    },
+    {
+      "path": "docs/agents/domain.md",
+      "expected": "edc6d6131fdffc4b7135704f5262124fc43355c95f61b7399dc5a4db643e28ca",
+      "actual": "edc6d6131fdffc4b7135704f5262124fc43355c95f61b7399dc5a4db643e28ca",
+      "matches": true
+    },
+    {
+      "path": "GLOSSARY.md",
+      "expected": "a246e0082a15dfd2fa74138473607b9a3c5e3426460f1d43d1d9d154f87ec1c5",
+      "actual": "a246e0082a15dfd2fa74138473607b9a3c5e3426460f1d43d1d9d154f87ec1c5",
+      "matches": true
+    },
+    {
+      "path": "docs/adr/0002-mobilebuildmcp-as-device-layer.md",
+      "expected": "00da2cbba873223976b22b0a26314a6b351b769b4c3f899a97f95334a565abe1",
+      "actual": "00da2cbba873223976b22b0a26314a6b351b769b4c3f899a97f95334a565abe1",
+      "matches": true
+    },
+    {
+      "path": "docs/adr/0008-durable-ios-admission.md",
+      "expected": "53d1111c4dd1e2f36635c89d5695a6356a72e054810d7e3f3e7faf4be194d501",
+      "actual": "53d1111c4dd1e2f36635c89d5695a6356a72e054810d7e3f3e7faf4be194d501",
+      "matches": true
+    },
+    {
+      "path": "docs/adr/0009-bounded-simulator-creation.md",
+      "expected": "f60dae7177255f92e1263c29c6a4433216b80d17ce83bc91dd8a444f687ed384",
+      "actual": "f60dae7177255f92e1263c29c6a4433216b80d17ce83bc91dd8a444f687ed384",
+      "matches": true
+    },
+    {
+      "path": "src/observed/allocation-config.ts",
+      "expected": "b6519649edbaf203e5323a15c80273321a42a5cb49850551297268e6ee1f5f0a",
+      "actual": "b6519649edbaf203e5323a15c80273321a42a5cb49850551297268e6ee1f5f0a",
+      "matches": true
+    },
+    {
+      "path": "src/observed/allocation.ts",
+      "expected": "0233ea8d8d571761596287e9369f7801bd693edfe6d95c459a950e4c3b943041",
+      "actual": "0233ea8d8d571761596287e9369f7801bd693edfe6d95c459a950e4c3b943041",
+      "matches": true
+    },
+    {
+      "path": "src/observed/create-source.ts",
+      "expected": "d13d6e4324be0b534ce32e0057dd0a1ca9654941976ce53dcf17bba530e258b1",
+      "actual": "d13d6e4324be0b534ce32e0057dd0a1ca9654941976ce53dcf17bba530e258b1",
+      "matches": true
+    },
+    {
+      "path": "package.json",
+      "expected": "d2fffea3e28d6ea794536b2cb67337abe8ec75c46cf10c2944ca1b3cd0a3a3ea",
+      "actual": "d2fffea3e28d6ea794536b2cb67337abe8ec75c46cf10c2944ca1b3cd0a3a3ea",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-phase5-retained-mount-derivation.json",
+      "expected": "8260a10fc574d9408078104f348522fa4f50ddc5279dfe16ecf916c1e57b098e",
+      "actual": "8260a10fc574d9408078104f348522fa4f50ddc5279dfe16ecf916c1e57b098e",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase4/result.json",
+      "expected": "acc2e7a0186b762f9c9bd041c003218376af9025790c0f56f7163d56b4b6345f",
+      "actual": "acc2e7a0186b762f9c9bd041c003218376af9025790c0f56f7163d56b4b6345f",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase4/probe.mjs",
+      "expected": "185cc4e7a375e6329fef04b2190a03ec7e2414e034693480032bc332b8fef9ba",
+      "actual": "185cc4e7a375e6329fef04b2190a03ec7e2414e034693480032bc332b8fef9ba",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase4/run.mjs",
+      "expected": "934ee99c13276a26365508471619ebf8a417074baa9225e99d7a1b39aa3f2d0c",
+      "actual": "934ee99c13276a26365508471619ebf8a417074baa9225e99d7a1b39aa3f2d0c",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase4/report.md",
+      "expected": "958a1b508f0ecf7ac00026709d462aeb70179704cb2ab380d5235c3eda8e1ed3",
+      "actual": "958a1b508f0ecf7ac00026709d462aeb70179704cb2ab380d5235c3eda8e1ed3",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase4/artifact-hashes.json",
+      "expected": "6cb619716912f6e9421ba926ab78fb87821823473d04ad6ef2555b655298c17f",
+      "actual": "6cb619716912f6e9421ba926ab78fb87821823473d04ad6ef2555b655298c17f",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/result.json",
+      "expected": "ba076ab50424a7b805a13bcc5d4bbd575d6cfdf728cd6d51ef1540e48ff10215",
+      "actual": "ba076ab50424a7b805a13bcc5d4bbd575d6cfdf728cd6d51ef1540e48ff10215",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/probe.mjs",
+      "expected": "80b33a7c38309fa360b09e141f6400026b46d1ac2e3ae08fcf0bda1d4a36df95",
+      "actual": "80b33a7c38309fa360b09e141f6400026b46d1ac2e3ae08fcf0bda1d4a36df95",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/run.mjs",
+      "expected": "9ccb7d5404801573c1440e2ba4aff10593ab859c2e3e667fda88bc528989a308",
+      "actual": "9ccb7d5404801573c1440e2ba4aff10593ab859c2e3e667fda88bc528989a308",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/report.md",
+      "expected": "452713b3bec77d8f09f6d31ce73d3295fe6b2920412e03ff4674419bbe4de1c6",
+      "actual": "452713b3bec77d8f09f6d31ce73d3295fe6b2920412e03ff4674419bbe4de1c6",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/artifact-hashes.json",
+      "expected": "485ed910a19d3cfe09c3468ddb65b939ba08ee06eb0be7a1bb80c07c47fcea53",
+      "actual": "485ed910a19d3cfe09c3468ddb65b939ba08ee06eb0be7a1bb80c07c47fcea53",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/diskutil-info-output.xml",
+      "expected": "338fdeb495a2a8d58be5e79ed9d2637d64bdbb6c7e9ba552b3aa345a34f2562d",
+      "actual": "338fdeb495a2a8d58be5e79ed9d2637d64bdbb6c7e9ba552b3aa345a34f2562d",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal-v1.md",
+      "expected": "3462b5e6effbc41831332308044e62a1900db1aa5374f00c495d8e3095985e0b",
+      "actual": "3462b5e6effbc41831332308044e62a1900db1aa5374f00c495d8e3095985e0b",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-design-review/completion.json",
+      "expected": "db116dd04e093abcc1b98a4cf206efd3e08978eb202c20685c332f1b9846aea4",
+      "actual": "db116dd04e093abcc1b98a4cf206efd3e08978eb202c20685c332f1b9846aea4",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-design-review/input-hashes.json",
+      "expected": "e1cfd0d0465b8ebc27c79d10116c7fec60e57a84e0ef1a1faedcd9fb2038f2a2",
+      "actual": "e1cfd0d0465b8ebc27c79d10116c7fec60e57a84e0ef1a1faedcd9fb2038f2a2",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-design-review/report-v1.md",
+      "expected": "5e8e6c4f7815c7d9958a4b467d174091ed43acc744c9fa8c8c16963844d93794",
+      "actual": "5e8e6c4f7815c7d9958a4b467d174091ed43acc744c9fa8c8c16963844d93794",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-design-review/report.md",
+      "expected": "050cc88a7a154e959b4071881d0428bc262ab94b64cb8ff694864b2e445f9d34",
+      "actual": "050cc88a7a154e959b4071881d0428bc262ab94b64cb8ff694864b2e445f9d34",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-design-review/round2/input-hashes.json",
+      "expected": "88086123d793f53f955bfb6fce392e3d40c8f4702b095400cd3030b2cc418938",
+      "actual": "88086123d793f53f955bfb6fce392e3d40c8f4702b095400cd3030b2cc418938",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-design-review/round2/report.md",
+      "expected": "045c2b499806d233f78b8cad32d3b07a66e777d09601c284f3abf67fdae387bf",
+      "actual": "045c2b499806d233f78b8cad32d3b07a66e777d09601c284f3abf67fdae387bf",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal.md",
+      "expected": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13",
+      "actual": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal-reviewed-v2.md",
+      "expected": "216b03469ed8107750ab947e636978fb91cdd3e673691fe72213d990dd37748e",
+      "actual": "216b03469ed8107750ab947e636978fb91cdd3e673691fe72213d990dd37748e",
+      "matches": true
+    }
+  ],
+  "reportRead": true,
+  "nativeQueries": 0,
+  "testsOrBuilds": 0,
+  "scope": "Proposal review only; independent implementation reviews and repaired installed gates remain required."
+}

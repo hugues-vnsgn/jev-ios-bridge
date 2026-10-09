@@ -1,0 +1,37 @@
+{
+  "capturedAtUtc": "2026-10-09T02:52:38.262Z",
+  "runtimeBundle": {
+    "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime",
+    "status": "DIRECT_METADATA_OBSERVED",
+    "candidateCorrespondence": {
+      "status": "MATCHED_EXPECTED_RECORD",
+      "candidateFileSha256": "8ac7edcc956f5cfdcbf3e511b776434699dacfd229f7d0bfbe2108dd831bd29d",
+      "catalogFileSha256": "9eb9df2ee598242ec1f9dd65acd6d9b07083c6317fac9f3163b34d07c8563e4c",
+      "catalogInputSha256": "08fca67bd717824e0d532b373eabfc2b7aa8329453c7ca7272040c425bc196d1",
+      "uuid": "8BD8CF0F-622F-4F00-84B2-D803DD15EDE1",
+      "runtimeId": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+      "build": "24A434",
+      "supportedArchitectures": [
+        "arm64"
+      ],
+      "catalogURL": "file:///private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2027.0.simruntime/",
+      "bundle": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime"
+    }
+  },
+  "unparsedMetadataCandidates": [
+    {
+      "path": "/Applications/Xcode.app/Contents/Info.plist",
+      "reason": "CONVERSION_OUTPUT_CAP",
+      "stableRawSha256": "537783b4c639af6ee31208fe2ec12a40bacbb0fc8f5dd2820f54e03063c4dbe8",
+      "requiresNewRootDispatch": true
+    }
+  ],
+  "automaticallyFollowedAlternativeCandidates": [],
+  "liveRows": {
+    "L01": "UNVERIFIED",
+    "L02": "UNVERIFIED",
+    "L03": "UNVERIFIED",
+    "L04": "UNVERIFIED",
+    "L05": "UNVERIFIED"
+  }
+}

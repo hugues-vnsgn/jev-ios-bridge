@@ -1,0 +1,33 @@
+{
+  "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+  "scope": "Read-only design review of repository source and retained artifacts; no native/system metadata, device/backend, stores, tests/builds or source mutations.",
+  "skills": [
+    "codebase-design",
+    "when-stuck inversion",
+    "writing-for-agents",
+    "unslop"
+  ],
+  "register": "Reference",
+  "beforeWords": 368,
+  "afterWords": 351,
+  "checker": {
+    "strictBefore": 5,
+    "candidateBefore": 0,
+    "strictAfter": 0,
+    "candidateAfter": 0
+  },
+  "fixed": [
+    "Use ASCII punctuation in technical prose.",
+    "Replace superseded original proposal findings with remaining specifications after Root revision."
+  ],
+  "leftAlone": [
+    "Paths, identifiers, command names, hashes and quoted key names retain their technical meaning."
+  ],
+  "flaggedNotChanged": [
+    "Owner daemon-namespace decision pending.",
+    "ACL/effective writers, production compatibility, SIP and atomic path pinning unverified.",
+    "Parser selection, exact name grammar, aggregate count limits and hard termination need implementation specifications."
+  ],
+  "allRecordedInputsUnchanged": true,
+  "reportSha256": "050cc88a7a154e959b4071881d0428bc262ab94b64cb8ff694864b2e445f9d34"
+}

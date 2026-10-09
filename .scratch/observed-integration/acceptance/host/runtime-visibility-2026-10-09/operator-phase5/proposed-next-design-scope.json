@@ -1,0 +1,47 @@
+{
+  "capturedAtUtc": "2026-10-09T03:12:50.104Z",
+  "proposedDesignScopeOnly": true,
+  "implementationPerformed": false,
+  "rootOwnsNextDispatch": true,
+  "scope": [
+    {
+      "id": "EXACT_MOUNT_METADATA_INTERPRETATION",
+      "evidence": "diskutil-info-output.xml and stable target receipts are complete; the sole approved installed XML plist package was unavailable.",
+      "proposal": "Root can review saved bounded XML or authorize a finite in-memory parser design for this existing output, without rerunning diskutil or following returned devices/paths.",
+      "limit": "Exact MountPoint and explicit writable/read-only fields must correspond to this candidate. No read-only conclusion follows from device number or catalog state."
+    },
+    {
+      "id": "BOUNDED_XCODE_OUTPUT_BUDGET",
+      "evidence": {
+        "inputBytes": 34501,
+        "completeJSONBytes": 77555,
+        "completeJSONSha256": "3b78d94ef7ee6f9ab11db94a9b3aa2513c77668ff00fa3227a7a12186ac32d33",
+        "metadataPredicates": "MATCH"
+      },
+      "proposal": "Separately review a finite metadata output budget or bounded extraction for the fixed Xcode Info path. Keep fatal overflow, bounded input/stability and credential-free children; review both process and installedPlist limits together.",
+      "anchors": [
+        "src/observed/allocation-config.ts:99",
+        "src/observed/allocation-config.ts:121",
+        "src/observed/allocation-config.ts:150"
+      ],
+      "limit": "Current production65536-byte ceiling remains in force; phase5 diagnostic budget does not change it."
+    },
+    {
+      "id": "FINITE_CRYPTEX_DISCOVERY_PROCESS_TRUST",
+      "evidence": "Accepted phase4 direct runtime metadata, phase5 exact mount/namespace/leaf stats and unchanged production root/metadata allowlists.",
+      "proposal": "Root defines reviewed discovery and child-authorization coverage plus a distinct trust strategy for the exact Cryptex candidate and writable ancestors. Preserve single-runtime identity, finite roots, no symlinks, stable files and rejection on uncertain mount correspondence.",
+      "limit": "A read-only mount alone does not establish atomic protection of writable ancestors or hostile-admin safety. All observed flags0/- supply no policy approval; owner trust remains ONLY exact /Applications."
+    }
+  ],
+  "allocationsRetained": true,
+  "repairsIntegratedOrUsed": false,
+  "compatibilityCalled": false,
+  "liveRows": {
+    "L01": "UNVERIFIED",
+    "L02": "UNVERIFIED",
+    "L03": "UNVERIFIED",
+    "L04": "UNVERIFIED",
+    "L05": "UNVERIFIED"
+  },
+  "disposition": "IDLE"
+}

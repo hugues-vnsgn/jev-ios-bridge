@@ -1,0 +1,1094 @@
+{
+  "atUtc": "2026-10-09T03:27:43.410714+00:00",
+  "reviewer": "/root/installed_path_spec_review",
+  "role": "Independent nonauthor Spec review; no test/build/native/device command executed",
+  "base": "4004ece782fc9448607605bfe3a54702f8622bb0",
+  "candidate": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+  "mergeBase": "4004ece782fc9448607605bfe3a54702f8622bb0",
+  "head": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+  "changedFiles": [
+    "src/observed/allocation-config.ts",
+    "tests/observed-allocation-config.test.ts"
+  ],
+  "ownedHashes": {
+    "src/observed/allocation-config.ts": "cbf94978d97a8e1b2c9413f83a7fa75decdf9c2f40a325ee77b5c2c895fce69d",
+    "tests/observed-allocation-config.test.ts": "f92cd1d0e9ddd93e3c8b1dc04de7ffd4f84fd2c9f65f3055858210fd2949fb66"
+  },
+  "ownedCommittedHashes": {
+    "src/observed/allocation-config.ts": "cbf94978d97a8e1b2c9413f83a7fa75decdf9c2f40a325ee77b5c2c895fce69d",
+    "tests/observed-allocation-config.test.ts": "f92cd1d0e9ddd93e3c8b1dc04de7ffd4f84fd2c9f65f3055858210fd2949fb66"
+  },
+  "protected435Match": true,
+  "current437Match": true,
+  "compiled68Match": true,
+  "compiledManifests": {
+    "compiled-node26.json": {
+      "count": 68,
+      "matchesLedger": true
+    },
+    "compiled-node24.json": {
+      "count": 68,
+      "matchesLedger": true
+    },
+    "compiled-after-full-node26.json": {
+      "count": 68,
+      "matchesLedger": true
+    },
+    "compiled-after-full-node24.json": {
+      "count": 68,
+      "matchesLedger": true
+    }
+  },
+  "receiptRawHashChecks": 81,
+  "checks": {
+    "node26-version": {
+      "hashes": {
+        "receipt": "581b7db8081dad168128fc4cb1482944944cc14848e82efe78f9991f5c90734d",
+        "stdout": "bd17489adcddbc8ed526bf6dedb22de2e677bbae176b977aa7f7c0408999248c",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--version"
+      ],
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": null,
+        "pass": null,
+        "fail": null,
+        "cancelled": null,
+        "skipped": null,
+        "todo": null
+      },
+      "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {},
+      "startUtc": "2026-10-09T02:48:20.800587+00:00",
+      "endUtc": "2026-10-09T02:48:20.916681+00:00"
+    },
+    "node24-version": {
+      "hashes": {
+        "receipt": "a48d3a9efc2dd2f1e9119bdf13e048a66d50b3a03e8f5a4827f8777e8cd03193",
+        "stdout": "b988e13140652de941a9a3fab325102625f646ec6fde3a7b8a8af63496a74061",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--version"
+      ],
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": null,
+        "pass": null,
+        "fail": null,
+        "cancelled": null,
+        "skipped": null,
+        "todo": null
+      },
+      "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {},
+      "startUtc": "2026-10-09T02:48:20.800557+00:00",
+      "endUtc": "2026-10-09T02:48:21.033561+00:00"
+    },
+    "npm-version": {
+      "hashes": {
+        "receipt": "ea57c9cf097d33181fd08998dbed456234aa1642b3de8e3db0f8a8461f0d298e",
+        "stdout": "005206ab803f8881d8227540b7980b37e723b69a8849edb31734a90b7e7964e2",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "npm",
+        "--version"
+      ],
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": null,
+        "pass": null,
+        "fail": null,
+        "cancelled": null,
+        "skipped": null,
+        "todo": null
+      },
+      "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {},
+      "startUtc": "2026-10-09T02:48:20.800596+00:00",
+      "endUtc": "2026-10-09T02:48:21.019722+00:00"
+    },
+    "setup-npm-ci": {
+      "hashes": {
+        "receipt": "adabbdddce41fb2aa9737e14dab04e019d47b526ef05d9bf3d36798e9f2ce7f1",
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr": "250e369d730a46c4d41df37449a5c58c169b4b1d2ab546951a8bed0285805a95"
+      },
+      "argv": [
+        "npm",
+        "ci",
+        "--ignore-scripts",
+        "--userconfig=/dev/null",
+        "--globalconfig=/dev/null",
+        "--registry=https://registry.npmjs.org",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exitCode": 1,
+      "countsFromRaw": {
+        "tests": null,
+        "pass": null,
+        "fail": null,
+        "cancelled": null,
+        "skipped": null,
+        "todo": null
+      },
+      "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {},
+      "startUtc": "2026-10-09T02:48:33.469756+00:00",
+      "endUtc": "2026-10-09T02:48:33.610403+00:00"
+    },
+    "setup-npm-ci-retry": {
+      "hashes": {
+        "receipt": "fee1b134382439cf24d838fd02e2593f3231a9054339f4db219b5d06fcd17421",
+        "stdout": "f872b59adcee32839892dba71882b03705ffde94eafa0a23bb88f656ffe384b0",
+        "stderr": "e49b794cae6663ada86efea1579a0381251a5d4d1ff9b0cefed3e5622b21317d"
+      },
+      "argv": [
+        "npm",
+        "ci",
+        "--ignore-scripts",
+        "--userconfig=.scratch/installed-xcode-path-policy/npm-userconfig",
+        "--globalconfig=.scratch/installed-xcode-path-policy/npm-globalconfig",
+        "--registry=https://registry.npmjs.org",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": null,
+        "pass": null,
+        "fail": null,
+        "cancelled": null,
+        "skipped": null,
+        "todo": null
+      },
+      "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {},
+      "startUtc": "2026-10-09T02:48:53.752292+00:00",
+      "endUtc": "2026-10-09T02:48:56.302335+00:00"
+    },
+    "policy-red-node26": {
+      "hashes": {
+        "receipt": "9b39476a7db6c3b3b7082319ee451ff8e0731e8176316377b2a90891dd205056",
+        "stdout": "9a609f65ec8162008dcd6b33a4d7016eb42123f2756dc3d53a4e113e97350000",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-reporter=tap",
+        "--test-name-pattern=^installed Xcode ancestor policy accepts",
+        "tests/observed-allocation-config.test.ts"
+      ],
+      "exitCode": 1,
+      "countsFromRaw": {
+        "tests": 1,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {},
+      "startUtc": "2026-10-09T02:50:08.581525+00:00",
+      "endUtc": "2026-10-09T02:50:09.346756+00:00"
+    },
+    "policy-red-node24": {
+      "hashes": {
+        "receipt": "ab148844c5a9755b1b76cb3580b20bcc8304bf94196e9c5bf5337203e0c0d851",
+        "stdout": "c1d911d4c92006c23958b200b83ac4b84b7e87b138524eebbabf9c4e0ee9b799",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-reporter=tap",
+        "--test-name-pattern=^installed Xcode ancestor policy accepts",
+        "tests/observed-allocation-config.test.ts"
+      ],
+      "exitCode": 1,
+      "countsFromRaw": {
+        "tests": 1,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {},
+      "startUtc": "2026-10-09T02:50:23.831606+00:00",
+      "endUtc": "2026-10-09T02:50:24.170515+00:00"
+    },
+    "policy-green-node26": {
+      "hashes": {
+        "receipt": "ef9dcd7fd80025e7be9b78cac742634e435ee760a51fbf653cdaa816323c18e4",
+        "stdout": "11b2640060734533150fe32c791b9b91cbc17e5fc3f65f407c57d5611beffa4c",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-reporter=tap",
+        "--test-name-pattern=^installed Xcode ancestor policy accepts",
+        "tests/observed-allocation-config.test.ts"
+      ],
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {},
+      "startUtc": "2026-10-09T02:50:44.892656+00:00",
+      "endUtc": "2026-10-09T02:50:45.219085+00:00"
+    },
+    "fresh-leaf-red-node26": {
+      "hashes": {
+        "receipt": "1ba66f4c1e209a6bf06ed56f2a0635833c08ad3c1dce8aaeab12aa2513839bf3",
+        "stdout": "dc1e4d896ed8986f086e3122aed101e3bb87ec3590645393b989edc719913950",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-reporter=tap",
+        "--test-name-pattern=^installed fresh leaf",
+        "tests/observed-allocation-config.test.ts"
+      ],
+      "exitCode": 1,
+      "countsFromRaw": {
+        "tests": 10,
+        "pass": 4,
+        "fail": 6,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {},
+      "startUtc": "2026-10-09T02:51:34.838935+00:00",
+      "endUtc": "2026-10-09T02:51:35.398427+00:00"
+    },
+    "fresh-leaf-red-node24": {
+      "hashes": {
+        "receipt": "b799c0b10fc093802f3f91109eef47356bfebcdde4135e6cd24abef4e4da5127",
+        "stdout": "99c48fac7f86ff231ac3f6bd3fa641085a17fb93ed31f43af64942a317bec29c",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-reporter=tap",
+        "--test-name-pattern=^installed fresh leaf",
+        "tests/observed-allocation-config.test.ts"
+      ],
+      "exitCode": 1,
+      "countsFromRaw": {
+        "tests": 10,
+        "pass": 4,
+        "fail": 6,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {},
+      "startUtc": "2026-10-09T02:51:46.388789+00:00",
+      "endUtc": "2026-10-09T02:51:46.997323+00:00"
+    },
+    "fresh-leaf-green-node26": {
+      "hashes": {
+        "receipt": "3e92715daf363813c3c23b7c192b5ff061340a063d63065812afe5170194217e",
+        "stdout": "1b40df2f704143d587b09983564ae82f461022c156f5d78dd9d75a5b334e8ed9",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-reporter=tap",
+        "--test-name-pattern=^installed fresh leaf",
+        "tests/observed-allocation-config.test.ts"
+      ],
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": 10,
+        "pass": 10,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {},
+      "startUtc": "2026-10-09T02:52:05.709992+00:00",
+      "endUtc": "2026-10-09T02:52:06.148480+00:00"
+    },
+    "focused-candidate-node26": {
+      "hashes": {
+        "receipt": "6733aaa43bfc22b95779620150e68289a47770e6b0dbee2fb2c94de051ec3106",
+        "stdout": "221f147f36da1a9172ed2d1939f50659cc4585cdc2f76a8d0cba2c9b29c5d8e9",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-reporter=tap",
+        "tests/observed-allocation-config.test.ts"
+      ],
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": 78,
+        "pass": 78,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {
+        "sourceBefore": {
+          "count": 430,
+          "ownedMatch": true,
+          "protectedMatch": false
+        },
+        "sourceAfter": {
+          "count": 430,
+          "ownedMatch": true,
+          "protectedMatch": false
+        }
+      },
+      "startUtc": "2026-10-09T02:54:23.351985+00:00",
+      "endUtc": "2026-10-09T02:54:25.895315+00:00"
+    },
+    "frozen-focused-node26": {
+      "hashes": {
+        "receipt": "e200bcd7ded05b9451f487b07b798e20b2f0de12f4aef09afb844afd415adc5c",
+        "stdout": "a17ba4a4e626f15780881b7b102b00c453a2ab226be268820b45f21eafbfb2b1",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-reporter=tap",
+        "tests/observed-allocation-config.test.ts"
+      ],
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": 78,
+        "pass": 78,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {
+        "sourceBefore": {
+          "count": 430,
+          "ownedMatch": true,
+          "protectedMatch": false
+        },
+        "sourceAfter": {
+          "count": 430,
+          "ownedMatch": true,
+          "protectedMatch": false
+        }
+      },
+      "startUtc": "2026-10-09T02:55:14.681368+00:00",
+      "endUtc": "2026-10-09T02:55:17.138372+00:00"
+    },
+    "frozen-focused-node24": {
+      "hashes": {
+        "receipt": "58d012eef471626622d5588069f43dda8df32ef26242111147102f8defd80b93",
+        "stdout": "65c0828c110e17067bfd8d34435c1dd676efdb0ce489f0a46bbe9f7eb5074c41",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-reporter=tap",
+        "tests/observed-allocation-config.test.ts"
+      ],
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": 78,
+        "pass": 78,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {
+        "sourceBefore": {
+          "count": 430,
+          "ownedMatch": true,
+          "protectedMatch": false
+        },
+        "sourceAfter": {
+          "count": 430,
+          "ownedMatch": true,
+          "protectedMatch": false
+        }
+      },
+      "startUtc": "2026-10-09T02:55:25.897801+00:00",
+      "endUtc": "2026-10-09T02:55:29.101261+00:00"
+    },
+    "frozen-typecheck-node26": {
+      "hashes": {
+        "receipt": "421b83c59652f4f9ca8d96c0ae37fae057563a6d04e011d1fac52572cac9de18",
+        "stdout": "a5f26a123d51067a484f97018e93e9514bb2902f7ffbcecb9d2baba69d5b928a",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "/opt/homebrew/bin/npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": null,
+        "pass": null,
+        "fail": null,
+        "cancelled": null,
+        "skipped": null,
+        "todo": null
+      },
+      "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {
+        "sourceBefore": {
+          "count": 430,
+          "ownedMatch": true,
+          "protectedMatch": false
+        },
+        "sourceAfter": {
+          "count": 430,
+          "ownedMatch": true,
+          "protectedMatch": false
+        }
+      },
+      "startUtc": "2026-10-09T02:55:44.056898+00:00",
+      "endUtc": "2026-10-09T02:55:45.172141+00:00"
+    },
+    "frozen-build-node26": {
+      "hashes": {
+        "receipt": "75ab19927d559b0063f92538398ea5aaf0ec5af4a043617a029e7d49d73006c4",
+        "stdout": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "/opt/homebrew/bin/npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": null,
+        "pass": null,
+        "fail": null,
+        "cancelled": null,
+        "skipped": null,
+        "todo": null
+      },
+      "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {
+        "sourceBefore": {
+          "count": 430,
+          "ownedMatch": true,
+          "protectedMatch": false
+        },
+        "sourceAfter": {
+          "count": 430,
+          "ownedMatch": true,
+          "protectedMatch": false
+        }
+      },
+      "startUtc": "2026-10-09T02:55:51.041051+00:00",
+      "endUtc": "2026-10-09T02:55:51.365047+00:00"
+    },
+    "frozen-typecheck-node24": {
+      "hashes": {
+        "receipt": "d65945f94fb45b43c1773e52844c0bb7a26fa46b68349f236e9efa867db03a1f",
+        "stdout": "a5f26a123d51067a484f97018e93e9514bb2902f7ffbcecb9d2baba69d5b928a",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "/opt/homebrew/bin/npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": null,
+        "pass": null,
+        "fail": null,
+        "cancelled": null,
+        "skipped": null,
+        "todo": null
+      },
+      "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {
+        "sourceBefore": {
+          "count": 430,
+          "ownedMatch": true,
+          "protectedMatch": false
+        },
+        "sourceAfter": {
+          "count": 430,
+          "ownedMatch": true,
+          "protectedMatch": false
+        }
+      },
+      "startUtc": "2026-10-09T02:56:03.166256+00:00",
+      "endUtc": "2026-10-09T02:56:03.802349+00:00"
+    },
+    "frozen-build-node24": {
+      "hashes": {
+        "receipt": "232a3bb46f61afe8dc5764c55a368308d96ebde2f269ebb3f26d7f7a4fad13fd",
+        "stdout": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "/opt/homebrew/bin/npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": null,
+        "pass": null,
+        "fail": null,
+        "cancelled": null,
+        "skipped": null,
+        "todo": null
+      },
+      "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {
+        "sourceBefore": {
+          "count": 430,
+          "ownedMatch": true,
+          "protectedMatch": false
+        },
+        "sourceAfter": {
+          "count": 430,
+          "ownedMatch": true,
+          "protectedMatch": false
+        }
+      },
+      "startUtc": "2026-10-09T02:56:15.941693+00:00",
+      "endUtc": "2026-10-09T02:56:16.310249+00:00"
+    },
+    "focused-commit": {
+      "hashes": {
+        "receipt": "8e07b5babe1e37f987d4325b6f469e90b44ad04d613af680d0d707ad32c7cac7",
+        "stdout": "76d34335295038d256a5260f01f2cfb1000886233d62cc43c63660e3b11fb980",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "git",
+        "commit",
+        "-m",
+        "fix: trust canonical Applications ancestor for installed Xcode"
+      ],
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": null,
+        "pass": null,
+        "fail": null,
+        "cancelled": null,
+        "skipped": null,
+        "todo": null
+      },
+      "head": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {
+        "sourceBefore": {
+          "count": 437,
+          "ownedMatch": true,
+          "protectedMatch": true
+        },
+        "sourceAfter": {
+          "count": 437,
+          "ownedMatch": true,
+          "protectedMatch": true
+        }
+      },
+      "startUtc": "2026-10-09T02:57:44.446476+00:00",
+      "endUtc": "2026-10-09T02:57:44.585662+00:00"
+    },
+    "owned-coverage-node26": {
+      "hashes": {
+        "receipt": "b7b6869fdf2698bbe78e99c424ec520c01f211121f7dd168e0f57b3ec076bf7e",
+        "stdout": "922cf319220a7972561049b847b64a7d50608386b6f9ffec34a83e7a3ab45a67",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--experimental-test-coverage",
+        "--test-coverage-include=**/src/observed/allocation-config.ts",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-reporter=tap",
+        "tests/observed-allocation-config.test.ts"
+      ],
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": 78,
+        "pass": 78,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "head": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {
+        "sourceBefore": {
+          "count": 437,
+          "ownedMatch": true,
+          "protectedMatch": true
+        },
+        "sourceAfter": {
+          "count": 437,
+          "ownedMatch": true,
+          "protectedMatch": true
+        }
+      },
+      "startUtc": "2026-10-09T02:58:07.236274+00:00",
+      "endUtc": "2026-10-09T02:58:09.978249+00:00"
+    },
+    "full-check-node26": {
+      "hashes": {
+        "receipt": "47a1a6fa671307cf3ed4c43b3008a0bf6b6fb89e018d72a6bb9be20a1dcf913e",
+        "stdout": "8f51839ec9a0fb410605933051edc9457c8667e65122392150c1e02aa9219039",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "/opt/homebrew/bin/npm",
+        "run",
+        "check"
+      ],
+      "exitCode": 1,
+      "countsFromRaw": {
+        "tests": 1723,
+        "pass": 1719,
+        "fail": 4,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "head": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {
+        "sourceBefore": {
+          "count": 437,
+          "ownedMatch": true,
+          "protectedMatch": true
+        },
+        "sourceAfter": {
+          "count": 437,
+          "ownedMatch": true,
+          "protectedMatch": true
+        }
+      },
+      "startUtc": "2026-10-09T02:58:54.668855+00:00",
+      "endUtc": "2026-10-09T03:01:18.796817+00:00"
+    },
+    "umask077-repro-node26": {
+      "hashes": {
+        "receipt": "36a90ed08b18a0286648ddfb19fe947d1b1e1885f6ee37906d580aa45b31670b",
+        "stdout": "4f0aba77da0fd13095a4f74ca9659dcafaed047294586f2ebd4df2d44f3f24e7",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-reporter=tap",
+        "--test-name-pattern=unsafe SQLite.*permissions|root separation and destination safety",
+        "tests/admission-core.test.ts",
+        "tests/admission-migration.test.ts"
+      ],
+      "exitCode": 1,
+      "countsFromRaw": {
+        "tests": 4,
+        "pass": 0,
+        "fail": 4,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "head": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": null,
+      "sourceMaps": {
+        "sourceBefore": {
+          "count": 437,
+          "ownedMatch": true,
+          "protectedMatch": true
+        },
+        "sourceAfter": {
+          "count": 437,
+          "ownedMatch": true,
+          "protectedMatch": true
+        }
+      },
+      "startUtc": "2026-10-09T03:02:31.862449+00:00",
+      "endUtc": "2026-10-09T03:02:32.137678+00:00"
+    },
+    "umask022-repro-node26": {
+      "hashes": {
+        "receipt": "f5aa7fdde9d32e398ac264bc47609b9ac4022e8ae41c393b421d34f3dd4eaf69",
+        "stdout": "84250509e85cb637528344a70352a9040b9a775568e9ec760d14e1f24705c5c2",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-reporter=tap",
+        "--test-name-pattern=unsafe SQLite.*permissions|root separation and destination safety",
+        "tests/admission-core.test.ts",
+        "tests/admission-migration.test.ts"
+      ],
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": 4,
+        "pass": 4,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "head": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": "022",
+      "sourceMaps": {
+        "sourceBefore": {
+          "count": 437,
+          "ownedMatch": true,
+          "protectedMatch": true
+        },
+        "sourceAfter": {
+          "count": 437,
+          "ownedMatch": true,
+          "protectedMatch": true
+        }
+      },
+      "startUtc": "2026-10-09T03:02:42.711618+00:00",
+      "endUtc": "2026-10-09T03:02:42.944533+00:00"
+    },
+    "full-check-node26-umask022": {
+      "hashes": {
+        "receipt": "793ebda5d3eaa2942de414393b7d1162abd80e486926ee42dcba34958fcba403",
+        "stdout": "f5b7f545e1fcca9a195fc9eb98e25436e06f16a9598a46ab0a839293a3fd8ef6",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "/opt/homebrew/bin/npm",
+        "run",
+        "check"
+      ],
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": 1723,
+        "pass": 1723,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "head": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": "022",
+      "sourceMaps": {
+        "sourceBefore": {
+          "count": 437,
+          "ownedMatch": true,
+          "protectedMatch": true
+        },
+        "sourceAfter": {
+          "count": 437,
+          "ownedMatch": true,
+          "protectedMatch": true
+        }
+      },
+      "startUtc": "2026-10-09T03:03:24.813818+00:00",
+      "endUtc": "2026-10-09T03:05:46.419997+00:00"
+    },
+    "full-check-node24-umask022": {
+      "hashes": {
+        "receipt": "3483c8bda8833048a12c3d9ff24058187601f4c9178680b8641165e41f6a71aa",
+        "stdout": "def1d3e496d03bc34fb188dce9250ecb142047a89f0e4546044e8f370f7d0d8d",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "/opt/homebrew/bin/npm",
+        "run",
+        "check"
+      ],
+      "exitCode": 1,
+      "countsFromRaw": {
+        "tests": 1723,
+        "pass": 1720,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "head": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": "022",
+      "sourceMaps": {
+        "sourceBefore": {
+          "count": 437,
+          "ownedMatch": true,
+          "protectedMatch": true
+        },
+        "sourceAfter": {
+          "count": 437,
+          "ownedMatch": true,
+          "protectedMatch": true
+        }
+      },
+      "startUtc": "2026-10-09T03:05:57.838198+00:00",
+      "endUtc": "2026-10-09T03:08:33.280732+00:00"
+    },
+    "three-failures-node24": {
+      "hashes": {
+        "receipt": "01e2220e8b41aefe0105a638e8b68ce166bab4449913e971bb90c92e19a2b2fb",
+        "stdout": "332ecdcce529b083675fd224ce8da38f186731aab70f2b5a582568169168df66",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-reporter=tap",
+        "--test-name-pattern=^parked preparation exits normally then two new processes yield one action driver attachment$|^H06[.]02 cli killed public action owner at evidence:terminal:1$|^H05[.]01 cli durable external preparation cancel at backend:list:2 fences successors$",
+        "tests/admission-allocation.test.ts",
+        "tests/observed-crash.test.ts",
+        "tests/observed-public-races.test.ts"
+      ],
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": 3,
+        "pass": 3,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "head": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": "022",
+      "sourceMaps": {
+        "sourceBefore": {
+          "count": 437,
+          "ownedMatch": true,
+          "protectedMatch": true
+        },
+        "sourceAfter": {
+          "count": 437,
+          "ownedMatch": true,
+          "protectedMatch": true
+        }
+      },
+      "startUtc": "2026-10-09T03:12:00.337081+00:00",
+      "endUtc": "2026-10-09T03:12:02.109065+00:00"
+    },
+    "full-check-node24-umask022-recheck": {
+      "hashes": {
+        "receipt": "3c9bd4c182dd930b91fa2a5dacb0276bed370cf34af938d7fed774610eebac37",
+        "stdout": "067a145dbd44489246d17adce169e56d0e6e9c88b14b8b2a14b9b056a13dde6b",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "/opt/homebrew/bin/npm",
+        "run",
+        "check"
+      ],
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": 1723,
+        "pass": 1723,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "head": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy",
+      "childUmask": "022",
+      "sourceMaps": {
+        "sourceBefore": {
+          "count": 437,
+          "ownedMatch": true,
+          "protectedMatch": true
+        },
+        "sourceAfter": {
+          "count": 437,
+          "ownedMatch": true,
+          "protectedMatch": true
+        }
+      },
+      "startUtc": "2026-10-09T03:16:22.061349+00:00",
+      "endUtc": "2026-10-09T03:18:43.276161+00:00"
+    }
+  },
+  "errors": [
+    [
+      "focused-candidate-node26",
+      "sourceBefore",
+      "frozen source mismatch"
+    ],
+    [
+      "focused-candidate-node26",
+      "sourceAfter",
+      "frozen source mismatch"
+    ],
+    [
+      "frozen-focused-node26",
+      "sourceBefore",
+      "frozen source mismatch"
+    ],
+    [
+      "frozen-focused-node26",
+      "sourceAfter",
+      "frozen source mismatch"
+    ],
+    [
+      "frozen-focused-node24",
+      "sourceBefore",
+      "frozen source mismatch"
+    ],
+    [
+      "frozen-focused-node24",
+      "sourceAfter",
+      "frozen source mismatch"
+    ],
+    [
+      "frozen-typecheck-node26",
+      "sourceBefore",
+      "frozen source mismatch"
+    ],
+    [
+      "frozen-typecheck-node26",
+      "sourceAfter",
+      "frozen source mismatch"
+    ],
+    [
+      "frozen-build-node26",
+      "sourceBefore",
+      "frozen source mismatch"
+    ],
+    [
+      "frozen-build-node26",
+      "sourceAfter",
+      "frozen source mismatch"
+    ],
+    [
+      "frozen-typecheck-node24",
+      "sourceBefore",
+      "frozen source mismatch"
+    ],
+    [
+      "frozen-typecheck-node24",
+      "sourceAfter",
+      "frozen source mismatch"
+    ],
+    [
+      "frozen-build-node24",
+      "sourceBefore",
+      "frozen source mismatch"
+    ],
+    [
+      "frozen-build-node24",
+      "sourceAfter",
+      "frozen source mismatch"
+    ]
+  ],
+  "hardFindings": [],
+  "specVerdict": "UNVERIFIED"
+}

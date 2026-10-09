@@ -1,0 +1,145 @@
+{
+  "scope": "Sanitized exact receipts for the four allowed read-only plutil children; no other metadata child command.",
+  "children": [
+    {
+      "argv": [
+        "/usr/bin/plutil",
+        "-convert",
+        "json",
+        "-o",
+        "-",
+        "--",
+        "/Library/Developer/CoreSimulator/Images/images.plist"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+      "startedAt": "2026-10-09T02:18:01.244Z",
+      "environment": {
+        "HOME": "/Users/hugues_mini",
+        "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "shell": false,
+      "stdin": "ignored",
+      "exitCode": 1,
+      "signal": null,
+      "completedAt": "2026-10-09T02:18:01.252Z",
+      "timedOut": false,
+      "overflow": false,
+      "error": null,
+      "stdout": "",
+      "stderr": "<REDACTED_NONEMPTY_STDERR>",
+      "stdoutOriginalBytes": 0,
+      "stderrOriginalBytes": 94,
+      "stdoutOriginalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrOriginalSha256": "236d02c41551d326d5f398257254398e8186acfd6b9d8f131ef8a648e751e47b",
+      "redaction": "Credential/token/auth/session fields and credential-bearing URL parts redacted recursively; unparsed stdout/nonempty stderr withheld."
+    },
+    {
+      "argv": [
+        "/usr/bin/plutil",
+        "-convert",
+        "json",
+        "-o",
+        "-",
+        "--",
+        "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/Info.plist"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+      "startedAt": "2026-10-09T02:18:01.253Z",
+      "environment": {
+        "HOME": "/Users/hugues_mini",
+        "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "shell": false,
+      "stdin": "ignored",
+      "exitCode": 0,
+      "signal": null,
+      "completedAt": "2026-10-09T02:18:01.257Z",
+      "timedOut": false,
+      "overflow": false,
+      "error": null,
+      "stdout": "{\n  \"CFBundleShortVersionString\": \"1.0.0\",\n  \"CFBundleIdentifier\": \"com.apple.MobileAsset.iOSSimulatorRuntime\",\n  \"MobileAssetProperties\": {\n    \"__AssetDefaultGarbageCollectionBehavior\": \"NeverCollected\",\n    \"Build\": \"24A434\",\n    \"SimulatorVersion\": \"27.0\",\n    \"Architectures\": [\n      \"arm64\"\n    ]\n  },\n  \"CFBundleName\": \"SimulatorRuntimeAsset\",\n  \"CFBundleInfoDictionaryVersion\": \"1\",\n  \"CFBundleVersion\": \"1.0\",\n  \"_DisableAFSCCompression\": true\n}\n",
+      "stderr": "",
+      "stdoutOriginalBytes": 387,
+      "stderrOriginalBytes": 0,
+      "stdoutOriginalSha256": "d731ff8b3c49ad667e03797661208ad87f17f23121b9338570a39568de3f63aa",
+      "stderrOriginalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redaction": "Credential/token/auth/session fields and credential-bearing URL parts redacted recursively; unparsed stdout/nonempty stderr withheld."
+    },
+    {
+      "argv": [
+        "/usr/bin/plutil",
+        "-convert",
+        "json",
+        "-o",
+        "-",
+        "--",
+        "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/7fd8477b73d7b67a321fff7d87723eed3c628424.asset/Info.plist"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+      "startedAt": "2026-10-09T02:18:01.259Z",
+      "environment": {
+        "HOME": "/Users/hugues_mini",
+        "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "shell": false,
+      "stdin": "ignored",
+      "exitCode": 0,
+      "signal": null,
+      "completedAt": "2026-10-09T02:18:01.263Z",
+      "timedOut": false,
+      "overflow": false,
+      "error": null,
+      "stdout": "{\n  \"CFBundleShortVersionString\": \"1.0.0\",\n  \"CFBundleIdentifier\": \"com.apple.MobileAsset.iOSSimulatorRuntime\",\n  \"MobileAssetProperties\": {\n    \"Build\": \"22G86\",\n    \"__AssetDefaultGarbageCollectionBehavior\": \"NeverCollected\",\n    \"SimulatorVersion\": \"18.6\"\n  },\n  \"CFBundleName\": \"SimulatorRuntimeAsset\",\n  \"CFBundleInfoDictionaryVersion\": \"1\",\n  \"CFBundleVersion\": \"1.0\",\n  \"_DisableAFSCCompression\": true\n}\n",
+      "stderr": "",
+      "stdoutOriginalBytes": 360,
+      "stderrOriginalBytes": 0,
+      "stdoutOriginalSha256": "56aee134b606923e5d40a5a643058f466c516d2e1b318a00f64668086d7b812f",
+      "stderrOriginalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redaction": "Credential/token/auth/session fields and credential-bearing URL parts redacted recursively; unparsed stdout/nonempty stderr withheld."
+    },
+    {
+      "argv": [
+        "/usr/bin/plutil",
+        "-convert",
+        "json",
+        "-o",
+        "-",
+        "--",
+        "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/c060853b459625d7878fd533de79c966fb98d31b.asset/Info.plist"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+      "startedAt": "2026-10-09T02:18:01.264Z",
+      "environment": {
+        "HOME": "/Users/hugues_mini",
+        "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "shell": false,
+      "stdin": "ignored",
+      "exitCode": 0,
+      "signal": null,
+      "completedAt": "2026-10-09T02:18:01.268Z",
+      "timedOut": false,
+      "overflow": false,
+      "error": null,
+      "stdout": "{\n  \"CFBundleShortVersionString\": \"1.0.0\",\n  \"CFBundleIdentifier\": \"com.apple.MobileAsset.iOSSimulatorRuntime\",\n  \"MobileAssetProperties\": {\n    \"__AssetDefaultGarbageCollectionBehavior\": \"NeverCollected\",\n    \"Build\": \"23E254a\",\n    \"SimulatorVersion\": \"26.4.1\",\n    \"Architectures\": [\n      \"arm64\"\n    ]\n  },\n  \"CFBundleName\": \"SimulatorRuntimeAsset\",\n  \"CFBundleInfoDictionaryVersion\": \"1\",\n  \"CFBundleVersion\": \"1.0\",\n  \"_DisableAFSCCompression\": true\n}\n",
+      "stderr": "",
+      "stdoutOriginalBytes": 390,
+      "stderrOriginalBytes": 0,
+      "stdoutOriginalSha256": "8b8bfd00b04f615c3577ffe6665199ffd82284b9dc4dd4cb517b2d85357785bd",
+      "stderrOriginalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redaction": "Credential/token/auth/session fields and credential-bearing URL parts redacted recursively; unparsed stdout/nonempty stderr withheld."
+    }
+  ]
+}

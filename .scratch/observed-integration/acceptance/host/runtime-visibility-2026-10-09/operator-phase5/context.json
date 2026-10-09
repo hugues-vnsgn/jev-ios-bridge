@@ -1,0 +1,52 @@
+{
+  "capturedAtUtc": "2026-10-09T03:10:05.453Z",
+  "brief": ".scratch/observed-action-rollout/runtime-visibility-phase5-2026-10-09.md",
+  "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+  "product": "b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433",
+  "model": "gpt-6.1-sol",
+  "effort": "xhigh",
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "bindingReadOnlyReceipt": {
+    "id": "bb0b9f39-22d0-4a52-89c2-6704bfb37ebf",
+    "ok": true,
+    "result": {
+      "terminal": {
+        "handle": "term_19640861-824c-4f24-8789-3f584723bc5a",
+        "ptyId": "ff805bee-c159-433e-aef6-f01b9d93ed59::/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge@@dbe60b95",
+        "incarnationId": "56f3d85a-3500-4750-a17f-a8d69dd290a7",
+        "orphaned": false,
+        "worktreeId": "ff805bee-c159-433e-aef6-f01b9d93ed59::/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge",
+        "worktreePath": "/Users/hugues_mini/Codes/AgentTools/jev-ios-bridge",
+        "branch": "refs/heads/main",
+        "tabId": "b0e5a4b6-106b-4dab-a49a-b3933445d4ef",
+        "leafId": "abe2d20e-837b-4e76-bb65-0288efa467bf",
+        "title": "⠹ Recheck iOS27.0 prerequisites | feat-native-callback-...",
+        "connected": true,
+        "writable": true,
+        "lastOutputAt": 1791515041850,
+        "preview": "thing\nGPT-6.1-Sol xhigh · ~/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic · feat/native-callback-diagnostic · Context 68% left · 258K w…\n? for shortcuts                                                                                                           ⚠ 1 warning · f2 to view",
+        "executionHostId": "local",
+        "agentIdentity": "codex",
+        "paneRuntimeId": 2,
+        "rendererGraphEpoch": 0,
+        "agentWait": null
+      }
+    },
+    "_meta": {
+      "runtimeId": "5f433f83-b0b5-4579-b844-952323951016"
+    }
+  },
+  "ownershipMetadataDiffersFromIntegrationPreview": true,
+  "terminalCreatedOrInputSent": false,
+  "productionSourceUnchanged": true,
+  "repairsIntegratedOrUsed": false,
+  "heavyTestBuildWindowUsed": false,
+  "scope": "Metadata only; nine exact children at most once; 10s/12s and combined1MiB per child; only Xcode Info input bytes (max65536) and prior repository evidence.",
+  "parserPrecheck": {
+    "package": "plist",
+    "status": "UNAVAILABLE",
+    "code": "MODULE_NOT_FOUND",
+    "fallbackAuthorized": false
+  },
+  "ownerTrustScope": "ONLY exact /Applications exception; no extension inferred."
+}

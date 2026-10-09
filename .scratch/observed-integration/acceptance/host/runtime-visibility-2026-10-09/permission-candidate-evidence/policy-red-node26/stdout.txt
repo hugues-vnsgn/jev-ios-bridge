@@ -1,0 +1,25 @@
+TAP version 13
+# Subtest: installed Xcode ancestor policy accepts strict paths and the exact root admin Applications exception
+not ok 1 - installed Xcode ancestor policy accepts strict paths and the exact root admin Applications exception
+  ---
+  duration_ms: 70.904083
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/observed-allocation-config.test.ts:1:17290'
+  failureType: 'testCodeFailure'
+  error: 'HOST_PREREQUISITE_MISSING'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/src/observed/allocation-config.ts:225:19)
+    async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/tests/observed-allocation-config.test.ts:265:21)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 674.2605

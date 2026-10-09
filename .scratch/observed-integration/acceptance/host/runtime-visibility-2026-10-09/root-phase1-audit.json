@@ -1,0 +1,115 @@
+{
+  "atUtc": "2026-10-09T02:11:37.971710+00:00",
+  "verdict": "PASS_BOUNDED_DIAGNOSTIC_PROVENANCE",
+  "artifactChecks": [
+    {
+      "path": "command.json",
+      "hashMatches": true,
+      "bytesMatch": true,
+      "private": true
+    },
+    {
+      "path": "context.json",
+      "hashMatches": true,
+      "bytesMatch": true,
+      "private": true
+    },
+    {
+      "path": "hypotheses.json",
+      "hashMatches": true,
+      "bytesMatch": true,
+      "private": true
+    },
+    {
+      "path": "probe.mjs",
+      "hashMatches": true,
+      "bytesMatch": true,
+      "private": true
+    },
+    {
+      "path": "report.md",
+      "hashMatches": true,
+      "bytesMatch": true,
+      "private": true
+    },
+    {
+      "path": "result.json",
+      "hashMatches": true,
+      "bytesMatch": true,
+      "private": true
+    },
+    {
+      "path": "run.mjs",
+      "hashMatches": true,
+      "bytesMatch": true,
+      "private": true
+    },
+    {
+      "path": "source-hashes-after.json",
+      "hashMatches": true,
+      "bytesMatch": true,
+      "private": true
+    },
+    {
+      "path": "source-hashes-before.json",
+      "hashMatches": true,
+      "bytesMatch": true,
+      "private": true
+    },
+    {
+      "path": "stderr.txt",
+      "hashMatches": true,
+      "bytesMatch": true,
+      "private": true
+    },
+    {
+      "path": "stdout.txt",
+      "hashMatches": true,
+      "bytesMatch": true,
+      "private": true
+    }
+  ],
+  "provenanceSummaries": {
+    "source-hashes-before.json": {
+      "allMatch": true,
+      "groups": {
+        "acceptedHost15": {
+          "count": 15,
+          "mismatches": []
+        },
+        "source437": {
+          "count": 437,
+          "mismatches": []
+        },
+        "compiled68": {
+          "count": 68,
+          "mismatches": []
+        }
+      }
+    },
+    "source-hashes-after.json": {
+      "allMatch": true,
+      "groups": {
+        "acceptedHost15": {
+          "count": 15,
+          "mismatches": []
+        },
+        "source437": {
+          "count": 437,
+          "mismatches": []
+        },
+        "compiled68": {
+          "count": 68,
+          "mismatches": []
+        }
+      }
+    }
+  },
+  "firstCutoff": "Actual unchanged trustedPath rejects /Applications mode0775 immediately after successful lstat; no plist/runtime enumeration reached.",
+  "reviewedScripts": [
+    "operator-phase1/probe.mjs",
+    "operator-phase1/run.mjs"
+  ],
+  "guardReview": "Transparent FS wrapper; finite installed metadata paths; child guard only read-only plutil; actual production helpers unchanged. No production store factory invoked.",
+  "limits": "No host/live acceptance or fix certification; subsequent runtime visibility remains unknown; operator compaction/completion pending."
+}

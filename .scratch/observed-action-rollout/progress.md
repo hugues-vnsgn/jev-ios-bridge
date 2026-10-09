@@ -129,3 +129,34 @@ The restored lunahigh operator completed its read-only metadata preflight, then 
 - Reverified15 accepted host files and437 product/test/docs paths; no Source delta/tests rerun. The existing lunahigh operator received only the bounded runtime recheck; receipt `93409252-b5c9-4e58-8fa0-17b07c3de520` proves input acceptance and turn start.
 - Operator completed5 exact fresh metadata/evidence queries and returned idle; satisfied wait and completion screen verified. No27.0 bundle inspectable in allocator-supported metadata roots; runtime build/profile compatibility and all L01–L05 remain UNVERIFIED. Root provenance audit PASS within this scope. Prior metadata is referenced by matching hash, not claimed freshly queried. Original/current preflight evidence preserved before Root exact-byte canonical promotion.
 - Owner-facts prerequisite resolved; runtime availability is the first remaining entry prerequisite. No actual migration, admission/config/journal/lease access, app build, backend/device effects, fallback/install, cleanup or merge/push/release/publication. Next is explicit27.0 verification → remaining entry gates → serial live cases → independent safety review → Root verdict.
+
+## 2026-10-09 owner screenshot and actual lookup reproduction
+
+- Owner screenshot displays installed iOS27.0/8.07GB; explicit reply keeps GPT-6.1-Sol xhigh in the same sole operator pane. Earlier Luna records remain historical. Root stays coordinator.
+- Actual unchanged compiled compatibility lookup ran once and returned HOST_PREREQUISITE_MISSING/exit3 at /Applications uid0/gid80/mode0775. trustedPath rejects group-write before any plist, child or runtime enumeration. No global runtime absence is inferred.
+- All15 accepted host+437 source/test/docs+68 compiled hashes match before/after. Root accepted bounded final diagnostic provenance, showed four ranked hypotheses, then dispatched only finite lstat/catalog metadata as phase2 (receipt280fcf88-8fe0-4cda-9317-79f665b12861, input accepted/turn started).
+- Owner operational facts/declaration stay confirmed/prepared. No Source/test/build, production store/migration/device/permission effects; L01–L05 and runtime compatibility remain UNVERIFIED. [Current detailed order](next-work.md).
+
+## Runtime catalog and owner trust decision
+
+Phases 2–3 found stable iOS 27.0 simulator asset metadata (build 24A434, arm64) and the expected CoreSimulator identifier at a catalog-reported Cryptex path outside production search roots. Direct bundle verification is active as phase 4; no production compatibility pass is claimed. Root accepted bounded provenance for each completed batch.
+
+The owner explicitly approved local administrator trust for the single root-owned/admin-group /Applications ancestor at exactly0775. Root recorded that decision and dispatched a narrow source/test repair to a separate checkout, `fix-installed-xcode-path-policy`, base4004ece782fc9448607605bfe3a54702f8622bb0. The former read-only design reviewer now authors that candidate and cannot independently review it. Actual host permissions stay unchanged. Integration product remains original/frozen while the sole operator inspects metadata; repair reviews/gates remain required.
+
+Named memory records were retrieved directly through the documented REST endpoint after tag searches returned unrelated records: original authorization mem_muyzl3a3_bb741a3a4972 and operational checkpoint mem_mv09ue3b_0f1fc9496b26. Their prior installation-only instruction is superseded by the current scoped evidence and owner decision. [Current report](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/next-work-report.md).
+
+## 2026-10-09 — direct Cryptex metadata and narrow candidate
+
+Phase4 returned once and idle: actual runtime Info/profile/SystemVersion confirms27.0/build24A434;14 metadata predicates MATCH,2 Xcode Info predicates UNVERIFIED after64KiB output overflow. Root audited18 artifacts and15+437+68 hashes plus56 prior artifacts; all match. Further writable-mode paths include /private/var/run and runtime metadata on the Cryptex volume. No readonly/protection conclusion yet.
+
+Root dispatched phase5 exact mount-info, seven fixed stat targets and one complete bounded Xcode Info conversion; request541aee3f-6d89-4196-9238-6cb31d56bf3e has input_accepted+turn_started in the same GPT-6.1-Sol xhigh operator pane. Metadata-only; no production/live entry.
+
+The permission author froze Applications-only candidate a0e68917 in fix/installed-xcode-path-policy, based4004ece: two owned files, all435 other accepted paths match, both nodes focused78/78 and typecheck/buildPASS, same68 compiled files across builds. Owned coverage78/78,97.49% lines/89.90% branches. Initial default26 full1719/1723 exposed evidence harness childumask077 masking permission fixtures. One-variable reproduction0/4 under077 versus4/4 under022 confirms cause; raw initial/diagnostic evidence retained. Root acknowledged normal childumask022 only for unchanged default gate reruns. Full gates and independent reviews remain pending. L01-L05 UNVERIFIED, ticket12 not dispatched.
+
+## 2026-10-09 — phase5 completion and bounded Cryptex approval
+
+Phase5 completed once with nine exact metadata children and the sole operator returned idle. Root audited20 artifacts, original15 host/437 Source-test-docs/68 compiled correspondence and76 prior references. Root separately parsed the retained3108-byte diskutil XML without native queries: exact mount, Writable/WritableMedia/WritableVolume allfalse. Seven sampled flags0; complete77555-byte Xcode JSON supplies all required matching identity/minimum-host fields. Actual production compatibility remains UNVERIFIED.
+
+The Applications candidate a0e68917 has final actual defaults1723/1723, typecheck/build on both Nodes and independent Spec/Standards PASS/zero findings. Original26 runner-umask failure and initial24 lock/milestone failures are preserved; the lower24 cause remains unconfirmed. Root preserved106 evidence files before integration.
+
+The owner explicitly approved frozen Cryptex v3 e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13. The additional root/daemon mode-based namespace trust is now authorized within its exact bounds; independent implementation reviews remain required. Xcode conversion/parser author is active separately; Cryptex implementation planning is authorized with shared-source work stacked on its freeze. No account-store migration, app builds or live effects. L01–L05 UNVERIFIED; ticket12 not dispatched.

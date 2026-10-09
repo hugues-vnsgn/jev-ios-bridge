@@ -1,0 +1,126 @@
+{
+  "atUtc": "2026-10-09T02:21:43.233372+00:00",
+  "verdict": "PASS_BOUNDED_PHASE2_PROVENANCE",
+  "checks": [
+    {
+      "path": "candidate-paths.json",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "child-receipts.json",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "command.json",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "context.json",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "hypothesis-results.json",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "metadata-input-hashes.json",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "prior-evidence-reference.json",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "probe.mjs",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "report.md",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "result.json",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "run.mjs",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "source-hashes-after.json",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "source-hashes-before.json",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "stderr.txt",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "stdout.txt",
+      "hashMatches": true,
+      "private": true
+    }
+  ],
+  "sourceSummaries": {
+    "source-hashes-before.json": {
+      "allMatch": true,
+      "groups": {
+        "acceptedHost15": {
+          "count": 15,
+          "mismatches": []
+        },
+        "source437": {
+          "count": 437,
+          "mismatches": []
+        },
+        "compiled68": {
+          "count": 68,
+          "mismatches": []
+        }
+      }
+    },
+    "source-hashes-after.json": {
+      "allMatch": true,
+      "groups": {
+        "acceptedHost15": {
+          "count": 15,
+          "mismatches": []
+        },
+        "source437": {
+          "count": 437,
+          "mismatches": []
+        },
+        "compiled68": {
+          "count": 68,
+          "mismatches": []
+        }
+      }
+    }
+  },
+  "metadataFinding": {
+    "path": "/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime/3e800c38767f9f2c5fc86acdad7adf44565e051a.asset/Info.plist",
+    "sha256": "9c132a7b98c399f764873f4c70ade83e8e44ee2ee9356135a13f49d15c921243",
+    "version": "27.0",
+    "build": "24A434",
+    "architecture": "arm64"
+  },
+  "review": "Root read probe.mjs guard/finite-read schedule, source manifests/provenance summary, exact result and final report. Four child conversions only; no product compatibility call. Final Worked for8m28s / idle prompt verified.",
+  "limits": "Simulator asset metadata presence only, no exact usable runtime bundle/profile compatibility. images.plist JSON conversion failed with unavailable redacted error wording; no cause inferred. No live/host acceptance or fix certification."
+}

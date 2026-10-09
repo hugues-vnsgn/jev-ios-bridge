@@ -1,0 +1,34 @@
+{
+  "status": "UNTESTED_RANKED_HYPOTHESES",
+  "actualFirstCutoff": "trustedPath rejects /Applications mode 0775",
+  "hypotheses": [
+    {
+      "rank": 1,
+      "hypothesis": "Other approved installed ancestor paths also fail the same trust policy.",
+      "basis": "The actual lookup stopped at /Applications with uid 0, gid 80 and mode 0775; the unchanged predicate rejects every group/other-write bit.",
+      "prediction": "A newly authorized lstat-only inspection of the remaining fixed Xcode/OS/device-type/runtime ancestor paths finds additional root-owned group-writable directories that this predicate rejects. If those paths all satisfy the predicate, this hypothesis is falsified.",
+      "nextProbe": "Record only type/uid/gid/mode/nlink for a Root-approved finite installed-path list; no permission changes or runtime activation."
+    },
+    {
+      "rank": 2,
+      "hypothesis": "The displayed iOS 27.0 component is an installed runtime image whose bundle is not currently exposed in the supported roots.",
+      "basis": "Owner component evidence shows installed display state, while earlier supported-root queries found no runtime bundle. The actual production lookup did not reach runtime enumeration.",
+      "prediction": "Newly authorized component/catalog/image/mount metadata identifies the expected simulator runtime image, but no corresponding mounted .simruntime bundle is exposed in the supported roots. A currently exposed matching bundle falsifies this visibility explanation.",
+      "nextProbe": "Inspect exact component catalog and mount/image metadata named by Root; do not mount, install, download, or invoke simulator/device services."
+    },
+    {
+      "rank": 3,
+      "hypothesis": "The current runtime bundle is stored at an installed location absent from the production hardcoded root list.",
+      "basis": "Production enumerates only the default Profiles/Runtimes and per-volume Profiles/Runtimes roots.",
+      "prediction": "Newly authorized component location metadata points to an existing .simruntime outside those roots whose Info.plist identifies com.apple.CoreSimulator.SimRuntime.iOS-27-0. A location within supported roots, or no matching bundle, falsifies this hypothesis.",
+      "nextProbe": "Follow only a specific catalog-reported installed metadata path after Root names and approves it; hash identifier/profile/SystemVersion plists without recursive app/user searches."
+    },
+    {
+      "rank": 4,
+      "hypothesis": "The displayed iOS 27.0 component represents platform/SDK support without the required simulator runtime component.",
+      "basis": "The preserved screenshot establishes displayed component state but no exact simulator runtime identifier or profile.",
+      "prediction": "Newly authorized component manifest metadata classifies the entry as platform/SDK support and supplies no matching CoreSimulator runtime identifier/image. A manifest binding to the expected simulator runtime identifier falsifies this hypothesis.",
+      "nextProbe": "Read the specific component manifest fields that distinguish platform/SDK support from a simulator runtime; no SDK/bridge execution."
+    }
+  ]
+}

@@ -1,0 +1,343 @@
+{
+  "atUtc": "2026-10-09T03:19:49.379685+00:00",
+  "verdict": "PASS_BOUNDED_PHASE5_PROVENANCE",
+  "artifactChecks": [
+    {
+      "path": "child-receipts.json",
+      "hashMatches": true,
+      "sizeMatches": true,
+      "private": true
+    },
+    {
+      "path": "command.json",
+      "hashMatches": true,
+      "sizeMatches": true,
+      "private": true
+    },
+    {
+      "path": "context.json",
+      "hashMatches": true,
+      "sizeMatches": true,
+      "private": true
+    },
+    {
+      "path": "diskutil-info-output.xml",
+      "hashMatches": true,
+      "sizeMatches": true,
+      "private": true
+    },
+    {
+      "path": "hypothesis-results.json",
+      "hashMatches": true,
+      "sizeMatches": true,
+      "private": true
+    },
+    {
+      "path": "metadata-input-hashes.json",
+      "hashMatches": true,
+      "sizeMatches": true,
+      "private": true
+    },
+    {
+      "path": "mount-metadata-result.json",
+      "hashMatches": true,
+      "sizeMatches": true,
+      "private": true
+    },
+    {
+      "path": "prior-evidence-reference.json",
+      "hashMatches": true,
+      "sizeMatches": true,
+      "private": true
+    },
+    {
+      "path": "probe.mjs",
+      "hashMatches": true,
+      "sizeMatches": true,
+      "private": true
+    },
+    {
+      "path": "proposed-next-design-scope.json",
+      "hashMatches": true,
+      "sizeMatches": true,
+      "private": true
+    },
+    {
+      "path": "report.md",
+      "hashMatches": true,
+      "sizeMatches": true,
+      "private": true
+    },
+    {
+      "path": "result.json",
+      "hashMatches": true,
+      "sizeMatches": true,
+      "private": true
+    },
+    {
+      "path": "run.mjs",
+      "hashMatches": true,
+      "sizeMatches": true,
+      "private": true
+    },
+    {
+      "path": "source-hashes-after.json",
+      "hashMatches": true,
+      "sizeMatches": true,
+      "private": true
+    },
+    {
+      "path": "source-hashes-before.json",
+      "hashMatches": true,
+      "sizeMatches": true,
+      "private": true
+    },
+    {
+      "path": "stat-flags.json",
+      "hashMatches": true,
+      "sizeMatches": true,
+      "private": true
+    },
+    {
+      "path": "stderr.txt",
+      "hashMatches": true,
+      "sizeMatches": true,
+      "private": true
+    },
+    {
+      "path": "stdout.txt",
+      "hashMatches": true,
+      "sizeMatches": true,
+      "private": true
+    },
+    {
+      "path": "xcode-info-conversion.json",
+      "hashMatches": true,
+      "sizeMatches": true,
+      "private": true
+    },
+    {
+      "path": "xcode-predicate-comparison.json",
+      "hashMatches": true,
+      "sizeMatches": true,
+      "private": true
+    }
+  ],
+  "provenance": {
+    "source-hashes-before.json": {
+      "allMatch": true,
+      "groups": {
+        "acceptedHost15": {
+          "count": 15,
+          "currentAndRecordedMismatches": []
+        },
+        "source437": {
+          "count": 437,
+          "currentAndRecordedMismatches": []
+        },
+        "compiled68": {
+          "count": 68,
+          "currentAndRecordedMismatches": []
+        }
+      },
+      "priorEvidence": {
+        "count": 76,
+        "mismatches": []
+      }
+    },
+    "source-hashes-after.json": {
+      "allMatch": true,
+      "groups": {
+        "acceptedHost15": {
+          "count": 15,
+          "currentAndRecordedMismatches": []
+        },
+        "source437": {
+          "count": 437,
+          "currentAndRecordedMismatches": []
+        },
+        "compiled68": {
+          "count": 68,
+          "currentAndRecordedMismatches": []
+        }
+      },
+      "priorEvidence": {
+        "count": 76,
+        "mismatches": []
+      }
+    }
+  },
+  "command": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+      "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/probe.mjs"
+    ],
+    "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+    "startedAt": "2026-10-09T03:10:19.276Z",
+    "completedAt": "2026-10-09T03:10:19.488Z",
+    "exitCode": 0,
+    "signal": null,
+    "stderr": ""
+  },
+  "childSummary": [
+    {
+      "argv": [
+        "/usr/sbin/diskutil",
+        "info",
+        "-plist",
+        "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "overflow": false,
+      "timedOut": false,
+      "outputComplete": true,
+      "targetStable": true
+    },
+    {
+      "argv": [
+        "/usr/bin/stat",
+        "-f",
+        "%d|%i|%u|%g|%p|%f|%Sf",
+        "/private/var/run"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "overflow": false,
+      "timedOut": false,
+      "outputComplete": true,
+      "targetStable": true
+    },
+    {
+      "argv": [
+        "/usr/bin/stat",
+        "-f",
+        "%d|%i|%u|%g|%p|%f|%Sf",
+        "/private/var/run/com.apple.security.cryptexd"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "overflow": false,
+      "timedOut": false,
+      "outputComplete": true,
+      "targetStable": true
+    },
+    {
+      "argv": [
+        "/usr/bin/stat",
+        "-f",
+        "%d|%i|%u|%g|%p|%f|%Sf",
+        "/private/var/run/com.apple.security.cryptexd/mnt"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "overflow": false,
+      "timedOut": false,
+      "outputComplete": true,
+      "targetStable": true
+    },
+    {
+      "argv": [
+        "/usr/bin/stat",
+        "-f",
+        "%d|%i|%u|%g|%p|%f|%Sf",
+        "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "overflow": false,
+      "timedOut": false,
+      "outputComplete": true,
+      "targetStable": true
+    },
+    {
+      "argv": [
+        "/usr/bin/stat",
+        "-f",
+        "%d|%i|%u|%g|%p|%f|%Sf",
+        "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "overflow": false,
+      "timedOut": false,
+      "outputComplete": true,
+      "targetStable": true
+    },
+    {
+      "argv": [
+        "/usr/bin/stat",
+        "-f",
+        "%d|%i|%u|%g|%p|%f|%Sf",
+        "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "overflow": false,
+      "timedOut": false,
+      "outputComplete": true,
+      "targetStable": true
+    },
+    {
+      "argv": [
+        "/usr/bin/stat",
+        "-f",
+        "%d|%i|%u|%g|%p|%f|%Sf",
+        "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "overflow": false,
+      "timedOut": false,
+      "outputComplete": true,
+      "targetStable": true
+    },
+    {
+      "argv": [
+        "/usr/bin/plutil",
+        "-convert",
+        "json",
+        "-o",
+        "-",
+        "--",
+        "/Applications/Xcode.app/Contents/Info.plist"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "overflow": false,
+      "timedOut": false,
+      "outputComplete": true,
+      "targetStable": true
+    }
+  ],
+  "xcodeJSONBytes": 77555,
+  "xcodePredicates": [
+    {
+      "id": "CFBundleIdentifier",
+      "verdict": "MATCH",
+      "actual": "com.apple.dt.Xcode",
+      "expected": "com.apple.dt.Xcode",
+      "sourceAnchor": "src/observed/allocation-config.ts:181"
+    },
+    {
+      "id": "CFBundleExecutable",
+      "verdict": "MATCH",
+      "actual": "Xcode",
+      "expected": "Xcode",
+      "sourceAnchor": "src/observed/allocation-config.ts:181"
+    },
+    {
+      "id": "LSMinimumSystemVersion",
+      "verdict": "MATCH",
+      "actual": "26.6",
+      "hostVersion": "27.0.1",
+      "hostVersionBasis": "Accepted phase4 host SystemVersion; not reread phase5.",
+      "sourceAnchor": "src/observed/allocation-config.ts:182"
+    }
+  ],
+  "operatorMountConclusion": "UNKNOWN - approved plist package unavailable",
+  "rootRetainedMountDerivation": "root-phase5-retained-mount-derivation.json",
+  "rootMountVerdict": "EXACT_MOUNT_REPORTS_UNWRITABLE",
+  "review": "Root inspected finite FS/argv/no-repeat/output/time/target guards, complete report and all manifest hashes. Final Worked for9m50s/idle prompt verified. Retained XML was parsed only from repository evidence; no native requery.",
+  "limits": "Actual production compatibility/executable/platform/uniqueness/operability/entry and L01-L05 remain UNVERIFIED. Writable ancestor trust extension requires separate owner decision; no SIP/atomic path pinning inferred."
+}

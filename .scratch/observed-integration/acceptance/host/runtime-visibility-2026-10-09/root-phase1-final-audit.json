@@ -1,0 +1,64 @@
+{
+  "atUtc": "2026-10-09T02:14:24.657973+00:00",
+  "verdict": "PASS_BOUNDED_PHASE1_FINAL",
+  "checks": [
+    {
+      "path": "command.json",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "context.json",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "hypotheses.json",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "probe.mjs",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "report.md",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "result.json",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "run.mjs",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "source-hashes-after.json",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "source-hashes-before.json",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "stderr.txt",
+      "hashMatches": true,
+      "private": true
+    },
+    {
+      "path": "stdout.txt",
+      "hashMatches": true,
+      "private": true
+    }
+  ],
+  "completion": "Operator final return and Worked for13m18s / idle prompt verified; wait RPC timed out separately.",
+  "ledgerSha256": "a02eb5b10bb2b0828710dcf6c90797e2aaf1694b8769b1bc82c64e74fefbd988",
+  "limits": "Diagnostic reproduction/provenance only; no runtime availability or acceptance/fix certification."
+}

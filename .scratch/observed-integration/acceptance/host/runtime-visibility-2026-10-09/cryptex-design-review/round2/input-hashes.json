@@ -1,0 +1,157 @@
+{
+  "reviewRound": 2,
+  "proposalSha256": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13",
+  "reviewedV2Archive": {
+    "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal-reviewed-v2.md",
+    "sha256": "216b03469ed8107750ab947e636978fb91cdd3e673691fe72213d990dd37748e"
+  },
+  "protectedInputChecks": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "86d3e5e2ccba32103401ab95af6b6488fc439d090913b028a7961d07f79a1c47",
+      "matchesPrior": true
+    },
+    {
+      "path": ".scratch/v1-release/map.md",
+      "sha256": "b154b9cb08454aa8433f1e8e917e4bef948db48d72b247f60f5b58d837daebaa",
+      "matchesPrior": true
+    },
+    {
+      "path": "docs/agents/domain.md",
+      "sha256": "edc6d6131fdffc4b7135704f5262124fc43355c95f61b7399dc5a4db643e28ca",
+      "matchesPrior": true
+    },
+    {
+      "path": "GLOSSARY.md",
+      "sha256": "a246e0082a15dfd2fa74138473607b9a3c5e3426460f1d43d1d9d154f87ec1c5",
+      "matchesPrior": true
+    },
+    {
+      "path": "docs/adr/0002-mobilebuildmcp-as-device-layer.md",
+      "sha256": "00da2cbba873223976b22b0a26314a6b351b769b4c3f899a97f95334a565abe1",
+      "matchesPrior": true
+    },
+    {
+      "path": "docs/adr/0008-durable-ios-admission.md",
+      "sha256": "53d1111c4dd1e2f36635c89d5695a6356a72e054810d7e3f3e7faf4be194d501",
+      "matchesPrior": true
+    },
+    {
+      "path": "docs/adr/0009-bounded-simulator-creation.md",
+      "sha256": "f60dae7177255f92e1263c29c6a4433216b80d17ce83bc91dd8a444f687ed384",
+      "matchesPrior": true
+    },
+    {
+      "path": "src/observed/allocation-config.ts",
+      "sha256": "b6519649edbaf203e5323a15c80273321a42a5cb49850551297268e6ee1f5f0a",
+      "matchesPrior": true
+    },
+    {
+      "path": "src/observed/allocation.ts",
+      "sha256": "0233ea8d8d571761596287e9369f7801bd693edfe6d95c459a950e4c3b943041",
+      "matchesPrior": true
+    },
+    {
+      "path": "src/observed/create-source.ts",
+      "sha256": "d13d6e4324be0b534ce32e0057dd0a1ca9654941976ce53dcf17bba530e258b1",
+      "matchesPrior": true
+    },
+    {
+      "path": "package.json",
+      "sha256": "d2fffea3e28d6ea794536b2cb67337abe8ec75c46cf10c2944ca1b3cd0a3a3ea",
+      "matchesPrior": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-phase5-retained-mount-derivation.json",
+      "sha256": "8260a10fc574d9408078104f348522fa4f50ddc5279dfe16ecf916c1e57b098e",
+      "matchesPrior": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase4/result.json",
+      "sha256": "acc2e7a0186b762f9c9bd041c003218376af9025790c0f56f7163d56b4b6345f",
+      "matchesPrior": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase4/probe.mjs",
+      "sha256": "185cc4e7a375e6329fef04b2190a03ec7e2414e034693480032bc332b8fef9ba",
+      "matchesPrior": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase4/run.mjs",
+      "sha256": "934ee99c13276a26365508471619ebf8a417074baa9225e99d7a1b39aa3f2d0c",
+      "matchesPrior": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase4/report.md",
+      "sha256": "958a1b508f0ecf7ac00026709d462aeb70179704cb2ab380d5235c3eda8e1ed3",
+      "matchesPrior": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase4/artifact-hashes.json",
+      "sha256": "6cb619716912f6e9421ba926ab78fb87821823473d04ad6ef2555b655298c17f",
+      "matchesPrior": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/result.json",
+      "sha256": "ba076ab50424a7b805a13bcc5d4bbd575d6cfdf728cd6d51ef1540e48ff10215",
+      "matchesPrior": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/probe.mjs",
+      "sha256": "80b33a7c38309fa360b09e141f6400026b46d1ac2e3ae08fcf0bda1d4a36df95",
+      "matchesPrior": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/run.mjs",
+      "sha256": "9ccb7d5404801573c1440e2ba4aff10593ab859c2e3e667fda88bc528989a308",
+      "matchesPrior": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/report.md",
+      "sha256": "452713b3bec77d8f09f6d31ce73d3295fe6b2920412e03ff4674419bbe4de1c6",
+      "matchesPrior": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/artifact-hashes.json",
+      "sha256": "485ed910a19d3cfe09c3468ddb65b939ba08ee06eb0be7a1bb80c07c47fcea53",
+      "matchesPrior": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/diskutil-info-output.xml",
+      "sha256": "338fdeb495a2a8d58be5e79ed9d2637d64bdbb6c7e9ba552b3aa345a34f2562d",
+      "matchesPrior": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal-v1.md",
+      "sha256": "3462b5e6effbc41831332308044e62a1900db1aa5374f00c495d8e3095985e0b",
+      "matchesPrior": true
+    }
+  ],
+  "priorReviewArtifactChecks": [
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-design-review/completion.json",
+      "sha256": "db116dd04e093abcc1b98a4cf206efd3e08978eb202c20685c332f1b9846aea4",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-design-review/input-hashes.json",
+      "sha256": "e1cfd0d0465b8ebc27c79d10116c7fec60e57a84e0ef1a1faedcd9fb2038f2a2",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-design-review/report-v1.md",
+      "sha256": "5e8e6c4f7815c7d9958a4b467d174091ed43acc744c9fa8c8c16963844d93794",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-design-review/report.md",
+      "sha256": "050cc88a7a154e959b4071881d0428bc262ab94b64cb8ff694864b2e445f9d34",
+      "matches": true
+    }
+  ],
+  "sourceEdits": false,
+  "nativeProbes": false,
+  "testsOrBuilds": false,
+  "scope": "Current policy v3 proposal only; conditional owner decision, not implementation approval or production compatibility proof.",
+  "reportWords": 165
+}

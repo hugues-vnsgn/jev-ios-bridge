@@ -1,0 +1,62 @@
+{
+  "head": "4004ece782fc9448607605bfe3a54702f8622bb0",
+  "sourceEdits": false,
+  "nativeProbes": false,
+  "testsOrBuilds": false,
+  "reviewOnly": true,
+  "inputs": {
+    "AGENTS.md": "86d3e5e2ccba32103401ab95af6b6488fc439d090913b028a7961d07f79a1c47",
+    ".scratch/v1-release/map.md": "b154b9cb08454aa8433f1e8e917e4bef948db48d72b247f60f5b58d837daebaa",
+    "docs/agents/domain.md": "edc6d6131fdffc4b7135704f5262124fc43355c95f61b7399dc5a4db643e28ca",
+    "GLOSSARY.md": "a246e0082a15dfd2fa74138473607b9a3c5e3426460f1d43d1d9d154f87ec1c5",
+    "docs/adr/0002-mobilebuildmcp-as-device-layer.md": "00da2cbba873223976b22b0a26314a6b351b769b4c3f899a97f95334a565abe1",
+    "docs/adr/0008-durable-ios-admission.md": "53d1111c4dd1e2f36635c89d5695a6356a72e054810d7e3f3e7faf4be194d501",
+    "docs/adr/0009-bounded-simulator-creation.md": "f60dae7177255f92e1263c29c6a4433216b80d17ce83bc91dd8a444f687ed384",
+    "src/observed/allocation-config.ts": "b6519649edbaf203e5323a15c80273321a42a5cb49850551297268e6ee1f5f0a",
+    "src/observed/allocation.ts": "0233ea8d8d571761596287e9369f7801bd693edfe6d95c459a950e4c3b943041",
+    "src/observed/create-source.ts": "d13d6e4324be0b534ce32e0057dd0a1ca9654941976ce53dcf17bba530e258b1",
+    "package.json": "d2fffea3e28d6ea794536b2cb67337abe8ec75c46cf10c2944ca1b3cd0a3a3ea",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal.md": "216b03469ed8107750ab947e636978fb91cdd3e673691fe72213d990dd37748e",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-phase5-retained-mount-derivation.json": "8260a10fc574d9408078104f348522fa4f50ddc5279dfe16ecf916c1e57b098e",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase4/result.json": "acc2e7a0186b762f9c9bd041c003218376af9025790c0f56f7163d56b4b6345f",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase4/probe.mjs": "185cc4e7a375e6329fef04b2190a03ec7e2414e034693480032bc332b8fef9ba",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase4/run.mjs": "934ee99c13276a26365508471619ebf8a417074baa9225e99d7a1b39aa3f2d0c",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase4/report.md": "958a1b508f0ecf7ac00026709d462aeb70179704cb2ab380d5235c3eda8e1ed3",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase4/artifact-hashes.json": "6cb619716912f6e9421ba926ab78fb87821823473d04ad6ef2555b655298c17f",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/result.json": "ba076ab50424a7b805a13bcc5d4bbd575d6cfdf728cd6d51ef1540e48ff10215",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/probe.mjs": "80b33a7c38309fa360b09e141f6400026b46d1ac2e3ae08fcf0bda1d4a36df95",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/run.mjs": "9ccb7d5404801573c1440e2ba4aff10593ab859c2e3e667fda88bc528989a308",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/report.md": "452713b3bec77d8f09f6d31ce73d3295fe6b2920412e03ff4674419bbe4de1c6",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/artifact-hashes.json": "485ed910a19d3cfe09c3468ddb65b939ba08ee06eb0be7a1bb80c07c47fcea53",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/diskutil-info-output.xml": "338fdeb495a2a8d58be5e79ed9d2637d64bdbb6c7e9ba552b3aa345a34f2562d",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal-v1.md": "3462b5e6effbc41831332308044e62a1900db1aa5374f00c495d8e3095985e0b"
+  },
+  "classification": {
+    "decision": "Additional exact /private/var/run root0/daemon1/0775 namespace-manager trust; Applications-only approval persists.",
+    "resolvedInitialSpecifications": [
+      "fresh pre/post mount proof",
+      "all-descendant same-device association",
+      "explicit owner/group/mode rules",
+      "nonrecursive diskutil bootstrap",
+      "XML field shape and unsafe parser rejection",
+      "fixed128KiB XcodeInfo output cap"
+    ],
+    "remainingSpecifications": [
+      "1000 aggregate runtime bundle and8192 metadata-child limits must appear in current document",
+      "exact mount-name grammar",
+      "shipped bounded parser selection",
+      "bounded child termination with tracked uncertainty"
+    ],
+    "unverifiedLimits": [
+      "ACL/effective writer inventory",
+      "SIP protection",
+      "cryptographic Apple provenance",
+      "atomic path pinning",
+      "actual production compatibility andL01-L05"
+    ],
+    "optionalAdvisory": "installed-metadata deep module with private bootstrap runner"
+  },
+  "capturedInputSnapshotAlreadyIncludedRootRevision": true,
+  "initialReportDraftBasedOnFirstReading": true,
+  "allCapturedInputsUnchanged": true
+}

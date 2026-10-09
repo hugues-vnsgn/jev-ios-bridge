@@ -1,0 +1,97 @@
+{
+  "capturedAtUtc": "2026-10-09T02:20:26.840Z",
+  "directoryMode": "0700",
+  "files": [
+    {
+      "path": "candidate-paths.json",
+      "bytes": 3121,
+      "mode": "0600",
+      "sha256": "9d5297fd21d7df5a335e69e0f4026a574e47947cafc4b29d571862f63fd8bd3f"
+    },
+    {
+      "path": "child-receipts.json",
+      "bytes": 6875,
+      "mode": "0600",
+      "sha256": "9f1ab692fb984e10e3ca9c2d2a1c4aea8d31f06be14f2968bf4fb9e6d29ac81e"
+    },
+    {
+      "path": "command.json",
+      "bytes": 120505,
+      "mode": "0600",
+      "sha256": "3a1cf687f0e520f29c1e9c8818f28829fb77718c16e8ff11090475173e4b8bc2"
+    },
+    {
+      "path": "context.json",
+      "bytes": 946,
+      "mode": "0600",
+      "sha256": "f3d28663a921d5e3166f7f40b5edd1e8c0126909042e1140a527695128a66ad4"
+    },
+    {
+      "path": "hypothesis-results.json",
+      "bytes": 2305,
+      "mode": "0600",
+      "sha256": "fafaf3456ffb581f23143b633813b3c4a4753ce2894c2b96dcf3f4ec4ce3c303"
+    },
+    {
+      "path": "metadata-input-hashes.json",
+      "bytes": 1704,
+      "mode": "0600",
+      "sha256": "1d4411baef31f6f7e100eac591b6b91f269d20515bbee42e61d8d68969cd73af"
+    },
+    {
+      "path": "prior-evidence-reference.json",
+      "bytes": 3441,
+      "mode": "0600",
+      "sha256": "af74688ec8efbcc84df4f036e2cb6b10feaa7116f28f334e65f9db3d96b86012"
+    },
+    {
+      "path": "probe.mjs",
+      "bytes": 15281,
+      "mode": "0600",
+      "sha256": "787d5afc0c468aaf99ea3c0dc3bf6afb8754d5b32b02cabc11faccc64124f5d0"
+    },
+    {
+      "path": "report.md",
+      "bytes": 9285,
+      "mode": "0600",
+      "sha256": "ffed2cbc9dd632132ce2f8084ff3f1c0fef30c64b1e076e28083de337c011664"
+    },
+    {
+      "path": "result.json",
+      "bytes": 107361,
+      "mode": "0600",
+      "sha256": "a17c238acc01be4e2ff1dbc6f8564d988091bcfb5eed4808195368770a64b4a6"
+    },
+    {
+      "path": "run.mjs",
+      "bytes": 5440,
+      "mode": "0600",
+      "sha256": "a4f1727ad65f2cb97de4e44ccc96a16d146ba12c65241b78a040d3b9f6ea5cb7"
+    },
+    {
+      "path": "source-hashes-after.json",
+      "bytes": 157953,
+      "mode": "0600",
+      "sha256": "a9ef58468cdbe8980cf43974a5e86896c012875feac1a147c1d9a81254273d33"
+    },
+    {
+      "path": "source-hashes-before.json",
+      "bytes": 157953,
+      "mode": "0600",
+      "sha256": "d1a0ae4ff3d7068eb1de7315869bfac0c144f74fc8f807f8974c7604719d8d8b"
+    },
+    {
+      "path": "stderr.txt",
+      "bytes": 0,
+      "mode": "0600",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "stdout.txt",
+      "bytes": 107361,
+      "mode": "0600",
+      "sha256": "a17c238acc01be4e2ff1dbc6f8564d988091bcfb5eed4808195368770a64b4a6"
+    }
+  ],
+  "scope": "Hashes of all new phase2 artifacts except this manifest itself. No installed metadata query rerun."
+}

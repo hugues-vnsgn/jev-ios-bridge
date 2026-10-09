@@ -1,0 +1,49 @@
+{
+  "confirmedFirstCutoff": {
+    "status": "CONFIRMED_FROM_PRESERVED_PHASE1_PHASE2",
+    "path": "/Applications",
+    "uid": 0,
+    "gid": 80,
+    "mode": "0775",
+    "reason": "Unchanged trustedPath rejects group-write bit before reading Xcode metadata."
+  },
+  "requiredRepairDecision": "A separately reviewed host/trust-policy decision is required to resolve the /Applications0775 rejection before production compatibility can pass. This batch made no permission or policy change.",
+  "runtimeDiscoveryGap": {
+    "status": "CATALOG_SUPPORTED_PENDING_DIRECT_METADATA",
+    "catalogPath": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime",
+    "productionSearchCoversThisPath": false,
+    "nextStep": "Root may authorize the exact no-symlink/canonical ancestor check and these three stable metadata reads. Any resolver/trust-policy repair must be a separate reviewed task.",
+    "metadataCandidates": [
+      {
+        "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist",
+        "basis": "Derived exact metadata suffix from catalog-reported iOS27 Cryptex bundle location.",
+        "followed": false,
+        "existence": "UNVERIFIED",
+        "requiresNewRootDispatch": true
+      },
+      {
+        "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist",
+        "basis": "Derived exact metadata suffix from catalog-reported iOS27 Cryptex bundle location.",
+        "followed": false,
+        "existence": "UNVERIFIED",
+        "requiresNewRootDispatch": true
+      },
+      {
+        "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist",
+        "basis": "Derived exact metadata suffix from catalog-reported iOS27 Cryptex bundle location.",
+        "followed": false,
+        "existence": "UNVERIFIED",
+        "requiresNewRootDispatch": true
+      }
+    ]
+  },
+  "forbiddenEffectsExecuted": false,
+  "fullInstalledCompatibility": "UNVERIFIED",
+  "liveRows": {
+    "L01": "UNVERIFIED",
+    "L02": "UNVERIFIED",
+    "L03": "UNVERIFIED",
+    "L04": "UNVERIFIED",
+    "L05": "UNVERIFIED"
+  }
+}
