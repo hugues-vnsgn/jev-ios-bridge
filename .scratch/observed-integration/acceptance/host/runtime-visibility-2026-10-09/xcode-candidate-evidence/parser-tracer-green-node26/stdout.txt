@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: readonly mount metadata parses the retained 3108-byte diskutil XML and requires the exact mount
+ok 1 - readonly mount metadata parses the retained 3108-byte diskutil XML and requires the exact mount
+  ---
+  duration_ms: 0.648208
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 141.142458

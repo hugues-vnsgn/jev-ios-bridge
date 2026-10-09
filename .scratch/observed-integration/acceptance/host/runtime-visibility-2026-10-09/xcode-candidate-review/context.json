@@ -1,0 +1,35 @@
+{
+  "base": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+  "candidate": "38aa879c3954c9d7742ef04059cad4d2fc824c87",
+  "authorWorktree": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output",
+  "ownedFiles": {
+    "src/observed/allocation-config.ts": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+    "src/observed/installed-plist.ts": "c74ddcafaef4e244bd1183695cade8fe4858f609bc6f20a1b86727801bc8b896",
+    "tests/fixtures/observed-allocation-backend.ts": "5b8c6b14a463ee8ec312ac33655f18c0efc931c2c900784840342f7aeb0e3d80",
+    "tests/installed-plist.test.ts": "c383636a717b8220905f3814d9123ce9ee78cbb1b5dfeb0d82bdf8e80a1aa02c",
+    "tests/observed-allocation-config.test.ts": "1ae9db02cb08814a874d9b94ea872105ec2a88fe75d56e0f7263116698dbc4ad"
+  },
+  "protectedOriginalCount": 434,
+  "candidateSourceCount": 439,
+  "candidateSourceManifest": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/candidate-source.json",
+  "candidateSourceManifestSha256": "4c92ae78c385daad1516de011cd09bd48fc63c3bf8426ffb9aeafbcdf57aaf13",
+  "compiledFileCount": 69,
+  "compiledBothNodesIdentical": true,
+  "focusedBothNodes": "174/174,0fail/cancelled/skipped/todo;typecheck/build0; raw receipts under author evidence",
+  "actualDefaultGates": "Root granted once26 then24 on frozen Source; in progress, no verdict inferred. Review Source now and add actual default evidence audit after completion.",
+  "normativeIntegration": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "normativeFiles": [
+    ".scratch/observed-integration/implementation-plan.md",
+    ".scratch/observed-integration/evidence/allocation-contract.md",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal.md",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/owner-cryptex-trust-decision.json",
+    ".scratch/observed-action-rollout/installed-cryptex-repair.md"
+  ],
+  "scope": "FixedXcodeInfo128KiB combined output only;64KiBinput and other commands; unwired bounded pure XML mount parser; exact-command fixture guard ownership transfer; no namespace/discovery/newnative authorization.",
+  "writerAssignments": {
+    "spec": "Only xcode-candidate-review/spec/**",
+    "standards": "Only xcode-candidate-review/standards/**"
+  },
+  "executionConstraint": "Read-only review/no native or store/device queries/tests/builds while author holds heavy window; inspect retained Source/evidence.",
+  "notWholeAcceptance": "Does not establish real installed compatibility, Lrows or final ticket12."
+}

@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: Xcode Info conversion accepts the observed 34501-byte input and 77555-byte JSON through production composition
+ok 1 - Xcode Info conversion accepts the observed 34501-byte input and 77555-byte JSON through production composition
+  ---
+  duration_ms: 36.196666
+  type: 'test'
+  ...
+# Subtest: Xcode Info installed proof requests the narrow cap and accepts the observed converted JSON size
+ok 2 - Xcode Info installed proof requests the narrow cap and accepts the observed converted JSON size
+  ---
+  duration_ms: 35.554458
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 196.651917

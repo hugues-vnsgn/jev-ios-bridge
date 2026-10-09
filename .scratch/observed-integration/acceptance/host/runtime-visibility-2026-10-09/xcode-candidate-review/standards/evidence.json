@@ -1,0 +1,87 @@
+{
+  "reviewer": "/root/installed_path_standards_review",
+  "role": "independent nonauthor Standards",
+  "atUtc": "2026-10-09T04:00:34.496155+00:00",
+  "base": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+  "candidate": "38aa879c3954c9d7742ef04059cad4d2fc824c87",
+  "candidateWorktree": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output",
+  "ownedHashes": {
+    "src/observed/allocation-config.ts": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+    "src/observed/installed-plist.ts": "c74ddcafaef4e244bd1183695cade8fe4858f609bc6f20a1b86727801bc8b896",
+    "tests/fixtures/observed-allocation-backend.ts": "5b8c6b14a463ee8ec312ac33655f18c0efc931c2c900784840342f7aeb0e3d80",
+    "tests/installed-plist.test.ts": "c383636a717b8220905f3814d9123ce9ee78cbb1b5dfeb0d82bdf8e80a1aa02c",
+    "tests/observed-allocation-config.test.ts": "1ae9db02cb08814a874d9b94ea872105ec2a88fe75d56e0f7263116698dbc4ad"
+  },
+  "source439CurrentAndCommittedOwnedMatch": true,
+  "protected434BaseProof": "static-audit.json",
+  "staticAuditSha256": "45d113658b9cbe137b8dd11fed741f5ff80f52ffaefbdb7d2265f46bda9e3047",
+  "finalLedgerObservedSha256": "c58806168f1b3e77876fb2c70d60dbda3ef1ca72a4ef55c5c295271da1f4e60a",
+  "fullDefaultChecks": {
+    "full-check-node26": {
+      "artifactHashes": {
+        "command.json": "292fab54e8048e6445b4f65f53891eaf2ab3be7c489d15dc86fec0a8707677ed",
+        "stdout.txt": "c6caa52bb0e9009c3fc57a2747d38a296f8478ae9f2a33897792d5d056003493",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "counts": {
+        "tests": 1819,
+        "pass": 1819,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "/opt/homebrew/bin/npm",
+        "run",
+        "check"
+      ],
+      "source439BeforeAfterMatch": true
+    },
+    "full-check-node24": {
+      "artifactHashes": {
+        "command.json": "7ffa7b71f2c51855b8c194f16951a0fb1ba76f126f56f0c1aa02c1d389471ac4",
+        "stdout.txt": "3ddfd184d8e9846902c0db1d201dfb7486c22518eeb646c18861b634c4537ff5",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "counts": {
+        "tests": 1819,
+        "pass": 1819,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "/opt/homebrew/bin/npm",
+        "run",
+        "check"
+      ],
+      "source439BeforeAfterMatch": true
+    }
+  },
+  "compiledMapHashes": {
+    "compiled-node26.json": "2ea567e81410f02c24210e5205b62e563a8dd38a3b0104e03c5cdcebfde5b56a",
+    "compiled-node24.json": "2ea567e81410f02c24210e5205b62e563a8dd38a3b0104e03c5cdcebfde5b56a",
+    "compiled-after-full-node26.json": "2ea567e81410f02c24210e5205b62e563a8dd38a3b0104e03c5cdcebfde5b56a",
+    "compiled-after-full-node24.json": "2ea567e81410f02c24210e5205b62e563a8dd38a3b0104e03c5cdcebfde5b56a"
+  },
+  "compiled69AcrossFourBuildsAndCurrentMatch": true,
+  "protectedCompiled67IndependentlyMatchBase": true,
+  "baseCompiledManifestSha256": "bf20ed727ce69f3243d1ae3ada91f694a28cc3106e37df0c468718e3f1d32a71",
+  "findings": {
+    "documentedBreaches": 0,
+    "materialHeuristics": 0
+  },
+  "reportWordCount": 321,
+  "limits": [
+    "Synthetic Xcode size/field models; original output size/hash derive from receipt, not retained reformatted JSON",
+    "Pure parser unwired",
+    "No new tests/builds/native/device/store/key operations or candidate edits",
+    "No installed/live/ticket12 acceptance"
+  ]
+}

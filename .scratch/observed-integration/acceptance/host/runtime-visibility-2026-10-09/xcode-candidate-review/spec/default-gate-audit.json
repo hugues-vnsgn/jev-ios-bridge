@@ -1,0 +1,123 @@
+{
+  "candidate": "38aa879c3954c9d7742ef04059cad4d2fc824c87",
+  "base": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+  "finalLedgerSha256": "c58806168f1b3e77876fb2c70d60dbda3ef1ca72a4ef55c5c295271da1f4e60a",
+  "checks": [
+    {
+      "name": "full-check-node26",
+      "receiptPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/full-check-node26/command.json",
+      "receiptSha256": "292fab54e8048e6445b4f65f53891eaf2ab3be7c489d15dc86fec0a8707677ed",
+      "stdoutSha256": "c6caa52bb0e9009c3fc57a2747d38a296f8478ae9f2a33897792d5d056003493",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "/opt/homebrew/bin/npm",
+        "run",
+        "check"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output",
+      "head": "38aa879c3954c9d7742ef04059cad4d2fc824c87",
+      "startUtc": "2026-10-09T03:51:24.137217+00:00",
+      "endUtc": "2026-10-09T03:53:45.207858+00:00",
+      "exitCode": 0,
+      "counts": {
+        "tests": 1819,
+        "pass": 1819,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceBeforeCount": 439,
+      "sourceAfterCount": 439,
+      "beforeAfterMatches439CandidateSource": true,
+      "rawByteCountsMatch": true,
+      "childUmask": "022",
+      "evidenceUmask": "077",
+      "sanitizedEnvironmentKeys": [
+        "PATH",
+        "HOME",
+        "TMPDIR",
+        "LANG",
+        "LC_ALL",
+        "npm_config_cache"
+      ],
+      "removedOverrides": true,
+      "actualDefaultScriptLines": [
+        "> jev-ios-bridge@1.3.1 check",
+        "> npm run typecheck && npm test && npm run build",
+        "> jev-ios-bridge@1.3.1 typecheck",
+        "> tsc --noEmit",
+        "> jev-ios-bridge@1.3.1 test",
+        "> tsx --test tests/*.test.ts",
+        "> jev-ios-bridge@1.3.1 build",
+        "> rm -rf dist && tsc -p tsconfig.build.json"
+      ],
+      "ledgerHashesMatch": true,
+      "rawCountsMatch": true
+    },
+    {
+      "name": "full-check-node24",
+      "receiptPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/full-check-node24/command.json",
+      "receiptSha256": "7ffa7b71f2c51855b8c194f16951a0fb1ba76f126f56f0c1aa02c1d389471ac4",
+      "stdoutSha256": "3ddfd184d8e9846902c0db1d201dfb7486c22518eeb646c18861b634c4537ff5",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "/opt/homebrew/bin/npm",
+        "run",
+        "check"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output",
+      "head": "38aa879c3954c9d7742ef04059cad4d2fc824c87",
+      "startUtc": "2026-10-09T03:53:57.081701+00:00",
+      "endUtc": "2026-10-09T03:56:18.237814+00:00",
+      "exitCode": 0,
+      "counts": {
+        "tests": 1819,
+        "pass": 1819,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceBeforeCount": 439,
+      "sourceAfterCount": 439,
+      "beforeAfterMatches439CandidateSource": true,
+      "rawByteCountsMatch": true,
+      "childUmask": "022",
+      "evidenceUmask": "077",
+      "sanitizedEnvironmentKeys": [
+        "PATH",
+        "HOME",
+        "TMPDIR",
+        "LANG",
+        "LC_ALL",
+        "npm_config_cache"
+      ],
+      "removedOverrides": true,
+      "actualDefaultScriptLines": [
+        "> jev-ios-bridge@1.3.1 check",
+        "> npm run typecheck && npm test && npm run build",
+        "> jev-ios-bridge@1.3.1 typecheck",
+        "> tsc --noEmit",
+        "> jev-ios-bridge@1.3.1 test",
+        "> tsx --test tests/*.test.ts",
+        "> jev-ios-bridge@1.3.1 build",
+        "> rm -rf dist && tsc -p tsconfig.build.json"
+      ],
+      "ledgerHashesMatch": true,
+      "rawCountsMatch": true
+    }
+  ],
+  "source439CurrentMatch": true,
+  "compiled69FocusedBothAndFullBothAndCurrentMatch": true,
+  "compiledManifestHashes": {
+    "compiled-node26.json": "2ea567e81410f02c24210e5205b62e563a8dd38a3b0104e03c5cdcebfde5b56a",
+    "compiled-node24.json": "2ea567e81410f02c24210e5205b62e563a8dd38a3b0104e03c5cdcebfde5b56a",
+    "compiled-after-full-node26.json": "2ea567e81410f02c24210e5205b62e563a8dd38a3b0104e03c5cdcebfde5b56a",
+    "compiled-after-full-node24.json": "2ea567e81410f02c24210e5205b62e563a8dd38a3b0104e03c5cdcebfde5b56a"
+  },
+  "auditIssues": [],
+  "qualification": "PASS is scoped host-only Spec review; not installed/live/finalticket12 acceptance."
+}

@@ -1,0 +1,82 @@
+{
+  "redAssociations": {
+    "xcode-red-node26": {
+      "allocationSourceMatchesBase": true
+    },
+    "xcode-red-node24": {
+      "allocationSourceMatchesBase": true
+    },
+    "other-combined-baseline-red-node26": {
+      "allocationSourceMatchesBase": true
+    },
+    "other-combined-baseline-red-node24": {
+      "allocationSourceMatchesBase": true
+    },
+    "fixture-contract-red-node26": {
+      "fixtureMatchesOriginal": true,
+      "testSourceSha256": "2c60dc193de830e4b94e30b28c39547ecf66e849c97dbf3a4dd4bb9d93bae444",
+      "testState": "Pre-final test expansion; exact failing contract name/line retained in raw log and current test453."
+    },
+    "fixture-contract-red-node24": {
+      "fixtureMatchesOriginal": true,
+      "testSourceSha256": "2c60dc193de830e4b94e30b28c39547ecf66e849c97dbf3a4dd4bb9d93bae444",
+      "testState": "Pre-final test expansion; exact failing contract name/line retained in raw log and current test453."
+    },
+    "parser-semantic-red-node26": {
+      "parserMatchesRetainedTracer": true,
+      "testMatchesRetainedSemanticRed": true
+    },
+    "parser-semantic-red-node24": {
+      "parserMatchesRetainedTracer": true,
+      "testMatchesRetainedSemanticRed": true
+    },
+    "parser-red-node26": {
+      "parserMissing": true,
+      "testMatchesRetainedInitialRed": true
+    },
+    "parser-red-node24": {
+      "parserMissing": true,
+      "testMatchesRetainedInitialRed": true
+    },
+    "intermediate-typecheck-node26": {
+      "failureOnlyParserNarrowing": true,
+      "parserSourceSha256": "72856674671c9035f373f6b43719193fa815f17c8056abe400a4c141cc0a8b16"
+    }
+  },
+  "allBooleanRedAssociationsPass": true,
+  "retainedXmlBytes": 3108,
+  "retainedXmlSha256": "338fdeb495a2a8d58be5e79ed9d2637d64bdbb6c7e9ba552b3aa345a34f2562d",
+  "embeddedXmlBytesMatch": true,
+  "retainedXcodeJsonHashMatch": true,
+  "retainedXcodeChildReceiptHashMatch": true,
+  "retainedXcodeChildSummaryMatch": true,
+  "retainedRequiredFieldsMatch": true,
+  "requiredFields": {
+    "CFBundleIdentifier": "com.apple.dt.Xcode",
+    "CFBundleExecutable": "Xcode",
+    "LSMinimumSystemVersion": "26.6"
+  },
+  "retainedXcodeChildSummary": {
+    "kind": "EXACT_XCODE_PLUTIL_1MIB",
+    "argv": [
+      "/usr/bin/plutil",
+      "-convert",
+      "json",
+      "-o",
+      "-",
+      "--",
+      "/Applications/Xcode.app/Contents/Info.plist"
+    ],
+    "exitCode": 0,
+    "observedCombinedBytes": 77555,
+    "retainedCombinedBytes": 77555,
+    "outputComplete": true,
+    "stdoutBytes": 77555,
+    "stderrBytes": 0,
+    "stdoutSha256": "3b78d94ef7ee6f9ab11db94a9b3aa2513c77668ff00fa3227a7a12186ac32d33",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "targetStable": true,
+    "inputBytes": 34501
+  },
+  "nativeOutputLimit": "Native output byte count and complete-output hash are retained receipt claims; stored JSON is sanitized/reformatted and not the original raw stdout."
+}

@@ -1,0 +1,28 @@
+TAP version 13
+# (node:13149) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: mapped allocation fixture permits the narrow exact Xcode Info cap and rejects other targets and higher caps
+not ok 1 - mapped allocation fixture permits the narrow exact Xcode Info cap and rejects other targets and higher caps
+  ---
+  duration_ms: 35.467458
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/observed-allocation-config.test.ts:1:29083'
+  failureType: 'testCodeFailure'
+  error: 'Unsafe fake source options'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assertNever (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/fixtures/observed-allocation-backend.ts:106:54)
+    Object.source (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/fixtures/observed-allocation-backend.ts:66:120)
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/observed-allocation-config.test.ts:455:27)
+    async Test.run (node:internal/test_runner/test:1069:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:332:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 162.86175

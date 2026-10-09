@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-09T03:54:01.833836+00:00",
+  "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+  "id": "ff805bee-c159-433e-aef6-f01b9d93ed59::/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+  "instanceId": "e508a1d0-2af3-44f9-8c8a-ff1b1d16215b",
+  "branch": "fix/installed-cryptex-runtime",
+  "base": "38aa879c3954c9d7742ef04059cad4d2fc824c87",
+  "source439AllMatch": true,
+  "clean": true,
+  "requestedParent": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "creationReceipt": "Orca create RPC returned runtime_unavailable after worktree creation began; no duplicate create retried. Same runtime status was ready. worktree show + git clean/unlocked checkout +439file hashes confirmed completion.",
+  "observedParentMetadata": null,
+  "lineageLimit": "Requested parent relationship was not recorded by Orca; Git stack base is independently confirmed.",
+  "orphanedOrOperatorDispatch": false,
+  "fallbackShell": "term_d99ff423-75ac-4b16-b3dd-811eb03e0aed confirmed connected ordinary shell in this worktree; left idle, no second device operator.",
+  "authorDispatch": "Pending review completion/free child slot and Root heavy window."
+}

@@ -1,0 +1,63 @@
+{
+  "at": "2026-10-09T03:59:37.104363+00:00",
+  "candidate": "38aa879c3954c9d7742ef04059cad4d2fc824c87",
+  "base": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+  "verdict": "PASS_AUTHOR_ACTUAL_DEFAULT_PROVENANCE_BOTH_NODES",
+  "gates": [
+    {
+      "receipt": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/full-check-node26/command.json",
+      "receiptSha256": "292fab54e8048e6445b4f65f53891eaf2ab3be7c489d15dc86fec0a8707677ed",
+      "stdoutSha256": "c6caa52bb0e9009c3fc57a2747d38a296f8478ae9f2a33897792d5d056003493",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "/opt/homebrew/bin/npm",
+        "run",
+        "check"
+      ],
+      "counts": {
+        "tests": 1819,
+        "pass": 1819,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "source439AllMatchesFreezeBeforeAfter": true,
+      "typecheckAndBuildInActualDefault": true,
+      "childUmask": "022",
+      "evidenceUmask": "077"
+    },
+    {
+      "receipt": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/full-check-node24/command.json",
+      "receiptSha256": "7ffa7b71f2c51855b8c194f16951a0fb1ba76f126f56f0c1aa02c1d389471ac4",
+      "stdoutSha256": "3ddfd184d8e9846902c0db1d201dfb7486c22518eeb646c18861b634c4537ff5",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "/opt/homebrew/bin/npm",
+        "run",
+        "check"
+      ],
+      "counts": {
+        "tests": 1819,
+        "pass": 1819,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "source439AllMatchesFreezeBeforeAfter": true,
+      "typecheckAndBuildInActualDefault": true,
+      "childUmask": "022",
+      "evidenceUmask": "077"
+    }
+  ],
+  "currentSource439AllMatchesFreeze": true,
+  "currentCompiled69AllMatchesFrozenFocusedBuild": true,
+  "independentReviews": "Awaiting final frozen reports",
+  "XcodeRawLimit": "77555B/originalhash complete-output receipt; retained sanitized/reformatted JSON differs and proves preserved required fields. Regression input/output sizes synthetic; no raw-byte reconstruction or new native probe.",
+  "nativeOrDeviceOperationsByRoot": 0
+}

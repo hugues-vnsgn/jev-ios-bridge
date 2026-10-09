@@ -1,0 +1,958 @@
+TAP version 13
+# Subtest: readonly mount metadata parses the retained 3108-byte diskutil XML and requires the exact mount
+ok 1 - readonly mount metadata parses the retained 3108-byte diskutil XML and requires the exact mount
+  ---
+  duration_ms: 0.8085
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses missing declaration
+not ok 2 - readonly mount metadata refuses missing declaration
+  ---
+  duration_ms: 0.775292
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:332:3)
+  ...
+# Subtest: readonly mount metadata refuses different encoding
+not ok 3 - readonly mount metadata refuses different encoding
+  ---
+  duration_ms: 0.076459
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses different doctype
+not ok 4 - readonly mount metadata refuses different doctype
+  ---
+  duration_ms: 0.427833
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses internal entity declaration
+not ok 5 - readonly mount metadata refuses internal entity declaration
+  ---
+  duration_ms: 0.049416
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses additional doctype
+not ok 6 - readonly mount metadata refuses additional doctype
+  ---
+  duration_ms: 0.039917
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses wrong plist version
+not ok 7 - readonly mount metadata refuses wrong plist version
+  ---
+  duration_ms: 0.093417
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses missing closing plist
+not ok 8 - readonly mount metadata refuses missing closing plist
+  ---
+  duration_ms: 0.041
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses trailing markup
+not ok 9 - readonly mount metadata refuses trailing markup
+  ---
+  duration_ms: 0.136292
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses trailing text
+not ok 10 - readonly mount metadata refuses trailing text
+  ---
+  duration_ms: 0.240416
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses duplicate required field
+not ok 11 - readonly mount metadata refuses duplicate required field
+  ---
+  duration_ms: 0.058583
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses decoded duplicate required field
+not ok 12 - readonly mount metadata refuses decoded duplicate required field
+  ---
+  duration_ms: 0.0405
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses duplicate unknown key
+not ok 13 - readonly mount metadata refuses duplicate unknown key
+  ---
+  duration_ms: 0.044209
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses key without value
+not ok 14 - readonly mount metadata refuses key without value
+  ---
+  duration_ms: 0.038042
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses value without key
+not ok 15 - readonly mount metadata refuses value without key
+  ---
+  duration_ms: 0.045458
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses unsupported tag
+not ok 16 - readonly mount metadata refuses unsupported tag
+  ---
+  duration_ms: 0.038958
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses element attribute
+not ok 17 - readonly mount metadata refuses element attribute
+  ---
+  duration_ms: 0.034417
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses mixed scalar markup
+not ok 18 - readonly mount metadata refuses mixed scalar markup
+  ---
+  duration_ms: 0.072459
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses comment
+not ok 19 - readonly mount metadata refuses comment
+  ---
+  duration_ms: 0.036333
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses processing instruction
+not ok 20 - readonly mount metadata refuses processing instruction
+  ---
+  duration_ms: 0.034458
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses CDATA
+not ok 21 - readonly mount metadata refuses CDATA
+  ---
+  duration_ms: 0.0405
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses unknown entity
+not ok 22 - readonly mount metadata refuses unknown entity
+  ---
+  duration_ms: 0.034958
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses unterminated entity
+not ok 23 - readonly mount metadata refuses unterminated entity
+  ---
+  duration_ms: 0.034334
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses nul numeric reference
+not ok 24 - readonly mount metadata refuses nul numeric reference
+  ---
+  duration_ms: 0.0305
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses surrogate numeric reference
+not ok 25 - readonly mount metadata refuses surrogate numeric reference
+  ---
+  duration_ms: 0.033875
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses out of range numeric reference
+not ok 26 - readonly mount metadata refuses out of range numeric reference
+  ---
+  duration_ms: 0.036084
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses invalid numeric reference
+not ok 27 - readonly mount metadata refuses invalid numeric reference
+  ---
+  duration_ms: 0.033291
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses invalid literal character
+not ok 28 - readonly mount metadata refuses invalid literal character
+  ---
+  duration_ms: 0.033375
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses unpaired surrogate
+not ok 29 - readonly mount metadata refuses unpaired surrogate
+  ---
+  duration_ms: 0.096334
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses forbidden text close
+not ok 30 - readonly mount metadata refuses forbidden text close
+  ---
+  duration_ms: 0.033875
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses invalid integer
+not ok 31 - readonly mount metadata refuses invalid integer
+  ---
+  duration_ms: 0.033583
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses invalid real
+not ok 32 - readonly mount metadata refuses invalid real
+  ---
+  duration_ms: 0.033584
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses overflowing real
+not ok 33 - readonly mount metadata refuses overflowing real
+  ---
+  duration_ms: 0.033375
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses invalid date
+not ok 34 - readonly mount metadata refuses invalid date
+  ---
+  duration_ms: 0.033333
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses invalid base64
+not ok 35 - readonly mount metadata refuses invalid base64
+  ---
+  duration_ms: 0.032959
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses noncanonical base64 padding
+not ok 36 - readonly mount metadata refuses noncanonical base64 padding
+  ---
+  duration_ms: 0.03575
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses mismatched nested closing tag
+not ok 37 - readonly mount metadata refuses mismatched nested closing tag
+  ---
+  duration_ms: 0.033292
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses nested writable substitute
+not ok 38 - readonly mount metadata refuses nested writable substitute
+  ---
+  duration_ms: 0.033291
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses input above 64KiB
+not ok 39 - readonly mount metadata refuses input above 64KiB
+  ---
+  duration_ms: 0.039125
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses depth above 32
+not ok 40 - readonly mount metadata refuses depth above 32
+  ---
+  duration_ms: 0.034791
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses nodes above 8192
+not ok 41 - readonly mount metadata refuses nodes above 8192
+  ---
+  duration_ms: 0.037791
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:7925'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1062:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+    Test.postRun (node:internal/test_runner/test:1191:19)
+    Test.run (node:internal/test_runner/test:1119:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+  ...
+# Subtest: readonly mount metadata refuses Writable as <true/>
+ok 42 - readonly mount metadata refuses Writable as <true/>
+  ---
+  duration_ms: 0.042625
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses Writable as <string>false</string>
+ok 43 - readonly mount metadata refuses Writable as <string>false</string>
+  ---
+  duration_ms: 0.023875
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses Writable as <integer>0</integer>
+ok 44 - readonly mount metadata refuses Writable as <integer>0</integer>
+  ---
+  duration_ms: 0.025042
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses Writable as <array><false/></array>
+ok 45 - readonly mount metadata refuses Writable as <array><false/></array>
+  ---
+  duration_ms: 0.019833
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableMedia as <true/>
+ok 46 - readonly mount metadata refuses WritableMedia as <true/>
+  ---
+  duration_ms: 0.019708
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableMedia as <string>false</string>
+ok 47 - readonly mount metadata refuses WritableMedia as <string>false</string>
+  ---
+  duration_ms: 0.019666
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableMedia as <integer>0</integer>
+ok 48 - readonly mount metadata refuses WritableMedia as <integer>0</integer>
+  ---
+  duration_ms: 0.020667
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableMedia as <array><false/></array>
+ok 49 - readonly mount metadata refuses WritableMedia as <array><false/></array>
+  ---
+  duration_ms: 0.024167
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableVolume as <true/>
+ok 50 - readonly mount metadata refuses WritableVolume as <true/>
+  ---
+  duration_ms: 0.065208
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableVolume as <string>false</string>
+ok 51 - readonly mount metadata refuses WritableVolume as <string>false</string>
+  ---
+  duration_ms: 0.021292
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableVolume as <integer>0</integer>
+ok 52 - readonly mount metadata refuses WritableVolume as <integer>0</integer>
+  ---
+  duration_ms: 0.021958
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableVolume as <array><false/></array>
+ok 53 - readonly mount metadata refuses WritableVolume as <array><false/></array>
+  ---
+  duration_ms: 0.022958
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata requires MountPoint at the root
+ok 54 - readonly mount metadata requires MountPoint at the root
+  ---
+  duration_ms: 0.037125
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata requires Writable at the root
+ok 55 - readonly mount metadata requires Writable at the root
+  ---
+  duration_ms: 0.024792
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata requires WritableMedia at the root
+ok 56 - readonly mount metadata requires WritableMedia at the root
+  ---
+  duration_ms: 0.018375
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata requires WritableVolume at the root
+ok 57 - readonly mount metadata requires WritableVolume at the root
+  ---
+  duration_ms: 0.02075
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses a different mount or coerced MountPoint type
+ok 58 - readonly mount metadata refuses a different mount or coerced MountPoint type
+  ---
+  duration_ms: 0.037833
+  type: 'test'
+  ...
+1..58
+# tests 58
+# suites 0
+# pass 18
+# fail 40
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 114.282791

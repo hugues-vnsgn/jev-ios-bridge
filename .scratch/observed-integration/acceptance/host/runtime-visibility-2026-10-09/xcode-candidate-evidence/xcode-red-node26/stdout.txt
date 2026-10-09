@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: Xcode Info conversion accepts the observed 34501-byte input and 77555-byte JSON through production composition
+not ok 1 - Xcode Info conversion accepts the observed 34501-byte input and 77555-byte JSON through production composition
+  ---
+  duration_ms: 40.708792
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/observed-allocation-config.test.ts:1:26576'
+  failureType: 'testCodeFailure'
+  error: 'Host process is not authorized'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    process (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/src/observed/allocation-config.ts:100:182)
+    TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/observed-allocation-config.test.ts:422:21)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: Xcode Info installed proof requests the narrow cap and accepts the observed converted JSON size
+not ok 2 - Xcode Info installed proof requests the narrow cap and accepts the observed converted JSON size
+  ---
+  duration_ms: 30.992
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/observed-allocation-config.test.ts:1:28037'
+  failureType: 'testCodeFailure'
+  error: 'HOST_PREREQUISITE_MISSING'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    verifyInstalledCompatibility (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/src/observed/allocation-config.ts:230:19)
+    async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/observed-allocation-config.test.ts:444:19)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 677.694583

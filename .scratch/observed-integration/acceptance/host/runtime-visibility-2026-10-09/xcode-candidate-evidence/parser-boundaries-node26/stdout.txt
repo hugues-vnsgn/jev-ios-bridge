@@ -1,0 +1,436 @@
+TAP version 13
+# Subtest: readonly mount metadata parses the retained 3108-byte diskutil XML and requires the exact mount
+ok 1 - readonly mount metadata parses the retained 3108-byte diskutil XML and requires the exact mount
+  ---
+  duration_ms: 1.293708
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses missing declaration
+ok 2 - readonly mount metadata refuses missing declaration
+  ---
+  duration_ms: 0.145
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses different encoding
+ok 3 - readonly mount metadata refuses different encoding
+  ---
+  duration_ms: 0.060375
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses different doctype
+ok 4 - readonly mount metadata refuses different doctype
+  ---
+  duration_ms: 0.054541
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses internal entity declaration
+ok 5 - readonly mount metadata refuses internal entity declaration
+  ---
+  duration_ms: 0.048875
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses additional doctype
+ok 6 - readonly mount metadata refuses additional doctype
+  ---
+  duration_ms: 0.045334
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses wrong plist version
+ok 7 - readonly mount metadata refuses wrong plist version
+  ---
+  duration_ms: 0.033083
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses missing closing plist
+ok 8 - readonly mount metadata refuses missing closing plist
+  ---
+  duration_ms: 0.03875
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses trailing markup
+ok 9 - readonly mount metadata refuses trailing markup
+  ---
+  duration_ms: 0.050042
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses trailing text
+ok 10 - readonly mount metadata refuses trailing text
+  ---
+  duration_ms: 0.0625
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses duplicate required field
+ok 11 - readonly mount metadata refuses duplicate required field
+  ---
+  duration_ms: 0.044333
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses decoded duplicate required field
+ok 12 - readonly mount metadata refuses decoded duplicate required field
+  ---
+  duration_ms: 0.050792
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses duplicate unknown key
+ok 13 - readonly mount metadata refuses duplicate unknown key
+  ---
+  duration_ms: 0.036375
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses key without value
+ok 14 - readonly mount metadata refuses key without value
+  ---
+  duration_ms: 0.031833
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses value without key
+ok 15 - readonly mount metadata refuses value without key
+  ---
+  duration_ms: 0.264542
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses unsupported tag
+ok 16 - readonly mount metadata refuses unsupported tag
+  ---
+  duration_ms: 0.059208
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses element attribute
+ok 17 - readonly mount metadata refuses element attribute
+  ---
+  duration_ms: 0.038
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses mixed scalar markup
+ok 18 - readonly mount metadata refuses mixed scalar markup
+  ---
+  duration_ms: 0.033708
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses comment
+ok 19 - readonly mount metadata refuses comment
+  ---
+  duration_ms: 0.030959
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses processing instruction
+ok 20 - readonly mount metadata refuses processing instruction
+  ---
+  duration_ms: 0.036584
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses CDATA
+ok 21 - readonly mount metadata refuses CDATA
+  ---
+  duration_ms: 0.031959
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses unknown entity
+ok 22 - readonly mount metadata refuses unknown entity
+  ---
+  duration_ms: 0.048167
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses unterminated entity
+ok 23 - readonly mount metadata refuses unterminated entity
+  ---
+  duration_ms: 0.030542
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses nul numeric reference
+ok 24 - readonly mount metadata refuses nul numeric reference
+  ---
+  duration_ms: 0.035917
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses surrogate numeric reference
+ok 25 - readonly mount metadata refuses surrogate numeric reference
+  ---
+  duration_ms: 0.049917
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses out of range numeric reference
+ok 26 - readonly mount metadata refuses out of range numeric reference
+  ---
+  duration_ms: 0.039459
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses invalid numeric reference
+ok 27 - readonly mount metadata refuses invalid numeric reference
+  ---
+  duration_ms: 0.041583
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses invalid literal character
+ok 28 - readonly mount metadata refuses invalid literal character
+  ---
+  duration_ms: 0.034459
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses unpaired surrogate
+ok 29 - readonly mount metadata refuses unpaired surrogate
+  ---
+  duration_ms: 0.042375
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses forbidden text close
+ok 30 - readonly mount metadata refuses forbidden text close
+  ---
+  duration_ms: 0.036375
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses invalid integer
+ok 31 - readonly mount metadata refuses invalid integer
+  ---
+  duration_ms: 0.036792
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses invalid real
+ok 32 - readonly mount metadata refuses invalid real
+  ---
+  duration_ms: 0.076208
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses overflowing real
+ok 33 - readonly mount metadata refuses overflowing real
+  ---
+  duration_ms: 0.05125
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses invalid date
+ok 34 - readonly mount metadata refuses invalid date
+  ---
+  duration_ms: 0.586125
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses invalid base64
+ok 35 - readonly mount metadata refuses invalid base64
+  ---
+  duration_ms: 0.074334
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses noncanonical base64 padding
+ok 36 - readonly mount metadata refuses noncanonical base64 padding
+  ---
+  duration_ms: 0.055
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses mismatched nested closing tag
+ok 37 - readonly mount metadata refuses mismatched nested closing tag
+  ---
+  duration_ms: 0.03475
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses nested writable substitute
+ok 38 - readonly mount metadata refuses nested writable substitute
+  ---
+  duration_ms: 0.034959
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses input above 64KiB
+ok 39 - readonly mount metadata refuses input above 64KiB
+  ---
+  duration_ms: 0.022958
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses depth above 32
+ok 40 - readonly mount metadata refuses depth above 32
+  ---
+  duration_ms: 0.056208
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses nodes above 8192
+ok 41 - readonly mount metadata refuses nodes above 8192
+  ---
+  duration_ms: 2.404209
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses Writable as <true/>
+ok 42 - readonly mount metadata refuses Writable as <true/>
+  ---
+  duration_ms: 0.066625
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses Writable as <string>false</string>
+ok 43 - readonly mount metadata refuses Writable as <string>false</string>
+  ---
+  duration_ms: 0.035333
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses Writable as <integer>0</integer>
+ok 44 - readonly mount metadata refuses Writable as <integer>0</integer>
+  ---
+  duration_ms: 0.035417
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses Writable as <array><false/></array>
+ok 45 - readonly mount metadata refuses Writable as <array><false/></array>
+  ---
+  duration_ms: 0.144333
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableMedia as <true/>
+ok 46 - readonly mount metadata refuses WritableMedia as <true/>
+  ---
+  duration_ms: 0.033167
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableMedia as <string>false</string>
+ok 47 - readonly mount metadata refuses WritableMedia as <string>false</string>
+  ---
+  duration_ms: 0.028292
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableMedia as <integer>0</integer>
+ok 48 - readonly mount metadata refuses WritableMedia as <integer>0</integer>
+  ---
+  duration_ms: 0.027791
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableMedia as <array><false/></array>
+ok 49 - readonly mount metadata refuses WritableMedia as <array><false/></array>
+  ---
+  duration_ms: 0.0265
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableVolume as <true/>
+ok 50 - readonly mount metadata refuses WritableVolume as <true/>
+  ---
+  duration_ms: 0.026334
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableVolume as <string>false</string>
+ok 51 - readonly mount metadata refuses WritableVolume as <string>false</string>
+  ---
+  duration_ms: 0.026625
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableVolume as <integer>0</integer>
+ok 52 - readonly mount metadata refuses WritableVolume as <integer>0</integer>
+  ---
+  duration_ms: 0.025917
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableVolume as <array><false/></array>
+ok 53 - readonly mount metadata refuses WritableVolume as <array><false/></array>
+  ---
+  duration_ms: 0.025417
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata requires MountPoint at the root
+ok 54 - readonly mount metadata requires MountPoint at the root
+  ---
+  duration_ms: 0.054125
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata requires Writable at the root
+ok 55 - readonly mount metadata requires Writable at the root
+  ---
+  duration_ms: 0.0245
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata requires WritableMedia at the root
+ok 56 - readonly mount metadata requires WritableMedia at the root
+  ---
+  duration_ms: 0.03075
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata requires WritableVolume at the root
+ok 57 - readonly mount metadata requires WritableVolume at the root
+  ---
+  duration_ms: 0.025125
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses a different mount or coerced MountPoint type
+ok 58 - readonly mount metadata refuses a different mount or coerced MountPoint type
+  ---
+  duration_ms: 0.043458
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata accepts bounded unknown plist values without substituting required fields
+ok 59 - readonly mount metadata accepts bounded unknown plist values without substituting required fields
+  ---
+  duration_ms: 0.081958
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata decodes built-in and numeric references once and matches exact decoded strings
+ok 60 - readonly mount metadata decodes built-in and numeric references once and matches exact decoded strings
+  ---
+  duration_ms: 0.071292
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata accepts exactly 64KiB of input and counts UTF-8 bytes
+ok 61 - readonly mount metadata accepts exactly 64KiB of input and counts UTF-8 bytes
+  ---
+  duration_ms: 1.197916
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata accepts depth 32 including the plist wrapper and exactly 8192 element nodes
+ok 62 - readonly mount metadata accepts depth 32 including the plist wrapper and exactly 8192 element nodes
+  ---
+  duration_ms: 1.777666
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses nonstandard declaration prefix "﻿"
+ok 63 - readonly mount metadata refuses nonstandard declaration prefix "﻿"
+  ---
+  duration_ms: 0.056708
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses nonstandard declaration prefix " "
+ok 64 - readonly mount metadata refuses nonstandard declaration prefix " "
+  ---
+  duration_ms: 0.034792
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses nonstandard declaration prefix "<?xml version=\\"1.0\\"?>"
+ok 65 - readonly mount metadata refuses nonstandard declaration prefix "<?xml version=\\"1.0\\"?>"
+  ---
+  duration_ms: 0.022875
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata requires a complete root dictionary <array><dict><key>Mo
+ok 66 - readonly mount metadata requires a complete root dictionary <array><dict><key>Mo
+  ---
+  duration_ms: 0.05875
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata requires a complete root dictionary <string>/private/var
+ok 67 - readonly mount metadata requires a complete root dictionary <string>/private/var
+  ---
+  duration_ms: 0.023834
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata requires a complete root dictionary <dict/>
+ok 68 - readonly mount metadata requires a complete root dictionary <dict/>
+  ---
+  duration_ms: 0.021959
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses non-text input object
+ok 69 - readonly mount metadata refuses non-text input object
+  ---
+  duration_ms: 0.039209
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses non-text input number
+ok 70 - readonly mount metadata refuses non-text input number
+  ---
+  duration_ms: 0.016875
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses non-text input object
+ok 71 - readonly mount metadata refuses non-text input object
+  ---
+  duration_ms: 0.016
+  type: 'test'
+  ...
+1..71
+# tests 71
+# suites 0
+# pass 71
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 99.498042

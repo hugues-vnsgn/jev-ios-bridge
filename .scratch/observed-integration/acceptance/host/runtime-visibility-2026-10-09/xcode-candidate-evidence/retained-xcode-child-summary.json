@@ -1,0 +1,22 @@
+{
+  "kind": "EXACT_XCODE_PLUTIL_1MIB",
+  "argv": [
+    "/usr/bin/plutil",
+    "-convert",
+    "json",
+    "-o",
+    "-",
+    "--",
+    "/Applications/Xcode.app/Contents/Info.plist"
+  ],
+  "exitCode": 0,
+  "observedCombinedBytes": 77555,
+  "retainedCombinedBytes": 77555,
+  "outputComplete": true,
+  "stdoutBytes": 77555,
+  "stderrBytes": 0,
+  "stdoutSha256": "3b78d94ef7ee6f9ab11db94a9b3aa2513c77668ff00fa3227a7a12186ac32d33",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "targetStable": true,
+  "inputBytes": 34501
+}

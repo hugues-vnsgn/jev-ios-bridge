@@ -1,0 +1,1066 @@
+TAP version 13
+# Subtest: readonly mount metadata parses the retained 3108-byte diskutil XML and requires the exact mount
+ok 1 - readonly mount metadata parses the retained 3108-byte diskutil XML and requires the exact mount
+  ---
+  duration_ms: 1.749417
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses missing declaration
+ok 2 - readonly mount metadata refuses missing declaration
+  ---
+  duration_ms: 0.207167
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses different encoding
+ok 3 - readonly mount metadata refuses different encoding
+  ---
+  duration_ms: 4.920542
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses different doctype
+ok 4 - readonly mount metadata refuses different doctype
+  ---
+  duration_ms: 0.091416
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses internal entity declaration
+ok 5 - readonly mount metadata refuses internal entity declaration
+  ---
+  duration_ms: 0.050541
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses additional doctype
+ok 6 - readonly mount metadata refuses additional doctype
+  ---
+  duration_ms: 0.046458
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses wrong plist version
+ok 7 - readonly mount metadata refuses wrong plist version
+  ---
+  duration_ms: 0.048833
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses missing closing plist
+ok 8 - readonly mount metadata refuses missing closing plist
+  ---
+  duration_ms: 0.063291
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses trailing markup
+ok 9 - readonly mount metadata refuses trailing markup
+  ---
+  duration_ms: 0.062209
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses trailing text
+ok 10 - readonly mount metadata refuses trailing text
+  ---
+  duration_ms: 0.05025
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses duplicate required field
+ok 11 - readonly mount metadata refuses duplicate required field
+  ---
+  duration_ms: 0.045542
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses decoded duplicate required field
+ok 12 - readonly mount metadata refuses decoded duplicate required field
+  ---
+  duration_ms: 0.086959
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses duplicate unknown key
+ok 13 - readonly mount metadata refuses duplicate unknown key
+  ---
+  duration_ms: 0.058416
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses key without value
+ok 14 - readonly mount metadata refuses key without value
+  ---
+  duration_ms: 0.048166
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses value without key
+ok 15 - readonly mount metadata refuses value without key
+  ---
+  duration_ms: 0.0435
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses unsupported tag
+ok 16 - readonly mount metadata refuses unsupported tag
+  ---
+  duration_ms: 0.065292
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses element attribute
+ok 17 - readonly mount metadata refuses element attribute
+  ---
+  duration_ms: 0.064042
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses mixed scalar markup
+ok 18 - readonly mount metadata refuses mixed scalar markup
+  ---
+  duration_ms: 0.049458
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses comment
+ok 19 - readonly mount metadata refuses comment
+  ---
+  duration_ms: 0.050625
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses processing instruction
+ok 20 - readonly mount metadata refuses processing instruction
+  ---
+  duration_ms: 0.0525
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses CDATA
+ok 21 - readonly mount metadata refuses CDATA
+  ---
+  duration_ms: 0.057375
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses unknown entity
+ok 22 - readonly mount metadata refuses unknown entity
+  ---
+  duration_ms: 0.070833
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses unterminated entity
+ok 23 - readonly mount metadata refuses unterminated entity
+  ---
+  duration_ms: 0.048125
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses nul numeric reference
+ok 24 - readonly mount metadata refuses nul numeric reference
+  ---
+  duration_ms: 0.06
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses surrogate numeric reference
+ok 25 - readonly mount metadata refuses surrogate numeric reference
+  ---
+  duration_ms: 0.057958
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses out of range numeric reference
+ok 26 - readonly mount metadata refuses out of range numeric reference
+  ---
+  duration_ms: 0.054834
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses invalid numeric reference
+ok 27 - readonly mount metadata refuses invalid numeric reference
+  ---
+  duration_ms: 0.049291
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses invalid literal character
+ok 28 - readonly mount metadata refuses invalid literal character
+  ---
+  duration_ms: 0.044416
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses unpaired surrogate
+ok 29 - readonly mount metadata refuses unpaired surrogate
+  ---
+  duration_ms: 0.05725
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses forbidden text close
+ok 30 - readonly mount metadata refuses forbidden text close
+  ---
+  duration_ms: 0.053167
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses invalid integer
+ok 31 - readonly mount metadata refuses invalid integer
+  ---
+  duration_ms: 0.047458
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses invalid real
+ok 32 - readonly mount metadata refuses invalid real
+  ---
+  duration_ms: 0.078792
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses overflowing real
+ok 33 - readonly mount metadata refuses overflowing real
+  ---
+  duration_ms: 0.080375
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses invalid date
+ok 34 - readonly mount metadata refuses invalid date
+  ---
+  duration_ms: 0.90225
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses invalid base64
+ok 35 - readonly mount metadata refuses invalid base64
+  ---
+  duration_ms: 0.070958
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses noncanonical base64 padding
+ok 36 - readonly mount metadata refuses noncanonical base64 padding
+  ---
+  duration_ms: 0.069541
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses mismatched nested closing tag
+ok 37 - readonly mount metadata refuses mismatched nested closing tag
+  ---
+  duration_ms: 0.047708
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses nested writable substitute
+ok 38 - readonly mount metadata refuses nested writable substitute
+  ---
+  duration_ms: 0.056083
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses input above 64KiB
+ok 39 - readonly mount metadata refuses input above 64KiB
+  ---
+  duration_ms: 0.0305
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses depth above 32
+ok 40 - readonly mount metadata refuses depth above 32
+  ---
+  duration_ms: 0.089167
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses nodes above 8192
+ok 41 - readonly mount metadata refuses nodes above 8192
+  ---
+  duration_ms: 4.383917
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses Writable as <true/>
+ok 42 - readonly mount metadata refuses Writable as <true/>
+  ---
+  duration_ms: 0.103208
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses Writable as <string>false</string>
+ok 43 - readonly mount metadata refuses Writable as <string>false</string>
+  ---
+  duration_ms: 0.046208
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses Writable as <integer>0</integer>
+ok 44 - readonly mount metadata refuses Writable as <integer>0</integer>
+  ---
+  duration_ms: 0.043292
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses Writable as <array><false/></array>
+ok 45 - readonly mount metadata refuses Writable as <array><false/></array>
+  ---
+  duration_ms: 0.050458
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableMedia as <true/>
+ok 46 - readonly mount metadata refuses WritableMedia as <true/>
+  ---
+  duration_ms: 0.037584
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableMedia as <string>false</string>
+ok 47 - readonly mount metadata refuses WritableMedia as <string>false</string>
+  ---
+  duration_ms: 0.037166
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableMedia as <integer>0</integer>
+ok 48 - readonly mount metadata refuses WritableMedia as <integer>0</integer>
+  ---
+  duration_ms: 0.036709
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableMedia as <array><false/></array>
+ok 49 - readonly mount metadata refuses WritableMedia as <array><false/></array>
+  ---
+  duration_ms: 0.03625
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableVolume as <true/>
+ok 50 - readonly mount metadata refuses WritableVolume as <true/>
+  ---
+  duration_ms: 0.03575
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableVolume as <string>false</string>
+ok 51 - readonly mount metadata refuses WritableVolume as <string>false</string>
+  ---
+  duration_ms: 0.045167
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableVolume as <integer>0</integer>
+ok 52 - readonly mount metadata refuses WritableVolume as <integer>0</integer>
+  ---
+  duration_ms: 0.0375
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses WritableVolume as <array><false/></array>
+ok 53 - readonly mount metadata refuses WritableVolume as <array><false/></array>
+  ---
+  duration_ms: 0.035625
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata requires MountPoint at the root
+ok 54 - readonly mount metadata requires MountPoint at the root
+  ---
+  duration_ms: 0.052583
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata requires Writable at the root
+ok 55 - readonly mount metadata requires Writable at the root
+  ---
+  duration_ms: 0.037667
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata requires WritableMedia at the root
+ok 56 - readonly mount metadata requires WritableMedia at the root
+  ---
+  duration_ms: 0.034834
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata requires WritableVolume at the root
+ok 57 - readonly mount metadata requires WritableVolume at the root
+  ---
+  duration_ms: 0.038083
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses a different mount or coerced MountPoint type
+ok 58 - readonly mount metadata refuses a different mount or coerced MountPoint type
+  ---
+  duration_ms: 0.076666
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata accepts bounded unknown plist values without substituting required fields
+ok 59 - readonly mount metadata accepts bounded unknown plist values without substituting required fields
+  ---
+  duration_ms: 0.142083
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata decodes built-in and numeric references once and matches exact decoded strings
+ok 60 - readonly mount metadata decodes built-in and numeric references once and matches exact decoded strings
+  ---
+  duration_ms: 0.11125
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata accepts exactly 64KiB of input and counts UTF-8 bytes
+ok 61 - readonly mount metadata accepts exactly 64KiB of input and counts UTF-8 bytes
+  ---
+  duration_ms: 5.410334
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata accepts depth 32 including the plist wrapper and exactly 8192 element nodes
+ok 62 - readonly mount metadata accepts depth 32 including the plist wrapper and exactly 8192 element nodes
+  ---
+  duration_ms: 3.4045
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses nonstandard declaration prefix "﻿"
+ok 63 - readonly mount metadata refuses nonstandard declaration prefix "﻿"
+  ---
+  duration_ms: 0.080792
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses nonstandard declaration prefix " "
+ok 64 - readonly mount metadata refuses nonstandard declaration prefix " "
+  ---
+  duration_ms: 0.049875
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses nonstandard declaration prefix "<?xml version=\\"1.0\\"?>"
+ok 65 - readonly mount metadata refuses nonstandard declaration prefix "<?xml version=\\"1.0\\"?>"
+  ---
+  duration_ms: 0.033542
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata requires a complete root dictionary <array><dict><key>Mo
+ok 66 - readonly mount metadata requires a complete root dictionary <array><dict><key>Mo
+  ---
+  duration_ms: 0.058083
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata requires a complete root dictionary <string>/private/var
+ok 67 - readonly mount metadata requires a complete root dictionary <string>/private/var
+  ---
+  duration_ms: 0.083958
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata requires a complete root dictionary <dict/>
+ok 68 - readonly mount metadata requires a complete root dictionary <dict/>
+  ---
+  duration_ms: 0.028834
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses non-text input object
+ok 69 - readonly mount metadata refuses non-text input object
+  ---
+  duration_ms: 0.031458
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses non-text input number
+ok 70 - readonly mount metadata refuses non-text input number
+  ---
+  duration_ms: 0.02375
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses non-text input object
+ok 71 - readonly mount metadata refuses non-text input object
+  ---
+  duration_ms: 0.017958
+  type: 'test'
+  ...
+# Subtest: readonly mount metadata refuses external entity definitions without resolving them
+ok 72 - readonly mount metadata refuses external entity definitions without resolving them
+  ---
+  duration_ms: 0.055583
+  type: 'test'
+  ...
+# Subtest: strict preparation parsing fills only the overall default and canonicalizes object order
+ok 73 - strict preparation parsing fills only the overall default and canonicalizes object order
+  ---
+  duration_ms: 3.084917
+  type: 'test'
+  ...
+# Subtest: private fixed account configuration uses defaults and refuses unsafe or malformed settings
+ok 74 - private fixed account configuration uses defaults and refuses unsafe or malformed settings
+  ---
+  duration_ms: 10.645
+  type: 'test'
+  ...
+# Subtest: installed proof uses exact IDs and RuntimeRoot OS, never internal bundle or newest runtime versions
+ok 75 - installed proof uses exact IDs and RuntimeRoot OS, never internal bundle or newest runtime versions
+  ---
+  duration_ms: 58.13625
+  type: 'test'
+  ...
+# Subtest: installed metadata replacement during plutil cannot supply compatibility even with identical bytes
+ok 76 - installed metadata replacement during plutil cannot supply compatibility even with identical bytes
+  ---
+  duration_ms: 29.809916
+  type: 'test'
+  ...
+# Subtest: production process composition allows only exact create and trusted fixed plist conversion with sanitized environment
+ok 77 - production process composition allows only exact create and trusted fixed plist conversion with sanitized environment
+  ---
+  duration_ms: 26.585541
+  type: 'test'
+  ...
+# Subtest: production child cancellation and capped output do not claim settlement until the actual child closes
+ok 78 - production child cancellation and capped output do not claim settlement until the actual child closes
+  ---
+  duration_ms: 27.297375
+  type: 'test'
+  ...
+# Subtest: installed Xcode identity mismatch refuses without host effects
+ok 79 - installed Xcode identity mismatch refuses without host effects
+  ---
+  duration_ms: 27.441625
+  type: 'test'
+  ...
+# Subtest: installed Xcode executable mismatch refuses without host effects
+ok 80 - installed Xcode executable mismatch refuses without host effects
+  ---
+  duration_ms: 31.466959
+  type: 'test'
+  ...
+# Subtest: installed Xcode min host mismatch refuses without host effects
+ok 81 - installed Xcode min host mismatch refuses without host effects
+  ---
+  duration_ms: 29.537167
+  type: 'test'
+  ...
+# Subtest: installed Xcode version mismatch refuses without host effects
+ok 82 - installed Xcode version mismatch refuses without host effects
+  ---
+  duration_ms: 43.928041
+  type: 'test'
+  ...
+# Subtest: installed Xcode build mismatch refuses without host effects
+ok 83 - installed Xcode build mismatch refuses without host effects
+  ---
+  duration_ms: 30.732458
+  type: 'test'
+  ...
+# Subtest: installed device architecture mismatch refuses without host effects
+ok 84 - installed device architecture mismatch refuses without host effects
+  ---
+  duration_ms: 39.111
+  type: 'test'
+  ...
+# Subtest: installed device family mismatch refuses without host effects
+ok 85 - installed device family mismatch refuses without host effects
+  ---
+  duration_ms: 31.23225
+  type: 'test'
+  ...
+# Subtest: installed device min runtime mismatch refuses without host effects
+ok 86 - installed device min runtime mismatch refuses without host effects
+  ---
+  duration_ms: 35.857958
+  type: 'test'
+  ...
+# Subtest: installed device max runtime mismatch refuses without host effects
+ok 87 - installed device max runtime mismatch refuses without host effects
+  ---
+  duration_ms: 29.764459
+  type: 'test'
+  ...
+# Subtest: installed runtime platform mismatch refuses without host effects
+ok 88 - installed runtime platform mismatch refuses without host effects
+  ---
+  duration_ms: 35.65225
+  type: 'test'
+  ...
+# Subtest: installed runtime architecture mismatch refuses without host effects
+ok 89 - installed runtime architecture mismatch refuses without host effects
+  ---
+  duration_ms: 30.014084
+  type: 'test'
+  ...
+# Subtest: installed runtime family mismatch refuses without host effects
+ok 90 - installed runtime family mismatch refuses without host effects
+  ---
+  duration_ms: 32.61825
+  type: 'test'
+  ...
+# Subtest: installed runtime min host mismatch refuses without host effects
+ok 91 - installed runtime min host mismatch refuses without host effects
+  ---
+  duration_ms: 28.178708
+  type: 'test'
+  ...
+# Subtest: installed runtime declared OS mismatch refuses without host effects
+ok 92 - installed runtime declared OS mismatch refuses without host effects
+  ---
+  duration_ms: 33.559709
+  type: 'test'
+  ...
+# Subtest: installed runtime actual OS mismatch refuses without host effects
+ok 93 - installed runtime actual OS mismatch refuses without host effects
+  ---
+  duration_ms: 31.507417
+  type: 'test'
+  ...
+# Subtest: installed runtime build mismatch refuses without host effects
+ok 94 - installed runtime build mismatch refuses without host effects
+  ---
+  duration_ms: 29.159375
+  type: 'test'
+  ...
+# Subtest: runtime mounted volume metadata is accepted while missing executable, unsafe metadata and excessive enumeration refuse
+ok 95 - runtime mounted volume metadata is accepted while missing executable, unsafe metadata and excessive enumeration refuse
+  ---
+  duration_ms: 144.1395
+  type: 'test'
+  ...
+# Subtest: config becoming public between permission validation and stable read refuses
+ok 96 - config becoming public between permission validation and stable read refuses
+  ---
+  duration_ms: 31.330375
+  type: 'test'
+  ...
+# Subtest: child error alone is not process settlement: a potentially live child stays tracked until close
+ok 97 - child error alone is not process settlement: a potentially live child stays tracked until close
+  ---
+  duration_ms: 34.962708
+  type: 'test'
+  ...
+# Subtest: private config rejects symlink, hardlink and overlong file without consulting alternate roots
+ok 98 - private config rejects symlink, hardlink and overlong file without consulting alternate roots
+  ---
+  duration_ms: 79.080417
+  type: 'test'
+  ...
+# Subtest: canonical digest keeps build and supplied source immutable while invalid non-JSON requests stay safe
+ok 99 - canonical digest keeps build and supplied source immutable while invalid non-JSON requests stay safe
+  ---
+  duration_ms: 3.719084
+  type: 'test'
+  ...
+# Subtest: child abort never reports a successful receipt even when its eventual close code is zero
+ok 100 - child abort never reports a successful receipt even when its eventual close code is zero
+  ---
+  duration_ms: 26.380375
+  type: 'test'
+  ...
+# Subtest: child deadline never reports a successful receipt even when its eventual close code is zero
+ok 101 - child deadline never reports a successful receipt even when its eventual close code is zero
+  ---
+  duration_ms: 44.517958
+  type: 'test'
+  ...
+# Subtest: plist allowlist distinguishes device profiles from runtime OS metadata and rejects every invalid process option
+ok 102 - plist allowlist distinguishes device profiles from runtime OS metadata and rejects every invalid process option
+  ---
+  duration_ms: 54.83175
+  type: 'test'
+  ...
+# Subtest: installed Xcode ancestor policy accepts strict paths and the exact root admin Applications exception
+ok 103 - installed Xcode ancestor policy accepts strict paths and the exact root admin Applications exception
+  ---
+  duration_ms: 70.472125
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf owner refuses at the compatibility interface
+ok 104 - installed fresh leaf owner refuses at the compatibility interface
+  ---
+  duration_ms: 27.948167
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf group-write refuses at the compatibility interface
+ok 105 - installed fresh leaf group-write refuses at the compatibility interface
+  ---
+  duration_ms: 26.910542
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf other-write refuses at the compatibility interface
+ok 106 - installed fresh leaf other-write refuses at the compatibility interface
+  ---
+  duration_ms: 28.820417
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf symlink refuses at the compatibility interface
+ok 107 - installed fresh leaf symlink refuses at the compatibility interface
+  ---
+  duration_ms: 26.435292
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf type refuses at the compatibility interface
+ok 108 - installed fresh leaf type refuses at the compatibility interface
+  ---
+  duration_ms: 27.249458
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf owner refuses at the process interface
+ok 109 - installed fresh leaf owner refuses at the process interface
+  ---
+  duration_ms: 23.165291
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf group-write refuses at the process interface
+ok 110 - installed fresh leaf group-write refuses at the process interface
+  ---
+  duration_ms: 25.763292
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf other-write refuses at the process interface
+ok 111 - installed fresh leaf other-write refuses at the process interface
+  ---
+  duration_ms: 24.283959
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf symlink refuses at the process interface
+ok 112 - installed fresh leaf symlink refuses at the process interface
+  ---
+  duration_ms: 25.671792
+  type: 'test'
+  ...
+# Subtest: installed fresh leaf type refuses at the process interface
+ok 113 - installed fresh leaf type refuses at the process interface
+  ---
+  duration_ms: 25.231
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses account owner without dispatch
+ok 114 - installed Applications exception refuses account owner without dispatch
+  ---
+  duration_ms: 32.934375
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses foreign owner without dispatch
+ok 115 - installed Applications exception refuses foreign owner without dispatch
+  ---
+  duration_ms: 36.065209
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses foreign group without dispatch
+ok 116 - installed Applications exception refuses foreign group without dispatch
+  ---
+  duration_ms: 30.395917
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses world write without dispatch
+ok 117 - installed Applications exception refuses world write without dispatch
+  ---
+  duration_ms: 24.74075
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses other write without group write without dispatch
+ok 118 - installed Applications exception refuses other write without group write without dispatch
+  ---
+  duration_ms: 25.831
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses different group permissions without dispatch
+ok 119 - installed Applications exception refuses different group permissions without dispatch
+  ---
+  duration_ms: 31.87425
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses sticky bit without dispatch
+ok 120 - installed Applications exception refuses sticky bit without dispatch
+  ---
+  duration_ms: 27.713875
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses setgid bit without dispatch
+ok 121 - installed Applications exception refuses setgid bit without dispatch
+  ---
+  duration_ms: 22.887125
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses setuid bit without dispatch
+ok 122 - installed Applications exception refuses setuid bit without dispatch
+  ---
+  duration_ms: 28.145209
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses symlink without dispatch
+ok 123 - installed Applications exception refuses symlink without dispatch
+  ---
+  duration_ms: 27.616083
+  type: 'test'
+  ...
+# Subtest: installed Applications exception refuses file without dispatch
+ok 124 - installed Applications exception refuses file without dispatch
+  ---
+  duration_ms: 27.298792
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app strict for group-write
+ok 125 - installed Applications exception keeps /Applications/Xcode.app strict for group-write
+  ---
+  duration_ms: 25.53675
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app strict for foreign-owner
+ok 126 - installed Applications exception keeps /Applications/Xcode.app strict for foreign-owner
+  ---
+  duration_ms: 27.456417
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app strict for symlink
+ok 127 - installed Applications exception keeps /Applications/Xcode.app strict for symlink
+  ---
+  duration_ms: 41.128292
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app/Contents strict for group-write
+ok 128 - installed Applications exception keeps /Applications/Xcode.app/Contents strict for group-write
+  ---
+  duration_ms: 27.505375
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app/Contents strict for foreign-owner
+ok 129 - installed Applications exception keeps /Applications/Xcode.app/Contents strict for foreign-owner
+  ---
+  duration_ms: 24.846375
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app/Contents strict for symlink
+ok 130 - installed Applications exception keeps /Applications/Xcode.app/Contents strict for symlink
+  ---
+  duration_ms: 24.371833
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app/Contents/Developer strict for group-write
+ok 131 - installed Applications exception keeps /Applications/Xcode.app/Contents/Developer strict for group-write
+  ---
+  duration_ms: 25.291792
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app/Contents/Developer strict for foreign-owner
+ok 132 - installed Applications exception keeps /Applications/Xcode.app/Contents/Developer strict for foreign-owner
+  ---
+  duration_ms: 25.260417
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app/Contents/Developer strict for symlink
+ok 133 - installed Applications exception keeps /Applications/Xcode.app/Contents/Developer strict for symlink
+  ---
+  duration_ms: 25.392625
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app/Contents/Info.plist strict for group-write
+ok 134 - installed Applications exception keeps /Applications/Xcode.app/Contents/Info.plist strict for group-write
+  ---
+  duration_ms: 30.457
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app/Contents/Info.plist strict for foreign-owner
+ok 135 - installed Applications exception keeps /Applications/Xcode.app/Contents/Info.plist strict for foreign-owner
+  ---
+  duration_ms: 24.981167
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Applications/Xcode.app/Contents/Info.plist strict for symlink
+ok 136 - installed Applications exception keeps /Applications/Xcode.app/Contents/Info.plist strict for symlink
+  ---
+  duration_ms: 24.988459
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist strict for group-write
+ok 137 - installed Applications exception keeps /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist strict for group-write
+  ---
+  duration_ms: 30.118041
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist strict for foreign-owner
+ok 138 - installed Applications exception keeps /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist strict for foreign-owner
+  ---
+  duration_ms: 29.050708
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist strict for symlink
+ok 139 - installed Applications exception keeps /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist strict for symlink
+  ---
+  duration_ms: 35.433875
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Library strict for group-write
+ok 140 - installed Applications exception keeps /Library strict for group-write
+  ---
+  duration_ms: 28.338959
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Library strict for foreign-owner
+ok 141 - installed Applications exception keeps /Library strict for foreign-owner
+  ---
+  duration_ms: 26.123375
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /Library strict for symlink
+ok 142 - installed Applications exception keeps /Library strict for symlink
+  ---
+  duration_ms: 26.204833
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /usr strict for group-write
+ok 143 - installed Applications exception keeps /usr strict for group-write
+  ---
+  duration_ms: 22.810709
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /usr strict for foreign-owner
+ok 144 - installed Applications exception keeps /usr strict for foreign-owner
+  ---
+  duration_ms: 25.516792
+  type: 'test'
+  ...
+# Subtest: installed Applications exception keeps /usr strict for symlink
+ok 145 - installed Applications exception keeps /usr strict for symlink
+  ---
+  duration_ms: 23.652792
+  type: 'test'
+  ...
+# Subtest: installed Applications exception permits no alternate or noncanonical Xcode metadata command
+ok 146 - installed Applications exception permits no alternate or noncanonical Xcode metadata command
+  ---
+  duration_ms: 25.061167
+  type: 'test'
+  ...
+# Subtest: installed Applications exception preserves metadata hardlink refusal
+ok 147 - installed Applications exception preserves metadata hardlink refusal
+  ---
+  duration_ms: 30.027458
+  type: 'test'
+  ...
+# Subtest: installed Applications exception preserves metadata size refusal
+ok 148 - installed Applications exception preserves metadata size refusal
+  ---
+  duration_ms: 27.353792
+  type: 'test'
+  ...
+# Subtest: installed Applications policy rechecks unsafe ancestor changes after metadata conversion
+ok 149 - installed Applications policy rechecks unsafe ancestor changes after metadata conversion
+  ---
+  duration_ms: 24.99025
+  type: 'test'
+  ...
+# Subtest: installed Applications policy checks permission trust without certifying ancestor identity stability
+ok 150 - installed Applications policy checks permission trust without certifying ancestor identity stability
+  ---
+  duration_ms: 33.80875
+  type: 'test'
+  ...
+# Subtest: Xcode Info conversion accepts the observed 34501-byte input and 77555-byte JSON through production composition
+ok 151 - Xcode Info conversion accepts the observed 34501-byte input and 77555-byte JSON through production composition
+  ---
+  duration_ms: 27.793292
+  type: 'test'
+  ...
+# Subtest: Xcode Info installed proof requests the narrow cap and accepts the observed converted JSON size
+ok 152 - Xcode Info installed proof requests the narrow cap and accepts the observed converted JSON size
+  ---
+  duration_ms: 29.811416
+  type: 'test'
+  ...
+# Subtest: mapped allocation fixture permits the narrow exact Xcode Info cap and rejects other targets and higher caps
+ok 153 - mapped allocation fixture permits the narrow exact Xcode Info cap and rejects other targets and higher caps
+  ---
+  duration_ms: 25.51175
+  type: 'test'
+  ...
+# Subtest: Xcode Info installed conversion enforces 131072-byte combined stdout and stderr
+ok 154 - Xcode Info installed conversion enforces 131072-byte combined stdout and stderr
+  ---
+  duration_ms: 28.780625
+  type: 'test'
+  ...
+# Subtest: Xcode Info installed conversion enforces 131073-byte combined stdout and stderr
+ok 155 - Xcode Info installed conversion enforces 131073-byte combined stdout and stderr
+  ---
+  duration_ms: 24.108791
+  type: 'test'
+  ...
+# Subtest: Xcode Info production conversion enforces 131072-byte combined stdout and stderr
+ok 156 - Xcode Info production conversion enforces 131072-byte combined stdout and stderr
+  ---
+  duration_ms: 35.798875
+  type: 'test'
+  ...
+# Subtest: Xcode Info production conversion enforces 131073-byte combined stdout and stderr
+ok 157 - Xcode Info production conversion enforces 131073-byte combined stdout and stderr
+  ---
+  duration_ms: 30.35275
+  type: 'test'
+  ...
+# Subtest: other installed metadata retains a 64KiB combined output limit at /Applications/Xcode.app/Contents/version.plist
+ok 158 - other installed metadata retains a 64KiB combined output limit at /Applications/Xcode.app/Contents/version.plist
+  ---
+  duration_ms: 28.036833
+  type: 'test'
+  ...
+# Subtest: other installed metadata retains a 64KiB combined output limit at /System/Library/CoreServices/SystemVersion.plist
+ok 159 - other installed metadata retains a 64KiB combined output limit at /System/Library/CoreServices/SystemVersion.plist
+  ---
+  duration_ms: 26.3305
+  type: 'test'
+  ...
+# Subtest: other installed metadata retains a 64KiB combined output limit at /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist
+ok 160 - other installed metadata retains a 64KiB combined output limit at /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist
+  ---
+  duration_ms: 25.73575
+  type: 'test'
+  ...
+# Subtest: production conversion refuses higher caps, different commands and paths before dispatch
+ok 161 - production conversion refuses higher caps, different commands and paths before dispatch
+  ---
+  duration_ms: 22.297583
+  type: 'test'
+  ...
+# Subtest: Xcode Info process honors a caller smaller output cap and waits for close after overflow
+ok 162 - Xcode Info process honors a caller smaller output cap and waits for close after overflow
+  ---
+  duration_ms: 26.965875
+  type: 'test'
+  ...
+# Subtest: Xcode Info malformed JSON refuses at the installed surface
+ok 163 - Xcode Info malformed JSON refuses at the installed surface
+  ---
+  duration_ms: 26.464084
+  type: 'test'
+  ...
+# Subtest: Xcode Info malformed JSON refuses at the production surface
+ok 164 - Xcode Info malformed JSON refuses at the production surface
+  ---
+  duration_ms: 25.914334
+  type: 'test'
+  ...
+# Subtest: Xcode Info pre-aborted compatibility request refuses before dispatch
+ok 165 - Xcode Info pre-aborted compatibility request refuses before dispatch
+  ---
+  duration_ms: 27.128208
+  type: 'test'
+  ...
+# Subtest: Xcode Info pre-aborted process request refuses before dispatch
+ok 166 - Xcode Info pre-aborted process request refuses before dispatch
+  ---
+  duration_ms: 23.968208
+  type: 'test'
+  ...
+# Subtest: Xcode Info in-flight abort stops conversion without reporting success before child close
+ok 167 - Xcode Info in-flight abort stops conversion without reporting success before child close
+  ---
+  duration_ms: 25.3305
+  type: 'test'
+  ...
+# Subtest: Xcode Info conversion retains the 65536-byte input boundary
+ok 168 - Xcode Info conversion retains the 65536-byte input boundary
+  ---
+  duration_ms: 35.752459
+  type: 'test'
+  ...
+# Subtest: Xcode Info conversion retains the 65537-byte input boundary
+ok 169 - Xcode Info conversion retains the 65537-byte input boundary
+  ---
+  duration_ms: 26.952667
+  type: 'test'
+  ...
+# Subtest: Xcode Info bytes change during conversion remains untrusted
+ok 170 - Xcode Info bytes change during conversion remains untrusted
+  ---
+  duration_ms: 25.452917
+  type: 'test'
+  ...
+# Subtest: Xcode Info identity change during conversion remains untrusted
+ok 171 - Xcode Info identity change during conversion remains untrusted
+  ---
+  duration_ms: 26.950209
+  type: 'test'
+  ...
+# Subtest: Xcode Info write-permission change during conversion remains untrusted
+ok 172 - Xcode Info write-permission change during conversion remains untrusted
+  ---
+  duration_ms: 25.545833
+  type: 'test'
+  ...
+# Subtest: Xcode Info hardlink change during conversion remains untrusted
+ok 173 - Xcode Info hardlink change during conversion remains untrusted
+  ---
+  duration_ms: 25.99225
+  type: 'test'
+  ...
+# Subtest: Xcode Info byte changes refuse even when injected metadata stamps remain identical
+ok 174 - Xcode Info byte changes refuse even when injected metadata stamps remain identical
+  ---
+  duration_ms: 26.284334
+  type: 'test'
+  ...
+1..174
+# tests 174
+# suites 0
+# pass 174
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3408.597416
+# start of coverage report
+# -----------------------------------------------------------------------
+# file                   | line % | branch % | funcs % | uncovered lines
+# -----------------------------------------------------------------------
+# src                    |        |          |         | 
+#  observed              |        |          |         | 
+#   allocation-config.ts |  97.52 |    90.95 |   76.74 | 55 189-193
+#   installed-plist.ts   | 100.00 |    97.30 |  100.00 | 
+# -----------------------------------------------------------------------
+# all files              |  98.22 |    93.15 |   82.14 | 
+# -----------------------------------------------------------------------
+# end of coverage report

@@ -1,0 +1,36 @@
+TAP version 13
+# node:internal/modules/run_main:105
+#     triggerUncaughtException(
+#     ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/src/observed/installed-plist.js' imported from /Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts
+#     at finalizeResolution (node:internal/modules/esm/resolve:274:11)
+#     at moduleResolve (node:internal/modules/esm/resolve:859:10)
+#     at defaultResolve (node:internal/modules/esm/resolve:983:11)
+#     at nextResolve (node:internal/modules/esm/hooks:748:28)
+#     at resolveBase (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:10494)
+#     at async resolveDirectory (file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:11575) {
+#   code: 'ERR_MODULE_NOT_FOUND',
+#   url: 'file:///Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/src/observed/installed-plist.js'
+# }
+# Node.js v24.0.0
+# Subtest: tests/installed-plist.test.ts
+not ok 1 - tests/installed-plist.test.ts
+  ---
+  duration_ms: 76.535584
+  type: 'test'
+  location: '/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 79.430209

@@ -1,0 +1,45 @@
+{
+  "frozenAtUtc": "2026-10-09T04:01:56.102445+00:00",
+  "reviewAxis": "Spec",
+  "verdict": "PASS",
+  "missingFindings": 0,
+  "incorrectFindings": 0,
+  "scopeFindings": 0,
+  "candidate": "38aa879c3954c9d7742ef04059cad4d2fc824c87",
+  "base": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+  "evidenceManifestSha256": "5a99f04f6b4fee5745c8d845430a03e908399f85d2b48695b9f67e1ae79a58e5",
+  "inputFileCount": 160,
+  "inputHashesRecheckedMatch": true,
+  "reviewArtifacts": {
+    "contract-correspondence.md": {
+      "sha256": "6df30f73094492868619e2a4195a51eca02aba643f754794e2d044d0e6261d54",
+      "bytes": 6859
+    },
+    "default-gate-audit.json": {
+      "sha256": "c9460e244d69c1365521f2d84d4019b32301cb1ebce1e2f718e1f45f4d03e759",
+      "bytes": 4712
+    },
+    "red-and-retained-audit.json": {
+      "sha256": "cdd1d33693d9867ff3f2ea4de05b66649db6a56f171effbe8e209f0bbcec9f67",
+      "bytes": 2934
+    },
+    "report.md": {
+      "sha256": "8144ac9d1bc9b8e79c2dd9b1cf27d13bc404feb9719cb53c2217b530930a489e",
+      "bytes": 2466
+    },
+    "static-audit.json": {
+      "sha256": "0a7ab5ab1d145eb94f4be207aee51e1b4afda34f31be693909895e4fe67e304d",
+      "bytes": 41083
+    }
+  },
+  "permissionAudit": {
+    "default-gate-audit.json": "0o600",
+    "report.md": "0o600",
+    "red-and-retained-audit.json": "0o600",
+    "evidence-manifest.json": "0o600",
+    "static-audit.json": "0o600",
+    "contract-correspondence.md": "0o600",
+    "directory": "0o700"
+  },
+  "scope": "Bounded host-only candidate; installed/live/finalticket12 remain unverified."
+}

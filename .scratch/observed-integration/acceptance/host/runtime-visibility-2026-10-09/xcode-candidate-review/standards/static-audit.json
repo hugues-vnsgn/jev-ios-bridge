@@ -1,0 +1,319 @@
+{
+  "reviewer": "/root/installed_path_standards_review",
+  "role": "independent nonauthor Standards",
+  "atUtc": "2026-10-09T03:54:40.230901+00:00",
+  "base": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+  "candidate": "38aa879c3954c9d7742ef04059cad4d2fc824c87",
+  "candidateWorktree": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output",
+  "ownedHashes": {
+    "src/observed/allocation-config.ts": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+    "src/observed/installed-plist.ts": "c74ddcafaef4e244bd1183695cade8fe4858f609bc6f20a1b86727801bc8b896",
+    "tests/fixtures/observed-allocation-backend.ts": "5b8c6b14a463ee8ec312ac33655f18c0efc931c2c900784840342f7aeb0e3d80",
+    "tests/installed-plist.test.ts": "c383636a717b8220905f3814d9123ce9ee78cbb1b5dfeb0d82bdf8e80a1aa02c",
+    "tests/observed-allocation-config.test.ts": "1ae9db02cb08814a874d9b94ea872105ec2a88fe75d56e0f7263116698dbc4ad"
+  },
+  "actual439MatchFrozenManifest": true,
+  "protectedCount": 434,
+  "protectedAllMatchBase": true,
+  "focusedLedgerSha256": "893ec0cb5cf0c6ba10e8cb12e7ffb87854cbd19fc037e4a0d2d6028a7b8f89a2",
+  "selectedReceiptChecks": {
+    "node24-version": {
+      "hashes": {
+        "command.json": "2c4e70779969095dbfe4f398cbef15a31ade9ce6142310f83845fe197a96d2d9",
+        "stdout.txt": "b988e13140652de941a9a3fab325102625f646ec6fde3a7b8a8af63496a74061",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "matchLedger": true,
+      "exitCode": 0,
+      "counts": {
+        "tests": null,
+        "pass": null,
+        "fail": null,
+        "cancelled": null,
+        "skipped": null,
+        "todo": null
+      }
+    },
+    "node26-version": {
+      "hashes": {
+        "command.json": "0fb47251d82493f567a1828f8f6f9c0073c9d5b2c7d80824401f1b7c97f406cd",
+        "stdout.txt": "bd17489adcddbc8ed526bf6dedb22de2e677bbae176b977aa7f7c0408999248c",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "matchLedger": true,
+      "exitCode": 0,
+      "counts": {
+        "tests": null,
+        "pass": null,
+        "fail": null,
+        "cancelled": null,
+        "skipped": null,
+        "todo": null
+      }
+    },
+    "frozen-focused-node26": {
+      "hashes": {
+        "command.json": "ff3e74bb053d0ea13d9b06557014b63c59c4a4ece54964a783fc8f489b5ceb2b",
+        "stdout.txt": "e6666172e13314d452f000000552c8b9f172311f51a44136fbd01f862976d89d",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "matchLedger": true,
+      "exitCode": 0,
+      "counts": {
+        "tests": 174,
+        "pass": 174,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "frozen-focused-node24": {
+      "hashes": {
+        "command.json": "e4aa8a5ffb7d38e5ad33884a83056494a02e1fd612829ae238dc2c0600f66bb7",
+        "stdout.txt": "14be46642e63eeff188fc29e2af08b932587e5e6cbba03708040dfc0c2d38a09",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "matchLedger": true,
+      "exitCode": 0,
+      "counts": {
+        "tests": 174,
+        "pass": 174,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "frozen-typecheck-node26": {
+      "hashes": {
+        "command.json": "0e65db4af79c51adc5f46533689dab5ee01cdd0ad8e7f5528be22ac9fcbac5cb",
+        "stdout.txt": "a5f26a123d51067a484f97018e93e9514bb2902f7ffbcecb9d2baba69d5b928a",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "matchLedger": true,
+      "exitCode": 0,
+      "counts": {
+        "tests": null,
+        "pass": null,
+        "fail": null,
+        "cancelled": null,
+        "skipped": null,
+        "todo": null
+      }
+    },
+    "frozen-typecheck-node24": {
+      "hashes": {
+        "command.json": "9a9e699669ea9033d37aaf585ad0d8d3fcc62fe0d2fa89c10a926cd5107b584d",
+        "stdout.txt": "a5f26a123d51067a484f97018e93e9514bb2902f7ffbcecb9d2baba69d5b928a",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "matchLedger": true,
+      "exitCode": 0,
+      "counts": {
+        "tests": null,
+        "pass": null,
+        "fail": null,
+        "cancelled": null,
+        "skipped": null,
+        "todo": null
+      }
+    },
+    "frozen-build-node26": {
+      "hashes": {
+        "command.json": "489163b2d6f22573d47d4404756073e0665353d283b328be70d3056bfde5a100",
+        "stdout.txt": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "matchLedger": true,
+      "exitCode": 0,
+      "counts": {
+        "tests": null,
+        "pass": null,
+        "fail": null,
+        "cancelled": null,
+        "skipped": null,
+        "todo": null
+      }
+    },
+    "frozen-build-node24": {
+      "hashes": {
+        "command.json": "b9a5d8d1125335af334681c04da50604837c9f17a8b02dace605caca7c0b0633",
+        "stdout.txt": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "matchLedger": true,
+      "exitCode": 0,
+      "counts": {
+        "tests": null,
+        "pass": null,
+        "fail": null,
+        "cancelled": null,
+        "skipped": null,
+        "todo": null
+      }
+    },
+    "xcode-red-node26": {
+      "hashes": {
+        "command.json": "ff7ae414a4ce8a2f0c89ef54d3b0dc2e14d417601bb99b6038d1a70d66b0810a",
+        "stdout.txt": "90eec2d337af61cedf281c64188d95cc7cc704ab902a051a907f359f12357ba1",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "matchLedger": true,
+      "exitCode": 1,
+      "counts": {
+        "tests": 2,
+        "pass": 0,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "xcode-red-node24": {
+      "hashes": {
+        "command.json": "0a611abd84c533784b2f65e0c4452777d4a5d0cfc3f13ea791384321b959cef7",
+        "stdout.txt": "fb9f4c0cc7be566ef1e8abdcfeb09c4e08e2b808fef82a052affa9139b7616d5",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "matchLedger": true,
+      "exitCode": 1,
+      "counts": {
+        "tests": 2,
+        "pass": 0,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "other-combined-baseline-red-node26": {
+      "hashes": {
+        "command.json": "f974125d88535dce16c0ddbb4296d09c8cd2fc4ef00a908fab0dffe8fba3be2c",
+        "stdout.txt": "307e624bc655314395374909982107926d91b4344fda73edbab5e66ec9a0b168",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "matchLedger": true,
+      "exitCode": 1,
+      "counts": {
+        "tests": 3,
+        "pass": 0,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "other-combined-baseline-red-node24": {
+      "hashes": {
+        "command.json": "f1b994868aed61d448b719e4d2dca9c15cde5d72ade559029bce9e33e6a4883f",
+        "stdout.txt": "6c6bfd1a61b76d9ae10d7a7c4e9185f0c7270d6d389a87dd7da7106cadbd9653",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "matchLedger": true,
+      "exitCode": 1,
+      "counts": {
+        "tests": 3,
+        "pass": 0,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "fixture-contract-red-node26": {
+      "hashes": {
+        "command.json": "d0d114b4754b14e471f2f6b204b6a237760f9d304060abe46b18e2d8330664c9",
+        "stdout.txt": "218f16d90eb9682109903c9f59c00e8c8357116f208f4a9aecde786f7f559e1b",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "matchLedger": true,
+      "exitCode": 1,
+      "counts": {
+        "tests": 1,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "fixture-contract-red-node24": {
+      "hashes": {
+        "command.json": "5e43de072b675dad496682e045d44eef1d5d3259fa4ca787fda4c7e503c9f429",
+        "stdout.txt": "47db5baccf2e6261d7cc5213b6216615c90b94937f31ead2db92465e632d5bfc",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "matchLedger": true,
+      "exitCode": 1,
+      "counts": {
+        "tests": 1,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "fixture-contract-green-node26": {
+      "hashes": {
+        "command.json": "b4a406fd33c68703385400a72deb2b0b5dc1fa8923ce567b2475abbf0c20797d",
+        "stdout.txt": "1106f9980528b7995f8c7ab42315d0a8183bf00f22cdabdee4dedce4cc2aa6ab",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "matchLedger": true,
+      "exitCode": 0,
+      "counts": {
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "parser-semantic-red-node26": {
+      "hashes": {
+        "command.json": "91508c92ff572c7a0040c321f36c317705fb733c6f8d0374cac47277eee39ecf",
+        "stdout.txt": "2ad68ade1f3428947fe75f1184c0740be5df5a794ac390ace5b335dd2cf38d14",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "matchLedger": true,
+      "exitCode": 1,
+      "counts": {
+        "tests": 58,
+        "pass": 18,
+        "fail": 40,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "parser-semantic-red-node24": {
+      "hashes": {
+        "command.json": "65aa081015b96b45e342aea4eca3d184ed715a3d025638566a859e0e2b66cf10",
+        "stdout.txt": "82b3572c697171c9ba2e1ee3513e45258bf804844ae5f0a60d3165e1521ebe86",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "matchLedger": true,
+      "exitCode": 1,
+      "counts": {
+        "tests": 58,
+        "pass": 18,
+        "fail": 40,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    }
+  },
+  "findings": {
+    "documentedBreaches": 0,
+    "materialHeuristics": 0
+  },
+  "fullDefaultGates": "Awaiting Root completion notification; no verdict inferred",
+  "scopeLimits": [
+    "No new tests/builds/native/system/device/store/key operations",
+    "Parser unwired; no installed/live/ticket12 certificate"
+  ]
+}

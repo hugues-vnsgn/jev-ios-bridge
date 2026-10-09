@@ -1,0 +1,4 @@
+[fix/xcode-metadata-output 38aa879c] fix: bound Xcode output and parse readonly mount metadata
+ 5 files changed, 439 insertions(+), 7 deletions(-)
+ create mode 100644 src/observed/installed-plist.ts
+ create mode 100644 tests/installed-plist.test.ts

@@ -1,0 +1,857 @@
+{
+  "at": "2026-10-09T04:03:39.480531+00:00",
+  "candidate": "38aa879c3954c9d7742ef04059cad4d2fc824c87",
+  "base": "a0e68917dca1816a6ca98315c2fc932a6fd2f2e8",
+  "verdict": "ACCEPT_SCOPED_XCODE_OUTPUT_AND_UNWIRED_PARSER_DELTA",
+  "spec": "PASS/zero missing-incorrect-scope findings; report and every-clause correspondence read",
+  "standards": "PASS/zero documented breaches/material heuristic findings; per-hunk report read",
+  "checks": [
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-action-rollout/installed-cryptex-repair.md",
+      "sha256": "71aeb47c1fa4217e18593e9eae334ac2a5742589bd92e0e9fb6172f279251604",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal.md",
+      "sha256": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/child-receipts.json",
+      "sha256": "6b4030cb8eb8503b665ed20c0a3d00d62846c7a30644c1ea8e1d0f15f23fad3a",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/xcode-info-conversion.json",
+      "sha256": "d8c020f64ff1810beaa2723a7911a34ddab182c68573c30a8a067ab0fb8c5906",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/owner-cryptex-trust-decision.json",
+      "sha256": "0b1bc876713d68cd9001dcd27a41bfa3e7f53aa96f8e1698f214e65dcca16c74",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/xcode-candidate-review/context.json",
+      "sha256": "8d5e0f7b10bd5129b8693efe4d1baffa349af257d86cb727d34d6127d98af1ae",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/evidence/allocation-contract.md",
+      "sha256": "b12157b52fe4e2c2b9bfb1e2b740806e52ff3890a7623c083f6075a3344402f1",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/implementation-plan.md",
+      "sha256": "be593199a45459a5e08a5e7deb715df2c505986ac5694b93612d479387d90702",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/v1-release/map.md",
+      "sha256": "b154b9cb08454aa8433f1e8e917e4bef948db48d72b247f60f5b58d837daebaa",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/AGENTS.md",
+      "sha256": "86d3e5e2ccba32103401ab95af6b6488fc439d090913b028a7961d07f79a1c47",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/GLOSSARY.md",
+      "sha256": "a246e0082a15dfd2fa74138473607b9a3c5e3426460f1d43d1d9d154f87ec1c5",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/docs/adr/0002-mobilebuildmcp-as-device-layer.md",
+      "sha256": "00da2cbba873223976b22b0a26314a6b351b769b4c3f899a97f95334a565abe1",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/docs/adr/0005-the-1-0-stability-contract.md",
+      "sha256": "fe61fd90fda45b661b183162062d500c3cb87517afc0b2aee37ccbb154f3f04b",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/docs/adr/0007-simulator-presentation-and-a-bounded-ios-point-tap-exception.md",
+      "sha256": "05f09cb8c30602b489b3fca212fae6edb1a9ba6e6beeb1a31cd418c40bcabb20",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/docs/adr/0009-bounded-simulator-creation.md",
+      "sha256": "f60dae7177255f92e1263c29c6a4433216b80d17ce83bc91dd8a444f687ed384",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/docs/agents/domain.md",
+      "sha256": "edc6d6131fdffc4b7135704f5262124fc43355c95f61b7399dc5a4db643e28ca",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/docs/agents/issue-tracker.md",
+      "sha256": "bef53bbef5e5f758759305a856233a6ec7db25ed81781b9c72bca1b04a8fd225",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-xcode-path-policy/.scratch/installed-xcode-path-policy/compiled-node26.json",
+      "sha256": "bf20ed727ce69f3243d1ae3ada91f694a28cc3106e37df0c468718e3f1d32a71",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/base-allocation-config.ts",
+      "sha256": "cbf94978d97a8e1b2c9413f83a7fa75decdf9c2f40a325ee77b5c2c895fce69d",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/base-observed-allocation-backend.ts",
+      "sha256": "82761f545831ccb2418936c5370e25b8970e972ddedf3879827d6c4c30df3814",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/base-observed-allocation-config.test.ts",
+      "sha256": "f92cd1d0e9ddd93e3c8b1dc04de7ffd4f84fd2c9f65f3055858210fd2949fb66",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/base.json",
+      "sha256": "886cb8c0a34966d91329a5118f949def9131faf1b3a3e0811c0b9b7da69e66e9",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/candidate-before-baseline-combined-allocation-config.ts",
+      "sha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/candidate-source.json",
+      "sha256": "4c92ae78c385daad1516de011cd09bd48fc63c3bf8426ffb9aeafbcdf57aaf13",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/candidate-src--observed--allocation-config.ts",
+      "sha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/candidate-src--observed--installed-plist.ts",
+      "sha256": "c74ddcafaef4e244bd1183695cade8fe4858f609bc6f20a1b86727801bc8b896",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/candidate-tests--fixtures--observed-allocation-backend.ts",
+      "sha256": "5b8c6b14a463ee8ec312ac33655f18c0efc931c2c900784840342f7aeb0e3d80",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/candidate-tests--installed-plist.test.ts",
+      "sha256": "c383636a717b8220905f3814d9123ce9ee78cbb1b5dfeb0d82bdf8e80a1aa02c",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/candidate-tests--observed-allocation-config.test.ts",
+      "sha256": "1ae9db02cb08814a874d9b94ea872105ec2a88fe75d56e0f7263116698dbc4ad",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/compiled-after-full-node24.json",
+      "sha256": "2ea567e81410f02c24210e5205b62e563a8dd38a3b0104e03c5cdcebfde5b56a",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/compiled-after-full-node26.json",
+      "sha256": "2ea567e81410f02c24210e5205b62e563a8dd38a3b0104e03c5cdcebfde5b56a",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/compiled-base-protected-audit.json",
+      "sha256": "ff6004900625f873377fa8586d93ebafbe9d1b3af722a88504e8da5551669bb4",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/compiled-node24.json",
+      "sha256": "2ea567e81410f02c24210e5205b62e563a8dd38a3b0104e03c5cdcebfde5b56a",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/compiled-node26.json",
+      "sha256": "2ea567e81410f02c24210e5205b62e563a8dd38a3b0104e03c5cdcebfde5b56a",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/expanded-focused-node24/command.json",
+      "sha256": "860e94cbd97d5c4168469dc73117b51af850138e27504479fe93d10c525cd37c",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/expanded-focused-node24/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/expanded-focused-node24/stdout.txt",
+      "sha256": "e15369d260cae8db33fb938627a2a60a3c6db9bfdca274e0b59f8bd01d289d76",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/expanded-focused-node26/command.json",
+      "sha256": "422ff35499540fa667c708c2522f49750908b991904f43ab737855236f6a98c8",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/expanded-focused-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/expanded-focused-node26/stdout.txt",
+      "sha256": "55f0ac4d059bda0fc7a86d90e9bc1562ef8b76f844b1699fda0bfc3358e4fbc3",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/expanded-typecheck-node26/command.json",
+      "sha256": "9c778b7ae7208eb932ab05c5bc601c3cde0974df8b757916f0bbba25e608ad6c",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/expanded-typecheck-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/expanded-typecheck-node26/stdout.txt",
+      "sha256": "a5f26a123d51067a484f97018e93e9514bb2902f7ffbcecb9d2baba69d5b928a",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/final-ledger.json",
+      "sha256": "c58806168f1b3e77876fb2c70d60dbda3ef1ca72a4ef55c5c295271da1f4e60a",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/finalization.json",
+      "sha256": "624be73370a20586e7a29209aec7ae4d89ac8e4d8de200ae8f24751753b245ac",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/fixture-contract-green-node26/command.json",
+      "sha256": "b4a406fd33c68703385400a72deb2b0b5dc1fa8923ce567b2475abbf0c20797d",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/fixture-contract-green-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/fixture-contract-green-node26/stdout.txt",
+      "sha256": "1106f9980528b7995f8c7ab42315d0a8183bf00f22cdabdee4dedce4cc2aa6ab",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/fixture-contract-red-node24/command.json",
+      "sha256": "5e43de072b675dad496682e045d44eef1d5d3259fa4ca787fda4c7e503c9f429",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/fixture-contract-red-node24/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/fixture-contract-red-node24/stdout.txt",
+      "sha256": "47db5baccf2e6261d7cc5213b6216615c90b94937f31ead2db92465e632d5bfc",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/fixture-contract-red-node26/command.json",
+      "sha256": "d0d114b4754b14e471f2f6b204b6a237760f9d304060abe46b18e2d8330664c9",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/fixture-contract-red-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/fixture-contract-red-node26/stdout.txt",
+      "sha256": "218f16d90eb9682109903c9f59c00e8c8357116f208f4a9aecde786f7f559e1b",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/focused-commit/command.json",
+      "sha256": "592da304ab8ece20842d436c841932333529be07b8767a122ca3bdec5f525a89",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/focused-commit/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/focused-commit/stdout.txt",
+      "sha256": "bc545a89791931eed7bd7e2a768a8650b6fa42001cec13a6c59b714a63c82e65",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/focused-ledger.json",
+      "sha256": "893ec0cb5cf0c6ba10e8cb12e7ffb87854cbd19fc037e4a0d2d6028a7b8f89a2",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/focused-report.md",
+      "sha256": "002e92cc850a7d1a0e08e49cb41ee56223e48fd28656a754747df4c77f4749a3",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/focused-stage/command.json",
+      "sha256": "cb676cdf3df59e37f9aa14b53004b8b420b6092723bbd0ed84e81dd041ebc5b4",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/focused-stage/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/focused-stage/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-build-node24/command.json",
+      "sha256": "b9a5d8d1125335af334681c04da50604837c9f17a8b02dace605caca7c0b0633",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-build-node24/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-build-node24/stdout.txt",
+      "sha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-build-node26/command.json",
+      "sha256": "489163b2d6f22573d47d4404756073e0665353d283b328be70d3056bfde5a100",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-build-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-build-node26/stdout.txt",
+      "sha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-diff-check/command.json",
+      "sha256": "4f89cee8c5a8b5491bb18e4c9dc82bb68fa6d61ab0e1a901f4ddea865e44ae4c",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-diff-check/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-diff-check/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-focused-node24/command.json",
+      "sha256": "e4aa8a5ffb7d38e5ad33884a83056494a02e1fd612829ae238dc2c0600f66bb7",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-focused-node24/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-focused-node24/stdout.txt",
+      "sha256": "14be46642e63eeff188fc29e2af08b932587e5e6cbba03708040dfc0c2d38a09",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-focused-node26/command.json",
+      "sha256": "ff3e74bb053d0ea13d9b06557014b63c59c4a4ece54964a783fc8f489b5ceb2b",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-focused-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-focused-node26/stdout.txt",
+      "sha256": "e6666172e13314d452f000000552c8b9f172311f51a44136fbd01f862976d89d",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-typecheck-node24/command.json",
+      "sha256": "9a9e699669ea9033d37aaf585ad0d8d3fcc62fe0d2fa89c10a926cd5107b584d",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-typecheck-node24/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-typecheck-node24/stdout.txt",
+      "sha256": "a5f26a123d51067a484f97018e93e9514bb2902f7ffbcecb9d2baba69d5b928a",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-typecheck-node26/command.json",
+      "sha256": "0e65db4af79c51adc5f46533689dab5ee01cdd0ad8e7f5528be22ac9fcbac5cb",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-typecheck-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/frozen-typecheck-node26/stdout.txt",
+      "sha256": "a5f26a123d51067a484f97018e93e9514bb2902f7ffbcecb9d2baba69d5b928a",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/full-check-node24/command.json",
+      "sha256": "7ffa7b71f2c51855b8c194f16951a0fb1ba76f126f56f0c1aa02c1d389471ac4",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/full-check-node24/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/full-check-node24/stdout.txt",
+      "sha256": "3ddfd184d8e9846902c0db1d201dfb7486c22518eeb646c18861b634c4537ff5",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/full-check-node26/command.json",
+      "sha256": "292fab54e8048e6445b4f65f53891eaf2ab3be7c489d15dc86fec0a8707677ed",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/full-check-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/full-check-node26/stdout.txt",
+      "sha256": "c6caa52bb0e9009c3fc57a2747d38a296f8478ae9f2a33897792d5d056003493",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/initial-red-installed-plist.test.ts",
+      "sha256": "c50cdea011205a2e7319a324cbdbd5a53f727b436ab96d23156db41ed15d45ce",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/initial-red-observed-allocation-config.test.ts",
+      "sha256": "cbf96297c590abf636b9a53fe2ce69eca21c76787ed0274c24243401eb916e01",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/intermediate-typecheck-fixed-node26/command.json",
+      "sha256": "45765730f008fea962c7cc95f7ca43c096c0660832559acd88931650ef66e201",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/intermediate-typecheck-fixed-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/intermediate-typecheck-fixed-node26/stdout.txt",
+      "sha256": "a5f26a123d51067a484f97018e93e9514bb2902f7ffbcecb9d2baba69d5b928a",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/intermediate-typecheck-node26/command.json",
+      "sha256": "e04116967a7e40cf49857610cedc294a9e68e0c9301fc967f802319baa23a494",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/intermediate-typecheck-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/intermediate-typecheck-node26/stdout.txt",
+      "sha256": "42471dbac3d1f772e65e17a5c54ff4c5f5ea3bdef02e6c01e89269ad88678e46",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/node24-version/command.json",
+      "sha256": "2c4e70779969095dbfe4f398cbef15a31ade9ce6142310f83845fe197a96d2d9",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/node24-version/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/node24-version/stdout.txt",
+      "sha256": "b988e13140652de941a9a3fab325102625f646ec6fde3a7b8a8af63496a74061",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/node26-version/command.json",
+      "sha256": "0fb47251d82493f567a1828f8f6f9c0073c9d5b2c7d80824401f1b7c97f406cd",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/node26-version/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/node26-version/stdout.txt",
+      "sha256": "bd17489adcddbc8ed526bf6dedb22de2e677bbae176b977aa7f7c0408999248c",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/other-combined-baseline-red-node24/command.json",
+      "sha256": "f1b994868aed61d448b719e4d2dca9c15cde5d72ade559029bce9e33e6a4883f",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/other-combined-baseline-red-node24/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/other-combined-baseline-red-node24/stdout.txt",
+      "sha256": "6c6bfd1a61b76d9ae10d7a7c4e9185f0c7270d6d389a87dd7da7106cadbd9653",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/other-combined-baseline-red-node26/command.json",
+      "sha256": "f974125d88535dce16c0ddbb4296d09c8cd2fc4ef00a908fab0dffe8fba3be2c",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/other-combined-baseline-red-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/other-combined-baseline-red-node26/stdout.txt",
+      "sha256": "307e624bc655314395374909982107926d91b4344fda73edbab5e66ec9a0b168",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/other-combined-green-node26/command.json",
+      "sha256": "d19f4d0f8f58b66393cef0d24e3ac1b28b7fc7a11956a2d2ac9652dd792875ac",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/other-combined-green-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/other-combined-green-node26/stdout.txt",
+      "sha256": "ed71689600b297b76b201e8c11d9560da0d78db772d4268505f01ca74dc9f24e",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/owned-coverage-node26/command.json",
+      "sha256": "a22f0a7b7eaa318dd75a6db6697c5622311086725287025e9a4cd91461bed11f",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/owned-coverage-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/owned-coverage-node26/stdout.txt",
+      "sha256": "cde2449c81d8726229faf9b9ecfffca178b07c525fe3efa69a695827d5a9c837",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-boundaries-node26/command.json",
+      "sha256": "fefd8ce3af595a67466fb7a627f48c19bced5f5a3921ce11b0f4494bfcefd4d0",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-boundaries-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-boundaries-node26/stdout.txt",
+      "sha256": "6d99eb68ce58b8a7f2129e784571548965933ad3b496dfea38f16ecb69b15e63",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-red-node24/command.json",
+      "sha256": "e8ee8b48be2bd45ae4fa08156077f3735474a0f4d64d96891a0ffb5b729b3e56",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-red-node24/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-red-node24/stdout.txt",
+      "sha256": "15f9117b7f82f6a61aea115d3a05b6fae24190c42dd4077faa3d171c568e89ff",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-red-node26/command.json",
+      "sha256": "5e3dffd2ebb2be90109cc4595d4b1f85687a63f70cbfaae266e3b6dd82b49a13",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-red-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-red-node26/stdout.txt",
+      "sha256": "22ad1be3c6d5c63d19747f25de78b93a9cb9d22e0cbf1df5faf60a7952364dff",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-semantic-green-node26/command.json",
+      "sha256": "17e0c16bb90d7bc2da3161e6d43b3948779b528504651d3b94b6a34484e776ed",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-semantic-green-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-semantic-green-node26/stdout.txt",
+      "sha256": "a7e4ca311023d5c82bafcaeee06ffb4b031e655cf6e1fb27929ad71ccf664b96",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-semantic-red-node24/command.json",
+      "sha256": "65aa081015b96b45e342aea4eca3d184ed715a3d025638566a859e0e2b66cf10",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-semantic-red-node24/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-semantic-red-node24/stdout.txt",
+      "sha256": "82b3572c697171c9ba2e1ee3513e45258bf804844ae5f0a60d3165e1521ebe86",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-semantic-red-node26/command.json",
+      "sha256": "91508c92ff572c7a0040c321f36c317705fb733c6f8d0374cac47277eee39ecf",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-semantic-red-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-semantic-red-node26/stdout.txt",
+      "sha256": "2ad68ade1f3428947fe75f1184c0740be5df5a794ac390ace5b335dd2cf38d14",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-tracer-green-node26/command.json",
+      "sha256": "83c1e65caf468e84428930158dae676b511c117f5930d81b2bbf670a5f0711f0",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-tracer-green-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/parser-tracer-green-node26/stdout.txt",
+      "sha256": "c4f8aacda6fd691bc46f2f19d192eca87a8a78dae1d65aa87e36cfc041f8c0e4",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/plan.md",
+      "sha256": "40c2f69010743e2be748b2c717b53e76a09d5cacb58328317baad749509729a1",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/retained-diskutil-info-output.xml",
+      "sha256": "338fdeb495a2a8d58be5e79ed9d2637d64bdbb6c7e9ba552b3aa345a34f2562d",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/retained-xcode-child-summary.json",
+      "sha256": "c53840a4dd2d29e384ebdfd1df6b1ccb90b4dc033eada9c2b121b1437f5d0e78",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/retained-xcode-json-reference.json",
+      "sha256": "134520d998d3cf452dc87dc5ba6ad4df915ba8306de636ef4280e9b207dd8118",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/run.py",
+      "sha256": "cb9e40a579b8459909bf0adf6b1e5dbaa3ee9be009dc34e04a660201cff14f2f",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/semantic-red-installed-plist.test.ts",
+      "sha256": "fae0e11dffa0aa37f446730bb59b6c80efcd87edafeba2f99d1d440a9256165a",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/setup-npm-ci/command.json",
+      "sha256": "e34e4539c0cc28020e2468880c5d0a5595de9d98a40599fb9dde009c1632b202",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/setup-npm-ci/stderr.txt",
+      "sha256": "e49b794cae6663ada86efea1579a0381251a5d4d1ff9b0cefed3e5622b21317d",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/setup-npm-ci/stdout.txt",
+      "sha256": "c9d39f478d3bd47f2d73a27bf226d235e922235884a9b7423eec751f7f0b8745",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/tracer-installed-plist.ts",
+      "sha256": "dbc9604dfddefdbc3a01992e57e3e99eb3900b32aa6b846d18ac69cb84e9ab0a",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/xcode-first-green-node26/command.json",
+      "sha256": "1e0a38b6900fca781c47737ea5fcdcd738d23a9dddc5cb9150dea76a60711caa",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/xcode-first-green-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/xcode-first-green-node26/stdout.txt",
+      "sha256": "2161d956b5a5639c3da2e33a53e114996ed9bb9c47254ce00ea38f8a436e184a",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/xcode-red-node24/command.json",
+      "sha256": "0a611abd84c533784b2f65e0c4452777d4a5d0cfc3f13ea791384321b959cef7",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/xcode-red-node24/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/xcode-red-node24/stdout.txt",
+      "sha256": "fb9f4c0cc7be566ef1e8abdcfeb09c4e08e2b808fef82a052affa9139b7616d5",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/xcode-red-node26/command.json",
+      "sha256": "ff7ae414a4ce8a2f0c89ef54d3b0dc2e14d417601bb99b6038d1a70d66b0810a",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/xcode-red-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/.scratch/xcode-metadata-output/xcode-red-node26/stdout.txt",
+      "sha256": "90eec2d337af61cedf281c64188d95cc7cc704ab902a051a907f359f12357ba1",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/src/observed/allocation-config.ts",
+      "sha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/src/observed/installed-plist.ts",
+      "sha256": "c74ddcafaef4e244bd1183695cade8fe4858f609bc6f20a1b86727801bc8b896",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/fixtures/observed-allocation-backend.ts",
+      "sha256": "5b8c6b14a463ee8ec312ac33655f18c0efc931c2c900784840342f7aeb0e3d80",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/installed-plist.test.ts",
+      "sha256": "c383636a717b8220905f3814d9123ce9ee78cbb1b5dfeb0d82bdf8e80a1aa02c",
+      "matches": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-xcode-metadata-output/tests/observed-allocation-config.test.ts",
+      "sha256": "1ae9db02cb08814a874d9b94ea872105ec2a88fe75d56e0f7263116698dbc4ad",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/xcode-candidate-review/spec/contract-correspondence.md",
+      "sha256": "6df30f73094492868619e2a4195a51eca02aba643f754794e2d044d0e6261d54",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/xcode-candidate-review/spec/default-gate-audit.json",
+      "sha256": "c9460e244d69c1365521f2d84d4019b32301cb1ebce1e2f718e1f45f4d03e759",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/xcode-candidate-review/spec/red-and-retained-audit.json",
+      "sha256": "cdd1d33693d9867ff3f2ea4de05b66649db6a56f171effbe8e209f0bbcec9f67",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/xcode-candidate-review/spec/report.md",
+      "sha256": "8144ac9d1bc9b8e79c2dd9b1cf27d13bc404feb9719cb53c2217b530930a489e",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/xcode-candidate-review/spec/static-audit.json",
+      "sha256": "0a7ab5ab1d145eb94f4be207aee51e1b4afda34f31be693909895e4fe67e304d",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/xcode-candidate-review/standards/static-audit.json",
+      "sha256": "45d113658b9cbe137b8dd11fed741f5ff80f52ffaefbdb7d2265f46bda9e3047",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/xcode-candidate-review/standards/report.md",
+      "sha256": "3bc60f8f1a35ece2aed45c2bf478a96037a1442217abe3221b04cd9f6933c626",
+      "matches": true
+    },
+    {
+      "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/xcode-candidate-review/standards/evidence.json",
+      "sha256": "934915aec8dfd5700f8ab6bb8a43235ae07ef8ea693f18aaea22d2f311ca5093",
+      "matches": true
+    }
+  ],
+  "reviewInputCount": 160,
+  "specFreezeSha256": "018ce895123126ff036b52e60efaa9c93268b1d38405c1ffddcafe7d70e059c5",
+  "standardsManifestSha256": "b0919deb172a104fa4a8aec0027ed6197b8288f1c99fc3ea02311718ee0eb526",
+  "authorEvidencePreserved": "xcode-candidate-evidence/root-preservation-index.json",
+  "defaultProof": "root-xcode-default-audit.json;1819/1819 actual defaults/typecheck/build bothNodes",
+  "limits": "OriginalXcode77555B/originalhash receipt, sanitized/reformatted retained JSON fields; synthetic size model; exact raw diskutilXML3108B/hash; parser unwired; no actual installed compatibility/live/final12 acceptance.",
+  "integration": "Ready to cherry-pick; production dist rebuild required after Source mutation."
+}

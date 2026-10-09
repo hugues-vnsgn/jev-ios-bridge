@@ -1,0 +1,25 @@
+{
+  "commit": "38aa879c3954c9d7742ef04059cad4d2fc824c87",
+  "sourceFrozen": true,
+  "reportSha256": "40a2ae99c1a2ec51e7584d792bb5a49574c2edde855c9e6a86a031526a6a7ddc",
+  "ledgerSha256": "c58806168f1b3e77876fb2c70d60dbda3ef1ca72a4ef55c5c295271da1f4e60a",
+  "candidateManifestSha256": "4c92ae78c385daad1516de011cd09bd48fc63c3bf8426ffb9aeafbcdf57aaf13",
+  "compiledFinalManifestSha256": "2ea567e81410f02c24210e5205b62e563a8dd38a3b0104e03c5cdcebfde5b56a",
+  "prosePass": {
+    "originalFocusedWords": 633,
+    "finalWords": 774,
+    "fixed": [
+      "Expanded dense numeric spacing",
+      "Replaced pending gates with captured full outcomes"
+    ],
+    "leftAlone": [
+      "Raw commands/counts/quoted errors and byte provenance"
+    ],
+    "flaggedNotChanged": [
+      "Independent review and installed/live proof pending"
+    ],
+    "checker": "0 strict,0 candidate"
+  },
+  "heavyWindowClosed": true,
+  "scratchCommitted": false
+}
