@@ -4,16 +4,16 @@ This is a Root coordination record. No production store or device operation was 
 
 | Gate | Current evidence | Required next action |
 | --- | --- | --- |
-| H01–H09 | PASS: actual1675 default gates both runtimes; complete maps/raw independently audited | Preserve the accepted host evidence; proceed only to prerequisite verification. |
-| Dedicated sole operator | [Owner-confirmed current binding](runtime-visibility-2026-10-09/user-evidence-and-binding.json), gpt-6.1-sol xhigh; same pane | Complete bounded read-only diagnosis; no L01–L05 dispatch until every prerequisite passes. Root remains coordinator. |
-| Installed host trust | [Actual unchanged lookup](runtime-visibility-2026-10-09/operator-phase1/report.md) refuses /Applications0775 before reading Xcode metadata | Applications candidate has final1723/1723 defaults both Nodes and independent Spec/Standards PASS; integrate exact repair. No chmod or bypass performed. |
-| Explicit runtime | User screenshot displays installed iOS27.0; prior metadata negatives are scoped to inspected roots; production lookup never reached runtime | Phases4–5 and Root retained-XML derivation verify27.0/build24A434, all required Xcode fields and exact unwritable mount. Implement/review owner-approved Cryptex support and fixed Xcode output; actual production compatibility still UNVERIFIED. |
-| Operational old writers/roots | [Owner confirmation](operational-confirmation-2026-10-09/owner-confirmation.json): older/external writers stopped; no additional historical roots or additional exclusions. Operational assertion only. | Use the prepared declaration at entry; preserve default sources and built-in protected-device exclusions. |
-| Actual migration | Not performed | With truthful declaration and all gates, invoke reviewed maintenance entry once; preserve all sources/claims and receipt. |
-| Effective config/capacity/storage | Actual account config/store not accessed | Verify private config/default digest and effective budgets; count held allocations, preserve max8 and conservative storage reservations. |
-| Unchanged artifacts | Generic fresh builds not performed | Sole operator builds fixture/Weather in isolated DerivedData, inspects metadata/compatibility and hashes sources/apps. |
-| Live L01–L05 | Not started | Exactly5 serial create-source cases; retain all devices and evidence, stop on uncertainty. |
-| Independent final safety | Not dispatched | Ticket12 after complete host/live evidence. |
+| H01–H09 | Original product b618116d accepted with1675 defaults both Nodes and clean37-command npm/plugin proofs. Applications and Xcode/parser repairs independently accepted; repaired distribution not yet accepted. | Preserve original evidence; complete Cryptex default/review/integrated/installed gates before operational entry. |
+| Dedicated sole operator | Owner keeps GPT-6.1-Sol xhigh in term_19640861-824c-4f24-8789-3f584723bc5a; idle after phases1–5. | Dispatch one [repaired installed compatibility recheck](../../../observed-action-rollout/installed-compatibility-recheck.md) only after final host binding. Root coordinates. |
+| Installed host trust | Applications integratedc12ed4f6 and fixed Xcode output/parser integrated5505f803; Root439Source/69compiled association matches. | Finish bounded owner-approved Cryptex repair; full gates and independent reviews precede repaired acceptance. |
+| Explicit runtime | Phases4–5 and exact retained XML confirm iOS27.0/build24A434 in Cryptex, matching Xcode fields and unwritable mount. Whole actual production compatibility remains UNVERIFIED. | Keep explicit iPhone17/iOS27.0; run the gated single production lookup after repairs pass. |
+| Operational old writers/roots | [Owner confirmation](operational-confirmation-2026-10-09/owner-confirmation.json): stopped older/external writers; no additional historical roots or exclusions. Operational assertion only. | Use prepared declaration at entry; preserve default sources and four protected UUID exclusions. |
+| Actual migration | Unexecuted private declaration. | Sole operator invokes reviewed maintenance entry once after host/actual compatibility gates; preserve sources/claims/receipt. |
+| Effective config/capacity/storage | Actual account config/store not accessed. | Verify private config/default digest, held capacity at most8 and conservative storage reservations. |
+| Unchanged artifacts | Generic fresh builds unperformed. | Sole operator builds unchanged fixture/Weather in isolated DerivedData and verifies metadata/source/app hashes. |
+| Live L01–L05 | All UNVERIFIED; unstarted. | Exactly five serial create-source cases after every prerequisite; retain all devices/evidence and stop on uncertainty. |
+| Independent final safety | Ticket12 unstarted. | Fresh nonauthor GPT-6-Astra high reviewer after all H/L evidence; Root readiness only with every gate PASS. |
 
 ## Operational declaration fields
 
