@@ -8,14 +8,14 @@ The owner separately approved the frozen [bounded Cryptex v3 policy](cryptex-pol
 
 ## Remaining order
 
-1. Complete: Applications repair integrated; Root verified2owned/435protected/15host paths. Original68compiled files remain stale and require rebuild.
-2. Finish fixed Xcode Info128KiB combined conversion output and the bounded pure XML mount parser in the isolated author worktree. Preserve64KiB inputs/all other outputs and existing assertions. Only the exact-command fixture output guard is transferred.
-3. Stack the owner-approved Cryptex implementation on that frozen candidate: finite discovery, explicit-runtime uniqueness, fresh mount proof around each conversion, same-device stable paths, exact modes and tracked metadata-child termination.
+1. Complete: Applications repair integrated; Root verified2owned/435protected/15host paths. A later Root build now supplies69compiled files matching the accepted parser candidate.
+2. Complete: fixed Xcode output and pure parser integrated5505f803 after bothNode174focused/1819default/typecheck/build and independent Spec/Standards PASS. Root actual build matches439Source/69compiled paths.
+3. Active: isolated Cryptex author has stacked on candidate38aa879c and holds the focused red/green/typecheck/build window: finite discovery, explicit-runtime uniqueness, fresh mount proof around each conversion, same-device stable paths, exact modes and tracked metadata-child termination.
 4. Complete both Node actual default gates, typecheck/build, independent reviews, clean installed proofs and Source/compiled/install correspondence for the repaired product.
 5. Through the same sole GPT-6.1-Sol xhigh operator, verify actual installed compatibility, private config/digest, reviewed migration, capacity/storage and unchanged fixture/Weather builds.
 6. Run L01 through L05 serially on fresh iPhone17/iOS27.0 create-source allocations; retain all five devices and raw public-interface evidence.
 7. Independent nonauthor final safety review, then Root readiness verdict. No automatic merge or publication.
 
-Original H01 through H09 acceptance remains scoped to original product `b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433` and its1675-test gates. Repair deltas require fresh validation. The owner writer/root assertion and private migration declaration remain available; migration has not run. All live rows remain UNVERIFIED. Root never operates devices. The sole operator is idle after the finite diagnosis.
+Original H01 through H09 acceptance remains scoped to original product `b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433` and its1675-test gates. Repair deltas require fresh validation. The owner writer/root assertion and private migration declaration remain available; migration has not run. All live rows remain UNVERIFIED. Root never operates devices. The sole operator is idle after the finite diagnosis. Original Xcode output size/hash are complete-output receipt claims; sanitized retained JSON supports required fields. The size regression is synthetic; exact diskutil XML remains hash-bound.
 
 [Detailed execution, case counts and stop rules](../../../../observed-action-rollout/next-work.md).

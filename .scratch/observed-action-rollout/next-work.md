@@ -13,8 +13,8 @@ The unchanged bridge refused `/Applications` mode0775 before reading runtime met
 | Order | Work and owner | Completion evidence |
 | --- | --- | --- |
 | 1 | Complete: Root integrated the independently accepted Applications repair | Candidate `a0e68917` integrated as `c12ed4f6`; exact two-file overlay audited, preserved raw gates, Spec and Standards PASS. |
-| 2 (active) | Isolated host author repairs fixed Xcode output and implements bounded XML mount parser | Genuine failing regressions; fixed Xcode conversion128KiB combined output only, all inputs64KiB; parser64KiB/depth32/8192nodes, typed exact mount and three false writable fields. Both Node gates and independent reviews. |
-| 3 | Cryptex author implements the owner-approved bounded v3 policy on the frozen parser candidate | Finite exact-namespace discovery, explicit-runtime uniqueness, fresh mount proofs around each conversion, stable same-device paths, exact permissions and guarded metadata child termination. No native probes in author worktrees. |
+| 2 (complete) | Root integrated reviewed fixed Xcode output and bounded XML mount parser | Genuine failing regressions; fixed Xcode conversion128KiB combined output only, all inputs64KiB; parser64KiB/depth32/8192nodes, typed exact mount and three false writable fields. Both Nodes174focused/1819default/typecheck/build; both review axes PASS. Integrated5505f803; Root439Source/69compiled match. |
+| 3 (active) | Cryptex author implements the owner-approved bounded v3 policy on the frozen parser candidate | Finite exact-namespace discovery, explicit-runtime uniqueness, fresh mount proofs around each conversion, stable same-device paths, exact permissions and guarded metadata child termination. No native probes in author worktrees. |
 | 4 | Root revalidates the repaired product and installed distribution | Actual default gates on both Node versions, typecheck/build, independent Spec/Standards reviews, clean npm/plugin proofs, current Source/compiled/install association. Original product acceptance does not automatically cover repair deltas. |
 | 5 | Same sole operator completes operational entry | Actual installed compatibility; private account config/default digest; reviewed migration; held capacity at most8; storage reservations; unchanged fixture and Weather builds in isolated DerivedData. |
 | 6 | Same sole operator runs L01 through L05 serially | Fresh create-source iPhone17/iOS27.0 allocation per case, public cross-process interfaces, exact effects, visible outcomes, retained raw evidence and all five allocations. |
@@ -28,7 +28,7 @@ Earlier full26 permission-fixture failures were caused by child umask077, confir
 
 The owner separately approved the [bounded Cryptex v3 policy](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal.md). [Exact answer and frozen proposal hash](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/owner-cryptex-trust-decision.json). It trusts root/daemon namespace managers only in the stated fixed subtree and requires fresh exact unwritable mount evidence. This is a mode-based policy, without an inspected ACL inventory or atomic ancestor pin. Independent proposal review found no remaining scoped defect; implementation regressions and reviews are still required.
 
-The Xcode/parser author owns one narrow existing fixture extension: its fake SourceProcess may accept128KiB only for the exact fixed Xcode Info conversion command. All other commands retain64KiB. No input-size heuristic or existing assertion relaxation is authorized.
+The accepted Xcode/parser repair includes one narrow existing fixture extension: its fake SourceProcess may accept128KiB only for the exact fixed Xcode Info conversion command. All other commands retain64KiB. No input-size heuristic or existing assertion relaxation is authorized.
 
 ## Operational entry
 
@@ -49,5 +49,7 @@ Before allocation, verify private effective config/store authority, default dige
 | L05 | MCP prepare → separate CLI action → MCP get | Unchanged Weather Settings sheet; outcome_observed;1touch,0relaunch,N≥2; snapshot and JPEG agree. |
 
 Each preparation uses exactly one create, boot, install and launch, with fresh unique declared IDs. Count actual listing/readiness/action captures and all backend calls. Retain five devices, including refusal and quarantine, within eight held allocations. Stop on uncertainty, unknown creation, exhausted capacity or unexplained effects; no replay, replacement, erase, delete, shutdown or reset.
+
+The Cryptex author now works in the isolated `fix-installed-cryptex-runtime` branch, base `38aa879c`, with438 other accepted paths protected. Only its focused regression/typecheck/build window is granted; full gates follow freeze. The sole operator remains idle.
 
 All L01 through L05 remain UNVERIFIED. Ticket12 is not dispatched. No production config/store activation, migration, app build or live device action has occurred in this diagnosis. Runtime fallback, downloads, host permission changes, cleanup, merge, push and publication remain outside this execution.
