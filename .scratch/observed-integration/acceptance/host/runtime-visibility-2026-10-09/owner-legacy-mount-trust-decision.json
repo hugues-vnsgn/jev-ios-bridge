@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "status": "APPROVED",
+  "recordedAtUtc": "2026-10-09 07:22:15 UTC",
+  "answer": "Approve the bounded legacy-mount policy (Recommended)",
+  "questionItemId": "[\"request_user_input_async\",\"call_d7e85512773e46f8a0173825d8a9ae03\",0]",
+  "proposal": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-proposal-v3.md",
+  "proposalSha256": "14dd5566f99845a4ee6562404c16610c732795f311b7df1e95ecb306dd599492",
+  "reviewAndEvidenceHead": "79de93bba306ccaa4ca768cb93b9f1dcc52b6fdb",
+  "scope": "Bounded legacy-mounted-metadata policy implementation and verification under exact fixed Volumes namespace; approved Applications/Cryptex meanings preserved; fresh mount proofs and lossless-or-refuse identities mandatory.",
+  "unchangedChoices": {
+    "soleNativeOperatorModel": "GPT-6.1-Sol xhigh",
+    "deviceTypeId": "com.apple.CoreSimulator.SimDeviceType.iPhone-17",
+    "runtimeId": "com.apple.CoreSimulator.SimRuntime.iOS-27-0"
+  },
+  "acceptance": "Owner policy approval only; implementation, actual compatibility, operational entry, L01-L05 and ticket12 pending."
+}

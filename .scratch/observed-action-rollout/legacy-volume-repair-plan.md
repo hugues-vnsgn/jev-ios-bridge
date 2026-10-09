@@ -1,6 +1,6 @@
 # Legacy runtime-volume repair: prepared execution
 
-Status: prepared only. Dispatch requires the owner's explicit approval of the exact independently reviewed v3 proposal SHA and Root's author-window grant. No Source implementation is authorized yet.
+Status: owner approved the exact v3 SHA and Root dispatched the existing isolated author. The granted window covers baseline/path declaration, genuine reds, implementation, focused/unchanged coverage/typecheck/build on both exact Nodes, Source freeze and serial actual unmodified defaults. Failures stop the window for diagnosis; no assertion weakening or silent reruns. No native operator work is dispatched by this grant.
 
 ## Inputs and scope
 

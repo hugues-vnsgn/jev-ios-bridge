@@ -1,6 +1,6 @@
 # Legacy mount decision ready for owner review
 
-Status: awaiting owner approval. Source implementation has not started.
+Status: owner approved the exact proposal below. [Frozen approval](owner-legacy-mount-trust-decision.json). Root dispatched the isolated author for implementation and verification; all implementation/native/live gates remain pending.
 
 ## Why a separate decision is needed
 
