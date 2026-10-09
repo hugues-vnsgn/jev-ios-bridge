@@ -79,6 +79,7 @@ export function installedHost(): InstalledHost {
   return { fs: nativeFs, account: userInfo(), platform: ['arm64', 'x64'].includes(arch()) ? platform() : 'unsupported', architecture: arch() === 'arm64' ? 'arm64' : 'x86_64' };
 }
 export const developerDirectory = '/Applications/Xcode.app/Contents/Developer';
+const installedPlistOutputLimit = (path: string) => path === '/Applications/Xcode.app/Contents/Info.plist' ? 131072 : 65536;
 const productionProcesses = new WeakSet<SourceProcess>();
 export const isProductionSourceProcess = (process: SourceProcess): boolean => productionProcesses.has(process);
 /** Production composition: only fixed executables and validated argument arrays; no inherited loader/credential overrides. */
@@ -97,7 +98,8 @@ export function allocationSourceProcess(host: InstalledHost, allowedArtifactRoot
         || allowedArtifactRoots.some(root => path.startsWith(resolve(root) + '/') && basename(path) === 'Info.plist'));
     const plist = executable === '/usr/bin/plutil' && args.length === 6 && args.slice(0, 5).join('\0') === '-convert\0json\0-o\0-\0--' && metadata;
     if ((!create && !plist) || options.shell !== false || options.signal.aborted || !Number.isSafeInteger(options.timeoutMs)
-      || options.timeoutMs < 1 || options.timeoutMs > 900000 || !Number.isSafeInteger(options.maxOutputBytes) || options.maxOutputBytes < 1 || options.maxOutputBytes > 65536) throw new Error('Host process is not authorized');
+      || options.timeoutMs < 1 || options.timeoutMs > 900000 || !Number.isSafeInteger(options.maxOutputBytes) || options.maxOutputBytes < 1
+      || options.maxOutputBytes > (plist ? installedPlistOutputLimit(path!) : 65536)) throw new Error('Host process is not authorized');
     if (plist) {
       const stat = await host.fs.lstat(path!);
       if (!stat.isFile() || stat.isSymbolicLink() || stat.nlink !== 1 || ![0, host.account.uid].includes(stat.uid) || (stat.mode & 0o022)) throw new Error('Host process is not authorized');
@@ -150,10 +152,11 @@ async function trustedPath(path: string, host: InstalledHost, directory = false)
 async function installedPlist(path: string, host: InstalledHost, process: SourceProcess, signal: AbortSignal): Promise<Record<string, unknown>> {
   signal.throwIfAborted(); const beforeStat = await trustedPath(path, host);
   const before = await stableFile(path, host.fs);
+  const maxOutputBytes = installedPlistOutputLimit(path);
   const result = await process('/usr/bin/plutil', ['-convert', 'json', '-o', '-', '--', path],
-    { signal, timeoutMs: 10000, maxOutputBytes: 65536, shell: false });
+    { signal, timeoutMs: 10000, maxOutputBytes, shell: false });
   signal.throwIfAborted();
-  if (result.exitCode !== 0 || Buffer.byteLength(result.stdout) > 65536 || Buffer.byteLength(result.stderr) > 65536
+  if (result.exitCode !== 0 || Buffer.byteLength(result.stdout) + Buffer.byteLength(result.stderr) > maxOutputBytes
     || stamp(beforeStat) !== stamp(await trustedPath(path, host)) || !before.equals(await stableFile(path, host.fs))) throw new Error('Unconfirmed installed metadata');
   const value: unknown = JSON.parse(result.stdout);
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('Invalid installed metadata');

@@ -78,6 +78,7 @@ import { PassThrough } from 'node:stream';
 import type { spawn } from 'node:child_process';
 import type { Stats } from 'node:fs';
 import { allocationSourceProcess, developerDirectory } from '../src/observed/allocation-config.js';
+import type { SourceProcess } from '../src/observed/create-source.js';
 
 function childHarness() {
   const child = Object.assign(new EventEmitter(), { stdout: new PassThrough(), stderr: new PassThrough(),
@@ -239,16 +240,17 @@ function overrideInstalledStats(f: AllocationFixture, change: (path: string, sta
 const applicationsStats = (stat: Stats) => Object.assign(stat, { uid: 0, gid: 80, mode: 0o040775 });
 const exactCreate = ['simctl', 'create', 'jev-observed-ABCDEF00-0000-4000-8000-000000000001', typeId, runtimeId];
 const processOptions = () => ({ shell: false as const, signal: new AbortController().signal, timeoutMs: 1000, maxOutputBytes: 65536 });
-function installedProcessFixture(f: AllocationFixture) {
+function installedProcessFixture(f: AllocationFixture, converted = new Map<string, { stdout: string; stderr: string }>()) {
   const invocations: unknown[][] = [];
   const launch = ((executable: string, args: string[], options: unknown) => {
     invocations.push([executable, args, options]); const { child } = childHarness();
     queueMicrotask(() => { void (async () => {
       try {
+        const conversion = executable === '/usr/bin/plutil' ? converted.get(args[5]!) : undefined;
         const output = executable === '/usr/bin/plutil'
-          ? await (await import('node:fs/promises')).readFile(f.map(args[5]!), 'utf8')
+          ? conversion?.stdout ?? await (await import('node:fs/promises')).readFile(f.map(args[5]!), 'utf8')
           : 'ABCDEF00-0000-4000-8000-000000000001\n';
-        child.stdout.write(output); child.emit('close', 0, null);
+        child.stdout.write(output); child.stderr.write(conversion?.stderr ?? ''); child.emit('close', 0, null);
       } catch (error) { child.emit('error', error); child.emit('close', 1, null); }
     })(); });
     return child;
@@ -400,6 +402,203 @@ test('installed Applications policy checks permission trust without certifying a
     assert.equal((await verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, process.source,
       new AbortController().signal)).runtimeVersion, '27.0.1');
     assert.ok(identities.size > 1); assert.ok(process.invocations.every(call => call[0] === '/usr/bin/plutil'));
+    assert.deepEqual(f.calls, []);
+  } finally { await f.cleanup(); }
+});
+
+
+// Reproduce the retained Xcode conversion sizes and required fields without executing plutil.
+const observedXcodeFields = { CFBundleIdentifier: 'com.apple.dt.Xcode', CFBundleExecutable: 'Xcode', LSMinimumSystemVersion: '26.6' };
+function xcodeConversionJson(bytes: number) {
+  const empty = JSON.stringify({ ...observedXcodeFields, retainedUnknownMetadata: '' });
+  return JSON.stringify({ ...observedXcodeFields, retainedUnknownMetadata: 'x'.repeat(bytes - Buffer.byteLength(empty)) });
+}
+const fixedPlistArgs = (path: string) => ['-convert', 'json', '-o', '-', '--', path];
+
+test('Xcode Info conversion accepts the observed 34501-byte input and 77555-byte JSON through production composition', async () => {
+  const f = await allocationFixture(); const h = childHarness();
+  const input = Buffer.alloc(34501); input.write('bplist00');
+  await (await import('node:fs/promises')).writeFile(f.map(xcodeInfoPath), input);
+  const source = allocationSourceProcess(f.host, [], h.launch);
+  try {
+    const pending = source('/usr/bin/plutil', fixedPlistArgs(xcodeInfoPath), { ...processOptions(), maxOutputBytes: 131072 });
+    await Promise.race([h.started, pending]);
+    const json = xcodeConversionJson(77555); h.child.stdout.write(json); h.child.emit('close', 0, null);
+    const result = await pending; assert.equal(result.exitCode, 0); assert.equal(Buffer.byteLength(result.stdout), 77555);
+    const value = JSON.parse(result.stdout); for (const [key, expected] of Object.entries(observedXcodeFields)) assert.equal(value[key], expected);
+    assert.deepEqual(h.invocations[0]!.slice(0, 2), ['/usr/bin/plutil', fixedPlistArgs(xcodeInfoPath)]);
+    assert.deepEqual((h.invocations[0]![2] as { env: unknown }).env,
+      { HOME: f.home, PATH: '/usr/bin:/bin:/usr/sbin:/sbin', LANG: 'C', LC_ALL: 'C', DEVELOPER_DIR: developerDirectory });
+    assert.deepEqual(await (await import('node:fs/promises')).readFile(f.map(xcodeInfoPath)), input);
+  } finally { h.child.emit('close', null, 'SIGTERM'); await f.cleanup(); }
+});
+
+test('Xcode Info installed proof requests the narrow cap and accepts the observed converted JSON size', async () => {
+  const f = await allocationFixture(); const input = Buffer.alloc(34501); input.write('bplist00');
+  await (await import('node:fs/promises')).writeFile(f.map(xcodeInfoPath), input);
+  const requests: { path: string; cap: number; deadline: number }[] = [];
+  const source: SourceProcess = async (executable, args, options) => {
+    requests.push({ path: args[5]!, cap: options.maxOutputBytes, deadline: options.timeoutMs });
+    if (args[5] === xcodeInfoPath) return { exitCode: 0, stdout: xcodeConversionJson(77555), stderr: '' };
+    return f.source(executable, args, options);
+  };
+  try {
+    const proof = await verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, source, new AbortController().signal);
+    assert.equal(proof.runtimeVersion, '27.0.1'); assert.equal(requests[0]!.cap, 131072);
+    assert.ok(requests.slice(1).every(r => r.cap === 65536)); assert.ok(requests.every(r => r.deadline === 10000));
+    assert.ok(!f.calls.includes('create'));
+  } finally { await f.cleanup(); }
+});
+
+test('mapped allocation fixture permits the narrow exact Xcode Info cap and rejects other targets and higher caps', async () => {
+  const f = await allocationFixture();
+  try {
+    assert.equal((await f.source('/usr/bin/plutil', fixedPlistArgs(xcodeInfoPath), { ...processOptions(), maxOutputBytes: 131072 })).exitCode, 0);
+    for (const [executable, args, cap] of [
+      ['/usr/bin/plutil', fixedPlistArgs(xcodeInfoPath), 131073],
+      ['/usr/bin/plutil', fixedPlistArgs('/Applications/Xcode.app/Contents/version.plist'), 65537],
+      ['/usr/bin/plutil', fixedPlistArgs(runtimeProfilePath), 65537],
+      ['/usr/bin/plutil', [...fixedPlistArgs(xcodeInfoPath), 'extra'], 131072],
+      ['/usr/bin/plutil', ['-convert', 'xml1', '-o', '-', '--', xcodeInfoPath], 131072],
+      ['/usr/bin/xcrun', exactCreate, 65537],
+    ] as [string, string[], number][]) await assert.rejects(f.source(executable, args, { ...processOptions(), maxOutputBytes: cap }));
+    assert.deepEqual(f.calls, ['plist']);
+  } finally { await f.cleanup(); }
+});
+
+for (const surface of ['installed', 'production'] as const) for (const bytes of [131072, 131073]) {
+  test(`Xcode Info ${surface} conversion enforces ${bytes}-byte combined stdout and stderr`, async () => {
+    const f = await allocationFixture(); const stdout = xcodeConversionJson(77555); const stderr = 'e'.repeat(bytes - 77555);
+    const production = installedProcessFixture(f, new Map([[xcodeInfoPath, { stdout, stderr }]]));
+    const source: SourceProcess = surface === 'production' ? production.source : async (executable, args, options) =>
+      args[5] === xcodeInfoPath ? { exitCode: 0, stdout, stderr } : f.source(executable, args, options);
+    try {
+      const proof = verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, source, new AbortController().signal);
+      if (bytes === 131072) assert.equal((await proof).xcodeVersion, '27.0');
+      else await assert.rejects(proof, /HOST_PREREQUISITE_MISSING/);
+      assert.ok(!f.calls.includes('create')); assert.ok(production.invocations.every(call => call[0] === '/usr/bin/plutil'));
+    } finally { await f.cleanup(); }
+  });
+}
+
+for (const path of ['/Applications/Xcode.app/Contents/version.plist', '/System/Library/CoreServices/SystemVersion.plist', runtimeProfilePath]) {
+  test(`other installed metadata retains a 64KiB combined output limit at ${path}`, async () => {
+    const f = await allocationFixture();
+    const source: SourceProcess = async (executable, args, options) => {
+      const result = await f.source(executable, args, options);
+      if (args[5] !== path) return result;
+      assert.equal(options.maxOutputBytes, 65536);
+      return { ...result, stdout: result.stdout + ' '.repeat(32768 - Buffer.byteLength(result.stdout)), stderr: 'e'.repeat(32769) };
+    };
+    try {
+      await assert.rejects(verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, source, new AbortController().signal), /HOST_PREREQUISITE_MISSING/);
+      assert.ok(!f.calls.includes('create'));
+    } finally { await f.cleanup(); }
+  });
+}
+
+test('production conversion refuses higher caps, different commands and paths before dispatch', async () => {
+  const f = await allocationFixture(); const h = childHarness(); const source = allocationSourceProcess(f.host, [f.app], h.launch);
+  try {
+    for (const [executable, args, maxOutputBytes] of [
+      ['/usr/bin/plutil', fixedPlistArgs(xcodeInfoPath), 131073],
+      ['/usr/bin/plutil', fixedPlistArgs('/Applications/Xcode.app/Contents/version.plist'), 65537],
+      ['/usr/bin/plutil', fixedPlistArgs(runtimeProfilePath), 65537],
+      ['/usr/bin/plutil', fixedPlistArgs(f.app + '/Info.plist'), 65537],
+      ['/usr/bin/plutil', fixedPlistArgs('/Applications/Xcode.app/Contents/Info.plist/../Info.plist'), 131072],
+      ['/usr/bin/plutil', ['-convert', 'xml1', '-o', '-', '--', xcodeInfoPath], 131072],
+      ['/usr/bin/plutil', [...fixedPlistArgs(xcodeInfoPath), 'extra'], 131072],
+      ['/usr/bin/xcrun', exactCreate, 65537],
+    ] as [string, string[], number][]) await assert.rejects(source(executable, args, { ...processOptions(), maxOutputBytes }));
+    assert.deepEqual(h.invocations, []); assert.deepEqual(f.calls, []);
+  } finally { await f.cleanup(); }
+});
+
+test('Xcode Info process honors a caller smaller output cap and waits for close after overflow', async () => {
+  const f = await allocationFixture(); const h = childHarness(); const source = allocationSourceProcess(f.host, [], h.launch); let settled = false;
+  try {
+    const pending = source('/usr/bin/plutil', fixedPlistArgs(xcodeInfoPath), processOptions()).finally(() => { settled = true; });
+    await h.started; h.child.stdout.write(xcodeConversionJson(65537)); await new Promise(r => setImmediate(r));
+    assert.equal(settled, false); assert.ok(h.child.killed > 0);
+    h.child.emit('close', 0, null); assert.equal((await pending).exitCode, null);
+  } finally { h.child.emit('close', null, 'SIGTERM'); await f.cleanup(); }
+});
+
+for (const surface of ['installed', 'production'] as const) test(`Xcode Info malformed JSON refuses at the ${surface} surface`, async () => {
+  const f = await allocationFixture(); const stdout = '{"CFBundleIdentifier":' + ' '.repeat(77555); const stderr = '';
+  const production = installedProcessFixture(f, new Map([[xcodeInfoPath, { stdout, stderr }]]));
+  const source: SourceProcess = surface === 'production' ? production.source : async () => ({ exitCode: 0, stdout, stderr });
+  try {
+    await assert.rejects(verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, source, new AbortController().signal), /HOST_PREREQUISITE_MISSING/);
+    assert.ok(!f.calls.includes('create')); assert.ok(production.invocations.length <= 1);
+  } finally { await f.cleanup(); }
+});
+
+for (const surface of ['compatibility', 'process'] as const) test(`Xcode Info pre-aborted ${surface} request refuses before dispatch`, async () => {
+  const f = await allocationFixture(); const production = installedProcessFixture(f); const signal = AbortSignal.abort();
+  try {
+    if (surface === 'compatibility') await assert.rejects(verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, production.source, signal), /HOST_PREREQUISITE_MISSING/);
+    else await assert.rejects(production.source('/usr/bin/plutil', fixedPlistArgs(xcodeInfoPath), { ...processOptions(), maxOutputBytes: 131072, signal }));
+    assert.deepEqual(production.invocations, []); assert.deepEqual(f.calls, []);
+  } finally { await f.cleanup(); }
+});
+
+test('Xcode Info in-flight abort stops conversion without reporting success before child close', async () => {
+  const f = await allocationFixture(); const h = childHarness(); const source = allocationSourceProcess(f.host, [], h.launch);
+  const controller = new AbortController(); let settled = false;
+  try {
+    const pending = source('/usr/bin/plutil', fixedPlistArgs(xcodeInfoPath), { ...processOptions(), maxOutputBytes: 131072, signal: controller.signal }).finally(() => { settled = true; });
+    await h.started; controller.abort(); h.child.stdout.write(xcodeConversionJson(77555)); await new Promise(r => setImmediate(r));
+    assert.equal(settled, false); assert.ok(h.child.killed > 0); h.child.emit('close', 0, null); assert.equal((await pending).exitCode, null);
+  } finally { h.child.emit('close', null, 'SIGTERM'); await f.cleanup(); }
+});
+
+for (const bytes of [65536, 65537]) test(`Xcode Info conversion retains the ${bytes}-byte input boundary`, async () => {
+  const f = await allocationFixture(); const input = Buffer.alloc(bytes); input.write('bplist00');
+  await (await import('node:fs/promises')).writeFile(f.map(xcodeInfoPath), input);
+  const production = installedProcessFixture(f, new Map([[xcodeInfoPath, { stdout: xcodeConversionJson(77555), stderr: '' }]]));
+  try {
+    const proof = verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, production.source, new AbortController().signal);
+    if (bytes === 65536) assert.equal((await proof).runtimeVersion, '27.0.1');
+    else { await assert.rejects(proof, /HOST_PREREQUISITE_MISSING/); assert.deepEqual(production.invocations, []); }
+    assert.ok(!f.calls.includes('create'));
+  } finally { await f.cleanup(); }
+});
+
+for (const mutation of ['bytes', 'identity', 'write-permission', 'hardlink'] as const) test(`Xcode Info ${mutation} change during conversion remains untrusted`, async () => {
+  const f = await allocationFixture(); let first = true;
+  const source: SourceProcess = async (executable, args, options) => {
+    if (args[5] !== xcodeInfoPath) return f.source(executable, args, options);
+    assert.equal(options.maxOutputBytes, 131072);
+    if (first) {
+      first = false; const fs = await import('node:fs/promises');
+      if (mutation === 'bytes') f.write(xcodeInfoPath, { ...observedXcodeFields, changed: true });
+      if (mutation === 'identity') { await fs.rename(f.map(xcodeInfoPath), f.map(xcodeInfoPath) + '.old'); f.write(xcodeInfoPath, observedXcodeFields); }
+      if (mutation === 'write-permission') await fs.chmod(f.map(xcodeInfoPath), 0o666);
+      if (mutation === 'hardlink') await fs.link(f.map(xcodeInfoPath), f.map(xcodeInfoPath) + '.alias');
+    }
+    return { exitCode: 0, stdout: xcodeConversionJson(77555), stderr: '' };
+  };
+  try {
+    await assert.rejects(verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, source, new AbortController().signal), /HOST_PREREQUISITE_MISSING/);
+    assert.ok(!f.calls.includes('create'));
+  } finally { await f.cleanup(); }
+});
+
+test('Xcode Info byte changes refuse even when injected metadata stamps remain identical', async () => {
+  const f = await allocationFixture(); const fs = await import('node:fs/promises'); const path = xcodeInfoPath;
+  const original = await f.host.fs.lstat(path); const lstat = f.host.fs.lstat; const open = f.host.fs.open;
+  f.host.fs.lstat = (async (p: string) => p === path ? original : lstat(p)) as typeof lstat;
+  f.host.fs.open = (async (...args: Parameters<typeof open>) => {
+    const handle = await open(...args); if (String(args[0]) === path) handle.stat = (async () => original) as typeof handle.stat;
+    return handle;
+  }) as typeof open;
+  const source: SourceProcess = async (_executable, _args, options) => {
+    assert.equal(options.maxOutputBytes, 131072); const changed = await fs.readFile(f.map(path)); changed[changed.length - 1] = changed[changed.length - 1]! ^ 1;
+    await fs.writeFile(f.map(path), changed); return { exitCode: 0, stdout: xcodeConversionJson(77555), stderr: '' };
+  };
+  try {
+    await assert.rejects(verifyInstalledCompatibility({ deviceTypeId: typeId, runtimeId }, f.host, source, new AbortController().signal), /HOST_PREREQUISITE_MISSING/);
     assert.deepEqual(f.calls, []);
   } finally { await f.cleanup(); }
 });

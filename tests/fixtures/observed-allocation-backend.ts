@@ -63,7 +63,9 @@ export async function allocationFixture(options: { now?: () => number; fault?: N
   let state = 'Booted'; let available = true; let screenshotPath: string | undefined;
   const commandResults = new Map<string, Awaited<ReturnType<CliRunner>>>();
   const source: SourceProcess = async (executable, args, options) => {
-    if (options.shell !== false || options.signal.aborted || options.timeoutMs <= 0 || options.maxOutputBytes > 65536) assertNever('Unsafe fake source options');
+    if (options.shell !== false || options.signal.aborted || options.timeoutMs <= 0 || options.maxOutputBytes >
+      (executable === '/usr/bin/plutil' && args.length === 6 && args.slice(0, 5).join('\0') === '-convert\0json\0-o\0-\0--'
+        && args[5] === xcodeInfoPath ? 131072 : 65536)) assertNever('Unsafe fake source options');
     if (executable === '/usr/bin/plutil') {
       if (args.length !== 6 || args.slice(0, 5).join('\0') !== '-convert\0json\0-o\0-\0--' || !(args[5]!.startsWith('/Applications/Xcode.app/Contents/') || args[5] === '/System/Library/CoreServices/SystemVersion.plist' || args[5]!.startsWith('/Library/Developer/CoreSimulator/') || args[5]!.startsWith(root + '/'))) assertNever('Unexpected fake plist command');
       const p = args[5]!; calls.push('plist'); await before?.('plist', p);
