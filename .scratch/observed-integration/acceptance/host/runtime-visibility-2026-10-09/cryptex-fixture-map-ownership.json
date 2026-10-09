@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-09T04:17:51.104832+00:00",
+  "finding": "Shared allocation fixture installed map excluded /private and would pass those discovery paths to real filesystem under new product Source. Author stopped existing-fixture/fullgate slice before any native query.",
+  "authorization": "Root narrowly transfers only installed map regex to include private; preserve originalother behavior/Xcodeguard/assertions.",
+  "file": "tests/fixtures/observed-allocation-backend.ts",
+  "baselineSha256": "5b8c6b14a463ee8ec312ac33655f18c0efc931c2c900784840342f7aeb0e3d80",
+  "proof": "Genuine pure-string map red bothNodes beforefixtureedit, green bothNodes and temporary-path ENOENT beforeexisting suites.",
+  "protectedBaselineCount": 437,
+  "baselineTotalCount": 439,
+  "candidateTotalCount": 441,
+  "productOwnedCount": 4,
+  "nativeHostAuthorization": false,
+  "hostPolicyExtension": false
+}
