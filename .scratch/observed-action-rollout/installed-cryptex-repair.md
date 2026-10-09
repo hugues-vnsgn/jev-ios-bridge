@@ -1,6 +1,6 @@
 # Bounded installed Cryptex runtime repair
 
-Status: owner-approved policy; implementation dispatch waits for Root's exact stacked base/worktree.
+Status: owner-approved policy; author active in fix-installed-cryptex-runtime at base38aa879c. Focused validation window granted; full default gates await freeze.
 
 ## Handoff and write ownership
 
@@ -8,7 +8,7 @@ Root is coordinator/integrator and never a device operator. This worker authors 
 
 The normative oracle is the frozen [v3 proposal](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal.md), SHA256 e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13, and [exact owner approval](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/owner-cryptex-trust-decision.json). Applications trust is separately authorized. Review the direct phase4 metadata, phase5 mount XML and Root retained-XML derivation. Read repository copies only; native queries belong to the sole operator after repaired host gates.
 
-Root will supply the exact frozen Xcode/parser commit and five-file manifest. Verify it before writing. Owned set: src/observed/allocation-config.ts; ONLY the private-prefix map regex in tests/fixtures/observed-allocation-backend.ts as defined below; NEW tests/observed-cryptex-runtime.test.ts; NEW tests/fixtures/observed-cryptex-runtime.ts; NEW private .scratch/installed-cryptex-runtime/**. Preserve parser module/test, fixed Xcode output logic/tests and the other author's exact-command fixture guard. Preserve public SourceProcess and InstalledCompatibility signatures. Any necessary ownership conflict stops only the dependent slice and is returned to Root.
+Root will supply the exact frozen Xcode/parser commit and five-file manifest. Verify it before writing. Owned set: src/observed/allocation-config.ts; ONLY the private-prefix regex and exact slash-root mapping branch in tests/fixtures/observed-allocation-backend.ts as defined below; NEW tests/observed-cryptex-runtime.test.ts; NEW tests/fixtures/observed-cryptex-runtime.ts; NEW private .scratch/installed-cryptex-runtime/**. Preserve parser module/test, fixed Xcode output logic/tests and the other author's exact-command fixture guard. Preserve public SourceProcess and InstalledCompatibility signatures. Any necessary ownership conflict stops only the dependent slice and is returned to Root.
 
 ## Implement the reviewed policy
 
@@ -34,4 +34,8 @@ Independent nonauthor Spec/Standards reviews and clean installed proofs precede 
 
 The Cryptex author found the existing installed-path fixture map recognizes only Applications|Library|System|usr; new Cryptex discovery would otherwise send /private lstat to the real namespace. Root transfers only the map regex in tests/fixtures/observed-allocation-backend.ts to add private, mapping /private and descendants into the temporary installed tree. Preserve all other mapping behavior, the accepted exactXcodeInfo output guard, argv/environment checks and original assertions. Capture the original fixture bytes/hash5b8c6b14a463ee8ec312ac33655f18c0efc931c2c900784840342f7aeb0e3d80 and a pure f.map regression red on bothNodes before editing; the red must inspect strings only and make no fs call on the unmapped path. Require green bothNodes and ENOENT inside the temporary tree before existing suites run. This isolates tests; it grants no native path permission or product-policy extension.
 
-The Cryptex product write set is now four files: allocation-config source, the one-prefix existing fixture extension, and the two new Cryptex suite/fixture files. Protect437 other paths of the439-file accepted parser baseline. The complete candidate remains441 paths. Parser/output logic and existing assertions remain protected. Source planning/first observed-layout reds already preserve439 original candidate hashes; subsequent association records must carry the explicit new fixture overlay.
+The Cryptex product write set is now four files: allocation-config source, the two-branch existing fixture extension, and the two new Cryptex suite/fixture files. Protect437 other paths of the439-file accepted parser baseline. The complete candidate remains441 paths. Parser/output logic and existing assertions remain protected. Source planning/first observed-layout reds already preserve439 original candidate hashes; subsequent association records must carry the explicit new fixture overlay.
+
+## Exact slash-root fixture mapping
+
+Root additionally transfers the exact `/` mapping branch to the same temporary installed tree. Complete ancestor snapshots must retain `/`; the old mapper passed it to the real root. Require pure-string red/green on both exact Nodes before filesystem methods, alongside `/private` and the fixed Cryptex descendant. These are the only two shared-mapper changes. A further virtual-stat conflict returns to Root before another edit. The four-file write set and437 protected/441 total counts remain unchanged. The author reports3/3 mapping greens on both Nodes and unchanged production Cryptex reds before starting Source implementation.

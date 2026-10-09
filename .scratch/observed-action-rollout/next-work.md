@@ -50,6 +50,6 @@ Before allocation, verify private effective config/store authority, default dige
 
 Each preparation uses exactly one create, boot, install and launch, with fresh unique declared IDs. Count actual listing/readiness/action captures and all backend calls. Retain five devices, including refusal and quarantine, within eight held allocations. Stop on uncertainty, unknown creation, exhausted capacity or unexplained effects; no replay, replacement, erase, delete, shutdown or reset.
 
-The Cryptex author now works in the isolated `fix-installed-cryptex-runtime` branch, base `38aa879c`, with437 other accepted paths protected after the narrow existing-fixture private-prefix mapping extension. Only its focused regression/typecheck/build window is granted; full gates follow freeze. The sole operator remains idle.
+The Cryptex author now works in the isolated `fix-installed-cryptex-runtime` branch, base `38aa879c`, with437 other accepted paths protected after the narrow existing-fixture private-prefix and exact slash-root mapping extension. Only its focused regression/typecheck/build window is granted; full gates follow freeze. The sole operator remains idle.
 
 All L01 through L05 remain UNVERIFIED. Ticket12 is not dispatched. No production config/store activation, migration, app build or live device action has occurred in this diagnosis. Runtime fallback, downloads, host permission changes, cleanup, merge, push and publication remain outside this execution.
