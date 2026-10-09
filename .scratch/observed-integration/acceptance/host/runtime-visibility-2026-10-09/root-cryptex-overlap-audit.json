@@ -1,0 +1,103 @@
+{
+  "atUtc": "2026-10-09T04:49:32.620045+00:00",
+  "scope": "Audit retained original focused failure/overlap/owned termination receipts only; no new process or native query.",
+  "receipts": [
+    {
+      "label": "focused-v2-node26",
+      "commandPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/focused-v2-node26/command.json",
+      "commandSha256": "35ac1c280b620d9f87616c4821a7652cd5c3353a6bc7d79ee9b16b5b4095ecf3",
+      "startedAtUtc": "2026-10-09T04:43:32.400679+00:00",
+      "completedAtUtc": "2026-10-09T04:47:19.805170+00:00",
+      "exitCode": 1,
+      "counts": {
+        "tests": 349,
+        "pass": 347,
+        "fail": 1,
+        "cancelled": 1,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "candidateSource441Count": 441,
+      "protected437CurrentMatch": true,
+      "acceptance": "Original failed/cancelled overlapping run, not final focused acceptance."
+    },
+    {
+      "label": "focused-v2-node24",
+      "commandPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/focused-v2-node24/command.json",
+      "commandSha256": "742c6ab3a3c6b9793a5dfb7bfc09390cca950b437b0872f9b01f69aaa1121136",
+      "startedAtUtc": "2026-10-09T04:43:42.996766+00:00",
+      "completedAtUtc": "2026-10-09T04:47:19.807661+00:00",
+      "exitCode": 1,
+      "counts": {
+        "tests": 349,
+        "pass": 347,
+        "fail": 1,
+        "cancelled": 1,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "candidateSource441Count": 441,
+      "protected437CurrentMatch": true,
+      "acceptance": "Original failed/cancelled overlapping run, not final focused acceptance."
+    }
+  ],
+  "terminationReceipt": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/focused-overlap-stop.json",
+  "terminationReceiptSha256": "b198d6d56b1c51b8b105fc43d84e8e970399910332235c936ede9824528bd527",
+  "selectedCount": 6,
+  "signals": "SIGTERM only",
+  "recordingWrappersPreserved": true,
+  "allSelectedFinalAbsenceReceipts": true,
+  "checks": [
+    {
+      "check": "six-selected-owned-cwd-ancestry",
+      "pass": true
+    },
+    {
+      "check": "bounded-sigterm-only-and-final-absence-receipts",
+      "pass": true
+    },
+    {
+      "label": "focused-v2-node26",
+      "check": "stdout-raw-receipt",
+      "pass": true
+    },
+    {
+      "label": "focused-v2-node26",
+      "check": "stderr-raw-receipt",
+      "pass": true
+    },
+    {
+      "label": "focused-v2-node26",
+      "check": "exact-failure-counts-source-receipt-and437-current-protected-bytes",
+      "pass": true
+    },
+    {
+      "label": "focused-v2-node24",
+      "check": "stdout-raw-receipt",
+      "pass": true
+    },
+    {
+      "label": "focused-v2-node24",
+      "check": "stderr-raw-receipt",
+      "pass": true
+    },
+    {
+      "label": "focused-v2-node24",
+      "check": "exact-failure-counts-source-receipt-and437-current-protected-bytes",
+      "pass": true
+    },
+    {
+      "check": "overlap-and-identical441-job-associations",
+      "pass": true
+    }
+  ],
+  "checkCount": 9,
+  "allChecksPass": true,
+  "diagnosis": "Author static diagnosis: private-prefix mapper redirected owned temporary home/config paths; earlier home lstat failed CONFIG_INVALID before an inherited test config-lstat barrier could resolve. Pure-string reproduction and serial repaired suites are pending.",
+  "limitations": [
+    "The audit verifies the recorded process ownership/termination provenance; it performs no independent process inspection.",
+    "Original focused failures remain failures; five-case/133-case earlier serial greens do not replace final repaired suites."
+  ]
+}
