@@ -1,0 +1,9 @@
+{
+  "atUtc": "2026-10-09T09:31:07.986807+00:00",
+  "initialScriptSha256": "ef58ef171997164722f67c6b1e505e842bf434e2a49ac2833f0aea75b87d57eb",
+  "initialActualExit": 1,
+  "error": "KeyError: 'source441' at line112 after 12483 validated regular files were copied",
+  "cause": "Root reader assumed baseline context keys source441/compiled69; supplied baseline-oracle schema uses baselineSource441/baselineCompiled69",
+  "correction": "Read explicit baseline keys; validate and reuse byte-identical existing copies with O_NOFOLLOW. No receipt overwrite, source change, test execution or native retry.",
+  "scope": "Evidence bookkeeping only; original script retained."
+}

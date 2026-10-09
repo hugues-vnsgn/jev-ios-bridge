@@ -1,0 +1,14 @@
+{
+  "scope": "Root audit-reader qualification; no reviewer Source/evidence or product gates changed",
+  "atUtc": "2026-10-09T10:45:42.275995+00:00",
+  "initialReaderSha256": "889b127166dd727a2a60683a31c105c1930d2a1c0053b16ef04dc359550df3cd",
+  "command": [
+    "python3",
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-implementation-review/audit-standards-4fa-binding.py"
+  ],
+  "actualExitCode": 1,
+  "failedAssertion": "manifest['selfExclusion'] == 'manifest.json'",
+  "actualSchemaValue": "manifest.json excluded from its own hash; its hash is returned to Root",
+  "correction": "Match the exact supplied descriptive schema value; retain exact observed review file-set, all digest/size/mode/Source correspondence and PASS checks.",
+  "rawFailure": "AssertionError at audit-standards-4fa-binding.py:41; original failure retained in tool transcript."
+}

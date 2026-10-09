@@ -1,0 +1,152 @@
+{
+  "atUtc": "2026-10-09T08:43:59.238359+00:00",
+  "status": "PASS provenance; Node24 default FAIL",
+  "candidate": "4fa9cc99a94ebb8c79e6d1fe347ccb83745da13d",
+  "records": {
+    "26": {
+      "receipt": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-candidate-evidence/failed-defaults/actual-default-node26/command.json",
+      "receiptSha256": "9a918aef719875c76f01bb3e93ee9afda7bc8a87713734a6bd0f6fd89cc6162b",
+      "rawStdoutSha256": "c8bba253d8f081d46bdfafeee2683bc841996fad7663f57f02a488fad7e1703e",
+      "rawStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "counts": {
+        "tests": 2198,
+        "pass": 2198,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exit": 0,
+      "buildReached": true,
+      "originalPublicFaultTraces": "not retained; HOST_EVIDENCE_DIR absent; no reconstruction",
+      "close": "2026-10-09T08:21:58.790962+00:00"
+    },
+    "24": {
+      "receipt": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-candidate-evidence/failed-defaults/actual-default-node24/command.json",
+      "receiptSha256": "16495663c20142e0e59e7686cc583c64ca96b7d8a31f88deb74ff4a1ee4ec9cf",
+      "rawStdoutSha256": "6f5faa5b1ffb0b44e334599cd8e5077d10b10b2d1bf58c4830970a26d358af64",
+      "rawStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "counts": {
+        "tests": 2198,
+        "pass": 2195,
+        "fail": 2,
+        "cancelled": 1,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exit": 1,
+      "buildReached": false,
+      "originalPublicFaultTraces": "not retained; HOST_EVIDENCE_DIR absent; no reconstruction",
+      "close": "2026-10-09T08:24:47.928771+00:00"
+    }
+  },
+  "checks": [
+    {
+      "name": "frozen candidate",
+      "pass": true
+    },
+    {
+      "name": "all Source/protected/compiled vectors match freeze",
+      "pass": true
+    },
+    {
+      "name": "26 command/result/raw hashes",
+      "pass": true
+    },
+    {
+      "name": "26 unmodified official default argv",
+      "pass": true
+    },
+    {
+      "name": "26 actual closed exit preserved",
+      "pass": true
+    },
+    {
+      "name": "26 Source freeze before/after",
+      "pass": true
+    },
+    {
+      "name": "26 inherited environment scrub",
+      "pass": true
+    },
+    {
+      "name": "26 serial after previous actual close",
+      "pass": true
+    },
+    {
+      "name": "26 raw count agreement",
+      "pass": true
+    },
+    {
+      "name": "26 prior compiled remains freeze",
+      "pass": true
+    },
+    {
+      "name": "26 build reach truth",
+      "pass": true
+    },
+    {
+      "name": "26 original host traces absent qualification",
+      "pass": true
+    },
+    {
+      "name": "24 command/result/raw hashes",
+      "pass": true
+    },
+    {
+      "name": "24 unmodified official default argv",
+      "pass": true
+    },
+    {
+      "name": "24 actual closed exit preserved",
+      "pass": true
+    },
+    {
+      "name": "24 Source freeze before/after",
+      "pass": true
+    },
+    {
+      "name": "24 inherited environment scrub",
+      "pass": true
+    },
+    {
+      "name": "24 serial after previous actual close",
+      "pass": true
+    },
+    {
+      "name": "24 raw count agreement",
+      "pass": true
+    },
+    {
+      "name": "24 prior compiled remains freeze",
+      "pass": true
+    },
+    {
+      "name": "24 build reach truth",
+      "pass": true
+    },
+    {
+      "name": "24 original host traces absent qualification",
+      "pass": true
+    },
+    {
+      "name": "confirmed error test timed out after 1000ms",
+      "pass": true
+    },
+    {
+      "name": "confirmed error 0 !== 1",
+      "pass": true
+    },
+    {
+      "name": "confirmed error Fixture setup: milestone backend:snapshot-ui:1 not reached",
+      "pass": true
+    },
+    {
+      "name": "failure result truth",
+      "pass": true
+    }
+  ],
+  "sourceUnchanged": true,
+  "lowerCause": "unresolved; fresh diagnostic traces cannot reconstruct prior missing public traces",
+  "scope": "Read-only rehash of retained official commands/raw results. Both-node implementation acceptance is blocked on the failed Node24 default. No native or live acceptance inferred."
+}
