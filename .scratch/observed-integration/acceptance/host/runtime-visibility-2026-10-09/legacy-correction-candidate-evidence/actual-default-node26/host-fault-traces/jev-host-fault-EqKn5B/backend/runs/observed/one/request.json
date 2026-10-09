@@ -1,0 +1,31 @@
+{
+  "action": {
+    "kind": "tap",
+    "selector": {
+      "identifier": "go"
+    }
+  },
+  "actionId": "one",
+  "after": {
+    "absent": [],
+    "present": [
+      {
+        "identifier": "done"
+      }
+    ]
+  },
+  "allocationId": "349DA6E1-6399-4291-80C5-FE3017F92C2F",
+  "app": {
+    "bundleId": "org.example.fixture"
+  },
+  "before": {
+    "absent": [],
+    "present": [
+      {
+        "identifier": "go"
+      }
+    ]
+  },
+  "timeoutMs": 5000,
+  "version": 1
+}

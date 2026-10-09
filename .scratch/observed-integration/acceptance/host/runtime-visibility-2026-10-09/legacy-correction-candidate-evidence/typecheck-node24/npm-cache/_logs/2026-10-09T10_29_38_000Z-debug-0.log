@@ -1,0 +1,24 @@
+0 verbose cli /Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node /opt/homebrew/lib/node_modules/npm/bin/npm-cli.js
+1 info using npm@11.19.0
+2 info using node@v24.0.0
+3 silly config load:file:/opt/homebrew/lib/node_modules/npm/npmrc
+4 silly config load:file:/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.npmrc
+5 silly config load:file:/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/typecheck-node24/user.npmrc
+6 silly config load:file:/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/typecheck-node24/global.npmrc
+7 verbose title npm run typecheck
+8 verbose argv "run" "typecheck"
+9 verbose logfile logs-max:10 dir:/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/typecheck-node24/npm-cache/_logs/2026-10-09T10_29_38_000Z-
+10 verbose logfile /Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/.scratch/installed-legacy-volume-runtime/review-correction/typecheck-node24/npm-cache/_logs/2026-10-09T10_29_38_000Z-debug-0.log
+11 silly logfile done cleaning log files
+12 http fetch GET 200 https://registry.npmjs.org/npm 241ms
+13 verbose cwd /Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding
+14 verbose os Darwin 27.0.0
+15 verbose node v24.0.0
+16 verbose npm  v11.19.0
+17 notice
+17 notice New minor version of npm available! 11.19.0 -> 11.21.0
+17 notice Changelog: https://github.com/npm/cli/releases/tag/v11.21.0
+17 notice To update run: npm install -g npm@11.21.0
+17 notice  { force: true, Symbol(proc-log.meta): true }
+18 verbose exit 0
+19 info ok

@@ -1,0 +1,3 @@
+{"pid":20339,"message":{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"host-fault","version":"1"}}}}
+{"pid":20339,"message":{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"start_observed_action","arguments":{"version":1,"actionId":"one","allocationId":"5BD2268D-20EF-480E-BF92-8E6B96E70BA2","app":{"bundleId":"org.example.fixture"},"action":{"kind":"tap","selector":{"identifier":"go"}},"before":{"present":[{"identifier":"go"}]},"after":{"present":[{"identifier":"done"}]},"timeoutMs":5000}}}}
+{"pid":20339,"message":{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"get_observed_action","arguments":{"actionId":"one","waitMs":5000}}}}

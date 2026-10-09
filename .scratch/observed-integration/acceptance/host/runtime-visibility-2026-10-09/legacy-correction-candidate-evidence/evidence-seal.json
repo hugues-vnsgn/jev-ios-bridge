@@ -1,0 +1,21 @@
+{
+  "verdict": "SEALED AUTHOR VALIDATION; independent reviews/installed/startup/native gates pending",
+  "candidateCommit": "dcc06dc0939d73d860cae9e03d4f1f47bacbd279",
+  "candidateContextSha256": "0f4dfabdfb9d8059fa6b992c9f35eeca7880f2fb354c12340b78053866ef67fb",
+  "manifestSha256": "0dd519569eedfbbc5d7a4125a0d439b4bddd87fd005944cfd9be8d7593927bc0",
+  "verificationIndexSha256": "bade9078eba361c97910bcb79e3c6c49a2da13f11e8f2d618c0f3a3707f48576",
+  "implementationReportSha256": "dd570978bca8e9445c7a8ba1cfea1d28c8eb5f99c0302d88b3004c2cc632f62f",
+  "regressionMatrixSha256": "7ec6d36cce34b074ef8c40b0300e1d5a0c30d43d2a39a719ab1bd52083b705ed",
+  "regularFilesInManifest": 12911,
+  "regularFilesIncludingManifestAndSeal": 12913,
+  "symlinks": 10,
+  "directories": 19070,
+  "source443StillFrozen": true,
+  "protected440StillFrozen": true,
+  "compiled69StillFrozen": true,
+  "allRetainedRegularBytesRehashed": true,
+  "allRetainedSymlinkTargetsRecheckedWithoutFollowing": true,
+  "fileMode": "0600",
+  "directoryMode": "0700",
+  "selfExclusion": "Final seal cannot hash itself; consumer must rehash its supplied SHA256"
+}

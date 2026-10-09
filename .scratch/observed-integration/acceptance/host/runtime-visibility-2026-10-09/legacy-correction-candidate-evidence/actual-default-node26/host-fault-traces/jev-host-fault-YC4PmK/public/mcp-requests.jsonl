@@ -1,0 +1,4 @@
+{"pid":22868,"message":{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"host-fault","version":"1"}}}}
+{"pid":22868,"message":{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"get_observed_allocation","arguments":{"allocationId":"0FB4E305-57F1-4711-AEB3-3549292E2D72"}}}}
+{"pid":22868,"message":{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"get_observed_allocation","arguments":{"allocationId":"0FB4E305-57F1-4711-AEB3-3549292E2D72","waitMs":45000}}}}
+{"pid":22868,"message":{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"get_observed_allocation","arguments":{"allocationId":"0FB4E305-57F1-4711-AEB3-3549292E2D72"}}}}

@@ -1,0 +1,1 @@
+{"transport":"cli","command":"observed-report","argument":"absent","options":{"waitMs":0.5},"pid":14705,"code":3,"signal":null,"stdout":"{\"version\":1,\"kind\":\"observed-operation-error\",\"code\":\"INVALID_REQUEST\",\"message\":\"Invalid observed wait duration\",\"acceptance\":\"no\",\"acceptanceKind\":\"action\"}\n","stderr":""}

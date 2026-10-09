@@ -1,0 +1,12 @@
+{
+  "source443Protected440Match": true,
+  "productionSourceUnedited": true,
+  "fixtureFiles": {
+    "tests/fixtures/observed-legacy-volume-runtime.ts": "f53ea26f8198a7cb56302565d5288c3fa1e2cbf4013599e2d61a08e9f0b540c0",
+    "tests/fixtures/observed-allocation-backend.ts": "021a93e539ebb56ffb3cac8b15d2b77b8ce838f3fb77f9e9ef31ff3ed3fa894a",
+    "tests/fixtures/observed-cli-server.ts": "eb1ee9f4215fff24f70867e904c3817d0528a6c7c35efa97bc50ecce6ff63669",
+    "tests/observed-legacy-volume-runtime.test.ts": "415aa60fa936511bbe33bb4685533cd2c86391dc94057ee23245d8ac1ec3c5cd"
+  },
+  "seams": "Legacy fixture filesystem checks pure map before all installed lstat/open/readdir; source read maps too. Launch creates simulated EventEmitter/PassThrough children, never native spawn. Every production test passes f.launch. Existing public mapper bytes protected and unchanged.",
+  "qualification": "Static isolation inspection; pure selected cases are next. No host/device/SDK/key operations."
+}

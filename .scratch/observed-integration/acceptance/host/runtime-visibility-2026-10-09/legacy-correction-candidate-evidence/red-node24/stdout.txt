@@ -1,0 +1,1044 @@
+(node:11442) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ review correction legacy binds Contents/Info.plist during restored caller identity (96.897583ms)
+ℹ {"kind":"legacy","leaf":"Contents/Info.plist","layer":"caller","changed":true,"restored":true,"accepted":true,"mountObservations":[{"ordinal":1,"ino":"101"},{"ordinal":2,"ino":"101"},{"ordinal":3,"ino":"101"},{"ordinal":4,"ino":"101"},{"ordinal":5,"ino":"101"},{"ordinal":6,"ino":"101"},{"ordinal":7,"ino":"101"},{"ordinal":8,"ino":"202"},{"ordinal":9,"ino":"202"},{"ordinal":10,"ino":"202"},{"ordinal":11,"ino":"202"},{"ordinal":12,"ino":"202"},{"ordinal":13,"ino":"202"},{"ordinal":14,"ino":"202"},{"ordinal":15,"ino":"202"},{"ordinal":16,"ino":"101"},{"ordinal":17,"ino":"101"},{"ordinal":18,"ino":"101"},{"ordinal":19,"ino":"101"},{"ordinal":20,"ino":"101"},{"ordinal":21,"ino":"101"},{"ordinal":22,"ino":"101"},{"ordinal":23,"ino":"101"},{"ordinal":24,"ino":"101"},{"ordinal":25,"ino":"101"},{"ordinal":26,"ino":"101"},{"ordinal":27,"ino":"101"},{"ordinal":28,"ino":"101"},{"ordinal":29,"ino":"101"},{"ordinal":30,"ino":"101"},{"ordinal":31,"ino":"101"},{"ordinal":32,"ino":"101"}],"metadataConversions":1,"fixtureLaunches":0,"readonlyXmlUnchanged":true}
+✖ review correction legacy binds Contents/Info.plist during restored factory conversion identity (124.100625ms)
+ℹ {"kind":"legacy","leaf":"Contents/Info.plist","layer":"factory conversion","changed":true,"restored":true,"accepted":true,"mountObservations":[{"ordinal":1,"ino":"101"},{"ordinal":2,"ino":"101"},{"ordinal":3,"ino":"101"},{"ordinal":4,"ino":"101"},{"ordinal":5,"ino":"101"},{"ordinal":6,"ino":"101"},{"ordinal":7,"ino":"101"},{"ordinal":8,"ino":"101"},{"ordinal":9,"ino":"101"},{"ordinal":10,"ino":"101"},{"ordinal":11,"ino":"101"},{"ordinal":12,"ino":"101"},{"ordinal":13,"ino":"101"},{"ordinal":14,"ino":"101"},{"ordinal":15,"ino":"101"},{"ordinal":16,"ino":"101"},{"ordinal":17,"ino":"101"},{"ordinal":18,"ino":"202"},{"ordinal":19,"ino":"202"},{"ordinal":20,"ino":"202"},{"ordinal":21,"ino":"202"},{"ordinal":22,"ino":"202"},{"ordinal":23,"ino":"202"},{"ordinal":24,"ino":"202"},{"ordinal":25,"ino":"202"},{"ordinal":26,"ino":"202"},{"ordinal":27,"ino":"202"},{"ordinal":28,"ino":"202"},{"ordinal":29,"ino":"202"},{"ordinal":30,"ino":"101"},{"ordinal":31,"ino":"101"},{"ordinal":32,"ino":"101"},{"ordinal":33,"ino":"101"},{"ordinal":34,"ino":"101"},{"ordinal":35,"ino":"101"},{"ordinal":36,"ino":"101"},{"ordinal":37,"ino":"101"},{"ordinal":38,"ino":"101"},{"ordinal":39,"ino":"101"},{"ordinal":40,"ino":"101"},{"ordinal":41,"ino":"101"},{"ordinal":42,"ino":"101"},{"ordinal":43,"ino":"101"},{"ordinal":44,"ino":"101"},{"ordinal":45,"ino":"101"},{"ordinal":46,"ino":"101"},{"ordinal":47,"ino":"101"},{"ordinal":48,"ino":"101"},{"ordinal":49,"ino":"101"},{"ordinal":50,"ino":"101"},{"ordinal":51,"ino":"101"},{"ordinal":52,"ino":"101"},{"ordinal":53,"ino":"101"},{"ordinal":54,"ino":"101"},{"ordinal":55,"ino":"101"},{"ordinal":56,"ino":"101"},{"ordinal":57,"ino":"101"},{"ordinal":58,"ino":"101"},{"ordinal":59,"ino":"101"},{"ordinal":60,"ino":"101"},{"ordinal":61,"ino":"101"},{"ordinal":62,"ino":"101"},{"ordinal":63,"ino":"101"},{"ordinal":64,"ino":"101"},{"ordinal":65,"ino":"101"},{"ordinal":66,"ino":"101"},{"ordinal":67,"ino":"101"},{"ordinal":68,"ino":"101"},{"ordinal":69,"ino":"101"},{"ordinal":70,"ino":"101"},{"ordinal":71,"ino":"101"},{"ordinal":72,"ino":"101"},{"ordinal":73,"ino":"101"},{"ordinal":74,"ino":"101"},{"ordinal":75,"ino":"101"},{"ordinal":76,"ino":"101"},{"ordinal":77,"ino":"101"},{"ordinal":78,"ino":"101"},{"ordinal":79,"ino":"101"},{"ordinal":80,"ino":"101"},{"ordinal":81,"ino":"101"},{"ordinal":82,"ino":"101"},{"ordinal":83,"ino":"101"},{"ordinal":84,"ino":"101"}],"metadataConversions":1,"fixtureLaunches":22,"readonlyXmlUnchanged":true}
+✖ review correction legacy binds Contents/Info.plist during restored factory bootstrap identity (114.690625ms)
+ℹ {"kind":"legacy","leaf":"Contents/Info.plist","layer":"factory bootstrap","changed":true,"restored":true,"accepted":true,"mountObservations":[{"ordinal":1,"ino":"101"},{"ordinal":2,"ino":"101"},{"ordinal":3,"ino":"101"},{"ordinal":4,"ino":"101"},{"ordinal":5,"ino":"101"},{"ordinal":6,"ino":"101"},{"ordinal":7,"ino":"101"},{"ordinal":8,"ino":"101"},{"ordinal":9,"ino":"101"},{"ordinal":10,"ino":"101"},{"ordinal":11,"ino":"101"},{"ordinal":12,"ino":"101"},{"ordinal":13,"ino":"101"},{"ordinal":14,"ino":"101"},{"ordinal":15,"ino":"101"},{"ordinal":16,"ino":"101"},{"ordinal":17,"ino":"101"},{"ordinal":18,"ino":"101"},{"ordinal":19,"ino":"202"},{"ordinal":20,"ino":"202"},{"ordinal":21,"ino":"101"},{"ordinal":22,"ino":"101"},{"ordinal":23,"ino":"101"},{"ordinal":24,"ino":"101"},{"ordinal":25,"ino":"101"},{"ordinal":26,"ino":"101"},{"ordinal":27,"ino":"101"},{"ordinal":28,"ino":"101"},{"ordinal":29,"ino":"101"},{"ordinal":30,"ino":"101"},{"ordinal":31,"ino":"101"},{"ordinal":32,"ino":"101"},{"ordinal":33,"ino":"101"},{"ordinal":34,"ino":"101"},{"ordinal":35,"ino":"101"},{"ordinal":36,"ino":"101"},{"ordinal":37,"ino":"101"},{"ordinal":38,"ino":"101"},{"ordinal":39,"ino":"101"},{"ordinal":40,"ino":"101"},{"ordinal":41,"ino":"101"},{"ordinal":42,"ino":"101"},{"ordinal":43,"ino":"101"},{"ordinal":44,"ino":"101"},{"ordinal":45,"ino":"101"},{"ordinal":46,"ino":"101"},{"ordinal":47,"ino":"101"},{"ordinal":48,"ino":"101"},{"ordinal":49,"ino":"101"},{"ordinal":50,"ino":"101"},{"ordinal":51,"ino":"101"},{"ordinal":52,"ino":"101"},{"ordinal":53,"ino":"101"},{"ordinal":54,"ino":"101"},{"ordinal":55,"ino":"101"},{"ordinal":56,"ino":"101"},{"ordinal":57,"ino":"101"},{"ordinal":58,"ino":"101"},{"ordinal":59,"ino":"101"},{"ordinal":60,"ino":"101"},{"ordinal":61,"ino":"101"},{"ordinal":62,"ino":"101"},{"ordinal":63,"ino":"101"},{"ordinal":64,"ino":"101"},{"ordinal":65,"ino":"101"},{"ordinal":66,"ino":"101"},{"ordinal":67,"ino":"101"},{"ordinal":68,"ino":"101"},{"ordinal":69,"ino":"101"},{"ordinal":70,"ino":"101"},{"ordinal":71,"ino":"101"},{"ordinal":72,"ino":"101"},{"ordinal":73,"ino":"101"},{"ordinal":74,"ino":"101"},{"ordinal":75,"ino":"101"},{"ordinal":76,"ino":"101"},{"ordinal":77,"ino":"101"},{"ordinal":78,"ino":"101"},{"ordinal":79,"ino":"101"},{"ordinal":80,"ino":"101"},{"ordinal":81,"ino":"101"},{"ordinal":82,"ino":"101"},{"ordinal":83,"ino":"101"},{"ordinal":84,"ino":"101"}],"metadataConversions":1,"fixtureLaunches":22,"readonlyXmlUnchanged":true}
+✖ review correction legacy caller Contents/Info.plist abort at open-result permits close only (56.638167ms)
+ℹ {"kind":"legacy","leaf":"Contents/Info.plist","layer":"caller","stage":"open-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"},{"operation":"close","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction legacy caller Contents/Info.plist abort at eof-read-result permits close only (56.903917ms)
+ℹ {"kind":"legacy","leaf":"Contents/Info.plist","layer":"caller","stage":"eof-read-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"},{"operation":"close","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction legacy factory Contents/Info.plist abort at open-result permits close only (92.023792ms)
+ℹ {"kind":"legacy","leaf":"Contents/Info.plist","layer":"factory","stage":"open-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"},{"operation":"close","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction legacy factory Contents/Info.plist abort at eof-read-result permits close only (84.318917ms)
+ℹ {"kind":"legacy","leaf":"Contents/Info.plist","layer":"factory","stage":"eof-read-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"},{"operation":"close","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction legacy binds Contents/Resources/profile.plist during restored caller identity (68.331042ms)
+ℹ {"kind":"legacy","leaf":"Contents/Resources/profile.plist","layer":"caller","changed":true,"restored":true,"accepted":true,"mountObservations":[{"ordinal":1,"ino":"101"},{"ordinal":2,"ino":"101"},{"ordinal":3,"ino":"101"},{"ordinal":4,"ino":"101"},{"ordinal":5,"ino":"101"},{"ordinal":6,"ino":"101"},{"ordinal":7,"ino":"101"},{"ordinal":8,"ino":"101"},{"ordinal":9,"ino":"101"},{"ordinal":10,"ino":"101"},{"ordinal":11,"ino":"101"},{"ordinal":12,"ino":"101"},{"ordinal":13,"ino":"101"},{"ordinal":14,"ino":"101"},{"ordinal":15,"ino":"101"},{"ordinal":16,"ino":"202"},{"ordinal":17,"ino":"202"},{"ordinal":18,"ino":"202"},{"ordinal":19,"ino":"202"},{"ordinal":20,"ino":"202"},{"ordinal":21,"ino":"202"},{"ordinal":22,"ino":"202"},{"ordinal":23,"ino":"202"},{"ordinal":24,"ino":"101"},{"ordinal":25,"ino":"101"},{"ordinal":26,"ino":"101"},{"ordinal":27,"ino":"101"},{"ordinal":28,"ino":"101"},{"ordinal":29,"ino":"101"},{"ordinal":30,"ino":"101"},{"ordinal":31,"ino":"101"},{"ordinal":32,"ino":"101"}],"metadataConversions":1,"fixtureLaunches":0,"readonlyXmlUnchanged":true}
+✖ review correction legacy binds Contents/Resources/profile.plist during restored factory conversion identity (116.784375ms)
+ℹ {"kind":"legacy","leaf":"Contents/Resources/profile.plist","layer":"factory conversion","changed":true,"restored":true,"accepted":true,"mountObservations":[{"ordinal":1,"ino":"101"},{"ordinal":2,"ino":"101"},{"ordinal":3,"ino":"101"},{"ordinal":4,"ino":"101"},{"ordinal":5,"ino":"101"},{"ordinal":6,"ino":"101"},{"ordinal":7,"ino":"101"},{"ordinal":8,"ino":"101"},{"ordinal":9,"ino":"101"},{"ordinal":10,"ino":"101"},{"ordinal":11,"ino":"101"},{"ordinal":12,"ino":"101"},{"ordinal":13,"ino":"101"},{"ordinal":14,"ino":"101"},{"ordinal":15,"ino":"101"},{"ordinal":16,"ino":"101"},{"ordinal":17,"ino":"101"},{"ordinal":18,"ino":"101"},{"ordinal":19,"ino":"101"},{"ordinal":20,"ino":"101"},{"ordinal":21,"ino":"101"},{"ordinal":22,"ino":"101"},{"ordinal":23,"ino":"101"},{"ordinal":24,"ino":"101"},{"ordinal":25,"ino":"101"},{"ordinal":26,"ino":"101"},{"ordinal":27,"ino":"101"},{"ordinal":28,"ino":"101"},{"ordinal":29,"ino":"101"},{"ordinal":30,"ino":"101"},{"ordinal":31,"ino":"101"},{"ordinal":32,"ino":"101"},{"ordinal":33,"ino":"101"},{"ordinal":34,"ino":"101"},{"ordinal":35,"ino":"101"},{"ordinal":36,"ino":"101"},{"ordinal":37,"ino":"101"},{"ordinal":38,"ino":"101"},{"ordinal":39,"ino":"101"},{"ordinal":40,"ino":"101"},{"ordinal":41,"ino":"101"},{"ordinal":42,"ino":"202"},{"ordinal":43,"ino":"202"},{"ordinal":44,"ino":"202"},{"ordinal":45,"ino":"202"},{"ordinal":46,"ino":"202"},{"ordinal":47,"ino":"202"},{"ordinal":48,"ino":"202"},{"ordinal":49,"ino":"202"},{"ordinal":50,"ino":"202"},{"ordinal":51,"ino":"202"},{"ordinal":52,"ino":"202"},{"ordinal":53,"ino":"202"},{"ordinal":54,"ino":"101"},{"ordinal":55,"ino":"101"},{"ordinal":56,"ino":"101"},{"ordinal":57,"ino":"101"},{"ordinal":58,"ino":"101"},{"ordinal":59,"ino":"101"},{"ordinal":60,"ino":"101"},{"ordinal":61,"ino":"101"},{"ordinal":62,"ino":"101"},{"ordinal":63,"ino":"101"},{"ordinal":64,"ino":"101"},{"ordinal":65,"ino":"101"},{"ordinal":66,"ino":"101"},{"ordinal":67,"ino":"101"},{"ordinal":68,"ino":"101"},{"ordinal":69,"ino":"101"},{"ordinal":70,"ino":"101"},{"ordinal":71,"ino":"101"},{"ordinal":72,"ino":"101"},{"ordinal":73,"ino":"101"},{"ordinal":74,"ino":"101"},{"ordinal":75,"ino":"101"},{"ordinal":76,"ino":"101"},{"ordinal":77,"ino":"101"},{"ordinal":78,"ino":"101"},{"ordinal":79,"ino":"101"},{"ordinal":80,"ino":"101"},{"ordinal":81,"ino":"101"},{"ordinal":82,"ino":"101"},{"ordinal":83,"ino":"101"},{"ordinal":84,"ino":"101"}],"metadataConversions":1,"fixtureLaunches":22,"readonlyXmlUnchanged":true}
+✖ review correction legacy binds Contents/Resources/profile.plist during restored factory bootstrap identity (112.624125ms)
+ℹ {"kind":"legacy","leaf":"Contents/Resources/profile.plist","layer":"factory bootstrap","changed":true,"restored":true,"accepted":true,"mountObservations":[{"ordinal":1,"ino":"101"},{"ordinal":2,"ino":"101"},{"ordinal":3,"ino":"101"},{"ordinal":4,"ino":"101"},{"ordinal":5,"ino":"101"},{"ordinal":6,"ino":"101"},{"ordinal":7,"ino":"101"},{"ordinal":8,"ino":"101"},{"ordinal":9,"ino":"101"},{"ordinal":10,"ino":"101"},{"ordinal":11,"ino":"101"},{"ordinal":12,"ino":"101"},{"ordinal":13,"ino":"101"},{"ordinal":14,"ino":"101"},{"ordinal":15,"ino":"101"},{"ordinal":16,"ino":"101"},{"ordinal":17,"ino":"101"},{"ordinal":18,"ino":"101"},{"ordinal":19,"ino":"101"},{"ordinal":20,"ino":"101"},{"ordinal":21,"ino":"101"},{"ordinal":22,"ino":"101"},{"ordinal":23,"ino":"101"},{"ordinal":24,"ino":"101"},{"ordinal":25,"ino":"101"},{"ordinal":26,"ino":"101"},{"ordinal":27,"ino":"101"},{"ordinal":28,"ino":"101"},{"ordinal":29,"ino":"101"},{"ordinal":30,"ino":"101"},{"ordinal":31,"ino":"101"},{"ordinal":32,"ino":"101"},{"ordinal":33,"ino":"101"},{"ordinal":34,"ino":"101"},{"ordinal":35,"ino":"101"},{"ordinal":36,"ino":"101"},{"ordinal":37,"ino":"101"},{"ordinal":38,"ino":"101"},{"ordinal":39,"ino":"101"},{"ordinal":40,"ino":"101"},{"ordinal":41,"ino":"101"},{"ordinal":42,"ino":"101"},{"ordinal":43,"ino":"202"},{"ordinal":44,"ino":"202"},{"ordinal":45,"ino":"101"},{"ordinal":46,"ino":"101"},{"ordinal":47,"ino":"101"},{"ordinal":48,"ino":"101"},{"ordinal":49,"ino":"101"},{"ordinal":50,"ino":"101"},{"ordinal":51,"ino":"101"},{"ordinal":52,"ino":"101"},{"ordinal":53,"ino":"101"},{"ordinal":54,"ino":"101"},{"ordinal":55,"ino":"101"},{"ordinal":56,"ino":"101"},{"ordinal":57,"ino":"101"},{"ordinal":58,"ino":"101"},{"ordinal":59,"ino":"101"},{"ordinal":60,"ino":"101"},{"ordinal":61,"ino":"101"},{"ordinal":62,"ino":"101"},{"ordinal":63,"ino":"101"},{"ordinal":64,"ino":"101"},{"ordinal":65,"ino":"101"},{"ordinal":66,"ino":"101"},{"ordinal":67,"ino":"101"},{"ordinal":68,"ino":"101"},{"ordinal":69,"ino":"101"},{"ordinal":70,"ino":"101"},{"ordinal":71,"ino":"101"},{"ordinal":72,"ino":"101"},{"ordinal":73,"ino":"101"},{"ordinal":74,"ino":"101"},{"ordinal":75,"ino":"101"},{"ordinal":76,"ino":"101"},{"ordinal":77,"ino":"101"},{"ordinal":78,"ino":"101"},{"ordinal":79,"ino":"101"},{"ordinal":80,"ino":"101"},{"ordinal":81,"ino":"101"},{"ordinal":82,"ino":"101"},{"ordinal":83,"ino":"101"},{"ordinal":84,"ino":"101"}],"metadataConversions":1,"fixtureLaunches":22,"readonlyXmlUnchanged":true}
+✖ review correction legacy caller Contents/Resources/profile.plist abort at open-result permits close only (46.235083ms)
+ℹ {"kind":"legacy","leaf":"Contents/Resources/profile.plist","layer":"caller","stage":"open-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"},{"operation":"close","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction legacy caller Contents/Resources/profile.plist abort at eof-read-result permits close only (54.074958ms)
+ℹ {"kind":"legacy","leaf":"Contents/Resources/profile.plist","layer":"caller","stage":"eof-read-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"},{"operation":"close","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction legacy factory Contents/Resources/profile.plist abort at open-result permits close only (92.863125ms)
+ℹ {"kind":"legacy","leaf":"Contents/Resources/profile.plist","layer":"factory","stage":"open-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"},{"operation":"close","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction legacy factory Contents/Resources/profile.plist abort at eof-read-result permits close only (99.272333ms)
+ℹ {"kind":"legacy","leaf":"Contents/Resources/profile.plist","layer":"factory","stage":"eof-read-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"},{"operation":"close","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction legacy binds Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist during restored caller identity (60.898291ms)
+ℹ {"kind":"legacy","leaf":"Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist","layer":"caller","changed":true,"restored":true,"accepted":true,"mountObservations":[{"ordinal":1,"ino":"101"},{"ordinal":2,"ino":"101"},{"ordinal":3,"ino":"101"},{"ordinal":4,"ino":"101"},{"ordinal":5,"ino":"101"},{"ordinal":6,"ino":"101"},{"ordinal":7,"ino":"101"},{"ordinal":8,"ino":"101"},{"ordinal":9,"ino":"101"},{"ordinal":10,"ino":"101"},{"ordinal":11,"ino":"101"},{"ordinal":12,"ino":"101"},{"ordinal":13,"ino":"101"},{"ordinal":14,"ino":"101"},{"ordinal":15,"ino":"101"},{"ordinal":16,"ino":"101"},{"ordinal":17,"ino":"101"},{"ordinal":18,"ino":"101"},{"ordinal":19,"ino":"101"},{"ordinal":20,"ino":"101"},{"ordinal":21,"ino":"101"},{"ordinal":22,"ino":"101"},{"ordinal":23,"ino":"101"},{"ordinal":24,"ino":"202"},{"ordinal":25,"ino":"202"},{"ordinal":26,"ino":"202"},{"ordinal":27,"ino":"202"},{"ordinal":28,"ino":"202"},{"ordinal":29,"ino":"202"},{"ordinal":30,"ino":"202"},{"ordinal":31,"ino":"202"},{"ordinal":32,"ino":"101"}],"metadataConversions":1,"fixtureLaunches":0,"readonlyXmlUnchanged":true}
+✖ review correction legacy binds Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist during restored factory conversion identity (115.517959ms)
+ℹ {"kind":"legacy","leaf":"Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist","layer":"factory conversion","changed":true,"restored":true,"accepted":true,"mountObservations":[{"ordinal":1,"ino":"101"},{"ordinal":2,"ino":"101"},{"ordinal":3,"ino":"101"},{"ordinal":4,"ino":"101"},{"ordinal":5,"ino":"101"},{"ordinal":6,"ino":"101"},{"ordinal":7,"ino":"101"},{"ordinal":8,"ino":"101"},{"ordinal":9,"ino":"101"},{"ordinal":10,"ino":"101"},{"ordinal":11,"ino":"101"},{"ordinal":12,"ino":"101"},{"ordinal":13,"ino":"101"},{"ordinal":14,"ino":"101"},{"ordinal":15,"ino":"101"},{"ordinal":16,"ino":"101"},{"ordinal":17,"ino":"101"},{"ordinal":18,"ino":"101"},{"ordinal":19,"ino":"101"},{"ordinal":20,"ino":"101"},{"ordinal":21,"ino":"101"},{"ordinal":22,"ino":"101"},{"ordinal":23,"ino":"101"},{"ordinal":24,"ino":"101"},{"ordinal":25,"ino":"101"},{"ordinal":26,"ino":"101"},{"ordinal":27,"ino":"101"},{"ordinal":28,"ino":"101"},{"ordinal":29,"ino":"101"},{"ordinal":30,"ino":"101"},{"ordinal":31,"ino":"101"},{"ordinal":32,"ino":"101"},{"ordinal":33,"ino":"101"},{"ordinal":34,"ino":"101"},{"ordinal":35,"ino":"101"},{"ordinal":36,"ino":"101"},{"ordinal":37,"ino":"101"},{"ordinal":38,"ino":"101"},{"ordinal":39,"ino":"101"},{"ordinal":40,"ino":"101"},{"ordinal":41,"ino":"101"},{"ordinal":42,"ino":"101"},{"ordinal":43,"ino":"101"},{"ordinal":44,"ino":"101"},{"ordinal":45,"ino":"101"},{"ordinal":46,"ino":"101"},{"ordinal":47,"ino":"101"},{"ordinal":48,"ino":"101"},{"ordinal":49,"ino":"101"},{"ordinal":50,"ino":"101"},{"ordinal":51,"ino":"101"},{"ordinal":52,"ino":"101"},{"ordinal":53,"ino":"101"},{"ordinal":54,"ino":"101"},{"ordinal":55,"ino":"101"},{"ordinal":56,"ino":"101"},{"ordinal":57,"ino":"101"},{"ordinal":58,"ino":"101"},{"ordinal":59,"ino":"101"},{"ordinal":60,"ino":"101"},{"ordinal":61,"ino":"101"},{"ordinal":62,"ino":"101"},{"ordinal":63,"ino":"101"},{"ordinal":64,"ino":"101"},{"ordinal":65,"ino":"101"},{"ordinal":66,"ino":"202"},{"ordinal":67,"ino":"202"},{"ordinal":68,"ino":"202"},{"ordinal":69,"ino":"202"},{"ordinal":70,"ino":"202"},{"ordinal":71,"ino":"202"},{"ordinal":72,"ino":"202"},{"ordinal":73,"ino":"202"},{"ordinal":74,"ino":"202"},{"ordinal":75,"ino":"202"},{"ordinal":76,"ino":"202"},{"ordinal":77,"ino":"202"},{"ordinal":78,"ino":"101"},{"ordinal":79,"ino":"101"},{"ordinal":80,"ino":"101"},{"ordinal":81,"ino":"101"},{"ordinal":82,"ino":"101"},{"ordinal":83,"ino":"101"},{"ordinal":84,"ino":"101"}],"metadataConversions":1,"fixtureLaunches":22,"readonlyXmlUnchanged":true}
+✖ review correction legacy binds Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist during restored factory bootstrap identity (103.727208ms)
+ℹ {"kind":"legacy","leaf":"Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist","layer":"factory bootstrap","changed":true,"restored":true,"accepted":true,"mountObservations":[{"ordinal":1,"ino":"101"},{"ordinal":2,"ino":"101"},{"ordinal":3,"ino":"101"},{"ordinal":4,"ino":"101"},{"ordinal":5,"ino":"101"},{"ordinal":6,"ino":"101"},{"ordinal":7,"ino":"101"},{"ordinal":8,"ino":"101"},{"ordinal":9,"ino":"101"},{"ordinal":10,"ino":"101"},{"ordinal":11,"ino":"101"},{"ordinal":12,"ino":"101"},{"ordinal":13,"ino":"101"},{"ordinal":14,"ino":"101"},{"ordinal":15,"ino":"101"},{"ordinal":16,"ino":"101"},{"ordinal":17,"ino":"101"},{"ordinal":18,"ino":"101"},{"ordinal":19,"ino":"101"},{"ordinal":20,"ino":"101"},{"ordinal":21,"ino":"101"},{"ordinal":22,"ino":"101"},{"ordinal":23,"ino":"101"},{"ordinal":24,"ino":"101"},{"ordinal":25,"ino":"101"},{"ordinal":26,"ino":"101"},{"ordinal":27,"ino":"101"},{"ordinal":28,"ino":"101"},{"ordinal":29,"ino":"101"},{"ordinal":30,"ino":"101"},{"ordinal":31,"ino":"101"},{"ordinal":32,"ino":"101"},{"ordinal":33,"ino":"101"},{"ordinal":34,"ino":"101"},{"ordinal":35,"ino":"101"},{"ordinal":36,"ino":"101"},{"ordinal":37,"ino":"101"},{"ordinal":38,"ino":"101"},{"ordinal":39,"ino":"101"},{"ordinal":40,"ino":"101"},{"ordinal":41,"ino":"101"},{"ordinal":42,"ino":"101"},{"ordinal":43,"ino":"101"},{"ordinal":44,"ino":"101"},{"ordinal":45,"ino":"101"},{"ordinal":46,"ino":"101"},{"ordinal":47,"ino":"101"},{"ordinal":48,"ino":"101"},{"ordinal":49,"ino":"101"},{"ordinal":50,"ino":"101"},{"ordinal":51,"ino":"101"},{"ordinal":52,"ino":"101"},{"ordinal":53,"ino":"101"},{"ordinal":54,"ino":"101"},{"ordinal":55,"ino":"101"},{"ordinal":56,"ino":"101"},{"ordinal":57,"ino":"101"},{"ordinal":58,"ino":"101"},{"ordinal":59,"ino":"101"},{"ordinal":60,"ino":"101"},{"ordinal":61,"ino":"101"},{"ordinal":62,"ino":"101"},{"ordinal":63,"ino":"101"},{"ordinal":64,"ino":"101"},{"ordinal":65,"ino":"101"},{"ordinal":66,"ino":"101"},{"ordinal":67,"ino":"202"},{"ordinal":68,"ino":"202"},{"ordinal":69,"ino":"101"},{"ordinal":70,"ino":"101"},{"ordinal":71,"ino":"101"},{"ordinal":72,"ino":"101"},{"ordinal":73,"ino":"101"},{"ordinal":74,"ino":"101"},{"ordinal":75,"ino":"101"},{"ordinal":76,"ino":"101"},{"ordinal":77,"ino":"101"},{"ordinal":78,"ino":"101"},{"ordinal":79,"ino":"101"},{"ordinal":80,"ino":"101"},{"ordinal":81,"ino":"101"},{"ordinal":82,"ino":"101"},{"ordinal":83,"ino":"101"},{"ordinal":84,"ino":"101"}],"metadataConversions":1,"fixtureLaunches":22,"readonlyXmlUnchanged":true}
+✖ review correction legacy caller Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist abort at open-result permits close only (57.155875ms)
+ℹ {"kind":"legacy","leaf":"Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist","layer":"caller","stage":"open-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"},{"operation":"close","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction legacy caller Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist abort at eof-read-result permits close only (52.7425ms)
+ℹ {"kind":"legacy","leaf":"Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist","layer":"caller","stage":"eof-read-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"},{"operation":"close","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction legacy factory Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist abort at open-result permits close only (92.02075ms)
+ℹ {"kind":"legacy","leaf":"Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist","layer":"factory","stage":"open-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"},{"operation":"close","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction legacy factory Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist abort at eof-read-result permits close only (90.697666ms)
+ℹ {"kind":"legacy","leaf":"Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist","layer":"factory","stage":"eof-read-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"},{"operation":"close","path":"/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction cryptex binds Contents/Info.plist during restored caller identity (79.398583ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Info.plist","layer":"caller","changed":true,"restored":true,"accepted":true,"mountObservations":[{"ordinal":1,"ino":"101"},{"ordinal":2,"ino":"101"},{"ordinal":3,"ino":"101"},{"ordinal":4,"ino":"101"},{"ordinal":5,"ino":"101"},{"ordinal":6,"ino":"101"},{"ordinal":7,"ino":"101"},{"ordinal":8,"ino":"202"},{"ordinal":9,"ino":"202"},{"ordinal":10,"ino":"202"},{"ordinal":11,"ino":"202"},{"ordinal":12,"ino":"202"},{"ordinal":13,"ino":"202"},{"ordinal":14,"ino":"202"},{"ordinal":15,"ino":"202"},{"ordinal":16,"ino":"101"},{"ordinal":17,"ino":"101"},{"ordinal":18,"ino":"101"},{"ordinal":19,"ino":"101"},{"ordinal":20,"ino":"101"},{"ordinal":21,"ino":"101"},{"ordinal":22,"ino":"101"},{"ordinal":23,"ino":"101"},{"ordinal":24,"ino":"101"},{"ordinal":25,"ino":"101"},{"ordinal":26,"ino":"101"},{"ordinal":27,"ino":"101"},{"ordinal":28,"ino":"101"},{"ordinal":29,"ino":"101"},{"ordinal":30,"ino":"101"},{"ordinal":31,"ino":"101"},{"ordinal":32,"ino":"101"}],"metadataConversions":1,"fixtureLaunches":0,"readonlyXmlUnchanged":true}
+✖ review correction cryptex binds Contents/Info.plist during restored factory conversion identity (119.312917ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Info.plist","layer":"factory conversion","changed":true,"restored":true,"accepted":true,"mountObservations":[{"ordinal":1,"ino":"101"},{"ordinal":2,"ino":"101"},{"ordinal":3,"ino":"101"},{"ordinal":4,"ino":"101"},{"ordinal":5,"ino":"101"},{"ordinal":6,"ino":"101"},{"ordinal":7,"ino":"101"},{"ordinal":8,"ino":"101"},{"ordinal":9,"ino":"101"},{"ordinal":10,"ino":"101"},{"ordinal":11,"ino":"101"},{"ordinal":12,"ino":"101"},{"ordinal":13,"ino":"101"},{"ordinal":14,"ino":"101"},{"ordinal":15,"ino":"101"},{"ordinal":16,"ino":"101"},{"ordinal":17,"ino":"101"},{"ordinal":18,"ino":"202"},{"ordinal":19,"ino":"202"},{"ordinal":20,"ino":"202"},{"ordinal":21,"ino":"202"},{"ordinal":22,"ino":"202"},{"ordinal":23,"ino":"202"},{"ordinal":24,"ino":"202"},{"ordinal":25,"ino":"202"},{"ordinal":26,"ino":"202"},{"ordinal":27,"ino":"202"},{"ordinal":28,"ino":"202"},{"ordinal":29,"ino":"202"},{"ordinal":30,"ino":"101"},{"ordinal":31,"ino":"101"},{"ordinal":32,"ino":"101"},{"ordinal":33,"ino":"101"},{"ordinal":34,"ino":"101"},{"ordinal":35,"ino":"101"},{"ordinal":36,"ino":"101"},{"ordinal":37,"ino":"101"},{"ordinal":38,"ino":"101"},{"ordinal":39,"ino":"101"},{"ordinal":40,"ino":"101"},{"ordinal":41,"ino":"101"},{"ordinal":42,"ino":"101"},{"ordinal":43,"ino":"101"},{"ordinal":44,"ino":"101"},{"ordinal":45,"ino":"101"},{"ordinal":46,"ino":"101"},{"ordinal":47,"ino":"101"},{"ordinal":48,"ino":"101"},{"ordinal":49,"ino":"101"},{"ordinal":50,"ino":"101"},{"ordinal":51,"ino":"101"},{"ordinal":52,"ino":"101"},{"ordinal":53,"ino":"101"},{"ordinal":54,"ino":"101"},{"ordinal":55,"ino":"101"},{"ordinal":56,"ino":"101"},{"ordinal":57,"ino":"101"},{"ordinal":58,"ino":"101"},{"ordinal":59,"ino":"101"},{"ordinal":60,"ino":"101"},{"ordinal":61,"ino":"101"},{"ordinal":62,"ino":"101"},{"ordinal":63,"ino":"101"},{"ordinal":64,"ino":"101"},{"ordinal":65,"ino":"101"},{"ordinal":66,"ino":"101"},{"ordinal":67,"ino":"101"},{"ordinal":68,"ino":"101"},{"ordinal":69,"ino":"101"},{"ordinal":70,"ino":"101"},{"ordinal":71,"ino":"101"},{"ordinal":72,"ino":"101"},{"ordinal":73,"ino":"101"},{"ordinal":74,"ino":"101"},{"ordinal":75,"ino":"101"},{"ordinal":76,"ino":"101"},{"ordinal":77,"ino":"101"},{"ordinal":78,"ino":"101"},{"ordinal":79,"ino":"101"},{"ordinal":80,"ino":"101"},{"ordinal":81,"ino":"101"},{"ordinal":82,"ino":"101"},{"ordinal":83,"ino":"101"},{"ordinal":84,"ino":"101"}],"metadataConversions":1,"fixtureLaunches":22,"readonlyXmlUnchanged":true}
+✖ review correction cryptex binds Contents/Info.plist during restored factory bootstrap identity (112.789042ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Info.plist","layer":"factory bootstrap","changed":true,"restored":true,"accepted":true,"mountObservations":[{"ordinal":1,"ino":"101"},{"ordinal":2,"ino":"101"},{"ordinal":3,"ino":"101"},{"ordinal":4,"ino":"101"},{"ordinal":5,"ino":"101"},{"ordinal":6,"ino":"101"},{"ordinal":7,"ino":"101"},{"ordinal":8,"ino":"101"},{"ordinal":9,"ino":"101"},{"ordinal":10,"ino":"101"},{"ordinal":11,"ino":"101"},{"ordinal":12,"ino":"101"},{"ordinal":13,"ino":"101"},{"ordinal":14,"ino":"101"},{"ordinal":15,"ino":"101"},{"ordinal":16,"ino":"101"},{"ordinal":17,"ino":"101"},{"ordinal":18,"ino":"101"},{"ordinal":19,"ino":"202"},{"ordinal":20,"ino":"202"},{"ordinal":21,"ino":"101"},{"ordinal":22,"ino":"101"},{"ordinal":23,"ino":"101"},{"ordinal":24,"ino":"101"},{"ordinal":25,"ino":"101"},{"ordinal":26,"ino":"101"},{"ordinal":27,"ino":"101"},{"ordinal":28,"ino":"101"},{"ordinal":29,"ino":"101"},{"ordinal":30,"ino":"101"},{"ordinal":31,"ino":"101"},{"ordinal":32,"ino":"101"},{"ordinal":33,"ino":"101"},{"ordinal":34,"ino":"101"},{"ordinal":35,"ino":"101"},{"ordinal":36,"ino":"101"},{"ordinal":37,"ino":"101"},{"ordinal":38,"ino":"101"},{"ordinal":39,"ino":"101"},{"ordinal":40,"ino":"101"},{"ordinal":41,"ino":"101"},{"ordinal":42,"ino":"101"},{"ordinal":43,"ino":"101"},{"ordinal":44,"ino":"101"},{"ordinal":45,"ino":"101"},{"ordinal":46,"ino":"101"},{"ordinal":47,"ino":"101"},{"ordinal":48,"ino":"101"},{"ordinal":49,"ino":"101"},{"ordinal":50,"ino":"101"},{"ordinal":51,"ino":"101"},{"ordinal":52,"ino":"101"},{"ordinal":53,"ino":"101"},{"ordinal":54,"ino":"101"},{"ordinal":55,"ino":"101"},{"ordinal":56,"ino":"101"},{"ordinal":57,"ino":"101"},{"ordinal":58,"ino":"101"},{"ordinal":59,"ino":"101"},{"ordinal":60,"ino":"101"},{"ordinal":61,"ino":"101"},{"ordinal":62,"ino":"101"},{"ordinal":63,"ino":"101"},{"ordinal":64,"ino":"101"},{"ordinal":65,"ino":"101"},{"ordinal":66,"ino":"101"},{"ordinal":67,"ino":"101"},{"ordinal":68,"ino":"101"},{"ordinal":69,"ino":"101"},{"ordinal":70,"ino":"101"},{"ordinal":71,"ino":"101"},{"ordinal":72,"ino":"101"},{"ordinal":73,"ino":"101"},{"ordinal":74,"ino":"101"},{"ordinal":75,"ino":"101"},{"ordinal":76,"ino":"101"},{"ordinal":77,"ino":"101"},{"ordinal":78,"ino":"101"},{"ordinal":79,"ino":"101"},{"ordinal":80,"ino":"101"},{"ordinal":81,"ino":"101"},{"ordinal":82,"ino":"101"},{"ordinal":83,"ino":"101"},{"ordinal":84,"ino":"101"}],"metadataConversions":1,"fixtureLaunches":22,"readonlyXmlUnchanged":true}
+✖ review correction cryptex caller Contents/Info.plist abort at open-result permits close only (62.473458ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Info.plist","layer":"caller","stage":"open-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"},{"operation":"close","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction cryptex caller Contents/Info.plist abort at eof-read-result permits close only (54.370666ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Info.plist","layer":"caller","stage":"eof-read-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"},{"operation":"close","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction cryptex factory Contents/Info.plist abort at open-result permits close only (83.033042ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Info.plist","layer":"factory","stage":"open-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"},{"operation":"close","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction cryptex factory Contents/Info.plist abort at eof-read-result permits close only (91.0195ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Info.plist","layer":"factory","stage":"eof-read-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"},{"operation":"close","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction cryptex binds Contents/Resources/profile.plist during restored caller identity (77.517375ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Resources/profile.plist","layer":"caller","changed":true,"restored":true,"accepted":true,"mountObservations":[{"ordinal":1,"ino":"101"},{"ordinal":2,"ino":"101"},{"ordinal":3,"ino":"101"},{"ordinal":4,"ino":"101"},{"ordinal":5,"ino":"101"},{"ordinal":6,"ino":"101"},{"ordinal":7,"ino":"101"},{"ordinal":8,"ino":"101"},{"ordinal":9,"ino":"101"},{"ordinal":10,"ino":"101"},{"ordinal":11,"ino":"101"},{"ordinal":12,"ino":"101"},{"ordinal":13,"ino":"101"},{"ordinal":14,"ino":"101"},{"ordinal":15,"ino":"101"},{"ordinal":16,"ino":"202"},{"ordinal":17,"ino":"202"},{"ordinal":18,"ino":"202"},{"ordinal":19,"ino":"202"},{"ordinal":20,"ino":"202"},{"ordinal":21,"ino":"202"},{"ordinal":22,"ino":"202"},{"ordinal":23,"ino":"202"},{"ordinal":24,"ino":"101"},{"ordinal":25,"ino":"101"},{"ordinal":26,"ino":"101"},{"ordinal":27,"ino":"101"},{"ordinal":28,"ino":"101"},{"ordinal":29,"ino":"101"},{"ordinal":30,"ino":"101"},{"ordinal":31,"ino":"101"},{"ordinal":32,"ino":"101"}],"metadataConversions":1,"fixtureLaunches":0,"readonlyXmlUnchanged":true}
+✖ review correction cryptex binds Contents/Resources/profile.plist during restored factory conversion identity (175.512667ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Resources/profile.plist","layer":"factory conversion","changed":true,"restored":true,"accepted":true,"mountObservations":[{"ordinal":1,"ino":"101"},{"ordinal":2,"ino":"101"},{"ordinal":3,"ino":"101"},{"ordinal":4,"ino":"101"},{"ordinal":5,"ino":"101"},{"ordinal":6,"ino":"101"},{"ordinal":7,"ino":"101"},{"ordinal":8,"ino":"101"},{"ordinal":9,"ino":"101"},{"ordinal":10,"ino":"101"},{"ordinal":11,"ino":"101"},{"ordinal":12,"ino":"101"},{"ordinal":13,"ino":"101"},{"ordinal":14,"ino":"101"},{"ordinal":15,"ino":"101"},{"ordinal":16,"ino":"101"},{"ordinal":17,"ino":"101"},{"ordinal":18,"ino":"101"},{"ordinal":19,"ino":"101"},{"ordinal":20,"ino":"101"},{"ordinal":21,"ino":"101"},{"ordinal":22,"ino":"101"},{"ordinal":23,"ino":"101"},{"ordinal":24,"ino":"101"},{"ordinal":25,"ino":"101"},{"ordinal":26,"ino":"101"},{"ordinal":27,"ino":"101"},{"ordinal":28,"ino":"101"},{"ordinal":29,"ino":"101"},{"ordinal":30,"ino":"101"},{"ordinal":31,"ino":"101"},{"ordinal":32,"ino":"101"},{"ordinal":33,"ino":"101"},{"ordinal":34,"ino":"101"},{"ordinal":35,"ino":"101"},{"ordinal":36,"ino":"101"},{"ordinal":37,"ino":"101"},{"ordinal":38,"ino":"101"},{"ordinal":39,"ino":"101"},{"ordinal":40,"ino":"101"},{"ordinal":41,"ino":"101"},{"ordinal":42,"ino":"202"},{"ordinal":43,"ino":"202"},{"ordinal":44,"ino":"202"},{"ordinal":45,"ino":"202"},{"ordinal":46,"ino":"202"},{"ordinal":47,"ino":"202"},{"ordinal":48,"ino":"202"},{"ordinal":49,"ino":"202"},{"ordinal":50,"ino":"202"},{"ordinal":51,"ino":"202"},{"ordinal":52,"ino":"202"},{"ordinal":53,"ino":"202"},{"ordinal":54,"ino":"101"},{"ordinal":55,"ino":"101"},{"ordinal":56,"ino":"101"},{"ordinal":57,"ino":"101"},{"ordinal":58,"ino":"101"},{"ordinal":59,"ino":"101"},{"ordinal":60,"ino":"101"},{"ordinal":61,"ino":"101"},{"ordinal":62,"ino":"101"},{"ordinal":63,"ino":"101"},{"ordinal":64,"ino":"101"},{"ordinal":65,"ino":"101"},{"ordinal":66,"ino":"101"},{"ordinal":67,"ino":"101"},{"ordinal":68,"ino":"101"},{"ordinal":69,"ino":"101"},{"ordinal":70,"ino":"101"},{"ordinal":71,"ino":"101"},{"ordinal":72,"ino":"101"},{"ordinal":73,"ino":"101"},{"ordinal":74,"ino":"101"},{"ordinal":75,"ino":"101"},{"ordinal":76,"ino":"101"},{"ordinal":77,"ino":"101"},{"ordinal":78,"ino":"101"},{"ordinal":79,"ino":"101"},{"ordinal":80,"ino":"101"},{"ordinal":81,"ino":"101"},{"ordinal":82,"ino":"101"},{"ordinal":83,"ino":"101"},{"ordinal":84,"ino":"101"}],"metadataConversions":1,"fixtureLaunches":22,"readonlyXmlUnchanged":true}
+✖ review correction cryptex binds Contents/Resources/profile.plist during restored factory bootstrap identity (199.550458ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Resources/profile.plist","layer":"factory bootstrap","changed":true,"restored":true,"accepted":true,"mountObservations":[{"ordinal":1,"ino":"101"},{"ordinal":2,"ino":"101"},{"ordinal":3,"ino":"101"},{"ordinal":4,"ino":"101"},{"ordinal":5,"ino":"101"},{"ordinal":6,"ino":"101"},{"ordinal":7,"ino":"101"},{"ordinal":8,"ino":"101"},{"ordinal":9,"ino":"101"},{"ordinal":10,"ino":"101"},{"ordinal":11,"ino":"101"},{"ordinal":12,"ino":"101"},{"ordinal":13,"ino":"101"},{"ordinal":14,"ino":"101"},{"ordinal":15,"ino":"101"},{"ordinal":16,"ino":"101"},{"ordinal":17,"ino":"101"},{"ordinal":18,"ino":"101"},{"ordinal":19,"ino":"101"},{"ordinal":20,"ino":"101"},{"ordinal":21,"ino":"101"},{"ordinal":22,"ino":"101"},{"ordinal":23,"ino":"101"},{"ordinal":24,"ino":"101"},{"ordinal":25,"ino":"101"},{"ordinal":26,"ino":"101"},{"ordinal":27,"ino":"101"},{"ordinal":28,"ino":"101"},{"ordinal":29,"ino":"101"},{"ordinal":30,"ino":"101"},{"ordinal":31,"ino":"101"},{"ordinal":32,"ino":"101"},{"ordinal":33,"ino":"101"},{"ordinal":34,"ino":"101"},{"ordinal":35,"ino":"101"},{"ordinal":36,"ino":"101"},{"ordinal":37,"ino":"101"},{"ordinal":38,"ino":"101"},{"ordinal":39,"ino":"101"},{"ordinal":40,"ino":"101"},{"ordinal":41,"ino":"101"},{"ordinal":42,"ino":"101"},{"ordinal":43,"ino":"202"},{"ordinal":44,"ino":"202"},{"ordinal":45,"ino":"101"},{"ordinal":46,"ino":"101"},{"ordinal":47,"ino":"101"},{"ordinal":48,"ino":"101"},{"ordinal":49,"ino":"101"},{"ordinal":50,"ino":"101"},{"ordinal":51,"ino":"101"},{"ordinal":52,"ino":"101"},{"ordinal":53,"ino":"101"},{"ordinal":54,"ino":"101"},{"ordinal":55,"ino":"101"},{"ordinal":56,"ino":"101"},{"ordinal":57,"ino":"101"},{"ordinal":58,"ino":"101"},{"ordinal":59,"ino":"101"},{"ordinal":60,"ino":"101"},{"ordinal":61,"ino":"101"},{"ordinal":62,"ino":"101"},{"ordinal":63,"ino":"101"},{"ordinal":64,"ino":"101"},{"ordinal":65,"ino":"101"},{"ordinal":66,"ino":"101"},{"ordinal":67,"ino":"101"},{"ordinal":68,"ino":"101"},{"ordinal":69,"ino":"101"},{"ordinal":70,"ino":"101"},{"ordinal":71,"ino":"101"},{"ordinal":72,"ino":"101"},{"ordinal":73,"ino":"101"},{"ordinal":74,"ino":"101"},{"ordinal":75,"ino":"101"},{"ordinal":76,"ino":"101"},{"ordinal":77,"ino":"101"},{"ordinal":78,"ino":"101"},{"ordinal":79,"ino":"101"},{"ordinal":80,"ino":"101"},{"ordinal":81,"ino":"101"},{"ordinal":82,"ino":"101"},{"ordinal":83,"ino":"101"},{"ordinal":84,"ino":"101"}],"metadataConversions":1,"fixtureLaunches":22,"readonlyXmlUnchanged":true}
+✖ review correction cryptex caller Contents/Resources/profile.plist abort at open-result permits close only (54.213042ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Resources/profile.plist","layer":"caller","stage":"open-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"},{"operation":"close","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction cryptex caller Contents/Resources/profile.plist abort at eof-read-result permits close only (57.11625ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Resources/profile.plist","layer":"caller","stage":"eof-read-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"},{"operation":"close","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction cryptex factory Contents/Resources/profile.plist abort at open-result permits close only (105.919291ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Resources/profile.plist","layer":"factory","stage":"open-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"},{"operation":"close","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction cryptex factory Contents/Resources/profile.plist abort at eof-read-result permits close only (112.5975ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Resources/profile.plist","layer":"factory","stage":"eof-read-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"},{"operation":"close","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction cryptex binds Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist during restored caller identity (70.006875ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist","layer":"caller","changed":true,"restored":true,"accepted":true,"mountObservations":[{"ordinal":1,"ino":"101"},{"ordinal":2,"ino":"101"},{"ordinal":3,"ino":"101"},{"ordinal":4,"ino":"101"},{"ordinal":5,"ino":"101"},{"ordinal":6,"ino":"101"},{"ordinal":7,"ino":"101"},{"ordinal":8,"ino":"101"},{"ordinal":9,"ino":"101"},{"ordinal":10,"ino":"101"},{"ordinal":11,"ino":"101"},{"ordinal":12,"ino":"101"},{"ordinal":13,"ino":"101"},{"ordinal":14,"ino":"101"},{"ordinal":15,"ino":"101"},{"ordinal":16,"ino":"101"},{"ordinal":17,"ino":"101"},{"ordinal":18,"ino":"101"},{"ordinal":19,"ino":"101"},{"ordinal":20,"ino":"101"},{"ordinal":21,"ino":"101"},{"ordinal":22,"ino":"101"},{"ordinal":23,"ino":"101"},{"ordinal":24,"ino":"202"},{"ordinal":25,"ino":"202"},{"ordinal":26,"ino":"202"},{"ordinal":27,"ino":"202"},{"ordinal":28,"ino":"202"},{"ordinal":29,"ino":"202"},{"ordinal":30,"ino":"202"},{"ordinal":31,"ino":"202"},{"ordinal":32,"ino":"101"}],"metadataConversions":1,"fixtureLaunches":0,"readonlyXmlUnchanged":true}
+✖ review correction cryptex binds Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist during restored factory conversion identity (123.187667ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist","layer":"factory conversion","changed":true,"restored":true,"accepted":true,"mountObservations":[{"ordinal":1,"ino":"101"},{"ordinal":2,"ino":"101"},{"ordinal":3,"ino":"101"},{"ordinal":4,"ino":"101"},{"ordinal":5,"ino":"101"},{"ordinal":6,"ino":"101"},{"ordinal":7,"ino":"101"},{"ordinal":8,"ino":"101"},{"ordinal":9,"ino":"101"},{"ordinal":10,"ino":"101"},{"ordinal":11,"ino":"101"},{"ordinal":12,"ino":"101"},{"ordinal":13,"ino":"101"},{"ordinal":14,"ino":"101"},{"ordinal":15,"ino":"101"},{"ordinal":16,"ino":"101"},{"ordinal":17,"ino":"101"},{"ordinal":18,"ino":"101"},{"ordinal":19,"ino":"101"},{"ordinal":20,"ino":"101"},{"ordinal":21,"ino":"101"},{"ordinal":22,"ino":"101"},{"ordinal":23,"ino":"101"},{"ordinal":24,"ino":"101"},{"ordinal":25,"ino":"101"},{"ordinal":26,"ino":"101"},{"ordinal":27,"ino":"101"},{"ordinal":28,"ino":"101"},{"ordinal":29,"ino":"101"},{"ordinal":30,"ino":"101"},{"ordinal":31,"ino":"101"},{"ordinal":32,"ino":"101"},{"ordinal":33,"ino":"101"},{"ordinal":34,"ino":"101"},{"ordinal":35,"ino":"101"},{"ordinal":36,"ino":"101"},{"ordinal":37,"ino":"101"},{"ordinal":38,"ino":"101"},{"ordinal":39,"ino":"101"},{"ordinal":40,"ino":"101"},{"ordinal":41,"ino":"101"},{"ordinal":42,"ino":"101"},{"ordinal":43,"ino":"101"},{"ordinal":44,"ino":"101"},{"ordinal":45,"ino":"101"},{"ordinal":46,"ino":"101"},{"ordinal":47,"ino":"101"},{"ordinal":48,"ino":"101"},{"ordinal":49,"ino":"101"},{"ordinal":50,"ino":"101"},{"ordinal":51,"ino":"101"},{"ordinal":52,"ino":"101"},{"ordinal":53,"ino":"101"},{"ordinal":54,"ino":"101"},{"ordinal":55,"ino":"101"},{"ordinal":56,"ino":"101"},{"ordinal":57,"ino":"101"},{"ordinal":58,"ino":"101"},{"ordinal":59,"ino":"101"},{"ordinal":60,"ino":"101"},{"ordinal":61,"ino":"101"},{"ordinal":62,"ino":"101"},{"ordinal":63,"ino":"101"},{"ordinal":64,"ino":"101"},{"ordinal":65,"ino":"101"},{"ordinal":66,"ino":"202"},{"ordinal":67,"ino":"202"},{"ordinal":68,"ino":"202"},{"ordinal":69,"ino":"202"},{"ordinal":70,"ino":"202"},{"ordinal":71,"ino":"202"},{"ordinal":72,"ino":"202"},{"ordinal":73,"ino":"202"},{"ordinal":74,"ino":"202"},{"ordinal":75,"ino":"202"},{"ordinal":76,"ino":"202"},{"ordinal":77,"ino":"202"},{"ordinal":78,"ino":"101"},{"ordinal":79,"ino":"101"},{"ordinal":80,"ino":"101"},{"ordinal":81,"ino":"101"},{"ordinal":82,"ino":"101"},{"ordinal":83,"ino":"101"},{"ordinal":84,"ino":"101"}],"metadataConversions":1,"fixtureLaunches":22,"readonlyXmlUnchanged":true}
+✖ review correction cryptex binds Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist during restored factory bootstrap identity (116.44575ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist","layer":"factory bootstrap","changed":true,"restored":true,"accepted":true,"mountObservations":[{"ordinal":1,"ino":"101"},{"ordinal":2,"ino":"101"},{"ordinal":3,"ino":"101"},{"ordinal":4,"ino":"101"},{"ordinal":5,"ino":"101"},{"ordinal":6,"ino":"101"},{"ordinal":7,"ino":"101"},{"ordinal":8,"ino":"101"},{"ordinal":9,"ino":"101"},{"ordinal":10,"ino":"101"},{"ordinal":11,"ino":"101"},{"ordinal":12,"ino":"101"},{"ordinal":13,"ino":"101"},{"ordinal":14,"ino":"101"},{"ordinal":15,"ino":"101"},{"ordinal":16,"ino":"101"},{"ordinal":17,"ino":"101"},{"ordinal":18,"ino":"101"},{"ordinal":19,"ino":"101"},{"ordinal":20,"ino":"101"},{"ordinal":21,"ino":"101"},{"ordinal":22,"ino":"101"},{"ordinal":23,"ino":"101"},{"ordinal":24,"ino":"101"},{"ordinal":25,"ino":"101"},{"ordinal":26,"ino":"101"},{"ordinal":27,"ino":"101"},{"ordinal":28,"ino":"101"},{"ordinal":29,"ino":"101"},{"ordinal":30,"ino":"101"},{"ordinal":31,"ino":"101"},{"ordinal":32,"ino":"101"},{"ordinal":33,"ino":"101"},{"ordinal":34,"ino":"101"},{"ordinal":35,"ino":"101"},{"ordinal":36,"ino":"101"},{"ordinal":37,"ino":"101"},{"ordinal":38,"ino":"101"},{"ordinal":39,"ino":"101"},{"ordinal":40,"ino":"101"},{"ordinal":41,"ino":"101"},{"ordinal":42,"ino":"101"},{"ordinal":43,"ino":"101"},{"ordinal":44,"ino":"101"},{"ordinal":45,"ino":"101"},{"ordinal":46,"ino":"101"},{"ordinal":47,"ino":"101"},{"ordinal":48,"ino":"101"},{"ordinal":49,"ino":"101"},{"ordinal":50,"ino":"101"},{"ordinal":51,"ino":"101"},{"ordinal":52,"ino":"101"},{"ordinal":53,"ino":"101"},{"ordinal":54,"ino":"101"},{"ordinal":55,"ino":"101"},{"ordinal":56,"ino":"101"},{"ordinal":57,"ino":"101"},{"ordinal":58,"ino":"101"},{"ordinal":59,"ino":"101"},{"ordinal":60,"ino":"101"},{"ordinal":61,"ino":"101"},{"ordinal":62,"ino":"101"},{"ordinal":63,"ino":"101"},{"ordinal":64,"ino":"101"},{"ordinal":65,"ino":"101"},{"ordinal":66,"ino":"101"},{"ordinal":67,"ino":"202"},{"ordinal":68,"ino":"202"},{"ordinal":69,"ino":"101"},{"ordinal":70,"ino":"101"},{"ordinal":71,"ino":"101"},{"ordinal":72,"ino":"101"},{"ordinal":73,"ino":"101"},{"ordinal":74,"ino":"101"},{"ordinal":75,"ino":"101"},{"ordinal":76,"ino":"101"},{"ordinal":77,"ino":"101"},{"ordinal":78,"ino":"101"},{"ordinal":79,"ino":"101"},{"ordinal":80,"ino":"101"},{"ordinal":81,"ino":"101"},{"ordinal":82,"ino":"101"},{"ordinal":83,"ino":"101"},{"ordinal":84,"ino":"101"}],"metadataConversions":1,"fixtureLaunches":22,"readonlyXmlUnchanged":true}
+✖ review correction cryptex caller Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist abort at open-result permits close only (59.20175ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist","layer":"caller","stage":"open-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"},{"operation":"close","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction cryptex caller Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist abort at eof-read-result permits close only (56.418542ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist","layer":"caller","stage":"eof-read-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"},{"operation":"close","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction cryptex factory Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist abort at open-result permits close only (91.207708ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist","layer":"factory","stage":"open-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"},{"operation":"close","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"}],"newEffects":0,"newFixtureLaunches":0}
+✖ review correction cryptex factory Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist abort at eof-read-result permits close only (100.76875ms)
+ℹ {"kind":"cryptex","leaf":"Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist","layer":"factory","stage":"eof-read-result","abortObserved":true,"postAbort":[{"operation":"opened-stat","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"},{"operation":"close","path":"/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist"}],"newEffects":0,"newFixtureLaunches":0}
+ℹ tests 42
+ℹ suites 0
+ℹ pass 0
+ℹ fail 42
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4023.949375
+
+✖ failing tests:
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:23472
+✖ review correction legacy binds Contents/Info.plist during restored caller identity (96.897583ms)
+  AssertionError [ERR_ASSERTION]: Observed identity restoration must refuse compatibility
+  + actual - expected
+  
+  + undefined
+  - 'HOST_PREREQUISITE_MISSING'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:415:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:332:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'HOST_PREREQUISITE_MISSING',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:23472
+✖ review correction legacy binds Contents/Info.plist during restored factory conversion identity (124.100625ms)
+  AssertionError [ERR_ASSERTION]: Observed identity restoration must refuse compatibility
+  + actual - expected
+  
+  + undefined
+  - 'HOST_PREREQUISITE_MISSING'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:415:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'HOST_PREREQUISITE_MISSING',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:23472
+✖ review correction legacy binds Contents/Info.plist during restored factory bootstrap identity (114.690625ms)
+  AssertionError [ERR_ASSERTION]: Observed identity restoration must refuse compatibility
+  + actual - expected
+  
+  + undefined
+  - 'HOST_PREREQUISITE_MISSING'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:415:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'HOST_PREREQUISITE_MISSING',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction legacy caller Contents/Info.plist abort at open-result permits close only (56.638167ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' }, { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' } ],
+    expected: [ { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction legacy caller Contents/Info.plist abort at eof-read-result permits close only (56.903917ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' }, { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' } ],
+    expected: [ { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction legacy factory Contents/Info.plist abort at open-result permits close only (92.023792ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' }, { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' } ],
+    expected: [ { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction legacy factory Contents/Info.plist abort at eof-read-result permits close only (84.318917ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' }, { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' } ],
+    expected: [ { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:23472
+✖ review correction legacy binds Contents/Resources/profile.plist during restored caller identity (68.331042ms)
+  AssertionError [ERR_ASSERTION]: Observed identity restoration must refuse compatibility
+  + actual - expected
+  
+  + undefined
+  - 'HOST_PREREQUISITE_MISSING'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:415:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'HOST_PREREQUISITE_MISSING',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:23472
+✖ review correction legacy binds Contents/Resources/profile.plist during restored factory conversion identity (116.784375ms)
+  AssertionError [ERR_ASSERTION]: Observed identity restoration must refuse compatibility
+  + actual - expected
+  
+  + undefined
+  - 'HOST_PREREQUISITE_MISSING'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:415:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'HOST_PREREQUISITE_MISSING',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:23472
+✖ review correction legacy binds Contents/Resources/profile.plist during restored factory bootstrap identity (112.624125ms)
+  AssertionError [ERR_ASSERTION]: Observed identity restoration must refuse compatibility
+  + actual - expected
+  
+  + undefined
+  - 'HOST_PREREQUISITE_MISSING'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:415:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'HOST_PREREQUISITE_MISSING',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction legacy caller Contents/Resources/profile.plist abort at open-result permits close only (46.235083ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' }, { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' } ],
+    expected: [ { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction legacy caller Contents/Resources/profile.plist abort at eof-read-result permits close only (54.074958ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' }, { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' } ],
+    expected: [ { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction legacy factory Contents/Resources/profile.plist abort at open-result permits close only (92.863125ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' }, { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' } ],
+    expected: [ { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction legacy factory Contents/Resources/profile.plist abort at eof-read-result permits close only (99.272333ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' }, { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' } ],
+    expected: [ { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:23472
+✖ review correction legacy binds Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist during restored caller identity (60.898291ms)
+  AssertionError [ERR_ASSERTION]: Observed identity restoration must refuse compatibility
+  + actual - expected
+  
+  + undefined
+  - 'HOST_PREREQUISITE_MISSING'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:415:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'HOST_PREREQUISITE_MISSING',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:23472
+✖ review correction legacy binds Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist during restored factory conversion identity (115.517959ms)
+  AssertionError [ERR_ASSERTION]: Observed identity restoration must refuse compatibility
+  + actual - expected
+  
+  + undefined
+  - 'HOST_PREREQUISITE_MISSING'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:415:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'HOST_PREREQUISITE_MISSING',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:23472
+✖ review correction legacy binds Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist during restored factory bootstrap identity (103.727208ms)
+  AssertionError [ERR_ASSERTION]: Observed identity restoration must refuse compatibility
+  + actual - expected
+  
+  + undefined
+  - 'HOST_PREREQUISITE_MISSING'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:415:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'HOST_PREREQUISITE_MISSING',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction legacy caller Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist abort at open-result permits close only (57.155875ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' }, { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' } ],
+    expected: [ { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction legacy caller Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist abort at eof-read-result permits close only (52.7425ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' }, { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' } ],
+    expected: [ { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction legacy factory Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist abort at open-result permits close only (92.02075ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' }, { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' } ],
+    expected: [ { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction legacy factory Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist abort at eof-read-result permits close only (90.697666ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' }, { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' } ],
+    expected: [ { operation: 'close', path: '/Library/Developer/CoreSimulator/Volumes/iOS_22G86/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:23472
+✖ review correction cryptex binds Contents/Info.plist during restored caller identity (79.398583ms)
+  AssertionError [ERR_ASSERTION]: Observed identity restoration must refuse compatibility
+  + actual - expected
+  
+  + undefined
+  - 'HOST_PREREQUISITE_MISSING'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:415:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'HOST_PREREQUISITE_MISSING',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:23472
+✖ review correction cryptex binds Contents/Info.plist during restored factory conversion identity (119.312917ms)
+  AssertionError [ERR_ASSERTION]: Observed identity restoration must refuse compatibility
+  + actual - expected
+  
+  + undefined
+  - 'HOST_PREREQUISITE_MISSING'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:415:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'HOST_PREREQUISITE_MISSING',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:23472
+✖ review correction cryptex binds Contents/Info.plist during restored factory bootstrap identity (112.789042ms)
+  AssertionError [ERR_ASSERTION]: Observed identity restoration must refuse compatibility
+  + actual - expected
+  
+  + undefined
+  - 'HOST_PREREQUISITE_MISSING'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:415:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'HOST_PREREQUISITE_MISSING',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction cryptex caller Contents/Info.plist abort at open-result permits close only (62.473458ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' }, { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' } ],
+    expected: [ { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction cryptex caller Contents/Info.plist abort at eof-read-result permits close only (54.370666ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' }, { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' } ],
+    expected: [ { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction cryptex factory Contents/Info.plist abort at open-result permits close only (83.033042ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' }, { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' } ],
+    expected: [ { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction cryptex factory Contents/Info.plist abort at eof-read-result permits close only (91.0195ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' }, { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' } ],
+    expected: [ { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:23472
+✖ review correction cryptex binds Contents/Resources/profile.plist during restored caller identity (77.517375ms)
+  AssertionError [ERR_ASSERTION]: Observed identity restoration must refuse compatibility
+  + actual - expected
+  
+  + undefined
+  - 'HOST_PREREQUISITE_MISSING'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:415:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'HOST_PREREQUISITE_MISSING',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:23472
+✖ review correction cryptex binds Contents/Resources/profile.plist during restored factory conversion identity (175.512667ms)
+  AssertionError [ERR_ASSERTION]: Observed identity restoration must refuse compatibility
+  + actual - expected
+  
+  + undefined
+  - 'HOST_PREREQUISITE_MISSING'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:415:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'HOST_PREREQUISITE_MISSING',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:23472
+✖ review correction cryptex binds Contents/Resources/profile.plist during restored factory bootstrap identity (199.550458ms)
+  AssertionError [ERR_ASSERTION]: Observed identity restoration must refuse compatibility
+  + actual - expected
+  
+  + undefined
+  - 'HOST_PREREQUISITE_MISSING'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:415:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'HOST_PREREQUISITE_MISSING',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction cryptex caller Contents/Resources/profile.plist abort at open-result permits close only (54.213042ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' }, { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' } ],
+    expected: [ { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction cryptex caller Contents/Resources/profile.plist abort at eof-read-result permits close only (57.11625ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' }, { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' } ],
+    expected: [ { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction cryptex factory Contents/Resources/profile.plist abort at open-result permits close only (105.919291ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' }, { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' } ],
+    expected: [ { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction cryptex factory Contents/Resources/profile.plist abort at eof-read-result permits close only (112.5975ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' }, { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' } ],
+    expected: [ { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:23472
+✖ review correction cryptex binds Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist during restored caller identity (70.006875ms)
+  AssertionError [ERR_ASSERTION]: Observed identity restoration must refuse compatibility
+  + actual - expected
+  
+  + undefined
+  - 'HOST_PREREQUISITE_MISSING'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:415:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'HOST_PREREQUISITE_MISSING',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:23472
+✖ review correction cryptex binds Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist during restored factory conversion identity (123.187667ms)
+  AssertionError [ERR_ASSERTION]: Observed identity restoration must refuse compatibility
+  + actual - expected
+  
+  + undefined
+  - 'HOST_PREREQUISITE_MISSING'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:415:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'HOST_PREREQUISITE_MISSING',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:23472
+✖ review correction cryptex binds Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist during restored factory bootstrap identity (116.44575ms)
+  AssertionError [ERR_ASSERTION]: Observed identity restoration must refuse compatibility
+  + actual - expected
+  
+  + undefined
+  - 'HOST_PREREQUISITE_MISSING'
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:415:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'HOST_PREREQUISITE_MISSING',
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction cryptex caller Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist abort at open-result permits close only (59.20175ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' }, { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' } ],
+    expected: [ { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction cryptex caller Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist abort at eof-read-result permits close only (56.418542ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' }, { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' } ],
+    expected: [ { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction cryptex factory Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist abort at open-result permits close only (91.207708ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' }, { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' } ],
+    expected: [ { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' } ],
+    operator: 'deepStrictEqual'
+  }
+
+test at tests/observed-legacy-volume-runtime.test.ts:1:26403
+✖ review correction cryptex factory Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist abort at eof-read-result permits close only (100.76875ms)
+  AssertionError [ERR_ASSERTION]: After shared abort only one handle close may dispatch
+  + actual - expected
+  
+    [
+      {
+  +     operation: 'opened-stat',
+  +     path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'
+  +   },
+  +   {
+        operation: 'close',
+        path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist'
+      }
+    ]
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-legacy-binding/tests/observed-legacy-volume-runtime.test.ts:438:16)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { operation: 'opened-stat', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' }, { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' } ],
+    expected: [ { operation: 'close', path: '/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist' } ],
+    operator: 'deepStrictEqual'
+  }

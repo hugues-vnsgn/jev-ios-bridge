@@ -1,0 +1,15 @@
+{
+  "candidateCommit": "dcc06dc0939d73d860cae9e03d4f1f47bacbd279",
+  "parentCommit": "4fa9cc99a94ebb8c79e6d1fe347ccb83745da13d",
+  "candidateContextSha256": "0f4dfabdfb9d8059fa6b992c9f35eeca7880f2fb354c12340b78053866ef67fb",
+  "sourceGitWorking443Exact": true,
+  "protected440Exact": true,
+  "compiled69ExactBothFinalBuilds": true,
+  "threeChangedPaths": [
+    "src/observed/allocation-config.ts",
+    "tests/fixtures/observed-legacy-volume-runtime.ts",
+    "tests/observed-legacy-volume-runtime.test.ts"
+  ],
+  "trackedWorkingTreeClean": true,
+  "commitHooks": "command-scoped disabled; no hook tests/gates invoked"
+}
