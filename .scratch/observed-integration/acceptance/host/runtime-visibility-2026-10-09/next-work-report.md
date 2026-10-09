@@ -2,13 +2,13 @@
 
 The latest diagnosis is complete: iOS27.0/build24A434 is installed in the exact Cryptex bundle, and all required Xcode identity/minimum-host fields match. Retained exact mount XML reports all three Writable properties false. The bridge still needs bounded support for this installed layout before actual compatibility can pass. [Phase5 audit](root-phase5-audit.json), [mount derivation](root-phase5-retained-mount-derivation.json).
 
-The Applications-only candidate `a0e68917` has final actual default1723/1723, typecheck/build on Node26.8.1 and exact24.0.0, plus independent Spec/Standards PASS with zero findings. Earlier26 runner-umask failure and initial24 lock/milestone failures remain preserved; the lower24 cause is unconfirmed. Root preserved106 candidate evidence files and is integrating the exact two-file change. [Preservation](permission-candidate-evidence/root-preservation-index.json).
+The Applications-only candidate `a0e68917` has final actual default1723/1723, typecheck/build on Node26.8.1 and exact24.0.0, plus independent Spec/Standards PASS with zero findings. Earlier26 runner-umask failure and initial24 lock/milestone failures remain preserved; the lower24 cause is unconfirmed. Root preserved106 candidate evidence files and integrated the exact two-file change as `c12ed4f6`. [Preservation](permission-candidate-evidence/root-preservation-index.json).
 
 The owner separately approved the frozen [bounded Cryptex v3 policy](cryptex-policy-proposal.md), SHA `e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13`. [Exact owner decision](owner-cryptex-trust-decision.json), [independent proposal review](cryptex-design-review/round2/report.md). This trust is restricted to the stated root/daemon-managed namespace, with fresh exact unwritable mount proofs and unchanged strict policy elsewhere. ACLs were not inspected; no atomic ancestor pin or exhaustive writer inventory is certified.
 
 ## Remaining order
 
-1. Integrate the independently accepted Applications repair and record Source overlay correspondence.
+1. Complete: Applications repair integrated; Root verified2owned/435protected/15host paths. Original68compiled files remain stale and require rebuild.
 2. Finish fixed Xcode Info128KiB combined conversion output and the bounded pure XML mount parser in the isolated author worktree. Preserve64KiB inputs/all other outputs and existing assertions. Only the exact-command fixture output guard is transferred.
 3. Stack the owner-approved Cryptex implementation on that frozen candidate: finite discovery, explicit-runtime uniqueness, fresh mount proof around each conversion, same-device stable paths, exact modes and tracked metadata-child termination.
 4. Complete both Node actual default gates, typecheck/build, independent reviews, clean installed proofs and Source/compiled/install correspondence for the repaired product.

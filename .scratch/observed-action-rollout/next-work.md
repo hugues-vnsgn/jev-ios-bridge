@@ -12,7 +12,7 @@ The unchanged bridge refused `/Applications` mode0775 before reading runtime met
 
 | Order | Work and owner | Completion evidence |
 | --- | --- | --- |
-| 1 | Root integrates the independently accepted Applications repair | Candidate `a0e68917`; exact two-file overlay, preserved raw gates, Spec and Standards PASS. |
+| 1 | Complete: Root integrated the independently accepted Applications repair | Candidate `a0e68917` integrated as `c12ed4f6`; exact two-file overlay audited, preserved raw gates, Spec and Standards PASS. |
 | 2 (active) | Isolated host author repairs fixed Xcode output and implements bounded XML mount parser | Genuine failing regressions; fixed Xcode conversion128KiB combined output only, all inputs64KiB; parser64KiB/depth32/8192nodes, typed exact mount and three false writable fields. Both Node gates and independent reviews. |
 | 3 | Cryptex author implements the owner-approved bounded v3 policy on the frozen parser candidate | Finite exact-namespace discovery, explicit-runtime uniqueness, fresh mount proofs around each conversion, stable same-device paths, exact permissions and guarded metadata child termination. No native probes in author worktrees. |
 | 4 | Root revalidates the repaired product and installed distribution | Actual default gates on both Node versions, typecheck/build, independent Spec/Standards reviews, clean npm/plugin proofs, current Source/compiled/install association. Original product acceptance does not automatically cover repair deltas. |
