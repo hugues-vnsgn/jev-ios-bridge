@@ -1,0 +1,454 @@
+{
+  "atUtc": "2026-10-09T04:38:09.900968+00:00",
+  "scope": "Preliminary retained raw first-slice audit only; not final Cryptex/host/installed/live acceptance.",
+  "receipts": [
+    {
+      "label": "red-node26",
+      "commandPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/red-node26/command.json",
+      "commandSha256": "bf13524900893f01ac1b0d1cd192f7eaea2133332792545fbc20be3f6d9d3145",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+      "startedAtUtc": "2026-10-09T04:12:24.664333+00:00",
+      "completedAtUtc": "2026-10-09T04:12:25.238916+00:00",
+      "exitCode": 1,
+      "counts": {
+        "tests": 2,
+        "pass": 0,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceSha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+      "testSha256": "43f16147dc7e0e8145ff198340799c6d0fc3520205658c52520732f63e9d6aaa",
+      "fixtureSha256": "a2a3179081b8e9e9ccc21b5b3706eae29bfa10bf1a2569df1ffb4ad13d6dbd53",
+      "sharedFixtureSha256": null,
+      "raw": {
+        "stdout.txt": {
+          "sha256": "933dbdb5d10545019e07614d5417c54cbf94611979337e7aa41902189b342660",
+          "bytes": 1729
+        },
+        "stderr.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    },
+    {
+      "label": "red-node24",
+      "commandPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/red-node24/command.json",
+      "commandSha256": "66f0c4a1486870a19506261d3c2f4b48d70eb0fc2abe879e38c88f8fbcce6a31",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+      "startedAtUtc": "2026-10-09T04:12:31.023446+00:00",
+      "completedAtUtc": "2026-10-09T04:12:31.375012+00:00",
+      "exitCode": 1,
+      "counts": {
+        "tests": 2,
+        "pass": 0,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceSha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+      "testSha256": "43f16147dc7e0e8145ff198340799c6d0fc3520205658c52520732f63e9d6aaa",
+      "fixtureSha256": "a2a3179081b8e9e9ccc21b5b3706eae29bfa10bf1a2569df1ffb4ad13d6dbd53",
+      "sharedFixtureSha256": null,
+      "raw": {
+        "stdout.txt": {
+          "sha256": "5a15b1b2e47c97c68d95c43ec4c05ec071b135415e462d957534d8f61d4df40f",
+          "bytes": 1897
+        },
+        "stderr.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    },
+    {
+      "label": "mapping-red-complete-node26",
+      "commandPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/mapping-red-complete-node26/command.json",
+      "commandSha256": "176db72b22921b4a2ce4ab7575ab473430ac712d39b4478c9f8eb5425e5632f3",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+      "startedAtUtc": "2026-10-09T04:25:52.027855+00:00",
+      "completedAtUtc": "2026-10-09T04:25:52.392620+00:00",
+      "exitCode": 1,
+      "counts": {
+        "tests": 5,
+        "pass": 0,
+        "fail": 5,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceSha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+      "testSha256": "639723c68e5183b144d4dbfddb5a84687f70b8b5425fe2c4ed9bdfbeea3a0267",
+      "fixtureSha256": "a2a3179081b8e9e9ccc21b5b3706eae29bfa10bf1a2569df1ffb4ad13d6dbd53",
+      "sharedFixtureSha256": null,
+      "raw": {
+        "stdout.txt": {
+          "sha256": "602429ad1551bf0a2b7ec7be021f93fe2ec409c2df7a1877adc71ee9dec27d68",
+          "bytes": 5514
+        },
+        "stderr.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    },
+    {
+      "label": "mapping-red-complete-node24",
+      "commandPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/mapping-red-complete-node24/command.json",
+      "commandSha256": "0b29aa06bc899ca7c728f71a59c95628c9cb25b8d86a895fe890ed42126d2e0b",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+      "startedAtUtc": "2026-10-09T04:25:52.679060+00:00",
+      "completedAtUtc": "2026-10-09T04:25:53.106764+00:00",
+      "exitCode": 1,
+      "counts": {
+        "tests": 5,
+        "pass": 0,
+        "fail": 5,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceSha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+      "testSha256": "639723c68e5183b144d4dbfddb5a84687f70b8b5425fe2c4ed9bdfbeea3a0267",
+      "fixtureSha256": "a2a3179081b8e9e9ccc21b5b3706eae29bfa10bf1a2569df1ffb4ad13d6dbd53",
+      "sharedFixtureSha256": null,
+      "raw": {
+        "stdout.txt": {
+          "sha256": "f43caec49a12140917f3e2632863276aeaf8b0f87577f7fdc95728848ffcdf4a",
+          "bytes": 5619
+        },
+        "stderr.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    },
+    {
+      "label": "mapping-green-node26",
+      "commandPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/mapping-green-node26/command.json",
+      "commandSha256": "0d80b4a40615a3667c318a259f9976c487df9add8b7b1039272aae61744ad9bd",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+      "startedAtUtc": "2026-10-09T04:26:08.420934+00:00",
+      "completedAtUtc": "2026-10-09T04:26:08.774063+00:00",
+      "exitCode": 1,
+      "counts": {
+        "tests": 5,
+        "pass": 3,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceSha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+      "testSha256": "639723c68e5183b144d4dbfddb5a84687f70b8b5425fe2c4ed9bdfbeea3a0267",
+      "fixtureSha256": "a2a3179081b8e9e9ccc21b5b3706eae29bfa10bf1a2569df1ffb4ad13d6dbd53",
+      "sharedFixtureSha256": "fc29492e92741c5d2871346d133f62f93d149a25b916b96bae9e2453367d7fba",
+      "raw": {
+        "stdout.txt": {
+          "sha256": "7074c9503d9127555e1a4238fdd7c36068ec2fef9bd49a2a3e7b76b9c07da15d",
+          "bytes": 2155
+        },
+        "stderr.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    },
+    {
+      "label": "mapping-green-node24",
+      "commandPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/mapping-green-node24/command.json",
+      "commandSha256": "633e31477bbb8a3ccef4bf17a8a1783e6a6b04db3c1be5eb66c5bd0f89be0acf",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+      "startedAtUtc": "2026-10-09T04:26:09.067669+00:00",
+      "completedAtUtc": "2026-10-09T04:26:09.405326+00:00",
+      "exitCode": 1,
+      "counts": {
+        "tests": 5,
+        "pass": 3,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceSha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+      "testSha256": "639723c68e5183b144d4dbfddb5a84687f70b8b5425fe2c4ed9bdfbeea3a0267",
+      "fixtureSha256": "a2a3179081b8e9e9ccc21b5b3706eae29bfa10bf1a2569df1ffb4ad13d6dbd53",
+      "sharedFixtureSha256": "fc29492e92741c5d2871346d133f62f93d149a25b916b96bae9e2453367d7fba",
+      "raw": {
+        "stdout.txt": {
+          "sha256": "3540fb385abed5afaba01661430840503d293115a12d57540c0dca22f72054a6",
+          "bytes": 2319
+        },
+        "stderr.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    },
+    {
+      "label": "first-green-node26",
+      "commandPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/first-green-node26/command.json",
+      "commandSha256": "77a2cd44269f15f57868fc64443c24c8a8e8ba810747181db34de8f7eccc0c3b",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+      "startedAtUtc": "2026-10-09T04:28:57.053197+00:00",
+      "completedAtUtc": "2026-10-09T04:28:57.453050+00:00",
+      "exitCode": 0,
+      "counts": {
+        "tests": 5,
+        "pass": 5,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "testSha256": "639723c68e5183b144d4dbfddb5a84687f70b8b5425fe2c4ed9bdfbeea3a0267",
+      "fixtureSha256": "a2a3179081b8e9e9ccc21b5b3706eae29bfa10bf1a2569df1ffb4ad13d6dbd53",
+      "sharedFixtureSha256": "fc29492e92741c5d2871346d133f62f93d149a25b916b96bae9e2453367d7fba",
+      "raw": {
+        "stdout.txt": {
+          "sha256": "354d4522c3167d09f21e82c9190b5e3fe1530e45e98a1556bb64fbefbd8a823b",
+          "bytes": 761
+        },
+        "stderr.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    },
+    {
+      "label": "first-green-node24",
+      "commandPath": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/first-green-node24/command.json",
+      "commandSha256": "7b4c3558977eaf63552c281b1b526786294d62aeb390b54168cea2dc1c693b7c",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+      "startedAtUtc": "2026-10-09T04:28:57.836795+00:00",
+      "completedAtUtc": "2026-10-09T04:28:58.300279+00:00",
+      "exitCode": 0,
+      "counts": {
+        "tests": 5,
+        "pass": 5,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "testSha256": "639723c68e5183b144d4dbfddb5a84687f70b8b5425fe2c4ed9bdfbeea3a0267",
+      "fixtureSha256": "a2a3179081b8e9e9ccc21b5b3706eae29bfa10bf1a2569df1ffb4ad13d6dbd53",
+      "sharedFixtureSha256": "fc29492e92741c5d2871346d133f62f93d149a25b916b96bae9e2453367d7fba",
+      "raw": {
+        "stdout.txt": {
+          "sha256": "0bbeeb3b4729b62bd35d4c91c1bc8baed06c35b0c012b0e66c406a572c3448de",
+          "bytes": 931
+        },
+        "stderr.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    }
+  ],
+  "checks": [
+    {
+      "label": "red-node26",
+      "check": "stdout-raw-receipt",
+      "pass": true
+    },
+    {
+      "label": "red-node26",
+      "check": "stderr-raw-receipt",
+      "pass": true
+    },
+    {
+      "label": "red-node26",
+      "check": "counts-exit-scrubbed-environment",
+      "pass": true
+    },
+    {
+      "label": "red-node24",
+      "check": "stdout-raw-receipt",
+      "pass": true
+    },
+    {
+      "label": "red-node24",
+      "check": "stderr-raw-receipt",
+      "pass": true
+    },
+    {
+      "label": "red-node24",
+      "check": "counts-exit-scrubbed-environment",
+      "pass": true
+    },
+    {
+      "label": "mapping-red-complete-node26",
+      "check": "stdout-raw-receipt",
+      "pass": true
+    },
+    {
+      "label": "mapping-red-complete-node26",
+      "check": "stderr-raw-receipt",
+      "pass": true
+    },
+    {
+      "label": "mapping-red-complete-node26",
+      "check": "counts-exit-scrubbed-environment",
+      "pass": true
+    },
+    {
+      "label": "mapping-red-complete-node24",
+      "check": "stdout-raw-receipt",
+      "pass": true
+    },
+    {
+      "label": "mapping-red-complete-node24",
+      "check": "stderr-raw-receipt",
+      "pass": true
+    },
+    {
+      "label": "mapping-red-complete-node24",
+      "check": "counts-exit-scrubbed-environment",
+      "pass": true
+    },
+    {
+      "label": "mapping-green-node26",
+      "check": "stdout-raw-receipt",
+      "pass": true
+    },
+    {
+      "label": "mapping-green-node26",
+      "check": "stderr-raw-receipt",
+      "pass": true
+    },
+    {
+      "label": "mapping-green-node26",
+      "check": "counts-exit-scrubbed-environment",
+      "pass": true
+    },
+    {
+      "label": "mapping-green-node24",
+      "check": "stdout-raw-receipt",
+      "pass": true
+    },
+    {
+      "label": "mapping-green-node24",
+      "check": "stderr-raw-receipt",
+      "pass": true
+    },
+    {
+      "label": "mapping-green-node24",
+      "check": "counts-exit-scrubbed-environment",
+      "pass": true
+    },
+    {
+      "label": "first-green-node26",
+      "check": "stdout-raw-receipt",
+      "pass": true
+    },
+    {
+      "label": "first-green-node26",
+      "check": "stderr-raw-receipt",
+      "pass": true
+    },
+    {
+      "label": "first-green-node26",
+      "check": "counts-exit-scrubbed-environment",
+      "pass": true
+    },
+    {
+      "label": "first-green-node24",
+      "check": "stdout-raw-receipt",
+      "pass": true
+    },
+    {
+      "label": "first-green-node24",
+      "check": "stderr-raw-receipt",
+      "pass": true
+    },
+    {
+      "label": "first-green-node24",
+      "check": "counts-exit-scrubbed-environment",
+      "pass": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/base-allocation-config.ts",
+      "sha256": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+      "check": "original-base-bytes",
+      "pass": true
+    },
+    {
+      "path": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/base-observed-allocation-backend.ts",
+      "sha256": "5b8c6b14a463ee8ec312ac33655f18c0efc931c2c900784840342f7aeb0e3d80",
+      "check": "original-base-bytes",
+      "pass": true
+    }
+  ],
+  "checkCount": 26,
+  "allChecksPass": true,
+  "auditAttemptHistory": [
+    "First computation stopped before writing: KeyError sharedFixtureSha256 in initial red receipt. Corrected optional-field handling; recomputed only from the same retained inputs. No regression command repeated."
+  ],
+  "limitations": [
+    "New historical test/fixture input bytes are receipt hashes pending final preservation/recoverability audit.",
+    "First green is only five cases, before full negative matrix and final candidate freeze.",
+    "No additional tests, builds, native queries or device/store operations by Root."
+  ]
+}
