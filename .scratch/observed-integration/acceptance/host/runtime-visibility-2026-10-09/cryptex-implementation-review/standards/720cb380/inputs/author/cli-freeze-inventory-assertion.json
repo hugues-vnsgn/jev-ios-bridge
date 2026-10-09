@@ -1,0 +1,15 @@
+{
+  "recordedAtUtc": "2026-10-09T05:35:37.252980+00:00",
+  "originalAssertion": "assert tracked == set(m['source441'])",
+  "originalToolChunk": "dbbda0",
+  "originalExitCode": 1,
+  "originalRawOutput": "Traceback (most recent call last):\n  File \"<stdin>\", line 4, in <module>\nAssertionError\n",
+  "cause": "Candidate Source441 inventory excludes historical/tool assets also tracked by Git. No Source byte or gate correspondence failed.",
+  "gitTrackedCount": 39156,
+  "candidateSourceCount": 441,
+  "correctedAssertion": "assert set(m['source441']) <= tracked; assert git diff --quiet HEAD exits 0",
+  "correctedResult": true,
+  "productEdited": false,
+  "gateRerunRequired": false,
+  "preservationLimit": "The original script was passed through the tool invocation; this records the exact failing/corrected assertions and current read-only proof rather than claiming a contemporaneous full-script archive."
+}

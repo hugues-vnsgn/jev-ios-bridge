@@ -1,0 +1,17 @@
+{
+  "scope": "Exact static line-anchor correction; original FAIL report remains immutable",
+  "parent": "dadde33a36440db6d9414adf84f80916caa9d2b3",
+  "file": "tests/fixtures/observed-cli-server.ts",
+  "parentMapperLine": 35,
+  "parentLstatLine": 37,
+  "historicalReportAnchorCorrection": "33/35 to35/37",
+  "successor": "720cb380d07102d72b20a6a4f5f7787a0ab88f2b",
+  "successorMapperLine": 19,
+  "successorDelegationLine": 39,
+  "successorLstatOpenReaddirLines": [
+    41,
+    42,
+    43
+  ],
+  "findingAndGateUnchanged": true
+}

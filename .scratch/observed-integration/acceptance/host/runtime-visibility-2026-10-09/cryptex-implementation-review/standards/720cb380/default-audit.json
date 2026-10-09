@@ -1,0 +1,404 @@
+{
+  "axis": "Standards evidence association",
+  "atUtc": "2026-10-09T05:47:04.940812+00:00",
+  "candidate": "720cb380d07102d72b20a6a4f5f7787a0ab88f2b",
+  "checks": [
+    {
+      "name": "root-successor-default-audit.json frozen hash",
+      "pass": true
+    },
+    {
+      "name": "author/actual-default-cli-summary.json frozen hash",
+      "pass": true
+    },
+    {
+      "name": "author/verification-index-cli-defaults.json frozen hash",
+      "pass": true
+    },
+    {
+      "name": "author/implementation-final-report.md frozen hash",
+      "pass": true
+    },
+    {
+      "name": "candidate manifest remains frozen",
+      "pass": true
+    },
+    {
+      "name": "candidate HEAD frozen",
+      "pass": true
+    },
+    {
+      "name": "current441 Source remains frozen",
+      "pass": true
+    },
+    {
+      "name": "package hash-bound to frozen Source",
+      "pass": true
+    },
+    {
+      "name": "unmodified package default scripts",
+      "pass": true
+    },
+    {
+      "name": "summary complete Source/owned/protected/compiled maps",
+      "pass": true
+    },
+    {
+      "name": "actual-default-cli-node26/command.json frozen hash",
+      "pass": true
+    },
+    {
+      "name": "26 Root receipt binding",
+      "pass": true
+    },
+    {
+      "name": "actual-default-cli-node26/result.json frozen hash",
+      "pass": true
+    },
+    {
+      "name": "26 stdout hash/length",
+      "pass": true
+    },
+    {
+      "name": "26 stderr hash/length",
+      "pass": true
+    },
+    {
+      "name": "26 raw seven counts1999",
+      "pass": true
+    },
+    {
+      "name": "26 actual exit0 close",
+      "pass": true
+    },
+    {
+      "name": "26 exact npm argv default",
+      "pass": true
+    },
+    {
+      "name": "26 no credential/runtime override environment",
+      "pass": true
+    },
+    {
+      "name": "26 receipt full candidate binding",
+      "pass": true
+    },
+    {
+      "name": "26 result source before/after/protected/compiled binding",
+      "pass": true
+    },
+    {
+      "name": "26 exact stage markers ordered",
+      "pass": true
+    },
+    {
+      "name": "actual-default-cli-node26/command.json frozen hash",
+      "pass": true
+    },
+    {
+      "name": "actual-default-cli-node26/build-stage-confirmed.json frozen hash",
+      "pass": true
+    },
+    {
+      "name": "actual-default-cli-node26/compiled-manifest.json frozen hash",
+      "pass": true
+    },
+    {
+      "name": "26 retained runtime stdout hash",
+      "pass": true
+    },
+    {
+      "name": "26 retained runtime stderr hash",
+      "pass": true
+    },
+    {
+      "name": "26 exact runtime version receipt",
+      "pass": true
+    },
+    {
+      "name": "26 archived compiled69 map",
+      "pass": true
+    },
+    {
+      "name": "26 actual archived compiled69 bytes",
+      "pass": true
+    },
+    {
+      "name": "actual-default-cli-node24/command.json frozen hash",
+      "pass": true
+    },
+    {
+      "name": "24 Root receipt binding",
+      "pass": true
+    },
+    {
+      "name": "actual-default-cli-node24/result.json frozen hash",
+      "pass": true
+    },
+    {
+      "name": "24 stdout hash/length",
+      "pass": true
+    },
+    {
+      "name": "24 stderr hash/length",
+      "pass": true
+    },
+    {
+      "name": "24 raw seven counts1999",
+      "pass": true
+    },
+    {
+      "name": "24 actual exit0 close",
+      "pass": true
+    },
+    {
+      "name": "24 exact npm argv default",
+      "pass": true
+    },
+    {
+      "name": "24 no credential/runtime override environment",
+      "pass": true
+    },
+    {
+      "name": "24 receipt full candidate binding",
+      "pass": true
+    },
+    {
+      "name": "24 result source before/after/protected/compiled binding",
+      "pass": true
+    },
+    {
+      "name": "24 exact stage markers ordered",
+      "pass": true
+    },
+    {
+      "name": "actual-default-cli-node24/command.json frozen hash",
+      "pass": true
+    },
+    {
+      "name": "actual-default-cli-node24/build-stage-confirmed.json frozen hash",
+      "pass": true
+    },
+    {
+      "name": "actual-default-cli-node24/compiled-manifest.json frozen hash",
+      "pass": true
+    },
+    {
+      "name": "24 retained runtime stdout hash",
+      "pass": true
+    },
+    {
+      "name": "24 retained runtime stderr hash",
+      "pass": true
+    },
+    {
+      "name": "24 exact runtime version receipt",
+      "pass": true
+    },
+    {
+      "name": "24 archived compiled69 map",
+      "pass": true
+    },
+    {
+      "name": "24 actual archived compiled69 bytes",
+      "pass": true
+    },
+    {
+      "name": "actual pair serial close",
+      "pass": true
+    },
+    {
+      "name": "old-failed-default-command.json frozen hash",
+      "pass": true
+    },
+    {
+      "name": "prior Standards manifest unchanged",
+      "pass": true
+    }
+  ],
+  "gates": [
+    {
+      "node": "26",
+      "receiptSha256": "21a6672518c72857b9f29fce13d7752d1060f956e076f3192c355d40967751dd",
+      "resultSha256": "5a5c49b48229e18a57f7c6467c13c03f4047163f1155b898f8ed798dbc9ced2e",
+      "counts": {
+        "tests": 1999,
+        "suites": 0,
+        "pass": 1999,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "/opt/homebrew/lib/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "check"
+      ],
+      "startedAtUtc": "2026-10-09T05:37:38.158706+00:00",
+      "completedAtUtc": "2026-10-09T05:40:12.085349+00:00",
+      "exitCode": 0
+    },
+    {
+      "node": "24",
+      "receiptSha256": "7f3ecda0cbb2c004ef96b9839411afe435ac6592028aa9e16a1fc76a33b4d56b",
+      "resultSha256": "71910371c916f7c81d40a77e340078559c77e392942a400e8c5ba3d931cf0d20",
+      "counts": {
+        "tests": 1999,
+        "suites": 0,
+        "pass": 1999,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "/opt/homebrew/lib/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "check"
+      ],
+      "startedAtUtc": "2026-10-09T05:40:12.358828+00:00",
+      "completedAtUtc": "2026-10-09T05:42:55.802271+00:00",
+      "exitCode": 0
+    }
+  ],
+  "inputs": {
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-implementation-review/root-successor-default-audit.json": {
+      "sha256": "611fdc525d7376e7a2c8a07fdd4590dee9a6479bc403923620f9a6f442a61a29",
+      "bytes": 4773,
+      "retained": "inputs/defaults/root-successor-default-audit.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-default-cli-summary.json": {
+      "sha256": "726023c1c6e5df25db6f01e4a4db64dd3d80e735889b1ab6d1c1cf1da064dc30",
+      "bytes": 113203,
+      "retained": "inputs/defaults/author/actual-default-cli-summary.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/verification-index-cli-defaults.json": {
+      "sha256": "1af4ef3f6de746e25ba054f6ad7bfc9df5057d2bfd15ea489181486b563c74a7",
+      "bytes": 3889,
+      "retained": "inputs/defaults/author/verification-index-cli-defaults.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/implementation-final-report.md": {
+      "sha256": "c9bc2f402bf7e7c169d353750179853959267af58dd4034dff9321e2dd1ba2f9",
+      "bytes": 1910,
+      "retained": "inputs/defaults/author/implementation-final-report.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-implementation-review/root-successor-default-audit-first-failure.json": {
+      "sha256": "cc67d0b0ee9905e40b374ce1723277ea33c1229d3f421c2d3520c1a75320734e",
+      "bytes": 660,
+      "retained": "inputs/defaults/root-successor-default-audit-first-failure.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/package.json": {
+      "sha256": "d2fffea3e28d6ea794536b2cb67337abe8ec75c46cf10c2944ca1b3cd0a3a3ea",
+      "bytes": 1550,
+      "retained": "inputs/defaults/package.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-default-cli-node26/command.json": {
+      "sha256": "21a6672518c72857b9f29fce13d7752d1060f956e076f3192c355d40967751dd",
+      "bytes": 54374,
+      "retained": "inputs/defaults/actual-default-cli-node26/command.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-default-cli-node26/result.json": {
+      "sha256": "5a5c49b48229e18a57f7c6467c13c03f4047163f1155b898f8ed798dbc9ced2e",
+      "bytes": 161011,
+      "retained": "inputs/defaults/actual-default-cli-node26/result.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-default-cli-node26/stdout.txt": {
+      "sha256": "8dfeb68756f8c323f055fd452ca36c2fd7dc82e7280e913ac92f3d58f5849201",
+      "bytes": 197222,
+      "retained": "inputs/defaults/actual-default-cli-node26/stdout.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-default-cli-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/defaults/actual-default-cli-node26/stderr.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-runtime-cli-node26/command.json": {
+      "sha256": "f25c492fbf395e2b8243b8ef0f067eb1f8995cb727d91b0c4baa6194b8dda94d",
+      "bytes": 54261,
+      "retained": "inputs/defaults/actual-default-cli-node26/command.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-default-cli-node26/build-stage-confirmed.json": {
+      "sha256": "82af5ec17e68038f48a128e381da6d6d2abcea25db8ab6b436754210878f228b",
+      "bytes": 168,
+      "retained": "inputs/defaults/actual-default-cli-node26/build-stage-confirmed.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-default-cli-node26/compiled-manifest.json": {
+      "sha256": "d7139dec7328f07374d4fe8c2e32ac056e86936e7c8802c9d4d62b646a7dbe59",
+      "bytes": 6823,
+      "retained": "inputs/defaults/actual-default-cli-node26/compiled-manifest.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-runtime-cli-node26/stdout.txt": {
+      "sha256": "bd17489adcddbc8ed526bf6dedb22de2e677bbae176b977aa7f7c0408999248c",
+      "bytes": 8,
+      "retained": "inputs/defaults/actual-default-cli-node26/runtime-stdout.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-runtime-cli-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/defaults/actual-default-cli-node26/runtime-stderr.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-default-cli-node24/command.json": {
+      "sha256": "7f3ecda0cbb2c004ef96b9839411afe435ac6592028aa9e16a1fc76a33b4d56b",
+      "bytes": 54436,
+      "retained": "inputs/defaults/actual-default-cli-node24/command.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-default-cli-node24/result.json": {
+      "sha256": "71910371c916f7c81d40a77e340078559c77e392942a400e8c5ba3d931cf0d20",
+      "bytes": 161011,
+      "retained": "inputs/defaults/actual-default-cli-node24/result.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-default-cli-node24/stdout.txt": {
+      "sha256": "5a6aacb852c405485930c229117e34e0fd1b4991eb26d73909552a2d18b241e6",
+      "bytes": 208511,
+      "retained": "inputs/defaults/actual-default-cli-node24/stdout.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-default-cli-node24/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/defaults/actual-default-cli-node24/stderr.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-runtime-cli-node24/command.json": {
+      "sha256": "ae6c01684a103fb8f0601e6556febf09f389a2005906a28a104044bf187e9e86",
+      "bytes": 54323,
+      "retained": "inputs/defaults/actual-default-cli-node24/command.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-default-cli-node24/build-stage-confirmed.json": {
+      "sha256": "82af5ec17e68038f48a128e381da6d6d2abcea25db8ab6b436754210878f228b",
+      "bytes": 168,
+      "retained": "inputs/defaults/actual-default-cli-node24/build-stage-confirmed.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-default-cli-node24/compiled-manifest.json": {
+      "sha256": "d7139dec7328f07374d4fe8c2e32ac056e86936e7c8802c9d4d62b646a7dbe59",
+      "bytes": 6823,
+      "retained": "inputs/defaults/actual-default-cli-node24/compiled-manifest.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-runtime-cli-node24/stdout.txt": {
+      "sha256": "b988e13140652de941a9a3fab325102625f646ec6fde3a7b8a8af63496a74061",
+      "bytes": 8,
+      "retained": "inputs/defaults/actual-default-cli-node24/runtime-stdout.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-runtime-cli-node24/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/defaults/actual-default-cli-node24/runtime-stderr.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-default-node26/command.json": {
+      "sha256": "02c92c11b6b376ec1d1680bf1bf153e4ee3222870d9a7166f5139a59b1d103e5",
+      "bytes": 54430,
+      "retained": "inputs/defaults/old-failed-default-command.json"
+    }
+  },
+  "verdict": "PASS",
+  "scope": "Frozen successor Standards and retained author default gates only; no installed/native/live or Ticket12 acceptance.",
+  "rootAuditCorrectionLimit": {
+    "scope": "Root retained-evidence audit tooling error, no product/gate failure",
+    "reportedFailure": "AssertionError:26 test/typecheck/build markers",
+    "originalExpression": "markers hardcoded jev-ios-bridge@1.0.0",
+    "confirmedCause": "Frozen package.json and both raw defaults identify1.3.1. Wrong Root version assumption; all three original actual1.3.1 stages observed.",
+    "correction": "Derive version from the hash-bound frozen package.json and require its exact test/typecheck/build marker strings. No product edit/test rerun.",
+    "originalStderrRetention": "failure text transcribed from tool result; original full stderr not stored separately"
+  }
+}

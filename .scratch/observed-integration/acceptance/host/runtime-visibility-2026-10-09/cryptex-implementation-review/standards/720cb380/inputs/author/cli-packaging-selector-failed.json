@@ -1,0 +1,15 @@
+{
+  "recordedAtUtc": "2026-10-09T05:32:31.217595+00:00",
+  "inputSuiteSha256": "5d83f729916adec23cce5598e0afb51e84f8842b4af10dc6df37925e90b43bd6",
+  "priorSuiteSha256": "4e18d0de58b5fa6940fbe1c11650731b69d87c560ab7b414e407756c078580dc",
+  "removedOnlyPureImportAndAddedPureBlock": true,
+  "productEdited": false,
+  "gateRerunRequired": false,
+  "selector": "end = s.index(anchor, start)",
+  "result": "False restoration assertion; selected new pure loop rather than later original installed loop",
+  "restoredSha256": "b92d687a8832a67227669917e4b22a965620fbea9ae7687bc36ec8470304231f",
+  "originalToolChunk": "cb9a62",
+  "originalToolExitCode": 1,
+  "originalToolRawOutput": "Traceback (most recent call last):\n  File \"<stdin>\", line 11, in <module>\nAssertionError\n",
+  "preservationLimit": "Original packaging script was passed directly in the tool invocation. This records its exact failing selector and reproduces the read-only comparison; it is not a contemporaneous full-script archive."
+}

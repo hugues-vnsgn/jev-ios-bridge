@@ -1,0 +1,9 @@
+{
+  "atUtc": "2026-10-09T05:36:19.664873+00:00",
+  "scope": "Root evidence-audit failure, not product/test failure; no native operation",
+  "scriptSha256": "1a18b3aa1414c54311e7e88f8f9b9a1d3046f57efbcc21d3c7274cec45095a3e",
+  "reportedFailure": "AssertionError: cli-affected-node26 raw counts",
+  "outputRetention": "failure text transcribed from original exec result; full original process stderr was not written to disk",
+  "confirmedCause": "Root compared six raw count fields to the entire seven-field receipt counts object; the receipt also includes suites0. Both six-field values match235/235 with0 failures/cancellations/skips/TODO.",
+  "correction": "Compare every six required count fields against their corresponding receipt values; retain exact raw count oracle unchanged."
+}

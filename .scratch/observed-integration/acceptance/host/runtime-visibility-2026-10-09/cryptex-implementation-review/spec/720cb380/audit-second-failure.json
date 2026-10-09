@@ -1,0 +1,10 @@
+{
+  "scope": "Review metadata audit path error; no Source or test failure",
+  "scriptSha256": "072ea9f731eef783c69dfdb8a2f44776b8b7c01e1d77e7e103b89f668c587c0d",
+  "exit": 1,
+  "exception": "FileNotFoundError build-cli-final-node26/compiled/capture.js",
+  "cause": "Successor archived builds preserve the dist/ prefix below compiled; parent archives omitted that prefix. Static discovery confirmed compiled/dist/capture.js. Correct the archive path only.",
+  "retention": "Exception text transcribed from tool result; no original stderr file was emitted.",
+  "productChanged": false,
+  "testsRerun": false
+}

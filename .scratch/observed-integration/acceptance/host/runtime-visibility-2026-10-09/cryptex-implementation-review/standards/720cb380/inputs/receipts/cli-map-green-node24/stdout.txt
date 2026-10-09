@@ -1,0 +1,24 @@
+(node:27328) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ the pure public fixture maps / into its temporary host tree (0.974458ms)
+✔ the pure public fixture maps /private into its temporary host tree (0.085333ms)
+✔ the pure public fixture maps /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist into its temporary host tree (0.067875ms)
+✔ the pure public fixture preserves its owned temporary path /private/tmp/jev-public-pure-fixture (0.034709ms)
+✔ the pure public fixture preserves its owned temporary path /private/tmp/jev-public-pure-fixture/home (0.0275ms)
+✔ the pure public fixture preserves its owned temporary path /private/tmp/jev-public-pure-fixture/runs/owned.json (0.020042ms)
+✔ the pure public fixture preserves installed mapping for /Applications/Xcode.app (0.081459ms)
+✔ the pure public fixture preserves installed mapping for /Library/Developer (0.030959ms)
+✔ the pure public fixture preserves installed mapping for /System/Library (0.165917ms)
+✔ the pure public fixture preserves installed mapping for /usr/bin/plutil (0.194041ms)
+✔ the pure public fixture preserves unrelated mapping for /private-other (0.029584ms)
+✔ the pure public fixture preserves unrelated mapping for /Applications-other (0.019084ms)
+✔ the pure public fixture preserves unrelated mapping for /opt/fixture (0.02025ms)
+✔ the pure public fixture preserves unrelated mapping for relative/fixture (0.015375ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 300.23

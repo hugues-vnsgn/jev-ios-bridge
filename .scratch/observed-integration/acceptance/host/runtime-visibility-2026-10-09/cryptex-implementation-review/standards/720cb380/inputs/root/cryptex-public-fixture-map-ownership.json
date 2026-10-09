@@ -1,0 +1,38 @@
+{
+  "atUtc": "2026-10-09T05:21:24.330079+00:00",
+  "priorCandidate": "dadde33a36440db6d9414adf84f80916caa9d2b3",
+  "base": "38aa879c3954c9d7742ef04059cad4d2fc824c87",
+  "file": "tests/fixtures/observed-cli-server.ts",
+  "baselineSha256": "e0bffe3dfe1b0ee90aed64b7fd2493ddb91faf73cf8c1c9e418338fc55f811d1",
+  "finding": "The separate public child fixture legacy mapper covers Applications/Library/System/usr only. New Cryptex discovery can pass slash/private ancestry and namespace listing through to native fs. Its injected source rejects diskutil before child launch. CLI/MCP fixture cases failed in actual Node26 default.",
+  "originalDefaultResult": {
+    "tests": 1985,
+    "pass": 1858,
+    "fail": 127,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "exitCode": 1
+  },
+  "authorization": "Root transfers only this mapper expression: preserve exact context.root and descendants verbatim; map exact slash root and installed private prefix into context.root/host; preserve all other mapping outcomes. No virtual stat, source-process, hooks, assertions, timeout or concurrency change.",
+  "proof": "Archive original bytes/hash, add pure-string mapper regressions red then green on both exact Nodes before filesystem calls. Keep failures and old candidate. Regress affected public suites and final focused/typecheck/build/coverage both Nodes before next freeze/default grant.",
+  "sourcePolicyUnchangedSha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+  "ownedProductPaths": [
+    "src/observed/allocation-config.ts",
+    "tests/fixtures/observed-allocation-backend.ts",
+    "tests/fixtures/observed-cli-server.ts",
+    "tests/observed-cryptex-runtime.test.ts",
+    "tests/fixtures/observed-cryptex-runtime.ts"
+  ],
+  "baselineSourceCount": 439,
+  "protectedSourceCount": 436,
+  "candidateSourceCount": 441,
+  "compiledJavascriptCount": 69,
+  "node24OriginalDefault": "Held after Node26 failure; not executed.",
+  "lifecycle": "Completed actual-default Node26 receipt independently seen at05:15:18.895097UTC. Verify stale session notice against actual closure before signalling; never terminate a completed/reused PID/group.",
+  "nativeHostPolicyExtension": false,
+  "nativeOperatorDispatch": false,
+  "pureSeamAuthorization": "Root additionally authorizes one fixture-only exported pure mapper declaration and local delegation. Extract the exact original expression first, preserving behavior, then observe pure-string red/green without setup/composition/filesystem methods. No production API or other fixture declaration/guard/hooks/Stats/assertion change.",
+  "lifecycleConfirmed": "Original session26914 closed naturally with exit1; no signal sent to group75354. Source441/old437protected/compiled69 matched dad afterrun; default build did not execute because test failed.",
+  "authorPureCheckpoint": "Both Nodes red14tests/11pass/3fail for slash/private/fixed descendant, then unchanged assertion green14/14. Contemporary extraction/red/green bytes retained; current childfixtureSHA eb1ee9f4215fff24f70867e904c3817d0528a6c7c35efa97bc50ecce6ff63669. Production Source unchanged."
+}

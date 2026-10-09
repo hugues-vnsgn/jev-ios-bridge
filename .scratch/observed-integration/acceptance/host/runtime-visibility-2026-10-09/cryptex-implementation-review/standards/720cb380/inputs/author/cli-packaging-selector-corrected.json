@@ -1,0 +1,12 @@
+{
+  "recordedAtUtc": "2026-10-09T05:32:31.217595+00:00",
+  "inputSuiteSha256": "5d83f729916adec23cce5598e0afb51e84f8842b4af10dc6df37925e90b43bd6",
+  "priorSuiteSha256": "4e18d0de58b5fa6940fbe1c11650731b69d87c560ab7b414e407756c078580dc",
+  "removedOnlyPureImportAndAddedPureBlock": true,
+  "productEdited": false,
+  "gateRerunRequired": false,
+  "selector": "first = s.index(anchor, start); end = s.index(anchor, first + len(anchor))",
+  "result": "Exact prior bytes restored",
+  "restoredSha256": "4e18d0de58b5fa6940fbe1c11650731b69d87c560ab7b414e407756c078580dc",
+  "exactPriorBytesMatch": true
+}

@@ -1,0 +1,1043 @@
+{
+  "atUtc": "2026-10-09T05:54:03.172167+00:00",
+  "candidate": "720cb380d07102d72b20a6a4f5f7787a0ab88f2b",
+  "Spec": "PASS0findings257checks",
+  "Standards": "PASS0findings207checks",
+  "scope": "Root rehash of sealed independent reviews, final author defaults1999 bothNodes; physical/installed/native/live gates pending",
+  "oldSpecFailPreserved": true,
+  "checks": [
+    {
+      "axis": "spec",
+      "path": "audit-first-failure.json",
+      "sha256": "db260242d87ab60fb6b47e56a078039ebbc6fd5f7a9cdb9d6d72ad4eeed89114",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "audit-first.py",
+      "sha256": "2fae8000ab4f0cf49f54ccd97ac2383f5622cccf1271e6bdc6482fa55d073c6a",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "audit-second-failure.json",
+      "sha256": "17f22cd4740fff3ca4ef03e75432e479c69b1c014115876b9979154e860a14e8",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "audit-second.py",
+      "sha256": "072ea9f731eef783c69dfdb8a2f44776b8b7c01e1d77e7e103b89f668c587c0d",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "audit.py",
+      "sha256": "ccd5089e2a17ad985fb6799c7a3d3a1ec6f36d22214e8eb9772879b6e9dc7150",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "clause-correspondence.md",
+      "sha256": "8d4b7247df916466e77f026490a534baf7c50d5b7c3b03dd23455e5f0943b75c",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "cumulative.diff",
+      "sha256": "9301db0b648dbd12980bcd5b41af9d6f57840c89b17974d5d2365bc9440f817b",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "draft-write-error.json",
+      "sha256": "64953221b18bd75a34aaf81cdba52f20bb46a78b8b1515f2f3a8847c891d2e7e",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "evidence-audit.md",
+      "sha256": "6fe49d7792c0144eb05040af9872f5c6ba922eb63421b2a70635fa827dd52c1a",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "input-manifest.json",
+      "sha256": "e73cbf18caaaba4f502e49a37666e7ff116bed8897e5f6067e4c15fb380724f7",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "preservation-audit.json",
+      "sha256": "cedd3c93584548bd666eaf808da9584e3051bd072ab83cd30fad7552e6497bed",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "prior-anchor-qualification.json",
+      "sha256": "48ae6f377332ee502086886a742f800df2960ef217d532997ff0cf9009b47f2b",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "prior-clause-correspondence.md",
+      "sha256": "d86524ab1afe2d8cdfd83ca54e1a3ec039c0bb4bcf73fa766cb8508d57088067",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "receipt-audit.json",
+      "sha256": "295cad62a46e587320047d89bc6153eb7a21dac12eec40bd63f75af8a201bac8",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "report.md",
+      "sha256": "412b99d2b4bb54c93107ebb6ab73495a19154626cd8723c7d09c960d99c536da",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "snapshots/src/observed/allocation-config.ts",
+      "sha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "snapshots/tests/fixtures/observed-allocation-backend.ts",
+      "sha256": "021a93e539ebb56ffb3cac8b15d2b77b8ce838f3fb77f9e9ef31ff3ed3fa894a",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "snapshots/tests/fixtures/observed-cli-server.ts",
+      "sha256": "eb1ee9f4215fff24f70867e904c3817d0528a6c7c35efa97bc50ecce6ff63669",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "snapshots/tests/fixtures/observed-cryptex-runtime.ts",
+      "sha256": "a4fda3b5fbdd0addef8b4b12892ad66b9b454e765c35a8eff89c7ff8999a8da6",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "snapshots/tests/observed-cryptex-runtime.test.ts",
+      "sha256": "5d83f729916adec23cce5598e0afb51e84f8842b4af10dc6df37925e90b43bd6",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "source-audit.json",
+      "sha256": "c9423ebe558f320100a6548cf0969e52acc1ac3a60ab1ead5459b1e4df663673",
+      "matches": true
+    },
+    {
+      "axis": "spec",
+      "path": "successor.diff",
+      "sha256": "8cab36636d3bf9d9735f752f8a776f62a06801db8182dba0c1781c84bc2b89c7",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "audit-first.py",
+      "sha256": "2c67abef7f61406d1fb381b6767839b7fbf766d53b859f1f52e9f205b6680e41",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "audit-run-corrected.stderr.txt",
+      "sha256": "9087565c9f4f8b30461bfc8885467fe74b2b0306cc2d8ca916a35d6c7e3288a9",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "audit-run-corrected.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "audit-run-final.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "audit-run-final.stdout.txt",
+      "sha256": "3ae44f2022415c018391f973c0af564b0a1017825be5495361f885b9113c21b1",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "audit-run-first.stderr.txt",
+      "sha256": "0101f65c9f378c8303b30bca2a81ed7cb6367cd7189476788ccddaccd2ebec56",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "audit-run-first.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "audit-second.py",
+      "sha256": "e2a9242904e9dccabab4ebb593e5b2a476bb1f99de8e015c8340d0e17559498e",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "audit.py",
+      "sha256": "8ea8d20a52cbd3922c8ad5a2059f36c0f05cf9c24b56d678cf619c395a0b3f06",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "default-audit.json",
+      "sha256": "cb2f42e14ca1ad981649085900d54fa0400858e6da2aa382dbe43e6ea52f9498",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "diff.txt",
+      "sha256": "b448d7fe7312e755184f5f633db224e24906a0b7205b7c0905de7073d8583a97",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "final-audit.json",
+      "sha256": "be3b0391659323e12d56eb593b018c40e65a3730582fbe72dd56be8c63790596",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "final-default-audit.py",
+      "sha256": "3a1188660ef110e81ce6b9b6660656231eab4c573d2479ed46ca54b0daad833c",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "final-default-audit.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "final-default-audit.stdout.txt",
+      "sha256": "cbc3e219ac4c01edd6c0164e3a0ccf67f5bc0faeb2dbe7103446e55a1744648b",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/author/before-cli-isolation-observed-cli-server.ts",
+      "sha256": "e0bffe3dfe1b0ee90aed64b7fd2493ddb91faf73cf8c1c9e418338fc55f811d1",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/author/before-cli-isolation-observed-cryptex-runtime.test.ts",
+      "sha256": "4e18d0de58b5fa6940fbe1c11650731b69d87c560ab7b414e407756c078580dc",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/author/candidate-cli-source.json",
+      "sha256": "de35d66204122d4b4561e60f20136d15545edf03ebc1c3cbaefd245888770b3b",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/author/clause-regression-matrix-cli.json",
+      "sha256": "a757fb3724c75ef74285890b02d58f135a2a234ccab3c7fa31d2de5e16e4403a",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/author/cli-freeze-inventory-assertion.json",
+      "sha256": "3f4c35748f8b1d852c3a77ab2347bb6b19b6773eb0629830bd0614c7b453fa09",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/author/cli-isolation-extraction.json",
+      "sha256": "7e8864029ff0979ad14ba78f1dfc2d54f6c3fe587571c135338bcae72b10f7eb",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/author/cli-isolation-green-observed-cli-server.ts",
+      "sha256": "eb1ee9f4215fff24f70867e904c3817d0528a6c7c35efa97bc50ecce6ff63669",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/author/cli-isolation-job-schema-note.json",
+      "sha256": "08b2f4ac47e3842296c579685910238b54e8bf6bfa25e08d5413f740b9888b48",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/author/cli-isolation-red-observed-cli-server.ts",
+      "sha256": "0f90cfc575eb4186d1acdec3f4f2d384277843b3a3622fe090d6fd5cb4434b4c",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/author/cli-isolation-red-observed-cryptex-runtime.test.ts",
+      "sha256": "5d83f729916adec23cce5598e0afb51e84f8842b4af10dc6df37925e90b43bd6",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/author/cli-isolation-report.md",
+      "sha256": "f4e86daa72bb0f18cd3a6f4e8481242d4982119f0b7289520bd164b019fce97f",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/author/cli-isolation-scope-proof.json",
+      "sha256": "832639240f28deae32c40d7be5a177c0937eb798d3168c095303ac250fb9e725",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/author/cli-packaging-selector-corrected.json",
+      "sha256": "9a3668622f7b3ec53b5ce52424c8ffe4bbf68545fdfc004415d52183250d4d1b",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/author/cli-packaging-selector-failed.json",
+      "sha256": "cba61b79c1a0af48e9c21573898d8ca300bbfbbe877e4d773f3b4f3655441bc7",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/author/verification-index-cli.json",
+      "sha256": "d9edd22be1e067380f26f50c7a350a1239df10610311c73338790e120783bbd9",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/candidate/src/observed/allocation-config.ts",
+      "sha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/candidate/tests/fixtures/observed-allocation-backend.ts",
+      "sha256": "021a93e539ebb56ffb3cac8b15d2b77b8ce838f3fb77f9e9ef31ff3ed3fa894a",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/candidate/tests/fixtures/observed-cli-server.ts",
+      "sha256": "eb1ee9f4215fff24f70867e904c3817d0528a6c7c35efa97bc50ecce6ff63669",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/candidate/tests/fixtures/observed-cryptex-runtime.ts",
+      "sha256": "a4fda3b5fbdd0addef8b4b12892ad66b9b454e765c35a8eff89c7ff8999a8da6",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/candidate/tests/observed-cryptex-runtime.test.ts",
+      "sha256": "5d83f729916adec23cce5598e0afb51e84f8842b4af10dc6df37925e90b43bd6",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/compiled/build-cli-final-node24.json",
+      "sha256": "d7139dec7328f07374d4fe8c2e32ac056e86936e7c8802c9d4d62b646a7dbe59",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/compiled/build-cli-final-node26.json",
+      "sha256": "d7139dec7328f07374d4fe8c2e32ac056e86936e7c8802c9d4d62b646a7dbe59",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/compiled/build-final-node24.json",
+      "sha256": "21b9368cec097ac411ff1216fa0557461a715d63929c40f4e7516b628a7cd3ce",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/compiled/build-final-node26.json",
+      "sha256": "4a19004eae26da67eb1f7f5715511a45e479384f2a998159a0f9d1ccda51798f",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/actual-default-cli-node24/build-stage-confirmed.json",
+      "sha256": "82af5ec17e68038f48a128e381da6d6d2abcea25db8ab6b436754210878f228b",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/actual-default-cli-node24/command.json",
+      "sha256": "ae6c01684a103fb8f0601e6556febf09f389a2005906a28a104044bf187e9e86",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/actual-default-cli-node24/compiled-manifest.json",
+      "sha256": "d7139dec7328f07374d4fe8c2e32ac056e86936e7c8802c9d4d62b646a7dbe59",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/actual-default-cli-node24/result.json",
+      "sha256": "71910371c916f7c81d40a77e340078559c77e392942a400e8c5ba3d931cf0d20",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/actual-default-cli-node24/runtime-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/actual-default-cli-node24/runtime-stdout.txt",
+      "sha256": "b988e13140652de941a9a3fab325102625f646ec6fde3a7b8a8af63496a74061",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/actual-default-cli-node24/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/actual-default-cli-node24/stdout.txt",
+      "sha256": "5a6aacb852c405485930c229117e34e0fd1b4991eb26d73909552a2d18b241e6",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/actual-default-cli-node26/build-stage-confirmed.json",
+      "sha256": "82af5ec17e68038f48a128e381da6d6d2abcea25db8ab6b436754210878f228b",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/actual-default-cli-node26/command.json",
+      "sha256": "f25c492fbf395e2b8243b8ef0f067eb1f8995cb727d91b0c4baa6194b8dda94d",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/actual-default-cli-node26/compiled-manifest.json",
+      "sha256": "d7139dec7328f07374d4fe8c2e32ac056e86936e7c8802c9d4d62b646a7dbe59",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/actual-default-cli-node26/result.json",
+      "sha256": "5a5c49b48229e18a57f7c6467c13c03f4047163f1155b898f8ed798dbc9ced2e",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/actual-default-cli-node26/runtime-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/actual-default-cli-node26/runtime-stdout.txt",
+      "sha256": "bd17489adcddbc8ed526bf6dedb22de2e677bbae176b977aa7f7c0408999248c",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/actual-default-cli-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/actual-default-cli-node26/stdout.txt",
+      "sha256": "8dfeb68756f8c323f055fd452ca36c2fd7dc82e7280e913ac92f3d58f5849201",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/author/actual-default-cli-summary.json",
+      "sha256": "726023c1c6e5df25db6f01e4a4db64dd3d80e735889b1ab6d1c1cf1da064dc30",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/author/implementation-final-report.md",
+      "sha256": "c9bc2f402bf7e7c169d353750179853959267af58dd4034dff9321e2dd1ba2f9",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/author/verification-index-cli-defaults.json",
+      "sha256": "1af4ef3f6de746e25ba054f6ad7bfc9df5057d2bfd15ea489181486b563c74a7",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/old-failed-default-command.json",
+      "sha256": "02c92c11b6b376ec1d1680bf1bf153e4ee3222870d9a7166f5139a59b1d103e5",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/package.json",
+      "sha256": "d2fffea3e28d6ea794536b2cb67337abe8ec75c46cf10c2944ca1b3cd0a3a3ea",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/root-successor-default-audit-first-failure.json",
+      "sha256": "cc67d0b0ee9905e40b374ce1723277ea33c1229d3f421c2d3520c1a75320734e",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/defaults/root-successor-default-audit.json",
+      "sha256": "611fdc525d7376e7a2c8a07fdd4590dee9a6479bc403923620f9a6f442a61a29",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/oracle/authorFinalInputs/candidate-cli-source.json",
+      "sha256": "de35d66204122d4b4561e60f20136d15545edf03ebc1c3cbaefd245888770b3b",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/oracle/authorFinalInputs/clause-regression-matrix-cli.json",
+      "sha256": "a757fb3724c75ef74285890b02d58f135a2a234ccab3c7fa31d2de5e16e4403a",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/oracle/authorFinalInputs/cli-isolation-report.md",
+      "sha256": "f4e86daa72bb0f18cd3a6f4e8481242d4982119f0b7289520bd164b019fce97f",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/oracle/authorFinalInputs/verification-index-cli.json",
+      "sha256": "d9edd22be1e067380f26f50c7a350a1239df10610311c73338790e120783bbd9",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/oracle/rootInputs/candidate-cli-context.json",
+      "sha256": "0cc9d919d408805272d4e57b1efc62d41a46559ee9bc921f8e2b5325dd3ffa75",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/oracle/rootInputs/cryptex-fixture-map-ownership.json",
+      "sha256": "65f3ea9716b5121ee825943549f3eaf74ef408f94d1fb2b9d5ffef686434c230",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/oracle/rootInputs/cryptex-implementation-review.md",
+      "sha256": "edd76b3d480814cec351e29f971be397768891be79e12865daff20cdd136c017",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/oracle/rootInputs/cryptex-policy-proposal.md",
+      "sha256": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/oracle/rootInputs/cryptex-public-fixture-map-ownership.json",
+      "sha256": "dc2220c03dbdaf97e6c2bccf0ea126ff814e689216fd9e5c45f5af9a4eb14b16",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/oracle/rootInputs/installed-cryptex-repair.md",
+      "sha256": "744a70c2279a3ce91e048f33a9b8c3ef3aa0521c88a2e1a2e12623d1af57b575",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/oracle/rootInputs/owner-cryptex-trust-decision.json",
+      "sha256": "0b1bc876713d68cd9001dcd27a41bfa3e7f53aa96f8e1698f214e65dcca16c74",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/oracle/rootInputs/root-old-candidate-review-preservation.json",
+      "sha256": "79d6206f097ffc3df5891c40e0ca14006600ad4751167389fbdc3208ea922f0f",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/oracle/rootInputs/root-phase5-retained-mount-derivation.json",
+      "sha256": "8260a10fc574d9408078104f348522fa4f50ddc5279dfe16ecf916c1e57b098e",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/oracle/rootInputs/root-xcode-integration.json",
+      "sha256": "b4d88597c41d20da1f0905b573badb58f016b8fc663a0a25ede9343867426a6b",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/prior/report.md",
+      "sha256": "7b64a1372af91e1ded8a103f7c22bbf3f94d4480cf6e3d8b719551a09bacaa1b",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/prior/static-audit.json",
+      "sha256": "8f581ec9fcd4ee056e2f5ab44505e404a33fa902175ed4d04b022c21e6dcf508",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/build-cli-final-node24/command.json",
+      "sha256": "88272c675c797fbff87381c2f6925f3dd18c743374d15861337c8d4df7046969",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/build-cli-final-node24/result.json",
+      "sha256": "bc597f5cac8bf9c88d33a7147f818e8b242998110af3cc4b8f130a524747ccc9",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/build-cli-final-node24/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/build-cli-final-node24/stdout.txt",
+      "sha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/build-cli-final-node26/command.json",
+      "sha256": "33e66c75b8c30dc3a0b5c6672873f6d6f0c6c3bdadceb85effea8eccd3e8f469",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/build-cli-final-node26/result.json",
+      "sha256": "13b16a8a3184a1b297c18011a78a13f0d605e07c4d69ee15eb39a3260d57f14b",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/build-cli-final-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/build-cli-final-node26/stdout.txt",
+      "sha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/cli-affected-node24/command.json",
+      "sha256": "9ca96b943f1a1d36773f10b050bd8c50fa63e1ff8fd0b283643a91eea47ec570",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/cli-affected-node24/result.json",
+      "sha256": "620506ebf718b83db57e7b61af99ea58a9c37914ab83027abdc88b446f7e9c38",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/cli-affected-node24/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/cli-affected-node24/stdout.txt",
+      "sha256": "c041c28e59c0bebf110923daed4fe0e319941c5791f2c3114f4baa2901ab765a",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/cli-affected-node26/command.json",
+      "sha256": "3084bd0ef008c5843fdfdb8d74778893814a540013417a88e341a97103defd68",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/cli-affected-node26/result.json",
+      "sha256": "6a057f25a1935068b66afcdc79e54e0dd073c99c871c7e4fa1fe5743dcc967a0",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/cli-affected-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/cli-affected-node26/stdout.txt",
+      "sha256": "3a40ab7c38d5d2429ff15223e12d4d700c3540fb35f996f25e2ae303a566c7f2",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/cli-map-green-node24/command.json",
+      "sha256": "60ed1f09ac17dde5a01fe1cbf151bfd76b9837a8c950714ad6239351c3fa9ec8",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/cli-map-green-node24/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/cli-map-green-node24/stdout.txt",
+      "sha256": "691327ace9f7b13ea11a997f4746ae71acc469627bc9d19914bee010fe9997af",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/cli-map-green-node26/command.json",
+      "sha256": "a0beaf5b1e1c7125045fbfcb47f7adb8fb4056c27d1e944abca5b2b1d3a53e10",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/cli-map-green-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/cli-map-green-node26/stdout.txt",
+      "sha256": "b0b1cea07abc5ce66aea10234fe8dd6f1bf1ea4ac5436f8b1c7b608a00610143",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/cli-map-red-node24/command.json",
+      "sha256": "e5c363572dda6a2210c3c6b03f325d5c33c1a11f8051f97728d3a9dff4f56126",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/cli-map-red-node24/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/cli-map-red-node24/stdout.txt",
+      "sha256": "37a1e8af177b1f69edcc87e065c9e1834b81be4fe4f01e9e4a7e2aeff2e0bf5c",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/cli-map-red-node26/command.json",
+      "sha256": "e43e9bcefc96fb6ea19fb04e602fd42e0c1ef88ae990d66eb70746e693cc5832",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/cli-map-red-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/cli-map-red-node26/stdout.txt",
+      "sha256": "75ee75bf4a8da6244b7783cf6bca8247fa60521f9d75768bda2ac8a2f0eafda7",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/coverage-cli-final-node24/command.json",
+      "sha256": "d52963da036f1b05ae54d7fe108499c0c273426885aeb6675c4273ec21fd8038",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/coverage-cli-final-node24/result.json",
+      "sha256": "1a9f55b7550867bd71399dcd14af9d1c6da24e2acd5bcbf972dc714735510df1",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/coverage-cli-final-node24/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/coverage-cli-final-node24/stdout.txt",
+      "sha256": "aff2f1a83dd49dbfb77ae3567991ea189d9ef39648f87402da997fd10838f01b",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/coverage-cli-final-node26/command.json",
+      "sha256": "4563454e7019aa29db889b5f4ec9fae15a8a161372843dcd87bee6b9a06b417b",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/coverage-cli-final-node26/result.json",
+      "sha256": "e2a0313c9f30d42d1ed41c2a9d903cedd6ecb69da4b53629aabc912a9b81994f",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/coverage-cli-final-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/coverage-cli-final-node26/stdout.txt",
+      "sha256": "19917b20c8ac7b69926144ba7583767e594178a57dfbc8a14d282b5b90c34c2f",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/focused-cli-final-node24/command.json",
+      "sha256": "aa0457808ebc036ecacafc19363771dcd68977de287fd139501409ab9a459354",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/focused-cli-final-node24/result.json",
+      "sha256": "2107ec6a0192e26e0d27cfeac1c6373b8da3a27007a79c530f251a7f7cca8e2d",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/focused-cli-final-node24/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/focused-cli-final-node24/stdout.txt",
+      "sha256": "09b5af0407539690179d6541790ecd5524c6970283ecc6e3082435525bc0b4d1",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/focused-cli-final-node26/command.json",
+      "sha256": "9a4c5227c492a7d22b2c6c6d6e88d72ade926b7e68be95dd747918e732dcf134",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/focused-cli-final-node26/result.json",
+      "sha256": "4a1dd856d42f90a5d374cba759e0475f6b85b509057c463594f71dba7897805f",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/focused-cli-final-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/focused-cli-final-node26/stdout.txt",
+      "sha256": "b510a9053c22e5a2876650abad4d72a7766e14c54b7b228a1f4ca122f95f397f",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/typecheck-cli-final-node24/command.json",
+      "sha256": "76a371ea8cd3eec55e00be90d9fc2736d7e63cb7c9ec4bd479ac04c60cbe5a2c",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/typecheck-cli-final-node24/result.json",
+      "sha256": "dae63ff1b822986459f2dcee1c101865e384fdbbc99aae4bbba90d1c48f660c6",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/typecheck-cli-final-node24/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/typecheck-cli-final-node24/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/typecheck-cli-final-node26/command.json",
+      "sha256": "9c781f3d6922b984a887f4603b08ff365d734280b4549488e42fab6f6d115d50",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/typecheck-cli-final-node26/result.json",
+      "sha256": "ab57a0a619e8e85c8f51180b748f00cc6acdd732419832ac485fcd3ced4fc5a1",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/typecheck-cli-final-node26/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/receipts/typecheck-cli-final-node26/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/root/audit-successor-first.py",
+      "sha256": "1a18b3aa1414c54311e7e88f8f9b9a1d3046f57efbcc21d3c7274cec45095a3e",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/root/audit-successor.py",
+      "sha256": "b1f460d969d595a20576180e328cfd6a7f8f20a2132b840b944fca862ab3af7c",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/root/candidate-cli-context.json",
+      "sha256": "0cc9d919d408805272d4e57b1efc62d41a46559ee9bc921f8e2b5325dd3ffa75",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/root/cryptex-fixture-map-ownership.json",
+      "sha256": "65f3ea9716b5121ee825943549f3eaf74ef408f94d1fb2b9d5ffef686434c230",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/root/cryptex-policy-proposal.md",
+      "sha256": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/root/cryptex-public-fixture-map-ownership.json",
+      "sha256": "dc2220c03dbdaf97e6c2bccf0ea126ff814e689216fd9e5c45f5af9a4eb14b16",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/root/oracle-cli-inputs.json",
+      "sha256": "eb5e488151620195f768555d8317ad83b99831109152aa709d701947f72765fd",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/root/owner-cryptex-trust-decision.json",
+      "sha256": "0b1bc876713d68cd9001dcd27a41bfa3e7f53aa96f8e1698f214e65dcca16c74",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/root/root-successor-audit-first-failure.json",
+      "sha256": "18086b129ea1116d82f3107ecb0fbf1b050d161154e234fb300afaa2546b2c68",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/standards/AGENTS.md",
+      "sha256": "86d3e5e2ccba32103401ab95af6b6488fc439d090913b028a7961d07f79a1c47",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/standards/GLOSSARY.md",
+      "sha256": "a246e0082a15dfd2fa74138473607b9a3c5e3426460f1d43d1d9d154f87ec1c5",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/standards/docs/adr/0002-mobilebuildmcp-as-device-layer.md",
+      "sha256": "00da2cbba873223976b22b0a26314a6b351b769b4c3f899a97f95334a565abe1",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/standards/docs/adr/0005-the-1-0-stability-contract.md",
+      "sha256": "fe61fd90fda45b661b183162062d500c3cb87517afc0b2aee37ccbb154f3f04b",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/standards/docs/adr/0008-durable-ios-admission.md",
+      "sha256": "53d1111c4dd1e2f36635c89d5695a6356a72e054810d7e3f3e7faf4be194d501",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/standards/docs/adr/0009-bounded-simulator-creation.md",
+      "sha256": "f60dae7177255f92e1263c29c6a4433216b80d17ce83bc91dd8a444f687ed384",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/standards/docs/agents/domain.md",
+      "sha256": "edc6d6131fdffc4b7135704f5262124fc43355c95f61b7399dc5a4db643e28ca",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/standards/docs/agents/issue-tracker.md",
+      "sha256": "bef53bbef5e5f758759305a856233a6ec7db25ed81781b9c72bca1b04a8fd225",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "inputs/standards/docs/domain-boundaries.md",
+      "sha256": "a347aa7ddc28498e57c25da3daceb5621d29a548397bd3e4b1b175e60c6c159f",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "report.md",
+      "sha256": "6b68a80bd05524c9b3c594a3cd474ce6d192cf6666fb3aeb584577eb5aac4cd9",
+      "matches": true
+    },
+    {
+      "axis": "standards",
+      "path": "static-audit.json",
+      "sha256": "372219b1bbcc3c33ea5a3b98fbf929a245e0cbf892be24e1679141008c6b39bf",
+      "matches": true
+    }
+  ],
+  "privateModes": "all700/600"
+}

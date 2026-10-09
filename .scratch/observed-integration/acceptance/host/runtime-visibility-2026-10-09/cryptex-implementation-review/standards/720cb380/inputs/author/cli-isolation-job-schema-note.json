@@ -1,0 +1,80 @@
+{
+  "note": "prepare-job-v2 inherited historical owned4 and potentially protected437 flag from first-green seed; these fields are stale. owned5, top-level Source/test/fixture SHA fields, and complete candidateSource441 bind the actual run. prepare-job-v3 removes stale fields. Historical receipts remain unchanged.",
+  "records": {
+    "cli-map-red-node26": {
+      "receipt": ".scratch/installed-cryptex-runtime/cli-map-red-node26/command.json",
+      "receiptSha256": "e43e9bcefc96fb6ea19fb04e602fd42e0c1ef88ae990d66eb70746e693cc5832",
+      "historicalOwned4Field": null,
+      "owned5Authoritative": {
+        "src/observed/allocation-config.ts": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+        "tests/fixtures/observed-allocation-backend.ts": "021a93e539ebb56ffb3cac8b15d2b77b8ce838f3fb77f9e9ef31ff3ed3fa894a",
+        "tests/observed-cryptex-runtime.test.ts": "5d83f729916adec23cce5598e0afb51e84f8842b4af10dc6df37925e90b43bd6",
+        "tests/fixtures/observed-cryptex-runtime.ts": "a4fda3b5fbdd0addef8b4b12892ad66b9b454e765c35a8eff89c7ff8999a8da6",
+        "tests/fixtures/observed-cli-server.ts": "0f90cfc575eb4186d1acdec3f4f2d384277843b3a3622fe090d6fd5cb4434b4c"
+      },
+      "historicalProtected437Flag": null,
+      "currentProtected436Flag": true,
+      "candidateSource441MatchesOwned5": true
+    },
+    "cli-map-red-node24": {
+      "receipt": ".scratch/installed-cryptex-runtime/cli-map-red-node24/command.json",
+      "receiptSha256": "e5c363572dda6a2210c3c6b03f325d5c33c1a11f8051f97728d3a9dff4f56126",
+      "historicalOwned4Field": null,
+      "owned5Authoritative": {
+        "src/observed/allocation-config.ts": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+        "tests/fixtures/observed-allocation-backend.ts": "021a93e539ebb56ffb3cac8b15d2b77b8ce838f3fb77f9e9ef31ff3ed3fa894a",
+        "tests/observed-cryptex-runtime.test.ts": "5d83f729916adec23cce5598e0afb51e84f8842b4af10dc6df37925e90b43bd6",
+        "tests/fixtures/observed-cryptex-runtime.ts": "a4fda3b5fbdd0addef8b4b12892ad66b9b454e765c35a8eff89c7ff8999a8da6",
+        "tests/fixtures/observed-cli-server.ts": "0f90cfc575eb4186d1acdec3f4f2d384277843b3a3622fe090d6fd5cb4434b4c"
+      },
+      "historicalProtected437Flag": null,
+      "currentProtected436Flag": true,
+      "candidateSource441MatchesOwned5": true
+    },
+    "cli-map-green-node26": {
+      "receipt": ".scratch/installed-cryptex-runtime/cli-map-green-node26/command.json",
+      "receiptSha256": "a0beaf5b1e1c7125045fbfcb47f7adb8fb4056c27d1e944abca5b2b1d3a53e10",
+      "historicalOwned4Field": null,
+      "owned5Authoritative": {
+        "src/observed/allocation-config.ts": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+        "tests/fixtures/observed-allocation-backend.ts": "021a93e539ebb56ffb3cac8b15d2b77b8ce838f3fb77f9e9ef31ff3ed3fa894a",
+        "tests/observed-cryptex-runtime.test.ts": "5d83f729916adec23cce5598e0afb51e84f8842b4af10dc6df37925e90b43bd6",
+        "tests/fixtures/observed-cryptex-runtime.ts": "a4fda3b5fbdd0addef8b4b12892ad66b9b454e765c35a8eff89c7ff8999a8da6",
+        "tests/fixtures/observed-cli-server.ts": "eb1ee9f4215fff24f70867e904c3817d0528a6c7c35efa97bc50ecce6ff63669"
+      },
+      "historicalProtected437Flag": null,
+      "currentProtected436Flag": true,
+      "candidateSource441MatchesOwned5": true
+    },
+    "cli-map-green-node24": {
+      "receipt": ".scratch/installed-cryptex-runtime/cli-map-green-node24/command.json",
+      "receiptSha256": "60ed1f09ac17dde5a01fe1cbf151bfd76b9837a8c950714ad6239351c3fa9ec8",
+      "historicalOwned4Field": null,
+      "owned5Authoritative": {
+        "src/observed/allocation-config.ts": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+        "tests/fixtures/observed-allocation-backend.ts": "021a93e539ebb56ffb3cac8b15d2b77b8ce838f3fb77f9e9ef31ff3ed3fa894a",
+        "tests/observed-cryptex-runtime.test.ts": "5d83f729916adec23cce5598e0afb51e84f8842b4af10dc6df37925e90b43bd6",
+        "tests/fixtures/observed-cryptex-runtime.ts": "a4fda3b5fbdd0addef8b4b12892ad66b9b454e765c35a8eff89c7ff8999a8da6",
+        "tests/fixtures/observed-cli-server.ts": "eb1ee9f4215fff24f70867e904c3817d0528a6c7c35efa97bc50ecce6ff63669"
+      },
+      "historicalProtected437Flag": null,
+      "currentProtected436Flag": true,
+      "candidateSource441MatchesOwned5": true
+    },
+    "cli-affected-node26": {
+      "receipt": ".scratch/installed-cryptex-runtime/cli-affected-node26/command.json",
+      "receiptSha256": "3084bd0ef008c5843fdfdb8d74778893814a540013417a88e341a97103defd68",
+      "historicalOwned4Field": null,
+      "owned5Authoritative": {
+        "src/observed/allocation-config.ts": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+        "tests/fixtures/observed-allocation-backend.ts": "021a93e539ebb56ffb3cac8b15d2b77b8ce838f3fb77f9e9ef31ff3ed3fa894a",
+        "tests/observed-cryptex-runtime.test.ts": "5d83f729916adec23cce5598e0afb51e84f8842b4af10dc6df37925e90b43bd6",
+        "tests/fixtures/observed-cryptex-runtime.ts": "a4fda3b5fbdd0addef8b4b12892ad66b9b454e765c35a8eff89c7ff8999a8da6",
+        "tests/fixtures/observed-cli-server.ts": "eb1ee9f4215fff24f70867e904c3817d0528a6c7c35efa97bc50ecce6ff63669"
+      },
+      "historicalProtected437Flag": null,
+      "currentProtected436Flag": true,
+      "candidateSource441MatchesOwned5": true
+    }
+  }
+}

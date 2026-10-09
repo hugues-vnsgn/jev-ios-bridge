@@ -1,0 +1,582 @@
+{
+  "reviewer": "/root/installed_path_standards_review",
+  "axis": "Independent nonauthor Standards",
+  "atUtc": "2026-10-09T05:25:42.156518+00:00",
+  "base": "38aa879c3954c9d7742ef04059cad4d2fc824c87",
+  "candidate": "dadde33a36440db6d9414adf84f80916caa9d2b3",
+  "ownedHashes": {
+    "src/observed/allocation-config.ts": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+    "tests/fixtures/observed-allocation-backend.ts": "021a93e539ebb56ffb3cac8b15d2b77b8ce838f3fb77f9e9ef31ff3ed3fa894a",
+    "tests/observed-cryptex-runtime.test.ts": "4e18d0de58b5fa6940fbe1c11650731b69d87c560ab7b414e407756c078580dc",
+    "tests/fixtures/observed-cryptex-runtime.ts": "a4fda3b5fbdd0addef8b4b12892ad66b9b454e765c35a8eff89c7ff8999a8da6"
+  },
+  "committed441MatchesContext": true,
+  "protected437MatchesBase": true,
+  "currentOwnedMatches": {
+    "src/observed/allocation-config.ts": true,
+    "tests/fixtures/observed-allocation-backend.ts": true,
+    "tests/observed-cryptex-runtime.test.ts": false,
+    "tests/fixtures/observed-cryptex-runtime.ts": true
+  },
+  "currentDriftLimit": "Author has started the successor fixture repair; review pins dad commit bytes and its sealed receipts, not the mutable current tests.",
+  "inputChecks": {
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal.md": {
+      "frozenInputSha256": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13",
+      "currentSha256": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13",
+      "recoveredFromCommit": null
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/owner-cryptex-trust-decision.json": {
+      "frozenInputSha256": "0b1bc876713d68cd9001dcd27a41bfa3e7f53aa96f8e1698f214e65dcca16c74",
+      "currentSha256": "0b1bc876713d68cd9001dcd27a41bfa3e7f53aa96f8e1698f214e65dcca16c74",
+      "recoveredFromCommit": null
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-fixture-map-ownership.json": {
+      "frozenInputSha256": "65f3ea9716b5121ee825943549f3eaf74ef408f94d1fb2b9d5ffef686434c230",
+      "currentSha256": "65f3ea9716b5121ee825943549f3eaf74ef408f94d1fb2b9d5ffef686434c230",
+      "recoveredFromCommit": null
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-phase5-retained-mount-derivation.json": {
+      "frozenInputSha256": "8260a10fc574d9408078104f348522fa4f50ddc5279dfe16ecf916c1e57b098e",
+      "currentSha256": "8260a10fc574d9408078104f348522fa4f50ddc5279dfe16ecf916c1e57b098e",
+      "recoveredFromCommit": null
+    },
+    ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-xcode-integration.json": {
+      "frozenInputSha256": "b4d88597c41d20da1f0905b573badb58f016b8fc663a0a25ede9343867426a6b",
+      "currentSha256": "b4d88597c41d20da1f0905b573badb58f016b8fc663a0a25ede9343867426a6b",
+      "recoveredFromCommit": null
+    },
+    ".scratch/observed-action-rollout/installed-cryptex-repair.md": {
+      "frozenInputSha256": "1f4fd7b16bac14ba19d590a052e927e6ef51ce044058abafad4169cf5a42f1ca",
+      "currentSha256": "744a70c2279a3ce91e048f33a9b8c3ef3aa0521c88a2e1a2e12623d1af57b575",
+      "recoveredFromCommit": "360dd8fa1250d4466d6644e680eda566efe53696"
+    },
+    ".scratch/observed-action-rollout/cryptex-implementation-review.md": {
+      "frozenInputSha256": "d9fc9a10aae2a859515025c9e1dad28e82122e636d70ee7bd2c93a61ad57d1e4",
+      "currentSha256": "edd76b3d480814cec351e29f971be397768891be79e12865daff20cdd136c017",
+      "recoveredFromCommit": "360dd8fa1250d4466d6644e680eda566efe53696"
+    }
+  },
+  "verificationIndexSha256": "ec19386a14ef8203bc8943ab47e054e9d415e83e966f54d81dfe743a16cd5704",
+  "retainedChecks": {
+    "red-node26": {
+      "artifactHashes": {
+        "command.json": "bf13524900893f01ac1b0d1cd192f7eaea2133332792545fbc20be3f6d9d3145",
+        "stdout.txt": "933dbdb5d10545019e07614d5417c54cbf94611979337e7aa41902189b342660",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 1,
+      "countsFromRaw": {
+        "tests": 2,
+        "pass": 0,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "red-node24": {
+      "artifactHashes": {
+        "command.json": "66f0c4a1486870a19506261d3c2f4b48d70eb0fc2abe879e38c88f8fbcce6a31",
+        "stdout.txt": "5a15b1b2e47c97c68d95c43ec4c05ec071b135415e462d957534d8f61d4df40f",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 1,
+      "countsFromRaw": {
+        "tests": 2,
+        "pass": 0,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "first-green-node26": {
+      "artifactHashes": {
+        "command.json": "77a2cd44269f15f57868fc64443c24c8a8e8ba810747181db34de8f7eccc0c3b",
+        "stdout.txt": "354d4522c3167d09f21e82c9190b5e3fe1530e45e98a1556bb64fbefbd8a823b",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": 5,
+        "pass": 5,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "first-green-node24": {
+      "artifactHashes": {
+        "command.json": "7b4c3558977eaf63552c281b1b526786294d62aeb390b54168cea2dc1c693b7c",
+        "stdout.txt": "0bbeeb3b4729b62bd35d4c91c1bc8baed06c35b0c012b0e66c406a572c3448de",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": 5,
+        "pass": 5,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "mapping-red-complete-node26": {
+      "artifactHashes": {
+        "command.json": "176db72b22921b4a2ce4ab7575ab473430ac712d39b4478c9f8eb5425e5632f3",
+        "stdout.txt": "602429ad1551bf0a2b7ec7be021f93fe2ec409c2df7a1877adc71ee9dec27d68",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 1,
+      "countsFromRaw": {
+        "tests": 5,
+        "pass": 0,
+        "fail": 5,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "mapping-red-complete-node24": {
+      "artifactHashes": {
+        "command.json": "0b29aa06bc899ca7c728f71a59c95628c9cb25b8d86a895fe890ed42126d2e0b",
+        "stdout.txt": "f43caec49a12140917f3e2632863276aeaf8b0f87577f7fdc95728848ffcdf4a",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 1,
+      "countsFromRaw": {
+        "tests": 5,
+        "pass": 0,
+        "fail": 5,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "temp-map-red-node26": {
+      "artifactHashes": {
+        "command.json": "655447710d69977281d680f672645c827b2bfc5a8bec1d29e06c27f7e7aaaa33",
+        "stdout.txt": "053f2a964ed3524e5db8a3541965c7d16d31b53fc38e4015a6b5b5d4ac25e57a",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 1,
+      "countsFromRaw": {
+        "tests": 8,
+        "pass": 3,
+        "fail": 5,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "temp-map-red-node24": {
+      "artifactHashes": {
+        "command.json": "59f1956357ffbaa28c46eec29f7c6c756884c84f715a14184015807a6722623c",
+        "stdout.txt": "5edad68ab463bb94d6ed3efb0df23531da9efb58927ba78c5916b4984e8445f4",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 1,
+      "countsFromRaw": {
+        "tests": 8,
+        "pass": 3,
+        "fail": 5,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "temp-map-green-node26": {
+      "artifactHashes": {
+        "command.json": "9e4d5e86857de15647406c67d7af85b746c94c2e6890a1069d51049e92c3d741",
+        "stdout.txt": "f33ab6fbb35bf6aa7cedaa5c75e8a0a33ed976fb12cdb51571e8f7decc7338b8",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": 8,
+        "pass": 8,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "temp-map-green-node24": {
+      "artifactHashes": {
+        "command.json": "582a908ae6a0fd7d8e7436dbd31a6c5b22d8c50522d2a0205400520763b8a4f9",
+        "stdout.txt": "1e547e5265be4f807cb591d68e7ddf2d97a83ee760b350fce69862141c0d726e",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": 8,
+        "pass": 8,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "focused-v2-node26": {
+      "artifactHashes": {
+        "command.json": "35ac1c280b620d9f87616c4821a7652cd5c3353a6bc7d79ee9b16b5b4095ecf3",
+        "stdout.txt": "9de47f9de7cbe687400f291adac0070a3638763ae44e43191130698e5d7ad4a3",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 1,
+      "countsFromRaw": {
+        "tests": 349,
+        "pass": 347,
+        "fail": 1,
+        "cancelled": 1,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "focused-v2-node24": {
+      "artifactHashes": {
+        "command.json": "742c6ab3a3c6b9793a5dfb7bfc09390cca950b437b0872f9b01f69aaa1121136",
+        "stdout.txt": "b7756d0e41d782e307c22cc0bbc0de247a57c6b19df29690da04f0fcd76017e1",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 1,
+      "countsFromRaw": {
+        "tests": 349,
+        "pass": 347,
+        "fail": 1,
+        "cancelled": 1,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "focused-serial-node26": {
+      "artifactHashes": {
+        "command.json": "ab6e7b1b8f278e9d358a527bded4f618cac4dc82ea295c759b44290a636fe02e",
+        "stdout.txt": "cdb6fa61b2a41a97627a3ea1b193e797161ded0708afe30a8c1abb979a5709db",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": 477,
+        "pass": 477,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "focused-serial-node24": {
+      "artifactHashes": {
+        "command.json": "ed2129fd3d1636562f5cd66d1e46ff9001928b764c5bb945995468c0ea856091",
+        "stdout.txt": "7585e6b5a52003d720039c54913fd9f0fae47f79e8349ceec5d689e011011674",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": 477,
+        "pass": 477,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "focused-final-node26": {
+      "artifactHashes": {
+        "command.json": "0cc333a40977bd9afffa87ae69c96b8bb190b7d0c33fad125ca6a1e8fb96bd16",
+        "stdout.txt": "34290bf4c4dc2a4c0399c66d008c083bfd8d274d91d249c1b6176f716f63ca90",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": 491,
+        "pass": 491,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "focused-final-node24": {
+      "artifactHashes": {
+        "command.json": "794c0b3e1dc8b90b534af8d3d74bc0111324ca7ff827fbc50e2ad10543b97e56",
+        "stdout.txt": "6db274b36d9f4a630b4638695d0be06c64acc1556240a248740d7ed88d4a646e",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": 491,
+        "pass": 491,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "coverage-final-node26": {
+      "artifactHashes": {
+        "command.json": "f5875585ff7f62e7430b99119cb1df86e385bea0ddfe2562e061f50a7033b864",
+        "stdout.txt": "9d0e57e11eaa491c56239a6d11f8b909bb61f4dd7765109daf27199e67005152",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": 340,
+        "pass": 340,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "coverage-final-node24": {
+      "artifactHashes": {
+        "command.json": "8f28b4de719c472ba7346db18551bd79b9a0e2a9130a7eb8f86b888d3f09b8b0",
+        "stdout.txt": "8ca6630f028c886bec1c3aff9fe9654cf7190e13343eb0039a57e9b31a5cc988",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "countsFromRaw": {
+        "tests": 340,
+        "pass": 340,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "typecheck-final-node26": {
+      "artifactHashes": {
+        "command.json": "6e3d608d93c511fa9f6750fca79dd52c38e1c9507e7688c56d31553a496598eb",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "countsFromRaw": {}
+    },
+    "typecheck-final-node24": {
+      "artifactHashes": {
+        "command.json": "c00edfaeb4800d5293d6156dbda70a343fa1889f1f8d75b4988d09ff43ca071f",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "countsFromRaw": {}
+    },
+    "build-final-node26": {
+      "artifactHashes": {
+        "command.json": "16b8af168f4c34571c19d5bce4eda894ad1a3fa9e9b9844194cfb67787c19a12",
+        "stdout.txt": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "countsFromRaw": {}
+    },
+    "build-final-node24": {
+      "artifactHashes": {
+        "command.json": "2251fb87e23b864bbf2379c6833f87a63d220a7c5c3be999187a46b015484b64",
+        "stdout.txt": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "countsFromRaw": {}
+    },
+    "runtime-node26": {
+      "artifactHashes": {
+        "command.json": "1fcacbdfef28884fd38b5ef45277e576465ff5735e994b45ad6d253f3a17c8e2",
+        "stdout.txt": "bd17489adcddbc8ed526bf6dedb22de2e677bbae176b977aa7f7c0408999248c",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "countsFromRaw": {}
+    },
+    "runtime-node24": {
+      "artifactHashes": {
+        "command.json": "4c6720fd1ba30f551691f19b96fee8fa9aa3a2678f4e766d3c074f62e6b31776",
+        "stdout.txt": "b988e13140652de941a9a3fab325102625f646ec6fde3a7b8a8af63496a74061",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "countsFromRaw": {}
+    },
+    "actual-default-node26": {
+      "artifactHashes": {
+        "command.json": "02c92c11b6b376ec1d1680bf1bf153e4ee3222870d9a7166f5139a59b1d103e5",
+        "stdout.txt": "b5f08207406073bd8230382c10a413d59df850e8df9f2e2e74649ce5ec25e1e9",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 1,
+      "countsFromRaw": {
+        "tests": 1985,
+        "pass": 1858,
+        "fail": 127,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    }
+  },
+  "historicalBytesSha256": "dea9bf49ccbe67cee110a7107467e4cf035637a52408f42343af4103b1330d2c",
+  "historicalLimitations": {
+    "sourceFirstGreen": "contemporaneous bytes preserved before any further Source edit",
+    "initialRedTest": "hash-matching reconstruction after extensions, not contemporaneous archive",
+    "firstGreenTest": "hash-matching reconstruction after extensions, not contemporaneous archive",
+    "initialFixture": "hash-matching reconstruction after hook extensions, not contemporaneous archive",
+    "baseSourceAndSharedFixture": "saved before production/shared-fixture edit"
+  },
+  "historicalSnapshotHashes": {
+    "base-allocation-config.ts": "82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026",
+    "initial-red-test-reconstructed.ts": "43f16147dc7e0e8145ff198340799c6d0fc3520205658c52520732f63e9d6aaa",
+    "initial-fixture-reconstructed.ts": "a2a3179081b8e9e9ccc21b5b3706eae29bfa10bf1a2569df1ffb4ad13d6dbd53",
+    "first-green-allocation-config.ts": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+    "first-green-test-reconstructed.ts": "639723c68e5183b144d4dbfddb5a84687f70b8b5425fe2c4ed9bdfbeea3a0267"
+  },
+  "archivedBothNodeCompiled69Match": true,
+  "perHunk": [
+    {
+      "file": "src/observed/allocation-config.ts",
+      "hunk": "@@ -11,0 +12 @@ import { simulatorUuid, validSimulatorIdentifiers } from './create-source.js';",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "hunk": "@@ -82,0 +84,88 @@ const installedPlistOutputLimit = (path: string) => path === '/Applications/Xcod",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "hunk": "@@ -87,0 +177 @@ export function allocationSourceProcess(host: InstalledHost, allowedArtifactRoot",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "hunk": "@@ -93 +183,3 @@ export function allocationSourceProcess(host: InstalledHost, allowedArtifactRoot",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "hunk": "@@ -98 +190 @@ export function allocationSourceProcess(host: InstalledHost, allowedArtifactRoot",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "hunk": "@@ -100,2 +192,4 @@ export function allocationSourceProcess(host: InstalledHost, allowedArtifactRoot",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "hunk": "@@ -103 +197,2 @@ export function allocationSourceProcess(host: InstalledHost, allowedArtifactRoot",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "hunk": "@@ -112 +207 @@ export function allocationSourceProcess(host: InstalledHost, allowedArtifactRoot",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "hunk": "@@ -113,0 +209,2 @@ export function allocationSourceProcess(host: InstalledHost, allowedArtifactRoot",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "hunk": "@@ -118 +215,7 @@ export function allocationSourceProcess(host: InstalledHost, allowedArtifactRoot",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "hunk": "@@ -127 +230 @@ export function allocationSourceProcess(host: InstalledHost, allowedArtifactRoot",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "hunk": "@@ -132,0 +236,3 @@ export function allocationSourceProcess(host: InstalledHost, allowedArtifactRoot",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "hunk": "@@ -152,0 +259,7 @@ async function installedPlist(path: string, host: InstalledHost, process: Source",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "hunk": "@@ -171 +284 @@ const families = (value: unknown): number[] => { if (!Array.isArray(value) || !v",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "hunk": "@@ -173 +286,2 @@ async function bundles(root: string, suffix: string, host: InstalledHost): Promi",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "hunk": "@@ -177,0 +292,23 @@ async function bundles(root: string, suffix: string, host: InstalledHost): Promi",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "hunk": "@@ -182,0 +320,7 @@ export async function verifyInstalledCompatibility(source: { deviceTypeId: strin",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "hunk": "@@ -198 +342 @@ export async function verifyInstalledCompatibility(source: { deviceTypeId: strin",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "hunk": "@@ -208 +352,2 @@ export async function verifyInstalledCompatibility(source: { deviceTypeId: strin",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "src/observed/allocation-config.ts",
+      "hunk": "@@ -216 +361,8 @@ export async function verifyInstalledCompatibility(source: { deviceTypeId: strin",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "tests/fixtures/observed-allocation-backend.ts",
+      "hunk": "@@ -34 +34,2 @@ export async function allocationFixture(options: { now?: () => number; fault?: N",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "tests/fixtures/observed-cryptex-runtime.ts",
+      "hunk": "@@ -0,0 +1,134 @@",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    },
+    {
+      "file": "tests/observed-cryptex-runtime.test.ts",
+      "hunk": "@@ -0,0 +1,489 @@",
+      "documentedBreaches": [],
+      "materialHeuristics": []
+    }
+  ],
+  "findings": {
+    "documentedBreaches": 0,
+    "materialHeuristics": 0
+  },
+  "staticVerdict": "PASS bounded committed Source delta",
+  "defaultGateVerdict": "Node26 FAIL1858/1985;127failed;exact24 held. Successor candidate needs fresh gates/review."
+}

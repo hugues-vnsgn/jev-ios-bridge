@@ -1,0 +1,97 @@
+{
+  "reviewer": "installed_path_standards_review",
+  "axis": "Standards",
+  "atUtc": "2026-10-09T05:47:50.734198+00:00",
+  "base": "38aa879c3954c9d7742ef04059cad4d2fc824c87",
+  "parent": "dadde33a36440db6d9414adf84f80916caa9d2b3",
+  "candidate": "720cb380d07102d72b20a6a4f5f7787a0ab88f2b",
+  "ownedHashes": {
+    "src/observed/allocation-config.ts": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+    "tests/fixtures/observed-allocation-backend.ts": "021a93e539ebb56ffb3cac8b15d2b77b8ce838f3fb77f9e9ef31ff3ed3fa894a",
+    "tests/observed-cryptex-runtime.test.ts": "5d83f729916adec23cce5598e0afb51e84f8842b4af10dc6df37925e90b43bd6",
+    "tests/fixtures/observed-cryptex-runtime.ts": "a4fda3b5fbdd0addef8b4b12892ad66b9b454e765c35a8eff89c7ff8999a8da6",
+    "tests/fixtures/observed-cli-server.ts": "eb1ee9f4215fff24f70867e904c3817d0528a6c7c35efa97bc50ecce6ff63669"
+  },
+  "staticAuditSha256": "372219b1bbcc3c33ea5a3b98fbf929a245e0cbf892be24e1679141008c6b39bf",
+  "defaultAuditSha256": "cb2f42e14ca1ad981649085900d54fa0400858e6da2aa382dbe43e6ea52f9498",
+  "staticChecks": 154,
+  "defaultChecks": 53,
+  "perHunk": [
+    {
+      "file": "tests/fixtures/observed-cli-server.ts",
+      "hunk": "@@ -15,8 +15,12 @@",
+      "lines": "19-21",
+      "documentedBreaches": [],
+      "materialHeuristicFindings": [],
+      "assessment": "Explicit fixture-only pure path seam; owned root identity first, exact slash and anchored installed namespaces mapped. No public product interface or deep-module policy changes. Names describe function; primitive strings match filesystem fixture interface; no unnecessary domain type."
+    },
+    {
+      "file": "tests/fixtures/observed-cli-server.ts",
+      "hunk": "@@ -31,9 +35,9 @@",
+      "lines": "39",
+      "documentedBreaches": [],
+      "materialHeuristicFindings": [],
+      "assessment": "Local delegation retains context ownership and every fs/process guard. The seam makes exact original behavior observable and is necessary for authorized pure regression; no material Middle Man or speculative hook."
+    },
+    {
+      "file": "tests/observed-cryptex-runtime.test.ts",
+      "hunk": "@@ -9,11 +9,34 @@",
+      "lines": "13,17-37",
+      "documentedBreaches": [],
+      "materialHeuristicFindings": [],
+      "assessment": "Import plus fourteen pure string expectations, four distinct behavior families. Original 166-case suite byte-equal after removal. Loops match existing parameterized test shape; no repeated production dispatch or scattered product policy."
+    }
+  ],
+  "documentedStandardBreaches": [],
+  "materialHeuristicFindings": [],
+  "verdict": "PASS",
+  "actualDefaults": [
+    {
+      "node": "26",
+      "receiptSha256": "21a6672518c72857b9f29fce13d7752d1060f956e076f3192c355d40967751dd",
+      "resultSha256": "5a5c49b48229e18a57f7c6467c13c03f4047163f1155b898f8ed798dbc9ced2e",
+      "counts": {
+        "tests": 1999,
+        "suites": 0,
+        "pass": 1999,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "/opt/homebrew/lib/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "check"
+      ],
+      "startedAtUtc": "2026-10-09T05:37:38.158706+00:00",
+      "completedAtUtc": "2026-10-09T05:40:12.085349+00:00",
+      "exitCode": 0
+    },
+    {
+      "node": "24",
+      "receiptSha256": "7f3ecda0cbb2c004ef96b9839411afe435ac6592028aa9e16a1fc76a33b4d56b",
+      "resultSha256": "71910371c916f7c81d40a77e340078559c77e392942a400e8c5ba3d931cf0d20",
+      "counts": {
+        "tests": 1999,
+        "suites": 0,
+        "pass": 1999,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "/opt/homebrew/lib/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "check"
+      ],
+      "startedAtUtc": "2026-10-09T05:40:12.358828+00:00",
+      "completedAtUtc": "2026-10-09T05:42:55.802271+00:00",
+      "exitCode": 0
+    }
+  ],
+  "scopeLimit": "Frozen Standards and retained author gates; integrated physical/installed/native/live/Ticket12 acceptance unverified. Prior static PASS with host FAILED26/held24 remains unchanged."
+}

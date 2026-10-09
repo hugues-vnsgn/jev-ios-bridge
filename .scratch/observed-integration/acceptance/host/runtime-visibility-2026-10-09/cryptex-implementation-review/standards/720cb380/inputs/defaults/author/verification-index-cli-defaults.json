@@ -1,0 +1,73 @@
+{
+  "commit": "720cb380d07102d72b20a6a4f5f7787a0ab88f2b",
+  "successorIndex": ".scratch/installed-cryptex-runtime/verification-index-cli.json",
+  "successorIndexSha256": "d9edd22be1e067380f26f50c7a350a1239df10610311c73338790e120783bbd9",
+  "actualDefaultSummary": ".scratch/installed-cryptex-runtime/actual-default-cli-summary.json",
+  "actualDefaultSummarySha256": "726023c1c6e5df25db6f01e4a4db64dd3d80e735889b1ab6d1c1cf1da064dc30",
+  "retainedPriorCandidate": "dadde33a36440db6d9414adf84f80916caa9d2b3",
+  "originalEvidencePathsPreserved": true,
+  "defaults": {
+    "26": {
+      "receipt": ".scratch/installed-cryptex-runtime/actual-default-cli-node26/command.json",
+      "receiptSha256": "21a6672518c72857b9f29fce13d7752d1060f956e076f3192c355d40967751dd",
+      "result": ".scratch/installed-cryptex-runtime/actual-default-cli-node26/result.json",
+      "resultSha256": "5a5c49b48229e18a57f7c6467c13c03f4047163f1155b898f8ed798dbc9ced2e",
+      "runtimeReceipt": ".scratch/installed-cryptex-runtime/actual-runtime-cli-node26/command.json",
+      "runtimeReceiptSha256": "f25c492fbf395e2b8243b8ef0f067eb1f8995cb727d91b0c4baa6194b8dda94d",
+      "buildProof": ".scratch/installed-cryptex-runtime/actual-default-cli-node26/build-stage-confirmed.json",
+      "buildProofSha256": "82af5ec17e68038f48a128e381da6d6d2abcea25db8ab6b436754210878f228b",
+      "compiledManifest": ".scratch/installed-cryptex-runtime/actual-default-cli-node26/compiled-manifest.json",
+      "compiledManifestSha256": "d7139dec7328f07374d4fe8c2e32ac056e86936e7c8802c9d4d62b646a7dbe59",
+      "counts": {
+        "tests": 1999,
+        "suites": 0,
+        "pass": 1999,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:37:38.158706+00:00",
+      "completedAtUtc": "2026-10-09T05:40:12.085349+00:00",
+      "stdoutSha256": "8dfeb68756f8c323f055fd452ca36c2fd7dc82e7280e913ac92f3d58f5849201",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source441Match": true,
+      "protected436Match": true,
+      "compiled69Match": true,
+      "buildStageExecuted": true,
+      "actualCloseRecorded": true
+    },
+    "24": {
+      "receipt": ".scratch/installed-cryptex-runtime/actual-default-cli-node24/command.json",
+      "receiptSha256": "7f3ecda0cbb2c004ef96b9839411afe435ac6592028aa9e16a1fc76a33b4d56b",
+      "result": ".scratch/installed-cryptex-runtime/actual-default-cli-node24/result.json",
+      "resultSha256": "71910371c916f7c81d40a77e340078559c77e392942a400e8c5ba3d931cf0d20",
+      "runtimeReceipt": ".scratch/installed-cryptex-runtime/actual-runtime-cli-node24/command.json",
+      "runtimeReceiptSha256": "ae6c01684a103fb8f0601e6556febf09f389a2005906a28a104044bf187e9e86",
+      "buildProof": ".scratch/installed-cryptex-runtime/actual-default-cli-node24/build-stage-confirmed.json",
+      "buildProofSha256": "82af5ec17e68038f48a128e381da6d6d2abcea25db8ab6b436754210878f228b",
+      "compiledManifest": ".scratch/installed-cryptex-runtime/actual-default-cli-node24/compiled-manifest.json",
+      "compiledManifestSha256": "d7139dec7328f07374d4fe8c2e32ac056e86936e7c8802c9d4d62b646a7dbe59",
+      "counts": {
+        "tests": 1999,
+        "suites": 0,
+        "pass": 1999,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:40:12.358828+00:00",
+      "completedAtUtc": "2026-10-09T05:42:55.802271+00:00",
+      "stdoutSha256": "5a6aacb852c405485930c229117e34e0fd1b4991eb26d73909552a2d18b241e6",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source441Match": true,
+      "protected436Match": true,
+      "compiled69Match": true,
+      "buildStageExecuted": true,
+      "actualCloseRecorded": true
+    }
+  }
+}

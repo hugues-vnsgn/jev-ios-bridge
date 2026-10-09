@@ -1,0 +1,1728 @@
+{
+  "reviewer": "installed_path_standards_review",
+  "axis": "Standards",
+  "atUtc": "2026-10-09T05:43:43.212084+00:00",
+  "base": "38aa879c3954c9d7742ef04059cad4d2fc824c87",
+  "parent": "dadde33a36440db6d9414adf84f80916caa9d2b3",
+  "candidate": "720cb380d07102d72b20a6a4f5f7787a0ab88f2b",
+  "ownedHashes": {
+    "src/observed/allocation-config.ts": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+    "tests/fixtures/observed-allocation-backend.ts": "021a93e539ebb56ffb3cac8b15d2b77b8ce838f3fb77f9e9ef31ff3ed3fa894a",
+    "tests/observed-cryptex-runtime.test.ts": "5d83f729916adec23cce5598e0afb51e84f8842b4af10dc6df37925e90b43bd6",
+    "tests/fixtures/observed-cryptex-runtime.ts": "a4fda3b5fbdd0addef8b4b12892ad66b9b454e765c35a8eff89c7ff8999a8da6",
+    "tests/fixtures/observed-cli-server.ts": "eb1ee9f4215fff24f70867e904c3817d0528a6c7c35efa97bc50ecce6ff63669"
+  },
+  "checks": [
+    {
+      "name": "frozen oracle hash",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input oracle/authorFinalInputs/candidate-cli-source.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input oracle/authorFinalInputs/verification-index-cli.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input oracle/authorFinalInputs/clause-regression-matrix-cli.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input oracle/authorFinalInputs/cli-isolation-report.md sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input oracle/rootInputs/cryptex-policy-proposal.md sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input oracle/rootInputs/owner-cryptex-trust-decision.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input oracle/rootInputs/cryptex-fixture-map-ownership.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input oracle/rootInputs/cryptex-public-fixture-map-ownership.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input oracle/rootInputs/root-phase5-retained-mount-derivation.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input oracle/rootInputs/root-xcode-integration.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input oracle/rootInputs/installed-cryptex-repair.md sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input oracle/rootInputs/cryptex-implementation-review.md sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input oracle/rootInputs/candidate-cli-context.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input oracle/rootInputs/root-old-candidate-review-preservation.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "HEAD frozen",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "441 Source / 436 protected / 5 owned",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "context Source equals candidate manifest",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "context protected and owned equal manifest",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "441 committed blobs",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "441 current bytes",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "436 protected base blobs",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "exact successor two paths",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "exact cumulative five owned paths",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "three policy files unchanged from parent",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "fixture only declaration/delegation/map delta",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "original 166-case suite exact bytes",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "red extraction exact original expression and delegation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "green fixture snapshot equals candidate",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "pure assertions unchanged red to green",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "original snapshots equal parent",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/cli-affected-node26/command.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "cli-affected-node26 stdout hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "cli-affected-node26 stderr hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "cli-affected-node26 exact seven raw counts",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "cli-affected-node26 exit and actual completion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "cli-affected-node26 exact Source association",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/cli-affected-node26/result.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "cli-affected-node26 result source before/after and protected",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/cli-affected-node24/command.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "cli-affected-node24 stdout hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "cli-affected-node24 stderr hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "cli-affected-node24 exact seven raw counts",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "cli-affected-node24 exit and actual completion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "cli-affected-node24 exact Source association",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/cli-affected-node24/result.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "cli-affected-node24 result source before/after and protected",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/focused-cli-final-node26/command.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "focused-cli-final-node26 stdout hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "focused-cli-final-node26 stderr hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "focused-cli-final-node26 exact seven raw counts",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "focused-cli-final-node26 exit and actual completion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "focused-cli-final-node26 exact Source association",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/focused-cli-final-node26/result.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "focused-cli-final-node26 result source before/after and protected",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/focused-cli-final-node24/command.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "focused-cli-final-node24 stdout hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "focused-cli-final-node24 stderr hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "focused-cli-final-node24 exact seven raw counts",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "focused-cli-final-node24 exit and actual completion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "focused-cli-final-node24 exact Source association",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/focused-cli-final-node24/result.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "focused-cli-final-node24 result source before/after and protected",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/typecheck-cli-final-node26/command.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "typecheck-cli-final-node26 stdout hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "typecheck-cli-final-node26 stderr hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "typecheck-cli-final-node26 exact seven raw counts",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "typecheck-cli-final-node26 exit and actual completion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "typecheck-cli-final-node26 exact Source association",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/typecheck-cli-final-node26/result.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "typecheck-cli-final-node26 result source before/after and protected",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/typecheck-cli-final-node24/command.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "typecheck-cli-final-node24 stdout hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "typecheck-cli-final-node24 stderr hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "typecheck-cli-final-node24 exact seven raw counts",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "typecheck-cli-final-node24 exit and actual completion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "typecheck-cli-final-node24 exact Source association",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/typecheck-cli-final-node24/result.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "typecheck-cli-final-node24 result source before/after and protected",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/coverage-cli-final-node26/command.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "coverage-cli-final-node26 stdout hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "coverage-cli-final-node26 stderr hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "coverage-cli-final-node26 exact seven raw counts",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "coverage-cli-final-node26 exit and actual completion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "coverage-cli-final-node26 exact Source association",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/coverage-cli-final-node26/result.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "coverage-cli-final-node26 result source before/after and protected",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/coverage-cli-final-node24/command.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "coverage-cli-final-node24 stdout hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "coverage-cli-final-node24 stderr hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "coverage-cli-final-node24 exact seven raw counts",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "coverage-cli-final-node24 exit and actual completion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "coverage-cli-final-node24 exact Source association",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/coverage-cli-final-node24/result.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "coverage-cli-final-node24 result source before/after and protected",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/build-cli-final-node26/command.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "build-cli-final-node26 stdout hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "build-cli-final-node26 stderr hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "build-cli-final-node26 exact seven raw counts",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "build-cli-final-node26 exit and actual completion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "build-cli-final-node26 exact Source association",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/build-cli-final-node26/result.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "build-cli-final-node26 result source before/after and protected",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/build-cli-final-node24/command.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "build-cli-final-node24 stdout hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "build-cli-final-node24 stderr hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "build-cli-final-node24 exact seven raw counts",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "build-cli-final-node24 exit and actual completion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "build-cli-final-node24 exact Source association",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/build-cli-final-node24/result.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "build-cli-final-node24 result source before/after and protected",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/cli-map-red-node26/command.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "red-node26 stdout hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "red-node26 stderr hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "red-node26 exact seven raw counts",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "red-node26 exit and actual completion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "red-node26 exact Source association",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/cli-map-red-node24/command.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "red-node24 stdout hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "red-node24 stderr hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "red-node24 exact seven raw counts",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "red-node24 exit and actual completion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "red-node24 exact Source association",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/cli-map-green-node26/command.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "green-node26 stdout hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "green-node26 stderr hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "green-node26 exact seven raw counts",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "green-node26 exit and actual completion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "green-node26 exact Source association",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input receipts/cli-map-green-node24/command.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "green-node24 stdout hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "green-node24 stderr hash/length",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "green-node24 exact seven raw counts",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "green-node24 exit and actual completion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "green-node24 exact Source association",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "compiled69 manifest size",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "build-cli-final-node26 archived compiled map equals candidate",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "build-cli-final-node26 actual compiled bytes",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "build-cli-final-node24 archived compiled map equals candidate",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "build-cli-final-node24 actual compiled bytes",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "build-final-node26 archived compiled map equals candidate",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "build-final-node26 actual compiled bytes",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "build-final-node24 archived compiled map equals candidate",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "build-final-node24 actual compiled bytes",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input prior/manifest.json sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input standards/AGENTS.md sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input standards/docs/agents/domain.md sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input standards/docs/agents/issue-tracker.md sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input standards/GLOSSARY.md sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input standards/docs/domain-boundaries.md sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input standards/docs/adr/0002-mobilebuildmcp-as-device-layer.md sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input standards/docs/adr/0005-the-1-0-stability-contract.md sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input standards/docs/adr/0008-durable-ios-admission.md sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "input standards/docs/adr/0009-bounded-simulator-creation.md sha",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "retainedGates": [
+    {
+      "label": "cli-affected-node26",
+      "receiptSha256": "3084bd0ef008c5843fdfdb8d74778893814a540013417a88e341a97103defd68",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cli.test.ts",
+        "tests/observed-mcp.test.ts",
+        "tests/observed-contract.test.ts",
+        "tests/observed-host-fault.test.ts",
+        "tests/observed-public-races.test.ts",
+        "tests/observed-crash.test.ts"
+      ],
+      "counts": {
+        "tests": 235,
+        "suites": 0,
+        "pass": 235,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:24:08.609863+00:00",
+      "completedAtUtc": "2026-10-09T05:25:48.797478+00:00",
+      "stdoutSha256": "3a40ab7c38d5d2429ff15223e12d4d700c3540fb35f996f25e2ae303a566c7f2",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "cli-affected-node24",
+      "receiptSha256": "9ca96b943f1a1d36773f10b050bd8c50fa63e1ff8fd0b283643a91eea47ec570",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cli.test.ts",
+        "tests/observed-mcp.test.ts",
+        "tests/observed-contract.test.ts",
+        "tests/observed-host-fault.test.ts",
+        "tests/observed-public-races.test.ts",
+        "tests/observed-crash.test.ts"
+      ],
+      "counts": {
+        "tests": 235,
+        "suites": 0,
+        "pass": 235,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:26:11.462614+00:00",
+      "completedAtUtc": "2026-10-09T05:27:50.448936+00:00",
+      "stdoutSha256": "c041c28e59c0bebf110923daed4fe0e319941c5791f2c3114f4baa2901ab765a",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "focused-cli-final-node26",
+      "receiptSha256": "9a4c5227c492a7d22b2c6c6d6e88d72ade926b7e68be95dd747918e732dcf134",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts",
+        "tests/observed-allocation-config.test.ts",
+        "tests/installed-plist.test.ts",
+        "tests/observed-allocation.test.ts",
+        "tests/observed-artifact.test.ts"
+      ],
+      "counts": {
+        "tests": 505,
+        "suites": 0,
+        "pass": 505,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:28:15.960734+00:00",
+      "completedAtUtc": "2026-10-09T05:28:54.996079+00:00",
+      "stdoutSha256": "b510a9053c22e5a2876650abad4d72a7766e14c54b7b228a1f4ca122f95f397f",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "focused-cli-final-node24",
+      "receiptSha256": "aa0457808ebc036ecacafc19363771dcd68977de287fd139501409ab9a459354",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts",
+        "tests/observed-allocation-config.test.ts",
+        "tests/installed-plist.test.ts",
+        "tests/observed-allocation.test.ts",
+        "tests/observed-artifact.test.ts"
+      ],
+      "counts": {
+        "tests": 505,
+        "suites": 0,
+        "pass": 505,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:28:55.150609+00:00",
+      "completedAtUtc": "2026-10-09T05:29:34.411053+00:00",
+      "stdoutSha256": "09b5af0407539690179d6541790ecd5524c6970283ecc6e3082435525bc0b4d1",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "typecheck-cli-final-node26",
+      "receiptSha256": "9c781f3d6922b984a887f4603b08ff365d734280b4549488e42fab6f6d115d50",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "counts": {},
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:29:34.485536+00:00",
+      "completedAtUtc": "2026-10-09T05:29:34.926126+00:00",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "typecheck-cli-final-node24",
+      "receiptSha256": "76a371ea8cd3eec55e00be90d9fc2736d7e63cb7c9ec4bd479ac04c60cbe5a2c",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "counts": {},
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:29:35.001619+00:00",
+      "completedAtUtc": "2026-10-09T05:29:35.329320+00:00",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "coverage-cli-final-node26",
+      "receiptSha256": "4563454e7019aa29db889b5f4ec9fae15a8a161372843dcd87bee6b9a06b417b",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--experimental-test-coverage",
+        "--test-coverage-include=**/src/observed/allocation-config.ts",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts",
+        "tests/observed-allocation-config.test.ts",
+        "tests/installed-plist.test.ts"
+      ],
+      "counts": {
+        "tests": 354,
+        "suites": 0,
+        "pass": 354,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:29:35.399565+00:00",
+      "completedAtUtc": "2026-10-09T05:29:45.431021+00:00",
+      "stdoutSha256": "19917b20c8ac7b69926144ba7583767e594178a57dfbc8a14d282b5b90c34c2f",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "coverage-cli-final-node24",
+      "receiptSha256": "d52963da036f1b05ae54d7fe108499c0c273426885aeb6675c4273ec21fd8038",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--experimental-test-coverage",
+        "--test-coverage-include=**/src/observed/allocation-config.ts",
+        "--test",
+        "tests/observed-cryptex-runtime.test.ts",
+        "tests/observed-allocation-config.test.ts",
+        "tests/installed-plist.test.ts"
+      ],
+      "counts": {
+        "tests": 354,
+        "suites": 0,
+        "pass": 354,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:29:45.564054+00:00",
+      "completedAtUtc": "2026-10-09T05:29:56.815412+00:00",
+      "stdoutSha256": "aff2f1a83dd49dbfb77ae3567991ea189d9ef39648f87402da997fd10838f01b",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "build-cli-final-node26",
+      "receiptSha256": "33e66c75b8c30dc3a0b5c6672873f6d6f0c6c3bdadceb85effea8eccd3e8f469",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "/opt/homebrew/lib/node_modules/npm/bin/npm-cli.js",
+        "--userconfig",
+        ".scratch/installed-cryptex-runtime/npm-empty-userconfig",
+        "--globalconfig",
+        ".scratch/installed-cryptex-runtime/npm-empty-globalconfig",
+        "--cache",
+        ".scratch/installed-cryptex-runtime/npm-cache",
+        "run",
+        "build"
+      ],
+      "counts": {},
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:29:56.931620+00:00",
+      "completedAtUtc": "2026-10-09T05:29:57.360124+00:00",
+      "stdoutSha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "build-cli-final-node24",
+      "receiptSha256": "88272c675c797fbff87381c2f6925f3dd18c743374d15861337c8d4df7046969",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "/opt/homebrew/lib/node_modules/npm/bin/npm-cli.js",
+        "--userconfig",
+        ".scratch/installed-cryptex-runtime/npm-empty-userconfig",
+        "--globalconfig",
+        ".scratch/installed-cryptex-runtime/npm-empty-globalconfig",
+        "--cache",
+        ".scratch/installed-cryptex-runtime/npm-cache",
+        "run",
+        "build"
+      ],
+      "counts": {},
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:29:57.440152+00:00",
+      "completedAtUtc": "2026-10-09T05:29:57.761161+00:00",
+      "stdoutSha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "cli-map-red-node26",
+      "receiptSha256": "e43e9bcefc96fb6ea19fb04e602fd42e0c1ef88ae990d66eb70746e693cc5832",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-name-pattern=the pure public fixture",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "counts": {
+        "tests": 14,
+        "suites": 0,
+        "pass": 11,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 1,
+      "startedAtUtc": "2026-10-09T05:22:52.533454+00:00",
+      "completedAtUtc": "2026-10-09T05:22:52.897402+00:00",
+      "stdoutSha256": "75ee75bf4a8da6244b7783cf6bca8247fa60521f9d75768bda2ac8a2f0eafda7",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "cli-map-red-node24",
+      "receiptSha256": "e5c363572dda6a2210c3c6b03f325d5c33c1a11f8051f97728d3a9dff4f56126",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-name-pattern=the pure public fixture",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "counts": {
+        "tests": 14,
+        "suites": 0,
+        "pass": 11,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 1,
+      "startedAtUtc": "2026-10-09T05:23:02.006755+00:00",
+      "completedAtUtc": "2026-10-09T05:23:02.340845+00:00",
+      "stdoutSha256": "37a1e8af177b1f69edcc87e065c9e1834b81be4fe4f01e9e4a7e2aeff2e0bf5c",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "cli-map-green-node26",
+      "receiptSha256": "a0beaf5b1e1c7125045fbfcb47f7adb8fb4056c27d1e944abca5b2b1d3a53e10",
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-name-pattern=the pure public fixture",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "counts": {
+        "tests": 14,
+        "suites": 0,
+        "pass": 14,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:23:20.454307+00:00",
+      "completedAtUtc": "2026-10-09T05:23:20.779796+00:00",
+      "stdoutSha256": "b0b1cea07abc5ce66aea10234fe8dd6f1bf1ea4ac5436f8b1c7b608a00610143",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "cli-map-green-node24",
+      "receiptSha256": "60ed1f09ac17dde5a01fe1cbf151bfd76b9837a8c950714ad6239351c3fa9ec8",
+      "argv": [
+        "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-name-pattern=the pure public fixture",
+        "tests/observed-cryptex-runtime.test.ts"
+      ],
+      "counts": {
+        "tests": 14,
+        "suites": 0,
+        "pass": 14,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-09T05:23:31.956754+00:00",
+      "completedAtUtc": "2026-10-09T05:23:32.364857+00:00",
+      "stdoutSha256": "691327ace9f7b13ea11a997f4746ae71acc469627bc9d19914bee010fe9997af",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "inputs": {
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/candidate-cli-source.json": {
+      "sha256": "de35d66204122d4b4561e60f20136d15545edf03ebc1c3cbaefd245888770b3b",
+      "bytes": 119721,
+      "retained": "inputs/author/candidate-cli-source.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/verification-index-cli.json": {
+      "sha256": "d9edd22be1e067380f26f50c7a350a1239df10610311c73338790e120783bbd9",
+      "bytes": 10896,
+      "retained": "inputs/author/verification-index-cli.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/clause-regression-matrix-cli.json": {
+      "sha256": "a757fb3724c75ef74285890b02d58f135a2a234ccab3c7fa31d2de5e16e4403a",
+      "bytes": 52344,
+      "retained": "inputs/author/clause-regression-matrix-cli.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-isolation-report.md": {
+      "sha256": "f4e86daa72bb0f18cd3a6f4e8481242d4982119f0b7289520bd164b019fce97f",
+      "bytes": 2571,
+      "retained": "inputs/author/cli-isolation-report.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-policy-proposal.md": {
+      "sha256": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13",
+      "bytes": 7557,
+      "retained": "inputs/root/cryptex-policy-proposal.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/owner-cryptex-trust-decision.json": {
+      "sha256": "0b1bc876713d68cd9001dcd27a41bfa3e7f53aa96f8e1698f214e65dcca16c74",
+      "bytes": 1327,
+      "retained": "inputs/root/owner-cryptex-trust-decision.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-fixture-map-ownership.json": {
+      "sha256": "65f3ea9716b5121ee825943549f3eaf74ef408f94d1fb2b9d5ffef686434c230",
+      "bytes": 3236,
+      "retained": "inputs/root/cryptex-fixture-map-ownership.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-public-fixture-map-ownership.json": {
+      "sha256": "dc2220c03dbdaf97e6c2bccf0ea126ff814e689216fd9e5c45f5af9a4eb14b16",
+      "bytes": 3124,
+      "retained": "inputs/root/cryptex-public-fixture-map-ownership.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-phase5-retained-mount-derivation.json": {
+      "sha256": "8260a10fc574d9408078104f348522fa4f50ddc5279dfe16ecf916c1e57b098e",
+      "bytes": 4294,
+      "retained": "inputs/oracle/rootInputs/root-phase5-retained-mount-derivation.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-xcode-integration.json": {
+      "sha256": "b4d88597c41d20da1f0905b573badb58f016b8fc663a0a25ede9343867426a6b",
+      "bytes": 1267,
+      "retained": "inputs/oracle/rootInputs/root-xcode-integration.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-action-rollout/installed-cryptex-repair.md": {
+      "sha256": "744a70c2279a3ce91e048f33a9b8c3ef3aa0521c88a2e1a2e12623d1af57b575",
+      "bytes": 10848,
+      "retained": "inputs/oracle/rootInputs/installed-cryptex-repair.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-action-rollout/cryptex-implementation-review.md": {
+      "sha256": "edd76b3d480814cec351e29f971be397768891be79e12865daff20cdd136c017",
+      "bytes": 4963,
+      "retained": "inputs/oracle/rootInputs/cryptex-implementation-review.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-implementation-review/candidate-cli-context.json": {
+      "sha256": "0cc9d919d408805272d4e57b1efc62d41a46559ee9bc921f8e2b5325dd3ffa75",
+      "bytes": 125483,
+      "retained": "inputs/root/candidate-cli-context.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-implementation-review/root-old-candidate-review-preservation.json": {
+      "sha256": "79d6206f097ffc3df5891c40e0ca14006600ad4751167389fbdc3208ea922f0f",
+      "bytes": 9638,
+      "retained": "inputs/oracle/rootInputs/root-old-candidate-review-preservation.json"
+    },
+    "git:720cb380d07102d72b20a6a4f5f7787a0ab88f2b:src/observed/allocation-config.ts": {
+      "sha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62",
+      "bytes": 31610,
+      "retained": "inputs/candidate/src/observed/allocation-config.ts"
+    },
+    "git:720cb380d07102d72b20a6a4f5f7787a0ab88f2b:tests/fixtures/observed-allocation-backend.ts": {
+      "sha256": "021a93e539ebb56ffb3cac8b15d2b77b8ce838f3fb77f9e9ef31ff3ed3fa894a",
+      "bytes": 10534,
+      "retained": "inputs/candidate/tests/fixtures/observed-allocation-backend.ts"
+    },
+    "git:720cb380d07102d72b20a6a4f5f7787a0ab88f2b:tests/observed-cryptex-runtime.test.ts": {
+      "sha256": "5d83f729916adec23cce5598e0afb51e84f8842b4af10dc6df37925e90b43bd6",
+      "bytes": 30986,
+      "retained": "inputs/candidate/tests/observed-cryptex-runtime.test.ts"
+    },
+    "git:720cb380d07102d72b20a6a4f5f7787a0ab88f2b:tests/fixtures/observed-cryptex-runtime.ts": {
+      "sha256": "a4fda3b5fbdd0addef8b4b12892ad66b9b454e765c35a8eff89c7ff8999a8da6",
+      "bytes": 9511,
+      "retained": "inputs/candidate/tests/fixtures/observed-cryptex-runtime.ts"
+    },
+    "git:720cb380d07102d72b20a6a4f5f7787a0ab88f2b:tests/fixtures/observed-cli-server.ts": {
+      "sha256": "eb1ee9f4215fff24f70867e904c3817d0528a6c7c35efa97bc50ecce6ff63669",
+      "bytes": 8487,
+      "retained": "inputs/candidate/tests/fixtures/observed-cli-server.ts"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-affected-node26/command.json": {
+      "sha256": "3084bd0ef008c5843fdfdb8d74778893814a540013417a88e341a97103defd68",
+      "bytes": 53337,
+      "retained": "inputs/receipts/cli-affected-node26/command.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-affected-node26/stdout.txt": {
+      "sha256": "3a40ab7c38d5d2429ff15223e12d4d700c3540fb35f996f25e2ae303a566c7f2",
+      "bytes": 23640,
+      "retained": "inputs/receipts/cli-affected-node26/stdout.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-affected-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/receipts/cli-affected-node26/stderr.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-affected-node26/result.json": {
+      "sha256": "6a057f25a1935068b66afcdc79e54e0dd073c99c871c7e4fa1fe5743dcc967a0",
+      "bytes": 161003,
+      "retained": "inputs/receipts/cli-affected-node26/result.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-affected-node24/command.json": {
+      "sha256": "9ca96b943f1a1d36773f10b050bd8c50fa63e1ff8fd0b283643a91eea47ec570",
+      "bytes": 53399,
+      "retained": "inputs/receipts/cli-affected-node24/command.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-affected-node24/stdout.txt": {
+      "sha256": "c041c28e59c0bebf110923daed4fe0e319941c5791f2c3114f4baa2901ab765a",
+      "bytes": 24651,
+      "retained": "inputs/receipts/cli-affected-node24/stdout.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-affected-node24/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/receipts/cli-affected-node24/stderr.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-affected-node24/result.json": {
+      "sha256": "620506ebf718b83db57e7b61af99ea58a9c37914ab83027abdc88b446f7e9c38",
+      "bytes": 161003,
+      "retained": "inputs/receipts/cli-affected-node24/result.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/focused-cli-final-node26/command.json": {
+      "sha256": "9a4c5227c492a7d22b2c6c6d6e88d72ade926b7e68be95dd747918e732dcf134",
+      "bytes": 53323,
+      "retained": "inputs/receipts/focused-cli-final-node26/command.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/focused-cli-final-node26/stdout.txt": {
+      "sha256": "b510a9053c22e5a2876650abad4d72a7766e14c54b7b228a1f4ca122f95f397f",
+      "bytes": 48725,
+      "retained": "inputs/receipts/focused-cli-final-node26/stdout.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/focused-cli-final-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/receipts/focused-cli-final-node26/stderr.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/focused-cli-final-node26/result.json": {
+      "sha256": "4a1dd856d42f90a5d374cba759e0475f6b85b509057c463594f71dba7897805f",
+      "bytes": 161008,
+      "retained": "inputs/receipts/focused-cli-final-node26/result.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/focused-cli-final-node24/command.json": {
+      "sha256": "aa0457808ebc036ecacafc19363771dcd68977de287fd139501409ab9a459354",
+      "bytes": 53385,
+      "retained": "inputs/receipts/focused-cli-final-node24/command.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/focused-cli-final-node24/stdout.txt": {
+      "sha256": "09b5af0407539690179d6541790ecd5524c6970283ecc6e3082435525bc0b4d1",
+      "bytes": 49265,
+      "retained": "inputs/receipts/focused-cli-final-node24/stdout.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/focused-cli-final-node24/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/receipts/focused-cli-final-node24/stderr.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/focused-cli-final-node24/result.json": {
+      "sha256": "2107ec6a0192e26e0d27cfeac1c6373b8da3a27007a79c530f251a7f7cca8e2d",
+      "bytes": 161008,
+      "retained": "inputs/receipts/focused-cli-final-node24/result.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/typecheck-cli-final-node26/command.json": {
+      "sha256": "9c781f3d6922b984a887f4603b08ff365d734280b4549488e42fab6f6d115d50",
+      "bytes": 53082,
+      "retained": "inputs/receipts/typecheck-cli-final-node26/command.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/typecheck-cli-final-node26/stdout.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/receipts/typecheck-cli-final-node26/stdout.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/typecheck-cli-final-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/receipts/typecheck-cli-final-node26/stderr.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/typecheck-cli-final-node26/result.json": {
+      "sha256": "ab57a0a619e8e85c8f51180b748f00cc6acdd732419832ac485fcd3ced4fc5a1",
+      "bytes": 160888,
+      "retained": "inputs/receipts/typecheck-cli-final-node26/result.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/typecheck-cli-final-node24/command.json": {
+      "sha256": "76a371ea8cd3eec55e00be90d9fc2736d7e63cb7c9ec4bd479ac04c60cbe5a2c",
+      "bytes": 53144,
+      "retained": "inputs/receipts/typecheck-cli-final-node24/command.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/typecheck-cli-final-node24/stdout.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/receipts/typecheck-cli-final-node24/stdout.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/typecheck-cli-final-node24/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/receipts/typecheck-cli-final-node24/stderr.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/typecheck-cli-final-node24/result.json": {
+      "sha256": "dae63ff1b822986459f2dcee1c101865e384fdbbc99aae4bbba90d1c48f660c6",
+      "bytes": 160888,
+      "retained": "inputs/receipts/typecheck-cli-final-node24/result.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/coverage-cli-final-node26/command.json": {
+      "sha256": "4563454e7019aa29db889b5f4ec9fae15a8a161372843dcd87bee6b9a06b417b",
+      "bytes": 53350,
+      "retained": "inputs/receipts/coverage-cli-final-node26/command.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/coverage-cli-final-node26/stdout.txt": {
+      "sha256": "19917b20c8ac7b69926144ba7583767e594178a57dfbc8a14d282b5b90c34c2f",
+      "bytes": 33749,
+      "retained": "inputs/receipts/coverage-cli-final-node26/stdout.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/coverage-cli-final-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/receipts/coverage-cli-final-node26/stderr.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/coverage-cli-final-node26/result.json": {
+      "sha256": "e2a0313c9f30d42d1ed41c2a9d903cedd6ecb69da4b53629aabc912a9b81994f",
+      "bytes": 161009,
+      "retained": "inputs/receipts/coverage-cli-final-node26/result.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/coverage-cli-final-node24/command.json": {
+      "sha256": "d52963da036f1b05ae54d7fe108499c0c273426885aeb6675c4273ec21fd8038",
+      "bytes": 53412,
+      "retained": "inputs/receipts/coverage-cli-final-node24/command.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/coverage-cli-final-node24/stdout.txt": {
+      "sha256": "aff2f1a83dd49dbfb77ae3567991ea189d9ef39648f87402da997fd10838f01b",
+      "bytes": 34080,
+      "retained": "inputs/receipts/coverage-cli-final-node24/stdout.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/coverage-cli-final-node24/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/receipts/coverage-cli-final-node24/stderr.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/coverage-cli-final-node24/result.json": {
+      "sha256": "1a9f55b7550867bd71399dcd14af9d1c6da24e2acd5bcbf972dc714735510df1",
+      "bytes": 161009,
+      "retained": "inputs/receipts/coverage-cli-final-node24/result.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/build-cli-final-node26/command.json": {
+      "sha256": "33e66c75b8c30dc3a0b5c6672873f6d6f0c6c3bdadceb85effea8eccd3e8f469",
+      "bytes": 53373,
+      "retained": "inputs/receipts/build-cli-final-node26/command.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/build-cli-final-node26/stdout.txt": {
+      "sha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+      "bytes": 75,
+      "retained": "inputs/receipts/build-cli-final-node26/stdout.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/build-cli-final-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/receipts/build-cli-final-node26/stderr.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/build-cli-final-node26/result.json": {
+      "sha256": "13b16a8a3184a1b297c18011a78a13f0d605e07c4d69ee15eb39a3260d57f14b",
+      "bytes": 160884,
+      "retained": "inputs/receipts/build-cli-final-node26/result.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/build-cli-final-node24/command.json": {
+      "sha256": "88272c675c797fbff87381c2f6925f3dd18c743374d15861337c8d4df7046969",
+      "bytes": 53435,
+      "retained": "inputs/receipts/build-cli-final-node24/command.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/build-cli-final-node24/stdout.txt": {
+      "sha256": "d389e171e7d990557a7d1d14e7bf0468ef7ac9a086d5d3d6b4f7f76786d7e62a",
+      "bytes": 75,
+      "retained": "inputs/receipts/build-cli-final-node24/stdout.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/build-cli-final-node24/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/receipts/build-cli-final-node24/stderr.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/build-cli-final-node24/result.json": {
+      "sha256": "bc597f5cac8bf9c88d33a7147f818e8b242998110af3cc4b8f130a524747ccc9",
+      "bytes": 160884,
+      "retained": "inputs/receipts/build-cli-final-node24/result.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-map-red-node26/command.json": {
+      "sha256": "e43e9bcefc96fb6ea19fb04e602fd42e0c1ef88ae990d66eb70746e693cc5832",
+      "bytes": 53207,
+      "retained": "inputs/receipts/cli-map-red-node26/command.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-map-red-node26/stdout.txt": {
+      "sha256": "75ee75bf4a8da6244b7783cf6bca8247fa60521f9d75768bda2ac8a2f0eafda7",
+      "bytes": 5604,
+      "retained": "inputs/receipts/cli-map-red-node26/stdout.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-map-red-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/receipts/cli-map-red-node26/stderr.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-map-red-node24/command.json": {
+      "sha256": "e5c363572dda6a2210c3c6b03f325d5c33c1a11f8051f97728d3a9dff4f56126",
+      "bytes": 53269,
+      "retained": "inputs/receipts/cli-map-red-node24/command.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-map-red-node24/stdout.txt": {
+      "sha256": "37a1e8af177b1f69edcc87e065c9e1834b81be4fe4f01e9e4a7e2aeff2e0bf5c",
+      "bytes": 5718,
+      "retained": "inputs/receipts/cli-map-red-node24/stdout.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-map-red-node24/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/receipts/cli-map-red-node24/stderr.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-map-green-node26/command.json": {
+      "sha256": "a0beaf5b1e1c7125045fbfcb47f7adb8fb4056c27d1e944abca5b2b1d3a53e10",
+      "bytes": 53205,
+      "retained": "inputs/receipts/cli-map-green-node26/command.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-map-green-node26/stdout.txt": {
+      "sha256": "b0b1cea07abc5ce66aea10234fe8dd6f1bf1ea4ac5436f8b1c7b608a00610143",
+      "bytes": 1629,
+      "retained": "inputs/receipts/cli-map-green-node26/stdout.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-map-green-node26/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/receipts/cli-map-green-node26/stderr.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-map-green-node24/command.json": {
+      "sha256": "60ed1f09ac17dde5a01fe1cbf151bfd76b9837a8c950714ad6239351c3fa9ec8",
+      "bytes": 53267,
+      "retained": "inputs/receipts/cli-map-green-node24/command.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-map-green-node24/stdout.txt": {
+      "sha256": "691327ace9f7b13ea11a997f4746ae71acc469627bc9d19914bee010fe9997af",
+      "bytes": 1793,
+      "retained": "inputs/receipts/cli-map-green-node24/stdout.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-map-green-node24/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained": "inputs/receipts/cli-map-green-node24/stderr.txt"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/build-cli-final-node26/compiled-manifest.json": {
+      "sha256": "d7139dec7328f07374d4fe8c2e32ac056e86936e7c8802c9d4d62b646a7dbe59",
+      "bytes": 6823,
+      "retained": "inputs/compiled/build-cli-final-node26.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/build-cli-final-node24/compiled-manifest.json": {
+      "sha256": "d7139dec7328f07374d4fe8c2e32ac056e86936e7c8802c9d4d62b646a7dbe59",
+      "bytes": 6823,
+      "retained": "inputs/compiled/build-cli-final-node24.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/build-final-node26/compiled-manifest.json": {
+      "sha256": "4a19004eae26da67eb1f7f5715511a45e479384f2a998159a0f9d1ccda51798f",
+      "bytes": 58334,
+      "retained": "inputs/compiled/build-final-node26.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/build-final-node24/compiled-manifest.json": {
+      "sha256": "21b9368cec097ac411ff1216fa0557461a715d63929c40f4e7516b628a7cd3ce",
+      "bytes": 58366,
+      "retained": "inputs/compiled/build-final-node24.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-isolation-scope-proof.json": {
+      "sha256": "832639240f28deae32c40d7be5a177c0937eb798d3168c095303ac250fb9e725",
+      "bytes": 53487,
+      "retained": "inputs/author/cli-isolation-scope-proof.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-isolation-extraction.json": {
+      "sha256": "7e8864029ff0979ad14ba78f1dfc2d54f6c3fe587571c135338bcae72b10f7eb",
+      "bytes": 472,
+      "retained": "inputs/author/cli-isolation-extraction.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-isolation-job-schema-note.json": {
+      "sha256": "08b2f4ac47e3842296c579685910238b54e8bf6bfa25e08d5413f740b9888b48",
+      "bytes": 5402,
+      "retained": "inputs/author/cli-isolation-job-schema-note.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-packaging-selector-failed.json": {
+      "sha256": "cba61b79c1a0af48e9c21573898d8ca300bbfbbe877e4d773f3b4f3655441bc7",
+      "bytes": 1000,
+      "retained": "inputs/author/cli-packaging-selector-failed.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-packaging-selector-corrected.json": {
+      "sha256": "9a3668622f7b3ec53b5ce52424c8ffe4bbf68545fdfc004415d52183250d4d1b",
+      "bytes": 598,
+      "retained": "inputs/author/cli-packaging-selector-corrected.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-freeze-inventory-assertion.json": {
+      "sha256": "3f4c35748f8b1d852c3a77ab2347bb6b19b6773eb0629830bd0614c7b453fa09",
+      "bytes": 914,
+      "retained": "inputs/author/cli-freeze-inventory-assertion.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-isolation-red-observed-cli-server.ts": {
+      "sha256": "0f90cfc575eb4186d1acdec3f4f2d384277843b3a3622fe090d6fd5cb4434b4c",
+      "bytes": 8405,
+      "retained": "inputs/author/cli-isolation-red-observed-cli-server.ts"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-isolation-green-observed-cli-server.ts": {
+      "sha256": "eb1ee9f4215fff24f70867e904c3817d0528a6c7c35efa97bc50ecce6ff63669",
+      "bytes": 8487,
+      "retained": "inputs/author/cli-isolation-green-observed-cli-server.ts"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/cli-isolation-red-observed-cryptex-runtime.test.ts": {
+      "sha256": "5d83f729916adec23cce5598e0afb51e84f8842b4af10dc6df37925e90b43bd6",
+      "bytes": 30986,
+      "retained": "inputs/author/cli-isolation-red-observed-cryptex-runtime.test.ts"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/before-cli-isolation-observed-cli-server.ts": {
+      "sha256": "e0bffe3dfe1b0ee90aed64b7fd2493ddb91faf73cf8c1c9e418338fc55f811d1",
+      "bytes": 8300,
+      "retained": "inputs/author/before-cli-isolation-observed-cli-server.ts"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/before-cli-isolation-observed-cryptex-runtime.test.ts": {
+      "sha256": "4e18d0de58b5fa6940fbe1c11650731b69d87c560ab7b414e407756c078580dc",
+      "bytes": 29775,
+      "retained": "inputs/author/before-cli-isolation-observed-cryptex-runtime.test.ts"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-implementation-review/oracle-cli-inputs.json": {
+      "sha256": "eb5e488151620195f768555d8317ad83b99831109152aa709d701947f72765fd",
+      "bytes": 4313,
+      "retained": "inputs/root/oracle-cli-inputs.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-implementation-review/root-successor-audit-first-failure.json": {
+      "sha256": "18086b129ea1116d82f3107ecb0fbf1b050d161154e234fb300afaa2546b2c68",
+      "bytes": 787,
+      "retained": "inputs/root/root-successor-audit-first-failure.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-implementation-review/audit-successor-first.py": {
+      "sha256": "1a18b3aa1414c54311e7e88f8f9b9a1d3046f57efbcc21d3c7274cec45095a3e",
+      "bytes": 7014,
+      "retained": "inputs/root/audit-successor-first.py"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-implementation-review/audit-successor.py": {
+      "sha256": "b1f460d969d595a20576180e328cfd6a7f8f20a2132b840b944fca862ab3af7c",
+      "bytes": 7048,
+      "retained": "inputs/root/audit-successor.py"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-implementation-review/standards/static-audit.json": {
+      "sha256": "8f581ec9fcd4ee056e2f5ab44505e404a33fa902175ed4d04b022c21e6dcf508",
+      "bytes": 22932,
+      "retained": "inputs/prior/static-audit.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-implementation-review/standards/report.md": {
+      "sha256": "7b64a1372af91e1ded8a103f7c22bbf3f94d4480cf6e3d8b719551a09bacaa1b",
+      "bytes": 2914,
+      "retained": "inputs/prior/report.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/cryptex-implementation-review/standards/manifest.json": {
+      "sha256": "91ea0e45cfa6ff78646cb928dd3daaa30395f2e092adac90fcd2dca65af8ec78",
+      "bytes": 2006,
+      "retained": "inputs/prior/manifest.json"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/AGENTS.md": {
+      "sha256": "86d3e5e2ccba32103401ab95af6b6488fc439d090913b028a7961d07f79a1c47",
+      "bytes": 1542,
+      "retained": "inputs/standards/AGENTS.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/docs/agents/domain.md": {
+      "sha256": "edc6d6131fdffc4b7135704f5262124fc43355c95f61b7399dc5a4db643e28ca",
+      "bytes": 2033,
+      "retained": "inputs/standards/docs/agents/domain.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/docs/agents/issue-tracker.md": {
+      "sha256": "bef53bbef5e5f758759305a856233a6ec7db25ed81781b9c72bca1b04a8fd225",
+      "bytes": 2375,
+      "retained": "inputs/standards/docs/agents/issue-tracker.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/GLOSSARY.md": {
+      "sha256": "a246e0082a15dfd2fa74138473607b9a3c5e3426460f1d43d1d9d154f87ec1c5",
+      "bytes": 5818,
+      "retained": "inputs/standards/GLOSSARY.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/docs/domain-boundaries.md": {
+      "sha256": "a347aa7ddc28498e57c25da3daceb5621d29a548397bd3e4b1b175e60c6c159f",
+      "bytes": 6152,
+      "retained": "inputs/standards/docs/domain-boundaries.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/docs/adr/0002-mobilebuildmcp-as-device-layer.md": {
+      "sha256": "00da2cbba873223976b22b0a26314a6b351b769b4c3f899a97f95334a565abe1",
+      "bytes": 4571,
+      "retained": "inputs/standards/docs/adr/0002-mobilebuildmcp-as-device-layer.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/docs/adr/0005-the-1-0-stability-contract.md": {
+      "sha256": "fe61fd90fda45b661b183162062d500c3cb87517afc0b2aee37ccbb154f3f04b",
+      "bytes": 2850,
+      "retained": "inputs/standards/docs/adr/0005-the-1-0-stability-contract.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/docs/adr/0008-durable-ios-admission.md": {
+      "sha256": "53d1111c4dd1e2f36635c89d5695a6356a72e054810d7e3f3e7faf4be194d501",
+      "bytes": 1625,
+      "retained": "inputs/standards/docs/adr/0008-durable-ios-admission.md"
+    },
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/docs/adr/0009-bounded-simulator-creation.md": {
+      "sha256": "f60dae7177255f92e1263c29c6a4433216b80d17ce83bc91dd8a444f687ed384",
+      "bytes": 1691,
+      "retained": "inputs/standards/docs/adr/0009-bounded-simulator-creation.md"
+    }
+  },
+  "perHunk": [
+    {
+      "file": "tests/fixtures/observed-cli-server.ts",
+      "hunk": "@@ -15,8 +15,12 @@",
+      "lines": "19-21",
+      "documentedBreaches": [],
+      "materialHeuristicFindings": [],
+      "assessment": "Explicit fixture-only pure path seam; owned root identity first, exact slash and anchored installed namespaces mapped. No public product interface or deep-module policy changes. Names describe function; primitive strings match filesystem fixture interface; no unnecessary domain type."
+    },
+    {
+      "file": "tests/fixtures/observed-cli-server.ts",
+      "hunk": "@@ -31,9 +35,9 @@",
+      "lines": "39",
+      "documentedBreaches": [],
+      "materialHeuristicFindings": [],
+      "assessment": "Local delegation retains context ownership and every fs/process guard. The seam makes exact original behavior observable and is necessary for authorized pure regression; no material Middle Man or speculative hook."
+    },
+    {
+      "file": "tests/observed-cryptex-runtime.test.ts",
+      "hunk": "@@ -9,11 +9,34 @@",
+      "lines": "13,17-37",
+      "documentedBreaches": [],
+      "materialHeuristicFindings": [],
+      "assessment": "Import plus fourteen pure string expectations, four distinct behavior families. Original 166-case suite byte-equal after removal. Loops match existing parameterized test shape; no repeated production dispatch or scattered product policy."
+    }
+  ],
+  "findings": [],
+  "staticVerdict": "PASS",
+  "defaultGateVerdict": "HELD pending fresh actual default pair",
+  "limits": [
+    "Bounded successor review reuses sealed dadde33a cumulative static audit after exact unchanged policy-byte verification; no Source authored, tests/builds run or native operations by reviewer.",
+    "Stale owned4/protected437 inherited seed note, two private packaging assertions, Root six-vs-seven count audit error and correction preserved; their documented original-script/stderr retention limits remain.",
+    "Old candidate Node26 1985/1858/127 failures and exact24 held remain separate and unchanged. Historical initial-red test/fixture reconstruction is exact hash matched but noncontemporaneous.",
+    "Installed compatibility, native/live L01-L05, and Ticket12 acceptance are unverified.",
+    "Reviewer two audit attempts assumed one archive layout: first removed dist/ from successor paths, second retained dist/ on older parent paths. Both FileNotFoundErrors and exact scripts/stdout/stderr retained. Corrected explicit archive paths follow each generation layout; no Source, receipts or product gates changed."
+  ],
+  "documentedStandardsApplied": [
+    {
+      "source": "AGENTS.md / docs/agents/domain.md",
+      "rule": "Read the single-context domain vocabulary and ADRs before design exploration; no introduced domain terms or changed contract."
+    },
+    {
+      "source": "docs/adr/0002-mobilebuildmcp-as-device-layer.md",
+      "rule": "Keep native device operations behind established device layer; changed hunks only affect fixture path mapping and pure assertions."
+    },
+    {
+      "source": "docs/adr/0005-the-1-0-stability-contract.md",
+      "rule": "Published signatures/schema and behavior remain stable; production byte hash unchanged from parent."
+    },
+    {
+      "source": "docs/adr/0008-durable-ios-admission.md / 0009-bounded-simulator-creation.md",
+      "rule": "Existing durable admission, bounded creation and allocation policy unchanged in successor."
+    },
+    {
+      "source": "cryptex-public-fixture-map-ownership.json",
+      "rule": "Only fixture mapper declaration/exact original extraction/local delegation and 14 pure tests; preserve all other fixture guards, assertions, timeouts and original cases."
+    }
+  ],
+  "fowlerBaselineEvaluated": [
+    "Mysterious Name",
+    "Duplicated Code",
+    "Feature Envy",
+    "Data Clumps",
+    "Primitive Obsession",
+    "Repeated Switches",
+    "Shotgun Surgery",
+    "Divergent Change",
+    "Speculative Generality",
+    "Message Chains",
+    "Middle Man",
+    "Refused Bequest"
+  ],
+  "heuristicMethod": "Judgment calls; repository documented standards override baseline. Tooling-enforced formatting/types/build excluded. No material baseline finding in changed hunks."
+}

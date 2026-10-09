@@ -1,0 +1,100 @@
+{
+  "atUtc": "2026-10-09T03:13:53.483951+00:00",
+  "derivation": "Python3 stdlib plistlib.loads of retained repository evidence only; no installed path or new native command followed. Operator result remains immutable.",
+  "input": {
+    "path": ".scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-phase5/result.json",
+    "sha256": "ba076ab50424a7b805a13bcc5d4bbd575d6cfdf728cd6d51ef1540e48ff10215",
+    "receiptIndex": 0,
+    "retainedXMLSha256": "338fdeb495a2a8d58be5e79ed9d2637d64bdbb6c7e9ba552b3aa345a34f2562d",
+    "retainedXMLBytes": 3108,
+    "matchesCompleteOriginalOutputHash": true
+  },
+  "mountPoint": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ",
+  "exactMountPointMatches": true,
+  "properties": {
+    "Writable": false,
+    "WritableMedia": false,
+    "WritableVolume": false,
+    "Sealed": "Yes",
+    "FilesystemType": "apfs",
+    "BusProtocol": "Disk Image",
+    "VolumeName": "iOS 27.0 Simulator",
+    "DeviceIdentifier": "disk7s1"
+  },
+  "verdict": "EXACT_MOUNT_REPORTS_UNWRITABLE",
+  "statFlags": [
+    {
+      "path": "/private/var/run",
+      "status": "RECORDED_STABLE",
+      "flagsNumeric": "0",
+      "flagsText": "-"
+    },
+    {
+      "path": "/private/var/run/com.apple.security.cryptexd",
+      "status": "RECORDED_STABLE",
+      "flagsNumeric": "0",
+      "flagsText": "-"
+    },
+    {
+      "path": "/private/var/run/com.apple.security.cryptexd/mnt",
+      "status": "RECORDED_STABLE",
+      "flagsNumeric": "0",
+      "flagsText": "-"
+    },
+    {
+      "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ",
+      "status": "RECORDED_STABLE",
+      "flagsNumeric": "0",
+      "flagsText": "-"
+    },
+    {
+      "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist",
+      "status": "RECORDED_STABLE",
+      "flagsNumeric": "0",
+      "flagsText": "-"
+    },
+    {
+      "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist",
+      "status": "RECORDED_STABLE",
+      "flagsNumeric": "0",
+      "flagsText": "-"
+    },
+    {
+      "path": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.iVUyCZ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist",
+      "status": "RECORDED_STABLE",
+      "flagsNumeric": "0",
+      "flagsText": "-"
+    }
+  ],
+  "xcode": {
+    "inputBytes": 34501,
+    "inputSha256": "537783b4c639af6ee31208fe2ec12a40bacbb0fc8f5dd2820f54e03063c4dbe8",
+    "completeJSONBytes": 77555,
+    "completeJSONSha256": "3b78d94ef7ee6f9ab11db94a9b3aa2513c77668ff00fa3227a7a12186ac32d33",
+    "predicates": [
+      {
+        "id": "CFBundleIdentifier",
+        "verdict": "MATCH",
+        "actual": "com.apple.dt.Xcode",
+        "expected": "com.apple.dt.Xcode",
+        "sourceAnchor": "src/observed/allocation-config.ts:181"
+      },
+      {
+        "id": "CFBundleExecutable",
+        "verdict": "MATCH",
+        "actual": "Xcode",
+        "expected": "Xcode",
+        "sourceAnchor": "src/observed/allocation-config.ts:181"
+      },
+      {
+        "id": "LSMinimumSystemVersion",
+        "verdict": "MATCH",
+        "actual": "26.6",
+        "hostVersion": "27.0.1",
+        "hostVersionBasis": "Accepted phase4 host SystemVersion; not reread phase5.",
+        "sourceAnchor": "src/observed/allocation-config.ts:182"
+      }
+    ]
+  },
+  "limits": "Retained output interpretation, not actual production compatibility or namespace trust approval. All7 sampled BSD flags are0/-. Writable /private/var/run root0/daemon1/exact0775 ancestor remains outside Applications-only owner decision. A readonly child mount does not itself pin ancestor path identity or prove SIP. Operator approved parser unavailable; diagnostic hypothetical ReadOnlyVolume property absent, actual output uses WritableVolume=false. No new native probe performed."
+}

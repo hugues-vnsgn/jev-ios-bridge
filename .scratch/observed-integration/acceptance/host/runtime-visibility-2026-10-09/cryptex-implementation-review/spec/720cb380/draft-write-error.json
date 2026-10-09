@@ -1,0 +1,7 @@
+{
+  "scope": "Draft report write syntax error, no candidate operation",
+  "exception": "SyntaxError: expected else after if expression in chmod expression missing a space",
+  "exitCode": 1,
+  "effects": "Python parses before executing; that invocation wrote no files. Corrected formatting only.",
+  "retention": "Exception text transcribed from tool output; original stdout/stderr not separately archived."
+}

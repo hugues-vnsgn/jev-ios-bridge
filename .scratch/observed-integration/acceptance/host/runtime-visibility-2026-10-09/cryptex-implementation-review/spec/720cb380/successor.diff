@@ -1,0 +1,61 @@
+diff --git a/tests/fixtures/observed-cli-server.ts b/tests/fixtures/observed-cli-server.ts
+index dc304eda..fae49f9b 100644
+--- a/tests/fixtures/observed-cli-server.ts
++++ b/tests/fixtures/observed-cli-server.ts
+@@ -16,6 +16,10 @@ import type { ObservedEvidenceStore } from '../../src/observed/evidence.js';
+ import { createObservedComposition, isObservedCommand, validateObservedStartConfiguration } from '../../src/observed/cli.js';
+ import { allocationFixture, fixtureDevice } from './observed-allocation-backend.js';
+ 
++export const mapPublicFixturePath = (root: string, path: string) =>
++  path === root || path.startsWith(root + '/') ? path
++    : path === '/' || /^\/(?:Applications|Library|System|usr|private)(?:\/|$)/.test(path) ? join(root, 'host', path) : path;
++
+ export async function setupPublicFixture(root: string) {
+   const fixture = await allocationFixture();
+   const context = { root: fixture.root, home: fixture.home, store: fixture.store, runsDir: fixture.runsDir, app: fixture.app };
+@@ -32,7 +36,7 @@ export function fixtureObserved(root: string, enabled = true, mode = 'observed',
+     admission = Admission.forTesting({ root: context.store, backend: 'fake', initialize: false,
+       ...(hooks.fault ? { fault: hooks.fault } : {}),
+       ...(mode === 'unresolved' ? { fault(point, operation) { if (point === 'beforeCommit' && operation === 'finalize') throw new Error('Fixture finalization fault'); } } : {}) });
+-    const map = (path: string) => /^\/(?:Applications|Library|System|usr)(?:\/|$)/.test(path) ? join(context.root, 'host', path) : path;
++    const map = (path: string) => mapPublicFixturePath(context.root, path);
+     const fakeFs = { ...fs,
+       lstat: ((p: string, ...args: []) => fs.lstat(map(p), ...args)) as typeof fs.lstat,
+       open: ((p: string, ...args: [number, number?]) => fs.open(map(p), ...args)) as typeof fs.open,
+diff --git a/tests/observed-cryptex-runtime.test.ts b/tests/observed-cryptex-runtime.test.ts
+index 695f7bf3..cea809ca 100644
+--- a/tests/observed-cryptex-runtime.test.ts
++++ b/tests/observed-cryptex-runtime.test.ts
+@@ -10,9 +10,32 @@ import type { Stats } from 'node:fs';
+ import type { SourceProcess } from '../src/observed/create-source.js';
+ import { allocationSourceProcess, developerDirectory, verifyInstalledCompatibility } from '../src/observed/allocation-config.js';
+ import { allocationFixture, typeId, runtimeId, runtimeBundle } from './fixtures/observed-allocation-backend.js';
++import { mapPublicFixturePath } from './fixtures/observed-cli-server.js';
+ import { cryptexFixture, cryptexDirectory, cryptexMount, cryptexRuntimes, cryptexBundle, cryptexInfo,
+   cryptexProfile, cryptexSystem, cryptexRuntimeRoot, readonlyMountXml } from './fixtures/observed-cryptex-runtime.js';
+ 
++const purePublicRoot = '/private/tmp/jev-public-pure-fixture';
++for (const path of ['/', '/private', cryptexInfo]) {
++  test(`the pure public fixture maps ${path} into its temporary host tree`, () => {
++    assert.equal(mapPublicFixturePath(purePublicRoot, path), join(purePublicRoot, 'host', path));
++  });
++}
++for (const path of [purePublicRoot, join(purePublicRoot, 'home'), join(purePublicRoot, 'runs', 'owned.json')]) {
++  test(`the pure public fixture preserves its owned temporary path ${path}`, () => {
++    assert.equal(mapPublicFixturePath(purePublicRoot, path), path);
++  });
++}
++for (const path of ['/Applications/Xcode.app', '/Library/Developer', '/System/Library', '/usr/bin/plutil']) {
++  test(`the pure public fixture preserves installed mapping for ${path}`, () => {
++    assert.equal(mapPublicFixturePath(purePublicRoot, path), join(purePublicRoot, 'host', path));
++  });
++}
++for (const path of ['/private-other', '/Applications-other', '/opt/fixture', 'relative/fixture']) {
++  test(`the pure public fixture preserves unrelated mapping for ${path}`, () => {
++    assert.equal(mapPublicFixturePath(purePublicRoot, path), path);
++  });
++}
++
+ for (const path of ['/', '/private', cryptexInfo]) {
+   test(`the installed fixture maps ${path} into its temporary host tree`, async () => {
+     const fixture = await allocationFixture();

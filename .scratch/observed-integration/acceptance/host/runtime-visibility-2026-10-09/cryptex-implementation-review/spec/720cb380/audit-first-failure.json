@@ -1,0 +1,9 @@
+{
+  "scope": "Review metadata audit error; no candidate command or Source failure",
+  "scriptSha256": "2fae8000ab4f0cf49f54ccd97ac2383f5622cccf1271e6bdc6482fa55d073c6a",
+  "exit": 1,
+  "exception": "KeyError: compiled69 at complete vector context/precommit match",
+  "cause": "Unvalidated precommit manifest predates compiled69 field. Compare its three Source vectors, then separately validate final compiled vector. This record transcribes the tool result; no original process stderr file was emitted.",
+  "productChanged": false,
+  "testsRerun": false
+}

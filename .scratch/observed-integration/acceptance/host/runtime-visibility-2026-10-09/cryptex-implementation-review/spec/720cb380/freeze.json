@@ -1,0 +1,116 @@
+{
+  "actualDefaults": {
+    "24": "1999/1999 zerofail/cancel/skip/todo; actual typecheck/test/build exit0",
+    "26": "1999/1999 zerofail/cancel/skip/todo; actual typecheck/test/build exit0"
+  },
+  "base": "38aa879c3954c9d7742ef04059cad4d2fc824c87",
+  "candidate": "720cb380d07102d72b20a6a4f5f7787a0ab88f2b",
+  "findingCount": 0,
+  "findings": {
+    "incorrectBehavior": [],
+    "missingPartialRequirements": [],
+    "scopeAdditions": []
+  },
+  "frozenAtUtc": "2026-10-09T05:51:15.893057+00:00",
+  "inputPaths": 2305,
+  "oldFailFreezeSha256": "9fb8892a467e96715f9ff9fe66c1f41dec5d202616cfd93cad46e4d33814af49",
+  "oldFailOutputsUnchanged": true,
+  "oracleSha256": "eb5e488151620195f768555d8317ad83b99831109152aa709d701947f72765fd",
+  "outputs": {
+    "audit-first-failure.json": {
+      "bytes": 556,
+      "sha256": "db260242d87ab60fb6b47e56a078039ebbc6fd5f7a9cdb9d6d72ad4eeed89114"
+    },
+    "audit-first.py": {
+      "bytes": 10981,
+      "sha256": "2fae8000ab4f0cf49f54ccd97ac2383f5622cccf1271e6bdc6482fa55d073c6a"
+    },
+    "audit-second-failure.json": {
+      "bytes": 608,
+      "sha256": "17f22cd4740fff3ca4ef03e75432e479c69b1c014115876b9979154e860a14e8"
+    },
+    "audit-second.py": {
+      "bytes": 11093,
+      "sha256": "072ea9f731eef783c69dfdb8a2f44776b8b7c01e1d77e7e103b89f668c587c0d"
+    },
+    "audit.py": {
+      "bytes": 14058,
+      "sha256": "ccd5089e2a17ad985fb6799c7a3d3a1ec6f36d22214e8eb9772879b6e9dc7150"
+    },
+    "clause-correspondence.md": {
+      "bytes": 7504,
+      "sha256": "8d4b7247df916466e77f026490a534baf7c50d5b7c3b03dd23455e5f0943b75c"
+    },
+    "cumulative.diff": {
+      "bytes": 67393,
+      "sha256": "9301db0b648dbd12980bcd5b41af9d6f57840c89b17974d5d2365bc9440f817b"
+    },
+    "draft-write-error.json": {
+      "bytes": 409,
+      "sha256": "64953221b18bd75a34aaf81cdba52f20bb46a78b8b1515f2f3a8847c891d2e7e"
+    },
+    "evidence-audit.md": {
+      "bytes": 5647,
+      "sha256": "6fe49d7792c0144eb05040af9872f5c6ba922eb63421b2a70635fa827dd52c1a"
+    },
+    "input-manifest.json": {
+      "bytes": 680149,
+      "sha256": "e73cbf18caaaba4f502e49a37666e7ff116bed8897e5f6067e4c15fb380724f7"
+    },
+    "preservation-audit.json": {
+      "bytes": 55463,
+      "sha256": "cedd3c93584548bd666eaf808da9584e3051bd072ab83cd30fad7552e6497bed"
+    },
+    "prior-anchor-qualification.json": {
+      "bytes": 528,
+      "sha256": "48ae6f377332ee502086886a742f800df2960ef217d532997ff0cf9009b47f2b"
+    },
+    "prior-clause-correspondence.md": {
+      "bytes": 12272,
+      "sha256": "d86524ab1afe2d8cdfd83ca54e1a3ec039c0bb4bcf73fa766cb8508d57088067"
+    },
+    "receipt-audit.json": {
+      "bytes": 1128694,
+      "sha256": "295cad62a46e587320047d89bc6153eb7a21dac12eec40bd63f75af8a201bac8"
+    },
+    "report.md": {
+      "bytes": 1926,
+      "sha256": "412b99d2b4bb54c93107ebb6ab73495a19154626cd8723c7d09c960d99c536da"
+    },
+    "snapshots/src/observed/allocation-config.ts": {
+      "bytes": 31610,
+      "sha256": "7d5798570970ca8de9fcca980b39662c4cf2b9be939e1ad31f23e9383e82fe62"
+    },
+    "snapshots/tests/fixtures/observed-allocation-backend.ts": {
+      "bytes": 10534,
+      "sha256": "021a93e539ebb56ffb3cac8b15d2b77b8ce838f3fb77f9e9ef31ff3ed3fa894a"
+    },
+    "snapshots/tests/fixtures/observed-cli-server.ts": {
+      "bytes": 8487,
+      "sha256": "eb1ee9f4215fff24f70867e904c3817d0528a6c7c35efa97bc50ecce6ff63669"
+    },
+    "snapshots/tests/fixtures/observed-cryptex-runtime.ts": {
+      "bytes": 9511,
+      "sha256": "a4fda3b5fbdd0addef8b4b12892ad66b9b454e765c35a8eff89c7ff8999a8da6"
+    },
+    "snapshots/tests/observed-cryptex-runtime.test.ts": {
+      "bytes": 30986,
+      "sha256": "5d83f729916adec23cce5598e0afb51e84f8842b4af10dc6df37925e90b43bd6"
+    },
+    "source-audit.json": {
+      "bytes": 142241,
+      "sha256": "c9423ebe558f320100a6548cf0969e52acc1ac3a60ab1ead5459b1e4df663673"
+    },
+    "successor.diff": {
+      "bytes": 4115,
+      "sha256": "8cab36636d3bf9d9735f752f8a776f62a06801db8182dba0c1781c84bc2b89c7"
+    }
+  },
+  "parent": "dadde33a36440db6d9414adf84f80916caa9d2b3",
+  "permissions": "directories700/files600",
+  "policySha256": "e8cbff80f2a1610a6e0b4ec1b372086e490f0bc8a8030d6ecf2e5c7105859d13",
+  "rootMirroredEvidenceFilesRehashed": 952,
+  "scopeLimits": "Static retained candidate Spec review only; installed/physical/native/live/ticket12 acceptance remains unverified; mode/ACL/atomic-pin and Xcode retained-byte qualifications preserved.",
+  "sourceEvidenceChecks": 257,
+  "verdict": "PASS"
+}

@@ -1,0 +1,8 @@
+{
+  "scope": "Root retained-evidence audit tooling error, no product/gate failure",
+  "reportedFailure": "AssertionError:26 test/typecheck/build markers",
+  "originalExpression": "markers hardcoded jev-ios-bridge@1.0.0",
+  "confirmedCause": "Frozen package.json and both raw defaults identify1.3.1. Wrong Root version assumption; all three original actual1.3.1 stages observed.",
+  "correction": "Derive version from the hash-bound frozen package.json and require its exact test/typecheck/build marker strings. No product edit/test rerun.",
+  "originalStderrRetention": "failure text transcribed from tool result; original full stderr not stored separately"
+}

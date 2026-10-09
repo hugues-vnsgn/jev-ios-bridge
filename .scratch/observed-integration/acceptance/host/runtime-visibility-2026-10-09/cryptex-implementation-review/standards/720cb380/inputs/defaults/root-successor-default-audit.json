@@ -1,0 +1,142 @@
+{
+  "atUtc": "2026-10-09T05:45:17.549679+00:00",
+  "candidate": "720cb380d07102d72b20a6a4f5f7787a0ab88f2b",
+  "packageVersion": "1.3.1",
+  "scope": "Root retained raw default correspondence; not integrated physical/installed/native/live acceptance",
+  "checks": [
+    {
+      "name": "hash-bound package version",
+      "pass": true
+    },
+    {
+      "name": "actual-default-cli-summary.json frozen hash",
+      "pass": true
+    },
+    {
+      "name": "verification-index-cli-defaults.json frozen hash",
+      "pass": true
+    },
+    {
+      "name": "implementation-final-report.md frozen hash",
+      "pass": true
+    },
+    {
+      "name": "26 raw output hashes",
+      "pass": true
+    },
+    {
+      "name": "26 unmodified command",
+      "pass": true
+    },
+    {
+      "name": "26 raw1999 counts",
+      "pass": true
+    },
+    {
+      "name": "26 actual close and exit0",
+      "pass": true
+    },
+    {
+      "name": "26 source and protected",
+      "pass": true
+    },
+    {
+      "name": "26 compiled69",
+      "pass": true
+    },
+    {
+      "name": "26 test/typecheck/build markers",
+      "pass": true
+    },
+    {
+      "name": "26 receipt binding",
+      "pass": true
+    },
+    {
+      "name": "24 raw output hashes",
+      "pass": true
+    },
+    {
+      "name": "24 unmodified command",
+      "pass": true
+    },
+    {
+      "name": "24 raw1999 counts",
+      "pass": true
+    },
+    {
+      "name": "24 actual close and exit0",
+      "pass": true
+    },
+    {
+      "name": "24 source and protected",
+      "pass": true
+    },
+    {
+      "name": "24 compiled69",
+      "pass": true
+    },
+    {
+      "name": "24 test/typecheck/build markers",
+      "pass": true
+    },
+    {
+      "name": "24 receipt binding",
+      "pass": true
+    },
+    {
+      "name": "actual defaults serialized",
+      "pass": true
+    }
+  ],
+  "gates": {
+    "26": {
+      "receipt": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-default-cli-node26/command.json",
+      "receiptSha256": "21a6672518c72857b9f29fce13d7752d1060f956e076f3192c355d40967751dd",
+      "result": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-default-cli-node26/result.json",
+      "resultSha256": "5a5c49b48229e18a57f7c6467c13c03f4047163f1155b898f8ed798dbc9ced2e",
+      "stdoutSha256": "8dfeb68756f8c323f055fd452ca36c2fd7dc82e7280e913ac92f3d58f5849201",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "counts": {
+        "tests": 1999,
+        "pass": 1999,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exit": 0,
+      "start": "2026-10-09T05:37:38.158706+00:00",
+      "close": "2026-10-09T05:40:12.085349+00:00"
+    },
+    "24": {
+      "receipt": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-default-cli-node24/command.json",
+      "receiptSha256": "7f3ecda0cbb2c004ef96b9839411afe435ac6592028aa9e16a1fc76a33b4d56b",
+      "result": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-default-cli-node24/result.json",
+      "resultSha256": "71910371c916f7c81d40a77e340078559c77e392942a400e8c5ba3d931cf0d20",
+      "stdoutSha256": "5a6aacb852c405485930c229117e34e0fd1b4991eb26d73909552a2d18b241e6",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "counts": {
+        "tests": 1999,
+        "pass": 1999,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exit": 0,
+      "start": "2026-10-09T05:40:12.358828+00:00",
+      "close": "2026-10-09T05:42:55.802271+00:00"
+    }
+  },
+  "frozenFinalInputs": {
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/actual-default-cli-summary.json": "726023c1c6e5df25db6f01e4a4db64dd3d80e735889b1ab6d1c1cf1da064dc30",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/verification-index-cli-defaults.json": "1af4ef3f6de746e25ba054f6ad7bfc9df5057d2bfd15ea489181486b563c74a7",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-cryptex-runtime/implementation-final-report.md": "c9bc2f402bf7e7c169d353750179853959267af58dd4034dff9321e2dd1ba2f9"
+  },
+  "oldFailure": "dad26 1985/1858/127 retained; dad24 held/unexecuted",
+  "independentFinalReview": "pending",
+  "rootPhysicalGates": "pending",
+  "actualCompatibility": "UNVERIFIED",
+  "liveRows": "L01-L05 UNVERIFIED"
+}
