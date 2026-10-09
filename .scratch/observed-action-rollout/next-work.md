@@ -1,6 +1,31 @@
 # Remaining observed workflow execution
 
-## Current checkpoint: installed gates passed; legacy volume refused
+## Current checkpoint: corrective host repair in final validation
+
+Tickets01–10 and H01–H09 are accepted. Ticket11's five live cases and ticket12's final independent review remain unstarted. The v1.0.0 release was published on2026-09-26; this page tracks the later observed workflow rollout.
+
+The first legacy implementation,4fa9cc99, failed independent Spec review: P1 allowed an observed mount identity change to escape later metadata validation; P2 allowed a file-stat call after cancellation during open or EOF read. Standards passed with no findings. Root rehashed13842 Spec inputs/17 outputs and625 Standards inputs/77 outputs. [Spec report](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-implementation-review/spec/4fa9cc99/report.md), [Standards report](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-implementation-review/standards/4fa9cc99/report.md), [Root Standards binding](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-implementation-review/root-standards-4fa-review-binding.json).
+
+The original author checkout remains frozen. The existing author is correcting P1/P2 in the separate `fix-installed-legacy-binding` checkout under the [bounded dispatch](legacy-review-correction-dispatch.md). Genuine42 failing regressions were recorded on both exact Nodes. The corrected Source now passes746 focused cases,595 coverage cases, typecheck and build on both26.8.1/24.0.0. Final Source443/compiled69 freeze and actual unmodified full defaults are next. This is progress, not candidate acceptance. All440 protected Source paths and prior assertions remain protected; the earlier Node24 failure and unresolved lower cause remain recorded.
+
+Integration still contains the accepted441Source/69compiled Cryptex product. Neither4fa nor the working correction has been integrated. The sole GPT-6.1-Sol xhigh operator is idle. No additional owner approval is pending.
+
+## Current execution order
+
+| Order | Work | Completion evidence |
+| --- | --- | --- |
+| 1 — active | Author freezes the corrected443Source/69compiled candidate and runs full defaults serially on both exact Nodes | Actual unchanged official commands, full raw results and child close, build reached, unchanged vectors, zero skips; preserve any failure and stop for diagnosis. |
+| 2 | Independent Spec and Standards review the frozen corrected candidate | Both axes PASS with no unresolved findings, P1/P2 and all42 regressions checked, precise input/output seals. |
+| 3 | Author proves final-candidate clean npm/plugin installations and wrapped startup |37 commands per Node and fixed startup proofs, all69 payloads bound. These gates precede Source integration. |
+| 4 | Root integrates only the three approved Source files and runs fresh physical host/distribution gates | Exact443Source/440protected/69compiled correspondence, both full defaults/typecheck/build, both37-command clean proofs and startup, original15 host artifacts preserved. |
+| 5 | The sole operator runs one real iPhone17/iOS27.0 compatibility lookup | [Prepared recheck](legacy-compatibility-recheck.md), reviewed pure guard checks, lossless traces, exact returned compatibility and all child closes. A refusal or uncertainty stops the single attempt. |
+| 6 | The sole operator completes operational entry | [Prepared entry](operational-entry-after-legacy-compatibility.md): effective config/default digest, migration once, capacity/storage and unchanged fixture/Weather generic simulator builds with Source/app hashes. |
+| 7 | The sole operator executes L01–L05 serially | All five public CLI/MCP outcomes and effect counts pass; retain all five allocations within the eight-allocation limit. |
+| 8 | Independent nonauthor gpt-6-astra high completes ticket12; Root reports merge readiness | All required host/live rows and safety review PASS. No automatic merge, push or publication. |
+
+There is no reliable finish time until the repaired bridge passes actual installed compatibility. The next measurable milestone is acceptance of the corrected host candidate. The earlier checkpoints below are retained history and do not supersede this order.
+
+## Earlier checkpoint: installed gates passed; legacy volume refused
 
 Fresh integrated physical defaults passed1999/1999 with typecheck/build on both exact Nodes. Both clean npm/plugin37-command proofs and wrapped startup passed; Root audited all69 compiled payload files. [Distribution binding](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-repaired-distribution-binding.json).
 
@@ -18,7 +43,7 @@ The current prerequisite diagnosis is complete. Stable direct metadata confirms 
 
 The unchanged bridge refused `/Applications` mode0775 before reading runtime metadata. Its discovery also excludes the Cryptex path, and the stable 34,501-byte Xcode plist expands to 77,555 JSON bytes, beyond its 64KiB output limit. These findings supersede the earlier installation-only advice. Actual production compatibility remains UNVERIFIED.
 
-## Execution order
+## Earlier execution order
 
 | Order | Work and owner | Completion evidence |
 | --- | --- | --- |
