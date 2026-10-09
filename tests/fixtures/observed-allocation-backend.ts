@@ -31,7 +31,8 @@ export async function allocationFixture(options: { now?: () => number; fault?: N
   const configPath = join(configDirectory, 'allocation.json');
   const configure = (settings: Record<string, unknown> = {}) => writeFileSync(configPath, JSON.stringify({ version: 1, ...fixtureBudgets, inventory: [], ...settings }), { mode: 0o600 });
   configure();
-  const map = (path: string) => /^\/(?:Applications|Library|System|usr)(?:\/|$)/.test(path) ? join(root, 'host', path) : path;
+  const map = (path: string) => path === root || path.startsWith(root + '/') ? path
+    : path === '/' || /^\/(?:Applications|Library|System|usr|private)(?:\/|$)/.test(path) ? join(root, 'host', path) : path;
   const write = (path: string, value: unknown, mode = 0o644) => {
     const target = map(path); mkdirSync(join(target, '..'), { recursive: true, mode: 0o700 });
     writeFileSync(target, typeof value === 'string' ? value : JSON.stringify(value), { mode });
