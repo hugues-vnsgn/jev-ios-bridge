@@ -23,3 +23,7 @@ Use `/root/installed_path_standards_review`. Apply documented repo standards and
 ## Completion
 
 Freeze separate reports, input/output hash manifests and auditable correspondence. Each axis must state PASS, FAIL or UNVERIFIED for this delta, with exact base/candidate and evidence limitations. The author cannot review its own implementation. These reviews do not accept repaired installed startup, actual native compatibility, live cases or ticket12.
+
+## Bounded re-review after public fixture failure
+
+Old dadde33a has a failed Node26 default and one fixture-boundary Spec gap; exact24 default is held. Root transfers only the separate public child mapper in tests/fixtures/observed-cli-server.ts, with original hash and pure-string red/green both Nodes. Read the new cryptex-public-fixture-map-ownership.json receipt before the new candidate. Review that fifth-file delta and updated tests/manifests; protect436 baseline paths and require441 Source/69 compiled plus both actual default gates. The production Source policy remains unchanged. Preserve old four-file/static reviews and every failure.

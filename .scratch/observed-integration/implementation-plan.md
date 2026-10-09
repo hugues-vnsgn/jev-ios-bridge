@@ -134,3 +134,7 @@ Root also transferred only the exact `/` mapping branch to the temporary install
 ## Preserve owned temporary fixture paths
 
 Root transferred a leading identity branch for the fixture root and descendants, which live under `/private/tmp`, before the installed private-prefix mapper. This preserves prior app/home/config/store paths. Retain pure-string red/green both Nodes and all original assertions. Four owned files,437 protected/441 total remain unchanged. Two accidentally overlapping focused runs stalled at an unreachable config-lstat barrier; only those verified owned fake-test trees may be terminated, preserving wrappers/raw final receipts. Both must close before edits or new validation; authoritative focused reruns are serial. No native policy extension or device/store effects.
+
+## Cryptex default gate exposed public fixture boundary
+
+Old candidate dadde33a final491focused/340coverage/typecheck/build passed both Nodes, but actual Node26 default failed1985tests/1858pass/127fail,0cancel/skip/TODO. Exact24 held. Separate public fixture mapper lacked private/slash isolation and could read native namespace stats; injected Source rejects diskutil before child launch. Root transfers only its mapper expression with original e0bffe3d hash and pure-string red/green both Nodes. New freeze has five owned files,436 protected of439 baseline,441 total/69compiled; Source7d unchanged. Both final checks/reviews and actual defaults must pass before Root integration/installed/native entry. Original failures and scoped old reviews remain.
