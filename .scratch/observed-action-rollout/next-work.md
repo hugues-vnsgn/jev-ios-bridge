@@ -1,5 +1,13 @@
 # Remaining observed workflow execution
 
+## Current checkpoint: installed gates passed; legacy volume refused
+
+Fresh integrated physical defaults passed1999/1999 with typecheck/build on both exact Nodes. Both clean npm/plugin37-command proofs and wrapped startup passed; Root audited all69 compiled payload files. [Distribution binding](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-repaired-distribution-binding.json).
+
+The sole operator then ran the actual compatibility lookup exactly once at full HEAD e971d331, Source3edf247a. It returned HOST_PREREQUISITE_MISSING/exit3 without a guard mismatch: the older iOS_22G86 Profiles directory is uid0/gid80/0775 and the preserved strict legacy-volume rule rejects it. Cryptex discovery was not reached. Root audited2169 provenance checks over693 private files. [Refusal](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/refusal-report.md), [audit](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-repaired-compatibility-audit.json).
+
+Next: the same operator performs the [bounded two-volume manual diagnosis](legacy-volume-diagnosis.md), while Root prepares and independently reviews the [new legacy policy proposal](../observed-integration/acceptance/host/runtime-visibility-2026-10-09/legacy-volume-policy-proposal.md). Cryptex approval preserved strict Volumes checks, so this extension needs a separate owner decision before implementation. Migration, app builds, devices, L01–L05 and ticket12 remain unstarted. The historical sections below retain their original checkpoint chronology.
+
 ## Latest result
 
 Tickets 01 through 10 and H01 through H09 are accepted for the original product `b618116d3d72a9bbd6f9a9fdcc4da325bc9dc433`: actual default checks passed 1,675 tests, typecheck and build on Node 26.8.1 and exact Node 24.0.0. Clean npm/plugin proofs passed 37 commands per runtime. [Accepted host report](../observed-integration/acceptance/host/report.md).

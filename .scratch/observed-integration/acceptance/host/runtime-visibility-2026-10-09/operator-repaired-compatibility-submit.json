@@ -1,0 +1,23 @@
+{
+  "atUtc": "2026-10-09T06:14:29.104149+00:00",
+  "fullIntegratedHead": "e971d3312b595a5d841b1d70288302c40f7a5b70",
+  "message": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-action-rollout/repaired-compatibility-dispatch.txt",
+  "messageSha256": "d8f49f8a16fb84b95148b88f88dd16eefec1dd7d22b8c8d6bbe2bfc8f30aa9c7",
+  "commandWithoutMessage": [
+    "/usr/local/bin/orca",
+    "terminal",
+    "send",
+    "--terminal",
+    "term_19640861-824c-4f24-8789-3f584723bc5a",
+    "--text",
+    "<exact message file>",
+    "--enter",
+    "--wait-submit",
+    "10",
+    "--json"
+  ],
+  "exit": 0,
+  "stdoutSha256": "3b621028584e68f2b28a29979b4236d4118cf084c2fc4a286f19f5c63dfb0e4c",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "scope": "Single input submission receipt; no turn completion inferred"
+}

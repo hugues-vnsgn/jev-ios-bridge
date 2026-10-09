@@ -1,0 +1,80 @@
+{
+  "outerShellCommand": "env -u TYPESAFE_API_KEY -u NODE_OPTIONS -u NODE_NO_WARNINGS /opt/homebrew/Cellar/node/26.8.1/bin/node .scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/run.mjs",
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+  "argv": [
+    "/opt/homebrew/Cellar/node/26.8.1/bin/node",
+    "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/operator-repaired-compatibility/probe.mjs"
+  ],
+  "probeEnvironment": {
+    "HOME": "/Users/hugues_mini",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+  },
+  "outerEnvironmentNames": [
+    "ANTHROPIC_DEFAULT_OPUS_MODEL",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL",
+    "API_TIMEOUT_MS",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC",
+    "CODEX_CI",
+    "CODEX_SESSION_ID",
+    "CODEX_THREAD_ID",
+    "CODEX_VERSION",
+    "COLORTERM",
+    "DISABLE_TELEMETRY",
+    "FPATH",
+    "GH_PAGER",
+    "GIT_PAGER",
+    "HOME",
+    "HOMEBREW_CELLAR",
+    "HOMEBREW_PREFIX",
+    "HOMEBREW_REPOSITORY",
+    "INFOPATH",
+    "LANG",
+    "LC_ALL",
+    "LC_CTYPE",
+    "LOGNAME",
+    "NO_COLOR",
+    "OLDPWD",
+    "PAGER",
+    "PATH",
+    "PWD",
+    "SHELL",
+    "SHLVL",
+    "TERM",
+    "TMPDIR",
+    "USER",
+    "_",
+    "__CF_USER_TEXT_ENCODING"
+  ],
+  "scrubbed": [
+    "TYPESAFE_API_KEY",
+    "NODE_OPTIONS",
+    "NODE_NO_WARNINGS"
+  ],
+  "node": "v26.8.1",
+  "startedAtUtc": "2026-10-09T06:22:10.350Z",
+  "outerCaptureLimitBytes": 536870912,
+  "outerSignalPolicy": "No additional signals or deadline; production shared60s and child deadlines/termination/close handling preserved.",
+  "events": [
+    {
+      "atUtc": "2026-10-09T06:22:11.028Z",
+      "event": "exit",
+      "code": 3,
+      "signal": null
+    },
+    {
+      "atUtc": "2026-10-09T06:22:11.028Z",
+      "event": "close",
+      "code": 3,
+      "signal": null
+    }
+  ],
+  "pid": 15855,
+  "code": 3,
+  "signal": null,
+  "closedAtUtc": "2026-10-09T06:22:11.028Z",
+  "capturedBytes": 14385783,
+  "captureComplete": true
+}
