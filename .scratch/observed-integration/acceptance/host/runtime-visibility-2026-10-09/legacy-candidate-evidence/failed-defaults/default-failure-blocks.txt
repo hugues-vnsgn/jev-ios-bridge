@@ -1,0 +1,35 @@
+✖ failing tests:
+
+test at tests/observed-artifact.test.ts:133:1
+✖ metadata cancellation refuses even when its process ignores the abort (1001.854166ms)
+  'test timed out after 1000ms'
+
+test at tests/observed-crash.test.ts:79:112
+✖ H06.03 genuine cli beforeCommit finalization response fault preserves authority (9862.215334ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-crash.test.ts:94:10)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual'
+  }
+
+test at tests/observed-public-races.test.ts:68:15
+✖ H05.01 mcp durable external preparation cancel at backend:snapshot-ui:1 fences successors (8311.597542ms)
+  AssertionError [ERR_ASSERTION]: Fixture setup: milestone backend:snapshot-ui:1 not reached
+      at Object.milestone (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/fixtures/observed-host/harness.ts:108:14)
+      at async TestContext.<anonymous> (/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/tests/observed-public-races.test.ts:73:5)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '=='
+  }

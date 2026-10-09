@@ -1,0 +1,6 @@
+{
+  "atUtc": "2026-10-09T08:30:00.195505+00:00",
+  "failure": "Root initial preservation indexing expected operationalFileExclusions; final manifest uses operationalExclusions, causing KeyError after all new immutable files had been copied.",
+  "repair": "Read-only rehash of every already copied file and exact manifest; corrected metadata field. No file overwrite, Source/gate/native change or rerun.",
+  "transcriptScope": "Summary of retained tool failure; not a separate contemporaneous command-recorder receipt."
+}

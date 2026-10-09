@@ -1,0 +1,19 @@
+{
+  "startedAtUtc": "2026-10-09T08:38:43.685546+00:00",
+  "childPid": 31553,
+  "childProcessGroup": 31553,
+  "argv": [
+    "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-name-pattern",
+    "^(?:metadata cancellation refuses even when its process ignores the abort|H06\\.03 genuine cli beforeCommit finalization response fault preserves authority|H05\\.01 mcp durable external preparation cancel at backend:snapshot-ui:1 fences successors)$",
+    "tests/observed-artifact.test.ts",
+    "tests/observed-crash.test.ts",
+    "tests/observed-public-races.test.ts"
+  ],
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+  "cohort": "candidate",
+  "repetition": 3
+}

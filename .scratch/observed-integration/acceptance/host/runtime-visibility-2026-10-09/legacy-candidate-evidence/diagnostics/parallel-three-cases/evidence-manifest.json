@@ -1,0 +1,3659 @@
+{
+  "root": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-legacy-volume-runtime/diagnostics/parallel-three-cases",
+  "files": {
+    "baseline/cohort-summary.json": {
+      "sha256": "9414bc58f9a7f8a7a895c9e62d9f4dc892b57622fc397f0059cef3fba49227c9",
+      "bytes": 60953,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/command.json": {
+      "sha256": "d3f6d416350e660f163bb43d172bc3d634b2b2c11cd9b255245f9dc3a6ae728e",
+      "bytes": 119110,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/home/Library/Application Support/jev-ios-bridge/allocation.json": {
+      "sha256": "e22438045b1dc33e8941fb6347ad363e95cbc14e4aef63bf8918dfd2923708e5",
+      "bytes": 332,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/host/Applications/Xcode.app/Contents/Developer/usr/bin/simctl": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/host/Applications/Xcode.app/Contents/Info.plist": {
+      "sha256": "bbe9c6ef361fea7e082c8a1acf93936c8905952630ac7e324c0e998fc8169581",
+      "bytes": 104,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/host/Applications/Xcode.app/Contents/MacOS/Xcode": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/host/Applications/Xcode.app/Contents/version.plist": {
+      "sha256": "14e2c88b0bd45158c1fd656cf8207af19c4a0fff6b300fd149808b311804ed82",
+      "bytes": 73,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist": {
+      "sha256": "655962b97c2250caf055fec5909bc563029e0cade48e65ad918ceecc1e279241",
+      "bytes": 72,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist": {
+      "sha256": "dff388e2802bb899dc33ed97e6cf9c5855375670937a2498c8716c8d304c962c",
+      "bytes": 96,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist": {
+      "sha256": "964ac4022b92fafe9c18c5dae333910c767a3fc53bef34ffeb523a450f898339",
+      "bytes": 130,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f1e3cd18e86080b1ad80d932d86de1752b2d7c9a0ed5d7513308a87dd300a611",
+      "bytes": 63,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist": {
+      "sha256": "d477305bd24624e11fc4db881743c5f1efa07e1344c8ff101ce9983d7f837675",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/host/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f4beba350d84ed39629a3ee7d3c2d1028fbf41c1e3a23755de12e4c3ffe26dbd",
+      "bytes": 62,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/host/usr/bin/plutil": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/host/usr/bin/xcrun": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/runs/leases/ABCDEF00-0000-4000-8000-000000000001.lock": {
+      "sha256": "e6a8e8c4c5a7c12e1cb229b38891dd90fb9888c60accbe12a2fd58a976b174a9",
+      "bytes": 149,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/runs/observed/one/allocation/host-prerequisites.json": {
+      "sha256": "c40b4359f8f36678b4ee44a06ffd455c0dfe291a782f574b84c966abeb8ff89a",
+      "bytes": 151,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/runs/observed/one/allocation/preparation-request.json": {
+      "sha256": "dbc9400b52e86480dd1cf5abed4d32d2667632d4aed5b41563aa6c5aa4e7ded4",
+      "bytes": 349,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/runs/observed/one/allocation/source-diagnostics.json": {
+      "sha256": "5c42daf2a1c0de6226f46199e1f493c5e8eb91c7c370ea4e805a8da096fc5843",
+      "bytes": 2148,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/runs/observed/one/allocation/staging/artifact-y3va0g/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o500",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/runs/observed/one/allocation/staging/artifact-y3va0g/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o400",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/store/admission.sqlite": {
+      "sha256": "3a76c191e0088f4fb02efe804f7a212039d048cbfadb558155976b6b22335d3b",
+      "bytes": 73728,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/backend/store/installation.json": {
+      "sha256": "822f6002035d6a06b47f54e29859c064142464b7868326eff9ccf5b8ef7b3842",
+      "bytes": 123,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/public/action.json": {
+      "sha256": "34962d0a67898fe77c08112bd2a2adc71dfa6501e55cc1cb56ecc502def5f2db",
+      "bytes": 284,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/public/calls.jsonl": {
+      "sha256": "e5fe6e812f4a7f3118fad30b25e29696e6f5edee590d07d7269db6008b6a0988",
+      "bytes": 168,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/public/command-1.json": {
+      "sha256": "c5f9782fa7244f0f8a8be1ee326954103cfd5e2e287c59e69adb1b8ab81fc140",
+      "bytes": 2037,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/public/command-2.json": {
+      "sha256": "bbd6ba3a01d0d0646f5195b00ead92d343de3475a66490f1f8d764b71a1c12cc",
+      "bytes": 625,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/public/command-3.json": {
+      "sha256": "56831efc587a8fec572da69e6ac162e2ce304c3df08a0b373c70bf4518a42142",
+      "bytes": 895,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/public/fixture.json": {
+      "sha256": "cad93a58533c822d001dae8cbc3e207b9de84037da53c890e08afbfba4b4115f",
+      "bytes": 272,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/public/mcp-requests.jsonl": {
+      "sha256": "251697c3e839dc9932167bd99a6d51a43ddec7fabd61860ae96820416afe6dc0",
+      "bytes": 642,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/public/milestones.jsonl": {
+      "sha256": "5416b8e7166cb30c3264787c4000eeb85cc7dc1550098f8115407709e2bb911e",
+      "bytes": 2754,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/public/release": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ASFuQi/public/test-context.json": {
+      "sha256": "6a76765aea39b14c99dd1f0b846582ddd8dceffa5d0aa3d79fbdc87e0a6b49f2",
+      "bytes": 100,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/home/Library/Application Support/jev-ios-bridge/allocation.json": {
+      "sha256": "e22438045b1dc33e8941fb6347ad363e95cbc14e4aef63bf8918dfd2923708e5",
+      "bytes": 332,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/host/Applications/Xcode.app/Contents/Developer/usr/bin/simctl": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/host/Applications/Xcode.app/Contents/Info.plist": {
+      "sha256": "bbe9c6ef361fea7e082c8a1acf93936c8905952630ac7e324c0e998fc8169581",
+      "bytes": 104,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/host/Applications/Xcode.app/Contents/MacOS/Xcode": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/host/Applications/Xcode.app/Contents/version.plist": {
+      "sha256": "14e2c88b0bd45158c1fd656cf8207af19c4a0fff6b300fd149808b311804ed82",
+      "bytes": 73,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist": {
+      "sha256": "655962b97c2250caf055fec5909bc563029e0cade48e65ad918ceecc1e279241",
+      "bytes": 72,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist": {
+      "sha256": "dff388e2802bb899dc33ed97e6cf9c5855375670937a2498c8716c8d304c962c",
+      "bytes": 96,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist": {
+      "sha256": "964ac4022b92fafe9c18c5dae333910c767a3fc53bef34ffeb523a450f898339",
+      "bytes": 130,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f1e3cd18e86080b1ad80d932d86de1752b2d7c9a0ed5d7513308a87dd300a611",
+      "bytes": 63,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist": {
+      "sha256": "d477305bd24624e11fc4db881743c5f1efa07e1344c8ff101ce9983d7f837675",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/host/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f4beba350d84ed39629a3ee7d3c2d1028fbf41c1e3a23755de12e4c3ffe26dbd",
+      "bytes": 62,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/host/usr/bin/plutil": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/host/usr/bin/xcrun": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/runs/observed/one/allocation/host-prerequisites.json": {
+      "sha256": "c40b4359f8f36678b4ee44a06ffd455c0dfe291a782f574b84c966abeb8ff89a",
+      "bytes": 151,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/runs/observed/one/allocation/preparation-request.json": {
+      "sha256": "055b5c5132045f659b9e302e55f74e3f9936ca15f1a00bb7d2a2c0bd327dcd8e",
+      "bytes": 349,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/runs/observed/one/allocation/readiness-1.json": {
+      "sha256": "f8b99c0beed32cb696be344b8a6b22d1e2980c8fc81bedf02be8ddab44f56379",
+      "bytes": 324,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/runs/observed/one/allocation/source-diagnostics.json": {
+      "sha256": "79f945c0e05d8b6be437466bf80a51399efe97d9b9111979959097e73ed21074",
+      "bytes": 2064,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/runs/observed/one/allocation/staging/artifact-jBMk7Q/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o500",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/runs/observed/one/allocation/staging/artifact-jBMk7Q/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o400",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/runs/observed/one/observation-1.json": {
+      "sha256": "65a47bde607fa0cf045a9a1182bd78768c931c2ee3352978a19f0b92f243c528",
+      "bytes": 518,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/runs/observed/one/observation-2.json": {
+      "sha256": "d37ba1955f00c995b4b3b375dcdc1f7474d5799153fa91d708600192943476d5",
+      "bytes": 522,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/runs/observed/one/provisional-result.json": {
+      "sha256": "a48aeee715d494b80155f987499fcd024eb9842b6b46b4fe33770385075c4840",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/runs/observed/one/request.json": {
+      "sha256": "10bb91ed76ae2904e22a3e42797281a7abed494f131fddff1f4d990f4f0db50b",
+      "bytes": 467,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/store/admission.sqlite": {
+      "sha256": "67164f7ea6809e846281a343dd51695cd0da28dba6ac9e9db0c31c45aebd1647",
+      "bytes": 81920,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/backend/store/installation.json": {
+      "sha256": "8e9a621bccf3468353f277380a077f3e0b4803a63734e82d72ee3b3e707233a1",
+      "bytes": 123,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/public/calls.jsonl": {
+      "sha256": "7977f9a81875a2fa06df9478ac4373cb1d6d63c02052d4d13f05670b3b048254",
+      "bytes": 243,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/public/command-1.json": {
+      "sha256": "5fae52f7ef524069f9046ac346a24768b504c8a4f9fd0ff39ea88fdfc687bf9e",
+      "bytes": 1352,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/public/command-2.json": {
+      "sha256": "37a653b548c82098adaee7811571f7b9b5887d5bb614c0c502f88c8f4abff85c",
+      "bytes": 1336,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/public/command-3.json": {
+      "sha256": "24178a60fdd6946375cafcf561a534419300961de2bb863a9364952a8c006be7",
+      "bytes": 1256,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/public/fixture.json": {
+      "sha256": "df1781662fe189a812569835e94ea3acf73a810adc64df9681568c9126b2a435",
+      "bytes": 272,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/public/milestones.jsonl": {
+      "sha256": "114ea0bb0466932c6ae61187c3c6144afc93859fe82d4ecf722bf9d5ad2662b1",
+      "bytes": 4744,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/public/prepare.json": {
+      "sha256": "65a7da2061a830dfaabcfc438fffabdbe29bae7da2d245535b4d26242be3dcae",
+      "bytes": 330,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/public/public-waits.jsonl": {
+      "sha256": "9fbb412af507c06cc39959f1de8a803ca92a79d34cebd55535c5553e80759b83",
+      "bytes": 1895,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/public/request.json": {
+      "sha256": "db08a271f015bf31acfc129fcb7484793847feda0fc95a806d5dfe8dd3f0db79",
+      "bytes": 284,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/host-evidence/jev-host-fault-ytPrnS/public/test-context.json": {
+      "sha256": "a35a0260b4800b4c159f5f228857ec96c902c7fe3d0cd69f64808df355849a98",
+      "bytes": 90,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/job.json": {
+      "sha256": "beef94c45e01107e20f6331dbc7f35193637947ee5740026b7508de41e3ac6e5",
+      "bytes": 60432,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/started.json": {
+      "sha256": "236b42b8a0a0e4cb2e0ebfa8ba64ab646edc9d873870aa7fc2cd958697b0f714",
+      "bytes": 784,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-1/stdout.txt": {
+      "sha256": "20f7374adb4ec1b5a76f5fdeba0e4d265a8d8afe6e6490fb3556561248ebc263",
+      "bytes": 752,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/command.json": {
+      "sha256": "13c6567a2389d4d0040530eb6b9e7cb7fdb5c35dac5614b4e05cb8382061ae64",
+      "bytes": 119110,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/home/Library/Application Support/jev-ios-bridge/allocation.json": {
+      "sha256": "e22438045b1dc33e8941fb6347ad363e95cbc14e4aef63bf8918dfd2923708e5",
+      "bytes": 332,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/host/Applications/Xcode.app/Contents/Developer/usr/bin/simctl": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/host/Applications/Xcode.app/Contents/Info.plist": {
+      "sha256": "bbe9c6ef361fea7e082c8a1acf93936c8905952630ac7e324c0e998fc8169581",
+      "bytes": 104,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/host/Applications/Xcode.app/Contents/MacOS/Xcode": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/host/Applications/Xcode.app/Contents/version.plist": {
+      "sha256": "14e2c88b0bd45158c1fd656cf8207af19c4a0fff6b300fd149808b311804ed82",
+      "bytes": 73,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist": {
+      "sha256": "655962b97c2250caf055fec5909bc563029e0cade48e65ad918ceecc1e279241",
+      "bytes": 72,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist": {
+      "sha256": "dff388e2802bb899dc33ed97e6cf9c5855375670937a2498c8716c8d304c962c",
+      "bytes": 96,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist": {
+      "sha256": "964ac4022b92fafe9c18c5dae333910c767a3fc53bef34ffeb523a450f898339",
+      "bytes": 130,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f1e3cd18e86080b1ad80d932d86de1752b2d7c9a0ed5d7513308a87dd300a611",
+      "bytes": 63,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist": {
+      "sha256": "d477305bd24624e11fc4db881743c5f1efa07e1344c8ff101ce9983d7f837675",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/host/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f4beba350d84ed39629a3ee7d3c2d1028fbf41c1e3a23755de12e4c3ffe26dbd",
+      "bytes": 62,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/host/usr/bin/plutil": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/host/usr/bin/xcrun": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/runs/leases/ABCDEF00-0000-4000-8000-000000000001.lock": {
+      "sha256": "a6b072b466181635d0083a6a35791284854da835ef6df918fe6bd407c3a80c9a",
+      "bytes": 149,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/runs/observed/one/allocation/host-prerequisites.json": {
+      "sha256": "c40b4359f8f36678b4ee44a06ffd455c0dfe291a782f574b84c966abeb8ff89a",
+      "bytes": 151,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/runs/observed/one/allocation/preparation-request.json": {
+      "sha256": "86313daa4f4f963f6511babf1f63a88026d264aafb8608d47d7dc701c5e9e51a",
+      "bytes": 349,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/runs/observed/one/allocation/source-diagnostics.json": {
+      "sha256": "5c42daf2a1c0de6226f46199e1f493c5e8eb91c7c370ea4e805a8da096fc5843",
+      "bytes": 2148,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/runs/observed/one/allocation/staging/artifact-PzqQxM/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o500",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/runs/observed/one/allocation/staging/artifact-PzqQxM/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o400",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/store/admission.sqlite": {
+      "sha256": "21efb087a03d248b2112c11f3fafc57e711b7d7db38cba22ebe324aa1848d704",
+      "bytes": 73728,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/backend/store/installation.json": {
+      "sha256": "bd98af85b798c833504bd5353a3c00b5d2bfc5f6d5bc9da856318ed7e742cd2e",
+      "bytes": 123,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/public/action.json": {
+      "sha256": "43080ae9a2bc2e23bdcce045e648e3fdf7006bcb978a2a97b74a18825941e1fd",
+      "bytes": 284,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/public/calls.jsonl": {
+      "sha256": "e5fe6e812f4a7f3118fad30b25e29696e6f5edee590d07d7269db6008b6a0988",
+      "bytes": 168,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/public/command-1.json": {
+      "sha256": "93413aea5b1c222c6a83a483449ea869f5eb83ac268447d23b9e92fd44f53741",
+      "bytes": 2037,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/public/command-2.json": {
+      "sha256": "f3bdd6509e823fca8c7fede047927f5a086a4c7d585148d9e9dfaa79dd060652",
+      "bytes": 625,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/public/command-3.json": {
+      "sha256": "957fe5091f7105a2e877c79b7aec63e513d1f6ceb068f43a2bae4817d18debab",
+      "bytes": 895,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/public/fixture.json": {
+      "sha256": "e4459119a73b297d5703079b0e6388030a68bb8acc8eb7d623d77e42ecba8568",
+      "bytes": 272,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/public/mcp-requests.jsonl": {
+      "sha256": "ab39e34d712c767bf09c55b2656be414ddc2340c04dda5201aea8bd8192eec74",
+      "bytes": 642,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/public/milestones.jsonl": {
+      "sha256": "590006c22ac2eeb2f2073657366c01c5f5e4be062e2111cc2e788870038db4cb",
+      "bytes": 2754,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/public/release": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-6sP4Y5/public/test-context.json": {
+      "sha256": "6a76765aea39b14c99dd1f0b846582ddd8dceffa5d0aa3d79fbdc87e0a6b49f2",
+      "bytes": 100,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/home/Library/Application Support/jev-ios-bridge/allocation.json": {
+      "sha256": "e22438045b1dc33e8941fb6347ad363e95cbc14e4aef63bf8918dfd2923708e5",
+      "bytes": 332,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/host/Applications/Xcode.app/Contents/Developer/usr/bin/simctl": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/host/Applications/Xcode.app/Contents/Info.plist": {
+      "sha256": "bbe9c6ef361fea7e082c8a1acf93936c8905952630ac7e324c0e998fc8169581",
+      "bytes": 104,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/host/Applications/Xcode.app/Contents/MacOS/Xcode": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/host/Applications/Xcode.app/Contents/version.plist": {
+      "sha256": "14e2c88b0bd45158c1fd656cf8207af19c4a0fff6b300fd149808b311804ed82",
+      "bytes": 73,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist": {
+      "sha256": "655962b97c2250caf055fec5909bc563029e0cade48e65ad918ceecc1e279241",
+      "bytes": 72,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist": {
+      "sha256": "dff388e2802bb899dc33ed97e6cf9c5855375670937a2498c8716c8d304c962c",
+      "bytes": 96,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist": {
+      "sha256": "964ac4022b92fafe9c18c5dae333910c767a3fc53bef34ffeb523a450f898339",
+      "bytes": 130,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f1e3cd18e86080b1ad80d932d86de1752b2d7c9a0ed5d7513308a87dd300a611",
+      "bytes": 63,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist": {
+      "sha256": "d477305bd24624e11fc4db881743c5f1efa07e1344c8ff101ce9983d7f837675",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/host/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f4beba350d84ed39629a3ee7d3c2d1028fbf41c1e3a23755de12e4c3ffe26dbd",
+      "bytes": 62,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/host/usr/bin/plutil": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/host/usr/bin/xcrun": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/runs/observed/one/allocation/host-prerequisites.json": {
+      "sha256": "c40b4359f8f36678b4ee44a06ffd455c0dfe291a782f574b84c966abeb8ff89a",
+      "bytes": 151,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/runs/observed/one/allocation/preparation-request.json": {
+      "sha256": "9b575b1df5789b859abdcfb4228324c6f4b080d33971d5a724a60aab8b6572a0",
+      "bytes": 349,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/runs/observed/one/allocation/readiness-1.json": {
+      "sha256": "217f55d5b9caf8d775f3dca42fd35274a8205ccf4df31389ba575f53c815d135",
+      "bytes": 324,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/runs/observed/one/allocation/source-diagnostics.json": {
+      "sha256": "79f945c0e05d8b6be437466bf80a51399efe97d9b9111979959097e73ed21074",
+      "bytes": 2064,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/runs/observed/one/allocation/staging/artifact-l6t2v9/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o500",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/runs/observed/one/allocation/staging/artifact-l6t2v9/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o400",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/runs/observed/one/observation-1.json": {
+      "sha256": "62b5f8a6d21c18297768835c683c53a9b7240146b9e2b4f90437c6214662b6e7",
+      "bytes": 518,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/runs/observed/one/observation-2.json": {
+      "sha256": "739a8b5d7d5eeaab774826676a9a6b6841652e66cd0c5ca1ae702debec78fce1",
+      "bytes": 522,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/runs/observed/one/provisional-result.json": {
+      "sha256": "a48aeee715d494b80155f987499fcd024eb9842b6b46b4fe33770385075c4840",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/runs/observed/one/request.json": {
+      "sha256": "348200b879c195ea0169f421f98ced7cd52bbc3775de59e5ad64160bc4004120",
+      "bytes": 467,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/store/admission.sqlite": {
+      "sha256": "f56ea2551aca7f5a0735f3f1897e342350e28b324e6965846aefc41d44704b20",
+      "bytes": 81920,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/backend/store/installation.json": {
+      "sha256": "df14e85e7ba86f7ace87fcb5788f9fbaf4fa91313c4b9268b350d848d71174bd",
+      "bytes": 123,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/public/calls.jsonl": {
+      "sha256": "7977f9a81875a2fa06df9478ac4373cb1d6d63c02052d4d13f05670b3b048254",
+      "bytes": 243,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/public/command-1.json": {
+      "sha256": "e4ff556940580ac3eb66bf2b22d012d3313c9f08da91a07fd8b62cbd7959d3a0",
+      "bytes": 1352,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/public/command-2.json": {
+      "sha256": "3f62ff6335b29d28ac8f2b70b7592101c89601f4d55da7fd033fe11e61bbcb1d",
+      "bytes": 1336,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/public/command-3.json": {
+      "sha256": "3da9f28f08730d8b40e595fb810e35abd9f3170174ba8bcd70333023e642f119",
+      "bytes": 1256,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/public/fixture.json": {
+      "sha256": "53a99c3f86f35d7ad63668f2b1c892a0f2df0521c02c85b6ccf18b67d35b002d",
+      "bytes": 272,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/public/milestones.jsonl": {
+      "sha256": "a18f024118eac10095434f1ecba62ecf120f6e38a2ed6962e4be87514cf47f96",
+      "bytes": 4744,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/public/prepare.json": {
+      "sha256": "ccd5efddba4bc832e3d282aafb7fe1c5a721054ee70e4f6b830eb7a703235fb9",
+      "bytes": 330,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/public/public-waits.jsonl": {
+      "sha256": "961cda84a564fd2e8b75516399b1ce4c1e86b848a3570a3020eca832f86b6b95",
+      "bytes": 1895,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/public/request.json": {
+      "sha256": "56193a949207e70107677a4d3515abceb692393338bed70b7d8be101fe9696a1",
+      "bytes": 284,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/host-evidence/jev-host-fault-MEvfQX/public/test-context.json": {
+      "sha256": "a35a0260b4800b4c159f5f228857ec96c902c7fe3d0cd69f64808df355849a98",
+      "bytes": 90,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/job.json": {
+      "sha256": "3f06c54b70a27c9278311fbed73a5c681721a12ed853e5ab09b461d1ea866685",
+      "bytes": 60432,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/started.json": {
+      "sha256": "523a62d0d186ca606907687ddafbc2772daad787d639d3fcf871dabfca80fa51",
+      "bytes": 784,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-2/stdout.txt": {
+      "sha256": "6e650172522ddaea1f12029daea4d36fe9ed16da8fe10e9266e3fd049e696614",
+      "bytes": 754,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/command.json": {
+      "sha256": "46141b01472f243007f72d055a0ff7c602811e1e9325b97dc9d382caa2edb0f5",
+      "bytes": 119110,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/home/Library/Application Support/jev-ios-bridge/allocation.json": {
+      "sha256": "e22438045b1dc33e8941fb6347ad363e95cbc14e4aef63bf8918dfd2923708e5",
+      "bytes": 332,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/host/Applications/Xcode.app/Contents/Developer/usr/bin/simctl": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/host/Applications/Xcode.app/Contents/Info.plist": {
+      "sha256": "bbe9c6ef361fea7e082c8a1acf93936c8905952630ac7e324c0e998fc8169581",
+      "bytes": 104,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/host/Applications/Xcode.app/Contents/MacOS/Xcode": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/host/Applications/Xcode.app/Contents/version.plist": {
+      "sha256": "14e2c88b0bd45158c1fd656cf8207af19c4a0fff6b300fd149808b311804ed82",
+      "bytes": 73,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist": {
+      "sha256": "655962b97c2250caf055fec5909bc563029e0cade48e65ad918ceecc1e279241",
+      "bytes": 72,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist": {
+      "sha256": "dff388e2802bb899dc33ed97e6cf9c5855375670937a2498c8716c8d304c962c",
+      "bytes": 96,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist": {
+      "sha256": "964ac4022b92fafe9c18c5dae333910c767a3fc53bef34ffeb523a450f898339",
+      "bytes": 130,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f1e3cd18e86080b1ad80d932d86de1752b2d7c9a0ed5d7513308a87dd300a611",
+      "bytes": 63,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist": {
+      "sha256": "d477305bd24624e11fc4db881743c5f1efa07e1344c8ff101ce9983d7f837675",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/host/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f4beba350d84ed39629a3ee7d3c2d1028fbf41c1e3a23755de12e4c3ffe26dbd",
+      "bytes": 62,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/host/usr/bin/plutil": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/host/usr/bin/xcrun": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/runs/observed/one/allocation/host-prerequisites.json": {
+      "sha256": "c40b4359f8f36678b4ee44a06ffd455c0dfe291a782f574b84c966abeb8ff89a",
+      "bytes": 151,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/runs/observed/one/allocation/preparation-request.json": {
+      "sha256": "bdf2e845d1df8e3df26708176b2cc981b7c96e06dfc94769a834cd80dc16e2e4",
+      "bytes": 349,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/runs/observed/one/allocation/readiness-1.json": {
+      "sha256": "cd82bbe58528d687222d574f58a618d5ccb014861c636c8bb0d43d4d923c9713",
+      "bytes": 324,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/runs/observed/one/allocation/source-diagnostics.json": {
+      "sha256": "79f945c0e05d8b6be437466bf80a51399efe97d9b9111979959097e73ed21074",
+      "bytes": 2064,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/runs/observed/one/allocation/staging/artifact-iLxYXq/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o500",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/runs/observed/one/allocation/staging/artifact-iLxYXq/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o400",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/runs/observed/one/observation-1.json": {
+      "sha256": "72d34a8cba52a9a10acd64f8c2a6bbcc9650e12c642cd74a555671bfc246eeba",
+      "bytes": 518,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/runs/observed/one/observation-2.json": {
+      "sha256": "4ef996f9c1ea110fef4cab0bcc57995811de00387ceb5c83e92b699bd942ece6",
+      "bytes": 522,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/runs/observed/one/provisional-result.json": {
+      "sha256": "a48aeee715d494b80155f987499fcd024eb9842b6b46b4fe33770385075c4840",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/runs/observed/one/request.json": {
+      "sha256": "39103dcae551c398f0ca0e4a2901918b85d27ae4f8a1ecc0541ddca11fff7d27",
+      "bytes": 467,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/store/admission.sqlite": {
+      "sha256": "ec686ba1bc0f0206e3835c80ebbe6ef78d38aaeceeb16b8a8b8e337908055431",
+      "bytes": 81920,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/backend/store/installation.json": {
+      "sha256": "792aa9a0f7bc664c92c956b1e0eff27c2d30fae7bff5274bee3e9feed0bd68a8",
+      "bytes": 123,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/public/calls.jsonl": {
+      "sha256": "7977f9a81875a2fa06df9478ac4373cb1d6d63c02052d4d13f05670b3b048254",
+      "bytes": 243,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/public/command-1.json": {
+      "sha256": "d6c52feb30ab0f34770d1fa2fb73f3ca1f61d3522c462a402c64d4b92c3ac946",
+      "bytes": 1352,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/public/command-2.json": {
+      "sha256": "f3993333a9a8acad38d247bb63427dec9a83ab6f248324443ac93cafd7f00c73",
+      "bytes": 1336,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/public/command-3.json": {
+      "sha256": "b3e7bda5fb0ae42acabd79769932aa7415341bb4b971db7aef668f6a7f9a88e1",
+      "bytes": 1256,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/public/fixture.json": {
+      "sha256": "f886d5af615168fbb0cbcdf91338f6fbaadea94d843b355c57dab72412a67079",
+      "bytes": 272,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/public/milestones.jsonl": {
+      "sha256": "6d1c2dc5257c4dc7540269d5821d05e0b8054620b4bf40a4477c448d702d1798",
+      "bytes": 4744,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/public/prepare.json": {
+      "sha256": "24b1dfc16a7709e87091aaba78ca4e72d291896d4cbee836335e927fe1972ccf",
+      "bytes": 330,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/public/public-waits.jsonl": {
+      "sha256": "dcf3b6d262361032e6303d719e7d0643918e196c2de2f3aeb3a93976ac4b56ff",
+      "bytes": 1895,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/public/request.json": {
+      "sha256": "356c8b7e82b64a2f985a188785bd328fe43cedcd0f8e2bc6e17c18538d067d40",
+      "bytes": 284,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-C00OHO/public/test-context.json": {
+      "sha256": "a35a0260b4800b4c159f5f228857ec96c902c7fe3d0cd69f64808df355849a98",
+      "bytes": 90,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/home/Library/Application Support/jev-ios-bridge/allocation.json": {
+      "sha256": "e22438045b1dc33e8941fb6347ad363e95cbc14e4aef63bf8918dfd2923708e5",
+      "bytes": 332,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/host/Applications/Xcode.app/Contents/Developer/usr/bin/simctl": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/host/Applications/Xcode.app/Contents/Info.plist": {
+      "sha256": "bbe9c6ef361fea7e082c8a1acf93936c8905952630ac7e324c0e998fc8169581",
+      "bytes": 104,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/host/Applications/Xcode.app/Contents/MacOS/Xcode": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/host/Applications/Xcode.app/Contents/version.plist": {
+      "sha256": "14e2c88b0bd45158c1fd656cf8207af19c4a0fff6b300fd149808b311804ed82",
+      "bytes": 73,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist": {
+      "sha256": "655962b97c2250caf055fec5909bc563029e0cade48e65ad918ceecc1e279241",
+      "bytes": 72,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist": {
+      "sha256": "dff388e2802bb899dc33ed97e6cf9c5855375670937a2498c8716c8d304c962c",
+      "bytes": 96,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist": {
+      "sha256": "964ac4022b92fafe9c18c5dae333910c767a3fc53bef34ffeb523a450f898339",
+      "bytes": 130,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f1e3cd18e86080b1ad80d932d86de1752b2d7c9a0ed5d7513308a87dd300a611",
+      "bytes": 63,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist": {
+      "sha256": "d477305bd24624e11fc4db881743c5f1efa07e1344c8ff101ce9983d7f837675",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/host/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f4beba350d84ed39629a3ee7d3c2d1028fbf41c1e3a23755de12e4c3ffe26dbd",
+      "bytes": 62,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/host/usr/bin/plutil": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/host/usr/bin/xcrun": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/runs/leases/ABCDEF00-0000-4000-8000-000000000001.lock": {
+      "sha256": "eb874f5cf5eaa0425e117670c6088a292ad42d14c9d041c731fb9d25bd20f4bd",
+      "bytes": 149,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/runs/observed/one/allocation/host-prerequisites.json": {
+      "sha256": "c40b4359f8f36678b4ee44a06ffd455c0dfe291a782f574b84c966abeb8ff89a",
+      "bytes": 151,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/runs/observed/one/allocation/preparation-request.json": {
+      "sha256": "6bd904323d3c5934868f49b83bc3493102a03a3ceb5cbc37bd16ae0f0cb9e1f7",
+      "bytes": 349,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/runs/observed/one/allocation/source-diagnostics.json": {
+      "sha256": "5c42daf2a1c0de6226f46199e1f493c5e8eb91c7c370ea4e805a8da096fc5843",
+      "bytes": 2148,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/runs/observed/one/allocation/staging/artifact-7mi5dk/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o500",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/runs/observed/one/allocation/staging/artifact-7mi5dk/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o400",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/store/admission.sqlite": {
+      "sha256": "52567edca3a1ea29cf44bc32ee443031aa2bf6d0e2c6e89eea6b740d68bd5102",
+      "bytes": 73728,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/backend/store/installation.json": {
+      "sha256": "7f2d3f5d58f8d9360ce60ac8b199be20b53365f962b940925f470fa7544a95c8",
+      "bytes": 123,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/public/action.json": {
+      "sha256": "06c79d7c259f29c6acc7ec4c09955d838efe5ffa646e840b7dfa7dae30254654",
+      "bytes": 284,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/public/calls.jsonl": {
+      "sha256": "e5fe6e812f4a7f3118fad30b25e29696e6f5edee590d07d7269db6008b6a0988",
+      "bytes": 168,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/public/command-1.json": {
+      "sha256": "99c41eb3fd2e5b2beaf3b9aba9a8ea0fc6e6c7393efe2468072a099dfe9de609",
+      "bytes": 2037,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/public/command-2.json": {
+      "sha256": "f2da0a7ba52ed52202c603084cdbcc7f20567a15cb14ca58f719142c923b9874",
+      "bytes": 625,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/public/command-3.json": {
+      "sha256": "00035de0eef9de4737760f3a93851034347eb8b22fe32a7089d3a8f7062b7397",
+      "bytes": 895,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/public/fixture.json": {
+      "sha256": "54cd4652bdb5ea364c6cd2303650f50a275c917e96517cb90a60d2098c1a0673",
+      "bytes": 272,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/public/mcp-requests.jsonl": {
+      "sha256": "93f178b844be2ecde472f092a8eeff8790378a68dede7b82708292ca1cb393aa",
+      "bytes": 642,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/public/milestones.jsonl": {
+      "sha256": "b084209cfebdd4ae0c81d22df7a346e6553e44a74cfd6ac6f1f8a77f1ddd1594",
+      "bytes": 2754,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/public/release": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/host-evidence/jev-host-fault-JTjN8q/public/test-context.json": {
+      "sha256": "6a76765aea39b14c99dd1f0b846582ddd8dceffa5d0aa3d79fbdc87e0a6b49f2",
+      "bytes": 100,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/job.json": {
+      "sha256": "30d611fc3e9e953a607290027474fe45519103611504ddfbfd5903c1307b4685",
+      "bytes": 60432,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/started.json": {
+      "sha256": "7856aa3a6753b95f5bfceca17a6b01ea01193379b25bd893e4cb580e53c7c4ba",
+      "bytes": 784,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-3/stdout.txt": {
+      "sha256": "7adec4edfb3ad6ad2ffaa2c3774f8a4e241228751b9722219dbcb5afe33eb565",
+      "bytes": 754,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/command.json": {
+      "sha256": "8e71f51b1f8c656b7beb40d609299864446e01f656c97a476be0fa600d2ce073",
+      "bytes": 119110,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/home/Library/Application Support/jev-ios-bridge/allocation.json": {
+      "sha256": "e22438045b1dc33e8941fb6347ad363e95cbc14e4aef63bf8918dfd2923708e5",
+      "bytes": 332,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/host/Applications/Xcode.app/Contents/Developer/usr/bin/simctl": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/host/Applications/Xcode.app/Contents/Info.plist": {
+      "sha256": "bbe9c6ef361fea7e082c8a1acf93936c8905952630ac7e324c0e998fc8169581",
+      "bytes": 104,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/host/Applications/Xcode.app/Contents/MacOS/Xcode": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/host/Applications/Xcode.app/Contents/version.plist": {
+      "sha256": "14e2c88b0bd45158c1fd656cf8207af19c4a0fff6b300fd149808b311804ed82",
+      "bytes": 73,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist": {
+      "sha256": "655962b97c2250caf055fec5909bc563029e0cade48e65ad918ceecc1e279241",
+      "bytes": 72,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist": {
+      "sha256": "dff388e2802bb899dc33ed97e6cf9c5855375670937a2498c8716c8d304c962c",
+      "bytes": 96,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist": {
+      "sha256": "964ac4022b92fafe9c18c5dae333910c767a3fc53bef34ffeb523a450f898339",
+      "bytes": 130,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f1e3cd18e86080b1ad80d932d86de1752b2d7c9a0ed5d7513308a87dd300a611",
+      "bytes": 63,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist": {
+      "sha256": "d477305bd24624e11fc4db881743c5f1efa07e1344c8ff101ce9983d7f837675",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/host/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f4beba350d84ed39629a3ee7d3c2d1028fbf41c1e3a23755de12e4c3ffe26dbd",
+      "bytes": 62,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/host/usr/bin/plutil": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/host/usr/bin/xcrun": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/runs/leases/ABCDEF00-0000-4000-8000-000000000001.lock": {
+      "sha256": "2b5c8204056da0f385052832b0c8d1f634ca917c8e7eb83bab7643812216641e",
+      "bytes": 149,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/runs/observed/one/allocation/host-prerequisites.json": {
+      "sha256": "c40b4359f8f36678b4ee44a06ffd455c0dfe291a782f574b84c966abeb8ff89a",
+      "bytes": 151,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/runs/observed/one/allocation/preparation-request.json": {
+      "sha256": "57c000bb6e8207c456039d4e3266ab0cdbbd4192f5cb0be467913faaa0f740c7",
+      "bytes": 349,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/runs/observed/one/allocation/source-diagnostics.json": {
+      "sha256": "5c42daf2a1c0de6226f46199e1f493c5e8eb91c7c370ea4e805a8da096fc5843",
+      "bytes": 2148,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/runs/observed/one/allocation/staging/artifact-c2mdos/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o500",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/runs/observed/one/allocation/staging/artifact-c2mdos/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o400",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/store/admission.sqlite": {
+      "sha256": "78fae1fed35d8a5f77cc9e2edb6564b5f823ef0b0c9850efd6e27dbed47de915",
+      "bytes": 73728,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/backend/store/installation.json": {
+      "sha256": "e9343b700f4e3a9e708c411ed287ca21c7566678caf1ac72b5145a1a96c26f7e",
+      "bytes": 123,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/public/action.json": {
+      "sha256": "734e1b26531de115e27346f4ac31f84ce39cb37cae9c27f57855da7e7f2e09c3",
+      "bytes": 284,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/public/calls.jsonl": {
+      "sha256": "e5fe6e812f4a7f3118fad30b25e29696e6f5edee590d07d7269db6008b6a0988",
+      "bytes": 168,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/public/command-1.json": {
+      "sha256": "f4b1d6eef7be966e6b265e3411d8747ae0c39ecfdd146b20a56b890bb19b3ab2",
+      "bytes": 2037,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/public/command-2.json": {
+      "sha256": "2322bff556558075691693beeed71b3d5f02741d383537b399c8b1262f5fcada",
+      "bytes": 625,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/public/command-3.json": {
+      "sha256": "b9d60023e0047940966605200eb52e0545c587f30c320550af2f0e5ae0b84441",
+      "bytes": 895,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/public/fixture.json": {
+      "sha256": "34e3cecfa1bc98315ed04443a1ed67f7c3818c76ea4c89c08b288147f3a2b773",
+      "bytes": 272,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/public/mcp-requests.jsonl": {
+      "sha256": "d5b4c01059b5fef3de3f7467234ceff189b3561020e85bbe5cf7a18c4687714b",
+      "bytes": 642,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/public/milestones.jsonl": {
+      "sha256": "ff3d516abe0e12cd47b8cc49bff5d627b2d1355dbdd926587807a84402775b05",
+      "bytes": 2754,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/public/release": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-FgEGu2/public/test-context.json": {
+      "sha256": "6a76765aea39b14c99dd1f0b846582ddd8dceffa5d0aa3d79fbdc87e0a6b49f2",
+      "bytes": 100,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/home/Library/Application Support/jev-ios-bridge/allocation.json": {
+      "sha256": "e22438045b1dc33e8941fb6347ad363e95cbc14e4aef63bf8918dfd2923708e5",
+      "bytes": 332,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/host/Applications/Xcode.app/Contents/Developer/usr/bin/simctl": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/host/Applications/Xcode.app/Contents/Info.plist": {
+      "sha256": "bbe9c6ef361fea7e082c8a1acf93936c8905952630ac7e324c0e998fc8169581",
+      "bytes": 104,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/host/Applications/Xcode.app/Contents/MacOS/Xcode": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/host/Applications/Xcode.app/Contents/version.plist": {
+      "sha256": "14e2c88b0bd45158c1fd656cf8207af19c4a0fff6b300fd149808b311804ed82",
+      "bytes": 73,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist": {
+      "sha256": "655962b97c2250caf055fec5909bc563029e0cade48e65ad918ceecc1e279241",
+      "bytes": 72,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist": {
+      "sha256": "dff388e2802bb899dc33ed97e6cf9c5855375670937a2498c8716c8d304c962c",
+      "bytes": 96,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist": {
+      "sha256": "964ac4022b92fafe9c18c5dae333910c767a3fc53bef34ffeb523a450f898339",
+      "bytes": 130,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f1e3cd18e86080b1ad80d932d86de1752b2d7c9a0ed5d7513308a87dd300a611",
+      "bytes": 63,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist": {
+      "sha256": "d477305bd24624e11fc4db881743c5f1efa07e1344c8ff101ce9983d7f837675",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/host/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f4beba350d84ed39629a3ee7d3c2d1028fbf41c1e3a23755de12e4c3ffe26dbd",
+      "bytes": 62,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/host/usr/bin/plutil": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/host/usr/bin/xcrun": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/runs/observed/one/allocation/host-prerequisites.json": {
+      "sha256": "c40b4359f8f36678b4ee44a06ffd455c0dfe291a782f574b84c966abeb8ff89a",
+      "bytes": 151,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/runs/observed/one/allocation/preparation-request.json": {
+      "sha256": "5180436dd3260f20cdb755e719dd2d4ed046bb1c41369461ccef7c2ef6ff3f45",
+      "bytes": 349,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/runs/observed/one/allocation/readiness-1.json": {
+      "sha256": "93d125f4718cd2c51556f962dfbf9b08ba4d62b17e59033b1e66ecf469dcacb7",
+      "bytes": 324,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/runs/observed/one/allocation/source-diagnostics.json": {
+      "sha256": "79f945c0e05d8b6be437466bf80a51399efe97d9b9111979959097e73ed21074",
+      "bytes": 2064,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/runs/observed/one/allocation/staging/artifact-pPzOb4/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o500",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/runs/observed/one/allocation/staging/artifact-pPzOb4/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o400",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/runs/observed/one/observation-1.json": {
+      "sha256": "455aa31ec2073da6374b041a421dd1aa7f493e606d5d72b5a88200bdcdee72a6",
+      "bytes": 518,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/runs/observed/one/observation-2.json": {
+      "sha256": "c075dedeee953556927daefba4922259b4ce444ebff6f87bd318e676e90b30b4",
+      "bytes": 522,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/runs/observed/one/provisional-result.json": {
+      "sha256": "a48aeee715d494b80155f987499fcd024eb9842b6b46b4fe33770385075c4840",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/runs/observed/one/request.json": {
+      "sha256": "75225043480e7790460d746aaee2dbef482da61463c4d5ebe0f64c293fafc84e",
+      "bytes": 467,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/store/admission.sqlite": {
+      "sha256": "c63bbda4e4327d1493440edb61b0a612e4c96bd580683d93fafc5f3524f79eef",
+      "bytes": 81920,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/backend/store/installation.json": {
+      "sha256": "8a4765212ff309361ccb6894c91d25d1fffb549881a9ca2667dff54eeae37310",
+      "bytes": 123,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/public/calls.jsonl": {
+      "sha256": "7977f9a81875a2fa06df9478ac4373cb1d6d63c02052d4d13f05670b3b048254",
+      "bytes": 243,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/public/command-1.json": {
+      "sha256": "50d750417a352c248b6da58cbfc9bbb8a72c3c13a7332031ec7d23f417b1c2e1",
+      "bytes": 1352,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/public/command-2.json": {
+      "sha256": "cad034bcbf259f280d3911d013eeaf01d5b842d0852a171d449ef59a43c62de2",
+      "bytes": 1336,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/public/command-3.json": {
+      "sha256": "2f2d15b36fec6166fcd0da3aa969ed7efa521d77deecfcb1b95d2899cfe199b6",
+      "bytes": 1256,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/public/fixture.json": {
+      "sha256": "0de3150ca3e20a4803c6eb01a82143204b75b9eabe11662d3487c0acc0c77acf",
+      "bytes": 272,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/public/milestones.jsonl": {
+      "sha256": "1be192762a11bc948ef25c586efaecfa2cd6ed93eabe04b33157a8214d1ca25f",
+      "bytes": 4744,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/public/prepare.json": {
+      "sha256": "381669193f41b2886deac9cfb7e84532eef257237ab64597cbe96e91012c173a",
+      "bytes": 330,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/public/public-waits.jsonl": {
+      "sha256": "18d35cd0c625b8eb554ad9020965a27dffaaf0c50127beeb9d10134b7ff9bc35",
+      "bytes": 1895,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/public/request.json": {
+      "sha256": "b36f729edb5faf81a642d8a24b2634f8968a1cca016faf3e4d6f19e8739b9f20",
+      "bytes": 284,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/host-evidence/jev-host-fault-iyXaSy/public/test-context.json": {
+      "sha256": "a35a0260b4800b4c159f5f228857ec96c902c7fe3d0cd69f64808df355849a98",
+      "bytes": 90,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/job.json": {
+      "sha256": "826a3429a43fcbdb231818c9cbfb64689665bea8cc0f817f560120750f2b1cc9",
+      "bytes": 60432,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/started.json": {
+      "sha256": "fd000c277aa40479213ffaa149e0b7e51c786dcecf15dcb87fc3cf6ce45a929b",
+      "bytes": 784,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "baseline/run-4/stdout.txt": {
+      "sha256": "895e773f9e23ec1a7532d076778b9a6787e8d8107af028a5a755f563f9ae1fd8",
+      "bytes": 752,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/cohort-summary.json": {
+      "sha256": "cd9ed1d8c3acffc6e1fb34ca04420fb79d1c20af697821a845f678bb24ebb6b5",
+      "bytes": 61196,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/command.json": {
+      "sha256": "3af962074094dd6609ec9df786b8e8bdef65ad1f9f78ebd914cacf2a35d37c29",
+      "bytes": 119598,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/home/Library/Application Support/jev-ios-bridge/allocation.json": {
+      "sha256": "e22438045b1dc33e8941fb6347ad363e95cbc14e4aef63bf8918dfd2923708e5",
+      "bytes": 332,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/host/Applications/Xcode.app/Contents/Developer/usr/bin/simctl": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/host/Applications/Xcode.app/Contents/Info.plist": {
+      "sha256": "bbe9c6ef361fea7e082c8a1acf93936c8905952630ac7e324c0e998fc8169581",
+      "bytes": 104,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/host/Applications/Xcode.app/Contents/MacOS/Xcode": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/host/Applications/Xcode.app/Contents/version.plist": {
+      "sha256": "14e2c88b0bd45158c1fd656cf8207af19c4a0fff6b300fd149808b311804ed82",
+      "bytes": 73,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist": {
+      "sha256": "655962b97c2250caf055fec5909bc563029e0cade48e65ad918ceecc1e279241",
+      "bytes": 72,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist": {
+      "sha256": "dff388e2802bb899dc33ed97e6cf9c5855375670937a2498c8716c8d304c962c",
+      "bytes": 96,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist": {
+      "sha256": "964ac4022b92fafe9c18c5dae333910c767a3fc53bef34ffeb523a450f898339",
+      "bytes": 130,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f1e3cd18e86080b1ad80d932d86de1752b2d7c9a0ed5d7513308a87dd300a611",
+      "bytes": 63,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist": {
+      "sha256": "d477305bd24624e11fc4db881743c5f1efa07e1344c8ff101ce9983d7f837675",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/host/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f4beba350d84ed39629a3ee7d3c2d1028fbf41c1e3a23755de12e4c3ffe26dbd",
+      "bytes": 62,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/host/usr/bin/plutil": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/host/usr/bin/xcrun": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/runs/observed/one/allocation/host-prerequisites.json": {
+      "sha256": "c40b4359f8f36678b4ee44a06ffd455c0dfe291a782f574b84c966abeb8ff89a",
+      "bytes": 151,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/runs/observed/one/allocation/preparation-request.json": {
+      "sha256": "cee738af27ccfc1ce26e746d8bcb34ddd688c7d10e00eabc1c1c71d5958f63b6",
+      "bytes": 349,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/runs/observed/one/allocation/readiness-1.json": {
+      "sha256": "02399358c2a3602ae07446cc5477e92922b2e8d6b61a2fc9ee1d38b0519900cc",
+      "bytes": 324,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/runs/observed/one/allocation/source-diagnostics.json": {
+      "sha256": "79f945c0e05d8b6be437466bf80a51399efe97d9b9111979959097e73ed21074",
+      "bytes": 2064,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/runs/observed/one/allocation/staging/artifact-fNQB34/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o500",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/runs/observed/one/allocation/staging/artifact-fNQB34/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o400",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/runs/observed/one/observation-1.json": {
+      "sha256": "84652b88f711eaa6aad75838661ec9d24a206a595896d96663fcef62610b48e6",
+      "bytes": 518,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/runs/observed/one/observation-2.json": {
+      "sha256": "640d636b47c5d997fa30585810e9c13f4dd5de233fc10ad71eab946d194a72bc",
+      "bytes": 522,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/runs/observed/one/provisional-result.json": {
+      "sha256": "a48aeee715d494b80155f987499fcd024eb9842b6b46b4fe33770385075c4840",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/runs/observed/one/request.json": {
+      "sha256": "6c55cb004393345386ced7ecd7d12f826eb511c6fbc036f2cad16c08f46de782",
+      "bytes": 467,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/store/admission.sqlite": {
+      "sha256": "facc1035801d1c9b119fb978d563f83d66228012f5c3ee44d1bb676f6532a046",
+      "bytes": 81920,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/backend/store/installation.json": {
+      "sha256": "98415b2fefabb7ea76cf685df1687e491922a667b2034bf1d4006a63f590a856",
+      "bytes": 123,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/public/calls.jsonl": {
+      "sha256": "7977f9a81875a2fa06df9478ac4373cb1d6d63c02052d4d13f05670b3b048254",
+      "bytes": 243,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/public/command-1.json": {
+      "sha256": "143094a63aa48e49fbb4eda6362919a5c81a7c017c2598fa5a306f85398c7a59",
+      "bytes": 1352,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/public/command-2.json": {
+      "sha256": "6ff01b59bc9ebad8daf01985fec01a2361c1f8bfe3d913a69998ba62fa8079c7",
+      "bytes": 1336,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/public/command-3.json": {
+      "sha256": "344431a5fb53c559f2dcd16da18cf256485c85b96dc18f0f7bea2baf8f0d5d15",
+      "bytes": 1256,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/public/fixture.json": {
+      "sha256": "e2f408e4cc9645b8c03ceac207d38b5104c51dbdde42664aadf3153eaad5929b",
+      "bytes": 272,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/public/milestones.jsonl": {
+      "sha256": "594bb1b02426514ae67246c3e2910189b3cff603e14c627c479e05de28ca707c",
+      "bytes": 4744,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/public/prepare.json": {
+      "sha256": "c410c2f13b315790608c9a8c430d1279158ba41c823e6a395c6a8ba22d7ed0d9",
+      "bytes": 330,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/public/public-waits.jsonl": {
+      "sha256": "1b728aca3034db4e69a2cded5ebe971c26dafca6b7e48c544e2b180cded3d17f",
+      "bytes": 1895,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/public/request.json": {
+      "sha256": "3e97e1a51af3daae3b290902fe70656b2511e1d3955bc355a6ec4a54c377c43d",
+      "bytes": 284,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-ELRzo7/public/test-context.json": {
+      "sha256": "a35a0260b4800b4c159f5f228857ec96c902c7fe3d0cd69f64808df355849a98",
+      "bytes": 90,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/home/Library/Application Support/jev-ios-bridge/allocation.json": {
+      "sha256": "e22438045b1dc33e8941fb6347ad363e95cbc14e4aef63bf8918dfd2923708e5",
+      "bytes": 332,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/host/Applications/Xcode.app/Contents/Developer/usr/bin/simctl": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/host/Applications/Xcode.app/Contents/Info.plist": {
+      "sha256": "bbe9c6ef361fea7e082c8a1acf93936c8905952630ac7e324c0e998fc8169581",
+      "bytes": 104,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/host/Applications/Xcode.app/Contents/MacOS/Xcode": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/host/Applications/Xcode.app/Contents/version.plist": {
+      "sha256": "14e2c88b0bd45158c1fd656cf8207af19c4a0fff6b300fd149808b311804ed82",
+      "bytes": 73,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist": {
+      "sha256": "655962b97c2250caf055fec5909bc563029e0cade48e65ad918ceecc1e279241",
+      "bytes": 72,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist": {
+      "sha256": "dff388e2802bb899dc33ed97e6cf9c5855375670937a2498c8716c8d304c962c",
+      "bytes": 96,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist": {
+      "sha256": "964ac4022b92fafe9c18c5dae333910c767a3fc53bef34ffeb523a450f898339",
+      "bytes": 130,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f1e3cd18e86080b1ad80d932d86de1752b2d7c9a0ed5d7513308a87dd300a611",
+      "bytes": 63,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist": {
+      "sha256": "d477305bd24624e11fc4db881743c5f1efa07e1344c8ff101ce9983d7f837675",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/host/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f4beba350d84ed39629a3ee7d3c2d1028fbf41c1e3a23755de12e4c3ffe26dbd",
+      "bytes": 62,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/host/usr/bin/plutil": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/host/usr/bin/xcrun": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/runs/leases/ABCDEF00-0000-4000-8000-000000000001.lock": {
+      "sha256": "5428f09347c377766d36c7affe45752259bb6ff7b3ffd61e5c28a5fc7dcf4425",
+      "bytes": 149,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/runs/observed/one/allocation/host-prerequisites.json": {
+      "sha256": "c40b4359f8f36678b4ee44a06ffd455c0dfe291a782f574b84c966abeb8ff89a",
+      "bytes": 151,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/runs/observed/one/allocation/preparation-request.json": {
+      "sha256": "971088958eb9043404b0b1ceef2af17960efcc23e528b42897c41dbf28d37a14",
+      "bytes": 349,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/runs/observed/one/allocation/source-diagnostics.json": {
+      "sha256": "5c42daf2a1c0de6226f46199e1f493c5e8eb91c7c370ea4e805a8da096fc5843",
+      "bytes": 2148,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/runs/observed/one/allocation/staging/artifact-mmut8i/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o500",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/runs/observed/one/allocation/staging/artifact-mmut8i/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o400",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/store/admission.sqlite": {
+      "sha256": "d36a321e62f9ef6be667552fa609d1cba886f82dd54db6845b3c4361e8a1ac10",
+      "bytes": 73728,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/backend/store/installation.json": {
+      "sha256": "e519bd8b3ccb6c4153b10f1c4dd7fcda7f787a515b1f31b26deaaf12fded1e59",
+      "bytes": 123,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/public/action.json": {
+      "sha256": "63886b63dfb7da7b7d171ea1534447a586566e4a818d47dbeac79f22e72f29b0",
+      "bytes": 284,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/public/calls.jsonl": {
+      "sha256": "e5fe6e812f4a7f3118fad30b25e29696e6f5edee590d07d7269db6008b6a0988",
+      "bytes": 168,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/public/command-1.json": {
+      "sha256": "8c6533eb318b59106515d81eb72e03459dfe0a6ba91d5676b3265887f2701be9",
+      "bytes": 2037,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/public/command-2.json": {
+      "sha256": "7a003e6c60219fb419dbebe05c5fb7d61c467318b0cc56f85415f691ab585c22",
+      "bytes": 625,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/public/command-3.json": {
+      "sha256": "64d8b06d0b53029778733ad981abc9e4e069d0775e8d786d6c96067ef5fb8813",
+      "bytes": 895,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/public/fixture.json": {
+      "sha256": "a814405d0e0b0102d78ea38b48010f363e24bc43c99c09b20a0cfd2b1b54a937",
+      "bytes": 272,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/public/mcp-requests.jsonl": {
+      "sha256": "352aadf2d04990750eef67b1370384e91a3d91bec7bb57dc06fa84b295a18a3b",
+      "bytes": 642,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/public/milestones.jsonl": {
+      "sha256": "bca81eab5f546270511d69b727010b680653ce0f3d1a131671e1547e72d2b87a",
+      "bytes": 2754,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/public/release": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/host-evidence/jev-host-fault-jsRb7p/public/test-context.json": {
+      "sha256": "6a76765aea39b14c99dd1f0b846582ddd8dceffa5d0aa3d79fbdc87e0a6b49f2",
+      "bytes": 100,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/job.json": {
+      "sha256": "7e3a147c089618f6ac289b5b0daf35c22d87804ddc9efd946222453887b1d001",
+      "bytes": 60676,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/started.json": {
+      "sha256": "a0d7285462b5078b11916112441a6eef7eeea2af613bc6fc02830aac2bc2da77",
+      "bytes": 783,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-1/stdout.txt": {
+      "sha256": "98e72f33c323e3f42604a380784c0c41336f12644e186b8e2ec3b0891e86bacb",
+      "bytes": 756,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/command.json": {
+      "sha256": "db39ae1a2b26a8ccb0f2d994eafdece4180638d94a9574ee7c6f9080ae0c53f6",
+      "bytes": 119598,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/home/Library/Application Support/jev-ios-bridge/allocation.json": {
+      "sha256": "e22438045b1dc33e8941fb6347ad363e95cbc14e4aef63bf8918dfd2923708e5",
+      "bytes": 332,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/host/Applications/Xcode.app/Contents/Developer/usr/bin/simctl": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/host/Applications/Xcode.app/Contents/Info.plist": {
+      "sha256": "bbe9c6ef361fea7e082c8a1acf93936c8905952630ac7e324c0e998fc8169581",
+      "bytes": 104,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/host/Applications/Xcode.app/Contents/MacOS/Xcode": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/host/Applications/Xcode.app/Contents/version.plist": {
+      "sha256": "14e2c88b0bd45158c1fd656cf8207af19c4a0fff6b300fd149808b311804ed82",
+      "bytes": 73,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist": {
+      "sha256": "655962b97c2250caf055fec5909bc563029e0cade48e65ad918ceecc1e279241",
+      "bytes": 72,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist": {
+      "sha256": "dff388e2802bb899dc33ed97e6cf9c5855375670937a2498c8716c8d304c962c",
+      "bytes": 96,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist": {
+      "sha256": "964ac4022b92fafe9c18c5dae333910c767a3fc53bef34ffeb523a450f898339",
+      "bytes": 130,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f1e3cd18e86080b1ad80d932d86de1752b2d7c9a0ed5d7513308a87dd300a611",
+      "bytes": 63,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist": {
+      "sha256": "d477305bd24624e11fc4db881743c5f1efa07e1344c8ff101ce9983d7f837675",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/host/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f4beba350d84ed39629a3ee7d3c2d1028fbf41c1e3a23755de12e4c3ffe26dbd",
+      "bytes": 62,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/host/usr/bin/plutil": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/host/usr/bin/xcrun": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/runs/leases/ABCDEF00-0000-4000-8000-000000000001.lock": {
+      "sha256": "4e55b2a95f1168cff27c14c3939aa35e1a916bc0e4e2cb82c866ec39a833432a",
+      "bytes": 149,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/runs/observed/one/allocation/host-prerequisites.json": {
+      "sha256": "c40b4359f8f36678b4ee44a06ffd455c0dfe291a782f574b84c966abeb8ff89a",
+      "bytes": 151,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/runs/observed/one/allocation/preparation-request.json": {
+      "sha256": "839cbc90aecf3bb8f85a541efe08f56a16b28cb12b47a620a0d8a2c54a5de8a9",
+      "bytes": 349,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/runs/observed/one/allocation/source-diagnostics.json": {
+      "sha256": "5c42daf2a1c0de6226f46199e1f493c5e8eb91c7c370ea4e805a8da096fc5843",
+      "bytes": 2148,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/runs/observed/one/allocation/staging/artifact-fzu3gB/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o500",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/runs/observed/one/allocation/staging/artifact-fzu3gB/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o400",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/store/admission.sqlite": {
+      "sha256": "7ac64bd76854869bc39b134eb200131b96ce7da0f17064d8efaf6b6a572913d9",
+      "bytes": 73728,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/backend/store/installation.json": {
+      "sha256": "a6c48680b2aefe7af5d5000d0602e8b127f1fcc22587d6a3e1549f0a01ff13b8",
+      "bytes": 123,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/public/action.json": {
+      "sha256": "5307287642899181609633505ae0580f0c0b78c0505ea7ac42b7ba794de61275",
+      "bytes": 284,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/public/calls.jsonl": {
+      "sha256": "e5fe6e812f4a7f3118fad30b25e29696e6f5edee590d07d7269db6008b6a0988",
+      "bytes": 168,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/public/command-1.json": {
+      "sha256": "df3ae38e22ef0fbb8868c79fa4f9a94caeb7c47768fceea10727322f8d958ea8",
+      "bytes": 2037,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/public/command-2.json": {
+      "sha256": "87fdba477fc09f41dda2a1eb753ea3762377f20f8628ce3db8e8a166b903135f",
+      "bytes": 625,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/public/command-3.json": {
+      "sha256": "e1f6658d6f59f38acffa8ea5b0aeb311eb2469d2436fc1eb418a3a3fc9cdfe94",
+      "bytes": 895,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/public/fixture.json": {
+      "sha256": "c4cba2b27ac03e62dfe379f7dbe865dde8853936f45231c05b633272bdc72e50",
+      "bytes": 272,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/public/mcp-requests.jsonl": {
+      "sha256": "1d5e9317a16e834d0bbe9f631b55441717e4e4c651f4b9422198cb75af29fae9",
+      "bytes": 642,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/public/milestones.jsonl": {
+      "sha256": "a8591058dfdf74a2ae027ea4f108ea82afbc493f57c3a6c8626aa2c7ec8e3525",
+      "bytes": 2754,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/public/release": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-GtYxiS/public/test-context.json": {
+      "sha256": "6a76765aea39b14c99dd1f0b846582ddd8dceffa5d0aa3d79fbdc87e0a6b49f2",
+      "bytes": 100,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/home/Library/Application Support/jev-ios-bridge/allocation.json": {
+      "sha256": "e22438045b1dc33e8941fb6347ad363e95cbc14e4aef63bf8918dfd2923708e5",
+      "bytes": 332,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/host/Applications/Xcode.app/Contents/Developer/usr/bin/simctl": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/host/Applications/Xcode.app/Contents/Info.plist": {
+      "sha256": "bbe9c6ef361fea7e082c8a1acf93936c8905952630ac7e324c0e998fc8169581",
+      "bytes": 104,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/host/Applications/Xcode.app/Contents/MacOS/Xcode": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/host/Applications/Xcode.app/Contents/version.plist": {
+      "sha256": "14e2c88b0bd45158c1fd656cf8207af19c4a0fff6b300fd149808b311804ed82",
+      "bytes": 73,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist": {
+      "sha256": "655962b97c2250caf055fec5909bc563029e0cade48e65ad918ceecc1e279241",
+      "bytes": 72,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist": {
+      "sha256": "dff388e2802bb899dc33ed97e6cf9c5855375670937a2498c8716c8d304c962c",
+      "bytes": 96,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist": {
+      "sha256": "964ac4022b92fafe9c18c5dae333910c767a3fc53bef34ffeb523a450f898339",
+      "bytes": 130,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f1e3cd18e86080b1ad80d932d86de1752b2d7c9a0ed5d7513308a87dd300a611",
+      "bytes": 63,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist": {
+      "sha256": "d477305bd24624e11fc4db881743c5f1efa07e1344c8ff101ce9983d7f837675",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/host/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f4beba350d84ed39629a3ee7d3c2d1028fbf41c1e3a23755de12e4c3ffe26dbd",
+      "bytes": 62,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/host/usr/bin/plutil": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/host/usr/bin/xcrun": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/runs/observed/one/allocation/host-prerequisites.json": {
+      "sha256": "c40b4359f8f36678b4ee44a06ffd455c0dfe291a782f574b84c966abeb8ff89a",
+      "bytes": 151,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/runs/observed/one/allocation/preparation-request.json": {
+      "sha256": "4bc72335e9138af5aed485e0edfb92c206485633b8cdfbd6815b6e93ff41c064",
+      "bytes": 349,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/runs/observed/one/allocation/readiness-1.json": {
+      "sha256": "7cd84844097fbdc6b2c4699759bb57498afffa247b07f3bd85116ea7f5d63ffb",
+      "bytes": 324,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/runs/observed/one/allocation/source-diagnostics.json": {
+      "sha256": "79f945c0e05d8b6be437466bf80a51399efe97d9b9111979959097e73ed21074",
+      "bytes": 2064,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/runs/observed/one/allocation/staging/artifact-DUvOb5/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o500",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/runs/observed/one/allocation/staging/artifact-DUvOb5/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o400",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/runs/observed/one/observation-1.json": {
+      "sha256": "933bdd9818cae634241877ec313dffdec60581d96281aefb58b0944e3de1871f",
+      "bytes": 518,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/runs/observed/one/observation-2.json": {
+      "sha256": "640d636b47c5d997fa30585810e9c13f4dd5de233fc10ad71eab946d194a72bc",
+      "bytes": 522,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/runs/observed/one/provisional-result.json": {
+      "sha256": "a48aeee715d494b80155f987499fcd024eb9842b6b46b4fe33770385075c4840",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/runs/observed/one/request.json": {
+      "sha256": "2328b813a6679959d46ea7ff351940bd28fa33ade8895de87c3b53263fb61db1",
+      "bytes": 467,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/store/admission.sqlite": {
+      "sha256": "383656314c770dd3b828cffc86f3564440a32f18ddd3d240754818455666428f",
+      "bytes": 81920,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/backend/store/installation.json": {
+      "sha256": "a6a540b919d23f6139c9f854da6c0219d351043b3719d1ab3a05a00c75f1e0a3",
+      "bytes": 123,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/public/calls.jsonl": {
+      "sha256": "7977f9a81875a2fa06df9478ac4373cb1d6d63c02052d4d13f05670b3b048254",
+      "bytes": 243,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/public/command-1.json": {
+      "sha256": "aca66feebfcbd1570668491a34a17a3249076fca4c9e0d046811d52aafbe51b2",
+      "bytes": 1352,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/public/command-2.json": {
+      "sha256": "57ff4be5148ee5020ae47c0f812f9b75cac1152fde6fe36e8800a54a2ecdc0dd",
+      "bytes": 1336,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/public/command-3.json": {
+      "sha256": "8f7ff9ccef747d958716cfb300344423624d00ad4797ea7c3c4102ed74200b35",
+      "bytes": 1256,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/public/fixture.json": {
+      "sha256": "33402900419b56be80bbe0b7a1695887c7206a68a5657fb8ba9a1a601f8c8ed4",
+      "bytes": 272,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/public/milestones.jsonl": {
+      "sha256": "bedcbb88069a83cd82a5e35776de2c11ea3ab9e46f85380c90b4e7d90342b6a6",
+      "bytes": 4744,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/public/prepare.json": {
+      "sha256": "58c910ddf10712eda8890c709430e6985a6bd1b4954855fb65b596ba8151fcc2",
+      "bytes": 330,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/public/public-waits.jsonl": {
+      "sha256": "4fb4346745f9e249dbbf3ea43c63bbb890097cf9891c3d12de8963bafc814476",
+      "bytes": 1895,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/public/request.json": {
+      "sha256": "0a3c0725db61f1c16732629d517e891c7a4ffed7a519874715425779fda38948",
+      "bytes": 284,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/host-evidence/jev-host-fault-dReKfF/public/test-context.json": {
+      "sha256": "a35a0260b4800b4c159f5f228857ec96c902c7fe3d0cd69f64808df355849a98",
+      "bytes": 90,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/job.json": {
+      "sha256": "262702eb2b464076a898fa8416a3c310567724e504f569f27e7e44af025c0d65",
+      "bytes": 60676,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/started.json": {
+      "sha256": "bf0ee391c49b006dc73030a4533d71698d16e10dc95e8e39869a7aaf06ed12bd",
+      "bytes": 783,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-2/stdout.txt": {
+      "sha256": "ed9f41abd5696018c8094e8d509dda630d11c50569dd97769e98357564f5b4cd",
+      "bytes": 754,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/command.json": {
+      "sha256": "5e8f5c42ea4af98aec88e01d07e35f51f3d485f3f83128abfc20514d422cc35e",
+      "bytes": 119598,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/home/Library/Application Support/jev-ios-bridge/allocation.json": {
+      "sha256": "e22438045b1dc33e8941fb6347ad363e95cbc14e4aef63bf8918dfd2923708e5",
+      "bytes": 332,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/host/Applications/Xcode.app/Contents/Developer/usr/bin/simctl": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/host/Applications/Xcode.app/Contents/Info.plist": {
+      "sha256": "bbe9c6ef361fea7e082c8a1acf93936c8905952630ac7e324c0e998fc8169581",
+      "bytes": 104,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/host/Applications/Xcode.app/Contents/MacOS/Xcode": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/host/Applications/Xcode.app/Contents/version.plist": {
+      "sha256": "14e2c88b0bd45158c1fd656cf8207af19c4a0fff6b300fd149808b311804ed82",
+      "bytes": 73,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist": {
+      "sha256": "655962b97c2250caf055fec5909bc563029e0cade48e65ad918ceecc1e279241",
+      "bytes": 72,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist": {
+      "sha256": "dff388e2802bb899dc33ed97e6cf9c5855375670937a2498c8716c8d304c962c",
+      "bytes": 96,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist": {
+      "sha256": "964ac4022b92fafe9c18c5dae333910c767a3fc53bef34ffeb523a450f898339",
+      "bytes": 130,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f1e3cd18e86080b1ad80d932d86de1752b2d7c9a0ed5d7513308a87dd300a611",
+      "bytes": 63,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist": {
+      "sha256": "d477305bd24624e11fc4db881743c5f1efa07e1344c8ff101ce9983d7f837675",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/host/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f4beba350d84ed39629a3ee7d3c2d1028fbf41c1e3a23755de12e4c3ffe26dbd",
+      "bytes": 62,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/host/usr/bin/plutil": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/host/usr/bin/xcrun": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/runs/observed/one/allocation/host-prerequisites.json": {
+      "sha256": "c40b4359f8f36678b4ee44a06ffd455c0dfe291a782f574b84c966abeb8ff89a",
+      "bytes": 151,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/runs/observed/one/allocation/preparation-request.json": {
+      "sha256": "41a8c8c7c67be6b1ea621c6099441b1d9197652ceb8f2fb21b6d1726b117cf4d",
+      "bytes": 349,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/runs/observed/one/allocation/readiness-1.json": {
+      "sha256": "482e15403c69e6fb68ae335bbc3392565c8df360a9e5d0acfdf3c1cbc654a1db",
+      "bytes": 324,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/runs/observed/one/allocation/source-diagnostics.json": {
+      "sha256": "79f945c0e05d8b6be437466bf80a51399efe97d9b9111979959097e73ed21074",
+      "bytes": 2064,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/runs/observed/one/allocation/staging/artifact-2L9dZa/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o500",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/runs/observed/one/allocation/staging/artifact-2L9dZa/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o400",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/runs/observed/one/observation-1.json": {
+      "sha256": "fbee78c96e76969978c7df3569f33d3ea64b593cf3320b673052561ff9f1d086",
+      "bytes": 518,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/runs/observed/one/observation-2.json": {
+      "sha256": "10fdc8c26363447dc81ef015bca9a3af9626211b7b5b426904a61613dda90997",
+      "bytes": 522,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/runs/observed/one/provisional-result.json": {
+      "sha256": "a48aeee715d494b80155f987499fcd024eb9842b6b46b4fe33770385075c4840",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/runs/observed/one/request.json": {
+      "sha256": "21f90ff223c6a5eb5ef8e2aa1632a179f28909db6f2bc079147134ae2b1e9f24",
+      "bytes": 467,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/store/admission.sqlite": {
+      "sha256": "eef4543754f8fc28f7bfd9c4b02aa33ffcd04e7d398be69e7e036b4517df1027",
+      "bytes": 81920,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/backend/store/installation.json": {
+      "sha256": "b20c324ed49b89ea50ad9e4695bfa4dfe1e722b5bbfa270a594088c3e3aaf754",
+      "bytes": 123,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/public/calls.jsonl": {
+      "sha256": "7977f9a81875a2fa06df9478ac4373cb1d6d63c02052d4d13f05670b3b048254",
+      "bytes": 243,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/public/command-1.json": {
+      "sha256": "bb0d9a86dc816776b7f41115df234817fac87f5b6dfc1234fd5ebc9522fc82b0",
+      "bytes": 1352,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/public/command-2.json": {
+      "sha256": "d446943553250b4cde621c88fd8aaa3ee1dc13ce2a282b0959da49fc0776f276",
+      "bytes": 1336,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/public/command-3.json": {
+      "sha256": "57ac837ebab376bcbeaf4f12b858dd2dc7ab285ce146780a0dbbc68b3d43f3f2",
+      "bytes": 1256,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/public/fixture.json": {
+      "sha256": "766e66c781e6812a159a4e9b8dcb60345665d6c752728c3a3f0994b05ef82b3e",
+      "bytes": 272,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/public/milestones.jsonl": {
+      "sha256": "6544caaa78c41bd6665b9c0984c237da231858f5c4e6d239d26f1d56a9745c02",
+      "bytes": 4744,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/public/prepare.json": {
+      "sha256": "5b497494fa6c67d6b4f82929fdf5cba432c77d006601c966af55466038876d0b",
+      "bytes": 330,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/public/public-waits.jsonl": {
+      "sha256": "ed501ae3d1452a274a405e3733a0cbece65d5b42c0b511ef91c68b6644690ada",
+      "bytes": 1895,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/public/request.json": {
+      "sha256": "b37b6530854ac1a3e99d887c6b11fe1e6005e465fb3c32601dbafcc40ab4f515",
+      "bytes": 284,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-WpmJtG/public/test-context.json": {
+      "sha256": "a35a0260b4800b4c159f5f228857ec96c902c7fe3d0cd69f64808df355849a98",
+      "bytes": 90,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/home/Library/Application Support/jev-ios-bridge/allocation.json": {
+      "sha256": "e22438045b1dc33e8941fb6347ad363e95cbc14e4aef63bf8918dfd2923708e5",
+      "bytes": 332,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/host/Applications/Xcode.app/Contents/Developer/usr/bin/simctl": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/host/Applications/Xcode.app/Contents/Info.plist": {
+      "sha256": "bbe9c6ef361fea7e082c8a1acf93936c8905952630ac7e324c0e998fc8169581",
+      "bytes": 104,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/host/Applications/Xcode.app/Contents/MacOS/Xcode": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/host/Applications/Xcode.app/Contents/version.plist": {
+      "sha256": "14e2c88b0bd45158c1fd656cf8207af19c4a0fff6b300fd149808b311804ed82",
+      "bytes": 73,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist": {
+      "sha256": "655962b97c2250caf055fec5909bc563029e0cade48e65ad918ceecc1e279241",
+      "bytes": 72,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist": {
+      "sha256": "dff388e2802bb899dc33ed97e6cf9c5855375670937a2498c8716c8d304c962c",
+      "bytes": 96,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist": {
+      "sha256": "964ac4022b92fafe9c18c5dae333910c767a3fc53bef34ffeb523a450f898339",
+      "bytes": 130,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f1e3cd18e86080b1ad80d932d86de1752b2d7c9a0ed5d7513308a87dd300a611",
+      "bytes": 63,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist": {
+      "sha256": "d477305bd24624e11fc4db881743c5f1efa07e1344c8ff101ce9983d7f837675",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/host/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f4beba350d84ed39629a3ee7d3c2d1028fbf41c1e3a23755de12e4c3ffe26dbd",
+      "bytes": 62,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/host/usr/bin/plutil": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/host/usr/bin/xcrun": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/runs/leases/ABCDEF00-0000-4000-8000-000000000001.lock": {
+      "sha256": "6a606b37f15ab99e483320d75e7b85f1452a428c1b2454d23cc7071a89f5e35a",
+      "bytes": 149,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/runs/observed/one/allocation/host-prerequisites.json": {
+      "sha256": "c40b4359f8f36678b4ee44a06ffd455c0dfe291a782f574b84c966abeb8ff89a",
+      "bytes": 151,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/runs/observed/one/allocation/preparation-request.json": {
+      "sha256": "cdb225640f559b92f4ba46bd3c095d3b015a01487e622a034dab58b20a4c8a3f",
+      "bytes": 349,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/runs/observed/one/allocation/source-diagnostics.json": {
+      "sha256": "5c42daf2a1c0de6226f46199e1f493c5e8eb91c7c370ea4e805a8da096fc5843",
+      "bytes": 2148,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/runs/observed/one/allocation/staging/artifact-Xp0RuQ/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o500",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/runs/observed/one/allocation/staging/artifact-Xp0RuQ/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o400",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/store/admission.sqlite": {
+      "sha256": "2e3d312e23d1a7a49d61a63215994b6e28f1c2ae7c2f7cca4c6bab833af54197",
+      "bytes": 73728,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/backend/store/installation.json": {
+      "sha256": "00689818a8b4fdbd5369e1b8eaaba9dceb6543f647f4579b2eb561218d4cce80",
+      "bytes": 123,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/public/action.json": {
+      "sha256": "f528838403511eca04365d82d97cf45bcb5b0fc98a4dfd60497b4d38b0c40e5f",
+      "bytes": 284,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/public/calls.jsonl": {
+      "sha256": "e5fe6e812f4a7f3118fad30b25e29696e6f5edee590d07d7269db6008b6a0988",
+      "bytes": 168,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/public/command-1.json": {
+      "sha256": "8bc4c946a3aaaf982791963b7d0272b343a5ee18544949a2ee9ac93de9fb20e7",
+      "bytes": 2037,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/public/command-2.json": {
+      "sha256": "3a1c56834aebabd9555d4fc91c5cc797857234752f2d8b78cd6d0e82cd9fa9e1",
+      "bytes": 625,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/public/command-3.json": {
+      "sha256": "acb1c2d0e4fd22dc30c8eed9ab2f98f70cc4b0a2abd6323f6ee1a3ceeaa96581",
+      "bytes": 895,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/public/fixture.json": {
+      "sha256": "9d73f8b752a720bf75ef22a4f654b51c4d33114c54514e609d6c832c787bc4b7",
+      "bytes": 272,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/public/mcp-requests.jsonl": {
+      "sha256": "acffa64f4e2699d5065b00c1a93bfef783407c799e5b2f7f5e10446b812b0823",
+      "bytes": 642,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/public/milestones.jsonl": {
+      "sha256": "b1a919769b403683c212a372f18ea7c793a6c6b762ba7fb1cda672c5cd508d84",
+      "bytes": 2754,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/public/release": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/host-evidence/jev-host-fault-zOpkmc/public/test-context.json": {
+      "sha256": "6a76765aea39b14c99dd1f0b846582ddd8dceffa5d0aa3d79fbdc87e0a6b49f2",
+      "bytes": 100,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/job.json": {
+      "sha256": "ebdd37297c6951e47cd551901f6ff03bf154ab7d89dc6e398be7820540f3c864",
+      "bytes": 60676,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/started.json": {
+      "sha256": "39ee319bf5c7f7776208d60b96676f014aec865f2ce93a6cceb7732f180e1581",
+      "bytes": 783,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-3/stdout.txt": {
+      "sha256": "eba2311f9bd42786fafc122a1c4919704bf8eafa0d4ca4e8dc12ccb04d5fc480",
+      "bytes": 756,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/command.json": {
+      "sha256": "6ee01c040891528842e3985851aa894f18a4413e644b078e4b72f90cab690bf0",
+      "bytes": 119598,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/home/Library/Application Support/jev-ios-bridge/allocation.json": {
+      "sha256": "e22438045b1dc33e8941fb6347ad363e95cbc14e4aef63bf8918dfd2923708e5",
+      "bytes": 332,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/host/Applications/Xcode.app/Contents/Developer/usr/bin/simctl": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/host/Applications/Xcode.app/Contents/Info.plist": {
+      "sha256": "bbe9c6ef361fea7e082c8a1acf93936c8905952630ac7e324c0e998fc8169581",
+      "bytes": 104,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/host/Applications/Xcode.app/Contents/MacOS/Xcode": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/host/Applications/Xcode.app/Contents/version.plist": {
+      "sha256": "14e2c88b0bd45158c1fd656cf8207af19c4a0fff6b300fd149808b311804ed82",
+      "bytes": 73,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist": {
+      "sha256": "655962b97c2250caf055fec5909bc563029e0cade48e65ad918ceecc1e279241",
+      "bytes": 72,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist": {
+      "sha256": "dff388e2802bb899dc33ed97e6cf9c5855375670937a2498c8716c8d304c962c",
+      "bytes": 96,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist": {
+      "sha256": "964ac4022b92fafe9c18c5dae333910c767a3fc53bef34ffeb523a450f898339",
+      "bytes": 130,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f1e3cd18e86080b1ad80d932d86de1752b2d7c9a0ed5d7513308a87dd300a611",
+      "bytes": 63,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist": {
+      "sha256": "d477305bd24624e11fc4db881743c5f1efa07e1344c8ff101ce9983d7f837675",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/host/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f4beba350d84ed39629a3ee7d3c2d1028fbf41c1e3a23755de12e4c3ffe26dbd",
+      "bytes": 62,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/host/usr/bin/plutil": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/host/usr/bin/xcrun": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/runs/observed/one/allocation/host-prerequisites.json": {
+      "sha256": "c40b4359f8f36678b4ee44a06ffd455c0dfe291a782f574b84c966abeb8ff89a",
+      "bytes": 151,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/runs/observed/one/allocation/preparation-request.json": {
+      "sha256": "b29dc89637012b20299ad0cee0566e51856f29f238735f2f98ec5ac79772433a",
+      "bytes": 349,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/runs/observed/one/allocation/readiness-1.json": {
+      "sha256": "924f5cbdcd449a56cacb3a017a971dc812461a72f34db5e7d3c23204fc9da22e",
+      "bytes": 324,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/runs/observed/one/allocation/source-diagnostics.json": {
+      "sha256": "79f945c0e05d8b6be437466bf80a51399efe97d9b9111979959097e73ed21074",
+      "bytes": 2064,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/runs/observed/one/allocation/staging/artifact-uvzFcn/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o500",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/runs/observed/one/allocation/staging/artifact-uvzFcn/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o400",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/runs/observed/one/observation-1.json": {
+      "sha256": "59ffd005d502e3606e41912321eaa26ddfcd7e1d089ea92826bc91ededcfc991",
+      "bytes": 518,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/runs/observed/one/observation-2.json": {
+      "sha256": "7b9517d812d269f1bf1d77706a444ba0d2294c3f2ff782a4233a8b81ca43e03c",
+      "bytes": 522,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/runs/observed/one/provisional-result.json": {
+      "sha256": "a48aeee715d494b80155f987499fcd024eb9842b6b46b4fe33770385075c4840",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/runs/observed/one/request.json": {
+      "sha256": "752bb4b6bfaaa809de7b894cd6f20ac0f339d20377d7e31c013cea2ef90d690b",
+      "bytes": 467,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/store/admission.sqlite": {
+      "sha256": "80bbd093cf62852d7e1f9b382ca35ddc92c980cebe6de4b334d919182a11c2f0",
+      "bytes": 81920,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/backend/store/installation.json": {
+      "sha256": "22da8f590a275b6c976a6f3f384e0bfdfd685f4700d978ccf4f2fce1d9efc861",
+      "bytes": 123,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/public/calls.jsonl": {
+      "sha256": "7977f9a81875a2fa06df9478ac4373cb1d6d63c02052d4d13f05670b3b048254",
+      "bytes": 243,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/public/command-1.json": {
+      "sha256": "7c42e0333da5992f97e3b7da0e7d500469065f669d34d510ff4057e26bfd2656",
+      "bytes": 1352,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/public/command-2.json": {
+      "sha256": "276d1608f0f7f22165f03a3f83c7d792289a50a31c8ce97cc0a9a91210b41152",
+      "bytes": 1336,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/public/command-3.json": {
+      "sha256": "acc659141be329131a15ec089a1a0893c1afacbc987de873b148b4d67787452c",
+      "bytes": 1256,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/public/fixture.json": {
+      "sha256": "e8613363e439cb996e62245310458082abaff36752c8e6c754dc63083fbe8912",
+      "bytes": 272,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/public/milestones.jsonl": {
+      "sha256": "f6887d6b6ab076f67001ee5440efa8034763f18ec9262535aba5a4f7e6c7c351",
+      "bytes": 4744,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/public/prepare.json": {
+      "sha256": "e37ff452fbbd0e5a5214e34b60bdd88d186cb99a5e4959733f450ce4dbc80883",
+      "bytes": 330,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/public/public-waits.jsonl": {
+      "sha256": "8a5961d0b0b207c9f3274ac9c4f2e5d967de8ab6c1a8d62e702b9af19f30b3ad",
+      "bytes": 1895,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/public/request.json": {
+      "sha256": "5f829f60b3170d22433b8dba6bb1d4cdf77efc72e017c0a368a68104777c6553",
+      "bytes": 284,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-hVrbgK/public/test-context.json": {
+      "sha256": "a35a0260b4800b4c159f5f228857ec96c902c7fe3d0cd69f64808df355849a98",
+      "bytes": 90,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/home/Library/Application Support/jev-ios-bridge/allocation.json": {
+      "sha256": "e22438045b1dc33e8941fb6347ad363e95cbc14e4aef63bf8918dfd2923708e5",
+      "bytes": 332,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/host/Applications/Xcode.app/Contents/Developer/usr/bin/simctl": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/host/Applications/Xcode.app/Contents/Info.plist": {
+      "sha256": "bbe9c6ef361fea7e082c8a1acf93936c8905952630ac7e324c0e998fc8169581",
+      "bytes": 104,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/host/Applications/Xcode.app/Contents/MacOS/Xcode": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/host/Applications/Xcode.app/Contents/version.plist": {
+      "sha256": "14e2c88b0bd45158c1fd656cf8207af19c4a0fff6b300fd149808b311804ed82",
+      "bytes": 73,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Info.plist": {
+      "sha256": "655962b97c2250caf055fec5909bc563029e0cade48e65ad918ceecc1e279241",
+      "bytes": 72,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/host/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype/Contents/Resources/profile.plist": {
+      "sha256": "dff388e2802bb899dc33ed97e6cf9c5855375670937a2498c8716c8d304c962c",
+      "bytes": 96,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Info.plist": {
+      "sha256": "964ac4022b92fafe9c18c5dae333910c767a3fc53bef34ffeb523a450f898339",
+      "bytes": 130,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f1e3cd18e86080b1ad80d932d86de1752b2d7c9a0ed5d7513308a87dd300a611",
+      "bytes": 63,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/host/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/profile.plist": {
+      "sha256": "d477305bd24624e11fc4db881743c5f1efa07e1344c8ff101ce9983d7f837675",
+      "bytes": 185,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/host/System/Library/CoreServices/SystemVersion.plist": {
+      "sha256": "f4beba350d84ed39629a3ee7d3c2d1028fbf41c1e3a23755de12e4c3ffe26dbd",
+      "bytes": 62,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/host/usr/bin/plutil": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/host/usr/bin/xcrun": {
+      "sha256": "7a69b7f9aa0f0693d048b5c58d321f6409aa34ef50f044362d71b9b98828a6db",
+      "bytes": 15,
+      "initialCopiedOrCreatedMode": "0o755",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/runs/leases/ABCDEF00-0000-4000-8000-000000000001.lock": {
+      "sha256": "2fc8e086f0170077b04cb2e85f015275b69d62689f939c174cf2ec6ed1d328d7",
+      "bytes": 149,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/runs/observed/one/allocation/host-prerequisites.json": {
+      "sha256": "c40b4359f8f36678b4ee44a06ffd455c0dfe291a782f574b84c966abeb8ff89a",
+      "bytes": 151,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/runs/observed/one/allocation/preparation-request.json": {
+      "sha256": "5ea990289a573582259ca3196cc0b068b5125b2101ec069635811f1e31017246",
+      "bytes": 349,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/runs/observed/one/allocation/source-diagnostics.json": {
+      "sha256": "5c42daf2a1c0de6226f46199e1f493c5e8eb91c7c370ea4e805a8da096fc5843",
+      "bytes": 2148,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/runs/observed/one/allocation/staging/artifact-PfrnmL/Fixture.app/Fixture": {
+      "sha256": "01733c518be23de7199af2eb4c61526a412c67e1accb1ac4128d9e7dc4d1ebf9",
+      "bytes": 56,
+      "initialCopiedOrCreatedMode": "0o500",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/runs/observed/one/allocation/staging/artifact-PfrnmL/Fixture.app/Info.plist": {
+      "sha256": "6265318d03d1feefaf27702950576dd07c53c2d8398c487573b43770f157ddec",
+      "bytes": 492,
+      "initialCopiedOrCreatedMode": "0o400",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/store/admission.sqlite": {
+      "sha256": "d0a6772226bed4efb1e3117b98752ffc4ff58c0c80303c2d6ea0396d9e7621f6",
+      "bytes": 73728,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/backend/store/installation.json": {
+      "sha256": "aeba6e432eb1542c400352975726f368c72c45ba42b638274422cf1d8d9e6ea6",
+      "bytes": 123,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/public/action.json": {
+      "sha256": "390801907e027f58ed502415fa847fcdde70d6920d95ad4720cc05c27db84909",
+      "bytes": 284,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/public/calls.jsonl": {
+      "sha256": "e5fe6e812f4a7f3118fad30b25e29696e6f5edee590d07d7269db6008b6a0988",
+      "bytes": 168,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/public/command-1.json": {
+      "sha256": "12b3f38d1cdc7683508c63f7e09350fdc5f03aa5aff93a221c7139f9dbd74b43",
+      "bytes": 2037,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/public/command-2.json": {
+      "sha256": "72bf874f0a8b2e23657bb55a6d6f2e8f1f8d291f580285cf43bede2168241806",
+      "bytes": 625,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/public/command-3.json": {
+      "sha256": "a363fa91662bdc4439e80becaaf6e59eae37838c8903741c4c76cd06a82b1f98",
+      "bytes": 895,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/public/fixture.json": {
+      "sha256": "2f591d2b36060da3a673530d5aa555049c6ecf16b9aad717e7be49cc7e3f7a3a",
+      "bytes": 272,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/public/mcp-requests.jsonl": {
+      "sha256": "1085797f292586030d2cbfa04cc9fcd3e22aee1d193c97a6fc91554abf394124",
+      "bytes": 642,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/public/milestones.jsonl": {
+      "sha256": "05ae5bd94b79bef8b24795b86eaeba79071efe09c608ba0c33e7b4c773f45008",
+      "bytes": 2754,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/public/release": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/host-evidence/jev-host-fault-rYONgt/public/test-context.json": {
+      "sha256": "6a76765aea39b14c99dd1f0b846582ddd8dceffa5d0aa3d79fbdc87e0a6b49f2",
+      "bytes": 100,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/job.json": {
+      "sha256": "0e00188cb1beea15010179e65c14dbf61cb55f703b73d604690beebf5b6f5d4f",
+      "bytes": 60676,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/started.json": {
+      "sha256": "439dcfacd32d53fcecc62ced7e3053905a476eb245305083188a95b4e5b32f50",
+      "bytes": 783,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "candidate/run-4/stdout.txt": {
+      "sha256": "6a2ecba97f159e57af5d42a2b4753e83066c2dd3699a8e07a542f2db9a7a0f4e",
+      "bytes": 754,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "cohorts-complete.json": {
+      "sha256": "9d5b346fe40fc5a8f2d78596bb3122cc463b6537546425985fcd7fcfddb5dc94",
+      "bytes": 124595,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "comparison-report.md": {
+      "sha256": "2b3a4cdcef540b05e992e0229d8c1319b4d745dddf20a37d477581229c5d313e",
+      "bytes": 1979,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "comparison-result.json": {
+      "sha256": "e2fb263917848d76fc44b72ddab19ad524523f1d9e4975d6892e3be67835ec58",
+      "bytes": 174796,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "preflight.json": {
+      "sha256": "8da05d2adaad9b72e22d323d659a4df898798b347523f461159a0c83acb3a013",
+      "bytes": 119740,
+      "initialCopiedOrCreatedMode": "0o600",
+      "sealedMode": "0600"
+    },
+    "run-comparison.py": {
+      "sha256": "c02a4607d882664560c29fd7fd3e43c980e04ad0f4ed4865380494e460787be6",
+      "bytes": 7791,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    },
+    "seal-comparison.py": {
+      "sha256": "d4a778450b4b8f926a9018894fc7688c91ec891a66c64e833e1df502bc4a9b39",
+      "bytes": 9853,
+      "initialCopiedOrCreatedMode": "0o644",
+      "sealedMode": "0600"
+    }
+  },
+  "selfExclusion": "evidence-manifest.json SHA256 sent to Root",
+  "otherExclusions": [],
+  "files600Directories700": true,
+  "archivedBytesUnchangedByPrivacyModes": true,
+  "previous481Plus79ImmutableFilesMatch": true,
+  "comparisonVerdict": "No reproduction, original full-default FAIL remains"
+}

@@ -1,0 +1,21 @@
+{
+  "derivedAfterActualCloseFromUnmodifiedRaw": true,
+  "rawSource": "actual-default-node24/stdout.txt",
+  "rawSourceSha256": "6f5faa5b1ffb0b44e334599cd8e5077d10b10b2d1bf58c4830970a26d358af64",
+  "markers": [
+    {
+      "lineNumber": 1313,
+      "line": "\u2716 metadata cancellation refuses even when its process ignores the abort (1001.854166ms)"
+    },
+    {
+      "lineNumber": 1379,
+      "line": "\u2716 H06.03 genuine cli beforeCommit finalization response fault preserves authority (9862.215334ms)"
+    },
+    {
+      "lineNumber": 1950,
+      "line": "\u2716 H05.01 mcp durable external preparation cancel at backend:snapshot-ui:1 fences successors (8311.597542ms)"
+    }
+  ],
+  "finalFailureBlocks": "default-failure-blocks.txt",
+  "finalFailureBlocksSha256": "0ff9976ed7c714fbf22a7e1ad30f6920d166f95bce4798b9651ddf288e002177"
+}

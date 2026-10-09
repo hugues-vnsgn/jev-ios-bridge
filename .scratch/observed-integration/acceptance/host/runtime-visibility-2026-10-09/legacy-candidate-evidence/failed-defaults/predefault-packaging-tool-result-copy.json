@@ -1,0 +1,14 @@
+{
+  "captureKind": "post hoc exact tool-result copy, not command-recorder receipt",
+  "command": "python3 .scratch/installed-legacy-volume-runtime/freeze-audit.py",
+  "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime",
+  "originalToolResult": {
+    "chunk_id": "077be6",
+    "wall_time_seconds": 0.291579083,
+    "exit_code": 1,
+    "original_token_count": 86,
+    "output": "Traceback (most recent call last):\n  File \"/Users/hugues_mini/orca/workspaces/jev-ios-bridge/fix-installed-cryptex-runtime/.scratch/installed-legacy-volume-runtime/freeze-audit.py\", line 52, in <module>\n    assert len(ownedNames)==199 and len(set(ownedNames))==199\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  "originalScriptSha256": "0e30b7b31bc57f5f43bea9ead04e2c46708dcc3ffdf1580ecc2b27dce4e21a89",
+  "productSourceOrTestOrGateChanges": false
+}

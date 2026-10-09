@@ -1,0 +1,15 @@
+✔ metadata cancellation refuses even when its process ignores the abort (323.045959ms)
+(node:31560) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ H06.03 genuine cli beforeCommit finalization response fault preserves authority (11922.570166ms)
+(node:31571) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ H05.01 mcp durable external preparation cancel at backend:snapshot-ui:1 fences successors (10190.078167ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15131.788834
