@@ -1,0 +1,30 @@
+{
+  "observedAtUtc": "2026-10-09T01:11:30.697119+00:00",
+  "verdict": "PASS for5 bounded runtime metadata/evidence queries only",
+  "runtimePrerequisite": "UNVERIFIED: no27.0 bundle in inspected supported metadata roots",
+  "receiptCount": 5,
+  "receiptFields": "exact argv/cwd/start/end/exit/signal/stdout/stderr retained",
+  "expectedMissingDefaultRootExit": 1,
+  "allQueriesFreshAfterOwnerConfirmation": true,
+  "priorMetadataPathAndHashMatches": true,
+  "priorMetadataIsNotFreshlyQueried": true,
+  "operatorCompletionScreenRequestId": "9858f367-0f6b-4122-ae0c-5fc82d61701e",
+  "satisfiedIdleWaitRequestId": "71ccfa27-e753-495f-9edf-5fa887f9e2d0",
+  "operatorIdle": true,
+  "ownerFacts": "Confirmed owner assertion, not independent process/native proof",
+  "privateDeclarationSha256": "676e554a08bcf44403da1ffef4737d5508c36e1f00e6793951f338fbf280e25b",
+  "declarationSchemaCorrespondence": "Static exact strict fields/version/booleans/empty array correspondence to inspected integration Source; no production parser/store execution",
+  "operatorFileHashes": {
+    "report.md": "72d549b41bd29d5ebaeee07eb9f3cd366170c1ae1dae8bc243b44e015c766ca8",
+    "versions.json": "e8be0101ed0c4fe23ace741f6613b14c2686dec7985a69c1fef213a88f6bb66e"
+  },
+  "liveRows": {
+    "L01": "UNVERIFIED",
+    "L02": "UNVERIFIED",
+    "L03": "UNVERIFIED",
+    "L04": "UNVERIFIED",
+    "L05": "UNVERIFIED"
+  },
+  "actualMigration": "not started",
+  "limits": "No fallback/install/runtime certification, no actual store/config/claim/device effect."
+}

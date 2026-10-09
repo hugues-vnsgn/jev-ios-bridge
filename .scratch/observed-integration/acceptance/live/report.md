@@ -1,22 +1,17 @@
-# Live acceptance prerequisite recheck — UNVERIFIED
+# iOS 27.0 runtime confirmation recheck — UNVERIFIED_RUNTIME_ABSENT_IN_INSPECTED_ROOTS
 
-Captured 2026-10-09. Bounded read-only metadata queries only.
+Captured 2026-10-09T01:09:56.504Z. This is a bounded read-only metadata recheck.
 
-## iOS 27.0 runtime
+## Runtime verdict
 
-No iOS 27.0 .simruntime bundle was found in the allocator-supported metadata roots. The default root query returned a scoped missing-root/empty result; the per-volume runtime-root and bundle searches found no iOS 27.0 bundle. This is a scoped negative only and says nothing about unmounted archives or image catalogs.
+No iOS 27.0 .simruntime bundle was found in the allocator-supported installed metadata roots. The default root query returned a scoped missing-root result; the per-volume root and bundle searches returned no runtime bundle. Exact runtime version/build/identifier and runtime-side iPhone 17 compatibility remain UNVERIFIED. This says nothing about unmounted archives, image catalogs, or other uninspected locations.
 
-- Required runtime identifier: `com.apple.CoreSimulator.SimRuntime.iOS-27-0`.
-- Exact runtime version/build and runtime profile compatibility: **UNVERIFIED**; no matching runtime plist was available to inspect.
-- iPhone 17 metadata is present. Its profile declares minimum runtime 26.0 and default range 26.0–99.99, so device-type metadata includes 27.0; runtime-side compatibility remains **UNVERIFIED**.
-- Host metadata: macOS 27.0.1 (26A434), Xcode 27.0 (27A266a), arm64, Node v26.8.1.
+Required runtime identifier: `com.apple.CoreSimulator.SimRuntime.iOS-27-0`.
 
-## Live rows and scope
+## Scope and status
 
-L01–L05 remain **UNVERIFIED**. No tests, builds, device backend, simulator listing, runtime download/install/update, production configuration/store/journal/lease access, migration, allocation, launch, capture, input, or cleanup was performed. No fallback was used.
-
-Operational old-writer quiescence and historical journal/lease root declarations or exclusions remain pending, as do production migration/configuration/capacity/storage and fresh app builds.
+L01–L05 remain **UNVERIFIED**. The owner confirmation resolves the stated writer/root facts as an owner assertion, but this recheck performed no migration, production store/configuration/journal/lease access, bridge/CLI/MCP backend work, tests, builds, simulator listing, runtime installation/download/update/substitution, allocation, launch, capture, input, or cleanup. No fallback was used.
 
 ## Evidence
 
-Exact argv, cwd, timestamps, exit status, stdout, stderr, plist hashes, and projections are in `versions.json`. The query environment removed TYPESAFE_API_KEY, NODE_OPTIONS, and NODE_NO_WARNINGS without reading or printing their values.
+Exact fresh argv, cwd, start/end timestamps, exit/signal, stdout/stderr, plist projections and hashes (if present), and explicit query limits are in `versions.json`. Prior unrelated host/device-type metadata is referenced there by evidence path and SHA-256, not represented as freshly queried. Query child environments removed TYPESAFE_API_KEY, NODE_OPTIONS, and NODE_NO_WARNINGS without reading or printing their values.

@@ -1,0 +1,21 @@
+{
+  "capturedAtUtc": "2026-10-09T01:09:08.768612+00:00",
+  "userText": "confirm",
+  "respondingTo": "Needed from you: confirm the writer/root facts in the pending question.",
+  "pendingQuestion": "Are all older or external bridge writers stopped, and are there historical journal or lease roots under other home directories or TMPDIRs? List those roots, or the affected devices to exclude. If none exist, confirm that explicitly.",
+  "recordedFacts": {
+    "version": 1,
+    "writersStopped": true,
+    "historicalRootsDeclaredOrExcluded": true,
+    "additionalJournalRoots": [],
+    "additionalLeaseRoots": [],
+    "excludedDevices": []
+  },
+  "interpretation": "Owner confirms stopped old/external writers and no additional historical journal/lease roots or additional device exclusions. Coordinator stated this interpretation to owner before preparation.",
+  "evidenceKind": "Owner operational assertion; not independent process quiescence or native release proof",
+  "declarationSha256": "676e554a08bcf44403da1ffef4737d5508c36e1f00e6793951f338fbf280e25b",
+  "schemaSource": "src/device/admission-sqlite.ts:21 strictObject; src/device/admission-maintenance.ts:15 published declaration shape",
+  "schemaCheck": "Static exact field/constant/array correspondence only; production modules not invoked",
+  "actualMigration": "not performed; runtime remains required",
+  "protectedDevices": "Built-in four protected UUID exclusions remain in the migration collector; no claims changed."
+}

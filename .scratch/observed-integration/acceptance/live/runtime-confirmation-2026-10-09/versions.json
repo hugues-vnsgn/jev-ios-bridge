@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "capturedAtUtc": "2026-10-09T01:09:56.504Z",
+  "evidenceBaseHead": "322723be6de6f315e0d44a2a18e8b31b92c97c2d",
+  "scope": "Read-only metadata recheck of explicit iOS 27.0 runtime in allocator-supported installed metadata roots only. No production migration/store or live/device execution was dispatched.",
+  "status": "UNVERIFIED_RUNTIME_ABSENT_IN_INSPECTED_ROOTS",
+  "requestedRuntime": {
+    "version": "iOS 27.0",
+    "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+    "runtimeBundlesFoundInInspectedRoots": [],
+    "matching27BundleFound": false,
+    "exactVersionBuildIdentifier": null,
+    "runtimeProfileAndIPhone17Compatibility": "UNVERIFIED: no iOS 27.0 bundle/profile was available for runtime-side compatibility inspection.",
+    "inspectedRoots": [
+      "/Library/Developer/CoreSimulator/Profiles/Runtimes",
+      "/Library/Developer/CoreSimulator/Volumes/<name>/Library/Developer/CoreSimulator/Profiles/Runtimes"
+    ],
+    "queryLimits": "A missing /Library/Developer/CoreSimulator/Profiles/Runtimes root is a scoped negative. Per-volume searches were limited to installed metadata roots under /Library/Developer/CoreSimulator/Volumes. No cache names, volume names, archives, images, catalogs, or device listings establish installation."
+  },
+  "priorMetadataReference": {
+    "path": ".scratch/observed-integration/acceptance/live/preflight-2026-10-09/versions.json",
+    "sha256": "9dbe0f698f28b5c9b5983b36381b7e3ff2fa61e8db09026a1d539a64a2c2cad8",
+    "classification": "Prior evidence only; unrelated host and iPhone 17 device-type metadata are not claimed as freshly queried in this runtime-only recheck."
+  },
+  "ownerOperationalConfirmation": {
+    "path": ".scratch/observed-integration/acceptance/host/operational-confirmation-2026-10-09/owner-confirmation.json",
+    "evidenceKind": "Owner operational assertion; not independent quiescence or native release proof.",
+    "scopeEffect": "Resolves the owner-facts prerequisite only; no production migration/store or live/device execution is dispatched."
+  },
+  "liveRows": {
+    "L01": "UNVERIFIED",
+    "L02": "UNVERIFIED",
+    "L03": "UNVERIFIED",
+    "L04": "UNVERIFIED",
+    "L05": "UNVERIFIED"
+  },
+  "provenance": {
+    "queryEnvironment": "TYPESAFE_API_KEY, NODE_OPTIONS, and NODE_NO_WARNINGS were removed from query child environments; their values were never read or printed. .env was not read.",
+    "commands": [
+      {
+        "argv": [
+          "find",
+          "/Library/Developer/CoreSimulator/Profiles/Runtimes",
+          "-maxdepth",
+          "1",
+          "-type",
+          "d",
+          "-name",
+          "*.simruntime",
+          "-print"
+        ],
+        "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+        "startedAt": "2026-10-09T01:09:56.463Z",
+        "completedAt": "2026-10-09T01:09:56.467Z",
+        "exitCode": 1,
+        "signal": null,
+        "stdout": "",
+        "stderr": "find: /Library/Developer/CoreSimulator/Profiles/Runtimes: No such file or directory\n"
+      },
+      {
+        "argv": [
+          "ls",
+          "-la",
+          "/Library/Developer/CoreSimulator/Volumes"
+        ],
+        "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+        "startedAt": "2026-10-09T01:09:56.467Z",
+        "completedAt": "2026-10-09T01:09:56.470Z",
+        "exitCode": 0,
+        "signal": null,
+        "stdout": "total 0\ndrwxr-xr-x@ 4 root  wheel  128 Oct  6 11:08 .\ndrwxr-xr-x  7 root  wheel  224 May  8 09:55 ..\ndrwxr-xr-x  2 root  wheel   64 Jun  9 18:23 iOS_22G86\ndrwxr-xr-x  2 root  wheel   64 May  8 10:05 iOS_23E254a\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "find",
+          "/Library/Developer/CoreSimulator/Volumes",
+          "-type",
+          "d",
+          "-path",
+          "*/Library/Developer/CoreSimulator/Profiles/Runtimes",
+          "-print"
+        ],
+        "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+        "startedAt": "2026-10-09T01:09:56.470Z",
+        "completedAt": "2026-10-09T01:09:56.472Z",
+        "exitCode": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "find",
+          "/Library/Developer/CoreSimulator/Volumes",
+          "-type",
+          "d",
+          "-path",
+          "*/Library/Developer/CoreSimulator/Profiles/Runtimes/*.simruntime",
+          "-print"
+        ],
+        "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+        "startedAt": "2026-10-09T01:09:56.472Z",
+        "completedAt": "2026-10-09T01:09:56.474Z",
+        "exitCode": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "shasum",
+          "-a",
+          "256",
+          ".scratch/observed-integration/acceptance/live/preflight-2026-10-09/versions.json"
+        ],
+        "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic",
+        "startedAt": "2026-10-09T01:09:56.474Z",
+        "completedAt": "2026-10-09T01:09:56.504Z",
+        "exitCode": 0,
+        "signal": null,
+        "stdout": "9dbe0f698f28b5c9b5983b36381b7e3ff2fa61e8db09026a1d539a64a2c2cad8  .scratch/observed-integration/acceptance/live/preflight-2026-10-09/versions.json\n",
+        "stderr": ""
+      }
+    ],
+    "runtimePlistInputs": []
+  }
+}
