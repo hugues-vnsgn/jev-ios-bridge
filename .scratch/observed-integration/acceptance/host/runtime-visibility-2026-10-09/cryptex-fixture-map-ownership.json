@@ -1,7 +1,7 @@
 {
   "at": "2026-10-09T04:17:51.104832+00:00",
   "finding": "Shared allocation fixture installed map excluded /private and would pass those discovery paths to real filesystem under new product Source. Author stopped existing-fixture/fullgate slice before any native query.",
-  "authorization": "Root transfers only two installed-map changes: add the private prefix and map the exact slash root to the same temporary installed tree. Preserve other mapping outcomes, Xcode output guard and original assertions.",
+  "authorization": "Root transfers only the private installed-prefix regex, exact slash-root mapping branch, and a leading identity branch for the exact owned temporary fixture root and its descendants. Preserve every other mapping outcome, Xcode output guard and original assertions.",
   "file": "tests/fixtures/observed-allocation-backend.ts",
   "baselineSha256": "5b8c6b14a463ee8ec312ac33655f18c0efc931c2c900784840342f7aeb0e3d80",
   "proof": "Independent pure-string regressions for /, /private and the fixed Cryptex descendant on both exact Node versions before the fixture edit; green after the two mapping changes. Inspect temporary mapped paths only before existing suites.",
@@ -14,5 +14,10 @@
   "priorAuthorization": "Root narrowly transfers only installed map regex to include private; preserve originalother behavior/Xcodeguard/assertions.",
   "additionalFinding": "The complete Cryptex ancestor snapshot includes /; the old mapper also passed that exact path to the real root. Author reported the conflict before any native root query.",
   "additionalAuthorizationAt": "2026-10-09T04:28:49.285176+00:00",
-  "authorCheckpoint": "Author reports mapping regressions green 3/3 on both Nodes, two unchanged production Cryptex cases still genuine red, allocation-config SHA unchanged through reds: 82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026. Source implementation now starts."
+  "authorCheckpoint": "Author reports mapping regressions green 3/3 on both Nodes, two unchanged production Cryptex cases still genuine red, allocation-config SHA unchanged through reds: 82140b7f019e6031597b678669d8f491d414a0eaf43e403cf49fde68fd370026. Source implementation now starts.",
+  "priorTwoBranchAuthorization": "Root transfers only two installed-map changes: add the private prefix and map the exact slash root to the same temporary installed tree. Preserve other mapping outcomes, Xcode output guard and original assertions.",
+  "tempRootFinding": "Canonical fixture roots are /private/tmp/observed-allocator-*; the private prefix remapped existing owned home/config/store/artifact paths into host/private/tmp. An inherited allocation test then awaited its config lstat barrier after earlier home lstat returned CONFIG_INVALID. Author static diagnosis; both overlapping focused workers remain pending until bounded owned-tree termination.",
+  "tempRootAuthorizationAt": "2026-10-09T04:47:20.866409+00:00",
+  "tempRootProof": "Retain current fixture bytes/hash; add pure-string owned root/descendant regression red and green on both Nodes before fixture edit and authoritative serial inherited suites. No filesystem call on unmapped native paths.",
+  "ownedTestTermination": "Bounded pgrep matching only the two exact recorded Node test argv; verify matched argv and worktree cwd, traverse only their descendants, SIGTERM then bounded SIGKILL if necessary, track actual completion. Preserve Python wrappers and final raw receipts. Sessions22522 and18444 must close before edits/new validation. No general process dump, unrelated process or native/backend effects."
 }

@@ -178,3 +178,7 @@ The Cryptex product write set is now four files: allocation-config source, the o
 ## Exact slash-root fixture mapping extension
 
 Root also transferred only the exact `/` mapping branch to the temporary installed tree, retaining complete ancestor snapshots. The author reports independent pure-string reds then3/3 mapping greens for `/`, `/private` and the fixed Cryptex descendant on both exact Nodes. No native root/private query occurred. The two unchanged production Cryptex cases remain genuine red on each Node before Source implementation. The four-file write set,437 protected baseline paths and441 total candidate paths remain unchanged. The original fixture hash and narrow mapping receipt are preserved; any further shared-fixture conflict returns to Root.
+
+## Preserve owned temporary fixture paths
+
+Root transferred a leading identity branch for the fixture root and descendants, which live under `/private/tmp`, before the installed private-prefix mapper. This preserves prior app/home/config/store paths. Retain pure-string red/green both Nodes and all original assertions. Four owned files,437 protected/441 total remain unchanged. Two accidentally overlapping focused runs stalled at an unreachable config-lstat barrier; only those verified owned fake-test trees may be terminated, preserving wrappers/raw final receipts. Both must close before edits or new validation; authoritative focused reruns are serial. No native policy extension or device/store effects.
