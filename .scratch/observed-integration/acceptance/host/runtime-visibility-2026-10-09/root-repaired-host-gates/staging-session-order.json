@@ -1,0 +1,8 @@
+{
+  "scope": "Private Git evidence staging scheduling error; no product/gate/native effect",
+  "error": "Git commit refused index.lock while prior owned git-add session5937 was still running",
+  "correction": "Waited for actual session5937 close exit0 before commit. No lock removal, signal, Source change or gate rerun.",
+  "retainedFiles": 12893,
+  "retainedBytes": 45239615,
+  "includes": "Complete retained default fake host fixture traces, fresh proof raw outputs, Source snapshots, compiled69 and exact archives; dependency caches/node_modules/generated dist/build excluded."
+}

@@ -1,0 +1,61 @@
+{
+  "name": "jev-ios-bridge",
+  "version": "1.3.1",
+  "description": "Check iOS and Android apps (SwiftUI, UIKit, Jetpack Compose, Compose Multiplatform, Android Views) on a simulator, or an emulator or phone (phones untested), with scripted steps and Jev-judged screen claims",
+  "keywords": [
+    "ios",
+    "android",
+    "simulator",
+    "emulator",
+    "testing",
+    "swiftui",
+    "jetpack-compose",
+    "compose-multiplatform",
+    "jev"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=24"
+  },
+  "bin": {
+    "jev-ios-bridge": "dist/cli.js"
+  },
+  "exports": {
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "skills",
+    "README.md",
+    "docs/guide",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "check": "npm run typecheck && npm test && npm run build",
+    "build:plugin": "node scripts/build-plugin.mjs",
+    "feasibility": "tsx spikes/feasibility/cli.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.1.0",
+    "@typesafe-ai/sdk": "0.6.0",
+    "mobilebuildmcp": "2.7.1",
+    "mobilecli": "1.0.14",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.6",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hugues-vnsgn/jev-ios-bridge.git"
+  },
+  "homepage": "https://github.com/hugues-vnsgn/jev-ios-bridge"
+}

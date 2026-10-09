@@ -1,0 +1,8 @@
+{
+  "scope": "Private Git evidence staging error; no product, gate or runtime operation",
+  "originalError": "OSError:[Errno7] Argument list too long:git",
+  "confirmedCause": "Long per-file path argument vector exceeded host exec argument limit before Git launched",
+  "selectedFiles": 12892,
+  "pathArgumentBytes": 2720810,
+  "correction": "Supply literal NUL-separated pathspecs over stdin; preserve selected bytes and all gate results."
+}

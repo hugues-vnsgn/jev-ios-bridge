@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "kind": "observed-action",
+  "actionId": "one",
+  "allocationId": "326C536A-8642-4632-8150-A8D5643C4190",
+  "device": {
+    "platform": "ios-simulator",
+    "udid": "ABCDEF00-0000-4000-8000-000000000001"
+  },
+  "bridgeVersion": "fixture",
+  "state": "terminal",
+  "authority": "committed",
+  "disposition": "retrieved",
+  "cancellationRequested": false,
+  "actionAttempted": true,
+  "actionAcknowledged": true,
+  "observations": 2,
+  "outcome": "outcome_observed",
+  "reason": null,
+  "admission": "available",
+  "allocationState": "retained",
+  "evidence": {
+    "directory": "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-9M3Bse/runs/observed/one",
+    "request": "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-9M3Bse/runs/observed/one/request.json",
+    "observations": [
+      "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-9M3Bse/runs/observed/one/observation-1.json",
+      "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/observed-allocator-9M3Bse/runs/observed/one/observation-2.json"
+    ],
+    "terminal": null,
+    "exportStatus": "pending"
+  }
+}
