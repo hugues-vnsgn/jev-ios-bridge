@@ -1,0 +1,60 @@
+[
+  {
+    "label": "cli-allocation",
+    "command": [
+      "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+      "--import",
+      "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/fixtures/observed-packaging/guard.mjs",
+      "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-repaired-host-gates/cryptex-installed-node24-installed/clean/node_modules/jev-ios-bridge/dist/cli.js",
+      "observed-allocation",
+      "ABCDEF00-0000-4000-8000-000000000099",
+      "--json"
+    ],
+    "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-repaired-host-gates/cryptex-installed-node24-installed/clean",
+    "node": "v24.0.0",
+    "childUmask": "0022",
+    "code": 3,
+    "signal": null,
+    "stdout": "cli-allocation.stdout",
+    "stderr": "cli-allocation.stderr",
+    "guardLog": "cli-allocation-guard.jsonl"
+  },
+  {
+    "label": "cli-action",
+    "command": [
+      "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+      "--import",
+      "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/fixtures/observed-packaging/guard.mjs",
+      "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-repaired-host-gates/cryptex-installed-node24-installed/clean/node_modules/jev-ios-bridge/dist/cli.js",
+      "observed-report",
+      "store-fault",
+      "--json"
+    ],
+    "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-repaired-host-gates/cryptex-installed-node24-installed/clean",
+    "node": "v24.0.0",
+    "childUmask": "0022",
+    "code": 3,
+    "signal": null,
+    "stdout": "cli-action.stdout",
+    "stderr": "cli-action.stderr",
+    "guardLog": "cli-action-guard.jsonl"
+  },
+  {
+    "label": "mcp",
+    "command": [
+      "/Users/hugues_mini/.npm/_npx/2c6eebc6231f3284/node_modules/node/bin/node",
+      "--import",
+      "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/tests/fixtures/observed-packaging/guard.mjs",
+      "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-repaired-host-gates/cryptex-installed-node24-installed/clean/node_modules/jev-ios-bridge/dist/cli.js",
+      "mcp"
+    ],
+    "cwd": "/Users/hugues_mini/orca/workspaces/jev-ios-bridge/feat-native-callback-diagnostic/.scratch/observed-integration/acceptance/host/runtime-visibility-2026-10-09/root-repaired-host-gates/cryptex-installed-node24-installed/clean",
+    "node": "v24.0.0",
+    "childUmask": "0022",
+    "code": 0,
+    "signal": null,
+    "stdout": "mcp.stdout",
+    "stderr": "mcp.stderr",
+    "guardLog": "mcp-guard.jsonl"
+  }
+]

@@ -1,0 +1,85 @@
+{
+  "scope": "Exact actual completed wrapped installed startup; original execution remains in run vault",
+  "files": {
+    "result.json": {
+      "sha256": "14d64222678cc2febea4bf813c887c14431f659afff4f729c2e0e14e0bf30153",
+      "bytes": 82058,
+      "actualSource": ".scratch/observed-run-vault/root-isolated-probes/cryptex-startup-node24/result.json"
+    },
+    "stdout": {
+      "sha256": "7179a28cf49a012fea6543ae300b7fd75db075de73619496b3a11c5d7d76e4a8",
+      "bytes": 991,
+      "actualSource": ".scratch/observed-run-vault/root-isolated-probes/cryptex-startup-node24/stdout"
+    },
+    "stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "actualSource": ".scratch/observed-run-vault/root-isolated-probes/cryptex-startup-node24/stderr"
+    },
+    "launch.json": {
+      "sha256": "dcb05ce525585a58c7e26cf1b99c7bb2f9c1dacccb217037a43b22a5a7a8e110",
+      "bytes": 41395,
+      "actualSource": ".scratch/observed-run-vault/root-isolated-probes/cryptex-startup-node24/launch.json"
+    },
+    "execution/summary.json": {
+      "sha256": "9a4b226e8179bc4901c2d2100da15bb5ed2d1566997618bfde1bac9689484c43",
+      "bytes": 1062,
+      "actualSource": ".scratch/observed-run-vault/root-isolated-probes/cryptex-startup-node24/execution/summary.json"
+    },
+    "execution/cli-allocation.stdout": {
+      "sha256": "00beff87177ec4f8c460fb2dea7962f94d2891e5a558f2a0fb3d0929c2af126e",
+      "bytes": 185,
+      "actualSource": ".scratch/observed-run-vault/root-isolated-probes/cryptex-startup-node24/execution/cli-allocation.stdout"
+    },
+    "execution/mcp.stderr": {
+      "sha256": "37c6aa52fdc4a3d0bc0ef0cdf7ab9044e01a16632acb6b40147d4b5648af1cd5",
+      "bytes": 169,
+      "actualSource": ".scratch/observed-run-vault/root-isolated-probes/cryptex-startup-node24/execution/mcp.stderr"
+    },
+    "execution/mcp.stdout": {
+      "sha256": "e4e744e9fc080d3e8fa737f31c16d186dc057119a8142944c432e271b8e52193",
+      "bytes": 1314,
+      "actualSource": ".scratch/observed-run-vault/root-isolated-probes/cryptex-startup-node24/execution/mcp.stdout"
+    },
+    "execution/cli-allocation.stderr": {
+      "sha256": "36bc610ce6c1d5573e6e74f1dbccb0917d2e1627f717a4b9a4468536c5498962",
+      "bytes": 169,
+      "actualSource": ".scratch/observed-run-vault/root-isolated-probes/cryptex-startup-node24/execution/cli-allocation.stderr"
+    },
+    "execution/commands.json": {
+      "sha256": "f617930a79e41a23de5ff531ff08ed3aadb67c579113280ee11fdd89384020f7",
+      "bytes": 3157,
+      "actualSource": ".scratch/observed-run-vault/root-isolated-probes/cryptex-startup-node24/execution/commands.json"
+    },
+    "execution/mcp-guard.jsonl": {
+      "sha256": "8ca5ed6102cf6575655b0014e6354b1c7eb2b0753c346246df78cc90d60b0202",
+      "bytes": 31,
+      "actualSource": ".scratch/observed-run-vault/root-isolated-probes/cryptex-startup-node24/execution/mcp-guard.jsonl"
+    },
+    "execution/mcp-requests.jsonl": {
+      "sha256": "4d283918ac0d8afddb4650e970981f60d5f578648ca5efc42c589b160e4cebed",
+      "bytes": 606,
+      "actualSource": ".scratch/observed-run-vault/root-isolated-probes/cryptex-startup-node24/execution/mcp-requests.jsonl"
+    },
+    "execution/cli-action.stderr": {
+      "sha256": "5df64571ea4cfe0e533c7c3c616f1d020a2e6dd73e2ffce70580bc53bd7f0197",
+      "bytes": 169,
+      "actualSource": ".scratch/observed-run-vault/root-isolated-probes/cryptex-startup-node24/execution/cli-action.stderr"
+    },
+    "execution/cli-allocation-guard.jsonl": {
+      "sha256": "8ca5ed6102cf6575655b0014e6354b1c7eb2b0753c346246df78cc90d60b0202",
+      "bytes": 31,
+      "actualSource": ".scratch/observed-run-vault/root-isolated-probes/cryptex-startup-node24/execution/cli-allocation-guard.jsonl"
+    },
+    "execution/cli-action.stdout": {
+      "sha256": "49f79e0f5b6e48113ff085b943bdaeec515d09df82cfd55131976f3f739cb058",
+      "bytes": 180,
+      "actualSource": ".scratch/observed-run-vault/root-isolated-probes/cryptex-startup-node24/execution/cli-action.stdout"
+    },
+    "execution/cli-action-guard.jsonl": {
+      "sha256": "8ca5ed6102cf6575655b0014e6354b1c7eb2b0753c346246df78cc90d60b0202",
+      "bytes": 31,
+      "actualSource": ".scratch/observed-run-vault/root-isolated-probes/cryptex-startup-node24/execution/cli-action-guard.jsonl"
+    }
+  }
+}
